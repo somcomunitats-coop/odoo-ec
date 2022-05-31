@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+  <record id="view_oauth_provider_form_ce_inherited" model="ir.ui.view">
+    <field name="name">auth.oauth.provider.form.ce.inherited</field>
+    <field name="model">auth.oauth.provider</field>
+    <field name="inherit_id" ref="auth_oauth.view_oauth_provider_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="after">
+        <field name="login_provider"/>
+        <field name="company_id" />
+      </xpath>
+    </field>
+  </record>
+
+  <record id="view_oauth_provider_tree_ce_inherited" model="ir.ui.view">
+    <field name="name">auth.oauth.provider.tree.ce.inherited</field>
+    <field name="model">auth.oauth.provider</field>
+    <field name="inherit_id" ref="auth_oauth.view_oauth_provider_tree" />
+    <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="company_id" />
+            </field>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+    <record id="comunitats_energetiques_platform" model="ir.module.category">
+        <field name="name">Comunitats Energètiques</field>
+        <field name="description">Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats Energètiques</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record model="res.groups" id="group_ce_member">
+        <field name="name">CE member</field>
+        <field name="category_id" ref="ce.comunitats_energetiques_platform"/>
+    </record>
+
+    <record model="res.groups" id="group_ce_admin">
+        <field name="name">CE admin</field>
+        <field name="category_id" ref="ce.comunitats_energetiques_platform"/>
+        <field name="implied_ids" eval="[(4, ref('group_ce_member'))]"/>
+    </record>
+
+        <record model="res.groups" id="group_platform_admin">
+        <field name="name">Platform admin</field>
+        <field name="category_id" ref="ce.comunitats_energetiques_platform"/>
+        <field name="implied_ids" eval="[(4, ref('group_ce_admin'))]"/>
+    </record>
+
+</odoo>

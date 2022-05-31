@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_company_form_ce_inherited" model="ir.ui.view">
+        <field name="name">res.company.tree.ce.inherited</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Comunitats Energètiques">
+                    <field name="id" invisible="1"/>
+                    <group string="Global Platform Administration" attrs="{'invisible': [('id','!=',1)]}">
+                        <field name="coordinator" readonly="True"/>                        
+                        <field name="platform_admin_key_cloak_provider_id" domain="[('company_id','=',id)]"/>
+                    </group>
+                    <group string="Company (=Comunitat Energètica) Administration" >
+                        <field name="ce_admin_key_cloak_provider_id" domain="[('company_id','=',id)]"/>
+                        <field name="auth_ce_key_cloak_provider_id" domain="[('company_id','=',id),('login_provider','=',True)]"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

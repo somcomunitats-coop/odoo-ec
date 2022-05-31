@@ -1,24 +1,45 @@
 <?xml version="1.0"?>
 <odoo noupdate="1">
   <record id="auth_keycloak.default_keycloak_provider" model="auth.oauth.provider">
-    <field name="name">Keycloak (admin)</field>
+    <field name="name">Keycloak (super-admin)</field>
     <field name="enabled" eval="1" />
     <field name="client_id">admin-cli</field>
     <field name="auth_endpoint">http://keycloak:8080/realms/master/protocol/openid-connect/auth</field>
     <field name="validation_endpoint">http://keycloak:8080/realms/master/protocol/openid-connect/token/introspect</field>
     <field name="data_endpoint">http://keycloak:8080/realms/master/protocol/openid-connect/userinfo</field>
     <field name="scope">openid</field>
-    <field name="body">Log in with Keycloak (admin)</field>
+    <field name="body">Keycloak (super-admin)</field>
+    <field name="users_endpoint">http://keycloack:8080/admin/realms/master/users</field>
+    <field name="superuser">PLATFORM_ADMIN_USERNAME</field>
+    <field name="superuser_pwd">PLATFORM_ADMIN_PASSWORD</field>
+    <field name="company_id">1</field>
   </record>
 
-  <record id="default_ce_keycloak_provider" model="auth.oauth.provider">
-  <field name="name">Keycloak (CE)</field>
-  <field name="enabled" eval="1" />
-  <field name="client_id">odoo</field>
-  <field name="auth_endpoint">http://keycloak:8080/realms/master/protocol/openid-connect/auth</field>
-  <field name="validation_endpoint">http://keycloak:8080/realms/master/protocol/openid-connect/token/introspect</field>
-  <field name="data_endpoint">http://keycloak:8080/realms/master/protocol/openid-connect/userinfo</field>
-  <field name="scope">openid</field>
-  <field name="body">Log in with Keycloak (CE)</field>
-</record>
+  <record id="default_admin_ce_keycloak_provider" model="auth.oauth.provider">
+    <field name="name">Coordinadora (admin-CE)</field>
+    <field name="enabled" eval="1" />
+    <field name="client_id">admin-cli</field>
+    <field name="auth_endpoint">http://keycloak:8080/realms/master/protocol/openid-connect/auth</field>
+    <field name="validation_endpoint">http://keycloak:8080/realms/master/protocol/openid-connect/token/introspect</field>
+    <field name="data_endpoint">http://keycloak:8080/realms/master/protocol/openid-connect/userinfo</field>
+    <field name="scope">openid</field>
+    <field name="body">Coordinadora (admin-CE)</field>
+    <field name="users_endpoint">http://keycloack:8080/admin/realms/CE_REALM_NAME/users</field>
+    <field name="superuser">CE_ADMIN_USERNAME</field>
+    <field name="superuser_pwd">CE_ADMIN_PASSWORD</field>
+    <field name="company_id">1</field>
+  </record>
+
+  <record id="default_auth_ce_keycloak_provider" model="auth.oauth.provider">
+    <field name="name">Coordinadora (login-CE)</field>
+    <field name="enabled" eval="1" />
+    <field name="client_id">odoo</field>
+    <field name="auth_endpoint">http://keycloak:8080/realms/CE_REALM_NAME/protocol/openid-connect/auth</field>
+    <field name="validation_endpoint">http://keycloak:8080/realms/CE_REALM_NAME/protocol/openid-connect/token/introspect</field>
+    <field name="data_endpoint">http://keycloak:8080/realms/CE_REALM_NAME/protocol/openid-connect/userinfo</field>
+    <field name="scope">openid</field>
+    <field name="body">Coordinadora (login-CE)</field>
+    <field name="company_id">1</field>
+    <field name="login_provider">1</field>
+  </record>
 </odoo>
