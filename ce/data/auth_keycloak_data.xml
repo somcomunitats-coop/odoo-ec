@@ -10,8 +10,8 @@
     <field name="scope">openid</field>
     <field name="body">Keycloak (super-admin)</field>
     <field name="users_endpoint">http://keycloack:8080/admin/realms/master/users</field>
-    <field name="superuser">PLATFORM_ADMIN_USERNAME</field>
-    <field name="superuser_pwd">PLATFORM_ADMIN_PASSWORD</field>
+    <field name="superuser">CK_PLATFORM_SUPERUSER_NAME</field>
+    <field name="superuser_pwd">CK_PLATFORM_SUPERUSER_PSW</field>
     <field name="company_id">1</field>
   </record>
 

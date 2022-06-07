@@ -6,6 +6,7 @@
         <field name="sequence">10</field>
     </record>
 
+    <!-- new groups -->
     <record model="res.groups" id="group_ce_member">
         <field name="name">CE member</field>
         <field name="category_id" ref="ce.comunitats_energetiques_platform"/>
@@ -17,10 +18,26 @@
         <field name="implied_ids" eval="[(4, ref('group_ce_member'))]"/>
     </record>
 
-        <record model="res.groups" id="group_platform_admin">
+    <record model="res.groups" id="group_platform_admin">
         <field name="name">Platform admin</field>
         <field name="category_id" ref="ce.comunitats_energetiques_platform"/>
         <field name="implied_ids" eval="[(4, ref('group_ce_admin'))]"/>
+    </record>
+
+    <!-- new roles -->
+    <record model="res.users.role" id="role_ce_member">
+        <field name="name">CE member role</field>
+        <field name="group_id" ref="ce.group_ce_member"/>
+    </record>
+
+    <record model="res.users.role" id="role_ce_admin">
+        <field name="name">CE admin role</field>
+        <field name="group_id" ref="ce.group_ce_admin"/>
+    </record>
+
+    <record model="res.users.role" id="role_platform_admin">
+        <field name="name">Platform admin role</field>
+        <field name="group_id" ref="ce.group_platform_admin"/>
     </record>
 
 </odoo>

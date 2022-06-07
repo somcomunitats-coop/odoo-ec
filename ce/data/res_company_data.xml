@@ -3,8 +3,8 @@
 
     <record id="base.main_company" model="res.company">
         <field name="name">Coordinadora</field>
+        <field name="kc_realm">coordinadora</field>
         <field name="coordinator">1</field>
-        <field name="platform_admin_key_cloak_provider_id" ref="auth_keycloak.default_keycloak_provider"/>
         <field name="ce_admin_key_cloak_provider_id" ref="default_admin_ce_keycloak_provider"/>
         <field name="auth_ce_key_cloak_provider_id" ref="default_auth_ce_keycloak_provider"/>
     </record>

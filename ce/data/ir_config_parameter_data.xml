@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+
+    <record id="ce_ck_server_url_id" model="ir.config_parameter">
+        <field name="key">ce.ck_server_url</field>
+        <field name="value">http://keycloak/</field>
+    </record>
+
+    <record id="ce_ck_server_port_id" model="ir.config_parameter">
+        <field name="key">ce.ck_server_port</field>
+        <field name="value">8080</field>
+    </record>
+
+    <record id="ce_ck_platform_oauth_provider_id" model="ir.config_parameter">
+        <field name="key">ce.ck_platform_oauth_provider_id</field>
+        <field name="value" ref="auth_keycloak.default_keycloak_provider"/>
+    </record>
+
+</odoo>

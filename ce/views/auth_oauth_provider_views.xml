@@ -22,4 +22,16 @@
             </field>
     </field>
   </record>
+
+  <template id="providers" inherit_id="auth_oauth.providers" name="OAuth Providers">
+      <xpath expr="//div[hasclass('o_auth_oauth_providers')]" position="replace">
+          <div class="o_auth_oauth_providers list-group mt-1 mb-1 text-left">
+              <a t-foreach="providers" t-as="p" t-if="p['login_provider']" class="list-group-item list-group-item-action py-2" t-att-href="p['auth_link']">
+                  <i t-att-class="p['css_class']"/>
+                  <t t-esc="p['body']"/>
+              </a>
+          </div>
+      </xpath>
+  </template>
+
 </odoo>

@@ -10,11 +10,6 @@
                     <field name="id" invisible="1"/>
                     <group string="Global Platform Administration" attrs="{'invisible': [('id','!=',1)]}">
                         <field name="coordinator" readonly="True"/>                        
-                        <field name="platform_admin_key_cloak_provider_id" domain="[('company_id','=',id)]"/>
-                    </group>
-                    <group string="Company (=Comunitat Energètica) Administration" >
-                        <field name="ce_admin_key_cloak_provider_id" domain="[('company_id','=',id)]"/>
-                        <field name="auth_ce_key_cloak_provider_id" domain="[('company_id','=',id),('login_provider','=',True)]"/>
                     </group>
                 </page>
             </xpath>
