@@ -15,13 +15,13 @@
     <record model="res.groups" id="group_ce_admin">
         <field name="name">CE admin</field>
         <field name="category_id" ref="ce.comunitats_energetiques_platform"/>
-        <field name="implied_ids" eval="[(4, ref('group_ce_member'))]"/>
+        <field name="implied_ids" eval="[(4, ref('group_ce_member')),(4, ref('easy_my_coop.group_easy_my_coop_user')),]"/>
     </record>
 
     <record model="res.groups" id="group_platform_admin">
         <field name="name">Platform admin</field>
         <field name="category_id" ref="ce.comunitats_energetiques_platform"/>
-        <field name="implied_ids" eval="[(4, ref('group_ce_admin'))]"/>
+        <field name="implied_ids" eval="[(4, ref('group_ce_admin')),(4, ref('easy_my_coop.group_easy_my_coop_manager'))]"/>
     </record>
 
     <!-- new roles -->

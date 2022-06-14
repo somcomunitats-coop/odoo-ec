@@ -6,6 +6,7 @@ class OAuthProvider(models.Model):
     company_id = fields.Many2one(
         string='Companyia',
         comodel_name='res.company',
+        default=lambda self: self.env["res.company"]._company_default_get()
     )
     
     login_provider = fields.Boolean(string='For users login')
