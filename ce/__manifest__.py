@@ -4,6 +4,7 @@
     'depends': [
         'auth_keycloak',
         'contacts',
+        'easy_my_coop',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
     'website': 'https://coopdevs.org, https://somenergia.coop',
@@ -16,10 +17,10 @@
     ],
     'data': [
         'security/ir_rules_data.xml',
+        'data/res_groups_data.xml',
         'data/auth_keycloak_data.xml',
         'data/ir_config_parameter_data.xml',
         'data/res_company_data.xml',
-        'data/res_groups_data.xml',
         'views/res_config_settings.xml',
         'views/auth_oauth_provider_views.xml',
         'views/res_company_views.xml',

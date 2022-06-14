@@ -13,6 +13,9 @@
                     </group>
                 </page>
             </xpath>
+            <xpath expr="//field[@name='property_cooperator_account']" position="before">
+                <field name="cooperator_journal"/>
+            </xpath>
         </field>
     </record>
 </odoo>

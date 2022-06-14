@@ -16,7 +16,7 @@
                             <div class="o_setting_right_pane">
                                 <label for="ck_server_url"/>
                                 <div class="text-muted">
-                                    Your filed description
+                                    URL to reach the Keycloac server
                                 </div>
                                 <field name="ck_server_url"/>
                             </div>
@@ -27,7 +27,7 @@
                             <div class="o_setting_right_pane">
                                 <label for="ck_server_port"/>
                                 <div class="text-muted">
-                                    Your filed description
+                                    Port where it is published the KeyCloak server
                                 </div>
                                 <field name="ck_server_port"/>
                             </div>
@@ -38,9 +38,50 @@
                             <div class="o_setting_right_pane">
                                 <label for="ck_platform_oauth_provider_id"/>
                                 <div class="text-muted">
-                                    Your filed description
+                                    Oauth provider to get admin inter-realms capabilities throw keycloak REST API.
+                                    Use this provider to perform actions as creation of new realms.
+                                    In Odoo this provider is only available on the 'coordinator' odoo company, under users that have
+                                    the Odoo group of 'Platform admins'. The realm must be 'master'. The client 'admin-cli'.
+                                    The 'superuser' must bé a super-admin full administrator user of KC (realm master), but
+                                    we suggest to create a specific one in KC related to this concrete Odoo instance (platform).
                                 </div>
                                 <field name="ck_platform_oauth_provider_id"/>
+                            </div>
+                        </div> 
+                        <div class="col-12 col-lg-6 o_setting_box" >
+                            <div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ck_user_group_mapped_to_odoo_group_ce_member"/>
+                                <div class="text-muted">
+                                    Name of tke KC realm user group that must be mapped against the Odoo group 'CE member'.
+                                    This KC realm group name must be the same in all the existing KC realms.
+                                </div>
+                                <field name="ck_user_group_mapped_to_odoo_group_ce_member"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" >
+                            <div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ck_user_group_mapped_to_odoo_group_ce_admin"/>
+                                <div class="text-muted">
+                                    Name of tke KC realm user group that must be mapped against the Odoo group 'CE admin'.
+                                    This KC realm group name must be the same in all the existing KC realms.
+                                </div>
+                                <field name="ck_user_group_mapped_to_odoo_group_ce_admin"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" >
+                            <div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ck_user_group_mapped_to_odoo_group_platform_admin"/>
+                                <div class="text-muted">
+                                    Name of tke KC realm user group that must be mapped against the Odoo group 'Platform admin'.
+                                    This KC realm group name must be the same in all the existing KC realms.
+                                </div>
+                                <field name="ck_user_group_mapped_to_odoo_group_platform_admin"/>
                             </div>
                         </div> 
                     </div>
