@@ -34,4 +34,8 @@
       </xpath>
   </template>
 
+  <menuitem id="auth_oauth.menu_oauth_providers" name="OAuth Providers"
+    parent="base.menu_users" sequence="30"
+    action="action_oauth_provider" groups="group_platform_admin"/>
+
 </odoo>
