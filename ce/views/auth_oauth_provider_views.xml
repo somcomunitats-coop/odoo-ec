@@ -34,8 +34,8 @@
       </xpath>
   </template>
 
-  <menuitem id="auth_oauth.menu_oauth_providers" name="OAuth Providers"
-    parent="base.menu_users" sequence="30"
-    action="auth_oauth.action_oauth_provider" groups="group_platform_admin"/>
+  <record model="ir.ui.menu" id="auth_oauth.menu_oauth_providers">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_admin')])]"/>
+  </record>
 
 </odoo>
