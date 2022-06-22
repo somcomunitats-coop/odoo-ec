@@ -10,6 +10,7 @@ class ResUsers(models.Model):
     def push_new_user_to_keyckoack(self):
         self.ensure_one()
 
+        ICPSudo = self.env['ir.config_parameter'].sudo()
         ce_admin_provider = self.company_id.ce_admin_key_cloak_provider_id
 
         if not ce_admin_provider:
@@ -23,5 +24,12 @@ class ResUsers(models.Model):
             'pwd': ce_admin_provider.superuser_pwd, 
             'login_match_key': 'username:login'
         }
+
+        ck_user_group_mapped_to_odoo_group_ce_member = ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_ce_admin')
+        kc_user_additional_vals = {
+            'attributes':{'lang':[self.lang]},
+            'groups': [ck_user_group_mapped_to_odoo_group_ce_member],
+        }
+        self = self.with_context(kc_user_creation_vals=kc_user_additional_vals)
         wiz = self.env['auth.keycloak.create.wiz'].create(wiz_vals)
         wiz.button_create_user()
