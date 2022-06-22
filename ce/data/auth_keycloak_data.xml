@@ -1,5 +1,13 @@
 <?xml version="1.0"?>
 <odoo noupdate="1">
+
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+      <value eval="[('module', '=', 'auth_keycloak'), ('name', '=', 'auth_keycloak.default_keycloak_provider')]"/>
+    </function>
+    <value eval="{'noupdate': False}" />
+  </function>
+
   <record id="auth_keycloak.default_keycloak_provider" model="auth.oauth.provider">
     <field name="name">Keycloak (super-admin)</field>
     <field name="enabled" eval="1" />
@@ -12,8 +20,15 @@
     <field name="users_endpoint">http://keycloack:8080/admin/realms/master/users</field>
     <field name="superuser">CK_PLATFORM_SUPERUSER_NAME</field>
     <field name="superuser_pwd">CK_PLATFORM_SUPERUSER_PSW</field>
-    <field name="company_id">1</field>
+    <field name="company_id"></field>
   </record>
+
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+      <value eval="[('module', '=', 'auth_keycloak'), ('name', '=', 'auth_keycloak.default_keycloak_provider')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
 
   <record id="default_admin_ce_keycloak_provider" model="auth.oauth.provider">
     <field name="name">Coordinadora (admin-CE)</field>
