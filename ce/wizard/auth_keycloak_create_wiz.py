@@ -1,5 +1,6 @@
 from odoo import fields, models, api
 
+
 class KeycloakCreateWiz(models.TransientModel):
     """Export Odoo users to Keycloak.
 
@@ -23,4 +24,3 @@ class KeycloakCreateWiz(models.TransientModel):
             values.update(self._context.get('kc_user_creation_vals'))
 
         return values
-
