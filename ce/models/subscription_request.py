@@ -4,6 +4,14 @@ from odoo.exceptions import UserError, ValidationError
 class SubscriptionRequest(models.Model):
     _inherit = 'subscription.request'
 
+    gender = fields.Selection(
+        [("male", _("Male")), ("female", _("Female")), ("not_binary", _("Not binary")),
+        ("not_share", _("I prefer do not share it")), ("other", _("Other"))],
+        string="Gender",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+    )
+
     def get_journal(self):
         """Need to override in order to use in multicompany enviroment"""
 
