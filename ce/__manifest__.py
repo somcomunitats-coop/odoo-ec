@@ -1,6 +1,6 @@
 {
     'name': "Comunitats Energètiques customizations",
-    'version': '12.0.0.0.1',
+    'version': '12.0.0.0.2',
     'depends': [
         'auth_keycloak',
         'contacts',
