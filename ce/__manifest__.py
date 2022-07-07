@@ -7,7 +7,7 @@
         'easy_my_coop',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
-    'website': 'https://coopdevs.org, https://somenergia.coop',
+    'website': 'https://somenergia.coop',
     'category': "Cooperative management",
     'description': """
     Odoo Comunitats Energètiques customizations.
