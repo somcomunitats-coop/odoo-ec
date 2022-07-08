@@ -4,7 +4,7 @@
     'depends': [
         'auth_keycloak',
         'contacts',
-        'easy_my_coop',
+        'easy_my_coop_website',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
     'website': 'https://coopdevs.org, https://somenergia.coop',
@@ -24,6 +24,7 @@
         'views/res_config_settings.xml',
         'views/auth_oauth_provider_views.xml',
         'views/res_company_views.xml',
+        'views/website_subscription_template.xml',
     ],
     'installable': True,
     'application': True,

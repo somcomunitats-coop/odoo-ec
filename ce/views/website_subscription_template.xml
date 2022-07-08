@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="becomecooperator_ccee" inherit_id="easy_my_coop_website.becomecooperator">
+        <xpath expr="//div[@id='wrap']//h1" position="replace">
+            <h1 class="mt-4 text-center">
+                Become Cooperator of <t t-esc="company.name" />
+            </h1>
+        </xpath>
+        <xpath expr="//div[@id='wrap']//a[@t-if='not logged']/." position="replace" />
+    
+        <xpath expr="//div[@name='confirm_email_container']" position="after">
+           <div 
+                t-if="not logged"
+                style="display: none;"
+                class="form-group field-login">
+                <label for="company_id">Target Odoo Company id</label>
+                <input
+                    class="form-control form-control-sm"
+                    autocapitalize="off"
+                    type="text"
+                    name="company_id"
+                    id="company_id"
+                    required="False"
+                    t-attf-value="#{company.id or 1}"
+                    />
+            </div>
+        </xpath>
+    </template>
+</odoo>
