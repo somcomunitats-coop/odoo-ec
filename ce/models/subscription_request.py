@@ -24,6 +24,3 @@ class SubscriptionRequest(models.Model):
                 raise UserError(_("You must set a cooperator journal on you company."))
 
         return j
-
-
-

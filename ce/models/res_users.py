@@ -30,6 +30,9 @@ class ResUsers(models.Model):
         kc_user_additional_vals = {
             'attributes':{'lang':[self.lang]},
             'groups': [ck_user_group_mapped_to_odoo_group_ce_member],
+            'enabled': True,
+            'credentials':[
+                {'type':'password','value':'w8P=FL_W','temporary':False}],
         }
         self = self.with_context(kc_user_creation_vals=kc_user_additional_vals)
         wiz = self.env['auth.keycloak.create.wiz'].create(wiz_vals)
