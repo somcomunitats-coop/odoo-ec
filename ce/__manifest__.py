@@ -4,6 +4,8 @@
     'depends': [
         'auth_keycloak',
         'contacts',
+        'auth_api_key',
+        'base_rest',
         'easy_my_coop_website',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",

@@ -7,5 +7,6 @@ from . import subscription_request
 from . import res_users
 from . import account_invoice
 from . import product
+#from . import reset_perms
 
 
