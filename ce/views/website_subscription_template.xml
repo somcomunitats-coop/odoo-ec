@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <template id="becomecooperator_ccee" inherit_id="easy_my_coop_website.becomecooperator">
-        <xpath expr="//div[@id='wrap']//h1" position="replace">
+        <xpath expr="//div[@id='wrap']//h2" position="replace">
             <h1 class="mt-4 text-center">
                 Become Cooperator of <t t-esc="company.name" />
             </h1>
