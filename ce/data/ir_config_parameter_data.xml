@@ -21,13 +21,28 @@
         <field name="value">ce_members_group</field>
     </record>
 
+    <record id="odoo_group_ce_member" model="ir.config_parameter">
+        <field name="key">ce.odoo_group_ce_member</field>
+        <field name="value" ref="ce.role_ce_member"/>
+    </record>
+
     <record id="ce_ck_user_group_mapped_to_odoo_group_ce_admin" model="ir.config_parameter">
         <field name="key">ce.ck_user_group_mapped_to_odoo_group_ce_admin</field>
         <field name="value">ce_admins_group</field>
     </record>
 
+    <record id="odoo_group_ce_admin" model="ir.config_parameter">
+        <field name="key">ce.odoo_group_ce_admin</field>
+        <field name="value" ref="ce.role_ce_admin" />
+    </record>
+
     <record id="ce_ck_user_group_mapped_to_odoo_group_platform_admin" model="ir.config_parameter">
         <field name="key">ce.ck_user_group_mapped_to_odoo_group_platform_admin</field>
         <field name="value">platform_admins_group</field>
+    </record>
+
+    <record id="odoo_group_platform_admin" model="ir.config_parameter">
+        <field name="key">ce.odoo_group_platform_admin</field>
+        <field name="value" ref="ce.role_platform_admin" />
     </record>
 </odoo>

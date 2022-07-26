@@ -58,6 +58,10 @@
                                     This KC realm group name must be the same in all the existing KC realms.
                                 </div>
                                 <field name="ck_user_group_mapped_to_odoo_group_ce_member"/>
+                                <div class="text-muted">
+                                    Role mapped in odoo for this group. 
+                                </div>
+                                <field name="odoo_group_ce_member"/>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 o_setting_box" >
@@ -70,6 +74,10 @@
                                     This KC realm group name must be the same in all the existing KC realms.
                                 </div>
                                 <field name="ck_user_group_mapped_to_odoo_group_ce_admin"/>
+                                <div class="text-muted">
+                                    Role mapped in odoo for this group.
+                                </div>
+                                <field name="odoo_group_ce_admin"/>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 o_setting_box" >
@@ -82,8 +90,12 @@
                                     This KC realm group name must be the same in all the existing KC realms.
                                 </div>
                                 <field name="ck_user_group_mapped_to_odoo_group_platform_admin"/>
+                                                                <div class="text-muted">
+                                    Role mapped in odoo for this group.
+                                </div>
+                                <field name="odoo_group_platform_admin"/>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     <h2>Company dependent parameters</h2>
                     <div class="row mt16 o_settings_container" name="title_setting_container_2">

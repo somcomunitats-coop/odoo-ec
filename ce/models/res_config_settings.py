@@ -10,6 +10,13 @@ class ResConfigSettings(models.TransientModel):
         config_parameter='ce.ck_platform_oauth_provider_id',domain="[('company_id','=',company_id)]")
     ck_user_group_mapped_to_odoo_group_ce_member = fields.Char(string="KeyCloak user group (ce_members)",
     config_parameter='ce.ck_user_group_mapped_to_odoo_group_ce_member')
+    odoo_group_ce_member = fields.Many2one(
+        'res.users.role', string="Odoo user group for ce_members", config_parameter='ce.odoo_group_ce_member')
+    odoo_group_ce_admin = fields.Many2one(
+        'res.users.role', string="Odoo user group for ce_admin", config_parameter='ce.odoo_group_ce_admin')
+    odoo_group_platform_admin = fields.Many2one(
+        'res.users.role', string="Odoo user group for platform_admin", config_parameter='ce.odoo_group_platform_admin')
+
     ck_user_group_mapped_to_odoo_group_ce_admin = fields.Char(string="KeyCloak user group (ce_admins)",
     config_parameter='ce.ck_user_group_mapped_to_odoo_group_ce_admin')
     ck_user_group_mapped_to_odoo_group_platform_admin = fields.Char(string="KeyCloak user_group (platform_admins)",
@@ -17,10 +24,10 @@ class ResConfigSettings(models.TransientModel):
 
     # company dependent parameters (saved on res_company):
     kc_realm = fields.Char(string='KeyCloak realm name', related='company_id.kc_realm', readonly=False)
-    ce_admin_key_cloak_provider_id = fields.Many2one('auth.oauth.provider', 
+    ce_admin_key_cloak_provider_id = fields.Many2one('auth.oauth.provider',
         string='OAuth provider for CCEE admin', readonly=False, related='company_id.ce_admin_key_cloak_provider_id',
         domain="[('company_id','=',company_id)]")
-    auth_ce_key_cloak_provider_id = fields.Many2one('auth.oauth.provider', 
+    auth_ce_key_cloak_provider_id = fields.Many2one('auth.oauth.provider',
         string='OAuth provider for CCEE login', readonly=False, related='company_id.auth_ce_key_cloak_provider_id',
         domain="[('company_id','=',company_id)]")
 

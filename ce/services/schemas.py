@@ -18,7 +18,7 @@ S_SET_PERMS_REQUEST_GET = {
     "user_id": {"type": "string", "required": True},
     "target_company_id": {"type": "string", "required": True},
     "target_user_id": {"type": "string", "required": True},
-    "new_role_id": {"type": "string", "required": True},
+    "new_role": {"type": "string", "required": True},
 }
 
 S_SET_PERMS_REQUEST_RETURN = {
