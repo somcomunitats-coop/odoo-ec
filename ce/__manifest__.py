@@ -2,9 +2,13 @@
     'name': "Comunitats Energètiques customizations",
     'version': '12.0.0.0.4',
     'depends': [
+        'base_rest_base_structure',
         'auth_keycloak',
         'contacts',
         'easy_my_coop_website',
+        'base_user_role',
+        'auth_api_key',
+        'crm',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
     'website': 'https://somenergia.coop',
@@ -14,6 +18,7 @@
     """,
     "license": "AGPL-3",
     'demo': [
+        'demo/demo_data.xml',
     ],
     'data': [
         'security/ir_rules_data.xml',
