@@ -30,6 +30,7 @@
         'views/auth_oauth_provider_views.xml',
         'views/res_company_views.xml',
         'views/website_subscription_template.xml',
+        'data/utm_data.xml',
     ],
     'installable': True,
     'application': True,
