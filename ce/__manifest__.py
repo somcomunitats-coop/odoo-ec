@@ -3,9 +3,9 @@
     'version': '12.0.0.0.4',
     'depends': [
         'base_rest_base_structure',
+        'cooperator_website',
         'auth_keycloak',
         'contacts',
-        'easy_my_coop_website',
         'base_user_role',
         'auth_api_key',
         'crm',
