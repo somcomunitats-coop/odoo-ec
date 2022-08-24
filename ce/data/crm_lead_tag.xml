@@ -1,0 +1,42 @@
+<odoo>
+    <record model="crm.lead.tag" id="tag_1">
+        <field name="name">Pipeline</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">kanban,tree,graph,pivot,form,calendar,activity</field>
+        <field name="domain">[('type','=','opportunity')]</field>
+        <field name="context">
+			{
+            'default_type': 'opportunity',
+            'search_default_assigned_to_me': 0
+			}
+		</field>
+        <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter" />
+    </record>
+
+    <!-- CE Energy Actions -->
+    <record model="crm.lead.tag" id="ce_tag_common_generation">
+        <field name="name">Generació renovable comunitaria</field>
+    </record>
+    <record model="crm.lead.tag" id="ce_tag_energy_efficiency">
+        <field name="name">Eficiencia energètica</field>
+    </record>
+    <record model="crm.lead.tag" id="ce_tag_sustainable_mobility">
+        <field name="name">Mobilitat sostenible</field>
+    </record>
+    <record model="crm.lead.tag" id="ce_tag_citizen_education">
+        <field name="name">Formació ciutadana</field>
+    </record>
+    <record model="crm.lead.tag" id="ce_tag_thermal_energy">
+        <field name="name">Energia tèrmica i climatització</field>
+    </record>
+    <record model="crm.lead.tag" id="ce_tag_collective_purchases">
+        <field name="name">Compres col·lectives</field>
+    </record>
+    <record model="crm.lead.tag" id="ce_tag_renewable_energy">
+        <field name="name">Subministrament d'energia 100% renovable</field>
+    </record>
+    <record model="crm.lead.tag" id="ce_tag_aggregate_demand">
+        <field name="name">Agregació i flexibilitat de la demanda</field>
+    </record>
+
+</odoo>

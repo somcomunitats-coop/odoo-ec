@@ -1,0 +1,41 @@
+<odoo>
+    <record id="ce_utm_sources_action" model="ir.actions.act_window">
+        <field name="name">Sources</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">utm.source</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" eval="False" /> <!-- Force empty -->
+        <field name="view_id" eval="False" /> <!-- Force empty -->
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to define a new Source.
+            </p>
+        </field>
+    </record>
+
+    <record id="ce_utm_sources_form_view" model="ir.ui.view">
+        <field name="name">utm.source.form</field>
+        <field name="model">utm.source</field>
+        <field name="inherit_id" ref="utm.utm_source_view_form" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="source_ext_id" />
+                <field name="id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="ce_utm_sources_tree_view" model="ir.ui.view">
+        <field name="name">utm.source.tree</field>
+        <field name="model">utm.source</field>
+        <field name="inherit_id" ref="utm.utm_source_view_tree" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="source_ext_id" />
+                <field name="id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

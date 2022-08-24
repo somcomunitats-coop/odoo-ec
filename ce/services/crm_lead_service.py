@@ -16,6 +16,9 @@ class CRMLeadService(Component):
 
     def create(self, **params):
         params = self._prepare_create(params)
+
+        company_id = self._check_company(params['odoo_company_id'])
+        params.update({'odoo_company_id': company_id})
         sr = self.env["crm.lead"].sudo().create(params)
         return self._to_dict(sr)
 
@@ -31,12 +34,22 @@ class CRMLeadService(Component):
             "id": crm_lead.id
         }
 
+    def _check_company(self, company_id):
+        if company_id == -1:
+            coordinator_id = self.env["res.company"].search([('coordinator','=',True)])[0]
+            return coordinator_id
+        return company_id
+
     def _prepare_create(self, params):
         return {
             "name": params.get("partner_name"),
-            "partner_name": params.get("partner_name"),
-            "email_from": params.get("email_from"),
-            "phone": params.get("phone"),
+            "partner_address_name": params.get("partner_name"),
+            "partner_address_email": params.get("partner_email"),
+            "partner_address_phone": params.get("partner_phone"),
+            "street": params.get("partner_full_address"),
+            "city": params.get("partner_city"),
+            "zip": params.get("partner_zip"),
             "company_id": params.get("odoo_company_id"),
-            "source_id": params.get("source_id"),
+            "source_id": params.get("source_xml_id"),
+            "tag_ids": [(6, 0, params.get("tag_ids", []))],
         }
