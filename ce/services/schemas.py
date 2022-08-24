@@ -2,6 +2,7 @@ def boolean_validator(field, value, error):
     if value and value not in ["true", "false"]:
         error(field, "Must be a boolean value: true or false")
 
+
 S_CRM_LEAD_RETURN_CREATE = {
     "id": {"type": "integer"},
 }
@@ -13,17 +14,13 @@ S_CRM_LEAD_CREATE = {
     "odoo_company_id": {"type": "integer"},
 }
 
-S_CE_MEMBER_PROFILE_GET = {
-    "id": {"type": "string"},
-}
-S_CE_MEMBER_PROFILE_RETURN_GET = {
+S_PROFILE_RETURN_GET = {
     "profile": {
         "type": "dict",
         "schema": {
-            "id": {"type": "string"},
+            "keycloak_id": {"type": "string"},
             "name": {"type": "string"},
-            "surname1": {"type": "string"},
-            "surname2": {"type": "string"},
+            "surname": {"type": "string"},
             "birth_date": {"type": "string"},
             "gender": {"type": "string"},
             "vat": {"type": "string"},
@@ -58,3 +55,9 @@ S_CE_MEMBER_PROFILE_RETURN_GET = {
         }
     }
 }
+
+S_PROFILE_PUT = {
+    "lang": {"type": "string", "required": True, "empty": False}
+}
+
+S_PROFILE_RETURN_PUT = S_PROFILE_RETURN_GET
