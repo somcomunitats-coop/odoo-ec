@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Copyright 2022 Som Energia & Coopdevs
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <menuitem id="ce_root_menu" name="Comunitats Energètiques" sequence="10" groups="ce.group_ce_admin" web_icon="ce,static/description/icon.png" />
+    <menuitem id="ce_config_menu" name="Configuration" parent="ce_root_menu"/>
+    <menuitem id="ce_menu_general_settings" name="General" parent="ce_config_menu" groups="ce.group_ce_admin" />
+        <menuitem id="ce_settings_menu" name="Settings" parent="ce_menu_general_settings" action="action_ce_configuration" groups="ce.group_platform_admin" />
+    <menuitem id="ce_menu_webforms_settings" name="Webforms" parent="ce_config_menu" groups="ce.group_platform_admin" />
+        <menuitem id="ce_config_sources_menu" name="Source types" parent="ce_menu_webforms_settings" action="ce_utm_sources_action" />
+        <menuitem id="ce_config_energy_actions_menu" name="Energy actions in progress" parent="ce_menu_webforms_settings" action="ce_crm_lead_tags_action" />
+
+    <menuitem id="ce_crm_leads_menu" name="Solicituds" parent="ce_root_menu" />
+        <menuitem id="ce_crm_leads_ce_info_menu" name="CE Information" parent="ce_crm_leads_menu" action="ce_crm_leads_ce_info_action" groups="ce.group_ce_admin" />
+        <menuitem id="ce_crm_leads_general_info_menu" name="General Information" parent="ce_crm_leads_menu" action="ce_crm_leads_general_info_action" groups="ce.group_platform_admin" />
+        <menuitem id="ce_crm_leads_future_zone_info_menu" name="Information future CE's by location" parent="ce_crm_leads_menu" action="ce_crm_leads_future_zone_info_action" groups="ce.group_platform_admin" />
+        <menuitem id="ce_crm_leads_new_ce_request_menu" name="CE Creation" parent="ce_crm_leads_menu" action="ce_crm_leads_new_ce_request_action" groups="ce.group_platform_admin" />
+</odoo>

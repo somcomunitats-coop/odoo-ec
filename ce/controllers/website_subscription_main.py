@@ -1,7 +1,7 @@
 from odoo import http
 from odoo.http import request
 from odoo.tools.translate import _
-from odoo.addons.easy_my_coop_website.controllers import main as emyc_wsc
+from odoo.addons.cooperator_website.controllers import main as emyc_wsc
 
 
 class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
