@@ -138,8 +138,4 @@
         <field name="context">{'module' : 'ce'}</field>
     </record>
 
-    <menuitem id="ce_root_menu" name="Comunitats Energètiques" sequence="10" groups="ce.group_ce_admin" web_icon="ce,static/description/icon.png"/>
-    <menuitem id="ce_config_menu" name="Configuration" parent="ce_root_menu" />
-    <menuitem id="ce_settings_menu" name="Settings" parent="ce_config_menu" action="action_ce_configuration" groups="ce.group_platform_admin"/>
-
 </odoo>

@@ -8,10 +8,20 @@ S_CRM_LEAD_RETURN_CREATE = {
 }
 S_CRM_LEAD_CREATE = {
     "partner_name": {"type": "string"},
-    "source_id": {"type": "integer"},
-    "email_from": {"type": "string"},
-    "phone": {"type": "string"},
+    "partner_email": {"type": "string"},
+    "partner_phone": {"type": "string"},
+    "partner_full_address": {"type": "string"},
+    "partner_city": {"type": "string"},
+    "partner_zip": {"type": "string"},
     "odoo_company_id": {"type": "integer"},
+    "source_xml_id": {"type": "integer"},
+    "tag_ids": {
+        "type": "list",
+        "schema": {
+            "type": "integer",
+        }
+    },
+
 }
 
 S_PROFILE_RETURN_GET = {
