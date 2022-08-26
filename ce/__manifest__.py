@@ -6,6 +6,7 @@
         'cooperator_website',
         'auth_keycloak',
         'contacts',
+        'base_rest',
         'base_user_role',
         'auth_api_key',
         'crm',

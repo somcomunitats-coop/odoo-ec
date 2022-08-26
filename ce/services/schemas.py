@@ -2,6 +2,17 @@ def boolean_validator(field, value, error):
     if value and value not in ["true", "false"]:
         error(field, "Must be a boolean value: true or false")
 
+S_SET_PERMS_REQUEST_GET = {
+    "company_id": {"type": "string", "required": True},
+    "user_id": {"type": "string", "required": True},
+    "target_company_id": {"type": "string", "required": True},
+    "target_user_id": {"type": "string", "required": True},
+    "new_role": {"type": "string", "required": True},
+}
+
+S_SET_PERMS_REQUEST_RETURN = {
+    "message": {"type": "boolean", "required": True},
+}
 
 S_CRM_LEAD_RETURN_CREATE = {
     "id": {"type": "integer"},
