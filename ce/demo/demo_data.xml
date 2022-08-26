@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="res_partner_member_ce_demo" model="res.partner">
+        <field name="name">CE Member</field>
+        <field name="customer" eval="False" />
+        <field name="is_company" eval="False" />
+        <field name="email">ce_member@coop.coop</field>
+        <field name="street">Calle bruc, 20</field>
+        <field name="city">Bilbao</field>
+        <field name="zip">4100</field>
+        <field name="country_id" ref="base.es" />
+    </record>
+
+    <record id="res_partner_admin_ce_demo" model="res.partner">
+        <field name="name">CE Admin</field>
+        <field name="customer" eval="False" />
+        <field name="is_company" eval="False" />
+        <field name="email">ce_admin@coop.coop</field>
+        <field name="street">Calle bruc, 22</field>
+        <field name="city">Bilbao</field>
+        <field name="zip">4100</field>
+        <field name="country_id" ref="base.es" />
+    </record>
+
+    <record id="res_partner_admin_platform_demo" model="res.partner">
+        <field name="name">Platform Admin</field>
+        <field name="customer" eval="False" />
+        <field name="is_company" eval="False" />
+        <field name="email">platform_admin@coop.coop</field>
+        <field name="street">Calle bruc, 24</field>
+        <field name="city">Bilbao</field>
+        <field name="zip">4100</field>
+        <field name="country_id" ref="base.es" />
+    </record>
+
+    <record id="res_users_member_ce_demo" model="res.users">
+        <field name="partner_id" ref="res_partner_member_ce_demo" />
+        <field name="login">member_ce</field>
+        <field name="password">demo</field>
+        <field name="groups_id" eval="[(4, ref('ce.group_ce_member'))]" />
+    </record>
+
+    <record id="res_users_admin_ce_demo" model="res.users">
+        <field name="partner_id" ref="res_partner_admin_ce_demo" />
+        <field name="login">admin_ce</field>
+        <field name="password">demo</field>
+        <field name="groups_id" eval="[(4, ref('ce.group_ce_admin'))]" />
+    </record>
+
+    <record id="res_users_platform_admin_demo" model="res.users">
+        <field name="partner_id" ref="res_partner_admin_platform_demo" />
+        <field name="login">admin_platform</field>
+        <field name="password">demo</field>
+        <field name="groups_id" eval="[(4, ref('ce.group_platform_admin'))]" />
+    </record>
+
+    <record id="auth_api_key_platform_admin_demo" model="auth.api.key">
+        <field name="user_id" ref="res_users_platform_admin_demo" />
+        <field name="name">api-key</field>
+        <field name="key">ddaccf96-80cc-485b-bd73-d9c1b48178ad</field>
+    </record>
+
+</odoo>

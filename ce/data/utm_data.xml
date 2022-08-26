@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CE Info Sources -->
+    <record model="utm.source" id="ce_source_general_info">
+        <field name="name">Information Newsletter (general)</field>
+    </record>
+    <record model="utm.source" id="ce_source_future_location_ce_info">
+        <field name="name">Information about future CE by location</field>
+    </record>
+    <record model="utm.source" id="ce_source_existing_ce_info">
+        <field name="name">Information about exiting CE</field>
+    </record>
+    <!-- CE Other Sources -->
+    <record model="utm.source" id="ce_source_creation_ce_proposal">
+        <field name="name">CE creation</field>
+    </record>
+
+</odoo>
