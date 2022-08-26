@@ -53,7 +53,14 @@ class MemberProfileService(Component):
         if partner.lang != target_lang.code:
             partner.sudo().write({'lang':target_lang.code})
 
-        # todo: also update lang in KeyCloack related user throw API call
+        #also update lang in KeyCloack related user throw API call
+        try:
+            user.update_user_data_to_keyckoack(['lang'])
+        except Exception:
+            raise wrapJsonException(
+                BadRequest(),
+                include_description=False,
+                extra_info={'message': _("Unable to update the lang in Keycloak for the related KC user ID: %s"%user.oauth_uid),})
 
         return self._to_dict(user, partner, partner_bank, sepa_mandate)
 
