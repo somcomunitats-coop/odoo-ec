@@ -5,6 +5,9 @@ import re
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
+    # when OVor WP are doing API calls to Odoo will use odoo_cempany_id = -1 in order to refer to the 'Coordinadora' one
+    API_PARAM_ID_VALUE_FOR_COORDINADORA = -1
+
     # overrided fields
     vat = fields.Char(related='partner_id.vat', string="Tax ID", readonly=False, required=True)
     # new fields
@@ -34,16 +37,15 @@ class ResCompany(models.Model):
     )
 
     @api.model
-    def create(self,vals):
-        company = super(ResCompany, self).create(vals)
-        if company.id > 1:
-            pass
-            #todo's:
-            # crear, per la nova companyia els registres que el òdul de easy_my_coop crea aquí
-            # /odoo/addons/easy_my_coop/data/easy_my_coop_data.xml via xml per a la companyia 1 (='Coordinadora)
-            # en el moment de instal·lar el mòdul, per exemple:
-            # - la sequència numèrica de factures de quotes
-            # - el diari de facturació de quotes
-            # - el tipus bàsic de quota d'alta de sòcia (Share Type)
+    def get_real_ce_company_id(self, api_param_odoo_compant_id):
+        if api_param_odoo_compant_id == self.API_PARAM_ID_VALUE_FOR_COORDINADORA:
+            return self.search([('coordinator','=',True)],limit=1) or None
+        else:
+            return self.search([('id','=',api_param_odoo_compant_id)]) or None
 
-        return company
+
+    @api.multi
+    def get_ce_members(self, domain_key='in_kc_and_active'):
+        domains_dict = {'in_kc_and_active': [('company_id','=',self.id),('oauth_uid','!=',None),('active','=',True)]}
+        members = self.env['res.users'].sudo().search(domains_dict['in_kc_and_active'])
+        return members
