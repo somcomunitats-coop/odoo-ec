@@ -1,5 +1,8 @@
 import logging
 from odoo.addons.component.core import Component
+from odoo.addons.base_rest.http import wrapJsonException
+from werkzeug.exceptions import BadRequest
+from odoo import _
 from . import schemas
 
 _logger = logging.getLogger(__name__)
@@ -15,10 +18,33 @@ class CRMLeadService(Component):
     """
 
     def create(self, **params):
-        params = self._prepare_create(params)
-
-        company_id = self._check_company(params['odoo_company_id'])
+        company_id = self.env['res.company'].get_real_ce_company_id(params['odoo_company_id']).id
         params.update({'odoo_company_id': company_id})
+
+        sources = {s.name:s.res_id for s in self.env['ir.model.data'].search([
+            ('module','=','ce'), ('model','=','utm.source')])}
+        if params['source_xml_id'] not in sources:
+            raise wrapJsonException(
+                BadRequest(
+                    _("Source {} not found").format(
+                        params["source_xml_id"])
+                ),
+                include_description=True,
+            )
+
+        params.update({'source_xml_id': sources[params['source_xml_id']]})
+
+        for tag_id in params['tag_ids']:
+            tag_id_res = self.env['crm.lead.tag'].search([('id','=',tag_id)]).id
+            if not tag_id_res:
+                raise wrapJsonException(
+                    BadRequest(
+                        _("Tag {} not found").format(tag_id)
+                    ),
+                    include_description=True,
+                )
+
+        params = self._prepare_create(params)
         sr = self.env["crm.lead"].sudo().create(params)
         return self._to_dict(sr)
 
