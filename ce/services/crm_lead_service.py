@@ -60,12 +60,6 @@ class CRMLeadService(Component):
             "id": crm_lead.id
         }
 
-    def _check_company(self, company_id):
-        if company_id == -1:
-            coordinator_id = self.env["res.company"].search([('coordinator','=',True)])[0]
-            return coordinator_id
-        return company_id
-
     def _prepare_create(self, params):
         return {
             "name": params.get("partner_name"),
