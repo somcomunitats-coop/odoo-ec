@@ -17,6 +17,7 @@ S_SET_PERMS_REQUEST_RETURN = {
 S_CRM_LEAD_RETURN_CREATE = {
     "id": {"type": "integer"},
 }
+
 S_CRM_LEAD_CREATE = {
     "partner_name": {"type": "string"},
     "partner_email": {"type": "string"},
@@ -25,14 +26,13 @@ S_CRM_LEAD_CREATE = {
     "partner_city": {"type": "string"},
     "partner_zip": {"type": "string"},
     "odoo_company_id": {"type": "integer"},
-    "source_xml_id": {"type": "integer"},
+    "source_xml_id": {"type": "string"},
     "tag_ids": {
         "type": "list",
         "schema": {
             "type": "integer",
         }
     },
-
 }
 
 S_PROFILE_RETURN_GET = {

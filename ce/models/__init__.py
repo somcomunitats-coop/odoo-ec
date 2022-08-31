@@ -6,6 +6,6 @@ from . import subscription_request
 from . import res_users
 from . import account_invoice
 from . import product
-from . import utm_campaign
+from . import utm_source
 from . import crm_lead
 from . import keycloak_sync_wiz
