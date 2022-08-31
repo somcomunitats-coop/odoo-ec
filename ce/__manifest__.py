@@ -37,6 +37,7 @@
         'views/ce_views.xml',
         'views/utm_views.xml',
         'views/menus.xml',
+        'views/res_users.xml',
     ],
     'installable': True,
     'application': True,

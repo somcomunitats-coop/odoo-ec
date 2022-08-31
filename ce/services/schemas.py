@@ -82,3 +82,19 @@ S_PROFILE_PUT = {
 }
 
 S_PROFILE_RETURN_PUT = S_PROFILE_RETURN_GET
+
+S_COMMUNITY_MEMBER = {
+    "name": {"type": "string", "required": True, "empty": False},
+    "rol": {"type": "string", "required": True},
+    "email": {"type": "string", "required": True},
+}
+
+S_COMMUNITY_MEMBERS_RETURN_GET = {
+    "members": {
+        "type": "list",
+        "schema": {
+            "type": "dict",
+            "schema": S_COMMUNITY_MEMBER
+        }
+    }
+}

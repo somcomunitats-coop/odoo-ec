@@ -7,6 +7,30 @@ logger = logging.getLogger(__name__)
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
+    USER_CE_ROLES = [('role_ce_member',_('CE Member')),('role_ce_admin',_('CE Andministrator')),('role_platform_admin',_('Platform Administrator'))]
+
+    ce_role = fields.Selection(USER_CE_ROLES, string='CE Role', compute='_compute_ce_role')
+
+    @api.depends('role_ids')
+    def _compute_ce_role(self):
+
+        role_ce_member_id = self.env['ir.model.data'].get_object_reference('ce','role_ce_member')[1]
+        role_ce_admin_id = self.env['ir.model.data'].get_object_reference('ce','role_ce_admin')[1]
+        role_platform_admin_id =  self.env['ir.model.data'].get_object_reference('ce','role_platform_admin')[1]
+
+        for user in self:
+            ce_role_ids = [r.id for r in user.role_ids if r.id in [role_ce_member_id, role_ce_admin_id, role_platform_admin_id]]
+
+            role_value=None
+            if role_platform_admin_id in ce_role_ids:
+                role_value = 'role_platform_admin'
+            elif role_ce_admin_id in ce_role_ids:
+                role_value = 'role_ce_admin'
+            elif role_ce_member_id in ce_role_ids:
+                role_value = 'role_ce_member'
+
+            user.ce_role = role_value
+
     @api.multi
     def push_new_user_to_keyckoack(self):
         self.ensure_one()
@@ -81,4 +105,5 @@ class ResUsers(models.Model):
         resp = kc_wiz._update_user_by_id(token, self.oauth_uid, to_up_data_dict)
 
         return resp
+
 
