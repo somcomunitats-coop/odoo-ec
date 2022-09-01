@@ -29,6 +29,7 @@
         'data/res_company_data.xml',
         'data/utm_data.xml',
         'data/crm_lead_tag.xml',
+        'data/crm_maps_data.xml',
         'views/res_config_settings.xml',
         'views/crm_lead_views.xml',
         'views/auth_oauth_provider_views.xml',
