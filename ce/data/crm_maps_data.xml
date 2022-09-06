@@ -1,0 +1,305 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+
+    <record id="ce_default_cm_color_schema" model="cm.map.colorschema">
+        <field name="name">Communities Color Schema</field>
+        <field name="color_text_base">70,70,71</field>
+        <field name="color_fill">244,212,44</field>
+        <field name="color_border">70,70,71</field>
+        <field name="color_button">177,204,52</field>
+        <field name="color_button_hover">244,212,44</field>
+        <field name="color_button_text">70,70,71</field>
+        <field name="color_button_text_hover">70,70,71</field>
+        <field name="color_button_text_inverted">177,204,52</field>
+        <field name="color_button_text_inverted_hover">244,212,44</field>
+    </record>
+
+    <record id="ce_default_cm_map" model="cm.map">
+        <field name="name">Comunitats</field>
+        <field name="slug_id">comunitats</field>
+        <field name="crowdfunding_type">none</field>
+        <field name="tile_style">osm</field>
+        <field name="colorschema_id" ref="ce.ce_default_cm_color_schema"/>
+        <field name="privacy_link">https://somcomunitats.coop/avis-legal/</field>
+        <field name="cookies_link">https://somcomunitats.coop/politica-de-cookies/</field>
+        <field name="show_progress_on_marker">False</field>
+        <field name="show_no_opacity_marker">False</field>
+        <field name="allow_filter_by_status">False</field>
+        <field name="allow_filter_by_category">True</field>
+        <field name="allow_filter_by_filter">True</field>
+        <field name="allow_filter_by_crowdfunding">False</field>
+        <field name="categories_filter_title">Categories title</field>
+        <field name="proposal_cta_title">Proposals title</field>
+
+        <!--
+        <field name="place_ids"></field>
+        <field name="submission_ok_message"></field>
+        <field name="submission_ok_email_template_id"></field>
+        <field name="crowdfunding_notification_request_ids"></field>
+        <field name="has_proposal"></field>
+        <field name="proposal_form_title"></field>
+        <field name="proposal_form_subtitle_step_category"></field>
+        <field name="proposal_form_subtitle_step_address"></field>
+        <field name="proposal_form_subtitle_step_form"></field>
+        <field name="proposal_form_model_id"></field>
+        -->
+    </record>
+
+    <record id="ce_cm_place_category_active" model="cm.place.category">
+        <field name="name">Activa</field>
+        <field name="icon">bolt</field>
+        <field name="color">brand</field>
+        <field name="slug_id">ce-activa</field>
+        <field name="allowed_in_map_mids" eval="[(4, ref('ce.ce_default_cm_map'))]"/>
+        <!-- 
+        <field name="description"></field>
+        <field name="proposal_form_model_id"></field>
+        <field name="submission_ok_message"></field>
+        <field name="submission_ok_email_template_id"></field>
+        -->
+    </record>
+    <record id="ce_cm_place_category_building" model="cm.place.category">
+        <field name="name">En construcció</field>
+        <field name="icon">bolt</field>
+        <field name="color">yellow</field>
+        <field name="slug_id">ce-en-construccio</field>
+        <field name="allowed_in_map_mids" eval="[(4, ref('ce.ce_default_cm_map'))]"/>
+        <!-- 
+        <field name="description"></field>
+        <field name="proposal_form_model_id"></field>
+        <field name="submission_ok_message"></field>
+        <field name="submission_ok_email_template_id"></field>
+        -->
+
+    </record>
+    <record id="ce_cm_filter_group_running_energetic_action" model="cm.filter.group">
+        <field name="name">Per acció energètica en curs</field>
+        <field name="slug_id">per-accio-energetica-en-curs</field>
+        <field name="allowed_in_map_mids" eval="[(4, ref('ce.ce_default_cm_map'))]"/>
+        <!--
+            <field name="filter_ids" eval="[]"/>
+        -->
+    </record>
+
+    <record id="ce_cm_filter_community_renewal_generation" model="cm.filter">
+        <field name="name">Generació renovable comunitaria</field>
+        <field name="slug_id">generacio-renovable-comunitaria</field>
+        <field name="icon">solar_panel</field>
+        <field name="color">black</field>
+        <field name="filter_group_id" ref="ce.ce_cm_filter_group_running_energetic_action"/>
+        <!-- 
+            <field name="description"></field>
+            <field name="places_mids"></field>
+        -->
+    </record>
+
+    <record id="ce_cm_filter_sustainable_mobility" model="cm.filter">
+        <field name="name">Mobilitat sostenible</field>
+        <field name="slug_id">mobilitat-sostenible</field>
+        <field name="icon">car_on</field>
+        <field name="color">black</field>
+        <field name="filter_group_id" ref="ce.ce_cm_filter_group_running_energetic_action"/>
+        <!-- 
+            <field name="description"></field>
+            <field name="places_mids"></field>
+        -->
+    </record>
+
+    <record id="ce_cm_filter_energetic_eficiency" model="cm.filter">
+        <field name="name">Eficiencia energètica</field>
+        <field name="slug_id">eficiencia-energetica</field>
+        <field name="icon">lightbulb</field>
+        <field name="color">black</field>
+        <field name="filter_group_id" ref="ce.ce_cm_filter_group_running_energetic_action"/>
+        <!-- 
+            <field name="description"></field>
+            <field name="places_mids"></field>
+        -->
+    </record>
+
+    <record id="ce_cm_filter_citizen_education" model="cm.filter">
+        <field name="name">Formació ciutadana</field>
+        <field name="slug_id">formacio-ciutadana</field>
+        <field name="icon">book_open_reader</field>
+        <field name="color">black</field>
+        <field name="filter_group_id" ref="ce.ce_cm_filter_group_running_energetic_action"/>
+        <!-- 
+            <field name="description"></field>
+            <field name="places_mids"></field>
+        -->
+    </record>
+
+    <record id="ce_cm_filter_thermical_energy" model="cm.filter">
+        <field name="name">Energia tèrmica i climatització</field>
+        <field name="slug_id">energia-termica-i-climatitzacio</field>
+        <field name="icon">house_fire</field>
+        <field name="color">black</field>
+        <field name="filter_group_id" ref="ce.ce_cm_filter_group_running_energetic_action"/>
+        <!-- 
+            <field name="description"></field>
+            <field name="places_mids"></field>
+        -->
+    </record>
+
+    <record id="ce_cm_filter_collective_purchase" model="cm.filter">
+        <field name="name">Compres col·lectives</field>
+        <field name="slug_id">compres-col-lectives</field>
+        <field name="icon">basket_shopping</field>
+        <field name="color">black</field>
+        <field name="filter_group_id" ref="ce.ce_cm_filter_group_running_energetic_action"/>
+        <!-- 
+            <field name="description"></field>
+            <field name="places_mids"></field>
+        -->
+    </record>
+
+    <record id="ce_cm_filter_renewal_energy_supply" model="cm.filter">
+        <field name="name">Subministrament d'energia 100% renovable</field>
+        <field name="slug_id">subministrament-d-energia-100-renovable</field>
+        <field name="icon">leaf</field>
+        <field name="color">black</field>
+        <field name="filter_group_id" ref="ce.ce_cm_filter_group_running_energetic_action"/>
+        <!-- 
+            <field name="description"></field>
+            <field name="places_mids"></field>
+        -->
+    </record>
+
+    <record id="ce_cm_filter_demand_flexibility_and_aggregation" model="cm.filter">
+        <field name="name">Agregació i flexibilitat de la demanda</field>
+        <field name="slug_id">agregacio-i-flexibilitat-de-la-demanda</field>
+        <field name="icon">chart_column</field>
+        <field name="color">black</field>
+        <field name="filter_group_id" ref="ce.ce_cm_filter_group_running_energetic_action"/>
+        <!-- 
+            <field name="description"></field>
+            <field name="places_mids"></field>
+        -->
+    </record>
+
+    <record id="ce_cm_form_model_into_community_registration" model="cm.form.model">
+        <field name="name">CE: Formulari inscripció a CE</field>
+        <field name="slug_id">ce-formulari-inscripcio-a-ce</field>
+        <field name="cta_label">Inscriu-t'he</field>
+        <field name="button_label">Enviar</field>
+        <field name="submission_ok_message">Gràcies per la teva participació</field>
+        <field name="generate_submission_in_proposal">False</field>
+        <field name="json_initial_data">{"name": "John Doe", "vegetarian": false,"birthDate": "1985-06-02", "personalData": {"age": 34}, "postalCode": "12345"}</field>
+        <field name="json_schema">{
+"type": "object",
+"properties": {
+    "name": {
+        "type": "string",
+        "minLength": 3,
+        "description": "Please enter your name"
+    },
+    "vegetarian": {
+        "type": "boolean"
+    },
+    "birthDate": {
+        "type": "string",
+        "format": "date"
+    },
+    "nationality": {
+        "type": "string",
+        "enum": ["DE","IT","JP","US","RU","Other"]
+    },
+    "personalData": {
+        "type": "object",
+        "properties": {
+            "age": {
+                "type": "integer",
+                "description": "Please enter your age."
+            },
+            "height": {
+                "type": "number"
+            },
+            "drivingSkill": {
+                "type": "number",
+                "maximum": 10,
+                "minimum": 1,
+                "default": 7
+            }
+        },
+        "required": ["age","height"]
+    },
+    "occupation": {"type": "string"},
+    "postalCode": {"type": "string","maxLength": 5}
+},
+"required": ["occupation","nationality"]
+}</field>
+        <field name="json_uischema">{
+"type": "VerticalLayout",
+"elements": [
+    {
+        "type": "Control",
+        "label": "Name",
+        "scope": "#/properties/name"
+    },
+    {
+        "type": "Control",
+        "label": "Birth Date",
+        "scope": "#/properties/birthDate"
+    }
+]
+}</field>
+        <field name="json_submission_fields_map">{}</field>
+        <field name="json_place_proposal_submission_fields_map">{}</field>
+        <field name="json_place_proposal_fields_map">{}</field>
+        <field name="allowed_in_map_mids" eval="[(4, ref('ce.ce_default_cm_map'))]"/>
+        <!-- 
+            <field name="description"></field>
+            <field name="submission_ok_email_template_id"></field>
+            <field name="follower_partner_id"></field>
+        -->
+    </record>
+
+    <record id="ce_cm_presenter_model_community" model="cm.presenter.model">
+        <field name="name">CE Presenter</field>
+        <field name="allowed_in_map_mids" eval="[(4, ref('ce.ce_default_cm_map'))]"/>
+        <field name="json_dataschema">{
+"p_description": "&lt;p class='m-2'&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt, velit quis volutpat placerat, nisl ex sodales nisi, et consectetur arcu quam vel nisi. Vestibulum rutrum eu massa in interdum. Suspendisse potenti. Donec vehicula elit et mi accumsan, in sagittis mauris pellentesque nullam.&lt;/p&gt;",
+"p_status":"&lt;h4&gt;Estat:&lt;/h4&gt;&lt;label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'&gt;&lt;div class='flex md:items-center pb-2'&gt;&lt;div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10 {{category_data.color.bg}} {{category_data.color.border}}'&gt;&lt;div class='{{category_data.color.bg}} overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border {{category_data.color.border}}'&gt;&lt;div class='z-0 rounded-full absolute inset-0 bg-opacity-10 {{category_data.color.bg}}'&gt;&lt;/div&gt;&lt;div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0 {{category_data.color.bg}}'&gt;&lt;/div&gt;&lt;i class='relative z-20 fas fa-{{category_data.icon_class}} text-base {{category_data.color.text}}'&gt;&lt;/i&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='flex-0 flex sm:flex-col ml-2 flex-row items-center sm:items-start'&gt;&lt;div class='text-sm text-gray-800 cursor-pointer sm:font-medium text-xs sm:text-sm'&gt;{{category_data.title}}&lt;/div&gt;&lt;span class='text-xs text-gray-500 hidden sm:block'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/label&gt;",
+"p_categories":"&lt;h4&gt;Acció energètica en curs:&lt;/h4&gt;{% for filter in filters_data %}&lt;div class='pb=4'&gt;&lt;label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'&gt;&lt;div class='flex md:items-center pb-2'&gt;&lt;div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10 {{filter.color.bg}} {{filter.color.border}}'&gt;&lt;div class='{{filter.color.bg}} overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border {{filter.color.border}}'&gt;&lt;div class='z-0 rounded-full absolute inset-0 bg-opacity-10 {{filter.color.bg}}'&gt;&lt;/div&gt;&lt;div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0 {{filter.color.bg}}'&gt;&lt;/div&gt;&lt;i class='relative z-20 fas fa-{{filter.icon_class}} text-base {{filter.color.text}}'&gt;&lt;/i&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='flex-0 flex sm:flex-col ml-2 flex-row items-center sm:items-start'&gt;&lt;div class='text-sm text-gray-800 cursor-pointer sm:font-medium text-xs sm:text-sm'&gt;{{filter.title}}&lt;/div&gt;&lt;span class='text-xs text-gray-500 hidden sm:block'&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/label&gt;{% endfor %}&lt;/div&gt;"
+}</field>
+        <field name="json_schema">{
+"type":"object",
+"properties":{
+    "p_description": { "type": "string", "format": "markdown" },
+    "p_status": { "type": "string", "format": "markdown" },
+    "p_categories": {"type": "string", "format": "markdown"}
+    }
+}</field>
+        <field name="json_uischema">{
+"type":"VerticalLayout",
+"elements": [
+    {
+        "type": "Display",
+        "scope": "#/properties/p_description"
+    },
+    {
+        "type": "Display",
+        "scope": "#/properties/p_status"
+    },
+    {
+        "type": "Display",
+        "scope": "#/properties/p_categories"
+    }
+]
+}</field>
+    </record>
+
+    <record id="ce_default_cm_map" model="cm.map">
+        <field name="allowed_place_category_mids" 
+            eval="[(4, ref('ce.ce_cm_place_category_active')),(4, ref('ce.ce_cm_place_category_building'))]" />
+        <field name="allowed_filter_group_mids" 
+            eval="[(4, ref('ce.ce_cm_filter_group_running_energetic_action'))]"/>
+        <field name="allowed_form_model_mids" 
+            eval="[(4, ref('ce.ce_cm_form_model_into_community_registration'))]"/>
+        <field name="allowed_presenter_model_mids" 
+            eval="[(4, ref('ce.ce_cm_presenter_model_community'))]"/>
+        <field name="allowed_place_category_inproposal_mids" 
+            eval="[(4, ref('ce.ce_cm_place_category_active'))]" />
+    </record>
+
+</odoo>
