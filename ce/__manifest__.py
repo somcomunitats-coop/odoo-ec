@@ -10,6 +10,7 @@
         'base_user_role',
         'auth_api_key',
         'crm',
+        'community_maps',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
     'website': 'https://somenergia.coop',
