@@ -73,6 +73,7 @@ S_PROFILE_RETURN_GET = {
             },
             "odoo_res_users_id": {"type": "integer"},
             "odoo_res_partner_id": {"type": "integer"},
+            "rol": {"type": "string"},
         }
     }
 }
@@ -87,6 +88,7 @@ S_COMMUNITY_MEMBER = {
     "name": {"type": "string", "required": True, "empty": False},
     "rol": {"type": "string", "required": True},
     "email": {"type": "string", "required": True},
+    "keycloak_id": {"type": "string"},
 }
 
 S_COMMUNITY_MEMBERS_RETURN_GET = {

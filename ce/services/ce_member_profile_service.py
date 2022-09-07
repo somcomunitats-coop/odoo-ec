@@ -96,6 +96,7 @@ class MemberProfileService(Component):
                 "iban": bank and bank.acc_number or "",
                 "sepa_accepted": sepa_mandate
             },
+            "rol": user.ce_role or "",
         }}
 
     def _get_profile_objs(self, _keycloak_id):
