@@ -9,3 +9,4 @@ from . import product
 from . import utm_source
 from . import crm_lead
 from . import keycloak_sync_wiz
+from . import cm_place

@@ -40,6 +40,7 @@
         'views/utm_views.xml',
         'views/menus.xml',
         'views/res_users.xml',
+        'views/cm_place.xml',
     ],
     'installable': True,
     'application': True,
