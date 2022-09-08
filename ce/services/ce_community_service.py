@@ -45,6 +45,7 @@ class CommunityService(Component):
             resp['members'].append({
                 "name": '{} {}'.format(user.firstname,user.lastname,),
                 "rol": user.ce_role or "",
-                "email": user.email or ""
+                "email": user.email or "",
+                "keycloak_id": user.oauth_uid,
             })
         return resp
