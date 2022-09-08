@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="view_place_tree_ce" model="ir.ui.view">
+            <field name="name">cm.place.tree</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="community_maps.view_place_tree"/>
+            <field name="arch" type="xml">
+                <field name="map_id" position="before">
+                    <field name="community_company_id" 
+                        attrs="{'invisible': [('team_type', 'not in', ['map_place','map_place_proposal'])]}" />
+                </field>
+            </field>
+        </record>
+        <record id="view_place_form_ce" model="ir.ui.view">
+            <field name="name">cm.place.form</field>
+            <field name="model">crm.team</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="community_maps.view_place_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='team_type']" position="before">
+                    <field name="community_company_id" 
+                        attrs="{'invisible': [('team_type', 'not in', ['map_place','map_place_proposal'])]}" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>  
