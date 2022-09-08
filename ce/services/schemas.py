@@ -73,7 +73,7 @@ S_PROFILE_RETURN_GET = {
             },
             "odoo_res_users_id": {"type": "integer"},
             "odoo_res_partner_id": {"type": "integer"},
-            "rol": {"type": "string"},
+            "role": {"type": "string"},
         }
     }
 }
