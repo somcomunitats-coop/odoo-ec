@@ -89,6 +89,7 @@ S_COMMUNITY_MEMBER = {
     "rol": {"type": "string", "required": True},
     "email": {"type": "string", "required": True},
     "keycloak_id": {"type": "string"},
+    "keycloak_id": {"type": "string"},
 }
 
 S_COMMUNITY_MEMBERS_RETURN_GET = {
