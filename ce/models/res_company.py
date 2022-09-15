@@ -8,8 +8,6 @@ class ResCompany(models.Model):
     # when OVor WP are doing API calls to Odoo will use odoo_cempany_id = -1 in order to refer to the 'Coordinadora' one
     API_PARAM_ID_VALUE_FOR_COORDINADORA = -1
 
-    # overrided fields
-    vat = fields.Char(related='partner_id.vat', string="Tax ID", readonly=False, required=True)
     # new fields
     kc_realm = fields.Char(string='KeyCloak realm name')
 
