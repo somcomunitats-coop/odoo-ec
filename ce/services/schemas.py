@@ -79,7 +79,7 @@ S_PROFILE_RETURN_GET = {
 }
 
 S_PROFILE_PUT = {
-    "lang": {"type": "string", "required": True, "empty": False}
+    "language": {"type": "string", "required": True, "empty": False}
 }
 
 S_PROFILE_RETURN_PUT = S_PROFILE_RETURN_GET
