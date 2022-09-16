@@ -40,16 +40,16 @@ class MemberProfileService(Component):
         active_langs = self.env['res.lang'].search([('active','=', True)])
         active_code_langs = [l.code.split('_')[0] for l in active_langs]
 
-        if params.get('lang').lower() not in active_code_langs:
+        if params.get('language').lower() not in active_code_langs:
             raise wrapJsonException(
                 BadRequest(),
                 include_description=False,
                 extra_info={'message': _("This language code %s is not active in Odoo. Active ones: %s") % (
-                    params.get('lang').lower(),
+                    params.get('language').lower(),
                     str(active_code_langs))}
             )
 
-        target_lang = [l for l in active_langs if l.code.split('_')[0] == params.get('lang').lower()][0]
+        target_lang = [l for l in active_langs if l.code.split('_')[0] == params.get('language').lower()][0]
         if partner.lang != target_lang.code:
             partner.sudo().write({'lang':target_lang.code})
 
