@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<odoo noupdate="1">
-
+<odoo>
+    <data noupdate="1">
     <record id="ce_default_cm_color_schema" model="cm.map.colorschema">
         <field name="name">Communities Color Schema</field>
         <field name="color_text_base">70,70,71</field>
@@ -301,5 +301,5 @@
         <field name="allowed_place_category_inproposal_mids" 
             eval="[(4, ref('ce.ce_cm_place_category_active'))]" />
     </record>
-
+    </data>
 </odoo>
