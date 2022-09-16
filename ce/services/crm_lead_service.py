@@ -61,11 +61,12 @@ class CRMLeadService(Component):
         }
 
     def _prepare_create(self, params):
-        return {
+
+        vals = {
             "name": params.get("partner_name"),
-            "partner_address_name": params.get("partner_name"),
-            "partner_address_email": params.get("partner_email"),
-            "partner_address_phone": params.get("partner_phone"),
+            "contact_name": params.get("partner_name"),
+            "email_from": params.get("partner_email"),
+            "phone": params.get("partner_phone"),
             "street": params.get("partner_full_address"),
             "city": params.get("partner_city"),
             "zip": params.get("partner_zip"),
@@ -73,3 +74,8 @@ class CRMLeadService(Component):
             "source_id": params.get("source_xml_id"),
             "tag_ids": [(6, 0, params.get("tag_ids", []))],
         }
+
+        if params.get("partner_phone", False) and params.get("partner_phone").strip()[:1] in ('6','7'):
+            vals['mobile'] = params.get("partner_phone")
+
+        return vals
