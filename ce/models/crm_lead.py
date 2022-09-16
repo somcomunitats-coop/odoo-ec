@@ -43,8 +43,9 @@ class CrmLead(models.Model):
 
             # read metadata key/value pairs
             m_dict = {m.key: m.value for m in lead.form_submission_metadata_ids}
-            if m_dict.get('legal_state',False) and m_dict['legal_state']:
-                if m_dict['legal_state'] == 'active':
+
+            if m_dict.get('partner_legal_state',False) and m_dict['partner_legal_state']:
+                if m_dict['partner_legal_state'] == 'active':
                     place_creation_data['place_category_id'] = active_categ_id
                 else:
                     place_creation_data['place_category_id'] = building_categ_id
@@ -52,14 +53,14 @@ class CrmLead(models.Model):
                 raise UserError(
                     _("Unable to get the Category (mandatory map place field) from Lead {}").format(lead.name))
 
-            if m_dict.get('latitude',False) and m_dict['latitude']:
-                place_creation_data['lat'] = m_dict['latitude']
+            if m_dict.get('partner_latitude',False) and m_dict['partner_latitude']:
+                place_creation_data['lat'] = m_dict['partner_latitude']
             else:
                 raise UserError(
                     _("Unable to get the Latitude (mandatory map place field) from Lead {}").format(lead.name))
 
-            if m_dict.get('longitude',False) and m_dict['longitude']:
-                place_creation_data['lng'] = m_dict['longitude']
+            if m_dict.get('partner_longitude',False) and m_dict['partner_longitude']:
+                place_creation_data['lng'] = m_dict['partner_longitude']
             else:
                 raise UserError(
                     _("Unable to get the Longitude (mandatory map place field) from Lead {}").format(lead.name))
@@ -98,7 +99,7 @@ class CrmLead(models.Model):
         self.ensure_one()
 
         ret = ''
-        meta_address_txt = [meta.value for meta in self.form_submission_metadata_ids if meta.key == 'address_txt']
+        meta_address_txt = [meta.value for meta in self.form_submission_metadata_ids if meta.key == 'partner_full_address']
 
         if self.street and (self.city or self.zip):
             ret ="{}{}. {}{}".format(
