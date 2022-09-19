@@ -1,6 +1,8 @@
 from email.policy import default
 from odoo import api, models, fields, _
 import re
+from odoo.exceptions import UserError
+from slugify import slugify
 
 class ResCompany(models.Model):
     _inherit = 'res.company'
@@ -47,3 +49,52 @@ class ResCompany(models.Model):
         domains_dict = {'in_kc_and_active': [('company_id','=',self.id),('oauth_uid','!=',None),('active','=',True)]}
         members = self.env['res.users'].sudo().search(domains_dict['in_kc_and_active'])
         return members
+
+    @api.model
+    def _is_not_unique(self, vals):
+
+        # check for VAT
+        if vals.get('vat', False) and vals.get('vat'):
+            sanit_vat = re.sub(r"[^a-zA-Z0-9]","",vals['vat']).lower()
+            if sanit_vat in [re.sub(r"[^a-zA-Z0-9]","",c.vat).lower() for c in self.search([]) if c.vat]:
+                raise UserError(
+                    _("Unable to create new company because there is an allready existing company with this VAT number: {}").format(vals['vat']))
+
+        # check for name
+        if vals.get('name', False) and vals.get('name'):
+            sanit_name = slugify(vals['name'])
+            if sanit_name in [slugify(c.name) for c in self.search([]) if c.name]:
+                raise UserError(
+                    _("Unable to create new company because there is an allready existing company with this NAME: {}").format(vals['name']))
+
+
+    @api.model
+    def create(self,vals):
+
+        # check that we are not creating duplicate companies by vat or by name
+        self._is_not_unique(vals)
+
+        new_company = super(ResCompany,self).create(vals)
+
+        return new_company
+
+    @api.multi
+    def _community_post_company_creation_tasks(self):
+        """ Do post company creation tasks that are specific for the CCEE project"""
+        self.ensure_one()
+        pass
+
+    @api.multi
+    def _create_keycloak_realm(self):
+        self.ensure_one()
+        pass
+
+    @api.multi
+    def _community_post_keycloak_creation_tasks(self):
+        """ Do post Kaykoac Realm creation tasks"""
+        self.ensure_one()
+        pass
+
+
+
+    
