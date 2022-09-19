@@ -19,6 +19,7 @@
 		<field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
 		<field name="arch" type="xml">
 			<field name="tag_ids" position="after">
+				<field name="ce_tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" attrs="{'invisible':[('source_id', '!=', %(ce.ce_source_creation_ce_proposal)d)]}"/>
 				<field name="source_id" />
 				<field name="community_company_id" readonly="1"/>
 			</field>
