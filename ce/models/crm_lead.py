@@ -19,8 +19,19 @@ class CrmLead(models.Model):
 
     lang = fields.Char(string="Language")
 
+    community_company_id = fields.Many2one(
+        string='Related Community',
+        comodel_name='res.company',
+        domain="[('coordinator','!=',True)]",
+        help="Community related to this Lead"
+    )
+
     @api.multi
     def _create_map_place_proposal(self):
+
+        if not self.env.user.company_id.coordinator:
+            raise UserError(
+                _("Only users that belongs to the 'Coordinator' company can create new Map Places from Leads."))
 
         active_categ_id = self.env['ir.model.data'].get_object_reference('ce', 'ce_cm_place_category_active')[1]
         building_categ_id = self.env['ir.model.data'].get_object_reference('ce', 'ce_cm_place_category_building')[1]
@@ -28,6 +39,11 @@ class CrmLead(models.Model):
         creation_ce_source_id = self.env['ir.model.data'].get_object_reference('ce', 'ce_source_creation_ce_proposal')[1]
 
         for lead in self:
+
+
+            if self.env['crm.team'].search([('proposal_form_submission_id','=',lead.id), ('map_id','=',default_ce_map_id)]):
+                raise UserError(
+                    _("There is an allready existing Map Place related to this Lead: {}.").format(lead.name))
 
             if not lead.source_id or lead.source_id.id != creation_ce_source_id:
                 raise UserError(
@@ -51,19 +67,19 @@ class CrmLead(models.Model):
                     place_creation_data['place_category_id'] = building_categ_id
             else:
                 raise UserError(
-                    _("Unable to get the Category (mandatory map place field) from Lead {}").format(lead.name))
+                    _("Unable to get the Category (mandatory map place field) from Lead: {}").format(lead.name))
 
             if m_dict.get('partner_latitude',False) and m_dict['partner_latitude']:
                 place_creation_data['lat'] = m_dict['partner_latitude']
             else:
                 raise UserError(
-                    _("Unable to get the Latitude (mandatory map place field) from Lead {}").format(lead.name))
+                    _("Unable to get the Latitude (mandatory map place field) from Lead: {}").format(lead.name))
 
             if m_dict.get('partner_longitude',False) and m_dict['partner_longitude']:
                 place_creation_data['lng'] = m_dict['partner_longitude']
             else:
                 raise UserError(
-                    _("Unable to get the Longitude (mandatory map place field) from Lead {}").format(lead.name))
+                    _("Unable to get the Longitude (mandatory map place field) from Lead: {}").format(lead.name))
 
             place_creation_data['address_txt'] = lead._get_address_txt() or None
             place_creation_data['filter_mids'] = [(6,0,lead._get_cmfilter_ids())]
@@ -118,6 +134,76 @@ class CrmLead(models.Model):
 
     @api.multi
     def _build_community_company(self):
+
+        if not self.env.user.company_id.coordinator:
+            raise UserError(
+                _("Only users that belongs to the 'Coordinator' company can create new Companies from Leads."))
+
+        creation_ce_source_id = self.env['ir.model.data'].get_object_reference('ce', 'ce_source_creation_ce_proposal')[1]
+
+        # build company for each Lead
+        for lead in self:
+
+            if not lead.source_id or lead.source_id.id != creation_ce_source_id:
+                raise UserError(
+                    _("The Source {} of Lead {} do not allow the creation of new Companies").format(lead.source_id.name, lead.name))
+
+            if not lead.community_company_id:
+                # Create the new company using very basic starting Data
+                company = self.env['res.company'].create(lead._get_company_create_vals())
+
+                # Update Lead & Map Place (if exist) fields accordingly
+                lead.community_company_id = company.id
+                if lead.team_id and lead.team_type == 'map_place_proposal':
+                    lead.team_id.community_company_id = company.id
+
+                # Do post creation specific CCEE tasks
+                company._community_post_company_creation_tasks()
+
+        # we need to do this commit before proceed to call KeyCloak API calls to build the related KC realms
+        self._cr.commit()
+
+        # build keyKloac realm for each new existing new company
+        for lead in self:
+            if lead.community_company_id:
+                lead.community_company_id._create_keycloak_realm()
+                lead.community_company_id._community_post_keycloak_creation_tasks()
+
+    @api.multi
+    def _get_company_create_vals(self):
+        self.ensure_one()
+        m_dict = {m.key: m.value for m in self.form_submission_metadata_ids}
+        create_vals = {
+                'name': self.name,
+                'street': self.street,
+                'street2': self.street2,
+                'city':self.city,
+                'zip': self.zip,
+                'state_id': self.state_id.id,
+                'country_id': self.country_id.id,
+                'website': self.website,
+                'phone': self.phone,
+                'email': self.email_from or (m_dict.get('contact_email',False) and m_dict['contact_email']) or None,
+                'vat': m_dict.get('partner_vat',False) and m_dict['partner_vat'] or None,
+                'social_twitter': m_dict.get('partner_twitter',False) and m_dict['partner_twitter'] or None,
+                'social_facebook': m_dict.get('partner_facebook',False) and m_dict['partner_facebook'] or None,
+                'social_instagram': m_dict.get('partner_instagram',False) and m_dict['partner_instagram'] or None,
+                'create_user': True,
+            }
+        return create_vals
+
+
+    @api.multi
+    def _create_keycloak_realm(self):
+        for lead in self:
+            if not lead.community_company_id:
+                raise UserError(
+                    _("Unable to create the KeyCloack entities from Lead: {}, because it is not yet related to any Community company").format(lead.name))
+            lead.community_company_id._create_keycloak_realm()
+
+
+    @api.multi
+    def _create_community_initial_users(self):
         for lead in self:
             pass
 
