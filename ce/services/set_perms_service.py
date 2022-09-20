@@ -80,7 +80,8 @@ class PermsService(Component):
         try:
             RoleSudo = self.env['res.users.role'].sudo(user.id)
             if target_user.role_ids:
-                target_user.role_line_ids.unlink()
+                import pudb; pu.db
+                target_user.role_line_ids.unlink(groups_map.values())
             new_role_record = RoleSudo.browse(int(groups_map[new_role]))
             ret_value = new_role_record.write({'users': [(4, target_user.id)]})
             target_user.role_line_ids.create(
@@ -108,3 +109,7 @@ class PermsService(Component):
 
     def _validator_return_set_perms(self):
         return schemas.S_SET_PERMS_REQUEST_RETURN
+
+    def _check_admin_exist(self):
+        return 
+
