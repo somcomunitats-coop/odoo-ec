@@ -49,6 +49,9 @@ class CRMLeadService(Component):
         return self._to_dict(sr)
 
     def _validator_create(self):
+        source = self.work.request.params.get('source_xml_id', False)
+        if source == 'ce_source_creation_ce_proposal':
+            return schemas.S_CRM_LEAD_CREATE_ALTA_CE
         return schemas.S_CRM_LEAD_CREATE
 
     def _validator_return_create(self):
@@ -64,17 +67,31 @@ class CRMLeadService(Component):
 
         vals = {
             "name": params.get("partner_name"),
-            "contact_name": params.get("partner_name"),
+            "description": params.get("partner_description"),
+            "street": params.get("partner_full_address"),
+            "zip": params.get("partner_zip"),
+            "city": params.get("partner_city"),
             "email_from": params.get("partner_email"),
             "phone": params.get("partner_phone"),
-            "street": params.get("partner_full_address"),
-            "city": params.get("partner_city"),
-            "zip": params.get("partner_zip"),
+            "cm_form_submission_metadata": {
+                "partner_qty_members": params.get("partner_qty_members"),
+                "partner_legal_state": params.get("partner_legal_state"),
+                "partner_foundation_date": params.get("partner_foundation_date"),
+                "partner_vat": params.get("partner_vat"),
+                "partner_comments": params.get("partner_comments"),
+                "partner_state": params.get("partner_state"),#canvis
+                "partner_firstname": params.get("partner_firstname"),#canvis
+                "partner_lastname": params.get("partner_lastname"),#canvis
+                "contact_email": params.get("partner_email"),
+                "contact2_firstname": params.get("contact2_firstname"),
+                "contact2_lastname": params.get("contact2_lastname"),
+                "contact2_email": params.get("contact2_email"),
+                "contact2_mobile": params.get("contact2_mobile"),
+            },
+            "tag_ids": [(6, 0, params.get("tag_ids", []))],
             "company_id": params.get("odoo_company_id"),
             "source_id": params.get("source_xml_id"),
-            "tag_ids": [(6, 0, params.get("tag_ids", []))],
         }
-
         if params.get("partner_phone", False) and params.get("partner_phone").strip()[:1] in ('6','7'):
             vals['mobile'] = params.get("partner_phone")
 
