@@ -1,5 +1,6 @@
 from email.policy import default
 from odoo import api, models, fields, _
+from datetime import datetime
 import re
 from odoo.exceptions import UserError
 from slugify import slugify
@@ -84,7 +85,6 @@ class ResCompany(models.Model):
         self.ensure_one()
 
         # [1] Set res.config.settings params that are company dependants
-
         # TODO choose the proper one depending of the legaol type of the new company
         pyme_char_template_id =  self.env['ir.model.data'].get_object_reference('l10n_es', 'account_chart_template_pymes')[1]
         #assoc_char_template_id =  self.env['ir.model.data'].get_object_reference('l10n_es', 'account_chart_template_assoc')[1]
@@ -99,10 +99,10 @@ class ResCompany(models.Model):
             'kc_realm': str(self.id),
             })
         rcs_sudo_id.execute()
+        user.company_id = user_active_company_id
 
         # [2] Create new Sequences and Subscription Journal
-        #default_subs_acc_jour_seq = self.env.ref('easy_my_coop.sequence_subscription_journal')
-        subs_acc_jour_seq = self.env['ir.sequence'].sudo(user).create({
+        subs_acc_jour_seq = self.env['ir.sequence'].sudo().create({
             'name': 'Account Subscription Journal Sequence',
             'padding': 3,
             'prefix': 'SUBJ/%(year)s/',
@@ -110,9 +110,13 @@ class ResCompany(models.Model):
             'number next': 1,
             'number_increment': 1,
             'company_id': self.id,
+            'date_range_ids': [(0,0,{
+                'date_from':'{}-01-01'.format(datetime.now().year),
+                'date_to': '{}-12-31'.format(datetime.now().year),
+                'number_next':1,
+                'number_next_actual':1})]
         })
-
-        subs_acc_jour = self.env['account.journal'].sudo(user).create({
+        subs_acc_jour = self.env['account.journal'].sudo().create({
             'name': 'Account Subscription Journal',
             'invoice_sequence_id': subs_acc_jour_seq.id,
             'type': 'sale',
@@ -121,23 +125,21 @@ class ResCompany(models.Model):
             'company_id': self.id,
             })
 
-        self.sudo(user).cooperator_journal = subs_acc_jour.id
+        self.sudo().cooperator_journal = subs_acc_jour.id
 
         # [3] update several accounts
         xml_id_4400 = "{}_{}".format(self.id, 'account_common_4400') # 440000 | Deudores (euros)
-        account_4400_id = self.env['ir.model.data'].get_object_reference('l10n_es', xml_id_4400)[1]
-        self.sudo(user).property_cooperator_account = account_4400_id
+        account_4400_id = self.env['ir.model.data'].sudo().get_object_reference('l10n_es', xml_id_4400)[1]
+
+        self.sudo().property_cooperator_account = account_4400_id
 
         xml_id_7000 = "{}_{}".format(self.id, 'account_common_7000') # 700000 | Ventas de mercaderías en España
         account_7000_id = self.env['ir.model.data'].get_object_reference('l10n_es', xml_id_7000)[1]
-        self.env.ref('easy_my_coop.product_category_company_share').sudo(user).property_account_income_categ_id = account_7000_id
+        self.env.ref('easy_my_coop.product_category_company_share').sudo().property_account_income_categ_id = account_7000_id
 
         xml_id_600 = "{}_{}".format(self.id, 'account_common_600') # 600000 | Ventas de mercaderías en España
         account_600_id = self.env['ir.model.data'].get_object_reference('l10n_es', xml_id_600)[1]
-        self.env.ref('easy_my_coop.product_category_company_share').sudo(user).property_account_expense_categ_id = account_600_id
-
-        # RECOVER THE ORIGINAL ACTIVE COMPANY_ID TO CURRENT USER
-        user.company_id = user_active_company_id
+        self.env.ref('easy_my_coop.product_category_company_share').sudo().property_account_expense_categ_id = account_600_id
 
     @api.multi
     def _create_keycloak_realm(self):
