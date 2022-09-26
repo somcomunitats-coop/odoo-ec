@@ -47,7 +47,7 @@ S_CRM_LEAD_CREATE_ALTA_CE = {
     "partner_city": {"type": "string", "required": True},
     "partner_state": {"type": "string", "required": True},
     "partner_qty_members": {"type": "integer", "required": True},
-    "partner_legal_state": {"type": "string", "required": True,
+    "partner_legal_state": {"type": "string",
         "check_with": ce_state_validator
     },
     "tag_ids": {
