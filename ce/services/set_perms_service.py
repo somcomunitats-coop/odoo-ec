@@ -8,6 +8,7 @@ from werkzeug.exceptions import BadRequest, NotFound
 from odoo import _
 from odoo.addons.base_rest.http import wrapJsonException
 from odoo.addons.component.core import Component
+from odoo.addons.base_rest import restapi
 from . import schemas
 
 
@@ -15,13 +16,33 @@ _logger = logging.getLogger(__name__)
 
 class PermsService(Component):
     _inherit = "base.rest.private_abstract_service"
-    _name = "ce.perms.services"
-    _usage = "perms"
+    _name = "ce.services"
+    _usage = "member"
     _description = """
-        Permission Request Services
+        CE Member roles requests
     """
 
-    def set_perms(self, **params):
+
+    @restapi.method(
+        [(["/<string:keycloak_id>"], "GET")],
+        output_param=restapi.CerberusValidator("_validator_return_get"),
+        auth="api_key",
+    )
+    def get(self, _keycloak_id):
+        user, partner, role, email = self._get_member_profile_objs(_keycloak_id)
+        return self._to_dict(user, partner, role, email)
+    
+    def _validator_return_get(self):
+        return schemas.S_MEMBER_PROFILE_RETURN_GET
+
+
+    @restapi.method(
+        [(["/<string:keycloak_id>"], "PUT")],
+        input_param=restapi.CerberusValidator("_validator_update"),
+        output_param=restapi.CerberusValidator("_validator_return_update"),
+        auth="api_key",
+    )
+    def update(self, _keycloak_id, **params):
         """
         User must be active in the company.
         "company_id"
@@ -104,12 +125,33 @@ class PermsService(Component):
             "new_role": params["new_role"],
         }
 
-    def _validator_set_perms(self):
-        return schemas.S_SET_PERMS_REQUEST_GET
+    def _validator_update(self):
+        return schemas.S_MEMBER_PROFILE_PUT
 
-    def _validator_return_set_perms(self):
-        return schemas.S_SET_PERMS_REQUEST_RETURN
+    def _validator_return_update(self):
+        return schemas.S_MEMBER_PROFILE_RETURN_PUT
+    
 
-    def _check_admin_exist(self):
-        return 
+    def _get_member_profile_objs(self, _keycloak_id):
+        user = self.env["res.users"].sudo().search([('oauth_uid','=',_keycloak_id)])
+        if not user:
+            raise wrapJsonException(
+                BadRequest(),
+                include_description=False,
+                extra_info={'message': _("No Odoo User found for KeyCloak user id %s") % _keycloak_id}
+            )
 
+        partner = user.partner_id or None
+        if not partner:
+            raise wrapJsonException(
+                BadRequest(),
+                include_description=False,
+                extra_info={'message': _("No Odoo Partner found for Odoo user with login username %s") % user.login}
+            )
+
+        import pudb; pu.db
+        role = partner or None
+
+        email = partner.email or False
+
+        return user, partner, role, email
