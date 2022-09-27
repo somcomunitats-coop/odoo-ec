@@ -1,5 +1,6 @@
 from odoo import models, api, fields, _
 from odoo.exceptions import UserError
+from datetime import datetime
 
 
 class CrmLead(models.Model):
@@ -173,6 +174,20 @@ class CrmLead(models.Model):
     def _get_company_create_vals(self):
         self.ensure_one()
         m_dict = {m.key: m.value for m in self.form_submission_metadata_ids}
+
+        foundation_date = None
+        if m_dict.get('partner_foundation_date',False) and m_dict['partner_foundation_date']:
+            date_formats = ['%Y-%m-%d','%d-%m-%Y','%Y/%m/%d','%d/%m/%Y']
+            for date_format in date_formats:
+                try:
+                    foundation_date = datetime.strptime(m_dict['partner_foundation_date'], date_format)
+                except:
+                    pass
+            if not foundation_date:
+                raise UserError(
+                    _("The Foundation Date value {} have a non valid format. It must be: yyyy-mm-dd or dd-mm-yyyy or yyyy/mm/dd or dd/mm/yyyy").format(m_dict['partner_foundation_date']))
+
+
         create_vals = {
                 'name': self.name,
                 'street': self.street,
@@ -188,7 +203,9 @@ class CrmLead(models.Model):
                 'social_twitter': m_dict.get('partner_twitter',False) and m_dict['partner_twitter'] or None,
                 'social_facebook': m_dict.get('partner_facebook',False) and m_dict['partner_facebook'] or None,
                 'social_instagram': m_dict.get('partner_instagram',False) and m_dict['partner_instagram'] or None,
+                'social_telegram': m_dict.get('partner_telegram',False) and m_dict['partner_telegram'] or None,
                 'create_user': True,
+                'foundation_date': foundation_date,
             }
         return create_vals
 
