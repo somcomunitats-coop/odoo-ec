@@ -86,7 +86,7 @@ S_PROFILE_RETURN_PUT = S_PROFILE_RETURN_GET
 
 S_COMMUNITY_MEMBER = {
     "name": {"type": "string", "required": True, "empty": False},
-    "rol": {"type": "string", "required": True},
+    "role": {"type": "string", "required": True},
     "email": {"type": "string", "required": True},
     "keycloak_id": {"type": "string"},
     "keycloak_id": {"type": "string"},
@@ -101,3 +101,41 @@ S_COMMUNITY_MEMBERS_RETURN_GET = {
         }
     }
 }
+
+S_COMMUNITY_SERVICE = {
+    "id": {"type": "integer"},
+    "name": {"type": "string"}
+}
+
+S_COMMUNITY_RETURN_GET = {
+            "id": {"type": "integer"},
+            "name": {"type": "string"},
+            "birth_date": {"type": "string"},
+            "members": {
+                "type": "list",
+                "schema": {
+                    "type": "dict",
+                    "schema": S_COMMUNITY_MEMBER
+                }
+            },
+            "contact_info": {
+                "type": "dict",
+                "schema": {
+                    "street": {"type": "string"},
+                    "postal_code": {"type": "string"},
+                    "city": {"type": "string"},
+                    "state": {"type": "string"},
+                    "country": {"type": "string"},
+                    "phone": {"type": "string"},
+                    "email": {"type": "string"},
+                    "telegram": {"type": "string"},
+                },
+            },
+            "active_services": {
+                "type": "list",
+                "schema": {
+                    "type": "dict",
+                    "schema": S_COMMUNITY_SERVICE
+                },
+            }
+        }
