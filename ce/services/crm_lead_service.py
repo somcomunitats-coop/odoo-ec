@@ -34,15 +34,20 @@ class CRMLeadService(Component):
 
         params.update({'source_xml_id': sources[params['source_xml_id']]})
 
-        for tag_id in params['tag_ids']:
-            tag_id_res = self.env['crm.lead.tag'].search([('id','=',tag_id)]).id
-            if not tag_id_res:
-                raise wrapJsonException(
-                    BadRequest(
-                        _("Tag {} not found").format(tag_id)
-                    ),
-                    include_description=True,
-                )
+        try:
+            tag_ids = params['tag_ids']
+        except:
+            tag_ids = False
+        if tag_ids:
+            for tag_id in tag_ids:
+                tag_id_res = self.env['crm.lead.tag'].search([('id','=',tag_id)]).id
+                if not tag_id_res:
+                    raise wrapJsonException(
+                        BadRequest(
+                            _("Tag {} not found").format(tag_id)
+                        ),
+                        include_description=True,
+                    )
 
         params = self._prepare_create(params)
         sr = self.env["crm.lead"].sudo().create(params)
