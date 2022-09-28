@@ -47,6 +47,13 @@ class ResCompany(models.Model):
         else:
             return self.search([('id','=',api_param_odoo_compant_id)]) or None
 
+    @api.model
+    def check_ce_has_admin(self):
+        ce_roles_map = self.env['res.users'].sudo().ce_user_roles_mapping()
+        ce_admin_key = self.env['ir.config_parameter'].sudo().get_param('ce.ck_user_group_mapped_to_odoo_group_ce_admin')
+        company_user_ids = self.env['res.users'].search([('company_id', '=', self.id)]).ids
+        admin_ids = self.env['res.users.role'].browse(ce_roles_map[ce_admin_key]).user_ids.ids
+        return any([user in admin_ids for user in company_user_ids])
 
     @api.multi
     def get_ce_members(self, domain_key='in_kc_and_active'):

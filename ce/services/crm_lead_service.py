@@ -18,6 +18,7 @@ class CRMLeadService(Component):
     """
 
     def create(self, **params):
+        import pudb; pu.db
         company_id = self.env['res.company'].get_real_ce_company_id(params['odoo_company_id']).id
         params.update({'odoo_company_id': company_id})
 

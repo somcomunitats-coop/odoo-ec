@@ -51,10 +51,13 @@ class KeycloakSyncMixin(models.AbstractModel):
                 values.update({'attributes':{'lang': odoo_user.lang},})
 
         if 'groups' in kc_data_to_update:
-            pass
-            # todo: set the proper KC group list values, depending of the current active odoo_user role
-            #ck_user_group_mapped_to_odoo_group_ce_member = ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_ce_member')
-            #values['groups'] = [ck_user_group_mapped_to_odoo_group_ce_member]
+            UserSudo = self.env['res.users'].sudo()
+            ce_roles_map = UserSudo.ce_user_roles_mapping()
+            groups_to_update = []
+            for k,v in ce_roles_map.items():
+                if v in odoo_user.role_ids.ids:
+                    groups_to_update.append(k)
+            values['groups'] = groups_to_update
 
         if 'enabled' in kc_data_to_update:
             values['enabled'] = odoo_user.active

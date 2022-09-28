@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    USER_CE_ROLES = [('role_ce_member',_('CE Member')),('role_ce_admin',_('CE Andministrator')),('role_platform_admin',_('Platform Administrator'))]
+    USER_CE_ROLES = [('role_ce_member',_('CE Member')),('role_ce_admin',_('CE Administrator')),('role_platform_admin',_('Platform Administrator'))]
 
     ce_role = fields.Selection(USER_CE_ROLES, string='CE Role', compute='_compute_ce_role')
 
@@ -106,4 +106,20 @@ class ResUsers(models.Model):
 
         return resp
 
+    @api.multi
+    def ce_user_roles_mapping(self):
+        ICPSudo = self.env['ir.config_parameter'].sudo()
+        ce_member_key = ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_ce_member')
+        ce_member_role_value = int(ICPSudo.get_param('ce.odoo_group_ce_member'))
+
+        ce_admin_key = ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_ce_admin')
+        ce_admin_role_value = int(ICPSudo.get_param('ce.odoo_group_ce_admin'))
+
+        platform_admin_key = ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_platform_admin')
+        platform_admin_role_value = int(ICPSudo.get_param('ce.odoo_group_platform_admin'))
+
+        roles_map = { ce_member_key: ce_member_role_value,
+                       ce_admin_key: ce_admin_role_value,
+                       platform_admin_key: platform_admin_role_value}
+        return roles_map
 

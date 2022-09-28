@@ -6,18 +6,6 @@ def ce_state_validator(field, value, error):
     if value and value not in ["activa", "on_construction"]:
         error(field, "Must be 'activa' or 'on_construction'")
 
-S_SET_PERMS_REQUEST_GET = {
-    "company_id": {"type": "string", "required": True},
-    "user_id": {"type": "string", "required": True},
-    "target_company_id": {"type": "string", "required": True},
-    "target_user_id": {"type": "string", "required": True},
-    "new_role": {"type": "string", "required": True},
-}
-
-S_SET_PERMS_REQUEST_RETURN = {
-    "message": {"type": "boolean", "required": True},
-}
-
 S_CRM_LEAD_RETURN_CREATE = {
     "id": {"type": "integer"},
 }
@@ -115,11 +103,30 @@ S_PROFILE_RETURN_GET = {
     }
 }
 
+S_MEMBER_PROFILE_RETURN_GET = {
+    "member": {
+        "type": "dict",
+        "schema": {
+            "keycloak_id": {"type": "string"},
+            "name": {"type": "string"},
+            "role": {"type": "string"},
+            "email": {"type": "string"},
+        }
+    }
+}
+
 S_PROFILE_PUT = {
     "language": {"type": "string", "required": True, "empty": False}
 }
 
+S_MEMBER_PROFILE_PUT = {
+    "role": {"type": "string", "required": True, "empty": False}
+}
+
 S_PROFILE_RETURN_PUT = S_PROFILE_RETURN_GET
+
+S_MEMBER_PROFILE_RETURN_PUT = S_MEMBER_PROFILE_RETURN_GET
+
 
 S_COMMUNITY_MEMBER = {
     "name": {"type": "string", "required": True, "empty": False},
