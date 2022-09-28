@@ -19,6 +19,7 @@ class CrmLead(models.Model):
     ]
 
     lang = fields.Char(string="Language")
+    ce_tag_ids = fields.Many2many('crm.lead.tag', 'crm_lead_ce_tag_rel', 'lead_id', 'tag_id', string='CE Tags', help="CE Classify and analyze categories")
 
     community_company_id = fields.Many2one(
         string='Related Community',
