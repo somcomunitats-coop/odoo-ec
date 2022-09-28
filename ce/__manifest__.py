@@ -1,6 +1,6 @@
 {
     'name': "Comunitats Energètiques customizations",
-    'version': '12.0.0.0.4',
+    'version': '12.0.0.0.5',
     'depends': [
         'base_rest_base_structure',
         'cooperator_website',
