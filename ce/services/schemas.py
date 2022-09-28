@@ -2,23 +2,9 @@ def boolean_validator(field, value, error):
     if value and value not in ["true", "false"]:
         error(field, "Must be a boolean value: true or false")
 
-<<<<<<< Updated upstream
-S_SET_PERMS_REQUEST_GET = {
-    "company_id": {"type": "string", "required": True},
-    "user_id": {"type": "string", "required": True},
-    "target_company_id": {"type": "string", "required": True},
-    "target_user_id": {"type": "string", "required": True},
-    "new_role": {"type": "string", "required": True},
-}
-
-S_SET_PERMS_REQUEST_RETURN = {
-    "message": {"type": "boolean", "required": True},
-}
-=======
 def ce_state_validator(field, value, error):
     if value and value not in ["activa", "on_construction"]:
         error(field, "Must be 'activa' or 'on_construction'")
->>>>>>> Stashed changes
 
 S_CRM_LEAD_RETURN_CREATE = {
     "id": {"type": "integer"},
