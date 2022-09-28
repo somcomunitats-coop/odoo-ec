@@ -56,6 +56,8 @@ class CrmLead(models.Model):
                 'team_type': 'map_place_proposal',
                 'user_id': self.env.user.id,
                 'proposal_form_submission_id': lead.id,
+                'interaction_method': 'external_link',
+                'external_link_target': '_top',
             }
 
             # read metadata key/value pairs
@@ -82,6 +84,12 @@ class CrmLead(models.Model):
                 raise UserError(
                     _("Unable to get the Longitude (mandatory map place field) from Lead: {}").format(lead.name))
 
+            if m_dict.get('partner_map_place_form_url',False) and m_dict['partner_map_place_form_url']:
+                place_creation_data['external_link_url'] = m_dict['partner_map_place_form_url']
+            else:
+                raise UserError(
+                    _("Unable to get the External Link URL (mandatory map place field) from Lead: {}").format(lead.name))
+
             place_creation_data['address_txt'] = lead._get_address_txt() or None
             place_creation_data['filter_mids'] = [(6,0,lead._get_cmfilter_ids())]
 
@@ -91,8 +99,14 @@ class CrmLead(models.Model):
             # is not being called on crm_team.create(). TODO: review why it happens and fix it.
             place._get_slug_id()
             place._get_config_relations_attrs()
+            place._build_presenter_metadata_ids()
 
             place.message_subscribe([self.env.user.partner_id.id])
+
+            pmnd_ids = [m for m in place.place_presenter_metadata_ids if m.key == 'p_description']
+            description_pmnd_id = pmnd_ids and pmnd_ids[0] or None
+            if description_pmnd_id and lead.description:
+                description_pmnd_id.value = "<p class='m-2'>{}</p>".format(lead.description)
 
             # lead update
             lead.write({
