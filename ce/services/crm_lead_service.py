@@ -18,7 +18,6 @@ class CRMLeadService(Component):
     """
 
     def create(self, **params):
-        import pudb; pu.db
         company_id = self.env['res.company'].get_real_ce_company_id(params['odoo_company_id']).id
         params.update({'odoo_company_id': company_id})
 
@@ -72,6 +71,9 @@ class CRMLeadService(Component):
     def _prepare_create(self, params):
 
         vals = {
+            "submission_type": 'place_proposal_submission',
+            "type": 'opportunity',
+            "contact_name": "{} {}".format(params.get("partner_firstname",""),params.get("partner_lastname","")),
             "name": params.get("partner_name"),
             "description": params.get("partner_description"),
             "street": params.get("partner_full_address"),
@@ -79,21 +81,29 @@ class CRMLeadService(Component):
             "city": params.get("partner_city"),
             "email_from": params.get("partner_email"),
             "phone": params.get("partner_phone"),
-            "cm_form_submission_metadata": {
-                "partner_qty_members": params.get("partner_qty_members"),
-                "partner_legal_state": params.get("partner_legal_state"),
-                "partner_foundation_date": params.get("partner_foundation_date"),
-                "partner_vat": params.get("partner_vat"),
-                "partner_comments": params.get("partner_comments"),
-                "partner_state": params.get("partner_state"),#canvis
-                "partner_firstname": params.get("partner_firstname"),#canvis
-                "partner_lastname": params.get("partner_lastname"),#canvis
-                "contact_email": params.get("partner_email"),
-                "contact2_firstname": params.get("contact2_firstname"),
-                "contact2_lastname": params.get("contact2_lastname"),
-                "contact2_email": params.get("contact2_email"),
-                "contact2_mobile": params.get("contact2_mobile"),
-            },
+            "form_submission_metadata_ids": [
+                (0,0,{'key':'partner_qty_members','value':params.get("partner_qty_members"),'type':'string'}),
+                (0,0,{'key':'partner_legal_state','value':params.get("partner_legal_state"),'type':'string'}),
+                (0,0,{'key':'partner_foundation_date','value':params.get("partner_foundation_date"),'type':'string'}),
+                (0,0,{'key':'partner_vat','value':params.get("partner_vat"),'type':'string'}),
+                (0,0,{'key':'partner_comments','value':params.get("partner_comments"),'type':'string'}),
+                (0,0,{'key':'partner_state','value':params.get("partner_state"),'type':'string'}),
+                (0,0,{'key':'partner_firstname','value':params.get("partner_firstname"),'type':'string'}),
+                (0,0,{'key':'partner_lastname','value':params.get("partner_lastname"),'type':'string'}),
+                (0,0,{'key':'contact_email','value':params.get("partner_email"),'type':'string'}),
+                (0,0,{'key':'contact2_firstname','value':params.get("contact2_firstname"),'type':'string'}),
+                (0,0,{'key':'contact2_lastname','value':params.get("contact2_lastname"),'type':'string'}),
+                (0,0,{'key':'contact2_email','value':params.get("contact2_email"),'type':'string'}),
+                (0,0,{'key':'contact2_mobile','value':params.get("contact2_mobile"),'type':'string'}),
+                (0,0,{'key':'partner_twitter','value':'','type':'string'}),
+                (0,0,{'key':'partner_facebook','value':'','type':'string'}),
+                (0,0,{'key':'partner_instagram','value':'','type':'string'}),
+                (0,0,{'key':'partner_telegram','value':'','type':'string'}),
+                (0,0,{'key':'partner_group_image_url','value':'','type':'string'}),
+                (0,0,{'key':'partner_latitude','value':'','type':'string'}),
+                (0,0,{'key':'partner_longitude','value':'','type':'string'}),
+                (0,0,{'key':'partner_map_place_form_url','value':'','type':'string'}),
+                ],
             "tag_ids": [(6, 0, params.get("tag_ids", []))],
             "company_id": params.get("odoo_company_id"),
             "source_id": params.get("source_xml_id"),

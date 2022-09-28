@@ -89,7 +89,7 @@ class CrmLead(models.Model):
                 place_creation_data['external_link_url'] = m_dict['partner_map_place_form_url']
             else:
                 raise UserError(
-                    _("Unable to get the External Link URL (mandatory map place field) from Lead: {}").format(lead.name))
+                    _("Unable to get the External Link URL (mandatory map place field) from Lead: {} (metadata key: partner_map_place_form_url)").format(lead.name))
 
             place_creation_data['address_txt'] = lead._get_address_txt() or None
             place_creation_data['filter_mids'] = [(6,0,lead._get_cmfilter_ids())]
