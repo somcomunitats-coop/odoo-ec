@@ -27,6 +27,39 @@ S_CRM_LEAD_CREATE = {
     },
 }
 
+S_CRM_LEAD_CREATE_ALTA_CE = {
+    "partner_name": {"type": "string", "required": True},
+    "partner_description": {"type": "string", "required": True},
+    "partner_full_address": {"type": "string", "required": True},
+    "partner_zip": {"type": "string", "required": True},
+    "partner_city": {"type": "string", "required": True},
+    "partner_state": {"type": "string", "required": True},
+    "partner_qty_members": {"type": "integer", "required": True},
+    "partner_legal_state": {"type": "string",
+        "check_with": ce_state_validator
+    },
+    "tag_ids": {
+        "type": "list",
+        "schema": {
+            "type": "integer",
+        },
+        "required": True
+    },
+    "partner_foundation_date": {"type": "string"},
+    "partner_vat": {"type": "string"},
+    "partner_comments": {"type": "string"},
+    "partner_firstname": {"type": "string", "required": True},
+    "partner_lastname": {"type": "string", "required": True},
+    "partner_email": {"type": "string", "required": True},
+    "partner_phone": {"type": "string", "required": True},
+    "contact2_firstname": {"type": "string"},
+    "contact2_lastname": {"type": "string"},
+    "contact2_email": {"type": "string"},
+    "contact2_mobile": {"type": "string"},
+    "odoo_company_id": {"type": "integer", "required": True},
+    "source_xml_id": {"type": "string", "required": True},
+}
+
 S_PROFILE_RETURN_GET = {
     "profile": {
         "type": "dict",
@@ -97,7 +130,7 @@ S_MEMBER_PROFILE_RETURN_PUT = S_MEMBER_PROFILE_RETURN_GET
 
 S_COMMUNITY_MEMBER = {
     "name": {"type": "string", "required": True, "empty": False},
-    "rol": {"type": "string", "required": True},
+    "role": {"type": "string", "required": True},
     "email": {"type": "string", "required": True},
     "keycloak_id": {"type": "string"},
     "keycloak_id": {"type": "string"},
@@ -112,3 +145,41 @@ S_COMMUNITY_MEMBERS_RETURN_GET = {
         }
     }
 }
+
+S_COMMUNITY_SERVICE = {
+    "id": {"type": "integer"},
+    "name": {"type": "string"}
+}
+
+S_COMMUNITY_RETURN_GET = {
+            "id": {"type": "integer"},
+            "name": {"type": "string"},
+            "birth_date": {"type": "string"},
+            "members": {
+                "type": "list",
+                "schema": {
+                    "type": "dict",
+                    "schema": S_COMMUNITY_MEMBER
+                }
+            },
+            "contact_info": {
+                "type": "dict",
+                "schema": {
+                    "street": {"type": "string"},
+                    "postal_code": {"type": "string"},
+                    "city": {"type": "string"},
+                    "state": {"type": "string"},
+                    "country": {"type": "string"},
+                    "phone": {"type": "string"},
+                    "email": {"type": "string"},
+                    "telegram": {"type": "string"},
+                },
+            },
+            "active_services": {
+                "type": "list",
+                "schema": {
+                    "type": "dict",
+                    "schema": S_COMMUNITY_SERVICE
+                },
+            }
+        }

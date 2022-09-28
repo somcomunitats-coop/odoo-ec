@@ -16,6 +16,12 @@
             <xpath expr="//field[@name='property_cooperator_account']" position="before">
                 <field name="cooperator_journal"/>
             </xpath>
+            <xpath expr="//field[@name='unmix_share_type']" position="before">
+                <field name="foundation_date"/>
+            </xpath>
+            <xpath expr="//field[@name='social_instagram']" position="after">
+                <field name="social_telegram"/>
+            </xpath>
         </field>
     </record>
 </odoo>

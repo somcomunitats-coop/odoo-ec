@@ -1,5 +1,6 @@
 from email.policy import default
 from odoo import api, models, fields, _
+from datetime import datetime
 import re
 from odoo.exceptions import UserError
 from slugify import slugify
@@ -35,6 +36,9 @@ class ResCompany(models.Model):
         " receivable journal for the"
         " cooperators"
     )
+
+    foundation_date = fields.Date('Foundation date')
+    social_telegram = fields.Char('Telegram Account')
 
     @api.model
     def get_real_ce_company_id(self, api_param_odoo_compant_id):
@@ -89,7 +93,63 @@ class ResCompany(models.Model):
     def _community_post_company_creation_tasks(self):
         """ Do post company creation tasks that are specific for the CCEE project"""
         self.ensure_one()
-        pass
+
+        # [1] Set res.config.settings params that are company dependants
+        # TODO choose the proper one depending of the legaol type of the new company
+        pyme_char_template_id =  self.env['ir.model.data'].get_object_reference('l10n_es', 'account_chart_template_pymes')[1]
+        #assoc_char_template_id =  self.env['ir.model.data'].get_object_reference('l10n_es', 'account_chart_template_assoc')[1]
+
+        user_active_company_id = self.env.user.company_id.id
+        user = self.env.user
+        user.company_ids = [(4,self.id)]
+        user.company_id = self.id
+        rcs_sudo = self.env['res.config.settings'].sudo(user)
+        rcs_sudo_id = rcs_sudo.create({
+            'chart_template_id': pyme_char_template_id,
+            'kc_realm': str(self.id),
+            })
+        rcs_sudo_id.execute()
+        user.company_id = user_active_company_id
+
+        # [2] Create new Sequences and Subscription Journal
+        subs_acc_jour_seq = self.env['ir.sequence'].sudo().create({
+            'name': 'Account Subscription Journal Sequence',
+            'padding': 3,
+            'prefix': 'SUBJ/%(year)s/',
+            'use_date_range': True,
+            'number next': 1,
+            'number_increment': 1,
+            'company_id': self.id,
+            'date_range_ids': [(0,0,{
+                'date_from':'{}-01-01'.format(datetime.now().year),
+                'date_to': '{}-12-31'.format(datetime.now().year),
+                'number_next':1,
+                'number_next_actual':1})]
+        })
+        subs_acc_jour = self.env['account.journal'].sudo().create({
+            'name': 'Account Subscription Journal',
+            'invoice_sequence_id': subs_acc_jour_seq.id,
+            'type': 'sale',
+            'code': 'SUB_',
+            'sequence_number next': 1,
+            'company_id': self.id,
+            })
+
+        self.sudo().cooperator_journal = subs_acc_jour.id
+
+        # [3] update several accounts
+        xml_id_4400 = "{}_{}".format(self.id, 'account_common_4400') # 440000 | Deudores (euros)
+        account_4400_id = self.env['ir.model.data'].sudo().get_object_reference('l10n_es', xml_id_4400)[1]
+
+        self.sudo().property_cooperator_account = account_4400_id
+
+        xml_id_7000 = "{}_{}".format(self.id, 'account_common_7000') # 700000 | Ventas de mercaderías en España
+        account_7000_id = self.env['ir.model.data'].get_object_reference('l10n_es', xml_id_7000)[1]
+        self.env.ref('easy_my_coop.product_category_company_share').sudo().property_account_income_categ_id = account_7000_id
+
+        xml_id_600 = "{}_{}".format(self.id, 'account_common_600') # 600000 | Ventas de mercaderías en España
+        account_600_id = self.env['ir.model.data'].get_object_reference('l10n_es', xml_id_600)[1]
+        self.env.ref('easy_my_coop.product_category_company_share').sudo().property_account_expense_categ_id = account_600_id
 
     @api.multi
     def _create_keycloak_realm(self):
@@ -102,6 +162,28 @@ class ResCompany(models.Model):
         self.ensure_one()
         pass
 
+    @api.multi
+    def get_active_services(self):
+        """Return a list of dicts with the key data of each active Service"""
+        self.ensure_one()
+        ret=[]
 
+        # TODO: in a further iteration it will get the data from the "community services model"
+        # but nowadays (2022-09-26) it still don't exists so we are getting this info from the related crm_lead.tag_ids
 
-    
+        creation_ce_source_id = self.env['ir.model.data'].get_object_reference('ce', 'ce_source_creation_ce_proposal')[1]
+        coordinator_id = self.get_real_ce_company_id(self.API_PARAM_ID_VALUE_FOR_COORDINADORA).id
+
+        lead_from = self.env['crm.lead'].sudo().search(
+            [('company_id','=',coordinator_id),
+            ('community_company_id','=',self.id),
+            ('source_id','=',creation_ce_source_id)]
+            ,limit=1)
+
+        if lead_from:
+            for tag in lead_from.tag_ids:
+                ret.append({
+                    'id': tag.id,
+                    'name': tag.name,
+                })
+        return ret

@@ -1,5 +1,6 @@
 from odoo import models, api, fields, _
 from odoo.exceptions import UserError
+from datetime import datetime
 
 
 class CrmLead(models.Model):
@@ -18,6 +19,7 @@ class CrmLead(models.Model):
     ]
 
     lang = fields.Char(string="Language")
+    ce_tag_ids = fields.Many2many('crm.lead.tag', 'crm_lead_ce_tag_rel', 'lead_id', 'tag_id', string='CE Tags', help="CE Classify and analyze categories")
 
     community_company_id = fields.Many2one(
         string='Related Community',
@@ -55,6 +57,8 @@ class CrmLead(models.Model):
                 'team_type': 'map_place_proposal',
                 'user_id': self.env.user.id,
                 'proposal_form_submission_id': lead.id,
+                'interaction_method': 'external_link',
+                'external_link_target': '_top',
             }
 
             # read metadata key/value pairs
@@ -81,6 +85,12 @@ class CrmLead(models.Model):
                 raise UserError(
                     _("Unable to get the Longitude (mandatory map place field) from Lead: {}").format(lead.name))
 
+            if m_dict.get('partner_map_place_form_url',False) and m_dict['partner_map_place_form_url']:
+                place_creation_data['external_link_url'] = m_dict['partner_map_place_form_url']
+            else:
+                raise UserError(
+                    _("Unable to get the External Link URL (mandatory map place field) from Lead: {}").format(lead.name))
+
             place_creation_data['address_txt'] = lead._get_address_txt() or None
             place_creation_data['filter_mids'] = [(6,0,lead._get_cmfilter_ids())]
 
@@ -90,8 +100,14 @@ class CrmLead(models.Model):
             # is not being called on crm_team.create(). TODO: review why it happens and fix it.
             place._get_slug_id()
             place._get_config_relations_attrs()
+            place._build_presenter_metadata_ids()
 
             place.message_subscribe([self.env.user.partner_id.id])
+
+            pmnd_ids = [m for m in place.place_presenter_metadata_ids if m.key == 'p_description']
+            description_pmnd_id = pmnd_ids and pmnd_ids[0] or None
+            if description_pmnd_id and lead.description:
+                description_pmnd_id.value = "<p class='m-2'>{}</p>".format(lead.description)
 
             # lead update
             lead.write({
@@ -173,6 +189,20 @@ class CrmLead(models.Model):
     def _get_company_create_vals(self):
         self.ensure_one()
         m_dict = {m.key: m.value for m in self.form_submission_metadata_ids}
+
+        foundation_date = None
+        if m_dict.get('partner_foundation_date',False) and m_dict['partner_foundation_date']:
+            date_formats = ['%Y-%m-%d','%d-%m-%Y','%Y/%m/%d','%d/%m/%Y']
+            for date_format in date_formats:
+                try:
+                    foundation_date = datetime.strptime(m_dict['partner_foundation_date'], date_format)
+                except:
+                    pass
+            if not foundation_date:
+                raise UserError(
+                    _("The Foundation Date value {} have a non valid format. It must be: yyyy-mm-dd or dd-mm-yyyy or yyyy/mm/dd or dd/mm/yyyy").format(m_dict['partner_foundation_date']))
+
+
         create_vals = {
                 'name': self.name,
                 'street': self.street,
@@ -188,7 +218,9 @@ class CrmLead(models.Model):
                 'social_twitter': m_dict.get('partner_twitter',False) and m_dict['partner_twitter'] or None,
                 'social_facebook': m_dict.get('partner_facebook',False) and m_dict['partner_facebook'] or None,
                 'social_instagram': m_dict.get('partner_instagram',False) and m_dict['partner_instagram'] or None,
+                'social_telegram': m_dict.get('partner_telegram',False) and m_dict['partner_telegram'] or None,
                 'create_user': True,
+                'foundation_date': foundation_date,
             }
         return create_vals
 
