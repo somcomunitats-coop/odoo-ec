@@ -1,22 +1,17 @@
-# Copyright 2019 Coop IT Easy SCRL fs
-#   Robin Keunen <robin@coopiteasy.be>
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-# pylint: disable=consider-merging-classes-inherited
-
-import logging
+import logging, json
+from odoo.addons.base_rest import restapi
 from werkzeug.exceptions import BadRequest, NotFound
-from odoo import _
 from odoo.addons.base_rest.http import wrapJsonException
 from odoo.addons.component.core import Component
-from odoo.addons.base_rest import restapi
+from odoo import _
 from . import schemas
-
 
 _logger = logging.getLogger(__name__)
 
-class PermsService(Component):
+class MemberService(Component):
     _inherit = "base.rest.private_abstract_service"
-    _name = "ce.services"
+    _name = "ce.member.services"
+    _collection = "ce.services"
     _usage = "member"
     _description = """
         CE Member roles requests
@@ -28,7 +23,7 @@ class PermsService(Component):
         auth="api_key",
     )
     def get(self, _keycloak_id):
-        user, partner, roles, email = self._get_member_profile_objs(_keycloak_id)
+        user, partner, role, email = self._get_member_profile_objs(_keycloak_id)
         return self._to_dict(user, partner, role, email)
     
     def _validator_return_get(self):
@@ -43,35 +38,60 @@ class PermsService(Component):
     def update(self, _keycloak_id, **params):
         _logger.info("Requested role update, user: {}".format(_keycloak_id))
 
-        user, partner, role, email = self._get_member_profile_objs(_keycloak_id)
-        roles_map = user.ce_user_roles_mapping()
-        ce_admin_key = self.env['ir.config_parameter'].sudo().get_param('ce.ck_user_group_mapped_to_odoo_group_ce_admin')
-        ce_admin_value = roles_map[ce_admin_key]
+        user, partner, actual_role, email = self._get_member_profile_objs(_keycloak_id)
+        ce_roles_map = user.ce_user_roles_mapping()
 
         new_role = params['role']
-        if not new_role in roles_map.keys():
+
+        if new_role not in ce_roles_map.keys():
+            valid_roles = [item[0] for item in self.env['res.users'].USER_CE_ROLE_NAMES_SELECTION]
             raise wrapJsonException(
-                BadRequest(
-                    _("Role {} not found!").format(
-                        new_role)
-                ),
-                include_description=True,
+                BadRequest(),
+                include_description=False,
+                extra_info={
+                    'message': _("The role '{}' is not a valid one, it must be one of: {}").format(
+                        params['role'],
+                        valid_roles),
+                    'code': 500,
+                    }
             )
 
-        RoleLineSudo = self.env['res.users.role.line'].sudo()
-        for role_line in user.role_line_ids:
-            role_id = role_line.role_id.id
-            if role_id in roles_map.values():
-                role_line.unlink()
-                if role_id == ce_admin_value and not user.company_id.check_ce_has_admin():
-                    raise wrapJsonException(
-                        BadRequest(
-                            _("CE must have and admin!")),
-                        include_description=True,
-                    )
-        new_role_vals = {'user_id': user.id, 'role_id': roles_map[new_role]}
-        RoleLineSudo.create(new_role_vals)
-        #user.update_user_data_to_keyckoack(['groups'])
+        if new_role != actual_role:
+
+            RoleLineSudo = self.env['res.users.role.line'].sudo()
+
+            for role_line in user.role_line_ids:
+                role_id = role_line.role_id.id
+                if role_id in [r['odoo_role_id'] for r in ce_roles_map.values()]:
+                    role_line.sudo().unlink()
+
+            RoleLineSudo.create({'user_id': user.id, 'role_id': ce_roles_map[new_role]['odoo_role_id']})
+
+            if not user.company_id.check_ce_has_admin():
+                raise wrapJsonException(
+                    BadRequest(),
+                    include_description=False,
+                    extra_info={
+                        'message': _("Unable to change the member role to '{}', because the company would remain without any 'CE Admin' member").format(new_role),
+                        'code': 500,
+                        }
+                )
+
+            #also update KeyCloack GROUP acordingly throw API call
+            try:
+                user.update_user_data_to_keyckoack(['groups'])
+            except Exception as ex:
+                details = (ex and hasattr(ex, 'name') and " Details: {}".format(ex.name)) or ''
+                raise wrapJsonException(
+                    BadRequest(),
+                    include_description=False,
+                    extra_info={
+                        'message': _("Unable to update the role in Keycloak for the related KC user ID: {}.{}").format(
+                            user.oauth_uid,
+                            details),
+                        'code': 500,
+                    })
+
         return self._to_dict(user, partner, new_role, email)
 
     def _prepare_create(self, params):
@@ -108,8 +128,9 @@ class PermsService(Component):
                 extra_info={'message': _("No Odoo Partner found for Odoo user with login username %s") % user.login}
             )
 
-        role = partner.user_ids.role_ids
+        role = user.ce_role or ''
         email = partner.email or False
+
         return user, partner, role, email
 
 

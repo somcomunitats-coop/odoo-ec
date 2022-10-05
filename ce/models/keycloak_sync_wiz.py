@@ -1,6 +1,8 @@
 # Copyright 2018 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
-from odoo import fields, models, api, exceptions, _
+from argparse import RawDescriptionHelpFormatter
+from odoo import fields, models, api, _
+from odoo.exceptions import UserError
 import logging
 import requests
 try:
@@ -18,6 +20,32 @@ class KeycloakSyncMixin(models.AbstractModel):
 
     _KEYCLOAK_UPDATABLE_USER_DATA = ['lang', 'groups', 'enabled', 'username', 'email', 'firstname_lastname', 'credentials']
 
+    # MANAGE REALM DATA ______________________________________________________________
+
+    def _get_realm_groups_data(self, token):
+        """Get the JSON Representation of groups of a given REALM.
+        It require the KC 'master' admin user have 'query-groups' Client Role assigned for the target realm
+        It returns a list of dicts. ex:
+        [{
+            "id": "8ge163b3-6kc7-40ed-x069-3309eabbcbea",
+            "name": "group1",
+            "path": "/group1",
+            "subGroups": []
+        }] """
+        target_endpoint = '{}/groups'.format(self.endpoint.replace('/users',''))
+
+        logger.info('GET KEYCLOAK GROUPS DATA FOR REALM %s' % self.endpoint)
+        headers = {
+            'Authorization': 'Bearer %s' % token,
+        }
+        resp = requests.get(target_endpoint, headers=headers, json={})
+        self._validate_response(resp, no_json=True)
+
+        return resp.json()
+
+
+    # MANAGE USER DATA ______________________________________________________________
+
     def _get_user_by_id(self, token, user_keycloak_id):
         """Get the JSON Representation of a given keycloak user ID"""
 
@@ -31,6 +59,42 @@ class KeycloakSyncMixin(models.AbstractModel):
         self._validate_response(resp, no_json=True)
 
         return resp.json()
+
+    def _get_groups_from_user(self, token, user_keycloak_id):
+        """Get the GROUPS JSON Representation of a given keycloak user ID.
+        It will retiurn a list of dicts, ex:
+        [
+            {'id': '72f8045b-984a-4773-bf59-461764c9d16e', 'name': 'ce_admins_group', 'path': '/ce_admins_group'}, 
+            {'id': '59139b95-0066-45a6-9b0b-d8bdf4006f87', 'name': 'ce_members_group', 'path': '/ce_members_group'}
+        ]
+        """
+        target_endpoint = '{}/{}/groups'.format(self.endpoint, user_keycloak_id)
+
+        logger.info('GET KEYCLOAK USER GROUPS DATA BY ID Calling %s' % self.endpoint)
+        headers = {
+            'Authorization': 'Bearer %s' % token,
+        }
+        resp = requests.get(target_endpoint, headers=headers, json={})
+        self._validate_response(resp, no_json=True)
+        return resp.json()
+
+
+    def _delete_user_groups_to_user(self, token, user_keycloak_id, group_ids):
+        """Remove a given list of KC group_ids from a user."""
+
+        headers = {
+                'Authorization': 'Bearer %s' % token,
+            }
+        try:
+            for group_id in group_ids:
+                target_endpoint = '{}/{}/groups/{}'.format(self.endpoint, user_keycloak_id, group_id)
+                logger.info('DELETE KEYCLOAK USER GROUP BY ID Calling %s' % self.endpoint)
+                requests.delete(target_endpoint, headers=headers, json={})
+        except:
+            raise UserError(
+                _("Error when calling Keycloak API to delete group on user: {}").format(target_endpoint))
+
+        return True
 
     def _update_user_values(self, odoo_user, kc_data_to_update=[]):
         """Prepare Keycloak UPDATE values for given Odoo user."""
@@ -51,13 +115,9 @@ class KeycloakSyncMixin(models.AbstractModel):
                 values.update({'attributes':{'lang': odoo_user.lang},})
 
         if 'groups' in kc_data_to_update:
-            UserSudo = self.env['res.users'].sudo()
-            ce_roles_map = UserSudo.ce_user_roles_mapping()
-            groups_to_update = []
-            for k,v in ce_roles_map.items():
-                if v in odoo_user.role_ids.ids:
-                    groups_to_update.append(k)
-            values['groups'] = groups_to_update
+            ce_roles_map = odoo_user.ce_user_roles_mapping()
+            values['groups'] = [ce_roles_map[odoo_user.ce_role]['kc_group_name']]
+
 
         if 'enabled' in kc_data_to_update:
             values['enabled'] = odoo_user.active
@@ -92,8 +152,29 @@ class KeycloakSyncMixin(models.AbstractModel):
         headers = {
             'Authorization': 'Bearer %s' % token,
         }
-        resp = requests.put(target_endpoint, headers=headers, json=to_up_data_dict)
-        self._validate_response(resp, no_json=True)
         
-        # only in case we are returning the full KC Data JSON Representantion of the user 
-        return self._get_user_by_id(token, user_keycloak_id)
+        try:
+            requests.put(target_endpoint, headers=headers, json=to_up_data_dict)
+        except:
+            raise UserError(
+                _("Error when calling Keycloak API to update user: {}").format(target_endpoint))
+
+        return True
+
+    def _add_user_groups_to_user(self, token, user_keycloak_id, group_ids):
+        """Assign(add) a given list of KC group_ids to a user."""
+
+        headers = {
+                'Authorization': 'Bearer %s' % token,
+            }
+        try:
+            for group_id in group_ids:
+                target_endpoint = '{}/{}/groups/{}'.format(self.endpoint, user_keycloak_id, group_id)
+                logger.info('UPDATE KEYCLOAK USER GROUP BY ID Calling %s' % self.endpoint)
+                requests.put(target_endpoint, headers=headers, json={})
+        except:
+            raise UserError(
+                _("Error when calling Keycloak API to add group on user: {}").format(target_endpoint))
+
+        return True
+

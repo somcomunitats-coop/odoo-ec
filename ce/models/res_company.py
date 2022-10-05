@@ -47,13 +47,16 @@ class ResCompany(models.Model):
         else:
             return self.search([('id','=',api_param_odoo_compant_id)]) or None
 
-    @api.model
+    @api.multi
     def check_ce_has_admin(self):
-        ce_roles_map = self.env['res.users'].sudo().ce_user_roles_mapping()
-        ce_admin_key = self.env['ir.config_parameter'].sudo().get_param('ce.ck_user_group_mapped_to_odoo_group_ce_admin')
-        company_user_ids = self.env['res.users'].search([('company_id', '=', self.id)]).ids
-        admin_ids = self.env['res.users.role'].browse(ce_roles_map[ce_admin_key]).user_ids.ids
-        return any([user in admin_ids for user in company_user_ids])
+        self.ensure_one()
+        admin_roles_ids = [r['odoo_role_id'] for r in self.env['res.users'].ce_user_roles_mapping().values() if r['is_admin']]
+        company_user_ids = self.get_ce_members().ids
+        admins_user_ids = []
+        for admin_role in self.env['res.users.role'].sudo().browse(admin_roles_ids):
+            for role_line in admin_role.line_ids:
+                admins_user_ids.append(role_line.user_id.id)
+        return any([user in admins_user_ids for user in company_user_ids])
 
     @api.multi
     def get_ce_members(self, domain_key='in_kc_and_active'):
@@ -187,3 +190,26 @@ class ResCompany(models.Model):
                     'name': tag.name,
                 })
         return ret
+
+    @api.multi
+    def get_kc_groups_data(self):
+        """Proceed to get the list of the KC groups related to the current company > Realm"""
+        self.ensure_one()
+        ce_admin_provider = self.ce_admin_key_cloak_provider_id
+
+        if not ce_admin_provider:
+            raise UserError(
+                _("Unable to get the 'CE admin' provider_id related to tha current company when triying to push new user to KC."))
+
+        wiz_vals = {
+            'provider_id': ce_admin_provider.id,
+            'endpoint': ce_admin_provider.users_endpoint,
+            'user': ce_admin_provider.superuser,
+            'pwd': ce_admin_provider.superuser_pwd,
+            'login_match_key': 'username:login'
+        }
+        kc_wizard = self.env['auth.keycloak.sync.wiz'].create(wiz_vals)
+        kc_wizard._validate_setup()
+        token = kc_wizard._get_token()
+
+        return kc_wizard._get_realm_groups_data(token)
