@@ -14,6 +14,7 @@
 
     <menuitem id="ce_crm_leads_menu" name="Solicituds" parent="ce_root_menu" />
         <menuitem id="ce_crm_leads_ce_info_menu" name="CE Information" parent="ce_crm_leads_menu" action="ce_crm_leads_ce_info_action" groups="ce.group_ce_admin" />
+        <menuitem id="ce_crm_leads_ce_contact_menu" name="CE Contact" parent="ce_crm_leads_menu" action="ce_crm_leads_ce_contact_action" groups="ce.group_ce_admin" />
         <menuitem id="ce_crm_leads_general_info_menu" name="General Information" parent="ce_crm_leads_menu" action="ce_crm_leads_general_info_action" groups="ce.group_platform_admin" />
         <menuitem id="ce_crm_leads_future_zone_info_menu" name="Information future CE's by location" parent="ce_crm_leads_menu" action="ce_crm_leads_future_zone_info_action" groups="ce.group_platform_admin" />
         <menuitem id="ce_crm_leads_new_ce_request_menu" name="CE Creation" parent="ce_crm_leads_menu" action="ce_crm_leads_new_ce_request_action" groups="ce.group_platform_admin" />
