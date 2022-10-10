@@ -64,7 +64,7 @@ class CrmLead(models.Model):
             m_dict = {m.key: m.value for m in lead.form_submission_metadata_ids}
 
             if m_dict.get('partner_legal_state',False) and m_dict['partner_legal_state']:
-                if m_dict['partner_legal_state'] in ['active','activa']:
+                if m_dict['partner_legal_state'] == 'active':
                     place_creation_data['place_category_id'] = active_categ_id
                 else:
                     place_creation_data['place_category_id'] = building_categ_id
@@ -86,10 +86,6 @@ class CrmLead(models.Model):
 
             if m_dict.get('partner_map_place_form_url',False) and m_dict['partner_map_place_form_url']:
                 place_creation_data['external_link_url'] = m_dict['partner_map_place_form_url']
-            else:
-                pass
-                # TODO: build this URL
-                # raise UserError(_("Unable to get the External Link URL (mandatory map place field) from Lead: {}").format(lead.name))
 
             place_creation_data['address_txt'] = lead._get_address_txt() or None
             place_creation_data['filter_mids'] = [(6,0,lead._get_cmfilter_ids())]
