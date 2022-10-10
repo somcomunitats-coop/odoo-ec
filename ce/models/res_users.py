@@ -7,9 +7,16 @@ logger = logging.getLogger(__name__)
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    USER_CE_ROLES = [('role_ce_member',_('CE Member')),('role_ce_admin',_('CE Administrator')),('role_platform_admin',_('Platform Administrator'))]
+    # CAUTION: we are using here as keys, the 3 Keycloak role names:
+    # ['role_ce_member', 'role_ce_admin', 'role_platform_admin']
+    # Also those 3 names are the ones allowed to be used to be assigned to the user 'role' param in
+    # any API call between Odoo and external services as CE-PublicWeb or CE-VirtualOffice
+    USER_CE_ROLE_NAMES_SELECTION = [
+        ('role_ce_member',_('CE Member')),
+        ('role_ce_admin',_('CE Administrator')),
+        ('role_platform_admin',_('Platform Administrator'))]
 
-    ce_role = fields.Selection(USER_CE_ROLES, string='CE Role', compute='_compute_ce_role')
+    ce_role = fields.Selection(USER_CE_ROLE_NAMES_SELECTION, string='CE Role', compute='_compute_ce_role')
 
     @api.depends('role_ids')
     def _compute_ce_role(self):
@@ -22,6 +29,7 @@ class ResUsers(models.Model):
             ce_role_ids = [r.id for r in user.role_ids if r.id in [role_ce_member_id, role_ce_admin_id, role_platform_admin_id]]
 
             role_value=None
+
             if role_platform_admin_id in ce_role_ids:
                 role_value = 'role_platform_admin'
             elif role_ce_admin_id in ce_role_ids:
@@ -87,7 +95,7 @@ class ResUsers(models.Model):
 
         if not self.oauth_uid:
             raise UserError(
-                _("The Odoo user %s (Odoo id: %s)do not have any mapped Keycloak Ured ID."%(self.id, self.login)))
+                _("The Odoo user {} (Odoo id: {}) do not have any mapped Keycloak User ID.").format(self.login, self.id))
 
         wiz_vals = {
             'provider_id': ce_admin_provider.id,
@@ -102,24 +110,58 @@ class ResUsers(models.Model):
         token = kc_wiz._get_token()
 
         to_up_data_dict = kc_wiz._update_user_values(self, kc_data_to_update)
-        resp = kc_wiz._update_user_by_id(token, self.oauth_uid, to_up_data_dict)
 
-        return resp
+        if to_up_data_dict.get('groups'):
 
-    @api.multi
+            new_group_allready_present_flag = False
+            new_kc_group_name = to_up_data_dict.pop('groups')[0]
+
+            # proceed to clear the existing groups
+            group_ids_to_delete = []
+            user_current_groups = kc_wiz._get_groups_from_user(token, self.oauth_uid) or []
+            for group_dict in user_current_groups:
+                if group_dict['name'] != new_kc_group_name:
+                    group_ids_to_delete.append(group_dict['id'])
+                else:
+                    new_group_allready_present_flag = True
+            if group_ids_to_delete:
+                kc_wiz._delete_user_groups_to_user(token, self.oauth_uid, group_ids_to_delete)
+
+            # proceed to add the new group
+            if not new_group_allready_present_flag:
+                # get the KC ID's for each KC group related to the user company-->realm
+                new_kc_group_id = [g['id'] for g in self.company_id.get_kc_groups_data() if g['name'] == new_kc_group_name]
+                new_kc_group_id = new_kc_group_id and new_kc_group_id[0]
+                if not new_kc_group_id:
+                    raise UserError(
+                        _("Unable to get the Keycloak ID related to the Keycloak group '{}' for company/realm ID:{}").format(new_kc_group_name,self.company_id.id))
+
+                kc_wiz._add_user_groups_to_user(token, self.oauth_uid, [new_kc_group_id])
+
+        if to_up_data_dict:
+            kc_wiz._update_user_by_id(token, self.oauth_uid, to_up_data_dict)
+
+        # if all is OK we return the basic user KC representation
+        return kc_wiz._get_user_by_id(token, self.oauth_uid)
+
+    @api.model
     def ce_user_roles_mapping(self):
+
         ICPSudo = self.env['ir.config_parameter'].sudo()
-        ce_member_key = ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_ce_member')
-        ce_member_role_value = int(ICPSudo.get_param('ce.odoo_group_ce_member'))
 
-        ce_admin_key = ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_ce_admin')
-        ce_admin_role_value = int(ICPSudo.get_param('ce.odoo_group_ce_admin'))
+        roles_map = {
+            'role_ce_member':
+                {'odoo_role_id': int(ICPSudo.get_param('ce.odoo_group_ce_member')),
+                'kc_group_name': ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_ce_member'),
+                'is_admin': False},
+            'role_ce_admin':
+                {'odoo_role_id': int(ICPSudo.get_param('ce.odoo_group_ce_admin')),
+                'kc_group_name': ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_ce_admin'),
+                'is_admin': True},
+            'role_platform_admin':
+                {'odoo_role_id': int(ICPSudo.get_param('ce.odoo_group_platform_admin')),
+                'kc_group_name': ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_platform_admin'),
+                'is_admin': True}
+            }
 
-        platform_admin_key = ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_platform_admin')
-        platform_admin_role_value = int(ICPSudo.get_param('ce.odoo_group_platform_admin'))
-
-        roles_map = { ce_member_key: ce_member_role_value,
-                       ce_admin_key: ce_admin_role_value,
-                       platform_admin_key: platform_admin_role_value}
         return roles_map
-

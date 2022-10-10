@@ -42,7 +42,6 @@ class CrmLead(models.Model):
 
         for lead in self:
 
-
             if self.env['crm.team'].search([('proposal_form_submission_id','=',lead.id), ('map_id','=',default_ce_map_id)]):
                 raise UserError(
                     _("There is an allready existing Map Place related to this Lead: {}.").format(lead.name))
@@ -87,9 +86,6 @@ class CrmLead(models.Model):
 
             if m_dict.get('partner_map_place_form_url',False) and m_dict['partner_map_place_form_url']:
                 place_creation_data['external_link_url'] = m_dict['partner_map_place_form_url']
-            else:
-                raise UserError(
-                    _("Unable to get the External Link URL (mandatory map place field) from Lead: {} (metadata key: partner_map_place_form_url)").format(lead.name))
 
             place_creation_data['address_txt'] = lead._get_address_txt() or None
             place_creation_data['filter_mids'] = [(6,0,lead._get_cmfilter_ids())]
@@ -101,6 +97,7 @@ class CrmLead(models.Model):
             place._get_slug_id()
             place._get_config_relations_attrs()
             place._build_presenter_metadata_ids()
+            place.place_category_id = place_creation_data['place_category_id']
 
             place.message_subscribe([self.env.user.partner_id.id])
 

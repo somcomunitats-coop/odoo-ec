@@ -56,11 +56,17 @@ class MemberProfileService(Component):
         #also update lang in KeyCloack related user throw API call
         try:
             user.update_user_data_to_keyckoack(['lang'])
-        except Exception:
+        except Exception as ex:
+            details = (ex and hasattr(ex, 'name') and " Details: {}".format(ex.name)) or ''
             raise wrapJsonException(
                 BadRequest(),
                 include_description=False,
-                extra_info={'message': _("Unable to update the lang in Keycloak for the related KC user ID: %s"%user.oauth_uid),})
+                extra_info={
+                    'message': _("Unable to update the lang in Keycloak for the related KC user ID: {}.{}").format(
+                        user.oauth_uid,
+                        details),
+                    'code': 500,
+                })
 
         return self._to_dict(user, partner, partner_bank, sepa_mandate)
 

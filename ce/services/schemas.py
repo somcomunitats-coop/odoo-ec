@@ -3,8 +3,8 @@ def boolean_validator(field, value, error):
         error(field, "Must be a boolean value: true or false")
 
 def ce_state_validator(field, value, error):
-    if value and value not in ["activa", "on_construction"]:
-        error(field, "Must be 'activa' or 'on_construction'")
+    if value and value not in ["active", "on_building"]:
+        error(field, "Must be 'active' or 'on_building'")
 
 S_CRM_LEAD_RETURN_CREATE = {
     "id": {"type": "integer"},
@@ -58,6 +58,7 @@ S_CRM_LEAD_CREATE_ALTA_CE = {
     "contact2_mobile": {"type": "string"},
     "odoo_company_id": {"type": "integer", "required": True},
     "source_xml_id": {"type": "string", "required": True},
+    "partner_map_place_form_url":{"type": "string", "required": False},
 }
 
 S_PROFILE_RETURN_GET = {
