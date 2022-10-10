@@ -8,7 +8,10 @@
         <field name="name">Information about future CE by location</field>
     </record>
     <record model="utm.source" id="ce_source_existing_ce_info">
-        <field name="name">Information about exiting CE</field>
+        <field name="name">Information about existing CE</field>
+    </record>
+    <record model="utm.source" id="ce_source_existing_ce_contact">
+        <field name="name">Contact a existing CE</field>
     </record>
     <!-- CE Other Sources -->
     <record model="utm.source" id="ce_source_creation_ce_proposal">
