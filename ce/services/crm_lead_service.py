@@ -70,10 +70,14 @@ class CRMLeadService(Component):
 
     def _prepare_create(self, params):
 
+        contact_name = params.get("partner_firstname", None) or params.get("partner_lastname",None) or None
+        if params.get("partner_firstname",None) and params.get("partner_lastname",None):
+            contact_name =  "{} {}".format(params.get("partner_firstname",""),params.get("partner_lastname",""))
+
         vals = {
             "submission_type": 'place_proposal_submission',
             "type": 'opportunity',
-            "contact_name": "{} {}".format(params.get("partner_firstname",""),params.get("partner_lastname","")),
+            "contact_name": contact_name,
             "name": params.get("partner_name"),
             "description": params.get("partner_description"),
             "street": params.get("partner_full_address"),
@@ -81,6 +85,9 @@ class CRMLeadService(Component):
             "city": params.get("partner_city"),
             "email_from": params.get("partner_email"),
             "phone": params.get("partner_phone"),
+            "tag_ids": [(6, 0, params.get("tag_ids", []))],
+            "company_id": params.get("odoo_company_id"),
+            "source_id": params.get("source_xml_id"),
             "form_submission_metadata_ids": [
                 (0,0,{'key':'partner_qty_members','value':params.get("partner_qty_members"),'type':'string'}),
                 (0,0,{'key':'partner_legal_state','value':params.get("partner_legal_state"),'type':'string'}),
@@ -103,10 +110,8 @@ class CRMLeadService(Component):
                 (0,0,{'key':'partner_group_image_url','value':'','type':'string'}),
                 (0,0,{'key':'partner_latitude','value':'','type':'string'}),
                 (0,0,{'key':'partner_longitude','value':'','type':'string'}),
+                (0,0,{'key':'partner_initial_share_amount','value':'100','type':'string'})
                 ],
-            "tag_ids": [(6, 0, params.get("tag_ids", []))],
-            "company_id": params.get("odoo_company_id"),
-            "source_id": params.get("source_xml_id"),
         }
         if params.get("partner_phone", False) and params.get("partner_phone").strip()[:1] in ('6','7'):
             vals['mobile'] = params.get("partner_phone")

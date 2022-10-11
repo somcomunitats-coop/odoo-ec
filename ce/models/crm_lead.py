@@ -199,6 +199,13 @@ class CrmLead(models.Model):
                 raise UserError(
                     _("The Foundation Date value {} have a non valid format. It must be: yyyy-mm-dd or dd-mm-yyyy or yyyy/mm/dd or dd/mm/yyyy").format(m_dict['partner_foundation_date']))
 
+        initial_share_amount = 0.00
+        if m_dict.get('partner_initial_share_amount',False) and m_dict['partner_initial_share_amount'] or None:
+                try:
+                    initial_share_amount = float(m_dict['partner_initial_share_amount'])
+                except:
+                    pass
+
 
         create_vals = {
                 'name': self.name,
@@ -218,6 +225,7 @@ class CrmLead(models.Model):
                 'social_telegram': m_dict.get('partner_telegram',False) and m_dict['partner_telegram'] or None,
                 'create_user': True,
                 'foundation_date': foundation_date,
+                'initial_subscription_share_amount': initial_share_amount,
             }
         return create_vals
 

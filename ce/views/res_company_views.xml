@@ -18,6 +18,8 @@
             </xpath>
             <xpath expr="//field[@name='unmix_share_type']" position="before">
                 <field name="foundation_date"/>
+                <field name="initial_subscription_share_amount" />
+                <field name="allow_new_members" />
             </xpath>
             <xpath expr="//field[@name='social_instagram']" position="after">
                 <field name="social_telegram"/>

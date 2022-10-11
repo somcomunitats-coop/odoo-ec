@@ -3,6 +3,7 @@ from odoo import api, models, fields, _
 from datetime import datetime
 import re
 from odoo.exceptions import UserError
+from odoo.addons import decimal_precision as dp
 from slugify import slugify
 
 class ResCompany(models.Model):
@@ -39,6 +40,8 @@ class ResCompany(models.Model):
 
     foundation_date = fields.Date('Foundation date')
     social_telegram = fields.Char('Telegram Account')
+    initial_subscription_share_amount = fields.Float('Initial Subscription Share Amount', digits=dp.get_precision('Product Price') )
+    allow_new_members = fields.Boolean(string="Allow new members",default=True)
 
     @api.model
     def get_real_ce_company_id(self, api_param_odoo_compant_id):
@@ -153,6 +156,26 @@ class ResCompany(models.Model):
         xml_id_600 = "{}_{}".format(self.id, 'account_common_600') # 600000 | Ventas de mercaderías en España
         account_600_id = self.env['ir.model.data'].get_object_reference('l10n_es', xml_id_600)[1]
         self.env.ref('easy_my_coop.product_category_company_share').sudo().property_account_expense_categ_id = account_600_id
+
+        # [4] create default_share_product
+        product_vals = {
+            'name': 'Quota inicial alta sòcia',
+            'short_name': 'Quota inicial alta sòcia',
+            'sale_ok': True,
+            'purchase_ok': False,
+            'is_share': True,
+            'display_on_website': True,
+            'categ_id': self.env.ref('easy_my_coop.product_category_company_share').id,
+            'type': 'service',
+            'default_code': 'quota_inicial_alta_sòcia',
+            'default_share_product': True,
+            'list_price': self.initial_subscription_share_amount or 0.00,
+            'customer': True,
+            'by_company': True,
+            'by_individual': True,
+            'company_id': self.id,
+            }
+        self.env['product.template'].sudo().create(product_vals)
 
     @api.multi
     def _create_keycloak_realm(self):
