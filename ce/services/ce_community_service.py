@@ -1,4 +1,5 @@
-import logging, json
+import logging
+import json
 from odoo.addons.base_rest import restapi
 from werkzeug.exceptions import BadRequest, NotFound
 from odoo.addons.base_rest.http import wrapJsonException
@@ -18,68 +19,59 @@ class CommunityService(Component):
     _description = """
         CE community requests
     """
+
     @restapi.method(
-        [(["/<int:odoo_company_id>/members"], "GET")],
-        output_param=restapi.CerberusValidator("_validator_return_community_members_get"),
+        [(["/<int:odoo_company_id>", "/<int:odoo_company_id>/<string:method_name>"], "GET")],
+        output_param=restapi.CerberusValidator(
+            "_validator_return_community_get"),
         auth="api_key",
     )
     def get(self, _odoo_company_id):
-        company_id = self.env['res.company'].get_real_ce_company_id(_odoo_company_id)
+        endpoint_args = self.work.request.endpoint_arguments
+        company_id = self.env['res.company'].get_real_ce_company_id(
+            _odoo_company_id)
 
         if not company_id:
             raise wrapJsonException(
                 BadRequest(),
                 include_description=False,
-                extra_info={'message': _("No Odoo Company found for odoo_company_id %s") % _odoo_company_id}
+                extra_info={'message': _(
+                    "No Odoo Company found for odoo_company_id %s") % _odoo_company_id}
             )
 
-        member_users = company_id.get_ce_members()
-        return self._to_dict_members(member_users)
+        if 'method_name' in endpoint_args and endpoint_args.get('method_name') == 'members':
+            return self._to_dict_members(company_id.get_ce_members())
+        else:
+            return self._to_dict_community(company_id)
 
-    def _validator_return_community_members_get(self):
-        return schemas.S_COMMUNITY_MEMBERS_RETURN_GET
+    def _validator_return_community_get(self):
+        endpoint_args = self.work.request.endpoint_arguments
+        if 'method_name' in endpoint_args and endpoint_args.get('method_name') == 'members':
+            return schemas.S_COMMUNITY_MEMBERS_RETURN_GET
+        else:
+            return schemas.S_COMMUNITY_RETURN_GET
 
     @staticmethod
     def _to_dict_members(users):
-        resp = {'members':[]}
+        resp = {'members': []}
         for user in users:
             resp['members'].append({
-                "name": '{} {}'.format(user.firstname,user.lastname,),
+                "name": '{} {}'.format(user.firstname, user.lastname,),
                 "role": user.ce_role or "",
                 "email": user.email or "",
                 "keycloak_id": user.oauth_uid,
             })
         return resp
 
-    @restapi.method(
-        [(["/<int:odoo_company_id>"], "GET")],
-        output_param=restapi.CerberusValidator("_validator_return_community_get"),
-        auth="api_key",
-    )
-    def get(self, _odoo_company_id):
-        company_id = self.env['res.company'].get_real_ce_company_id(_odoo_company_id)
-
-        if not company_id:
-            raise wrapJsonException(
-                BadRequest(),
-                include_description=False,
-                extra_info={'message': _("No Odoo Company found for odoo_company_id %s") % _odoo_company_id}
-            )
-
-        return self._to_dict_community(company_id)
-
-    def _validator_return_community_get(self):
-        return schemas.S_COMMUNITY_RETURN_GET
-
     @staticmethod
     def _to_dict_community(company):
 
-        resp = {
+        resp = {'community':{
             'id': company.id,
             'name': company.name,
             'birth_date': company.foundation_date and company.foundation_date.strftime('%Y-%m-%d') or '',
-            'members':[],
-            'contact_info':{
+            'members': [],
+            'contact_info': {
                 'street': company.street or '',
                 'postal_code': company.zip or '',
                 'city': company.city or '',
@@ -88,10 +80,12 @@ class CommunityService(Component):
                 'phone': company.phone or '',
                 'email': company.email or '',
                 'telegram': company.social_telegram or ''},
-            'active_services': []
-            }
+            'active_services': [],
+            'allow_new_members': company.allow_new_members,
+        }}
 
-        resp.update(CommunityService._to_dict_members(company.get_ce_members()))
+        resp.update(CommunityService._to_dict_members(
+            company.get_ce_members()))
         resp.update({'active_services': company.get_active_services()})
 
         return resp

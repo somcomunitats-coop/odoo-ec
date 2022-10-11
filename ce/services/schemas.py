@@ -153,6 +153,9 @@ S_COMMUNITY_SERVICE = {
 }
 
 S_COMMUNITY_RETURN_GET = {
+        "community": {
+        "type": "dict",
+        "schema": {
             "id": {"type": "integer"},
             "name": {"type": "string"},
             "birth_date": {"type": "string"},
@@ -182,5 +185,8 @@ S_COMMUNITY_RETURN_GET = {
                     "type": "dict",
                     "schema": S_COMMUNITY_SERVICE
                 },
-            }
+            },
+            "allow_new_members": {"type": "boolean"},
         }
+    }
+}
