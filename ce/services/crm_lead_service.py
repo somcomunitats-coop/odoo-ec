@@ -32,6 +32,7 @@ class CRMLeadService(Component):
                 include_description=True,
             )
 
+        target_source_xml_id = params['source_xml_id']
         params.update({'source_xml_id': sources[params['source_xml_id']]})
 
         try:
@@ -51,7 +52,21 @@ class CRMLeadService(Component):
 
         params = self._prepare_create(params)
         sr = self.env["crm.lead"].sudo().create(params)
-        self.env.ref('ce.email_templ_lead_ce_creation_receipt_confirm_id').sudo().send_mail(sr.id)
+
+        # send the receipt confirmation email
+        email_template = None
+        if target_source_xml_id == 'ce_source_creation_ce_proposal':
+            email_template = 'email_templ_lead_ce_creation_receipt_confirm_id'
+        elif target_source_xml_id == 'ce_source_existing_ce_contact':
+            email_template = 'email_templ_lead_request_contact_confirm_id'
+        elif target_source_xml_id == 'ce_source_existing_ce_info':
+            email_template = 'email_templ_lead_request_ce_news_confirm_id'
+        elif target_source_xml_id == 'ce_source_future_location_ce_info':
+            email_template = 'email_templ_lead_request_advise_future_ce_confirm_id'
+
+        if email_template:
+            self.env.ref('ce.{}'.format(email_template)).sudo().send_mail(sr.id)
+
         return self._to_dict(sr)
 
     def _validator_create(self):
