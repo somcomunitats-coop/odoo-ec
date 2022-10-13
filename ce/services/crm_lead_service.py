@@ -51,6 +51,7 @@ class CRMLeadService(Component):
 
         params = self._prepare_create(params)
         sr = self.env["crm.lead"].sudo().create(params)
+        self.env.ref('ce.email_templ_lead_ce_creation_receipt_confirm_id').sudo().send_mail(sr.id)
         return self._to_dict(sr)
 
     def _validator_create(self):
