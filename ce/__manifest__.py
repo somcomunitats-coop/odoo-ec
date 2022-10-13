@@ -42,6 +42,7 @@
         'views/res_users.xml',
         'views/cm_place.xml',
         'data/mail_template_data.xml',
+        'data/mail_template_update_data.xml'
     ],
     'installable': True,
     'application': True,
