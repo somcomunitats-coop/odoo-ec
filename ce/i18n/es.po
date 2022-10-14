@@ -1,0 +1,1298 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ce
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-14 06:58+0000\n"
+"PO-Revision-Date: 2022-10-14 16:17+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 3.1.1\n"
+
+#. module: ce
+#: model:mail.template,body_html:ce.email_templ_lead_request_contact_confirm_id
+msgid ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"    <p>Hello,</p>\n"
+"\n"
+"    <p>Thank you for contact.</p>\n"
+"\n"
+"    <p>We have received your email and we have we have forwarded it to the Community so that they can contact you as soon as possible.</p>\n"
+"\n"
+"    <p>Here is a copy of the data we received:</p>\n"
+"\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p> - Contact name: ${object.name}</p>\n"
+"    <p> - Address: ${object.street}</p>\n"
+"    <p> - Zip code: ${object.zip}</p>\n"
+"    <p> - City: ${object.city}</p>\n"
+"    <p> - Email: ${object.email_from}</p>\n"
+"    <p> - Phone: ${object.phone}</p>\n"
+"    <p></p>\n"
+"    % if object.tag_ids:\n"
+"    <p> - Interested in:</p>\n"
+"        % for tag in object.tag_ids:\n"
+"        <p>     ${tag.name}</p>\n"
+"        % endfor\n"
+"    % endif\n"
+"    </div>\n"
+"    <br />\n"
+"    <p>Yours faithfully,</p>\n"
+"    <p>Somcomunitats.coop team </p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"\n"
+"</div>\n"
+"            "
+msgstr ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"    <p>Hola,</p>\n"
+"\n"
+"    <p>Gracias por contactar.</p>\n"
+"\n"
+"    <p>Hemos recibido su correo electrónico y lo hemos remitido a la Comunidad para que se pongan en contacto con usted lo antes posible.</p>\n"
+"\n"
+"    <p>Aquí tiene una copia de los datos que hemos recibido:</p>\n"
+"\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p> - Nombre: ${object.name}</p>\n"
+"    <p> - Dirección: ${object.street}</p>\n"
+"    <p> - Código postal: ${object.zip}</p>\n"
+"    <p> - Ciudad: ${object.city}</p>\n"
+"    <p> - Correo Electrónico: ${object.email_from}</p>\n"
+"    <p> - Teléfono: ${object.phone}</p>\n"
+"    <p></p>\n"
+"    % if object.tag_ids:\n"
+"    <p> - Interés en:</p>\n"
+"        % for tag in object.tag_ids:\n"
+"        <p>     ${tag.name}</p>\n"
+"        % endfor\n"
+"    % endif\n"
+"    </div>\n"
+"    <br />\n"
+"    <p>Atentamente,</p>\n"
+"    <p>Somcomunitats.coop team </p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos y preguntas frecuentes</a></p>\n"
+"\n"
+"</div>\n"
+"            "
+
+#. module: ce
+#: model:mail.template,body_html:ce.email_templ_lead_ce_creation_receipt_confirm_id
+msgid ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"    <p>Hello,</p>\n"
+"\n"
+"    <p>Thank you for filling out the form and requesting the membership of your Energy Community on the Somcomunitats.coop platform.</p>\n"
+"\n"
+"    <p>In the coming weeks we will study the application and contact you to indicate the steps and the information necessary to complete the registration process for the Community and the people who are part of it.</p>\n"
+"\n"
+"    <p>Here is a copy of the data we received:</p>\n"
+"\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p> - Community name: ${object.name}</p>\n"
+"    <p> - Description: ${object.description}</p>\n"
+"    <p> - Address: ${object.street}</p>\n"
+"    <p> - Zip code: ${object.zip}</p>\n"
+"    <p> - City: ${object.city}</p>\n"
+"    <p> - Email: ${object.email_from}</p>\n"
+"    <p> - Phone: ${object.phone}</p>\n"
+"    <p></p>\n"
+"    % if object.form_submission_metadata_ids:\n"
+"        % for meta in object.form_submission_metadata_ids:\n"
+"            % if meta.value:\n"
+"                % if meta.key == 'partner_qty_members':\n"
+"                    <p> - Members: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'partner_legal_state':\n"
+"                    <p> - Activity state: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'partner_foundation_date':\n"
+"                    <p> - Foundation date: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'partner_vat':\n"
+"                    <p> - Activity state: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'partner_comments':\n"
+"                    <p> - Comments: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'partner_firstname':\n"
+"                    <p> - Contact firstname: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'partner_lastname':\n"
+"                    <p> - Contact lastname: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'contact2_firstname':\n"
+"                    <p> - Contact 2 firstname: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'contact2_lastname':\n"
+"                    <p> - Contact 2 lastname: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'contact2_email':\n"
+"                    <p> - Contact 2 email: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'contact2_mobile':\n"
+"                    <p> - Contact 2 phone: ${meta.value}</p>\n"
+"                % endif\n"
+"            % endif\n"
+"        % endfor\n"
+"    % endif\n"
+"    % if object.tag_ids:\n"
+"    <p> - Interested in:</p>\n"
+"        % for tag in object.tag_ids:\n"
+"        <p>     ${tag.name}</p>\n"
+"        % endfor\n"
+"    % endif\n"
+"    </div>\n"
+"    <br />\n"
+"    <p>We keep in touch for any questions.</p>\n"
+"    <p>Yours faithfully,</p>\n"
+"    <p>Somcomunitats.coop team </p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"\n"
+"</div>\n"
+"            "
+msgstr ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"    <p>Hola,</p>\n"
+"\n"
+"    <p>Gracias por rellenar el formulario y solicitar el alta de tu Comunidad Energética en la plataforma Somcomunitats.coop.</p>\n"
+"\n"
+"    <p>En las próximas semanas estudiaremos la solicitud y nos pondremos en contacto contigo para indicarte los pasos y la información necesaria para completar el proceso de alta de la Comunidad y de las personas que forman parte de ella.</p>\n"
+"\n"
+"    <p>Here is a copy of the data we received:</p>\n"
+"\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p> - Community name: ${object.name}</p>\n"
+"    <p> - Description: ${object.description}</p>\n"
+"    <p> - Address: ${object.street}</p>\n"
+"    <p> - Zip code: ${object.zip}</p>\n"
+"    <p> - City: ${object.city}</p>\n"
+"    <p> - Email: ${object.email_from}</p>\n"
+"    <p> - Phone: ${object.phone}</p>\n"
+"    <p></p>\n"
+"    % if object.form_submission_metadata_ids:\n"
+"        % for meta in object.form_submission_metadata_ids:\n"
+"            % if meta.value:\n"
+"                % if meta.key == 'partner_qty_members':\n"
+"                    <p> - Members: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'partner_legal_state':\n"
+"                    <p> - Activity state: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'partner_foundation_date':\n"
+"                    <p> - Foundation date: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'partner_vat':\n"
+"                    <p> - Activity state: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'partner_comments':\n"
+"                    <p> - Comments: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'partner_firstname':\n"
+"                    <p> - Contact firstname: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'partner_lastname':\n"
+"                    <p> - Contact lastname: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'contact2_firstname':\n"
+"                    <p> - Contact 2 firstname: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'contact2_lastname':\n"
+"                    <p> - Contact 2 lastname: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'contact2_email':\n"
+"                    <p> - Contact 2 email: ${meta.value}</p>\n"
+"                % endif\n"
+"                % if meta.key == 'contact2_mobile':\n"
+"                    <p> - Contact 2 phone: ${meta.value}</p>\n"
+"                % endif\n"
+"            % endif\n"
+"        % endfor\n"
+"    % endif\n"
+"    % if object.tag_ids:\n"
+"    <p> - Interested in:</p>\n"
+"        % for tag in object.tag_ids:\n"
+"        <p>     ${tag.name}</p>\n"
+"        % endfor\n"
+"    % endif\n"
+"    </div>\n"
+"    <br />\n"
+"    <p>We keep in touch for any questions.</p>\n"
+"    <p>Yours faithfully,</p>\n"
+"    <p>Somcomunitats.coop team </p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"\n"
+"</div>\n"
+"            "
+
+#. module: ce
+#: model:mail.template,body_html:ce.email_templ_lead_request_advise_future_ce_confirm_id
+msgid ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"    <p>Hello,</p>\n"
+"\n"
+"    <p>Thank you for filling out the form.</p>\n"
+"\n"
+"    <p>In case an Energy Community is activated in your neighborhood or municipality, they can consult the existing requests and contact you. Without any commitment on your part beyond having shown interest in promoting a movement of social transformation and an energy model.</p>\n"
+"\n"
+"    <p>Here is a copy of the data we received:</p>\n"
+"\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p> - Contact name: ${object.name}</p>\n"
+"    <p> - Address: ${object.street}</p>\n"
+"    <p> - Zip code: ${object.zip}</p>\n"
+"    <p> - City: ${object.city}</p>\n"
+"    <p> - Email: ${object.email_from}</p>\n"
+"    <p> - Phone: ${object.phone}</p>\n"
+"    <p></p>\n"
+"    % if object.tag_ids:\n"
+"    <p> - Interested in:</p>\n"
+"        % for tag in object.tag_ids:\n"
+"        <p>     ${tag.name}</p>\n"
+"        % endfor\n"
+"    % endif\n"
+"    </div>\n"
+"    <br />\n"
+"    <p>We keep in touch for any questions.</p>\n"
+"    <p>Yours faithfully,</p>\n"
+"    <p>Somcomunitats.coop team </p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"\n"
+"</div>\n"
+"            "
+msgstr ""
+
+#. module: ce
+#: model:mail.template,body_html:ce.email_templ_lead_request_ce_news_confirm_id
+msgid ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"    <p>Hello,</p>\n"
+"\n"
+"    <p>Thank you for filling out the form.</p>\n"
+"\n"
+"    <p>You have been subscribed correctly to the Community Newsletter.</p>\n"
+"\n"
+"    <p>Here is a copy of the data we received:</p>\n"
+"\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p> - Community name: ${object.company_id.name}</p>\n"
+"    <p> - Email: ${object.email_from}</p>\n"
+"    <p> - Language: ${object.company_id.default_lang_id.code or object.company_id.partner_id.lang}</p>\n"
+"    </div>\n"
+"    <br />\n"
+"    <p>Yours faithfully,</p>\n"
+"    <p>Somcomunitats.coop team </p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"\n"
+"</div>\n"
+"            "
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.res_config_settings_view_form_ce
+msgid "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" aria-label=\"Values set here are company-specific.\" groups=\"base.group_multi_company\" role=\"img\"/>"
+msgstr "<span class=\"fa fa-lg fa-building-o\" title=\"Los valores establecidos aquí son específicos de la empresa.\" aria-label=\"Los valores establecidos aquí son específicos de la empresa.\" groups=\"base.group_multi_company\" role=\"img\"/>"
+
+#. module: ce
+#: model:ir.model,name:ce.model_res_groups
+msgid "Access Groups"
+msgstr "Grupos de acceso"
+
+#. module: ce
+#: model:cm.place.category,name:ce.ce_cm_place_category_active
+msgid "Activa"
+msgstr ""
+
+#. module: ce
+#: model:cm.filter,name:ce.ce_cm_filter_demand_flexibility_and_aggregation
+#: model:crm.lead.tag,name:ce.ce_tag_aggregate_demand
+msgid "Agregació i flexibilitat de la demanda"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_company__allow_new_members
+msgid "Allow new members"
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.becomecooperator_ccee
+msgid "Become Cooperator of"
+msgstr ""
+
+#. module: ce
+#: model:ir.actions.server,name:ce.action_build_community_company_from_lead
+msgid "Build Community Company"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/res_users.py:16 selection:res.users,ce_role:0
+#, python-format
+msgid "CE Administrator"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,help:ce.field_crm_lead__ce_tag_ids
+msgid "CE Classify and analyze categories"
+msgstr ""
+
+#. module: ce
+#: model:ir.actions.act_window,name:ce.ce_crm_leads_ce_contact_action
+#: model:ir.ui.menu,name:ce.ce_crm_leads_ce_contact_menu
+msgid "CE Contact"
+msgstr ""
+
+#. module: ce
+#: model:ir.ui.menu,name:ce.ce_crm_leads_new_ce_request_menu
+msgid "CE Creation"
+msgstr ""
+
+#. module: ce
+#: model:ir.actions.act_window,name:ce.ce_crm_leads_ce_info_action
+#: model:ir.ui.menu,name:ce.ce_crm_leads_ce_info_menu
+msgid "CE Information"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/res_users.py:15 selection:res.users,ce_role:0
+#, python-format
+msgid "CE Member"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_users__ce_role
+msgid "CE Role"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_crm_lead__ce_tag_ids
+msgid "CE Tags"
+msgstr ""
+
+#. module: ce
+#: model:res.groups,name:ce.group_ce_admin
+#: model:res.users.role,name:ce.role_ce_admin
+msgid "CE admin role"
+msgstr ""
+
+#. module: ce
+#: model:utm.source,name:ce.ce_source_creation_ce_proposal
+msgid "CE creation"
+msgstr ""
+
+#. module: ce
+#: model:ir.actions.act_window,name:ce.ce_crm_leads_new_ce_request_action
+msgid "CE creation requests"
+msgstr ""
+
+#. module: ce
+#: model:res.groups,name:ce.group_ce_member
+#: model:res.users.role,name:ce.role_ce_member
+msgid "CE member role"
+msgstr ""
+
+#. module: ce
+#: model:cm.map,categories_filter_title:ce.ce_default_cm_map
+msgid "Categories title"
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.actions.act_window,help:ce.ce_utm_sources_action
+msgid "Click to define a new Source."
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.actions.act_window,help:ce.ce_crm_lead_tags_action
+msgid "Click to define a new tag."
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,help:ce.field_crm_lead__community_company_id
+msgid "Community related to this Lead"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,help:ce.field_crm_team__community_company_id
+msgid "Community related to this Map point"
+msgstr ""
+
+#. module: ce
+#: model:ir.model,name:ce.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.res_config_settings_view_form_ce
+msgid "Company dependent parameters"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_auth_oauth_provider__company_id
+msgid "Companyia"
+msgstr ""
+
+#. module: ce
+#: model:cm.filter,name:ce.ce_cm_filter_collective_purchase
+#: model:crm.lead.tag,name:ce.ce_tag_collective_purchases
+msgid "Compres col·lectives"
+msgstr ""
+
+#. module: ce
+#: model:ir.module.category,name:ce.comunitats_energetiques_platform
+#: model:ir.ui.menu,name:ce.ce_root_menu
+#: model_terms:ir.ui.view,arch_db:ce.res_config_settings_view_form_ce
+#: model_terms:ir.ui.view,arch_db:ce.view_company_form_ce_inherited
+msgid "Comunitats Energètiques"
+msgstr ""
+
+#. module: ce
+#: model:ir.actions.act_window,name:ce.action_ce_configuration
+msgid "Comunitats Energètiques Settings"
+msgstr ""
+
+#. module: ce
+#: model:ir.model,name:ce.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de Configuración"
+
+#. module: ce
+#: model:ir.ui.menu,name:ce.ce_config_menu
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: ce
+#: model:ir.model,name:ce.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: ce
+#: model:utm.source,name:ce.ce_source_existing_ce_contact
+msgid "Contact a existing CE"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_company__cooperator_journal
+msgid "Cooperator Journal"
+msgstr ""
+
+#. module: ce
+#: model:auth.oauth.provider,body:ce.default_admin_ce_keycloak_provider
+msgid "Coordinadora (admin-CE)"
+msgstr ""
+
+#. module: ce
+#: model:auth.oauth.provider,body:ce.default_auth_ce_keycloak_provider
+msgid "Coordinadora (login-CE)"
+msgstr ""
+
+#. module: ce
+#: model:ir.actions.server,name:ce.action_create_map_place_from_lead
+msgid "Create Map Place"
+msgstr ""
+
+#. module: ce
+#: model:cm.filter,name:ce.ce_cm_filter_energetic_eficiency
+#: model:crm.lead.tag,name:ce.ce_tag_energy_efficiency
+msgid "Eficiencia energètica"
+msgstr ""
+
+#. module: ce
+#: model:cm.place.category,name:ce.ce_cm_place_category_building
+msgid "En construcció"
+msgstr ""
+
+#. module: ce
+#: model:cm.filter,name:ce.ce_cm_filter_thermical_energy
+#: model:crm.lead.tag,name:ce.ce_tag_thermal_energy
+msgid "Energia tèrmica i climatització"
+msgstr ""
+
+#. module: ce
+#: model:ir.actions.act_window,name:ce.ce_crm_lead_tags_action
+msgid "Energy Actions"
+msgstr ""
+
+#. module: ce
+#: model:ir.ui.menu,name:ce.ce_config_energy_actions_menu
+msgid "Energy actions in progress"
+msgstr ""
+
+#. module: ce
+#: model:cm.form.model,button_label:ce.ce_cm_form_model_into_community_registration
+msgid "Enviar"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/keycloak_sync_wiz.py:177
+#, python-format
+msgid "Error when calling Keycloak API to add group on user: {}"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/keycloak_sync_wiz.py:95
+#, python-format
+msgid "Error when calling Keycloak API to delete group on user: {}"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/keycloak_sync_wiz.py:160
+#, python-format
+msgid "Error when calling Keycloak API to update user: {}"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/subscription_request.py:8
+#: selection:subscription.request,gender:0
+#, python-format
+msgid "Female"
+msgstr "Mujer"
+
+#. module: ce
+#: model:ir.model.fields,help:ce.field_res_company__coordinator
+msgid "Flag to indicate that this company has the rol of 'Coordinator'(=Administrator) for the current 'Comunitats Energètiques' Platform"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_auth_oauth_provider__login_provider
+msgid "For users login"
+msgstr ""
+
+#. module: ce
+#: model:cm.filter,name:ce.ce_cm_filter_citizen_education
+#: model:crm.lead.tag,name:ce.ce_tag_citizen_education
+msgid "Formació ciutadana"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_company__foundation_date
+msgid "Foundation date"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_subscription_request__gender
+msgid "Gender"
+msgstr "Género"
+
+#. module: ce
+#: model:cm.filter,name:ce.ce_cm_filter_community_renewal_generation
+#: model:crm.lead.tag,name:ce.ce_tag_common_generation
+msgid "Generació renovable comunitaria"
+msgstr ""
+
+#. module: ce
+#: model:ir.ui.menu,name:ce.ce_menu_general_settings
+msgid "General"
+msgstr ""
+
+#. module: ce
+#: model:ir.actions.act_window,name:ce.ce_crm_leads_general_info_action
+#: model:ir.ui.menu,name:ce.ce_crm_leads_general_info_menu
+msgid "General Information"
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.view_company_form_ce_inherited
+msgid "Global Platform Administration"
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.res_config_settings_view_form_ce
+msgid "Global platform parameters"
+msgstr ""
+
+#. module: ce
+#: model:cm.form.model,submission_ok_message:ce.ce_cm_form_model_into_community_registration
+msgid "Gràcies per la teva participació"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/subscription_request.py:9
+#: selection:subscription.request,gender:0
+#, python-format
+msgid "I prefer do not share it"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_mail_mass_mailing__source_ext_id
+#: model:ir.model.fields,field_description:ce.field_utm_source__source_ext_id
+msgid "ID Ext Source"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_crm_lead_tag__tag_ext_id
+msgid "ID Ext tag"
+msgstr ""
+
+#. module: ce
+#: model:utm.source,name:ce.ce_source_general_info
+msgid "Information Newsletter (general)"
+msgstr ""
+
+#. module: ce
+#: model:utm.source,name:ce.ce_source_existing_ce_info
+msgid "Information about existing CE"
+msgstr ""
+
+#. module: ce
+#: model:utm.source,name:ce.ce_source_future_location_ce_info
+msgid "Information about future CE by location"
+msgstr ""
+
+#. module: ce
+#: model:ir.actions.act_window,name:ce.ce_crm_leads_future_zone_info_action
+#: model:ir.ui.menu,name:ce.ce_crm_leads_future_zone_info_menu
+msgid "Information future CE's by location"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_company__initial_subscription_share_amount
+msgid "Initial Subscription Share Amount"
+msgstr ""
+
+#. module: ce
+#: model:cm.form.model,cta_label:ce.ce_cm_form_model_into_community_registration
+msgid "Inscriu-t'he"
+msgstr ""
+
+#. module: ce
+#: model:ir.model,name:ce.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_config_settings__ck_server_url
+msgid "KeyCloak Server URL"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_config_settings__ck_server_port
+msgid "KeyCloak Server port"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_company__kc_realm
+#: model:ir.model.fields,field_description:ce.field_res_config_settings__kc_realm
+msgid "KeyCloak realm name"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_config_settings__ck_user_group_mapped_to_odoo_group_ce_admin
+msgid "KeyCloak user group (ce_admins)"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_config_settings__ck_user_group_mapped_to_odoo_group_ce_member
+msgid "KeyCloak user group (ce_members)"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_config_settings__ck_user_group_mapped_to_odoo_group_platform_admin
+msgid "KeyCloak user_group (platform_admins)"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_crm_lead__lang
+msgid "Language"
+msgstr "Idioma"
+
+#. module: ce
+#: model:ir.model,name:ce.model_crm_lead_tag
+msgid "Lead Tag"
+msgstr "Etiqueta de Iniciativa"
+
+#. module: ce
+#: model:ir.model,name:ce.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Iniciativa/Oportunidad"
+
+#. module: ce
+#: code:addons/ce/models/subscription_request.py:8
+#: selection:subscription.request,gender:0
+#, python-format
+msgid "Male"
+msgstr "Hombre"
+
+#. module: ce
+#: model:cm.filter,name:ce.ce_cm_filter_sustainable_mobility
+#: model:crm.lead.tag,name:ce.ce_tag_sustainable_mobility
+msgid "Mobilitat sostenible"
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.res_config_settings_view_form_ce
+msgid ""
+"Name of tke KC realm user group that must be mapped against the Odoo group 'CE admin'.\n"
+"                                    This KC realm group name must be the same in all the existing KC realms."
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.res_config_settings_view_form_ce
+msgid ""
+"Name of tke KC realm user group that must be mapped against the Odoo group 'CE member'.\n"
+"                                    This KC realm group name must be the same in all the existing KC realms."
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.res_config_settings_view_form_ce
+msgid ""
+"Name of tke KC realm user group that must be mapped against the Odoo group 'Platform admin'.\n"
+"                                    This KC realm group name must be the same in all the existing KC realms."
+msgstr ""
+
+#. module: ce
+#: model:ir.module.category,description:ce.comunitats_energetiques_platform
+msgid "Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats Energètiques"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/services/ce_community_service.py:38
+#, python-format
+msgid "No Odoo Company found for odoo_company_id %s"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/services/ce_member_profile_service.py:122
+#: code:addons/ce/services/ce_member_service.py:128
+#, python-format
+msgid "No Odoo Partner found for Odoo user with login username %s"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/services/ce_member_profile_service.py:114
+#: code:addons/ce/services/ce_member_service.py:120
+#, python-format
+msgid "No Odoo User found for KeyCloak user id %s"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/subscription_request.py:8
+#: selection:subscription.request,gender:0
+#, python-format
+msgid "Not binary"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/controllers/website_subscription_main.py:20
+#, python-format
+msgid "Not valid parameter value [odoo_company_id]"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_company__ce_admin_key_cloak_provider_id
+#: model:ir.model.fields,field_description:ce.field_res_config_settings__ce_admin_key_cloak_provider_id
+msgid "OAuth provider for CCEE admin"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_company__auth_ce_key_cloak_provider_id
+#: model:ir.model.fields,field_description:ce.field_res_config_settings__auth_ce_key_cloak_provider_id
+msgid "OAuth provider for CCEE login"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_config_settings__ck_platform_oauth_provider_id
+msgid "OAuth provider for Platform admin"
+msgstr ""
+
+#. module: ce
+#: model:ir.model,name:ce.model_auth_oauth_provider
+msgid "OAuth2 provider"
+msgstr "Proveedor OAuth2"
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.res_config_settings_view_form_ce
+msgid ""
+"Oauth provider to get admin inter-realms capabilities throw keycloak REST API.\n"
+"                                    Use this provider to perform actions as creation of new realms.\n"
+"                                    In Odoo this provider is only available on the 'coordinator' odoo company, under users that have\n"
+"                                    the Odoo group of 'Platform admins'. The realm must be 'master'. The client 'admin-cli'.\n"
+"                                    The 'superuser' must bé a super-admin full administrator user of KC (realm master), but\n"
+"                                    we suggest to create a specific one in KC related to this concrete Odoo instance (platform)."
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_config_settings__odoo_group_ce_admin
+msgid "Odoo user group for ce_admin"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_config_settings__odoo_group_ce_member
+msgid "Odoo user group for ce_members"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_config_settings__odoo_group_platform_admin
+msgid "Odoo user group for platform_admin"
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.becomecooperator_ccee
+msgid "Once you are a member you can enjoy the services available from the community and be part of a movement of social and energy model transformation."
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/crm_lead.py:153
+#, python-format
+msgid "Only users that belongs to the 'Coordinator' company can create new Companies from Leads."
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/crm_lead.py:36
+#, python-format
+msgid "Only users that belongs to the 'Coordinator' company can create new Map Places from Leads."
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/subscription_request.py:9
+#: selection:subscription.request,gender:0
+#, python-format
+msgid "Other"
+msgstr "Otro"
+
+#. module: ce
+#: model:cm.filter.group,name:ce.ce_cm_filter_group_running_energetic_action
+msgid "Per acció energètica en curs"
+msgstr ""
+
+#. module: ce
+#: model:crm.lead.tag,name:ce.tag_1
+msgid "Pipeline"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/res_users.py:17 selection:res.users,ce_role:0
+#, python-format
+msgid "Platform Administrator"
+msgstr ""
+
+#. module: ce
+#: model:res.groups,name:ce.group_platform_admin
+#: model:res.users.role,name:ce.role_platform_admin
+msgid "Platform admin role"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_company__coordinator
+msgid "Platform coordinator"
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.res_config_settings_view_form_ce
+msgid "Port where it is published the KeyCloak server"
+msgstr ""
+
+#. module: ce
+#: model:ir.model,name:ce.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: ce
+#: model:cm.map,proposal_cta_title:ce.ce_default_cm_map
+msgid "Proposals title"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_crm_lead__community_company_id
+#: model:ir.model.fields,field_description:ce.field_crm_team__community_company_id
+msgid "Related Community"
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.res_config_settings_view_form_ce
+msgid "Role mapped in odoo for this group."
+msgstr ""
+
+#. module: ce
+#: model:ir.model,name:ce.model_crm_team
+msgid "Sales Channels"
+msgstr "Canales de Ventas"
+
+#. module: ce
+#: model:ir.ui.menu,name:ce.ce_settings_menu
+msgid "Settings"
+msgstr "Ajustes"
+
+#. module: ce
+#: model:ir.ui.menu,name:ce.ce_crm_leads_menu
+msgid "Solicituds"
+msgstr ""
+
+#. module: ce
+#: model:ir.ui.menu,name:ce.ce_config_sources_menu
+msgid "Source types"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/services/crm_lead_service.py:29
+#, python-format
+msgid "Source {} not found"
+msgstr ""
+
+#. module: ce
+#: model:ir.actions.act_window,name:ce.ce_utm_sources_action
+msgid "Sources"
+msgstr "Fuentes"
+
+#. module: ce
+#: model:cm.filter,name:ce.ce_cm_filter_renewal_energy_supply
+#: model:crm.lead.tag,name:ce.ce_tag_renewable_energy
+msgid "Subministrament d'energia 100% renovable"
+msgstr ""
+
+#. module: ce
+#: model:ir.model,name:ce.model_subscription_request
+msgid "Subscription Request"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/services/crm_lead_service.py:47
+#: code:addons/ce/services/crm_lead_service.py:48
+#, python-format
+msgid "Tag {} not found"
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.becomecooperator_ccee
+msgid "Target Odoo Company id"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_company__social_telegram
+msgid "Telegram Account"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/crm_lead.py:200
+#, python-format
+msgid "The Foundation Date value {} have a non valid format. It must be: yyyy-mm-dd or dd-mm-yyyy or yyyy/mm/dd or dd/mm/yyyy"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/res_users.py:98
+#, python-format
+msgid "The Odoo user {} (Odoo id: {}) do not have any mapped Keycloak User ID."
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/crm_lead.py:51
+#, python-format
+msgid "The Source {} of Lead {} do not allow the creation of Map Proposals"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/crm_lead.py:162
+#, python-format
+msgid "The Source {} of Lead {} do not allow the creation of new Companies"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/services/ce_member_service.py:52
+#, python-format
+msgid "The role '{}' is not a valid one, it must be one of: {}"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/crm_lead.py:47
+#, python-format
+msgid "There is an allready existing Map Place related to this Lead: {}."
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.becomecooperator_ccee
+msgid "This form allow you to request be member of the community:"
+msgstr ""
+
+#. module: ce
+#: model:ir.model.fields,help:ce.field_res_company__cooperator_journal
+msgid "This journal will be the default one as the receivable journal for the cooperators"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/services/ce_member_profile_service.py:47
+#: code:addons/ce/services/crm_lead_service.py:101
+#, python-format
+msgid "This language code %s is not active in Odoo. Active ones: %s"
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.becomecooperator_ccee
+msgid "To be a member you must fulfill this form and lateron proceed to pay the initial share of"
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.res_config_settings_view_form_ce
+msgid "URL to reach the Keycloac server"
+msgstr ""
+
+#. module: ce
+#: model:ir.model,name:ce.model_utm_source
+msgid "UTM Source"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/services/ce_member_service.py:75
+#, python-format
+msgid "Unable to change the member role to '{}', because the company would remain without any 'CE Admin' member"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/res_company.py:85
+#, python-format
+msgid "Unable to create new company because there is an allready existing company with this NAME: {}"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/res_company.py:78
+#, python-format
+msgid "Unable to create new company because there is an allready existing company with this VAT number: {}"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/crm_lead.py:238 code:addons/ce/models/crm_lead.py:244
+#, python-format
+msgid "Unable to create the KeyCloack entities from Lead: {}, because it is not yet related to any Community company"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/res_partner.py:41
+#, python-format
+msgid "Unable to create the new Odoo user related to this partner."
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/res_company.py:225
+#: code:addons/ce/models/res_users.py:52 code:addons/ce/models/res_users.py:94
+#, python-format
+msgid "Unable to get the 'CE admin' provider_id related to tha current company when triying to push new user to KC."
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/crm_lead.py:73
+#, python-format
+msgid "Unable to get the Category (mandatory map place field) from Lead: {}"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/res_users.py:137
+#, python-format
+msgid "Unable to get the Keycloak ID related to the Keycloak group '{}' for company/realm ID:{}"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/crm_lead.py:79
+#, python-format
+msgid "Unable to get the Latitude (mandatory map place field) from Lead: {}"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/crm_lead.py:85
+#, python-format
+msgid "Unable to get the Longitude (mandatory map place field) from Lead: {}"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/services/ce_member_profile_service.py:65
+#, python-format
+msgid "Unable to update the lang in Keycloak for the related KC user ID: {}.{}"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/services/ce_member_service.py:89
+#, python-format
+msgid "Unable to update the role in Keycloak for the related KC user ID: {}.{}"
+msgstr ""
+
+#. module: ce
+#: model:ir.model,name:ce.model_res_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: ce
+#: model:ir.ui.menu,name:ce.ce_menu_webforms_settings
+msgid "Webforms"
+msgstr ""
+
+#. module: ce
+#: code:addons/ce/models/subscription_request.py:24
+#, python-format
+msgid "You must set a cooperator journal on you company."
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.res_config_settings_view_form_ce
+msgid "Your filed description"
+msgstr ""
+
+#. module: ce
+#: model:mail.template,subject:ce.email_templ_lead_request_contact_confirm_id
+msgid "[Somcomunitats.coop] Community Contact Request"
+msgstr ""
+
+#. module: ce
+#: model:mail.template,subject:ce.email_templ_lead_request_ce_news_confirm_id
+msgid "[Somcomunitats.coop] Community Newsletter Subscription Request"
+msgstr ""
+
+#. module: ce
+#: model:mail.template,subject:ce.email_templ_lead_request_advise_future_ce_confirm_id
+msgid "[Somcomunitats.coop] Interested in Communities in your area"
+msgstr ""
+
+#. module: ce
+#: model:mail.template,subject:ce.email_templ_lead_ce_creation_receipt_confirm_id
+msgid "[Somcomunitats.coop] New Community Creation Request to the platform"
+msgstr ""
+
+#. module: ce
+#: model:ir.model,name:ce.model_auth_keycloak_create_wiz
+msgid "auth.keycloak.create.wiz"
+msgstr ""
+
+#. module: ce
+#: model:ir.model,name:ce.model_auth_keycloak_sync_mixin
+msgid "auth.keycloak.sync.mixin"
+msgstr ""
+
+#. module: ce
+#: model:ir.model,name:ce.model_create_coop_subscription_invoice
+msgid "create coop subscription invoice"
+msgstr ""
+
+#. module: ce
+#: model:cm.map,privacy_link:ce.ce_default_cm_map
+msgid "https://somcomunitats.coop/avis-legal/"
+msgstr ""
+
+#. module: ce
+#: model:cm.map,cookies_link:ce.ce_default_cm_map
+msgid "https://somcomunitats.coop/politica-de-cookies/"
+msgstr ""
+
+#. module: ce
+#: model:cm.presenter.model,json_dataschema:ce.ce_cm_presenter_model_community
+msgid ""
+"{\n"
+"\"p_description\": \"<p class='m-2'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt, velit quis volutpat placerat, nisl ex sodales nisi, et consectetur arcu quam vel nisi. Vestibulum rutrum eu massa in interdum. Suspendisse potenti. Donec vehicula elit et mi accumsan, in sagittis mauris pellentesque nullam.</p>\",\n"
+"\"p_status\":\"<h4>Estat:</h4><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10 {{category_data.color.bg}} {{category_data.color.border}}'><div class='{{category_data.color.bg}} overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border {{category_data.color.border}}'><div class='z-0 rounded-full absolute inset-0 bg-opacity-10 {{category_data.color.bg}}'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0 {{category_data.color.bg}}'></div><i class='relative z-20 fas fa-{{category_data.icon_class}} text-base {{category_data.color.text}}'></i></div></div><div class='flex-0 flex sm:flex-col ml-2 flex-row items-center sm:items-start'><div class='text-sm text-gray-800 cursor-pointer sm:font-medium text-xs sm:text-sm'>{{category_data.title}}</div><span class='text-xs text-gray-500 hidden sm:block'></span></div></div></label>\",\n"
+"\"p_categories\":\"<h4>Acció energètica en curs:</h4>{% for filter in filters_data %}<div class='pb=4'><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10 {{filter.color.bg}} {{filter.color.border}}'><div class='{{filter.color.bg}} overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border {{filter.color.border}}'><div class='z-0 rounded-full absolute inset-0 bg-opacity-10 {{filter.color.bg}}'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0 {{filter.color.bg}}'></div><i class='relative z-20 fas fa-{{filter.icon_class}} text-base {{filter.color.text}}'></i></div></div><div class='flex-0 flex sm:flex-col ml-2 flex-row items-center sm:items-start'><div class='text-sm text-gray-800 cursor-pointer sm:font-medium text-xs sm:text-sm'>{{filter.title}}</div><span class='text-xs text-gray-500 hidden sm:block'></span></div></div></label>{% endfor %}</div>\"\n"
+"}"
+msgstr ""
+
+#. module: ce
+#: model:cm.form.model,json_uischema:ce.ce_cm_form_model_into_community_registration
+msgid ""
+"{\n"
+"\"type\": \"VerticalLayout\",\n"
+"\"elements\": [\n"
+"    {\n"
+"        \"type\": \"Control\",\n"
+"        \"label\": \"Name\",\n"
+"        \"scope\": \"#/properties/name\"\n"
+"    },\n"
+"    {\n"
+"        \"type\": \"Control\",\n"
+"        \"label\": \"Birth Date\",\n"
+"        \"scope\": \"#/properties/birthDate\"\n"
+"    }\n"
+"]\n"
+"}"
+msgstr ""
+
+#. module: ce
+#: model:cm.form.model,json_schema:ce.ce_cm_form_model_into_community_registration
+msgid ""
+"{\n"
+"\"type\": \"object\",\n"
+"\"properties\": {\n"
+"    \"name\": {\n"
+"        \"type\": \"string\",\n"
+"        \"minLength\": 3,\n"
+"        \"description\": \"Please enter your name\"\n"
+"    },\n"
+"    \"vegetarian\": {\n"
+"        \"type\": \"boolean\"\n"
+"    },\n"
+"    \"birthDate\": {\n"
+"        \"type\": \"string\",\n"
+"        \"format\": \"date\"\n"
+"    },\n"
+"    \"nationality\": {\n"
+"        \"type\": \"string\",\n"
+"        \"enum\": [\"DE\",\"IT\",\"JP\",\"US\",\"RU\",\"Other\"]\n"
+"    },\n"
+"    \"personalData\": {\n"
+"        \"type\": \"object\",\n"
+"        \"properties\": {\n"
+"            \"age\": {\n"
+"                \"type\": \"integer\",\n"
+"                \"description\": \"Please enter your age.\"\n"
+"            },\n"
+"            \"height\": {\n"
+"                \"type\": \"number\"\n"
+"            },\n"
+"            \"drivingSkill\": {\n"
+"                \"type\": \"number\",\n"
+"                \"maximum\": 10,\n"
+"                \"minimum\": 1,\n"
+"                \"default\": 7\n"
+"            }\n"
+"        },\n"
+"        \"required\": [\"age\",\"height\"]\n"
+"    },\n"
+"    \"occupation\": {\"type\": \"string\"},\n"
+"    \"postalCode\": {\"type\": \"string\",\"maxLength\": 5}\n"
+"},\n"
+"\"required\": [\"occupation\",\"nationality\"]\n"
+"}"
+msgstr ""
+
+#. module: ce
+#: model:cm.presenter.model,json_uischema:ce.ce_cm_presenter_model_community
+msgid ""
+"{\n"
+"\"type\":\"VerticalLayout\",\n"
+"\"elements\": [\n"
+"    {\n"
+"        \"type\": \"Display\",\n"
+"        \"scope\": \"#/properties/p_description\"\n"
+"    },\n"
+"    {\n"
+"        \"type\": \"Display\",\n"
+"        \"scope\": \"#/properties/p_status\"\n"
+"    },\n"
+"    {\n"
+"        \"type\": \"Display\",\n"
+"        \"scope\": \"#/properties/p_categories\"\n"
+"    }\n"
+"]\n"
+"}"
+msgstr ""
+
+#. module: ce
+#: model:cm.form.model,json_initial_data:ce.ce_cm_form_model_into_community_registration
+msgid "{\"name\": \"John Doe\", \"vegetarian\": false,\"birthDate\": \"1985-06-02\", \"personalData\": {\"age\": 34}, \"postalCode\": \"12345\"}"
+msgstr ""
+
+#. module: ce
+#: model_terms:ir.ui.view,arch_db:ce.becomecooperator_ccee
+msgid "€ by follow the steps you will receive by email."
+msgstr ""
