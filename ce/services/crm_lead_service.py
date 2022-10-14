@@ -90,6 +90,20 @@ class CRMLeadService(Component):
         if params.get("partner_firstname",None) and params.get("partner_lastname",None):
             contact_name =  "{} {}".format(params.get("partner_firstname",""),params.get("partner_lastname",""))
 
+        target_lang = None
+        if params.get("partner_language", None):
+            active_langs = self.env['res.lang'].search([('active','=', True)])
+            active_code_langs = [l.code.split('_')[0] for l in active_langs]
+            if params.get('partner_language').lower() not in active_code_langs:
+                raise wrapJsonException(
+                    BadRequest(),
+                    include_description=False,
+                    extra_info={'message': _("This language code %s is not active in Odoo. Active ones: %s") % (
+                        params.get('partner_language').lower(),
+                        str(active_code_langs))}
+                )
+            target_lang = [l for l in active_langs if l.code.split('_')[0] == params.get('partner_language').lower()][0]
+
         vals = {
             "submission_type": 'place_proposal_submission',
             "type": 'opportunity',
@@ -119,6 +133,7 @@ class CRMLeadService(Component):
                 (0,0,{'key':'contact2_email','value':params.get("contact2_email"),'type':'string'}),
                 (0,0,{'key':'contact2_mobile','value':params.get("contact2_mobile"),'type':'string'}),
                 (0,0,{'key':'partner_map_place_form_url','value':params.get("partner_map_place_form_url"),'type':'string'}),
+                (0,0,{'key':'partner_language','value':target_lang and target_lang.code or 'en_US','type':'string'}),
                 (0,0,{'key':'partner_twitter','value':'','type':'string'}),
                 (0,0,{'key':'partner_facebook','value':'','type':'string'}),
                 (0,0,{'key':'partner_instagram','value':'','type':'string'}),

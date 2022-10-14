@@ -201,10 +201,14 @@ class CrmLead(models.Model):
 
         initial_share_amount = 0.00
         if m_dict.get('partner_initial_share_amount',False) and m_dict['partner_initial_share_amount'] or None:
-                try:
-                    initial_share_amount = float(m_dict['partner_initial_share_amount'])
-                except:
-                    pass
+            try:
+                initial_share_amount = float(m_dict['partner_initial_share_amount'])
+            except:
+                pass
+
+        lang_id = None
+        if m_dict.get('partner_language',False) and m_dict['partner_language'] or None:
+            lang_id = self.env['res.lang'].search([('code','=',m_dict['partner_language'])],limit=1)
 
 
         create_vals = {
@@ -226,7 +230,9 @@ class CrmLead(models.Model):
                 'create_user': True,
                 'foundation_date': foundation_date,
                 'initial_subscription_share_amount': initial_share_amount,
+                'default_lang_id': lang_id and lang_id.id or None,
             }
+
         return create_vals
 
 
