@@ -84,8 +84,8 @@ class CommunityService(Component):
             'allow_new_members': company.allow_new_members,
         }}
 
-        resp.update(CommunityService._to_dict_members(
+        resp['community'].update(CommunityService._to_dict_members(
             company.get_ce_members()))
-        resp.update({'active_services': company.get_active_services()})
+        resp['community'].update({'active_services': company.get_active_services()})
 
         return resp
