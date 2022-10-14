@@ -59,6 +59,7 @@ S_CRM_LEAD_CREATE_ALTA_CE = {
     "odoo_company_id": {"type": "integer", "required": True},
     "source_xml_id": {"type": "string", "required": True},
     "partner_map_place_form_url":{"type": "string", "required": False},
+    "partner_language": {"type": "string"},
 }
 
 S_PROFILE_RETURN_GET = {
