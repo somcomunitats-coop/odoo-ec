@@ -36,7 +36,7 @@ class ResPartner(models.Model):
         user = self.create_user_from_partner_id()
         if user:
             self.user_id = user
-            self.push_new_user_to_keyckoack()
+            self.sudo().push_new_user_to_keyckoack()
         else: 
             raise UserError(_("Unable to create the new Odoo user related to this partner."))
         return user
