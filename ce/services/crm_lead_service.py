@@ -63,6 +63,8 @@ class CRMLeadService(Component):
             email_template = 'email_templ_lead_request_ce_news_confirm_id'
         elif target_source_xml_id == 'ce_source_future_location_ce_info':
             email_template = 'email_templ_lead_request_advise_future_ce_confirm_id'
+        elif target_source_xml_id == 'ce_source_general_info':
+            email_template = 'email_templ_lead_request_platform_news_confirm_id'
 
         if email_template:
             self.env.ref('ce.{}'.format(email_template)).sudo().send_mail(sr.id)
