@@ -71,7 +71,7 @@ class ResPartner(models.Model):
     def _get_vals_for_create_user_from_partner_id(self):
 
         self.ensure_one()
-        res_users_o = self.env['res.users']
+        ce_roles_map = self.env['res.users'].ce_user_roles_mapping()
         ce_member_group_id = self.env['ir.model.data'].get_object_reference('ce','group_ce_member')[1]
 
         return {
@@ -81,6 +81,10 @@ class ResPartner(models.Model):
             'company_id': self.company_id.id,
             'company_ids': [(6, 0, [self.company_id.id])],
             'groups_id': [(6,0,[9, ce_member_group_id])], # 9 = portal_user
+            'role_line_ids': [(0,0,{
+                'role_id': ce_roles_map['role_ce_member']['odoo_role_id'],
+                'is_enabled': True,
+                'company_id': self.company_id.id})],
         }
 
     @api.multi
