@@ -7,6 +7,13 @@ import re
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
+    #extend the available Selection options with not_binary, not_share
+    gender = fields.Selection(
+        [("male", _("Male")), ("female", _("Female")), ("not_binary", _("Not binary")),
+        ("not_share", _("I prefer do not share it")), ("other", _("Other"))
+    ])
+
+
     def _get_sanitized_login_username(self):
         return ((self.vat and re.sub(r"[^a-zA-Z0-9]","",self.vat).lower()) or
             (self.name and re.sub(' +','_',re.sub(r"[^a-zA-Z0-9 ]","",self.name)).lower()))
