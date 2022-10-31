@@ -6,7 +6,7 @@ class SubscriptionRequest(models.Model):
 
     gender = fields.Selection(
         [("male", _("Male")), ("female", _("Female")), ("not_binary", _("Not binary")),
-        ("not_share", _("I prefer do not share it")), ("other", _("Other"))],
+        ("not_share", _("I prefer to not share it")), ("other", _("Other"))],
         string="Gender",
         readonly=True,
         states={"draft": [("readonly", False)]},
