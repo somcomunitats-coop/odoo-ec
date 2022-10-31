@@ -10,7 +10,7 @@ class ResPartner(models.Model):
     #extend the available Selection options with not_binary, not_share
     gender = fields.Selection(
         [("male", _("Male")), ("female", _("Female")), ("not_binary", _("Not binary")),
-        ("not_share", _("I prefer do not share it")), ("other", _("Other"))
+        ("not_share", _("I prefer to not share it")), ("other", _("Other"))
     ])
 
 
