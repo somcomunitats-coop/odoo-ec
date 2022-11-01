@@ -28,10 +28,46 @@
                     />
             </div>
         </xpath>
+        <xpath expr="//div[@id='wrap']//input[@id='email']" position="attributes">
+            <attribute name="placeholder"></attribute>
+        </xpath>
+        <xpath expr="//div[@id='wrap']//input[@id='confirm_email']" position="attributes">
+            <attribute name="placeholder"></attribute>
+        </xpath>
     </template>
 
     <template id="iban_template_es_ccee" inherit_id="l10n_es_cooperator.iban_template_es">
-          <xpath expr="//div[@name='iban_container']" position="replace"/>
+        <xpath expr="//div[@name='iban_container']" position="replace"/>
+        <xpath expr="//input[@name='vat']" position="attributes" >
+            <attribute name="placeholder"></attribute>
+        </xpath>
+    </template>
+
+    <template id="contact_template_ccee" inherit_id="cooperator_website.contact_template">
+        <xpath expr="//input[@name='firstname']" position="attributes" >
+            <attribute name="placeholder"></attribute>
+        </xpath>
+        <xpath expr="//input[@id='lastname']" position="attributes" >
+            <attribute name="placeholder"></attribute>
+        </xpath>
+        <xpath expr="//input[@name='birthdate']" position="attributes">
+            <attribute name="placeholder"></attribute>
+        </xpath>
+        <xpath expr="//input[@id='phone']" position="attributes" >
+            <attribute name="placeholder"></attribute>
+        </xpath>
+    </template>
+
+    <template id="address_template_ccee" inherit_id="cooperator_website.address_template">
+        <xpath expr="//input[@id='address']" position="attributes" >
+            <attribute name="placeholder"></attribute>
+        </xpath>
+        <xpath expr="//input[@id='city']" position="attributes" >
+            <attribute name="placeholder"></attribute>
+        </xpath>
+        <xpath expr="//input[@id='zip_code']" position="attributes" >
+            <attribute name="placeholder"></attribute>
+        </xpath>
     </template>
 
 </odoo>
