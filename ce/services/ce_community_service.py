@@ -82,6 +82,8 @@ class CommunityService(Component):
                 'telegram': company.social_telegram or ''},
             'active_services': [],
             'allow_new_members': company.allow_new_members,
+            "public_web_landing_url": company.get_public_web_landing_url() or '',
+            "keycloak_odoo_login_url": company.get_keycloak_odoo_login_url() or '',
         }}
 
         resp['community'].update(CommunityService._to_dict_members(
