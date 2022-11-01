@@ -25,6 +25,7 @@ S_CRM_LEAD_CREATE = {
             "type": "integer",
         }
     },
+    "partner_description": {"type": "string"},
 }
 
 S_CRM_LEAD_CREATE_ALTA_CE = {
@@ -188,6 +189,8 @@ S_COMMUNITY_RETURN_GET = {
                 },
             },
             "allow_new_members": {"type": "boolean"},
+            "public_web_landing_url": {"type": "string"},
+            "keycloak_odoo_login_url": {"type": "string"},
         }
     }
 }
