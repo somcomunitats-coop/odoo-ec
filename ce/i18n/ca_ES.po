@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-19 14:30+0000\n"
-"PO-Revision-Date: 2022-10-19 16:50+0200\n"
+"POT-Creation-Date: 2022-11-01 20:37+0000\n"
+"PO-Revision-Date: 2022-11-01 21:42+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: ca_ES\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.1\n"
 
 #. module: ce
 #: model:mail.template,body_html:ce.email_templ_lead_request_contact_confirm_id
@@ -560,6 +560,7 @@ msgstr "Paràmetres que depenen de la companyia"
 
 #. module: ce
 #: model:ir.model.fields,field_description:ce.field_auth_oauth_provider__company_id
+#: model:ir.model.fields,field_description:ce.field_res_users_role_line__company_id
 msgid "Companyia"
 msgstr ""
 
@@ -673,8 +674,9 @@ msgid "Error when calling Keycloak API to update user: {}"
 msgstr ""
 
 #. module: ce
+#: code:addons/ce/models/res_partner.py:12
 #: code:addons/ce/models/subscription_request.py:8
-#: selection:subscription.request,gender:0
+#: selection:res.partner,gender:0 selection:subscription.request,gender:0
 #, python-format
 msgid "Female"
 msgstr "Dona"
@@ -701,6 +703,8 @@ msgid "Foundation date"
 msgstr "Data creació"
 
 #. module: ce
+#: model:ir.model.fields,field_description:ce.field_res_partner__gender
+#: model:ir.model.fields,field_description:ce.field_res_users__gender
 #: model:ir.model.fields,field_description:ce.field_subscription_request__gender
 msgid "Gender"
 msgstr "Gènere"
@@ -739,9 +743,16 @@ msgstr ""
 
 #. module: ce
 #: code:addons/ce/models/subscription_request.py:9
-#: selection:subscription.request,gender:0
 #, python-format
 msgid "I prefer do not share it"
+msgstr "Prefereixo no compartir-ho"
+
+#. module: ce
+#: code:addons/ce/models/res_partner.py:13
+#: code:addons/ce/models/subscription_request.py:9
+#: selection:res.partner,gender:0 selection:subscription.request,gender:0
+#, python-format
+msgid "I prefer to not share it"
 msgstr "Prefereixo no compartir-ho"
 
 #. module: ce
@@ -838,8 +849,9 @@ msgid "Lead/Opportunity"
 msgstr "Iniciativa/Oportunitat"
 
 #. module: ce
+#: code:addons/ce/models/res_partner.py:12
 #: code:addons/ce/models/subscription_request.py:8
-#: selection:subscription.request,gender:0
+#: selection:res.partner,gender:0 selection:subscription.request,gender:0
 #, python-format
 msgid "Male"
 msgstr "Home"
@@ -897,14 +909,17 @@ msgid "No Odoo User found for KeyCloak user id %s"
 msgstr ""
 
 #. module: ce
+#: code:addons/ce/models/res_partner.py:12
 #: code:addons/ce/models/subscription_request.py:8
-#: selection:subscription.request,gender:0
+#: selection:res.partner,gender:0 selection:subscription.request,gender:0
 #, python-format
 msgid "Not binary"
 msgstr "No binari"
 
 #. module: ce
 #: code:addons/ce/controllers/website_subscription_main.py:20
+#: code:addons/ce/controllers/website_subscription_main.py:22
+#: code:addons/ce/controllers/website_subscription_main.py:45
 #, python-format
 msgid "Not valid parameter value [odoo_company_id]"
 msgstr ""
@@ -975,8 +990,9 @@ msgid "Only users that belongs to the 'Coordinator' company can create new Map P
 msgstr ""
 
 #. module: ce
+#: code:addons/ce/models/res_partner.py:13
 #: code:addons/ce/models/subscription_request.py:9
-#: selection:subscription.request,gender:0
+#: selection:res.partner,gender:0 selection:subscription.request,gender:0
 #, python-format
 msgid "Other"
 msgstr "Altres"
@@ -1074,7 +1090,7 @@ msgstr ""
 #. module: ce
 #: model:ir.model,name:ce.model_subscription_request
 msgid "Subscription Request"
-msgstr "Sol·licitud de subscripció"
+msgstr "Sol·licitud de Subscripció"
 
 #. module: ce
 #: code:addons/ce/services/crm_lead_service.py:48
@@ -1129,6 +1145,18 @@ msgid "There is an allready existing Map Place related to this Lead: {}."
 msgstr ""
 
 #. module: ce
+#: code:addons/ce/controllers/website_subscription_main.py:153
+#, python-format
+msgid "There is an existing account for this email address on this community. Please contact with the community administrators."
+msgstr "En aquesta Comunitat ja existeix un compte creat amb aquest mateix NIF/CIF. Si us plau contacteu amb els administradors de la Comunitat Energètica."
+
+#. module: ce
+#: code:addons/ce/controllers/website_subscription_main.py:141
+#, python-format
+msgid "There is an existing account for this vat number on this community. Please contact with the community administrators."
+msgstr "En aquesta Comunitat ja existeix un compte creat amb aquest mateix correu electrònic. Si us plau contacteu amb els administradors de la Comunitat Energètica."
+
+#. module: ce
 #: model_terms:ir.ui.view,arch_db:ce.becomecooperator_ccee
 msgid "This form allow you to request be member of the community:"
 msgstr "Aquest és el formulari per a sol·licitar adherir-te com a soci/a a la comunitat energètica:"
@@ -1140,7 +1168,6 @@ msgstr "Aquest diari serà el que s'usarà per defecte per als cobraments de les
 
 #. module: ce
 #: code:addons/ce/services/ce_member_profile_service.py:47
-#: code:addons/ce/services/crm_lead_service.py:101
 #: code:addons/ce/services/crm_lead_service.py:103
 #, python-format
 msgid "This language code %s is not active in Odoo. Active ones: %s"
@@ -1169,12 +1196,14 @@ msgstr ""
 
 #. module: ce
 #: code:addons/ce/models/res_company.py:85
+#: code:addons/ce/models/res_company.py:93
 #, python-format
 msgid "Unable to create new company because there is an allready existing company with this NAME: {}"
 msgstr ""
 
 #. module: ce
 #: code:addons/ce/models/res_company.py:78
+#: code:addons/ce/models/res_company.py:86
 #, python-format
 msgid "Unable to create new company because there is an allready existing company with this VAT number: {}"
 msgstr ""
@@ -1187,12 +1216,14 @@ msgstr ""
 
 #. module: ce
 #: code:addons/ce/models/res_partner.py:41
+#: code:addons/ce/models/res_partner.py:48
 #, python-format
 msgid "Unable to create the new Odoo user related to this partner."
 msgstr ""
 
 #. module: ce
 #: code:addons/ce/models/res_company.py:225
+#: code:addons/ce/models/res_company.py:264
 #: code:addons/ce/models/res_users.py:52 code:addons/ce/models/res_users.py:94
 #, python-format
 msgid "Unable to get the 'CE admin' provider_id related to tha current company when triying to push new user to KC."
@@ -1238,6 +1269,11 @@ msgstr ""
 #: model:ir.model,name:ce.model_res_users
 msgid "Users"
 msgstr "Usuaris"
+
+#. module: ce
+#: model:ir.model,name:ce.model_res_users_role_line
+msgid "Users associated to a role"
+msgstr ""
 
 #. module: ce
 #: model:ir.ui.menu,name:ce.ce_menu_webforms_settings
