@@ -1,34 +1,31 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* cooperator
+#	* cooperator
+# 	* cooperator_website
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-20 21:51+0000\n"
-"PO-Revision-Date: 2022-10-21 00:00+0200\n"
+"POT-Creation-Date: 2022-10-31 09:48+0000\n"
+"PO-Revision-Date: 2022-10-31 09:48+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
-"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 3.1.1\n"
 
 #. module: cooperator
 #: model:mail.template,report_name:cooperator.email_template_release_capital
-msgid ""
-"\n"
+msgid "\n"
 "                ${(object.number or '').replace('/','_')}_${object.state == 'draft' and 'draft' or ''}\n"
 "            "
 msgstr ""
 
 #. module: cooperator
 #: model:mail.template,body_html:cooperator.email_template_waiting_list
-msgid ""
-"\n"
+msgid "\n"
 "<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
 "    <p>Hello ${object.firstname},</p>\n"
@@ -75,8 +72,7 @@ msgstr ""
 
 #. module: cooperator
 #: model:mail.template,body_html:cooperator.email_template_certificat_increase
-msgid ""
-"\n"
+msgid "\n"
 "<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
 "    <p>Hello ${object.firstname},</p>\n"
@@ -121,8 +117,7 @@ msgstr ""
 
 #. module: cooperator
 #: model:mail.template,body_html:cooperator.email_template_certificat
-msgid ""
-"\n"
+msgid "\n"
 "<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
 "    <p>Hello ${object.firstname},</p>\n"
@@ -167,8 +162,7 @@ msgstr ""
 
 #. module: cooperator
 #: model:mail.template,body_html:cooperator.email_template_share_update
-msgid ""
-"\n"
+msgid "\n"
 "<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
 "    <p>Hello ${object.firstname},</p>\n"
@@ -213,8 +207,7 @@ msgstr ""
 
 #. module: cooperator
 #: model:mail.template,body_html:cooperator.email_template_share_transfer
-msgid ""
-"\n"
+msgid "\n"
 "<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
 "    <p>Hello ${object.firstname},</p>\n"
@@ -259,8 +252,7 @@ msgstr ""
 
 #. module: cooperator
 #: model:mail.template,body_html:cooperator.email_template_confirmation_company
-msgid ""
-"\n"
+msgid "\n"
 "<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
 "    <p>Hello ${object.firstname},</p>\n"
@@ -307,8 +299,7 @@ msgstr ""
 
 #. module: cooperator
 #: model:mail.template,body_html:cooperator.email_template_release_capital
-msgid ""
-"\n"
+msgid "\n"
 "<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
 "    <p>Hello ${object.partner_id.firstname},</p>\n"
@@ -351,8 +342,7 @@ msgstr ""
 
 #. module: cooperator
 #: model:mail.template,body_html:cooperator.email_template_confirmation
-msgid ""
-"\n"
+msgid "\n"
 "<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
 "    <p>Hello,</p>\n"
@@ -382,8 +372,7 @@ msgid ""
 "    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
 "</div>\n"
 "            "
-msgstr ""
-"\n"
+msgstr "\n"
 "<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
 "    <p>Hola,</p>\n"
@@ -416,8 +405,7 @@ msgstr ""
 
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_release_capital
-msgid ""
-"${object.company_id.name} Request to Release\n"
+msgid "${object.company_id.name} Request to Release\n"
 "                Capital (Ref ${object.number or 'n/a'})\n"
 "            "
 msgstr ""
@@ -436,8 +424,7 @@ msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.theme_invoice_G002_document
-msgid ""
-"<span groups=\"account.group_show_line_subtotals_tax_excluded\">\n"
+msgid "<span groups=\"account.group_show_line_subtotals_tax_excluded\">\n"
 "                                    Amount\n"
 "                                </span>\n"
 "                                <span groups=\"account.group_show_line_subtotals_tax_included\">\n"
@@ -502,8 +489,7 @@ msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.theme_invoice_G002_document
-msgid ""
-"<strong class=\"text-center\">Scan me with your banking\n"
+msgid "<strong class=\"text-center\">Scan me with your banking\n"
 "                            app.\n"
 "                        </strong>\n"
 "                        <br/>\n"
@@ -512,8 +498,7 @@ msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.theme_invoice_G002_document
-msgid ""
-"<strong class=\"text-center\">The SEPA QR Code\n"
+msgid "<strong class=\"text-center\">The SEPA QR Code\n"
 "                            informations are not set correctly.\n"
 "                        </strong>\n"
 "                        <br/>"
@@ -735,7 +720,8 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: cooperator
-#: selection:operation.request,state:0 selection:subscription.request,state:0
+#: selection:operation.request,state:0
+#: selection:subscription.request,state:0
 msgid "Cancelled"
 msgstr ""
 
@@ -756,8 +742,7 @@ msgstr ""
 #: model:mail.template,report_name:cooperator.email_template_certificat_increase
 #: model:mail.template,report_name:cooperator.email_template_share_transfer
 #: model:mail.template,report_name:cooperator.email_template_share_update
-msgid ""
-"Certificat\n"
+msgid "Certificat\n"
 "                ${(object.cooperator_register_number or '')}\n"
 "            "
 msgstr ""
@@ -1013,10 +998,14 @@ msgstr ""
 #. module: cooperator
 #: model:ir.actions.act_window,name:cooperator.action_partner_cooperator_form
 #: model:ir.ui.menu,name:cooperator.menu_cooperator_cooperator
-#: model:ir.ui.menu,name:cooperator.menu_cooperator_main
 #: model_terms:ir.ui.view,arch_db:cooperator.view_res_partner_filter
 msgid "Cooperators"
-msgstr ""
+msgstr "Socias"
+
+#. module: cooperator
+#: model:ir.ui.menu,name:cooperator.menu_cooperator_main
+msgid "Cooperators"
+msgstr "Gestión Sociataria"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__country_id
@@ -1042,8 +1031,7 @@ msgstr "Crea una factura de cliente"
 
 #. module: cooperator
 #: model_terms:ir.actions.act_window,help:cooperator.account_invoice_action
-msgid ""
-"Create invoices, register payments and keep track of the\n"
+msgid "Create invoices, register payments and keep track of the\n"
 "                discussions with your customers."
 msgstr "Crear facturas, registrar pagos y mantener el rastro de todas las conversaciones con sus clientes."
 
@@ -1173,14 +1161,16 @@ msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.view_subscription_request_filter
-#: selection:operation.request,state:0 selection:subscription.request,state:0
+#: selection:operation.request,state:0
+#: selection:subscription.request,state:0
 msgid "Done"
 msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.operation_request_form
 #: model_terms:ir.ui.view,arch_db:cooperator.view_subscription_request_filter
-#: selection:operation.request,state:0 selection:subscription.request,state:0
+#: selection:operation.request,state:0
+#: selection:subscription.request,state:0
 msgid "Draft"
 msgstr "Borrador"
 
@@ -1191,8 +1181,7 @@ msgstr "Factura borrador"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_register_G001
-msgid ""
-"Effective\n"
+msgid "Effective\n"
 "                            date"
 msgstr ""
 
@@ -1344,7 +1333,7 @@ msgstr "Agrupar por"
 
 #. module: cooperator
 #: selection:subscription.request,gender:0
-msgid "I prefer do not share it"
+msgid "I prefer to not share it"
 msgstr ""
 
 #. module: cooperator
@@ -1730,8 +1719,7 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:cooperator.action_company_representative_form
 #: model_terms:ir.actions.act_window,help:cooperator.action_partner_cooperator_candidate_form
 #: model_terms:ir.actions.act_window,help:cooperator.action_partner_cooperator_form
-msgid ""
-"OpenERP helps you easily track all activities related to\n"
+msgid "OpenERP helps you easily track all activities related to\n"
 "                    a cooperator: discussions, history of business\n"
 "                    opportunities,\n"
 "                    documents, etc."
@@ -1744,15 +1732,13 @@ msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_subscription_G001
-msgid ""
-"Operation\n"
+msgid "Operation\n"
 "                            number"
 msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_subscription_G001
-msgid ""
-"Operation\n"
+msgid "Operation\n"
 "                            type"
 msgstr ""
 
@@ -1799,8 +1785,7 @@ msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.external_layout_standard
-msgid ""
-"Page:\n"
+msgid "Page:\n"
 "                            <span class=\"page\"/>\n"
 "                            /\n"
 "                            <span class=\"topage\"/>"
@@ -1942,8 +1927,7 @@ msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.theme_invoice_G002_document
-msgid ""
-"Request to Release\n"
+msgid "Request to Release\n"
 "                        Capital"
 msgstr ""
 
@@ -2037,8 +2021,7 @@ msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_subscription_G001
-msgid ""
-"Share\n"
+msgid "Share\n"
 "                            number"
 msgstr ""
 
@@ -2176,13 +2159,11 @@ msgstr "Provincia"
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_subscription_request__activity_state
-msgid ""
-"Status based on activities\n"
+msgid "Status based on activities\n"
 "Overdue: Due date is already passed\n"
 "Today: Activity date is today\n"
 "Planned: Future activities."
-msgstr ""
-"Estado basado en actividades\n"
+msgstr "Estado basado en actividades\n"
 "Vencida: la fecha tope ya ha pasado\n"
 "Hoy: La fecha tope es hoy\n"
 "Planificada: futuras actividades."
@@ -2195,14 +2176,14 @@ msgstr "Enviar"
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.view_subscription_register_filter
 #: selection:operation.request,operation_type:0
-#: selection:subscription.register,type:0 selection:subscription.request,type:0
+#: selection:subscription.register,type:0
+#: selection:subscription.request,type:0
 msgid "Subscription"
 msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_subscription_G001
-msgid ""
-"Subscription\n"
+msgid "Subscription\n"
 "                            date"
 msgstr ""
 
@@ -2262,8 +2243,7 @@ msgstr ""
 
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_waiting_list
-msgid ""
-"Subscription request added on waiting list.\n"
+msgid "Subscription request added on waiting list.\n"
 "            "
 msgstr ""
 
@@ -2274,8 +2254,7 @@ msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.view_create_subscription
-msgid ""
-"Subscription request will be created with data from the\n"
+msgid "Subscription request will be created with data from the\n"
 "                        partner."
 msgstr ""
 
@@ -2591,7 +2570,8 @@ msgid "Vendor Credit Note"
 msgstr "Factura rectificativa de proveedor"
 
 #. module: cooperator
-#: selection:operation.request,state:0 selection:subscription.request,state:0
+#: selection:operation.request,state:0
+#: selection:subscription.request,state:0
 msgid "Waiting"
 msgstr ""
 
@@ -2672,4 +2652,341 @@ msgstr ""
 #. module: cooperator
 #: selection:subscription.request,state:0
 msgid "paid"
+msgstr ""
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.cooperator_thanks
+msgid "&amp;times;"
+msgstr ""
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid "0647980091"
+msgstr ""
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.address_template
+msgid "1030"
+msgstr ""
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
+msgid "1978-03-05"
+msgstr ""
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.address_template
+msgid "Address"
+msgstr "Dirección"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
+msgid "Are you already a cooperator?"
+msgstr "Ya eres socia/o?"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
+msgid "Become Cooperator"
+msgstr "Hazte socia/o"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid "Become Cooperator as Company"
+msgstr "Hazte socia/o como empresa"
+
+#. module: cooperator_website
+#: model:website.menu,name:cooperator_website.menu_becomecooperator
+msgid "Become cooperator"
+msgstr "Hazte socia/o"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
+msgid "Bourdon"
+msgstr ""
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.address_template
+msgid "Bruxelles"
+msgstr ""
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.address_template
+msgid "City"
+msgstr "Ciudad"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid ""
+"Company\n"
+"                                        Register Number"
+msgstr ""
+"Número\n"
+"                                        de Registro de la empresa"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid "Company Info"
+msgstr "Información de la empresa"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid "Company email"
+msgstr "Correo electrónico de la empresa"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid "Company name"
+msgstr "Nombre de la empresa"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid "Company type"
+msgstr "Tipo empresa"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
+msgid "Confirm Email"
+msgstr "Confirma correo electrónico"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid "Contact Person"
+msgstr "Persona de contacto"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.address_template
+msgid "Country"
+msgstr "País"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.address_template
+msgid "Country..."
+msgstr "País..."
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
+msgid "Date of birth"
+msgstr "Fecha de nacimiento"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
+msgid "Didier"
+msgstr ""
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
+msgid "Do you already have an account?"
+msgstr "Ya tienes una cuenta?"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
+msgid ""
+"Do you want to\n"
+"                                            modify your personal information first?"
+msgstr ""
+"Quieres\n"
+"                                            primero modificar tus datos personales?"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
+msgid "Email"
+msgstr "Correo electrónico"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.rules_template
+msgid "Financial Risk"
+msgstr "Riesgo financiero"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
+msgid "First Name"
+msgstr "Nombre"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid "Function"
+msgstr "Cargo"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
+msgid "Gender"
+msgstr "Género"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.rules_template
+msgid "Generic Rules"
+msgstr "Condiciones Generales"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.rules_template
+msgid ""
+"Identity\n"
+"            card scan"
+msgstr ""
+"Escanea\n"
+"            tarjeta de identidad"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.rules_template
+msgid "Internal Rules"
+msgstr "Protocolo Interno"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid "Is a company?"
+msgstr "Es una empresa?"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid "La super coopérative"
+msgstr "Coco Coop"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
+msgid "Language"
+msgstr "Idioma"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
+msgid "Last Name"
+msgstr "Apellidos"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
+msgid "Logged"
+msgstr "Registrado"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid "Main Address"
+msgstr "Dirección principal"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
+msgid "Phone"
+msgstr "Teléfono"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.rules_template
+msgid ""
+"Privacy\n"
+"            Policy"
+msgstr ""
+"Política\n"
+"            Privacidad"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
+msgid "Send"
+msgstr "Enviar"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.shares_template
+msgid "Share number"
+msgstr "Número de quotas"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.shares_template
+msgid "Share type"
+msgstr "Tipo quota"
+
+#. module: cooperator_website
+#: code:addons/cooperator_website/controllers/main.py:274
+#, python-format
+msgid "Some mandatory fields have not been filled"
+msgstr "Algunos campos obligatorios no se han informado"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.cooperator_thanks
+msgid "Thanks!"
+msgstr "Gracias!"
+
+#. module: cooperator_website
+#: code:addons/cooperator_website/controllers/main.py:295
+#, python-format
+msgid "The email and the confirmation email doesn't match.Please check the given mail addresses"
+msgstr "El correo electrónico y el correo electrónico de confirmación no coinciden. Por favor corrígelo."
+
+#. module: cooperator_website
+#: code:addons/cooperator_website/controllers/main.py:283
+#, python-format
+msgid "There is an existing account for this mail address. Please login before fill in the form"
+msgstr "Ya existe una cuenta registrada para esta dirección de correo. Por favor regístrate primero con esta cuenta existente antes de rellenar el formulario."
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.shares_template
+msgid "Total"
+msgstr ""
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.cooperator_thanks
+msgid "We will get back to you shortly."
+msgstr "Nos pondremos en contacto contigo en breve."
+
+#. module: cooperator_website
+#: model:ir.actions.act_url,name:cooperator_website.action_open_website
+msgid "Website Cooperator contact Form"
+msgstr "Formulario de contacto para socias/os "
+
+#. module: cooperator_website
+#: code:addons/cooperator_website/controllers/main.py:342
+#, python-format
+msgid "You can't subscribe for an amount that exceed "
+msgstr "No puedes suscribirte por un importe que excede "
+
+#. module: cooperator_website
+#: code:addons/cooperator_website/controllers/main.py:333
+#, python-format
+msgid "You can't subscribe two different types of share"
+msgstr "No te puedes suscribir a 2 tipos de cuota distintos"
+
+#. module: cooperator_website
+#: code:addons/cooperator_website/controllers/main.py:310
+#, python-format
+msgid "You need to upload a scan of your id card"
+msgstr "Es necesario que subas una copia escaneada de tu tarjeta de identidad"
+
+#. module: cooperator_website
+#: code:addons/cooperator_website/controllers/main.py:320
+#, python-format
+msgid "Your IBAN is not valid."
+msgstr "Tu IBAN no es válido"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.cooperator_thanks
+msgid ""
+"Your subscription has been successfully\n"
+"                                registered."
+msgstr ""
+"Tu suscripción ha sido registrada\n"
+"                                correctamente."
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.address_template
+msgid "Zip / Postal Code"
+msgstr "Código postal"
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid "administration@beescoop.be"
+msgstr ""
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
+msgid "didier.bourdon@bees-coop.be"
+msgstr ""
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
+msgid "e.g. +32 456 926 5059"
+msgstr ""
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.address_template
+msgid "rue Van Hove, 199"
 msgstr ""
