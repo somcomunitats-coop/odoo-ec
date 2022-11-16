@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-01 20:37+0000\n"
-"PO-Revision-Date: 2022-11-01 21:42+0100\n"
+"POT-Creation-Date: 2022-11-16 12:13+0000\n"
+"PO-Revision-Date: 2022-11-16 14:21+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: ca_ES\n"
@@ -33,11 +33,9 @@ msgid ""
 "\n"
 "    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "    <p> - Contact name: ${object.name}</p>\n"
-"    <p> - Address: ${object.street}</p>\n"
-"    <p> - Zip code: ${object.zip}</p>\n"
-"    <p> - City: ${object.city}</p>\n"
 "    <p> - Email: ${object.email_from}</p>\n"
 "    <p> - Phone: ${object.phone}</p>\n"
+"    <p> - Message: ${object.description}</p>\n"
 "    <p></p>\n"
 "    % if object.tag_ids:\n"
 "    <p> - Interested in:</p>\n"
@@ -58,7 +56,7 @@ msgstr ""
 "\n"
 "<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
-"    <p>Hola,</p>\n"
+"    <p>Hola</p>\n"
 "\n"
 "    <p>Gràcies per posar-te en contacte.</p>\n"
 "\n"
@@ -68,11 +66,9 @@ msgstr ""
 "\n"
 "    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "    <p> - Nom: ${object.name}</p>\n"
-"    <p> - Adreça: ${object.street}</p>\n"
-"    <p> - Codi postal: ${object.zip}</p>\n"
-"    <p> - Ciutat: ${object.city}</p>\n"
 "    <p> - Correu electrònic: ${object.email_from}</p>\n"
 "    <p> - Telèfon: ${object.phone}</p>\n"
+"    <p> - Missatge: ${object.description}</p>\n"
 "    <p></p>\n"
 "    % if object.tag_ids:\n"
 "    <p> - Interès en:</p>\n"
@@ -82,9 +78,8 @@ msgstr ""
 "    % endif\n"
 "    </div>\n"
 "    <br />\n"
-"    <p>Seguim en contacte per qualsevol dubte.</p>\n"
 "    <p>Atentament,</p>\n"
-"    <p>Equip de Somcomunitats.coop</p>\n"
+"    <p>Somcomunitats.coop team </p>\n"
 "    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos i preguntes freqüents</a></p>\n"
 "\n"
 "</div>\n"
@@ -742,12 +737,6 @@ msgid "Gràcies per la teva participació"
 msgstr ""
 
 #. module: ce
-#: code:addons/ce/models/subscription_request.py:9
-#, python-format
-msgid "I prefer do not share it"
-msgstr "Prefereixo no compartir-ho"
-
-#. module: ce
 #: code:addons/ce/models/res_partner.py:13
 #: code:addons/ce/models/subscription_request.py:9
 #: selection:res.partner,gender:0 selection:subscription.request,gender:0
@@ -890,6 +879,7 @@ msgstr ""
 
 #. module: ce
 #: code:addons/ce/services/ce_community_service.py:38
+#: code:addons/ce/services/ce_community_service.py:40
 #, python-format
 msgid "No Odoo Company found for odoo_company_id %s"
 msgstr ""
@@ -917,7 +907,6 @@ msgid "Not binary"
 msgstr "No binari"
 
 #. module: ce
-#: code:addons/ce/controllers/website_subscription_main.py:20
 #: code:addons/ce/controllers/website_subscription_main.py:22
 #: code:addons/ce/controllers/website_subscription_main.py:45
 #, python-format
@@ -1195,14 +1184,12 @@ msgid "Unable to change the member role to '{}', because the company would remai
 msgstr ""
 
 #. module: ce
-#: code:addons/ce/models/res_company.py:85
 #: code:addons/ce/models/res_company.py:93
 #, python-format
 msgid "Unable to create new company because there is an allready existing company with this NAME: {}"
 msgstr ""
 
 #. module: ce
-#: code:addons/ce/models/res_company.py:78
 #: code:addons/ce/models/res_company.py:86
 #, python-format
 msgid "Unable to create new company because there is an allready existing company with this VAT number: {}"
@@ -1215,14 +1202,12 @@ msgid "Unable to create the KeyCloack entities from Lead: {}, because it is not 
 msgstr ""
 
 #. module: ce
-#: code:addons/ce/models/res_partner.py:41
 #: code:addons/ce/models/res_partner.py:48
 #, python-format
 msgid "Unable to create the new Odoo user related to this partner."
 msgstr ""
 
 #. module: ce
-#: code:addons/ce/models/res_company.py:225
 #: code:addons/ce/models/res_company.py:264
 #: code:addons/ce/models/res_users.py:52 code:addons/ce/models/res_users.py:94
 #, python-format
@@ -1327,6 +1312,7 @@ msgid "auth.keycloak.sync.mixin"
 msgstr ""
 
 #. module: ce
+#: model:ir.model,name:ce.model_create_coop_subs_invoice_wiz
 #: model:ir.model,name:ce.model_create_coop_subscription_invoice
 msgid "create coop subscription invoice"
 msgstr ""
