@@ -7,6 +7,7 @@ from odoo.addons.component.core import Component
 from odoo import _
 from datetime import datetime
 from . import schemas
+from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
@@ -27,7 +28,8 @@ class CommunityService(Component):
         auth="api_key",
     )
     def get(self, _odoo_company_id):
-        endpoint_args = self.work.request.endpoint_arguments
+        endpoint_args = self.work and hasattr(
+            self.work, 'request') and self.work.request.endpoint_arguments or None
         company_id = self.env['res.company'].get_real_ce_company_id(
             _odoo_company_id)
 
@@ -39,14 +41,14 @@ class CommunityService(Component):
                     "No Odoo Company found for odoo_company_id %s") % _odoo_company_id}
             )
 
-        if 'method_name' in endpoint_args and endpoint_args.get('method_name') == 'members':
+        if endpoint_args and 'method_name' in endpoint_args and endpoint_args.get('method_name') == 'members':
             return self._to_dict_members(company_id.get_ce_members())
         else:
             return self._to_dict_community(company_id)
 
     def _validator_return_community_get(self):
-        endpoint_args = self.work.request.endpoint_arguments
-        if 'method_name' in endpoint_args and endpoint_args.get('method_name') == 'members':
+        endpoint_args = self.work and hasattr(self.work, 'request') and self.work.request.endpoint_arguments or None
+        if endpoint_args and 'method_name' in endpoint_args and endpoint_args.get('method_name') == 'members':
             return schemas.S_COMMUNITY_MEMBERS_RETURN_GET
         else:
             return schemas.S_COMMUNITY_RETURN_GET
@@ -66,7 +68,7 @@ class CommunityService(Component):
     @staticmethod
     def _to_dict_community(company):
 
-        resp = {'community':{
+        resp = {'community': {
             'id': company.id,
             'name': company.name,
             'birth_date': company.foundation_date and company.foundation_date.strftime('%Y-%m-%d') or '',
@@ -88,6 +90,7 @@ class CommunityService(Component):
 
         resp['community'].update(CommunityService._to_dict_members(
             company.get_ce_members()))
-        resp['community'].update({'active_services': company.get_active_services()})
+        resp['community'].update(
+            {'active_services': company.get_active_services()})
 
         return resp

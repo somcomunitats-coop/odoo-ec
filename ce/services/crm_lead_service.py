@@ -72,8 +72,8 @@ class CRMLeadService(Component):
         return self._to_dict(sr)
 
     def _validator_create(self):
-        source = self.work.request.params.get('source_xml_id', False)
-        if source == 'ce_source_creation_ce_proposal':
+        source = self.work and hasattr(self.work, 'request') and self.work.request.params.get('source_xml_id', False) or None
+        if source and source == 'ce_source_creation_ce_proposal':
             return schemas.S_CRM_LEAD_CREATE_ALTA_CE
         return schemas.S_CRM_LEAD_CREATE
 
