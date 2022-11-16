@@ -126,11 +126,9 @@
 
     <div id="field_list_div" style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; ">
     <p> - Contact name: ${object.name}</p>
-    <p> - Address: ${object.street}</p>
-    <p> - Zip code: ${object.zip}</p>
-    <p> - City: ${object.city}</p>
     <p> - Email: ${object.email_from}</p>
     <p> - Phone: ${object.phone}</p>
+    <p> - Message: ${object.description}</p>
     <p></p>
     % if object.tag_ids:
     <p> - Interested in:</p>
