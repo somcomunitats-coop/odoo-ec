@@ -65,7 +65,11 @@ class MemberService(Component):
                 if role_id in [r['odoo_role_id'] for r in ce_roles_map.values()]:
                     role_line.sudo().unlink()
 
-            RoleLineSudo.create({'user_id': user.id, 'role_id': ce_roles_map[new_role]['odoo_role_id']})
+            RoleLineSudo.create({
+                'user_id': user.id,
+                'role_id': ce_roles_map[new_role]['odoo_role_id'],
+                'company_id': user.company_id.id,
+                })
 
             if not user.company_id.check_ce_has_admin():
                 raise wrapJsonException(
