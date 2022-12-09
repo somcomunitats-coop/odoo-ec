@@ -25,17 +25,6 @@
                             <div class="o_setting_left_pane">
                             </div>
                             <div class="o_setting_right_pane">
-                                <label for="ck_server_port"/>
-                                <div class="text-muted">
-                                    Port where it is published the KeyCloak server
-                                </div>
-                                <field name="ck_server_port"/>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box" >
-                            <div class="o_setting_left_pane">
-                            </div>
-                            <div class="o_setting_right_pane">
                                 <label for="ck_platform_oauth_provider_id"/>
                                 <div class="text-muted">
                                     Oauth provider to get admin inter-realms capabilities throw keycloak REST API.
@@ -54,12 +43,19 @@
                             <div class="o_setting_right_pane">
                                 <label for="ck_user_group_mapped_to_odoo_group_ce_member"/>
                                 <div class="text-muted">
-                                    Name of tke KC realm user group that must be mapped against the Odoo group 'CE member'.
-                                    This KC realm group name must be the same in all the existing KC realms.
+                                    Name of the KC 'user group' related to CE member users.
+                                    Must be the same in all the existing KC realms/clients.
                                 </div>
                                 <field name="ck_user_group_mapped_to_odoo_group_ce_member"/>
+                                <label for="ck_role_mapped_to_odoo_group_ce_member"/>
                                 <div class="text-muted">
-                                    Role mapped in odoo for this group. 
+                                    Name of the KC 'role' assigned to the above KC 'user group'.
+                                    Must be the same in all the existing KC realms/clients.
+                                </div>
+                                <field name="ck_role_mapped_to_odoo_group_ce_member"/>
+                                <label for="odoo_group_ce_member"/>
+                                <div class="text-muted">
+                                    Name of the Odoo 'user role' mapped to the above KC entities (user group/role).
                                 </div>
                                 <field name="odoo_group_ce_member"/>
                             </div>
@@ -70,12 +66,19 @@
                             <div class="o_setting_right_pane">
                                 <label for="ck_user_group_mapped_to_odoo_group_ce_admin"/>
                                 <div class="text-muted">
-                                    Name of tke KC realm user group that must be mapped against the Odoo group 'CE admin'.
-                                    This KC realm group name must be the same in all the existing KC realms.
+                                    Name of the KC 'user group' related to CE admin users.
+                                    Must be the same in all the existing KC realms/clients.
                                 </div>
-                                <field name="ck_user_group_mapped_to_odoo_group_ce_admin"/>
+                                <field name="ck_user_group_mapped_to_odoo_group_ce_admin"/><br/>
+                                <label for="ck_role_mapped_to_odoo_group_ce_admin"/>
                                 <div class="text-muted">
-                                    Role mapped in odoo for this group.
+                                    Name of the KC 'role' assigned to the above KC 'user group'.
+                                    Must be the same in all the existing KC realms/clients.
+                                </div>
+                                <field name="ck_role_mapped_to_odoo_group_ce_admin"/>
+                                <label for="odoo_group_ce_admin"/>
+                                <div class="text-muted">
+                                    Name of the Odoo 'user role' mapped to the above KC entities (user group/role).
                                 </div>
                                 <field name="odoo_group_ce_admin"/>
                             </div>
@@ -86,12 +89,19 @@
                             <div class="o_setting_right_pane">
                                 <label for="ck_user_group_mapped_to_odoo_group_platform_admin"/>
                                 <div class="text-muted">
-                                    Name of tke KC realm user group that must be mapped against the Odoo group 'Platform admin'.
-                                    This KC realm group name must be the same in all the existing KC realms.
+                                    Name of the KC 'user group' related to Platform admin users.
+                                    Must be the same in all the existing KC realms/clients.
                                 </div>
                                 <field name="ck_user_group_mapped_to_odoo_group_platform_admin"/>
-                                                                <div class="text-muted">
-                                    Role mapped in odoo for this group.
+                                <label for="ck_role_mapped_to_odoo_group_platform_admin"/>
+                                <div class="text-muted">
+                                    Name of the KC 'role' assigned to the above KC 'user group'.
+                                    Must be the same in all the existing KC realms/clients.
+                                </div>
+                                <field name="ck_role_mapped_to_odoo_group_platform_admin"/>
+                                <label for="odoo_group_platform_admin"/>
+                                <div class="text-muted">
+                                    Name of the Odoo 'user role' mapped to the above KC entities (user group/role).
                                 </div>
                                 <field name="odoo_group_platform_admin"/>
                             </div>

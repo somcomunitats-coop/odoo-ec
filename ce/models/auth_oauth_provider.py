@@ -12,8 +12,8 @@ class OAuthProvider(models.Model):
     login_provider = fields.Boolean(string='For users login')
 
     @api.model
-    def update_ce_oauth_providers(self,kc_url,kc_port):
-        if any([kc_url,kc_port]):
+    def update_ce_oauth_providers(self, kc_url):
+        if kc_url:
             pass #todo: update the existing providers related to the ce module accordingly
 
             

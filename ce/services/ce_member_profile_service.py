@@ -79,6 +79,9 @@ class MemberProfileService(Component):
     @staticmethod
     def _to_dict(user, partner, bank, sepa_mandate):
 
+        # in case that an user don't have any odoo role assigned in odoo, we will return that it is 'CE member'
+        user_ce_role = user.ce_role or 'role_ce_member'
+
         return {'profile':{
             "keycloak_id": user.oauth_uid,
             "odoo_res_users_id": user.id,
@@ -102,7 +105,7 @@ class MemberProfileService(Component):
                 "iban": bank and bank.acc_number or "",
                 "sepa_accepted": sepa_mandate
             },
-            "role": user.ce_role or "",
+            "role": user.ce_user_roles_mapping()[user_ce_role]['kc_role_name'] or "",
         }}
 
     def _get_profile_objs(self, _keycloak_id):

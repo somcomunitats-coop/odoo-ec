@@ -23,8 +23,8 @@ class MemberService(Component):
         auth="api_key",
     )
     def get(self, _keycloak_id):
-        user, partner, role, email = self._get_member_profile_objs(_keycloak_id)
-        return self._to_dict(user, partner, role, email)
+        user, partner, kc_role, email = self._get_member_profile_objs(_keycloak_id)
+        return self._to_dict(user, partner, kc_role, email)
     
     def _validator_return_get(self):
         return schemas.S_MEMBER_PROFILE_RETURN_GET
@@ -38,36 +38,38 @@ class MemberService(Component):
     def update(self, _keycloak_id, **params):
         _logger.info("Requested role update, user: {}".format(_keycloak_id))
 
-        user, partner, actual_role, email = self._get_member_profile_objs(_keycloak_id)
-        ce_roles_map = user.ce_user_roles_mapping()
+        user, partner, actual_kc_role, email = self._get_member_profile_objs(_keycloak_id)
+        ce_roles_map = self.env['res.users'].ce_user_roles_mapping()
+        kc_role_list = [r['kc_role_name'] for r in ce_roles_map.values()]
+        new_kc_role = params['role']
 
-        new_role = params['role']
-
-        if new_role not in ce_roles_map.keys():
-            valid_roles = [item[0] for item in self.env['res.users'].USER_CE_ROLE_NAMES_SELECTION]
+        if new_kc_role not in kc_role_list:
             raise wrapJsonException(
                 BadRequest(),
                 include_description=False,
                 extra_info={
                     'message': _("The role '{}' is not a valid one, it must be one of: {}").format(
                         params['role'],
-                        valid_roles),
+                        kc_role_list),
                     'code': 500,
                     }
             )
 
-        if new_role != actual_role:
+        if new_kc_role != actual_kc_role:
 
             RoleLineSudo = self.env['res.users.role.line'].sudo()
 
+            # reset/delete all the existing odoo role ids of this user (only the ones related to the CE module)
             for role_line in user.role_line_ids:
                 role_id = role_line.role_id.id
                 if role_id in [r['odoo_role_id'] for r in ce_roles_map.values()]:
                     role_line.sudo().unlink()
 
+            # assign to the user the new odoo role
+            new_odoo_role = [v['odoo_role_id'] for k,v in ce_roles_map.items() if v['kc_role_name']==new_kc_role]
             RoleLineSudo.create({
                 'user_id': user.id,
-                'role_id': ce_roles_map[new_role]['odoo_role_id'],
+                'role_id': new_odoo_role[0],
                 'company_id': user.company_id.id,
                 })
 
@@ -76,7 +78,7 @@ class MemberService(Component):
                     BadRequest(),
                     include_description=False,
                     extra_info={
-                        'message': _("Unable to change the member role to '{}', because the company would remain without any 'CE Admin' member").format(new_role),
+                        'message': _("Unable to change the user role to '{}', because the company would remain without any 'CE Admin' member").format(new_kc_role),
                         'code': 500,
                         }
                 )
@@ -96,17 +98,7 @@ class MemberService(Component):
                         'code': 500,
                     })
 
-        return self._to_dict(user, partner, new_role, email)
-
-    def _prepare_create(self, params):
-        """Prepare a writable dictionary of values"""
-        return {
-            "company_id": params["company_id"],
-            "user_id": params["user_id"],
-            "target_company_id": params["target_company_id"],
-            "target_user_id": params["target_user_id"],
-            "new_role": params["new_role"],
-        }
+        return self._to_dict(user, partner, new_kc_role, email)
 
     def _validator_update(self):
         return schemas.S_MEMBER_PROFILE_PUT
@@ -132,19 +124,24 @@ class MemberService(Component):
                 extra_info={'message': _("No Odoo Partner found for Odoo user with login username %s") % user.login}
             )
 
-        role = user.ce_role or ''
+        ce_roles_map = self.env['res.users'].ce_user_roles_mapping()
+
+        # in case that an user don't have any CE odoo role assigned in odoo, we will return that it is 'CE member'
+        user_ce_role = user.ce_role or 'role_ce_member'
+
+        kc_role = ce_roles_map[user_ce_role]['kc_role_name'] or ''
         email = partner.email or False
 
-        return user, partner, role, email
+        return user, partner, kc_role, email
 
 
     @staticmethod
-    def _to_dict(user, partner, role, email):
+    def _to_dict(user, partner, kc_role, email):
         return {
             'member':{
                 "keycloak_id": user.oauth_uid,
                 "name": user.display_name,
-                "role": user.ce_role or "",
+                "role": kc_role or "",
                 "email": email,
             }
         }
