@@ -3,7 +3,7 @@
     'version': '12.0.0.0.13',
     'depends': [
         'base_rest_base_structure',
-        'cooperator_website',
+        'l10n_es_cooperator',
         'auth_keycloak',
         'contacts',
         'base_rest',
