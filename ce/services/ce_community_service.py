@@ -57,9 +57,13 @@ class CommunityService(Component):
     def _to_dict_members(users):
         resp = {'members': []}
         for user in users:
+
+            # in case that an user don't have any odoo role assigned in odoo, we will return that it is 'CE member'
+            user_ce_role = user.ce_role or 'role_ce_member'
+
             resp['members'].append({
                 "name": '{} {}'.format(user.firstname, user.lastname,),
-                "role": user.ce_role or "",
+                "role": user.ce_user_roles_mapping()[user_ce_role]['kc_role_name'] or "",
                 "email": user.email or "",
                 "keycloak_id": user.oauth_uid,
             })

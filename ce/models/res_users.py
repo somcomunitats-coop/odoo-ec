@@ -7,10 +7,6 @@ logger = logging.getLogger(__name__)
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    # CAUTION: we are using here as keys, the 3 Keycloak role names:
-    # ['role_ce_member', 'role_ce_admin', 'role_platform_admin']
-    # Also those 3 names are the ones allowed to be used to be assigned to the user 'role' param in
-    # any API call between Odoo and external services as CE-PublicWeb or CE-VirtualOffice
     USER_CE_ROLE_NAMES_SELECTION = [
         ('role_ce_member',_('CE Member')),
         ('role_ce_admin',_('CE Administrator')),
@@ -153,14 +149,17 @@ class ResUsers(models.Model):
             'role_ce_member':
                 {'odoo_role_id': int(ICPSudo.get_param('ce.odoo_group_ce_member')),
                 'kc_group_name': ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_ce_member'),
+                'kc_role_name': ICPSudo.get_param('ce.ck_role_mapped_to_odoo_group_ce_member'),
                 'is_admin': False},
             'role_ce_admin':
                 {'odoo_role_id': int(ICPSudo.get_param('ce.odoo_group_ce_admin')),
                 'kc_group_name': ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_ce_admin'),
+                'kc_role_name': ICPSudo.get_param('ce.ck_role_mapped_to_odoo_group_ce_admin'),
                 'is_admin': True},
             'role_platform_admin':
                 {'odoo_role_id': int(ICPSudo.get_param('ce.odoo_group_platform_admin')),
                 'kc_group_name': ICPSudo.get_param('ce.ck_user_group_mapped_to_odoo_group_platform_admin'),
+                'kc_role_name': ICPSudo.get_param('ce.ck_role_mapped_to_odoo_group_platform_admin'),
                 'is_admin': True}
             }
 
