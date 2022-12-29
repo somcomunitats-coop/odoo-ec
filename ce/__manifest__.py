@@ -1,16 +1,15 @@
 {
     'name': "Comunitats Energètiques customizations",
-    'version': '12.0.0.0.14',
+    'version': '14.0.0.0.0',
     'depends': [
         'base_rest_base_structure',
         'l10n_es_cooperator',
-        'auth_keycloak',
+        'auth_oidc',
         'contacts',
         'base_rest',
         'base_user_role',
         'auth_api_key',
         'crm',
-        'community_maps',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
     'website': 'https://somenergia.coop',
