@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="keycloak_login_provider" model="auth.oauth.provider">
+        <field name="name">Keycloak Login Provider</field>
+        <field name="body">Login with Keycloak</field>
+        <field name="css_class">fa fa-fw fa-sign-in text-primary</field>
+        <field name="flow">id_token_code</field>
+        <field name="enabled">0</field>
+        <field name="client_id">odoo</field>
+        <field name="client_secret">SECRET</field>
+        <field name="scope">openid email</field>
+        <field name="token_map">user_id:email</field>
+        <field name="auth_endpoint">http://10.0.3.1:8080/realms/REALM/protocol/openid-connect/auth</field>
+        <field name="token_endpoint">http://10.0.3.1:8080/realms/REALM/protocol/openid-connect/token</field>
+        <field name="jwks_uri">http://10.0.3.1:8080/realms/REALM/protocol/openid-connect/certs</field>
+        <field name="validation_endpoint"></field>
+        <field name="data_endpoint"></field>
+    </record>
+</odoo>
