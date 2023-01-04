@@ -5,9 +5,6 @@
     <field name="model">auth.oauth.provider</field>
     <field name="inherit_id" ref="auth_oauth.view_oauth_provider_form" />
     <field name="arch" type="xml">
-      <field name="client_id" position="after">
-        <field name="client_secret" />
-      </field>
       <xpath expr="//field[@name='auth_endpoint']/ancestor::group[1]" position="after">
         <field name="id" invisible="1"/>
         <!-- TODO: any good way to hide/show this properly -->
