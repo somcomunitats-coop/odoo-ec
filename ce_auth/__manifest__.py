@@ -3,7 +3,7 @@
     'version': '14.0.0.0.0',
     'depends': [
         'auth_oauth',
-        'auth_oidc',
+        'auth_oidc'
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
     'website': 'https://somenergia.coop',
