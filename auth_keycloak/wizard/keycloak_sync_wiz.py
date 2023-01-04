@@ -73,7 +73,7 @@ class KeycloakSyncMixin(models.AbstractModel):
 
     def _get_token(self):
         """Retrieve auth token from Keycloak."""
-        url = self.provider_id.validation_endpoint.replace('/introspect', '')
+        url = self.provider_id.token_endpoint.replace('/introspect', '')
         logger.info('Calling %s' % url)
         headers = {'content-type': 'application/x-www-form-urlencoded'}
         data = {
