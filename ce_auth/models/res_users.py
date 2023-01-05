@@ -7,6 +7,8 @@ logger = logging.getLogger(__name__)
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
+    _LOGIN_MATCH_KEY = 'username:login'
+
     def _generate_signup_values(self, provider, validation, params):
         """
         Overwrite method to get user values with user_id not email
@@ -120,8 +122,9 @@ class ResUsers(models.Model):
         :param token: valid auth token from Keycloak
         :param odoo_user: res.users record
         """
+        odoo_key = self._LOGIN_MATCH_KEY.split(':')[1]
         keycloak_user = self._get_users(
-            token, search=odoo_user.login)
+            token, search=odoo_user.mapped(odoo_key)[0])
         if keycloak_user:
             if len(keycloak_user) > 1:
                 # TODO: warn user?
@@ -136,7 +139,7 @@ class ResUsers(models.Model):
         """Prepare Keycloak values for given Odoo user."""
         values = {
             'username': odoo_user.login,
-            'email': odoo_user.email,
+            'email': odoo_user.partner_id.email,
         }
         if 'firstname' in odoo_user.partner_id:
             # partner_firstname installed
