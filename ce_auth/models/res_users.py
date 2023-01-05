@@ -25,17 +25,18 @@ class ResUsers(models.Model):
         users.create_users_on_keycloak()
         return users
 
-    def _get_token(self, provider_id):
+    def _get_admin_token(self):
         """Retrieve auth token from Keycloak."""
-        url = provider_id.token_endpoint.replace('/introspect', '')
+        admin_provider_id = self.env.ref('ce_auth.keycloak_admin_provider')
+        url = admin_provider_id.token_endpoint.replace('/introspect', '')
         logger.info('Calling %s' % url)
         headers = {'content-type': 'application/x-www-form-urlencoded'}
         data = {
-            'username': 'dani',
-            'password': '123',
+            'username': admin_provider_id.superuser,
+            'password': admin_provider_id.superuser_pwd,
             'grant_type': 'password',
-            'client_id': 'admin-cli',
-            'client_secret': 'SiAFFhk4oohKZ6nYzpq8EVaNGIdH5Hok',
+            'client_id': admin_provider_id.client_id,
+            'client_secret': admin_provider_id.client_secret,
         }
         resp = requests.post(url, data=data, headers=headers)
         self._validate_response(resp)
@@ -53,11 +54,11 @@ class ResUsers(models.Model):
         """
         logger.debug('Create keycloak user START')
         provider_id = self.env.ref('ce_auth.keycloak_login_provider')
-        token = self._get_token(provider_id)
+        token = self._get_admin_token()
         logger.info(
-            'Creating users for %s' % ','.join(self.user_ids.mapped('login'))
+            'Creating users for %s' % ','.join(self.mapped('login'))
         )
-        for user in self.user_ids:
+        for user in self:
             if user.oauth_uid:
                 # already sync'ed somewhere else
                 continue
@@ -120,7 +121,7 @@ class ResUsers(models.Model):
         :param odoo_user: res.users record
         """
         keycloak_user = self._get_users(
-            token, search=odoo_user.mapped('email')[0])
+            token, search=odoo_user.login)
         if keycloak_user:
             if len(keycloak_user) > 1:
                 # TODO: warn user?
