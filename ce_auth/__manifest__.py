@@ -17,6 +17,7 @@
     ],
     'data': [
         'views/auth_oauth_views.xml',
+        'views/view_users_form.xml',
         'data/auth_oauth_provider_data.xml',
     ],
     'installable': True,
