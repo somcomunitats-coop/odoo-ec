@@ -27,18 +27,17 @@ class ResUsers(models.Model):
         users.create_users_on_keycloak()
         return users
 
-    def _get_admin_token(self):
+    def _get_admin_token(self, provider_id):
         """Retrieve auth token from Keycloak."""
-        admin_provider_id = self.env.ref('ce_auth.keycloak_admin_provider')
-        url = admin_provider_id.token_endpoint.replace('/introspect', '')
+        url = provider_id.token_endpoint.replace('/introspect', '')
         logger.info('Calling %s' % url)
         headers = {'content-type': 'application/x-www-form-urlencoded'}
         data = {
-            'username': admin_provider_id.superuser,
-            'password': admin_provider_id.superuser_pwd,
+            'username': provider_id.superuser,
+            'password': provider_id.superuser_pwd,
             'grant_type': 'password',
-            'client_id': admin_provider_id.client_id,
-            'client_secret': admin_provider_id.client_secret,
+            'client_id': provider_id.client_id,
+            'client_secret': provider_id.client_secret,
         }
         resp = requests.post(url, data=data, headers=headers)
         self._validate_response(resp)
@@ -55,8 +54,8 @@ class ResUsers(models.Model):
         4. brings you to update users list
         """
         logger.debug('Create keycloak user START')
-        provider_id = self.env.ref('ce_auth.keycloak_login_provider')
-        token = self._get_admin_token()
+        provider_id = self.env.ref('ce_auth.keycloak_admin_provider')
+        token = self._get_admin_token(provider_id)
         logger.info(
             'Creating users for %s' % ','.join(self.mapped('login'))
         )
@@ -64,7 +63,7 @@ class ResUsers(models.Model):
             if user.oauth_uid:
                 # already sync'ed somewhere else
                 continue
-            keycloak_user = self._get_or_create_user(token, user, provider_id)
+            keycloak_user = self._get_or_create_user(token, provider_id, user)
             user.update({
                 'oauth_uid': keycloak_user['id'],
                 'oauth_provider_id': provider_id.id,
@@ -74,17 +73,17 @@ class ResUsers(models.Model):
         logger.debug('Create keycloak users STOP')
         return True
 
-    def _get_users(self, token, **params):
+    def _get_users(self, token, provider_id, **params):
         """Retrieve users from Keycloak.
 
         :param token: a valida auth token from Keycloak
         :param **params: extra search params for users endpoint
         """
-        logger.info('Calling %s' % 'http://10.0.3.1:8080/admin/realms/0/users')
+        logger.info('Calling %s' % provider_id.admin_user_endpoint)
         headers = {
             'Authorization': 'Bearer %s' % token,
         }
-        resp = requests.get('http://10.0.3.1:8080/admin/realms/0/users', headers=headers, params=params)
+        resp = requests.get(provider_id.admin_user_endpoint, headers=headers, params=params)
         self._validate_response(resp)
         return resp.json()
 
@@ -116,7 +115,7 @@ class ResUsers(models.Model):
                     _('Something went wrong. Please check logs.')
                 )
 
-    def _get_or_create_user(self, token, odoo_user, provider_id):
+    def _get_or_create_user(self, token, provider_id, odoo_user):
         """Lookup for given user on Keycloak: create it if missing.
 
         :param token: valid auth token from Keycloak
@@ -124,7 +123,7 @@ class ResUsers(models.Model):
         """
         odoo_key = self._LOGIN_MATCH_KEY.split(':')[1]
         keycloak_user = self._get_users(
-            token, search=odoo_user.mapped(odoo_key)[0])
+            token, provider_id, search=odoo_user.mapped(odoo_key)[0])
         if keycloak_user:
             if len(keycloak_user) > 1:
                 # TODO: warn user?
@@ -132,7 +131,7 @@ class ResUsers(models.Model):
             return keycloak_user[0]
         else:
             values = self._create_user_values(odoo_user)
-            keycloak_user = self._create_user(token, **values)
+            keycloak_user = self._create_user(token, provider_id, **values)
         return keycloak_user
 
     def _create_user_values(self, odoo_user):
@@ -166,17 +165,17 @@ class ResUsers(models.Model):
             firstname, lastname = name_parts[0], ' '.join(name_parts[1:])
         return firstname, lastname
 
-    def _create_user(self, token, **data):
+    def _create_user(self, token, provider_id, **data):
         """Create a user on Keycloak w/ given data."""
-        logger.info('CREATE Calling %s' % 'http://10.0.3.1:8080/admin/realms/0/users')
+        logger.info('CREATE Calling %s' % provider_id.admin_user_endpoint)
         headers = {
             'Authorization': 'Bearer %s' % token,
         }
         # TODO: what to do w/ credentials?
         # Shall we just rely on Keycloak sending out a reset password link?
         # Shall we enforce a dummy pwd and enable "change after 1st login"?
-        resp = requests.post('http://10.0.3.1:8080/admin/realms/0/users', headers=headers, json=data)
+        resp = requests.post(provider_id.admin_user_endpoint, headers=headers, json=data)
         self._validate_response(resp, no_json=True)
         # yes, Keycloak sends back NOTHING on create
         # so we are forced to do anothe call to get its data :(
-        return self._get_users(token, search=data['username'])[0]
+        return self._get_users(token, provider_id, search=data['username'])[0]
