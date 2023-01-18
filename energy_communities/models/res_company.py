@@ -12,24 +12,9 @@ from slugify import slugify
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
-    # when OVor WP are doing API calls to Odoo will use odoo_cempany_id = -1 in order to refer to the 'Coordinadora' one
-    API_PARAM_ID_VALUE_FOR_COORDINADORA = -1
-
-    # new fields
-    kc_realm = fields.Char(string='KeyCloak realm name')
-
     coordinator = fields.Boolean(string='Platform coordinator',
                                  help="Flag to indicate that this company has the rol of 'Coordinator'(=Administrator) for the current 'Comunitats Energètiques' Platform"
                                  )
-
-    ce_admin_key_cloak_provider_id = fields.Many2one(
-        string='OAuth provider for CCEE admin',
-        comodel_name='auth.oauth.provider',
-    )
-    auth_ce_key_cloak_provider_id = fields.Many2one(
-        string='OAuth provider for CCEE login',
-        comodel_name='auth.oauth.provider',
-    )
 
     cooperator_journal = fields.Many2one(
         "account.journal",
@@ -194,17 +179,6 @@ class ResCompany(models.Model):
         self.env['product.template'].sudo().create(product_vals)
 
     @api.multi
-    def _create_keycloak_realm(self):
-        self.ensure_one()
-        pass
-
-    @api.multi
-    def _community_post_keycloak_creation_tasks(self):
-        """ Do post Kaykoac Realm creation tasks"""
-        self.ensure_one()
-        pass
-
-    @api.multi
     def get_active_services(self):
         """Return a list of dicts with the key data of each active Service"""
         self.ensure_one()
@@ -246,32 +220,3 @@ class ResCompany(models.Model):
              ('community_company_id', '=', self.id), ('map_id', '=', self.env.ref('ce.ce_default_cm_map').id)], limit=1)
 
         return related_map_place and related_map_place.external_link_url or None
-
-    @api.multi
-    def get_keycloak_odoo_login_url(self):
-        self.ensure_one()
-        provider_dict = [p_dict for p_dict in OAL().list_providers() if p_dict.get('id') and p_dict.get('id') == self.auth_ce_key_cloak_provider_id.id]
-        return provider_dict and provider_dict[0] and provider_dict[0]['auth_link'] or ''
-
-    @api.multi
-    def get_kc_groups_data(self):
-        """Proceed to get the list of the KC groups related to the current company > Realm"""
-        self.ensure_one()
-        ce_admin_provider = self.ce_admin_key_cloak_provider_id
-
-        if not ce_admin_provider:
-            raise UserError(
-                _("Unable to get the 'CE admin' provider_id related to tha current company when triying to push new user to KC."))
-
-        wiz_vals = {
-            'provider_id': ce_admin_provider.id,
-            'endpoint': ce_admin_provider.users_endpoint,
-            'user': ce_admin_provider.superuser,
-            'pwd': ce_admin_provider.superuser_pwd,
-            'login_match_key': 'username:login'
-        }
-        kc_wizard = self.env['auth.keycloak.sync.wiz'].create(wiz_vals)
-        kc_wizard._validate_setup()
-        token = kc_wizard._get_token()
-
-        return kc_wizard._get_realm_groups_data(token)

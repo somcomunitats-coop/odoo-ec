@@ -94,9 +94,3 @@ class ResPartner(models.Model):
                 'company_id': self.company_id.id})],
         }
 
-    @api.multi
-    def push_new_user_to_keyckoack(self):
-        self.ensure_one()
-        return self.user_id.push_new_user_to_keyckoack()
-
-    
