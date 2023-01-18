@@ -6,4 +6,3 @@ from . import account_invoice
 from . import product
 from . import utm_source
 from . import crm_lead
-from . import res_users_role
