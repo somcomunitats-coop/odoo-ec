@@ -9,12 +9,12 @@
     <!-- new groups -->
     <record model="res.groups" id="group_ce_member">
         <field name="name">CE member</field>
-        <field name="category_id" ref="ce.comunitats_energetiques_platform"/>
+        <field name="category_id" ref="comunitats_energetiques_platform"/>
     </record>
 
     <record model="res.groups" id="group_ce_admin">
         <field name="name">CE admin</field>
-        <field name="category_id" ref="ce.comunitats_energetiques_platform"/>
+        <field name="category_id" ref="comunitats_energetiques_platform"/>
         <field name="implied_ids" eval="[(4, ref('group_ce_member')),(4, ref('cooperator.cooperator_group_user')),]" />
         <field
             name="implied_ids"
@@ -24,7 +24,7 @@
 
     <record model="res.groups" id="group_platform_admin">
         <field name="name">Platform admin</field>
-        <field name="category_id" ref="ce.comunitats_energetiques_platform"/>
+        <field name="category_id" ref="comunitats_energetiques_platform"/>
         <field name="implied_ids" eval="[(4, ref('group_ce_admin')),(4, ref('cooperator.cooperator_group_manager'))]" />
         <field
             name="users"
@@ -35,17 +35,17 @@
     <!-- new roles -->
     <record model="res.users.role" id="role_ce_member">
         <field name="name">CE member role</field>
-        <field name="group_id" ref="ce.group_ce_member"/>
+        <field name="group_id" ref="group_ce_member"/>
     </record>
 
     <record model="res.users.role" id="role_ce_admin">
         <field name="name">CE admin role</field>
-        <field name="group_id" ref="ce.group_ce_admin"/>
+        <field name="group_id" ref="group_ce_admin"/>
     </record>
 
     <record model="res.users.role" id="role_platform_admin">
         <field name="name">Platform admin role</field>
-        <field name="group_id" ref="ce.group_platform_admin"/>
+        <field name="group_id" ref="group_platform_admin"/>
     </record>
 
 </odoo>

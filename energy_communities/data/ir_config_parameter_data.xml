@@ -23,7 +23,7 @@
 
     <record id="odoo_group_ce_member" model="ir.config_parameter">
         <field name="key">ce.odoo_group_ce_member</field>
-        <field name="value" ref="ce.role_ce_member"/>
+        <field name="value" ref="role_ce_member"/>
     </record>
 
     <record id="ce_ck_user_group_mapped_to_odoo_group_ce_admin" model="ir.config_parameter">
@@ -38,7 +38,7 @@
 
     <record id="odoo_group_ce_admin" model="ir.config_parameter">
         <field name="key">ce.odoo_group_ce_admin</field>
-        <field name="value" ref="ce.role_ce_admin" />
+        <field name="value" ref="role_ce_admin" />
     </record>
 
     <record id="ce_ck_user_group_mapped_to_odoo_group_platform_admin" model="ir.config_parameter">
@@ -53,6 +53,6 @@
 
     <record id="odoo_group_platform_admin" model="ir.config_parameter">
         <field name="key">ce.odoo_group_platform_admin</field>
-        <field name="value" ref="ce.role_platform_admin" />
+        <field name="value" ref="role_platform_admin" />
     </record>
 </odoo>
