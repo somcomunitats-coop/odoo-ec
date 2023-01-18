@@ -28,7 +28,7 @@ class CrmLead(models.Model):
         help="Community related to this Lead"
     )
 
-    @api.multi
+    
     def _create_map_place_proposal(self):
 
         if not self.env.user.company_id.coordinator:
@@ -112,7 +112,7 @@ class CrmLead(models.Model):
                 'submission_type': 'place_proposal_submission',
             })
 
-    @api.multi
+    
     def _get_cmfilter_ids(self):
         self.ensure_one()
 
@@ -123,7 +123,7 @@ class CrmLead(models.Model):
 
         return [id_pairs[t.id] for t in self.tag_ids if t.id in id_pairs]
 
-    @api.multi
+    
     def _get_address_txt(self):
         self.ensure_one()
 
@@ -145,7 +145,7 @@ class CrmLead(models.Model):
 
         return ret
 
-    @api.multi
+    
     def _build_community_company(self):
 
         if not self.env.user.company_id.coordinator:
@@ -182,7 +182,7 @@ class CrmLead(models.Model):
                 lead.community_company_id._create_keycloak_realm()
                 lead.community_company_id._community_post_keycloak_creation_tasks()
 
-    @api.multi
+    
     def _get_company_create_vals(self):
         self.ensure_one()
         m_dict = {m.key: m.value for m in self.form_submission_metadata_ids}
@@ -236,7 +236,7 @@ class CrmLead(models.Model):
         return create_vals
 
 
-    @api.multi
+    
     def _create_keycloak_realm(self):
         for lead in self:
             if not lead.community_company_id:
@@ -245,7 +245,7 @@ class CrmLead(models.Model):
             lead.community_company_id._create_keycloak_realm()
 
 
-    @api.multi
+    
     def _create_community_initial_users(self):
         for lead in self:
             pass

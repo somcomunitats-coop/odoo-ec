@@ -40,7 +40,6 @@ class ResCompany(models.Model):
         else:
             return self.search([('id', '=', api_param_odoo_compant_id)]) or None
 
-    @api.multi
     def check_ce_has_admin(self):
         self.ensure_one()
         admin_roles_ids = [r['odoo_role_id']
@@ -52,7 +51,6 @@ class ResCompany(models.Model):
                 admins_user_ids.append(role_line.user_id.id)
         return any([user in admins_user_ids for user in company_user_ids])
 
-    @api.multi
     def get_ce_members(self, domain_key='in_kc_and_active'):
         domains_dict = {'in_kc_and_active': [
             ('company_id', '=', self.id), ('oauth_uid', '!=', None), ('active', '=', True)]}
@@ -87,7 +85,6 @@ class ResCompany(models.Model):
 
         return new_company
 
-    @api.multi
     def _community_post_company_creation_tasks(self):
         """ Do post company creation tasks that are specific for the CCEE project"""
         self.ensure_one()
@@ -178,7 +175,6 @@ class ResCompany(models.Model):
         }
         self.env['product.template'].sudo().create(product_vals)
 
-    @api.multi
     def get_active_services(self):
         """Return a list of dicts with the key data of each active Service"""
         self.ensure_one()
@@ -205,7 +201,6 @@ class ResCompany(models.Model):
                 })
         return ret
 
-    @api.multi
     def get_public_web_landing_url(self):
         """Return the URL that points to the public landing web of the CE, reading it from the related
         map place (field: external_link_url)"""

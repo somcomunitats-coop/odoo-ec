@@ -18,12 +18,10 @@ class ResPartner(models.Model):
         return ((self.vat and re.sub(r"[^a-zA-Z0-9]","",self.vat).lower()) or
             (self.name and re.sub(' +','_',re.sub(r"[^a-zA-Z0-9 ]","",self.name)).lower()))
 
-    @api.multi
     def write(self, vals):
         result = super().write(vals)
         return result
 
-    @api.multi
     def activate_partner_in_comunitat_energetica(self):
         """ Initialize all the specific 'Comunitats Energètiques' functionallity for this partner
 
@@ -48,7 +46,6 @@ class ResPartner(models.Model):
             raise UserError(_("Unable to create the new Odoo user related to this partner."))
         return user
 
-    @api.multi
     def create_user_from_partner_id(self):
         """Create the related Odoo res_user:
             - Use the VAT number as 'login'
@@ -74,7 +71,6 @@ class ResPartner(models.Model):
 
         return user
 
-    @api.multi
     def _get_vals_for_create_user_from_partner_id(self):
 
         self.ensure_one()

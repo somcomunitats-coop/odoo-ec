@@ -4,7 +4,6 @@ from odoo.http import request
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    @api.multi
     def get_web_share_products(self, is_company):
         """We are fully overriding this function in order to make it multi-company sensitive"""
         
