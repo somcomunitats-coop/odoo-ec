@@ -25,7 +25,6 @@
     'data': [
         'security/ir_rules_data.xml',
         'data/res_groups_data.xml',
-        'data/ir_config_parameter_data.xml',
         'data/res_company_data.xml',
         'data/utm_data.xml',
         'data/crm_lead_tag.xml',
