@@ -4,7 +4,6 @@ from odoo import api, models, fields, _
 from datetime import datetime
 import re
 from odoo.exceptions import UserError
-from odoo.addons import decimal_precision as dp
 from odoo.addons.auth_signup.controllers.main import AuthSignupHome as Home
 from odoo.addons.auth_oauth.controllers.main import OAuthLogin as OAL
 from slugify import slugify
@@ -29,7 +28,7 @@ class ResCompany(models.Model):
     foundation_date = fields.Date('Foundation date')
     social_telegram = fields.Char('Telegram Account')
     initial_subscription_share_amount = fields.Float(
-        'Initial Subscription Share Amount', digits=dp.get_precision('Product Price'))
+        'Initial Subscription Share Amount', digits='Product Price')
     allow_new_members = fields.Boolean(
         string="Allow new members", default=True)
 
