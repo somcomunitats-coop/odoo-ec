@@ -1,6 +1,6 @@
 {
-    'name': "Comunitats Energètiques customizations",
-    'version': '14.0.0.0.0',
+    'name': "Energy Community",
+    'version': '14.0.1.0.0',
     'depends': [
         'account',
         'cooperator',
@@ -17,7 +17,7 @@
     'website': 'https://somenergia.coop',
     'category': "Cooperative management",
     'description': """
-    Odoo Comunitats Energètiques customizations.
+    Energy Communities customizations.
     """,
     "license": "AGPL-3",
     'demo': [
