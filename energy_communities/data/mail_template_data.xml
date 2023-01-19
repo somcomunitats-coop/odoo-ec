@@ -9,14 +9,13 @@
             </field>
             <field name="subject">[Somcomunitats.coop] New Community Creation Request to the platform</field>
             <field name="email_to">${object.email_from}</field>
-            <field name="email_bcc">${object.company_id.email}</field>
+            <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">
                 ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
             </field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="True" />
             <field name="lang">${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
-            <field name="easy_my_coop" eval="True" />
             <field
                 name="body_html"
             ><![CDATA[
@@ -103,14 +102,13 @@
             <field name="subject">[Somcomunitats.coop] Community Contact Request</field>
             <field name="email_to">${object.email_from}</field>
             <field name="email_cc">info+contacteCE@somcomunitats.coop</field>
-            <field name="email_bcc">${object.company_id.email}</field>
+            <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">
                 ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
             </field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="True" />
             <field name="lang">${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
-            <field name="easy_my_coop" eval="True" />
             <field
                 name="body_html"
             ><![CDATA[
@@ -156,14 +154,13 @@
             <field name="subject">[Somcomunitats.coop] Community Newsletter Subscription Request</field>
             <field name="email_to">${object.email_from}</field>
             <field name="email_cc">info+butlletiCE@somcomunitats.coop</field>
-            <field name="email_bcc">${object.company_id.email}</field>
+            <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">
                 ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
             </field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="True" />
             <field name="lang">${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
-            <field name="easy_my_coop" eval="True" />
             <field
                 name="body_html"
             ><![CDATA[
@@ -198,14 +195,13 @@
             </field>
             <field name="subject">[Somcomunitats.coop] Interested in Communities in your area</field>
             <field name="email_to">${object.email_from}</field>
-            <field name="email_bcc">${object.company_id.email}</field>
+            <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">
                 ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
             </field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="True" />
             <field name="lang">${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
-            <field name="easy_my_coop" eval="True" />
             <field
                 name="body_html"
             ><![CDATA[
@@ -250,14 +246,13 @@
             <field name="subject">[Somcomunitats.coop] Platform Newsletter Subscription Request</field>
             <field name="email_to">${object.email_from}</field>
             <field name="email_cc">info+butlleti@somcomunitats.coop</field>
-            <field name="email_bcc">${object.company_id.email}</field>
+            <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">
                 ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
             </field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="True" />
             <field name="lang">${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
-            <field name="easy_my_coop" eval="True" />
             <field
                 name="body_html"
             ><![CDATA[

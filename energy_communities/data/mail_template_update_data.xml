@@ -17,7 +17,7 @@
             <field name="subject">[Somcomunitats.coop] Application to become Community membership</field>
             <field name="email_to">${object.email}</field>
             <field name="email_cc">info+altausuari@somcomunitats.coop</field>
-            <field name="email_bcc">${object.company_id.email}</field>
+            <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">
                 ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
             </field>
