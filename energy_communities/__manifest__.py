@@ -2,11 +2,14 @@
     'name': "Comunitats Energètiques customizations",
     'version': '14.0.0.0.0',
     'depends': [
+        'account',
+        'cooperator',
+        'base_user_role',
+        'base_user_role_company',
         'l10n_es_cooperator',
         'auth_oidc',
         'contacts',
         'base_rest',
-        'base_user_role',
         'auth_api_key',
         'crm',
     ],
@@ -22,6 +25,7 @@
     ],
     'data': [
         'security/ir_rules_data.xml',
+        'security/res_users_role_data.xml',
         'data/res_groups_data.xml',
         'data/utm_data.xml',
         'data/crm_lead_tag.xml',
