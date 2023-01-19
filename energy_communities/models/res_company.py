@@ -4,9 +4,7 @@ from odoo import api, models, fields, _
 from datetime import datetime
 import re
 from odoo.exceptions import UserError
-from odoo.addons.auth_signup.controllers.main import AuthSignupHome as Home
-from odoo.addons.auth_oauth.controllers.main import OAuthLogin as OAL
-from slugify import slugify
+
 
 class ResCompany(models.Model):
     _inherit = 'res.company'
@@ -69,8 +67,10 @@ class ResCompany(models.Model):
 
         # check for name
         if vals.get('name', False) and vals.get('name'):
-            sanit_name = slugify(vals['name'])
-            if sanit_name in [slugify(c.name) for c in self.search([]) if c.name]:
+            #sanit_name = slugify(vals['name'])
+            sanit_name = vals['name']
+            #if sanit_name in [slugify(c.name) for c in self.search([]) if c.name]:
+            if sanit_name in [c.name for c in self.search([]) if c.name]:
                 raise UserError(
                     _("Unable to create new company because there is an allready existing company with this NAME: {}").format(vals['name']))
 
