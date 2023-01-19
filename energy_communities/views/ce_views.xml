@@ -1,4 +1,5 @@
 <odoo>
+    <!--
     <record model="ir.actions.act_window" id="crm.crm_lead_opportunities_tree_view">
         <field name="name">Pipeline</field>
         <field name="res_model">crm.lead</field>
@@ -11,13 +12,12 @@
 			}
 		</field>
         <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter" />
-    </record>
+    </record>-->
 
     <record id="ce_crm_leads_ce_info_action" model="ir.actions.act_window">
         <field name="name">CE Information</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">crm.lead</field>
-        <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="search_view_id" eval="False" /> <!-- Force empty -->
         <field name="view_id" eval="False" /> <!-- Force empty -->
@@ -28,7 +28,6 @@
         <field name="name">CE Contact</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">crm.lead</field>
-        <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="search_view_id" eval="False" /> <!-- Force empty -->
         <field name="view_id" eval="False" /> <!-- Force empty -->
@@ -39,7 +38,6 @@
         <field name="name">General Information</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">crm.lead</field>
-        <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="search_view_id" eval="False" /> <!-- Force empty -->
         <field name="view_id" eval="False" /> <!-- Force empty -->
@@ -50,7 +48,6 @@
         <field name="name">Information future CE's by location</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">crm.lead</field>
-        <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="search_view_id" eval="False" /> <!-- Force empty -->
         <field name="view_id" eval="False" /> <!-- Force empty -->
@@ -61,7 +58,6 @@
         <field name="name">CE creation requests</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">crm.lead</field>
-        <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="search_view_id" eval="False" /> <!-- Force empty -->
         <field name="view_id" eval="False" /> <!-- Force empty -->
