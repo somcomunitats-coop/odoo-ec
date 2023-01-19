@@ -1,0 +1,181 @@
+from odoo import api, models, fields, _, exceptions
+import logging, requests
+
+logger = logging.getLogger(__name__)
+
+
+class ResUsers(models.Model):
+    _inherit = 'res.users'
+
+    _LOGIN_MATCH_KEY = 'username:login'
+
+    def _generate_signup_values(self, provider, validation, params):
+        """
+        Overwrite method to get user values with user_id not email
+        :param provider:
+        :param validation:
+        :param params:
+        :return:
+        """
+        values = super(ResUsers, self)._generate_signup_values(provider, validation, params)
+        values['login'] = validation['user_id']
+        return values
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        users = super(ResUsers, self).create(vals_list)
+        users.create_users_on_keycloak()
+        return users
+
+    def _get_admin_token(self, provider_id):
+        """Retrieve auth token from Keycloak."""
+        url = provider_id.token_endpoint.replace('/introspect', '')
+        logger.info('Calling %s' % url)
+        headers = {'content-type': 'application/x-www-form-urlencoded'}
+        data = {
+            'username': provider_id.superuser,
+            'password': provider_id.superuser_pwd,
+            'grant_type': 'password',
+            'client_id': provider_id.client_id,
+            'client_secret': provider_id.client_secret,
+        }
+        resp = requests.post(url, data=data, headers=headers)
+        self._validate_response(resp)
+        return resp.json()['access_token']
+
+    def create_users_on_keycloak(self):
+        """Create users on Keycloak.
+
+        1. get a token
+        2. loop on given users
+        3. push them to Keycloak if:
+           a. missing on Keycloak
+           b. they do not have an Oauth UID already
+        4. brings you to update users list
+        """
+        logger.debug('Create keycloak user START')
+        provider_id = self.env.ref('ce_auth.keycloak_admin_provider')
+        token = self._get_admin_token(provider_id)
+        logger.info(
+            'Creating users for %s' % ','.join(self.mapped('login'))
+        )
+        for user in self:
+            if user.oauth_uid:
+                # already sync'ed somewhere else
+                continue
+            keycloak_user = self._get_or_create_user(token, provider_id, user)
+            user.update({
+                'oauth_uid': keycloak_user['id'],
+                'oauth_provider_id': provider_id.id,
+            })
+        # action = self.env.ref('base.action_res_users').read()[0]
+        # action['domain'] = [('id', 'in', self.user_ids.ids)]
+        logger.debug('Create keycloak users STOP')
+        return True
+
+    def _get_users(self, token, provider_id, **params):
+        """Retrieve users from Keycloak.
+
+        :param token: a valida auth token from Keycloak
+        :param **params: extra search params for users endpoint
+        """
+        logger.info('Calling %s' % provider_id.admin_user_endpoint)
+        headers = {
+            'Authorization': 'Bearer %s' % token,
+        }
+        resp = requests.get(provider_id.admin_user_endpoint, headers=headers, params=params)
+        self._validate_response(resp)
+        return resp.json()
+
+
+    def _validate_response(self, resp, no_json=False):
+        # When Keycloak detects a clash on non-unique values, like emails,
+        # it raises:
+        # `HTTPError: 409 Client Error: Conflict for url: `
+        # http://keycloak:8080/auth/admin/realms/master/users
+        if resp.status_code == 409:
+            detail = ''
+            if resp.content and resp.json().get('errorMessage'):
+                # ie: {"errorMessage":"User exists with same username"}
+                detail = '\n' + resp.json().get('errorMessage')
+            raise exceptions.UserError(_(
+                'Conflict on user values. '
+                'Please verify that all values supposed to be unique '
+                'are really unique. %(detail)s'
+            ) % {'detail': detail})
+            if not resp.ok:
+                # TODO: do something better?
+                raise resp.raise_for_status()
+            if no_json:
+                return resp.content
+            try:
+                return resp.json()
+            except JSONDecodeError:
+                raise exceptions.UserError(
+                    _('Something went wrong. Please check logs.')
+                )
+
+    def _get_or_create_user(self, token, provider_id, odoo_user):
+        """Lookup for given user on Keycloak: create it if missing.
+
+        :param token: valid auth token from Keycloak
+        :param odoo_user: res.users record
+        """
+        odoo_key = self._LOGIN_MATCH_KEY.split(':')[1]
+        keycloak_user = self._get_users(
+            token, provider_id, search=odoo_user.mapped(odoo_key)[0])
+        if keycloak_user:
+            if len(keycloak_user) > 1:
+                # TODO: warn user?
+                pass
+            return keycloak_user[0]
+        else:
+            values = self._create_user_values(odoo_user)
+            keycloak_user = self._create_user(token, provider_id, **values)
+        return keycloak_user
+
+    def _create_user_values(self, odoo_user):
+        """Prepare Keycloak values for given Odoo user."""
+        values = {
+            'username': odoo_user.login,
+            'email': odoo_user.partner_id.email,
+        }
+        if 'firstname' in odoo_user.partner_id:
+            # partner_firstname installed
+            firstname = odoo_user.partner_id.firstname
+            lastname = odoo_user.partner_id.lastname
+        else:
+            firstname, lastname = self._split_user_fullname(odoo_user)
+        values.update({
+            'firstName': firstname,
+            'lastName': lastname,
+        })
+        logger.debug('CREATE using values %s' % str(values))
+        return values
+
+    def _split_user_fullname(self, odoo_user):
+        # yeah, I know, it's not perfect... you can override it ;)
+        name_parts = odoo_user.name.split(' ')
+        if len(name_parts) == 2:
+            # great we've found the 2 parts
+            firstname, lastname = name_parts
+        else:
+            # make sure firstname is there
+            # then use the rest - if any - to build lastname
+            firstname, lastname = name_parts[0], ' '.join(name_parts[1:])
+        return firstname, lastname
+
+    def _create_user(self, token, provider_id, **data):
+        """Create a user on Keycloak w/ given data."""
+        logger.info('CREATE Calling %s' % provider_id.admin_user_endpoint)
+        headers = {
+            'Authorization': 'Bearer %s' % token,
+        }
+        # TODO: what to do w/ credentials?
+        # Shall we just rely on Keycloak sending out a reset password link?
+        # Shall we enforce a dummy pwd and enable "change after 1st login"?
+        resp = requests.post(provider_id.admin_user_endpoint, headers=headers, json=data)
+        self._validate_response(resp, no_json=True)
+        # yes, Keycloak sends back NOTHING on create
+        # so we are forced to do anothe call to get its data :(
+        return self._get_users(token, provider_id, search=data['username'])[0]

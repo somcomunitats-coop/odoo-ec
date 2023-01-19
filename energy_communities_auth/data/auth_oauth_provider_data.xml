@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="keycloak_login_provider" model="auth.oauth.provider">
+        <field name="name">Keycloak Login Provider</field>
+        <field name="body">Login with Keycloak</field>
+        <field name="css_class">fa fa-fw fa-sign-in text-primary</field>
+        <field name="flow">id_token_code</field>
+        <field name="enabled">1</field>
+        <field name="client_id">odoo</field>
+        <field name="client_secret">DHu6GCYbaRwplehdv9oZ8coD9urBn6v0</field>
+        <field name="scope">openid email</field>
+        <field name="token_map">user_id:email</field>
+        <field name="auth_endpoint">http://10.0.3.1:8080/realms/0/protocol/openid-connect/auth</field>
+        <field name="token_endpoint">http://10.0.3.1:8080/realms/0/protocol/openid-connect/token</field>
+        <field name="jwks_uri">http://10.0.3.1:8080/realms/0/protocol/openid-connect/certs</field>
+        <field name="validation_endpoint"></field>
+        <field name="data_endpoint"></field>
+    </record>
+
+    <record id="keycloak_admin_provider" model="auth.oauth.provider">
+        <field name="name">Keycloak Admin Provider</field>
+        <field name="body">Login with Keycloak</field>
+        <field name="css_class">fa fa-fw fa-sign-in text-primary</field>
+        <field name="flow">id_token_code</field>
+        <field name="enabled">0</field>
+        <field name="client_id">admin-cli</field>
+        <field name="client_secret">VJkk87Als1ok3LHr3kTS5aLKwYaZoIA8</field>
+        <field name="scope">openid</field>
+        <field name="token_map">user_id:email</field>
+        <field name="auth_endpoint">http://10.0.3.1:8080/realms/0/protocol/openid-connect/auth</field>
+        <field name="token_endpoint">http://10.0.3.1:8080/realms/0/protocol/openid-connect/token</field>
+        <field name="jwks_uri">http://10.0.3.1:8080/realms/0/protocol/openid-connect/certs</field>
+        <field name="validation_endpoint"></field>
+        <field name="data_endpoint"></field>
+        <field name="superuser">api_admin_0</field>
+        <field name="superuser_pwd">123</field>
+    </record>
+</odoo>
