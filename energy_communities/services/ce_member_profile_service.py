@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 
 class MemberProfileService(Component):
-    _inherit = "base.rest.private_abstract_service"
+    _inherit = 'base.rest.service'
     _name = "ce.member.profile.services"
     _collection = "ce.services"
     _usage = "profile"

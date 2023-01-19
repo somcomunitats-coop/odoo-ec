@@ -9,7 +9,7 @@ from . import schemas
 _logger = logging.getLogger(__name__)
 
 class MemberService(Component):
-    _inherit = "base.rest.private_abstract_service"
+    _inherit = "base.rest.service"
     _name = "ce.member.services"
     _collection = "ce.services"
     _usage = "member"
