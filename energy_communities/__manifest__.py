@@ -35,7 +35,6 @@
         'views/ce_views.xml',
         'views/utm_views.xml',
         'views/menus.xml',
-        'views/res_users.xml',
         'data/mail_template_data.xml',
         'data/mail_template_update_data.xml'
     ],
