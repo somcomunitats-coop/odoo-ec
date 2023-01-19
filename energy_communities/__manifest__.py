@@ -24,7 +24,6 @@
         'data/res_groups_data.xml',
         'data/utm_data.xml',
         'data/crm_lead_tag.xml',
-        'data/crm_maps_data.xml',
         'views/crm_lead_views.xml',
         'views/res_company_views.xml',
         'views/website_subscription_template.xml',
