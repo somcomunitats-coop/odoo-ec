@@ -194,9 +194,52 @@ class ResCompany(models.Model):
         self.env['product.template'].sudo().create(product_vals)
 
     @api.multi
-    def _create_keycloak_realm(self):
+    def _create_keycloak_entities(self):
         self.ensure_one()
-        pass
+        # 1) CREATE CE_ ADMIN PROVIDER:
+        # todo: we assume that "unique platform realm" is allready created with KC name = '0'
+        # todo: we assume that "unique odoo" client is allready created with client_id = 'odoo'
+        # but we need to implement the creation of it just after module 'ce' installation
+        platform_realm_name = '0'  # Platform unique KC ealm
+        odoo_client_id = 'odoo' #Platform unique Odoo KC Client
+        # get realm_admin provider
+        # this provider will be a supra-company one (platform) related to the "UNIQUE" platform '0' realm
+        # so it will not be necessary to create it here because it will already exist
+        realm_0_admin_provider = self.env.ref('ce.default_platform_admin_keycloak_provider')
+        self.ce_admin_key_cloak_provider_id = realm_0_admin_provider.id
+
+        wiz_vals = {
+            'provider_id': realm_0_admin_provider.id,
+            'endpoint': realm_0_admin_provider.users_endpoint,
+            'user': realm_0_admin_provider.superuser,
+            'pwd': realm_0_admin_provider.superuser_pwd,
+            'login_match_key': 'username:login'
+        }
+        realm_admin_wiz = self.env['auth.keycloak.sync.wiz'].sudo().create(wiz_vals)
+        realm_admin_wiz._validate_setup()
+        token = realm_admin_wiz._get_token()
+
+        clients_repr_list = realm_admin_wiz._get_clients(token, odoo_client_id)
+
+        if not clients_repr_list:
+            raise UserError(
+                _("Unable to get the 'secret key' related to the KC Odoo client: {}").format(odoo_client_id))
+
+        odoo_client_secret = realm_admin_wiz._get_client_secret(token, clients_repr_list[0]['id'])
+        ce_odoo_login_provider = self.env['auth.oauth.provider'].sudo().create({
+            'name': '{} (login-CE)'.format(self.name),
+            'body': '{} (login-CE)'.format(self.name),
+            'client_id': odoo_client_id,
+            'client_secret': odoo_client_secret,
+            'login_provider': True,
+            'company_id': self.id,
+            'auth_endpoint': realm_0_admin_provider.auth_endpoint.replace('/master/','/{}/'.format(platform_realm_name)),
+            'validation_endpoint': realm_0_admin_provider.validation_endpoint.replace('/master/','/{}/'.format(platform_realm_name)),
+            'data_endpoint': realm_0_admin_provider.data_endpoint.replace('/master/','/{}/'.format(platform_realm_name)),
+            'scope': 'openid',
+            'enabled': True,
+        })
+        self.auth_ce_key_cloak_provider_id = ce_odoo_login_provider.id
 
     @api.multi
     def _community_post_keycloak_creation_tasks(self):
