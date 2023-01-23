@@ -2,6 +2,7 @@
     'name': "Energy Communities integration with Keycloak",
     'version': '14.0.0.0.0',
     'depends': [
+        'energy_communities',
         'auth_oauth',
         'auth_oidc'
     ],
