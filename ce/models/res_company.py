@@ -205,7 +205,7 @@ class ResCompany(models.Model):
         # get realm_admin provider
         # this provider will be a supra-company one (platform) related to the "UNIQUE" platform '0' realm
         # so it will not be necessary to create it here because it will already exist
-        realm_0_admin_provider = self.env.ref('ce.default_platform_admin_keycloak_provider')
+        realm_0_admin_provider = self.env.ref('ce.platform_admin_keycloak_provider')
         self.ce_admin_key_cloak_provider_id = realm_0_admin_provider.id
 
         wiz_vals = {
