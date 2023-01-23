@@ -1,5 +1,5 @@
 {
-    'name': "Energy Communities integration with authoidc",
+    'name': "Energy Communities integration with Keycloak",
     'version': '14.0.0.0.0',
     'depends': [
         'auth_oauth',
