@@ -179,7 +179,7 @@ class CrmLead(models.Model):
         # build keyKloac realm for each new existing new company
         for lead in self:
             if lead.community_company_id:
-                lead.community_company_id._create_keycloak_realm()
+                lead.community_company_id._create_keycloak_entities()
                 lead.community_company_id._community_post_keycloak_creation_tasks()
 
     @api.multi

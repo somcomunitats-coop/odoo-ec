@@ -63,6 +63,24 @@ S_CRM_LEAD_CREATE_ALTA_CE = {
     "partner_language": {"type": "string"},
 }
 
+S_PROFILE_COMMUNITY_GET = {
+    "type": "dict",
+    "schema": {
+        "id": {"type": "integer"},
+        "name": {"type": "string"},
+        "role": {"type": "string"},
+        "public_web_landing_url": {"type": "string"},
+        "keycloak_odoo_login_url": {"type": "string"},
+        "payment_info": {
+            "type": "dict",
+            "schema": {
+                "iban": {"type": "string"},
+                "sepa_accepted": {"type": "boolean"},
+            }
+        },
+    }
+}
+
 S_PROFILE_RETURN_GET = {
     "profile": {
         "type": "dict",
@@ -86,13 +104,10 @@ S_PROFILE_RETURN_GET = {
                 },
             },
             "language": {"type": "string"},
-            "payment_info": {
-                "type": "dict",
-                "schema": {
-                    "iban": {"type": "string"},
-                    "sepa_accepted": {"type": "boolean"},
-                }
-            },
+            "communities": {
+                "type": "list",
+                "schema": S_PROFILE_COMMUNITY_GET
+                },
             "suscriptions": {
                 "type": "dict",
                 "schema": {
@@ -101,7 +116,6 @@ S_PROFILE_RETURN_GET = {
             },
             "odoo_res_users_id": {"type": "integer"},
             "odoo_res_partner_id": {"type": "integer"},
-            "role": {"type": "string"},
         }
     }
 }

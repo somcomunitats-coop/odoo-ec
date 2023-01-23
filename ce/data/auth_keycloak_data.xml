@@ -23,6 +23,36 @@
     <field name="company_id"></field>
   </record>
 
+  <record id="platform_admin_keycloak_provider" model="auth.oauth.provider">
+    <field name="name">Realm 0 (platform-admin)</field>
+    <field name="enabled" eval="1" />
+    <field name="client_id">admin-cli</field>
+    <field name="auth_endpoint">http://keycloak:8080/realms/master/protocol/openid-connect/auth</field>
+    <field name="validation_endpoint">http://keycloak:8080/realms/master/protocol/openid-connect/token/introspect</field>
+    <field name="data_endpoint">http://keycloak:8080/realms/master/protocol/openid-connect/userinfo</field>
+    <field name="scope">openid</field>
+    <field name="body">Realm 0 (platform-admin)</field>
+    <field name="users_endpoint">http://keycloack:8080/admin/realms/0/users</field>
+    <field name="superuser">api_admin_0</field>
+    <field name="superuser_pwd">w8P=FL_W</field>
+    <field name="company_id"></field>
+  </record>
+
+  <record id="platform_login_keycloak_provider" model="auth.oauth.provider">
+    <field name="name">Realm 0 (platform-login)</field>
+    <field name="enabled" eval="1" />
+    <field name="client_id">odoo</field>
+    <field name="auth_endpoint">http://keycloak:8080/realms/0/protocol/openid-connect/auth</field>
+    <field name="validation_endpoint">http://keycloak:8080/realms/0/protocol/openid-connect/token/introspect</field>
+    <field name="data_endpoint">http://keycloak:8080/realms/0/protocol/openid-connect/userinfo</field>
+    <field name="scope">openid</field>
+    <field name="body">Realm 0 (platform-login)</field>
+    <field name="users_endpoint">http://keycloack:8080/admin/realms/0/users</field>
+    <field name="superuser">api_admin_0</field>
+    <field name="superuser_pwd">w8P=FL_W</field>
+    <field name="company_id"></field>
+  </record>
+
   <function name="write" model="ir.model.data">
     <function name="search" model="ir.model.data">
       <value eval="[('module', '=', 'auth_keycloak'), ('name', '=', 'auth_keycloak.default_keycloak_provider')]"/>
