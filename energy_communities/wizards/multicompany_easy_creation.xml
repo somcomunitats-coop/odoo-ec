@@ -9,6 +9,13 @@
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[last()]" position="after">
+                    <page string="Cooperator">
+                        <group string="Cooperator">
+                            <field name="property_cooperator_account"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//page[last()]" position="after">
                     <page string="Energy Communities">
                         <group string="Create from CRM Lead">
                             <field name="crm_lead_id"/>
