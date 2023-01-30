@@ -24,7 +24,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         self_new_company = self.with_company(new_company_id)
         product_category_company_share = self_new_company.env.ref('cooperator.product_category_company_share')
         account_chart_external_id = list(self.chart_template_id.get_external_id().values())[0]
-        _logger.info(account_chart_external_id)
         values = {
             'l10n_es.account_chart_template_common': {
                 'property_account_income_categ_id': 'l10n_es.{}_account_common_101'.format(new_company_id),
@@ -43,10 +42,10 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 'property_account_expense_categ_id': 'l10n_es.{}_account_full_120'.format(new_company_id)
             },
         }.get(account_chart_external_id, False)
-        _logger.info("VALUES")
-        _logger.info(values)
 
         if values:
+            values['property_account_income_categ_id'] = self.env.ref(values['property_account_income_categ_id'])
+            values['property_account_expense_categ_id'] = self.env.ref(values['property_account_expense_categ_id'])
             product_category_company_share.write(values)
 
     def action_accept(self):
