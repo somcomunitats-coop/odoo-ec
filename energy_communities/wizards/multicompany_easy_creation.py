@@ -50,5 +50,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
 
     def action_accept(self):
         action = super(AccountMulticompanyEasyCreationWiz, self).action_accept()
+        self.new_company_id.property_cooperator_account = self.property_cooperator_account
         self.update_product_category_company_share()
         return action
