@@ -6,12 +6,13 @@ from odoo.addons.component.core import Component
 from odoo import _
 from . import schemas
 from odoo.http import request
+from keycloak import KeycloakOpenID
 
 _logger = logging.getLogger(__name__)
 
 
 class MemberProfileService(Component):
-    _inherit = "base.rest.private_abstract_service"
+    _inherit = 'base.rest.service'
     _name = "ce.member.profile.services"
     _collection = "ce.services"
     _usage = "profile"
@@ -26,48 +27,43 @@ class MemberProfileService(Component):
     )
     def get(self):
         headers = request.httprequest.headers
-        _keycloak_id = None
-        if ((not _keycloak_id) and headers.get('Authorization') and headers.get('Authorization')[:7] == 'Bearer '):
-            received_token = headers.get('Authorization').replace(headers.get('Authorization')[:7],'')
+        if headers.get('Authorization'):
+            received_token = headers.get('Authorization')
 
-            realm_0_login_provider = self.env.ref('ce.platform_login_keycloak_provider')
-            wiz_vals = {
-                'provider_id': realm_0_login_provider.id,
-                'endpoint': realm_0_login_provider.users_endpoint,
-                'user': realm_0_login_provider.superuser,
-                'pwd': realm_0_login_provider.superuser_pwd,
-                'login_match_key': 'username:login'
-            }
-            realm_login_wiz = self.env['auth.keycloak.sync.wiz'].sudo().create(wiz_vals)
-            realm_login_wiz._validate_setup()
+            keycloak_admin_provider = self.env.ref('energy_communities.keycloak_admin_provider')
 
-            on_fly_token = realm_login_wiz._get_token()
-            #validation_on_fly = self.env['res.users']._keycloak_validate(realm_0_login_provider, on_fly_token)
-            validation_received_token = self.env['res.users']._keycloak_validate(realm_0_login_provider, received_token)
+            keycloak_openid = KeycloakOpenID(server_url=keycloak_admin_provider.auth_endpoint,
+                                             client_id=keycloak_admin_provider.client_id,
+                                             realm_name="0",
+                                             client_secret_key=keycloak_admin_provider.client_secret)
+            token_info = keycloak_openid.introspect(received_token)
+            return token_info
+            _logger.info("TOKEN")
+            _logger.info(token_info)
+            validation_received_token = self.env['res.users']._keycloak_validate(keycloak_admin_provider,
+                                                                                 received_token)
             if validation_received_token.get('sub'):
                 _keycloak_id = validation_received_token.get('sub')
             else:
                 raise wrapJsonException(
+                    Unauthorized(),
+                    include_description=False,
+                    extra_info={
+                        'message': _(
+                            "The received oauth KeyCloak token have not been validated by KeyCloak : {}").format(
+                            validation_received_token),
+                        'code': 401,
+                    })
+        else:
+            raise wrapJsonException(
                 Unauthorized(),
                 include_description=False,
                 extra_info={
-                    'message': _("The received oauth KeyCloak token have not been validated by KeyCloak : {}").format(
-                        validation_received_token),
-                    'code': 401,
-                })
-            #import pudb; pu.db
-        if not _keycloak_id:
-                raise wrapJsonException(
-                Unauthorized(),
-                include_description=False,
-                extra_info={
-                    'message': _("Unable to validate the received oauth KeyCloak token: {}").format(
-                        validation_received_token),
+                    'message': _("Authorization token not found"),
                     'code': 500,
                 })
 
-        user, partner, companies_data = self._get_profile_objs(_keycloak_id)
-        return self._to_dict(user, partner, companies_data)
+
 
     @restapi.method(
         [(["/<string:keycloak_id>"], "GET")],
@@ -77,7 +73,6 @@ class MemberProfileService(Component):
     def get_by_kc_user_id(self, _keycloak_id):
         user, partner, companies_data = self._get_profile_objs(_keycloak_id)
         return self._to_dict(user, partner, companies_data)
-
 
     def _validator_return_get(self):
         return schemas.S_PROFILE_RETURN_GET
@@ -90,7 +85,7 @@ class MemberProfileService(Component):
     )
     def update(self, _keycloak_id, **params):
         user, partner, companies_data = self._get_profile_objs(_keycloak_id)
-        active_langs = self.env['res.lang'].search([('active','=', True)])
+        active_langs = self.env['res.lang'].search([('active', '=', True)])
         active_code_langs = [l.code.split('_')[0] for l in active_langs]
 
         if params.get('language').lower() not in active_code_langs:
@@ -104,9 +99,9 @@ class MemberProfileService(Component):
 
         target_lang = [l for l in active_langs if l.code.split('_')[0] == params.get('language').lower()][0]
         if partner.lang != target_lang.code:
-            partner.sudo().write({'lang':target_lang.code})
+            partner.sudo().write({'lang': target_lang.code})
 
-        #also update lang in KeyCloack related user throw API call
+        # also update lang in KeyCloack related user throw API call
         try:
             user.update_user_data_to_keyckoack(['lang'])
         except Exception as ex:
@@ -135,8 +130,7 @@ class MemberProfileService(Component):
         # in case that an user don't have any odoo role assigned in odoo, we will return that it is 'CE member'
         user_ce_role = user.ce_role or 'role_ce_member'
 
-
-        return {'profile':{
+        return {'profile': {
             "keycloak_id": user.oauth_uid,
             "odoo_res_users_id": user.id,
             "odoo_res_partner_id": user.partner_id.id,
@@ -159,9 +153,9 @@ class MemberProfileService(Component):
         }}
 
     def _get_profile_objs(self, _keycloak_id):
-        user = self.env["res.users"].sudo().search([('oauth_uid','=',_keycloak_id)])
+        user = self.env["res.users"].sudo().search([('oauth_uid', '=', _keycloak_id)])
 
-        #todo: on next iteration we will install the module that allow have different role per each company
+        # todo: on next iteration we will install the module that allow have different role per each company
         user_ce_role = user.ce_role or 'role_ce_member'
 
         if not user:
@@ -181,12 +175,12 @@ class MemberProfileService(Component):
 
         companies_data = []
         for company_id in user.company_ids:
-
             partner_bank = self.env['res.partner.bank'].sudo().search([
                 ('partner_id', '=', partner.id), ('company_id', '=', company_id.id)
             ], order="sequence asc", limit=1) or None
 
-            sepa_mandate = partner_bank and any([sm.id for sm in partner_bank.mandate_ids if sm.state == 'valid']) or False
+            sepa_mandate = partner_bank and any(
+                [sm.id for sm in partner_bank.mandate_ids if sm.state == 'valid']) or False
 
             companies_data.append({
                 "id": company_id.id,
