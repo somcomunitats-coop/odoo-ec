@@ -61,8 +61,14 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             'list_price': self.capital_share
         })
 
+    def update_values_from_crm_lead(self):
+        if self.crm_lead_id:
+            vals = self.crm_lead_id._get_company_create_vals()
+            self.new_company_id.write(vals)
+
     def action_accept(self):
         action = super(AccountMulticompanyEasyCreationWiz, self).action_accept()
+        self.update_values_from_crm_lead()
         self.new_company_id.property_cooperator_account = self.property_cooperator_account
         self.update_product_category_company_share()
         self.create_capital_share_product_template()
