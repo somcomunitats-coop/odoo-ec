@@ -27,7 +27,7 @@ class MemberProfileService(Component):
     )
     def get(self):
         headers = request.httprequest.headers
-        if headers.get('Authorization'):
+        if headers.get('Authorization') and headers.get('Authorization')[:7] == 'Bearer ':
             received_token = headers.get('Authorization')[7:]
 
             keycloak_admin_provider = self.env.ref('energy_communities.keycloak_admin_provider')
