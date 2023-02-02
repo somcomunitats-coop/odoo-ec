@@ -28,20 +28,14 @@ class MemberProfileService(Component):
     def get(self):
         headers = request.httprequest.headers
         if headers.get('Authorization'):
-            received_token = headers.get('Authorization')
+            received_token = headers.get('Authorization')[7:]
 
             keycloak_admin_provider = self.env.ref('energy_communities.keycloak_admin_provider')
-
-            keycloak_openid = KeycloakOpenID(server_url=keycloak_admin_provider.auth_endpoint,
+            keycloak_openid = KeycloakOpenID(server_url=keycloak_admin_provider.root_endpoint,
                                              client_id=keycloak_admin_provider.client_id,
-                                             realm_name="0",
+                                             realm_name=keycloak_admin_provider.realm_name,
                                              client_secret_key=keycloak_admin_provider.client_secret)
-            token_info = keycloak_openid.introspect(received_token)
-            return token_info
-            _logger.info("TOKEN")
-            _logger.info(token_info)
-            validation_received_token = self.env['res.users']._keycloak_validate(keycloak_admin_provider,
-                                                                                 received_token)
+            validation_received_token = keycloak_openid.introspect(received_token)
             if validation_received_token.get('sub'):
                 _keycloak_id = validation_received_token.get('sub')
             else:
@@ -54,6 +48,18 @@ class MemberProfileService(Component):
                             validation_received_token),
                         'code': 401,
                     })
+            if not _keycloak_id:
+                raise wrapJsonException(
+                    Unauthorized(),
+                    include_description=False,
+                    extra_info={
+                        'message': _("Unable to validate the received oauth KeyCloak token: {}").format(
+                            validation_received_token),
+                        'code': 500,
+                    })
+
+            user, partner, companies_data = self._get_profile_objs(_keycloak_id)
+            return self._to_dict(user, partner, companies_data)
         else:
             raise wrapJsonException(
                 Unauthorized(),

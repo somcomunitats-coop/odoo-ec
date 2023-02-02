@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<odoo>
+<odoo noupdate="1">
     <record id="keycloak_login_provider" model="auth.oauth.provider">
         <field name="name">Keycloak Login Provider</field>
         <field name="body">Login with Keycloak</field>
