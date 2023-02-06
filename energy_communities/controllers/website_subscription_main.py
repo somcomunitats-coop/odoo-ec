@@ -156,5 +156,5 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                     "Please contact with the community administrators."
                 )
                 return request.render(redirect, values)
-
+        del values["redirect_url"]
         return ret
