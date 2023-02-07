@@ -32,6 +32,8 @@
         <field name="jwks_uri">http://10.0.3.1:8080/realms/0/protocol/openid-connect/certs</field>
         <field name="validation_endpoint"></field>
         <field name="data_endpoint"></field>
+        <field name="is_admin_provider">1</field>
+        <field name="admin_user_endpoint">http://10.0.3.1:8080/admin/realms/0/users</field>
         <field name="superuser">api_admin_0</field>
         <field name="superuser_pwd"></field>
     </record>
