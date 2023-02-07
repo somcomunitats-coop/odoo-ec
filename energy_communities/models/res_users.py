@@ -21,12 +21,6 @@ class ResUsers(models.Model):
         values['login'] = validation['user_id']
         return values
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        users = super(ResUsers, self).create(vals_list)
-        users.create_users_on_keycloak()
-        return users
-
     def _get_admin_token(self, provider_id):
         """Retrieve auth token from Keycloak."""
         url = provider_id.token_endpoint.replace('/introspect', '')
