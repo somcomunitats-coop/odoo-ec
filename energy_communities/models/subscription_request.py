@@ -32,5 +32,6 @@ class SubscriptionRequest(models.Model):
             # Somewhere the company_id is assigned as string
             # Can't find where, this is a workaround
             vals['company_id'] = int(vals['company_id'])
+            vals['country_id'] = int(vals['country_id'])
         subscription_request = super(SubscriptionRequest, self).create(vals)
         return subscription_request
