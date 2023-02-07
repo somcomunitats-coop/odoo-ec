@@ -48,7 +48,7 @@ class ResUsers(models.Model):
         4. brings you to update users list
         """
         logger.debug('Create keycloak user START')
-        provider_id = self.env.ref('energy_communities_keycloak.keycloak_admin_provider')
+        provider_id = self.env.ref('energy_communities.keycloak_admin_provider')
         token = self._get_admin_token(provider_id)
         logger.info(
             'Creating users for %s' % ','.join(self.mapped('login'))
