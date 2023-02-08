@@ -4,3 +4,4 @@ from . import subscription_request
 from . import product
 from . import utm_source
 from . import crm_lead
+from . import auth_oauth_provider
