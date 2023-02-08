@@ -60,7 +60,7 @@ class ResUsers(models.Model):
             keycloak_user = self._get_or_create_user(token, provider_id, user)
             keycloak_login_provider = self.env.ref('energy_communities.keycloak_login_provider')
             user.update({
-                'oauth_uid': keycloak_user['id'],
+                'oauth_uid': user.login.lower(),
                 'oauth_provider_id': keycloak_login_provider.id,
             })
         # action = self.env.ref('base.action_res_users').read()[0]
