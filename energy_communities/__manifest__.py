@@ -12,7 +12,7 @@
         'contacts',
         'base_rest',
         'auth_api_key',
-        'crm'
+        'crm',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
     'website': 'https://somenergia.coop',
