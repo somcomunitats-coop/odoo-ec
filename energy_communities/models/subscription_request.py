@@ -35,3 +35,8 @@ class SubscriptionRequest(models.Model):
             vals['country_id'] = int(vals['country_id'])
         subscription_request = super(SubscriptionRequest, self).create(vals)
         return subscription_request
+
+    def get_partner_vals(self):
+        vals = super(SubscriptionRequest, self).get_partner_vals()
+        vals["company_id"] = self.company_id.id
+        return vals
