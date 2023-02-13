@@ -83,7 +83,6 @@ class ResUsers(models.Model):
         self._validate_response(resp)
         return resp.json()
 
-
     def _validate_response(self, resp, no_json=False):
         # When Keycloak detects a clash on non-unique values, like emails,
         # it raises:
@@ -135,7 +134,9 @@ class ResUsers(models.Model):
         values = {
             'username': odoo_user.login,
             'email': odoo_user.partner_id.email,
+            'attributes': {'lang': [odoo_user.lang]}
         }
+
         if 'firstname' in odoo_user.partner_id:
             # partner_firstname installed
             firstname = odoo_user.partner_id.firstname
