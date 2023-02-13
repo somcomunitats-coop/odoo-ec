@@ -18,6 +18,11 @@ class AccountMove(models.Model):
                                "login": vat,
                                "company_ids": [partner.company_id.id],
                                "company_id": partner.company_id.id,
+                               "role_line_ids":
+                                   [(0, 0, {
+                                       'role_id': self.env.ref('energy_communities.role_ce_member').id,
+                                       'company_id': partner.company_id.id
+                                   })]
                                }
                 user = user_obj.sudo()._signup_create_user(user_values)
                 # We requiere the user to update the password in keycloak
