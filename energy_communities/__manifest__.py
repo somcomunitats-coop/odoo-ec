@@ -13,7 +13,9 @@
         'base_rest',
         'auth_api_key',
         'crm',
-        'account_multicompany_easy_creation'
+        'account_multicompany_easy_creation',
+        'purchase',
+        'mass_mailing',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
     'website': 'https://somenergia.coop',
