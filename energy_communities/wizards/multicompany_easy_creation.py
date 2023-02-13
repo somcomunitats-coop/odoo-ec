@@ -70,6 +70,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         action = super(AccountMulticompanyEasyCreationWiz, self).action_accept()
         self.update_values_from_crm_lead()
         self.new_company_id.property_cooperator_account = self.property_cooperator_account
+        self.new_company_id.create_user = True
         self.update_product_category_company_share()
         self.create_capital_share_product_template()
         return action
