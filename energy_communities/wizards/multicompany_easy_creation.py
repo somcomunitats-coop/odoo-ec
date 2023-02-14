@@ -55,11 +55,11 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
 
     def create_capital_share_product_template(self):
         # We use sudo to be able to copy the product and not needing to be in the main company
-        new_share_product = self.sudo().env.ref('energy_communities.share_capital_product_template').copy()
-        new_share_product.write({
+        self.sudo().env.ref('energy_communities.share_capital_product_template').copy({
             'name': _('Contribution to Share Capital'),
             'company_id': self.new_company_id.id,
-            'list_price': self.capital_share
+            'list_price': self.capital_share,
+            'active': True
         })
 
     def update_values_from_crm_lead(self):
