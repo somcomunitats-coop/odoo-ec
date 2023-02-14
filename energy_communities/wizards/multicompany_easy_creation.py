@@ -8,6 +8,9 @@ _logger = logging.getLogger(__name__)
 class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     _inherit = "account.multicompany.easy.creation.wiz"
 
+    def _default_product_share_template(self):
+        return self.env.ref('energy_communities.share_capital_product_template').id
+
     crm_lead_id = fields.Many2one('crm.lead', string="CRM Lead")
     property_cooperator_account = fields.Many2one(
         comodel_name="account.account",
@@ -27,6 +30,12 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         comodel_name="account.chart.template",
         string="Chart Template",
         domain=[('visible', '=', True)]
+    )
+    product_share_template = fields.Many2one(
+        comodel_name='product.template',
+        default=_default_product_share_template,
+        string="Product Share Template",
+        domain=[('is_share', '=', True)]
     )
 
     def update_product_category_company_share(self):
@@ -55,12 +64,13 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
 
     def create_capital_share_product_template(self):
         # We use sudo to be able to copy the product and not needing to be in the main company
-        self.sudo().env.ref('energy_communities.share_capital_product_template').copy({
-            'name': _('Contribution to Share Capital'),
+        self.sudo().product_share_template.copy({
+            'name': self.product_share_template.name,
             'company_id': self.new_company_id.id,
             'list_price': self.capital_share,
             'active': True
         })
+        self.new_company_id.initial_subscription_share_amount = self.capital_share
 
     def update_values_from_crm_lead(self):
         if self.crm_lead_id:
