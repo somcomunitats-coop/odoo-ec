@@ -48,10 +48,9 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             },
         }.get(account_chart_external_id, False)
 
-        if values:
-            values['property_account_income_categ_id'] = self.env.ref(values['property_account_income_categ_id'])
-            values['property_account_expense_categ_id'] = self.env.ref(values['property_account_expense_categ_id'])
-            product_category_company_share.write(values)
+        values['property_account_income_categ_id'] = self.env.ref(values['property_account_income_categ_id'])
+        values['property_account_expense_categ_id'] = self.env.ref(values['property_account_expense_categ_id'])
+        product_category_company_share.write(values)
 
     def create_capital_share_product_template(self):
         # We use sudo to be able to copy the product and not needing to be in the main company
