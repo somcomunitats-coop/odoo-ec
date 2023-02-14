@@ -22,6 +22,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
              " cooperators",
     )
     capital_share = fields.Monetary(string="Initial capital share", default=100)
+    create_user = fields.Boolean(string="Create user for cooperator", default=True)
 
     def update_product_category_company_share(self):
         new_company_id = self.new_company_id.id
@@ -77,6 +78,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         self.update_values_from_crm_lead()
         if self.property_cooperator_account:
             self.set_cooperative_account()
+        self.new_company_id.create_user = self.create_user
         self.update_product_category_company_share()
         self.create_capital_share_product_template()
         return action
