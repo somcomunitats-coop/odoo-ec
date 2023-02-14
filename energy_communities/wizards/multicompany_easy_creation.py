@@ -35,10 +35,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         product_category_company_share = self_new_company.env.ref('cooperator.product_category_company_share')
         account_chart_external_id = list(self.chart_template_id.get_external_id().values())[0]
         values = {
-            'l10n_es.account_chart_template_common': {
-                'property_account_income_categ_id': 'l10n_es.{}_account_common_101'.format(new_company_id),
-                'property_account_expense_categ_id': 'l10n_es.{}_account_common_101'.format(new_company_id)
-            },
             'l10n_es.account_chart_template_pymes': {
                 'property_account_income_categ_id': 'l10n_es.{}_account_pymes_100'.format(new_company_id),
                 'property_account_expense_categ_id': 'l10n_es.{}_account_pymes_100'.format(new_company_id)
