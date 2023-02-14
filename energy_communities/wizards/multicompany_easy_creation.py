@@ -66,11 +66,17 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             vals = self.crm_lead_id._get_company_create_vals()
             self.new_company_id.write(vals)
 
+    def set_cooperative_account(self):
+        new_company = self.new_company_id
+        new_company.write({
+            "property_cooperator_account": self.match_account(self.property_cooperator_account).id
+        })
+
     def action_accept(self):
         action = super(AccountMulticompanyEasyCreationWiz, self).action_accept()
         self.update_values_from_crm_lead()
-        self.new_company_id.property_cooperator_account = self.property_cooperator_account
-        self.new_company_id.create_user = True
+        if self.property_cooperator_account:
+            self.set_cooperative_account()
         self.update_product_category_company_share()
         self.create_capital_share_product_template()
         return action
