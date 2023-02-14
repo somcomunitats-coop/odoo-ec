@@ -23,6 +23,11 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     )
     capital_share = fields.Monetary(string="Initial capital share", default=100)
     create_user = fields.Boolean(string="Create user for cooperator", default=True)
+    chart_template_id = fields.Many2one(
+        comodel_name="account.chart.template",
+        string="Chart Template",
+        domain=[('visible', '=', True)]
+    )
 
     def update_product_category_company_share(self):
         new_company_id = self.new_company_id.id
