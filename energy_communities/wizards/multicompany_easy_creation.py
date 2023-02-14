@@ -32,19 +32,19 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         values = {
             'l10n_es.account_chart_template_common': {
                 'property_account_income_categ_id': 'l10n_es.{}_account_common_101'.format(new_company_id),
-                'property_account_expense_categ_id': 'l10n_es.{}_account_common_119'.format(new_company_id)
+                'property_account_expense_categ_id': 'l10n_es.{}_account_common_101'.format(new_company_id)
             },
             'l10n_es.account_chart_template_pymes': {
                 'property_account_income_categ_id': 'l10n_es.{}_account_pymes_100'.format(new_company_id),
-                'property_account_expense_categ_id': 'l10n_es.{}_account_pymes_120'.format(new_company_id)
+                'property_account_expense_categ_id': 'l10n_es.{}_account_pymes_100'.format(new_company_id)
             },
             'l10n_es.account_chart_template_assoc': {
                 'property_account_income_categ_id': 'l10n_es.{}_account_assoc_100'.format(new_company_id),
-                'property_account_expense_categ_id': 'l10n_es.{}_account_assoc_120'.format(new_company_id)
+                'property_account_expense_categ_id': 'l10n_es.{}_account_assoc_100'.format(new_company_id)
             },
             'l10n_es.account_chart_template_full': {
                 'property_account_income_categ_id': 'l10n_es.{}_account_full_100'.format(new_company_id),
-                'property_account_expense_categ_id': 'l10n_es.{}_account_full_120'.format(new_company_id)
+                'property_account_expense_categ_id': 'l10n_es.{}_account_full_100'.format(new_company_id)
             },
         }.get(account_chart_external_id, False)
 
