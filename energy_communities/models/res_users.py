@@ -59,9 +59,10 @@ class ResUsers(models.Model):
                 # already sync'ed somewhere else
                 continue
             keycloak_user = self._get_or_create_user(token, provider_id, user)
+            keycloak_key = self._LOGIN_MATCH_KEY.split(':')[0]
             keycloak_login_provider = self.env.ref('energy_communities.keycloak_login_provider')
             user.update({
-                'oauth_uid': user.login.lower(),
+                'oauth_uid': keycloak_user[keycloak_key],
                 'oauth_provider_id': keycloak_login_provider.id,
             })
         # action = self.env.ref('base.action_res_users').read()[0]
