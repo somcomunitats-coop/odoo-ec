@@ -1,5 +1,5 @@
 from . import auth_oauth_provider
-from . import account_char_template
+from . import account_chart_template
 from . import res_company
 from . import res_partner
 from . import res_users
