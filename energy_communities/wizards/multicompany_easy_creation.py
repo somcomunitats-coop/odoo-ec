@@ -1,7 +1,10 @@
-from odoo import fields, models, api
+from odoo import fields, models, api, _
 
 import logging
+
 _logger = logging.getLogger(__name__)
+
+
 class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     _inherit = "account.multicompany.easy.creation.wiz"
 
@@ -18,6 +21,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
              " receivable account for the"
              " cooperators",
     )
+    capital_share = fields.Monetary(string="Initial capital share", default=100)
 
     def update_product_category_company_share(self):
         new_company_id = self.new_company_id.id
@@ -48,8 +52,18 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             values['property_account_expense_categ_id'] = self.env.ref(values['property_account_expense_categ_id'])
             product_category_company_share.write(values)
 
+    def create_capital_share_product_template(self):
+        # We use sudo to be able to copy the product and not needing to be in the main company
+        new_share_product = self.sudo().env.ref('energy_communities.share_capital_product_template').copy()
+        new_share_product.write({
+            'name': _('Contribution to Share Capital'),
+            'company_id': self.new_company_id.id,
+            'list_price': self.capital_share
+        })
+
     def action_accept(self):
         action = super(AccountMulticompanyEasyCreationWiz, self).action_accept()
         self.new_company_id.property_cooperator_account = self.property_cooperator_account
         self.update_product_category_company_share()
+        self.create_capital_share_product_template()
         return action

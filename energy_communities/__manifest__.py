@@ -30,6 +30,7 @@
         'security/res_users_role_data.xml',
         'data/utm_data.xml',
         'data/crm_lead_tag.xml',
+        'data/product_data.xml',
         'data/auth_oauth_provider_data.xml',
         'views/crm_lead_views.xml',
         'views/res_company_views.xml',
