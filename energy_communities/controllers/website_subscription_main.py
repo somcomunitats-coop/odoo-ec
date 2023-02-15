@@ -17,14 +17,14 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             except:
                 pass
 
-        if ('odoo_company_id' in kwargs) and (not target_odoo_company_id or not request.env['res.company'].sudo().search(
+        if ('odoo_company_id' in kwargs) and (
+                not target_odoo_company_id or not request.env['res.company'].sudo().search(
                 [('id', '=', target_odoo_company_id)])):
             return http.Response(_("Not valid parameter value [odoo_company_id]"), status=500)
 
         ctx = dict(request.context)
         ctx.update({'target_odoo_company_id': target_odoo_company_id})
         request.context = ctx
-
 
         res = super(WebsiteSubscriptionCCEE,
                     self).display_become_cooperator_page(**kwargs)
@@ -40,7 +40,8 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             except:
                 pass
 
-        if ('odoo_company_id' in kwargs) and (not target_odoo_company_id or not request.env['res.company'].sudo().search(
+        if ('odoo_company_id' in kwargs) and (
+                not target_odoo_company_id or not request.env['res.company'].sudo().search(
                 [('id', '=', target_odoo_company_id)])):
             return http.Response(_("Not valid parameter value [odoo_company_id]"), status=500)
 
@@ -52,68 +53,71 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                     self).share_subscription(**kwargs)
         return res
 
-
-
     def fill_values(self, values, is_company, logged, load_from_user=False):
+        target_company_id = request.context.get('target_odoo_company_id', False)
 
-        values = super(WebsiteSubscriptionCCEE, self).fill_values(
-            values, is_company, logged, load_from_user)
+        sub_req_obj = request.env["subscription.request"]
+        if target_company_id:
+            company = request.env['res.company'].sudo().browse(target_company_id)
+        else:
+            company = request.website.company_id
+        products = self.get_products_share(is_company)
 
-        default_company = request.env["res.company"]._company_default_get()
+        if load_from_user:
+            values = self.get_values_from_user(values, is_company)
+        if is_company:
+            values["is_company"] = "on"
+        if logged:
+            values["logged"] = "on"
+        values["countries"] = self.get_countries()
+        values["langs"] = self.get_langs()
+        values["products"] = products
+        fields_desc = sub_req_obj.sudo().fields_get(["company_type", "gender"])
+        values["company_types"] = fields_desc["company_type"]["selection"]
+        values["genders"] = fields_desc["gender"]["selection"]
+        values["company"] = company
 
-        # get target_company under display_become_cooperator_page controller:
-        target_company_id = request.context.get('target_odoo_company_id', False) and int(
-            request.context.get('target_odoo_company_id')) or None
+        if not values.get("share_product_id"):
+            for product in products:
+                if product.default_share_product is True:
+                    values["share_product_id"] = product.id
+                    break
+            if not values.get("share_product_id", False) and products:
+                values["share_product_id"] = products[0].id
+        if not values.get("country_id"):
+            if company.default_country_id:
+                values["country_id"] = company.default_country_id.id
+            else:
+                values["country_id"] = 68
+        if not values.get("activities_country_id"):
+            if company.default_country_id:
+                values["activities_country_id"] = company.default_country_id.id
+            else:
+                values["activities_country_id"] = 68
+        if not values.get("lang"):
+            if company.default_lang_id:
+                values["lang"] = company.default_lang_id.code
 
-        # get target_company under share_subscription controller:
-        if values.get('company_id',None) and (int(values['company_id']) != default_company.id):
-            target_company_id = values['company_id']
-            #ctx = dict(request.context)
-            #ctx.update({'target_odoo_company_id': target_company_id})
-            #request.context = ctx
-
-        if target_company_id and target_company_id != default_company.id:
-            company = request.env['res.company'].sudo().search(
-                [('id', '=', target_company_id)])
-    
-            values["company"] = company
-            if not values.get("country_id"):
-                if company.default_country_id:
-                    # company.default_country_id.id
-                    values["country_id"] = "68"
-                else:
-                    values["country_id"] = "68"
-            if not values.get("activities_country_id"):
-                if company.default_country_id:
-                    # company.default_country_id.id
-                    values["activities_country_id"] = "68"
-                else:
-                    values["activities_country_id"] = "68"
-            if not values.get("lang"):
-                if company.default_lang_id:
-                    values["lang"] = company.default_lang_id.code
-
-            values.update(
-                {
-                    "display_data_policy": company.display_data_policy_approval,
-                    "data_policy_required": company.data_policy_approval_required,
-                    "data_policy_text": company.data_policy_approval_text,
-                    "display_internal_rules": company.display_internal_rules_approval,
-                    "internal_rules_required": company.internal_rules_approval_required,
-                    "internal_rules_text": company.internal_rules_approval_text,
-                    "display_financial_risk": company.display_financial_risk_approval,
-                    "financial_risk_required": company.financial_risk_approval_required,
-                    "financial_risk_text": company.financial_risk_approval_text,
-                    "display_generic_rules": company.display_generic_rules_approval,
-                    "generic_rules_required": company.generic_rules_approval_required,
-                    "generic_rules_text": company.generic_rules_approval_text,
-                }
-            )
-
+        values.update(
+            {
+                "display_data_policy": company.display_data_policy_approval,
+                "data_policy_required": company.data_policy_approval_required,
+                "data_policy_text": company.data_policy_approval_text,
+                "display_internal_rules": company.display_internal_rules_approval,
+                "internal_rules_required": company.internal_rules_approval_required,
+                "internal_rules_text": company.internal_rules_approval_text,
+                "display_financial_risk": company.display_financial_risk_approval,
+                "financial_risk_required": company.financial_risk_approval_required,
+                "financial_risk_text": company.financial_risk_approval_text,
+                "display_generic_rules": company.display_generic_rules_approval,
+                "generic_rules_required": company.generic_rules_approval_required,
+                "generic_rules_text": company.generic_rules_approval_text,
+            }
+        )
         return values
 
     def validation(  # noqa: C901 (method too complex)
-        self, kwargs, logged, values, post_file
+            self, kwargs, logged, values, post_file
     ):
         ret = super(WebsiteSubscriptionCCEE, self).validation(kwargs, logged, values, post_file)
         target_odoo_company_id = kwargs.get('company_id') and int(kwargs.get('company_id')) or None
@@ -122,7 +126,8 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         # redirect url to fall back on become coopererator in template redirection
         if target_odoo_company_id:
             values["redirect_url"] = urljoin(
-                request.httprequest.host_url, "/page/become_cooperator?odoo_company_id={}".format(target_odoo_company_id)
+                request.httprequest.host_url,
+                "/page/become_cooperator?odoo_company_id={}".format(target_odoo_company_id)
             )
         else:
             values["redirect_url"] = urljoin(
@@ -130,11 +135,12 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             )
 
         email = kwargs.get("email")
-        sani_vat = re.sub(r"[^a-zA-Z0-9]","",kwargs.get("vat", "")).lower()
+        sani_vat = re.sub(r"[^a-zA-Z0-9]", "", kwargs.get("vat", "")).lower()
         is_company = kwargs.get("is_company") == "on"
 
         if not logged and sani_vat:
-            user_in_ce = request.env['res.users'].sudo().search([("login", "=", sani_vat), ('company_id','=', target_odoo_company_id)])
+            user_in_ce = request.env['res.users'].sudo().search(
+                [("login", "=", sani_vat), ('company_id', '=', target_odoo_company_id)])
             if user_in_ce:
                 values = self.fill_values(values, is_company, logged)
                 values.update(kwargs)
@@ -146,7 +152,8 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                 return request.render(redirect, values)
 
         if not logged and email:
-            user_in_ce = request.env['res.users'].sudo().search([("partner_id.email", "=", email), ('company_id','=', target_odoo_company_id)])
+            user_in_ce = request.env['res.users'].sudo().search(
+                [("partner_id.email", "=", email), ('company_id', '=', target_odoo_company_id)])
             if user_in_ce:
                 values = self.fill_values(values, is_company, logged)
                 values.update(kwargs)
@@ -156,5 +163,5 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                     "Please contact with the community administrators."
                 )
                 return request.render(redirect, values)
-
+        del values["redirect_url"]
         return ret

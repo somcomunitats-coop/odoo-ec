@@ -21,12 +21,6 @@ class ResUsers(models.Model):
         values['login'] = validation['user_id']
         return values
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        users = super(ResUsers, self).create(vals_list)
-        users.create_users_on_keycloak()
-        return users
-
     def _get_admin_token(self, provider_id):
         """Retrieve auth token from Keycloak."""
         url = provider_id.token_endpoint.replace('/introspect', '')
@@ -54,7 +48,8 @@ class ResUsers(models.Model):
         4. brings you to update users list
         """
         logger.debug('Create keycloak user START')
-        provider_id = self.env.ref('energy_communities_keycloak.keycloak_admin_provider')
+        provider_id = self.env.ref('energy_communities.keycloak_admin_provider')
+        provider_id.validate_admin_provider()
         token = self._get_admin_token(provider_id)
         logger.info(
             'Creating users for %s' % ','.join(self.mapped('login'))
@@ -64,9 +59,11 @@ class ResUsers(models.Model):
                 # already sync'ed somewhere else
                 continue
             keycloak_user = self._get_or_create_user(token, provider_id, user)
+            keycloak_key = self._LOGIN_MATCH_KEY.split(':')[0]
+            keycloak_login_provider = self.env.ref('energy_communities.keycloak_login_provider')
             user.update({
-                'oauth_uid': keycloak_user['id'],
-                'oauth_provider_id': provider_id.id,
+                'oauth_uid': keycloak_user[keycloak_key],
+                'oauth_provider_id': keycloak_login_provider.id,
             })
         # action = self.env.ref('base.action_res_users').read()[0]
         # action['domain'] = [('id', 'in', self.user_ids.ids)]
@@ -86,7 +83,6 @@ class ResUsers(models.Model):
         resp = requests.get(provider_id.admin_user_endpoint, headers=headers, params=params)
         self._validate_response(resp)
         return resp.json()
-
 
     def _validate_response(self, resp, no_json=False):
         # When Keycloak detects a clash on non-unique values, like emails,
@@ -139,7 +135,9 @@ class ResUsers(models.Model):
         values = {
             'username': odoo_user.login,
             'email': odoo_user.partner_id.email,
+            'attributes': {'lang': [odoo_user.lang]}
         }
+
         if 'firstname' in odoo_user.partner_id:
             # partner_firstname installed
             firstname = odoo_user.partner_id.firstname

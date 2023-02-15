@@ -170,8 +170,6 @@ class CrmLead(models.Model):
                 if lead.team_id and lead.team_type == 'map_place_proposal':
                     lead.team_id.community_company_id = company.id
 
-                # Do post creation specific CCEE tasks
-                company._community_post_company_creation_tasks()
 
         # we need to do this commit before proceed to call KeyCloak API calls to build the related KC realms
         self._cr.commit()

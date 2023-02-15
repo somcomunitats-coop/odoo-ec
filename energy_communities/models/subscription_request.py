@@ -29,5 +29,14 @@ class SubscriptionRequest(models.Model):
     def create(self, vals):
         if vals:
             vals['skip_iban_control'] = True
+            # Somewhere the company_id is assigned as string
+            # Can't find where, this is a workaround
+            vals['company_id'] = int(vals['company_id'])
+            vals['country_id'] = int(vals['country_id'])
         subscription_request = super(SubscriptionRequest, self).create(vals)
         return subscription_request
+
+    def get_partner_vals(self):
+        vals = super(SubscriptionRequest, self).get_partner_vals()
+        vals["company_id"] = self.company_id.id
+        return vals

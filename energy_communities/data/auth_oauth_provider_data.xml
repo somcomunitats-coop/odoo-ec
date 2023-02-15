@@ -7,7 +7,7 @@
         <field name="flow">id_token_code</field>
         <field name="enabled">1</field>
         <field name="client_id">odoo</field>
-        <field name="client_secret">DHu6GCYbaRwplehdv9oZ8coD9urBn6v0</field>
+        <field name="client_secret"></field>
         <field name="scope">openid email</field>
         <field name="token_map">user_id:email</field>
         <field name="auth_endpoint">http://10.0.3.1:8080/realms/0/protocol/openid-connect/auth</field>
@@ -24,7 +24,7 @@
         <field name="flow">id_token_code</field>
         <field name="enabled">0</field>
         <field name="client_id">admin-cli</field>
-        <field name="client_secret">VJkk87Als1ok3LHr3kTS5aLKwYaZoIA8</field>
+        <field name="client_secret"></field>
         <field name="scope">openid</field>
         <field name="token_map">user_id:email</field>
         <field name="auth_endpoint">http://10.0.3.1:8080/realms/0/protocol/openid-connect/auth</field>
@@ -32,7 +32,9 @@
         <field name="jwks_uri">http://10.0.3.1:8080/realms/0/protocol/openid-connect/certs</field>
         <field name="validation_endpoint"></field>
         <field name="data_endpoint"></field>
+        <field name="is_admin_provider">1</field>
+        <field name="admin_user_endpoint">http://10.0.3.1:8080/admin/realms/0/users</field>
         <field name="superuser">api_admin_0</field>
-        <field name="superuser_pwd">123</field>
+        <field name="superuser_pwd"></field>
     </record>
 </odoo>

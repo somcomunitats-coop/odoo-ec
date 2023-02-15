@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="wizard_multicompany_easy_creation_form_inherit" model="ir.ui.view">
+            <field name="name">account_multicompany_easy_creation.wizard_multicompany_easy_creation_form_inherit</field>
+            <field name="model">account.multicompany.easy.creation.wiz</field>
+            <field name="inherit_id"
+                   ref="account_multicompany_easy_creation.wizard_multicompany_easy_creation_view_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[last()]" position="after">
+                    <page string="Cooperator">
+                        <group string="Cooperator">
+                            <field name="property_cooperator_account"/>
+                            <field name="product_share_template"/>
+                            <field name="capital_share"/>
+                            <field name="create_user"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//page[last()]" position="after">
+                    <page string="Energy Communities">
+                        <group string="Create from CRM Lead">
+                            <field name="crm_lead_id"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
