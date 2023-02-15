@@ -88,12 +88,12 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             if company.default_country_id:
                 values["country_id"] = company.default_country_id.id
             else:
-                values["country_id"] = "20"
+                values["country_id"] = 68
         if not values.get("activities_country_id"):
             if company.default_country_id:
                 values["activities_country_id"] = company.default_country_id.id
             else:
-                values["activities_country_id"] = "20"
+                values["activities_country_id"] = 68
         if not values.get("lang"):
             if company.default_lang_id:
                 values["lang"] = company.default_lang_id.code
