@@ -1,37 +1,37 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* cooperator
+# 	* cooperator
 # 	* cooperator_website
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-31 09:47+0000\n"
-"PO-Revision-Date: 2022-10-31 09:47+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2023-02-07 09:47+0000\n"
+"PO-Revision-Date: 2023-02-11 20:42+0100\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: ca_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-
-#. module: cooperator
-#: model:mail.template,report_name:cooperator.email_template_release_capital
-msgid "\n"
-"                ${(object.number or '').replace('/','_')}_${object.state == 'draft' and 'draft' or ''}\n"
-"            "
-msgstr ""
+"X-Generator: Poedit 3.2.2\n"
 
 #. module: cooperator
 #: model:mail.template,body_html:cooperator.email_template_waiting_list
-msgid "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+msgid ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hello ${object.firstname},</p>\n"
 "\n"
-"    <p>Thank you for your subscription request. There are currently no project to raise funds for, thus we added it on waiting list.\n"
-"        We will contact you as soon as the subscription requests are re-opened.\n"
+"    <p>Thank you for your subscription request. There are currently no "
+"project to raise funds for, thus we added it on waiting list.\n"
+"        We will contact you as soon as the subscription requests are re-"
+"opened.\n"
 "     </p>\n"
 "\n"
 "    <br/>\n"
@@ -51,7 +51,8 @@ msgid "\n"
 "        ${object.company_id.zip} ${object.company_id.city}<br/>\n"
 "    % endif\n"
 "    % if object.company_id.country_id:\n"
-"        ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
+"        ${object.company_id.state_id and ('%s, ' % object.company_id."
+"state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
 "    % endif\n"
 "    % if object.company_id.phone:\n"
 "        Phone:&nbsp; ${object.company_id.phone}\n"
@@ -59,7 +60,8 @@ msgid "\n"
 "\n"
 "    % if object.company_id.website:\n"
 "        <div>\n"
-"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
+"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object."
+"company_id.website}</a>\n"
 "        </div>\n"
 "    %endif\n"
 "\n"
@@ -69,21 +71,22 @@ msgid "\n"
 "</div>\n"
 "            "
 msgstr ""
-
-#. module: cooperator
-#: model:mail.template,body_html:cooperator.email_template_certificat_increase
-msgid "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
-"    <p>Hello ${object.firstname},</p>\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
-"    <p>We confirm the reception of you payment for the new share(s) you have taken.</p>\n"
+"    <p>Hola ${object.firstname},</p>\n"
+"\n"
+"    <p>Processarem aviat la teva soŀlicitud. Si és correcta tota la "
+"informació que ens has proporcionat, rebràs un altre correu amb la "
+"informació de com procedir amb el pagament.</p>\n"
 "\n"
 "    <br/>\n"
-"    <p>Find in attachment your ${object.company_id.name} certificate.</p>\n"
-"    <p>Thank you for trusting ${object.company_id.name or 'us'}!</p>\n"
+"    <p>Per qualsevol pregunta, no dubtis en contactar-nos.</p>\n"
 "    <br/>\n"
-"    <p>Sustainably your,</p>\n"
+"\n"
+"    <p>Cooperativament,</p>\n"
 "    <p>${object.company_id.name}.</p>\n"
 "\n"
 "    % if object.company_id.street:\n"
@@ -96,15 +99,17 @@ msgid "\n"
 "        ${object.company_id.zip} ${object.company_id.city}<br/>\n"
 "    % endif\n"
 "    % if object.company_id.country_id:\n"
-"        ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
+"        ${object.company_id.state_id and ('%s, ' % object.company_id."
+"state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
 "    % endif\n"
 "    % if object.company_id.phone:\n"
-"        Phone:&nbsp; ${object.company_id.phone}\n"
+"        Telèfon:&nbsp; ${object.company_id.phone}\n"
 "    % endif\n"
 "\n"
 "    % if object.company_id.website:\n"
 "        <div>\n"
-"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
+"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object."
+"company_id.website}</a>\n"
 "        </div>\n"
 "    %endif\n"
 "\n"
@@ -113,153 +118,23 @@ msgid "\n"
 "    </div>\n"
 "</div>\n"
 "            "
-msgstr ""
-
-#. module: cooperator
-#: model:mail.template,body_html:cooperator.email_template_certificat
-msgid "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"\n"
-"    <p>Hello ${object.firstname},</p>\n"
-"\n"
-"    <p>We confirm the reception of you payment. You are now shareholder of our cooperative</p>\n"
-"\n"
-"    <br/>\n"
-"    <p>Find in attachment your ${object.company_id.name} certificate.</p>\n"
-"    <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
-"    <br/>\n"
-"    <p>Sustainably your,</p>\n"
-"    <p>${object.company_id.name}.</p>\n"
-"\n"
-"    % if object.company_id.street:\n"
-"        ${object.company_id.street}\n"
-"    % endif\n"
-"    % if object.company_id.street2:\n"
-"        ${object.company_id.street2}<br/>\n"
-"    % endif\n"
-"    % if object.company_id.city or object.company_id.zip:\n"
-"        ${object.company_id.zip} ${object.company_id.city}<br/>\n"
-"    % endif\n"
-"    % if object.company_id.country_id:\n"
-"        ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
-"    % endif\n"
-"    % if object.company_id.phone:\n"
-"        Phone:&nbsp; ${object.company_id.phone}\n"
-"    % endif\n"
-"\n"
-"    % if object.company_id.website:\n"
-"        <div>\n"
-"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
-"        </div>\n"
-"    %endif\n"
-"\n"
-"    <div>\n"
-"        <img src=${object.company_id.logo_url}>\n"
-"    </div>\n"
-"</div>\n"
-"            "
-msgstr ""
-
-#. module: cooperator
-#: model:mail.template,body_html:cooperator.email_template_share_update
-msgid "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"\n"
-"    <p>Hello ${object.firstname},</p>\n"
-"\n"
-"    <p>We confirm you that the adaptation on shares portfolio has been succesfully performed. Your cooperator certificate has been adapted accordingly</p>\n"
-"\n"
-"    <br/>\n"
-"    <p>Find in attachment your ${object.company_id.name} certificate.</p>\n"
-"    <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
-"    <br/>\n"
-"    <p>Sustainably your,</p>\n"
-"    <p>${object.company_id.name}.</p>\n"
-"\n"
-"    % if object.company_id.street:\n"
-"        ${object.company_id.street}\n"
-"    % endif\n"
-"    % if object.company_id.street2:\n"
-"        ${object.company_id.street2}<br/>\n"
-"    % endif\n"
-"    % if object.company_id.city or object.company_id.zip:\n"
-"        ${object.company_id.zip} ${object.company_id.city}<br/>\n"
-"    % endif\n"
-"    % if object.company_id.country_id:\n"
-"        ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
-"    % endif\n"
-"    % if object.company_id.phone:\n"
-"        Phone:&nbsp; ${object.company_id.phone}\n"
-"    % endif\n"
-"\n"
-"    % if object.company_id.website:\n"
-"        <div>\n"
-"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
-"        </div>\n"
-"    %endif\n"
-"\n"
-"     <div>\n"
-"         <img src=${object.company_id.logo_url}>\n"
-"     </div>\n"
-"</div>\n"
-"            "
-msgstr ""
-
-#. module: cooperator
-#: model:mail.template,body_html:cooperator.email_template_share_transfer
-msgid "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"\n"
-"    <p>Hello ${object.firstname},</p>\n"
-"\n"
-"    <p>We confirm you that the shares have been transfered to you. If you was not already cooperator, you are now shareholder of our cooperative</p>\n"
-"\n"
-"    <br/>\n"
-"    <p>Find in attachment your ${object.company_id.name} certificate.</p>\n"
-"    <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
-"    <br/>\n"
-"    <p>Sustainably your,</p>\n"
-"    <p>${object.company_id.name}.</p>\n"
-"\n"
-"    % if object.company_id.street:\n"
-"        ${object.company_id.street}\n"
-"    % endif\n"
-"    % if object.company_id.street2:\n"
-"        ${object.company_id.street2}<br/>\n"
-"    % endif\n"
-"    % if object.company_id.city or object.company_id.zip:\n"
-"        ${object.company_id.zip} ${object.company_id.city}<br/>\n"
-"    % endif\n"
-"    % if object.company_id.country_id:\n"
-"        ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
-"    % endif\n"
-"    % if object.company_id.phone:\n"
-"        Phone:&nbsp; ${object.company_id.phone}\n"
-"    % endif\n"
-"\n"
-"    % if object.company_id.website:\n"
-"        <div>\n"
-"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
-"        </div>\n"
-"    %endif\n"
-"\n"
-"    <div>\n"
-"        <img src=${object.company_id.logo_url}>\n"
-"    </div>\n"
-"</div>\n"
-"            "
-msgstr ""
 
 #. module: cooperator
 #: model:mail.template,body_html:cooperator.email_template_confirmation_company
-msgid "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+msgid ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hello ${object.firstname},</p>\n"
 "\n"
-"    <p>We have received your subscription request for ${object.company_id.name}. Thank you for your support.</p>\n"
+"    <p>We have received your subscription request for ${object.company_id."
+"name}. Thank you for your support.</p>\n"
 "\n"
-"    <p>Your request will be soon processed by our team \"gestion et participation des membres\". If all the provided info are correct you will soon receive the payment information in another email</p>\n"
+"    <p>Your request will be soon processed by our team. If all the provided "
+"info are correct you will soon receive the payment information in another "
+"email.</p>\n"
 "\n"
 "    <br/>\n"
 "    <p>If you have any question, do not hesitate to contact us.</p>\n"
@@ -278,7 +153,8 @@ msgid "\n"
 "        ${object.company_id.zip} ${object.company_id.city}<br/>\n"
 "    % endif\n"
 "    % if object.company_id.country_id:\n"
-"        ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
+"        ${object.company_id.state_id and ('%s, ' % object.company_id."
+"state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
 "    % endif\n"
 "    % if object.company_id.phone:\n"
 "        Phone:&nbsp; ${object.company_id.phone}\n"
@@ -286,7 +162,8 @@ msgid "\n"
 "\n"
 "    % if object.company_id.website:\n"
 "        <div>\n"
-"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
+"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object."
+"company_id.website}</a>\n"
 "        </div>\n"
 "    %endif\n"
 "\n"
@@ -299,16 +176,30 @@ msgstr ""
 
 #. module: cooperator
 #: model:mail.template,body_html:cooperator.email_template_release_capital
-msgid "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+msgid ""
 "\n"
-"    <p>Hello ${object.partner_id.firstname},</p>\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
-"    <p>You will find in attachment all the necessary information for the payment. We kindly remind you that your subscription will be effective only once we received the payment.</p>\n"
-"\n"
-"    <p>Do not forget to add the structured communication to the payment.</p>\n"
-"\n"
-"    <p>Sustainably your,</p>\n"
+"    <p>Hello ${object.subscription_request.firstname},</p>\n"
+"    </br>\n"
+"    <p>Your request to become member of Energy Community ${object."
+"company_id.name} is already underway! In order to complete it you must make "
+"a bank deposit of the amount indicated below:</p>\n"
+"    </br>\n"
+"    <p>- Initial registration fee amount: ${object.amount_total} € </p>\n"
+"    <p>- Banck account number: ${(object.company_id.bank_ids and object."
+"company_id.bank_ids[0].acc_number) or 'ESXX XXXX XXXX XX XXXXXXXXXX'}</p>\n"
+"    <p>- Receiver: ${object.company_id.name}</p>\n"
+"    <p>- Concept: Your first and last names</p>\n"
+"    </br>\n"
+"    <p>Once the payment is made, please send us the document proof of it by "
+"email to ${(object.company_id.coop_email_contact or object.company_id."
+"email)|safe} </p>\n"
+"    </br>\n"
+"    <p>Many thanks and see you soon!</p>\n"
+"    </br>\n"
 "    <p>${object.company_id.name}.</p>\n"
 "\n"
 "    % if object.company_id.street:\n"
@@ -321,7 +212,8 @@ msgid "\n"
 "        ${object.company_id.zip} ${object.company_id.city}<br/>\n"
 "    % endif\n"
 "    % if object.company_id.country_id:\n"
-"        ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
+"        ${object.company_id.state_id and ('%s, ' % object.company_id."
+"state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
 "    % endif\n"
 "    % if object.company_id.phone:\n"
 "        Phone:&nbsp; ${object.company_id.phone}\n"
@@ -329,7 +221,8 @@ msgid "\n"
 "\n"
 "    % if object.company_id.website:\n"
 "        <div>\n"
-"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
+"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object."
+"company_id.website}</a>\n"
 "        </div>\n"
 "    %endif\n"
 "\n"
@@ -339,17 +232,340 @@ msgid "\n"
 "</div>\n"
 "            "
 msgstr ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
+"\n"
+"    <p>Hola ${object.subscription_request.firstname},</p>\n"
+"    </br>\n"
+"    <p>La teva petició d'alta com a persona sòcia a la Comunitat Energètica "
+"${object.company_id.name} està en tràmit! Per a completar el procés cal fer "
+"l'ingrés bancari de l'import indicat a continuació:</p>\n"
+"    </br>\n"
+"    <p>- Aportació inicial: ${object.amount_total} € </p>\n"
+"    <p>- Número de compte: ${(object.company_id.bank_ids and object."
+"company_id.bank_ids[0].acc_number) or 'ESXX XXXX XXXX XX XXXXXXXXXX'}</p>\n"
+"    <p>- Beneficiari: ${object.company_id.name}</p>\n"
+"    <p>- Concepte: Your first and last names</p>\n"
+"    </br>\n"
+"    <p>Una vegada fet l'ingrés, ens pots enviar el justificant de pagament "
+"responent aquest mateix correu electrònic o escrivint a ${(object."
+"company_id.coop_email_contact or object.company_id.email)|safe} </p>\n"
+"    </br>\n"
+"    <p>Moltes gràcies i fins ben aviat!</p>\n"
+"    </br>\n"
+"    <p>${object.company_id.name}.</p>\n"
+"\n"
+"    % if object.company_id.street:\n"
+"        ${object.company_id.street}\n"
+"    % endif\n"
+"    % if object.company_id.street2:\n"
+"        ${object.company_id.street2}<br/>\n"
+"    % endif\n"
+"    % if object.company_id.city or object.company_id.zip:\n"
+"        ${object.company_id.zip} ${object.company_id.city}<br/>\n"
+"    % endif\n"
+"    % if object.company_id.country_id:\n"
+"        ${object.company_id.state_id and ('%s, ' % object.company_id."
+"state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
+"    % endif\n"
+"    % if object.company_id.phone:\n"
+"        Phone:&nbsp; ${object.company_id.phone}\n"
+"    % endif\n"
+"\n"
+"    % if object.company_id.website:\n"
+"        <div>\n"
+"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object."
+"company_id.website}</a>\n"
+"        </div>\n"
+"    %endif\n"
+"\n"
+"    <div>\n"
+"        <img src=${object.company_id.logo_url}>\n"
+"    </div>\n"
+"</div>\n"
+"            "
+
+#. module: cooperator
+#: model:mail.template,body_html:cooperator.email_template_certificat_increase
+msgid ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
+"\n"
+"    <p>Hello ${object.subscription_request_ids[0].firstname},</p>\n"
+"\n"
+"    <p>We confirm the reception of you payment for the new share(s) you "
+"have taken.</p>\n"
+"\n"
+"    <br/>\n"
+"    <p>Find in attachment your ${object.env.company.name} certificate.</p>\n"
+"    <p>Thank you for trusting ${object.env.company.name or 'us'}!</p>\n"
+"    <br/>\n"
+"    <p>Sustainably your,</p>\n"
+"    <p>${object.env.company.name}.</p>\n"
+"\n"
+"    % if object.env.company.street:\n"
+"        ${object.env.company.street}\n"
+"    % endif\n"
+"    % if object.env.company.street2:\n"
+"        ${object.env.company.street2}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.city or object.env.company.zip:\n"
+"        ${object.env.company.zip} ${object.env.company.city}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.country_id:\n"
+"        ${object.env.company.state_id and ('%s, ' % object.env.company."
+"state_id.name) or ''} ${object.env.company.country_id.name or ''}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.phone:\n"
+"        Phone:&nbsp; ${object.env.company.phone}\n"
+"    % endif\n"
+"\n"
+"    % if object.env.company.website:\n"
+"        <div>\n"
+"            Web :&nbsp;<a href=\"${object.env.company.website}\">${object."
+"env.company.website}</a>\n"
+"        </div>\n"
+"    %endif\n"
+"\n"
+"    <div>\n"
+"        <img src=${object.env.company.logo_url}>\n"
+"    </div>\n"
+"</div>\n"
+"            "
+msgstr ""
+
+#. module: cooperator
+#: model:mail.template,body_html:cooperator.email_template_share_update
+msgid ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
+"\n"
+"    <p>Hello ${object.subscription_request_ids[0].firstname},</p>\n"
+"\n"
+"    <p>We confirm you that the adaptation on shares portfolio has been "
+"succesfully performed. Your cooperator certificate has been adapted "
+"accordingly.</p>\n"
+"\n"
+"    <br/>\n"
+"    <p>Find in attachment your ${object.env.company.name} certificate.</p>\n"
+"    <p>Thank you for choosing ${object.env.company.name or 'us'}!</p>\n"
+"    <br/>\n"
+"    <p>Sustainably your,</p>\n"
+"    <p>${object.env.company.name}.</p>\n"
+"\n"
+"    % if object.env.company.street:\n"
+"        ${object.env.company.street}\n"
+"    % endif\n"
+"    % if object.env.company.street2:\n"
+"        ${object.env.company.street2}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.city or object.env.company.zip:\n"
+"        ${object.env.company.zip} ${object.env.company.city}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.country_id:\n"
+"        ${object.env.company.state_id and ('%s, ' % object.env.company."
+"state_id.name) or ''} ${object.env.company.country_id.name or ''}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.phone:\n"
+"        Phone:&nbsp; ${object.env.company.phone}\n"
+"    % endif\n"
+"\n"
+"    % if object.env.company.website:\n"
+"        <div>\n"
+"            Web :&nbsp;<a href=\"${object.env.company.website}\">${object."
+"env.company.website}</a>\n"
+"        </div>\n"
+"    %endif\n"
+"\n"
+"     <div>\n"
+"         <img src=${object.env.company.logo_url}>\n"
+"     </div>\n"
+"</div>\n"
+"            "
+msgstr ""
+
+#. module: cooperator
+#: model:mail.template,body_html:cooperator.email_template_share_transfer
+msgid ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
+"\n"
+"    <p>Hello ${object.subscription_request_ids[0].firstname},</p>\n"
+"\n"
+"    <p>We confirm you that the shares have been transfered to you. If you "
+"was not already cooperator, you are now shareholder of our cooperative.</"
+"p>\n"
+"\n"
+"    <br/>\n"
+"    <p>Find in attachment your ${object.env.company.name} certificate.</p>\n"
+"    <p>Thank you for choosing ${object.env.company.name or 'us'}!</p>\n"
+"    <br/>\n"
+"    <p>Sustainably your,</p>\n"
+"    <p>${object.env.company.name}.</p>\n"
+"\n"
+"    % if object.env.company.street:\n"
+"        ${object.env.company.street}\n"
+"    % endif\n"
+"    % if object.env.company.street2:\n"
+"        ${object.env.company.street2}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.city or object.env.company.zip:\n"
+"        ${object.env.company.zip} ${object.env.company.city}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.country_id:\n"
+"        ${object.env.company.state_id and ('%s, ' % object.env.company."
+"state_id.name) or ''} ${object.env.company.country_id.name or ''}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.phone:\n"
+"        Phone:&nbsp; ${object.env.company.phone}\n"
+"    % endif\n"
+"\n"
+"    % if object.env.company.website:\n"
+"        <div>\n"
+"            Web :&nbsp;<a href=\"${object.env.company.website}\">${object."
+"env.company.website}</a>\n"
+"        </div>\n"
+"    %endif\n"
+"\n"
+"    <div>\n"
+"        <img src=${object.env.company.logo_url}>\n"
+"    </div>\n"
+"</div>\n"
+"            "
+msgstr ""
+
+#. module: cooperator
+#: model:mail.template,body_html:cooperator.email_template_certificat
+msgid ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
+"\n"
+"    <p>Hello ${object.subscription_request_ids[0].firstname},</p>\n"
+"    </br>\n"
+"    <p>We welcome you to the Energy Community ${object.env.company.name}!</"
+"p>\n"
+"    <p>You have succesfully finished the incoming process so you are now a "
+"member of our community!</p>\n"
+"    </br>\n"
+"    <p>Here you have your community member number: <strong>${(object."
+"cooperator_register_number or 'XXX')}</strong></p>\n"
+"    </br>\n"
+"    <p>Do not hesitate to ask us if you have any question by repliying to "
+"this email.</>\n"
+"    <br/>\n"
+"    <p>Many thanks and see you soon!</p>\n"
+"    </br>\n"
+"    <p>${object.env.company.name}.</p>\n"
+"\n"
+"    % if object.env.company.street:\n"
+"        ${object.env.company.street}\n"
+"    % endif\n"
+"    % if object.env.company.street2:\n"
+"        ${object.env.company.street2}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.city or object.env.company.zip:\n"
+"        ${object.env.company.zip} ${object.env.company.city}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.country_id:\n"
+"        ${object.env.company.state_id and ('%s, ' % object.env.company."
+"state_id.name) or ''} ${object.env.company.country_id.name or ''}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.phone:\n"
+"        Phone:&nbsp; ${object.env.company.phone}\n"
+"    % endif\n"
+"\n"
+"    % if object.env.company.website:\n"
+"        <div>\n"
+"            Web :&nbsp;<a href=\"${object.env.company.website}\">${object."
+"env.company.website}</a>\n"
+"        </div>\n"
+"    %endif\n"
+"\n"
+"    <div>\n"
+"        <img src=${object.env.company.logo_url}>\n"
+"    </div>\n"
+"</div>\n"
+"            "
+msgstr ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
+"\n"
+"    <p>Hola ${object.subscription_request_ids[0].firstname},</p>\n"
+"    </br>\n"
+"    <p>Et donem la benvinguda a la Comunitat Energètica ${object.env."
+"company.name}!</p>\n"
+"    <p>Has finalitzat correctament el procés d'alta i ja ets plenament soci/"
+"sòcia de la nostra comunitat!</p>\n"
+"    </br>\n"
+"    <p>El teu número de soci/sòcia és el: <strong>${(object."
+"cooperator_register_number or 'XXX')}</strong></p>\n"
+"    </br>\n"
+"    <p>Per a qualsevol dubte pots respondre aquest mateix correu electrònic."
+"</>\n"
+"    <br/>\n"
+"    <p>Salut i fins ben aviat!</p>\n"
+"    </br>\n"
+"    <p>${object.env.company.name}.</p>\n"
+"\n"
+"    % if object.env.company.street:\n"
+"        ${object.env.company.street}\n"
+"    % endif\n"
+"    % if object.env.company.street2:\n"
+"        ${object.env.company.street2}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.city or object.env.company.zip:\n"
+"        ${object.env.company.zip} ${object.env.company.city}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.country_id:\n"
+"        ${object.env.company.state_id and ('%s, ' % object.env.company."
+"state_id.name) or ''} ${object.env.company.country_id.name or ''}<br/>\n"
+"    % endif\n"
+"    % if object.env.company.phone:\n"
+"        Phone:&nbsp; ${object.env.company.phone}\n"
+"    % endif\n"
+"\n"
+"    % if object.env.company.website:\n"
+"        <div>\n"
+"            Web :&nbsp;<a href=\"${object.env.company.website}\">${object."
+"env.company.website}</a>\n"
+"        </div>\n"
+"    %endif\n"
+"\n"
+"    <div>\n"
+"        <img src=${object.env.company.logo_url}>\n"
+"    </div>\n"
+"</div>\n"
+"            "
 
 #. module: cooperator
 #: model:mail.template,body_html:cooperator.email_template_confirmation
-msgid "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+msgid ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hello,</p>\n"
-"    <p>Thank you for filling out the form and request to join the Community.</p>\n"
-"    <p>In the coming weeks we will contact you to indicate the next steps</p>\n"
+"    <p>Thank you for filling out the form and request to join the Community."
+"</p>\n"
+"    <p>In the coming weeks we will contact you to indicate the next steps</"
+"p>\n"
 "    <p>Here is a copy of the data we received:</p>\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
 "        <p> - Request to join: ${object.company_id.name}</p>\n"
 "        <p> - Firstname: ${object.firstname}</p>\n"
 "        <p> - Lastname: ${object.lastname}</p>\n"
@@ -359,27 +575,35 @@ msgid "\n"
 "        <p> - City: ${object.city}</p>\n"
 "        <p> - Country: ${object.country_id.name}</p>        \n"
 "        <p> - Email: ${object.email}</p>\n"
-"        <p> - Phone: ${object.phone}</p>\n"
-"        <p> - Gender: ${object.gender}</p>        \n"
+"        <p> - Phone: ${(object.phone or '')}</p>\n"
+"        <p> - Gender: ${dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]}</p>        \n"
 "        <p> - Birthdate: ${object.birthdate}</p>\n"
-"        <p> - Language: ${object.lang}</p>  \n"
+"        <p> - Language: ${dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}</p>  \n"
 "        <p> - Initial share amount: ${object.subscription_amount}</p>  \n"
 "    </div>\n"
 "    <br />\n"
 "    <p>We keep in touch for any questions.</p>\n"
 "    <p>Yours faithfully,</p>\n"
 "    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
+"and FAQs</a></p>\n"
 "</div>\n"
 "            "
-msgstr "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+msgstr ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hola,</p>\n"
-"    <p>Gràcies per omplir el formulari i sol·licitar l’adhesió a la Comunitat Energètica.</p>\n"
-"    <p>En les properes setmanes ens posarem en contacte amb tu per indicar-te les següents passes.</p>\n"
+"    <p>Gràcies per omplir el formulari i sol·licitar l’adhesió a la "
+"Comunitat Energètica.</p>\n"
+"    <p>En les properes setmanes ens posarem en contacte amb tu per indicar-"
+"te les següents passes.</p>\n"
 "    <p>Aquí tens una còpia de les dades que hem rebut:</p>\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
 "        <p> - Comunitat: ${object.company_id.name}</p>\n"
 "        <p> - Nom: ${object.firstname}</p>\n"
 "        <p> - Cognoms: ${object.lastname}</p>\n"
@@ -389,51 +613,57 @@ msgstr "\n"
 "        <p> - Ciutat: ${object.city}</p>\n"
 "        <p> - Pais: ${object.country_id.name}</p>        \n"
 "        <p> - Correu electrònic: ${object.email}</p>\n"
-"        <p> - Telèfon: ${object.phone}</p>\n"
-"        <p> - Gènere: ${object.gender}</p>        \n"
+"        <p> - Telèfon: ${(object.phone or '')}</p>\n"
+"        <p> - Gènere: ${dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]}</p>        \n"
 "        <p> - Data creació: ${object.birthdate}</p>\n"
-"        <p> - Idioma: ${object.lang}</p>  \n"
-"        <p> - Import quota inicial: ${object.subscription_amount}</p>  \n"
+"        <p> - Idioma: ${dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}</p>  \n"
+"        <p> - Import aportació inicial: ${object.subscription_amount}</"
+"p>  \n"
 "    </div>\n"
 "    <br />\n"
 "    <p>Seguim en contacte per qualsevol dubte.</p>\n"
 "    <p>Atentament,</p>\n"
 "    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos i preguntes freqüents</a></p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos i "
+"preguntes freqüents</a></p>\n"
 "</div>\n"
 "            "
 
 #. module: cooperator
-#: model:mail.template,subject:cooperator.email_template_release_capital
-msgid "${object.company_id.name} Request to Release\n"
-"                Capital (Ref ${object.number or 'n/a'})\n"
-"            "
+#: model:mail.template,report_name:cooperator.email_template_release_capital
+msgid ""
+"${(object.name or \"capital_release_request\").replace(\"/\", \"_"
+"\")}${object.state == \"draft\" and \"_draft\" or \"\"}"
 msgstr ""
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:69
+#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "%s is not available to companies"
 msgstr "%s no està disponible per empreses"
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:74
+#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "%s is not available to individuals"
 msgstr "%s no està disponible per a persones individuals"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.theme_invoice_G002_document
-msgid "<span groups=\"account.group_show_line_subtotals_tax_excluded\">\n"
+msgid ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">\n"
 "                                    Amount\n"
 "                                </span>\n"
-"                                <span groups=\"account.group_show_line_subtotals_tax_included\">\n"
+"                                <span groups=\"account."
+"group_show_line_subtotals_tax_included\">\n"
 "                                    Total Price\n"
 "                                </span>"
-msgstr "<span groups=\"account.group_show_line_subtotals_tax_excluded\">\n"
+msgstr ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">\n"
 "                                    Import\n"
 "                                </span>\n"
-"                                <span groups=\"account.group_show_line_subtotals_tax_included\">\n"
+"                                <span groups=\"account."
+"group_show_line_subtotals_tax_included\">\n"
 "                                    Preu Total\n"
 "                                </span>"
 
@@ -494,12 +724,14 @@ msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.theme_invoice_G002_document
-msgid "<strong class=\"text-center\">Scan me with your banking\n"
+msgid ""
+"<strong class=\"text-center\">Scan me with your banking\n"
 "                            app.\n"
 "                        </strong>\n"
 "                        <br/>\n"
 "                        <br/>"
-msgstr "<strong class=\"text-center\">Escaneja'm amb la app.\n"
+msgstr ""
+"<strong class=\"text-center\">Escaneja'm amb la app.\n"
 "                            bancària.\n"
 "                        </strong>\n"
 "                        <br/>\n"
@@ -507,11 +739,13 @@ msgstr "<strong class=\"text-center\">Escaneja'm amb la app.\n"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.theme_invoice_G002_document
-msgid "<strong class=\"text-center\">The SEPA QR Code\n"
+msgid ""
+"<strong class=\"text-center\">The SEPA QR Code\n"
 "                            informations are not set correctly.\n"
 "                        </strong>\n"
 "                        <br/>"
-msgstr "<strong class=\"text-center\">La informació del codi\n"
+msgstr ""
+"<strong class=\"text-center\">La informació del codi\n"
 "                            SEPA QR no és correcte..\n"
 "                        </strong>\n"
 "                        <br/>"
@@ -548,7 +782,7 @@ msgid "<strong>Your Contact:</strong>"
 msgstr "<strong>El teu contacte:</strong>"
 
 #. module: cooperator
-#: code:addons/cooperator/wizard/create_subscription_from_partner.py:205
+#: code:addons/cooperator/wizard/create_subscription_from_partner.py:0
 #, python-format
 msgid "A person can't be representative of two different companies."
 msgstr "Una mateixa persona no pot representar 2 empreses diferents."
@@ -557,11 +791,6 @@ msgstr "Una mateixa persona no pot representar 2 empreses diferents."
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__iban
 msgid "Account Number"
 msgstr "Número de compte"
-
-#. module: cooperator
-#: sql_constraint:res.partner.bank:0
-msgid "Account Number must be unique!"
-msgstr "El número de compte ha de ser únic!"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__message_needaction
@@ -599,14 +828,30 @@ msgid "Activities zip Code"
 msgstr "Codi postal activitats"
 
 #. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__activity_state
 msgid "Activity State"
 msgstr "Estat de l'activitat"
 
 #. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__address
 msgid "Address"
 msgstr "Adreça"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__type
+#: model:ir.model.fields,field_description:cooperator.field_res_users__type
+msgid "Address Type"
+msgstr "Tipus d'adreça"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__allow_id_card_upload
@@ -619,9 +864,9 @@ msgid "Approve"
 msgstr "Aprova"
 
 #. module: cooperator
-#: selection:operation.request,state:0
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__state__approved
 msgid "Approved"
-msgstr "Aprovat"
+msgstr ""
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_partner__data_policy_approved
@@ -659,20 +904,9 @@ msgid "Attachment Count"
 msgstr "Nombre d'adjunts"
 
 #. module: cooperator
-#: model:ir.model,name:cooperator.model_res_partner_bank
-msgid "Bank Accounts"
-msgstr "Comptes bancaris"
-
-#. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__bank_account
 msgid "Bank account"
 msgstr "Compte bancari"
-
-#. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_product_product__customer
-#: model:ir.model.fields,field_description:cooperator.field_product_template__customer
-msgid "Become customer"
-msgstr "Fes-te client/a"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_tree
@@ -680,9 +914,9 @@ msgid "Block"
 msgstr "Bloquejar"
 
 #. module: cooperator
-#: selection:subscription.request,state:0
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__state__block
 msgid "Blocked"
-msgstr "Bloquejat"
+msgstr ""
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__board_representative
@@ -705,7 +939,7 @@ msgid "Bottom logo 2"
 msgstr "Logo inferior 2"
 
 #. module: cooperator
-#: selection:subscription.request,source:0
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__source__crm
 msgid "CRM"
 msgstr ""
 
@@ -725,15 +959,14 @@ msgstr "Pot ser subscrit per persones individuals?"
 #: model_terms:ir.ui.view,arch_db:cooperator.operation_request_form
 #: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_view_form
 #: model_terms:ir.ui.view,arch_db:cooperator.view_create_subscription
-#: model_terms:ir.ui.view,arch_db:cooperator.view_update_partner_info
 #: model_terms:ir.ui.view,arch_db:cooperator.view_update_share_line_info
 #: model_terms:ir.ui.view,arch_db:cooperator.view_validate_subscription_request
 msgid "Cancel"
 msgstr "Cancel·lar"
 
 #. module: cooperator
-#: selection:operation.request,state:0
-#: selection:subscription.request,state:0
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__state__cancelled
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__state__cancelled
 msgid "Cancelled"
 msgstr "Canceŀlat"
 
@@ -754,10 +987,8 @@ msgstr "Sol·licitud capital social"
 #: model:mail.template,report_name:cooperator.email_template_certificat_increase
 #: model:mail.template,report_name:cooperator.email_template_share_transfer
 #: model:mail.template,report_name:cooperator.email_template_share_update
-msgid "Certificat\n"
-"                ${(object.cooperator_register_number or '')}\n"
-"            "
-msgstr ""
+msgid "Certificate ${(object.cooperator_register_number or '')}"
+msgstr "Certificat ${(object.cooperator_register_number or '')}"
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_res_partner__cooperator
@@ -780,26 +1011,31 @@ msgstr "Marcar si ha deixat de ser sòcia efectiva."
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_subscription_request__skip_iban_control
 msgid "Check to bypass iban format control."
-msgstr "Marcar si no es vol aplicar control de format per al codi IBAN"
+msgstr "Marcar si no es vol aplicar control de format per al codi IBAN."
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_res_company__display_data_policy_approval
-msgid "Choose to display a data policy checkbox on the cooperator website form."
+msgid ""
+"Choose to display a data policy checkbox on the cooperator website form."
 msgstr "Mostrar text de Política Dades al formulari web de subscripció."
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_res_company__display_financial_risk_approval
-msgid "Choose to display a financial risk checkbox on the cooperator website form."
-msgstr "Mostrar text de Política Risc Financer al formulari web de subscripció."
+msgid ""
+"Choose to display a financial risk checkbox on the cooperator website form."
+msgstr ""
+"Mostrar text de Política Risc Financer al formulari web de subscripció."
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_res_company__display_internal_rules_approval
-msgid "Choose to display an internal rules checkbox on the cooperator website form."
-msgstr "Mostrar text de Pilítica Interna al formulari web de subscripció."
+msgid ""
+"Choose to display an internal rules checkbox on the cooperator website form."
+msgstr "Mostrar text de Política Interna al formulari web de subscripció."
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_res_company__display_generic_rules_approval
-msgid "Choose to display generic rules checkbox on the cooperator website form."
+msgid ""
+"Choose to display generic rules checkbox on the cooperator website form."
 msgstr "Mostrar text de Condicions Generals al formulari web de subscripció."
 
 #. module: cooperator
@@ -817,7 +1053,7 @@ msgstr "Prémer per afegir contacte a la llista de contactes."
 #. module: cooperator
 #: model_terms:ir.actions.act_window,help:cooperator.product_template_action
 msgid "Click to define a new share product."
-msgstr "Prémer per definir una nova quota."
+msgstr "Prémer per definir una nova aportació."
 
 #. module: cooperator
 #: model:ir.model,name:cooperator.model_res_company
@@ -844,11 +1080,6 @@ msgstr "Moneda de l'empresa"
 #: model:ir.model.fields,field_description:cooperator.field_res_users__company_register_number
 msgid "Company Register Number"
 msgstr "Codi de registre de la companyia"
-
-#. module: cooperator
-#: model:product.category,name:cooperator.product_category_company_share
-msgid "Company Share"
-msgstr ""
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__company_email
@@ -898,10 +1129,10 @@ msgid "Contacts"
 msgstr "Contactes"
 
 #. module: cooperator
-#: selection:operation.request,operation_type:0
-#: selection:subscription.register,type:0
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__operation_type__convert
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_register__type__convert
 msgid "Conversion"
-msgstr "Conversió"
+msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.view_subscription_register_filter
@@ -911,14 +1142,13 @@ msgstr "Convertir"
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__share_to_product_id
 msgid "Convert to this share type"
-msgstr "Convertir a aquest tipus de quota"
+msgstr "Convertir a aquest tipus d'aportació"
 
 #. module: cooperator
-#: code:addons/cooperator/models/operation_request.py:239
-#: code:addons/cooperator/models/operation_request.py:359
+#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "Converting just part of the shares is not yet implemented"
-msgstr "Convertir només una part de la quota no està contemplat"
+msgstr "Convertir només una part de la aportació no està contemplat"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.view_company_form
@@ -928,12 +1158,11 @@ msgstr "Cooperatiu"
 #. module: cooperator
 #: model:ir.module.category,name:cooperator.module_category_cooperator_management
 msgid "Cooperative Management"
-msgstr ""
+msgstr "Gestió cooperativa"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__partner_id
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__cooperator
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_partner__cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_users__cooperator
 #: model:ir.model.fields,field_description:cooperator.field_share_line__partner_id
@@ -958,7 +1187,7 @@ msgid "Cooperator Candidates"
 msgstr "Candidates a sòcies"
 
 #. module: cooperator
-#: model:ir.actions.act_window,name:cooperator.account_invoice_action
+#: model:ir.actions.act_window,name:cooperator.action_move_out_invoice_type
 msgid "Cooperator Invoices"
 msgstr "Factures sòcies"
 
@@ -997,7 +1226,6 @@ msgid "Cooperator certificat"
 msgstr "Certificat sòcia"
 
 #. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_email_template_preview__is_cooperator_template
 #: model:ir.model.fields,field_description:cooperator.field_mail_template__is_cooperator_template
 msgid "Cooperator mail template"
 msgstr "Plantilla email sòcia"
@@ -1037,15 +1265,18 @@ msgid "Create Subscription From Partner"
 msgstr "Crear subscripció desde la persona/empresa"
 
 #. module: cooperator
-#: model_terms:ir.actions.act_window,help:cooperator.account_invoice_action
+#: model_terms:ir.actions.act_window,help:cooperator.action_move_out_invoice_type
 msgid "Create a customer invoice"
-msgstr ""
+msgstr "Crear una factura de client"
 
 #. module: cooperator
-#: model_terms:ir.actions.act_window,help:cooperator.account_invoice_action
-msgid "Create invoices, register payments and keep track of the\n"
-"                discussions with your customers."
+#: model_terms:ir.actions.act_window,help:cooperator.action_move_out_invoice_type
+msgid ""
+"Create invoices, register payments and keep track of the discussions with "
+"your customers."
 msgstr ""
+"Crear factures, registrar pagaments i fer seguiment de les converses amb "
+"els clients."
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__create_user
@@ -1055,7 +1286,6 @@ msgstr "Crear usuari per la sòcia"
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__create_uid
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__create_uid
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__create_uid
 #: model:ir.model.fields,field_description:cooperator.field_share_line__create_uid
 #: model:ir.model.fields,field_description:cooperator.field_share_line_update_info__create_uid
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__create_uid
@@ -1067,7 +1297,6 @@ msgstr "Creat per"
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__create_date
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__create_date
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__create_date
 #: model:ir.model.fields,field_description:cooperator.field_share_line__create_date
 #: model:ir.model.fields,field_description:cooperator.field_share_line_update_info__create_date
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__create_date
@@ -1077,7 +1306,6 @@ msgid "Created on"
 msgstr "Creat el"
 
 #. module: cooperator
-#: model:ir.model,name:cooperator.model_account_invoice_refund
 #: model_terms:ir.ui.view,arch_db:cooperator.theme_invoice_G002_document
 msgid "Credit Note"
 msgstr "Factura rectificativa (abonament)"
@@ -1115,13 +1343,13 @@ msgstr "Idioma per defecte"
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_res_company__default_capital_release_request_payment_term
 msgid "Default payment term to use for capital release requests"
-msgstr "Terme pagament retorn capital solcial per defecte"
+msgstr "Terme pagament retorn capital social per defecte"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_product_product__default_share_product
 #: model:ir.model.fields,field_description:cooperator.field_product_template__default_share_product
 msgid "Default share product"
-msgstr "Quota alta per defecte"
+msgstr "Aportació alta per defecte"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__display_data_policy_approval
@@ -1144,16 +1372,22 @@ msgid "Display Internal Rules Approval"
 msgstr "Mostrar aprovació Política Interna"
 
 #. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_account_invoice_report__display_name
+#: model:ir.model.fields,field_description:cooperator.field_account_journal__display_name
+#: model:ir.model.fields,field_description:cooperator.field_account_move__display_name
+#: model:ir.model.fields,field_description:cooperator.field_mail_template__display_name
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__display_name
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__display_name
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__display_name
+#: model:ir.model.fields,field_description:cooperator.field_product_template__display_name
+#: model:ir.model.fields,field_description:cooperator.field_res_company__display_name
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__display_name
 #: model:ir.model.fields,field_description:cooperator.field_share_line__display_name
 #: model:ir.model.fields,field_description:cooperator.field_share_line_update_info__display_name
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__display_name
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__display_name
 #: model:ir.model.fields,field_description:cooperator.field_validate_subscription_request__display_name
 msgid "Display Name"
-msgstr "Mostrar Nom"
+msgstr "Nom de visualització"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__display_logo1
@@ -1172,17 +1406,17 @@ msgid "Display on website"
 msgstr "Mostrar a la Web"
 
 #. module: cooperator
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__state__done
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__state__done
 #: model_terms:ir.ui.view,arch_db:cooperator.view_subscription_request_filter
-#: selection:operation.request,state:0
-#: selection:subscription.request,state:0
 msgid "Done"
 msgstr "Fet"
 
 #. module: cooperator
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__state__draft
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__state__draft
 #: model_terms:ir.ui.view,arch_db:cooperator.operation_request_form
 #: model_terms:ir.ui.view,arch_db:cooperator.view_subscription_request_filter
-#: selection:operation.request,state:0
-#: selection:subscription.request,state:0
 msgid "Draft"
 msgstr "Esborrany"
 
@@ -1193,9 +1427,11 @@ msgstr "Factura esborrany"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_register_G001
-msgid "Effective\n"
+msgid ""
+"Effective\n"
 "                            date"
-msgstr "Data\n"
+msgstr ""
+"Data\n"
 "                            efectiva"
 
 #. module: cooperator
@@ -1241,7 +1477,7 @@ msgid "Entry type"
 msgstr "Tipus entrada"
 
 #. module: cooperator
-#: code:addons/cooperator/wizard/update_share_line.py:45
+#: code:addons/cooperator/wizard/update_share_line.py:0
 #, python-format
 msgid "Error the update return more than one subscription register lines."
 msgstr ""
@@ -1252,8 +1488,13 @@ msgid "Execute"
 msgstr "Executa"
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:200
-#: selection:subscription.request,gender:0
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__failed_message_ids
+msgid "Failed Messages"
+msgstr "Missatges que han fallat"
+
+#. module: cooperator
+#: code:addons/cooperator/models/subscription_request.py:0
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__gender__female
 #, python-format
 msgid "Female"
 msgstr "Dona"
@@ -1289,6 +1530,11 @@ msgid "Followers (Partners)"
 msgstr "Seguidors (Clients)"
 
 #. module: cooperator
+#: model:ir.model.fields,help:cooperator.field_subscription_request__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_certificat_G001_document
 msgid "For the board of"
 msgstr "En representació de"
@@ -1296,8 +1542,8 @@ msgstr "En representació de"
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_product_product__force_min_qty
 #: model:ir.model.fields,field_description:cooperator.field_product_template__force_min_qty
-msgid "Force Min Qty"
-msgstr "Quantitat mínima forçada"
+msgid "Force minimum quantity?"
+msgstr "Forçar a la quantitat mínima?"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__capital_release_request_date
@@ -1325,13 +1571,11 @@ msgid "Generic Rules Approved"
 msgstr "Política Condicions Generals aprovada"
 
 #. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_account_bank_statement_import_journal_creation__get_cooperator_payment
 #: model:ir.model.fields,field_description:cooperator.field_account_journal__get_cooperator_payment
 msgid "Get cooperator payments?"
 msgstr "Obtenir pagaments sòcies?"
 
 #. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_account_bank_statement_import_journal_creation__get_general_payment
 #: model:ir.model.fields,field_description:cooperator.field_account_journal__get_general_payment
 msgid "Get general payments?"
 msgstr "Obtenir pagaments generals?"
@@ -1345,19 +1589,20 @@ msgid "Group By"
 msgstr "Agrupar per"
 
 #. module: cooperator
-#: selection:subscription.request,gender:0
-msgid "I prefer to not share it"
-msgstr ""
-
-#. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__already_cooperator
 msgid "I'm already cooperator"
 msgstr "Ja soc sòcia"
 
 #. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_account_invoice_report__id
+#: model:ir.model.fields,field_description:cooperator.field_account_journal__id
+#: model:ir.model.fields,field_description:cooperator.field_account_move__id
+#: model:ir.model.fields,field_description:cooperator.field_mail_template__id
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__id
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__id
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__id
+#: model:ir.model.fields,field_description:cooperator.field_product_template__id
+#: model:ir.model.fields,field_description:cooperator.field_res_company__id
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__id
 #: model:ir.model.fields,field_description:cooperator.field_share_line__id
 #: model:ir.model.fields,field_description:cooperator.field_share_line_update_info__id
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__id
@@ -1367,17 +1612,26 @@ msgid "ID"
 msgstr ""
 
 #. module: cooperator
-#: model:ir.model.fields,help:cooperator.field_subscription_request__message_unread
-msgid "If checked new messages require your attention."
-msgstr "Si està marcat, els nous missatges requereixen la vostra atenció."
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: cooperator
+#: model:ir.model.fields,help:cooperator.field_subscription_request__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_res_company__unmix_share_type
-msgid "If checked, A cooperator will be authorised to have only one type of share"
-msgstr "Si està marcat, una sòcia estarà autoritzada a tenir només un tipus de quota."
+msgid ""
+"If checked, A cooperator will be authorised to have only one type of share"
+msgstr ""
+"Si està marcat, una sòcia estarà autoritzada a tenir només un tipus "
+"d'aportació"
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_subscription_request__message_needaction
+#: model:ir.model.fields,help:cooperator.field_subscription_request__message_unread
 msgid "If checked, new messages require your attention."
 msgstr "Si està marcat, els nous missatges requereixen la vostra atenció."
 
@@ -1388,13 +1642,17 @@ msgstr "Si està marcat, alguns missatges tenen un error d'entrega."
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_operation_request__subscription_request
-msgid "In case on a transfer of share. If the share receiver isn't a effective member then a subscription form should be filled."
-msgstr "En cas de transferir una quota, si el receptor/a no és una sòcia efectiva, cal omplir un formulari de subscripció."
+msgid ""
+"In case on a transfer of share. If the share receiver isn't a effective "
+"member then a subscription form should be filled."
+msgstr ""
+"En cas de transferir una aportació, si el receptor/a no és una sòcia "
+"efectiva, cal omplir un formulari de subscripció."
 
 #. module: cooperator
-#: selection:subscription.request,type:0
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__type__increase
 msgid "Increase number of share"
-msgstr "Incrementar nombre de quotes"
+msgstr "Incrementar número d'aportació"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.product_template_form_view
@@ -1412,21 +1670,25 @@ msgid "Invalid IBAN"
 msgstr "Codi IBAN no vàlid"
 
 #. module: cooperator
-#: model:ir.model,name:cooperator.model_account_invoice
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__invoice
 #: model_terms:ir.ui.view,arch_db:cooperator.theme_invoice_G002_document
 msgid "Invoice"
 msgstr "Factura"
 
 #. module: cooperator
+#: model:ir.model.fields,help:cooperator.field_res_partner__type
+#: model:ir.model.fields,help:cooperator.field_res_users__type
+msgid ""
+"Invoice & Delivery addresses are used in sales orders. Private addresses "
+"are only visible by authorized users."
+msgstr ""
+"Les adreces de factura i lliurament s'utilitzen a les comandes de venda. "
+"Les adreces privades només són visibles pels usuaris autoritzats."
+
+#. module: cooperator
 #: model:ir.model,name:cooperator.model_account_invoice_report
 msgid "Invoices Statistics"
 msgstr "Estadístiques de factures"
-
-#. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__is_company
-msgid "Is Company"
-msgstr "Es empresa"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__message_is_follower
@@ -1444,9 +1706,9 @@ msgid "Is an operation"
 msgstr "És una operació"
 
 #. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__is_company
-msgid "Is company"
-msgstr "És una empresa"
+#: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__is_company
+msgid "Is company?"
+msgstr "És empresa?"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__data_policy_approval_required
@@ -1472,7 +1734,7 @@ msgstr "Aprovació Politica Interna obligatòria?"
 #: model:ir.model.fields,field_description:cooperator.field_product_product__is_share
 #: model:ir.model.fields,field_description:cooperator.field_product_template__is_share
 msgid "Is share?"
-msgstr "És quota societària?"
+msgstr "És aportació societària?"
 
 #. module: cooperator
 #: model:ir.model,name:cooperator.model_account_journal
@@ -1480,9 +1742,14 @@ msgid "Journal"
 msgstr "Diari"
 
 #. module: cooperator
+#: model:ir.model,name:cooperator.model_account_move
+msgid "Journal Entry"
+msgstr "Assentament comptable"
+
+#. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_subscription_request__capital_release_request_date
 msgid "Keep empty to use the current date"
-msgstr "Deixa-ho buit per utilitzar la data actual."
+msgstr "Deixa-ho buit per utilitzar la data actual"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__lang
@@ -1490,21 +1757,26 @@ msgid "Language"
 msgstr "Idioma"
 
 #. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_account_invoice_report____last_update
+#: model:ir.model.fields,field_description:cooperator.field_account_journal____last_update
+#: model:ir.model.fields,field_description:cooperator.field_account_move____last_update
+#: model:ir.model.fields,field_description:cooperator.field_mail_template____last_update
 #: model:ir.model.fields,field_description:cooperator.field_operation_request____last_update
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription____last_update
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info____last_update
+#: model:ir.model.fields,field_description:cooperator.field_product_template____last_update
+#: model:ir.model.fields,field_description:cooperator.field_res_company____last_update
+#: model:ir.model.fields,field_description:cooperator.field_res_partner____last_update
 #: model:ir.model.fields,field_description:cooperator.field_share_line____last_update
 #: model:ir.model.fields,field_description:cooperator.field_share_line_update_info____last_update
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register____last_update
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request____last_update
 #: model:ir.model.fields,field_description:cooperator.field_validate_subscription_request____last_update
 msgid "Last Modified on"
-msgstr "Última modificació el "
+msgstr "Última modificació el"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__write_uid
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__write_uid
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__write_uid
 #: model:ir.model.fields,field_description:cooperator.field_share_line__write_uid
 #: model:ir.model.fields,field_description:cooperator.field_share_line_update_info__write_uid
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__write_uid
@@ -1516,7 +1788,6 @@ msgstr "Última actualització per"
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__write_date
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__write_date
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__write_date
 #: model:ir.model.fields,field_description:cooperator.field_share_line__write_date
 #: model:ir.model.fields,field_description:cooperator.field_share_line_update_info__write_date
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__write_date
@@ -1566,8 +1837,8 @@ msgid "Main Attachment"
 msgstr "Adjunt principal"
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:200
-#: selection:subscription.request,gender:0
+#: code:addons/cooperator/models/subscription_request.py:0
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__gender__male
 #, python-format
 msgid "Male"
 msgstr "Home"
@@ -1575,7 +1846,7 @@ msgstr "Home"
 #. module: cooperator
 #: model:ir.module.category,description:cooperator.module_category_cooperator_management
 msgid "Manage your cooperative."
-msgstr ""
+msgstr "Gestiona la teva Cooperativa."
 
 #. module: cooperator
 #: model:res.groups,name:cooperator.cooperator_group_manager
@@ -1583,14 +1854,14 @@ msgid "Manager"
 msgstr "Director"
 
 #. module: cooperator
-#: selection:subscription.request,source:0
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__source__manual
 msgid "Manual"
 msgstr ""
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__subscription_maximum_amount
 msgid "Maximum authorised subscription amount"
-msgstr "Màxim import autoritzat per la quota de subscripció"
+msgstr "Màxim import autoritzat per la aportació de subscripció"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__message_has_error
@@ -1609,15 +1880,20 @@ msgid "Minimum quantity"
 msgstr "Quantitat mínima"
 
 #. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__name
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_register_G001
 msgid "Name"
 msgstr "Nom"
 
 #. module: cooperator
-#: selection:subscription.request,type:0
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__type__new
 msgid "New Cooperator"
-msgstr "Nova sòcia"
+msgstr ""
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__activity_date_deadline
@@ -1633,11 +1909,6 @@ msgstr "Resum de la següent activitat"
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__activity_type_id
 msgid "Next Activity Type"
 msgstr "Tipus de la següent activitat"
-
-#. module: cooperator
-#: selection:subscription.request,gender:0
-msgid "Not binary"
-msgstr "No binari"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_register_G001
@@ -1658,11 +1929,11 @@ msgstr "Nombre d'accions"
 #: model:ir.model.fields,field_description:cooperator.field_share_line__share_number
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__ordered_parts
 msgid "Number of Share"
-msgstr "Nombre quotes"
+msgstr "Nombre aportacions"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__message_has_error_counter
-msgid "Number of error"
+msgid "Number of errors"
 msgstr "Nombre d'errors"
 
 #. module: cooperator
@@ -1681,18 +1952,18 @@ msgstr "Nombre de missatges amb error d'entrega"
 #: model:ir.model.fields,field_description:cooperator.field_res_users__number_of_share
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__quantity
 msgid "Number of share"
-msgstr "Nombre quotes"
+msgstr "Nombre aportacions"
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:696
+#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Number of share must be greater than 0."
-msgstr "Nombre quotes ha de ser superior a 0."
+msgstr "Nombre aportacions ha de ser superior a 0."
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__quantity_to
 msgid "Number of share to"
-msgstr "Nombre de quotes"
+msgstr "Nombre d'aportacions"
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_subscription_request__message_unread_counter
@@ -1711,19 +1982,19 @@ msgid "Old cooperator"
 msgstr "Sòcia antiga"
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:778
+#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Only blocked requests can be unblocked."
 msgstr "Només sol·licituds bloquejades es poden desbloquejar."
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:800
+#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Only draft request can be put on the waiting list."
 msgstr "Només sol·licituds en esborrany es poden posar en llista de espera."
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:771
+#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Only draft requests can be blocked."
 msgstr "Només sol·licituds en esborrany es poden bloquejar."
@@ -1732,29 +2003,34 @@ msgstr "Només sol·licituds en esborrany es poden bloquejar."
 #: model_terms:ir.actions.act_window,help:cooperator.action_company_representative_form
 #: model_terms:ir.actions.act_window,help:cooperator.action_partner_cooperator_candidate_form
 #: model_terms:ir.actions.act_window,help:cooperator.action_partner_cooperator_form
-msgid "OpenERP helps you easily track all activities related to\n"
+msgid ""
+"OpenERP helps you easily track all activities related to\n"
 "                    a cooperator: discussions, history of business\n"
 "                    opportunities,\n"
 "                    documents, etc."
 msgstr ""
 
 #. module: cooperator
-#: selection:subscription.request,source:0
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__source__operation
 msgid "Operation"
 msgstr "Operació"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_subscription_G001
-msgid "Operation\n"
+msgid ""
+"Operation\n"
 "                            number"
-msgstr "Operació\n"
+msgstr ""
+"Operació\n"
 "                            número"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_subscription_G001
-msgid "Operation\n"
+msgid ""
+"Operation\n"
 "                            type"
-msgstr "Operació\n"
+msgstr ""
+"Operació\n"
 "                            tipus"
 
 #. module: cooperator
@@ -1771,7 +2047,7 @@ msgstr "Tipus d'operació"
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__subscription_amount
 msgid "Operation amount"
-msgstr "import operació"
+msgstr "Import operació"
 
 #. module: cooperator
 #: model:ir.actions.act_window,name:cooperator.operation_request_action
@@ -1787,24 +2063,21 @@ msgid "Operation requests"
 msgstr "Sol·licituds d'operació"
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:200
-#: selection:subscription.request,gender:0
+#: code:addons/cooperator/models/subscription_request.py:0
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__gender__other
 #, python-format
 msgid "Other"
-msgstr "Altres"
-
-#. module: cooperator
-#: selection:subscription.request,activity_state:0
-msgid "Overdue"
-msgstr "Vençut"
+msgstr ""
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.external_layout_standard
-msgid "Page:\n"
+msgid ""
+"Page:\n"
 "                            <span class=\"page\"/>\n"
 "                            /\n"
 "                            <span class=\"topage\"/>"
-msgstr "Pàgina:\n"
+msgstr ""
+"Pàgina:\n"
 "                            <span class=\"page\"/>\n"
 "                            /\n"
 "                            <span class=\"topage\"/>"
@@ -1815,7 +2088,6 @@ msgid "Paid"
 msgstr "Pagat"
 
 #. module: cooperator
-#: model:mail.template,subject:cooperator.email_template_certificat
 #: model:mail.template,subject:cooperator.email_template_certificat_increase
 msgid "Payment Received Confirmation"
 msgstr ""
@@ -1831,20 +2103,19 @@ msgid "Phone:"
 msgstr "Telèfon:"
 
 #. module: cooperator
-#: selection:subscription.request,activity_state:0
-msgid "Planned"
-msgstr "Planificat"
-
-#. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:510
+#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
-msgid "Please define income account for this product: \"%s\" (id:%d) - or for its category: \"%s\"."
-msgstr "Si us plau defineixi compte d'ingressos per aquest producte: \"%s\" (id:%d) - o per aquesta categoria: \"%s\"."
+msgid ""
+"Please define income account for this product: \"%s\" (id:%d) - or for its "
+"category: \"%s\"."
+msgstr ""
+"Si us plau defineixi compte d'ingressos per aquest producte: \"%s\" (id:%d) "
+"- o per aquesta categoria: \"%s\"."
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.theme_invoice_G002_document
-msgid "Please use the following communication for your payment :"
-msgstr "Si us plau utilitzeu la següent comunicació per al vostre pagament:"
+msgid "Please use the following communication for your payment:"
+msgstr "Si us plau fes servir la següent comunicació per al teu pagament:"
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_operation_request__share_to_unit_price
@@ -1882,13 +2153,12 @@ msgid "Refuse"
 msgstr "Rebutja"
 
 #. module: cooperator
-#: selection:operation.request,state:0
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__state__refused
 msgid "Refused"
-msgstr "Refusat"
+msgstr ""
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__register_number
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__register_number
 msgid "Register Company Number"
 msgstr "Número de registre de la companyia"
 
@@ -1898,9 +2168,9 @@ msgid "Register Number Operation"
 msgstr "Número de registre de la operació"
 
 #. module: cooperator
-#: model:ir.ui.menu,name:cooperator.menu_account_invoice_action
+#: model:ir.ui.menu,name:cooperator.menu_move_out_invoice_type
 msgid "Register Payment"
-msgstr "Registre del pagament"
+msgstr ""
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_account_invoice_report__release_capital_request
@@ -1908,7 +2178,9 @@ msgid "Release capital request"
 msgstr "Sol·licitud retorn capital social"
 
 #. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_account_invoice__release_capital_request
+#: model:ir.model.fields,field_description:cooperator.field_account_bank_statement_line__release_capital_request
+#: model:ir.model.fields,field_description:cooperator.field_account_move__release_capital_request
+#: model:ir.model.fields,field_description:cooperator.field_account_payment__release_capital_request
 msgid "Release of capital request"
 msgstr "Sol·licitud retorn capital social"
 
@@ -1916,6 +2188,11 @@ msgstr "Sol·licitud retorn capital social"
 #: model:ir.ui.menu,name:cooperator.menu_cooperator_main_reporting
 msgid "Reporting"
 msgstr "Informes"
+
+#. module: cooperator
+#: model:ir.model.fields.selection,name:cooperator.selection__res_partner__type__representative
+msgid "Representative"
+msgstr ""
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__representative_email
@@ -1945,10 +2222,8 @@ msgstr "Data sol·licitud"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.theme_invoice_G002_document
-msgid "Request to Release\n"
-"                        Capital"
-msgstr "Sol·licitud devolució\n"
-"                        capital social"
+msgid "Request to Release Capital"
+msgstr "Sol·licitud devolució aportació"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.view_subscription_request_filter
@@ -1975,7 +2250,7 @@ msgstr "Mateixa data"
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.view_share_line_filter
 msgid "Search Share Line"
-msgstr "Cercar línia quota"
+msgstr "Cercar línia aportació"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.view_subscription_register_filter
@@ -1988,8 +2263,8 @@ msgid "Search Subscription Request"
 msgstr "Cercar sol·licitud subscripció"
 
 #. module: cooperator
-#: selection:operation.request,operation_type:0
-#: selection:subscription.register,type:0
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__operation_type__sell_back
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_register__type__sell_back
 msgid "Sell Back"
 msgstr "Devolució"
 
@@ -2006,12 +2281,12 @@ msgstr "Enviar correu retorn capital social"
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__send_share_transfer_email
 msgid "Send Share Transfer Email"
-msgstr "Enviar correu transferència quota"
+msgstr "Enviar correu transferència aportació"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__send_share_update_email
 msgid "Send Share Update Email"
-msgstr "Enviar correu actualització quota"
+msgstr "Enviar correu actualització aportació"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__send_waiting_list_email
@@ -2029,33 +2304,25 @@ msgid "Send confirmation email"
 msgstr "Enviar correu confirmació"
 
 #. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__representative_function
-msgid "Set function"
-msgstr "Definir funció"
-
-#. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__legal_form
-msgid "Set legal form"
-msgstr "Definir forma legal"
-
-#. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_subscription_G001
-msgid "Share\n"
+msgid ""
+"Share\n"
 "                            number"
-msgstr "Quota\n"
+msgstr ""
+"Aportació\n"
 "                            número"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.product_template_form_view
 msgid "Share Information"
-msgstr "Informació quota"
+msgstr "Informació aportació"
 
 #. module: cooperator
 #: model:ir.actions.act_window,name:cooperator.share_line_action
 #: model:ir.model.fields,field_description:cooperator.field_res_partner__share_ids
 #: model:ir.model.fields,field_description:cooperator.field_res_users__share_ids
 msgid "Share Lines"
-msgstr "Línies quota"
+msgstr "Línies aportació"
 
 #. module: cooperator
 #: model:ir.ui.menu,name:cooperator.menu_cooperator_main_subscription
@@ -2065,30 +2332,30 @@ msgstr "Gestió aportacions"
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__share_qty
 msgid "Share Quantity"
-msgstr "Quantitat quota"
+msgstr "Quantitat aportació"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__subscription_request
 msgid "Share Receiver Info"
-msgstr "Info. receptor quota"
+msgstr "Info. receptor aportació"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__share_product
 #: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_tree
 msgid "Share Type"
-msgstr "Tipus quota"
+msgstr "Tipus aportació"
 
 #. module: cooperator
 #: model:ir.model,name:cooperator.model_share_line
 #: model:ir.model.fields,field_description:cooperator.field_share_line_update_info__share_line
 #: model_terms:ir.ui.view,arch_db:cooperator.share_line_form
 msgid "Share line"
-msgstr "Línia quota"
+msgstr "Línia aportació"
 
 #. module: cooperator
 #: model:ir.model,name:cooperator.model_share_line_update_info
 msgid "Share line update info"
-msgstr "Info. actualització línia quota"
+msgstr "Info. actualització línia aportació"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__share_unit_price
@@ -2097,34 +2364,34 @@ msgstr "Info. actualització línia quota"
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__share_unit_price
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__share_unit_price
 msgid "Share price"
-msgstr "Preu quota"
+msgstr "Preu aportació"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.view_partner_form
 msgid "Share subscriptions"
-msgstr "Subscripcions quota"
+msgstr "Aportacions de subscripció"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__share_to_unit_price
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__share_to_unit_price
 msgid "Share to price"
-msgstr "Quota a preu"
+msgstr "Vers aportació amb preu"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__share_to_product_id
 msgid "Share to type"
-msgstr "Quota a tipus"
+msgstr "Vers aportació de tipus"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__share_to_short_name
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__share_to_short_name
 msgid "Share to type name"
-msgstr "Quota a nom tipus"
+msgstr "Vers aportació amb nom de tipus"
 
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_share_transfer
 msgid "Share transfer"
-msgstr ""
+msgstr "Transferència aportació"
 
 #. module: cooperator
 #: model:ir.actions.act_window,name:cooperator.product_template_action
@@ -2135,7 +2402,7 @@ msgstr ""
 #: model:ir.ui.menu,name:cooperator.menu_cooperator_share_product
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_certificat_G001_document
 msgid "Share type"
-msgstr "Tipus quota"
+msgstr "Tipus aportació"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_operation_request__share_short_name
@@ -2143,17 +2410,17 @@ msgstr "Tipus quota"
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__share_short_name
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__share_short_name
 msgid "Share type name"
-msgstr "Nom tipus quota"
+msgstr "Nom tipus aportació"
 
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_share_update
 msgid "Share update"
-msgstr ""
+msgstr "Actualització d'aportació"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.view_partner_form
 msgid "Shares"
-msgstr "Quotes"
+msgstr "Aportacions"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_product_product__short_name
@@ -2179,11 +2446,13 @@ msgstr "Estat"
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_subscription_request__activity_state
-msgid "Status based on activities\n"
+msgid ""
+"Status based on activities\n"
 "Overdue: Due date is already passed\n"
 "Today: Activity date is today\n"
 "Planned: Future activities."
-msgstr "Estat basat en activitats\n"
+msgstr ""
+"Estat basat en activitats\n"
 "Sobrepassat: La data de venciment ja s'ha passat\n"
 "Avui: La data de l'activitat és avui\n"
 "Planificat: Activitats futures."
@@ -2194,18 +2463,19 @@ msgid "Submit"
 msgstr "Publicar"
 
 #. module: cooperator
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__operation_type__subscription
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_register__type__subscription
 #: model_terms:ir.ui.view,arch_db:cooperator.view_subscription_register_filter
-#: selection:operation.request,operation_type:0
-#: selection:subscription.register,type:0
-#: selection:subscription.request,type:0
 msgid "Subscription"
 msgstr "Subscripció"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_subscription_G001
-msgid "Subscription\n"
+msgid ""
+"Subscription\n"
 "                            date"
-msgstr "Data\n"
+msgstr ""
+"Data\n"
 "                            subscripció"
 
 #. module: cooperator
@@ -2256,7 +2526,9 @@ msgid "Subscription register"
 msgstr "Registre subscripció"
 
 #. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_account_invoice__subscription_request
+#: model:ir.model.fields,field_description:cooperator.field_account_bank_statement_line__subscription_request
+#: model:ir.model.fields,field_description:cooperator.field_account_move__subscription_request
+#: model:ir.model.fields,field_description:cooperator.field_account_payment__subscription_request
 #: model:ir.model.fields,field_description:cooperator.field_res_partner__subscription_request_ids
 #: model:ir.model.fields,field_description:cooperator.field_res_users__subscription_request_ids
 msgid "Subscription request"
@@ -2264,21 +2536,22 @@ msgstr "Sol·licitud de subscripció"
 
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_waiting_list
-msgid "Subscription request added on waiting list.\n"
-"            "
-msgstr ""
+msgid "Subscription request added on waiting list"
+msgstr "Sol·licitud de subscripció en llista d'espera"
 
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_confirmation_company
 msgid "Subscription request confirmation"
-msgstr ""
+msgstr "Confirmació de sol·licitud de subscripció"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.view_create_subscription
-msgid "Subscription request will be created with data from the\n"
-"                        partner."
-msgstr "La sol·licitud de subscripció es farà amb les dades del\n"
-"                        partner."
+msgid ""
+"Subscription request will be created with data from the\n"
+"                    partner."
+msgstr ""
+"La sol·licitud de subscripció es crearà amb dades del\n"
+"                    contacte."
 
 #. module: cooperator
 #: model:ir.actions.act_window,name:cooperator.subscription_request_action
@@ -2294,117 +2567,145 @@ msgstr ""
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_res_company__data_policy_approval_text
 msgid "Text to display aside the checkbox to approve data policy."
-msgstr "Text per mostrar al costat de la casella de selecció per aprovar la Política de Dades."
+msgstr ""
+"Text per mostrar al costat de la casella de selecció per aprovar la "
+"Política de Dades."
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_res_company__financial_risk_approval_text
 msgid "Text to display aside the checkbox to approve financial risk."
-msgstr "Text per mostrar al costat de la casella de selecció per aprovar el Risc Financer."
+msgstr ""
+"Text per mostrar al costat de la casella de selecció per aprovar el Risc "
+"Financer."
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_res_company__internal_rules_approval_text
 msgid "Text to display aside the checkbox to approve internal rules."
-msgstr "Text per mostrar al costat de la casella de selecció per aprovar la Política Interna."
+msgstr ""
+"Text per mostrar al costat de la casella de selecció per aprovar la "
+"Política Interna."
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_res_company__generic_rules_approval_text
 msgid "Text to display aside the checkbox to approve the generic rules."
-msgstr "Text per mostrar al costat de la casella de selecció per aprovar les Condicions Generals."
+msgstr ""
+"Text per mostrar al costat de la casella de selecció per aprovar les "
+"Condicions Generals."
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:704
+#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "The checkbox already cooperator is checked please select a cooperator."
-msgstr "El camp que indica que ja és sòcia està marcat de manera que cal sel·leccionar una sòcia."
+msgstr ""
+"El camp que indica que ja és sòcia està marcat, cal sel·leccionar una sòcia."
 
 #. module: cooperator
-#: code:addons/cooperator/models/operation_request.py:223
+#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "The cooperator can't hand over more shares that he/she owns."
-msgstr "La sòcia no pot actuar sobre quotes que no li corresponen."
+msgstr "La sòcia no pot actuar sobre aportacions que no li corresponen."
 
 #. module: cooperator
-#: code:addons/cooperator/models/operation_request.py:211
+#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
-msgid "The cooperator doesn't own this share type. Please choose the appropriate share type."
-msgstr "La sòcia no es correspon amb el tipus de quota. Si us plau tria el tipus correcte."
+msgid ""
+"The cooperator doesn't own this share type. Please choose the appropriate "
+"share type."
+msgstr ""
+"La sòcia no es correspon amb el tipus d'aportació. Si us plau tria el tipus "
+"correcte."
 
 #. module: cooperator
-#: code:addons/cooperator/models/operation_request.py:127
+#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "The effective date can not be in the future."
 msgstr "La data efectiva no pot ser futura."
 
 #. module: cooperator
-#: code:addons/cooperator/models/operation_request.py:277
+#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
-msgid "The information of the receiver are not correct. Please correct the information before submitting"
-msgstr "La informació del receptor no és correcte. Si us plau corregeix-la abans de procedir"
+msgid ""
+"The information of the receiver are not correct. Please correct the "
+"information before submitting"
+msgstr ""
+"La informació del receptor no és correcte. Si us plau corregeix-la abans de "
+"procedir"
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:690
+#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "The request must be in draft or on waiting list to be validated"
-msgstr "La sol·licitud ha de estar en estat d'esborrany o en llista d'espera per poder ser validada"
+msgstr ""
+"La sol·licitud ha de estar en estat d'esborrany o en llista d'espera per "
+"poder ser validada"
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:744
-#: code:addons/cooperator/wizard/create_subscription_from_partner.py:196
+#: code:addons/cooperator/models/subscription_request.py:0
+#: code:addons/cooperator/wizard/create_subscription_from_partner.py:0
 #, python-format
-msgid "There is two different persons with the same national register number. Please proceed to a merge before to continue"
-msgstr "Hi ha 2 persones diferents amb el mateix número de registre nacional. Si us plau procedeix amb una fusió ..."
+msgid ""
+"There is two different persons with the same national register number. "
+"Please proceed to a merge before to continue"
+msgstr ""
+"Hi ha 2 persones diferents amb el mateix número de registre nacional. Si us "
+"plau procedeix amb una fusió abans de continuar"
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_res_company__property_cooperator_account
-msgid "This account will be the default one as the receivable account for the cooperators"
-msgstr "Aquest compte serà el compte de Ingressos per defecte de les sòcies"
+msgid ""
+"This account will be the default one as the receivable account for the "
+"cooperators"
+msgstr "Aquest serà el compte de Ingressos per defecte de les sòcies"
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:752
+#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
-msgid "This contact person is already defined for another company. Please select another contact"
-msgstr "Aquesta persona de contacte està ja definida per a una altre companyia. Si us plau trien una altra."
+msgid ""
+"This contact person is already defined for another company. Please select "
+"another contact"
+msgstr ""
+"Aquesta persona de contacte està ja definida per a una altre companyia. Si "
+"us plau trien una altra"
 
 #. module: cooperator
-#: code:addons/cooperator/models/operation_request.py:172
+#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
-msgid "This operation can't be executed if the cooperator is not an effective member"
-msgstr "Aquesta operació no pot ser executada si la sòcia no és encara sòcia efectiva"
+msgid ""
+"This operation can't be executed if the cooperator is not an effective "
+"member"
+msgstr ""
+"Aquesta operació no pot ser executada si la sòcia no és encara sòcia "
+"efectiva"
 
 #. module: cooperator
-#: code:addons/cooperator/models/operation_request.py:401
+#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This operation is not yet implemented."
 msgstr "Aquesta operació no està encara implementada."
 
 #. module: cooperator
-#: code:addons/cooperator/models/operation_request.py:330
+#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This operation must be approved before to be executed"
 msgstr "Aquesta operació cal que sigui aprovada abans de ser executada"
 
 #. module: cooperator
-#: code:addons/cooperator/models/operation_request.py:269
+#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share can not be subscribed an individual"
-msgstr "Aquesta quota no pot ser subscrita per una Persona individual"
+msgstr "Aquesta aportació no pot ser subscrita per una Persona individual"
 
 #. module: cooperator
-#: code:addons/cooperator/models/operation_request.py:262
+#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share can not be subscribed by a company"
-msgstr "Aquesta quota no pot ser subscrita per una Empresa"
+msgstr "Aquesta aportació no pot ser subscrita per una Empresa"
 
 #. module: cooperator
-#: code:addons/cooperator/models/operation_request.py:255
+#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share type could not be transfered to "
-msgstr "Aquesta quota no pot ser transferida a"
-
-#. module: cooperator
-#: selection:subscription.request,activity_state:0
-msgid "Today"
-msgstr "Avui"
+msgstr "Aquesta aportació no pot ser transferida a "
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_certificat_G001_document
@@ -2427,7 +2728,7 @@ msgstr "Import total línia"
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.view_partner_form
 msgid "Total of shares"
-msgstr "Total de quotes"
+msgstr "Total d'aportacions"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_tree
@@ -2448,13 +2749,13 @@ msgstr "Import total subscrit"
 #: model:ir.model.fields,field_description:cooperator.field_res_partner__total_value
 #: model:ir.model.fields,field_description:cooperator.field_res_users__total_value
 msgid "Total value of shares"
-msgstr "Import total quotes"
+msgstr "Import total aportacions"
 
 #. module: cooperator
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__operation_type__transfer
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_register__type__transfer
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__state__transfer
 #: model_terms:ir.ui.view,arch_db:cooperator.view_subscription_register_filter
-#: selection:operation.request,operation_type:0
-#: selection:subscription.register,type:0
-#: selection:subscription.request,state:0
 msgid "Transfer"
 msgstr "Transferència"
 
@@ -2470,6 +2771,11 @@ msgid "Type"
 msgstr "Tipus"
 
 #. module: cooperator
+#: model:ir.model.fields,help:cooperator.field_subscription_request__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipus d'excepció d'activitat en el registre."
+
+#. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_tree
 msgid "Unblock"
 msgstr "Desbloqueja"
@@ -2477,12 +2783,12 @@ msgstr "Desbloqueja"
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_certificat_G001_document
 msgid "Unit Price"
-msgstr "Preu un."
+msgstr "Preu unitari"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__unmix_share_type
 msgid "Unmix share type"
-msgstr ""
+msgstr "Separar tipus aportacions"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__message_unread
@@ -2495,58 +2801,25 @@ msgid "Unread Messages Counter"
 msgstr "Comptador de missatges no llegits"
 
 #. module: cooperator
-#: model:ir.actions.act_window,name:cooperator.action_view_update_partner_info
-#: model_terms:ir.ui.view,arch_db:cooperator.view_update_partner_info
-msgid "Update Cooperator Info"
-msgstr "Actualitzar informació sòcia"
-
-#. module: cooperator
-#: model_terms:ir.ui.view,arch_db:cooperator.view_update_partner_info
-msgid "Update Cooperator Info."
-msgstr "Actualitzar informació sòcia"
-
-#. module: cooperator
-#: model_terms:ir.ui.view,arch_db:cooperator.view_update_partner_info
 #: model_terms:ir.ui.view,arch_db:cooperator.view_update_share_line_info
 msgid "Update Info"
-msgstr "Actualitzar info."
-
-#. module: cooperator
-#: model:ir.model,name:cooperator.model_partner_update_info
-msgid "Update Partner Info"
-msgstr "Actualitzar informació del Partner"
+msgstr "Actualitzar info"
 
 #. module: cooperator
 #: model:ir.actions.act_window,name:cooperator.action_view_update_share_line_info
 #: model_terms:ir.ui.view,arch_db:cooperator.view_update_share_line_info
 msgid "Update Share Line Info"
-msgstr "Actualitzar informació línia de quota"
+msgstr "Actualitzar informació línia d'aportació"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.view_update_share_line_info
 msgid "Update Share Line Info."
-msgstr "Actualitzar informació línia de quota"
-
-#. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__all
-msgid "Update all info"
-msgstr "Actualitzar tota la informació"
-
-#. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__birthdate
-msgid "Update birth date"
-msgstr "Actualitzar data naixement"
-
-#. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_partner_update_info__from_sub_req
-msgid "Update from subscription request"
-msgstr "Actualitzar desde sol·licitud de subscripció"
+msgstr "Actualitzar informació línia d'aportació."
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.share_line_form
-#: model_terms:ir.ui.view,arch_db:cooperator.view_partner_form
 msgid "Update info"
-msgstr "Actualitzar info."
+msgstr "Actualitzar info"
 
 #. module: cooperator
 #: model:res.groups,name:cooperator.cooperator_group_user
@@ -2556,7 +2829,7 @@ msgstr "Usuari"
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__is_valid_iban
 msgid "Valid IBAN?"
-msgstr ""
+msgstr "IBAN vàlid?"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_tree
@@ -2584,7 +2857,7 @@ msgstr "Validar la sol·licitud de subscripció."
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.theme_invoice_G002_document
 msgid "Vendor Bill"
-msgstr "Factura de proveïdor "
+msgstr "Factura de proveïdor"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.theme_invoice_G002_document
@@ -2592,8 +2865,8 @@ msgid "Vendor Credit Note"
 msgstr "Nota d'abonament de proveïdor"
 
 #. module: cooperator
-#: selection:operation.request,state:0
-#: selection:subscription.request,state:0
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__state__waiting
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__state__waiting
 msgid "Waiting"
 msgstr "Esperant"
 
@@ -2608,9 +2881,9 @@ msgid "Web:"
 msgstr ""
 
 #. module: cooperator
-#: selection:subscription.request,source:0
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__source__website
 msgid "Website"
-msgstr ""
+msgstr "Lloc web"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__website_message_ids
@@ -2623,28 +2896,35 @@ msgid "Website communication history"
 msgstr "Historial de comunicacions del lloc web"
 
 #. module: cooperator
-#: code:addons/cooperator/models/operation_request.py:230
-#, python-format
-msgid "You can't convert the share to the same share type."
-msgstr "No pots convertir la quota vers el mateix tipus de quota que ja té."
+#: model:mail.template,subject:cooperator.email_template_certificat
+msgid "Wellcome to the Energy Community ${object.env.company.name}!"
+msgstr "Benvinguda a la Comunitat Energètica ${object.env.company.name}!"
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:785
+#: code:addons/cooperator/models/operation_request.py:0
+#, python-format
+msgid "You can't convert the share to the same share type."
+msgstr ""
+"No pots convertir la aportació vers el mateix tipus d'aportació que ja té."
+
+#. module: cooperator
+#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "You cannot cancel a request in this state."
 msgstr "No pots cancel·lar una sol·licitud en aquest estat."
 
 #. module: cooperator
-#: code:addons/cooperator/models/operation_request.py:234
+#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "You must convert all the shares to the selected type."
-msgstr "Cal convertir totes les quotes al tipus sel·leccionat. "
+msgstr "Cal convertir totes les aportacions al tipus sel·leccionat."
 
 #. module: cooperator
-#: code:addons/cooperator/models/subscription_request.py:539
+#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "You must set a cooperator account on your company."
-msgstr "Cal que defineixis un compte comptable per a les sòcies a la teva companyia."
+msgstr ""
+"Cal que defineixis un compte comptable per a les sòcies a la teva companyia."
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__zip_code
@@ -2654,7 +2934,16 @@ msgstr "Codi postal"
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_confirmation
 msgid "[Somcomunitats.coop] Application to become Community membership"
-msgstr "[Somcomunitats.coop] Sol·licitud d’adhesió a Comunitat Energètica"
+msgstr "[Somcomunitats.coop] Sol·licitud d'adhesió a Comunitat Energètica"
+
+#. module: cooperator
+#: model:mail.template,subject:cooperator.email_template_release_capital
+msgid ""
+"[Somcomunitats.coop] Request to become member of Energy Community ${object."
+"company_id.name}"
+msgstr ""
+"[Somcomunitats.coop] Sol·licitud d'adhesió a la Comunitat Energètica "
+"${object.company_id.name}"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_share_line_update_info__effective_date
@@ -2669,16 +2958,26 @@ msgstr "està recollit al registre de sòcies amb el número"
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__logo_url
 msgid "logo url"
+msgstr "URL logo"
+
+#. module: cooperator
+#: model:ir.actions.report,print_report_name:cooperator.action_cooperator_invoices
+msgid "object._get_report_base_filename()"
 msgstr ""
 
 #. module: cooperator
-#: selection:subscription.request,state:0
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__state__paid
 msgid "paid"
-msgstr "Pagat"
+msgstr "pagat"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.cooperator_thanks
 msgid "&amp;times;"
+msgstr ""
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
+msgid "+32 456 926 5059"
 msgstr ""
 
 #. module: cooperator_website
@@ -2702,14 +3001,25 @@ msgid "Address"
 msgstr "Adreça"
 
 #. module: cooperator_website
+#: code:addons/cooperator_website/controllers/main.py:0
+#, python-format
+msgid ""
+"An account already exists for this email address. Please log in before "
+"filling in the form."
+msgstr ""
+"Ja existeix un compte per aquest correu electrònic. Si us plau inicia "
+"sessió abans d'omplir el formulari."
+
+#. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
 msgid "Are you already a cooperator?"
 msgstr "Ja ets sòcia?"
 
 #. module: cooperator_website
+#: model:website.menu,name:cooperator_website.menu_becomecooperator
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
 msgid "Become Cooperator"
-msgstr "Fes-te sòcia de la cooperativa!"
+msgstr "Fes-te sòcia de la cooperativa"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
@@ -2717,14 +3027,9 @@ msgid "Become Cooperator as Company"
 msgstr "Fes-te'n soci/a com a empresa"
 
 #. module: cooperator_website
-#: model:website.menu,name:cooperator_website.menu_becomecooperator
-msgid "Become cooperator"
-msgstr "Fes-te'n soci/a"
-
-#. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
 msgid "Bourdon"
-msgstr "Peiró"
+msgstr "Camps Rovira"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.address_template
@@ -2738,17 +3043,13 @@ msgstr "Ciutat"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
-msgid ""
-"Company\n"
-"                                        Register Number"
-msgstr ""
-"Empresa\n"
-"                                        Número de Registre"
+msgid "Company Info"
+msgstr "Informació de la companyia"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
-msgid "Company Info"
-msgstr "Informació de la companyia"
+msgid "Company Register Number"
+msgstr "Número de Registre de la companyía"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
@@ -2794,7 +3095,7 @@ msgstr "Data de naixement"
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
 msgid "Didier"
-msgstr "Joan"
+msgstr "Isabel"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
@@ -2803,18 +3104,20 @@ msgstr "Ja tens un compte?"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
-msgid ""
-"Do you want to\n"
-"                                            modify your personal information first?"
-msgstr ""
-"Vols primer\n"
-"                                            modificar la teva informació personal?"
+msgid "Do you want to modify your personal information first?"
+msgstr "Vols primer canviar les teves dades personals?"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
 msgid "Email"
 msgstr "Correu electrònic"
+
+#. module: cooperator_website
+#: code:addons/cooperator_website/controllers/main.py:0
+#, python-format
+msgid "Email and confirmation email addresses don't match."
+msgstr "El correu electrònic i el de confirmació no coincideixen."
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.rules_template
@@ -2843,12 +3146,8 @@ msgstr "Condicions Generals"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.rules_template
-msgid ""
-"Identity\n"
-"            card scan"
-msgstr ""
-"Escanejar\n"
-"            tarja identitat"
+msgid "Identity card scan"
+msgstr "Escaneig tarja identitat"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.rules_template
@@ -2859,11 +3158,6 @@ msgstr "Reglament intern"
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
 msgid "Is a company?"
 msgstr "És una companyia?"
-
-#. module: cooperator_website
-#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
-msgid "La super coopérative"
-msgstr "Coco-coop"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
@@ -2892,13 +3186,21 @@ msgid "Phone"
 msgstr "Telèfon"
 
 #. module: cooperator_website
+#: code:addons/cooperator_website/controllers/main.py:0
+#, python-format
+msgid "Please upload a scan of your ID card."
+msgstr "Si us plau puja una còpia escanejada de la teva tarja d'identitat."
+
+#. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.rules_template
-msgid ""
-"Privacy\n"
-"            Policy"
-msgstr ""
-"Política\n"
-"            Privacitat"
+msgid "Privacy Policy"
+msgstr "Política de privacitat"
+
+#. module: cooperator_website
+#: code:addons/cooperator_website/controllers/main.py:0
+#, python-format
+msgid "Provided IBAN is not valid."
+msgstr "L'IBAN proporcionat no és vàlid."
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
@@ -2909,35 +3211,28 @@ msgstr "Envia"
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.shares_template
 msgid "Share number"
-msgstr "Nombre de quotes"
+msgstr "Número aportació"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.shares_template
 msgid "Share type"
-msgstr "Tipus de quota"
+msgstr "Tipus d'aportació"
 
 #. module: cooperator_website
-#: code:addons/cooperator_website/controllers/main.py:274
+#: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
-msgid "Some mandatory fields have not been filled"
-msgstr "Alguns camps obligatoris no s'han informat"
+msgid "Some mandatory fields have not been filled."
+msgstr "Alguns camps obligatoris no s'han omplert."
+
+#. module: cooperator_website
+#: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
+msgid "Super Cooperative"
+msgstr "Super Cooperativa"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.cooperator_thanks
 msgid "Thanks!"
 msgstr "Gràcies!"
-
-#. module: cooperator_website
-#: code:addons/cooperator_website/controllers/main.py:295
-#, python-format
-msgid "The email and the confirmation email doesn't match.Please check the given mail addresses"
-msgstr "El correu electrònic i el correu electrònic de confirmació no coincideixen. Si us plau reviseu-ho"
-
-#. module: cooperator_website
-#: code:addons/cooperator_website/controllers/main.py:283
-#, python-format
-msgid "There is an existing account for this mail address. Please login before fill in the form"
-msgstr "Ja existeix un compte per aquesta adreça de correu electrònic. Si us plau registreu-vos amb el compte existent abans d'omplir el formulari."
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.shares_template
@@ -2951,41 +3246,27 @@ msgstr "T'avisarem aviat."
 
 #. module: cooperator_website
 #: model:ir.actions.act_url,name:cooperator_website.action_open_website
-msgid "Website Cooperator contact Form"
-msgstr "Formulari de contacte de la persona cooperadora"
+msgid "Website Cooperator Contact Form"
+msgstr "Formulari web de contacte de les sòcies"
 
 #. module: cooperator_website
-#: code:addons/cooperator_website/controllers/main.py:342
+#: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
-msgid "You can't subscribe for an amount that exceed "
-msgstr "No et pots subscriure per un import que excedeix "
+msgid ""
+"You can't subscribe for an amount that exceeds {amount}{currency_symbol}."
+msgstr ""
+"No pots subscriure't per un import superior a {amount}{currency_symbol}."
 
 #. module: cooperator_website
-#: code:addons/cooperator_website/controllers/main.py:333
+#: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
-msgid "You can't subscribe two different types of share"
-msgstr "No et pots subscriure a 2 tipus de quota diferents"
-
-#. module: cooperator_website
-#: code:addons/cooperator_website/controllers/main.py:310
-#, python-format
-msgid "You need to upload a scan of your id card"
-msgstr "Has de pujar una imatge escanejada de la teva tarja de identitat"
-
-#. module: cooperator_website
-#: code:addons/cooperator_website/controllers/main.py:320
-#, python-format
-msgid "Your IBAN is not valid."
-msgstr "El teu IBAN no és vàlid"
+msgid "You can't subscribe to two different types of share."
+msgstr "No pots subscriure't a dos tipus d'aportacions diferents."
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.cooperator_thanks
-msgid ""
-"Your subscription has been successfully\n"
-"                                registered."
-msgstr ""
-"La teva subscripció ha estat registrada\n"
-"                                correctament."
+msgid "Your subscription has been successfully registered."
+msgstr "La teva subscripció s'ha registrat correctament."
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.address_template
@@ -2994,21 +3275,16 @@ msgstr "Codi Postal"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
-msgid "administration@beescoop.be"
-msgstr "coco@pera.coop"
+msgid "administration@mycoop.be"
+msgstr "admin@la_meva_cooperativa.coop"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:cooperator_website.becomecooperator
-msgid "didier.bourdon@bees-coop.be"
-msgstr "joan.peiro@forndevidre.coop"
-
-#. module: cooperator_website
-#: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
-msgid "e.g. +32 456 926 5059"
-msgstr ""
+msgid "didier.bourdon@mycoop.be"
+msgstr "isabel.camps.rovira@la_meva_cooperativa.coop"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.address_template
-msgid "rue Van Hove, 199"
-msgstr ""
+msgid "rue Van Hove 199"
+msgstr "Carrer Major 12"
