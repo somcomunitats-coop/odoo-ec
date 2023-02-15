@@ -14,8 +14,7 @@ class OAuthProvider(models.Model):
                                       default='http://10.0.3.1:8080/admin/realms/REALM/users')
     root_endpoint = fields.Char(string='Root URL', required=True,
                                       default='http://10.0.3.1:8080/')
-    realm_name = fields.Char(string='Realm name', required=True, default='0')
-                                      default='http://10.0.3.1:8080/admin/realms/0/users')
+    realm_name = fields.Char(string='Realm name', required=True, default='http://10.0.3.1:8080/admin/realms/0/users')
 
     def validate_admin_provider(self):
         if not self.client_secret:
