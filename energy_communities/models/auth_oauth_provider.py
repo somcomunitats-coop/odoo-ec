@@ -1,4 +1,5 @@
 from odoo import fields, models, api
+from odoo.exceptions import UserError
 
 
 class OAuthProvider(models.Model):
@@ -14,3 +15,10 @@ class OAuthProvider(models.Model):
     root_endpoint = fields.Char(string='Root URL', required=True,
                                       default='http://10.0.3.1:8080/')
     realm_name = fields.Char(string='Realm name', required=True, default='0')
+                                      default='http://10.0.3.1:8080/admin/realms/0/users')
+
+    def validate_admin_provider(self):
+        if not self.client_secret:
+            raise UserError("Admin provider doesn't have a valid client secret")
+        if not self.superuser_pwd:
+            raise UserError("Admin provider doesn't have a valid superuser password")
