@@ -37,10 +37,12 @@
         'views/website_subscription_template.xml',
         'views/ce_views.xml',
         'views/utm_views.xml',
+        'views/auth_oauth_views.xml',
+        'views/view_users_form.xml',
         'views/menus.xml',
         'data/mail_template_data.xml',
         'data/mail_template_update_data.xml',
-        'wizards/multicompany_easy_creation.xml'
+        'wizards/multicompany_easy_creation.xml',
     ],
     'installable': True,
     'application': True,
