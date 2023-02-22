@@ -28,6 +28,7 @@
         'demo/demo_data.xml',
     ],
     'data': [
+        'security/ir_rule_data.xml',
         'security/res_users_role_data.xml',
         'data/utm_data.xml',
         'data/crm_lead_tag.xml',
