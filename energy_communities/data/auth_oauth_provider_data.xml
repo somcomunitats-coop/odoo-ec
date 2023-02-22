@@ -9,10 +9,11 @@
         <field name="client_id">odoo</field>
         <field name="client_secret"></field>
         <field name="scope">openid email</field>
+        <field name="is_keycloak_provider">1</field>
         <field name="token_map">user_id:email</field>
-        <field name="auth_endpoint">http://10.0.3.1:8080/realms/0/protocol/openid-connect/auth</field>
-        <field name="token_endpoint">http://10.0.3.1:8080/realms/0/protocol/openid-connect/token</field>
-        <field name="jwks_uri">http://10.0.3.1:8080/realms/0/protocol/openid-connect/certs</field>
+        <field name="auth_endpoint"></field>
+        <field name="token_endpoint"></field>
+        <field name="jwks_uri"></field>
         <field name="validation_endpoint"></field>
         <field name="data_endpoint"></field>
     </record>
@@ -26,14 +27,15 @@
         <field name="client_id">admin-cli</field>
         <field name="client_secret"></field>
         <field name="scope">openid</field>
-        <field name="token_map">user_id:email</field>
-        <field name="auth_endpoint">http://10.0.3.1:8080/realms/0/protocol/openid-connect/auth</field>
-        <field name="token_endpoint">http://10.0.3.1:8080/realms/0/protocol/openid-connect/token</field>
-        <field name="jwks_uri">http://10.0.3.1:8080/realms/0/protocol/openid-connect/certs</field>
+        <field name="token_map"></field>
+        <field name="auth_endpoint"></field>
+        <field name="token_endpoint"></field>
+        <field name="jwks_uri"></field>
         <field name="validation_endpoint"></field>
         <field name="data_endpoint"></field>
+        <field name="is_keycloak_provider">1</field>
         <field name="is_admin_provider">1</field>
-        <field name="admin_user_endpoint">http://10.0.3.1:8080/admin/realms/0/users</field>
+        <field name="admin_user_endpoint"></field>
         <field name="superuser">api_admin_0</field>
         <field name="superuser_pwd"></field>
     </record>

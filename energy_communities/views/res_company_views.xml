@@ -24,6 +24,9 @@
             <xpath expr="//field[@name='social_instagram']" position="after">
                 <field name="social_telegram"/>
             </xpath>
+            <xpath expr="//field[@name='create_user']" position="after">
+                <field name="create_user_in_keycloak"/>
+            </xpath>
         </field>
     </record>
 </odoo>

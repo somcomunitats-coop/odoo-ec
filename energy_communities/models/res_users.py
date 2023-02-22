@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    _LOGIN_MATCH_KEY = 'username:login'
+    _LOGIN_MATCH_KEY = 'id:login'
 
     def _generate_signup_values(self, provider, validation, params):
         """
