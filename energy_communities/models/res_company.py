@@ -29,6 +29,9 @@ class ResCompany(models.Model):
         'Initial Subscription Share Amount', digits='Product Price')
     allow_new_members = fields.Boolean(
         string="Allow new members", default=True)
+    create_user_in_keycloak = fields.Boolean('Create user for keycloak',
+                                             help='Users created by cooperator are pushed automatically to keycloak',
+                                             default=False)
 
     @api.model
     def get_real_ce_company_id(self, api_param_odoo_compant_id):
