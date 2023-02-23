@@ -43,6 +43,7 @@
         'views/view_users_form.xml',
         'views/subscription_request_view.xml',
         'views/res_users_view.xml',
+        'views/res_users_role_view.xml',
         'views/menus.xml',
         'data/mail_template_data.xml',
         'data/mail_template_update_data.xml',
