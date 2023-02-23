@@ -1,4 +1,5 @@
-from odoo import fields, models, api
+from odoo import fields, models, api, _
+from odoo.exceptions import UserError, ValidationError
 
 
 class AccountMove(models.Model):
@@ -30,3 +31,23 @@ class AccountMove(models.Model):
                 if partner.company_id.create_user_in_keycloak:
                     user.create_users_on_keycloak()
         return user
+
+    def get_sequence_register(self):
+        ret = super(AccountMove, self).get_sequence_register()
+        company_seq = self.env['ir.sequence'].search(
+            [('code','=','subscription.register'),('company_id','=',self.env.company.id),('active','=',True)])
+        if not company_seq:
+            raise ValidationError(
+                _("You must have a company specific sequence number for subscription.register")
+            )
+        return company_seq
+
+    def get_sequence_operation(self):
+        ret = super(AccountMove, self).get_sequence_operation()
+        company_seq = self.env['ir.sequence'].search(
+            [('code','=','register.operation'),('company_id','=',self.env.company.id),('active','=',True)])
+        if not company_seq:
+            raise ValidationError(
+                _("You must have a company specific sequence number for register.operation")
+            )
+        return company_seq
