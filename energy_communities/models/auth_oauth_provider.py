@@ -1,5 +1,6 @@
 from odoo import fields, models, api
 from odoo.exceptions import UserError
+import werkzeug
 
 URL_ADMIN_USERS = "{root_endpoint}/auth/admin/realms/{realm_name}/users"
 URL_AUTH = "{root_endpoint}/auth/realms/{realm_name}/protocol/openid-connect/auth"
@@ -55,3 +56,15 @@ class OAuthProvider(models.Model):
                                                       'realm_name': self.realm_name})
             self.jwks_uri = URL_JWKS.format(**{'root_endpoint': self.root_endpoint,
                                                'realm_name': self.realm_name})
+
+    def get_auth_link(self):
+        return_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url') + 'auth_oauth/signin'
+        params = dict(
+            response_type='token',
+            client_id=self.client_id,
+            redirect_uri=return_url,
+            scope=self.scope,
+            # state=json.dumps(state),
+            # nonce=base64.urlsafe_b64encode(os.urandom(16)),
+        )
+        return "{}{}".format(self.auth_endpoint, werkzeug.urls.url_encode(params))
