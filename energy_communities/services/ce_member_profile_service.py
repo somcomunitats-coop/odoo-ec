@@ -179,11 +179,13 @@ class MemberProfileService(Component):
 
             sepa_mandate = partner_bank and any(
                 [sm.id for sm in partner_bank.mandate_ids if sm.state == 'valid']) or False
-
+            role_code = ''
+            if user.role_line_ids:
+                role_code = user.role_line_ids[0].role_id.code
             companies_data.append({
                 "id": company_id.id,
                 "name": company_id.name,
-                "role": "",
+                "role": role_code,
                 "public_web_landing_url": False or '',  # TODO Get landing from map
                 "keycloak_odoo_login_url": login_provider_id.get_auth_link() or '',
                 "payment_info": {
