@@ -69,8 +69,6 @@ class MemberProfileService(Component):
                     'code': 500,
                 })
 
-
-
     @restapi.method(
         [(["/<string:keycloak_id>"], "GET")],
         output_param=restapi.CerberusValidator("_validator_return_get"),
@@ -132,10 +130,6 @@ class MemberProfileService(Component):
 
     @staticmethod
     def _to_dict(user, partner, companies_data):
-
-        # in case that an user don't have any odoo role assigned in odoo, we will return that it is 'CE member'
-        user_ce_role = user.ce_role or 'role_ce_member'
-
         return {'profile': {
             "keycloak_id": user.oauth_uid,
             "odoo_res_users_id": user.id,
@@ -161,9 +155,6 @@ class MemberProfileService(Component):
     def _get_profile_objs(self, _keycloak_id):
         user = self.env["res.users"].sudo().search([('oauth_uid', '=', _keycloak_id)])
 
-        # todo: on next iteration we will install the module that allow have different role per each company
-        user_ce_role = user.ce_role or 'role_ce_member'
-
         if not user:
             raise wrapJsonException(
                 BadRequest(),
@@ -180,6 +171,7 @@ class MemberProfileService(Component):
             )
 
         companies_data = []
+        login_provider_id = self.env.ref('energy_communities.keycloak_login_provider')
         for company_id in user.company_ids:
             partner_bank = self.env['res.partner.bank'].sudo().search([
                 ('partner_id', '=', partner.id), ('company_id', '=', company_id.id)
@@ -191,9 +183,9 @@ class MemberProfileService(Component):
             companies_data.append({
                 "id": company_id.id,
                 "name": company_id.name,
-                "role": user.ce_user_roles_mapping()[user_ce_role]['kc_role_name'] or "",
-                "public_web_landing_url": company_id.get_public_web_landing_url() or '',
-                "keycloak_odoo_login_url": company_id.get_keycloak_odoo_login_url() or '',
+                "role": "",
+                "public_web_landing_url": False or '',  # TODO Get landing from map
+                "keycloak_odoo_login_url": login_provider_id.get_auth_link() or '',
                 "payment_info": {
                     "iban": partner_bank and partner_bank.acc_number or "",
                     "sepa_accepted": sepa_mandate
