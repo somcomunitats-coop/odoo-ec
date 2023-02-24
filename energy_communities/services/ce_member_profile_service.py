@@ -186,7 +186,8 @@ class MemberProfileService(Component):
                 "id": company_id.id,
                 "name": company_id.name,
                 "role": role_code,
-                "public_web_landing_url": False or '',  # TODO Get landing from map
+                "public_web_landing_url": 'https://somcomunitats.coop/ce/comunitat-energetica-prova/',
+                # TODO Get landing from map
                 "keycloak_odoo_login_url": login_provider_id.get_auth_link() or '',
                 "payment_info": {
                     "iban": partner_bank and partner_bank.acc_number or "",
