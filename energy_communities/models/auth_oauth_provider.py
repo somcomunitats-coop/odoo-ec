@@ -1,11 +1,13 @@
 from odoo import fields, models, api
 from odoo.exceptions import UserError
+import werkzeug
+from odoo.addons.auth_oauth.controllers.main import OAuthLogin as OAL
 
-URL_ADMIN_USERS = "{root_endpoint}/auth/admin/realms/{realm_name}/users"
-URL_AUTH = "{root_endpoint}/auth/realms/{realm_name}/protocol/openid-connect/auth"
-URL_VALIDATION = "{root_endpoint}/auth/realms/{realm_name}/protocol/openid-connect/userinfo"
-URL_TOKEN = "{root_endpoint}/auth/realms/{realm_name}/protocol/openid-connect/token"
-URL_JWKS = "{root_endpoint}/auth/realms/{realm_name}/protocol/openid-connect/certs"
+URL_ADMIN_USERS = "{root_endpoint}admin/realms/{realm_name}/users"
+URL_AUTH = "{root_endpoint}realms/{realm_name}/protocol/openid-connect/auth"
+URL_VALIDATION = "{root_endpoint}realms/{realm_name}/protocol/openid-connect/userinfo"
+URL_TOKEN = "{root_endpoint}realms/{realm_name}/protocol/openid-connect/token"
+URL_JWKS = "{root_endpoint}realms/{realm_name}/protocol/openid-connect/certs"
 
 
 class OAuthProvider(models.Model):
@@ -18,8 +20,7 @@ class OAuthProvider(models.Model):
     superuser_pwd = fields.Char(string='Superuser password', help='"Superuser" user password',
                                 placeholder='I hope is not "admin"', required=False)
     admin_user_endpoint = fields.Char(string='User admin URL', required=True)
-    root_endpoint = fields.Char(string='Root URL', required=True,
-                                default='http://odoo-ce.local:8069')
+    root_endpoint = fields.Char(string='Root URL', required=True, default='http://keycloak-ccee.local:8080/auth/')
     realm_name = fields.Char(string='Realm name', required=True, default='0')
 
     def validate_admin_provider(self):
@@ -55,3 +56,9 @@ class OAuthProvider(models.Model):
                                                       'realm_name': self.realm_name})
             self.jwks_uri = URL_JWKS.format(**{'root_endpoint': self.root_endpoint,
                                                'realm_name': self.realm_name})
+
+    def get_auth_link(self):
+        self.ensure_one()
+        provider_dict = [p_dict for p_dict in OAL().list_providers() if
+                         p_dict.get('id') and p_dict.get('id') == self.id]
+        return provider_dict and provider_dict[0] and provider_dict[0]['auth_link'] or ''

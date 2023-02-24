@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="energy_communities_form_inherit" model="ir.ui.view">
+            <field name="name">res.user.role.energy_communities.form</field>
+            <field name="model">res.users.role</field>
+            <field name="inherit_id" ref="base_user_role.view_res_users_role_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="code"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
