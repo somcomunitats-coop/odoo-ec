@@ -1,6 +1,6 @@
 {
     'name': "Energy Community",
-    'version': '14.0.1.0.5',
+    'version': '14.0.1.0.6',
     'depends': [
         'account',
         'cooperator',
