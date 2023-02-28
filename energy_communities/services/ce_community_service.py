@@ -38,7 +38,6 @@ class CommunityService(Component):
                                              realm_name=keycloak_admin_provider.realm_name,
                                              client_secret_key=keycloak_admin_provider.client_secret)
             validation_received_token = keycloak_openid.introspect(received_token)
-            _logger.info(validation_received_token)
             if validation_received_token['active']:
                 endpoint_args = self.work and hasattr(
                     self.work, 'request') and self.work.request.endpoint_arguments or None
