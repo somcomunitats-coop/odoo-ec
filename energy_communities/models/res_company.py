@@ -8,11 +8,10 @@ from odoo.exceptions import UserError
 
 class ResCompany(models.Model):
     _inherit = 'res.company'
-
     coordinator = fields.Boolean(string='Platform coordinator',
                                  help="Flag to indicate that this company has the rol of 'Coordinator'(=Administrator) for the current 'Comunitats Energètiques' Platform"
                                  )
-
+    ce_tag_ids = fields.Many2many('crm.tag', string='Energy Community Services')
     cooperator_journal = fields.Many2one(
         "account.journal",
         string="Cooperator Journal",
@@ -92,28 +91,13 @@ class ResCompany(models.Model):
     def get_active_services(self):
         """Return a list of dicts with the key data of each active Service"""
         self.ensure_one()
-        ret = []
-
-        # TODO: in a further iteration it will get the data from the "community services model"
-        # but nowadays (2022-09-26) it still don't exists so we are getting this info from the related crm_lead.tag_ids
-
-        creation_ce_source_id = self.env['ir.model.data'].get_object_reference(
-            'ce', 'ce_source_creation_ce_proposal')[1]
-        coordinator_id = self.get_real_ce_company_id(
-            self.API_PARAM_ID_VALUE_FOR_COORDINADORA).id
-
-        lead_from = self.env['crm.lead'].sudo().search(
-            [('company_id', '=', coordinator_id),
-             ('community_company_id', '=', self.id),
-             ('source_id', '=', creation_ce_source_id)], limit=1)
-
-        if lead_from:
-            for tag in lead_from.tag_ids:
-                ret.append({
-                    'id': tag.id,
-                    'name': tag.name,
-                })
-        return ret
+        res = []
+        for tag in self.ce_tag_ids:
+            res.append({
+                'id': tag.id,
+                'name': tag.name,
+            })
+        return res
 
     def get_public_web_landing_url(self):
         # TODO Get from community_maps
