@@ -36,7 +36,7 @@ class MemberProfileService(Component):
                                              realm_name=keycloak_admin_provider.realm_name,
                                              client_secret_key=keycloak_admin_provider.client_secret)
             validation_received_token = keycloak_openid.introspect(received_token)
-            if validation_received_token.get('sub'):
+            if validation_received_token['active']:
                 _keycloak_id = validation_received_token.get('sub')
             else:
                 raise wrapJsonException(
