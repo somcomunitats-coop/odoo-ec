@@ -114,13 +114,8 @@ class ResCompany(models.Model):
         return ret
 
     def get_public_web_landing_url(self):
-        """Return the URL that points to the public landing web of the CE, reading it from the related
-        map place (field: external_link_url)"""
-        self.ensure_one()
-        ret = []
-
-        coordinator_id = self.get_real_ce_company_id(
-            self.API_PARAM_ID_VALUE_FOR_COORDINADORA).id
+        # TODO Get from community_maps
+        return 'https://somcomunitats.coop/ce/comunitat-energetica-prova/'
 
         related_map_place = self.env['crm.team'].sudo().search(
             [('company_id', '=', coordinator_id),
