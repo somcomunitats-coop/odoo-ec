@@ -18,9 +18,9 @@ class ResCompany(models.Model):
         string="Cooperator Journal",
         domain="[('type','=','sale'),('active','=',True)]",
         help="This journal will be"
-        " the default one as the"
-        " receivable journal for the"
-        " cooperators"
+             " the default one as the"
+             " receivable journal for the"
+             " cooperators"
     )
 
     foundation_date = fields.Date('Foundation date')
@@ -66,16 +66,18 @@ class ResCompany(models.Model):
             sanit_vat = re.sub(r"[^a-zA-Z0-9]", "", vals['vat']).lower()
             if sanit_vat in [re.sub(r"[^a-zA-Z0-9]", "", c.vat).lower() for c in self.search([]) if c.vat]:
                 raise UserError(
-                    _("Unable to create new company because there is an allready existing company with this VAT number: {}").format(vals['vat']))
+                    _("Unable to create new company because there is an allready existing company with this VAT number: {}").format(
+                        vals['vat']))
 
         # check for name
         if vals.get('name', False) and vals.get('name'):
-            #sanit_name = slugify(vals['name'])
+            # sanit_name = slugify(vals['name'])
             sanit_name = vals['name']
-            #if sanit_name in [slugify(c.name) for c in self.search([]) if c.name]:
+            # if sanit_name in [slugify(c.name) for c in self.search([]) if c.name]:
             if sanit_name in [c.name for c in self.search([]) if c.name]:
                 raise UserError(
-                    _("Unable to create new company because there is an allready existing company with this NAME: {}").format(vals['name']))
+                    _("Unable to create new company because there is an allready existing company with this NAME: {}").format(
+                        vals['name']))
 
     @api.model
     def create(self, vals):
