@@ -117,8 +117,6 @@ class ResCompany(models.Model):
         # TODO Get from community_maps
         return 'https://somcomunitats.coop/ce/comunitat-energetica-prova/'
 
-        related_map_place = self.env['crm.team'].sudo().search(
-            [('company_id', '=', coordinator_id),
-             ('community_company_id', '=', self.id), ('map_id', '=', self.env.ref('ce.ce_default_cm_map').id)], limit=1)
-
-        return related_map_place and related_map_place.external_link_url or None
+    def get_keycloak_odoo_login_url(self):
+        login_provider_id = self.env.ref('energy_communities.keycloak_login_provider')
+        return login_provider_id.get_auth_link()
