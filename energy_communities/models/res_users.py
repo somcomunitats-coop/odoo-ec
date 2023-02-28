@@ -177,3 +177,7 @@ class ResUsers(models.Model):
         # yes, Keycloak sends back NOTHING on create
         # so we are forced to do anothe call to get its data :(
         return self._get_users(token, provider_id, search=data['username'])[0]
+
+    def get_role_codes(self):
+        #TODO Map all code to company and enable (We should update the API schema too)
+        return self.role_line_ids[0].role_id.code
