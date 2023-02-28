@@ -1,12 +1,15 @@
 import logging, json
 from odoo.addons.base_rest import restapi
-from werkzeug.exceptions import BadRequest, NotFound
+from werkzeug.exceptions import BadRequest, NotFound, Unauthorized
 from odoo.addons.base_rest.http import wrapJsonException
 from odoo.addons.component.core import Component
+from odoo.http import request
 from odoo import _
+from keycloak import KeycloakOpenID
 from . import schemas
 
 _logger = logging.getLogger(__name__)
+
 
 class MemberService(Component):
     _inherit = "base.rest.service"
@@ -23,9 +26,38 @@ class MemberService(Component):
         auth="api_key",
     )
     def get(self, _keycloak_id):
-        user, partner, kc_role, email = self._get_member_profile_objs(_keycloak_id)
-        return self._to_dict(user, partner, kc_role, email)
-    
+        headers = request.httprequest.headers
+        if headers.get('Authorization') and headers.get('Authorization')[:7] == 'Bearer ':
+            received_token = headers.get('Authorization')[7:]
+
+            keycloak_admin_provider = self.env.ref('energy_communities.keycloak_admin_provider')
+            keycloak_openid = KeycloakOpenID(server_url=keycloak_admin_provider.root_endpoint,
+                                             client_id=keycloak_admin_provider.client_id,
+                                             realm_name=keycloak_admin_provider.realm_name,
+                                             client_secret_key=keycloak_admin_provider.client_secret)
+            validation_received_token = keycloak_openid.introspect(received_token)
+            if validation_received_token['active']:
+                user, partner, kc_role, email = self._get_member_profile_objs(_keycloak_id)
+                return self._to_dict(user, partner, kc_role, email)
+            else:
+                raise wrapJsonException(
+                    Unauthorized(),
+                    include_description=False,
+                    extra_info={
+                        'message': _(
+                            "The received oauth KeyCloak token have not been validated by KeyCloak : {}").format(
+                            received_token),
+                        'code': 401,
+                    })
+        else:
+            raise wrapJsonException(
+                Unauthorized(),
+                include_description=False,
+                extra_info={
+                    'message': _("Authorization token not found"),
+                    'code': 500,
+                })
+
     def _validator_return_get(self):
         return schemas.S_MEMBER_PROFILE_RETURN_GET
 
@@ -52,7 +84,7 @@ class MemberService(Component):
                         params['role'],
                         kc_role_list),
                     'code': 500,
-                    }
+                }
             )
 
         if new_kc_role != actual_kc_role:
@@ -66,24 +98,26 @@ class MemberService(Component):
                     role_line.sudo().unlink()
 
             # assign to the user the new odoo role
-            new_odoo_role = [v['odoo_role_id'] for k,v in ce_roles_map.items() if v['kc_role_name']==new_kc_role]
+            new_odoo_role = [v['odoo_role_id'] for k, v in ce_roles_map.items() if v['kc_role_name'] == new_kc_role]
             RoleLineSudo.create({
                 'user_id': user.id,
                 'role_id': new_odoo_role[0],
                 'company_id': user.company_id.id,
-                })
+            })
 
             if not user.company_id.check_ce_has_admin():
                 raise wrapJsonException(
                     BadRequest(),
                     include_description=False,
                     extra_info={
-                        'message': _("Unable to change the user role to '{}', because the company would remain without any 'CE Admin' member").format(new_kc_role),
+                        'message': _(
+                            "Unable to change the user role to '{}', because the company would remain without any 'CE Admin' member").format(
+                            new_kc_role),
                         'code': 500,
-                        }
+                    }
                 )
 
-            #also update KeyCloack GROUP acordingly throw API call
+            # also update KeyCloack GROUP acordingly throw API call
             try:
                 user.update_user_data_to_keyckoack(['groups'])
             except Exception as ex:
@@ -105,10 +139,9 @@ class MemberService(Component):
 
     def _validator_return_update(self):
         return schemas.S_MEMBER_PROFILE_RETURN_PUT
-    
 
     def _get_member_profile_objs(self, _keycloak_id):
-        user = self.env["res.users"].sudo().search([('oauth_uid','=',_keycloak_id)])
+        user = self.env["res.users"].sudo().search([('oauth_uid', '=', _keycloak_id)])
         if not user:
             raise wrapJsonException(
                 BadRequest(),
@@ -124,21 +157,14 @@ class MemberService(Component):
                 extra_info={'message': _("No Odoo Partner found for Odoo user with login username %s") % user.login}
             )
 
-        ce_roles_map = self.env['res.users'].ce_user_roles_mapping()
-
-        # in case that an user don't have any CE odoo role assigned in odoo, we will return that it is 'CE member'
-        user_ce_role = user.ce_role or 'role_ce_member'
-
-        kc_role = ce_roles_map[user_ce_role]['kc_role_name'] or ''
         email = partner.email or False
 
-        return user, partner, kc_role, email
-
+        return user, partner, user.get_role_codes(), email
 
     @staticmethod
     def _to_dict(user, partner, kc_role, email):
         return {
-            'member':{
+            'member': {
                 "keycloak_id": user.oauth_uid,
                 "name": user.display_name,
                 "role": kc_role or "",
