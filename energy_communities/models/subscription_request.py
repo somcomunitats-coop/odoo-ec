@@ -1,12 +1,13 @@
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError, ValidationError
 
+
 class SubscriptionRequest(models.Model):
     _inherit = 'subscription.request'
 
     gender = fields.Selection(selection_add=[("not_binary", "Not binary"),
                                              ("not_share", "I prefer to not share it")])
-    vat = fields.Char(required=True)
+    vat = fields.Char(required=True, readonly=True, states={"draft": [("readonly", False)]})
 
     def get_journal(self):
         """Need to override in order to use in multicompany enviroment"""
@@ -22,7 +23,7 @@ class SubscriptionRequest(models.Model):
         return j
 
     def get_required_field(self):
-        required_fields =  super(SubscriptionRequest,self).get_required_field()
+        required_fields = super(SubscriptionRequest, self).get_required_field()
         if 'iban' in required_fields: required_fields.remove('iban')
         return required_fields
 
