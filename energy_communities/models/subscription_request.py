@@ -6,6 +6,7 @@ class SubscriptionRequest(models.Model):
 
     gender = fields.Selection(selection_add=[("not_binary", "Not binary"),
                                              ("not_share", "I prefer to not share it")])
+    vat = fields.Char(required=True)
 
     def get_journal(self):
         """Need to override in order to use in multicompany enviroment"""
