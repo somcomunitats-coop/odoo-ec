@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="cooperator.view_partner_tree" model="ir.ui.view">
+            <field name="mode">primary</field>
+        </record>
+
+        <record id="cooperator.action_partner_cooperator_form" model="ir.actions.act_window">
+            <field name="view_id" ref="cooperator.view_partner_tree"></field>
+        </record>
+
+        <record id="cooperator.action_partner_cooperator_candidate_form" model="ir.actions.act_window">
+            <field name="view_id" ref="cooperator.view_partner_tree"></field>
+        </record>
+
+        <record id="cooperator.action_company_representative_form" model="ir.actions.act_window">
+            <field name="view_id" ref="cooperator.view_partner_tree"></field>
+        </record>
+    </data>
+</odoo>

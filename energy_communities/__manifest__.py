@@ -36,6 +36,7 @@
         'data/auth_oauth_provider_data.xml',
         'views/crm_lead_views.xml',
         'views/res_company_views.xml',
+        'views/res_partner_views.xml',
         'views/website_subscription_template.xml',
         'views/ce_views.xml',
         'views/utm_views.xml',
