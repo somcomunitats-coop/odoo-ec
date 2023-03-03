@@ -1,13 +1,14 @@
 import logging
 import json
 from odoo.addons.base_rest import restapi
-from werkzeug.exceptions import BadRequest, NotFound
+from werkzeug.exceptions import BadRequest, NotFound, Unauthorized
 from odoo.addons.base_rest.http import wrapJsonException
 from odoo.addons.component.core import Component
 from odoo import _
 from datetime import datetime
 from . import schemas
 from odoo.http import request
+from keycloak import KeycloakOpenID
 
 _logger = logging.getLogger(__name__)
 
@@ -23,28 +24,54 @@ class CommunityService(Component):
 
     @restapi.method(
         [(["/<int:odoo_company_id>", "/<int:odoo_company_id>/<string:method_name>"], "GET")],
-        output_param=restapi.CerberusValidator(
-            "_validator_return_community_get"),
+        output_param=restapi.CerberusValidator("_validator_return_community_get"),
         auth="api_key",
     )
     def get(self, _odoo_company_id):
-        endpoint_args = self.work and hasattr(
-            self.work, 'request') and self.work.request.endpoint_arguments or None
-        company_id = self.env['res.company'].get_real_ce_company_id(
-            _odoo_company_id)
+        headers = request.httprequest.headers
+        if headers.get('Authorization') and headers.get('Authorization')[:7] == 'Bearer ':
+            received_token = headers.get('Authorization')[7:]
 
-        if not company_id:
-            raise wrapJsonException(
-                BadRequest(),
-                include_description=False,
-                extra_info={'message': _(
-                    "No Odoo Company found for odoo_company_id %s") % _odoo_company_id}
-            )
+            keycloak_admin_provider = self.env.ref('energy_communities.keycloak_admin_provider')
+            keycloak_openid = KeycloakOpenID(server_url=keycloak_admin_provider.root_endpoint,
+                                             client_id=keycloak_admin_provider.client_id,
+                                             realm_name=keycloak_admin_provider.realm_name,
+                                             client_secret_key=keycloak_admin_provider.client_secret)
+            validation_received_token = keycloak_openid.introspect(received_token)
+            if validation_received_token['active']:
+                endpoint_args = self.work and hasattr(
+                    self.work, 'request') and self.work.request.endpoint_arguments or None
+                company_id = self.env['res.company'].browse(_odoo_company_id)
 
-        if endpoint_args and 'method_name' in endpoint_args and endpoint_args.get('method_name') == 'members':
-            return self._to_dict_members(company_id.get_ce_members())
+                if not company_id:
+                    raise wrapJsonException(
+                        BadRequest(),
+                        include_description=False,
+                        extra_info={'message': _(
+                            "No Odoo Company found for odoo_company_id %s") % _odoo_company_id}
+                    )
+                if endpoint_args and 'method_name' in endpoint_args and endpoint_args.get('method_name') == 'members':
+                    return self._to_dict_members(company_id.get_ce_members())
+                else:
+                    return self._to_dict_community(company_id)
+            else:
+                raise wrapJsonException(
+                    Unauthorized(),
+                    include_description=False,
+                    extra_info={
+                        'message': _(
+                            "The received oauth KeyCloak token have not been validated by KeyCloak : {}").format(
+                            received_token),
+                        'code': 401,
+                    })
         else:
-            return self._to_dict_community(company_id)
+            raise wrapJsonException(
+                Unauthorized(),
+                include_description=False,
+                extra_info={
+                    'message': _("Authorization token not found"),
+                    'code': 500,
+                })
 
     def _validator_return_community_get(self):
         endpoint_args = self.work and hasattr(self.work, 'request') and self.work.request.endpoint_arguments or None
@@ -57,13 +84,9 @@ class CommunityService(Component):
     def _to_dict_members(users):
         resp = {'members': []}
         for user in users:
-
-            # in case that an user don't have any odoo role assigned in odoo, we will return that it is 'CE member'
-            user_ce_role = user.ce_role or 'role_ce_member'
-
             resp['members'].append({
-                "name": '{} {}'.format(user.firstname, user.lastname,),
-                "role": user.ce_user_roles_mapping()[user_ce_role]['kc_role_name'] or "",
+                "name": '{} {}'.format(user.firstname, user.lastname, ),
+                "role": user.get_role_codes(),
                 "email": user.email or "",
                 "keycloak_id": user.oauth_uid,
             })
