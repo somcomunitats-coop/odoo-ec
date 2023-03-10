@@ -42,7 +42,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
 
         if ('odoo_company_id' in kwargs) and (
                 not target_odoo_company_id or not request.env['res.company'].sudo().search(
-                [('id', '=', target_odoo_company_id)])):
+            [('id', '=', target_odoo_company_id)])):
             return http.Response(_("Not valid parameter value [odoo_company_id]"), status=500)
 
         ctx = dict(request.context)
@@ -119,29 +119,56 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
     def validation(  # noqa: C901 (method too complex)
             self, kwargs, logged, values, post_file
     ):
-        ret = super(WebsiteSubscriptionCCEE, self).validation(kwargs, logged, values, post_file)
         target_odoo_company_id = kwargs.get('company_id') and int(kwargs.get('company_id')) or None
 
-        redirect = "cooperator_website.becomecooperator"
-        # redirect url to fall back on become coopererator in template redirection
-        if target_odoo_company_id:
-            values["redirect_url"] = urljoin(
-                request.httprequest.host_url,
-                "/page/become_cooperator?odoo_company_id={}".format(target_odoo_company_id)
-            )
-        else:
-            values["redirect_url"] = urljoin(
-                request.httprequest.host_url, "/page/become_cooperator"
-            )
+        user_obj = request.env["res.users"]
+        sub_req_obj = request.env["subscription.request"]
 
+        redirect = "cooperator_website.becomecooperator"
+
+        if target_odoo_company_id:
+            company = request.env['res.company'].sudo().browse(target_odoo_company_id)
+        else:
+            company = request.website.company_id
+
+        values["redirect_url"] = urljoin(
+            request.httprequest.host_url,
+            "/page/become_cooperator?odoo_company_id={}".format(company.id)
+        )
         email = kwargs.get("email")
-        sani_vat = re.sub(r"[^a-zA-Z0-9]", "", kwargs.get("vat", "")).lower()
         is_company = kwargs.get("is_company") == "on"
 
-        if not logged and sani_vat:
-            user_in_ce = request.env['res.users'].sudo().search(
-                [("login", "=", sani_vat), ('company_id', '=', target_odoo_company_id)])
-            if user_in_ce:
+        if is_company:
+            is_company = True
+            redirect = "cooperator_website.becomecompanycooperator"
+            email = kwargs.get("company_email")
+        # Check that required field from model subscription_request exists
+        required_fields = sub_req_obj.sudo().get_required_field()
+        error = {field for field in required_fields if not values.get(field)}  # noqa
+
+        if error:
+            values = self.fill_values(values, is_company, logged)
+            values["error_msg"] = _("Some mandatory fields have not been filled.")
+            values = dict(values, error=error, kwargs=kwargs.items())
+            return request.render(redirect, values)
+
+        if not logged and email:
+            confirm_email = kwargs.get("confirm_email")
+            if email != confirm_email:
+                values = self.fill_values(values, is_company, logged)
+                values.update(kwargs)
+                values["error_msg"] = _(
+                    "Email and confirmation email addresses don't match."
+                )
+                return request.render(redirect, values)
+
+            # There's no issue with the email, so we can remember the confirmation email
+        values["confirm_email"] = email
+
+        if "vat" in required_fields:
+            vat = kwargs.get("vat")
+            user_count = user_obj.sudo().search_count([("vat", "ilike", vat)])
+            if user_count:
                 values = self.fill_values(values, is_company, logged)
                 values.update(kwargs)
                 values["error_msg"] = _(
@@ -151,17 +178,50 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                 )
                 return request.render(redirect, values)
 
-        if not logged and email:
-            user_in_ce = request.env['res.users'].sudo().search(
-                [("partner_id.email", "=", email), ('company_id', '=', target_odoo_company_id)])
-            if user_in_ce:
+        if company.allow_id_card_upload:
+            if not post_file:
                 values = self.fill_values(values, is_company, logged)
                 values.update(kwargs)
-                values["error_msg"] = _(
-                    "There is an existing account for this"
-                    " email address on this community. "
-                    "Please contact with the community administrators."
-                )
+                values["error_msg"] = _("Please upload a scan of your ID card.")
                 return request.render(redirect, values)
+
+        if "iban" in required_fields:
+            iban = kwargs.get("iban")
+            if iban.strip():
+                valid = sub_req_obj.check_iban(iban)
+
+                if not valid:
+                    values = self.fill_values(values, is_company, logged)
+                    values["error_msg"] = _("Provided IBAN is not valid.")
+                    return request.render(redirect, values)
+
+        # check the subscription's amount
+        max_amount = company.subscription_maximum_amount
+        if logged:
+            partner = request.env.user.partner_id
+            if partner.member:
+                max_amount = max_amount - partner.total_value
+                if company.unmix_share_type:
+                    share = self.get_selected_share(kwargs)
+                    if partner.cooperator_type != share.default_code:
+                        values = self.fill_values(values, is_company, logged)
+                        values["error_msg"] = _(
+                            "You can't subscribe to two different types of share."
+                        )
+                        return request.render(redirect, values)
+        total_amount = float(kwargs.get("total_parts"))
+
+        if max_amount > 0 and total_amount > max_amount:
+            values = self.fill_values(values, is_company, logged)
+            values["error_msg"] = _(
+                "You can't subscribe for an amount that exceeds "
+                "{amount}{currency_symbol}."
+            ).format(amount=max_amount, currency_symbol=company.currency_id.symbol)
+            return request.render(redirect, values)
+
+        # remove non-model attributes (used internally when re-rendering the
+        # form in case of a validation error)
         del values["redirect_url"]
-        return ret
+        del values["confirm_email"]
+
+        return True
