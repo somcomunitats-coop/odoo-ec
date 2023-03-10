@@ -6,30 +6,51 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-06 18:25+0000\n"
-"PO-Revision-Date: 2023-02-06 18:25+0000\n"
+"POT-Creation-Date: 2023-03-08 14:36+0000\n"
+"PO-Revision-Date: 2023-03-10 08:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"X-Generator: Poedit 3.2.2\n"
+
+#. module: energy_communities
+#: model:ir.model.fields,help:energy_communities.field_subscription_request__vat
+msgid ""
+"\n"
+"        The Tax Identification Number. Complete it if the contact is "
+"subjected to\n"
+"        government taxes. Used in some legal statements.\"\n"
+"        "
+msgstr ""
+"\n"
+"        El NIF/CIF. Completa este campo si el contacto está subjecto a\n"
+"        las tasas estatales. Se usa en algunos informes legales.\"\n"
+"        "
 
 #. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_contact_confirm_id
 msgid ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hello,</p>\n"
 "\n"
 "    <p>Thank you for contact.</p>\n"
 "\n"
-"    <p>We have received your email and we have we have forwarded it to the Community so that they can contact you as soon as possible.</p>\n"
+"    <p>We have received your email and we have we have forwarded it to the "
+"Community so that they can contact you as soon as possible.</p>\n"
 "\n"
 "    <p>Here is a copy of the data we received:</p>\n"
 "\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
 "    <p> - Contact name: ${object.name}</p>\n"
 "    <p> - Email: ${object.email_from}</p>\n"
 "    <p> - Phone: ${object.phone}</p>\n"
@@ -46,23 +67,29 @@ msgid ""
 "    <p>We keep in touch for any questions.</p>\n"
 "    <p>Yours faithfully,</p>\n"
 "    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
+"and FAQs</a></p>\n"
 "\n"
 "</div>\n"
 "            "
 msgstr ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hola,</p>\n"
 "\n"
 "    <p>Gracias por contactar.</p>\n"
 "\n"
-"    <p>Hemos recibido su correo electrónico y lo hemos remitido a la Comunidad para que se pongan en contacto con usted lo antes posible.</p>\n"
+"    <p>Hemos recibido su correo electrónico y lo hemos remitido a la "
+"Comunidad para que se pongan en contacto con usted lo antes posible.</p>\n"
 "\n"
 "    <p>Aquí tiene una copia de los datos que hemos recibido:</p>\n"
 "\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
 "    <p> - Nombre: ${object.name}</p>\n"
 "    <p> - Correo Electrónico: ${object.email_from}</p>\n"
 "    <p> - Teléfono: ${object.phone}</p>\n"
@@ -79,7 +106,8 @@ msgstr ""
 "    <p>Seguimos en contacto para cualquier consulta.</p>\n"
 "    <p>Atentamente,</p>\n"
 "    <p>Equipo de Somcomunitats.coop</p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos y Preguntas Frecuentes</a></p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos y "
+"Preguntas Frecuentes</a></p>\n"
 "\n"
 "</div>\n"
 "            "
@@ -88,17 +116,25 @@ msgstr ""
 #: model:mail.template,body_html:energy_communities.email_templ_lead_ce_creation_receipt_confirm_id
 msgid ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hello,</p>\n"
 "\n"
-"    <p>Thank you for filling out the form and requesting the membership of your Energy Community on the Somcomunitats.coop platform.</p>\n"
+"    <p>Thank you for filling out the form and requesting the membership of "
+"your Energy Community on the Somcomunitats.coop platform.</p>\n"
 "\n"
-"    <p>In the coming weeks we will study the application and contact you to indicate the steps and the information necessary to complete the registration process for the Community and the people who are part of it.</p>\n"
+"    <p>In the coming weeks we will study the application and contact you to "
+"indicate the steps and the information necessary to complete the "
+"registration process for the Community and the people who are part of it.</"
+"p>\n"
 "\n"
 "    <p>Here is a copy of the data we received:</p>\n"
 "\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
 "    <p> - Community name: ${object.name}</p>\n"
 "    <p> - Description: ${object.description}</p>\n"
 "    <p> - Address: ${object.street}</p>\n"
@@ -157,23 +193,32 @@ msgid ""
 "    <p>We keep in touch for any questions.</p>\n"
 "    <p>Yours faithfully,</p>\n"
 "    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
+"and FAQs</a></p>\n"
 "\n"
 "</div>\n"
 "            "
 msgstr ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hola,</p>\n"
 "\n"
-"    <p>Gracias por rellenar el formulario y solicitar el alta de tu Comunidad Energética en la plataforma Somcomunitats.coop.</p>\n"
+"    <p>Gracias por rellenar el formulario y solicitar el alta de tu "
+"Comunidad Energética en la plataforma Somcomunitats.coop.</p>\n"
 "\n"
-"    <p>En las próximas semanas estudiaremos la solicitud y nos pondremos en contacto contigo para indicarte los pasos y la información necesaria para completar el proceso de alta de la Comunidad y de las personas que forman parte de ella.</p>\n"
+"    <p>En las próximas semanas estudiaremos la solicitud y nos pondremos en "
+"contacto contigo para indicarte los pasos y la información necesaria para "
+"completar el proceso de alta de la Comunidad y de las personas que forman "
+"parte de ella.</p>\n"
 "\n"
 "    <p>Aquí tienes una copia de los datos recibidos:</p>\n"
 "\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
 "    <p> - Nombre comunidad: ${object.name}</p>\n"
 "    <p> - Descripción: ${object.description}</p>\n"
 "    <p> - Dirección: ${object.street}</p>\n"
@@ -232,7 +277,8 @@ msgstr ""
 "    <p>Seguimos en contacto para cualquier consulta.</p>\n"
 "    <p>Atentamente,</p>\n"
 "    <p>Equipo de Somcomunitats.coop</p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos y preguntas frecuentes</a></p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos y "
+"preguntas frecuentes</a></p>\n"
 "\n"
 "</div>\n"
 "            "
@@ -241,17 +287,24 @@ msgstr ""
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_advise_future_ce_confirm_id
 msgid ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hello,</p>\n"
 "\n"
 "    <p>Thank you for filling out the form.</p>\n"
 "\n"
-"    <p>In case an Energy Community is activated in your neighborhood or municipality, they can consult the existing requests and contact you. Without any commitment on your part beyond having shown interest in promoting a movement of social transformation and an energy model.</p>\n"
+"    <p>In case an Energy Community is activated in your neighborhood or "
+"municipality, they can consult the existing requests and contact you. "
+"Without any commitment on your part beyond having shown interest in "
+"promoting a movement of social transformation and an energy model.</p>\n"
 "\n"
 "    <p>Here is a copy of the data we received:</p>\n"
 "\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
 "    <p> - Contact name: ${object.name}</p>\n"
 "    <p> - Address: ${object.street}</p>\n"
 "    <p> - Zip code: ${object.zip}</p>\n"
@@ -270,23 +323,31 @@ msgid ""
 "    <p>We keep in touch for any questions.</p>\n"
 "    <p>Yours faithfully,</p>\n"
 "    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
+"and FAQs</a></p>\n"
 "\n"
 "</div>\n"
 "            "
 msgstr ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hola,</p>\n"
 "\n"
 "    <p>Gracias por rellenar el formulario.</p>\n"
 "\n"
-"    <p>En caso de que alguna Comunidad se active en tu barrio o municipio vecino, ésta podrá consultar esta solicitud y contactar contigo. Sin ningún compromiso por tu parte más allá de haber mostrado interés en impulsar un movimiento de transformación social y de modelo energético.</p>\n"
+"    <p>En caso de que alguna Comunidad se active en tu barrio o municipio "
+"vecino, ésta podrá consultar esta solicitud y contactar contigo. Sin ningún "
+"compromiso por tu parte más allá de haber mostrado interés en impulsar un "
+"movimiento de transformación social y de modelo energético.</p>\n"
 "\n"
 "    <p>Aquí tienes una copia de los datos recibidos:</p>\n"
 "\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
 "    <p> - Nombre: ${object.name}</p>\n"
 "    <p> - Dirección: ${object.street}</p>\n"
 "    <p> - Código postal: ${object.zip}</p>\n"
@@ -305,7 +366,8 @@ msgstr ""
 "    <p>Seguimos en contacto para cualquier consulta.</p>\n"
 "    <p>Atentamente,</p>\n"
 "    <p>Equipo de Somcomunitats.coop</p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos y preguntas frecuentes</a></p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos y "
+"preguntas frecuentes</a></p>\n"
 "\n"
 "</div>\n"
 "            "
@@ -314,7 +376,9 @@ msgstr ""
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_ce_news_confirm_id
 msgid ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hello,</p>\n"
 "\n"
@@ -324,21 +388,27 @@ msgid ""
 "\n"
 "    <p>Here is a copy of the data we received:</p>\n"
 "\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
 "    <p> - Community name: ${object.company_id.name}</p>\n"
 "    <p> - Email: ${object.email_from}</p>\n"
-"    <p> - Language: ${object.company_id.default_lang_id.code or object.company_id.partner_id.lang}</p>\n"
+"    <p> - Language: ${object.company_id.default_lang_id.code or object."
+"company_id.partner_id.lang}</p>\n"
 "    </div>\n"
 "    <br />\n"
 "    <p>Yours faithfully,</p>\n"
 "    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
+"and FAQs</a></p>\n"
 "\n"
 "</div>\n"
 "            "
 msgstr ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hola,</p>\n"
 "\n"
@@ -348,15 +418,19 @@ msgstr ""
 "\n"
 "    <p>Aquí tienes una copia de los datos recibidos :</p>\n"
 "\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
 "    <p> - Nombre Comunidad: ${object.company_id.name}</p>\n"
 "    <p> - Correo electrónico: ${object.email_from}</p>\n"
-"    <p> - Idioma: ${object.company_id.default_lang_id.code or object.company_id.partner_id.lang}</p>\n"
+"    <p> - Idioma: ${object.company_id.default_lang_id.code or object."
+"company_id.partner_id.lang}</p>\n"
 "    </div>\n"
 "    <br />\n"
 "    <p>Atentamente,</p>\n"
 "    <p>Equipo de Somcomunitats.coop</p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos y preguntas frecuentes</a></p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos y "
+"preguntas frecuentes</a></p>\n"
 "\n"
 "</div>\n"
 "            "
@@ -365,7 +439,9 @@ msgstr ""
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_platform_news_confirm_id
 msgid ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hello,</p>\n"
 "\n"
@@ -377,20 +453,26 @@ msgid ""
 "\n"
 "    <p>Here is a copy of the data we received:</p>\n"
 "\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
 "    <p> - Email: ${object.email_from}</p>\n"
-"    <p> - Language: ${object.company_id.default_lang_id.code or object.company_id.partner_id.lang}</p>\n"
+"    <p> - Language: ${object.company_id.default_lang_id.code or object."
+"company_id.partner_id.lang}</p>\n"
 "    </div>\n"
 "    <br />\n"
 "    <p>Yours faithfully,</p>\n"
 "    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
+"and FAQs</a></p>\n"
 "\n"
 "</div>\n"
 "            "
 msgstr ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "    <p>Hola,</p>\n"
 "\n"
@@ -402,72 +484,109 @@ msgstr ""
 "\n"
 "    <p>Aquí tienes una copia de los datos recibidos:</p>\n"
 "\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
 "    <p> - Correo electrónico: ${object.email_from}</p>\n"
-"    <p> - Idioma: ${object.company_id.default_lang_id.code or object.company_id.partner_id.lang}</p>\n"
+"    <p> - Idioma: ${object.company_id.default_lang_id.code or object."
+"company_id.partner_id.lang}</p>\n"
 "    </div>\n"
 "    <br />\n"
 "    <p>Atentamente,</p>\n"
 "    <p>Equipo de Somcomunitats.coop</p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos y preguntas frecuentes</a></p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos y "
+"preguntas frecuentes</a></p>\n"
 "\n"
 "</div>\n"
 "            "
 
 #. module: energy_communities
+#: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser_pwd
+msgid "\"Superuser\" user password"
+msgstr "Contraseña del super-usuario"
+
+#. module: energy_communities
+#: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser
+msgid "A super power user that is able to CRUD users on KC."
+msgstr "Un super-usuario con permisos para CRUD en KC."
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_account_chart_template
+msgid "Account Chart Template"
+msgstr "Plantilla de gráfico de cuentas"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__is_admin_provider
+msgid "Admin provider"
+msgstr "Proveedor AUTH  tareas administrativas"
+
+#. module: energy_communities
 #: model:res.groups,name:energy_communities.group_admin
 msgid "Administrator"
-msgstr ""
+msgstr "Administrador"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_aggregate_demand
 msgid "Agregació i flexibilitat de la demanda"
-msgstr ""
+msgstr "Agregación y flexibilidad de la demanda"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__allow_new_members
 msgid "Allow new members"
-msgstr "Autoritza nous membres"
+msgstr "Autoriza nuevos miembros"
+
+#. module: energy_communities
+#: code:addons/energy_communities/services/ce_community_service.py:0
+#: code:addons/energy_communities/services/ce_member_profile_service.py:0
+#: code:addons/energy_communities/services/ce_member_service.py:0
+#, python-format
+msgid "Authorization token not found"
+msgstr "Token de autorización no encontrado"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "Become Cooperator of"
-msgstr "Esdevé membre de"
+msgstr "Conviértete en miembro de"
 
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.action_build_community_company_from_lead
 msgid "Build Community Company"
-msgstr "Genera la companyia al Odoo"
+msgstr "Genera la compañía en Odoo"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_crm_lead__ce_tag_ids
 msgid "CE Classify and analyze categories"
-msgstr "Classifica i analitza categories CE"
+msgstr "Clasifica y analiza categorías de CE"
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_leads_ce_contact_action
 msgid "CE Contact"
-msgstr "Contacte de CE"
+msgstr "Contacto de CE"
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_leads_ce_info_action
 msgid "CE Information"
-msgstr "Informació de CE"
+msgstr "Información de CE"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__ce_tag_ids
 msgid "CE Tags"
-msgstr "Etiquetes de CE"
+msgstr "Etiquetas de CE"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_creation_ce_proposal
 msgid "CE creation"
-msgstr "Creació de CE"
+msgstr "Creación de CE"
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_leads_new_ce_request_action
 msgid "CE creation requests"
-msgstr "Sol·licitud creació CE"
+msgstr "Solicitudes creación CE"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__crm_lead_id
+msgid "CRM Lead"
+msgstr "Iniciativa CRM"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_crm_tag
@@ -475,66 +594,134 @@ msgid "CRM Tag"
 msgstr "Etiqueta CRM"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__chart_template_id
+msgid "Chart Template"
+msgstr "Plantilla plan contable"
+
+#. module: energy_communities
 #: model_terms:ir.actions.act_window,help:energy_communities.ce_utm_sources_action
 msgid "Click to define a new Source."
-msgstr "Clica per definir un nou Source."
+msgstr "Haz clic para definir un nuevo Source."
 
 #. module: energy_communities
 #: model_terms:ir.actions.act_window,help:energy_communities.ce_crm_lead_tags_action
 msgid "Click to define a new tag."
-msgstr "Clica per definir una nova etiqueta."
+msgstr "Haz clic para definir una nueva etiqueta."
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_users_role__code
+msgid "Code"
+msgstr "Código"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_crm_lead__community_company_id
 msgid "Community related to this Lead"
-msgstr "Comunitat relacionada"
+msgstr "Comunitad relacionada"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_company
 msgid "Companies"
-msgstr "Empreses"
+msgstr "Compañías"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_collective_purchases
 msgid "Compres col·lectives"
-msgstr ""
+msgstr "Compras colectivas"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "Comunitats Energètiques"
-msgstr ""
+msgstr "Comunidades Energéticas"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_config_menu
 msgid "Configuration"
-msgstr "Configuració"
+msgstr "Configuración"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid ""
+"Conflict on user values. Please verify that all values supposed to be "
+"unique are really unique. %(detail)s"
+msgstr ""
+"Conflicto con los datos de usuario. Por favor verifica que los datos que se "
+"supone que son únicos para cada usuario, realmente lo son. %(detail)s"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_partner
 msgid "Contact"
-msgstr "Contacte"
+msgstr "Contacto"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_contact
 msgid "Contact a existing CE"
-msgstr "Contactar una CE existent"
+msgstr "Contactar una CE existente"
+
+#. module: energy_communities
+#: model:product.template,name:energy_communities.share_capital_product_template
+msgid "Contribution to Share Capital"
+msgstr "Aportación al Capital Social"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/operation_request.py:0
+#, python-format
+msgid "Converting just part of the shares is not yet implemented"
+msgstr "Convertir solamente parte de las aportaciones no está aún contemplado"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
+msgid "Cooperator"
+msgstr "Socia"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__property_cooperator_account
+msgid "Cooperator Account"
+msgstr "Cuenta socias"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__cooperator_journal
 msgid "Cooperator Journal"
-msgstr "Diari Sòcies"
+msgstr "Diario Socias"
 
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.action_create_map_place_from_lead
 msgid "Create Map Place"
-msgstr "Crear punt de mapa"
+msgstr "Crear punto de mapa"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
+msgid "Create from CRM Lead"
+msgstr "Crear desde CRM Lead"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__create_user
+msgid "Create user for cooperator"
+msgstr "Crear usuario de Odoo desde la socia"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__create_user_in_keycloak
+msgid "Create user for keycloak"
+msgstr "Crear usuario de KeyCloak/SSO desde la socia"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_users_form_form_inherit
+msgid "DNI"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_account_move__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_operation_request__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_product_template__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_res_users_role__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__display_name
 msgid "Display Name"
@@ -543,55 +730,61 @@ msgstr "Nombre mostrado"
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_ce_contact_menu
 msgid "EC Contact"
-msgstr ""
+msgstr "Contacto CE"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_new_ce_request_menu
 msgid "EC Creation"
-msgstr ""
+msgstr "Creación CE"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_ce_info_menu
 msgid "EC Information"
-msgstr ""
+msgstr "Información CE"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_energy_efficiency
 msgid "Eficiencia energètica"
-msgstr ""
+msgstr "Eficiencia Energética"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_thermal_energy
 msgid "Energia tèrmica i climatització"
-msgstr ""
+msgstr "Energía térmica y climatización"
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_lead_tags_action
 msgid "Energy Actions"
-msgstr "Accions Energètiques"
+msgstr "Acciones Energéticas"
 
 #. module: energy_communities
 #: model:ir.module.category,name:energy_communities.energy_communities_category
 #: model:ir.ui.menu,name:energy_communities.ce_root_menu
+#: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
 msgid "Energy Communities"
-msgstr ""
+msgstr "Comunidades Energéticas"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_ce_admin_res_groups
 #: model:res.users.role,name:energy_communities.role_ce_admin
 msgid "Energy Community Administrator"
-msgstr ""
+msgstr "Administradora Comunidades Energética"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_ce_member_res_groups
 #: model:res.users.role,name:energy_communities.role_ce_member
 msgid "Energy Community Member"
-msgstr ""
+msgstr "Miembro Comunidad Energética"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__ce_tag_ids
+msgid "Energy Community Services"
+msgstr "Servicios Comunidad Energética"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_config_energy_actions_menu
 msgid "Energy actions in progress"
-msgstr "Accions energètiques en curs"
+msgstr "Acciones energéticas en curso"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_res_company__coordinator
@@ -600,28 +793,30 @@ msgid ""
 "'Coordinator'(=Administrator) for the current 'Comunitats Energètiques' "
 "Platform"
 msgstr ""
+"Marcar para indicar que esta compañía ejerce el rol de Administradora de "
+"Instància para la plataforma actual"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_citizen_education
 msgid "Formació ciutadana"
-msgstr ""
+msgstr "Formación ciudadana"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__foundation_date
 msgid "Foundation date"
-msgstr "Data creació"
+msgstr "Fecha creación"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__gender
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__gender
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request__gender
 msgid "Gender"
-msgstr "Gènere"
+msgstr "Género"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_common_generation
 msgid "Generació renovable comunitaria"
-msgstr ""
+msgstr "Generación renovable comunitaria"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_menu_general_settings
@@ -632,29 +827,36 @@ msgstr ""
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_leads_general_info_action
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_general_info_menu
 msgid "General Information"
-msgstr "Informació general"
+msgstr "InformacióN general"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "Global Platform Administration"
-msgstr "Administració global de la plataforma"
+msgstr "Administración global de la Instancia"
 
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__gender__not_share
 #: model:ir.model.fields.selection,name:energy_communities.selection__subscription_request__gender__not_share
 msgid "I prefer to not share it"
-msgstr ""
+msgstr "Prefiero no compartirlo"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_chart_template__id
+#: model:ir.model.fields,field_description:energy_communities.field_account_move__id
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__id
+#: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__id
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__id
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag__id
+#: model:ir.model.fields,field_description:energy_communities.field_operation_request__id
 #: model:ir.model.fields,field_description:energy_communities.field_product_template__id
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__id
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__id
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__id
+#: model:ir.model.fields,field_description:energy_communities.field_res_users_role__id
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request__id
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__id
 msgid "ID"
-msgstr ""
+msgstr "Identificador"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_mailing_mailing__source_ext_id
@@ -670,32 +872,47 @@ msgstr ""
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_general_info
 msgid "Information Newsletter (general)"
-msgstr "Rebre butlletí informació general plataforma"
+msgstr "Recibir boletín información general plataforma"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_info
 msgid "Information about existing CE"
-msgstr "Rebre butlletí informació sobre una CE"
+msgstr "Recibir boletín información sobre una CE"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_future_location_ce_info
 msgid "Information about future CE by location"
-msgstr "Rebre informació sobre CCEE de la meva zona"
+msgstr "Recibir información sobre futuras CCEE en mi zona"
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_leads_future_zone_info_action
 msgid "Information future CE's by location"
-msgstr "Rebre informació sobre CCEE de la meva zona"
+msgstr "Recibir información sobre CCEE de mi zona"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_future_zone_info_menu
 msgid "Information future EC's by location"
-msgstr ""
+msgstr "Recibir información sobre CCEE de mi zona"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__initial_subscription_share_amount
 msgid "Initial Subscription Share Amount"
-msgstr "Quota inicial alta sòcia"
+msgstr "Importe aportación inicial alta socia"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__capital_share
+msgid "Initial capital share"
+msgstr "Cuota inicial alta sòcia"
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__is_keycloak_provider
+msgid "Keycloak provider"
+msgstr "Proveedor KeyCloak"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__lang
@@ -703,11 +920,18 @@ msgid "Language"
 msgstr "Idioma"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_chart_template____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_account_move____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_operation_request____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_product_template____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_res_company____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_res_users____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_res_users_role____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source____last_update
 msgid "Last Modified on"
@@ -716,32 +940,44 @@ msgstr "Última modificación el"
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_crm_lead
 msgid "Lead/Opportunity"
-msgstr "Iniciativa/Oportunitat"
+msgstr "Iniciativa/Oportunidad"
+
+#. module: energy_communities
+#: model:auth.oauth.provider,body:energy_communities.keycloak_admin_provider
+#: model:auth.oauth.provider,body:energy_communities.keycloak_login_provider
+msgid "Login with Keycloak"
+msgstr "Registrarse con KeyCloak"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_sustainable_mobility
 msgid "Mobilitat sostenible"
-msgstr ""
+msgstr "Movilidad sostenible"
 
 #. module: energy_communities
 #: model:ir.module.category,description:energy_communities.energy_communities_category
 msgid ""
-"Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats Energètiques\n"
+"Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats "
+"Energètiques\n"
 "        "
 msgstr ""
+"Nivel de acceso de los usuarios a la plataforma Odoo de las Comunidades "
+"Energéticas\n"
+"        "
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_community_service.py:0
 #, python-format
 msgid "No Odoo Company found for odoo_company_id %s"
 msgstr ""
+"No se ha encontrado ninguna compañía en Odoo para el parámetro: "
+"odoo_company_id= %s"
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
 #: code:addons/energy_communities/services/ce_member_service.py:0
 #, python-format
 msgid "No Odoo Partner found for Odoo user with login username %s"
-msgstr ""
+msgstr "No se ha encontrado ningún Contacto para el Usuario con login: %s"
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
@@ -749,19 +985,25 @@ msgstr ""
 #, python-format
 msgid "No Odoo User found for KeyCloak user id %s"
 msgstr ""
+"No se ha encontrado ningún Usuario de Odoo vinculado al Usuario de "
+"KeyCloak: %s"
 
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__gender__not_binary
 #: model:ir.model.fields.selection,name:energy_communities.selection__subscription_request__gender__not_binary
 msgid "Not binary"
-msgstr ""
+msgstr "No binario"
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Not valid parameter value [odoo_company_id]"
-msgstr ""
+msgstr "El valor para el parámetro [odoo_company_id] no es válido"
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_auth_oauth_provider
+msgid "OAuth2 provider"
+msgstr "Proveedor OAuth2"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
@@ -770,9 +1012,9 @@ msgid ""
 "community and be part of a movement of social and energy model "
 "transformation."
 msgstr ""
-"Una vegada siguis soci/a podràs gaudir dels serveis disponibles de la "
-"comunitat energètica i, alhora, formar part d'un moviment de transformació "
-"social i de model energètic."
+"Una vez ya seas socio/a podrás utilizar los servicios disponibles de la "
+"comunidad energética y, al mismo tiempo, formar parte de un movimiento de "
+"transformación social y de modelo energético."
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
@@ -781,6 +1023,9 @@ msgid ""
 "Only users that belongs to the 'Coordinator' company can create new "
 "Companies from Leads."
 msgstr ""
+"Solo usuarios que pertenecen a una compañía que ejerce el rol de "
+"Coordinadora de CCEE pueden crear nuevas compañías desde las Iniciativas "
+"CRM."
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
@@ -789,111 +1034,186 @@ msgid ""
 "Only users that belongs to the 'Coordinator' company can create new Map "
 "Places from Leads."
 msgstr ""
+"Solo usuarios que pertenecen a una compañía que ejerce el rol de "
+"Coordinadora de CCEE pueden crear nuevos puntos de mapa desde las "
+"Iniciativas CRM."
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_operation_request
+msgid "Operation request"
+msgstr "Solicitud operación"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_platform_manager
 msgid "Platform Manager"
-msgstr ""
+msgstr "Administradora de Instancia"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_platform_admin_res_groups
 #: model:res.users.role,name:energy_communities.role_platform_admin
 msgid "Platform admin role"
-msgstr ""
+msgstr "Rol de Administradora de Instancia"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__coordinator
 msgid "Platform coordinator"
-msgstr "Coordinadora de la plataforma"
+msgstr "Coordinadora de la Instancia"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__product_share_template
+msgid "Product Share Template"
+msgstr "Plantilla de producto aportación"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_product_template
 msgid "Product Template"
-msgstr "Plantilla de producte"
+msgstr "Plantilla de producto"
+
+#. module: energy_communities
+#: model:ir.actions.server,name:energy_communities.print_instance
+msgid "Push user to Keycloak"
+msgstr "Enviar usuario al KeyCloak"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__realm_name
+msgid "Realm name"
+msgstr "Nombre REALM"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__community_company_id
 msgid "Related Community"
-msgstr "Comunitat relacionada"
+msgstr "Comunidad relacionada"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_menu
 msgid "Requests"
+msgstr "Solicitudes"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__root_endpoint
+msgid "Root URL"
+msgstr "URL raíz"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/account_chart_template.py:0
+#, python-format
+msgid "SUBJ"
 msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "Something went wrong. Please check logs."
+msgstr "Algo fué mal. Por favor revisar los LOGS."
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_config_sources_menu
 msgid "Source types"
-msgstr "Tipus d'origens"
+msgstr "Tipos de orígenes"
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/crm_lead_service.py:0
 #, python-format
 msgid "Source {} not found"
-msgstr ""
+msgstr "Origen {} no encontrado"
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_utm_sources_action
 msgid "Sources"
-msgstr "Origens"
+msgstr "Origenes"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_renewable_energy
 msgid "Subministrament d'energia 100% renovable"
-msgstr ""
+msgstr "Suministro de energía 100% renovable"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/account_chart_template.py:0
+#, python-format
+msgid "Subscription Journal"
+msgstr "Diario de subscripciones"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_subscription_request
 msgid "Subscription Request"
-msgstr "Sol·licitud de Subscripció"
+msgstr "Solicitud de Suscripción"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__superuser
+msgid "Superuser"
+msgstr "Super Usuario"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__superuser_pwd
+msgid "Superuser password"
+msgstr "Contraseña super usuario"
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/crm_lead_service.py:0
 #, python-format
 msgid "Tag {} not found"
-msgstr ""
+msgstr "Etiqueta {} no encontrada"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "Target Odoo Company id"
-msgstr "Companyia d'Odoo de destí"
+msgstr "Compañía Odoo de destino"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_subscription_request__vat
+msgid "Tax ID"
+msgstr "NIF/CIF"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__social_telegram
 msgid "Telegram Account"
-msgstr "Compte Telegram"
+msgstr "Cuenta Telegram"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
 #, python-format
 msgid ""
-"The Foundation Date value {} have a non valid format. It must be: yyyy-mm-dd"
-" or dd-mm-yyyy or yyyy/mm/dd or dd/mm/yyyy"
+"The Foundation Date value {} have a non valid format. It must be: yyyy-mm-"
+"dd or dd-mm-yyyy or yyyy/mm/dd or dd/mm/yyyy"
 msgstr ""
+"La Fecha de Fundación {} no tiene un formato válido. Debe ser: yyyy-mm-dd o "
+"dd-mm-yyyy o yyyy/mm/dd o dd/mm/yyyy"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
 #, python-format
 msgid "The Source {} of Lead {} do not allow the creation of Map Proposals"
 msgstr ""
+"El origen de Iniciativa CRM {} no permite la creación de propuestas de "
+"punto de mapa"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
 #, python-format
 msgid "The Source {} of Lead {} do not allow the creation of new Companies"
 msgstr ""
+"El origen de Iniciativa CRM {} no permite la creación de nuevas compañías"
+
+#. module: energy_communities
+#: code:addons/energy_communities/services/ce_community_service.py:0
+#: code:addons/energy_communities/services/ce_member_profile_service.py:0
+#: code:addons/energy_communities/services/ce_member_service.py:0
+#, python-format
+msgid ""
+"The received oauth KeyCloak token have not been validated by KeyCloak : {}"
+msgstr "El oauth token recibido no ha sido validado por Keycloak: {}"
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_service.py:0
 #, python-format
-msgid "The role '{}' is not a valid one, it must be one of: {}"
-msgstr ""
+msgid "The role code '{}' is not a valid one"
+msgstr "El rol '{}' no es válido"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
 #, python-format
 msgid "There is an allready existing Map Place related to this Lead: {}."
-msgstr ""
+msgstr "Ya existe un Punto de Mapa relacionado con esta Iniciativa CRM: {}."
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
@@ -902,6 +1222,8 @@ msgid ""
 "There is an existing account for this email address on this community. "
 "Please contact with the community administrators."
 msgstr ""
+"En esta Comunidad ya existe una cuenta con este mismo correo electrónico. "
+"Contacta con los administradores de la Comunidad Energética."
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
@@ -910,13 +1232,23 @@ msgid ""
 "There is an existing account for this vat number on this community. Please "
 "contact with the community administrators."
 msgstr ""
+"En esta Comunidad ya existe una cuenta con este mismo NIF/CIF. Contacta con "
+"los administradores de la Comunidad Energética."
+
+#. module: energy_communities
+#: model:ir.model.fields,help:energy_communities.field_account_multicompany_easy_creation_wiz__property_cooperator_account
+msgid ""
+"This account will be the default one as the receivable account for the "
+"cooperators"
+msgstr ""
+"Ésta será la cuenta por defecto para el cobro de las aportaciones de las "
+"socias"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "This form allow you to request be member of the community:"
 msgstr ""
-"Aquest és el formulari per a sol·licitar adherir-te com a soci/a a la "
-"comunitat energètica:"
+"Este es el formulario para solicitar ser socio/a de la comunidad energética:"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_res_company__cooperator_journal
@@ -924,15 +1256,27 @@ msgid ""
 "This journal will be the default one as the receivable journal for the "
 "cooperators"
 msgstr ""
-"Aquest diari serà el que s'usarà per defecte per als cobraments de les altes"
-" de sòcies"
+"Éste será el diario por defecto para el cobro de las aportaciones de las "
+"socias"
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
 #: code:addons/energy_communities/services/crm_lead_service.py:0
 #, python-format
 msgid "This language code %s is not active in Odoo. Active ones: %s"
-msgstr ""
+msgstr "Este código de idioma %s no está activo en Odoo. Los activos son: %s"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/operation_request.py:0
+#, python-format
+msgid "This operation is not yet implemented."
+msgstr "Esta operación aún no está implementada."
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/operation_request.py:0
+#, python-format
+msgid "This operation must be approved before to be executed"
+msgstr "Esta operación debe ser aprobada antes de ejecutarse"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
@@ -940,21 +1284,13 @@ msgid ""
 "To be a member you must fulfill this form and lateron proceed to pay the "
 "initial share of"
 msgstr ""
-"Per a associar-t’hi primer cal omplir aquest qüestionari i després "
-"formalitzar l’aportació econòmica d’entrada de"
+"Para ser socio/a primero debes rellenar este cuestionario y después "
+"formalizar la aportación económica inicial de"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_utm_source
 msgid "UTM Source"
-msgstr "UTM Origen"
-
-#. module: energy_communities
-#: code:addons/energy_communities/services/ce_member_service.py:0
-#, python-format
-msgid ""
-"Unable to change the user role to '{}', because the company would remain "
-"without any 'CE Admin' member"
-msgstr ""
+msgstr "Origen UTM"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
@@ -963,6 +1299,8 @@ msgid ""
 "Unable to create new company because there is an allready existing company "
 "with this NAME: {}"
 msgstr ""
+"No es posible crear la nueva compañía porque ya existe una con este nombre: "
+"{}"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
@@ -971,19 +1309,15 @@ msgid ""
 "Unable to create new company because there is an allready existing company "
 "with this VAT number: {}"
 msgstr ""
+"No es posible crear la nueva compañía porque ya existe una con este NIF/"
+"CIF: {}"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
 #, python-format
 msgid ""
-"Unable to create the KeyCloack entities from Lead: {}, because it is not yet"
-" related to any Community company"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_partner.py:0
-#, python-format
-msgid "Unable to create the new Odoo user related to this partner."
+"Unable to create the KeyCloack entities from Lead: {}, because it is not "
+"yet related to any Community company"
 msgstr ""
 
 #. module: energy_communities
@@ -991,18 +1325,24 @@ msgstr ""
 #, python-format
 msgid "Unable to get the Category (mandatory map place field) from Lead: {}"
 msgstr ""
+"No se ha podido obtener la Categoría (campo obligatorio de los puntos de "
+"mapa) desde la Iniciativa CRM: {}"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
 #, python-format
 msgid "Unable to get the Latitude (mandatory map place field) from Lead: {}"
 msgstr ""
+"No se ha podido obtener la Latitud (campo obligatorio de los puntos de "
+"mapa) desde la Iniciativa CRM: {}"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
 #, python-format
 msgid "Unable to get the Longitude (mandatory map place field) from Lead: {}"
 msgstr ""
+"No se ha podido obtener la Longitud (campo obligatorio de los puntos de "
+"mapa) desde la Iniciativa CRM: {}"
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
@@ -1010,29 +1350,80 @@ msgstr ""
 msgid ""
 "Unable to update the lang in Keycloak for the related KC user ID: {}.{}"
 msgstr ""
+"No se ha podido actualizar el idioma en KeyCloak para el usuario de "
+"KeyCloak con ID: {}.{}"
 
 #. module: energy_communities
-#: code:addons/energy_communities/services/ce_member_service.py:0
+#: code:addons/energy_communities/services/ce_member_profile_service.py:0
 #, python-format
-msgid ""
-"Unable to update the role in Keycloak for the related KC user ID: {}.{}"
-msgstr ""
+msgid "Unable to validate the received oauth KeyCloak token: {}"
+msgstr "No se ha podido validar el Oauth token recibido: {}"
+
+#. module: energy_communities
+#: model:product.template,uom_name:energy_communities.share_capital_product_template
+msgid "Units"
+msgstr "Unidades"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_user
 msgid "User"
+msgstr "Usuario"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__admin_user_endpoint
+msgid "User admin URL"
+msgstr "URL usuario admin"
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_res_users_role
+msgid "User role"
+msgstr "Rol de usuario"
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_res_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: energy_communities
+#: model:ir.model.fields,help:energy_communities.field_res_company__create_user_in_keycloak
+msgid "Users created by cooperator are pushed automatically to keycloak"
 msgstr ""
+"Los usuarios creados por el módulo Cooperator son replicados "
+"automáticamente en KeyCloak"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_menu_webforms_settings
 msgid "Webforms"
-msgstr "Formularis Web"
+msgstr "Formularios Web"
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_account_multicompany_easy_creation_wiz
+msgid "Wizard Account Multi-company Easy Creation"
+msgstr "'account.multicompany.easy.creation.wiz'"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/account_move.py:0
+#, python-format
+msgid ""
+"You must have a company specific sequence number for register.operation"
+msgstr ""
+"Debe existir una secuencia numérica para register.operation específica para "
+"esta compañía"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/account_move.py:0
+#, python-format
+msgid ""
+"You must have a company specific sequence number for subscription.register"
+msgstr ""
+"Debe existir una secuencia numérica para subscription.register específica "
+"para esta compañía"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/subscription_request.py:0
 #, python-format
 msgid "You must set a cooperator journal on you company."
-msgstr ""
+msgstr "Debe seleccionarse un Diario específico para Socias en esta compañía."
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_contact_confirm_id
@@ -1065,5 +1456,5 @@ msgstr "[Somcomunitats.coop] Suscripción boletín plataforma"
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "€ by follow the steps you will receive by email."
 msgstr ""
-"€ seguint els passos que t'indicarem per correu electrònic un cop rebem la "
-"teva petició."
+"€ siguiendo los pasos que te indicaremos por correo electrónico una vez "
+"hayamos recibido tu petición."
