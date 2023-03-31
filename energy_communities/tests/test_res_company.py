@@ -1,0 +1,66 @@
+from odoo.tests import common
+from odoo.exceptions import ValidationError
+
+
+class TestResCompany(common.SingleTransactionCase):
+
+    def test_hierarchy_level_company_instance(self):
+        company_instance = self.env['res.company'].search([('hierarchy_level', '=', 'instance')])
+        if not company_instance:
+            company_instance = self.env['res.company'].create(
+                {'name': 'Instance Company',
+                 'hierarchy_level': 'instance'})
+        self.assertEqual(company_instance.hierarchy_level, 'instance')
+
+        company_instance_count = self.env['res.company'].search([('hierarchy_level', '=', 'instance')])
+        self.assertEqual(len(company_instance_count), 1)
+
+        self.assertEqual(company_instance.parent_id, self.env['res.company'])
+
+        with self.assertRaises(ValidationError):
+            self.env['res.company'].create(
+                {'name': 'Instance Company Error',
+                 'hierarchy_level': 'instance'})
+
+    def test_hierarchy_level_company_coordinator(self):
+        company_instance = self.env['res.company'].search([('hierarchy_level', '=', 'instance')])
+        company_coordinator = self.env['res.company'].create(
+            {'name': 'Coordinator Company',
+             'hierarchy_level': 'coordinator',
+             'parent_id': company_instance.id})
+        self.assertEqual(company_coordinator.hierarchy_level, 'coordinator')
+        self.assertEqual(company_coordinator.parent_id.hierarchy_level, 'instance')
+        self.assertEqual(company_coordinator.parent_id_filtered_ids, company_instance)
+
+        company_community = self.env['res.company'].create(
+            {'name': 'Community Company Test',
+             'hierarchy_level': 'community',
+             'parent_id': company_coordinator.id})
+        with self.assertRaises(ValidationError):
+            self.env['res.company'].create(
+                {'name': 'coordinator Company',
+                 'hierarchy_level': 'coordinator',
+                 'parent_id': company_community.id})
+
+    def test_hierarchy_level_company_community(self):
+        company_coordinator = self.env['res.company'].search([('hierarchy_level', '=', 'coordinator')], limit=1)
+        company_community = self.env['res.company'].create(
+            {'name': 'Community Company',
+             'hierarchy_level': 'community',
+             'parent_id': company_coordinator.id})
+        self.assertEqual(company_community.hierarchy_level, 'community')
+        self.assertEqual(company_community.parent_id.hierarchy_level, 'coordinator')
+        all_company_coordinator = self.env['res.company'].search([('hierarchy_level', '=', 'coordinator')])
+        self.assertEqual(company_community.parent_id_filtered_ids, all_company_coordinator)
+
+        company_instance = self.env['res.company'].search([('hierarchy_level', '=', 'instance')])
+        with self.assertRaises(ValidationError):
+            self.env['res.company'].create(
+                {'name': 'Community Company Error',
+                 'hierarchy_level': 'community',
+                 'parent_id': company_instance.id})
+        with self.assertRaises(ValidationError):
+            self.env['res.company'].create(
+                {'name': 'Community Company Error 2',
+                 'hierarchy_level': 'community',
+                 'parent_id': company_community.id})

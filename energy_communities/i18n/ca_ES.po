@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-08 14:36+0000\n"
-"PO-Revision-Date: 2023-03-09 08:10+0100\n"
+"POT-Creation-Date: 2023-03-30 16:30+0000\n"
+"PO-Revision-Date: 2023-03-30 19:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ca_ES\n"
@@ -503,6 +503,96 @@ msgstr ""
 "            "
 
 #. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_template_confirmation_company
+msgid ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
+"\n"
+"    <p>Hello,</p>\n"
+"    <p>Thank you for filling out the form and request to join the Community."
+"</p>\n"
+"    <p>In the coming weeks we will contact you to indicate the next steps</"
+"p>\n"
+"    <p>Here is a copy of the data we received:</p>\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
+"        <p> - Request to join: ${object.company_id.name}</p>\n"
+"        <p> - Company Name: ${object.company_name}</p>\n"
+"        <p> - Company Email: ${object.company_email}</p>\n"
+"        <p> - VAT: ${object.vat}</p>\n"
+"        <p> - Address: ${object.address}</p>\n"
+"        <p> - Zip code: ${object.zip_code}</p>\n"
+"        <p> - City: ${object.city}</p>\n"
+"        <p> - Country: ${object.country_id.name}</p>\n"
+"        <p> - Firstname: ${object.firstname}</p>\n"
+"        <p> - Lastname: ${object.lastname}</p>\n"
+"        <p> - Function: ${object.contact_person_function}</p>\n"
+"        <p> - Email: ${object.email}</p>\n"
+"        <p> - Phone: ${(object.phone or '')}</p>\n"
+"        <p> - Gender: ${dict(object.fields_get(allfields=['gender'])"
+"['gender']['selection'])[object.gender]}</p>\n"
+"        <p> - Birthdate: ${object.birthdate}</p>\n"
+"        <p> - Language: ${dict(object.fields_get(allfields=['lang'])['lang']"
+"['selection'])[object.lang]}</p>\n"
+"        <p> - Initial share amount: ${object.subscription_amount}</p>\n"
+"    </div>\n"
+"    <br />\n"
+"    <p>We keep in touch for any questions.</p>\n"
+"    <p>Yours faithfully,</p>\n"
+"    <p>Somcomunitats.coop team </p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
+"and FAQs</a></p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
+"\n"
+"    <p>Hola,</p>\n"
+"    <p>Gràcies per omplir el formulari i sol·licitar l’adhesió a la "
+"Comunitat Energètica.</p>\n"
+"    <p>En les properes setmanes ens posarem en contacte amb tu per indicar-"
+"te les següents passes.</p>\n"
+"    <p>Aquí tens una còpia de les dades que hem rebut:</p>\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
+"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
+"34); background-color: #FFF; \">\n"
+"        <p> - Comunitat: ${object.company_id.name}</p>\n"
+"        <p> - Nom empresa: ${object.company_name}</p>\n"
+"        <p> - Correu empresa: ${object.company_email}</p>\n"
+"        <p> - NIF/CIF empresa: ${object.vat}</p>\n"
+"        <p> - Direcció empresa: ${object.address}</p>\n"
+"        <p> - Codi postal empresa: ${object.zip_code}</p>\n"
+"        <p> - Ciutat empresa: ${object.city}</p>\n"
+"        <p> - Pais empresa: ${object.country_id.name}</p>\n"
+"        <p> - Nom persona representant: ${object.firstname}</p>\n"
+"        <p> - Cognoms persona representant: ${object.lastname}</p>\n"
+"        <p> - Càrrec representant: ${object.contact_person_function}</p>\n"
+"        <p> - Correu representant: ${object.email}</p>\n"
+"        <p> - Telèfon representant: ${(object.phone or '')}</p>\n"
+"        <p> - Gènere representant: ${dict(object."
+"fields_get(allfields=['gender'])['gender']['selection'])[object.gender]}</"
+"p>\n"
+"        <p> - data naixement representant: ${object.birthdate}</p>\n"
+"        <p> - Idioma comunicacions: ${dict(object."
+"fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}</p>\n"
+"        <p> - Import aportació inicial: ${object.subscription_amount}</p>\n"
+"    </div>\n"
+"    <br />\n"
+"    <p>Seguim en contacte per qualsevol dubte.</p>\n"
+"    <p>Atentament,</p>\n"
+"    <p>Equip Somcomunitats.coop</p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
+"and FAQs</a></p>\n"
+"</div>\n"
+"            "
+
+#. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser_pwd
 msgid "\"Superuser\" user password"
 msgstr "Contrasenya del super-usuari"
@@ -538,12 +628,23 @@ msgid "Allow new members"
 msgstr "Autoritza nous membres"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#, python-format
+msgid "An instance company already exists"
+msgstr "Ja existeix una empresa amb el rol de Instància"
+
+#. module: energy_communities
 #: code:addons/energy_communities/services/ce_community_service.py:0
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
 #: code:addons/energy_communities/services/ce_member_service.py:0
 #, python-format
 msgid "Authorization token not found"
 msgstr "Token d'autorització no trobat"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
+msgid "Become Company Cooperator of"
+msgstr "Esdevé empresa membre de"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
@@ -616,6 +717,13 @@ msgid "Code"
 msgstr "Codi"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__community
+#, python-format
+msgid "Community"
+msgstr "Comunitat"
+
+#. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_crm_lead__community_company_id
 msgid "Community related to this Lead"
 msgstr "Comunitat relacionada"
@@ -628,11 +736,6 @@ msgstr "Empreses"
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_collective_purchases
 msgid "Compres col·lectives"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
-msgid "Comunitats Energètiques"
 msgstr ""
 
 #. module: energy_communities
@@ -685,6 +788,13 @@ msgstr "Compte sòcies"
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__cooperator_journal
 msgid "Cooperator Journal"
 msgstr "Diari Sòcies"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__coordinator
+#, python-format
+msgid "Coordinator"
+msgstr "Coordinadora"
 
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.action_create_map_place_from_lead
@@ -750,6 +860,12 @@ msgid "Eficiencia energètica"
 msgstr "Eficiència Energètica"
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_subscription_main.py:0
+#, python-format
+msgid "Email and confirmation email addresses don't match."
+msgstr "El correu i el correu de confirmació no coincideixen."
+
+#. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_thermal_energy
 msgid "Energia tèrmica i climatització"
 msgstr ""
@@ -762,6 +878,7 @@ msgstr "Accions Energètiques"
 #. module: energy_communities
 #: model:ir.module.category,name:energy_communities.energy_communities_category
 #: model:ir.ui.menu,name:energy_communities.ce_root_menu
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 #: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
 msgid "Energy Communities"
 msgstr "Comunitats Energètiques"
@@ -787,16 +904,6 @@ msgstr "Serveis Comunitat Energètica"
 #: model:ir.ui.menu,name:energy_communities.ce_config_energy_actions_menu
 msgid "Energy actions in progress"
 msgstr "Accions energètiques en curs"
-
-#. module: energy_communities
-#: model:ir.model.fields,help:energy_communities.field_res_company__coordinator
-msgid ""
-"Flag to indicate that this company has the rol of "
-"'Coordinator'(=Administrator) for the current 'Comunitats Energètiques' "
-"Platform"
-msgstr ""
-"Marcar per indicar que aquesta companyia té el rol d'Administradora de "
-"Instància per la plataforma actual"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_citizen_education
@@ -832,9 +939,9 @@ msgid "General Information"
 msgstr "Informació general"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
-msgid "Global Platform Administration"
-msgstr "Administració global de la Instància"
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__hierarchy_level
+msgid "Hierarchy level"
+msgstr "Nivell jeràrquic"
 
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__gender__not_share
@@ -905,6 +1012,13 @@ msgstr "Import inicial alta sòcia"
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__capital_share
 msgid "Initial capital share"
 msgstr "Quota inicial alta sòcia"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__instance
+#, python-format
+msgid "Instance"
+msgstr "Instància"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_account_move
@@ -1002,11 +1116,12 @@ msgid "OAuth2 provider"
 msgstr "Proveïdor OAuth2"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid ""
 "Once you are a member you can enjoy the services available from the "
-"community and be part of a movement of social and energy model "
-"transformation."
+"community and be part of a movement\n"
+"                of social and energy model transformation."
 msgstr ""
 "Una vegada siguis soci/a podràs gaudir dels serveis disponibles de la "
 "comunitat energètica i, alhora, formar part d'un moviment de transformació "
@@ -1020,7 +1135,7 @@ msgid ""
 "Companies from Leads."
 msgstr ""
 "Només els usuaris que pertanyen a una companyia amb el rol de Coordinadora "
-"de CE poden crear noves companyies a partir de les iniciatives CRM"
+"de CE poden crear noves companyies a partir de les iniciatives CRM."
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
@@ -1030,7 +1145,7 @@ msgid ""
 "Places from Leads."
 msgstr ""
 "Només els usuaris que pertanyen a una companyia amb el rol de Coordinadora "
-"de CE poden crear nous punts de mapa a partir de les iniciatives CRM"
+"de CE poden crear nous punts de mapa a partir de les iniciatives CRM."
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_operation_request
@@ -1038,20 +1153,44 @@ msgid "Operation request"
 msgstr "Sol·licitud d'operació"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__parent_id
+msgid "Parent Coordinator Company"
+msgstr "Empresa principal Coordinadora"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__parent_id_filtered_ids
+msgid "Parent Id Filtered"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#, python-format
+msgid "Parent company must be coordinator hierarchy level."
+msgstr "L'empresa principal ha de tenir nivell de Coordinadora."
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#, python-format
+msgid "Parent company must be instance hierarchy level."
+msgstr "L'empresa principal ha de tenir nivell d'Instància."
+
+#. module: energy_communities
 #: model:res.groups,name:energy_communities.group_platform_manager
 msgid "Platform Manager"
-msgstr "Administradora de Instància"
+msgstr "Administradora d'Instància"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_platform_admin_res_groups
 #: model:res.users.role,name:energy_communities.role_platform_admin
 msgid "Platform admin role"
-msgstr "Rol d'Administradora de Instància"
+msgstr "Rol d'Administradora d'Instància"
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__coordinator
-msgid "Platform coordinator"
-msgstr "Coordinadora de la Instància"
+#: code:addons/energy_communities/controllers/website_subscription_main.py:0
+#, python-format
+msgid "Please upload a scan of your ID card."
+msgstr ""
+"Si us plau puja una imatge escanejada de la teva tarja d'identificació."
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__product_share_template
@@ -1062,6 +1201,12 @@ msgstr "Plantilla de producte aportació"
 #: model:ir.model,name:energy_communities.model_product_template
 msgid "Product Template"
 msgstr "Plantilla de producte"
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_subscription_main.py:0
+#, python-format
+msgid "Provided IBAN is not valid."
+msgstr "L'IBANproporcionat no és vàlid."
 
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.print_instance
@@ -1093,6 +1238,12 @@ msgstr "URL arrel"
 #, python-format
 msgid "SUBJ"
 msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_subscription_main.py:0
+#, python-format
+msgid "Some mandatory fields have not been filled."
+msgstr "Alguns camps obligatoris no han estat omplerts."
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
@@ -1149,6 +1300,7 @@ msgid "Tag {} not found"
 msgstr "Etiqueta {} no trobada"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "Target Odoo Company id"
 msgstr "Companyia Odoo de destí"
@@ -1213,14 +1365,6 @@ msgstr "Ja existeix un punt de mapa vinculat amb aquesta Iniciativa CRM: {}."
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid ""
-"There is an existing account for this email address on this community. "
-"Please contact with the community administrators."
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#, python-format
-msgid ""
 "There is an existing account for this vat number on this community. Please "
 "contact with the community administrators."
 msgstr ""
@@ -1237,6 +1381,7 @@ msgstr ""
 "les sòcies"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "This form allow you to request be member of the community:"
 msgstr ""
@@ -1272,6 +1417,7 @@ msgid "This operation must be approved before to be executed"
 msgstr "Aquesta operació cal aprovar-la abans d'executar-se"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid ""
 "To be a member you must fulfill this form and lateron proceed to pay the "
@@ -1358,6 +1504,13 @@ msgid "Units"
 msgstr "Unitats"
 
 #. module: energy_communities
+#: model:ir.actions.server,name:energy_communities.update_company_ids_from_partners_users_ir_actions_server
+#: model:ir.cron,cron_name:energy_communities.update_company_ids_from_partners_users
+#: model:ir.cron,name:energy_communities.update_company_ids_from_partners_users
+msgid "Update company_ids from res.parters with users"
+msgstr "Actualitzar company_ids en res.partner desde els res.user"
+
+#. module: energy_communities
 #: model:res.groups,name:energy_communities.group_user
 msgid "User"
 msgstr "Usuari"
@@ -1392,7 +1545,29 @@ msgstr "Formularis Web"
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_account_multicompany_easy_creation_wiz
 msgid "Wizard Account Multi-company Easy Creation"
+msgstr "Wizard Account Multi-company Easy Creation"
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_subscription_main.py:0
+#, python-format
+msgid ""
+"You can't subscribe for an amount that exceeds {amount}{currency_symbol}."
 msgstr ""
+"No pots subscriure't per un import superior a {amount}{currency_symbol}."
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_subscription_main.py:0
+#, python-format
+msgid "You can't subscribe to two different types of share."
+msgstr "No pots subscriure't a 2 tipus d'aportacions diferents."
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#, python-format
+msgid "You cannot create a instance company with a parent company."
+msgstr ""
+"Ho hi pot haver una empresa de nivell Instància que tingui una empresa "
+"principal assignada."
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/account_move.py:0
@@ -1417,7 +1592,12 @@ msgstr ""
 #, python-format
 msgid "You must set a cooperator journal on you company."
 msgstr ""
-"Cal sel·leccionar un Diari específic per a Sòcies en aquesta companyia"
+"Cal sel·leccionar un Diari específic per a Sòcies en aquesta companyia."
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_template_confirmation_company
+msgid "[Somcomunitats.coop] Application to become Community membership"
+msgstr "[Somcomunitats.coop] Sol·licitud d'adhesió a Comunitat Energètica"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_contact_confirm_id
@@ -1448,6 +1628,7 @@ msgid "[Somcomunitats.coop] Platform Newsletter Subscription Request"
 msgstr "[Somcomunitats.coop] Subscripció al butlletí"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "€ by follow the steps you will receive by email."
 msgstr ""

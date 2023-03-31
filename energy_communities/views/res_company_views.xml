@@ -3,16 +3,18 @@
     <record id="view_company_form_ce_inherited" model="ir.ui.view">
         <field name="name">res.company.tree.ce.inherited</field>
         <field name="model">res.company</field>
-        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="inherit_id" ref="base.view_company_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//page[@name='general_info']//field[@name='parent_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
             <xpath expr="//notebook" position="inside">
-                <page string="Comunitats Energètiques">
-                    <field name="id" invisible="1"/>
+                <page string="Energy Communities">
                     <group>
+                        <field name="hierarchy_level"></field>
+                        <field name="parent_id_filtered_ids" invisible="True"></field>
+                        <field name="parent_id" domain="[('id', 'in', parent_id_filtered_ids)]"></field>
                         <field name="ce_tag_ids"/>
-                    </group>
-                    <group string="Global Platform Administration" attrs="{'invisible': [('id','!=',1)]}">
-                        <field name="coordinator" readonly="True"/>                        
                     </group>
                 </page>
             </xpath>
@@ -21,14 +23,25 @@
             </xpath>
             <xpath expr="//field[@name='unmix_share_type']" position="before">
                 <field name="foundation_date"/>
-                <field name="initial_subscription_share_amount" />
-                <field name="allow_new_members" />
+                <field name="initial_subscription_share_amount"/>
+                <field name="allow_new_members"/>
             </xpath>
             <xpath expr="//field[@name='social_instagram']" position="after">
                 <field name="social_telegram"/>
             </xpath>
             <xpath expr="//field[@name='create_user']" position="after">
                 <field name="create_user_in_keycloak"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_company_tree" model="ir.ui.view">
+        <field name="name">res.company.tree</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="hierarchy_level"/>
+                <field name="parent_id"/>
             </xpath>
         </field>
     </record>

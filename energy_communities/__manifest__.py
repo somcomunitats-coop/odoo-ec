@@ -1,11 +1,14 @@
 {
     'name': "Energy Community",
-    'version': '14.0.1.0.8',
+    'version': '14.0.1.1.0',
     'depends': [
         'account',
+        'account_payment_order',
         'cooperator',
+        'base_technical_features',
         'base_user_role',
         'base_user_role_company',
+        'l10n_es_aeat',
         'l10n_es_cooperator',
         'auth_oauth',
         'auth_oidc',
@@ -14,8 +17,10 @@
         'auth_api_key',
         'crm',
         'account_multicompany_easy_creation',
+        'partner_multi_company',
         'purchase',
         'mass_mailing',
+        'mail_multicompany',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
     'website': 'https://somenergia.coop',
@@ -34,6 +39,7 @@
         'data/crm_lead_tag.xml',
         'data/product_data.xml',
         'data/auth_oauth_provider_data.xml',
+        'data/ir_cron.xml',
         'views/crm_lead_views.xml',
         'views/res_company_views.xml',
         'views/res_partner_views.xml',
@@ -52,7 +58,8 @@
     ],
     'installable': True,
     'application': True,
-    'auto_install': False
+    'auto_install': False,
+    'post_init_hook': 'post_init_hook',
 }
 
 

@@ -8,7 +8,7 @@
                    ref="account_multicompany_easy_creation.wizard_multicompany_easy_creation_view_form"/>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <xpath expr="//page[last()]" position="after">
+                <xpath expr="//page" position="before">
                     <page string="Cooperator">
                         <group string="Cooperator">
                             <field name="property_cooperator_account"/>
@@ -18,8 +18,11 @@
                         </group>
                     </page>
                 </xpath>
-                <xpath expr="//page[last()]" position="after">
+                <xpath expr="//page" position="before">
                     <page string="Energy Communities">
+                        <group string="Energy Communities">
+                            <field name="parent_id"></field>
+                        </group>
                         <group string="Create from CRM Lead">
                             <field name="crm_lead_id"/>
                         </group>
