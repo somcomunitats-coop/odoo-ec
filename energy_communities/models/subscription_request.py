@@ -5,10 +5,17 @@ from odoo.exceptions import UserError, ValidationError
 class SubscriptionRequest(models.Model):
     _inherit = 'subscription.request'
 
+    @api.depends('share_product_id', 'share_product_id.categ_id')
+    def _compute_is_voluntary(self):
+        product_category_voluntary_share = self.env.ref('energy_communities.product_category_company_voluntary_share')
+        for record in self:
+            record.is_voluntary = record.share_product_id.categ_id == product_category_voluntary_share
+
     gender = fields.Selection(selection_add=[("not_binary", "Not binary"),
                                              ("not_share", "I prefer to not share it")])
     vat = fields.Char(required=True, readonly=True, states={"draft": [("readonly", False)]})
-
+    mandate_approved = fields.Boolean(required=True, default=False, string="Approved SEPA")
+    is_voluntary = fields.Boolean(compute=_compute_is_voluntary, string="Is voluntary contribution", readonly=True)
     def get_journal(self):
         """Need to override in order to use in multicompany enviroment"""
 
@@ -41,6 +48,13 @@ class SubscriptionRequest(models.Model):
         subscription_request = super(SubscriptionRequest, self).create(vals)
         return subscription_request
 
+    def validate_subscription_request(self):
+        #TODO Disabled validation for production, this should be removed once is working correctly
+        self.ensure_one()
+        if self.is_voluntary:
+            raise UserError(_("You can't validate a voluntary contribution in this versión."))
+        super(SubscriptionRequest, self).validate_subscription_request()
+
     def get_partner_vals(self):
         vals = super(SubscriptionRequest, self).get_partner_vals()
         vals["company_id"] = self.company_id.id
@@ -72,8 +86,22 @@ class SubscriptionRequest(models.Model):
         return partner
 
     def get_mail_template_notif(self, is_company=False):
-        if is_company:
-            mail_template = "energy_communities.email_template_confirmation_company"
+        if self.is_voluntary:
+            mail_template = "energy_communities.email_template_confirmation_voluntary_share"
         else:
-            mail_template = "cooperator.email_template_confirmation"
+            if is_company:
+                mail_template = "energy_communities.email_template_confirmation_company"
+            else:
+                mail_template = "cooperator.email_template_confirmation"
         return self.env.ref(mail_template, False)
+
+    def _send_confirmation_mail(self):
+        if self.company_id.send_confirmation_email:
+            if self.is_voluntary and not self.partner_id:
+                return False
+            mail_template_notif = self.get_mail_template_notif(
+                is_company=self.is_company
+            )
+            # sudo is needed to change state of invoice linked to a request
+            #  sent through the api
+            mail_template_notif.sudo().send_mail(self.id)

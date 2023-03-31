@@ -54,6 +54,21 @@ class ResCompany(models.Model):
     create_user_in_keycloak = fields.Boolean('Create user for keycloak',
                                              help='Users created by cooperator are pushed automatically to keycloak',
                                              default=False)
+    voluntary_share_id = fields.Many2one(comodel_name='product.template', domain=[('is_share', '=', True)],
+                                         string='Voluntary share to show on website')
+
+    @api.constrains('hierarchy_level', 'parent_id')
+    def _check_hierarchy_level(self):
+        for rec in self:
+            if rec.hierarchy_level == 'instance':
+                if self.search_count([('hierarchy_level', '=', 'instance'), ('id', '!=', rec.id)]):
+                    raise ValidationError(_('An instance company already exists'))
+                if rec.parent_id:
+                    raise ValidationError(_('You cannot create a instance company with a parent company.'))
+            if rec.hierarchy_level == 'coordinator' and rec.parent_id.hierarchy_level != 'instance':
+                raise ValidationError(_('Parent company must be instance hierarchy level.'))
+            if rec.hierarchy_level == 'community' and rec.parent_id.hierarchy_level != 'coordinator':
+                raise ValidationError(_('Parent company must be coordinator hierarchy level.'))
 
     @api.constrains('hierarchy_level', 'parent_id')
     def _check_hierarchy_level(self):
