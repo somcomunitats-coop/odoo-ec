@@ -9,8 +9,10 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     _inherit = "account.multicompany.easy.creation.wiz"
 
     def _default_product_share_template(self):
-        return self.env.ref('energy_communities.share_capital_product_template').id
+        return self.env.ref('energy_communities.share_capital_product_template', raise_if_not_found=False)
 
+    parent_id = fields.Many2one('res.company', string='Parent Coordinator Company', index=True, required=True,
+                                domain=[('hierarchy_level', '=', 'coordinator')])
     crm_lead_id = fields.Many2one('crm.lead', string="CRM Lead")
     property_cooperator_account = fields.Many2one(
         comodel_name="account.account",
@@ -92,3 +94,20 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         self.update_product_category_company_share()
         self.create_capital_share_product_template()
         return action
+
+    def create_company(self):
+        self.new_company_id = self.env["res.company"].create(
+            {"name": self.name, "user_ids": [(6, 0, self.user_ids.ids)],
+             'parent_id': self.parent_id.id}
+        )
+        allowed_company_ids = (
+            self.env.context.get("allowed_company_ids", []) + self.new_company_id.ids
+        )
+        new_company = self.new_company_id.with_context(
+            allowed_company_ids=allowed_company_ids
+        )
+        self.with_context(
+            allowed_company_ids=allowed_company_ids
+        ).chart_template_id.try_loading(company=new_company)
+        self.create_bank_journals()
+        self.create_sequences()

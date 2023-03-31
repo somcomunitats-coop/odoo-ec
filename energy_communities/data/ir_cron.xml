@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        This cron is disabled and only will need to be called if there is
+        discrepancy between the company_ids of partners-users.
+        This discrepancy can be caused when installing the module to a
+        database with user and partners already created without partner_multi_company.
+    -->
+    <data>
+        <record id="update_company_ids_from_partners_users" model="ir.cron">
+            <field name="name">Update company_ids from res.parters with users</field>
+            <field name="active" eval="False"/>
+            <field name="user_id" ref="base.user_root" />
+            <field name="model_id" ref="base.model_res_partner"></field>
+            <field name="code">model.cron_update_company_ids_from_user()</field>
+        </record>
+    </data>
+</odoo>

@@ -1,16 +1,39 @@
 from email.policy import default
 from sqlite3 import dbapi2
 from odoo import api, models, fields, _
+from odoo.exceptions import ValidationError
 from datetime import datetime
 import re
 from odoo.exceptions import UserError
 
+_HIERARCHY_LEVEL_VALUES = [
+    ('instance', _('Instance')),
+    ('coordinator', _('Coordinator')),
+    ('community', _('Community'))
+]
+
 
 class ResCompany(models.Model):
     _inherit = 'res.company'
-    coordinator = fields.Boolean(string='Platform coordinator',
-                                 help="Flag to indicate that this company has the rol of 'Coordinator'(=Administrator) for the current 'Comunitats Energètiques' Platform"
-                                 )
+
+    @api.onchange('hierarchy_level')
+    def onchange_hierarchy_level(self):
+        self.parent_id = False
+
+    @api.depends('hierarchy_level')
+    def _compute_parent_id_filtered_ids(self):
+        for rec in self:
+            if rec.hierarchy_level == 'instance':
+                rec.parent_id_filtered_ids = False
+            elif rec.hierarchy_level == 'coordinator':
+                rec.parent_id_filtered_ids = self.search([('hierarchy_level', '=', 'instance')])
+            elif rec.hierarchy_level == 'community':
+                rec.parent_id_filtered_ids = self.search([('hierarchy_level', '=', 'coordinator')])
+
+    hierarchy_level = fields.Selection(selection=_HIERARCHY_LEVEL_VALUES, required=True, string="Hierarchy level",
+                                       default='community')
+    parent_id_filtered_ids = fields.One2many('res.company', compute=_compute_parent_id_filtered_ids, readonly=True,
+                                             store=False)
     ce_tag_ids = fields.Many2many('crm.tag', string='Energy Community Services')
     cooperator_journal = fields.Many2one(
         "account.journal",
@@ -31,6 +54,19 @@ class ResCompany(models.Model):
     create_user_in_keycloak = fields.Boolean('Create user for keycloak',
                                              help='Users created by cooperator are pushed automatically to keycloak',
                                              default=False)
+
+    @api.constrains('hierarchy_level', 'parent_id')
+    def _check_hierarchy_level(self):
+        for rec in self:
+            if rec.hierarchy_level == 'instance':
+                if self.search_count([('hierarchy_level', '=', 'instance'), ('id', '!=', rec.id)]):
+                    raise ValidationError(_('An instance company already exists'))
+                if rec.parent_id:
+                    raise ValidationError(_('You cannot create a instance company with a parent company.'))
+            if rec.hierarchy_level == 'coordinator' and rec.parent_id.hierarchy_level != 'instance':
+                    raise ValidationError(_('Parent company must be instance hierarchy level.'))
+            if rec.hierarchy_level == 'community' and rec.parent_id.hierarchy_level != 'coordinator':
+                    raise ValidationError(_('Parent company must be coordinator hierarchy level.'))
 
     @api.model
     def get_real_ce_company_id(self, api_param_odoo_compant_id):

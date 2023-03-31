@@ -46,6 +46,16 @@ class SubscriptionRequest(models.Model):
         vals["company_id"] = self.company_id.id
         return vals
 
+    def get_partner_company_vals(self):
+        vals = super(SubscriptionRequest, self).get_partner_company_vals()
+        vals["company_id"] = self.company_id.id
+        return vals
+
+    def get_representative_vals(self):
+        vals = super(SubscriptionRequest, self).get_representative_vals()
+        vals["company_id"] = self.company_id.id
+        return vals
+
     def _find_partner_from_create_vals(self, vals):
         partner_model = self.env["res.partner"]
         partner_id = vals.get("partner_id")
@@ -60,3 +70,10 @@ class SubscriptionRequest(models.Model):
         if partner:
             vals["partner_id"] = partner.id
         return partner
+
+    def get_mail_template_notif(self, is_company=False):
+        if is_company:
+            mail_template = "energy_communities.email_template_confirmation_company"
+        else:
+            mail_template = "cooperator.email_template_confirmation"
+        return self.env.ref(mail_template, False)

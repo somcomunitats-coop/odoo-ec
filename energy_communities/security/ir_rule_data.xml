@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<odoo noupdate="1">
+<odoo>
     <record model="ir.rule" id="subscription_request_company_rule">
         <field name="name">Subscription Request multi-company</field>
         <field name="model_id" ref="cooperator.model_subscription_request"/>
@@ -26,5 +26,34 @@
         <field name="model_id" ref="cooperator.model_operation_request"/>
         <field name="global" eval="True"/>
         <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record model="ir.rule" id="mail_message_company_rule">
+        <field name="name">mail.message multi-company</field>
+        <field name="model_id" ref="mail.model_mail_message"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('author_id.company_ids', '=', False),
+                                    ('author_id.company_ids', 'in', company_ids)]</field>
+    </record>
+
+    <record model="ir.rule" id="mail_followers_company_rule">
+        <field name="name">mail.followers multi-company</field>
+        <field name="model_id" ref="mail.model_mail_followers"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('partner_id.company_ids', '=', False),
+                                    ('partner_id.company_ids', 'in', company_ids)]</field>
+    </record>
+
+    <record model="ir.rule" id="mail_activity_company_rule">
+        <field name="name">mail.activity multi-company</field>
+        <field name="model_id" ref="mail.model_mail_activity"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('user_id.partner_id.company_ids', '=', False),
+                                    ('user_id.partner_id.company_ids', 'in', company_ids)]
+        </field>
+    </record>
+
+    <record model="ir.rule" id="base.res_partner_rule">
+        <field name="domain_force">['|', ('company_ids', '=', False), ('company_ids', 'in', company_ids)]</field>
     </record>
 </odoo>

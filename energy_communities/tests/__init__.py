@@ -1,1 +1,1 @@
-from . import test_crm_lead_service
+from . import test_res_company

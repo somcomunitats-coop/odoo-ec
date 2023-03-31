@@ -19,7 +19,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
 
         if ('odoo_company_id' in kwargs) and (
                 not target_odoo_company_id or not request.env['res.company'].sudo().search(
-                [('id', '=', target_odoo_company_id)])):
+            [('id', '=', target_odoo_company_id)])):
             return http.Response(_("Not valid parameter value [odoo_company_id]"), status=500)
 
         ctx = dict(request.context)
@@ -28,6 +28,29 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
 
         res = super(WebsiteSubscriptionCCEE,
                     self).display_become_cooperator_page(**kwargs)
+        return res
+
+    @http.route()
+    def display_become_company_cooperator_page(self, **kwargs):
+
+        target_odoo_company_id = False
+        if kwargs.get('odoo_company_id', False):
+            try:
+                target_odoo_company_id = int(kwargs.get('odoo_company_id'))
+            except:
+                pass
+
+        if ('odoo_company_id' in kwargs) and (
+                not target_odoo_company_id or not request.env['res.company'].sudo().search(
+            [('id', '=', target_odoo_company_id)])):
+            return http.Response(_("Not valid parameter value [odoo_company_id]"), status=500)
+
+        ctx = dict(request.context)
+        ctx.update({'target_odoo_company_id': target_odoo_company_id})
+        request.context = ctx
+
+        res = super(WebsiteSubscriptionCCEE,
+                    self).display_become_company_cooperator_page(**kwargs)
         return res
 
     @http.route()  # noqa: C901 (method too complex)
