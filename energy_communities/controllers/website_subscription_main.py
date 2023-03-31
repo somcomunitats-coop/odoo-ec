@@ -5,6 +5,18 @@ from odoo.addons.cooperator_website.controllers import main as emyc_wsc
 from urllib.parse import urljoin
 import re
 
+_VOLUNTARY_SHARE_FORM_FIELD = [
+    "email",
+    "confirm_email",
+    "iban",
+    "share_product_id",
+    "phone",
+    "lang",
+    "nb_parts",
+    "total_parts",
+    "error_msg",
+]
+
 
 class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
     @http.route()

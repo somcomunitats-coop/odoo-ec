@@ -7,6 +7,8 @@
         <field name="arch" type="xml">
             <field name="country_id" position="after">
                 <field name="company_id"/>
+                <field name="mandate_approved"/>
+                <field name="is_voluntary"/>
             </field>
         </field>
     </record>

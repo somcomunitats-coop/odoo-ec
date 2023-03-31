@@ -14,6 +14,7 @@
                         <field name="hierarchy_level"></field>
                         <field name="parent_id_filtered_ids" invisible="True"></field>
                         <field name="parent_id" domain="[('id', 'in', parent_id_filtered_ids)]"></field>
+                        <field name="voluntary_share_id"></field>
                         <field name="ce_tag_ids"/>
                     </group>
                 </page>

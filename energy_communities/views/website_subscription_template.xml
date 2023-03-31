@@ -115,4 +115,254 @@
         </xpath>
     </template>
 
+
+    <template id="voluntary_shares_template" name="voluntary_shares_template">
+        <div class="row" name="voluntary_share_div">
+            <div class="col-12">
+                <div
+                        class="form-group field-bank_account"
+                        t-attf-class="form-group #{error and 'iban' in error and 'has-error' or ''}"
+                        name="iban_container"
+                >
+                    <label for="iban">Bank Account Number</label>
+                    <input
+                            class="form-control form-control-sm"
+                            type="text"
+                            name="iban"
+                            id="iban"
+                            required="True"
+                            t-att-readonly="logged"
+                            t-attf-value="#{iban or ''}"
+                    />
+
+                </div>
+            </div>
+            <div
+                    class="col-12"
+                    id="mandate_approved"
+                    name="mandate_approved_container"
+            >
+                <div t-attf-class="form-group">
+                    <div class="form-check">
+                        <input
+                                type="checkbox"
+                                name="mandate_approved"
+                                class="form-check-input"
+                                t-att-required="1"
+                        />
+                        <label>
+                            <label for="mandate_approved">Accept to make the payment via SEPA transfer.</label>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div
+                        class="form-group field-parts-type"
+                        t-attf-class="form-group #{error and 'share_product_id' in error and 'has-error' or ''}"
+                        name="share_product_container"
+                >
+                    <label for="share_product_id">Share type</label>
+                    <select
+                            class="form-control form-control-sm"
+                            id="share_product_id"
+                            name="share_product_id"
+                            required="True"
+                            disabled="True"
+                    >
+                        <t t-foreach="products or []" t-as="product">
+                            <option
+                                    t-att-value="product.id"
+                                    t-att-selected="product.id == int(share_product_id)"
+                            >
+                                <t t-esc="product.short_name"/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 col-6">
+                <label for="ordered_parts">Share number</label>
+                <div t-attf-class="form-group" name="share_number_container">
+                    <input
+                            type="number"
+                            name="ordered_parts"
+                            id="ordered_parts"
+                            step="1"
+                            min="1"
+                            value="1"
+                            class="form-control form-control-sm"
+                    />
+                </div>
+            </div>
+            <div class="col-md-3 col-6" name="total_parts_container">
+                <div id="share_price" style="display: none;"/>
+                <label for="total_parts">Total</label>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <span
+                                class="input-group-text"
+                                t-esc="company.currency_id.symbol"
+                        />
+                    </div>
+                    <input
+                            type="text"
+                            id="total_parts"
+                            class="form-control form-control-sm total"
+                            name="total_parts"
+                            t-att-data-max="company.subscription_maximum_amount"
+                            t-att-readonly="'readonly'"
+                    />
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="voluntary_share_text_template" name="voluntary_share_text_template">
+        <h1 class="mt-4 text-center">
+            Voluntary Share of <t t-esc="company.name"/>
+        </h1>
+        <br/>
+        <p>
+            Hello,
+        </p>
+        <p>
+            This is the form to be able to make Voluntary Contributions to the Social Capital by the members of <t
+                t-esc="company.name"/>.
+        </p>
+        <p>
+            Once your request is received, you will receive a confirmation email with the instructions to follow.
+        </p>
+        <p>
+            You
+            can consult the <a href="#">GENERAL CONDITIONS</a> of Voluntary Contributions.
+        </p>
+        <p> You can consult
+            our
+            <a href="#">FREQUENTLY ASKED QUESTIONS</a>.</p>
+        <p>Note: Please, if you are not yet a member, you must process it at through
+            these forms: <a t-att-href='"page/become_cooperator?odoo_company_id=" + str(company.id)'>INDIVIDUAL
+                PARTNER</a> and <a t-att-href='"page/become_company_cooperator?odoo_company_id=" + str(company.id)'>
+                LEGAL ENTITY PARTNER</a>.
+        </p>
+    </template>
+
+    <template id="voluntary_share" name="Voluntary Share Template">
+        <t t-call="website.layout">
+            <div id="wrap" class="o_portal_wrap">
+                <div class="container oe_cooperator">
+                    <div class="row justify-content-center">
+                        <div class="col-xs-12 col-sm-10  col-md-8 col-lg-6">
+                            <t t-call="energy_communities.voluntary_share_text_template"/>
+                            <form
+                                    action="/subscription/voluntary_share"
+                                    method="post"
+                                    class="form-horizontal mt32 oe_subscription_request_form"
+                                    enctype="multipart/form-data"
+                            >
+                                <t t-call="cooperator_website.error_message_template"/>
+
+                                <t t-call="cooperator_website.csrf_template"/>
+
+                                <div
+                                        class="form-group"
+                                        t-attf-class="form-group #{error and 'vat' in error and 'has-error' or ''}"
+                                        name="company_id_container"
+                                        style="display: none;"
+                                >
+                                    <label for="company_id">Company</label>
+                                    <input
+                                            type="text"
+                                            class="form-control form-control-sm"
+                                            name="company_id"
+                                            required="True"
+                                            t-attf-value="#{company_id or ''}"
+                                    />
+                                </div>
+
+
+                                <div
+                                        class="form-group"
+                                        t-attf-class="form-group #{error and 'vat' in error and 'has-error' or ''}"
+                                        name="vat_container"
+                                >
+                                    <label for="vat">VAT</label>
+                                    <input
+                                            type="text"
+                                            class="form-control form-control-sm"
+                                            name="vat"
+                                            required="True"
+                                            t-attf-value="#{vat or ''}"
+                                    />
+                                </div>
+
+                                <div class="form-group field-login">
+                                    <label for="email">Email</label>
+                                    <input
+                                            class="form-control form-control-sm"
+                                            autocapitalize="off"
+                                            type="email"
+                                            name="email"
+                                            id="email"
+                                            required="True"
+                                            t-att-readonly="logged"
+                                            t-attf-value="#{email or ''}"
+                                    />
+
+                                </div>
+
+                                <div
+                                        t-if="not logged"
+                                        t-attf-class="form-group #{error and 'email_from' in error and 'has-error' or ''}"
+                                        name="confirm_email_container"
+                                >
+                                    <label for="confirm_email">Confirm Email</label>
+                                    <input
+                                            type="confirm_email"
+                                            class="form-control form-control-sm mandatory-field"
+                                            name="confirm_email"
+                                            t-att-required="not logged"
+                                            t-att-readonly="logged"
+                                            t-attf-value="#{confirm_email or ''}"
+                                    />
+                                </div>
+
+                                <div
+                                        class="form-group field-phone"
+                                        t-attf-class="form-group #{error and 'phone' in error and 'has-error' or ''}"
+                                        name="phone_container"
+                                >
+                                    <label for="phone">Phone</label>
+                                    <input
+                                            class="form-control form-control-sm"
+                                            id="phone"
+                                            type="tel"
+                                            name="phone"
+                                            required="True"
+                                            t-att-readonly="logged"
+                                            t-attf-value="#{phone or ''}"
+                                    />
+
+
+                                </div>
+
+                                <t t-call="energy_communities.voluntary_shares_template"></t>
+                                <t t-call="cooperator_website.rules_template"></t>
+
+                                <div class="text-center">
+                                    <button
+                                            class="btn btn-primary mt-3 mb-3 text-center"
+                                    >Send</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </t>
+    </template>
+
 </odoo>
