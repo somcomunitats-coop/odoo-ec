@@ -257,27 +257,24 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         company = request.env['res.company'].sudo().search([('id', '=', values["company_id"])])
 
         if partner:
-            values["email"] = partner.email
+            values["email"] = partner.email or _("Email not found")
             values["phone"] = partner.phone
-            values["lastname"] = partner.lastname
+            values["lastname"] = partner.lastname or ""
             values["firstname"] = partner.firstname or partner.name
-            values["address"] = partner.street
-            values["city"] = partner.city
-            values["zip_code"] = partner.zip
-            values["country_id"] = partner.country_id.id
-            values["lang"] = partner.lang
+            values["address"] = partner.street or _("Address not found")
+            values["city"] = partner.city or _("City not found")
+            values["zip_code"] = partner.zip or _("ZIP code not found")
+            values["country_id"] = partner.country_id.id or company.default_country_id.id
+            values["lang"] = partner.lang or company.default_lang_id.id
             values["birthdate"] = partner.birthdate_date
         else:
-            values["lastname"] = "Partner not found"
-            values["firstname"] = "Partner not found"
-            values["address"] = "Partner not found"
-            values["city"] = "Partner not found"
-            values["zip_code"] = "Partner not found"
+            values["lastname"] = _("Partner not found")
+            values["firstname"] = _("Partner not found")
+            values["address"] = _("Partner not found")
+            values["city"] = _("Partner not found")
+            values["zip_code"] = _("Partner not found")
             values["country_id"] = company.default_country_id.id
             values["lang"] = company.default_lang_id.code
-            values["birthdate"] = datetime.strptime(
-                '2000-01-01', "%Y-%m-%d"
-            ).date()
         values["share_product_id"] = company.voluntary_share_id.id
         subscription_id = sub_req_obj.sudo().create(values)
 
