@@ -12,4 +12,39 @@
             </field>
         </field>
     </record>
+
+    <function name="write" model="ir.model.data">
+        <function name="search" model="ir.model.data">
+            <value eval="[('module', '=', 'cooperator'),('name', '=', 'view_subscription_request_filter_inherit')]"/>
+        </function>
+        <value eval="{'noupdate': False}"/>
+    </function>
+
+    <record id="view_subscription_request_filter_inherit" model="ir.ui.view">
+        <field name="name">subscription.request.search.inherit</field>
+        <field name="model">subscription.request</field>
+        <field name="inherit_id" ref="cooperator.view_subscription_request_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <separator/>
+                <filter
+                        string="Mandatory Shares"
+                        name="mandatory_share"
+                        domain="[('is_voluntary','=', False)]"
+                />
+                <filter
+                        string="Voluntary Shares"
+                        name="voluntary_share"
+                        domain="[('is_voluntary','=', True)]"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <function name="write" model="ir.model.data">
+        <function name="search" model="ir.model.data">
+            <value eval="[('module', '=', 'cooperator'),('name', '=', 'view_subscription_request_filter_inherit')]"/>
+        </function>
+        <value eval="{'noupdate': True}"/>
+    </function>
 </odoo>

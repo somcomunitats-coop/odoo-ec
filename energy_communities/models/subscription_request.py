@@ -15,7 +15,8 @@ class SubscriptionRequest(models.Model):
                                              ("not_share", "I prefer to not share it")])
     vat = fields.Char(required=True, readonly=True, states={"draft": [("readonly", False)]})
     mandate_approved = fields.Boolean(required=True, default=False, string="Approved SEPA")
-    is_voluntary = fields.Boolean(compute=_compute_is_voluntary, string="Is voluntary contribution", readonly=True)
+    is_voluntary = fields.Boolean(compute=_compute_is_voluntary, string="Is voluntary contribution", readonly=True,
+                                  store=True)
     def get_journal(self):
         """Need to override in order to use in multicompany enviroment"""
 
