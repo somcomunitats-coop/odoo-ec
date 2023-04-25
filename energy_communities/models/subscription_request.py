@@ -14,7 +14,6 @@ class SubscriptionRequest(models.Model):
     gender = fields.Selection(selection_add=[("not_binary", "Not binary"),
                                              ("not_share", "I prefer to not share it")])
     vat = fields.Char(required=True, readonly=True, states={"draft": [("readonly", False)]})
-    mandate_approved = fields.Boolean(required=True, default=False, string="Approved SEPA")
     is_voluntary = fields.Boolean(compute=_compute_is_voluntary, string="Is voluntary contribution", readonly=True,
                                   store=True)
     def get_journal(self):
@@ -37,9 +36,6 @@ class SubscriptionRequest(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals:
-            vals['skip_iban_control'] = True
-
         # Somewhere the company_id is assigned as string
         # Can't find where, this is a workaround
         if 'company_id' in vals:
@@ -47,13 +43,13 @@ class SubscriptionRequest(models.Model):
         if 'country_id' in vals:
             vals['country_id'] = int(vals['country_id'])
         subscription_request = super(SubscriptionRequest, self).create(vals)
+        if not subscription_request.is_voluntary:
+            subscription_request.skip_iban_control = True
         return subscription_request
 
     def validate_subscription_request(self):
-        #TODO Disabled validation for production, this should be removed once is working correctly
-        self.ensure_one()
-        if self.is_voluntary:
-            raise UserError(_("You can't validate a voluntary contribution in this versión."))
+        if self.is_voluntary and self.type == 'new':
+            raise ValidationError(_('You can\'t create a voluntary subscription share for a new cooperator.'))
         super(SubscriptionRequest, self).validate_subscription_request()
 
     def get_partner_vals(self):

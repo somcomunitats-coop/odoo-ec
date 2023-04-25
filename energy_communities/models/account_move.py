@@ -51,3 +51,10 @@ class AccountMove(models.Model):
                 _("You must have a company specific sequence number for register.operation")
             )
         return company_seq
+
+    def send_capital_release_request_mail(self):
+        # temporal fix por Gares Bide needs
+        # capital_release_mail only must be sent when is a mandatory share
+        #TODO Remove it and implement a configuration
+        if not self.subscription_request.is_voluntary:
+            return super(AccountMove, self).send_capital_release_request_mail()

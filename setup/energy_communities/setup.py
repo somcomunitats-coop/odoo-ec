@@ -2,10 +2,16 @@ import setuptools
 
 setuptools.setup(
     setup_requires=['setuptools-odoo'],
+    install_requires=[
+        "odoo14-addon-account-payment-cooperator @ git+https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce@v14.0.1.1.3#egg=odoo14-addon-account-payment-cooperator&subdirectory=setup/account_payment_cooperator",
+        "odoo14-addon-account-banking-mandate-cooperator @ git+https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce@v14.0.1.1.3#egg=odoo14-addon-account-banking-mandate-cooperator&subdirectory=setup/account_banking_mandate_cooperator",
+    ],
     odoo_addon={
         "depends_override": {
             "mail_multicompany": "odoo14-addon-mail-multicompany==14.0.0.1.1.dev2",
             "partner_multi_company": "odoo14-addon-partner-multi-company==14.0.1.0.1.dev4",
-            },
-    },
+            "account_payment_cooperator": "odoo14-addon-account-payment-cooperator",
+            "account_banking_mandate_cooperator": "odoo14-addon-account-banking-mandate-cooperator",
+        },
+    }
 )
