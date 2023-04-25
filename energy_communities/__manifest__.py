@@ -1,6 +1,6 @@
 {
     'name': "Energy Community",
-    'version': '14.0.1.1.2',
+    'version': '14.0.1.1.3',
     'depends': [
         'account',
         'account_payment_order',
@@ -21,6 +21,8 @@
         'purchase',
         'mass_mailing',
         'mail_multicompany',
+        'account_payment_cooperator',
+        'account_banking_mandate_cooperator',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
     'website': 'https://somenergia.coop',
