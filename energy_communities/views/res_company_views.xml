@@ -8,6 +8,29 @@
             <xpath expr="//page[@name='general_info']//field[@name='parent_id']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <field name="landing_page_id" invisible="1"/>
+                    <button
+                        name="create_landing"
+                        type="object"
+                        string="Create landing page"
+                        attrs="{'invisible': [('landing_page_id','=',True)]}"
+                    />
+                </header>
+            </xpath>
+            <xpath expr="//field[@name='logo']" position="before">
+                <div class='oe_button_box'>
+                    <button 
+                        name="get_landing_page_form"
+                        type="object"
+                        string="My landing page"
+                        class="oe_stat_button"
+                        icon="fa-globe"
+                        attrs="{'invisible': [('landing_page_id','=',False)]}"
+                    />
+                </div>
+            </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Energy Communities">
                     <group>
