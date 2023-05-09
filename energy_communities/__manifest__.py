@@ -4,6 +4,7 @@
     'depends': [
         'account',
         'account_banking_mandate_cooperator',
+        'account_lock_date_update',
         'account_multicompany_easy_creation',
         'account_payment_cooperator',
         'account_payment_order',
