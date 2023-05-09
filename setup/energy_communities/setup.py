@@ -8,11 +8,11 @@ setuptools.setup(
     ],
     odoo_addon={
         "depends_override": {
+            "account_banking_mandate_cooperator": "odoo14-addon-account-banking-mandate-cooperator",
+            "account_payment_cooperator": "odoo14-addon-account-payment-cooperator",
+            "account_reconciliation_widget": "odoo14-addon-account-reconciliation-widget==14.0.2.0.2",
             "mail_multicompany": "odoo14-addon-mail-multicompany==14.0.0.1.1.dev2",
             "partner_multi_company": "odoo14-addon-partner-multi-company==14.0.1.0.1.dev4",
-            "account_payment_cooperator": "odoo14-addon-account-payment-cooperator",
-            "account_banking_mandate_cooperator": "odoo14-addon-account-banking-mandate-cooperator",
-            "account_reconciliation_widget": "odoo14-addon-account-reconciliation-widget==14.0.2.0.2",
         },
     }
 )
