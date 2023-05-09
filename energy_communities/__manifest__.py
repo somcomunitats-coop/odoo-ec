@@ -23,6 +23,7 @@
         'mail_multicompany',
         'account_payment_cooperator',
         'account_banking_mandate_cooperator',
+        'account_reconciliation_widget',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
     'website': 'https://somenergia.coop',
