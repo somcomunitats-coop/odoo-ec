@@ -66,10 +66,10 @@ class ResCompany(models.Model):
     voluntary_share_id = fields.Many2one(comodel_name='product.template', domain=[('is_share', '=', True)],
                                          string='Voluntary share to show on website')
     landing_page_id = fields.Many2one("landing.page", string=_("Landing Page"))
-    wordpress_db_credentials_admin_username = fields.Char(
+    wordpress_db_username = fields.Char(
         string=_("Wordpress DB Admin Username")
     )
-    wordpress_db_credentials_admin_password = fields.Char(
+    wordpress_db_password = fields.Char(
         string=_("Wordpress DB Admin Password")
     )
 
@@ -211,7 +211,9 @@ class ResCompany(models.Model):
         }
 
     def action_create_wp_landing(self, fields=None):
-        auth = Authenticate().authenticate()
+        username = self.wordpress_db_username
+        password = self.wordpress_db_password
+        auth = Authenticate(username, password).authenticate()
         token = "Bearer %s" % auth["token"]
         landing_page_data = self.landing_page_id.to_dict()
         landing_page = LandingPage.create(token, landing_page_data)
