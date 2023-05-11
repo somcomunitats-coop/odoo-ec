@@ -43,7 +43,12 @@ class Client(object):
         Return:
             **response**: Return the response object
         """
-        return self._send_request(verb="PUT", url=self._format_url(route), payload=body)
+        headers = {
+            'Authorization': token,
+        }
+        return self._send_request(
+            verb="PUT", url=self._format_url(route), payload=body, extra_headers=headers
+        )
 
     def _format_url(self, path):
         return "{url}{path}".format(url=self.baseurl, path=path)

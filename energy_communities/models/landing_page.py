@@ -1,4 +1,7 @@
 from odoo import models, fields, api, _
+from .res_config_settings import ResConfigSettings
+from ..pywordpress_client.resources.authenticate import Authenticate
+from ..pywordpress_client.resources.landing_page import LandingPage as LandingPageResource
 
 
 class LandingPage(models.Model):
@@ -64,13 +67,15 @@ class LandingPage(models.Model):
 
     def action_landing_page_status(self):
         for record in self:
-            if record.status == "publish":
-                record.write({"status": "draft"})
-            else:
-                record.write({"status": "publish"})
+            new_status = "draft" if record.status == "publish" else "publish"
 
-    def action_update_wp_landing(self, id):
-        auth = Authenticate().authenticate()
-        token = "Bearer %s" % auth["token"]
-        landing_page_data = self.to_dict()
-        landing_page = LandingPage.update(token, landing_page_data)
+            username = self.company_id.wordpress_db_username # "odoo_rest_user"
+            password = self.company_id.wordpress_db_password # "9SN6H8A@E87lxV)h"
+            auth = Authenticate(username, password).authenticate()
+            token = "Bearer %s" % auth["token"]
+            landing_page_data = record.to_dict()
+            landing_page_data["status"] = new_status
+            landing_page_resource = LandingPageResource(record.wp_landing_page_id)
+            landing_page_resource.update(token, landing_page_data)
+
+            record.write({"status": new_status})

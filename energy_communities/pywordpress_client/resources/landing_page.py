@@ -21,12 +21,12 @@ class LandingPage:
 
         return cls(**response_data)
 
-    def update(cls, token, body):
+    def update(self, token, body):
         """
         Updates a Landing Page instance.
         """
         response_data = Client().put(
-            "{}".format(cls._url_path +self.id),
+            "{url_path}/{id}".format(url_path=self._url_path, id=self.id),
             token,
             body
         )
