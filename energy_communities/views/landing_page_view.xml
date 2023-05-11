@@ -4,16 +4,16 @@
         <field name="name">landing.page.form.view</field>
         <field name="model">landing.page</field>
         <field name="arch" type="xml">
-        <form create="false">
-            <header>
-                <button name="action_landing_page_status" type="object" string="Publish" attrs="{'invisible': [('status','!=','draft')]}"/>
-                <button name="action_landing_page_status" type="object" string="Unpublish" attrs="{'invisible': [('status','!=','publish')]}"/>
-                <field name="status" widget="statusbar"/>
-            </header>
-            
+            <form create="false">
+                <header>
+                    <button name="action_landing_page_status" type="object" string="Publish" attrs="{'invisible': [('status','!=','draft')]}"/>
+                    <button name="action_landing_page_status" type="object" string="Unpublish" attrs="{'invisible': [('status','!=','publish')]}"/>
+                    <field name="status" widget="statusbar"/>
+                </header>
+
                 <group style="width:40px;">
-                  <h4 style="color:green;" attrs="{'invisible': [('status','!=','publish')]}">Published</h4>
-                  <h4 style="color:orange;" attrs="{'invisible': [('status','!=','draft')]}">Draft</h4>
+                    <h4 style="color:green;" attrs="{'invisible': [('status','!=','publish')]}">Published</h4>
+                    <h4 style="color:orange;" attrs="{'invisible': [('status','!=','draft')]}">Draft</h4>
                 </group>
                 <group>
                     <field name="name"/>

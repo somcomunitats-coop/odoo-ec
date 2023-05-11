@@ -15,7 +15,7 @@
                         name="create_landing"
                         type="object"
                         string="Create landing page"
-                        attrs="{'invisible': [('landing_page_id','=',True)]}"
+                        attrs="{'invisible': [('landing_page_id','!=',False)]}"
                     />
                 </header>
             </xpath>
