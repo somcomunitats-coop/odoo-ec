@@ -38,12 +38,10 @@ class ResCompany(models.Model):
     parent_id_filtered_ids = fields.One2many('res.company', compute=_compute_parent_id_filtered_ids, readonly=True,
                                              store=False)
     ce_tag_ids = fields.Many2many('crm.tag', string='Energy Community Services')
-    _inherit = "res.company"
     coordinator = fields.Boolean(
         string="Platform coordinator",
         help="Flag to indicate that this company has the rol of 'Coordinator'(=Administrator) for the current 'Comunitats Energètiques' Platform",
     )
-    ce_tag_ids = fields.Many2many("crm.tag", string="Energy Community Services")
     cooperator_journal = fields.Many2one(
         "account.journal",
         string="Cooperator Journal",

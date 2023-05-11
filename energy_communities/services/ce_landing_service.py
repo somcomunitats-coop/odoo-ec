@@ -40,7 +40,7 @@ class LandingService(Component):
                 "number_of_members": landing_page.number_of_members,
                 "virtual_office_link": landing_page.virtual_office_link or "",
                 "external_website_link": landing_page.external_website_link or "",
-                # "active_services": [],
+                "community_active_services": landing_page.company_id.get_active_services(),
                 "group_image_link": landing_page.group_image_link or "",
                 "short_description": landing_page.short_description or "",
                 "long_description": landing_page.long_description or "",

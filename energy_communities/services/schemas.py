@@ -222,13 +222,13 @@ S_LANDING_PAGE_CREATE = {
             "number_of_members": {"type": "integer"},
             "virtual_office_link": {"type": "string"},
             "external_website_link": {"type": "string"},
-            # "active_services": {
-            #     "type": "list",
-            #     "schema": {
-            #         "type": "dict",
-            #         "schema": S_COMMUNITY_SERVICE
-            #     },
-            # },
+            "community_active_services": {
+                "type": "list",
+                "schema": {
+                    "type": "dict",
+                    "schema": S_COMMUNITY_SERVICE
+                },
+            },
             "group_image_link": {"type": "string"},
             "short_description": {"type": "string"},
             "long_description": {"type": "string"},

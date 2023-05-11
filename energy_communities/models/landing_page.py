@@ -22,7 +22,6 @@ class LandingPage(models.Model):
     number_of_members = fields.Integer(string=_("Number of members"))
     virtual_office_link = fields.Char(string=_("Virtual office link"))
     external_website_link = fields.Char(string=_("External website link"))
-    # active_services = company_id.get_active_services()
     group_image_link = fields.Char(string=_("Group image link"))
     short_description = fields.Char(string=_("Short description"))
     long_description = fields.Text(string=_("Long description"))
@@ -37,31 +36,34 @@ class LandingPage(models.Model):
     street = fields.Char(string=_("Street"))
     postal_code = fields.Char(string=_("Postal code"))
     city = fields.Char(string=_("City"))
+    community_active_services = fields.Many2many(
+        string=_("Community active services"), related="company_id.ce_tag_ids"
+    )
 
     def to_dict(self):
         data = {
-            "title": self.name,
+            "title": self.name or "",
             "odoo_company_id": self.company_id.id,
             "status": self.status,
-            # "allow_new_members": self.allow_new_members,
-            # "number_of_members": self.number_of_members,
-            # "virtual_office_link": self.virtual_office_link,
-            # "external_website_link": self.external_website_link,
-            # # "active_services": self.active_services,
-            # "group_image_link": self.group_image_link,
-            # "short_description": self.short_description,
-            # "long_description": self.long_description,
-            # "why_become_cooperator": self.why_become_cooperator,
-            # "become_cooperator_process": self.become_cooperator_process,
-            # "subscription_information": self.subscription_information,
-            # "new_cooperator_form_link": self.new_cooperator_form_link,
-            # "contact_form": self.contact_form,
-            # "subscription_link": self.subscription_link,
-            # "social_media_link": self.social_media_link,
-            # "map_geolocation": self.map_geolocation,
-            # "street": self.street,
-            # "postal_code": self.postal_code,
-            # "city": self.city,
+            "allow_new_members": self.allow_new_members,
+            "number_of_members": self.number_of_members,
+            "virtual_office_link": self.virtual_office_link or "",
+            "external_website_link": self.external_website_link or "",
+            "community_active_services": self.community_active_services,
+            "group_image_link": self.group_image_link or "",
+            "short_description": self.short_description or "",
+            "long_description": self.long_description or "",
+            "why_become_cooperator": self.why_become_cooperator or "",
+            "become_cooperator_process": self.become_cooperator_process or "",
+            "subscription_information": self.subscription_information or "",
+            "new_cooperator_form_link": self.new_cooperator_form_link or "",
+            "contact_form": self.contact_form or "",
+            "subscription_link": self.subscription_link or "",
+            "social_media_link": self.social_media_link or "",
+            "map_geolocation": self.map_geolocation or "",
+            "street": self.street or "",
+            "postal_code": self.postal_code or "",
+            "city": self.city or "",
         }
         return data
 
