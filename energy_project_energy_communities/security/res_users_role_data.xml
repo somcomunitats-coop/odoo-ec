@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record model="res.users.role" id="energy_communities.role_ce_member">
+        <field
+            name="implied_ids"
+            eval="[
+                (4, ref('energy_project.group_user')),
+                ]"
+        />
+    </record>
+
+    <record model="res.users.role" id="energy_communities.role_ce_admin">
+        <field
+            name="implied_ids"
+            eval="[
+                (4, ref('energy_project.group_admin')),
+                ]"
+        />
+    </record>
+
+    <record model="res.users.role" id="energy_communities.role_platform_admin">
+        <field
+            name="implied_ids"
+            eval="[
+                (4, ref('energy_project.group_admin')),
+                ]"
+        />
+    </record>
+</odoo>
