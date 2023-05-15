@@ -7,37 +7,37 @@ from ..pywordpress_client.resources.landing_page import LandingPage as LandingPa
 class LandingPage(models.Model):
     _name = "landing.page"
 
-    name = fields.Char(string=_("Name"))
-    company_id = fields.Many2one("res.company", string=_("Company"))
-    wp_landing_page_id = fields.Integer(string=_("WP Landing Page"))
+    name = fields.Char(string="Name")
+    company_id = fields.Many2one("res.company", string="Company")
+    wp_landing_page_id = fields.Integer(string="WP Landing Page")
     status = fields.Selection(
-        selection=[("draft", "Draft"), ("publish", "Publish")],
+        selection=[("draft", _("Draft")), ("publish", _("Publish"))],
         default="draft",
         required=True,
-        string=_("Status"),
+        string="Status",
     )
     allow_new_members = fields.Boolean(
-        string=_("Allows new members"), related="company_id.allow_new_members"
+        string="Allows new members", related="company_id.allow_new_members"
     )
-    number_of_members = fields.Integer(string=_("Number of members"))
-    virtual_office_link = fields.Char(string=_("Virtual office link"))
-    external_website_link = fields.Char(string=_("External website link"))
-    group_image_link = fields.Char(string=_("Group image link"))
-    short_description = fields.Char(string=_("Short description"))
-    long_description = fields.Text(string=_("Long description"))
-    why_become_cooperator = fields.Text(string=_("Why become cooperator"))
-    become_cooperator_process = fields.Text(string=_("Become cooperator process"))
-    subscription_information = fields.Text(string=_("Subscription information"))
-    new_cooperator_form_link = fields.Char(string=_("New cooperator form link"))
-    contact_form = fields.Char(string=_("Contact form"))
-    subscription_link = fields.Char(string=_("Subscription link"))
-    social_media_link = fields.Char(string=_("Social media link"))
-    map_geolocation = fields.Char(string=_("Map geolocation"))
-    street = fields.Char(string=_("Street"))
-    postal_code = fields.Char(string=_("Postal code"))
-    city = fields.Char(string=_("City"))
+    number_of_members = fields.Integer(string="Number of members")
+    virtual_office_link = fields.Char(string="Virtual office link")
+    external_website_link = fields.Char(string="External website link")
+    group_image_link = fields.Char(string="Group image link")
+    short_description = fields.Char(string="Short description")
+    long_description = fields.Text(string="Long description")
+    why_become_cooperator = fields.Text(string="Why become cooperator")
+    become_cooperator_process = fields.Text(string="Become cooperator process")
+    subscription_information = fields.Text(string="Subscription information")
+    new_cooperator_form_link = fields.Char(string="New cooperator form link")
+    contact_form = fields.Char(string="Contact form")
+    subscription_link = fields.Char(string="Subscription link")
+    social_media_link = fields.Char(string="Social media link")
+    map_geolocation = fields.Char(string="Map geolocation")
+    street = fields.Char(string="Street")
+    postal_code = fields.Char(string="Postal code")
+    city = fields.Char(string="City")
     community_active_services = fields.Many2many(
-        string=_("Community active services"), related="company_id.ce_tag_ids"
+        string="Community active services", related="company_id.ce_tag_ids"
     )
 
     def to_dict(self):
@@ -71,8 +71,8 @@ class LandingPage(models.Model):
         for record in self:
             new_status = "draft" if record.status == "publish" else "publish"
 
-            username = self.company_id.wordpress_db_username # "odoo_rest_user"
-            password = self.company_id.wordpress_db_password # "9SN6H8A@E87lxV)h"
+            username = self.company_id.wordpress_db_username
+            password = self.company_id.wordpress_db_password
             auth = Authenticate(username, password).authenticate()
             token = "Bearer %s" % auth["token"]
             landing_page_data = record.to_dict()
