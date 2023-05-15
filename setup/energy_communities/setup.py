@@ -9,6 +9,7 @@ setuptools.setup(
     odoo_addon={
         "depends_override": {
             "account_banking_mandate_cooperator": "odoo14-addon-account-banking-mandate-cooperator",
+            "account_lock_date_update": "odoo14-addon-account-lock-date-update==14.0.2.0.1.dev10",
             "account_payment_cooperator": "odoo14-addon-account-payment-cooperator",
             "account_reconciliation_widget": "odoo14-addon-account-reconciliation-widget==14.0.2.0.2",
             "mail_multicompany": "odoo14-addon-mail-multicompany==14.0.0.1.1.dev2",
