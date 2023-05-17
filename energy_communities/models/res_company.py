@@ -28,15 +28,15 @@ class ResCompany(models.Model):
     @api.depends('hierarchy_level')
     def _compute_parent_id_filtered_ids(self):
         for rec in self:
-            if rec.hierarchy_level == 'instance':
+            if rec.hierarchy_level == INSTANCE_HIERARCHY:
                 rec.parent_id_filtered_ids = False
-            elif rec.hierarchy_level == 'coordinator':
-                rec.parent_id_filtered_ids = self.search([('hierarchy_level', '=', 'instance')])
-            elif rec.hierarchy_level == 'community':
-                rec.parent_id_filtered_ids = self.search([('hierarchy_level', '=', 'coordinator')])
+            elif rec.hierarchy_level == COORDINATOR_HIERARCHY:
+                rec.parent_id_filtered_ids = self.search([('hierarchy_level', '=', INSTANCE_HIERARCHY)])
+            elif rec.hierarchy_level == COMMUNITY_HIERARCHY:
+                rec.parent_id_filtered_ids = self.search([('hierarchy_level', '=', COORDINATOR_HIERARCHY)])
 
     hierarchy_level = fields.Selection(selection=_HIERARCHY_LEVEL_VALUES, required=True, string="Hierarchy level",
-                                       default='community')
+                                       default=COMMUNITY_HIERARCHY)
     parent_id_filtered_ids = fields.One2many('res.company', compute=_compute_parent_id_filtered_ids, readonly=True,
                                              store=False)
     ce_tag_ids = fields.Many2many('crm.tag', string='Energy Community Services')
@@ -65,33 +65,33 @@ class ResCompany(models.Model):
     @api.constrains('hierarchy_level', 'parent_id')
     def _check_hierarchy_level(self):
         for rec in self:
-            if rec.hierarchy_level == 'instance':
-                if self.search_count([('hierarchy_level', '=', 'instance'), ('id', '!=', rec.id)]):
+            if rec.hierarchy_level == INSTANCE_HIERARCHY:
+                if self.search_count([('hierarchy_level', '=', INSTANCE_HIERARCHY), ('id', '!=', rec.id)]):
                     raise ValidationError(_('An instance company already exists'))
                 if rec.parent_id:
                     raise ValidationError(_('You cannot create a instance company with a parent company.'))
-            if rec.hierarchy_level == 'coordinator' and rec.parent_id.hierarchy_level != 'instance':
+            if rec.hierarchy_level == COORDINATOR_HIERARCHY and rec.parent_id.hierarchy_level != INSTANCE_HIERARCHY:
                 raise ValidationError(_('Parent company must be instance hierarchy level.'))
-            if rec.hierarchy_level == 'community' and rec.parent_id.hierarchy_level != 'coordinator':
+            if rec.hierarchy_level == COMMUNITY_HIERARCHY and rec.parent_id.hierarchy_level != COORDINATOR_HIERARCHY:
                 raise ValidationError(_('Parent company must be coordinator hierarchy level.'))
 
     @api.constrains('hierarchy_level', 'parent_id')
     def _check_hierarchy_level(self):
         for rec in self:
-            if rec.hierarchy_level == 'instance':
-                if self.search_count([('hierarchy_level', '=', 'instance'), ('id', '!=', rec.id)]):
+            if rec.hierarchy_level == INSTANCE_HIERARCHY:
+                if self.search_count([('hierarchy_level', '=', INSTANCE_HIERARCHY), ('id', '!=', rec.id)]):
                     raise ValidationError(_('An instance company already exists'))
                 if rec.parent_id:
                     raise ValidationError(_('You cannot create a instance company with a parent company.'))
-            if rec.hierarchy_level == 'coordinator' and rec.parent_id.hierarchy_level != 'instance':
+            if rec.hierarchy_level == COORDINATOR_HIERARCHY and rec.parent_id.hierarchy_level != INSTANCE_HIERARCHY:
                     raise ValidationError(_('Parent company must be instance hierarchy level.'))
-            if rec.hierarchy_level == 'community' and rec.parent_id.hierarchy_level != 'coordinator':
+            if rec.hierarchy_level == COMMUNITY_HIERARCHY and rec.parent_id.hierarchy_level != COORDINATOR_HIERARCHY:
                     raise ValidationError(_('Parent company must be coordinator hierarchy level.'))
 
     @api.model
     def get_real_ce_company_id(self, api_param_odoo_compant_id):
         if api_param_odoo_compant_id == self.API_PARAM_ID_VALUE_FOR_COORDINADORA:
-            return self.search([('coordinator', '=', True)], limit=1) or None
+            return self.search([(COORDINATOR_HIERARCHY, '=', True)], limit=1) or None
         else:
             return self.search([('id', '=', api_param_odoo_compant_id)]) or None
 
