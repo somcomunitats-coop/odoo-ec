@@ -16,5 +16,23 @@
         <record id="cooperator.action_company_representative_form" model="ir.actions.act_window">
             <field name="view_id" ref="cooperator.view_partner_tree"></field>
         </record>
+
+        <record id="view_partner_form_ce_inherited" model="ir.ui.view">
+            <field name="name">res.partner.form.ce.inherited</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="before">
+                    <field name="user_is_ce_member" invisible="True"></field>
+                    <field name="user_is_platform_admin" invisible="True"></field>
+                </xpath>
+                <xpath expr="//page[@name='sales_purchases']//field[@name='company_ids']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('user_is_ce_member', '=', False), ('user_is_platform_admin', '=', False)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+
     </data>
 </odoo>

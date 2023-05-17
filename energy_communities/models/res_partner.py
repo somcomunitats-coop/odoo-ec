@@ -10,6 +10,21 @@ class ResPartner(models.Model):
     gender = fields.Selection(selection_add=[("not_binary", "Not binary"),
                                              ("not_share", "I prefer to not share it")])
 
+    user_is_ce_member = fields.Boolean(string='Current user is CE member', compute='_user_is_ce_member')
+    user_is_platform_admin = fields.Boolean(string='Current user is Platform admin', compute='_user_is_platform_admin')
+
+    def _user_is_ce_member(self):
+        for record in self:
+            user = self.env.user
+            is_ce_member = user.role_ids.code == 'role_ce_admin'
+            record.user_is_ce_member = is_ce_member
+
+    def _user_is_platform_admin(self):
+        for record in self:
+            user = self.env.user
+            is_platform_admin = user.role_ids.code == 'role_platform_admin'
+            record.user_is_platform_admin = is_platform_admin
+
     @api.model
     def create(self, vals):
         current_company = self.env.company
