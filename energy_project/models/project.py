@@ -1,0 +1,39 @@
+from odoo import _, fields, models
+
+STATE_VALUES = [
+    ("draft", _("Draft")),
+    ("activation", _("In Activation")),
+    ("active", _("Active")),
+]
+
+
+class Project(models.Model):
+    _name = "energy_project.project"
+    _description = "Energy project"
+
+    name = fields.Char(required=True)
+    type = fields.Many2one("energy_project.project_type", required=True, readonly=True)
+    state = fields.Selection(STATE_VALUES, default="draft", required=True)
+    company_id = fields.Many2one(
+        "res.company", default=lambda self: self.env.company, readonly=True
+    )
+    inscription_ids = fields.One2many(
+        "energy_project.inscription", "project_id", required=True
+    )
+    active = fields.Boolean(default=True)
+
+    # address fields
+    street = fields.Char(required=True)
+    street2 = fields.Char(required=True)
+    zip = fields.Char(change_default=True, required=True)
+    city = fields.Char(required=True)
+    state_id = fields.Many2one(
+        "res.country.state",
+        string="State",
+        ondelete="restrict",
+        domain="[('country_id', '=?', country_id)]",
+        required=True,
+    )
+    country_id = fields.Many2one(
+        "res.country", string="Country", ondelete="restrict", required=True
+    )

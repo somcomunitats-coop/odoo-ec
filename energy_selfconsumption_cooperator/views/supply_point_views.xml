@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="supply_point_form_view_inherit" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.supply_point.form.inherit</field>
+            <field name="model">energy_selfconsumption.supply_point</field>
+            <field
+                name="inherit_id"
+                ref="energy_selfconsumption.supply_point_form_view"
+            />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='owner_id']" position="after">
+                    <field name="cooperator_id" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
