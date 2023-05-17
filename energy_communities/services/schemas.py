@@ -208,3 +208,41 @@ S_COMMUNITY_RETURN_GET = {
         }
     }
 }
+
+S_LANDING_PAGE_CREATE = {
+    "landing": {
+        "type": "dict",
+        "schema": {
+            "id": {"type": "integer"},
+            "name": {"type": "string"},
+            "company_id": {"type": "integer"},
+            "wp_landing_page_id": {"type": "integer"},
+            "status": {"type": "string"},
+            "allow_new_members": {"type": "boolean"},
+            "number_of_members": {"type": "integer"},
+            "virtual_office_link": {"type": "string"},
+            "external_website_link": {"type": "string"},
+            "community_active_services": {
+                "type": "list",
+                "schema": {
+                    "type": "dict",
+                    "schema": S_COMMUNITY_SERVICE
+                },
+            },
+            "group_image_link": {"type": "string"},
+            "short_description": {"type": "string"},
+            "long_description": {"type": "string"},
+            "why_become_cooperator": {"type": "string"},
+            "become_cooperator_process": {"type": "string"},
+            "subscription_information": {"type": "string"},
+            "new_cooperator_form_link": {"type": "string"},
+            "contact_form": {"type": "string"},
+            "subscription_link": {"type": "string"},
+            "social_media_link": {"type": "string"},
+            "map_geolocation": {"type": "string"},
+            "street": {"type": "string"},
+            "postal_code": {"type": "string"},
+            "city": {"type": "string"},
+        }
+    }
+}

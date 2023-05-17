@@ -38,6 +38,7 @@
     ],
     'data': [
         'security/ir_rule_data.xml',
+        'security/ir.model.access.csv',
         'security/res_users_role_data.xml',
         'data/utm_data.xml',
         'data/crm_lead_tag.xml',
@@ -45,7 +46,9 @@
         'data/auth_oauth_provider_data.xml',
         'data/ir_cron.xml',
         'views/crm_lead_views.xml',
+        'views/landing_page_view.xml',
         'views/res_company_views.xml',
+        'views/res_config_settings.xml',
         'views/res_partner_views.xml',
         'views/website_subscription_template.xml',
         'views/ce_views.xml',

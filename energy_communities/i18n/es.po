@@ -804,7 +804,7 @@ msgstr "Plantilla de gráfico de cuentas"
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Address not found"
-msgstr ""
+msgstr "Dirección no encontrada"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__is_admin_provider
@@ -909,7 +909,7 @@ msgstr "Plantilla plan contable"
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "City not found"
-msgstr ""
+msgstr "Municipio no encontrado"
 
 #. module: energy_communities
 #: model_terms:ir.actions.act_window,help:energy_communities.ce_utm_sources_action
@@ -955,7 +955,7 @@ msgstr "Compras colectivas"
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__community
 msgid "Comunitat"
-msgstr ""
+msgstr "Comunidad"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_template_conditions_voluntary_share
@@ -1028,7 +1028,7 @@ msgstr "Diario Socias"
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__coordinator
 msgid "Coordinadora"
-msgstr ""
+msgstr "Coordinadora"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
@@ -1059,7 +1059,7 @@ msgstr "Crear usuario de KeyCloak/SSO desde la socia"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_users_form_form_inherit
 msgid "DNI"
-msgstr ""
+msgstr "DNI"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_chart_template__display_name
@@ -1102,20 +1102,20 @@ msgstr "Eficiencia Energética"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "Email"
-msgstr ""
+msgstr "Correo electrónico"
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Email and confirmation email addresses don't match."
-msgstr ""
+msgstr "El correo electrónico i el correo de confirmación no coinciden"
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Email not found"
-msgstr ""
+msgstr "Correu electrónico no encontrado"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_thermal_energy
@@ -1192,7 +1192,7 @@ msgstr "Generación renovable comunitaria"
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_menu_general_settings
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_leads_general_info_action
@@ -1301,7 +1301,7 @@ msgstr "Instancia"
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__instance
 msgid "Instància"
-msgstr ""
+msgstr "Instancia"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request__is_voluntary
@@ -1382,7 +1382,7 @@ msgstr ""
 #: code:addons/energy_communities/services/ce_community_service.py:0
 #, python-format
 msgid "No Odoo Company found for odoo_company_id %s"
-msgstr ""
+msgstr "No se ha encontrado ninguna comunidad con el id %s"
 "No se ha encontrado ninguna compañía en Odoo para el parámetro: "
 "odoo_company_id= %s"
 
@@ -1398,7 +1398,7 @@ msgstr "No se ha encontrado ningún Contacto para el Usuario con login: %s"
 #: code:addons/energy_communities/services/ce_member_service.py:0
 #, python-format
 msgid "No Odoo User found for KeyCloak user id %s"
-msgstr ""
+msgstr "No se ha encontrado ningun usuario con el id %s"
 "No se ha encontrado ningún Usuario de Odoo vinculado al Usuario de "
 "KeyCloak: %s"
 
@@ -1503,7 +1503,7 @@ msgstr "La compañía matriz debe tener nivel de Instancia."
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Partner not found"
-msgstr ""
+msgstr "Cliente no encontrado"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
@@ -1542,7 +1542,7 @@ msgstr "Plantilla de producto"
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Provided IBAN is not valid."
-msgstr ""
+msgstr "El IBAN no es valido"
 
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.print_instance
@@ -1594,7 +1594,7 @@ msgstr "Tipo de aportación"
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Some mandatory fields have not been filled."
-msgstr ""
+msgstr "No se han rellenado campos obligatorios"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
@@ -1774,13 +1774,13 @@ msgstr "Este código de idioma %s no está activo en Odoo. Los activos son: %s"
 #: code:addons/energy_communities/models/operation_request.py:0
 #, python-format
 msgid "This operation is not yet implemented."
-msgstr ""
+msgstr "Esta operación todavia no esta implementada"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/operation_request.py:0
 #, python-format
 msgid "This operation must be approved before to be executed"
-msgstr ""
+msgstr "Esta operación debe ser aprobada antes de se ejecutada"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
@@ -1795,7 +1795,7 @@ msgstr ""
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_utm_source
@@ -2015,7 +2015,7 @@ msgstr "Debe seleccionarse un Diario específico para Socias en esta compañía.
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "ZIP code not found"
-msgstr ""
+msgstr "Código postal"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_template_confirmation_company
