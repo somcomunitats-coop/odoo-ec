@@ -1,5 +1,7 @@
 from odoo import api, fields, models, SUPERUSER_ID
 import logging
+from .res_company import INSTANCE_HIERARCHY
+from .res_users_role import CE_ADMIN_ROLE, PLATFORM_ADMIN_ROLE
 
 logger = logging.getLogger(__name__)
 
@@ -16,19 +18,19 @@ class ResPartner(models.Model):
     def _user_is_ce_member(self):
         for record in self:
             user = self.env.user
-            is_ce_member = user.role_ids.code == 'role_ce_admin'
+            is_ce_member = user.role_ids.code == CE_ADMIN_ROLE
             record.user_is_ce_member = is_ce_member
 
     def _user_is_platform_admin(self):
         for record in self:
             user = self.env.user
-            is_platform_admin = user.role_ids.code == 'role_platform_admin'
+            is_platform_admin = user.role_ids.code == PLATFORM_ADMIN_ROLE
             record.user_is_platform_admin = is_platform_admin
 
     @api.model
     def create(self, vals):
         current_company = self.env.company
-        if current_company.hierarchy_level != 'instance':
+        if current_company.hierarchy_level != INSTANCE_HIERARCHY:
             if vals.get('company_ids', False):
                 vals['company_ids'][0][-1].append(current_company.id)
 

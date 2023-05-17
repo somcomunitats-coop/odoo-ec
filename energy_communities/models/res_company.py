@@ -6,10 +6,15 @@ from datetime import datetime
 import re
 from odoo.exceptions import UserError
 
+
+INSTANCE_HIERARCHY = 'instance'
+COORDINATOR_HIERARCHY = 'coordinator'
+COMMUNITY_HIERARCHY = 'community'
+
 _HIERARCHY_LEVEL_VALUES = [
-    ('instance', _('Instance')),
-    ('coordinator', _('Coordinator')),
-    ('community', _('Community'))
+    (INSTANCE_HIERARCHY, _('Instance')),
+    (COORDINATOR_HIERARCHY, _('Coordinator')),
+    (COMMUNITY_HIERARCHY, _('Community'))
 ]
 
 
