@@ -10,6 +10,16 @@ class ResPartner(models.Model):
     gender = fields.Selection(selection_add=[("not_binary", "Not binary"),
                                              ("not_share", "I prefer to not share it")])
 
+    @api.model
+    def create(self, vals):
+        current_company = self.env.company
+        if current_company.hierarchy_level != 'instance':
+            if vals.get('company_ids', False):
+                vals['company_ids'][0][-1].append(current_company.id)
+
+        new_parner = super(ResPartner, self).create(vals)
+        return new_parner
+
     def cron_update_company_ids_from_user(self):
         partner_with_users = self.search([('user_ids', '!=', False), ('user_ids.id', '!=', SUPERUSER_ID)])
         for partner in partner_with_users:
