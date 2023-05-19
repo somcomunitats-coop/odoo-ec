@@ -32,6 +32,8 @@
         'partner_multi_company',
         'purchase',
         'queue_job',
+        'sale_crm',
+        'sale_management',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
     'website': 'https://somenergia.coop',
