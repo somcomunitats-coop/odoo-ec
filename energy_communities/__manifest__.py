@@ -47,8 +47,8 @@
     ],
     'data': [
         'security/ir_rule_data.xml',
-        'security/ir.model.access.csv',
         'security/res_users_role_data.xml',
+        'security/ir.model.access.csv',
         'data/utm_data.xml',
         'data/crm_lead_tag.xml',
         'data/product_data.xml',
