@@ -10,7 +10,6 @@ image: python:3.7
 stages:
   - test
   - check
-  - package
 
 services:
   - postgres:12
@@ -29,6 +28,9 @@ variables:
   ODOO_REPO: "coopdevs/ocb"
   REPO_PLATFORM: "git.coopdevs.org"
   MQT_DEP: "pip"
+  REMOTE: "coopdevs/odoo"
+  REPO_NAME: "ocb"
+  TRAVIS_BUILD_WEB_URL: "https://git.coopdevs.org/coopdevs/odoo/OCB.git"
 
 before_script:
   - curl -sL https://deb.nodesource.com/setup_10.x | bash -
