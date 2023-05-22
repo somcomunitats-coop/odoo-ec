@@ -38,9 +38,10 @@ S_CRM_LEAD_CREATE_ALTA_CE = {
     "partner_city": {"type": "string", "required": True},
     "partner_state": {"type": "string", "required": True},
     "partner_qty_members": {"type": "integer", "required": True},
-    "partner_legal_state": {"type": "string",
-                            "check_with": ce_state_validator
-                            },
+    "partner_legal_state": {
+        "type": "string",
+        "check_with": ce_state_validator
+    },
     "tag_ids": {
         "type": "list",
         "schema": {
@@ -196,14 +197,14 @@ S_COMMUNITY_RETURN_GET = {
                         "email": {"type": "string"},
                         "telegram": {"type": "string"},
                     },
-                    },
+            },
             "active_services": {
                     "type": "list",
                     "schema": {
                         "type": "dict",
                         "schema": S_COMMUNITY_SERVICE
                     },
-                    },
+            },
             "allow_new_members": {"type": "boolean"},
             "public_web_landing_url": {"type": "string"},
             "keycloak_odoo_login_url": {"type": "string"},
@@ -233,7 +234,7 @@ S_LANDING_PAGE_CREATE = {
             },
             "group_image_link": {"type": "string"},
             "short_description": {"type": "string"},
-            "long_description": {"type": "string", "required": True},
+            "long_description": {"type": "string"},
             "why_become_cooperator": {"type": "string"},
             "become_cooperator_process": {"type": "string"},
             "subscription_information": {"type": "string"},
