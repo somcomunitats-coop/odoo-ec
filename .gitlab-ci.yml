@@ -5,9 +5,68 @@
 # Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+---
+image: python:3.7
 stages:
-- test
-sast:
+  - test
+  - check
+  - package
+
+services:
+  - postgres:12
+
+variables:
+  POSTGRES_DB: project_ci_test
+  POSTGRES_USER: odoo
+  POSTGRES_PASSWORD: "odoo"
+  TEST_DBNAME: "${CI_PROJECT_PATH_SLUG}-pipeline-${CI_PIPELINE_ID}"
+  DEPLOY_DBNAME: "${CI_PROJECT_PATH_SLUG}-${CI_COMMIT_REF_SLUG}"
+  RUNNER_HOME: "/home/gitlab-runner"
+  INSTANCE_PATH: "${RUNNER_HOME}/instances/${CI_PROJECT_PATH_SLUG}-${CI_COMMIT_REF_SLUG}"
+  TRAVIS_BUILD_DIR: "$CI_PROJECT_DIR"
+  ODOO_BRANCH: "14.0_2023-02-16"
+  ODOO_REPO: "coopdevs/ocb"
+  REPO_PLATFORM: "git.coopdevs.org"
+  CODECOV_TOKEN: "${CODECOV_TOKEN}"
+  MQT_DEP: "pip"
+
+before_script:
+  - curl -sL https://deb.nodesource.com/setup_10.x | bash -
+  - apt-get install -y  sudo postgresql-client expect-dev python3-lxml nodejs python-dev
+    python3-pip build-essential libsasl2-dev python-dev libldap2-dev libssl-dev
+    libxmlsec1-dev npm
+  - pip install coverage six
+  - export PGHOST="postgres"
+  - export PGUSER="odoo"
+  - export PGPASSWORD="odoo"
+  - git clone https://github.com/coopdevs/maintainer-quality-tools.git -b
+    fix/pylint-odoo-version ${HOME}/maintainer-quality-tools
+  - export PATH=${HOME}/maintainer-quality-tools/travis:${HOME}/gitlab_tools:${PATH}
+
+test:
   stage: test
-include:
-- template: Security/SAST.gitlab-ci.yml
+  tags:
+    - postgres
+    - docker
+  variables:
+    LINT_CHECK: "0"
+    TESTS: "1"
+    MAKEPOT: "1"
+  script:
+    - travis_install_nightly
+    - cd ${HOME}/${REPO_NAME}-${ODOO_BRANCH} && python setup.py install && cd -
+    - travis_run_tests
+    - travis_after_tests_success || true
+  coverage: '/TOTAL.+ ([0-9]{1,3}%)/'
+
+check_coverage:
+  stage: check
+  tags:
+    - docker
+  variables:
+    JOB_NAME: "test"
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq jq
+  script:
+    - CURRENT_COVERAGE=`curl -s "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/pipelines/${CI_PIPELINE_ID}/jobs" | jq --arg JOB_NAME "$JOB_NAME" '.[] | select(.name==$JOB_NAME) | .coverage'`
+    - if  [ "$CURRENT_COVERAGE" -lt "$MIN_COVERAGE" ]; then echo "Coverage decreased from ${MIN_COVERAGE}. Current value ${CURRENT_COVERAGE}" && exit 1; fi;
