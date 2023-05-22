@@ -24,12 +24,16 @@
         'crm_metadata_rest_api',
         'crm_rest_api',
         'l10n_es_aeat',
+        'l10n_es_aeat_sii_oca',
         'l10n_es_cooperator',
         'mail_multicompany',
         'mass_mailing',
         'metadata',
         'partner_multi_company',
         'purchase',
+        'queue_job',
+        'sale_crm',
+        'sale_management',
     ],
     'author': "Coopdevs Treball SCCL & Som Energia SCCL",
     'website': 'https://somenergia.coop',
@@ -43,8 +47,8 @@
     ],
     'data': [
         'security/ir_rule_data.xml',
-        'security/ir.model.access.csv',
         'security/res_users_role_data.xml',
+        'security/ir.model.access.csv',
         'data/utm_data.xml',
         'data/crm_lead_tag.xml',
         'data/product_data.xml',
@@ -73,5 +77,3 @@
     'auto_install': False,
     'post_init_hook': 'post_init_hook',
 }
-
-
