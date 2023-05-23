@@ -15,6 +15,7 @@ class Selfconsumption(models.Model):
     )
     code = fields.Char(string="CAU")
     power = fields.Float(string="Generation Power (kWh)")
+    distribution_table_id = fields.Many2one('energy_selfconsumption.distribution_table')
 
     def set_activation(self):
         for record in self:

@@ -48,6 +48,7 @@
                         <group>
                             <group>
                                 <field name="company_id" invisible="True"/>
+                                <field name="id" invisible="True"/>
                                 <field name="type" invisible="True"/>
                                 <field
                                         name="code"
@@ -56,6 +57,11 @@
                                 <field
                                         name="power"
                                         attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                                />
+                                <field
+                                        name="distribution_table_id"
+                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                                        domain="[('selfconsumption_project_id', '=', id)]"
                                 />
                             </group>
                             <group>
