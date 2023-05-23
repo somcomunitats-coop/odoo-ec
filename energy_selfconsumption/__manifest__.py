@@ -21,5 +21,6 @@
         "views/selfconsumption_views.xml",
         "views/supply_point_views.xml",
         "views/res_partner_views.xml",
+        "views/distribution_table_views.xml",
     ],
 }
