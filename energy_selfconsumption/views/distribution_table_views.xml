@@ -25,7 +25,7 @@
                         <group>
                             <field name="selfconsumption_project_id"/>
                             <field
-                                    name="supply_point_assignations_ids"
+                                    name="supply_point_assignation_ids"
                                     widget="one2many"
                                     mode="list"
                                     context="{'default_distribution_table_id':id}"
