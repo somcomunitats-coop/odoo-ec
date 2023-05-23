@@ -218,13 +218,16 @@ class ResCompany(models.Model):
         }
 
     def action_create_wp_landing(self, fields=None):
-        username = self.wordpress_db_username
-        password = self.wordpress_db_password
-        auth = Authenticate(username, password).authenticate()
-        token = "Bearer %s" % auth["token"]
-        landing_page_data = self.landing_page_id.to_dict()
-        landing_page = LandingPage.create(token, landing_page_data)
-        self.landing_page_id.write({"wp_landing_page_id": landing_page.id})
+        instance_company = self.env['res.company'].search(
+            [('hierarchy_level', '=', 'instance')])
+        if instance_company:
+            username = instance_company.wordpress_db_username
+            password = instance_company.wordpress_db_password
+            auth = Authenticate(username, password).authenticate()
+            token = "Bearer %s" % auth["token"]
+            landing_page_data = self.landing_page_id.to_dict()
+            landing_page = LandingPage.create(token, landing_page_data)
+            self.landing_page_id.write({"wp_landing_page_id": landing_page.id})
 
     def get_landing_page_form(self):
         return {
