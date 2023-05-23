@@ -1,7 +1,6 @@
 from odoo import api, fields, models, SUPERUSER_ID
 import logging
 from .res_company import INSTANCE_HIERARCHY
-from .res_users_role import CE_ADMIN_ROLE, PLATFORM_ADMIN_ROLE
 
 logger = logging.getLogger(__name__)
 
@@ -12,20 +11,6 @@ class ResPartner(models.Model):
     gender = fields.Selection(selection_add=[("not_binary", "Not binary"),
                                              ("not_share", "I prefer to not share it")])
 
-    user_is_ce_member = fields.Boolean(string='Current user is CE member', compute='_user_is_ce_member')
-    user_is_platform_admin = fields.Boolean(string='Current user is Platform admin', compute='_user_is_platform_admin')
-
-    def _user_is_ce_member(self):
-        for record in self:
-            user = self.env.user
-            is_ce_member = user.role_ids.code == CE_ADMIN_ROLE
-            record.user_is_ce_member = is_ce_member
-
-    def _user_is_platform_admin(self):
-        for record in self:
-            user = self.env.user
-            is_platform_admin = user.role_ids.code == PLATFORM_ADMIN_ROLE
-            record.user_is_platform_admin = is_platform_admin
 
     @api.model
     def create(self, vals):
@@ -34,8 +19,8 @@ class ResPartner(models.Model):
             if vals.get('company_ids', False):
                 vals['company_ids'][0][-1].append(current_company.id)
 
-        new_parner = super(ResPartner, self).create(vals)
-        return new_parner
+        new_partner = super(ResPartner, self).create(vals)
+        return new_partner
 
     def cron_update_company_ids_from_user(self):
         partner_with_users = self.search([('user_ids', '!=', False), ('user_ids.id', '!=', SUPERUSER_ID)])

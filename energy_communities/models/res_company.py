@@ -101,7 +101,7 @@ class ResCompany(models.Model):
     @api.model
     def get_real_ce_company_id(self, api_param_odoo_compant_id):
         if api_param_odoo_compant_id == self.API_PARAM_ID_VALUE_FOR_COORDINADORA:
-            return self.search([(COORDINATOR_HIERARCHY, '=', True)], limit=1) or None
+            return self.search([('coordinator', '=', True)], limit=1) or None
         else:
             return self.search([("id", "=", api_param_odoo_compant_id)]) or None
 
