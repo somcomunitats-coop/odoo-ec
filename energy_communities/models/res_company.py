@@ -29,15 +29,18 @@ class ResCompany(models.Model):
             if rec.hierarchy_level == 'instance':
                 rec.parent_id_filtered_ids = False
             elif rec.hierarchy_level == 'coordinator':
-                rec.parent_id_filtered_ids = self.search([('hierarchy_level', '=', 'instance')])
+                rec.parent_id_filtered_ids = self.search(
+                    [('hierarchy_level', '=', 'instance')])
             elif rec.hierarchy_level == 'community':
-                rec.parent_id_filtered_ids = self.search([('hierarchy_level', '=', 'coordinator')])
+                rec.parent_id_filtered_ids = self.search(
+                    [('hierarchy_level', '=', 'coordinator')])
 
     hierarchy_level = fields.Selection(selection=_HIERARCHY_LEVEL_VALUES, required=True, string="Hierarchy level",
                                        default='community')
     parent_id_filtered_ids = fields.One2many('res.company', compute=_compute_parent_id_filtered_ids, readonly=True,
                                              store=False)
-    ce_tag_ids = fields.Many2many('crm.tag', string='Energy Community Services')
+    ce_tag_ids = fields.Many2many(
+        'crm.tag', string='Energy Community Services')
     cooperator_journal = fields.Many2one(
         "account.journal",
         string="Cooperator Journal",
@@ -72,26 +75,34 @@ class ResCompany(models.Model):
         for rec in self:
             if rec.hierarchy_level == 'instance':
                 if self.search_count([('hierarchy_level', '=', 'instance'), ('id', '!=', rec.id)]):
-                    raise ValidationError(_('An instance company already exists'))
+                    raise ValidationError(
+                        _('An instance company already exists'))
                 if rec.parent_id:
-                    raise ValidationError(_('You cannot create a instance company with a parent company.'))
+                    raise ValidationError(
+                        _('You cannot create a instance company with a parent company.'))
             if rec.hierarchy_level == 'coordinator' and rec.parent_id.hierarchy_level != 'instance':
-                raise ValidationError(_('Parent company must be instance hierarchy level.'))
+                raise ValidationError(
+                    _('Parent company must be instance hierarchy level.'))
             if rec.hierarchy_level == 'community' and rec.parent_id.hierarchy_level != 'coordinator':
-                raise ValidationError(_('Parent company must be coordinator hierarchy level.'))
+                raise ValidationError(
+                    _('Parent company must be coordinator hierarchy level.'))
 
     @api.constrains('hierarchy_level', 'parent_id')
     def _check_hierarchy_level(self):
         for rec in self:
             if rec.hierarchy_level == 'instance':
                 if self.search_count([('hierarchy_level', '=', 'instance'), ('id', '!=', rec.id)]):
-                    raise ValidationError(_('An instance company already exists'))
+                    raise ValidationError(
+                        _('An instance company already exists'))
                 if rec.parent_id:
-                    raise ValidationError(_('You cannot create a instance company with a parent company.'))
+                    raise ValidationError(
+                        _('You cannot create a instance company with a parent company.'))
             if rec.hierarchy_level == 'coordinator' and rec.parent_id.hierarchy_level != 'instance':
-                    raise ValidationError(_('Parent company must be instance hierarchy level.'))
+                raise ValidationError(
+                    _('Parent company must be instance hierarchy level.'))
             if rec.hierarchy_level == 'community' and rec.parent_id.hierarchy_level != 'coordinator':
-                    raise ValidationError(_('Parent company must be coordinator hierarchy level.'))
+                raise ValidationError(
+                    _('Parent company must be coordinator hierarchy level.'))
 
     @api.model
     def get_real_ce_company_id(self, api_param_odoo_compant_id):
@@ -122,7 +133,8 @@ class ResCompany(models.Model):
                 ("active", "=", True),
             ]
         }
-        members = self.env["res.users"].sudo().search(domains_dict["in_kc_and_active"])
+        members = self.env["res.users"].sudo().search(
+            domains_dict["in_kc_and_active"])
         return members
 
     @api.model
@@ -180,7 +192,8 @@ class ResCompany(models.Model):
         return "https://somcomunitats.coop/ce/comunitat-energetica-prova/"
 
     def get_keycloak_odoo_login_url(self):
-        login_provider_id = self.env.ref("energy_communities.keycloak_login_provider")
+        login_provider_id = self.env.ref(
+            "energy_communities.keycloak_login_provider")
         return login_provider_id.get_auth_link()
 
     def create_landing(self):

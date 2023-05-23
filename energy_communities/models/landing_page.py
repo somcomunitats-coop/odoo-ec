@@ -77,7 +77,8 @@ class LandingPage(models.Model):
             token = "Bearer %s" % auth["token"]
             landing_page_data = record.to_dict()
             landing_page_data["status"] = new_status
-            landing_page_resource = LandingPageResource(record.wp_landing_page_id)
+            landing_page_resource = LandingPageResource(
+                record.wp_landing_page_id)
             landing_page_resource.update(token, landing_page_data)
 
             record.write({"status": new_status})
