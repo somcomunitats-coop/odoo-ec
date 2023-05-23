@@ -23,7 +23,10 @@
                             </h1>
                         </div>
                         <group>
-                            <field name="selfconsumption_project_id"/>
+                            <group>
+                                <field name="selfconsumption_project_id"/>
+                                <field name="type"/>
+                            </group>
                             <field
                                     name="supply_point_assignation_ids"
                                     widget="one2many"
