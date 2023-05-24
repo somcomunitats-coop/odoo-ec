@@ -27,6 +27,9 @@ class DistributionTable(models.Model):
     supply_point_assignation_ids = fields.One2many('energy_selfconsumption.supply_point_assignation', 'distribution_table_id')
     coefficient_is_valid = fields.Boolean(compute=_compute_coefficient_is_valid, readonly=True, store=False)
 
+    @api.onchange('selfconsumption_project_id')
+    def _onchange_selfconsumption_project_id(self):
+        self.supply_point_assignation_ids = False
 
     def button_activate(self):
         for record in self:
