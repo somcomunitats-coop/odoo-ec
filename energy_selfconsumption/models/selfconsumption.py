@@ -27,4 +27,6 @@ class Selfconsumption(models.Model):
                 raise ValidationError(_("Project must have a valid Code."))
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Generation Power."))
+            if not record.distribution_table_id:
+                raise ValidationError(_("Must select a valid Distribution Table."))
             record.write({"state": "active"})
