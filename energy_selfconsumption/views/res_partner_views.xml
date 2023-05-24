@@ -29,7 +29,7 @@
             <field name="arch" type="xml">
                 <div name="button_box" position="inside">
                     <button class="oe_stat_button" type="object" name="get_supply_points"
-                        icon="fa-lightbulb-o">
+                        icon="fa-lightbulb-o" context="{'default_owner_id': id}">
                         <field string="Supply Points" name="supply_point_count" widget="statinfo"/>
                     </button>
                 </div>
