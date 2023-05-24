@@ -25,21 +25,23 @@
                         <div class="oe_title">
                             <label for="name"/>
                             <h1>
-                                <field name="name" placeholder="Title"/>
+                                <field name="name" placeholder="Title"
+                                attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
                             </h1>
                         </div>
                         <group>
                             <group>
-                                <field name="selfconsumption_project_id"/>
+                                <field name="selfconsumption_project_id" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
                             </group>
                             <group>
-                                 <field name="type"/>
+                                 <field name="type" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
                             </group>
                             <field
                                     name="supply_point_assignation_ids"
                                     widget="one2many"
                                     mode="list"
                                     context="{'default_distribution_table_id':id}"
+                                    attrs="{'readonly': [('state', 'not in', ['draft'])]}"
                             >
                                 <tree editable="bottom"
                                 decoration-success="table_coefficient_is_valid == True">
