@@ -30,7 +30,9 @@ class SupplyPointAssignation(models.Model):
 
     supply_point_filtered_ids = fields.One2many('energy_selfconsumption.supply_point',
                                                 compute=_compute_supply_point_filtered_ids, readonly=True)
-
+    company_id = fields.Many2one(
+        "res.company", default=lambda self: self.env.company, readonly=True
+    )
     @api.constrains('coefficient')
     def constraint_coefficient(self):
         for record in self:

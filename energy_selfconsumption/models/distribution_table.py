@@ -31,6 +31,9 @@ class DistributionTable(models.Model):
                                                    'distribution_table_id')
     coefficient_is_valid = fields.Boolean(compute=_compute_coefficient_is_valid, readonly=True, store=False)
     active = fields.Boolean(default=True)
+    company_id = fields.Many2one(
+        "res.company", default=lambda self: self.env.company, readonly=True
+    )
 
     @api.onchange('selfconsumption_project_id')
     def _onchange_selfconsumption_project_id(self):
