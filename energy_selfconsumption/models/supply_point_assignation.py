@@ -1,5 +1,5 @@
 from odoo import fields, models, api
-
+from odoo.exceptions import ValidationError
 class SupplyPointAssignation(models.Model):
     _name = 'energy_selfconsumption.supply_point_assignation'
     _description = 'Supply Point Assignation'
@@ -29,3 +29,9 @@ class SupplyPointAssignation(models.Model):
 
     supply_point_filtered_ids = fields.One2many('energy_selfconsumption.supply_point',
                                                 compute=_compute_supply_point_filtered_ids, readonly=True)
+
+    @api.constrains('coefficient')
+    def constraint_coefficient(self):
+        for record in self:
+            if record.coefficient < 0:
+                raise ValidationError("Coefficient can't be negative.")
