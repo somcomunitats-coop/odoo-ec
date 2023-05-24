@@ -58,6 +58,7 @@
                                             domain="[('id', 'in', supply_point_filtered_ids)]"
                                     />
                                     <field name="owner_id"/>
+                                    <field name="code"/>
                                     <field name="coefficient" sum="True"/>
                                 </tree>
                             </field>
