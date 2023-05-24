@@ -33,13 +33,15 @@
                                     mode="list"
                                     context="{'default_distribution_table_id':id}"
                             >
-                                <tree editable="bottom">
+                                <tree editable="bottom"
+                                decoration-success="table_coefficient_is_valid == True">
+                                    <field name="table_coefficient_is_valid" invisible="True"/>
                                     <field
                                             name="supply_point_id"
                                             options="{'no_create': True}"
                                     />
                                     <field name="owner_id"/>
-                                    <field name="coefficient"/>
+                                    <field name="coefficient" sum="True"/>
                                 </tree>
                             </field>
                         </group>
