@@ -1,4 +1,5 @@
 from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
 
 STATE_VALUES = [
     ("draft", _("Draft")),
@@ -25,3 +26,12 @@ class DistributionTable(models.Model):
     state = fields.Selection(STATE_VALUES, default="draft", required=True)
     supply_point_assignation_ids = fields.One2many('energy_selfconsumption.supply_point_assignation', 'distribution_table_id')
     coefficient_is_valid = fields.Boolean(compute=_compute_coefficient_is_valid, readonly=True, store=False)
+
+
+    def button_activate(self):
+        for record in self:
+            if not record.coefficient_is_valid:
+                raise ValidationError(_("Coefficient distribution must sum to 1."))
+            if not record.selfconsumption_project_id.state == 'activation':
+                raise ValidationError(_("Self-consumption project is not in activation"))
+            record.write({"state": "active"})

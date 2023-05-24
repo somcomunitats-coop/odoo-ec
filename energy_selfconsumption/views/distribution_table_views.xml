@@ -8,6 +8,12 @@
             <field name="arch" type="xml">
                 <form string="Distribution Table">
                     <header>
+                        <button
+                                type="object"
+                                string="Activate"
+                                name="button_activate"
+                                states="draft"
+                        />
                         <field
                                 name="state"
                                 widget="statusbar"
