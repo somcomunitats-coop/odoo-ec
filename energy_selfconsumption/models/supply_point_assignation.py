@@ -1,9 +1,10 @@
 from odoo import fields, models, api
 from odoo.exceptions import ValidationError
+
+
 class SupplyPointAssignation(models.Model):
     _name = 'energy_selfconsumption.supply_point_assignation'
     _description = 'Supply Point Assignation'
-
 
     @api.depends('distribution_table_id')
     def _compute_supply_point_filtered_ids(self):
@@ -35,3 +36,10 @@ class SupplyPointAssignation(models.Model):
         for record in self:
             if record.coefficient < 0:
                 raise ValidationError("Coefficient can't be negative.")
+
+    @api.onchange('coefficient')
+    def _onchange_coefficient(self):
+        if self.coefficient < 0:
+            self.coefficient = -self.coefficient
+        if self.coefficient > 1:
+            self.coefficient = 1
