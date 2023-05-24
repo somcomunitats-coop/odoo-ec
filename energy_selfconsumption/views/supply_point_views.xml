@@ -35,6 +35,8 @@
                                            options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
                                 </div>
                             </group>
+                        </group>
+                        <group>
                             <field name="supply_point_assignation_ids">
                                 <tree>
                                     <field name="distribution_table_id"/>
@@ -42,6 +44,7 @@
                                 </tree>
                             </field>
                         </group>
+
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
