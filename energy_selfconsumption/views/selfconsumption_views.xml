@@ -61,7 +61,8 @@
                                 <field
                                         name="distribution_table_id"
                                         attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                                        domain="[('selfconsumption_project_id', '=', id)]"
+                                        domain="[('state', 'not in', ['draft']), '|', ('selfconsumption_project_id', '=', id), ('selfconsumption_project_id', '=', False)]"
+                                        options="{'no_create': True}"
                                 />
                             </group>
                             <group>
