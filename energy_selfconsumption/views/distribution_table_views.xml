@@ -39,6 +39,8 @@
                             <group>
                                 <field name="type" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
                             </group>
+                        </group>
+                        <group>
                             <field
                                     name="supply_point_assignation_ids"
                                     widget="one2many"
