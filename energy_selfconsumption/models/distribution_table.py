@@ -26,6 +26,7 @@ class DistributionTable(models.Model):
     state = fields.Selection(STATE_VALUES, default="draft", required=True)
     supply_point_assignation_ids = fields.One2many('energy_selfconsumption.supply_point_assignation', 'distribution_table_id')
     coefficient_is_valid = fields.Boolean(compute=_compute_coefficient_is_valid, readonly=True, store=False)
+    active = fields.Boolean(default=True)
 
     @api.onchange('selfconsumption_project_id')
     def _onchange_selfconsumption_project_id(self):
