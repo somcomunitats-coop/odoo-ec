@@ -21,7 +21,7 @@ class SupplyPointAssignation(models.Model):
 
     distribution_table_id = fields.Many2one('energy_selfconsumption.distribution_table', required=True)
     supply_point_id = fields.Many2one('energy_selfconsumption.supply_point', required=True)
-    coefficient = fields.Float(string='Distribution coefficient')
+    coefficient = fields.Float(string='Distribution coefficient', digits=(1, 5))
     owner_id = fields.Many2one("res.partner", related='supply_point_id.owner_id')
     table_coefficient_is_valid = fields.Boolean(related='distribution_table_id.coefficient_is_valid')
 
