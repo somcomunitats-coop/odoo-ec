@@ -15,7 +15,7 @@ class DistributionTable(models.Model):
     _description = 'Distribution Table'
 
     name = fields.Char()
-    selfconsumption_project_id = fields.Many2one('energy_selfconsumption.selfconsumption')
+    selfconsumption_project_id = fields.Many2one('energy_selfconsumption.selfconsumption', required=True)
     type = fields.Selection(TYPE_VALUES, default="fixed", required=True, string="Modality")
     state = fields.Selection(STATE_VALUES, default="draft", required=True)
     supply_point_assignation_ids = fields.One2many('energy_selfconsumption.supply_point_assignation', 'distribution_table_id')
