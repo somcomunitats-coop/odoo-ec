@@ -20,6 +20,12 @@
                                 name="activate"
                                 attrs="{'invisible':[('state','not in',['activation'])]}"
                         />
+                        <button
+                                type="object"
+                                name="action_selfconsumption_import_wizard"
+                                string="Import data"
+                                attrs="{'invisible':[('state','not in',['draft'])]}"
+                        />
                         <field
                                 name="state"
                                 widget="statusbar"
