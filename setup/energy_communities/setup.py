@@ -18,5 +18,10 @@ setuptools.setup(
             "partner_multi_company": "odoo14-addon-partner-multi-company==14.0.1.0.1.dev4",
             "queue_job": "odoo14-addon-queue-job==14.0.3.1.5",
         },
+        "external_dependencies_override": {
+            "python": {
+                "keycloak": "keycloak==3.1.3",
+            },
+        },
     }
 )
