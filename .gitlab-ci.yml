@@ -42,7 +42,7 @@ before_script:
   - export PGUSER="odoo"
   - export PGPASSWORD="odoo"
   - git clone https://github.com/coopdevs/maintainer-quality-tools.git -b
-    fix/pylint-odoo-version ${HOME}/maintainer-quality-tools
+    fix/custom-requirements ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${HOME}/gitlab_tools:${PATH}
 
 test:
