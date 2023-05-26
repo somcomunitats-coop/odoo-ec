@@ -37,7 +37,8 @@ before_script:
   - apt-get install -y sudo postgresql-client expect-dev python3-lxml nodejs python-dev
     python3-pip build-essential libsasl2-dev python-dev libldap2-dev libssl-dev
     libxmlsec1-dev npm
-  - pip install coverage six python-slugify
+    # TODO Move project python dependacies
+  - pip install coverage six python-slugify python-keycloak
   - export PGHOST="postgres"
   - export PGUSER="odoo"
   - export PGPASSWORD="odoo"
