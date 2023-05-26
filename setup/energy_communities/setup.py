@@ -20,7 +20,7 @@ setuptools.setup(
         },
         "external_dependencies_override": {
             "python": {
-                "keycloak": "keycloak==3.1.3",
+                "python-keycloak": "python-keycloak==2.16.3",
             },
         },
     }
