@@ -7,8 +7,7 @@ STATE_VALUES = [
 ]
 
 TYPE_VALUES = [
-    ("fixed", _("Fixed")),
-    ("horary", _("Horary")),
+    ("fixed", _("Fixed"))
 ]
 
 
