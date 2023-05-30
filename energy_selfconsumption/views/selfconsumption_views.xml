@@ -28,6 +28,13 @@
                         />
                     </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="get_distribution_tables"
+                                    icon="fa-table" context="{'default_owner_id': id}"
+                                    attrs="{'invisible': [('state', '==', 'draft')]}">
+                                <field string="Distribution Tables" name="distribution_table_count" widget="statinfo"/>
+                            </button>
+                        </div>
                         <widget
                                 name="web_ribbon"
                                 text="Archived"

@@ -10,12 +10,30 @@ class Selfconsumption(models.Model):
     }
     _description = "Self-consumption Energy Project"
 
+    def _compute_distribution_table_count(self):
+        for record in self:
+            record.distribution_table_count = len(record.distribution_table_ids)
+
     project_id = fields.Many2one(
         "energy_project.project", required=True, ondelete="cascade"
     )
     code = fields.Char(string="CAU")
     power = fields.Float(string="Generation Power (kWh)")
     distribution_table_id = fields.Many2one('energy_selfconsumption.distribution_table')
+    distribution_table_ids = fields.One2many('energy_selfconsumption.distribution_table', 'selfconsumption_project_id',
+                                             readonly=True)
+    distribution_table_count = fields.Integer(compute=_compute_distribution_table_count)
+
+    def get_distribution_tables(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Distribution Tables',
+            'view_mode': 'tree,form',
+            'res_model': 'energy_selfconsumption.distribution_table',
+            'domain': [('selfconsumption_project_id', '=', self.id)],
+            'context': {'create': True, 'default_selfconsumption_project_id': self.id},
+        }
 
     def set_activation(self):
         for record in self:
