@@ -19,7 +19,6 @@ class Selfconsumption(models.Model):
     )
     code = fields.Char(string="CAU")
     power = fields.Float(string="Generation Power (kWh)")
-    distribution_table_id = fields.Many2one('energy_selfconsumption.distribution_table')
     distribution_table_ids = fields.One2many('energy_selfconsumption.distribution_table', 'selfconsumption_project_id',
                                              readonly=True)
     distribution_table_count = fields.Integer(compute=_compute_distribution_table_count)
@@ -45,6 +44,6 @@ class Selfconsumption(models.Model):
                 raise ValidationError(_("Project must have a valid Code."))
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Generation Power."))
-            if not record.distribution_table_id:
-                raise ValidationError(_("Must select a valid Distribution Table."))
+            if record.distribution_table_ids.filtered_domain([('state', '=', 'validated')]):
+                raise ValidationError(_("Must have a valid Distribution Table."))
             record.write({"state": "active"})

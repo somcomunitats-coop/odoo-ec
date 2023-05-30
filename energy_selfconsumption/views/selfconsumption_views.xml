@@ -65,12 +65,6 @@
                                         name="power"
                                         attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
                                 />
-                                <field
-                                        name="distribution_table_id"
-                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                                        domain="[('state', '=', 'active'), ('selfconsumption_project_id', '=', id)]"
-                                        options="{'no_create': True}"
-                                />
                             </group>
                             <group>
                                 <span class="o_form_label o_td_label" name="address_name">
