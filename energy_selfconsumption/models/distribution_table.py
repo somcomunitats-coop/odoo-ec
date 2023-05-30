@@ -22,7 +22,6 @@ class DistributionTable(models.Model):
                 sum(record.supply_point_assignation_ids.mapped('coefficient')), 1.00000,
                 precision_rounding=0.00001)
 
-    name = fields.Char()
     selfconsumption_project_id = fields.Many2one('energy_selfconsumption.selfconsumption', required=True)
     type = fields.Selection(TYPE_VALUES, default="fixed", required=True, string="Modality")
     state = fields.Selection(STATE_VALUES, default="draft", required=True)
