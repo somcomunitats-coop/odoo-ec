@@ -77,6 +77,10 @@
                     There is no examples click here to add new Supply Points.
                 </p>
             </field>
+            <field
+                    name="context"
+                    eval="{'default_country_id': ref('base.es')}"
+            />
         </record>
 
         <menuitem
