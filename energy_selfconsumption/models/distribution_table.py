@@ -3,7 +3,7 @@ from odoo.exceptions import ValidationError
 
 STATE_VALUES = [
     ("draft", _("Draft")),
-    ("active", _("Active")),
+    ("validated", _("Validated")),
 ]
 
 TYPE_VALUES = [
@@ -44,4 +44,4 @@ class DistributionTable(models.Model):
                 raise ValidationError(_("Coefficient distribution must sum to 1."))
             if not record.selfconsumption_project_id.state == 'activation':
                 raise ValidationError(_("Self-consumption project is not in activation"))
-            record.write({"state": "active"})
+            record.write({"state": "validated"})

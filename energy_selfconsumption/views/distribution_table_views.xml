@@ -18,10 +18,16 @@
                                 name="state"
                                 widget="statusbar"
                                 readonly="True"
-                                statusbar_visible="draft,active"
+                                statusbar_visible="draft,validated"
                         />
                     </header>
                     <sheet>
+                        <widget
+                                name="web_ribbon"
+                                text="Archived"
+                                bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"
+                        />
                         <field name="active" invisible="True"/>
                         <div class="oe_title">
                             <label for="name"/>
