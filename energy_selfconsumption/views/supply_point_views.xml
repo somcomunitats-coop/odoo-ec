@@ -36,15 +36,6 @@
                                 </div>
                             </group>
                         </group>
-                        <group>
-                            <field name="supply_point_assignation_ids">
-                                <tree>
-                                    <field name="distribution_table_id"/>
-                                    <field name="coefficient"/>
-                                </tree>
-                            </field>
-                        </group>
-
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
