@@ -1,34 +1,27 @@
+
 import logging
-from odoo.addons.base_rest import restapi
 from odoo.addons.component.core import Component
-from odoo import _
-from datetime import datetime
 from . import schemas
-from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
 
 class LandingService(Component):
-    _inherit = 'base.rest.service'
-    _name = "ce.landing.services"
-    _collection = "ce.services"
+    _inherit = "base.rest.private_abstract_service"
+    _name = "ce.landing.service"
     _usage = "landing"
     _description = """
         CE WP landing page requests
     """
 
-    @restapi.method(
-        [(["/<int:odoo_landing_page_id>"], "GET")],
-        output_param=restapi.CerberusValidator("_validator_create"),
-        auth="api_key",
-    )
-    def get(self, _odoo_landing_page_id):
-        landing_page = self.env['landing.page'].browse(_odoo_landing_page_id)
+    def get(self, _id):
+        landing_page = self.env['landing.page'].browse(_id)
         return self._to_dict(landing_page)
 
     @staticmethod
     def _to_dict(landing_page):
+        # TODO: move this method to model method?
+        # return landing.to_dict()
         return {
             "landing": {
                 "id": landing_page.id,
@@ -58,5 +51,8 @@ class LandingService(Component):
             }
         }
 
-    def _validator_create(self):
+    def _validator_get(self):
+        return {}
+
+    def _validator_return_get(self):
         return schemas.S_LANDING_PAGE_CREATE

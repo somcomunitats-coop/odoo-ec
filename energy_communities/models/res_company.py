@@ -42,7 +42,8 @@ class ResCompany(models.Model):
                                        default=COMMUNITY_HIERARCHY)
     parent_id_filtered_ids = fields.One2many('res.company', compute=_compute_parent_id_filtered_ids, readonly=True,
                                              store=False)
-    ce_tag_ids = fields.Many2many('crm.tag', string='Energy Community Services')
+    ce_tag_ids = fields.Many2many(
+        'crm.tag', string='Energy Community Services')
     cooperator_journal = fields.Many2one(
         "account.journal",
         string="Cooperator Journal",
@@ -127,7 +128,8 @@ class ResCompany(models.Model):
                 ("active", "=", True),
             ]
         }
-        members = self.env["res.users"].sudo().search(domains_dict["in_kc_and_active"])
+        members = self.env["res.users"].sudo().search(
+            domains_dict["in_kc_and_active"])
         return members
 
     @api.model
@@ -185,7 +187,8 @@ class ResCompany(models.Model):
         return "https://somcomunitats.coop/ce/comunitat-energetica-prova/"
 
     def get_keycloak_odoo_login_url(self):
-        login_provider_id = self.env.ref("energy_communities.keycloak_login_provider")
+        login_provider_id = self.env.ref(
+            "energy_communities.keycloak_login_provider")
         return login_provider_id.get_auth_link()
 
     def create_landing(self):
@@ -210,13 +213,16 @@ class ResCompany(models.Model):
         }
 
     def action_create_wp_landing(self, fields=None):
-        username = self.wordpress_db_username
-        password = self.wordpress_db_password
-        auth = Authenticate(username, password).authenticate()
-        token = "Bearer %s" % auth["token"]
-        landing_page_data = self.landing_page_id.to_dict()
-        landing_page = LandingPage.create(token, landing_page_data)
-        self.landing_page_id.write({"wp_landing_page_id": landing_page.id})
+        instance_company = self.env['res.company'].search(
+            [('hierarchy_level', '=', 'instance')])
+        if instance_company:
+            username = instance_company.wordpress_db_username
+            password = instance_company.wordpress_db_password
+            auth = Authenticate(username, password).authenticate()
+            token = "Bearer %s" % auth["token"]
+            landing_page_data = self.landing_page_id.to_dict()
+            landing_page = LandingPage.create(token, landing_page_data)
+            self.landing_page_id.write({"wp_landing_page_id": landing_page.id})
 
     def get_landing_page_form(self):
         return {
