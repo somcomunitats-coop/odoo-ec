@@ -43,4 +43,6 @@ class DistributionTable(models.Model):
                 raise ValidationError(_("Coefficient distribution must sum to 1."))
             if not record.selfconsumption_project_id.state == 'activation':
                 raise ValidationError(_("Self-consumption project is not in activation"))
+            if not record.selfconsumption_project_id.distribution_table_ids.filtered_domain([('state', '=', 'validated')]):
+                raise ValidationError(_("Self-consumption project already has a validated table"))
             record.write({"state": "validated"})
