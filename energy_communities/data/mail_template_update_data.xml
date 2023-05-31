@@ -43,7 +43,11 @@
         <p> - Gender: ${dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]}</p>
         <p> - Birthdate: ${object.birthdate}</p>
         <p> - Language: ${dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}</p>
-        <p> - Initial share amount: ${object.subscription_amount}</p>  
+        <p> - Initial share amount: ${object.subscription_amount}</p> 
+    % if object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit': 
+        <p> - Bank account: ${object.iban}</p>
+        <p> - I authorize bank receipts to be sent to this account: ${object.mandate_approved and 'SI' or 'NO'}</p> 
+    % endif
     </div>
     <br />
     <p>We keep in touch for any questions.</p>
@@ -73,9 +77,7 @@
         <record id="cooperator.email_template_release_capital" model="mail.template">
             <field name="name">Request email to Release Capital for CE</field>
             <field name="email_from">${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
-            <field name="subject">[Somcomunitats.coop] Request to become member of Energy Community
-                ${object.company_id.name}
-            </field>
+            <field name="subject">[Somcomunitats.coop] Request to become member of Energy Community ${object.company_id.name}</field>
             <field name="partner_to">${object.partner_id.id}</field>
             <field name="email_cc">info+altausuari@somcomunitats.coop</field>
             <!--<field name="email_bcc">${object.company_id.email}</field>-->
@@ -98,6 +100,15 @@
 
     <p>Hello ${object.subscription_request.firstname},</p>
     </br>
+    % if object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit': 
+    <p>Your request to become member of Energy Community ${object.company_id.name} is already underway!</p>
+    </br>
+    <p>We will shortly issue a bank receipt to your bank account (${object.subscription_request.iban}) for the collection of the initial mandatory contribution (${object.amount_total}€)</p>
+    </br>
+    <p>Once we have been able to process this payment, you will receive a final welcome email where we will provide you with your membership number that will link you to the Energy Community ${object.company_id.name}</p>
+    </br>
+    % endif
+    % if object.payment_mode_id.payment_method_id.code != 'sepa_direct_debit': 
     <p>Your request to become member of Energy Community ${object.company_id.name} is already underway! In order to complete it you must make a bank deposit of the amount indicated below:</p>
     </br>
     <p>- Initial registration fee amount: ${object.amount_total} € </p>
@@ -107,6 +118,7 @@
     </br>
     <p>Once the payment is made, please send us the document proof of it by email to ${(object.company_id.coop_email_contact or object.company_id.email)|safe} </p>
     </br>
+    % endif
     <p>Many thanks and see you soon!</p>
     </br>
     <p>${object.company_id.name}.</p>
@@ -268,6 +280,10 @@
         <p> - Birthdate: ${object.birthdate}</p>
         <p> - Language: ${dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}</p>
         <p> - Initial share amount: ${object.subscription_amount}</p>
+    % if object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit': 
+        <p> - Bank account: ${object.iban}</p>
+        <p> - I authorize bank receipts to be sent to this account: ${object.mandate_approved and 'SI' or 'NO'}</p> 
+    % endif
     </div>
     <br />
     <p>We keep in touch for any questions.</p>

@@ -111,14 +111,24 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         values["company_types"] = fields_desc["company_type"]["selection"]
         values["genders"] = fields_desc["gender"]["selection"]
         values["company"] = company
+        values["share_payment_sepa_direct_debit"] = False
 
         if not values.get("share_product_id"):
             for product in products:
-                if product.default_share_product is True:
+                if (product.default_share_product is True
+                    and product.id != company.voluntary_share_id.id):
                     values["share_product_id"] = product.id
+                    values["share_payment_sepa_direct_debit"] = (product.payment_mode_id
+                                                                 .payment_method_id.code
+                                                                 =='sepa_direct_debit'
+                                                                 or False)
                     break
             if not values.get("share_product_id", False) and products:
                 values["share_product_id"] = products[0].id
+                values["share_payment_sepa_direct_debit"] = (product[0].payment_mode_id
+                                                                 .payment_method_id.code
+                                                                 =='sepa_direct_debit'
+                                                                 or False)
         if not values.get("country_id"):
             if company.default_country_id:
                 values["country_id"] = company.default_country_id.id
