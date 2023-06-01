@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-15 16:13+0000\n"
-"PO-Revision-Date: 2023-05-15 16:13+0000\n"
+"POT-Creation-Date: 2023-05-30 17:51+0000\n"
+"PO-Revision-Date: 2023-05-30 17:51+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -349,6 +349,10 @@ msgid ""
 "        <p> - Birthdate: ${object.birthdate}</p>\n"
 "        <p> - Language: ${dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}</p>\n"
 "        <p> - Initial share amount: ${object.subscription_amount}</p>\n"
+"    % if object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit': \n"
+"        <p> - Bank account: ${object.iban}</p>\n"
+"        <p> - I authorize bank receipts to be sent to this account: ${object.mandate_approved and 'SI' or 'NO'}</p> \n"
+"    % endif\n"
 "    </div>\n"
 "    <br />\n"
 "    <p>We keep in touch for any questions.</p>\n"
@@ -422,6 +426,7 @@ msgid "Authorization token not found"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.iban_template_es_ccee
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "Bank Account Number"
 msgstr ""
@@ -842,6 +847,7 @@ msgid "Hierarchy level"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.iban_template_es_ccee
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "I accept that the entity issues direct debit receipts to this account."
 msgstr ""
@@ -1487,6 +1493,15 @@ msgstr ""
 msgid ""
 "To be a member you must fulfill this form and lateron proceed to pay the "
 "initial share of"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
+msgid ""
+"To join, you must first fill out this form where we ask for a bank account "
+"and authorization to issue a bank receipt to collect the initial mandatory "
+"financial contribution of"
 msgstr ""
 
 #. module: energy_communities

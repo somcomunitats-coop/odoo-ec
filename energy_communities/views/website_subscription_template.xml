@@ -7,7 +7,12 @@
             </h1>
             <br/>
             <p>This form allow you to request be member of the community: <t t-esc="company.name"/>.</p>
-            <p>To be a member you must fulfill this form and lateron proceed to pay the initial share of <t t-esc="company.initial_subscription_share_amount"/>€ by follow the steps you will receive by email.</p>
+            <t t-if="share_payment_sepa_direct_debit">
+                <p>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <t t-esc="company.initial_subscription_share_amount"/>€.</p>
+            </t>
+            <t t-else="">
+                <p>To be a member you must fulfill this form and lateron proceed to pay the initial share of <t t-esc="company.initial_subscription_share_amount"/>€ by follow the steps you will receive by email.</p>
+            </t>
             <p>Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
         </xpath>
@@ -44,7 +49,12 @@
             </h1>
             <br/>
             <p>This form allow you to request be member of the community: <t t-esc="company.name"/>.</p>
-            <p>To be a member you must fulfill this form and lateron proceed to pay the initial share of <t t-esc="company.initial_subscription_share_amount"/>€ by follow the steps you will receive by email.</p>
+            <t t-if="share_payment_sepa_direct_debit">
+                <p>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <t t-esc="company.initial_subscription_share_amount"/>€.</p>
+            </t>
+            <t t-else="">
+                <p>To be a member you must fulfill this form and lateron proceed to pay the initial share of <t t-esc="company.initial_subscription_share_amount"/>€ by follow the steps you will receive by email.</p>
+            </t>
             <p>Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
         </xpath>
@@ -82,7 +92,45 @@
 
 
     <template id="iban_template_es_ccee" inherit_id="l10n_es_cooperator.iban_template_es">
-        <xpath expr="//div[@name='iban_container']" position="replace"/>
+        <xpath expr="//div[@name='iban_container']" position="replace">
+            <t t-if="share_payment_sepa_direct_debit">
+                <div
+                        class="form-group field-bank_account"
+                        t-attf-class="form-group #{error and 'iban' in error and 'has-error' or ''}"
+                        name="iban_container"
+                >
+                    <label for="iban">Bank Account Number</label>
+                    <input
+                            class="form-control form-control-sm"
+                            type="text"
+                            name="iban"
+                            id="iban"
+                            required="True"
+                            t-att-readonly="logged"
+                            t-attf-value="#{iban or ''}"
+                    />
+                </div>
+                <div
+                        class="col-12"
+                        id="mandate_approved"
+                        name="mandate_approved_container"
+                >
+                    <div t-attf-class="form-group">
+                        <div class="form-check">
+                            <input
+                                    type="checkbox"
+                                    name="mandate_approved"
+                                    class="form-check-input"
+                                    t-att-required="1"
+                            />
+                            <label>
+                                <label for="mandate_approved">I accept that the entity issues direct debit receipts to this account.</label>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
         <xpath expr="//input[@name='vat']" position="attributes">
             <attribute name="placeholder"></attribute>
         </xpath>
