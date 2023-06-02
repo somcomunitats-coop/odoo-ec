@@ -15,8 +15,8 @@ class LandingService(Component):
     """
 
     def get(self, _id):
-        landing_page = self.env['landing.page'].browse(_id)
-        return self._to_dict(landing_page)
+        related_company = self.env['res.company'].browse(_id)
+        return self._to_dict(related_company.landing_page_id)
 
     @staticmethod
     def _to_dict(landing_page):
