@@ -70,15 +70,17 @@ class LandingPage(models.Model):
     def action_landing_page_status(self):
         for record in self:
             new_status = "draft" if record.status == "publish" else "publish"
+            instance_company = self.env['res.company'].search(
+                [('hierarchy_level', '=', 'instance')])
+            if instance_company:
+                username = instance_company.wordpress_db_username
+                password = instance_company.wordpress_db_password
+                auth = Authenticate(username, password).authenticate()
+                token = "Bearer %s" % auth["token"]
+                landing_page_data = record.to_dict()
+                landing_page_data["status"] = new_status
+                landing_page_resource = LandingPageResource(
+                    record.wp_landing_page_id)
+                landing_page_resource.update(token, landing_page_data)
 
-            username = self.company_id.wordpress_db_username
-            password = self.company_id.wordpress_db_password
-            auth = Authenticate(username, password).authenticate()
-            token = "Bearer %s" % auth["token"]
-            landing_page_data = record.to_dict()
-            landing_page_data["status"] = new_status
-            landing_page_resource = LandingPageResource(
-                record.wp_landing_page_id)
-            landing_page_resource.update(token, landing_page_data)
-
-            record.write({"status": new_status})
+                record.write({"status": new_status})

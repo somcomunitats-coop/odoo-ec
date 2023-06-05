@@ -14,9 +14,10 @@ class LandingService(Component):
         CE WP landing page requests
     """
 
+    # TODO: This is not restful, we should ask for landing_id directly. Refactor WP before fixing this.
     def get(self, _id):
-        landing_page = self.env['landing.page'].browse(_id)
-        return self._to_dict(landing_page)
+        related_company = self.env['res.company'].browse(_id)
+        return self._to_dict(related_company.landing_page_id)
 
     @staticmethod
     def _to_dict(landing_page):
