@@ -1,6 +1,6 @@
 from odoo import api, fields, models, SUPERUSER_ID
 import logging
-from .res_company import INSTANCE_HIERARCHY
+from lxml import etree
 
 logger = logging.getLogger(__name__)
 
@@ -10,12 +10,10 @@ class ResPartner(models.Model):
 
     gender = fields.Selection(selection_add=[("not_binary", "Not binary"),
                                              ("not_share", "I prefer to not share it")])
-
-
     @api.model
     def create(self, vals):
         current_company = self.env.company
-        if current_company.hierarchy_level != INSTANCE_HIERARCHY:
+        if self.env.user not in (self.env.ref("base.user_root"), self.env.ref("base.user_admin")):
             if vals.get('company_ids', False):
                 vals['company_ids'][0][-1].append(current_company.id)
 

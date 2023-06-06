@@ -17,15 +17,5 @@
             <field name="view_id" ref="cooperator.view_partner_tree"></field>
         </record>
 
-        <record id="view_partner_form_ce_inherited" model="ir.ui.view">
-            <field name="name">res.partner.form.ce.inherited</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.view_partner_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//page[@name='sales_purchases']//field[@name='company_id']" position="attributes">
-                    <attribute name="groups">energy_communities.role_ce_admin, energy_communities.role_platform_admin</attribute>
-                </xpath>
-            </field>
-        </record>
     </data>
 </odoo>
