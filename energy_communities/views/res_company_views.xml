@@ -11,24 +11,17 @@
             <xpath expr="//sheet" position="before">
                 <header>
                     <field name="landing_page_id" invisible="1"/>
-                    <button
-                        name="create_landing"
-                        type="object"
-                        string="Create landing page"
-                        attrs="{'invisible': [('landing_page_id','!=',False)]}"
-                    />
+                    <button name="create_landing" type="object" string="Create landing page" attrs="{'invisible': [('landing_page_id','!=',False)]}" />
+                    <button name="action_open_assign_admin_wizard" type="object" string="Assing administrator" />
                 </header>
             </xpath>
             <xpath expr="//field[@name='logo']" position="before">
                 <div class='oe_button_box'>
-                    <button 
-                        name="get_landing_page_form"
-                        type="object"
-                        string="My landing page"
-                        class="oe_stat_button"
-                        icon="fa-globe"
-                        attrs="{'invisible': [('landing_page_id','=',False)]}"
-                    />
+                    <button name="get_landing_page_form" type="object" string="My landing page" class="oe_stat_button" icon="fa-globe" attrs="{'invisible': [('landing_page_id','=',False)]}" />
+                </div>
+                <field name="admin_mids" invisible="True"></field>
+                <div class='oe_button_box'>
+                    <button name="get_admins" type="object" string="Administrators" class="oe_stat_button" icon="fa-globe" attrs="{'invisible': [('admin_mids','=',[])]}" />
                 </div>
             </xpath>
             <xpath expr="//notebook" position="inside">

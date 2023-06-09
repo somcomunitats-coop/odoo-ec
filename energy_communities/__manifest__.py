@@ -71,6 +71,7 @@
         'data/mail_template_data.xml',
         'data/mail_template_update_data.xml',
         'wizards/multicompany_easy_creation.xml',
+        'wizards/assign_admin_wizard.xml',
     ],
     'installable': True,
     'application': True,
