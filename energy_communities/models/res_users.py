@@ -181,3 +181,15 @@ class ResUsers(models.Model):
     def get_role_codes(self):
         #TODO Map all code to company and enable (We should update the API schema too)
         return self.role_line_ids[0].role_id.code
+
+    def get_administrared_ce(self):
+        communities = []
+        role_lines = self.env["res.users.role.line"].sudo().search([
+            ("user_id.id", "=", self.id),
+            ("active", "=", True),
+            ("role_id.code", "=", "role_ce_admin")
+        ])
+        for role_line in role_lines:
+            for company in role_line.allowed_company_ids:
+                communities.append(company.id)
+        return communities
