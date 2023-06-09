@@ -254,6 +254,15 @@ class ResCompany(models.Model):
             landing_page = LandingPageResource(token, baseurl).create(landing_page_data)
             self.landing_page_id.write({"wp_landing_page_id": landing_page["id"]})
 
+    def action_open_assign_admin_wizard(self):
+        return {
+            'name': 'Example Wizard',
+            'type': 'ir.actions.act_window',
+            'res_model': 'assign.admin.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+        }
+
     def get_landing_page_form(self):
         return {
             "type": "ir.actions.act_window",

@@ -13,13 +13,9 @@
             </xpath>
             <xpath expr="//sheet" position="before">
                 <header>
-                    <field name="landing_page_id" invisible="1" />
-                    <button
-            name="create_landing"
-            type="object"
-            string="Create landing page"
-            attrs="{'invisible': [('landing_page_id','!=',False)]}"
-          />
+                    <field name="landing_page_id" invisible="1"/>
+                    <button name="create_landing" type="object" string="Create landing page" attrs="{'invisible': [('landing_page_id','!=',False)]}" />
+                    <button name="action_open_assign_admin_wizard" type="object" string="Assing administrator" />
                 </header>
             </xpath>
             <xpath expr="//field[@name='logo']" position="before">
