@@ -155,6 +155,17 @@ class ResCompany(models.Model):
                 admins_user_ids.append(role_line.user_id.id)
         return any([user in admins_user_ids for user in company_user_ids])
 
+    def get_ce_admins(self):
+        admins = []
+        role_lines = self.env["res.users.role.line"].sudo().search([
+            ("allowed_company_ids.id", "=", self.id),  # It's M2M, = is okey?
+            ("active", "=", True),
+            ("role_id.code", "=", "role_ce_admin")
+        ])
+        for role_line in role_lines:
+            admins.append(role_line.user_id)
+        return admins
+
     def add_ce_admin(self, user):
         if self.hierarchy_level != COMMUNITY_HIERARCHY:
             raise UserError(_("Only a CE can have CE admins"))
@@ -191,7 +202,7 @@ class ResCompany(models.Model):
     def get_ce_members(self, domain_key="in_kc_and_active"):
         domains_dict = {
             "in_kc_and_active": [
-                ("company_id", "=", self.id),
+                ("company_id", "=", self.id),  # TODO: company_ids ??
                 ("oauth_uid", "!=", None),
                 ("active", "=", True),
             ]
