@@ -37,7 +37,7 @@ class DistributionTable(models.Model):
     def _onchange_selfconsumption_project_id(self):
         self.supply_point_assignation_ids = False
 
-    def button_activate(self):
+    def button_validate(self):
         for record in self:
             if not record.coefficient_is_valid:
                 raise ValidationError(_("Coefficient distribution must sum to 1."))
