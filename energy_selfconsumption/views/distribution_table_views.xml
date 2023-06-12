@@ -73,6 +73,7 @@
             <field name="arch" type="xml">
                 <tree string="Distribution Table">
                     <field name="selfconsumption_project_id"/>
+                    <field name="create_date"/>
                     <field name="type"/>
                     <field name="state"/>
                 </tree>
