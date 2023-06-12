@@ -22,6 +22,7 @@ class DistributionTable(models.Model):
                 sum(record.supply_point_assignation_ids.mapped('coefficient')), 1.00000,
                 precision_rounding=0.00001)
 
+    name = fields.Char(readonly=True)
     selfconsumption_project_id = fields.Many2one('energy_selfconsumption.selfconsumption', required=True)
     type = fields.Selection(TYPE_VALUES, default="fixed", required=True, string="Modality")
     state = fields.Selection(STATE_VALUES, default="draft", required=True)
@@ -32,6 +33,11 @@ class DistributionTable(models.Model):
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
     )
+
+    @api.model
+    def create(self, vals):
+        vals['name'] = self.env.ref('energy_selfconsumption.distribution_table_sequence', False).next_by_id()
+        return super(DistributionTable, self).create(vals)
 
     @api.onchange('selfconsumption_project_id')
     def _onchange_selfconsumption_project_id(self):

@@ -72,6 +72,7 @@
             <field name="model">energy_selfconsumption.distribution_table</field>
             <field name="arch" type="xml">
                 <tree string="Distribution Table">
+                    <field name="name"/>
                     <field name="selfconsumption_project_id"/>
                     <field name="create_date"/>
                     <field name="type"/>
