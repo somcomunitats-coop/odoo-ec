@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="supply_point_assignation_form_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.supply_point_assignation.form</field>
+            <field name="model">energy_selfconsumption.supply_point_assignation</field>
+            <field name="arch" type="xml">
+                <form string="Supply Point Assignations">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="distribution_table_id" readonly="True"/>
+                                <field name="supply_point_id" readonly="True"/>
+                                <field name="coefficient" readonly="True"/>
+                            </group>
+                            <group>
+                                <field name="owner_id"/>
+                                <field name="code"/>
+                                <field name="table_coefficient_is_valid"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="supply_point_assignation_tree_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.supply_point_assignation.tree</field>
+            <field name="model">energy_selfconsumption.supply_point_assignation</field>
+            <field name="arch" type="xml">
+                <tree string="Supply Point Assignations">
+                    <field name="distribution_table_id"/>
+                    <field name="supply_point_id"/>
+                    <field name="coefficient"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

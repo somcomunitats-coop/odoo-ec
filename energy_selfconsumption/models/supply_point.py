@@ -28,3 +28,6 @@ class SupplyPoint(models.Model):
     country_id = fields.Many2one(
         "res.country", string="Country", ondelete="restrict", required=True
     )
+
+    supply_point_assignation_ids = fields.One2many('energy_selfconsumption.supply_point_assignation','supply_point_id',
+                                                   readonly=True)
