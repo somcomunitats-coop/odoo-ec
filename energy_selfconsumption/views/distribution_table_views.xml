@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="distribution_table_form_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.distribution_table_form_view.form</field>
+            <field name="model">energy_selfconsumption.distribution_table</field>
+            <field name="arch" type="xml">
+                <form string="Distribution Table">
+                    <header>
+                        <button
+                                type="object"
+                                string="Validate"
+                                name="button_validate"
+                                states="draft"
+                        />
+                        <field
+                                name="state"
+                                widget="statusbar"
+                                readonly="True"
+                                statusbar_visible="draft,validated"
+                        />
+                    </header>
+                    <sheet>
+                        <widget
+                                name="web_ribbon"
+                                text="Archived"
+                                bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"
+                        />
+                        <field name="active" invisible="True"/>
+                        <group>
+                            <group>
+                                <field name="selfconsumption_project_id"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                       options="{'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="type" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field
+                                    name="supply_point_assignation_ids"
+                                    widget="one2many"
+                                    mode="list"
+                                    context="{'default_distribution_table_id':id}"
+                                    attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                            >
+                                <tree editable="bottom">
+                                    <field name="supply_point_filtered_ids" invisible="True"/>
+                                    <field name="table_coefficient_is_valid" invisible="True"/>
+                                    <field
+                                            name="supply_point_id"
+                                            options="{'no_create': True}"
+                                            domain="[('id', 'in', supply_point_filtered_ids)]"
+                                    />
+                                    <field name="owner_id"/>
+                                    <field name="code"/>
+                                    <field name="coefficient" sum="True"
+                                           decoration-success="table_coefficient_is_valid == True"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="distribution_table_tree_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.distribution_table.tree</field>
+            <field name="model">energy_selfconsumption.distribution_table</field>
+            <field name="arch" type="xml">
+                <tree string="Distribution Table">
+                    <field name="name"/>
+                    <field name="selfconsumption_project_id"/>
+                    <field name="create_date"/>
+                    <field name="type"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="distribution_table_search_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.distribution_table.search</field>
+            <field name="model">energy_selfconsumption.distribution_table</field>
+            <field name="arch" type="xml">
+                <search string="Distribution Table">
+                    <group expand="1" string="Group By">
+                        <filter string="Self-consumption Project" name="selfconsumption_project_id" domain="[]"
+                                context="{'group_by':'selfconsumption_project_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="distribution_table_act_window" model="ir.actions.act_window">
+            <field name="name">Distribution Table</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">energy_selfconsumption.distribution_table</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Distribution Table.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

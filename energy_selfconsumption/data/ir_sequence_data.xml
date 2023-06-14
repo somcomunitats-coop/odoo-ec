@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="distribution_table_sequence" model="ir.sequence">
+            <field name="name">Distribution Table Sequence</field>
+            <field name="code">energy_selfconsumption.distribution_table</field>
+            <field name="prefix">DT</field>
+            <field name="padding">3</field>
+            <field eval="1" name="number_next" />
+            <field eval="1" name="number_increment" />
+        </record>
+    </data>
+</odoo>

@@ -43,7 +43,7 @@ class SubscriptionRequest(models.Model):
         if 'country_id' in vals:
             vals['country_id'] = int(vals['country_id'])
         subscription_request = super(SubscriptionRequest, self).create(vals)
-        if not subscription_request.is_voluntary:
+        if not subscription_request.payment_mode_id.payment_method_id.code == 'sepa_direct_debit':
             subscription_request.skip_iban_control = True
         return subscription_request
 

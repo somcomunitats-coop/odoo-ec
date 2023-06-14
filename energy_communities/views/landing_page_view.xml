@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="landing_page_form_view" model="ir.ui.view">
+        <field name="name">landing.page.form.view</field>
+        <field name="model">landing.page</field>
+        <field name="arch" type="xml">
+            <form create="false">
+                <header>
+                    <button name="action_landing_page_status" type="object" string="Publish" attrs="{'invisible': [('status','!=','draft')]}"/>
+                    <button name="action_landing_page_status" type="object" string="Unpublish" attrs="{'invisible': [('status','!=','publish')]}"/>
+                    <field name="status" widget="statusbar"/>
+                </header>
+
+                <group style="width:40px;">
+                    <h4 style="color:green;" attrs="{'invisible': [('status','!=','publish')]}">Published</h4>
+                    <h4 style="color:orange;" attrs="{'invisible': [('status','!=','draft')]}">Draft</h4>
+                </group>
+                <group>
+                    <field name="wp_landing_page_id" readonly="True"/>
+                    <field name="name"/>
+                    <field name="allow_new_members"/>
+                    <field name="number_of_members"/>
+                    <field name="virtual_office_link"/>
+                    <field name="external_website_link"/>
+                </group>
+                <group>
+                    <field name="group_image_link"/>
+                    <field name="short_description"/>
+                    <field name="long_description"/>
+                    <field name="why_become_cooperator"/>
+                    <field name="become_cooperator_process"/>
+                    <field name="subscription_information"/>
+                </group>
+                <group>
+                    <field name="new_cooperator_form_link"/>
+                    <field name="contact_form"/>
+                    <field name="subscription_link"/>
+                    <field name="social_media_link"/>
+                </group>
+                <group>
+                    <field name="map_geolocation"/>
+                    <field name="street"/>
+                    <field name="postal_code"/>
+                    <field name="city"/>
+                    <field name="community_active_services"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+</odoo>

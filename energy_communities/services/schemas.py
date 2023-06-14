@@ -2,9 +2,11 @@ def boolean_validator(field, value, error):
     if value and value not in ["true", "false"]:
         error(field, "Must be a boolean value: true or false")
 
+
 def ce_state_validator(field, value, error):
     if value and value not in ["active", "on_building"]:
         error(field, "Must be 'active' or 'on_building'")
+
 
 S_CRM_LEAD_RETURN_CREATE = {
     "id": {"type": "integer"},
@@ -36,7 +38,8 @@ S_CRM_LEAD_CREATE_ALTA_CE = {
     "partner_city": {"type": "string", "required": True},
     "partner_state": {"type": "string", "required": True},
     "partner_qty_members": {"type": "integer", "required": True},
-    "partner_legal_state": {"type": "string",
+    "partner_legal_state": {
+        "type": "string",
         "check_with": ce_state_validator
     },
     "tag_ids": {
@@ -59,7 +62,7 @@ S_CRM_LEAD_CREATE_ALTA_CE = {
     "contact2_mobile": {"type": "string"},
     "odoo_company_id": {"type": "integer", "required": True},
     "source_xml_id": {"type": "string", "required": True},
-    "partner_map_place_form_url":{"type": "string", "required": False},
+    "partner_map_place_form_url": {"type": "string", "required": False},
     "partner_language": {"type": "string"},
 }
 
@@ -107,7 +110,7 @@ S_PROFILE_RETURN_GET = {
             "communities": {
                 "type": "list",
                 "schema": S_PROFILE_COMMUNITY_GET
-                },
+            },
             "suscriptions": {
                 "type": "dict",
                 "schema": {
@@ -169,42 +172,83 @@ S_COMMUNITY_SERVICE = {
 }
 
 S_COMMUNITY_RETURN_GET = {
-        "community": {
+    "community": {
         "type": "dict",
         "schema": {
-            "id": {"type": "integer"},
-            "name": {"type": "string"},
-            "birth_date": {"type": "string"},
-            "members": {
-                "type": "list",
-                "schema": {
-                    "type": "dict",
-                    "schema": S_COMMUNITY_MEMBER
-                }
-            },
-            "contact_info": {
-                "type": "dict",
-                "schema": {
-                    "street": {"type": "string"},
-                    "postal_code": {"type": "string"},
-                    "city": {"type": "string"},
-                    "state": {"type": "string"},
-                    "country": {"type": "string"},
-                    "phone": {"type": "string"},
-                    "email": {"type": "string"},
-                    "telegram": {"type": "string"},
+                "id": {"type": "integer"},
+                "name": {"type": "string"},
+                "birth_date": {"type": "string"},
+                "members": {
+                    "type": "list",
+                    "schema": {
+                        "type": "dict",
+                        "schema": S_COMMUNITY_MEMBER
+                    }
                 },
+            "contact_info": {
+                    "type": "dict",
+                    "schema": {
+                        "street": {"type": "string"},
+                        "postal_code": {"type": "string"},
+                        "city": {"type": "string"},
+                        "state": {"type": "string"},
+                        "country": {"type": "string"},
+                        "phone": {"type": "string"},
+                        "email": {"type": "string"},
+                        "telegram": {"type": "string"},
+                    },
             },
             "active_services": {
-                "type": "list",
-                "schema": {
-                    "type": "dict",
-                    "schema": S_COMMUNITY_SERVICE
-                },
+                    "type": "list",
+                    "schema": {
+                        "type": "dict",
+                        "schema": S_COMMUNITY_SERVICE
+                    },
             },
             "allow_new_members": {"type": "boolean"},
             "public_web_landing_url": {"type": "string"},
             "keycloak_odoo_login_url": {"type": "string"},
         }
     }
+}
+
+S_LANDING_PAGE_CREATE = {
+    "landing": {
+        "type": "dict",
+        "schema": {
+            "id": {"type": "integer"},
+            "name": {"type": "string"},
+            "company_id": {"type": "integer"},
+            "wp_landing_page_id": {"type": "integer"},
+            "status": {"type": "string"},
+            "allow_new_members": {"type": "boolean"},
+            "number_of_members": {"type": "integer"},
+            "virtual_office_link": {"type": "string"},
+            "external_website_link": {"type": "string"},
+            "community_active_services": {
+                "type": "list",
+                "schema": {
+                    "type": "dict",
+                    "schema": S_COMMUNITY_SERVICE
+                },
+            },
+            "group_image_link": {"type": "string"},
+            "short_description": {"type": "string"},
+            "long_description": {"type": "string"},
+            "why_become_cooperator": {"type": "string"},
+            "become_cooperator_process": {"type": "string"},
+            "subscription_information": {"type": "string"},
+            "new_cooperator_form_link": {"type": "string"},
+            "contact_form": {"type": "string"},
+            "subscription_link": {"type": "string"},
+            "social_media_link": {"type": "string"},
+            "map_geolocation": {"type": "string"},
+            "street": {"type": "string"},
+            "postal_code": {"type": "string"},
+            "city": {"type": "string"},
+        }
+    }
+}
+S_LANDING_PAGE_GET = {
+    "landing_id": {"type": "integer", "required": True, "empty": False}
 }
