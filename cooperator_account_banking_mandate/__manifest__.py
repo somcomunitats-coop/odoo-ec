@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    "name": "Account Banking Mandate Cooperator",
+    "name": "Cooperator Account Banking Mandate",
     "version": "14.0.1.0.1",
     "license": "AGPL-3",
     "summary": """

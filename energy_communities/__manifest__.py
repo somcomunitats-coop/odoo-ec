@@ -1,12 +1,12 @@
 {
     'name': "Energy Community",
-    'version': '14.0.1.1.4',
+    'version': '14.0.1.1.6',
     'depends': [
         'account',
-        'account_banking_mandate_cooperator',
+        'cooperator_account_banking_mandate',
         'account_lock_date_update',
         'account_multicompany_easy_creation',
-        'account_payment_cooperator',
+        'cooperator_account_payment',
         'account_payment_order',
         'account_reconciliation_widget',
         'auth_api_key',

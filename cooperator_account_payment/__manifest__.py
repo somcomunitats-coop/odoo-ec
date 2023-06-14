@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    "name": "Account Payment Cooperator",
+    "name": "Cooperator Account Payment",
     "version": "14.0.1.0.1",
     "license": "AGPL-3",
     "summary": """
