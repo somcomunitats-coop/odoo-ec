@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="energy_projects_category" model="ir.module.category">
+        <field name="name">Energy Projects</field>
+    </record>
+
+    <!-- new groups -->
+    <record model="res.groups" id="group_user">
+        <field name="name">User</field>
+        <field name="category_id" ref="energy_projects_category" />
+    </record>
+
+    <record model="res.groups" id="group_admin">
+        <field name="name">Administrator</field>
+        <field name="category_id" ref="energy_projects_category" />
+    </record>
+</odoo>

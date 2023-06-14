@@ -1,0 +1,654 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* energy_selfconsumption
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-24 14:43+0000\n"
+"PO-Revision-Date: 2023-05-24 16:54+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: eu_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 3.0.1\n"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+msgid ""
+"<span class=\"o_form_label o_td_label\" name=\"address_name\">\n"
+"                                    <b>Address</b>\n"
+"                                </span>"
+msgstr ""
+"<span class=\"o_form_label o_td_label\" name=\"address_name\">\n"
+"                                    <b>Helbidea</b>\n"
+"                                </span>"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_needaction
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_needaction
+msgid "Action Needed"
+msgstr "Ekintza Beharrezkoa"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Activate"
+msgstr "Aktibatu"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__active
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__active
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__active
+#, python-format
+msgid "Active"
+msgstr "Aktiboa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_ids
+msgid "Activities"
+msgstr "Jarduerak"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_exception_decoration
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Jarduera Salbuespen Dekorazioa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_state
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_state
+msgid "Activity State"
+msgstr "Jardueraren egoera"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_type_icon
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Jarduera motaren ikonoa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_attachment_count
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_attachment_count
+msgid "Attachment Count"
+msgstr "Eranskinen zenbaketa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__code
+msgid "CAU"
+msgstr "CAU"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__code
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__code
+msgid "CUPS"
+msgstr "CUPS"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__city
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__city
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+msgid "City"
+msgstr "Hiria"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.actions.act_window,help:energy_selfconsumption.action_partner_owner_form
+msgid "Click to add a contact in your address book."
+msgstr "Egin klik helbide-liburuan kontaktu bat gehitzeko."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__coefficient_is_valid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__table_coefficient_is_valid
+msgid "Coefficient Is Valid"
+msgstr "Koefizientea Baliozkoa da"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#, python-format
+msgid "Coefficient distribution must sum to 1."
+msgstr "Koefizienteen banaketa 1 izan behar da."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__company_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__company_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__company_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__company_id
+msgid "Company"
+msgstr "Enpresa"
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_res_partner
+msgid "Contact"
+msgstr "Kontaktua"
+
+#. module: energy_selfconsumption
+#: model:ir.ui.menu,name:energy_selfconsumption.contacts_category_menu
+msgid "Contacts"
+msgstr "Kontaktuak"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__country_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__country_id
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+msgid "Country"
+msgstr "Herrialdea"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__create_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__create_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__create_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__create_uid
+msgid "Created by"
+msgstr "Sortua"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__create_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__create_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__create_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__create_date
+msgid "Created on"
+msgstr "Urtean sortua"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Bistaratzeko izena"
+
+#. module: energy_selfconsumption
+#: model:ir.actions.act_window,name:energy_selfconsumption.distribution_table_act_window
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_distribution_table
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__distribution_table_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__distribution_table_id
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_search_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_tree_view
+msgid "Distribution Table"
+msgstr "Banaketa taula"
+
+#. module: energy_selfconsumption
+#: model:ir.ui.menu,name:energy_selfconsumption.distribution_table_menu
+msgid "Distribution Tables"
+msgstr "Banaketa Taulak"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__coefficient
+msgid "Distribution coefficient"
+msgstr "Banaketa-koefizientea"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__draft
+#, python-format
+msgid "Draft"
+msgstr "Zirriborroa"
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_supply_point
+msgid "Energy Supply Point"
+msgstr "Energia Hornikuntza Puntua"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__failed_message_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__failed_message_ids
+msgid "Failed Messages"
+msgstr "Huts egin duten mezuak"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__fixed
+#, python-format
+msgid "Fixed"
+msgstr "Finkoa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_follower_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_follower_ids
+msgid "Followers"
+msgstr "Jarraitzaileak"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_channel_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Jarraitzaileak (Kanalak)"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_partner_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Jarraitzaileak (bazkideak)"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_type_icon
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Letra-tipo ikaragarria ikonoa adibidez. fa-tasks"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__power
+msgid "Generation Power (kWh)"
+msgstr "Sorkuntza potentzia (kWh)"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_search_view
+msgid "Group By"
+msgstr "Taldeka"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__horary
+#, python-format
+msgid "Horary"
+msgstr "Ordukoa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_exception_icon
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_exception_icon
+msgid "Icon"
+msgstr "Ikonoa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_exception_icon
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Salbuespen jarduera bat adierazteko ikonoa."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_needaction
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_unread
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_needaction
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "Hautatuta, mezu berriek zure arreta eskatzen dute."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_has_error
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Hautatzen bada, mezu batzuek entrega-errore bat dute."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__inscription_ids
+msgid "Inscription"
+msgstr "Inskripzioa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_is_follower
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_is_follower
+msgid "Is Follower"
+msgstr "Jarraitzailea da"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner____last_update
+msgid "Last Modified on"
+msgstr "Azken aldaketa egunean"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__write_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__write_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__write_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__write_uid
+msgid "Last Updated by"
+msgstr "Azken eguneratua"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__write_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__write_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__write_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__write_date
+msgid "Last Updated on"
+msgstr "Azken eguneratzea egunean"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_main_attachment_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Eranskin nagusia"
+
+#. module: energy_selfconsumption
+#: model:ir.ui.menu,name:energy_selfconsumption.management_category_menu
+msgid "Management"
+msgstr "Kudeaketa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_has_error
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_has_error
+msgid "Message Delivery error"
+msgstr "Errore bat mezua bidaltzean"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_ids
+msgid "Messages"
+msgstr "Mezuak"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__type
+msgid "Modality"
+msgstr "Modalitatea"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Must select a valid Distribution Table."
+msgstr "Baliozko Banaketa Taula bat hautatu behar du."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__my_activity_date_deadline
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Nire jarduera-epea"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__name
+msgid "Name"
+msgstr "Izena"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_date_deadline
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Hurrengo Jardueren Epea"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_summary
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_summary
+msgid "Next Activity Summary"
+msgstr "Hurrengo jardueren laburpena"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_type_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_type_id
+msgid "Next Activity Type"
+msgstr "Hurrengo jarduera mota"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_needaction_counter
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Ekintza kopurua"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_has_error_counter
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_has_error_counter
+msgid "Number of errors"
+msgstr "Akats kopurua"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_needaction_counter
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Ekintza bat eskatzen duen mezu kopurua"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_has_error_counter
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Bidalketa-errorea duten mezu kopurua"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_unread_counter
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Irakurri gabeko mezu kopurua"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__owner_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__owner_id
+msgid "Owner"
+msgstr "Titularra"
+
+#. module: energy_selfconsumption
+#: model:ir.actions.act_window,name:energy_selfconsumption.action_partner_owner_form
+#: model:ir.ui.menu,name:energy_selfconsumption.res_partner_owners_menu
+msgid "Owners"
+msgstr "Titularrak"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__project_id
+#: model:ir.ui.menu,name:energy_selfconsumption.project_menu
+msgid "Project"
+msgstr "Proiektua"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Project must have a valid Code."
+msgstr "Proiektuak baliozko Kode bat izan behar du."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Project must have a valid Generation Power."
+msgstr "Proiektuak baliozko Sorkuntza Potentzia izan behar du."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_user_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_user_id
+msgid "Responsible User"
+msgstr "Erabiltzaile arduratsua"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_tree_view
+msgid "Self-Consumption Projects"
+msgstr "Autokontsumo Proiektuak"
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_selfconsumption
+msgid "Self-consumption Energy Project"
+msgstr "Autokontsumo Energia Proiektua"
+
+#. module: energy_selfconsumption
+#: model:ir.ui.menu,name:energy_selfconsumption.root
+msgid "Self-consumption Management"
+msgstr "Autokontsumoaren Kudeaketa"
+
+#. module: energy_selfconsumption
+#: model:ir.actions.act_window,name:energy_selfconsumption.selfconsumption_form_view_act_window
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_search_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Self-consumption Project"
+msgstr "Autokontsumo Proiektua"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#, python-format
+msgid "Self-consumption project is not in activation"
+msgstr "Autokontsumo proiektua ez dago aktibazioan"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__selfconsumption_project_id
+msgid "Selfconsumption Project"
+msgstr "Autokontsumo Proiektua"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Set in activation"
+msgstr "Ezarri aktibazioan"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__state
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__state
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__state_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__state_id
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+msgid "State"
+msgstr "Estatu"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_state
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Jardueren araberako egoera\n"
+"Epemuga: Dagoeneko gainditu da mugaeguna\n"
+"Gaur: jardueraren data gaur da\n"
+"Aurreikusita: Etorkizuneko jarduerak."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__street
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__street
+msgid "Street"
+msgstr "Kalea"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+msgid "Street 2..."
+msgstr "Kalea 2..."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+msgid "Street..."
+msgstr "Kalea..."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__street2
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__street2
+msgid "Street2"
+msgstr "Kalea 2"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__supply_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_users__supply_ids
+msgid "Supply"
+msgstr "Hornikuntza"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__supply_point_id
+msgid "Supply Point"
+msgstr "Hornikuntza Puntua"
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_supply_point_assignation
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__supply_point_assignation_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__supply_point_assignation_ids
+msgid "Supply Point Assignation"
+msgstr "Hornikuntza-puntuaren esleipena"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_assignation_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_assignation_tree_view
+msgid "Supply Point Assignations"
+msgstr "Hornikuntza puntuen esleipenak"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__supply_point_count
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_users__supply_point_count
+msgid "Supply Point Count"
+msgstr "Hornikuntza puntuen zenbaketa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__supply_point_filtered_ids
+msgid "Supply Point Filtered"
+msgstr "Hornikuntza-puntua Iragazita"
+
+#. module: energy_selfconsumption
+#: model:ir.actions.act_window,name:energy_selfconsumption.supply_point_form_act_window
+#: model:ir.ui.menu,name:energy_selfconsumption.supply_point_menu
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_tree_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_partner_form_inherit
+msgid "Supply Points"
+msgstr "Hornikuntza Puntuak"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__coefficient
+msgid "The sum of all the coefficients must result in 1"
+msgstr "Koefiziente guztien baturak 1 izan behar du"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.actions.act_window,help:energy_selfconsumption.distribution_table_act_window
+msgid "There is no examples click here to add new Distribution Table."
+msgstr "Ez dago adibiderik egin klik hemen Banaketa Taula berria gehitzeko."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.actions.act_window,help:energy_selfconsumption.selfconsumption_form_view_act_window
+msgid "There is no examples click here to add new Self-consumption Project."
+msgstr "Ez dago adibiderik egin klik hemen Autokontsumo Proiektu berria gehitzeko."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.actions.act_window,help:energy_selfconsumption.supply_point_form_act_window
+msgid "There is no examples click here to add new Supply Points."
+msgstr "Ez dago adibiderik egin klik hemen Hornikuntza puntu berriak gehitzeko."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+msgid "Title"
+msgstr "Izenburua"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_form_view
+msgid "True"
+msgstr "Egia"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__type
+msgid "Type"
+msgstr "Mota"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_exception_decoration
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Erregistratutako salbuespen-jarduera mota."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_unread
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_unread
+msgid "Unread Messages"
+msgstr "Irakurri gabeko mezuakord"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_unread_counter
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Irakurri gabeko mezuen kontagailua"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+msgid "ZIP"
+msgstr "Posta Kodea"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__zip
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__zip
+msgid "Zip"
+msgstr "Posta Kodea"

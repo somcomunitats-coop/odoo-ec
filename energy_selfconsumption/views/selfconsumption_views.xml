@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="selfconsumption_form_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.selfconsumption.form</field>
+            <field name="model">energy_selfconsumption.selfconsumption</field>
+            <field name="arch" type="xml">
+                <form string="Self-consumption Project">
+                    <header>
+                        <button
+                                type="object"
+                                string="Set in activation"
+                                name="set_activation"
+                                attrs="{'invisible':[('state','not in',['draft'])]}"
+                        />
+                        <button
+                                type="object"
+                                string="Activate"
+                                name="activate"
+                                attrs="{'invisible':[('state','not in',['activation'])]}"
+                        />
+                        <field
+                                name="state"
+                                widget="statusbar"
+                                readonly="True"
+                                statusbar_visible="draft,activation,active"
+                        />
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="get_distribution_tables"
+                                    icon="fa-table" context="{'default_owner_id': id}"
+                                    attrs="{'invisible': [('state', '==', 'draft')]}">
+                                <field string="Distribution Tables" name="distribution_table_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <widget
+                                name="web_ribbon"
+                                text="Archived"
+                                bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"
+                        />
+                        <field name="active" invisible="True"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field
+                                        name="name"
+                                        placeholder="Title"
+                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                                />
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="company_id" invisible="True"/>
+                                <field name="id" invisible="True"/>
+                                <field name="type" invisible="True"/>
+                                <field
+                                        name="code"
+                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                                />
+                                <field
+                                        name="power"
+                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                                />
+                            </group>
+                            <group>
+                                <span class="o_form_label o_td_label" name="address_name">
+                                    <b>Address</b>
+                                </span>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street"
+                                           attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street"
+                                           attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"/>
+                                    <field name="city" placeholder="City" class="o_address_city"
+                                           attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State"
+                                           options="{'no_open': True, 'no_quick_create': True}"
+                                           context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"
+                                           attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip"
+                                           attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"/>
+                                    <field name="country_id" placeholder="Country" class="o_address_country"
+                                           options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+                                           attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"/>
+                                </div>
+                            </group>
+                        </group>
+                        <group>
+                            <field
+                                    name="inscription_ids"
+                                    widget="one2many"
+                                    mode="list"
+                                    context="{'default_project_id':id, 'default_effective_date': today}"
+                            >
+                                <tree editable="bottom">
+                                    <field
+                                            name="partner_id"
+                                            options="{'no_create': True}"
+                                    />
+                                    <field name="effective_date"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="selfconsumption_tree_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.selfconsumption.tree</field>
+            <field name="model">energy_selfconsumption.selfconsumption</field>
+            <field name="arch" type="xml">
+                <tree string="Self-Consumption Projects">
+                    <field name="name"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="selfconsumption_form_view_act_window" model="ir.actions.act_window">
+            <field name="name">Self-consumption Project</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">energy_selfconsumption.selfconsumption</field>
+            <field name="view_mode">tree,form</field>
+            <field
+                    name="context"
+                    eval="{'default_type': ref('energy_selfconsumption.selfconsumption_project_type')}"
+            />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Self-consumption Project.
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+                name="Self-consumption Management"
+                id="root"
+                web_icon="energy_selfconsumption,static/description/icon.png"
+        />
+        <menuitem name="Management" id="management_category_menu" parent="root"/>
+        <menuitem
+                name="Project"
+                id="project_menu"
+                parent="management_category_menu"
+                action="selfconsumption_form_view_act_window"
+        />
+    </data>
+</odoo>
