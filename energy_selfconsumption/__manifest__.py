@@ -4,11 +4,12 @@
         Module for energetic self-consumption projects.
         """,
     "description": """
+        Module for energetic self-consumption projects.
     """,
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://somcomunitats.coop/",
     "category": "Customizations",
-    "version": "14.0.1.0.1",
+    "version": "14.0.1.1.1",
     "depends": [
         "base",
         "mail",
