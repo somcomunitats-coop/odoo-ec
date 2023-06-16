@@ -143,9 +143,10 @@ class ResUsers(models.Model):
     def _create_user_values(self, odoo_user):
         """Prepare Keycloak values for given Odoo user."""
         values = {
-            "username": odoo_user.login,
-            "email": odoo_user.partner_id.email,
-            "attributes": {"lang": [odoo_user.lang]},
+            'username': odoo_user.login,
+            'email': odoo_user.partner_id.email,
+            'attributes': {'lang': [odoo_user.lang]},
+            'enabled': True,
         }
 
         if "firstname" in odoo_user.partner_id:
