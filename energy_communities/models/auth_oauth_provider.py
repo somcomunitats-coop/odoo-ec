@@ -10,6 +10,7 @@ URL_AUTH = "{root_endpoint}realms/{realm_name}/protocol/openid-connect/auth"
 URL_VALIDATION = "{root_endpoint}realms/{realm_name}/protocol/openid-connect/userinfo"
 URL_TOKEN = "{root_endpoint}realms/{realm_name}/protocol/openid-connect/token"
 URL_JWKS = "{root_endpoint}realms/{realm_name}/protocol/openid-connect/certs"
+URL_RESET_PASSWORD = "{root_endpoint}admin/realms/{realm_name}/users/{kc_uid}/execute-actions-email?redirect_uri={odoo_url}&client_id={cliend_id}"
 
 
 class OAuthProvider(models.Model):
@@ -17,25 +18,15 @@ class OAuthProvider(models.Model):
 
     is_admin_provider = fields.Boolean(string="Admin provider")
     is_keycloak_provider = fields.Boolean(string="Keycloak provider")
-    superuser = fields.Char(
-        string="Superuser",
-        help="A super power user that is able to CRUD users on KC.",
-        placeholder="admin",
-        required=False,
-    )
-    superuser_pwd = fields.Char(
-        string="Superuser password",
-        help='"Superuser" user password',
-        placeholder='I hope is not "admin"',
-        required=False,
-    )
-    admin_user_endpoint = fields.Char(string="User admin URL", required=True)
-    root_endpoint = fields.Char(
-        string="Root URL",
-        required=True,
-        default="http://keycloak-ccee.local:8080/auth/",
-    )
-    realm_name = fields.Char(string="Realm name", required=True, default="0")
+    superuser = fields.Char(string='Superuser', help='A super power user that is able to CRUD users on KC.',
+                            placeholder='admin', required=False)
+    superuser_pwd = fields.Char(string='Superuser password', help='"Superuser" user password',
+                                placeholder='I hope is not "admin"', required=False)
+    admin_user_endpoint = fields.Char(string='User admin URL', required=True)
+    root_endpoint = fields.Char(string='Root URL', required=True, default='http://keycloak-ccee.local:8080/auth/')
+    realm_name = fields.Char(string='Realm name', required=True, default='0')
+    reset_password_endpoint = fields.Char(string='Reset password URL', required=True)
+    redirect_admin_url = fields.Char(string='Redirect Link after update password', required=True)
 
     def validate_admin_provider(self):
         if not self.client_secret:
@@ -45,40 +36,46 @@ class OAuthProvider(models.Model):
 
     @api.onchange("root_endpoint")
     def _onchange_root_endpoint(self):
+        # TODO: Duplicated code? 🤔
         if self.is_keycloak_provider and self.root_endpoint and self.realm_name:
-            self.admin_user_endpoint = URL_ADMIN_USERS.format(
-                **{"root_endpoint": self.root_endpoint, "realm_name": self.realm_name}
-            )
-            self.auth_endpoint = URL_AUTH.format(
-                **{"root_endpoint": self.root_endpoint, "realm_name": self.realm_name}
-            )
-            self.validation_endpoint = URL_VALIDATION.format(
-                **{"root_endpoint": self.root_endpoint, "realm_name": self.realm_name}
-            )
-            self.token_endpoint = URL_TOKEN.format(
-                **{"root_endpoint": self.root_endpoint, "realm_name": self.realm_name}
-            )
-            self.jwks_uri = URL_JWKS.format(
-                **{"root_endpoint": self.root_endpoint, "realm_name": self.realm_name}
+            self.admin_user_endpoint = URL_ADMIN_USERS.format(**{'root_endpoint': self.root_endpoint,
+                                                                 'realm_name': self.realm_name})
+            self.auth_endpoint = URL_AUTH.format(**{'root_endpoint': self.root_endpoint,
+                                                    'realm_name': self.realm_name})
+            self.validation_endpoint = URL_VALIDATION.format(**{'root_endpoint': self.root_endpoint,
+                                                                'realm_name': self.realm_name})
+            self.token_endpoint = URL_TOKEN.format(**{'root_endpoint': self.root_endpoint,
+                                                      'realm_name': self.realm_name})
+            self.jwks_uri = URL_JWKS.format(**{'root_endpoint': self.root_endpoint,
+                                               'realm_name': self.realm_name})
+            self.reset_password_endpoint = URL_RESET_PASSWORD.format(
+                root_endpoint=self.root_endpoint,
+                realm_name=self.realm_name,
+                kc_uid='{kc_uid}',
+                odoo_url=self.redirect_admin_url,
+                cliend_id=self.client_id,
             )
 
     @api.onchange("realm_name")
     def _onchange_realm_name(self):
+        # TODO: Duplicated code? 🤔
         if self.is_keycloak_provider and self.root_endpoint and self.realm_name:
-            self.admin_user_endpoint = URL_ADMIN_USERS.format(
-                **{"root_endpoint": self.root_endpoint, "realm_name": self.realm_name}
-            )
-            self.auth_endpoint = URL_AUTH.format(
-                **{"root_endpoint": self.root_endpoint, "realm_name": self.realm_name}
-            )
-            self.validation_endpoint = URL_VALIDATION.format(
-                **{"root_endpoint": self.root_endpoint, "realm_name": self.realm_name}
-            )
-            self.token_endpoint = URL_TOKEN.format(
-                **{"root_endpoint": self.root_endpoint, "realm_name": self.realm_name}
-            )
-            self.jwks_uri = URL_JWKS.format(
-                **{"root_endpoint": self.root_endpoint, "realm_name": self.realm_name}
+            self.admin_user_endpoint = URL_ADMIN_USERS.format(**{'root_endpoint': self.root_endpoint,
+                                                                 'realm_name': self.realm_name})
+            self.auth_endpoint = URL_AUTH.format(**{'root_endpoint': self.root_endpoint,
+                                                    'realm_name': self.realm_name})
+            self.validation_endpoint = URL_VALIDATION.format(**{'root_endpoint': self.root_endpoint,
+                                                                'realm_name': self.realm_name})
+            self.token_endpoint = URL_TOKEN.format(**{'root_endpoint': self.root_endpoint,
+                                                      'realm_name': self.realm_name})
+            self.jwks_uri = URL_JWKS.format(**{'root_endpoint': self.root_endpoint,
+                                               'realm_name': self.realm_name})
+            self.reset_password_endpoint = URL_RESET_PASSWORD.format(
+                root_endpoint=self.root_endpoint,
+                realm_name=self.realm_name,
+                kc_uid='{kc_uid}',
+                odoo_url=self.redirect_admin_url,
+                cliend_id=self.client_id,
             )
 
     def get_auth_link(self):

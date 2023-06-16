@@ -207,3 +207,20 @@ class ResUsers(models.Model):
             for company in role_line.allowed_company_ids:
                 communities.append(company.id)
         return communities
+
+    def send_reset_password_mail(self):
+        provider_id = self.env.ref('energy_communities.keycloak_admin_provider')
+        provider_id.validate_admin_provider()
+        headers = {
+            'Authorization': 'Bearer %s' % self._get_admin_token(provider_id)
+        }
+        headers['Content-Type'] = "application/json"
+
+        endpoint = provider_id.reset_password_endpoint.format(
+            kc_uid = self.oauth_uid
+        )
+        response = requests.put(endpoint, headers=headers, data='["UPDATE_PASSWORD"]')
+        if response.status_code != 204:
+            raise exceptions.UserError(
+                _('Something went wrong. Mail can not be sended. More details: {}').format(response.json())
+            )
