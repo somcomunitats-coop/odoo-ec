@@ -140,16 +140,16 @@ class ResCompany(models.Model):
         return admins
 
     def add_ce_admin(self, user):
-        if self.hierarchy_level != COMMUNITY_HIERARCHY:
+        if self.hierarchy_level != 'community':
             raise UserError(_("Only a CE can have CE admins"))
 
-        role = self.env["res.users.role"].sudo().search([{
+        role = self.env["res.users.role"].sudo().search([(
             "code", "=", "role_ce_admin"
-        }])
+        )])
         current_role = self.env["res.users.role.line"].sudo().search([
             ("user_id", "=", user.id),
             ("active", "=", True),
-            ("allowed_company_ids", "=", self.id)  # It's M2M, = is okey?
+            ("company_id", "=", self.id)  # It's M2M, = is okey?
         ])
         if current_role and len(current_role) > 1:
             raise UserError(_("Error: This user have multiple roles for this company"))
@@ -161,15 +161,15 @@ class ResCompany(models.Model):
         if current_role:
                 current_role.write({"role_id": role})
         else:
+            user = self.env["res.users"].sudo().browse(user.id)
+            user.write({
+                "company_ids": [(4, self.id)]
+            })
             self.env["res.users.role.line"].sudo().create({
                 "user_id": user.id,
                 "active": True,
-                "role_id": role,
-                "community_ids": (6, 0, self.id),
-            })
-            user = self.env["res.users"].sudo().browse(user.id)
-            user.write({
-                "community_ids": (6, 0, self.id)
+                "role_id": role.id,
+                "company_id": self.id,
             })
 
     def get_ce_members(self, domain_key="in_kc_and_active"):
