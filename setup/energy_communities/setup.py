@@ -6,7 +6,7 @@ setuptools.setup(
         "depends_override": {
             "account_lock_date_update": "odoo14-addon-account-lock-date-update==14.0.2.0.1.dev10",
             "account_reconciliation_widget": "odoo14-addon-account-reconciliation-widget==14.0.2.0.2",
-            "community_maps": "odoo14-addon-community-maps==14.0.0.1.6.dev1",
+            "community_maps": "odoo14-addon-community-maps==14.0.0.1.8",
             "cooperator_payment_account": "odoo14-addon-cooperator-payment-account==14.0.1.0.1",
             "cooperator_payment_account-mandate": "odoo14-addon-cooperator-payment-account-mandate==14.0.1.0.1",
             "crm_metadata": "odoo14-addon-crm-metadata==14.0.1.0.0",
