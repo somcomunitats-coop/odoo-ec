@@ -21,44 +21,38 @@ class AssignAdminWizard(models.TransientModel):
 
 
     def process_data(self):
-        if self.is_new_admin:
-            user = self.create_user()
-        else:
-            user = self.env['res.users'].search([('login', '=', self.vat)])
-
         company_ids = self.env.context.get('active_ids')
         if not company_ids:
             raise ValidationError(_('Company not found'))
-        company = self.env['res.company'].browse(company_ids[0])
+
+        company_id = company_ids[0]
+        if self.is_new_admin:
+            user = self.create_user(company_id)
+        else:
+            user = self.env['res.users'].search([('login', '=', self.vat)])
+
+
+        company = self.env['res.company'].browse(company_id)
         company.add_ce_admin(user)
 
         return True
 
 
     # TODO: Move this method inside res_users
-    def create_user(self):
+    def create_user(self, company_id):
         vals = {
             "login": self.vat,
             "firstname": self.first_name,
             "lastname": self.last_name,
-            "company_id": self.env.context.get('active_ids'),
-            "company_ids": (6, 0, elf.env.context.get('active_ids')),
-            "lang": self.lang,
+            "company_id": company_id,
+            "company_ids": [company_id],
+            "lang": self.lang.code,
             "email": self.email,  # It works?
         }
         user = self.env["res.users"].create(vals)
 
-        provider_id = self.env.ref('energy_communities.keycloak_admin_provider')
-        provider_id.validate_admin_provider()
-        token = self.env["res.users"]._get_admin_token(provider_id)
-
-        keycloak_user = self.env["res.users"]._get_or_create_user(token, provider_id, user)
-        keycloak_key = self.env["res.users"]._LOGIN_MATCH_KEY.split(':')[0]
-        keycloak_login_provider = self.env.ref('energy_communities.keycloak_login_provider')
-        user.update({
-            'oauth_uid': keycloak_user[keycloak_key],
-            'oauth_provider_id': keycloak_login_provider.id,
-        })
+        user.create_users_on_keycloak()
+        user.send_reset_password_mail()
 
 
         return user
