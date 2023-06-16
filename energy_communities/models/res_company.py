@@ -155,15 +155,22 @@ class ResCompany(models.Model):
                 admins_user_ids.append(role_line.user_id.id)
         return any([user in admins_user_ids for user in company_user_ids])
 
-    def get_ce_admins(self):
-        admins = []
-        role_lines = self.env["res.users.role.line"].sudo().search([
-            ("allowed_company_ids.id", "=", self.id),  # It's M2M, = is okey?
-            ("active", "=", True),
-            ("role_id.code", "=", "role_ce_admin")
+    # TODO: Get admins depends on hierarcy level
+    def _get_admins(self):
+        # admins = []
+        import pdb; pdb.set_trace()
+        admins = self.env["res.users"].sudo().search([  # ??
+            ("role_line_ids.company_id.id", "=", self.id),
+            ("role_line_ids.active", "=", True),
+            ("role_line_ids.role_id.code", "=", "role_ce_admin")
         ])
-        for role_line in role_lines:
-            admins.append(role_line.user_id)
+        # role_lines = self.env["res.users.role.line"].sudo().search([
+        #     ("company_id.id", "=", self.id),
+        #     ("active", "=", True),
+        #     ("role_id.code", "=", "role_ce_admin")
+        # ])
+        # for role_line in role_lines:
+        #     admins.append(role_line.user_id)
         return admins
 
     def add_ce_admin(self, user):
