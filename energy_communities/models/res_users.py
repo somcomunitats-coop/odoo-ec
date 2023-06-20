@@ -225,3 +225,13 @@ class ResUsers(models.Model):
             raise exceptions.UserError(
                 _('Something went wrong. Mail can not be sended. More details: {}').format(response.json())
             )
+
+    def make_internal_user(self):
+        # TODO: Require rebase new roles branch
+        pass
+        # self.env["res.users.role.line"].sudo().create({
+        #     "user_id": self.id,
+        #     "active": True,
+        #     "role_id": role.id,
+        #     "company_id": self.id,
+        # })

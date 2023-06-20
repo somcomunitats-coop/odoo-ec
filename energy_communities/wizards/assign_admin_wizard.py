@@ -34,6 +34,7 @@ class AssignAdminWizard(models.TransientModel):
 
         company = self.env['res.company'].browse(company_id)
         company.add_ce_admin(user)
+        user.make_internal_user()
 
         return True
 
