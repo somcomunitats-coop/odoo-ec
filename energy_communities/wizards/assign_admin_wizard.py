@@ -47,7 +47,7 @@ class AssignAdminWizard(models.TransientModel):
             "company_id": company_id,
             "company_ids": [company_id],
             "lang": self.lang.code,
-            "email": self.email,  # It works?
+            "email": self.email,
         }
         user = self.env["res.users"].create(vals)
 
