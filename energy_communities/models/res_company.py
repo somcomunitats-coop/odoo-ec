@@ -157,21 +157,13 @@ class ResCompany(models.Model):
 
     # TODO: Get admins depends on hierarcy level
     def _get_admins(self):
-        # admins = []
-        import pdb; pdb.set_trace()
-        admins = self.env["res.users"].sudo().search([  # ??
-            ("role_line_ids.company_id.id", "=", self.id),
-            ("role_line_ids.active", "=", True),
-            ("role_line_ids.role_id.code", "=", "role_ce_admin")
-        ])
-        # role_lines = self.env["res.users.role.line"].sudo().search([
-        #     ("company_id.id", "=", self.id),
-        #     ("active", "=", True),
-        #     ("role_id.code", "=", "role_ce_admin")
-        # ])
-        # for role_line in role_lines:
-        #     admins.append(role_line.user_id)
-        return admins
+        for rec in self:
+            role_lines = self.env["res.users.role.line"].sudo().search([
+                ("company_id.id", "=", self.id),
+                ("active", "=", True),
+                ("role_id.code", "=", "role_ce_admin")
+            ])
+            rec.admins = role_lines.mapped("user_id")
 
     def add_ce_admin(self, user):
         if self.hierarchy_level != 'community':

@@ -220,7 +220,7 @@ class ResUsers(models.Model):
         endpoint = provider_id.reset_password_endpoint.format(
             kc_uid = self.oauth_uid
         )
-        response = requests.put(endpoint, headers=headers, data='["UPDATE_PASSWORD"]')
+        response = requests.put(endpoint, headers=headers, data='["UPDATE_PASSWORD", "VERIFY_EMAIL"]')
         if response.status_code != 204:
             raise exceptions.UserError(
                 _('Something went wrong. Mail can not be sended. More details: {}').format(response.json())
