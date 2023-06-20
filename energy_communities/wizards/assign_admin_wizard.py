@@ -31,6 +31,7 @@ class AssignAdminWizard(models.TransientModel):
             raise ValidationError(_('Company not found'))
         company = self.env['res.company'].browse(company_ids[0])
         company.add_ce_admin(user)
+        user.make_internal_user()
 
         return True
 
