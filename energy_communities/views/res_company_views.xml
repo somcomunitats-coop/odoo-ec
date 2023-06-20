@@ -34,14 +34,12 @@
             <xpath expr="//notebook" position="inside">
                 <page string="Energy Communities">
                     <group>
-                        <field name="hierarchy_level" />
-                        <field name="parent_id_filtered_ids" invisible="True" />
-                        <field
-              name="parent_id"
-              domain="[('id', 'in', parent_id_filtered_ids)]"
-            />
-                        <field name="voluntary_share_id" />
-                        <field name="ce_tag_ids" />
+                        <field name="hierarchy_level"></field>
+                        <field name="parent_id_filtered_ids" invisible="True"></field>
+                        <field name="parent_id" domain="[('id', 'in', parent_id_filtered_ids)]"></field>
+                        <field name="voluntary_share_id"></field>
+                        <field name="ce_tag_ids"/>
+                        <field name="admins"/>
                     </group>
                 </page>
             </xpath>
