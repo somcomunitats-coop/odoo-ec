@@ -18,6 +18,11 @@
         <field name="category_id" ref="energy_communities_category"/>
     </record>
 
+    <record model="res.groups" id="group_coordinator">
+        <field name="name">Coordinator</field>
+        <field name="category_id" ref="energy_communities_category"/>
+    </record>
+
     <record model="res.groups" id="group_platform_manager">
         <field name="name">Platform Manager</field>
         <field name="category_id" ref="energy_communities_category"/>
@@ -29,7 +34,7 @@
         <field name="code">role_ce_member</field>
         <field name="implied_ids" eval="[
                 (4, ref('group_user')),
-                (4, ref('base.group_portal'))]"/>
+        ]"/>
     </record>
 
     <record model="res.users.role" id="role_ce_admin">
@@ -57,7 +62,7 @@
         <field name="name">Coordination role</field>
         <field name="code">role_coordination</field>
         <field name="implied_ids" eval="[
-               (4, ref('group_admin')),
+               (4, ref('group_coordinator')),
                (4, ref('sale.group_delivery_invoice_address')),
                (4, ref('account.group_account_invoice')),
                (4, ref('base.group_partner_manager')),
