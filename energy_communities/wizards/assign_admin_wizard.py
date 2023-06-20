@@ -41,10 +41,10 @@ class AssignAdminWizard(models.TransientModel):
             "login": self.vat,
             "firstname": self.first_name,
             "lastname": self.last_name,
-            "company_id": self.env.context.get('active_ids'),
-            "company_ids": (6, 0, elf.env.context.get('active_ids')),
-            "lang": self.lang,
-            "email": self.email,  # It works?
+            "company_id": company_id,
+            "company_ids": [company_id],
+            "lang": self.lang.code,
+            "email": self.email,
         }
         user = self.env["res.users"].create(vals)
 
