@@ -25,8 +25,8 @@ class OAuthProvider(models.Model):
     admin_user_endpoint = fields.Char(string='User admin URL', required=True)
     root_endpoint = fields.Char(string='Root URL', required=True, default='http://keycloak-ccee.local:8080/auth/')
     realm_name = fields.Char(string='Realm name', required=True, default='0')
-    reset_password_endpoint = fields.Char(string='Reset password URL', required=True)
-    redirect_admin_url = fields.Char(string='Redirect Link after update password', required=True)
+    reset_password_endpoint = fields.Char(string='Reset password URL')
+    redirect_admin_url = fields.Char(string='Redirect Link after update password')
 
     def validate_admin_provider(self):
         if not self.client_secret:
