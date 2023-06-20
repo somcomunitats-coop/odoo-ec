@@ -155,27 +155,33 @@ class ResCompany(models.Model):
                 admins_user_ids.append(role_line.user_id.id)
         return any([user in admins_user_ids for user in company_user_ids])
 
-    # TODO: Get admins depends on hierarcy level
+    def _get_admin_role_name(self):
+        if self.hierarchy_level == 'community':
+            return "role_ce_admin"
+        elif self.hierarchy_level == 'coordinator':
+            return "role_coordination"
+        elif self.hierarchy_level == 'instance':
+            return "role_platform_admin"
+
     def _get_admins(self):
+        role_name = self._get_admin_role_name()
         for rec in self:
             role_lines = self.env["res.users.role.line"].sudo().search([
                 ("company_id.id", "=", self.id),
                 ("active", "=", True),
-                ("role_id.code", "=", "role_ce_admin")
+                ("role_id.code", "=", role_name)
             ])
             rec.admins = role_lines.mapped("user_id")
 
     def add_ce_admin(self, user):
-        if self.hierarchy_level != 'community':
-            raise UserError(_("Only a CE can have CE admins"))
-
+        role_name = self._get_admin_role_name()
         role = self.env["res.users.role"].sudo().search([(
-            "code", "=", "role_ce_admin"
+            "code", "=", role_name
         )])
         current_role = self.env["res.users.role.line"].sudo().search([
             ("user_id", "=", user.id),
             ("active", "=", True),
-            ("company_id", "=", self.id)  # It's M2M, = is okey?
+            ("company_id", "=", self.id)
         ])
         if current_role and len(current_role) > 1:
             raise UserError(_("Error: This user have multiple roles for this company"))
@@ -201,7 +207,7 @@ class ResCompany(models.Model):
     def get_ce_members(self, domain_key="in_kc_and_active"):
         domains_dict = {
             "in_kc_and_active": [
-                ("company_id", "=", self.id),  # TODO: company_ids ??
+                ("company_id", "=", self.id),
                 ("oauth_uid", "!=", None),
                 ("active", "=", True),
             ]
