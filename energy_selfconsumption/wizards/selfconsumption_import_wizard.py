@@ -1,5 +1,5 @@
-from odoo import fields, models, _
-from odoo.exceptions import UserError
+from odoo import fields, models, _, api
+from odoo.exceptions import UserError, ValidationError
 import base64
 import logging
 from io import StringIO
@@ -12,11 +12,14 @@ logger = logging.getLogger(__name__)
 class SelfconsumptionImportWizard(models.TransientModel):
     _name = 'energy_selfconsumption.selfconsumption_import.wizard'
 
-    name = fields.Char()
     import_file = fields.Binary(string="Import File (*.csv)")
-    fname = fields.Char(
-        string="Template Name", readonly=True
-    )
+    fname = fields.Char(string="File Name")
+
+    @api.constrains('import_file')
+    def _constrains_import_file(self):
+        format = str(self.fname.split(".")[1])
+        if format != 'csv':
+            raise ValidationError("Only csv format files are accepted.")
 
     def import_file_button(self):
         file_data = base64.b64decode(self.import_file)

@@ -9,7 +9,8 @@
                 <form>
                     <sheet>
                         <group>
-                            <field name="import_file"></field>
+                            <field name="import_file" filename="fname" widget="binary"></field>
+                            <field name="fname" invisible="1"></field>
                         </group>
                     </sheet>
                     <footer>
