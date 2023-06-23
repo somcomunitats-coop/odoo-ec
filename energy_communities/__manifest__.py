@@ -1,6 +1,6 @@
 {
     'name': "Energy Community",
-    'version': '14.0.1.1.7',
+    'version': '14.0.1.1.8',
     'depends': [
         'account',
         'cooperator_account_banking_mandate',
