@@ -30,8 +30,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
         distribution_table = self.env['energy_selfconsumption.distribution_table'].create({
             'selfconsumption_project_id': project.id
         })
-
-        for index, single_statement_data in enumerate(parsing_data):
+        for index, single_statement_data in enumerate(parsing_data[1:]):
             self.import_single_statement(single_statement_data, distribution_table)
         return True
 
@@ -52,7 +51,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     )
                 decoded_file = data_file.decode(detected_encoding)
             csv = reader(StringIO(decoded_file), **csv_options)
-            return csv
+            return list(csv)
         except BaseException:
             logger.warning("Parser error", exc_info=True)
             raise UserError(_("Error parsing the file"))
