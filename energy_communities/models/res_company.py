@@ -69,6 +69,9 @@ class ResCompany(models.Model):
     wordpress_db_password = fields.Char(
         string=_("Wordpress DB Admin Password")
     )
+    wordpress_base_url = fields.Char(
+        string=_("Wordpress Base URL (JWT auth)")
+    )
 
     @api.constrains('hierarchy_level', 'parent_id')
     def _check_hierarchy_level(self):
