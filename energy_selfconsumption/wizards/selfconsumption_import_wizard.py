@@ -26,12 +26,18 @@ class SelfconsumptionImportWizard(models.TransientModel):
         parsing_data = self.with_context(active_id=self.ids[0])._parse_file(file_data)
         active_id = self.env.context.get('active_id')
         project = self.env['energy_selfconsumption.selfconsumption'].browse(active_id)
-        # check exist distribution table
-        distribution_table = self.env['energy_selfconsumption.distribution_table'].create({
-            'selfconsumption_project_id': project.id
-        })
+        parsing_errors = []
         for index, single_statement_data in enumerate(parsing_data[1:]):
-            self.import_single_statement(single_statement_data, distribution_table)
+            found = self.import_single_statement(single_statement_data, project)
+            if not found:
+                parsing_errors.append((index, single_statement_data))
+        if parsing_errors:
+            error_list = ''
+            for error in parsing_errors:
+                error_list = "".join(
+                    [error_list, _('<li>Line: {index} DNI: {vat} </li>\n').format(index=error[0], vat=error[1][0])])
+            project.message_post(subject=_('Import Result'),
+                                 body=_('Partners not found for: <ul>{list}</ul>'.format(list=error_list)))
         return True
 
     def _parse_file(self, data_file):
@@ -56,25 +62,25 @@ class SelfconsumptionImportWizard(models.TransientModel):
             logger.warning("Parser error", exc_info=True)
             raise UserError(_("Error parsing the file"))
 
-    def import_single_statement(self, line, distribution_table):
-        supply_point = self.env['energy_selfconsumption.supply_point'].search([('code', '=', line[0])])
-        if not supply_point:
-            supply_point = self.create_supply_point(
-                code=line[0],
-                street=line[2],
-                street2=line[3],
-                city=line[4],
-                state=line[5],
-                zip=line[6],
-                country=line[7],
-                owner_vat=line[9]
-            )
+    def import_single_statement(self, line, project):
+        partner = self.env['res.partner'].search([
+            ('vat', '=ilike', line[0])
+        ], limit=1)
 
-        self.env['energy_selfconsumption.supply_point_assignation'].create({
-            'supply_point_id': supply_point.id,
-            'distribution_table_id': distribution_table.id,
-            'coefficient': line[1]
-        })
+        if not partner:
+            return False
+        if partner.id in project.inscription_ids.mapped('partner_id.id'):
+            return False
+        try:
+            self.env['energy_project.inscription'].create({
+                'project_id': project.id,
+                'partner_id': partner.id,
+                'effective_date': fields.date.today()
+            }
+            )
+        except:
+            return False
+        return True
 
     def create_supply_point(self, code, street, street2, city, state, zip, country, owner_vat):
         owner = self.env['res.partner'].search([('vat', '=', owner_vat)])
@@ -88,11 +94,10 @@ class SelfconsumptionImportWizard(models.TransientModel):
             'street': street,
             'street2': street2,
             'city': city,
-            'state_id': self.env['res.country.state'].search([('code', '=', state), ('country_id', '=', country.id)]).id,
+            'state_id': self.env['res.country.state'].search(
+                [('code', '=', state), ('country_id', '=', country.id)]).id,
             'zip': zip,
             'country_id': country.id,
             'owner_id': owner.id,
-            'cooperator_id': owner.id #TODO move it to other module
+            'cooperator_id': owner.id  # TODO move it to other module
         })
-
-
