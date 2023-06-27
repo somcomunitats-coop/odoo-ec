@@ -7,7 +7,12 @@ class SubscriptionRequest(models.Model):
 
     @api.depends('share_product_id', 'share_product_id.categ_id')
     def _compute_is_voluntary(self):
-        product_category_voluntary_share = self.env.ref('energy_communities.product_category_company_voluntary_share')
+        # We need to use the raise_if_not_found because in the CI product_category_voluntary_share
+        # is loaded after this method's evaluation.
+        product_category_voluntary_share = self.env.ref(
+            'energy_communities.product_category_company_voluntary_share',
+            raise_if_not_found=False
+        )
         for record in self:
             record.is_voluntary = record.share_product_id.categ_id == product_category_voluntary_share
 
