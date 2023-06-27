@@ -17,11 +17,11 @@ class CRMLeadService(Component):
         create_dict = super().create(params)
         crm_lead = json.loads(create_dict.response[0].decode("utf-8"))
 
-        meta = params["metadata"]
+        metadata = params["metadata"]
         target_source_xml_id = None
-        for m in meta:
-            if m["key"] == "source_xml_id":
-                target_source_xml_id = m["value"]
+        for data in metadata:
+            if data["key"] == "source_xml_id":
+                target_source_xml_id = data["value"]
 
         template_external_id = None
         if target_source_xml_id == "ce_source_creation_ce_proposal":
