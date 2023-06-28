@@ -33,7 +33,7 @@ variables:
   TRAVIS_BUILD_WEB_URL: "https://git.coopdevs.org/coopdevs/odoo/OCB.git"
 
 before_script:
-  - curl -sL https://deb.nodesource.com/setup_10.x | bash -
+  - curl -sL https://deb.nodesource.com/setup_14.x | bash -
   - apt-get install -y sudo postgresql-client expect-dev python3-lxml nodejs python-dev
     python3-pip build-essential libsasl2-dev python-dev libldap2-dev libssl-dev
     libxmlsec1-dev npm
