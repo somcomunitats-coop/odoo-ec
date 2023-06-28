@@ -3,7 +3,7 @@
     <data>
 
         <record id="subscription_request_form_inherit" model="ir.ui.view">
-            <field name="name">account_payment_cooperator.subscription_request.form</field>
+            <field name="name">cooperator_account_payment.subscription_request.form</field>
             <field name="model">subscription.request</field>
             <field name="inherit_id" ref="cooperator.subscription_request_view_form"/>
             <field name="priority" eval="8"/>

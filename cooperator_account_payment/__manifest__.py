@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Cooperator Account Payment",
-    "version": "14.0.1.0.1",
+    "version": "14.0.1.0.2",
     "license": "AGPL-3",
     "summary": """
         This module adds support for payment mode to cooperator.""",

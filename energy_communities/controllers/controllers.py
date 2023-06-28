@@ -7,5 +7,5 @@ class MainController(main.RestController):
     _default_auth = "api_key"
 
 
-class CrmLeadController(MainController):
-    pass
+# class CrmLeadController(MainController):
+#     pass
