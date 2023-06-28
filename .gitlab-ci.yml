@@ -30,7 +30,6 @@ variables:
   MQT_DEP: "pip"
   REMOTE: "coopdevs/odoo"
   REPO_NAME: "ocb"
-  TRAVIS_BUILD_WEB_URL: "https://git.coopdevs.org/coopdevs/odoo/OCB.git"
 
 before_script:
   - curl -sL https://deb.nodesource.com/setup_14.x | bash -
