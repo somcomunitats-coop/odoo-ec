@@ -12,6 +12,7 @@ setuptools.setup(
             "crm_metadata": "odoo14-addon-crm-metadata==14.0.1.0.0",
             "crm_metadata_rest_api": "odoo14-addon-crm-metadata-rest-api==14.0.1.0.2",
             "crm_rest_api": "odoo14-addon-crm-rest-api==14.0.1.0.2",
+            "l10n_es_cooperator": "odoo14-addon-l10n-es-cooperator==14.0.0.1.1.dev2",
             "l10n_es_aeat_sii_oca": "odoo14-addon-l10n-es-aeat-sii-oca==14.0.2.8.1",
             "mail_multicompany": "odoo14-addon-mail-multicompany==14.0.0.1.1.dev2",
             "metadata": "odoo14-addon-metadata==14.0.1.0.0",
