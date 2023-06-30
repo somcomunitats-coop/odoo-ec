@@ -68,7 +68,6 @@ class DistributionTableImportWizard(models.TransientModel):
     def get_supply_point_assignation_values(self, line):
         return {
             'supply_point_id': self.get_supply_point_id(code=line[0]),
-            'owner_id': self.get_owner_id(vat=line[1]),
             'coefficient': line[1]
         }
 
@@ -77,28 +76,3 @@ class DistributionTableImportWizard(models.TransientModel):
         if not supply_point:
             return False
         return supply_point.id
-
-    def get_owner_id(self, vat):
-        owner = self.env['res.partner'].search([('vat', '=', vat)])
-        if not owner:
-            return False
-        return owner.id
-    def create_supply_point(self, code, street, street2, city, state, zip, country, owner_vat):
-        owner = self.env['res.partner'].search([('vat', '=', owner_vat)])
-        if not owner:
-            # TODO create new owner
-            raise UserError('Owner not found VAT:{}'.format(owner_vat))
-        country = self.env['res.country'].search([('code', '=', country)])
-        return self.env['energy_selfconsumption.supply_point'].create({
-            'code': code,
-            'name': code,
-            'street': street,
-            'street2': street2,
-            'city': city,
-            'state_id': self.env['res.country.state'].search(
-                [('code', '=', state), ('country_id', '=', country.id)]).id,
-            'zip': zip,
-            'country_id': country.id,
-            'owner_id': owner.id,
-            'cooperator_id': owner.id  # TODO move it to other module
-        })
