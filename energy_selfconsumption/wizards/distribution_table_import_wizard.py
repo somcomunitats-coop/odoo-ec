@@ -68,7 +68,7 @@ class DistributionTableImportWizard(models.TransientModel):
     def get_supply_point_assignation_values(self, line):
         return {
             'supply_point_id': self.get_supply_point_id(code=line[0]),
-            'coefficient': line[1]
+            'coefficient': self.get_coefficient(coefficient=line[1])
         }
 
     def get_supply_point_id(self, code):
@@ -76,3 +76,10 @@ class DistributionTableImportWizard(models.TransientModel):
         if not supply_point:
             return False
         return supply_point.id
+
+    def get_coefficient(self, coefficient):
+        try:
+            return fields.Float.convert_to_write(self=fields.Float(), value=coefficient, record=self.env[
+                'energy_selfconsumption.supply_point_assignation'].coefficient)
+        except ValueError:
+            return 0
