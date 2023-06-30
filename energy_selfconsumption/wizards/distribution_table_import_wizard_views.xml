@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="distribution_table_import_wizard_form_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.distribution_table_import.wizard.form</field>
+            <field name="model">energy_selfconsumption.distribution_table_import.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="import_file" filename="fname" widget="binary"></field>
+                            <field name="fname" invisible="1"></field>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button type="object" name="import_file_button">Import</button>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="distribution_table_import_wizard_action" model="ir.actions.act_window">
+            <field name="name">Import Distribution Table</field>
+            <field name="res_model">energy_selfconsumption.distribution_table_import.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_energy_selfconsumption_distribution_table"/>
+        </record>
+    </data>
+</odoo>

@@ -52,3 +52,14 @@ class DistributionTable(models.Model):
             if record.selfconsumption_project_id.distribution_table_ids.filtered_domain([('state', '=', 'validated')]):
                 raise ValidationError(_("Self-consumption project already has a validated table"))
             record.write({"state": "validated"})
+
+    def action_distribution_table_import_wizard(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'energy_selfconsumption.distribution_table_import.wizard',
+            'views': [(False, 'form')],
+            'view_id': False,
+            'target': 'new',
+        }
