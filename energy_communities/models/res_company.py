@@ -189,8 +189,8 @@ class ResCompany(models.Model):
         return res
 
     def get_public_web_landing_url(self):
-        # TODO Get from community_maps
-        return "https://somcomunitats.coop/ce/comunitat-energetica-prova/"
+        # TODO: Get from landing page or company, for now we don't need
+        return ""
 
     def get_keycloak_odoo_login_url(self):
         login_provider_id = self.env.ref(
