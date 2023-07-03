@@ -183,6 +183,7 @@ class ResCompany(models.Model):
                 {
                     "id": tag.id,
                     "name": tag.name,
+                    "ext_id": tag.tag_ext_id
                 }
             )
         return res
