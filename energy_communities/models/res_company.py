@@ -7,7 +7,7 @@ import re
 import os
 from odoo.exceptions import UserError
 from ..pywordpress_client.resources.authenticate import Authenticate
-from ..pywordpress_client.resources.landing_page import LandingPage
+from ..pywordpress_client.resources.landing_page import LandingPage as LandingPageResource
 
 _HIERARCHY_LEVEL_VALUES = [
     ('instance', _('Instance')),
@@ -201,7 +201,7 @@ class ResCompany(models.Model):
 
     def create_landing(self):
         landing_page = self.env["landing.page"]
-        vals = {"company_id": self.id, "name": self.name, "status": "publish"}
+        vals = {"company_id": self.id, "name": self.name, "status": "draft"}
         new_landing = landing_page.create(vals)
         context = {
             "__last_update": {},
@@ -224,13 +224,16 @@ class ResCompany(models.Model):
         instance_company = self.env['res.company'].search(
             [('hierarchy_level', '=', 'instance')])
         if instance_company:
+            baseurl = instance_company.wordpress_base_url
             username = instance_company.wordpress_db_username
             password = instance_company.wordpress_db_password
-            auth = Authenticate(username, password).authenticate()
+            auth = Authenticate(baseurl, username, password).authenticate()
             token = "Bearer %s" % auth["token"]
             landing_page_data = self.landing_page_id.to_dict()
-            landing_page = LandingPage.create(token, landing_page_data)
-            self.landing_page_id.write({"wp_landing_page_id": landing_page.id})
+            landing_page = LandingPageResource(
+                token, baseurl).create(landing_page_data)
+            self.landing_page_id.write(
+                {"wp_landing_page_id": landing_page['id']})
 
     def get_landing_page_form(self):
         return {

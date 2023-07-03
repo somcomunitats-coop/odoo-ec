@@ -13,12 +13,8 @@ class Client(object):
     This class manages the HTTP requests and this class only can send a request.
     """
 
-    def __init__(self):
-        self.baseurl = False
-        instance_company = self.env['res.company'].search(
-            [('hierarchy_level', '=', 'instance')])
-        if instance_company:
-            self.baseurl = instance_company.wordpress_base_url
+    def __init__(self, baseurl):
+        self.baseurl = baseurl
 
     def post(self, route, token=None, body=None):
         """Send a POST HTTP requests
