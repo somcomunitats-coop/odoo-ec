@@ -20,6 +20,7 @@
         "security/ir_rule_data.xml",
         "data/project_type_data.xml",
         "data/ir_sequence_data.xml",
+        "data/ir_attactment_data.xml",
         "views/selfconsumption_views.xml",
         "views/supply_point_views.xml",
         "views/res_partner_views.xml",

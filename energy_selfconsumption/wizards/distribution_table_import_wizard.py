@@ -5,6 +5,8 @@ import logging
 from io import StringIO
 import chardet
 from csv import reader
+import werkzeug
+from odoo.http import request
 
 logger = logging.getLogger(__name__)
 
@@ -17,9 +19,10 @@ class DistributionTableImportWizard(models.TransientModel):
 
     @api.constrains('import_file')
     def _constrains_import_file(self):
-        format = str(self.fname.split(".")[1])
-        if format != 'csv':
-            raise ValidationError("Only csv format files are accepted.")
+        if self.fname:
+            format = str(self.fname.split(".")[1])
+            if format != 'csv':
+                raise ValidationError("Only csv format files are accepted.")
 
     def import_file_button(self):
         file_data = base64.b64decode(self.import_file)
@@ -29,6 +32,17 @@ class DistributionTableImportWizard(models.TransientModel):
         parsing_errors = []
         self.import_all_lines(parsing_data, distribution_table)
         return True
+
+    def download_template_button(self):
+        distribution_table_example_attachment = self.env.ref('energy_selfconsumption.distribution_table_example_attachment')
+        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
+        download_url = '/web/content/' + str(distribution_table_example_attachment.id) + '?download=true'
+        # download
+        return {
+            "type": "ir.actions.act_url",
+            "url": str(base_url) + str(download_url),
+            "target": "new",
+        }
 
     def _parse_file(self, data_file):
         self.ensure_one()

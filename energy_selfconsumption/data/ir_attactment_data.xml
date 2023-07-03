@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.attachment" id="distribution_table_example_attachment">
+            <field name="name">import_distribution_table_example.csv</field>
+            <field name="type">binary</field>
+            <field name="datas">
+                Q1VQUyxDb2VmZmljaWVudApFUzAzOTA1NTU0MjgxMTA0MzRHTSwwLjUKRVMwMzkwMTUxMzUwNzc0NTI3WkEsMC4yNQpFUzAzOTA5NzQwOTIwODQ4MTJKQywwLjI1Cg==
+            </field>
+            <field name="company_id"></field>
+        </record>
+
+        <record model="ir.actions.act_url" id="distribution_table_download_act_url">
+            <field name="name">distribution_table_download_act_url</field>
+            <field name="url" eval="'/web/content/' + str(ref('distribution_table_example_attachment')) + '?download=true'"></field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

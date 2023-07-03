@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
+                        <button type="action" name="energy_selfconsumption.distribution_table_download_act_url">Download Template</button>
                         <group>
                             <field name="import_file" filename="fname" widget="binary"></field>
                             <field name="fname" invisible="1"></field>
