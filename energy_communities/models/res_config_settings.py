@@ -13,9 +13,9 @@ class ResConfigSettings(models.TransientModel):
     ''' WORDPRESS DB CREDENTIALS '''
     wordpress_db_username = fields.Char(
         related='company_id.wordpress_db_username',
-        string=_("Wordpress DB Username"),
+        string=_("Wordpress DB Admin Username"),
         readonly=False)
     wordpress_db_password = fields.Char(
         related='company_id.wordpress_db_password',
-        string=_("Wordpress DB Password"),
+        string=_("Wordpress DB Admin Password"),
         readonly=False)
