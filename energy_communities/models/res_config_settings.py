@@ -5,20 +5,17 @@ from odoo import fields, models, _
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
+    wordpress_base_url = fields.Char(
+        related='company_id.wordpress_base_url',
+        string=_("Wordpress Base URL (JWT auth)"),
+        readonly=False
+    )
     ''' WORDPRESS DB CREDENTIALS '''
     wordpress_db_username = fields.Char(
         related='company_id.wordpress_db_username',
-        string=_("Wordpress DB Username"),
+        string=_("Wordpress DB Admin Username"),
         readonly=False)
     wordpress_db_password = fields.Char(
         related='company_id.wordpress_db_password',
-        string=_("Wordpress DB Password"),
+        string=_("Wordpress DB Admin Password"),
         readonly=False)
-
-def get_wordpress_db_credentials(company):
-    return {
-        "data": {
-            "username": company.wordpress_db_username,
-            "password": company.wordpress_db_password,
-        }
-    }

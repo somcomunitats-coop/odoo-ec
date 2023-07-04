@@ -73,14 +73,17 @@ class LandingPage(models.Model):
             instance_company = self.env['res.company'].search(
                 [('hierarchy_level', '=', 'instance')])
             if instance_company:
+                baseurl = instance_company.wordpress_base_url
                 username = instance_company.wordpress_db_username
                 password = instance_company.wordpress_db_password
-                auth = Authenticate(username, password).authenticate()
+                auth = Authenticate(baseurl, username, password).authenticate()
                 token = "Bearer %s" % auth["token"]
                 landing_page_data = record.to_dict()
                 landing_page_data["status"] = new_status
-                landing_page_resource = LandingPageResource(
-                    record.wp_landing_page_id)
-                landing_page_resource.update(token, landing_page_data)
+                LandingPageResource(
+                    token,
+                    baseurl,
+                    record.wp_landing_page_id
+                ).update(landing_page_data)
 
                 record.write({"status": new_status})

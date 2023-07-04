@@ -2160,6 +2160,13 @@ msgid "Wordpress DB Admin Username"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__wordpress_base_url
+#, python-format
+msgid "Wordpress Base URL (JWT auth)"
+msgstr ""
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.connect_res_config_settings_view_form
 msgid "Wordpress DB Credentials"
 msgstr ""
@@ -2168,14 +2175,21 @@ msgstr ""
 #: code:addons/energy_communities/models/res_config_settings.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__wordpress_db_password
 #, python-format
-msgid "Wordpress DB Password"
+msgid "Wordpress DB Admin Password"
 msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_config_settings.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__wordpress_db_username
 #, python-format
-msgid "Wordpress DB Username"
+msgid "Wordpress DB Admin Username"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_config_settings.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__wordpress_base_url
+#, python-format
+msgid "Wordpress Base URL (JWT auth)"
 msgstr ""
 
 #. module: energy_communities
