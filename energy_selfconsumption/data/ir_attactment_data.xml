@@ -9,11 +9,5 @@
             </field>
             <field name="company_id"></field>
         </record>
-
-        <record model="ir.actions.act_url" id="distribution_table_download_act_url">
-            <field name="name">distribution_table_download_act_url</field>
-            <field name="url" eval="'/web/content/' + str(ref('distribution_table_example_attachment')) + '?download=true'"></field>
-            <field name="target">new</field>
-        </record>
     </data>
 </odoo>

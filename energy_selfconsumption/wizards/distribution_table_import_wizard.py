@@ -35,12 +35,10 @@ class DistributionTableImportWizard(models.TransientModel):
 
     def download_template_button(self):
         distribution_table_example_attachment = self.env.ref('energy_selfconsumption.distribution_table_example_attachment')
-        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
-        download_url = '/web/content/' + str(distribution_table_example_attachment.id) + '?download=true'
-        # download
+        download_url = '/web/content/{}/?download=true'.format(str(distribution_table_example_attachment.id))
         return {
             "type": "ir.actions.act_url",
-            "url": str(base_url) + str(download_url),
+            "url": download_url,
             "target": "new",
         }
 

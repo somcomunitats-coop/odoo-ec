@@ -8,7 +8,10 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <button type="action" name="energy_selfconsumption.distribution_table_download_act_url">Download Template</button>
+                        <p>You can download an example template for the import. The template must have this format and
+                            be a CSV file.</p>
+                        <button type="object" name="download_template_button">Download Template</button>
+                        <separator/>
                         <group>
                             <field name="import_file" filename="fname" widget="binary"></field>
                             <field name="fname" invisible="1"></field>
