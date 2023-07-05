@@ -14,6 +14,7 @@
         "base",
         "mail",
         "energy_project",
+        "partner_firstname"
     ],
     "data": [
         "security/ir.model.access.csv",

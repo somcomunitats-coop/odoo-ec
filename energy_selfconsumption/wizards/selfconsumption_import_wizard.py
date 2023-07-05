@@ -68,7 +68,15 @@ class SelfconsumptionImportWizard(models.TransientModel):
         ], limit=1)
 
         if not partner:
-            return False
+            if line[2]:
+                partner = self.env['res.partner'].create({
+                    'vat': line[0],
+                    'firstname': line[2],
+                    'lastname': line[3],
+                    'company_type': 'person'
+                })
+            else:
+                return False
         if partner.id in project.inscription_ids.mapped('partner_id.id'):
             return False
         try:
