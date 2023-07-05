@@ -168,7 +168,8 @@ S_COMMUNITY_MEMBERS_RETURN_GET = {
 
 S_COMMUNITY_SERVICE = {
     "id": {"type": "integer"},
-    "name": {"type": "string"}
+    "name": {"type": "string"},
+    "ext_id": {"type": "string"}
 }
 
 S_COMMUNITY_RETURN_GET = {

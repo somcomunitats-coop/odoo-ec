@@ -7,7 +7,7 @@ import re
 import os
 from odoo.exceptions import UserError
 from ..pywordpress_client.resources.authenticate import Authenticate
-from ..pywordpress_client.resources.landing_page import LandingPage
+from ..pywordpress_client.resources.landing_page import LandingPage as LandingPageResource
 
 _HIERARCHY_LEVEL_VALUES = [
     ('instance', _('Instance')),
@@ -68,6 +68,9 @@ class ResCompany(models.Model):
     )
     wordpress_db_password = fields.Char(
         string=_("Wordpress DB Admin Password")
+    )
+    wordpress_base_url = fields.Char(
+        string=_("Wordpress Base URL (JWT auth)")
     )
 
     @api.constrains('hierarchy_level', 'parent_id')
@@ -183,13 +186,14 @@ class ResCompany(models.Model):
                 {
                     "id": tag.id,
                     "name": tag.name,
+                    "ext_id": tag.tag_ext_id
                 }
             )
         return res
 
     def get_public_web_landing_url(self):
-        # TODO Get from community_maps
-        return "https://somcomunitats.coop/ce/comunitat-energetica-prova/"
+        # TODO: Get from landing page or company, for now we don't need
+        return ""
 
     def get_keycloak_odoo_login_url(self):
         login_provider_id = self.env.ref(
@@ -198,7 +202,7 @@ class ResCompany(models.Model):
 
     def create_landing(self):
         landing_page = self.env["landing.page"]
-        vals = {"company_id": self.id, "name": self.name, "status": "publish"}
+        vals = {"company_id": self.id, "name": self.name, "status": "draft"}
         new_landing = landing_page.create(vals)
         context = {
             "__last_update": {},
@@ -221,13 +225,16 @@ class ResCompany(models.Model):
         instance_company = self.env['res.company'].search(
             [('hierarchy_level', '=', 'instance')])
         if instance_company:
+            baseurl = instance_company.wordpress_base_url
             username = instance_company.wordpress_db_username
             password = instance_company.wordpress_db_password
-            auth = Authenticate(username, password).authenticate()
+            auth = Authenticate(baseurl, username, password).authenticate()
             token = "Bearer %s" % auth["token"]
             landing_page_data = self.landing_page_id.to_dict()
-            landing_page = LandingPage.create(token, landing_page_data)
-            self.landing_page_id.write({"wp_landing_page_id": landing_page.id})
+            landing_page = LandingPageResource(
+                token, baseurl).create(landing_page_data)
+            self.landing_page_id.write(
+                {"wp_landing_page_id": landing_page['id']})
 
     def get_landing_page_form(self):
         return {

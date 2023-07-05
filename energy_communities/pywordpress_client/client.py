@@ -13,8 +13,8 @@ class Client(object):
     This class manages the HTTP requests and this class only can send a request.
     """
 
-    def __init__(self):
-        self.baseurl = "https://web-testing.somcomunitats.coop/wp-json"
+    def __init__(self, baseurl):
+        self.baseurl = baseurl
 
     def post(self, route, token=None, body=None):
         """Send a POST HTTP requests
@@ -78,7 +78,8 @@ class Client(object):
         if headers.get("Content-Type") == "application/json":
             payload = json.dumps(payload)
 
-        logger.info("{verb} {url} \n {body}".format(verb=verb, url=url, body=payload))
+        logger.info("{verb} {url} \n {body}".format(
+            verb=verb, url=url, body=payload))
 
         try:
             response = requests.request(
