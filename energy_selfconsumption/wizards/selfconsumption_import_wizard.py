@@ -107,5 +107,5 @@ class SelfconsumptionImportWizard(models.TransientModel):
             'zip': zip,
             'country_id': country.id,
             'owner_id': owner.id,
-            'cooperator_id': owner.id  # TODO move it to other module
+            'partner_id': partner.id
         })
