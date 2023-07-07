@@ -90,7 +90,7 @@ class DistributionTableImportWizard(models.TransientModel):
     def get_supply_point_id(self, code):
         supply_point = self.env['energy_selfconsumption.supply_point'].search([('code', '=', code)])
         if not supply_point:
-            return False
+            raise ValidationError(_('There isn\'t any supply point with this code: {code}').format(code=code))
         return supply_point.id
 
     def get_coefficient(self, coefficient):
