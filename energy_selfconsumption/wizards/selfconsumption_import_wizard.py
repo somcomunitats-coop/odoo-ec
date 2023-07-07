@@ -67,7 +67,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
 
     def import_single_statement(self, line, project):
         partner = self.env['res.partner'].search([
-            ('vat', '=ilike', line[0])
+            '|', ('vat', '=', line[0]), ('vat', '=ilike', line[0])
         ], limit=1)
 
         if not partner:
@@ -94,7 +94,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
         return True
 
     def create_supply_point(self, code, street, street2, city, state, zip, country, owner_vat):
-        owner = self.env['res.partner'].search([('vat', '=', owner_vat)])
+        owner = self.env['res.partner'].search([
+            '|', ('vat', '=', owner_vat), ('vat', '=ilike', owner_vat)
+        ], limit=1)
         if not owner:
             # TODO create new owner
             raise UserError('Owner not found VAT:{}'.format(owner_vat))
