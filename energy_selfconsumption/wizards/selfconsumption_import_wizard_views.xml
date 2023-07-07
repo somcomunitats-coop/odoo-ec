@@ -12,6 +12,11 @@
                             <field name="import_file" filename="fname" widget="binary"></field>
                             <field name="fname" invisible="1"></field>
                         </group>
+                        <group>
+                            <field name="delimiter"></field>
+                            <field name="quotechar"></field>
+                            <field name="encoding"></field>
+                        </group>
                     </sheet>
                     <footer>
                         <button type="object" name="import_file_button">IMPORT</button>
