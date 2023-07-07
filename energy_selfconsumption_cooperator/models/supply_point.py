@@ -4,13 +4,13 @@ from odoo import fields, models, api
 class SupplyPoint(models.Model):
     _inherit = "energy_selfconsumption.supply_point"
 
-    cooperator_id = fields.Many2one(
-        "res.partner",
+    partner_id = fields.Many2one(
         string="Cooperator",
-        required=True,
         domain=[("member", "=", True)],
+        required=True,
+        help="Cooperator subscribed to the self-consumption project"
     )
 
-    @api.onchange('cooperator_id')
+    @api.onchange('partner_id')
     def _onchange_cooperator_id(self):
-        self.owner_id = self.cooperator_id
+        self.owner_id = self.partner_id
