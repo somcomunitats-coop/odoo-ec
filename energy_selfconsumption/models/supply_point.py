@@ -1,10 +1,18 @@
-from odoo import fields, models
+from odoo import fields, models, _
 
 
 class SupplyPoint(models.Model):
     _name = "energy_selfconsumption.supply_point"
     _description = "Energy Supply Point"
     _inherit = ["mail.thread", "mail.activity.mixin"]
+
+    _sql_constraints = {
+        (
+            "unique_code_company_id",
+            "unique (code, company_id)",
+            _("A supply point with this code already exists."),
+        )
+    }
 
     name = fields.Char(required=True)
     code = fields.Char(string="CUPS", required=True)
