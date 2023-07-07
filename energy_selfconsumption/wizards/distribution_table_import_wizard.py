@@ -16,6 +16,10 @@ class DistributionTableImportWizard(models.TransientModel):
 
     import_file = fields.Binary(string="Import File (*.csv)")
     fname = fields.Char(string="File Name")
+    delimiter = fields.Char(default=',', required=True, string='File Delimiter', help='Delimiter in import CSV file.')
+    quotechar = fields.Char(default='"', required=True, string='File Quotechar', help='Quotechar in import CSV file.')
+    encoding = fields.Char(default='utf-8', required=True, string='File Encoding', help='Enconding format in import CSV file.')
+
 
     @api.constrains('import_file')
     def _constrains_import_file(self):
@@ -47,10 +51,10 @@ class DistributionTableImportWizard(models.TransientModel):
         try:
             csv_options = {}
 
-            csv_options["delimiter"] = ','
-            csv_options["quotechar"] = '"'
+            csv_options["delimiter"] = self.delimiter
+            csv_options["quotechar"] = self.quotechar
             try:
-                decoded_file = data_file.decode("utf-8")
+                decoded_file = data_file.decode(self.encoding)
             except UnicodeDecodeError:
                 detected_encoding = chardet.detect(data_file).get("encoding", False)
                 if not detected_encoding:
