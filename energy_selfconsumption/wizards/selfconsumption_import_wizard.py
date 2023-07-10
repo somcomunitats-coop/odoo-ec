@@ -25,22 +25,19 @@ class SelfconsumptionImportWizard(models.TransientModel):
             raise ValidationError("Only csv format files are accepted.")
 
     def import_file_button(self):
+        error_string_list = ''
         file_data = base64.b64decode(self.import_file)
         parsing_data = self.with_context(active_id=self.ids[0])._parse_file(file_data)
         active_id = self.env.context.get('active_id')
         project = self.env['energy_selfconsumption.selfconsumption'].browse(active_id)
-        parsing_errors = []
-        for index, single_statement_data in enumerate(parsing_data[1:]):
-            found = self.import_line(single_statement_data, project)
-            if not found:
-                parsing_errors.append((index, single_statement_data))
-        if parsing_errors:
-            error_list = ''
-            for error in parsing_errors:
-                error_list = "".join(
-                    [error_list, _('<li>Line: {index} DNI: {vat} </li>\n').format(index=error[0], vat=error[1][0])])
-            project.message_post(subject=_('Import Result'),
-                                 body=_('Partners not found for: <ul>{list}</ul>'.format(list=error_list)))
+        for index, line in enumerate(parsing_data[1:]):
+            error = self.import_line(line, project)
+            if error:
+                error_string_list = "".join(
+                    [error_string_list, _('<li>Line {line}: {error}</li>\n').format(index, error)])
+        if error_string_list:
+            project.message_post(subject=_('Import Errors'),
+                                 body=_('Import errors found: <ul>{list}</ul>'.format(list=error_string_list)))
         return True
 
     def _parse_file(self, data_file):
@@ -71,27 +68,27 @@ class SelfconsumptionImportWizard(models.TransientModel):
         ], limit=1)
 
         if not partner:
-            if line[2]:
-                partner = self.env['res.partner'].create({
-                    'vat': line[0],
-                    'firstname': line[2],
-                    'lastname': line[3],
-                    'company_type': 'person'
+            return _('Partner with VAT:<b>{vat}</b> was not found.').format(vat=line[0])
+
+        if not project.inscription_ids.filtered_domain([('partner_id', '=', partner.id)]):
+            try:
+                self.env['energy_project.inscription'].create({
+                    'project_id': project.id,
+                    'partner_id': partner.id,
+                    'effective_date': fields.date.today()
                 })
-            else:
-                return False
-        if partner.id in project.inscription_ids.mapped('partner_id.id'):
-            return False
-        try:
-            self.env['energy_project.inscription'].create({
-                'project_id': project.id,
-                'partner_id': partner.id,
-                'effective_date': fields.date.today()
-            }
-            )
-        except:
-            return False
-        return True
+            except:
+                return _('Could not create inscription.').format(vat=line[0])
+
+        supply_point = self.env['energy_selfconsumption.supply_point'].search(
+            [('code', '=', line[2]), ('company_id', '=', self.env.company)])
+
+        if supply_point and supply_point.partner_id != partner:
+            return _(
+                'The supply point partner {supply_partner} and the partner {vat} in the subscription are different.').format(
+                supply_partner=supply_point.partner_id.vat, vat=partner.vat)
+
+        return False
 
     def create_supply_point(self, code, street, street2, city, state, zip, country, owner_vat):
         owner = self.env['res.partner'].search([
