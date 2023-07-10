@@ -31,7 +31,8 @@ class SelfconsumptionImportWizard(models.TransientModel):
         active_id = self.env.context.get('active_id')
         project = self.env['energy_selfconsumption.selfconsumption'].browse(active_id)
         for index, line in enumerate(parsing_data[1:]):
-            error = self.import_line(line, project)
+            import_dict = self.get_line_dict(line)
+            error = self.import_line(import_dict, project)
             if error:
                 error_string_list = "".join(
                     [error_string_list, _('<li>Line {line}: {error}</li>\n').format(index, error)])
@@ -39,6 +40,22 @@ class SelfconsumptionImportWizard(models.TransientModel):
             project.message_post(subject=_('Import Errors'),
                                  body=_('Import errors found: <ul>{list}</ul>'.format(list=error_string_list)))
         return True
+
+    def get_line_dict(self, line):
+        return {
+            'partner_vat': line[0] or False,
+            'effective_date': line[1] or False,
+            'code': line[2] or False,
+            'street1': line[3] or False,
+            'street2': line[4] or False,
+            'city': line[5] or False,
+            'state': line[6] or False,
+            'postal_code': line[7] or False,
+            'country': line[8] or False,
+            'owner_vat': line[9] or False,
+            'owner_firstname': line[10] or False,
+            'owner_lastname': line[11] or False,
+        }
 
     def _parse_file(self, data_file):
         self.ensure_one()
@@ -64,11 +81,11 @@ class SelfconsumptionImportWizard(models.TransientModel):
 
     def import_line(self, line, project):
         partner = self.env['res.partner'].search([
-            '|', ('vat', '=', line[0]), ('vat', '=ilike', line[0])
+            '|', ('vat', '=', line['partner_vat']), ('vat', '=ilike', line['partner_vat'])
         ], limit=1)
 
         if not partner:
-            return _('Partner with VAT:<b>{vat}</b> was not found.').format(vat=line[0])
+            return _('Partner with VAT:<b>{vat}</b> was not found.').format(vat=line['partner_vat'])
 
         if not project.inscription_ids.filtered_domain([('partner_id', '=', partner.id)]):
             try:
@@ -78,10 +95,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     'effective_date': fields.date.today()
                 })
             except:
-                return _('Could not create inscription.').format(vat=line[0])
+                return _('Could not create inscription for {vat}.').format(vat=line['partner_vat'])
 
-        supply_point = self.env['energy_selfconsumption.supply_point'].search(
-            [('code', '=', line[2]), ('company_id', '=', self.env.company)])
+        supply_point = self.env['energy_selfconsumption.supply_point'].search([('code', '=', line['code'])])
 
         if supply_point and supply_point.partner_id != partner:
             return _(
