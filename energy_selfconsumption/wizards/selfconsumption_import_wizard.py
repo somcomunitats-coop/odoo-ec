@@ -33,9 +33,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
         for index, line in enumerate(parsing_data[1:]):
             import_dict = self.get_line_dict(line)
             error = self.import_line(import_dict, project)
-            if error:
+            if error[0]:
                 error_string_list = "".join(
-                    [error_string_list, _('<li>Line {line}: {error}</li>\n').format(index, error)])
+                    [error_string_list, _('<li>Line {line}: {error}</li>\n').format(index, error[1])])
         if error_string_list:
             project.message_post(subject=_('Import Errors'),
                                  body=_('Import errors found: <ul>{list}</ul>'.format(list=error_string_list)))
@@ -85,7 +85,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
         ], limit=1)
 
         if not partner:
-            return _('Partner with VAT:<b>{vat}</b> was not found.').format(vat=line['partner_vat'])
+            return False, _('Partner with VAT:<b>{vat}</b> was not found.').format(vat=line_dict['partner_vat'])
 
         if not project.inscription_ids.filtered_domain([('partner_id', '=', partner.id)]):
             try:
@@ -95,12 +95,12 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     'effective_date': fields.date.today()
                 })
             except:
-                return _('Could not create inscription for {vat}.').format(vat=line['partner_vat'])
+                return False, _('Could not create inscription for {vat}.').format(vat=line_dict['partner_vat'])
 
         supply_point = self.env['energy_selfconsumption.supply_point'].search([('code', '=', line['code'])])
 
         if supply_point and supply_point.partner_id != partner:
-            return _(
+            return False, _(
                 'The supply point partner {supply_partner} and the partner {vat} in the subscription are different.').format(
                 supply_partner=supply_point.partner_id.vat, vat=partner.vat)
 
