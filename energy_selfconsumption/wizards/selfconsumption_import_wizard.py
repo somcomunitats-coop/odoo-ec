@@ -114,6 +114,16 @@ class SelfconsumptionImportWizard(models.TransientModel):
         owner = self.env['res.partner'].search([
             '|', ('vat', '=', line_dict['owner_vat']), ('vat', '=ilike', line_dict['owner_vat'])
         ], limit=1)
+        if not owner:
+            try:
+                res = self.env['res.partner'].create({
+                    'vat': line_dict['owner_vat'],
+                    'firstname': line_dict['owner_fistname'],
+                    'lastname': line_dict['owner_lastname'],
+                    'company_type': 'person'
+                })
+            except Exception as e:
+                return False, _('Owner could not be created: {error}').format(error=e)
         country = self.env['res.country'].search([('code', '=', line_dict['country'])])
         if not country:
             return False, _('Country code was not found: {code}').format(line_dict['country'])
