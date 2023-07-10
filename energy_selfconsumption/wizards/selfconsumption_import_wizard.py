@@ -104,25 +104,32 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 'The supply point partner {supply_partner} and the partner {vat} in the subscription are different.').format(
                 supply_partner=supply_point.partner_id.vat, vat=partner.vat)
 
-        return False
+        if not supply_point:
+            result = self.create_supply_point(line_dict, partner)
+            if not result[0]:
+                return result
+        return True
 
-    def create_supply_point(self, code, street, street2, city, state, zip, country, owner_vat):
+    def create_supply_point(self, line_dict, partner):
         owner = self.env['res.partner'].search([
-            '|', ('vat', '=', owner_vat), ('vat', '=ilike', owner_vat)
+            '|', ('vat', '=', line_dict['owner_vat']), ('vat', '=ilike', line_dict['owner_vat'])
         ], limit=1)
-        if not owner:
-            # TODO create new owner
-            raise UserError('Owner not found VAT:{}'.format(owner_vat))
-        country = self.env['res.country'].search([('code', '=', country)])
+        country = self.env['res.country'].search([('code', '=', line_dict['country'])])
+        if not country:
+            return False, _('Country code was not found: {code}').format(line_dict['country'])
+        state = self.env['res.country.state'].search(
+                [('code', '=', line_dict['state']), ('country_id', '=', country.id)])
+        if not state:
+            return False, _('State code was not found: {code}').format(line_dict['state'])
+
         return self.env['energy_selfconsumption.supply_point'].create({
-            'code': code,
-            'name': code,
-            'street': street,
-            'street2': street2,
-            'city': city,
-            'state_id': self.env['res.country.state'].search(
-                [('code', '=', state), ('country_id', '=', country.id)]).id,
-            'zip': zip,
+            'code': line_dict['code'],
+            'name': line_dict['code'],
+            'street': line_dict['street'],
+            'street2': line_dict['street2'],
+            'city': line_dict['city'],
+            'zip': line_dict['postal_code'],
+            'state_id': state.id,
             'country_id': country.id,
             'owner_id': owner.id,
             'partner_id': partner.id
