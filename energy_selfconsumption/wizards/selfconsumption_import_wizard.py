@@ -79,9 +79,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
             logger.warning("Parser error", exc_info=True)
             raise UserError(_("Error parsing the file"))
 
-    def import_line(self, line, project):
+    def import_line(self, line_dict, project):
         partner = self.env['res.partner'].search([
-            '|', ('vat', '=', line['partner_vat']), ('vat', '=ilike', line['partner_vat'])
+            '|', ('vat', '=', line_dict['partner_vat']), ('vat', '=ilike', line_dict['partner_vat'])
         ], limit=1)
 
         if not partner:
@@ -97,7 +97,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
             except:
                 return False, _('Could not create inscription for {vat}.').format(vat=line_dict['partner_vat'])
 
-        supply_point = self.env['energy_selfconsumption.supply_point'].search([('code', '=', line['code'])])
+        supply_point = self.env['energy_selfconsumption.supply_point'].search([('code', '=', line_dict['code'])])
 
         if supply_point and supply_point.partner_id != partner:
             return False, _(
