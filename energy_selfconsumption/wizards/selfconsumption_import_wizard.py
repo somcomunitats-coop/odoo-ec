@@ -31,7 +31,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
         project = self.env['energy_selfconsumption.selfconsumption'].browse(active_id)
         parsing_errors = []
         for index, single_statement_data in enumerate(parsing_data[1:]):
-            found = self.import_single_statement(single_statement_data, project)
+            found = self.import_line(single_statement_data, project)
             if not found:
                 parsing_errors.append((index, single_statement_data))
         if parsing_errors:
@@ -65,7 +65,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
             logger.warning("Parser error", exc_info=True)
             raise UserError(_("Error parsing the file"))
 
-    def import_single_statement(self, line, project):
+    def import_line(self, line, project):
         partner = self.env['res.partner'].search([
             '|', ('vat', '=', line[0]), ('vat', '=ilike', line[0])
         ], limit=1)
