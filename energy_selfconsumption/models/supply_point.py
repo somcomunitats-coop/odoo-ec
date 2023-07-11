@@ -1,4 +1,4 @@
-from odoo import fields, models, _
+from odoo import _, fields, models
 
 
 class SupplyPoint(models.Model):
@@ -16,10 +16,18 @@ class SupplyPoint(models.Model):
 
     name = fields.Char(required=True)
     code = fields.Char(string="CUPS", required=True)
-    owner_id = fields.Many2one("res.partner", string="Owner", required=True,
-                               help="Partner with the legal obligation of the supply point")
-    partner_id = fields.Many2one("res.partner", string="Partner", required=True,
-                                 help="Partner subscribed to the self-consumption project")
+    owner_id = fields.Many2one(
+        "res.partner",
+        string="Owner",
+        required=True,
+        help="Partner with the legal obligation of the supply point",
+    )
+    partner_id = fields.Many2one(
+        "res.partner",
+        string="Partner",
+        required=True,
+        help="Partner subscribed to the self-consumption project",
+    )
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
     )
@@ -40,5 +48,8 @@ class SupplyPoint(models.Model):
         "res.country", string="Country", ondelete="restrict", required=True
     )
 
-    supply_point_assignation_ids = fields.One2many('energy_selfconsumption.supply_point_assignation','supply_point_id',
-                                                   readonly=True)
+    supply_point_assignation_ids = fields.One2many(
+        "energy_selfconsumption.supply_point_assignation",
+        "supply_point_id",
+        readonly=True,
+    )

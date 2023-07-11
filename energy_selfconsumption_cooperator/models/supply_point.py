@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import api, fields, models
 
 
 class SupplyPoint(models.Model):
@@ -8,9 +8,9 @@ class SupplyPoint(models.Model):
         string="Cooperator",
         domain=[("member", "=", True)],
         required=True,
-        help="Cooperator subscribed to the self-consumption project"
+        help="Cooperator subscribed to the self-consumption project",
     )
 
-    @api.onchange('partner_id')
+    @api.onchange("partner_id")
     def _onchange_cooperator_id(self):
         self.owner_id = self.partner_id
