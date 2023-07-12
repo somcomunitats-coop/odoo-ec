@@ -73,7 +73,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
             "partner_vat": line[0] or False,
             "effective_date": line[1] or False,
             "code": line[2] or False,
-            "street1": line[3] or False,
+            "street": line[3] or False,
             "street2": line[4] or False,
             "city": line[5] or False,
             "state": line[6] or False,
