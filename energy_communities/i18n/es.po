@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-30 20:04+0000\n"
-"PO-Revision-Date: 2023-05-30 22:44+0200\n"
+"POT-Creation-Date: 2023-07-05 07:12+0000\n"
+"PO-Revision-Date: 2023-07-07 08:53+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 3.3.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_subscription_request__vat
@@ -850,6 +850,21 @@ msgid "An instance company already exists"
 msgstr "Ya existe una compañía con el rol de Instancia"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
+msgid "Assign Admin Wizard"
+msgstr "Asistente de creación de administradoras"
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_assign_admin_wizard
+msgid "Assign admin Wizard"
+msgstr "Asistente de creación de administradoras"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
+msgid "Assing administrator"
+msgstr "Asignar administradora"
+
+#. module: energy_communities
 #: code:addons/energy_communities/services/ce_community_service.py:0
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
 #: code:addons/energy_communities/services/ce_member_service.py:0
@@ -924,6 +939,11 @@ msgid "CRM Tag"
 msgstr "Etiqueta CRM"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
+msgid "Cancelar"
+msgstr "Cancelar"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__chart_template_id
 msgid "Chart Template"
 msgstr "Plantilla plan contable"
@@ -967,6 +987,13 @@ msgid "Community active services"
 msgstr "Servicios activos en la Comunidad"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__admins
+#, python-format
+msgid "Community admins"
+msgstr "Administradoras de comunidad"
+
+#. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_crm_lead__community_company_id
 msgid "Community related to this Lead"
 msgstr "Comunitad relacionada"
@@ -974,13 +1001,19 @@ msgstr "Comunitad relacionada"
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_company
 msgid "Companies"
-msgstr "Empreses"
+msgstr "Compañías"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__company_id
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "Company"
 msgstr "Compañía"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
+#, python-format
+msgid "Company not found"
+msgstr "No se ha encontrado la comunidad"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_collective_purchases
@@ -1022,7 +1055,7 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_partner
 msgid "Contact"
-msgstr "Contacte"
+msgstr "Contacto"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_contact
@@ -1066,8 +1099,15 @@ msgid "Cooperator Journal"
 msgstr "Diario Socias"
 
 #. module: energy_communities
+#: model:res.groups,name:energy_communities.role_coordination_res_groups
+#: model:res.users.role,name:energy_communities.role_coordination
+msgid "Coordination role"
+msgstr "Rol de coordinadora"
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__coordinator
+#: model:res.groups,name:energy_communities.group_coordinator
 #, python-format
 msgid "Coordinator"
 msgstr "Coordinadora"
@@ -1098,11 +1138,13 @@ msgid "Create user for keycloak"
 msgstr "Crear usuario de KeyCloak/SSO desde la socia"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_date
 msgid "Created on"
 msgstr ""
@@ -1116,6 +1158,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_account_chart_template__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_account_move__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag__display_name
@@ -1161,7 +1204,10 @@ msgid "Eficiencia energètica"
 msgstr "Eficiencia Energética"
 
 #. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__email
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
+#, python-format
 msgid "Email"
 msgstr "Correo electrónico"
 
@@ -1219,14 +1265,39 @@ msgid "Energy actions in progress"
 msgstr "Acciones energéticas en curso"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#, python-format
+msgid "Error: One role line can't have multiple users"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#, python-format
+msgid "Error: This user have multiple roles for this company"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#, python-format
+msgid "Error: You can't remove {} role"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__external_website_link
 msgid "External website link"
-msgstr ""
+msgstr "Enlace del sitio web"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid "FREQUENTLY ASKED QUESTIONS"
 msgstr "PREGUNTAS FRECUENTES"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__first_name
+#, python-format
+msgid "First name"
+msgstr "Nombre"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_citizen_education
@@ -1285,7 +1356,9 @@ msgstr "Nivel jerárquico"
 #: model_terms:ir.ui.view,arch_db:energy_communities.iban_template_es_ccee
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "I accept that the entity issues direct debit receipts to this account."
-msgstr "Confirmo que la persona titular de la cuenta bancaria, sea yo misma u otra persona, autoritza la domiciliación de los recibos."
+msgstr ""
+"Confirmo que la persona titular de la cuenta bancaria, sea yo misma u otra "
+"persona, autoritza la domiciliación de los recibos."
 
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__gender__not_share
@@ -1297,6 +1370,7 @@ msgstr "Prefiero no compartirlo"
 #: model:ir.model.fields,field_description:energy_communities.field_account_chart_template__id
 #: model:ir.model.fields,field_description:energy_communities.field_account_move__id
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__id
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__id
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__id
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__id
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag__id
@@ -1374,6 +1448,19 @@ msgid "Instance"
 msgstr "Instancia"
 
 #. module: energy_communities
+#: model:res.groups,name:energy_communities.role_internal_user_res_groups
+#: model:res.users.role,name:energy_communities.role_internal_user
+msgid "Internal User"
+msgstr "Usuaria de la plataforma"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__is_new_admin
+#, python-format
+msgid "Is a new admin?"
+msgstr "Es una administradora nueva?"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request__is_voluntary
 msgid "Is voluntary contribution"
 msgstr "Es aportación voluntaria"
@@ -1401,7 +1488,10 @@ msgid "Landing Page"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__lang
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__lang
+#, python-format
 msgid "Language"
 msgstr "Idioma"
 
@@ -1409,6 +1499,7 @@ msgstr "Idioma"
 #: model:ir.model.fields,field_description:energy_communities.field_account_chart_template____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_account_move____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag____last_update
@@ -1426,14 +1517,23 @@ msgid "Last Modified on"
 msgstr "Última modificación el"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_date
 msgid "Last Updated on"
 msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__last_name
+#, python-format
+msgid "Last name"
+msgstr "Apellido"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_crm_lead
@@ -1652,6 +1752,11 @@ msgid "Postal code"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
+msgid "Procesar"
+msgstr "Procesar"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__product_share_template
 msgid "Product Share Template"
 msgstr "Plantilla de producto aportación"
@@ -1659,7 +1764,7 @@ msgstr "Plantilla de producto aportación"
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_product_template
 msgid "Product Template"
-msgstr "Plantilla de producte"
+msgstr "Plantilla de producto"
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
@@ -1692,6 +1797,11 @@ msgid "Realm name"
 msgstr "Nombre REALM"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__redirect_admin_url
+msgid "Redirect Link after update password"
+msgstr "Enlace de redirección después de haber introducido la contraseña"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__community_company_id
 msgid "Related Community"
 msgstr "Comunidad relacionada"
@@ -1700,6 +1810,11 @@ msgstr "Comunidad relacionada"
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_menu
 msgid "Requests"
 msgstr "Solicitudes"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__reset_password_endpoint
+msgid "Reset password URL"
+msgstr "Enlace de reseteo de contraseña"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__root_endpoint
@@ -1741,6 +1856,12 @@ msgstr ""
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Some mandatory fields have not been filled."
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "Something went wrong. Mail can not be sended. More details: {}"
 msgstr ""
 
 #. module: energy_communities
@@ -2096,7 +2217,10 @@ msgstr ""
 "automáticamente en KeyCloak"
 
 #. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__vat
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
+#, python-format
 msgid "VAT"
 msgstr "NIF"
 
