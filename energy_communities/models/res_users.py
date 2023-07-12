@@ -227,11 +227,17 @@ class ResUsers(models.Model):
             )
 
     def make_internal_user(self):
-        # TODO: Require rebase new roles branch
-        pass
-        # self.env["res.users.role.line"].sudo().create({
-        #     "user_id": self.id,
-        #     "active": True,
-        #     "role_id": role.id,
-        #     "company_id": self.id,
-        # })
+        already_user = self.env["res.users.role.line"].sudo().search([
+            ("user_id.id", "=", self.id),
+            ("active", "=", True),
+            ("role_id.code", "=", "role_internal_user")
+        ])
+        if not already_user:
+            role = self.env["res.users.role"].sudo().search([(
+                "code", "=", "role_internal_user"
+            )])
+            self.env["res.users.role.line"].sudo().create({
+                "user_id": self.id,
+                "active": True,
+                "role_id": role.id,
+            })

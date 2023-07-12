@@ -46,7 +46,7 @@ class AssignAdminWizard(models.TransientModel):
             "firstname": self.first_name,
             "lastname": self.last_name,
             "company_id": company_id,
-            "company_ids": [company_id],
+            "company_ids": [(6, 0, [company_id])],
             "lang": self.lang.code,
             "email": self.email,
         }
