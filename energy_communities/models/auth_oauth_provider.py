@@ -22,7 +22,7 @@ class OAuthProvider(models.Model):
                             placeholder='admin', required=False)
     superuser_pwd = fields.Char(string='Superuser password', help='"Superuser" user password',
                                 placeholder='I hope is not "admin"', required=False)
-    admin_user_endpoint = fields.Char(string='User admin URL', required=True)
+    admin_user_endpoint = fields.Char(string='User admin URL')
     root_endpoint = fields.Char(string='Root URL', required=True, default='http://keycloak-ccee.local:8080/auth/')
     realm_name = fields.Char(string='Realm name', required=True, default='0')
     reset_password_endpoint = fields.Char(string='Reset password URL')
