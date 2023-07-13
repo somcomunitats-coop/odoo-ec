@@ -49,12 +49,12 @@ class SelfconsumptionImportWizard(models.TransientModel):
         project = self.env["energy_selfconsumption.selfconsumption"].browse(active_id)
         for index, line in enumerate(parsing_data[1:]):
             import_dict = self.get_line_dict(line)
-            error = self.import_line(import_dict, project)
-            if error[0]:
+            result = self.import_line(import_dict, project)
+            if not result[0]:
                 error_string_list = "".join(
                     [
                         error_string_list,
-                        _("<li>Line {line}: {error}</li>\n").format(index, error[1]),
+                        _("<li>Line {line}: {error}</li>\n").format(line=index, error=result[1]),
                     ]
                 )
         if error_string_list:
@@ -150,7 +150,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
             result = self.create_supply_point(line_dict, partner)
             if not result[0]:
                 return result
-        return True
+        return True, False
 
     def create_supply_point(self, line_dict, partner):
         owner = self.env["res.partner"].search(
@@ -175,15 +175,15 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 return False, _("Owner could not be created: {error}").format(error=e)
         country = self.env["res.country"].search([("code", "=", line_dict["country"])])
         if not country:
-            return False, _("Country code was not found: {code}").format(
-                line_dict["country"]
+            return False, _("Country code was not found: {country}").format(
+                country=line_dict["country"]
             )
         state = self.env["res.country.state"].search(
             [("code", "=", line_dict["state"]), ("country_id", "=", country.id)]
         )
         if not state:
-            return False, _("State code was not found: {code}").format(
-                line_dict["state"]
+            return False, _("State code was not found: {state}").format(
+                state=line_dict["state"]
             )
 
         return self.env["energy_selfconsumption.supply_point"].create(
