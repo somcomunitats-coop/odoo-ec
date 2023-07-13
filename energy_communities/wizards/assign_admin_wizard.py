@@ -18,42 +18,40 @@ class AssignAdminWizard(models.TransientModel):
         'res.lang',
         string=_("Language")
     )
+    role = fields.Selection(
+        selection='_get_available_roles',
+        string=_("Role")
+    )
 
+    @api.model
+    def _get_available_roles(self):
+        company = self.env['res.company'].browse(self.env.company.id)
+        if company.hierarchy_level == 'community':
+            return [
+                ('role_ce_admin', _("Energy Community Administrator")),
+                ('role_ce_member', _("Energy Community Member")),
+            ]
+        elif company.hierarchy_level == 'coordinator':
+            return [  # TODO: branch_new_roles is required
+                # ('role_ce_admin', _("Energy Community Administrator")),
+                # ('role_ce_member', _("Energy Community Member"))
+            ]
+        return []
 
     def process_data(self):
-        company_ids = self.env.context.get('active_ids')
-        if not company_ids:
-            raise ValidationError(_('Company not found'))
-
-        company_id = company_ids[0]
+        company_id = self.env.company.id
         if self.is_new_admin:
-            user = self.create_user(company_id)
+            user = self.env['res.users'].create_energy_community_user(
+                vat=self.vat,
+                first_name=self.first_name,
+                last_name=self.last_name,
+                lang_code=self.lang.code,
+                email=self.email,
+                company_id=company_id,
+            )
         else:
             user = self.env['res.users'].search([('login', '=', self.vat)])
 
-
-        company = self.env['res.company'].browse(company_id)
-        company.add_ce_admin(user)
-        user.make_internal_user()
+        user.add_energy_community_role(self.role, company_id)
 
         return True
-
-
-    # TODO: Move this method inside res_users
-    def create_user(self, company_id):
-        vals = {
-            "login": self.vat,
-            "firstname": self.first_name,
-            "lastname": self.last_name,
-            "company_id": company_id,
-            "company_ids": [(6, 0, [company_id])],
-            "lang": self.lang.code,
-            "email": self.email,
-        }
-        user = self.env["res.users"].create(vals)
-
-        user.create_users_on_keycloak()
-        user.send_reset_password_mail()
-
-
-        return user
