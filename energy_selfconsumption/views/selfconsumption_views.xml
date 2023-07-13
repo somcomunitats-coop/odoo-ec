@@ -45,7 +45,6 @@
                                 type="object"
                                 name="get_distribution_tables"
                                 icon="fa-table"
-                                context="{'default_owner_id': id}"
                                 attrs="{'invisible': [('state', '==', 'draft')]}"
                             >
                                 <field
