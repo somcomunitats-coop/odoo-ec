@@ -14,8 +14,18 @@
             <xpath expr="//sheet" position="before">
                 <header>
                     <field name="landing_page_id" invisible="1"/>
-                    <button name="create_landing" type="object" string="Create landing page" attrs="{'invisible': [('landing_page_id','!=',False)]}" />
-                    <button name="action_open_assign_admin_wizard" type="object" string="Assing administrator" groups="['group_admin','group_platform_manager','group_coordinator']"/>
+                    <button
+                        name="create_landing"
+                        type="object"
+                        string="Create landing page"
+                        attrs="{'invisible': [('landing_page_id','!=',False)]}"
+                    />
+                    <button
+                        name="action_open_assign_admin_wizard"
+                        type="object"
+                        string="Assing administrator"
+                        groups="energy_communities.group_platform_manager, energy_communities.group_admin, energy_communities.group_coordinator"
+                    />
                 </header>
             </xpath>
             <xpath expr="//field[@name='logo']" position="before">
