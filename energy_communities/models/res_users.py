@@ -227,3 +227,60 @@ class ResUsers(models.Model):
                 "active": True,
                 "role_id": role.id,
             })
+
+    def make_ce_member(self, company):
+        # Create role line with role, company and user
+        # Add company in allowed_company_ids
+        pass
+
+    def make_ce_admin(self, company):
+        pass
+
+    def make_coord_admin(self, company):
+        # Create role line with role, company and user
+        # Add company in allowed_company_ids
+        # Create a line for every company
+        # Add all companies in allowed_company_ids
+        pass
+
+    def make_coord_worker(self, company):
+        # Create role line with role, company and user
+        # Add company in allowed_company_ids
+        # Create a line for every company
+        # Add all companies in allowed_company_ids
+        pass
+
+    def add_energy_community_role(self, role, company_id):
+        # TODO: Refactor quan tingui més info de com queden els roles 😟
+        if role == 'role_ce_member':
+            self.make_ce_member(company_id)
+        elif role == 'role_ce_admin':
+            self.make_ce_admin(company_id)
+        elif role == 'role_coordination':
+            self.make_coord_admin(company_id)
+        elif role == 'role_platform_admin':
+            self.make_coord_worker(company_id)
+        else:
+            raise exceptions.UserError(
+                _('Role not found')
+            )
+
+    def create_energy_community_user(
+        cls, vat, first_name, last_name, lang_code, email, company_id
+    ):
+        vals = {
+            "login": vat,
+            "firstname": first_name,
+            "lastname": last_name,
+            # "company_id": company_id,  # TODO: Move!
+            # "company_ids": [(6, 0, [company_id])],  # TODO: Move!
+            "lang": lang_code,
+            "email": email,
+        }
+        user = cls.create(vals)
+
+        user.make_internal_user()
+        # user.create_users_on_keycloak()  # TEMPORAL
+        # user.send_reset_password_mail()  # TEMPORAL
+
+        return user
