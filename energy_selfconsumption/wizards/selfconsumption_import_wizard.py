@@ -143,7 +143,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
 
         if supply_point and supply_point.partner_id != partner:
             return False, _(
-                "The supply point partner {supply_partner} and the partner {vat} in the subscription are different."
+                "The supply point partner {supply_partner} and the partner {vat} in the inscription are different."
             ).format(supply_partner=supply_point.partner_id.vat, vat=partner.vat)
 
         if not supply_point:
