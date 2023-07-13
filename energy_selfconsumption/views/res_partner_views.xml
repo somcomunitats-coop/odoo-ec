@@ -33,6 +33,7 @@
                         type="object"
                         name="get_supply_points"
                         icon="fa-lightbulb-o"
+                        context="{'default_partner_id': id, 'default_owner_id': id}"
                     >
                         <field
                             string="Supply Points"
