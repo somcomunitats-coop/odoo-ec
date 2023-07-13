@@ -26,7 +26,7 @@ class DistributionTableImportWizard(models.TransientModel):
         if self.fname:
             format = str(self.fname.split(".")[1])
             if format != 'csv':
-                raise ValidationError("Only csv format files are accepted.")
+                raise ValidationError(_("Only csv format files are accepted."))
 
     def import_file_button(self):
         file_data = base64.b64decode(self.import_file)
