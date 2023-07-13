@@ -7,7 +7,6 @@ class SupplyPoint(models.Model):
     partner_id = fields.Many2one(
         string="Cooperator",
         domain=[("member", "=", True)],
-        required=True,
         help="Cooperator subscribed to the self-consumption project"
     )
 
