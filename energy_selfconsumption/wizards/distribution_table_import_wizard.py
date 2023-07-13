@@ -33,7 +33,6 @@ class DistributionTableImportWizard(models.TransientModel):
         parsing_data = self.with_context(active_id=self.ids[0])._parse_file(file_data)
         active_id = self.env.context.get('active_id')
         distribution_table = self.env['energy_selfconsumption.distribution_table'].browse(active_id)
-        parsing_errors = []
         self.import_all_lines(parsing_data, distribution_table)
         return True
 
