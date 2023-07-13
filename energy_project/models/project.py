@@ -18,7 +18,7 @@ class Project(models.Model):
         "res.company", default=lambda self: self.env.company, readonly=True
     )
     inscription_ids = fields.One2many(
-        "energy_project.inscription", "project_id", required=True
+        "energy_project.inscription", "project_id",
     )
     active = fields.Boolean(default=True)
 
