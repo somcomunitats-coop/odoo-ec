@@ -20,20 +20,5 @@
             parent="energy_selfconsumption.contacts_category_menu"
             action="action_partner_cooperator_form"
         />
-
-        <record id="view_partner_form_inherit" model="ir.ui.view">
-            <field name="name">res.partner.form.button.context</field>
-            <field name="model">res.partner</field>
-            <field
-                name="inherit_id"
-                ref="energy_selfconsumption.view_partner_form_inherit"
-            />
-            <field name="arch" type="xml">
-                <xpath expr="//button[@name='get_supply_points']" position="attributes">
-                    <attribute name="context">{'default_partner_id': id}</attribute>
-                </xpath>
-            </field>
-        </record>
-
     </data>
 </odoo>

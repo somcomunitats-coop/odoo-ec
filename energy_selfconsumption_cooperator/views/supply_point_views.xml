@@ -10,7 +10,6 @@
             />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='owner_id']" position="replace">
-                    <field name="partner_id" options="{'no_create': True}" />
                     <field
                         name="owner_id"
                         domain="['|', ('member', '=' , False), ('id', '=', partner_id)]"
