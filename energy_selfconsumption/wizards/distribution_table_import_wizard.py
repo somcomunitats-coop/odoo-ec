@@ -1,64 +1,45 @@
+from odoo import fields, models, _, api
+from odoo.exceptions import UserError, ValidationError
 import base64
 import logging
-from csv import reader
 from io import StringIO
-
 import chardet
-
-from odoo import _, api, fields, models
-from odoo.exceptions import UserError, ValidationError
+from csv import reader
+import werkzeug
+from odoo.http import request
 
 logger = logging.getLogger(__name__)
 
 
 class DistributionTableImportWizard(models.TransientModel):
-    _name = "energy_selfconsumption.distribution_table_import.wizard"
+    _name = 'energy_selfconsumption.distribution_table_import.wizard'
 
     import_file = fields.Binary(string="Import File (*.csv)")
     fname = fields.Char(string="File Name")
-    delimiter = fields.Char(
-        default=",",
-        required=True,
-        string="File Delimiter",
-        help="Delimiter in import CSV file.",
-    )
-    quotechar = fields.Char(
-        default='"',
-        required=True,
-        string="File Quotechar",
-        help="Quotechar in import CSV file.",
-    )
-    encoding = fields.Char(
-        default="utf-8",
-        required=True,
-        string="File Encoding",
-        help="Enconding format in import CSV file.",
-    )
+    delimiter = fields.Char(default=',', required=True, string='File Delimiter', help='Delimiter in import CSV file.')
+    quotechar = fields.Char(default='"', required=True, string='File Quotechar', help='Quotechar in import CSV file.')
+    encoding = fields.Char(default='utf-8', required=True, string='File Encoding', help='Enconding format in import CSV file.')
 
-    @api.constrains("import_file")
+
+    @api.constrains('import_file')
     def _constrains_import_file(self):
         if self.fname:
             format = str(self.fname.split(".")[1])
-            if format != "csv":
+            if format != 'csv':
                 raise ValidationError("Only csv format files are accepted.")
 
     def import_file_button(self):
         file_data = base64.b64decode(self.import_file)
         parsing_data = self.with_context(active_id=self.ids[0])._parse_file(file_data)
-        active_id = self.env.context.get("active_id")
-        distribution_table = self.env[
-            "energy_selfconsumption.distribution_table"
-        ].browse(active_id)
+        active_id = self.env.context.get('active_id')
+        distribution_table = self.env['energy_selfconsumption.distribution_table'].browse(active_id)
+        parsing_errors = []
         self.import_all_lines(parsing_data, distribution_table)
         return True
 
     def download_template_button(self):
-        distribution_table_example_attachment = self.env.ref(
-            "energy_selfconsumption.distribution_table_example_attachment"
-        )
-        download_url = "/web/content/{}/?download=true".format(
-            str(distribution_table_example_attachment.id)
-        )
+        distribution_table_example_attachment = self.env.ref('energy_selfconsumption.distribution_table_example_attachment')
+        download_url = '/web/content/{}/?download=true'.format(str(distribution_table_example_attachment.id))
         return {
             "type": "ir.actions.act_url",
             "url": download_url,
@@ -95,35 +76,26 @@ class DistributionTableImportWizard(models.TransientModel):
             supply_point_assignation_values_list.append((0, 0, value))
 
         distribution_table.write(
-            {"supply_point_assignation_ids": supply_point_assignation_values_list}
+            {
+                'supply_point_assignation_ids': supply_point_assignation_values_list
+            }
         )
 
     def get_supply_point_assignation_values(self, line):
         return {
-            "supply_point_id": self.get_supply_point_id(code=line[0]),
-            "coefficient": self.get_coefficient(coefficient=line[1]),
+            'supply_point_id': self.get_supply_point_id(code=line[0]),
+            'coefficient': self.get_coefficient(coefficient=line[1])
         }
 
     def get_supply_point_id(self, code):
-        supply_point = self.env["energy_selfconsumption.supply_point"].search(
-            [("code", "=", code)]
-        )
+        supply_point = self.env['energy_selfconsumption.supply_point'].search([('code', '=', code)])
         if not supply_point:
-            raise ValidationError(
-                _("There isn't any supply point with this code: {code}").format(
-                    code=code
-                )
-            )
+            raise ValidationError(_('There isn\'t any supply point with this code: {code}').format(code=code))
         return supply_point.id
 
     def get_coefficient(self, coefficient):
         try:
-            return fields.Float.convert_to_write(
-                self=fields.Float(),
-                value=coefficient,
-                record=self.env[
-                    "energy_selfconsumption.supply_point_assignation"
-                ].coefficient,
-            )
+            return fields.Float.convert_to_write(self=fields.Float(), value=coefficient, record=self.env[
+                'energy_selfconsumption.supply_point_assignation'].coefficient)
         except ValueError:
             return 0

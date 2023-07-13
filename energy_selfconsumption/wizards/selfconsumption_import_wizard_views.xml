@@ -1,29 +1,21 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
 
         <record id="selfconsumption_import_wizard_form_view" model="ir.ui.view">
-            <field
-                name="name"
-            >energy_selfconsumption.selfconsumption_import.wizard.form</field>
-            <field
-                name="model"
-            >energy_selfconsumption.selfconsumption_import.wizard</field>
+            <field name="name">energy_selfconsumption.selfconsumption_import.wizard.form</field>
+            <field name="model">energy_selfconsumption.selfconsumption_import.wizard</field>
             <field name="arch" type="xml">
                 <form>
                     <sheet>
                         <group>
-                            <field
-                                name="import_file"
-                                filename="fname"
-                                widget="binary"
-                            />
-                            <field name="fname" invisible="1" />
+                            <field name="import_file" filename="fname" widget="binary"></field>
+                            <field name="fname" invisible="1"></field>
                         </group>
                         <group>
-                            <field name="delimiter" />
-                            <field name="quotechar" />
-                            <field name="encoding" />
+                            <field name="delimiter"></field>
+                            <field name="quotechar"></field>
+                            <field name="encoding"></field>
                         </group>
                     </sheet>
                     <footer>
@@ -35,15 +27,10 @@
 
         <record id="selfconsumption_import_wizard_action" model="ir.actions.act_window">
             <field name="name">Import data</field>
-            <field
-                name="res_model"
-            >energy_selfconsumption.selfconsumption_import.wizard</field>
+            <field name="res_model">energy_selfconsumption.selfconsumption_import.wizard</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
-            <field
-                name="binding_model_id"
-                ref="model_energy_selfconsumption_selfconsumption"
-            />
+            <field name="binding_model_id" ref="model_energy_selfconsumption_selfconsumption"/>
         </record>
     </data>
 </odoo>

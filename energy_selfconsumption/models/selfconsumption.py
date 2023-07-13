@@ -37,12 +37,12 @@ class Selfconsumption(models.Model):
     def get_distribution_tables(self):
         self.ensure_one()
         return {
-            "type": "ir.actions.act_window",
-            "name": "Distribution Tables",
-            "view_mode": "tree,form",
-            "res_model": "energy_selfconsumption.distribution_table",
-            "domain": [("selfconsumption_project_id", "=", self.id)],
-            "context": {"create": True, "default_selfconsumption_project_id": self.id},
+            'type': 'ir.actions.act_window',
+            'name': 'Distribution Tables',
+            'view_mode': 'tree,form',
+            'res_model': 'energy_selfconsumption.distribution_table',
+            'domain': [('selfconsumption_project_id', '=', self.id)],
+            'context': {'create': True, 'default_selfconsumption_project_id': self.id},
         }
     
     def get_inscriptions(self):
@@ -68,19 +68,17 @@ class Selfconsumption(models.Model):
                 raise ValidationError(_("Project must have a valid CIL."))
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Generation Power."))
-            if not record.distribution_table_ids.filtered_domain(
-                [("state", "=", "validated")]
-            ):
+            if not record.distribution_table_ids.filtered_domain([('state', '=', 'validated')]):
                 raise ValidationError(_("Must have a valid Distribution Table."))
             record.write({"state": "active"})
 
     def action_selfconsumption_import_wizard(self):
         self.ensure_one()
         return {
-            "type": "ir.actions.act_window",
-            "view_mode": "form",
-            "res_model": "energy_selfconsumption.selfconsumption_import.wizard",
-            "views": [(False, "form")],
-            "view_id": False,
-            "target": "new",
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'energy_selfconsumption.selfconsumption_import.wizard',
+            'views': [(False, 'form')],
+            'view_id': False,
+            'target': 'new',
         }

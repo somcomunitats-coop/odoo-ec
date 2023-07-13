@@ -10,7 +10,12 @@
     "website": "https://somcomunitats.coop/",
     "category": "Customizations",
     "version": "14.0.1.1.1",
-    "depends": ["base", "mail", "energy_project", "partner_firstname"],
+    "depends": [
+        "base",
+        "mail",
+        "energy_project",
+        "partner_firstname"
+    ],
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
