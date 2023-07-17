@@ -182,37 +182,6 @@ class ResCompany(models.Model):
             ])
             rec.admins = role_lines.mapped("user_id")
 
-    def add_ce_admin(self, user):
-        role_name = self._get_admin_role_name()
-        role = self.env["res.users.role"].sudo().search([(
-            "code", "=", role_name
-        )])
-        current_role = self.env["res.users.role.line"].sudo().search([
-            ("user_id", "=", user.id),
-            ("active", "=", True),
-            ("company_id", "=", self.id)
-        ])
-        if current_role and len(current_role) > 1:
-            raise UserError(_("Error: This user have multiple roles for this company"))
-        if current_role and len(current_role.company_ids) > 1:
-            raise UserError(_("Error: One role line can't have multiple users"))
-        if current_role and current_role.role.code != "role_ce_member":
-            raise UserError(_("Error: You can't remove {} role").format(current_role.role.code))
-
-        if current_role:
-                current_role.write({"role_id": role})
-        else:
-            user = self.env["res.users"].sudo().browse(user.id)
-            user.write({
-                "company_ids": [(4, self.id)]
-            })
-            self.env["res.users.role.line"].sudo().create({
-                "user_id": user.id,
-                "active": True,
-                "role_id": role.id,
-                "company_id": self.id,
-            })
-
     def get_ce_members(self, domain_key="in_kc_and_active"):
         domains_dict = {
             "in_kc_and_active": [
@@ -268,6 +237,9 @@ class ResCompany(models.Model):
         for tag in self.ce_tag_ids:
             res.append({"id": tag.id, "name": tag.name, "ext_id": tag.tag_ext_id})
         return res
+
+    def get_child_companies(self):
+        pass
 
     def get_public_web_landing_url(self):
         # TODO: Get from landing page or company, for now we don't need

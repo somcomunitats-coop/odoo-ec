@@ -41,7 +41,7 @@ class AssignAdminWizard(models.TransientModel):
     def process_data(self):
         company_id = self.env.company.id
         if self.is_new_admin:
-            user = self.env['res.users'].create_energy_community_user(
+            user = self.env['res.users'].create_energy_community_base_user(
                 vat=self.vat,
                 first_name=self.first_name,
                 last_name=self.last_name,

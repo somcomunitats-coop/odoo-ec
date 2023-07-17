@@ -16,6 +16,7 @@
                             <field name="last_name" attrs="{'invisible':[('is_new_admin', '=', False)]}"/>
                             <field name="email" attrs="{'invisible':[('is_new_admin', '=', False)]}"/>
                             <field name="lang" attrs="{'invisible':[('is_new_admin', '=', False)]}"/>
+                            <field name="role"/>
                         </group>
                     </sheet>
                     <footer>
