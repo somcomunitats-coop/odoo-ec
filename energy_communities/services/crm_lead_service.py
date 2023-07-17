@@ -44,8 +44,7 @@ class CRMLeadService(Component):
     def _setup_lead_utm_source(self, lead_id, source_xml_id):
         lead = self.env['crm.lead'].browse(lead_id)
         if lead:
-            utm_source = self.env['ir.model.data'].get_object(
-                'energy_communities', source_xml_id)
+            utm_source = self.env.ref('energy_communities.'+source_xml_id)
             lead.write({
                 'source_id': utm_source.id
             })
