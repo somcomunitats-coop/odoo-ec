@@ -242,44 +242,68 @@ class ResUsers(models.Model):
                 "role_id": role.id,
             })
 
-    def make_ce_member(self, company):
-        # Create role line with role, company and user
-        # Add company in allowed_company_ids
-        pass
+    def make_ce_user(self, company_id, role_name):
+        role = self.env["res.users.role"].sudo().search([(
+            "code", "=", role_name
+        )])
+        current_role = self.env["res.users.role.line"].sudo().search([
+            ("user_id", "=", self.id),
+            ("active", "=", True),
+            ("company_id", "=", company_id)
+        ])
 
-    def make_ce_admin(self, company):
-        pass
+        if current_role:
+                current_role.write({"role_id": role})
+        else:
+            self.write({
+                "company_ids": [(4, company_id)]
+            })
+            self.env["res.users.role.line"].sudo().create({
+                "user_id": self.id,
+                "active": True,
+                "role_id": role.id,
+                "company_id": company_id,
+            })
 
-    def make_coord_admin(self, company):
-        # Create role line with role, company and user
-        # Add company in allowed_company_ids
-        # Create a line for every company
-        # Add all companies in allowed_company_ids
-        pass
+    def make_coord_user(self, company_id, role_name):
+        role = self.env["res.users.role"].sudo().search([(
+            "code", "=", role_name
+        )])
+        current_role = self.env["res.users.role.line"].sudo().search([
+            ("user_id", "=", self.id),
+            ("active", "=", True),
+            ("company_id", "=", company_id)
+        ])
 
-    def make_coord_worker(self, company):
-        # Create role line with role, company and user
-        # Add company in allowed_company_ids
-        # Create a line for every company
-        # Add all companies in allowed_company_ids
-        pass
+        if current_role:
+                current_role.write({"role_id": role})
+        else:
+            self.write({
+                "company_ids": [(4, company_id)]
+            })
+            self.env["res.users.role.line"].sudo().create({
+                "user_id": self.id,
+                "active": True,
+                "role_id": role.id,
+                "company_id": company_id,
+            })
 
-    def add_energy_community_role(self, role, company_id):
-        # TODO: Refactor quan tingui més info de com queden els roles 😟
-        if role == 'role_ce_member':
-            self.make_ce_member(company_id)
-        elif role == 'role_ce_admin':
-            self.make_ce_admin(company_id)
-        elif role == 'role_coordination':
-            self.make_coord_admin(company_id)
-        elif role == 'role_platform_admin':
-            self.make_coord_worker(company_id)
+        company = self.ref["res.company"].browse(company_id)
+        child_companies = company.get_child_companies()
+        for child_company in child_companies:
+            self.make_ce_user(company_id, "role_ce_admin")  # TODO: New super-role!
+
+    def add_energy_community_role(self, role_name, company_id):
+        if role_name == 'role_ce_member' or role_name == 'role_ce_admin':
+            self.make_ce_user(company_id, role_name)
+        elif role_name == 'role_coordination' or role_name == 'role_coordination':  # TODO: Change role name and New super-role!
+            self.make_coord_user(company_id, role_name)
         else:
             raise exceptions.UserError(
                 _('Role not found')
             )
 
-    def create_energy_community_user(
+    def create_energy_community_base_user(
         cls, vat, first_name, last_name, lang_code, email, company_id
     ):
         vals = {
