@@ -15,7 +15,7 @@ def migrate(cr, version):
         ('code', '=', 'role_internal_user')
     ])
     role_lines = env['res.users.role.line'].search([
-        ("role_id.code", "in", ['role_ce_admin', 'role_coordination', 'role_platform_admin'])
+        ("role_id.code", "in", ['role_ce_member', 'role_ce_admin', 'role_platform_admin'])
     ])
     logger.info("Founded this role lines: {}".format(role_lines))
     for line in role_lines:
