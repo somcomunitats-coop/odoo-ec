@@ -166,7 +166,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 res = self.env["res.partner"].create(
                     {
                         "vat": line_dict["owner_vat"],
-                        "firstname": line_dict["owner_fistname"],
+                        "firstname": line_dict["owner_firstname"],
                         "lastname": line_dict["owner_lastname"],
                         "company_type": "person",
                     }
