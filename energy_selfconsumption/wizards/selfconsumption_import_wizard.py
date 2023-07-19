@@ -163,7 +163,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
         )
         if not owner:
             try:
-                res = self.env["res.partner"].create(
+                owner = self.env["res.partner"].create(
                     {
                         "vat": line_dict["owner_vat"],
                         "firstname": line_dict["owner_firstname"],
