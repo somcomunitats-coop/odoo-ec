@@ -71,7 +71,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
     def get_line_dict(self, line):
         return {
             "partner_vat": line[0] or False,
-            "effective_date": line[1] or fields.date.today(),
+            "effective_date": line[1] or False,
             "code": line[2] or False,
             "street": line[3] or False,
             "street2": line[4] or False,
@@ -124,12 +124,21 @@ class SelfconsumptionImportWizard(models.TransientModel):
         if not project.inscription_ids.filtered_domain(
             [("partner_id", "=", partner.id)]
         ):
+            if line_dict["effective_date"]:
+                try:
+                    effective_date_iso = fields.date.fromisoformat(line_dict["effective_date"])
+                except ValueError as e:
+                    return False, _("Could not create inscription for {vat}. {error}").format(
+                        vat=line_dict["partner_vat"], error=e
+                    )
+            else:
+                effective_date_iso = fields.date.today()
             try:
                 self.env["energy_project.inscription"].create(
                     {
                         "project_id": project.id,
                         "partner_id": partner.id,
-                        "effective_date": line_dict["effective_date"],
+                        "effective_date": effective_date_iso,
                     }
                 )
             except Exception as e:
