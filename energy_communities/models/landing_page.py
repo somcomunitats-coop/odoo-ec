@@ -23,6 +23,10 @@ class LandingPage(models.Model):
     virtual_office_link = fields.Char(string="Virtual office link")
     external_website_link = fields.Char(string="External website link")
     group_image_link = fields.Char(string="Group image link")
+    primary_image_file = fields.Image(
+        "Primary Image")
+    secondary_image_file = fields.Image(
+        "Secondary Image")
     short_description = fields.Char(string="Short description")
     long_description = fields.Text(string="Long description")
     why_become_cooperator = fields.Text(string="Why become cooperator")

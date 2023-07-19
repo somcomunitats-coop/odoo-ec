@@ -23,6 +23,19 @@ class LandingService(Component):
     def _to_dict(landing_page):
         # TODO: move this method to model method?
         # return landing.to_dict()
+        base_url = landing_page.env['ir.config_parameter'].get_param(
+            'web.base.url')
+        if landing_page.primary_image_file:
+            primary_image_file = base_url+'/web/image/landing.page/' + \
+                str(landing_page.id)+'/primary_image_file'
+        else:
+            primary_image_file = ""
+        if landing_page.secondary_image_file:
+            secondary_image_file = base_url+'/web/image/landing.page/' + \
+                str(landing_page.id)+'/secondary_image_file'
+        else:
+            secondary_image_file = ""
+
         return {
             "landing": {
                 "id": landing_page.id,
@@ -36,6 +49,8 @@ class LandingService(Component):
                 "external_website_link": landing_page.external_website_link or "",
                 "community_active_services": landing_page.company_id.get_active_services(),
                 "group_image_link": landing_page.group_image_link or "",
+                "primary_image_file": primary_image_file,
+                "secondary_image_file": secondary_image_file,
                 "short_description": landing_page.short_description or "",
                 "long_description": landing_page.long_description or "",
                 "why_become_cooperator": landing_page.why_become_cooperator or "",

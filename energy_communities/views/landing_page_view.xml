@@ -24,6 +24,8 @@
                     <field name="external_website_link"/>
                 </group>
                 <group>
+                    <field name="primary_image_file" widget="image"/>
+                    <field name="secondary_image_file" widget="image"/>
                     <field name="group_image_link"/>
                     <field name="short_description"/>
                     <field name="long_description"/>

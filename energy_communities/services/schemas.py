@@ -234,6 +234,8 @@ S_LANDING_PAGE_CREATE = {
                 },
             },
             "group_image_link": {"type": "string"},
+            "primary_image_file": {"type": "string"},
+            "secondary_image_file": {"type": "string"},
             "short_description": {"type": "string"},
             "long_description": {"type": "string"},
             "why_become_cooperator": {"type": "string"},
