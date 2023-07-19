@@ -37,9 +37,10 @@ class SelfconsumptionImportWizard(models.TransientModel):
 
     @api.constrains("import_file")
     def _constrains_import_file(self):
-        format = str(self.fname.split(".")[1])
-        if format != "csv":
-            raise ValidationError(_("Only csv format files are accepted."))
+        if self.fname:
+            format = str(self.fname.split(".")[1])
+            if format != 'csv':
+                raise ValidationError(_("Only csv format files are accepted."))
 
     def import_file_button(self):
         error_string_list = ""
@@ -67,6 +68,15 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 ),
             )
         return True
+
+    def download_template_button(self):
+        distribution_table_example_attachment = self.env.ref('energy_selfconsumption.selfconsumption_table_example_attachment')
+        download_url = '/web/content/{}/?download=true'.format(str(distribution_table_example_attachment.id))
+        return {
+            "type": "ir.actions.act_url",
+            "url": download_url,
+            "target": "new",
+        }
 
     def get_line_dict(self, line):
         return {
