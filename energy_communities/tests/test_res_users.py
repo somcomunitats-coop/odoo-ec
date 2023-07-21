@@ -1,5 +1,6 @@
 # Add faker into requirements.txt ?? 🤔
 from faker import Faker
+from mock import patch
 from odoo.tests import common
 from odoo.exceptions import UserError
 
@@ -65,17 +66,37 @@ class TestResUsers(common.TransactionCase):
             "role_id": self.internal_role.id,
         })
 
-    def test__create_energy_community_base_user__base_case(self):
-        # Patch is required 🌞
-        pass
+    @patch("odoo.addons.energy_communities.models.res_users.ResUsers.create_users_on_keycloak")
+    @patch("odoo.addons.energy_communities.models.res_users.ResUsers.send_reset_password_mail")
+    def test__create_energy_community_base_user__base_case(
+        self, reset_password_mocked, create_kc_user_mocked
+    ):
+        user = self.users_model.create_energy_community_base_user(
+            vat=faker.vat_id(),
+            first_name="Tom",
+            last_name="Bombadil",
+            lang_code="en_US",
+            email=faker.email(),
+        )
 
-    def test__add_energy_community_role__make_ce_user(self):
-        # Patch is required 🌞
-        pass
+        # then send_reset_password_mail function was called once time
+        reset_password_mocked.assert_called_once()
+        # then create_users_on_keycloak function was called once time
+        create_kc_user_mocked.assert_called_once()
 
-    def test__add_energy_community_role__make_coord_user(self):
-        # Patch is required 🌞
-        pass
+    @patch("odoo.addons.energy_communities.models.res_users.ResUsers.make_ce_user")
+    def test__add_energy_community_role__make_ce_user(self, make_ce_user_mocked):
+        self.random_user.add_energy_community_role(self.community.id, 'role_ce_admin')
+
+        # then make_ce_user_mocked function was called once time
+        make_ce_user_mocked.assert_called_with(self.community.id, 'role_ce_admin')
+
+    @patch("odoo.addons.energy_communities.models.res_users.ResUsers.make_coord_user")
+    def test__add_energy_community_role__make_coord_user(self, make_coord_user_mocked):
+        self.random_user.add_energy_community_role(self.coordination.id, 'role_coordination')  # TODO: Rename in other branch ❗️❗️
+
+        # then make_coord_user function was called once time
+        make_coord_user_mocked.assert_called_with(self.coordination.id, 'role_coordination')
 
     def test__add_energy_community_role__role_not_found(self):
         with self.assertRaises(UserError):

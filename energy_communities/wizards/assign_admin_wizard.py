@@ -52,6 +52,6 @@ class AssignAdminWizard(models.TransientModel):
         else:
             user = self.env['res.users'].search([('login', '=', self.vat)])
 
-        user.add_energy_community_role(self.role, company_id)
+        user.add_energy_community_role(company_id, self.role)
 
         return True

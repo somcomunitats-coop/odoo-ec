@@ -293,7 +293,7 @@ class ResUsers(models.Model):
         for child_company in child_companies:
             self.make_ce_user(company_id, "role_ce_admin")  # TODO: New super-role!
 
-    def add_energy_community_role(self, role_name, company_id):
+    def add_energy_community_role(self, company_id, role_name):
         if role_name == 'role_ce_member' or role_name == 'role_ce_admin':
             self.make_ce_user(company_id, role_name)
         elif role_name == 'role_coordination' or role_name == 'role_coordination':  # TODO: Change role name and New super-role!
@@ -304,21 +304,19 @@ class ResUsers(models.Model):
             )
 
     def create_energy_community_base_user(
-        cls, vat, first_name, last_name, lang_code, email, company_id
+        cls, vat, first_name, last_name, lang_code, email
     ):
         vals = {
             "login": vat,
             "firstname": first_name,
             "lastname": last_name,
-            # "company_id": company_id,  # TODO: Move!
-            # "company_ids": [(6, 0, [company_id])],  # TODO: Move!
             "lang": lang_code,
             "email": email,
         }
         user = cls.create(vals)
 
         user.make_internal_user()
-        # user.create_users_on_keycloak()  # TEMPORAL
-        # user.send_reset_password_mail()  # TEMPORAL
+        user.create_users_on_keycloak()
+        user.send_reset_password_mail()
 
         return user
