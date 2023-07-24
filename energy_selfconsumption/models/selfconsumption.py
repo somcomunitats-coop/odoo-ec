@@ -18,7 +18,7 @@ class Selfconsumption(models.Model):
         "energy_project.project", required=True, ondelete="cascade"
     )
     code = fields.Char(string="CAU")
-    power = fields.Float(string="Generation Power (kWh)")
+    power = fields.Float(string="Generation Power (kW)")
     distribution_table_ids = fields.One2many('energy_selfconsumption.distribution_table', 'selfconsumption_project_id',
                                              readonly=True)
     distribution_table_count = fields.Integer(compute=_compute_distribution_table_count)
