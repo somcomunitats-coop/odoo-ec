@@ -18,7 +18,6 @@ class Selfconsumption(models.Model):
         for record in self:
             record.inscription_count = len(record.inscription_ids)
 
-
     project_id = fields.Many2one(
         "energy_project.project", required=True, ondelete="cascade"
     )
