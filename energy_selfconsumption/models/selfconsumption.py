@@ -19,6 +19,7 @@ class Selfconsumption(models.Model):
     )
     code = fields.Char(string="CAU")
     cil = fields.Char(string="CIL", help="Production facility code for liquidation purposes")
+    owner_id = fields.Many2one("res.partner", string="Owner", required=True, default=lambda self: self.env.company.partner_id)
     power = fields.Float(string="Generation Power (kW)")
     distribution_table_ids = fields.One2many('energy_selfconsumption.distribution_table', 'selfconsumption_project_id',
                                              readonly=True)

@@ -69,6 +69,10 @@
                                         name="power"
                                         attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
                                 />
+                                <field
+                                        name="owner_id"
+                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                                />
                             </group>
                             <group>
                                 <span class="o_form_label o_td_label" name="address_name">
