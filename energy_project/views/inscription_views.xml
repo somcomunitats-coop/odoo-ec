@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <tree editable="bottom">
                     <field name="partner_id" options="{'no_create': True}" />
-                    <field name="effective_date" />
+                    <field name="effective_date" width="900px" />
                 </tree>
             </field>      
         </record>
