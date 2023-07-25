@@ -35,5 +35,6 @@ class Project(models.Model):
         required=True,
     )
     country_id = fields.Many2one(
-        "res.country", string="Country", ondelete="restrict", required=True
+        "res.country", string="Country", ondelete="restrict", required=True,
+        default=lambda self: self.env.ref('base.es')
     )
