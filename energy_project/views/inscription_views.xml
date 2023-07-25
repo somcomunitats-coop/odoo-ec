@@ -6,8 +6,8 @@
             <field name="model">energy_project.inscription</field>
             <field name="arch" type="xml">
                 <tree editable="bottom">
-                    <field name="partner_id" options="{'no_create': True}" />
-                    <field name="effective_date" width="900px" />
+                    <field name="partner_id" options="{'no_create': True}" width="50%" />
+                    <field name="effective_date" width="50%" />
                 </tree>
             </field>      
         </record>
