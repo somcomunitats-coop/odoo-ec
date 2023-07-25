@@ -20,56 +20,99 @@ class LandingPage(models.Model):
         string="Allows new members", related="company_id.allow_new_members"
     )
     number_of_members = fields.Integer(string="Number of members")
-    virtual_office_link = fields.Char(string="Virtual office link")
     external_website_link = fields.Char(string="External website link")
+    twitter_link = fields.Char(string="Twitter link")
+    telegram_link = fields.Char(string="Telegram link")
+    instagram_link = fields.Char(string="Instagram link")
+    # TODO: group_image_link Left for backward compatibility. To be removed
     group_image_link = fields.Char(string="Group image link")
     primary_image_file = fields.Image(
         "Primary Image")
     secondary_image_file = fields.Image(
         "Secondary Image")
-    short_description = fields.Char(string="Short description")
+    short_description = fields.Text(string="Short description")
     long_description = fields.Text(string="Long description")
-    why_become_cooperator = fields.Text(string="Why become cooperator")
-    become_cooperator_process = fields.Text(string="Become cooperator process")
-    subscription_information = fields.Text(string="Subscription information")
-    new_cooperator_form_link = fields.Char(string="New cooperator form link")
-    contact_form = fields.Char(string="Contact form")
-    subscription_link = fields.Char(string="Subscription link")
-    social_media_link = fields.Char(string="Social media link")
+    why_become_cooperator = fields.Html(string="Why become cooperator")
+    become_cooperator_process = fields.Html(string="Become cooperator process")
+    # TODO: remove this one
     map_geolocation = fields.Char(string="Map geolocation")
+    map_place_id = fields.Many2one('cm.place', "Place reference")
     street = fields.Char(string="Street")
     postal_code = fields.Char(string="Postal code")
     city = fields.Char(string="City")
     community_active_services = fields.Many2many(
         string="Community active services", related="company_id.ce_tag_ids"
     )
+    community_type = fields.Selection(
+        selection=[("citizen", _("Citizen")), ("industrial", _("Industrial"))],
+        default="citizen",
+        required=True,
+        string="Community type",
+    )
+    community_secondary_type = fields.Selection(
+        selection=[("cooperative", _("Cooperative"))],
+        default="cooperative",
+        required=True,
+        string="Community secondary type",
+    )
+    community_status = fields.Selection(
+        selection=[("open", _("Open")), ("closed", _("Closed"))],
+        default="open",
+        required=True,
+        string="Community status",
+    )
 
     def to_dict(self):
-        data = {
-            "title": self.name or "",
-            "odoo_company_id": self.company_id.id,
-            "status": self.status,
-            "allow_new_members": self.allow_new_members,
-            "number_of_members": self.number_of_members,
-            "virtual_office_link": self.virtual_office_link or "",
-            "external_website_link": self.external_website_link or "",
-            "community_active_services": self.community_active_services,
-            "group_image_link": self.group_image_link or "",
-            "short_description": self.short_description or "",
-            "long_description": self.long_description or "",
-            "why_become_cooperator": self.why_become_cooperator or "",
-            "become_cooperator_process": self.become_cooperator_process or "",
-            "subscription_information": self.subscription_information or "",
-            "new_cooperator_form_link": self.new_cooperator_form_link or "",
-            "contact_form": self.contact_form or "",
-            "subscription_link": self.subscription_link or "",
-            "social_media_link": self.social_media_link or "",
-            "map_geolocation": self.map_geolocation or "",
-            "street": self.street or "",
-            "postal_code": self.postal_code or "",
-            "city": self.city or "",
+        base_url = self.env['ir.config_parameter'].get_param(
+            'web.base.url')
+        if self.primary_image_file:
+            primary_image_file = base_url+'/web/image/landing.page/' + \
+                str(self.id)+'/primary_image_file'
+        else:
+            primary_image_file = ""
+        if self.secondary_image_file:
+            secondary_image_file = base_url+'/web/image/landing.page/' + \
+                str(self.id)+'/secondary_image_file'
+        else:
+            secondary_image_file = ""
+        if self.map_place_id:
+            map_reference = self.map_place_id.slug_id
+        else:
+            map_reference = ""
+        return {
+            "landing": {
+                "id": self.id,
+                "name": self.name,
+                "title": self.name,
+                "odoo_company_id": self.company_id.id,
+                "company_id": self.company_id.id,
+                "wp_landing_page_id": self.wp_landing_page_id,
+                "status": self.status,
+                "community_type": self.community_type,
+                "community_secondary_type": self.community_secondary_type,
+                "community_status": self.community_status,
+                "allow_new_members": self.allow_new_members,
+                "number_of_members": self.number_of_members,
+                "external_website_link": self.external_website_link or "",
+                "twitter_link": self.twitter_link or "",
+                "instagram_link": self.instagram_link or "",
+                "telegram_link": self.telegram_link or "",
+                "community_active_services": self.company_id.get_active_services(),
+                # TODO: group_image_link Left for backward compatibility. To be removed
+                "group_image_link": self.group_image_link or "",
+                "primary_image_file": primary_image_file,
+                "secondary_image_file": secondary_image_file,
+                "short_description": self.short_description or "",
+                "long_description": self.long_description or "",
+                "why_become_cooperator": self.why_become_cooperator or "",
+                "become_cooperator_process": self.become_cooperator_process or "",
+                "map_geolocation": self.map_geolocation or "",
+                "map_reference": map_reference,
+                "street": self.street or "",
+                "postal_code": self.postal_code or "",
+                "city": self.city or ""
+            }
         }
-        return data
 
     def action_landing_page_status(self):
         for record in self:
@@ -82,7 +125,8 @@ class LandingPage(models.Model):
                 password = instance_company.wordpress_db_password
                 auth = Authenticate(baseurl, username, password).authenticate()
                 token = "Bearer %s" % auth["token"]
-                landing_page_data = record.to_dict()
+                landing_page_data_dict = record.to_dict()
+                landing_page_data = landing_page_data_dict['landing_page']
                 landing_page_data["status"] = new_status
                 LandingPageResource(
                     token,

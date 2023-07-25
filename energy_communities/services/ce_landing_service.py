@@ -21,51 +21,7 @@ class LandingService(Component):
 
     @staticmethod
     def _to_dict(landing_page):
-        # TODO: move this method to model method?
-        # return landing.to_dict()
-        base_url = landing_page.env['ir.config_parameter'].get_param(
-            'web.base.url')
-        if landing_page.primary_image_file:
-            primary_image_file = base_url+'/web/image/landing.page/' + \
-                str(landing_page.id)+'/primary_image_file'
-        else:
-            primary_image_file = ""
-        if landing_page.secondary_image_file:
-            secondary_image_file = base_url+'/web/image/landing.page/' + \
-                str(landing_page.id)+'/secondary_image_file'
-        else:
-            secondary_image_file = ""
-
-        return {
-            "landing": {
-                "id": landing_page.id,
-                "name": landing_page.name,
-                "company_id": landing_page.company_id.id,
-                "wp_landing_page_id": landing_page.wp_landing_page_id,
-                "status": landing_page.status,
-                "allow_new_members": landing_page.allow_new_members,
-                "number_of_members": landing_page.number_of_members,
-                "virtual_office_link": landing_page.virtual_office_link or "",
-                "external_website_link": landing_page.external_website_link or "",
-                "community_active_services": landing_page.company_id.get_active_services(),
-                "group_image_link": landing_page.group_image_link or "",
-                "primary_image_file": primary_image_file,
-                "secondary_image_file": secondary_image_file,
-                "short_description": landing_page.short_description or "",
-                "long_description": landing_page.long_description or "",
-                "why_become_cooperator": landing_page.why_become_cooperator or "",
-                "become_cooperator_process": landing_page.become_cooperator_process or "",
-                "subscription_information": landing_page.subscription_information or "",
-                "new_cooperator_form_link": landing_page.new_cooperator_form_link or "",
-                "contact_form": landing_page.contact_form or "",
-                "subscription_link": landing_page.subscription_link or "",
-                "social_media_link": landing_page.social_media_link or "",
-                "map_geolocation": landing_page.map_geolocation or "",
-                "street": landing_page.street or "",
-                "postal_code": landing_page.postal_code or "",
-                "city": landing_page.city or ""
-            }
-        }
+        return landing_page.to_dict()
 
     def _validator_get(self):
         return {}
