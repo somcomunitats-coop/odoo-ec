@@ -29,6 +29,11 @@
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="get_inscriptions"
+                                    icon="fa-pencil-square-o" context="{'default_effective_date': today}">
+                                <field string="Inscriptions" name="inscription_count" widget="statinfo"/>
+                            </button>
+
                             <button class="oe_stat_button" type="object" name="get_distribution_tables"
                                     icon="fa-table" context="{'default_owner_id': id}"
                                     attrs="{'invisible': [('state', '==', 'draft')]}">
@@ -88,22 +93,6 @@
                                            attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"/>
                                 </div>
                             </group>
-                        </group>
-                        <group>
-                            <field
-                                    name="inscription_ids"
-                                    widget="one2many"
-                                    mode="list"
-                                    context="{'default_project_id':id, 'default_effective_date': today}"
-                            >
-                                <tree editable="bottom">
-                                    <field
-                                            name="partner_id"
-                                            options="{'no_create': True}"
-                                    />
-                                    <field name="effective_date"/>
-                                </tree>
-                            </field>
                         </group>
                     </sheet>
                     <div class="oe_chatter">
