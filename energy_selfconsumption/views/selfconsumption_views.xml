@@ -67,7 +67,15 @@
                                         attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
                                 />
                                 <field
+                                        name="cil"
+                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                                />
+                                <field
                                         name="power"
+                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                                />
+                                <field
+                                        name="owner_id"
                                         attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
                                 />
                             </group>
@@ -110,6 +118,12 @@
             <field name="arch" type="xml">
                 <tree string="Self-Consumption Projects">
                     <field name="name"/>
+                    <field name="street"/>
+                    <field name="street2"/>
+                    <field name="state_id"/>
+                    <field name="zip"/>
+                    <field name="country_id"/>
+                    <field name="power"/>
                     <field name="state"/>
                 </tree>
             </field>

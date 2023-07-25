@@ -22,7 +22,9 @@ class Selfconsumption(models.Model):
         "energy_project.project", required=True, ondelete="cascade"
     )
     code = fields.Char(string="CAU")
-    power = fields.Float(string="Generation Power (kWh)")
+    cil = fields.Char(string="CIL", help="Production facility code for liquidation purposes")
+    owner_id = fields.Many2one("res.partner", string="Owner", required=True, default=lambda self: self.env.company.partner_id)
+    power = fields.Float(string="Generation Power (kW)")
     distribution_table_ids = fields.One2many('energy_selfconsumption.distribution_table', 'selfconsumption_project_id',
                                              readonly=True)
     distribution_table_count = fields.Integer(compute=_compute_distribution_table_count) 
@@ -59,6 +61,8 @@ class Selfconsumption(models.Model):
         for record in self:
             if not record.code:
                 raise ValidationError(_("Project must have a valid Code."))
+            if not record.cil:
+                raise ValidationError(_("Project must have a valid CIL."))
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Generation Power."))
             if not record.distribution_table_ids.filtered_domain([('state', '=', 'validated')]):
