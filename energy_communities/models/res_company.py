@@ -76,6 +76,7 @@ class ResCompany(models.Model):
         string="Voluntary share to show on website",
     wordpress_base_url = fields.Char(
         string=_("Wordpress Base URL (JWT auth)")
+    )
 
     admins = fields.One2many(
         'res.users',
@@ -238,8 +239,18 @@ class ResCompany(models.Model):
             res.append({"id": tag.id, "name": tag.name, "ext_id": tag.tag_ext_id})
         return res
 
+    def get_lower_hierarchy_level(self):
+        if self.hierarchy_level == 'instance':
+            return 'coordinator'
+        elif self.hierarchy_level == 'coordinator':
+            return 'community'
+        return ''
+
     def get_child_companies(self):
-        pass
+        return self.env['res.company'].search([
+            ('hierarchy_level' ,'=', self.get_lower_hierarchy_level()),
+            ('parent_id', '=', self.id),
+        ])
 
     def get_public_web_landing_url(self):
         # TODO: Get from landing page or company, for now we don't need
