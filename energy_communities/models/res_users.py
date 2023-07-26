@@ -287,16 +287,15 @@ class ResUsers(models.Model):
                 "role_id": role.id,
                 "company_id": company_id,
             })
-
-        company = self.ref["res.company"].browse(company_id)
+        company = self.env["res.company"].browse(company_id)
         child_companies = company.get_child_companies()
         for child_company in child_companies:
-            self.make_ce_user(company_id, "role_ce_admin")  # TODO: New super-role!
+            self.make_ce_user(child_company.id, "role_ce_manager")
 
     def add_energy_community_role(self, company_id, role_name):
         if role_name == 'role_ce_member' or role_name == 'role_ce_admin':
             self.make_ce_user(company_id, role_name)
-        elif role_name == 'role_coordination' or role_name == 'role_coordination':  # TODO: Change role name and New super-role!
+        elif role_name == 'role_coord_worker' or role_name == 'role_coord_admin':
             self.make_coord_user(company_id, role_name)
         else:
             raise exceptions.UserError(

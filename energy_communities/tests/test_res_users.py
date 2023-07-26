@@ -93,10 +93,10 @@ class TestResUsers(common.TransactionCase):
 
     @patch("odoo.addons.energy_communities.models.res_users.ResUsers.make_coord_user")
     def test__add_energy_community_role__make_coord_user(self, make_coord_user_mocked):
-        self.random_user.add_energy_community_role(self.coordination.id, 'role_coordination')  # TODO: Rename in other branch ❗️❗️
+        self.random_user.add_energy_community_role(self.coordination.id, 'role_coord_admin')
 
         # then make_coord_user function was called once time
-        make_coord_user_mocked.assert_called_with(self.coordination.id, 'role_coordination')
+        make_coord_user_mocked.assert_called_with(self.coordination.id, 'role_coord_admin')
 
     def test__add_energy_community_role__role_not_found(self):
         with self.assertRaises(UserError):

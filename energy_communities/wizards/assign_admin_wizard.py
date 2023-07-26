@@ -32,9 +32,9 @@ class AssignAdminWizard(models.TransientModel):
                 ('role_ce_member', _("Energy Community Member")),
             ]
         elif company.hierarchy_level == 'coordinator':
-            return [  # TODO: branch_new_roles is required
-                # ('role_ce_admin', _("Energy Community Administrator")),
-                # ('role_ce_member', _("Energy Community Member"))
+            return [
+                ('role_coord_admin', _("Coordinator Admin")),
+                ('role_coord_worker', _("Coordinator Worker"))
             ]
         return []
 
@@ -47,7 +47,6 @@ class AssignAdminWizard(models.TransientModel):
                 last_name=self.last_name,
                 lang_code=self.lang.code,
                 email=self.email,
-                company_id=company_id,
             )
         else:
             user = self.env['res.users'].search([('login', '=', self.vat)])
