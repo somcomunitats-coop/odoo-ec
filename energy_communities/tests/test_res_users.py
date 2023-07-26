@@ -24,6 +24,56 @@ class TestResUsers(common.TransactionCase):
             "email": faker.email(),
         })
 
+    def make_community_admin(self, community_admin):
+        community_admin.write({"company_ids": [(4, self.community.id)]})
+        self.admin_role = self.env["res.users.role"].search([(
+            "code", "=", 'role_ce_admin'
+        )])
+        self.role_line_model.create({
+            "user_id": community_admin.id,
+            "active": True,
+            "role_id": self.admin_role.id,
+            "company_id": self.community.id,
+        })
+        self.internal_role = self.env["res.users.role"].search([(
+            "code", "=", "role_internal_user"
+        )])
+        self.role_line_model.create({
+            "user_id": community_admin.id,
+            "active": True,
+            "role_id": self.internal_role.id,
+        })
+
+    def make_coord_admin(self, coord_admin):
+        coord_admin.write({"company_ids": [(4, self.coordination.id)]})
+        coord_admin.write({"company_ids": [(4, self.community.id)]})
+        coord_admin_role = self.env["res.users.role"].search([(
+            "code", "=", 'role_coord_admin'
+        )])
+        self.role_line_model.create({
+            "user_id": coord_admin.id,
+            "active": True,
+            "role_id": coord_admin_role.id,
+            "company_id": self.community.id,
+        })
+        self.ce_manager_role = self.env["res.users.role"].search([(
+            "code", "=", 'role_ce_manager'
+        )])
+        self.role_line_model.create({
+            "user_id": coord_admin.id,
+            "active": True,
+            "role_id": self.ce_manager_role.id,
+            "company_id": self.community.id,
+        })
+        self.internal_role = self.env["res.users.role"].search([(
+            "code", "=", "role_internal_user"
+        )])
+        self.role_line_model.create({
+            "user_id": coord_admin.id,
+            "active": True,
+            "role_id": self.internal_role.id,
+        })
+
     def setUp(self):
         super().setUp()
 
@@ -43,28 +93,11 @@ class TestResUsers(common.TransactionCase):
         
         self.platform_admin = self.create_user("Platform", "Admin")
         self.community_admin = self.create_user("Community", "Admin")
+        self.coord_admin = self.create_user("Coord", "Admin")
         self.random_user = self.create_user("Brandom", "Random")
 
-        self.community_admin.write({
-            "company_ids": [(4, self.community.id)]
-        })
-        self.admin_role = self.env["res.users.role"].search([(
-            "code", "=", 'role_ce_admin'
-        )])
-        self.role_line_model.create({
-            "user_id": self.community_admin.id,
-            "active": True,
-            "role_id": self.admin_role.id,
-            "company_id": self.community.id,
-        })
-        self.internal_role = self.env["res.users.role"].search([(
-            "code", "=", "role_internal_user"
-        )])
-        self.role_line_model.create({
-            "user_id": self.community_admin.id,
-            "active": True,
-            "role_id": self.internal_role.id,
-        })
+        self.make_community_admin(self.community_admin)
+        self.make_coord_admin(self.coord_admin)
 
     @patch("odoo.addons.energy_communities.models.res_users.ResUsers.create_users_on_keycloak")
     @patch("odoo.addons.energy_communities.models.res_users.ResUsers.send_reset_password_mail")
@@ -157,3 +190,42 @@ class TestResUsers(common.TransactionCase):
             ("role_id.code", "=", "role_internal_user"),
         ])
         self.assertEqual(len(rl), 1)
+
+    def test__make_coord_user__new_user(self):
+        self.random_user.make_coord_user(self.coordination.id, 'role_coord_admin')
+
+        rl_coord = self.role_line_model.search([
+            ("user_id", "=", self.random_user.id),
+            ("role_id.code", "=", "role_coord_admin"),
+            ("company_id", "=", self.coordination.id),
+        ])
+        self.assertEqual(len(rl_coord), 1)
+        self.assertIn(
+            self.coordination,
+            self.random_user.company_ids
+        )
+        rl_ce = self.role_line_model.search([
+            ("user_id", "=", self.random_user.id),
+            ("role_id.code", "=", "role_ce_manager"),
+            ("company_id", "=", self.community.id),
+        ])
+        self.assertEqual(len(rl_ce), 1)
+        self.assertIn(
+            self.community,
+            self.random_user.company_ids
+        )
+
+    def test__make_coord_user__already_user(self):
+        other_coord = self.create_company(
+            'Coordinator 2', 'coordinator', self.instance.id,
+        )
+
+        self.coord_admin.make_coord_user(other_coord.id, 'role_coord_admin')
+
+        rl_coord = self.role_line_model.search([
+            ("user_id", "=", self.coord_admin.id),
+            ("role_id.code", "=", "role_coord_admin"),
+        ])
+        self.assertEqual(len(rl_coord), 2)
+        self.assertIn(self.coordination, self.coord_admin.company_ids)
+        self.assertIn(other_coord, self.coord_admin.company_ids)
