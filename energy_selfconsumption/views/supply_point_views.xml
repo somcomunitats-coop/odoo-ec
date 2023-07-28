@@ -36,6 +36,18 @@
                                 </div>
                             </group>
                         </group>
+
+                        <notebook>
+                            <page string="Self-consumption Projects" name="selfconsumption_project" autofocus="autofocus">
+                                <field name="supply_point_assignation_ids">
+                                    <tree default_order="distribution_table_create_date desc">
+                                        <field name="selfconsumption_project_id" string="Name"/>
+                                        <field name="distribution_table_state"/>
+                                        <field name="distribution_table_create_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
