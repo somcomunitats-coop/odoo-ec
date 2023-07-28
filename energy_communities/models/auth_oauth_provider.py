@@ -34,20 +34,23 @@ class OAuthProvider(models.Model):
         if not self.superuser_pwd:
             raise UserError("Admin provider doesn't have a valid superuser password")
 
-    @api.onchange("root_endpoint")
-    def _onchange_root_endpoint(self):
-        # TODO: Duplicated code? 🤔
+    def _update_urls(self):
         if self.is_keycloak_provider and self.root_endpoint and self.realm_name:
-            self.admin_user_endpoint = URL_ADMIN_USERS.format(**{'root_endpoint': self.root_endpoint,
-                                                                 'realm_name': self.realm_name})
-            self.auth_endpoint = URL_AUTH.format(**{'root_endpoint': self.root_endpoint,
-                                                    'realm_name': self.realm_name})
-            self.validation_endpoint = URL_VALIDATION.format(**{'root_endpoint': self.root_endpoint,
-                                                                'realm_name': self.realm_name})
-            self.token_endpoint = URL_TOKEN.format(**{'root_endpoint': self.root_endpoint,
-                                                      'realm_name': self.realm_name})
-            self.jwks_uri = URL_JWKS.format(**{'root_endpoint': self.root_endpoint,
-                                               'realm_name': self.realm_name})
+            self.admin_user_endpoint = URL_ADMIN_USERS.format(**{
+                'root_endpoint': self.root_endpoint, 'realm_name': self.realm_name
+            })
+            self.auth_endpoint = URL_AUTH.format(**{
+                'root_endpoint': self.root_endpoint, 'realm_name': self.realm_name
+            })
+            self.validation_endpoint = URL_VALIDATION.format(**{
+                'root_endpoint': self.root_endpoint, 'realm_name': self.realm_name
+            })
+            self.token_endpoint = URL_TOKEN.format(**{
+                'root_endpoint': self.root_endpoint, 'realm_name': self.realm_name
+            })
+            self.jwks_uri = URL_JWKS.format(**{
+                'root_endpoint': self.root_endpoint, 'realm_name': self.realm_name
+            })
             self.reset_password_endpoint = URL_RESET_PASSWORD.format(
                 root_endpoint=self.root_endpoint,
                 realm_name=self.realm_name,
@@ -56,27 +59,13 @@ class OAuthProvider(models.Model):
                 cliend_id=self.client_id,
             )
 
-    @api.onchange("realm_name")
+    @api.onchange('root_endpoint')
+    def _onchange_root_endpoint(self):
+        self._update_urls()
+
+    @api.onchange('realm_name')
     def _onchange_realm_name(self):
-        # TODO: Duplicated code? 🤔
-        if self.is_keycloak_provider and self.root_endpoint and self.realm_name:
-            self.admin_user_endpoint = URL_ADMIN_USERS.format(**{'root_endpoint': self.root_endpoint,
-                                                                 'realm_name': self.realm_name})
-            self.auth_endpoint = URL_AUTH.format(**{'root_endpoint': self.root_endpoint,
-                                                    'realm_name': self.realm_name})
-            self.validation_endpoint = URL_VALIDATION.format(**{'root_endpoint': self.root_endpoint,
-                                                                'realm_name': self.realm_name})
-            self.token_endpoint = URL_TOKEN.format(**{'root_endpoint': self.root_endpoint,
-                                                      'realm_name': self.realm_name})
-            self.jwks_uri = URL_JWKS.format(**{'root_endpoint': self.root_endpoint,
-                                               'realm_name': self.realm_name})
-            self.reset_password_endpoint = URL_RESET_PASSWORD.format(
-                root_endpoint=self.root_endpoint,
-                realm_name=self.realm_name,
-                kc_uid='{kc_uid}',
-                odoo_url=self.redirect_admin_url,
-                cliend_id=self.client_id,
-            )
+        self._update_urls()
 
     def get_auth_link(self):
         self.ensure_one()

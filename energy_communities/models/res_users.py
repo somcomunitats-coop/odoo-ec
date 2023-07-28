@@ -60,23 +60,19 @@ class ResUsers(models.Model):
             if user.oauth_uid:
                 # already sync'ed somewhere else
                 continue
-            keycloak_user = self._get_or_create_user(token, provider_id, user)
-            keycloak_key = self._LOGIN_MATCH_KEY.split(":")[0]
-            keycloak_login_provider = self.env.ref(
-                "energy_communities.keycloak_login_provider"
-            )
-            user.update(
-                {
-                    "oauth_uid": keycloak_user[keycloak_key],
-                    "oauth_provider_id": keycloak_login_provider.id,
-                }
-            )
+            keycloak_user = self._get_or_create_kc_user(token, provider_id, user)
+            keycloak_key = self._LOGIN_MATCH_KEY.split(':')[0]
+            keycloak_login_provider = self.env.ref('energy_communities.keycloak_login_provider')
+            user.update({
+                'oauth_uid': keycloak_user[keycloak_key],
+                'oauth_provider_id': keycloak_login_provider.id,
+            })
         # action = self.env.ref('base.action_res_users').read()[0]
         # action['domain'] = [('id', 'in', self.user_ids.ids)]
         logger.debug("Create keycloak users STOP")
         return True
 
-    def _get_users(self, token, provider_id, **params):
+    def _get_kc_users(self, token, provider_id, **params):
         """Retrieve users from Keycloak.
 
         :param token: a valida auth token from Keycloak
@@ -120,7 +116,7 @@ class ResUsers(models.Model):
         except JSONDecodeError:
             raise exceptions.UserError(_("Something went wrong. Please check logs."))
 
-    def _get_or_create_user(self, token, provider_id, odoo_user):
+    def _get_or_create_kc_user(self, token, provider_id, odoo_user):
         """Lookup for given user on Keycloak: create it if missing.
 
         :param token: valid auth token from Keycloak
@@ -137,7 +133,7 @@ class ResUsers(models.Model):
             return keycloak_user[0]
         else:
             values = self._create_user_values(odoo_user)
-            keycloak_user = self._create_user(token, provider_id, **values)
+            keycloak_user = self._create_kc_user(token, provider_id, **values)
         return keycloak_user
 
     def _create_user_values(self, odoo_user):
@@ -176,7 +172,7 @@ class ResUsers(models.Model):
             firstname, lastname = name_parts[0], " ".join(name_parts[1:])
         return firstname, lastname
 
-    def _create_user(self, token, provider_id, **data):
+    def _create_kc_user(self, token, provider_id, **data):
         """Create a user on Keycloak w/ given data."""
         logger.info("CREATE Calling %s" % provider_id.admin_user_endpoint)
         headers = {
