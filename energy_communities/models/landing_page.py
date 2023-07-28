@@ -21,9 +21,12 @@ class LandingPage(models.Model):
     )
     number_of_members = fields.Integer(string="Number of members")
     external_website_link = fields.Char(string="External website link")
-    twitter_link = fields.Char(string="Twitter link")
-    telegram_link = fields.Char(string="Telegram link")
-    instagram_link = fields.Char(string="Instagram link")
+    twitter_link = fields.Char(
+        string="Twitter link", related="company_id.social_twitter")
+    telegram_link = fields.Char(
+        string="Telegram link", related="company_id.social_telegram")
+    instagram_link = fields.Char(
+        string="Instagram link", related="company_id.social_instagram")
     # TODO: group_image_link Left for backward compatibility. To be removed
     group_image_link = fields.Char(string="Group image link")
     primary_image_file = fields.Image(
