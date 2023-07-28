@@ -7,7 +7,7 @@ from ..pywordpress_client.resources.landing_page import LandingPage as LandingPa
 class LandingPage(models.Model):
     _name = "landing.page"
 
-    name = fields.Char(string="Name")
+    name = fields.Char(string="Name", translate=True)
     company_id = fields.Many2one("res.company", string="Company")
     wp_landing_page_id = fields.Integer(string="WP Landing Page")
     status = fields.Selection(
@@ -20,7 +20,8 @@ class LandingPage(models.Model):
         string="Allows new members", related="company_id.allow_new_members"
     )
     number_of_members = fields.Integer(string="Number of members")
-    external_website_link = fields.Char(string="External website link")
+    external_website_link = fields.Char(
+        string="External website link", translate=True)
     twitter_link = fields.Char(
         string="Twitter link", related="company_id.social_twitter")
     telegram_link = fields.Char(
@@ -33,10 +34,12 @@ class LandingPage(models.Model):
         "Primary Image")
     secondary_image_file = fields.Image(
         "Secondary Image")
-    short_description = fields.Text(string="Short description")
-    long_description = fields.Text(string="Long description")
-    why_become_cooperator = fields.Html(string="Why become cooperator")
-    become_cooperator_process = fields.Html(string="Become cooperator process")
+    short_description = fields.Text(string="Short description", translate=True)
+    long_description = fields.Text(string="Long description", translate=True)
+    why_become_cooperator = fields.Html(
+        string="Why become cooperator", translate=True)
+    become_cooperator_process = fields.Html(
+        string="Become cooperator process", translate=True)
     # TODO: remove this one
     map_geolocation = fields.Char(string="Map geolocation")
     map_place_id = fields.Many2one('cm.place', "Place reference")
