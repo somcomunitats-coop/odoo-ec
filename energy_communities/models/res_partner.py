@@ -35,7 +35,7 @@ class ResPartner(models.Model):
             ('email', '=', self.email),
             ('user_ids', '!=', False)
         ])
-        if self.email and count_users >= 1:
+        if self.email and count_users > 0:
             raise ValidationError('The email already registered, please use another email!')
 
     def cron_update_company_ids_from_user(self):
