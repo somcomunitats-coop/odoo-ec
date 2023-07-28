@@ -176,36 +176,36 @@ S_COMMUNITY_RETURN_GET = {
     "community": {
         "type": "dict",
         "schema": {
-                "id": {"type": "integer"},
-                "name": {"type": "string"},
-                "birth_date": {"type": "string"},
-                "members": {
-                    "type": "list",
-                    "schema": {
-                        "type": "dict",
-                        "schema": S_COMMUNITY_MEMBER
-                    }
-                },
-            "contact_info": {
+            "id": {"type": "integer"},
+            "name": {"type": "string"},
+            "birth_date": {"type": "string"},
+            "members": {
+                "type": "list",
+                "schema": {
                     "type": "dict",
-                    "schema": {
-                        "street": {"type": "string"},
-                        "postal_code": {"type": "string"},
-                        "city": {"type": "string"},
-                        "state": {"type": "string"},
-                        "country": {"type": "string"},
-                        "phone": {"type": "string"},
-                        "email": {"type": "string"},
-                        "telegram": {"type": "string"},
-                    },
-                    },
+                    "schema": S_COMMUNITY_MEMBER
+                }
+            },
+            "contact_info": {
+                "type": "dict",
+                "schema": {
+                    "street": {"type": "string"},
+                    "postal_code": {"type": "string"},
+                    "city": {"type": "string"},
+                    "state": {"type": "string"},
+                    "country": {"type": "string"},
+                    "phone": {"type": "string"},
+                    "email": {"type": "string"},
+                    "telegram": {"type": "string"},
+                }
+            },
             "active_services": {
-                    "type": "list",
-                    "schema": {
-                        "type": "dict",
-                        "schema": S_COMMUNITY_SERVICE
-                    },
-                    },
+                "type": "list",
+                "schema": {
+                    "type": "dict",
+                    "schema": S_COMMUNITY_SERVICE
+                }
+            },
             "allow_new_members": {"type": "boolean"},
             "public_web_landing_url": {"type": "string"},
             "keycloak_odoo_login_url": {"type": "string"},
@@ -237,7 +237,7 @@ S_LANDING_PAGE_CREATE = {
                 "schema": {
                     "type": "dict",
                     "schema": S_COMMUNITY_SERVICE
-                },
+                }
             },
             "group_image_link": {"type": "string"},
             "primary_image_file": {"type": "string"},
