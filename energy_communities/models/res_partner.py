@@ -1,4 +1,5 @@
 import logging
+from odoo.exceptions import ValidationError
 
 from odoo import SUPERUSER_ID, api, fields, models
 
@@ -27,6 +28,15 @@ class ResPartner(models.Model):
 
         new_partner = super().create(vals)
         return new_partner
+
+    @api.constrains('email')
+    def _check_email(self):
+        count_users = self.env['res.partner'].search_count([
+            ('email', '=', self.email),
+            ('user_ids', '!=', False)
+        ])
+        if self.email and count_users >= 1:
+            raise ValidationError('The email already registered, please use another email!')
 
     def cron_update_company_ids_from_user(self):
         partner_with_users = self.search(
