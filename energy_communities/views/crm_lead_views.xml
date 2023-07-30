@@ -14,6 +14,24 @@
 		<field name="search_view_id" ref="crm.view_crm_case_opportunities_filter" />
 	</record>
 	-->
+	<record id="ce_crm_lead_view_form" model="ir.ui.view">
+		<field name="name">ce.crm.lead.view.form</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.crm_lead_view_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//sheet" position="before">
+                <header>
+					<button
+						name="action_assign_crm_to_coordinator_company"
+						type="object"
+						string="Assing CRM to coordinator company"
+						groups="energy_communities.group_platform_manager, energy_communities.group_admin, energy_communities.group_coordinator"
+					/>
+				</header>
+			</xpath>
+		</field>
+	</record>
+
 	<record id="ce_crm_lead_opportunities_form_view" model="ir.ui.view">
 		<field name="name">crm.lead.form.opportunity</field>
 		<field name="model">crm.lead</field>
