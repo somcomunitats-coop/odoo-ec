@@ -19,7 +19,7 @@ class Inscription(models.Model):
     project_id = fields.Many2one(
         "energy_project.project",
         required=True,
-        ondelete="restrict",
+        ondelete="cascade",
         string="Energy Project",
         check_company=True,
     )
