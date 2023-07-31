@@ -14,12 +14,19 @@
                                 name="button_validate"
                                 states="draft"
                         />
+                        <button
+                            type="object"
+                            string="Reset to draft"
+                            name="button_draft"
+                            attrs="{'invisible':['|',('state','not in',['validated']),('selfconsumption_project_state','not in',['inscription'])]}"
+                        />
                         <field
                                 name="state"
                                 widget="statusbar"
                                 readonly="True"
-                                statusbar_visible="draft,validated"
+                                statusbar_visible="draft,validated,process,active"
                         />
+                        <field name="selfconsumption_project_state" invisible="1"/>
                     </header>
                     <sheet>
                         <widget

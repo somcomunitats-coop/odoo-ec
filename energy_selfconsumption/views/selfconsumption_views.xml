@@ -12,7 +12,7 @@
                                 type="object"
                                 string="Set in activation"
                                 name="set_activation"
-                                attrs="{'invisible':[('state','not in',['draft'])]}"
+                                attrs="{'invisible':[('state','not in',['draft', 'inscription'])]}"
                         />
                         <button
                                 type="object"
@@ -20,11 +20,19 @@
                                 name="activate"
                                 attrs="{'invisible':[('state','not in',['activation'])]}"
                         />
+                        <button
+                                type="object"
+                                string="Reset to inscription"
+                                name="set_inscription"
+                                attrs="{'invisible':[('state','not in',['activation'])]}"
+                                confirm="Are you sure you want to change the project status to the previous step?
+                                 If so, the distribution table will return to the 'validated' state."
+                        />
                         <field
                                 name="state"
                                 widget="statusbar"
                                 readonly="True"
-                                statusbar_visible="draft,activation,active"
+                                statusbar_visible="draft,inscription,activation,active"
                         />
                     </header>
                     <sheet>

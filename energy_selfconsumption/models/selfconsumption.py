@@ -53,9 +53,14 @@ class Selfconsumption(models.Model):
             'context': {'create': True, 'default_project_id': self.id},
         }
 
+    def distribution_table_state(self, actual_state, new_state):
+        distribution_table_to_activate = self.distribution_table_ids.filtered(lambda table: table.state == actual_state)
+        distribution_table_to_activate.write({"state": new_state})
+
     def set_activation(self):
         for record in self:
-            record.write({"state": "activation"})
+            record.write({"state": "activation"})        
+        self.distribution_table_state("validated", "process")
 
     def activate(self):
         for record in self:
@@ -65,6 +70,12 @@ class Selfconsumption(models.Model):
                 raise ValidationError(_("Project must have a valid CIL."))
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Generation Power."))
-            if not record.distribution_table_ids.filtered_domain([('state', '=', 'validated')]):
-                raise ValidationError(_("Must have a valid Distribution Table."))
             record.write({"state": "active"})
+        self.distribution_table_state("process", "active")
+
+    def set_inscription(self):
+        for record in self.distribution_table_ids:
+            record.write({"state": "validated"})        
+        for record in self:
+            record.write({"state": "inscription"})
+        self.distribution_table_state("process", "validated")

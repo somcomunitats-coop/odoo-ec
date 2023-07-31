@@ -4,6 +4,8 @@ from odoo.exceptions import ValidationError
 STATE_VALUES = [
     ("draft", _("Draft")),
     ("validated", _("Validated")),
+    ("process", _("In process")),
+    ("active", _("Active")),
 ]
 
 TYPE_VALUES = [
@@ -24,6 +26,7 @@ class DistributionTable(models.Model):
 
     name = fields.Char(readonly=True)
     selfconsumption_project_id = fields.Many2one('energy_selfconsumption.selfconsumption', required=True)
+    selfconsumption_project_state = fields.Selection(related='selfconsumption_project_id.state')
     type = fields.Selection(TYPE_VALUES, default="fixed", required=True, string="Modality")
     state = fields.Selection(STATE_VALUES, default="draft", required=True)
     supply_point_assignation_ids = fields.One2many('energy_selfconsumption.supply_point_assignation',
@@ -35,9 +38,21 @@ class DistributionTable(models.Model):
     )
 
     @api.model
+    def create_table(self, selfconsumption_project_id):
+        existing_tables = self.search([
+            ('selfconsumption_project_id', '=', selfconsumption_project_id.id),
+        ])
+        if bool(existing_tables):
+            return any(table['state'] == 'active' for table in existing_tables)
+        return True
+
+    @api.model
     def create(self, vals):
-        vals['name'] = self.env.ref('energy_selfconsumption.distribution_table_sequence', False).next_by_id()
-        return super(DistributionTable, self).create(vals)
+        selfconsumption_project_id = self.env['energy_selfconsumption.selfconsumption'].browse(vals.get('selfconsumption_project_id'))
+        if self.create_table(selfconsumption_project_id):
+            vals['name'] = self.env.ref('energy_selfconsumption.distribution_table_sequence', False).next_by_id()
+            return super(DistributionTable, self).create(vals)
+        raise ValidationError(_("In order to create a new DistributionTable it is necessary that one of the DistributionTables created is active"))
 
     @api.onchange('selfconsumption_project_id')
     def _onchange_selfconsumption_project_id(self):
@@ -51,4 +66,10 @@ class DistributionTable(models.Model):
                 raise ValidationError(_("Self-consumption project is not in activation"))
             if record.selfconsumption_project_id.distribution_table_ids.filtered_domain([('state', '=', 'validated')]):
                 raise ValidationError(_("Self-consumption project already has a validated table"))
+            if record.selfconsumption_project_id.distribution_table_ids.filtered_domain([('state', '=', 'process')]):
+                raise ValidationError(_("Self-consumption project already has a table in process"))
             record.write({"state": "validated"})
+
+    def button_draft(self):
+        for record in self:
+            record.write({"state": "draft"})
