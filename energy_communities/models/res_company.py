@@ -80,7 +80,7 @@ class ResCompany(models.Model):
 
     admins = fields.One2many(
         'res.users',
-        string=_("Community admins"),
+        string="Community admins",
         compute='_get_admins',
         readonly=True,
         store=False
