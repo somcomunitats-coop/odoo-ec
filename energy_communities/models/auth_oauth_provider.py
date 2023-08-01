@@ -34,7 +34,8 @@ class OAuthProvider(models.Model):
         if not self.superuser_pwd:
             raise UserError("Admin provider doesn't have a valid superuser password")
 
-    def _update_urls(self):
+    @api.onchange('root_endpoint', 'realm_name')
+    def _onchange_update_endpoints(self):
         if self.is_keycloak_provider and self.root_endpoint and self.realm_name:
             self.admin_user_endpoint = URL_ADMIN_USERS.format(**{
                 'root_endpoint': self.root_endpoint, 'realm_name': self.realm_name
@@ -58,14 +59,6 @@ class OAuthProvider(models.Model):
                 odoo_url=self.redirect_admin_url,
                 cliend_id=self.client_id,
             )
-
-    @api.onchange('root_endpoint')
-    def _onchange_root_endpoint(self):
-        self._update_urls()
-
-    @api.onchange('realm_name')
-    def _onchange_realm_name(self):
-        self._update_urls()
 
     def get_auth_link(self):
         self.ensure_one()
