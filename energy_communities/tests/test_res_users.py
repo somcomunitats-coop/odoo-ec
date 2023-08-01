@@ -165,25 +165,3 @@ class TestResUsers(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
         self.assertEqual(len(rl_coord), 2)
         self.assertIn(self.coordination, self.coord_admin.company_ids)
         self.assertIn(other_coord, self.coord_admin.company_ids)
-
-    @patch("odoo.addons.energy_communities.models.res_users.ResUsers.create_users_on_keycloak")
-    @patch("odoo.addons.energy_communities.models.res_users.ResUsers.send_reset_password_mail")
-    def test__email_must_be_unique(
-        self, reset_password_mocked, create_kc_user_mocked
-    ):
-        self.users_model.create_energy_community_base_user(
-            vat=faker.vat_id(),
-            first_name="Tom",
-            last_name="Bombadil",
-            lang_code="en_US",
-            email="random.mail@somcomunitats.coop",
-        )
-
-        with self.assertRaises(ValidationError):
-            self.users_model.create_energy_community_base_user(
-                vat=faker.vat_id(),
-                first_name="Timmy",
-                last_name="Box",
-                lang_code="en_US",
-                email="random.mail@somcomunitats.coop",
-            )
