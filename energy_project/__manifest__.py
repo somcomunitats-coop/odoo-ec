@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://somcomunitats.coop/",
     "category": "Customizations",
-    "version": "14.0.1.1.1",
+    "version": "14.0.1.1.2",
     "depends": [
         "base",
         "mail",
@@ -18,5 +18,6 @@
         "security/res_groups.xml",
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
+        "views/inscription_views.xml",
     ],
 }

@@ -24,7 +24,7 @@ class Project(models.Model):
 
     # address fields
     street = fields.Char(required=True)
-    street2 = fields.Char(required=True)
+    street2 = fields.Char()
     zip = fields.Char(change_default=True, required=True)
     city = fields.Char(required=True)
     state_id = fields.Many2one(
@@ -35,5 +35,6 @@ class Project(models.Model):
         required=True,
     )
     country_id = fields.Many2one(
-        "res.country", string="Country", ondelete="restrict", required=True
+        "res.country", string="Country", ondelete="restrict", required=True,
+        default=lambda self: self.env.ref('base.es')
     )
