@@ -7,21 +7,13 @@ class AssignAdminWizard(models.TransientModel):
     _name = 'assign.admin.wizard'
     _description = 'Assign admin Wizard'
 
-    is_new_admin = fields.Boolean(
-        string=_("Is a new admin?")
-    )
-    first_name = fields.Char(string=_("First name"))
-    last_name = fields.Char(string=_("Last name"))
-    vat = fields.Char(string=_("VAT"))
-    email = fields.Char(string=_("Email"))
-    lang = fields.Many2one(
-        'res.lang',
-        string=_("Language")
-    )
-    role = fields.Selection(
-        selection='_get_available_roles',
-        string=_("Role")
-    )
+    is_new_admin = fields.Boolean(string="Is a new admin?")
+    first_name = fields.Char(string="First name")
+    last_name = fields.Char(string="Last name")
+    vat = fields.Char(string="VAT")
+    email = fields.Char(string="Email")
+    lang = fields.Many2one('res.lang', string="Language")
+    role = fields.Selection(selection='_get_available_roles', string="Role")
 
     @api.model
     def _get_available_roles(self):
