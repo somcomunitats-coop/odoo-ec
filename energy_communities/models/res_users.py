@@ -122,10 +122,9 @@ class ResUsers(models.Model):
         :param token: valid auth token from Keycloak
         :param odoo_user: res.users record
         """
-        odoo_key = self._LOGIN_MATCH_KEY.split(":")[1]
-        keycloak_user = self._get_users(
-            token, provider_id, search=odoo_user.mapped(odoo_key)[0]
-        )
+        odoo_key = self._LOGIN_MATCH_KEY.split(':')[1]
+        keycloak_user = self._get_kc_users(
+            token, provider_id, search=odoo_user.mapped(odoo_key)[0])
         if keycloak_user:
             if len(keycloak_user) > 1:
                 # TODO: warn user?
@@ -187,7 +186,7 @@ class ResUsers(models.Model):
         self._validate_response(resp, no_json=True)
         # yes, Keycloak sends back NOTHING on create
         # so we are forced to do anothe call to get its data :(
-        return self._get_users(token, provider_id, search=data["username"])[0]
+        return self._get_kc_users(token, provider_id, search=data['username'])[0]
 
     def get_role_codes(self):
         # TODO Map all code to company and enable (We should update the API schema too)
