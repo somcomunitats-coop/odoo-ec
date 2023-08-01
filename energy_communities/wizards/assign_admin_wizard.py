@@ -31,7 +31,6 @@ class AssignAdminWizard(models.TransientModel):
         return []
 
     def process_data(self):
-        company_id = self.env.company.id
         if self.is_new_admin:
             user = self.env['res.users'].create_energy_community_base_user(
                 vat=self.vat,
@@ -41,8 +40,13 @@ class AssignAdminWizard(models.TransientModel):
                 email=self.email,
             )
         else:
-            user = self.env['res.users'].search([('login', '=', self.vat)])
+            user = self.env['res.users'].search([
+                ('login', 'ilike', self.vat)
+            ], limit=1)
+            if not user:
+                raise ValidationError(_('User not found'))
 
+        company_id = self.env.company.id
         user.add_energy_community_role(company_id, self.role)
 
         return True
