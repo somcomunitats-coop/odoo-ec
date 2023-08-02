@@ -29,7 +29,7 @@
                         />
                         <button
                                 type="object"
-                                string="Set to inscription"
+                                string="Change to registration status"
                                 name="set_inscription"
                                 args="['activation']"
                                 attrs="{'invisible':[('state','not in',['activation'])]}"

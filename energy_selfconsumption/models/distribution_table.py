@@ -38,22 +38,10 @@ class DistributionTable(models.Model):
     )
 
     @api.model
-    def check_active_table(self, selfconsumption_project_id):
-        existing_tables = self.search([
-            ('selfconsumption_project_id', '=', selfconsumption_project_id.id),
-            ('state', '=', 'active')
-        ])
-        return bool(existing_tables)
-
-    @api.model
     def create(self, vals):
-        selfconsumption_project_id = self.env['energy_selfconsumption.selfconsumption'].browse(vals.get('selfconsumption_project_id'))
-        if not self.check_active_table(selfconsumption_project_id):
-            raise ValidationError(_("In order to create a new DistributionTable it is necessary that one of the DistributionTables created is active"))
         vals['name'] = self.env.ref('energy_selfconsumption.distribution_table_sequence', False).next_by_id()
         return super(DistributionTable, self).create(vals)
         
-
     @api.onchange('selfconsumption_project_id')
     def _onchange_selfconsumption_project_id(self):
         self.supply_point_assignation_ids = False
@@ -62,8 +50,6 @@ class DistributionTable(models.Model):
         for record in self:
             if not record.coefficient_is_valid:
                 raise ValidationError(_("Coefficient distribution must sum to 1."))
-            if not record.selfconsumption_project_id.state == 'activation':
-                raise ValidationError(_("Self-consumption project is not in activation"))
             if record.selfconsumption_project_id.distribution_table_ids.filtered_domain([('state', '=', 'validated')]):
                 raise ValidationError(_("Self-consumption project already has a validated table"))
             if record.selfconsumption_project_id.distribution_table_ids.filtered_domain([('state', '=', 'process')]):
