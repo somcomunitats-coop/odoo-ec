@@ -1,8 +1,5 @@
 from odoo import api, fields, models
 from odoo.http import request
-import logging
-
-logger = logging.getLogger(__name__)
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
