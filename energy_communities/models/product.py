@@ -1,5 +1,8 @@
 from odoo import api, fields, models
 from odoo.http import request
+import logging
+
+logger = logging.getLogger(__name__)
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
@@ -36,3 +39,16 @@ class ProductTemplate(models.Model):
                 ]
             )
         return product_templates
+
+    @api.model
+    def create(self, vals):
+        if self.env.user not in (self.env.ref("base.user_root"),
+                                self.env.ref("base.user_admin"),
+                                self.env.ref("base.default_user"),
+                                self.env.ref("base.public_user"),
+                                self.env.ref("base.template_portal_user_id")):
+            if not vals.get('company_id', False):
+                vals['company_id'] = self.env.company.id
+
+        product = super(ProductTemplate, self).create(vals)
+        return product
