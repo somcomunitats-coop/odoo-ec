@@ -15,8 +15,9 @@ class CompanySetupMixin(object):
 class UserSetupMixin(object):
 
     def create_user(self, firstname, lastname, vat=False, email=False):
-            return self.users_model.create({
-            "login": vat if vat else faker.vat_id(),
+        login = vat if vat else faker.vat_id()
+        return self.users_model.create({
+            "login": login.lower(),
             "firstname": firstname,
             "lastname": lastname,
             "email": email if email else faker.email(),
