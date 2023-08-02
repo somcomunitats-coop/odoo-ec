@@ -10,9 +10,16 @@
                     <header>
                         <button
                                 type="object"
+                                string="Set in inscription"
+                                name="set_inscription"
+                                args="['draft']"
+                                attrs="{'invisible':[('state','not in',['draft'])]}"
+                        />
+                        <button
+                                type="object"
                                 string="Set in activation"
-                                name="set_activation"
-                                attrs="{'invisible':[('state','not in',['draft', 'inscription'])]}"
+                                name="set_in_activation_state"
+                                attrs="{'invisible':[('state','not in',['inscription'])]}"
                         />
                         <button
                                 type="object"
@@ -22,8 +29,9 @@
                         />
                         <button
                                 type="object"
-                                string="Reset to inscription"
+                                string="Set to inscription"
                                 name="set_inscription"
+                                args="['activation']"
                                 attrs="{'invisible':[('state','not in',['activation'])]}"
                                 confirm="Are you sure you want to change the project status to the previous step?
                                  If so, the distribution table will return to the 'validated' state."

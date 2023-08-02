@@ -38,21 +38,21 @@ class DistributionTable(models.Model):
     )
 
     @api.model
-    def create_table(self, selfconsumption_project_id):
+    def check_active_table(self, selfconsumption_project_id):
         existing_tables = self.search([
             ('selfconsumption_project_id', '=', selfconsumption_project_id.id),
+            ('state', '=', 'active')
         ])
-        if bool(existing_tables):
-            return any(table['state'] == 'active' for table in existing_tables)
-        return True
+        return bool(existing_tables)
 
     @api.model
     def create(self, vals):
         selfconsumption_project_id = self.env['energy_selfconsumption.selfconsumption'].browse(vals.get('selfconsumption_project_id'))
-        if self.create_table(selfconsumption_project_id):
-            vals['name'] = self.env.ref('energy_selfconsumption.distribution_table_sequence', False).next_by_id()
-            return super(DistributionTable, self).create(vals)
-        raise ValidationError(_("In order to create a new DistributionTable it is necessary that one of the DistributionTables created is active"))
+        if not self.check_active_table(selfconsumption_project_id):
+            raise ValidationError(_("In order to create a new DistributionTable it is necessary that one of the DistributionTables created is active"))
+        vals['name'] = self.env.ref('energy_selfconsumption.distribution_table_sequence', False).next_by_id()
+        return super(DistributionTable, self).create(vals)
+        
 
     @api.onchange('selfconsumption_project_id')
     def _onchange_selfconsumption_project_id(self):

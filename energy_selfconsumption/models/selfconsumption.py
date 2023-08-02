@@ -57,8 +57,10 @@ class Selfconsumption(models.Model):
         distribution_table_to_activate = self.distribution_table_ids.filtered(lambda table: table.state == actual_state)
         distribution_table_to_activate.write({"state": new_state})
 
-    def set_activation(self):
+    def set_in_activation_state(self):
         for record in self:
+            if not record.distribution_table_ids.filtered_domain([('state', '=', 'validated')]):
+                raise ValidationError(_("Must have a valid Distribution Table."))
             record.write({"state": "activation"})        
         self.distribution_table_state("validated", "process")
 
@@ -73,9 +75,8 @@ class Selfconsumption(models.Model):
             record.write({"state": "active"})
         self.distribution_table_state("process", "active")
 
-    def set_inscription(self):
-        for record in self.distribution_table_ids:
-            record.write({"state": "validated"})        
+    def set_inscription(self, selfconsumption_state):
         for record in self:
             record.write({"state": "inscription"})
-        self.distribution_table_state("process", "validated")
+        if selfconsumption_state == 'activation':
+            self.distribution_table_state("process", "validated")
