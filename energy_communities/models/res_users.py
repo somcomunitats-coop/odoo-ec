@@ -192,18 +192,6 @@ class ResUsers(models.Model):
         # TODO Map all code to company and enable (We should update the API schema too)
         return self.role_line_ids[0].role_id.code
 
-    def get_administrared_ce(self):
-        communities = []
-        role_lines = self.env["res.users.role.line"].sudo().search([
-            ("user_id.id", "=", self.id),
-            ("active", "=", True),
-            ("role_id.code", "=", "role_ce_admin")
-        ])
-        for role_line in role_lines:
-            for company in role_line.allowed_company_ids:
-                communities.append(company.id)
-        return communities
-
     def send_reset_password_mail(self):
         provider_id = self.env.ref('energy_communities.keycloak_admin_provider')
         provider_id.validate_admin_provider()
@@ -222,26 +210,26 @@ class ResUsers(models.Model):
             )
 
     def make_internal_user(self):
-        already_user = self.env["res.users.role.line"].sudo().search([
+        already_user = self.env["res.users.role.line"].search([
             ("user_id.id", "=", self.id),
             ("active", "=", True),
             ("role_id.code", "=", "role_internal_user")
         ])
         if not already_user:
-            role = self.env["res.users.role"].sudo().search([(
+            role = self.env["res.users.role"].search([(
                 "code", "=", "role_internal_user"
             )])
-            self.env["res.users.role.line"].sudo().create({
-                "user_id": self.id,
-                "active": True,
-                "role_id": role.id,
-            })
+            self.write({'role_line_ids': [(0, 0, {
+                    'user_id': self.id,
+                    'active': True,
+                    'role_id': role.id,
+            })]})
 
     def make_ce_user(self, company_id, role_name):
-        role = self.env["res.users.role"].sudo().search([(
+        role = self.env["res.users.role"].search([(
             "code", "=", role_name
         )])
-        current_role = self.env["res.users.role.line"].sudo().search([
+        current_role = self.env["res.users.role.line"].search([
             ("user_id", "=", self.id),
             ("active", "=", True),
             ("company_id", "=", company_id)
@@ -251,20 +239,20 @@ class ResUsers(models.Model):
                 current_role.write({"role_id": role})
         else:
             self.write({
-                "company_ids": [(4, company_id)]
-            })
-            self.env["res.users.role.line"].sudo().create({
-                "user_id": self.id,
-                "active": True,
-                "role_id": role.id,
-                "company_id": company_id,
+                "company_ids": [(4, company_id)],
+                "role_line_ids": [(0, 0, {
+                    'user_id': self.id,
+                    'active': True,
+                    'role_id': role.id,
+                    'company_id': company_id,
+                })]
             })
 
     def make_coord_user(self, company_id, role_name):
-        role = self.env["res.users.role"].sudo().search([(
+        role = self.env["res.users.role"].search([(
             "code", "=", role_name
         )])
-        current_role = self.env["res.users.role.line"].sudo().search([
+        current_role = self.env["res.users.role.line"].search([
             ("user_id", "=", self.id),
             ("active", "=", True),
             ("company_id", "=", company_id)
@@ -274,14 +262,15 @@ class ResUsers(models.Model):
                 current_role.write({"role_id": role})
         else:
             self.write({
-                "company_ids": [(4, company_id)]
+                "company_ids": [(4, company_id)],
+                "role_line_ids": [(0, 0, {
+                    'user_id': self.id,
+                    'active': True,
+                    'role_id': role.id,
+                    'company_id': company_id,
+                })]
             })
-            self.env["res.users.role.line"].sudo().create({
-                "user_id": self.id,
-                "active": True,
-                "role_id": role.id,
-                "company_id": company_id,
-            })
+
         company = self.env["res.company"].browse(company_id)
         child_companies = company.get_child_companies()
         for child_company in child_companies:

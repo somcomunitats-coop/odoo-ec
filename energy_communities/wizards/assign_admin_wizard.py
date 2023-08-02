@@ -1,3 +1,4 @@
+import re
 from odoo import models, fields, api
 from odoo.tools.translate import _
 from odoo.exceptions import ValidationError
@@ -31,9 +32,10 @@ class AssignAdminWizard(models.TransientModel):
         return []
 
     def process_data(self):
+        vat = re.sub(r"[^a-zA-Z0-9]", "", self.vat).lower()
         if self.is_new_admin:
             user = self.env['res.users'].create_energy_community_base_user(
-                vat=self.vat,
+                vat=vat,
                 first_name=self.first_name,
                 last_name=self.last_name,
                 lang_code=self.lang.code,
@@ -41,7 +43,7 @@ class AssignAdminWizard(models.TransientModel):
             )
         else:
             user = self.env['res.users'].search([
-                ('login', 'ilike', self.vat)
+                ('login', 'ilike', vat)
             ], limit=1)
             if not user:
                 raise ValidationError(_('User not found'))

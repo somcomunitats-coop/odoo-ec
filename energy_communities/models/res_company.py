@@ -169,14 +169,14 @@ class ResCompany(models.Model):
         if self.hierarchy_level == 'community':
             return "role_ce_admin"
         elif self.hierarchy_level == 'coordinator':
-            return "role_coordination"
+            return "role_coord_admin"
         elif self.hierarchy_level == 'instance':
             return "role_platform_admin"
 
     def _get_admins(self):
         role_name = self._get_admin_role_name()
         for rec in self:
-            role_lines = self.env["res.users.role.line"].sudo().search([
+            role_lines = self.env["res.users.role.line"].search([
                 ("company_id.id", "=", self.id),
                 ("active", "=", True),
                 ("role_id.code", "=", role_name)
