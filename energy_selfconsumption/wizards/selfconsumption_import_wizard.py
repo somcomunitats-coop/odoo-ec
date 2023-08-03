@@ -1,5 +1,6 @@
 import base64
 import logging
+from datetime import datetime
 from csv import reader
 from io import StringIO
 
@@ -33,6 +34,12 @@ class SelfconsumptionImportWizard(models.TransientModel):
         required=True,
         string="File Encoding",
         help="Enconding format in import CSV file.",
+    )
+    date_format = fields.Char(
+        default="%d/%m/%Y",
+        required=True,
+        string="Date Format",
+        help="Date format for effective date.",
     )
 
     @api.constrains("import_file")
@@ -132,23 +139,19 @@ class SelfconsumptionImportWizard(models.TransientModel):
             )
 
         if not project.inscription_ids.filtered_domain(
-            [("partner_id", "=", partner.id)]
+                [("partner_id", "=", partner.id)]
         ):
-            if line_dict["effective_date"]:
-                try:
-                    effective_date_iso = fields.date.fromisoformat(line_dict["effective_date"])
-                except ValueError as e:
-                    return False, _("Could not create inscription for {vat}. {error}").format(
-                        vat=line_dict["partner_vat"], error=e
-                    )
-            else:
-                effective_date_iso = fields.date.today()
             try:
+                if line_dict["effective_date"]:
+                    effective_date = datetime.strptime(line_dict["effective_date"], self.date_format).date()
+                else:
+                    effective_date = fields.date.today()
+
                 self.env["energy_project.inscription"].create(
                     {
                         "project_id": project.id,
                         "partner_id": partner.id,
-                        "effective_date": effective_date_iso,
+                        "effective_date": effective_date,
                     }
                 )
             except Exception as e:
