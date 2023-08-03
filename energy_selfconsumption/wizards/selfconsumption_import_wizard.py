@@ -173,26 +173,29 @@ class SelfconsumptionImportWizard(models.TransientModel):
         return True, False
 
     def create_supply_point(self, line_dict, partner):
-        owner = self.env["res.partner"].search(
-            [
-                "|",
-                ("vat", "=", line_dict["owner_vat"]),
-                ("vat", "=ilike", line_dict["owner_vat"]),
-            ],
-            limit=1,
-        )
-        if not owner:
-            try:
-                owner = self.env["res.partner"].create(
-                    {
-                        "vat": line_dict["owner_vat"],
-                        "firstname": line_dict["owner_firstname"],
-                        "lastname": line_dict["owner_lastname"],
-                        "company_type": "person",
-                    }
-                )
-            except Exception as e:
-                return False, _("Owner could not be created: {error}").format(error=e)
+        if line_dict["owner_vat"]:
+            owner = self.env["res.partner"].search(
+                [
+                    "|",
+                    ("vat", "=", line_dict["owner_vat"]),
+                    ("vat", "=ilike", line_dict["owner_vat"]),
+                ],
+                limit=1,
+            )
+            if not owner:
+                try:
+                    owner = self.env["res.partner"].create(
+                        {
+                            "vat": line_dict["owner_vat"],
+                            "firstname": line_dict["owner_firstname"],
+                            "lastname": line_dict["owner_lastname"],
+                            "company_type": "person",
+                        }
+                    )
+                except Exception as e:
+                    return False, _("Owner could not be created: {error}").format(error=e)
+        else:
+            owner = partner
         country = self.env["res.country"].search([("code", "=", line_dict["country"])])
         if not country:
             return False, _("Country code was not found: {country}").format(
