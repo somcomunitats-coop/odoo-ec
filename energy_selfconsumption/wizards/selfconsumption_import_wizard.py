@@ -68,11 +68,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
         if error_string_list:
             project.message_post(
                 subject=_("Import Errors"),
-                body=_(
-                    "Import errors found: <ul>{list}</ul>".format(
-                        list=error_string_list
-                    )
-                ),
+                body=_("Import errors found: <ul>{list}</ul>").format(
+                    list=error_string_list
+                )
             )
         return True
 
