@@ -50,6 +50,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 raise ValidationError(_("Only csv format files are accepted."))
 
     def import_file_button(self):
+        self.flush()
         error_string_list = ""
         file_data = base64.b64decode(self.import_file)
         parsing_data = self.with_context(active_id=self.ids[0])._parse_file(file_data)
@@ -76,6 +77,14 @@ class SelfconsumptionImportWizard(models.TransientModel):
 
     def download_template_button(self):
         distribution_table_example_attachment = self.env.ref('energy_selfconsumption.selfconsumption_table_example_attachment')
+        download_url = '/web/content/{}/?download=true'.format(str(distribution_table_example_attachment.id))
+        return {
+            "type": "ir.actions.act_url",
+            "url": download_url,
+            "target": "new",
+        }
+    def download_list_button(self):
+        distribution_table_example_attachment = self.env.ref('energy_selfconsumption.list_state_attachment')
         download_url = '/web/content/{}/?download=true'.format(str(distribution_table_example_attachment.id))
         return {
             "type": "ir.actions.act_url",

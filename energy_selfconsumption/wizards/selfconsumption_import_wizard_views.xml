@@ -10,7 +10,9 @@
                     <sheet>
                         <p>You can download an example template for the import. The template must have this format and
                             be a CSV file.</p>
-                        <button type="object" name="download_template_button">Download Template</button>
+                        <button type="object" class="btn btn-primary mr-1" name="download_template_button">Download
+                            Template</button>
+                        <button type="object" name="download_list_button">Download State List</button>
                         <separator/>
                         <group>
                             <field name="import_file" filename="fname" widget="binary"></field>
