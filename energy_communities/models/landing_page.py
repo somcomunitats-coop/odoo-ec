@@ -116,7 +116,7 @@ class LandingPage(models.Model):
                 "map_reference": map_reference,
                 "street": self.street or "",
                 "postal_code": self.postal_code or "",
-                "city": self.city or ""
+                "city": self.city or "",
             }
         }
 
