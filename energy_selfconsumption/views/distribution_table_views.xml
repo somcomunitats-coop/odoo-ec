@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
         <record id="distribution_table_form_view" model="ir.ui.view">
             <field name="name">energy_selfconsumption.distribution_table_form_view.form</field>
             <field name="model">energy_selfconsumption.distribution_table</field>
@@ -13,6 +12,7 @@
                                 string="Validate"
                                 name="button_validate"
                                 states="draft"
+                                class="btn btn-primary"
                         />
                         <button
                             type="object"
