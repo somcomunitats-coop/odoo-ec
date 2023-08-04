@@ -23,7 +23,7 @@
                         <button
                             type="object"
                             name="action_selfconsumption_import_wizard"
-                            string="Import data"
+                            string="Import inscriptions and supply points"
                             attrs="{'invisible':[('state','not in',['draft'])]}"
                         />
                         <field
