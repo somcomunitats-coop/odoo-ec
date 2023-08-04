@@ -32,7 +32,7 @@
                         />
                         <button
                                 type="object"
-                                string="Change to inscription status"
+                                string="Back to In Inscription status"
                                 name="set_inscription"
                                 args="['activation']"
                                 attrs="{'invisible':[('state','not in',['activation'])]}"
