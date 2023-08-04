@@ -73,7 +73,7 @@ class Selfconsumption(models.Model):
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Generation Power."))
             record.write({"state": "active"})
-        self.distribution_table_state("process", "draft")
+        self.distribution_table_state("process", "active")
 
     def set_inscription(self, selfconsumption_state):
         for record in self:
