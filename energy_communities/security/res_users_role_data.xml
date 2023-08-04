@@ -28,7 +28,6 @@
         <field name="name">Energy Community Member</field>
         <field name="code">role_ce_member</field>
         <field name="implied_ids" eval="[
-                (5, 0, 0),
                 (4, ref('group_user')),
         ]"/>
     </record>
@@ -37,7 +36,6 @@
         <field name="name">Energy Community Administrator</field>
         <field name="code">role_ce_admin</field>
         <field name="implied_ids" eval="[
-               (5, 0, 0),
                (4, ref('group_admin')),
                (4, ref('sale.group_delivery_invoice_address')),
                (4, ref('account.group_account_invoice')),
@@ -61,7 +59,6 @@
         <field name="name">Energy Community Manager</field>
         <field name="code">role_ce_manager</field>
         <field name="implied_ids" eval="[
-               (5, 0, 0),
                (4, ref('group_admin')),
                (4, ref('sale.group_delivery_invoice_address')),
                (4, ref('account.group_account_invoice')),
@@ -85,7 +82,6 @@
         <field name="name">Coordinator Admin</field>
         <field name="code">role_coord_admin</field>
         <field name="implied_ids" eval="[
-               (5, 0, 0),
                (4, ref('group_admin')),
                (4, ref('sale.group_delivery_invoice_address')),
                (4, ref('account.group_account_invoice')),
@@ -109,7 +105,6 @@
         <field name="name">Coordinator Worker</field>
         <field name="code">role_coord_worker</field>
         <field name="implied_ids" eval="[
-               (5, 0, 0),
                (4, ref('group_user')),
                (4, ref('sale.group_delivery_invoice_address')),
                (4, ref('account.group_account_invoice')),
@@ -133,7 +128,6 @@
         <field name="name">Platform admin role</field>
         <field name="code">role_platform_admin</field>
         <field name="implied_ids" eval="[
-               (5, 0, 0),
                (4, ref('group_platform_manager')),
                (4, ref('group_admin')),
                (4, ref('base.group_erp_manager')),
@@ -161,7 +155,6 @@
         <field name="name">Internal User</field>
         <field name="code">role_internal_user</field>
         <field name="implied_ids" eval="[
-               (5, 0, 0),
                (4, ref('base.group_user')),
         ]"/>
     </record>
