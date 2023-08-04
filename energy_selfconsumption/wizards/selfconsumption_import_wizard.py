@@ -56,7 +56,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
         parsing_data = self.with_context(active_id=self.ids[0])._parse_file(file_data)
         active_id = self.env.context.get("active_id")
         project = self.env["energy_selfconsumption.selfconsumption"].browse(active_id)
-        for index, line in enumerate(parsing_data[1:]):
+        for index, line in enumerate(parsing_data[1:], start=2):
             import_dict = self.get_line_dict(line)
             result = self.import_line(import_dict, project)
             if not result[0]:
