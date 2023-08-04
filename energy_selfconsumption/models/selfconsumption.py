@@ -75,6 +75,7 @@ class Selfconsumption(models.Model):
     def action_selfconsumption_import_wizard(self):
         self.ensure_one()
         return {
+            'name': _('Import Inscriptions and Supply Points'),
             'type': 'ir.actions.act_window',
             'view_mode': 'form',
             'res_model': 'energy_selfconsumption.selfconsumption_import.wizard',
