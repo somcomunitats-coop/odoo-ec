@@ -1,4 +1,4 @@
-from odoo import api, fields, models,  _
+from odoo import fields, models, api
 from odoo.exceptions import ValidationError
 
 
@@ -36,15 +36,13 @@ class SupplyPointAssignation(models.Model):
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
     )
-    @api.constrains("coefficient", "owner_id")
+    @api.constrains('coefficient')
     def constraint_coefficient(self):
         for record in self:
-            if record.owner_id and not record.owner_id.member:
-                raise ValidationError(_("The selected partner is not a member"))
             if record.coefficient < 0:
-                raise ValidationError(_("Coefficient can't be negative."))
+                raise ValidationError("Coefficient can't be negative.")
 
-    @api.onchange("coefficient")
+    @api.onchange('coefficient')
     def _onchange_coefficient(self):
         if self.coefficient < 0:
             self.coefficient = -self.coefficient
