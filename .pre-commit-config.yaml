@@ -129,10 +129,12 @@ repos:
           - --rcfile=.pylintrc
           - --exit-zero
         verbose: true
-        additional_dependencies: &pylint_deps
-          - pylint-odoo==3.5.0
       - id: pylint
         name: pylint with mandatory checks
         args:
           - --rcfile=.pylintrc-mandatory
-        additional_dependencies: *pylint_deps
+  - repo: https://github.com/OCA/pylint-odoo
+    rev: v8.0.19
+    hooks:
+      - id: pylint_odoo
+        name: pylint odoo
