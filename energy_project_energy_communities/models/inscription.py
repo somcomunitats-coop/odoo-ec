@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 class Inscription(models.Model):
@@ -10,4 +10,4 @@ class Inscription(models.Model):
     def _check_member(self):
         for record in self:
             if record.partner_id and not record.partner_id.member:
-                raise ValidationError("The selected partner is not a member")
+                raise ValidationError(_("The selected partner is not a member"))
