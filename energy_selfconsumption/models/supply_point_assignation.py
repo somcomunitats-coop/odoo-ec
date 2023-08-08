@@ -54,7 +54,7 @@ class SupplyPointAssignation(models.Model):
                 raise ValidationError(_("Coefficient can't be negative."))
 
     @api.constrains("owner_id")
-    def constraint_coefficient(self):
+    def constraint_owner_id(self):
         for record in self:
             if record.owner_id and not record.owner_id.member:
                 raise ValidationError(_("The selected partner is not a member"))
