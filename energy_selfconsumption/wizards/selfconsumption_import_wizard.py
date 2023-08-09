@@ -84,8 +84,8 @@ class SelfconsumptionImportWizard(models.TransientModel):
             "target": "new",
         }
     def download_list_button(self):
-        distribution_table_example_attachment = self.env.ref('energy_selfconsumption.list_state_attachment')
-        download_url = '/web/content/{}/?download=true'.format(str(distribution_table_example_attachment.id))
+        list_state_attachment = self.env.ref('energy_selfconsumption.list_state_attachment')
+        download_url = '/web/content/{}/?download=true'.format(str(list_state_attachment.id))
         return {
             "type": "ir.actions.act_url",
             "url": download_url,
