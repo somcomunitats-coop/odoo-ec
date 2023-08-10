@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="selfconsumption_import_wizard_form_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.selfconsumption_import.wizard.form</field>
+            <field name="model">energy_selfconsumption.selfconsumption_import.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <p>You can download an example template for the importation of inscriptions and supply points.
+                            The template must have the following format and be a CSV file.</p>
+                        <p>In the state list file, you can check which code is assigned for your state.</p>
+                        <button type="object" class="btn btn-primary mr-1" name="download_template_button">Download
+                            Template</button>
+                        <button type="object" name="download_list_button">Download State List</button>
+                        <separator/>
+                        <group>
+                            <field name="import_file" filename="fname" widget="binary"></field>
+                            <field name="fname" invisible="1"></field>
+                        </group>
+                        <group>
+                            <field name="date_format"></field>
+                            <field name="delimiter"></field>
+                            <field name="quotechar"></field>
+                            <field name="encoding"></field>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button type="object" name="import_file_button">Import</button>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="selfconsumption_import_wizard_action" model="ir.actions.act_window">
+            <field name="name">Import data</field>
+            <field name="res_model">energy_selfconsumption.selfconsumption_import.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

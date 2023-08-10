@@ -59,3 +59,15 @@ class DistributionTable(models.Model):
     def button_draft(self):
         for record in self:
             record.write({"state": "draft"})
+
+    def action_distribution_table_import_wizard(self):
+        self.ensure_one()
+        return {
+            'name': _('Import Distribution Table'),
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'energy_selfconsumption.distribution_table_import.wizard',
+            'views': [(False, 'form')],
+            'view_id': False,
+            'target': 'new',
+        }

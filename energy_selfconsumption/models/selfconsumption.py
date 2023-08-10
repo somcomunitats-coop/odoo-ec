@@ -25,8 +25,11 @@ class Selfconsumption(models.Model):
     cil = fields.Char(string="CIL", help="Production facility code for liquidation purposes")
     owner_id = fields.Many2one("res.partner", string="Owner", required=True, default=lambda self: self.env.company.partner_id)
     power = fields.Float(string="Generation Power (kW)")
-    distribution_table_ids = fields.One2many('energy_selfconsumption.distribution_table', 'selfconsumption_project_id',
-                                             readonly=True)
+    distribution_table_ids = fields.One2many(
+        "energy_selfconsumption.distribution_table",
+        "selfconsumption_project_id",
+        readonly=True,
+    )
     distribution_table_count = fields.Integer(compute=_compute_distribution_table_count) 
     inscription_ids = fields.One2many('energy_project.inscription', 'project_id', readonly=True)
     inscription_count = fields.Integer(compute=_compute_inscription_count)
@@ -73,7 +76,19 @@ class Selfconsumption(models.Model):
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Generation Power."))
             record.write({"state": "active"})
-        self.distribution_table_state("process", "active")
+            self.distribution_table_state("process", "active")
+
+    def action_selfconsumption_import_wizard(self):
+        self.ensure_one()
+        return {
+            'name': _('Import Inscriptions and Supply Points'),
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'energy_selfconsumption.selfconsumption_import.wizard',
+            'views': [(False, 'form')],
+            'view_id': False,
+            'target': 'new',
+        }
 
     def set_inscription(self, selfconsumption_state):
         for record in self:

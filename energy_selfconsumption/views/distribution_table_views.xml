@@ -20,6 +20,12 @@
                             name="button_draft"
                             attrs="{'invisible':['|',('state','not in',['validated']),('selfconsumption_project_state','not in',['inscription'])]}"
                         />
+                        <button
+                                type="object"
+                                name="action_distribution_table_import_wizard"
+                                string="Import table"
+                                states="draft"
+                        />
                         <field
                                 name="state"
                                 widget="statusbar"
