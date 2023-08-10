@@ -18,8 +18,8 @@ class DistributionTableImportWizard(models.TransientModel):
     fname = fields.Char(string="File Name")
     delimiter = fields.Char(default=',', required=True, string='File Delimiter', help='Delimiter in import CSV file.')
     quotechar = fields.Char(default='"', required=True, string='File Quotechar', help='Quotechar in import CSV file.')
-    encoding = fields.Char(default='utf-8', required=True, string='File Encoding', help='Enconding format in import CSV file.')
-
+    encoding = fields.Char(default='utf-8', required=True, string='File Encoding',
+                           help='Enconding format in import CSV file.')
 
     @api.constrains('import_file')
     def _constrains_import_file(self):
@@ -37,7 +37,8 @@ class DistributionTableImportWizard(models.TransientModel):
         return True
 
     def download_template_button(self):
-        distribution_table_example_attachment = self.env.ref('energy_selfconsumption.distribution_table_example_attachment')
+        distribution_table_example_attachment = self.env.ref(
+            'energy_selfconsumption.distribution_table_example_attachment')
         download_url = '/web/content/{}/?download=true'.format(str(distribution_table_example_attachment.id))
         return {
             "type": "ir.actions.act_url",
@@ -72,6 +73,7 @@ class DistributionTableImportWizard(models.TransientModel):
 
         for index, line in enumerate(data[1:]):
             value = self.get_supply_point_assignation_values(line)
+
             supply_point_assignation_values_list.append((0, 0, value))
 
         distribution_table.write(
@@ -87,10 +89,10 @@ class DistributionTableImportWizard(models.TransientModel):
         }
 
     def get_supply_point_id(self, code):
-        supply_point = self.env['energy_selfconsumption.supply_point'].search([('code', '=', code)])
-        if not supply_point:
+        supply_point_id = self.env['energy_selfconsumption.supply_point'].search_read([('code', '=', code)], ['id'])
+        if not supply_point_id:
             raise ValidationError(_('There isn\'t any supply point with this code: {code}').format(code=code))
-        return supply_point.id
+        return supply_point_id[0]['id']
 
     def get_coefficient(self, coefficient):
         try:
