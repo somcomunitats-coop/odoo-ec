@@ -59,7 +59,7 @@ class SupplyPointAssignation(models.Model):
         for record in self:
             supply_points = record.distribution_table_id.selfconsumption_project_id.inscription_ids.mapped('partner_id.supply_ids')
             if record.supply_point_id.id not in supply_points.ids:
-                raise ValidationError(_("The partner of the supply ppoint is not subscribed to the project"))
+                raise ValidationError(_("The partner of the supply point is not subscribed to the project"))
 
     @api.onchange('coefficient')
     def _onchange_coefficient(self):
