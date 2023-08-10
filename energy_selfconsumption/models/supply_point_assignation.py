@@ -47,17 +47,19 @@ class SupplyPointAssignation(models.Model):
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
     )
+
     @api.constrains('coefficient')
     def constraint_coefficient(self):
         for record in self:
             if record.coefficient < 0:
                 raise ValidationError(_("Coefficient can't be negative."))
 
-    @api.constrains("owner_id")
-    def constraint_owner_id(self):
+    @api.constrains("supply_point_id")
+    def constraint_supply_point_id(self):
         for record in self:
-            if record.owner_id and not record.owner_id.member:
-                raise ValidationError(_("The selected partner is not a member"))
+            supply_points = record.distribution_table_id.selfconsumption_project_id.inscription_ids.mapped('partner_id.supply_ids')
+            if record.supply_point_id.id not in supply_points.ids:
+                raise ValidationError(_("The partner of the supply ppoint is not subscribed to the project"))
 
     @api.onchange('coefficient')
     def _onchange_coefficient(self):
