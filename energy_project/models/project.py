@@ -2,6 +2,7 @@ from odoo import _, fields, models
 
 STATE_VALUES = [
     ("draft", _("Draft")),
+    ("inscription", _("In Inscription")),
     ("activation", _("In Activation")),
     ("active", _("Active")),
 ]
