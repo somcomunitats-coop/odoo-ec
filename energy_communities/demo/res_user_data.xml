@@ -25,6 +25,17 @@
                    eval="[
             (4, obj(ref('energy_community_company_1_wizard')).new_company_id.id),
             ]"></field>
+            <field name="role_line_ids"
+                   model="account.multicompany.easy.creation.wiz"
+                   eval="[
+                   (0, 0, {
+                    'role_id': ref('role_internal_user')
+                    }),
+                   (0, 0, {
+                    'role_id': ref('role_ce_member'),
+                    'company_id':obj(ref('energy_community_company_1_wizard')).new_company_id.id,
+                })]"
+            />
         </record>
 
         <record id="res_partner_admin_ce_1_demo" model="res.partner">
@@ -50,6 +61,17 @@
                    eval="[
             (4, obj(ref('energy_community_company_1_wizard')).new_company_id.id),
             ]"></field>
+            <field name="role_line_ids"
+                   model="account.multicompany.easy.creation.wiz"
+                   eval="[
+                  (0, 0, {
+                    'role_id': ref('role_internal_user')
+                    }),
+                   (0, 0, {
+                    'role_id': ref('role_ce_admin'),
+                    'company_id':obj(ref('energy_community_company_1_wizard')).new_company_id.id,
+                })]"
+            />
         </record>
 
         <record id="res_partner_manager_ce_1_demo" model="res.partner">
@@ -75,6 +97,17 @@
                    eval="[
             (4, obj(ref('energy_community_company_1_wizard')).new_company_id.id),
             ]"></field>
+            <field name="role_line_ids"
+                   model="account.multicompany.easy.creation.wiz"
+                   eval="[
+                   (0, 0, {
+                    'role_id': ref('role_internal_user')
+                    }),
+                   (0, 0, {
+                    'role_id': ref('role_ce_manager'),
+                    'company_id':obj(ref('energy_community_company_1_wizard')).new_company_id.id,
+                })]"
+            />
         </record>
 
         <record id="res_partner_admin_coordinator_1_demo" model="res.partner">
@@ -102,6 +135,30 @@
             (4, obj(ref('energy_community_company_2_wizard')).new_company_id.id),
             (4, obj(ref('energy_community_company_3_wizard')).new_company_id.id),
             ]"></field>
+            <field name="role_line_ids"
+                   model="account.multicompany.easy.creation.wiz"
+                   eval="[
+                   (0, 0, {
+                    'role_id': ref('role_internal_user')
+                    }),
+                   (0, 0, {
+                    'role_id': ref('role_coord_admin'),
+                    'company_id':ref('coordinator_company'),
+                    }),
+                   (0, 0, {
+                    'role_id': ref('role_coord_admin'),
+                    'company_id':obj(ref('energy_community_company_1_wizard')).new_company_id.id,
+                    }),
+                   (0, 0, {
+                    'role_id': ref('role_coord_admin'),
+                    'company_id':obj(ref('energy_community_company_2_wizard')).new_company_id.id,
+                    }),
+                   (0, 0, {
+                    'role_id': ref('role_coord_admin'),
+                    'company_id':obj(ref('energy_community_company_3_wizard')).new_company_id.id,
+                    }),
+                ]"
+            />
         </record>
 
         <record id="res_partner_worker_coordinator_1_demo" model="res.partner">
@@ -129,6 +186,30 @@
             (4, obj(ref('energy_community_company_2_wizard')).new_company_id.id),
             (4, obj(ref('energy_community_company_3_wizard')).new_company_id.id),
             ]"></field>
+            <field name="role_line_ids"
+                   model="account.multicompany.easy.creation.wiz"
+                   eval="[
+                   (0, 0, {
+                    'role_id': ref('role_internal_user')
+                    }),
+                   (0, 0, {
+                    'role_id': ref('role_coord_worker'),
+                    'company_id':ref('coordinator_company'),
+                    }),
+                   (0, 0, {
+                    'role_id': ref('role_coord_worker'),
+                    'company_id':obj(ref('energy_community_company_1_wizard')).new_company_id.id,
+                    }),
+                   (0, 0, {
+                    'role_id': ref('role_coord_worker'),
+                    'company_id':obj(ref('energy_community_company_2_wizard')).new_company_id.id,
+                    }),
+                   (0, 0, {
+                    'role_id': ref('role_coord_worker'),
+                    'company_id':obj(ref('energy_community_company_3_wizard')).new_company_id.id,
+                    }),
+                ]"
+            />
         </record>
 
         <record id="res_partner_admin_plataforma_demo" model="res.partner">
@@ -157,6 +238,17 @@
             (4, obj(ref('energy_community_company_2_wizard')).new_company_id.id),
             (4, obj(ref('energy_community_company_3_wizard')).new_company_id.id),
             ]"></field>
+            <field name="role_line_ids"
+                   model="account.multicompany.easy.creation.wiz"
+                   eval="[
+                   (0, 0, {
+                    'role_id': ref('role_internal_user')
+                    }),
+                   (0, 0, {
+                    'role_id': ref('role_platform_admin'),
+                    }),
+                ]"
+            />
         </record>
     </data>
 </odoo>
