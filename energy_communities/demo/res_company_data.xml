@@ -13,7 +13,7 @@
             <field name="parent_id" ref="base.main_company"/>
         </record>
 
-        <record id="ce_company_wizard" model="account.multicompany.easy.creation.wiz">
+        <record id="energy_community_company_1_wizard" model="account.multicompany.easy.creation.wiz">
             <field name="name">Comunitat Energetica 1</field>
             <field name="parent_id" ref="coordinator_company"/>
             <field name="capital_share">100</field>
@@ -21,11 +21,42 @@
             <field name="property_cooperator_account" ref="l10n_es.account_common_4300"/>
         </record>
 
+        <!-- action_accept method expects singletons, so it must be called for every community company-->
         <function name="action_accept" model="account.multicompany.easy.creation.wiz"
-        eval="[[ref('ce_company_wizard')]]"/>
-        
+        eval="[[ref('energy_community_company_1_wizard')]]"/>
+
         <function name="set_cooperator_journal" model="account.multicompany.easy.creation.wiz"
-        eval="[[ref('ce_company_wizard')]]"/>
+        eval="[[ref('energy_community_company_1_wizard')]]"/>
+
+
+        <record id="energy_community_company_2_wizard" model="account.multicompany.easy.creation.wiz">
+            <field name="name">Comunitat Energetica 2</field>
+            <field name="parent_id" ref="coordinator_company"/>
+            <field name="capital_share">100</field>
+            <field name="chart_template_id" ref="l10n_es.account_chart_template_pymes"/>
+            <field name="property_cooperator_account" ref="l10n_es.account_common_4300"/>
+        </record>
+
+        <function name="action_accept" model="account.multicompany.easy.creation.wiz"
+        eval="[[ref('energy_community_company_2_wizard')]]"/>
+
+        <function name="set_cooperator_journal" model="account.multicompany.easy.creation.wiz"
+        eval="[[ref('energy_community_company_2_wizard')]]"/>
+
+
+        <record id="energy_community_company_3_wizard" model="account.multicompany.easy.creation.wiz">
+            <field name="name">Comunitat Energetica 3</field>
+            <field name="parent_id" ref="coordinator_company"/>
+            <field name="capital_share">100</field>
+            <field name="chart_template_id" ref="l10n_es.account_chart_template_pymes"/>
+            <field name="property_cooperator_account" ref="l10n_es.account_common_4300"/>
+        </record>
+
+        <function name="action_accept" model="account.multicompany.easy.creation.wiz"
+        eval="[[ref('energy_community_company_3_wizard')]]"/>
+
+        <function name="set_cooperator_journal" model="account.multicompany.easy.creation.wiz"
+        eval="[[ref('energy_community_company_3_wizard')]]"/>
 
     </data>
 </odoo>
