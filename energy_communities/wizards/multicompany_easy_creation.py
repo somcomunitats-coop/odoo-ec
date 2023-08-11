@@ -39,6 +39,11 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         string="Product Share Template",
         domain=[('is_share', '=', True)]
     )
+    new_product_share_template = fields.Many2one(
+        comodel_name='product.template',
+        string="New Product Share Template",
+        readonly=True
+    )
 
     def update_product_category_company_share(self):
         new_company_id = self.new_company_id.id
@@ -66,7 +71,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
 
     def create_capital_share_product_template(self):
         # We use sudo to be able to copy the product and not needing to be in the main company
-        self.sudo().product_share_template.copy({
+        self.new_product_share_template = self.sudo().product_share_template.copy({
             'name': self.product_share_template.name,
             'company_id': self.new_company_id.id,
             'list_price': self.capital_share,
