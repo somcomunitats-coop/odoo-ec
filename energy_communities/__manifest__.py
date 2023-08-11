@@ -43,6 +43,7 @@
     """,
     "license": "AGPL-3",
     'demo': [
+        'demo/res_lang.xml',
         'demo/res_company_data.xml',
         'demo/res_user_data.xml',
     ],

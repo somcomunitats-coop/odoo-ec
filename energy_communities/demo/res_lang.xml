@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <function name="toggle_active" model="res.lang">
+            <value eval="ref('base.lang_es')"/>
+        </function>
+        <function name="toggle_active" model="res.lang">
+            <value eval="ref('base.lang_ca_ES')"/>
+        </function>
+        <function name="toggle_active" model="res.lang">
+            <value eval="ref('base.lang_eu_ES')"/>
+        </function>
+    </data>
+</odoo>
