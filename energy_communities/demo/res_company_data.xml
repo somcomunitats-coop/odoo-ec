@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="base.main_company" model="res.company">
+            <field name="name">Instancia</field>
+            <field name="hierarchy_level">instance</field>
+        </record>
+
+        <record id="coordinator_company" model="res.company">
+            <field name="name">Coordinadora</field>
+            <field name="hierarchy_level">coordinator</field>
+            <field name="parent_id" ref="base.main_company"/>
+        </record>
+
+        <record id="ce_company_wizard" model="account.multicompany.easy.creation.wiz">
+            <field name="name">Comunitat Energetica 1</field>
+            <field name="parent_id" ref="coordinator_company"/>
+            <field name="capital_share">100</field>
+            <field name="chart_template_id" ref="l10n_es.account_chart_template_pymes"/>
+            <field name="property_cooperator_account" ref="l10n_es.account_common_4300"/>
+        </record>
+
+        <function name="action_accept" model="account.multicompany.easy.creation.wiz"
+        eval="[[ref('ce_company_wizard')]]"/>
+        
+        <function name="set_cooperator_journal" model="account.multicompany.easy.creation.wiz"
+        eval="[[ref('ce_company_wizard')]]"/>
+
+    </data>
+</odoo>
