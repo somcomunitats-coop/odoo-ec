@@ -58,5 +58,12 @@
         <function name="set_cooperator_journal" model="account.multicompany.easy.creation.wiz"
         eval="[[ref('energy_community_company_3_wizard')]]"/>
 
+        <function model="res.users" name="write">
+            <value eval="[ref('base.user_root'), ref('base.user_admin'), ref('base.user_demo')]"/>
+            <value eval="{'company_ids': [
+                (4, ref('coordinator_company')),
+            ]}"/>
+        </function>
+
     </data>
 </odoo>
