@@ -44,6 +44,7 @@
     "license": "AGPL-3",
     'demo': [
         'demo/res_company_data.xml',
+        'demo/res_user_data.xml',
     ],
     'data': [
         'security/ir_rule_data.xml',
