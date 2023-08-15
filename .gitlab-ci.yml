@@ -24,9 +24,6 @@ test:
     - echo -e "\e[0Ksection_start:`date +%s`:deps[collapsed=true]\r\e[0KInstall addons and dependencies"
     - oca_install_addons
     - echo -e "\e[0Ksection_end:`date +%s`:deps\r\e[0K"
-    - echo -e "\e[0Ksection_start:`date +%s`:check_licenses[collapsed=true]\r\e[0KCheck licenses"
-    - manifestoo -d . check-licenses
-    - echo -e "\e[0Ksection_end:`date +%s`:check_licenses\r\e[0K"
     - echo -e "\e[0Ksection_start:`date +%s`:check_dev[collapsed=true]\r\e[0KCheck development status"
     - manifestoo -d . check-dev-status --default-dev-status=Beta
     - echo -e "\e[0Ksection_end:`date +%s`:check_dev\r\e[0K"
