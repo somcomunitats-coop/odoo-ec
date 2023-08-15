@@ -1,5 +1,5 @@
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
 
 
 class Inscription(models.Model):
@@ -32,28 +32,28 @@ class Inscription(models.Model):
     )
     effective_date = fields.Date(required=True)
 
-    def unlink(self):
-        related_projects = []
-        to_delete_assignations = self.env['energy_selfconsumption.supply_point_assignation']
-        for inscription in self:
-            related_tables = self.env['energy_selfconsumption.distribution_table'].search([
-                ('state', 'in', ['validated', 'process', 'active']),
-                ('selfconsumption_project_id', '=', inscription.project_id.id)
-            ])
-            if related_tables:
-                related_projects.append(inscription.project_id.name)
-            else:
-                partner_assignations = self.env['energy_selfconsumption.supply_point_assignation'].search([
-                    ('distribution_table_id.selfconsumption_project_id.inscription_ids.partner_id', '=', inscription.partner_id.id),
-                    ('selfconsumption_project_id', '=', inscription.project_id.id),
-                ])
-                to_delete_assignations |= partner_assignations
-        if related_projects:
-            project_names = ', '.join(related_projects)
-            raise UserError(_(
-                "Cannot delete inscription. It is related to the following project(s): %s" % project_names
-            ))
-        if to_delete_assignations:
-            to_delete_assignations.unlink()
+    def has_matching_supply_assignations(self):
+        matching_tables = self.project_id.selfconsumption_id.distribution_table_ids.filtered(
+            lambda table: table.state in ('validated', 'process', 'active')
+        )
+        return any(
+            table.supply_point_assignation_ids.supply_point_id.partner_id == self.partner_id
+            for table in matching_tables
+        )
 
+    def get_matching_supply_assignations_to_remove(self):
+        supply_point_assignation = self.env['energy_selfconsumption.supply_point_assignation'].search([
+                    ('distribution_table_id.selfconsumption_project_id.inscription_ids.partner_id', '=', self.partner_id.id),
+                    ('selfconsumption_project_id', '=', self.project_id.id),
+                    ('distribution_table_id.state', '=', 'draft')
+                ])
+        return supply_point_assignation
+
+    def unlink(self):
+        matching_assignations = self.has_matching_supply_assignations()
+        if matching_assignations:
+            raise ValidationError(_("Cannot delete inscription. It is related to the following project(s): {project}").format(project=self.project_id.name))
+        supply_point_assignation = self.get_matching_supply_assignations_to_remove()
+        if supply_point_assignation:
+            supply_point_assignation.unlink()
         return super(Inscription, self).unlink()
