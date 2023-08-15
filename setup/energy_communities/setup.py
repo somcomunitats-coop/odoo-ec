@@ -3,7 +3,7 @@ import setuptools
 setuptools.setup(
     setup_requires=['setuptools-odoo'],
     odoo_addon={
-        "depends": {
+        "depends_override": {
             "account_lock_date_update": "odoo14-addon-account-lock-date-update==14.0.2.0.1.dev10",
             "account_reconciliation_widget": "odoo14-addon-account-reconciliation-widget==14.0.2.0.2",
             "community_maps": "odoo14-addon-community-maps==14.0.0.1.13",
@@ -18,11 +18,9 @@ setuptools.setup(
             "partner_multi_company": "odoo14-addon-partner-multi-company==14.0.1.0.1.dev4",
             "queue_job": "odoo14-addon-queue-job==14.0.3.1.5",
         },
-        "external_dependencies": {
-            "python": {
-                "python-keycloak": "python-keycloak==2.16.3",
-                "python-slugify": "python-slugify==8.0.1",
-            },
-        },
+        "install_requires": [
+            "python-keycloak",
+            "python-slugify"
+        ],
     }
 )
