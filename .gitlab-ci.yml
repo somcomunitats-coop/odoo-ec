@@ -13,6 +13,9 @@ variables:
   RUNNER_HOME: '/home/gitlab-runner'
   PIP_INDEX_URL: 'https://pypi.org/simple'
 
+before_script:
+  - pip install python-slugify python-keycloak
+
 test:
   stage: test
   tags:
