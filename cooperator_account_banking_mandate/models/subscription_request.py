@@ -16,7 +16,7 @@ class SubscriptionRequest(models.Model):
     mandate_required = fields.Boolean(
         related="payment_mode_id.payment_method_id.mandate_required",
     )
-    mandate_approved = fields.Boolean(default=False, required=True, string="Approved creation of new mandate")
+    mandate_approved = fields.Boolean(default=False, string="Approved creation of new mandate")
 
     def create_invoice(self, partner):
         if self.mandate_required and not self.mandate_id:

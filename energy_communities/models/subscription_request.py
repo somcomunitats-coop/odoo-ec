@@ -18,7 +18,7 @@ class SubscriptionRequest(models.Model):
 
     gender = fields.Selection(selection_add=[("not_binary", "Not binary"),
                                              ("not_share", "I prefer to not share it")])
-    vat = fields.Char(required=True, readonly=True, states={"draft": [("readonly", False)]})
+    vat = fields.Char(readonly=True, states={"draft": [("readonly", False)]})
     is_voluntary = fields.Boolean(compute=_compute_is_voluntary, string="Is voluntary contribution", readonly=True,
                                   store=True)
     def get_journal(self):
