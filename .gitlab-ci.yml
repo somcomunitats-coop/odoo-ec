@@ -35,4 +35,5 @@ test:
     - echo -e "\e[0Ksection_end:`date +%s`:init_db\r\e[0K"
     - echo -e "\e[0Ksection_start:`date +%s`:test[collapsed=true]\r\e[0KRun tests"
     - oca_run_tests
+    - coverage report -m
     - echo -e "\e[0Ksection_end:`date +%s`:test\r\e[0K"
