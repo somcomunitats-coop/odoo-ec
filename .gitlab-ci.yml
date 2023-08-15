@@ -39,6 +39,8 @@ test:
     - echo -e "\e[0Ksection_end:`date +%s`:test\r\e[0K"
   coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
   artifacts:
+    paths:
+       - coverage.xml
     reports:
       coverage_report:
         coverage_format: cobertura
