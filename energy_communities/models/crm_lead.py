@@ -251,7 +251,7 @@ class CrmLead(models.Model):
 
     def action_assign_crm_to_coordinator_company(self):
         return {
-            'name': 'Assign CRM to coordinator company',
+            'name': _('Assign CRM to coordinator company'),
             'type': 'ir.actions.act_window',
             'res_model': 'assign.crm.to.coordinator.company.wizard',
             'view_mode': 'form',
