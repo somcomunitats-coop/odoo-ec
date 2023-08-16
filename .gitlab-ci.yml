@@ -40,20 +40,22 @@ test:
   variables:
     MAKEPOT: "1"
   script:
-    - echo -e "\e[0Ksection_start:`date +%s`:deps[collapsed=true]\r\e[0KInstall addons and dependencies"
+    - section_start "deps" "Install addons and dependencies"
     - oca_install_addons
-    - echo -e "\e[0Ksection_end:`date +%s`:deps\r\e[0K"
-    - echo -e "\e[0Ksection_start:`date +%s`:check_dev[collapsed=true]\r\e[0KCheck development status"
-    - manifestoo -d . check-dev-status --default-dev-status=Beta
-    - echo -e "\e[0Ksection_end:`date +%s`:check_dev\r\e[0K"
-    - echo -e "\e[0Ksection_start:`date +%s`:init_db[collapsed=true]\r\e[0KInitialize test db"
+    - section_end "deps"    
+   
+    - section_start "init_db" "Initialize test db"
     - oca_init_test_database
-    - echo -e "\e[0Ksection_end:`date +%s`:init_db\r\e[0K"
-    - echo -e "\e[0Ksection_start:`date +%s`:test[collapsed=true]\r\e[0KRun tests"
+    - section_end "init_db"
+    
+    - section_start "test" "Run tests"
     - oca_run_tests
+    - section_end "test"
+
+    - section_start "codecov" "Get code coverage"
     - coverage report -m
     - coverage xml
-    - echo -e "\e[0Ksection_end:`date +%s`:test\r\e[0K"
+    - section_end "codecov"
   coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
   artifacts:
     paths:
