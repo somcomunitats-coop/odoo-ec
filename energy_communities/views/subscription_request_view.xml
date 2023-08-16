@@ -9,6 +9,9 @@
                 <field name="company_id"/>
                 <field name="is_voluntary"/>
             </field>
+            <field name="vat" position="attributes">
+                <attribute name="required">True</attribute>
+            </field>
         </field>
     </record>
 

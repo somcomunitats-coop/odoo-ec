@@ -14,7 +14,7 @@
                             attrs="{'invisible': [('mandate_required', '=', False)]}"
                     />
                     <field name="mandate_required" invisible="1"/>
-                    <field name="mandate_approved"/>
+                    <field name="mandate_approved" required="True"/>
                 </xpath>
             </field>
         </record>

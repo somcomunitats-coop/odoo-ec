@@ -8,15 +8,20 @@ setuptools.setup(
             "account_reconciliation_widget": "odoo14-addon-account-reconciliation-widget==14.0.2.0.2",
             "community_maps": "odoo14-addon-community-maps==14.0.0.1.13",
             "cooperator_account_payment": "odoo14-addon-cooperator-account-payment==14.0.1.0.2",
-            "cooperator_account_banking_mandate": "odoo14-addon-cooperator-account-banking-mandate==14.0.1.0.5",
             "crm_metadata": "odoo14-addon-crm-metadata==14.0.1.0.0",
             "crm_metadata_rest_api": "odoo14-addon-crm-metadata-rest-api==14.0.1.0.2",
             "crm_rest_api": "odoo14-addon-crm-rest-api==14.0.1.0.2",
+            "l10n_es_cooperator": "odoo14-addon-l10n-es-cooperator==14.0.0.1.1.dev2",
             "l10n_es_aeat_sii_oca": "odoo14-addon-l10n-es-aeat-sii-oca==14.0.2.8.1",
             "mail_multicompany": "odoo14-addon-mail-multicompany==14.0.0.1.1.dev2",
-            "metadata": "odoo14-addon-metadata==14.0.0.0.1",
+            "metadata": "odoo14-addon-metadata==14.0.1.0.0",
             "partner_multi_company": "odoo14-addon-partner-multi-company==14.0.1.0.1.dev4",
             "queue_job": "odoo14-addon-queue-job==14.0.3.1.5",
+        },
+        "external_dependencies_override": {
+            "python": {
+                "python-keycloak": "python-keycloak==2.16.3",
+            },
         },
     }
 )

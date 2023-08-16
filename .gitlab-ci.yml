@@ -1,13 +1,66 @@
-# You can override the included template(s) by including variable overrides
-# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
-# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/#customizing-settings
-# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
-# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
-# Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+---
+image: ghcr.io/oca/oca-ci/py3.8-odoo14.0:latest
 stages:
-- test
-sast:
+  - test
+
+services:
+  - postgres:12
+
+variables:
+  POSTGRES_DB: project_ci_test
+  POSTGRES_USER: odoo
+  POSTGRES_PASSWORD: "odoo"
+  RUNNER_HOME: '/home/gitlab-runner'
+  PIP_INDEX_URL: 'https://pypi.org/simple'
+
+before_script:
+  - pip install python-slugify python-keycloak
+  - >
+    function section_start {
+        GITLABCI_SECTION_DATE=$(date '+%s')
+        GITLABCI_SECTION_NAME="$1"
+        GITLABCI_SECTION_TEXT="$2"
+        COLOR_START="\033[1;35m"
+        COLOR_END="\033[0m"
+        stdbuf -i0 -o0 -e0 echo -e "section_start:${GITLABCI_SECTION_DATE}:${GITLABCI_SECTION_NAME}[collapsed=true]\r\e[0K${COLOR_START}${GITLABCI_SECTION_TEXT}${COLOR_END}"
+
+    }
+
+    function section_end {
+        GITLABCI_SECTION_DATE=$(date '+%s')
+        GITLABCI_SECTION_NAME="$1"
+        stdbuf -i0 -o0 -e0 echo -e "section_end:${GITLABCI_SECTION_DATE}:${GITLABCI_SECTION_NAME}\r\e[0K"
+    }
+
+test:
   stage: test
-include:
-- template: Security/SAST.gitlab-ci.yml
+  tags:
+    - postgres
+    - docker
+  variables:
+    MAKEPOT: "1"
+  script:
+    - section_start "deps" "Install addons and dependencies"
+    - oca_install_addons
+    - section_end "deps"    
+   
+    - section_start "init_db" "Initialize test db"
+    - oca_init_test_database
+    - section_end "init_db"
+    
+    - section_start "test" "Run tests"
+    - oca_run_tests
+    - section_end "test"
+
+    - section_start "codecov" "Get code coverage"
+    - coverage report -m
+    - coverage xml
+    - section_end "codecov"
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  artifacts:
+    paths:
+       - coverage.xml
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
