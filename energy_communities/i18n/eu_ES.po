@@ -851,6 +851,37 @@ msgid "An instance company already exists"
 msgstr "Ya existe una compañía con el rol de Instancia"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_crm_to_coordinator_wizard_form
+msgid "Assign"
+msgstr "Esleitu"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_crm_to_coordinator_wizard_form
+msgid "Assign CRM to Coordinator Company Wizard"
+msgstr "Esleitu CRM enpresa koordinatzaileari"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/crm_lead.py:0
+#, python-format
+msgid "Assign CRM to coordinator company"
+msgstr "Esleitu CRM enpresa koordinatzaileari"
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_assign_crm_to_coordinator_company_wizard
+msgid "Assign CRM to coordinator company wizard"
+msgstr "Esleitu CRM enpresa koordinatzaileari"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__assigned_company_id
+msgid "Assigned company"
+msgstr "Esleitutako enpresa"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_crm_lead_view_form
+msgid "Assing CRM to coordinator company"
+msgstr "Esleitu CRM enpresa liderrari"
+
+#. module: energy_communities
 #: code:addons/energy_communities/services/ce_community_service.py:0
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
 #: code:addons/energy_communities/services/ce_member_service.py:0
