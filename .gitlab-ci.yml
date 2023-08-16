@@ -15,6 +15,22 @@ variables:
 
 before_script:
   - pip install python-slugify python-keycloak
+  - >
+    function section_start {
+        GITLABCI_SECTION_DATE=$(date '+%s')
+        GITLABCI_SECTION_NAME="$1"
+        GITLABCI_SECTION_TEXT="$2"
+        COLOR_START="\033[1;35m"
+        COLOR_END="\033[0m"
+        stdbuf -i0 -o0 -e0 echo -e "section_start:${GITLABCI_SECTION_DATE}:${GITLABCI_SECTION_NAME}[collapsed=true]\r\e[0K${COLOR_START}${GITLABCI_SECTION_TEXT}${COLOR_END}"
+
+    }
+
+    function section_end {
+        GITLABCI_SECTION_DATE=$(date '+%s')
+        GITLABCI_SECTION_NAME="$1"
+        stdbuf -i0 -o0 -e0 echo -e "section_end:${GITLABCI_SECTION_DATE}:${GITLABCI_SECTION_NAME}\r\e[0K"
+    }
 
 test:
   stage: test
