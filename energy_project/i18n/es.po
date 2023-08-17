@@ -192,3 +192,10 @@ msgstr "Usuario"
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__zip
 msgid "Zip"
 msgstr "Código postal"
+
+#. module: energy_project
+#: code:addons/energy_project/models/project.py:0
+#: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__inscription
+#, python-format
+msgid "In Inscription"
+msgstr "En inscripción"
