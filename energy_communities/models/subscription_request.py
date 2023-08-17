@@ -7,7 +7,7 @@ class SubscriptionRequest(models.Model):
 
     @api.depends('share_product_id', 'share_product_id.categ_id')
     def _compute_is_voluntary(self):
-        product_category_voluntary_share = self.env.ref('energy_communities.product_category_company_voluntary_share')
+        product_category_voluntary_share = self.env.ref('energy_communities.product_category_company_voluntary_share', raise_if_not_found=False)
         for record in self:
             record.is_voluntary = record.share_product_id.categ_id == product_category_voluntary_share
 
@@ -15,7 +15,7 @@ class SubscriptionRequest(models.Model):
                                              ("not_share", "I prefer to not share it")])
     vat = fields.Char(required=True, readonly=True, states={"draft": [("readonly", False)]})
     is_voluntary = fields.Boolean(compute=_compute_is_voluntary, string="Is voluntary contribution", readonly=True,
-                                  store=True)
+                                  store=True, default=False)
     def get_journal(self):
         """Need to override in order to use in multicompany enviroment"""
 
@@ -34,6 +34,8 @@ class SubscriptionRequest(models.Model):
         if 'iban' in required_fields: required_fields.remove('iban')
         return required_fields
 
+    def return_true(self):
+        return True
     @api.model
     def create(self, vals):
         # Somewhere the company_id is assigned as string
@@ -102,3 +104,12 @@ class SubscriptionRequest(models.Model):
             # sudo is needed to change state of invoice linked to a request
             #  sent through the api
             mail_template_notif.sudo().send_mail(self.id)
+
+    def validate_subscription_request_with_company(self):
+        '''
+        This method is used in data demo importation to be able to validate with the context of the company instead of
+        the main company in the installation of the module.
+        :return:
+        '''
+        self = self.with_company(self.company_id)
+        return self.validate_subscription_request()

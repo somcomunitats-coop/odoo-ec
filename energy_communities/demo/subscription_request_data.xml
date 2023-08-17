@@ -31,6 +31,9 @@
             <field name="state">draft</field>
         </record>
 
+        <function name="validate_subscription_request_with_company" model="subscription.request"
+                  eval="[ref('subscription_1_community_1_data')]"/>
+
         <record id="subscription_2_community_1_data" model="subscription.request">
             <field name="firstname">Jessica</field>
             <field name="lastname">Tirado Ruvalcaba</field>
