@@ -39,18 +39,18 @@ class Inscription(models.Model):
         return matching_tables
 
     def get_matching_supply_assignations_to_remove(self):
-        supply_point_assignation = self.env['energy_selfconsumption.supply_point_assignation'].search([
+        supply_point_assignations = self.env['energy_selfconsumption.supply_point_assignation'].search([
                     ('distribution_table_id.selfconsumption_project_id.inscription_ids.partner_id', '=', self.partner_id.id),
                     ('selfconsumption_project_id', '=', self.project_id.id),
                     ('distribution_table_id.state', '=', 'draft')
                 ])
-        return supply_point_assignation
+        return supply_point_assignations
 
     def unlink(self):
         matching_assignations = self.has_matching_supply_assignations()
         if len(matching_assignations) > 0:
             raise ValidationError(_("The inscription cannot be deleted. It is related to a distribution table with state: {table_state}").format(table_state=matching_assignations.state))
-        supply_point_assignation = self.get_matching_supply_assignations_to_remove()
-        if supply_point_assignation:
-            supply_point_assignation.unlink()
+        supply_point_assignations = self.get_matching_supply_assignations_to_remove()
+        if supply_point_assignations:
+            supply_point_assignations.unlink()
         return super(Inscription, self).unlink()
