@@ -41,3 +41,9 @@ msgstr "Última modificación el"
 #: model:ir.model.fields,field_description:energy_project_energy_communities.field_energy_project_inscription__partner_id
 msgid "Partner"
 msgstr "Socio"
+
+#. module: energy_project_energy_communities
+#: code:addons/energy_project_energy_communities/models/inscription.py:0
+#, python-format
+msgid "The selected partner is not a member"
+msgstr "El socio seleccionado no es miembro"
