@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, _
 
 
 class SupplyPoint(models.Model):
@@ -6,9 +6,20 @@ class SupplyPoint(models.Model):
     _description = "Energy Supply Point"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
+    _sql_constraints = {
+        (
+            "unique_code_company_id",
+            "unique (code, company_id)",
+            _("A supply point with this code already exists."),
+        )
+    }
+
     name = fields.Char(required=True)
     code = fields.Char(string="CUPS", required=True)
-    owner_id = fields.Many2one("res.partner", string="Owner", required=True)
+    owner_id = fields.Many2one("res.partner", string="Owner", required=True,
+                               help="Partner with the legal obligation of the supply point")
+    partner_id = fields.Many2one("res.partner", string="Partner", required=True,
+                                 help="Partner subscribed to the self-consumption project")
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
     )

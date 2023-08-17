@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://somcomunitats.coop/",
     "category": "Customizations",
-    "version": "14.0.1.1.2",
+    "version": "14.0.1.1.3",
     "depends": [
         "energy_selfconsumption",
         "cooperator",

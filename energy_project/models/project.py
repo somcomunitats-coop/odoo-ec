@@ -2,6 +2,7 @@ from odoo import _, fields, models
 
 STATE_VALUES = [
     ("draft", _("Draft")),
+    ("inscription", _("In Inscription")),
     ("activation", _("In Activation")),
     ("active", _("Active")),
 ]
@@ -18,7 +19,7 @@ class Project(models.Model):
         "res.company", default=lambda self: self.env.company, readonly=True
     )
     inscription_ids = fields.One2many(
-        "energy_project.inscription", "project_id", required=True
+        "energy_project.inscription", "project_id",
     )
     active = fields.Boolean(default=True)
 

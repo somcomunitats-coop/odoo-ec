@@ -249,6 +249,15 @@ class CrmLead(models.Model):
         for lead in self:
             pass
 
+    def action_assign_crm_to_coordinator_company(self):
+        return {
+            'name': _('Assign CRM to coordinator company'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'assign.crm.to.coordinator.company.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+        }
+
 
 class CrmTags(models.Model):
     _inherit = 'crm.tag'

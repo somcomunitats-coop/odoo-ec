@@ -4,6 +4,8 @@ from odoo.exceptions import ValidationError
 STATE_VALUES = [
     ("draft", _("Draft")),
     ("validated", _("Validated")),
+    ("process", _("In process")),
+    ("active", _("Active")),
 ]
 
 TYPE_VALUES = [
@@ -24,6 +26,7 @@ class DistributionTable(models.Model):
 
     name = fields.Char(readonly=True)
     selfconsumption_project_id = fields.Many2one('energy_selfconsumption.selfconsumption', required=True)
+    selfconsumption_project_state = fields.Selection(related='selfconsumption_project_id.state')
     type = fields.Selection(TYPE_VALUES, default="fixed", required=True, string="Modality")
     state = fields.Selection(STATE_VALUES, default="draft", required=True)
     supply_point_assignation_ids = fields.One2many('energy_selfconsumption.supply_point_assignation',
@@ -38,7 +41,7 @@ class DistributionTable(models.Model):
     def create(self, vals):
         vals['name'] = self.env.ref('energy_selfconsumption.distribution_table_sequence', False).next_by_id()
         return super(DistributionTable, self).create(vals)
-
+        
     @api.onchange('selfconsumption_project_id')
     def _onchange_selfconsumption_project_id(self):
         self.supply_point_assignation_ids = False
@@ -47,8 +50,24 @@ class DistributionTable(models.Model):
         for record in self:
             if not record.coefficient_is_valid:
                 raise ValidationError(_("Coefficient distribution must sum to 1."))
-            if not record.selfconsumption_project_id.state == 'activation':
-                raise ValidationError(_("Self-consumption project is not in activation"))
             if record.selfconsumption_project_id.distribution_table_ids.filtered_domain([('state', '=', 'validated')]):
                 raise ValidationError(_("Self-consumption project already has a validated table"))
+            if record.selfconsumption_project_id.distribution_table_ids.filtered_domain([('state', '=', 'process')]):
+                raise ValidationError(_("Self-consumption project already has a table in process"))
             record.write({"state": "validated"})
+
+    def button_draft(self):
+        for record in self:
+            record.write({"state": "draft"})
+
+    def action_distribution_table_import_wizard(self):
+        self.ensure_one()
+        return {
+            'name': _('Import Distribution Table'),
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'energy_selfconsumption.distribution_table_import.wizard',
+            'views': [(False, 'form')],
+            'view_id': False,
+            'target': 'new',
+        }

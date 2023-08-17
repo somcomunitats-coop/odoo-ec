@@ -1,6 +1,6 @@
 {
     'name': "Energy Community",
-    'version': '14.0.1.1.12',
+    'version': '14.0.1.1.13',
     'depends': [
         'account',
         'cooperator_account_banking_mandate',
@@ -70,6 +70,7 @@
         'views/menus.xml',
         'data/mail_template_data.xml',
         'data/mail_template_update_data.xml',
+        'wizards/assign_crm_to_coordinator_company.xml',
         'wizards/multicompany_easy_creation.xml',
     ],
     'installable': True,
