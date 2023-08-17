@@ -71,7 +71,6 @@
             </field>
             <field name="subject">[Somcomunitats.coop] Community Contact Request</field>
             <field name="email_to">${object.email_from}</field>
-            <field name="email_cc">info+contacteCE@somcomunitats.coop</field>
             <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">
                 ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
@@ -122,7 +121,6 @@
         name="subject"
       >[Somcomunitats.coop] Community Newsletter Subscription Request</field>
             <field name="email_to">${object.email_from}</field>
-            <field name="email_cc">info+butlletiCE@somcomunitats.coop</field>
             <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">
                 ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
@@ -214,12 +212,9 @@
 
         <record id="email_templ_lead_request_platform_news_confirm_id" model="mail.template">
             <field name="name">Confirmation Email for Platform News Request Lead Receipt</field>
-            <field name="email_from">info+butlleti@somcomunitats.coop</field>
-            <field
-        name="subject"
-      >[Somcomunitats.coop] Platform Newsletter Subscription Request</field>
+            <field name="email_from">${object.company_id.email}</field>
+            <field name="subject">[Somcomunitats.coop] Platform Newsletter Subscription Request</field>
             <field name="email_to">${object.email_from}</field>
-            <field name="email_cc">info+butlleti@somcomunitats.coop</field>
             <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">
                 ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
