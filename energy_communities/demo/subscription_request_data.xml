@@ -34,6 +34,12 @@
         <function name="validate_subscription_request_with_company" model="subscription.request"
                   eval="[ref('subscription_1_community_1_data')]"/>
 
+        <!--The method action_invoice_paid does not create the payment, but it sets the cooperator logic that we need in this demo
+        #TODO see how we can pay invoices from data-->
+        <function name="action_invoice_paid" model="account.move">
+                <value model="subscription.request" eval="obj(ref('subscription_1_community_1_data')).capital_release_request.ids"/>
+        </function>
+
         <record id="subscription_2_community_1_data" model="subscription.request">
             <field name="firstname">Jessica</field>
             <field name="lastname">Tirado Ruvalcaba</field>
