@@ -47,7 +47,7 @@ class DistributionTable(models.Model):
     def _supply_point_constrain(self):
         for record in self:
             if record.state in ('validated', 'process', 'active'):
-                raise ValidationError(_(f"The supply point can't be removed because the distribution table state is {record.state}"))
+                raise ValidationError(_("The supply point can't be removed because the distribution table state is {table_state}").format(table_state=record.state))
      
     @api.onchange('selfconsumption_project_id')
     def _onchange_selfconsumption_project_id(self):
