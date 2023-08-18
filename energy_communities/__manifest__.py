@@ -23,6 +23,9 @@
         'crm_metadata',
         'crm_metadata_rest_api',
         'crm_rest_api',
+        'energy_project',
+        'energy_selfconsumption',
+        'energy_selfconsumption_cooperator',
         'l10n_es_aeat',
         'l10n_es_aeat_sii_oca',
         'l10n_es_cooperator',
@@ -47,6 +50,7 @@
         'demo/res_company_data.xml',
         'demo/res_user_data.xml',
         'demo/subscription_request_data.xml',
+        'demo/energy_selfconsumption_data.xml',
     ],
     'data': [
         'security/ir_rule_data.xml',
