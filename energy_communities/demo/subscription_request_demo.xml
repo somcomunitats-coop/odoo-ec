@@ -2,7 +2,7 @@
 
 <odoo>
     <data>
-        <record id="subscription_1_community_1_data" model="subscription.request">
+        <record id="subscription_1_community_1_demo" model="subscription.request">
             <field name="firstname">Ignacio</field>
             <field name="lastname">Mora Herrera</field>
             <field name="vat">43549978F</field>
@@ -32,16 +32,16 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_1_community_1_data')]"/>
+                  eval="[ref('subscription_1_community_1_demo')]"/>
 
         <!--The method action_invoice_paid does not create the payment, but it sets the cooperator logic that we need in this demo
         #TODO see how we can pay invoices from data-->
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_1_community_1_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_1_community_1_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_2_community_1_data" model="subscription.request">
+        <record id="subscription_2_community_1_demo" model="subscription.request">
             <field name="firstname">Jessica</field>
             <field name="lastname">Tirado Ruvalcaba</field>
             <field name="vat">Y6415494A</field>
@@ -70,14 +70,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_2_community_1_data')]"/>
+                  eval="[ref('subscription_2_community_1_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_2_community_1_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_2_community_1_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_3_community_1_data" model="subscription.request">
+        <record id="subscription_3_community_1_demo" model="subscription.request">
             <field name="firstname">Ester</field>
             <field name="lastname">Ojeda Hurtado</field>
             <field name="vat">X9855477T</field>
@@ -106,14 +106,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_3_community_1_data')]"/>
+                  eval="[ref('subscription_3_community_1_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_3_community_1_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_3_community_1_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_4_community_1_data" model="subscription.request">
+        <record id="subscription_4_community_1_demo" model="subscription.request">
             <field name="firstname">Marc</field>
             <field name="lastname">Ortiz Espinosa</field>
             <field name="vat">21948576K</field>
@@ -142,14 +142,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_4_community_1_data')]"/>
+                  eval="[ref('subscription_4_community_1_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_4_community_1_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_4_community_1_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_5_community_1_data" model="subscription.request">
+        <record id="subscription_5_community_1_demo" model="subscription.request">
             <field name="firstname">Laura</field>
             <field name="lastname">Gurule Torres</field>
             <field name="vat">26309903L</field>
@@ -178,14 +178,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_5_community_1_data')]"/>
+                  eval="[ref('subscription_5_community_1_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_5_community_1_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_5_community_1_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_6_community_1_data" model="subscription.request">
+        <record id="subscription_6_community_1_demo" model="subscription.request">
             <field name="firstname">Rufino</field>
             <field name="lastname">Menchaca Vázquez</field>
             <field name="vat">13922435Y</field>
@@ -214,14 +214,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_6_community_1_data')]"/>
+                  eval="[ref('subscription_6_community_1_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_6_community_1_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_6_community_1_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_7_community_1_data" model="subscription.request">
+        <record id="subscription_7_community_1_demo" model="subscription.request">
             <field name="firstname">Nataly</field>
             <field name="lastname">Gamboa Barragán</field>
             <field name="vat">Z7891647F</field>
@@ -250,14 +250,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_7_community_1_data')]"/>
+                  eval="[ref('subscription_7_community_1_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_7_community_1_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_7_community_1_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_8_community_1_data" model="subscription.request">
+        <record id="subscription_8_community_1_demo" model="subscription.request">
             <field name="firstname">Ana</field>
             <field name="lastname">Romo Padilla</field>
             <field name="vat">05321311P</field>
@@ -286,14 +286,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_8_community_1_data')]"/>
+                  eval="[ref('subscription_8_community_1_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_8_community_1_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_8_community_1_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_9_community_1_data" model="subscription.request">
+        <record id="subscription_9_community_1_demo" model="subscription.request">
             <field name="firstname">John</field>
             <field name="lastname">Zepeda Cervántez</field>
             <field name="vat">X4259691E</field>
@@ -322,14 +322,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_9_community_1_data')]"/>
+                  eval="[ref('subscription_9_community_1_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_9_community_1_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_9_community_1_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_10_community_1_data" model="subscription.request">
+        <record id="subscription_10_community_1_demo" model="subscription.request">
             <field name="firstname">Ampelio</field>
             <field name="lastname">Guillén Terán</field>
             <field name="vat">15914625M</field>
@@ -358,14 +358,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_10_community_1_data')]"/>
+                  eval="[ref('subscription_10_community_1_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_10_community_1_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_10_community_1_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_1_community_2_data" model="subscription.request">
+        <record id="subscription_1_community_2_demo" model="subscription.request">
             <field name="firstname">Josep</field>
             <field name="lastname">Galván Arce</field>
             <field name="vat">35860250F</field>
@@ -395,14 +395,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_1_community_2_data')]"/>
+                  eval="[ref('subscription_1_community_2_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_1_community_2_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_1_community_2_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_2_community_2_data" model="subscription.request">
+        <record id="subscription_2_community_2_demo" model="subscription.request">
             <field name="firstname">Benjamí</field>
             <field name="lastname">Tórrez Loera</field>
             <field name="vat">68229623P</field>
@@ -432,14 +432,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_2_community_2_data')]"/>
+                  eval="[ref('subscription_2_community_2_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_2_community_2_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_2_community_2_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_3_community_2_data" model="subscription.request">
+        <record id="subscription_3_community_2_demo" model="subscription.request">
             <field name="firstname">Marta</field>
             <field name="lastname">Saavedra Negrón</field>
             <field name="vat">22984129E</field>
@@ -469,14 +469,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_3_community_2_data')]"/>
+                  eval="[ref('subscription_3_community_2_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_3_community_2_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_3_community_2_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_4_community_2_data" model="subscription.request">
+        <record id="subscription_4_community_2_demo" model="subscription.request">
             <field name="firstname">Sandra</field>
             <field name="lastname">Mercado Cano</field>
             <field name="vat">44213606Q</field>
@@ -506,14 +506,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_4_community_2_data')]"/>
+                  eval="[ref('subscription_4_community_2_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_4_community_2_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_4_community_2_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_5_community_2_data" model="subscription.request">
+        <record id="subscription_5_community_2_demo" model="subscription.request">
             <field name="firstname">Manel</field>
             <field name="lastname">Cardona Villanueva</field>
             <field name="vat">52625784J</field>
@@ -543,14 +543,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_5_community_2_data')]"/>
+                  eval="[ref('subscription_5_community_2_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_5_community_2_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_5_community_2_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_6_community_2_data" model="subscription.request">
+        <record id="subscription_6_community_2_demo" model="subscription.request">
             <field name="firstname">Elsy</field>
             <field name="lastname">Macías Rojas</field>
             <field name="vat">84047054V</field>
@@ -580,14 +580,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_6_community_2_data')]"/>
+                  eval="[ref('subscription_6_community_2_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_6_community_2_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_6_community_2_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_7_community_2_data" model="subscription.request">
+        <record id="subscription_7_community_2_demo" model="subscription.request">
             <field name="firstname">Noelino</field>
             <field name="lastname">Gastelum Palomino</field>
             <field name="vat">71528692A</field>
@@ -617,14 +617,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_7_community_2_data')]"/>
+                  eval="[ref('subscription_7_community_2_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_7_community_2_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_7_community_2_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_8_community_2_data" model="subscription.request">
+        <record id="subscription_8_community_2_demo" model="subscription.request">
             <field name="firstname">Heraldo</field>
             <field name="lastname">Mondragón Márquez</field>
             <field name="vat">84021689K</field>
@@ -654,14 +654,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_8_community_2_data')]"/>
+                  eval="[ref('subscription_8_community_2_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_8_community_2_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_8_community_2_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_9_community_2_data" model="subscription.request">
+        <record id="subscription_9_community_2_demo" model="subscription.request">
             <field name="firstname">Antia</field>
             <field name="lastname">Barrientos Canales</field>
             <field name="vat">96476066J</field>
@@ -691,14 +691,14 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_9_community_2_data')]"/>
+                  eval="[ref('subscription_9_community_2_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_9_community_2_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_9_community_2_demo')).capital_release_request.ids"/>
         </function>
 
-        <record id="subscription_10_community_2_data" model="subscription.request">
+        <record id="subscription_10_community_2_demo" model="subscription.request">
             <field name="firstname">Etelvina</field>
             <field name="lastname">Zapata Tejada</field>
             <field name="vat">26077733B</field>
@@ -728,11 +728,11 @@
         </record>
 
         <function name="validate_subscription_request_with_company" model="subscription.request"
-                  eval="[ref('subscription_10_community_2_data')]"/>
+                  eval="[ref('subscription_10_community_2_demo')]"/>
 
         <function name="action_invoice_paid" model="account.move">
             <value model="subscription.request"
-                   eval="obj(ref('subscription_10_community_2_data')).capital_release_request.ids"/>
+                   eval="obj(ref('subscription_10_community_2_demo')).capital_release_request.ids"/>
         </function>
     </data>
 </odoo>

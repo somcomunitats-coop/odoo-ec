@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="selfconsumption_1_community_1_demo" model="energy_selfconsumption.selfconsumption">
+            <field name="name">Autoconsum Comunitat de Veïns Joan XXIII</field>
+            <field name="type" ref="energy_selfconsumption.selfconsumption_project_type"></field>
+            <field name="state">draft</field>
+            <field name="power">127</field>
+            <field name="code">ES0397277816188340VL</field>
+            <field name="cil">001ES0397277816188340VL</field>
+            <field name="street">Av. de Joan XXIII, 27-31</field>
+            <field name="zip">08028</field>
+            <field name="city">Barcelona</field>
+            <field name="state_id" ref="base.state_es_b"/>
+            <field name="country_id" ref="base.es"/>
+            <field name="owner_id" eval="obj(ref('energy_community_company_1_wizard')).new_company_id.partner_id" model="account.multicompany.easy.creation.wiz"/>
+            <field name="company_id" eval="obj(ref('subscription_1_community_1_demo')).company_id"
+                   model="subscription.request"></field>
+        </record>
+
+        <record id="inscription_1_selfconsumption_1_demo" model="energy_project.inscription">
+            <field name="project_id" model="energy_selfconsumption.selfconsumption"
+                   eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"/>
+            <field name="effective_date" eval="datetime.today()"></field>
+            <field name="partner_id" eval="obj(ref('subscription_1_community_1_demo')).partner_id"
+                   model="subscription.request"></field>
+            <field name="company_id" eval="obj(ref('subscription_1_community_1_demo')).company_id"
+                   model="subscription.request"></field>
+        </record>
+
+        <record id="inscription_2_selfconsumption_1_demo" model="energy_project.inscription">
+            <field name="project_id" model="energy_selfconsumption.selfconsumption"
+                   eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"/>
+            <field name="effective_date" eval="datetime.today()"></field>
+            <field name="partner_id" eval="obj(ref('subscription_2_community_1_demo')).partner_id"
+                   model="subscription.request"></field>
+            <field name="company_id" eval="obj(ref('subscription_2_community_1_demo')).company_id"
+                   model="subscription.request"></field>
+        </record>
+
+        <record id="inscription_3_selfconsumption_1_demo" model="energy_project.inscription">
+            <field name="project_id" model="energy_selfconsumption.selfconsumption"
+                   eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"/>
+            <field name="effective_date" eval="datetime.today()"></field>
+            <field name="partner_id" eval="obj(ref('subscription_3_community_1_demo')).partner_id"
+                   model="subscription.request"></field>
+            <field name="company_id" eval="obj(ref('subscription_3_community_1_demo')).company_id"
+                   model="subscription.request"></field>
+        </record>
+
+        <record id="inscription_4_selfconsumption_1_demo" model="energy_project.inscription">
+            <field name="project_id" model="energy_selfconsumption.selfconsumption"
+                   eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"/>
+            <field name="effective_date" eval="datetime.today()"></field>
+            <field name="partner_id" eval="obj(ref('subscription_4_community_1_demo')).partner_id"
+                   model="subscription.request"></field>
+            <field name="company_id" eval="obj(ref('subscription_4_community_1_demo')).company_id"
+                   model="subscription.request"></field>
+        </record>
+        <record id="inscription_5_selfconsumption_1_demo" model="energy_project.inscription">
+            <field name="project_id" model="energy_selfconsumption.selfconsumption"
+                   eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"/>
+            <field name="effective_date" eval="datetime.today()"></field>
+            <field name="partner_id" eval="obj(ref('subscription_5_community_1_demo')).partner_id"
+                   model="subscription.request"></field>
+            <field name="company_id" eval="obj(ref('subscription_5_community_1_demo')).company_id"
+                   model="subscription.request"></field>
+        </record>
+        <record id="inscription_6_selfconsumption_1_demo" model="energy_project.inscription">
+            <field name="project_id" model="energy_selfconsumption.selfconsumption"
+                   eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"/>
+            <field name="effective_date" eval="datetime.today()"></field>
+            <field name="partner_id" eval="obj(ref('subscription_6_community_1_demo')).partner_id"
+                   model="subscription.request"></field>
+            <field name="company_id" eval="obj(ref('subscription_6_community_1_demo')).company_id"
+                   model="subscription.request"></field>
+        </record>
+        <record id="inscription_7_selfconsumption_1_demo" model="energy_project.inscription">
+            <field name="project_id" model="energy_selfconsumption.selfconsumption"
+                   eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"/>
+            <field name="effective_date" eval="datetime.today()"></field>
+            <field name="partner_id" eval="obj(ref('subscription_7_community_1_demo')).partner_id"
+                   model="subscription.request"></field>
+            <field name="company_id" eval="obj(ref('subscription_7_community_1_demo')).company_id"
+                   model="subscription.request"></field>
+        </record>
+        <record id="inscription_8_selfconsumption_1_demo" model="energy_project.inscription">
+            <field name="project_id" model="energy_selfconsumption.selfconsumption"
+                   eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"/>
+            <field name="effective_date" eval="datetime.today()"></field>
+            <field name="partner_id" eval="obj(ref('subscription_8_community_1_demo')).partner_id"
+                   model="subscription.request"></field>
+            <field name="company_id" eval="obj(ref('subscription_8_community_1_demo')).company_id"
+                   model="subscription.request"></field>
+        </record>
+        <record id="inscription_9_selfconsumption_1_demo" model="energy_project.inscription">
+            <field name="project_id" model="energy_selfconsumption.selfconsumption"
+                   eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"/>
+            <field name="effective_date" eval="datetime.today()"></field>
+            <field name="partner_id" eval="obj(ref('subscription_9_community_1_demo')).partner_id"
+                   model="subscription.request"></field>
+            <field name="company_id" eval="obj(ref('subscription_9_community_1_demo')).company_id"
+                   model="subscription.request"></field>
+        </record>
+        <record id="inscription_10_selfconsumption_1_demo" model="energy_project.inscription">
+            <field name="project_id" model="energy_selfconsumption.selfconsumption"
+                   eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"/>
+            <field name="effective_date" eval="datetime.today()"></field>
+            <field name="partner_id" eval="obj(ref('subscription_10_community_1_demo')).partner_id"
+                   model="subscription.request"></field>
+            <field name="company_id" eval="obj(ref('subscription_10_community_1_demo')).company_id"
+                   model="subscription.request"></field>
+        </record>
+    </data>
+</odoo>

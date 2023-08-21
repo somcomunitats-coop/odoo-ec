@@ -46,11 +46,11 @@
     """,
     "license": "AGPL-3",
     'demo': [
-        'demo/res_lang.xml',
-        'demo/res_company_data.xml',
-        'demo/res_user_data.xml',
-        'demo/subscription_request_data.xml',
-        'demo/energy_selfconsumption_data.xml',
+        'demo/res_lang_demo.xml',
+        'demo/res_company_demo.xml',
+        'demo/res_user_demo.xml',
+        'demo/subscription_request_demo.xml',
+        'demo/energy_selfconsumption_demo.xml',
     ],
     'data': [
         'security/ir_rule_data.xml',
