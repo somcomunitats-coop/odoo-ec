@@ -3,18 +3,18 @@
 <odoo>
     <data>
         <record id="base.main_company" model="res.company">
-            <field name="name">Instancia</field>
+            <field name="name">Som Comunitats</field>
             <field name="hierarchy_level">instance</field>
         </record>
 
         <record id="coordinator_company" model="res.company">
-            <field name="name">Coordinadora</field>
+            <field name="name">Som Energia</field>
             <field name="hierarchy_level">coordinator</field>
             <field name="parent_id" ref="base.main_company"/>
         </record>
 
         <record id="energy_community_company_1_wizard" model="account.multicompany.easy.creation.wiz">
-            <field name="name">Comunitat Energetica 1</field>
+            <field name="name">Comunitat Energetica Sants</field>
             <field name="parent_id" ref="coordinator_company"/>
             <field name="capital_share">100</field>
             <field name="chart_template_id" ref="l10n_es.account_chart_template_pymes"/>
@@ -30,7 +30,7 @@
 
 
         <record id="energy_community_company_2_wizard" model="account.multicompany.easy.creation.wiz">
-            <field name="name">Comunitat Energetica 2</field>
+            <field name="name">Comunitat Energetica Villanoveta</field>
             <field name="parent_id" ref="coordinator_company"/>
             <field name="capital_share">100</field>
             <field name="chart_template_id" ref="l10n_es.account_chart_template_pymes"/>
@@ -45,7 +45,7 @@
 
 
         <record id="energy_community_company_3_wizard" model="account.multicompany.easy.creation.wiz">
-            <field name="name">Comunitat Energetica 3</field>
+            <field name="name">Comunitat Energetica Salt</field>
             <field name="parent_id" ref="coordinator_company"/>
             <field name="capital_share">100</field>
             <field name="chart_template_id" ref="l10n_es.account_chart_template_pymes"/>
