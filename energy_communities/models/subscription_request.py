@@ -7,7 +7,8 @@ class SubscriptionRequest(models.Model):
 
     @api.depends('share_product_id', 'share_product_id.categ_id')
     def _compute_is_voluntary(self):
-        product_category_voluntary_share = self.env.ref('energy_communities.product_category_company_voluntary_share', raise_if_not_found=False)
+        product_category_voluntary_share = self.env.ref('energy_communities.product_category_company_voluntary_share',
+                                                        raise_if_not_found=False)
         for record in self:
             record.is_voluntary = record.share_product_id.categ_id == product_category_voluntary_share
 
@@ -16,6 +17,7 @@ class SubscriptionRequest(models.Model):
     vat = fields.Char(required=True, readonly=True, states={"draft": [("readonly", False)]})
     is_voluntary = fields.Boolean(compute=_compute_is_voluntary, string="Is voluntary contribution", readonly=True,
                                   store=True)
+
     def get_journal(self):
         """Need to override in order to use in multicompany enviroment"""
 
