@@ -15,7 +15,7 @@ class SubscriptionRequest(models.Model):
                                              ("not_share", "I prefer to not share it")])
     vat = fields.Char(required=True, readonly=True, states={"draft": [("readonly", False)]})
     is_voluntary = fields.Boolean(compute=_compute_is_voluntary, string="Is voluntary contribution", readonly=True,
-                                  store=True, default=False)
+                                  store=True)
     def get_journal(self):
         """Need to override in order to use in multicompany enviroment"""
 
@@ -34,8 +34,6 @@ class SubscriptionRequest(models.Model):
         if 'iban' in required_fields: required_fields.remove('iban')
         return required_fields
 
-    def return_true(self):
-        return True
     @api.model
     def create(self, vals):
         # Somewhere the company_id is assigned as string
