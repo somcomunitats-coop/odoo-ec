@@ -20,6 +20,25 @@
                    model="subscription.request"></field>
         </record>
 
+        <record id="selfconsumption_2_community_1_demo" model="energy_selfconsumption.selfconsumption">
+            <field name="name">Centre Cívic Casal de Sarrià</field>
+            <field name="type" ref="energy_selfconsumption.selfconsumption_project_type"></field>
+            <field name="state">draft</field>
+            <field name="power">31</field>
+            <field name="code">ES0029998956068735WM</field>
+            <field name="cil">001ES0029998956068735WM</field>
+            <field name="street">C/ d'Eduardo Conde</field>
+            <field name="zip">08034</field>
+            <field name="city">Barcelona</field>
+            <field name="state_id" ref="base.state_es_b"/>
+            <field name="country_id" ref="base.es"/>
+            <field name="owner_id" eval="obj(ref('energy_community_company_1_wizard')).new_company_id.partner_id"
+                   model="account.multicompany.easy.creation.wiz"/>
+            <field name="company_id" eval="obj(ref('subscription_1_community_1_demo')).company_id"
+                   model="subscription.request"></field>
+        </record>
+
+
         <record id="inscription_1_selfconsumption_1_demo" model="energy_project.inscription">
             <field name="project_id" model="energy_selfconsumption.selfconsumption"
                    eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"/>
