@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 
 
@@ -41,16 +41,25 @@ class SupplyPointAssignation(models.Model):
         related="distribution_table_id.coefficient_is_valid"
     )
 
+
     supply_point_filtered_ids = fields.One2many('energy_selfconsumption.supply_point',
                                                 compute=_compute_supply_point_filtered_ids, readonly=True)
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
     )
+
     @api.constrains('coefficient')
     def constraint_coefficient(self):
         for record in self:
             if record.coefficient < 0:
-                raise ValidationError("Coefficient can't be negative.")
+                raise ValidationError(_("Coefficient can't be negative."))
+
+    @api.constrains("supply_point_id")
+    def constraint_supply_point_id(self):
+        for record in self:
+            supply_points = record.distribution_table_id.selfconsumption_project_id.inscription_ids.mapped('partner_id.supply_ids')
+            if record.supply_point_id.id not in supply_points.ids:
+                raise ValidationError(_("The partner of the supply point is not subscribed to the project"))
 
     @api.onchange('coefficient')
     def _onchange_coefficient(self):
