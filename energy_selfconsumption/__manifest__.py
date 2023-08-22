@@ -29,5 +29,6 @@
         "views/supply_point_assignation_views.xml",
         "wizards/selfconsumption_import_wizard_views.xml",
         "wizards/distribution_table_import_wizard_views.xml",
+        "reports/selfconsumption_reports.xml",
     ],
 }

@@ -112,3 +112,7 @@ class Selfconsumption(models.Model):
     def set_draft(self):
         for record in self:
             record.write({"state": "draft"})
+
+    def action_manager_authorization_report(self):
+        self.ensure_one()
+        return self.env.ref('energy_selfconsumption.selfconsumption_manager_authorization_report').report_action(self)
