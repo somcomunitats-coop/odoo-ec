@@ -192,8 +192,33 @@ class ResCompany(models.Model):
                 ("active", "=", True),
             ]
         }
-        members = self.env["res.users"].sudo().search(domains_dict["in_kc_and_active"])
-        return members
+        return self.env["res.users"].sudo().search(
+            domains_dict["in_kc_and_active"]
+        )
+
+    def get_users(self, role_codes=[]):
+        if role_codes:
+            users = self.env["res.users.role.line"].search([
+                ("company_id", "=", self.id),
+                ("role_id.code", "in", role_codes),
+            ]).user_id
+
+        else:
+            users = self.env["res.users.role.line"].search([
+                ("company_id", "=", self.id),
+            ]).user_id
+
+        wants_platform_admins = (
+            self.env.ref("energy_communities.role_platform_admin").code in role_codes or
+            not role_codes
+        )
+        if wants_platform_admins:
+            users += self.env["res.users.role.line"].search([
+                ("role_id", "=", self.env.ref("energy_communities.role_platform_admin").id),
+            ]).user_id
+
+        return users
+        # return lines.user_id  # TODO: Si?
 
     @api.model
     def _is_not_unique(self, vals):
