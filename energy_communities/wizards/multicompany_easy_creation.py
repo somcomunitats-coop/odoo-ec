@@ -23,12 +23,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     )
     crm_lead_id = fields.Many2one("crm.lead", string="CRM Lead")
     property_cooperator_account = fields.Many2one(
-        comodel_name="account.account",
+        comodel_name="account.account.template",
         string="Cooperator Account",
-        domain=[
-            ("internal_type", "=", "receivable"),
-            ("deprecated", "=", False),
-        ],
         help="This account will be"
         " the default one as the"
         " receivable account for the"
@@ -52,6 +48,54 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         string="New Product Share Template",
         readonly=True,
     )
+
+    default_lang_id = fields.Many2one(
+        comodel_name="res.lang",
+        string="Language",
+    )
+
+    street = fields.Char(
+        string="Address",
+    )
+
+    city = fields.Char(
+        string="City",
+    )
+
+    zip_code = fields.Char(
+        string="ZIP code",
+    )
+
+    foundation_date = fields.Date(
+        string="Foundation date"
+    )
+
+    vat = fields.Char(
+        string="ZIP code",
+    )
+
+    email = fields.Char(
+        string="Email",
+    )
+
+    phone = fields.Char(
+        string="Phone",
+    )
+
+    def add_company_managers(self):
+        coord_members = self.parent_id.get_users(["role_coord_admin", "role_coord_worker"])
+        for manager in coord_members:
+            manager.make_ce_user(self.new_company_id, "role_ce_manager")
+
+    def add_company_log(self):
+        message = _("Community created from: <a href='/web#id={id}&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>")
+        self.new_company_id.message_post(
+            body=message.format(
+                id=self.crm_lead_id.id,
+                menu_id=self.env.ref("crm.crm_menu_root").id,
+                name=self.crm_lead_id.name,
+            )
+        )
 
     def update_product_category_company_share(self):
         new_company_id = self.new_company_id.id
