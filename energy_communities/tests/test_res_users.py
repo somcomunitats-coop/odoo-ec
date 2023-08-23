@@ -33,7 +33,7 @@ class TestResUsers(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
         self.random_user = self.create_user("Brandom", "Random")
 
         self.make_community_admin(self.community_admin)
-        self.make_coord_admin(self.coord_admin)
+        self.make_coord_user(self.coord_admin)
 
     @patch("odoo.addons.energy_communities.models.res_users.ResUsers.create_users_on_keycloak")
     @patch("odoo.addons.energy_communities.models.res_users.ResUsers.send_reset_password_mail")
