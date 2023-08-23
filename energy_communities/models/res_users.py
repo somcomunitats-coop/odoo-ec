@@ -232,19 +232,19 @@ class ResUsers(models.Model):
         current_role = self.env["res.users.role.line"].search([
             ("user_id", "=", self.id),
             ("active", "=", True),
-            ("company_id", "=", company_id)
+            ("company_id", "=", company_id.id)
         ])
 
         if current_role:
                 current_role.write({"role_id": role})
         else:
             self.write({
-                "company_ids": [(4, company_id)],
+                "company_ids": [(4, company_id.id)],
                 "role_line_ids": [(0, 0, {
                     'user_id': self.id,
                     'active': True,
                     'role_id': role.id,
-                    'company_id': company_id,
+                    'company_id': company_id.id,
                 })]
             })
 

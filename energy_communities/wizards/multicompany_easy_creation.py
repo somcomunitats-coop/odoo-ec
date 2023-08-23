@@ -155,7 +155,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
 
     def update_values_from_crm_lead(self):
         if self.crm_lead_id:
-            vals = self.crm_lead_id._get_company_create_vals()
+            vals = self.crm_lead_id._get_default_community_wizard()
             self.new_company_id.write(vals)
 
     def set_cooperative_account(self):
