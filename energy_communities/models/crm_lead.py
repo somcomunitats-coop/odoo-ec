@@ -36,6 +36,15 @@ class CrmLead(models.Model):
         help="Community related to this Lead",
     )
 
+    finished = fields.Boolean(
+        related="stage_id.is_won",
+        readonly=True,
+    )
+    company_hierarchy_level = fields.Selection(
+        related="company_id.hierarchy_level",
+        readonly=True,
+    )
+
     def _create_map_place_proposal(self):
         if not self.env.user.company_id.coordinator:
             raise UserError(
@@ -343,6 +352,21 @@ class CrmLead(models.Model):
             "res_model": "assign.crm.to.coordinator.company.wizard",
             "view_mode": "form",
             "target": "new",
+        }
+
+    def action_create_community(self):
+        default_company_vals = {
+            'default_{}'.format(field): value
+            for field, value in self._get_default_community_wizard().items()
+        }
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Create community',
+            'res_model': 'account.multicompany.easy.creation.wiz',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': default_company_vals,
         }
 
 
