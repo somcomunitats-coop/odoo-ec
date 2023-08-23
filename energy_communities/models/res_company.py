@@ -16,7 +16,8 @@ _HIERARCHY_LEVEL_VALUES = [
 
 
 class ResCompany(models.Model):
-    _inherit = "res.company"
+    _name = 'res.company'
+    _inherit = ['res.company', "mail.thread", "mail.activity.mixin"]
 
     @api.onchange("hierarchy_level")
     def onchange_hierarchy_level(self):
