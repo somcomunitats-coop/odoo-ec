@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 11:24+0000\n"
-"PO-Revision-Date: 2023-05-16 13:26+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2023-08-24 13:57+0000\n"
+"PO-Revision-Date: 2023-08-24 15:58+0200\n"
+"Last-Translator: Daniil Digtyar Vasilieva <daniil.digtyar@somit.coop>\n"
 "Language-Team: \n"
 "Language: ca_ES\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: energy_project_energy_communities
 #: model:ir.model.fields,field_description:energy_project_energy_communities.field_energy_project_inscription__display_name
 msgid "Display Name"
-msgstr "Nom visible"
+msgstr "Nom Visible"
 
 #. module: energy_project_energy_communities
 #: model:ir.model.fields,field_description:energy_project_energy_communities.field_energy_project_inscription__id
@@ -41,3 +41,10 @@ msgstr "Última modificació el"
 #: model:ir.model.fields,field_description:energy_project_energy_communities.field_energy_project_inscription__partner_id
 msgid "Partner"
 msgstr "Soci"
+
+#. module: energy_project_energy_communities
+#: code:addons/energy_project_energy_communities/models/inscription.py:0
+#: code:addons/setup/energy_project_energy_communities/odoo/addons/energy_project_energy_communities/models/inscription.py:0
+#, python-format
+msgid "The selected partner is not a member"
+msgstr "El soci seleccionat no és soci"
