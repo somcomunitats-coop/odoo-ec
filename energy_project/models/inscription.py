@@ -49,7 +49,8 @@ class Inscription(models.Model):
     def unlink(self):
         matching_assignations = self.has_matching_supply_assignations()
         if len(matching_assignations) > 0:
-            raise ValidationError(_("The inscription cannot be deleted. It is related to a distribution table with state: {table_state}").format(table_state=matching_assignations.state))
+            table_states = ', '.join(matching_assignations.mapped('state'))
+            raise ValidationError(_("The inscription cannot be deleted. It is related to a distribution table with state: {table_state}").format(table_state=table_states))
         supply_point_assignations = self.get_matching_supply_assignations_to_remove()
         if supply_point_assignations:
             supply_point_assignations.unlink()
