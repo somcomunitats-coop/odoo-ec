@@ -19,6 +19,9 @@ class CRMLeadService(Component):
         create_dict = super().create(params)
         crm_lead = json.loads(create_dict.response[0].decode("utf-8"))
 
+        # get user lang from payload
+        lang = self._get_lang(params)
+
         # get utm source from payload
         target_source_xml_id = self._get_source_xml_id(params)
 
@@ -33,12 +36,15 @@ class CRMLeadService(Component):
             )
 
             # send auto responder email and notify admins
-            email_values = {"email_to": params["email_from"]}
+            email_values = {
+                "email_to": params["email_from"],
+                "lang": lang
+            }
             if template_external_id:
                 template = self.env.ref(
                     "energy_communities.{}".format(template_external_id)
                 )
-                template.sudo().send_mail(crm_lead["id"], email_values=email_values)
+                template.with_context(email_values).send_mail(crm_lead["id"])
                 # Add template to chatter message
                 self.env["crm.lead"].post_template_to_chatter(template.id)
         return crm_lead
@@ -56,6 +62,13 @@ class CRMLeadService(Component):
             if data["key"] == "source_xml_id":
                 target_source_xml_id = data["value"]
         return target_source_xml_id
+
+    def _get_lang(self, params):
+        metadata = params["metadata"]
+        for data in metadata:
+            if data["key"] == "current_lang":
+                lang = data["value"]
+        return lang
 
     def _get_autoresponder_email_template(self, source_xml_id):
         template_external_id = None
