@@ -57,6 +57,13 @@
                             string="Download Self-consumption Manager Authorization"
                             attrs="{'invisible':[('state','not in',['activation', 'active'])]}"
                         />
+                        <button
+                            type="object"
+                            name="action_manager_partition_coefficient_report"
+                            string="Download Partition Coefficient"
+                            attrs="{'invisible':[('state','not in',['activation', 'active'])]}"
+                        />
+
                         <field
                                 name="state"
                                 widget="statusbar"
