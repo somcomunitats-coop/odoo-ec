@@ -14,7 +14,7 @@
         </record>
 
         <record id="energy_community_company_1_wizard" model="account.multicompany.easy.creation.wiz">
-            <field name="name">Comunitat Energetica Sants</field>
+            <field name="name">Comunitat Energètica Sants</field>
             <field name="parent_id" ref="coordinator_company"/>
             <field name="capital_share">100</field>
             <field name="chart_template_id" ref="l10n_es.account_chart_template_pymes"/>
@@ -30,7 +30,7 @@
 
 
         <record id="energy_community_company_2_wizard" model="account.multicompany.easy.creation.wiz">
-            <field name="name">Comunitat Energetica Villanoveta</field>
+            <field name="name">Comunitat Energètica Villanoveta</field>
             <field name="parent_id" ref="coordinator_company"/>
             <field name="capital_share">100</field>
             <field name="chart_template_id" ref="l10n_es.account_chart_template_pymes"/>
@@ -45,7 +45,7 @@
 
 
         <record id="energy_community_company_3_wizard" model="account.multicompany.easy.creation.wiz">
-            <field name="name">Comunitat Energetica Salt</field>
+            <field name="name">Comunitat Energètica Salt</field>
             <field name="parent_id" ref="coordinator_company"/>
             <field name="capital_share">100</field>
             <field name="chart_template_id" ref="l10n_es.account_chart_template_pymes"/>
