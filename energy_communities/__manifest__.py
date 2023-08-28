@@ -23,6 +23,9 @@
         'crm_metadata',
         'crm_metadata_rest_api',
         'crm_rest_api',
+        'energy_project',
+        'energy_selfconsumption',
+        'energy_selfconsumption_cooperator',
         'l10n_es_aeat',
         'l10n_es_aeat_sii_oca',
         'l10n_es_cooperator',
@@ -43,7 +46,11 @@
     """,
     "license": "AGPL-3",
     'demo': [
-        'demo/demo_data.xml',
+        'demo/res_lang_demo.xml',
+        'demo/res_company_demo.xml',
+        'demo/res_user_demo.xml',
+        'demo/subscription_request_demo.xml',
+        'demo/energy_selfconsumption_demo.xml',
     ],
     'data': [
         'security/ir_rule_data.xml',

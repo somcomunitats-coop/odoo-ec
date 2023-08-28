@@ -39,6 +39,11 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         string="Product Share Template",
         domain=[('is_share', '=', True)]
     )
+    new_product_share_template = fields.Many2one(
+        comodel_name='product.template',
+        string="New Product Share Template",
+        readonly=True
+    )
 
     def update_product_category_company_share(self):
         new_company_id = self.new_company_id.id
@@ -66,7 +71,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
 
     def create_capital_share_product_template(self):
         # We use sudo to be able to copy the product and not needing to be in the main company
-        self.sudo().product_share_template.copy({
+        self.new_product_share_template = self.sudo().product_share_template.copy({
             'name': self.product_share_template.name,
             'company_id': self.new_company_id.id,
             'list_price': self.capital_share,
@@ -84,6 +89,17 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         new_company.write({
             "property_cooperator_account": self.match_account(self.property_cooperator_account).id
         })
+
+    def set_cooperator_journal(self):
+        '''
+        This method is only used in the creation from data. Is used to assign the subcription journal in the res.company
+        configuration.
+        This need to execute after the creation of the company because searching is the only way to reference the journal
+        created in the aplication of the account.chart.template see acoount_chart_template.py#L10
+        :return:
+        '''
+        self.new_company_id.cooperator_journal = self.env['account.journal'].search(
+            [('code', '=', 'SUBJ'), ('company_id', '=', self.new_company_id.id)]) or False
 
     def action_accept(self):
         action = super(AccountMulticompanyEasyCreationWiz, self).action_accept()
