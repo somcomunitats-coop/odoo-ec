@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
         <record id="share_capital_product_template" model="product.template">
@@ -8,7 +8,7 @@
             <field name="purchase_ok">False</field>
             <field name="is_share">True</field>
             <field name="display_on_website">True</field>
-            <field name="categ_id" ref="cooperator.product_category_company_share"></field>
+            <field name="categ_id" ref="cooperator.product_category_company_share" />
             <field name="type">service</field>
             <field name="default_share_product">True</field>
             <field name="list_price">0</field>
@@ -28,7 +28,7 @@
             <field name="purchase_ok">False</field>
             <field name="is_share">True</field>
             <field name="display_on_website">True</field>
-            <field name="categ_id" ref="product_category_company_voluntary_share"></field>
+            <field name="categ_id" ref="product_category_company_voluntary_share" />
             <field name="type">service</field>
             <field name="default_share_product">True</field>
             <field name="list_price">85</field>

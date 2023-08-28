@@ -1,7 +1,9 @@
 import json
 import logging
-from odoo.addons.component.core import Component
+
 from odoo import _
+
+from odoo.addons.component.core import Component
 
 _logger = logging.getLogger(__name__)
 
@@ -22,12 +24,13 @@ class CRMLeadService(Component):
 
         if target_source_xml_id:
             # setup utm source on crm lead
-            crm_lead_id = crm_lead.get('id', False)
+            crm_lead_id = crm_lead.get("id", False)
             self._setup_lead_utm_source(crm_lead_id, target_source_xml_id)
 
             # select autoresponder notification id based on utm source
             template_external_id = self._get_autoresponder_email_template(
-                target_source_xml_id)
+                target_source_xml_id
+            )
 
             # send auto responder email and notify admins
             email_values = {"email_to": params["email_from"]}
@@ -35,19 +38,16 @@ class CRMLeadService(Component):
                 template = self.env.ref(
                     "energy_communities.{}".format(template_external_id)
                 )
-                template.sudo().send_mail(
-                    crm_lead["id"], email_values=email_values)
+                template.sudo().send_mail(crm_lead["id"], email_values=email_values)
                 # Add template to chatter message
                 self.env["crm.lead"].post_template_to_chatter(template.id)
         return crm_lead
 
     def _setup_lead_utm_source(self, lead_id, source_xml_id):
-        lead = self.env['crm.lead'].browse(lead_id)
+        lead = self.env["crm.lead"].browse(lead_id)
         if lead:
-            utm_source = self.env.ref('energy_communities.'+source_xml_id)
-            lead.write({
-                'source_id': utm_source.id
-            })
+            utm_source = self.env.ref("energy_communities." + source_xml_id)
+            lead.write({"source_id": utm_source.id})
 
     def _get_source_xml_id(self, params):
         metadata = params["metadata"]

@@ -11,5 +11,4 @@ from . import product
 from . import utm_source
 from . import crm_lead
 from . import account_move
-from . import auth_oauth_provider
 from . import operation_request

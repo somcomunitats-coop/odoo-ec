@@ -1,22 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
   <record id="connect_res_config_settings_view_form" model="ir.ui.view">
     <field name="name">res.config.settings.external.platforms.credentials</field>
     <field name="model">res.config.settings</field>
-    <field name="priority" eval="100"/>
-    <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+    <field name="priority" eval="100" />
+    <field name="inherit_id" ref="base.res_config_settings_view_form" />
     <field name="arch" type="xml">
       <xpath expr="//div[hasclass('settings')]" position="inside">
-        <div class="app_settings_block"
-             data-string="wordpress_credentials"
-             string="Wordpress credentials"
-             data-key="worpress_credentials"
+        <div
+          class="app_settings_block"
+          data-string="wordpress_credentials"
+          string="Wordpress credentials"
+          data-key="worpress_credentials"
         >
             <div class="row mt16 o_settings_container">
                 <group>
-                    <field name="wordpress_base_url"/>
-                    <field name="wordpress_db_username"/>
-                    <field name="wordpress_db_password"/>
+                    <field name="wordpress_base_url" />
+                    <field name="wordpress_db_username" />
+                    <field name="wordpress_db_password" />
                 </group>
             </div>
         </div>

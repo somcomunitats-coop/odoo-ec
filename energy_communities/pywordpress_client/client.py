@@ -1,14 +1,14 @@
-import logging
-import requests
 import json
+import logging
+
+import requests
 
 from . import exceptions
-
 
 logger = logging.getLogger(__name__)
 
 
-class Client(object):
+class Client:
     """Client class
     This class manages the HTTP requests and this class only can send a request.
     """
@@ -27,10 +27,13 @@ class Client(object):
             **response**: Return the response object
         """
         headers = {
-            'Authorization': token,
+            "Authorization": token,
         }
         return self._send_request(
-            verb="POST", url=self._format_url(route), payload=body, extra_headers=headers
+            verb="POST",
+            url=self._format_url(route),
+            payload=body,
+            extra_headers=headers,
         )
 
     def put(self, route, token=None, body=None):
@@ -44,7 +47,7 @@ class Client(object):
             **response**: Return the response object
         """
         headers = {
-            'Authorization': token,
+            "Authorization": token,
         }
         return self._send_request(
             verb="PUT", url=self._format_url(route), payload=body, extra_headers=headers
@@ -53,7 +56,8 @@ class Client(object):
     def _format_url(self, path):
         return "{url}{path}".format(url=self.baseurl, path=path)
 
-    def _send_request(self, verb, url, payload, extra_headers={}):
+    # TODO extra_headers check if default value {} is needed
+    def _send_request(self, verb, url, payload, extra_headers):
         """send the API request using the *requests.request* method
 
         Args:
@@ -78,8 +82,7 @@ class Client(object):
         if headers.get("Content-Type") == "application/json":
             payload = json.dumps(payload)
 
-        logger.info("{verb} {url} \n {body}".format(
-            verb=verb, url=url, body=payload))
+        logger.info("{verb} {url} \n {body}".format(verb=verb, url=url, body=payload))
 
         try:
             response = requests.request(

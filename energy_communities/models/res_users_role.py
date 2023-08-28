@@ -1,7 +1,7 @@
-from odoo import models, fields
+from odoo import fields, models
 
 
 class ResUsersRole(models.Model):
-    _inherit = 'res.users.role'
+    _inherit = "res.users.role"
 
-    code = fields.Char(string='Code')
+    code = fields.Char(string="Code")

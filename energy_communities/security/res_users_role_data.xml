@@ -1,8 +1,10 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
     <record id="energy_communities_category" model="ir.module.category">
         <field name="name">Energy Communities</field>
-        <field name="description">Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats Energètiques
+        <field
+      name="description"
+    >Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats Energètiques
         </field>
         <field name="sequence">10</field>
     </record>
@@ -10,33 +12,38 @@
     <!-- new groups -->
     <record model="res.groups" id="group_user">
         <field name="name">User</field>
-        <field name="category_id" ref="energy_communities_category"/>
+        <field name="category_id" ref="energy_communities_category" />
     </record>
 
     <record model="res.groups" id="group_admin">
         <field name="name">Administrator</field>
-        <field name="category_id" ref="energy_communities_category"/>
+        <field name="category_id" ref="energy_communities_category" />
     </record>
 
     <record model="res.groups" id="group_platform_manager">
         <field name="name">Platform Manager</field>
-        <field name="category_id" ref="energy_communities_category"/>
+        <field name="category_id" ref="energy_communities_category" />
     </record>
 
     <!-- new roles -->
     <record model="res.users.role" id="role_ce_member">
         <field name="name">Energy Community Member</field>
         <field name="code">role_ce_member</field>
-        <field name="implied_ids" eval="[
+        <field
+      name="implied_ids"
+      eval="[
                 (5, 0, 0),
                 (4, ref('group_user')),
-        ]"/>
+        ]"
+    />
     </record>
 
     <record model="res.users.role" id="role_ce_admin">
         <field name="name">Energy Community Administrator</field>
         <field name="code">role_ce_admin</field>
-        <field name="implied_ids" eval="[
+        <field
+      name="implied_ids"
+      eval="[
                (5, 0, 0),
                (4, ref('group_admin')),
                (4, ref('sale.group_delivery_invoice_address')),
@@ -54,13 +61,16 @@
                (4, ref('crm.group_use_lead')),
                (4, ref('mass_mailing.group_mass_mailing_user')),
                (4, ref('l10n_es_aeat.group_account_aeat')),
-        ]"/>
+        ]"
+    />
     </record>
 
     <record model="res.users.role" id="role_ce_manager">
         <field name="name">Energy Community Manager</field>
         <field name="code">role_ce_manager</field>
-        <field name="implied_ids" eval="[
+        <field
+      name="implied_ids"
+      eval="[
                (5, 0, 0),
                (4, ref('group_admin')),
                (4, ref('sale.group_delivery_invoice_address')),
@@ -78,13 +88,16 @@
                (4, ref('crm.group_use_lead')),
                (4, ref('mass_mailing.group_mass_mailing_user')),
                (4, ref('l10n_es_aeat.group_account_aeat')),
-        ]"/>
+        ]"
+    />
     </record>
 
     <record model="res.users.role" id="role_coord_admin">
         <field name="name">Coordinator Admin</field>
         <field name="code">role_coord_admin</field>
-        <field name="implied_ids" eval="[
+        <field
+      name="implied_ids"
+      eval="[
                (5, 0, 0),
                (4, ref('group_admin')),
                (4, ref('sale.group_delivery_invoice_address')),
@@ -102,13 +115,16 @@
                (4, ref('crm.group_use_lead')),
                (4, ref('mass_mailing.group_mass_mailing_user')),
                (4, ref('l10n_es_aeat.group_account_aeat')),
-        ]"/>
+        ]"
+    />
     </record>
 
     <record model="res.users.role" id="role_coord_worker">
         <field name="name">Coordinator Worker</field>
         <field name="code">role_coord_worker</field>
-        <field name="implied_ids" eval="[
+        <field
+      name="implied_ids"
+      eval="[
                (5, 0, 0),
                (4, ref('group_user')),
                (4, ref('sale.group_delivery_invoice_address')),
@@ -126,13 +142,16 @@
                (4, ref('crm.group_use_lead')),
                (4, ref('mass_mailing.group_mass_mailing_user')),
                (4, ref('l10n_es_aeat.group_account_aeat')),
-        ]"/>
+        ]"
+    />
     </record>
 
     <record model="res.users.role" id="role_platform_admin">
         <field name="name">Platform admin role</field>
         <field name="code">role_platform_admin</field>
-        <field name="implied_ids" eval="[
+        <field
+      name="implied_ids"
+      eval="[
                (5, 0, 0),
                (4, ref('group_platform_manager')),
                (4, ref('group_admin')),
@@ -154,15 +173,19 @@
                (4, ref('crm.group_use_lead')),
                (4, ref('mass_mailing.group_mass_mailing_user')),
                (4, ref('l10n_es_aeat.group_account_aeat'))
-        ]"/>
+        ]"
+    />
     </record>
 
     <record model="res.users.role" id="role_internal_user">
         <field name="name">Internal User</field>
         <field name="code">role_internal_user</field>
-        <field name="implied_ids" eval="[
+        <field
+      name="implied_ids"
+      eval="[
                (5, 0, 0),
                (4, ref('base.group_user')),
-        ]"/>
+        ]"
+    />
     </record>
 </odoo>

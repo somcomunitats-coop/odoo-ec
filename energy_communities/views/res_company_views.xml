@@ -1,71 +1,80 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
     <record id="view_company_form_ce_inherited" model="ir.ui.view">
         <field name="name">res.company.tree.ce.inherited</field>
         <field name="model">res.company</field>
-        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="inherit_id" ref="base.view_company_form" />
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='general_info']//field[@name='parent_id']" position="attributes">
+            <xpath
+        expr="//page[@name='general_info']//field[@name='parent_id']"
+        position="attributes"
+      >
                 <attribute name="invisible">True</attribute>
             </xpath>
             <xpath expr="//sheet" position="before">
                 <header>
-                    <field name="landing_page_id" invisible="1"/>
+                    <field name="landing_page_id" invisible="1" />
                     <button
-                        name="create_landing"
-                        type="object"
-                        string="Create landing page"
-                        attrs="{'invisible': [('landing_page_id','!=',False)]}"
-                    />
+            name="create_landing"
+            type="object"
+            string="Create landing page"
+            attrs="{'invisible': [('landing_page_id','!=',False)]}"
+          />
                 </header>
             </xpath>
             <xpath expr="//field[@name='logo']" position="before">
                 <div class='oe_button_box'>
-                    <button 
-                        name="get_landing_page_form"
-                        type="object"
-                        string="My landing page"
-                        class="oe_stat_button"
-                        icon="fa-globe"
-                        attrs="{'invisible': [('landing_page_id','=',False)]}"
-                    />
+                    <button
+            name="get_landing_page_form"
+            type="object"
+            string="My landing page"
+            class="oe_stat_button"
+            icon="fa-globe"
+            attrs="{'invisible': [('landing_page_id','=',False)]}"
+          />
                 </div>
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Energy Communities">
                     <group>
-                        <field name="hierarchy_level"></field>
-                        <field name="parent_id_filtered_ids" invisible="True"></field>
-                        <field name="parent_id" domain="[('id', 'in', parent_id_filtered_ids)]"></field>
-                        <field name="voluntary_share_id"></field>
-                        <field name="ce_tag_ids"/>
+                        <field name="hierarchy_level" />
+                        <field name="parent_id_filtered_ids" invisible="True" />
+                        <field
+              name="parent_id"
+              domain="[('id', 'in', parent_id_filtered_ids)]"
+            />
+                        <field name="voluntary_share_id" />
+                        <field name="ce_tag_ids" />
                     </group>
                 </page>
             </xpath>
-            <xpath expr="//field[@name='property_cooperator_account']" position="before">
-                <field name="cooperator_journal"/>
+            <xpath
+        expr="//field[@name='property_cooperator_account']"
+        position="before"
+      >
+                <field name="cooperator_journal" />
             </xpath>
             <xpath expr="//field[@name='unmix_share_type']" position="before">
-                <field name="foundation_date"/>
-                <field name="initial_subscription_share_amount"/>
-                <field name="allow_new_members"/>
+                <field name="foundation_date" />
+                <field name="initial_subscription_share_amount" />
+                <field name="allow_new_members" />
             </xpath>
             <xpath expr="//field[@name='social_instagram']" position="after">
-                <field name="social_telegram"/>
+                <field name="social_telegram" />
             </xpath>
             <xpath expr="//field[@name='create_user']" position="after">
-                <field name="create_user_in_keycloak"/>
+                <field name="create_user_in_keycloak" />
             </xpath>
         </field>
     </record>
     <record id="view_company_tree" model="ir.ui.view">
         <field name="name">res.company.tree</field>
         <field name="model">res.company</field>
-        <field name="inherit_id" ref="base.view_company_tree"/>
+        <field name="inherit_id" ref="base.view_company_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
-                <field name="hierarchy_level"/>
-                <field name="parent_id"/>
+                <field name="hierarchy_level" />
+                <field name="parent_id" />
             </xpath>
         </field>
     </record>

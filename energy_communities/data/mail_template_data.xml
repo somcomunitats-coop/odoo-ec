@@ -3,9 +3,13 @@
     <data noupdate="1">
 
         <record id="email_templ_lead_assigned_to_coordinator_id" model="mail.template">
-            <field name="name">Request for registration of the Energy Community on the platform</field>
+            <field
+        name="name"
+      >Request for registration of the Energy Community on the platform</field>
             <field name="email_from">${object.company_id.email}</field>
-            <field name="subject">[Somcomunitats.coop] Request for registration of the Energy Community on the platform</field>
+            <field
+        name="subject"
+      >[Somcomunitats.coop] Request for registration of the Energy Community on the platform</field>
             <field name="email_to">${ctx.get('email_to')}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="True" />
@@ -29,7 +33,9 @@
             <field name="email_from">
                 ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
             </field>
-            <field name="subject">[Somcomunitats.coop] New Community Creation Request to the platform</field>
+            <field
+        name="subject"
+      >[Somcomunitats.coop] New Community Creation Request to the platform</field>
             <field name="email_to">${object.email_from}</field>
             <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">
@@ -37,10 +43,12 @@
             </field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="True" />
-            <field name="lang">${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
             <field
-                name="body_html"
-            ><![CDATA[
+        name="lang"
+      >${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+            <field
+        name="body_html"
+      ><![CDATA[
 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
 
     <p>Hello,</p>
@@ -117,7 +125,9 @@
         </record>
 
         <record id="email_templ_lead_request_contact_confirm_id" model="mail.template">
-            <field name="name">Confirmation Email for CE Contact Request Lead Receipt</field>
+            <field
+        name="name"
+      >Confirmation Email for CE Contact Request Lead Receipt</field>
             <field name="email_from">
                 ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
             </field>
@@ -130,10 +140,12 @@
             </field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="True" />
-            <field name="lang">${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
             <field
-                name="body_html"
-            ><![CDATA[
+        name="lang"
+      >${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+            <field
+        name="body_html"
+      ><![CDATA[
 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
 
     <p>Hello,</p>
@@ -169,11 +181,15 @@
 
 
     <record id="email_templ_lead_request_ce_news_confirm_id" model="mail.template">
-            <field name="name">Confirmation Email for CE News Request Lead Receipt</field>
+            <field
+        name="name"
+      >Confirmation Email for CE News Request Lead Receipt</field>
             <field name="email_from">
                 ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
             </field>
-            <field name="subject">[Somcomunitats.coop] Community Newsletter Subscription Request</field>
+            <field
+        name="subject"
+      >[Somcomunitats.coop] Community Newsletter Subscription Request</field>
             <field name="email_to">${object.email_from}</field>
             <field name="email_cc">info+butlletiCE@somcomunitats.coop</field>
             <field name="email_cc">${object.company_id.email}</field>
@@ -182,10 +198,12 @@
             </field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="True" />
-            <field name="lang">${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
             <field
-                name="body_html"
-            ><![CDATA[
+        name="lang"
+      >${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+            <field
+        name="body_html"
+      ><![CDATA[
 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
 
     <p>Hello,</p>
@@ -210,12 +228,19 @@
             ]]></field>
         </record>
 
-        <record id="email_templ_lead_request_advise_future_ce_confirm_id" model="mail.template">
-            <field name="name">Confirmation Email for furture CE Contact Request Lead Receipt</field>
+        <record
+      id="email_templ_lead_request_advise_future_ce_confirm_id"
+      model="mail.template"
+    >
+            <field
+        name="name"
+      >Confirmation Email for furture CE Contact Request Lead Receipt</field>
             <field name="email_from">
                 ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
             </field>
-            <field name="subject">[Somcomunitats.coop] Interested in Communities in your area</field>
+            <field
+        name="subject"
+      >[Somcomunitats.coop] Interested in Communities in your area</field>
             <field name="email_to">${object.email_from}</field>
             <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">
@@ -223,10 +248,12 @@
             </field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="True" />
-            <field name="lang">${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
             <field
-                name="body_html"
-            ><![CDATA[
+        name="lang"
+      >${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+            <field
+        name="body_html"
+      ><![CDATA[
 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
 
     <p>Hello,</p>
@@ -262,10 +289,17 @@
             ]]></field>
         </record>
 
-    <record id="email_templ_lead_request_platform_news_confirm_id" model="mail.template">
-            <field name="name">Confirmation Email for Platform News Request Lead Receipt</field>
+    <record
+      id="email_templ_lead_request_platform_news_confirm_id"
+      model="mail.template"
+    >
+            <field
+        name="name"
+      >Confirmation Email for Platform News Request Lead Receipt</field>
             <field name="email_from">info+butlleti@somcomunitats.coop</field>
-            <field name="subject">[Somcomunitats.coop] Platform Newsletter Subscription Request</field>
+            <field
+        name="subject"
+      >[Somcomunitats.coop] Platform Newsletter Subscription Request</field>
             <field name="email_to">${object.email_from}</field>
             <field name="email_cc">info+butlleti@somcomunitats.coop</field>
             <field name="email_cc">${object.company_id.email}</field>
@@ -274,10 +308,12 @@
             </field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="True" />
-            <field name="lang">${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
             <field
-                name="body_html"
-            ><![CDATA[
+        name="lang"
+      >${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+            <field
+        name="body_html"
+      ><![CDATA[
 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
 
     <p>Hello,</p>

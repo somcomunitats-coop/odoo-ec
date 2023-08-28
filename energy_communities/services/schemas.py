@@ -25,7 +25,7 @@ S_CRM_LEAD_CREATE = {
         "type": "list",
         "schema": {
             "type": "integer",
-        }
+        },
     },
     "partner_description": {"type": "string"},
 }
@@ -38,16 +38,13 @@ S_CRM_LEAD_CREATE_ALTA_CE = {
     "partner_city": {"type": "string", "required": True},
     "partner_state": {"type": "string", "required": True},
     "partner_qty_members": {"type": "integer", "required": True},
-    "partner_legal_state": {
-        "type": "string",
-        "check_with": ce_state_validator
-    },
+    "partner_legal_state": {"type": "string", "check_with": ce_state_validator},
     "tag_ids": {
         "type": "list",
         "schema": {
             "type": "integer",
         },
-        "required": True
+        "required": True,
     },
     "partner_foundation_date": {"type": "string"},
     "partner_vat": {"type": "string"},
@@ -79,9 +76,9 @@ S_PROFILE_COMMUNITY_GET = {
             "schema": {
                 "iban": {"type": "string"},
                 "sepa_accepted": {"type": "boolean"},
-            }
+            },
         },
-    }
+    },
 }
 
 S_PROFILE_RETURN_GET = {
@@ -107,19 +104,16 @@ S_PROFILE_RETURN_GET = {
                 },
             },
             "language": {"type": "string"},
-            "communities": {
-                "type": "list",
-                "schema": S_PROFILE_COMMUNITY_GET
-            },
+            "communities": {"type": "list", "schema": S_PROFILE_COMMUNITY_GET},
             "suscriptions": {
                 "type": "dict",
                 "schema": {
                     "community_news": {"type": "boolean"},
-                }
+                },
             },
             "odoo_res_users_id": {"type": "integer"},
             "odoo_res_partner_id": {"type": "integer"},
-        }
+        },
     }
 }
 
@@ -131,17 +125,13 @@ S_MEMBER_PROFILE_RETURN_GET = {
             "name": {"type": "string"},
             "role": {"type": "string"},
             "email": {"type": "string"},
-        }
+        },
     }
 }
 
-S_PROFILE_PUT = {
-    "language": {"type": "string", "required": True, "empty": False}
-}
+S_PROFILE_PUT = {"language": {"type": "string", "required": True, "empty": False}}
 
-S_MEMBER_PROFILE_PUT = {
-    "role": {"type": "string", "required": True, "empty": False}
-}
+S_MEMBER_PROFILE_PUT = {"role": {"type": "string", "required": True, "empty": False}}
 
 S_PROFILE_RETURN_PUT = S_PROFILE_RETURN_GET
 
@@ -153,23 +143,19 @@ S_COMMUNITY_MEMBER = {
     "role": {"type": "string", "required": True},
     "email": {"type": "string", "required": True},
     "keycloak_id": {"type": "string"},
-    "keycloak_id": {"type": "string"},
 }
 
 S_COMMUNITY_MEMBERS_RETURN_GET = {
     "members": {
         "type": "list",
-        "schema": {
-            "type": "dict",
-            "schema": S_COMMUNITY_MEMBER
-        }
+        "schema": {"type": "dict", "schema": S_COMMUNITY_MEMBER},
     }
 }
 
 S_COMMUNITY_SERVICE = {
     "id": {"type": "integer"},
     "name": {"type": "string"},
-    "ext_id": {"type": "string"}
+    "ext_id": {"type": "string"},
 }
 
 S_COMMUNITY_RETURN_GET = {
@@ -181,10 +167,7 @@ S_COMMUNITY_RETURN_GET = {
             "birth_date": {"type": "string"},
             "members": {
                 "type": "list",
-                "schema": {
-                    "type": "dict",
-                    "schema": S_COMMUNITY_MEMBER
-                }
+                "schema": {"type": "dict", "schema": S_COMMUNITY_MEMBER},
             },
             "contact_info": {
                 "type": "dict",
@@ -197,19 +180,16 @@ S_COMMUNITY_RETURN_GET = {
                     "phone": {"type": "string"},
                     "email": {"type": "string"},
                     "telegram": {"type": "string"},
-                }
+                },
             },
             "active_services": {
                 "type": "list",
-                "schema": {
-                    "type": "dict",
-                    "schema": S_COMMUNITY_SERVICE
-                }
+                "schema": {"type": "dict", "schema": S_COMMUNITY_SERVICE},
             },
             "allow_new_members": {"type": "boolean"},
             "public_web_landing_url": {"type": "string"},
             "keycloak_odoo_login_url": {"type": "string"},
-        }
+        },
     }
 }
 S_LANDING_PAGE_CREATE = {
@@ -234,10 +214,7 @@ S_LANDING_PAGE_CREATE = {
             "telegram_link": {"type": "string"},
             "community_active_services": {
                 "type": "list",
-                "schema": {
-                    "type": "dict",
-                    "schema": S_COMMUNITY_SERVICE
-                }
+                "schema": {"type": "dict", "schema": S_COMMUNITY_SERVICE},
             },
             "group_image_link": {"type": "string"},
             "primary_image_file": {"type": "string"},
@@ -251,7 +228,7 @@ S_LANDING_PAGE_CREATE = {
             "street": {"type": "string"},
             "postal_code": {"type": "string"},
             "city": {"type": "string"},
-        }
+        },
     }
 }
 S_LANDING_PAGE_GET = {

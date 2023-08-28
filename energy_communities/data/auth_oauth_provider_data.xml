@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo noupdate="1">
     <record id="keycloak_login_provider" model="auth.oauth.provider">
         <field name="name">Keycloak Login Provider</field>
@@ -7,15 +7,15 @@
         <field name="flow">id_token_code</field>
         <field name="enabled">1</field>
         <field name="client_id">odoo</field>
-        <field name="client_secret"></field>
+        <field name="client_secret" />
         <field name="scope">openid email</field>
         <field name="is_keycloak_provider">1</field>
         <field name="token_map">user_id:email</field>
-        <field name="auth_endpoint"></field>
-        <field name="token_endpoint"></field>
-        <field name="jwks_uri"></field>
-        <field name="validation_endpoint"></field>
-        <field name="data_endpoint"></field>
+        <field name="auth_endpoint" />
+        <field name="token_endpoint" />
+        <field name="jwks_uri" />
+        <field name="validation_endpoint" />
+        <field name="data_endpoint" />
     </record>
 
     <record id="keycloak_admin_provider" model="auth.oauth.provider">
@@ -25,18 +25,18 @@
         <field name="flow">id_token_code</field>
         <field name="enabled">0</field>
         <field name="client_id">admin-cli</field>
-        <field name="client_secret"></field>
+        <field name="client_secret" />
         <field name="scope">openid</field>
-        <field name="token_map"></field>
-        <field name="auth_endpoint"></field>
-        <field name="token_endpoint"></field>
-        <field name="jwks_uri"></field>
-        <field name="validation_endpoint"></field>
-        <field name="data_endpoint"></field>
+        <field name="token_map" />
+        <field name="auth_endpoint" />
+        <field name="token_endpoint" />
+        <field name="jwks_uri" />
+        <field name="validation_endpoint" />
+        <field name="data_endpoint" />
         <field name="is_keycloak_provider">1</field>
         <field name="is_admin_provider">1</field>
-        <field name="admin_user_endpoint"></field>
+        <field name="admin_user_endpoint" />
         <field name="superuser">api_admin_0</field>
-        <field name="superuser_pwd"></field>
+        <field name="superuser_pwd" />
     </record>
 </odoo>
