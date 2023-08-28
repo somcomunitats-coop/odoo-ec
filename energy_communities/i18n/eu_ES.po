@@ -18,6 +18,45 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_lead_assigned_to_coordinator_id
+msgid ""
+"\n"
+"                \n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"                        <p>Hello,</p>\n"
+"\n"
+"                        <p>There is a new Energy Community registration request.</p>\n"
+"\n"
+"                        <p>Go to Odoo to track this registration.</p>\n"
+"\n"
+"                        <p>Yours faithfully,</p>\n"
+"                        <p>Somcomunitats.coop team </p>\n"
+"                        <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"\n"
+"                    </div>\n"
+"                \n"
+"            "
+msgstr ""
+"\n"
+"                \n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"                        <p>Kaixo,</p>\n"
+"\n"
+"                        <p>Comunidad Energétican izena emateko eskaera berri bat dago.</p>\n"
+"\n"
+"                        <p>Zoaz Odoo erregistro honi jarraipena emateko.</p>\n"
+"\n"
+"                        <p>Zinez,</p>\n"
+"                        <p>Taldea Somcomunitats.coop</p>\n"
+"                        <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"\n"
+"                    </div>\n"
+"                \n"
+"            "
+
+#. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_subscription_request__vat
 msgid ""
 "\n"
@@ -2394,6 +2433,15 @@ msgstr "[Somcomunitats.coop] Plataformari Komunitatea Sortzeko Eskaera Berria"
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_platform_news_confirm_id
 msgid "[Somcomunitats.coop] Platform Newsletter Subscription Request"
 msgstr "[Somcomunitats.coop] Plataformaren Buletina Harpidetza eskaera"
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_templ_lead_assigned_to_coordinator_id
+msgid ""
+"[Somcomunitats.coop] Request for registration of the Energy Community on the"
+" platform"
+msgstr ""
+"[Somcomunitats.coop] Energia Erkidegoa inskribatzeko eskaera "
+"plataforma"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
