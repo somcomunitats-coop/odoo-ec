@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 11:08+0000\n"
-"PO-Revision-Date: 2023-05-16 11:08+0000\n"
+"POT-Creation-Date: 2023-08-18 09:01+0000\n"
+"PO-Revision-Date: 2023-08-18 09:01+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -104,6 +104,13 @@ msgstr ""
 #: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__activation
 #, python-format
 msgid "In Activation"
+msgstr ""
+
+#. module: energy_project
+#: code:addons/energy_project/models/project.py:0
+#: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__inscription
+#, python-format
+msgid "In Inscription"
 msgstr ""
 
 #. module: energy_project
