@@ -3,7 +3,7 @@ class HTTPError(Exception):
 
     def __init__(self, error_msg):
         self.message = self.message.format(error_msg)
-        super(HTTPError, self).__init__(self.message)
+        super().__init__(self.message)
 
 
 class BadRequestError(Exception):
@@ -19,7 +19,7 @@ class ResourceNotFound(Exception):
 
     def __init__(self, resource, filter):
         self.message = self.message.format(resource, filter)
-        super(ResourceNotFound, self).__init__(self.message)
+        super().__init__(self.message)
 
 
 class NotSuccessfulRequest(Exception):
@@ -27,4 +27,4 @@ class NotSuccessfulRequest(Exception):
 
     def __init__(self, status_code):
         self.message = self.message.format(status_code)
-        super(NotSuccessfulRequest, self).__init__(self.message)
+        super().__init__(self.message)

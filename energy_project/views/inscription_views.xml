@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
         <record id="inscription_view_tree" model="ir.ui.view">
@@ -6,10 +6,14 @@
             <field name="model">energy_project.inscription</field>
             <field name="arch" type="xml">
                 <tree editable="bottom">
-                    <field name="partner_id" options="{'no_create': True}" width="50%" />
+                    <field
+            name="partner_id"
+            options="{'no_create': True}"
+            width="50%"
+          />
                     <field name="effective_date" width="50%" />
                 </tree>
-            </field>      
+            </field>
         </record>
     </data>
 </odoo>

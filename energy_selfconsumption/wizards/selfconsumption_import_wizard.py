@@ -1,7 +1,7 @@
 import base64
 import logging
-from datetime import datetime
 from csv import reader
+from datetime import datetime
 from io import StringIO
 
 import chardet
@@ -46,7 +46,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
     def _constrains_import_file(self):
         if self.fname:
             format = str(self.fname.split(".")[1])
-            if format != 'csv':
+            if format != "csv":
                 raise ValidationError(_("Only csv format files are accepted."))
 
     def import_file_button(self):
@@ -63,7 +63,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 error_string_list = "".join(
                     [
                         error_string_list,
-                        _("<li>Line {line}: {error}</li>\n").format(line=index, error=result[1]),
+                        _("<li>Line {line}: {error}</li>\n").format(
+                            line=index, error=result[1]
+                        ),
                     ]
                 )
         if error_string_list:
@@ -71,21 +73,30 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 subject=_("Import Errors"),
                 body=_("Import errors found: <ul>{list}</ul>").format(
                     list=error_string_list
-                )
+                ),
             )
         return True
 
     def download_template_button(self):
-        distribution_table_example_attachment = self.env.ref('energy_selfconsumption.selfconsumption_table_example_attachment')
-        download_url = '/web/content/{}/?download=true'.format(str(distribution_table_example_attachment.id))
+        distribution_table_example_attachment = self.env.ref(
+            "energy_selfconsumption.selfconsumption_table_example_attachment"
+        )
+        download_url = "/web/content/{}/?download=true".format(
+            str(distribution_table_example_attachment.id)
+        )
         return {
             "type": "ir.actions.act_url",
             "url": download_url,
             "target": "new",
         }
+
     def download_list_button(self):
-        list_state_attachment = self.env.ref('energy_selfconsumption.list_state_attachment')
-        download_url = '/web/content/{}/?download=true'.format(str(list_state_attachment.id))
+        list_state_attachment = self.env.ref(
+            "energy_selfconsumption.list_state_attachment"
+        )
+        download_url = "/web/content/{}/?download=true".format(
+            str(list_state_attachment.id)
+        )
         return {
             "type": "ir.actions.act_url",
             "url": download_url,
@@ -146,11 +157,13 @@ class SelfconsumptionImportWizard(models.TransientModel):
             )
 
         if not project.inscription_ids.filtered_domain(
-                [("partner_id", "=", partner.id)]
+            [("partner_id", "=", partner.id)]
         ):
             try:
                 if line_dict["effective_date"]:
-                    effective_date = datetime.strptime(line_dict["effective_date"], self.date_format).date()
+                    effective_date = datetime.strptime(
+                        line_dict["effective_date"], self.date_format
+                    ).date()
                 else:
                     effective_date = fields.date.today()
 
@@ -162,9 +175,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     }
                 )
             except Exception as e:
-                return False, _("Could not create inscription for {vat}. {error}").format(
-                    vat=line_dict["partner_vat"], error=e
-                )
+                return False, _(
+                    "Could not create inscription for {vat}. {error}"
+                ).format(vat=line_dict["partner_vat"], error=e)
 
         supply_point = self.env["energy_selfconsumption.supply_point"].search(
             [("code", "=", line_dict["code"])]
@@ -202,7 +215,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
                         }
                     )
                 except Exception as e:
-                    return False, _("Owner could not be created: {error}").format(error=e)
+                    return False, _("Owner could not be created: {error}").format(
+                        error=e
+                    )
         else:
             owner = partner
         country = self.env["res.country"].search([("code", "=", line_dict["country"])])

@@ -1,13 +1,17 @@
-from odoo import api, models, fields, _, exceptions
-import logging, requests
+import logging
+from json import JSONDecodeError
+
+import requests
+
+from odoo import _, api, exceptions, fields, models
 
 logger = logging.getLogger(__name__)
 
 
 class ResUsers(models.Model):
-    _inherit = 'res.users'
+    _inherit = "res.users"
 
-    _LOGIN_MATCH_KEY = 'id:login'
+    _LOGIN_MATCH_KEY = "id:login"
 
     def _generate_signup_values(self, provider, validation, params):
         """
@@ -17,25 +21,25 @@ class ResUsers(models.Model):
         :param params:
         :return:
         """
-        values = super(ResUsers, self)._generate_signup_values(provider, validation, params)
-        values['login'] = validation['user_id']
+        values = super()._generate_signup_values(provider, validation, params)
+        values["login"] = validation["user_id"]
         return values
 
     def _get_admin_token(self, provider_id):
         """Retrieve auth token from Keycloak."""
-        url = provider_id.token_endpoint.replace('/introspect', '')
-        logger.info('Calling %s' % url)
-        headers = {'content-type': 'application/x-www-form-urlencoded'}
+        url = provider_id.token_endpoint.replace("/introspect", "")
+        logger.info("Calling %s" % url)
+        headers = {"content-type": "application/x-www-form-urlencoded"}
         data = {
-            'username': provider_id.superuser,
-            'password': provider_id.superuser_pwd,
-            'grant_type': 'password',
-            'client_id': provider_id.client_id,
-            'client_secret': provider_id.client_secret,
+            "username": provider_id.superuser,
+            "password": provider_id.superuser_pwd,
+            "grant_type": "password",
+            "client_id": provider_id.client_id,
+            "client_secret": provider_id.client_secret,
         }
         resp = requests.post(url, data=data, headers=headers)
         self._validate_response(resp)
-        return resp.json()['access_token']
+        return resp.json()["access_token"]
 
     def create_users_on_keycloak(self):
         """Create users on Keycloak.
@@ -47,27 +51,29 @@ class ResUsers(models.Model):
            b. they do not have an Oauth UID already
         4. brings you to update users list
         """
-        logger.debug('Create keycloak user START')
-        provider_id = self.env.ref('energy_communities.keycloak_admin_provider')
+        logger.debug("Create keycloak user START")
+        provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
         provider_id.validate_admin_provider()
         token = self._get_admin_token(provider_id)
-        logger.info(
-            'Creating users for %s' % ','.join(self.mapped('login'))
-        )
+        logger.info("Creating users for %s" % ",".join(self.mapped("login")))
         for user in self:
             if user.oauth_uid:
                 # already sync'ed somewhere else
                 continue
             keycloak_user = self._get_or_create_user(token, provider_id, user)
-            keycloak_key = self._LOGIN_MATCH_KEY.split(':')[0]
-            keycloak_login_provider = self.env.ref('energy_communities.keycloak_login_provider')
-            user.update({
-                'oauth_uid': keycloak_user[keycloak_key],
-                'oauth_provider_id': keycloak_login_provider.id,
-            })
+            keycloak_key = self._LOGIN_MATCH_KEY.split(":")[0]
+            keycloak_login_provider = self.env.ref(
+                "energy_communities.keycloak_login_provider"
+            )
+            user.update(
+                {
+                    "oauth_uid": keycloak_user[keycloak_key],
+                    "oauth_provider_id": keycloak_login_provider.id,
+                }
+            )
         # action = self.env.ref('base.action_res_users').read()[0]
         # action['domain'] = [('id', 'in', self.user_ids.ids)]
-        logger.debug('Create keycloak users STOP')
+        logger.debug("Create keycloak users STOP")
         return True
 
     def _get_users(self, token, provider_id, **params):
@@ -76,11 +82,13 @@ class ResUsers(models.Model):
         :param token: a valida auth token from Keycloak
         :param **params: extra search params for users endpoint
         """
-        logger.info('Calling %s' % provider_id.admin_user_endpoint)
+        logger.info("Calling %s" % provider_id.admin_user_endpoint)
         headers = {
-            'Authorization': 'Bearer %s' % token,
+            "Authorization": "Bearer %s" % token,
         }
-        resp = requests.get(provider_id.admin_user_endpoint, headers=headers, params=params)
+        resp = requests.get(
+            provider_id.admin_user_endpoint, headers=headers, params=params
+        )
         self._validate_response(resp)
         return resp.json()
 
@@ -90,26 +98,27 @@ class ResUsers(models.Model):
         # `HTTPError: 409 Client Error: Conflict for url: `
         # http://keycloak:8080/auth/admin/realms/master/users
         if resp.status_code == 409:
-            detail = ''
-            if resp.content and resp.json().get('errorMessage'):
+            detail = ""
+            if resp.content and resp.json().get("errorMessage"):
                 # ie: {"errorMessage":"User exists with same username"}
-                detail = '\n' + resp.json().get('errorMessage')
-            raise exceptions.UserError(_(
-                'Conflict on user values. '
-                'Please verify that all values supposed to be unique '
-                'are really unique. %(detail)s'
-            ) % {'detail': detail})
-            if not resp.ok:
-                # TODO: do something better?
-                raise resp.raise_for_status()
-            if no_json:
-                return resp.content
-            try:
-                return resp.json()
-            except JSONDecodeError:
-                raise exceptions.UserError(
-                    _('Something went wrong. Please check logs.')
+                detail = "\n" + resp.json().get("errorMessage")
+            raise exceptions.UserError(
+                _(
+                    "Conflict on user values. "
+                    "Please verify that all values supposed to be unique "
+                    "are really unique. %(detail)s"
                 )
+                % {"detail": detail}
+            )
+        if not resp.ok:
+            # TODO: do something better?
+            raise resp.raise_for_status()
+        if no_json:
+            return resp.content
+        try:
+            return resp.json()
+        except JSONDecodeError:
+            raise exceptions.UserError(_("Something went wrong. Please check logs."))
 
     def _get_or_create_user(self, token, provider_id, odoo_user):
         """Lookup for given user on Keycloak: create it if missing.
@@ -117,9 +126,10 @@ class ResUsers(models.Model):
         :param token: valid auth token from Keycloak
         :param odoo_user: res.users record
         """
-        odoo_key = self._LOGIN_MATCH_KEY.split(':')[1]
+        odoo_key = self._LOGIN_MATCH_KEY.split(":")[1]
         keycloak_user = self._get_users(
-            token, provider_id, search=odoo_user.mapped(odoo_key)[0])
+            token, provider_id, search=odoo_user.mapped(odoo_key)[0]
+        )
         if keycloak_user:
             if len(keycloak_user) > 1:
                 # TODO: warn user?
@@ -133,51 +143,55 @@ class ResUsers(models.Model):
     def _create_user_values(self, odoo_user):
         """Prepare Keycloak values for given Odoo user."""
         values = {
-            'username': odoo_user.login,
-            'email': odoo_user.partner_id.email,
-            'attributes': {'lang': [odoo_user.lang]}
+            "username": odoo_user.login,
+            "email": odoo_user.partner_id.email,
+            "attributes": {"lang": [odoo_user.lang]},
         }
 
-        if 'firstname' in odoo_user.partner_id:
+        if "firstname" in odoo_user.partner_id:
             # partner_firstname installed
             firstname = odoo_user.partner_id.firstname
             lastname = odoo_user.partner_id.lastname
         else:
             firstname, lastname = self._split_user_fullname(odoo_user)
-        values.update({
-            'firstName': firstname,
-            'lastName': lastname,
-        })
-        logger.debug('CREATE using values %s' % str(values))
+        values.update(
+            {
+                "firstName": firstname,
+                "lastName": lastname,
+            }
+        )
+        logger.debug("CREATE using values %s" % str(values))
         return values
 
     def _split_user_fullname(self, odoo_user):
         # yeah, I know, it's not perfect... you can override it ;)
-        name_parts = odoo_user.name.split(' ')
+        name_parts = odoo_user.name.split(" ")
         if len(name_parts) == 2:
             # great we've found the 2 parts
             firstname, lastname = name_parts
         else:
             # make sure firstname is there
             # then use the rest - if any - to build lastname
-            firstname, lastname = name_parts[0], ' '.join(name_parts[1:])
+            firstname, lastname = name_parts[0], " ".join(name_parts[1:])
         return firstname, lastname
 
     def _create_user(self, token, provider_id, **data):
         """Create a user on Keycloak w/ given data."""
-        logger.info('CREATE Calling %s' % provider_id.admin_user_endpoint)
+        logger.info("CREATE Calling %s" % provider_id.admin_user_endpoint)
         headers = {
-            'Authorization': 'Bearer %s' % token,
+            "Authorization": "Bearer %s" % token,
         }
         # TODO: what to do w/ credentials?
         # Shall we just rely on Keycloak sending out a reset password link?
         # Shall we enforce a dummy pwd and enable "change after 1st login"?
-        resp = requests.post(provider_id.admin_user_endpoint, headers=headers, json=data)
+        resp = requests.post(
+            provider_id.admin_user_endpoint, headers=headers, json=data
+        )
         self._validate_response(resp, no_json=True)
         # yes, Keycloak sends back NOTHING on create
         # so we are forced to do anothe call to get its data :(
-        return self._get_users(token, provider_id, search=data['username'])[0]
+        return self._get_users(token, provider_id, search=data["username"])[0]
 
     def get_role_codes(self):
-        #TODO Map all code to company and enable (We should update the API schema too)
+        # TODO Map all code to company and enable (We should update the API schema too)
         return self.role_line_ids[0].role_id.code

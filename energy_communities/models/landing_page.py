@@ -1,7 +1,10 @@
-from odoo import models, fields, api, _
-from .res_config_settings import ResConfigSettings
+from odoo import _, api, fields, models
+
 from ..pywordpress_client.resources.authenticate import Authenticate
-from ..pywordpress_client.resources.landing_page import LandingPage as LandingPageResource
+from ..pywordpress_client.resources.landing_page import (
+    LandingPage as LandingPageResource,
+)
+from .res_config_settings import ResConfigSettings
 
 
 class LandingPage(models.Model):
@@ -20,29 +23,29 @@ class LandingPage(models.Model):
         string="Allows new members", related="company_id.allow_new_members"
     )
     number_of_members = fields.Integer(string="Number of members")
-    external_website_link = fields.Char(
-        string="External website link", translate=True)
+    external_website_link = fields.Char(string="External website link", translate=True)
     twitter_link = fields.Char(
-        string="Twitter link", related="company_id.social_twitter")
+        string="Twitter link", related="company_id.social_twitter"
+    )
     telegram_link = fields.Char(
-        string="Telegram link", related="company_id.social_telegram")
+        string="Telegram link", related="company_id.social_telegram"
+    )
     instagram_link = fields.Char(
-        string="Instagram link", related="company_id.social_instagram")
+        string="Instagram link", related="company_id.social_instagram"
+    )
     # TODO: group_image_link Left for backward compatibility. To be removed
     group_image_link = fields.Char(string="Group image link")
-    primary_image_file = fields.Image(
-        "Primary Image")
-    secondary_image_file = fields.Image(
-        "Secondary Image")
+    primary_image_file = fields.Image("Primary Image")
+    secondary_image_file = fields.Image("Secondary Image")
     short_description = fields.Text(string="Short description", translate=True)
     long_description = fields.Text(string="Long description", translate=True)
-    why_become_cooperator = fields.Html(
-        string="Why become cooperator", translate=True)
+    why_become_cooperator = fields.Html(string="Why become cooperator", translate=True)
     become_cooperator_process = fields.Html(
-        string="Become cooperator process", translate=True)
+        string="Become cooperator process", translate=True
+    )
     # TODO: remove this one
     map_geolocation = fields.Char(string="Map geolocation")
-    map_place_id = fields.Many2one('cm.place', "Place reference")
+    map_place_id = fields.Many2one("cm.place", "Place reference")
     street = fields.Char(string="Street")
     postal_code = fields.Char(string="Postal code")
     city = fields.Char(string="City")
@@ -69,16 +72,23 @@ class LandingPage(models.Model):
     )
 
     def to_dict(self):
-        base_url = self.env['ir.config_parameter'].get_param(
-            'web.base.url')
+        base_url = self.env["ir.config_parameter"].get_param("web.base.url")
         if self.primary_image_file:
-            primary_image_file = base_url+'/web/image/landing.page/' + \
-                str(self.id)+'/primary_image_file'
+            primary_image_file = (
+                base_url
+                + "/web/image/landing.page/"
+                + str(self.id)
+                + "/primary_image_file"
+            )
         else:
             primary_image_file = ""
         if self.secondary_image_file:
-            secondary_image_file = base_url+'/web/image/landing.page/' + \
-                str(self.id)+'/secondary_image_file'
+            secondary_image_file = (
+                base_url
+                + "/web/image/landing.page/"
+                + str(self.id)
+                + "/secondary_image_file"
+            )
         else:
             secondary_image_file = ""
         if self.map_place_id:
@@ -123,20 +133,19 @@ class LandingPage(models.Model):
     def action_landing_page_status(self):
         for record in self:
             new_status = "draft" if record.status == "publish" else "publish"
-            instance_company = self.env['res.company'].search(
-                [('hierarchy_level', '=', 'instance')])
+            instance_company = self.env["res.company"].search(
+                [("hierarchy_level", "=", "instance")]
+            )
             if instance_company:
                 baseurl = instance_company.wordpress_base_url
                 username = instance_company.wordpress_db_username
                 password = instance_company.wordpress_db_password
                 auth = Authenticate(baseurl, username, password).authenticate()
                 token = "Bearer %s" % auth["token"]
-                landing_page_data = record.to_dict()['landing_page']
+                landing_page_data = record.to_dict()["landing_page"]
                 landing_page_data["status"] = new_status
-                LandingPageResource(
-                    token,
-                    baseurl,
-                    record.wp_landing_page_id
-                ).update(landing_page_data)
+                LandingPageResource(token, baseurl, record.wp_landing_page_id).update(
+                    landing_page_data
+                )
 
                 record.write({"status": new_status})

@@ -1,12 +1,13 @@
-from odoo import api, models, fields, _
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+
 class OperationRequest(models.Model):
-    _inherit = 'operation.request'
+    _inherit = "operation.request"
 
     def execute_operation(self):
-        """CAUTION: we are full overriding here this function in order to 
-        be able to get sequences (sequence_register_operation & sequence_subscription) 
+        """CAUTION: we are full overriding here this function in order to
+        be able to get sequences (sequence_register_operation & sequence_subscription)
         from a multicompany scenario"""
 
         self.ensure_one()
@@ -54,8 +55,8 @@ class OperationRequest(models.Model):
                     _("Converting just part of the" " shares is not yet implemented")
                 )
         elif self.operation_type == "transfer":
-            #sequence_id = self.env.ref("cooperator.sequence_subscription", False)
-            sequence_id = self.env['account.move'].get_sequence_register()
+            # sequence_id = self.env.ref("cooperator.sequence_subscription", False)
+            sequence_id = self.env["account.move"].get_sequence_register()
 
             partner_vals = {"member": True}
             if self.receiver_not_member:
@@ -97,11 +98,11 @@ class OperationRequest(models.Model):
         else:
             raise ValidationError(_("This operation is not yet" " implemented."))
 
-        #sequence_operation = self.env.ref(
+        # sequence_operation = self.env.ref(
         #    "cooperator.sequence_register_operation", False
-        #)  # noqa
-        sequence_operation = self.env['account.move'].get_sequence_operation()
-        
+        # )  # noqa
+        sequence_operation = self.env["account.move"].get_sequence_operation()
+
         sub_reg_operation = sequence_operation.next_by_id()
 
         values["name"] = sub_reg_operation

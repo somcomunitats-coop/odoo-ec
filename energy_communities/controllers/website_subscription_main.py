@@ -1,9 +1,10 @@
+from urllib.parse import urljoin
+
 from odoo import http
 from odoo.http import request
 from odoo.tools.translate import _
+
 from odoo.addons.cooperator_website.controllers import main as emyc_wsc
-from urllib.parse import urljoin
-import re
 
 _VOLUNTARY_SHARE_FORM_FIELD = [
     "email",
@@ -21,79 +22,88 @@ _VOLUNTARY_SHARE_FORM_FIELD = [
 class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
     @http.route()
     def display_become_cooperator_page(self, **kwargs):
-
         target_odoo_company_id = False
-        if kwargs.get('odoo_company_id', False):
+        if kwargs.get("odoo_company_id", False):
             try:
-                target_odoo_company_id = int(kwargs.get('odoo_company_id'))
+                target_odoo_company_id = int(kwargs.get("odoo_company_id"))
             except:
                 pass
 
-        if ('odoo_company_id' in kwargs) and (
-                not target_odoo_company_id or not request.env['res.company'].sudo().search(
-            [('id', '=', target_odoo_company_id)])):
-            return http.Response(_("Not valid parameter value [odoo_company_id]"), status=500)
+        if ("odoo_company_id" in kwargs) and (
+            not target_odoo_company_id
+            or not request.env["res.company"]
+            .sudo()
+            .search([("id", "=", target_odoo_company_id)])
+        ):
+            return http.Response(
+                _("Not valid parameter value [odoo_company_id]"), status=500
+            )
 
         ctx = dict(request.context)
-        ctx.update({'target_odoo_company_id': target_odoo_company_id})
+        ctx.update({"target_odoo_company_id": target_odoo_company_id})
         request.context = ctx
 
-        res = super(WebsiteSubscriptionCCEE,
-                    self).display_become_cooperator_page(**kwargs)
+        res = super().display_become_cooperator_page(**kwargs)
         return res
 
     @http.route()
     def display_become_company_cooperator_page(self, **kwargs):
-
         target_odoo_company_id = False
-        if kwargs.get('odoo_company_id', False):
+        if kwargs.get("odoo_company_id", False):
             try:
-                target_odoo_company_id = int(kwargs.get('odoo_company_id'))
+                target_odoo_company_id = int(kwargs.get("odoo_company_id"))
             except:
                 pass
 
-        if ('odoo_company_id' in kwargs) and (
-                not target_odoo_company_id or not request.env['res.company'].sudo().search(
-            [('id', '=', target_odoo_company_id)])):
-            return http.Response(_("Not valid parameter value [odoo_company_id]"), status=500)
+        if ("odoo_company_id" in kwargs) and (
+            not target_odoo_company_id
+            or not request.env["res.company"]
+            .sudo()
+            .search([("id", "=", target_odoo_company_id)])
+        ):
+            return http.Response(
+                _("Not valid parameter value [odoo_company_id]"), status=500
+            )
 
         ctx = dict(request.context)
-        ctx.update({'target_odoo_company_id': target_odoo_company_id})
+        ctx.update({"target_odoo_company_id": target_odoo_company_id})
         request.context = ctx
 
-        res = super(WebsiteSubscriptionCCEE,
-                    self).display_become_company_cooperator_page(**kwargs)
+        res = super().display_become_company_cooperator_page(**kwargs)
         return res
 
     @http.route()  # noqa: C901 (method too complex)
     def share_subscription(self, **kwargs):
-
         target_odoo_company_id = False
-        if kwargs.get('company_id', False):
+        if kwargs.get("company_id", False):
             try:
-                target_odoo_company_id = int(kwargs.get('company_id'))
+                target_odoo_company_id = int(kwargs.get("company_id"))
             except:
                 pass
 
-        if ('odoo_company_id' in kwargs) and (
-                not target_odoo_company_id or not request.env['res.company'].sudo().search(
-            [('id', '=', target_odoo_company_id)])):
-            return http.Response(_("Not valid parameter value [odoo_company_id]"), status=500)
+        if ("odoo_company_id" in kwargs) and (
+            not target_odoo_company_id
+            or not request.env["res.company"]
+            .sudo()
+            .search([("id", "=", target_odoo_company_id)])
+        ):
+            return http.Response(
+                _("Not valid parameter value [odoo_company_id]"), status=500
+            )
 
         ctx = dict(request.context)
-        ctx.update({'target_odoo_company_id': target_odoo_company_id})
+        ctx.update({"target_odoo_company_id": target_odoo_company_id})
         request.context = ctx
 
-        res = super(WebsiteSubscriptionCCEE,
-                    self).share_subscription(**kwargs)
+        res = super().share_subscription(**kwargs)
         return res
 
     def fill_values(self, values, is_company, logged, load_from_user=False):
-        target_company_id = request.context.get('target_odoo_company_id', False)
+        target_company_id = request.context.get("target_odoo_company_id", False)
 
         sub_req_obj = request.env["subscription.request"]
         if target_company_id:
-            company = request.env['res.company'].sudo().browse(target_company_id)
+            company = request.env["res.company"].sudo().browse(target_company_id)
         else:
             company = request.website.company_id
         products = self.get_products_share(is_company)
@@ -115,20 +125,24 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
 
         if not values.get("share_product_id"):
             for product in products:
-                if (product.default_share_product is True
-                    and product.id != company.voluntary_share_id.id):
+                if (
+                    product.default_share_product is True
+                    and product.id != company.voluntary_share_id.id
+                ):
                     values["share_product_id"] = product.id
-                    values["share_payment_sepa_direct_debit"] = (product.payment_mode_id
-                                                                 .payment_method_id.code
-                                                                 =='sepa_direct_debit'
-                                                                 or False)
+                    values["share_payment_sepa_direct_debit"] = (
+                        product.payment_mode_id.payment_method_id.code
+                        == "sepa_direct_debit"
+                        or False
+                    )
                     break
             if not values.get("share_product_id", False) and products:
                 values["share_product_id"] = products[0].id
-                values["share_payment_sepa_direct_debit"] = (product[0].payment_mode_id
-                                                                 .payment_method_id.code
-                                                                 =='sepa_direct_debit'
-                                                                 or False)
+                values["share_payment_sepa_direct_debit"] = (
+                    product[0].payment_mode_id.payment_method_id.code
+                    == "sepa_direct_debit"
+                    or False
+                )
         if not values.get("country_id"):
             if company.default_country_id:
                 values["country_id"] = company.default_country_id.id
@@ -162,9 +176,11 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         return values
 
     def validation(  # noqa: C901 (method too complex)
-            self, kwargs, logged, values, post_file
+        self, kwargs, logged, values, post_file
     ):
-        target_odoo_company_id = kwargs.get('company_id') and int(kwargs.get('company_id')) or None
+        target_odoo_company_id = (
+            kwargs.get("company_id") and int(kwargs.get("company_id")) or None
+        )
 
         user_obj = request.env["res.users"]
         sub_req_obj = request.env["subscription.request"]
@@ -172,13 +188,13 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         redirect = "cooperator_website.becomecooperator"
 
         if target_odoo_company_id:
-            company = request.env['res.company'].sudo().browse(target_odoo_company_id)
+            company = request.env["res.company"].sudo().browse(target_odoo_company_id)
         else:
             company = request.website.company_id
 
         values["redirect_url"] = urljoin(
             request.httprequest.host_url,
-            "/page/become_cooperator?odoo_company_id={}".format(company.id)
+            "/page/become_cooperator?odoo_company_id={}".format(company.id),
         )
         email = kwargs.get("email")
         is_company = kwargs.get("is_company") == "on"

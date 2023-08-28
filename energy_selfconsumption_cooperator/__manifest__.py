@@ -7,7 +7,7 @@
             Module glue between Energy Self-consumption and Cooperator
     """,
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
-    "website": "https://somcomunitats.coop/",
+    "website": "https://coopdevs.org",
     "category": "Customizations",
     "version": "14.0.1.1.3",
     "depends": [

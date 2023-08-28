@@ -1,21 +1,22 @@
-# -*- coding: utf-8 -*-
-from odoo import fields, models, _
+from odoo import _, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = "res.config.settings"
 
     wordpress_base_url = fields.Char(
-        related='company_id.wordpress_base_url',
+        related="company_id.wordpress_base_url",
         string=_("Wordpress Base URL (JWT auth)"),
-        readonly=False
+        readonly=False,
     )
-    ''' WORDPRESS DB CREDENTIALS '''
+    """ WORDPRESS DB CREDENTIALS """
     wordpress_db_username = fields.Char(
-        related='company_id.wordpress_db_username',
+        related="company_id.wordpress_db_username",
         string=_("Wordpress DB Admin Username"),
-        readonly=False)
+        readonly=False,
+    )
     wordpress_db_password = fields.Char(
-        related='company_id.wordpress_db_password',
+        related="company_id.wordpress_db_password",
         string=_("Wordpress DB Admin Password"),
-        readonly=False)
+        readonly=False,
+    )

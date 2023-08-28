@@ -22,49 +22,62 @@ class Selfconsumption(models.Model):
         "energy_project.project", required=True, ondelete="cascade"
     )
     code = fields.Char(string="CAU")
-    cil = fields.Char(string="CIL", help="Production facility code for liquidation purposes")
-    owner_id = fields.Many2one("res.partner", string="Owner", required=True, default=lambda self: self.env.company.partner_id)
+    cil = fields.Char(
+        string="CIL", help="Production facility code for liquidation purposes"
+    )
+    owner_id = fields.Many2one(
+        "res.partner",
+        string="Owner",
+        required=True,
+        default=lambda self: self.env.company.partner_id,
+    )
     power = fields.Float(string="Generation Power (kW)")
     distribution_table_ids = fields.One2many(
         "energy_selfconsumption.distribution_table",
         "selfconsumption_project_id",
         readonly=True,
     )
-    distribution_table_count = fields.Integer(compute=_compute_distribution_table_count) 
-    inscription_ids = fields.One2many('energy_project.inscription', 'project_id', readonly=True)
+    distribution_table_count = fields.Integer(compute=_compute_distribution_table_count)
+    inscription_ids = fields.One2many(
+        "energy_project.inscription", "project_id", readonly=True
+    )
     inscription_count = fields.Integer(compute=_compute_inscription_count)
 
     def get_distribution_tables(self):
         self.ensure_one()
         return {
-            'type': 'ir.actions.act_window',
-            'name': 'Distribution Tables',
-            'view_mode': 'tree,form',
-            'res_model': 'energy_selfconsumption.distribution_table',
-            'domain': [('selfconsumption_project_id', '=', self.id)],
-            'context': {'create': True, 'default_selfconsumption_project_id': self.id},
+            "type": "ir.actions.act_window",
+            "name": "Distribution Tables",
+            "view_mode": "tree,form",
+            "res_model": "energy_selfconsumption.distribution_table",
+            "domain": [("selfconsumption_project_id", "=", self.id)],
+            "context": {"create": True, "default_selfconsumption_project_id": self.id},
         }
-    
+
     def get_inscriptions(self):
         self.ensure_one()
         return {
-            'type': 'ir.actions.act_window',
-            'name': 'Inscriptions',
-            'view_mode': 'tree,form',
-            'res_model': 'energy_project.inscription',
-            'domain': [('project_id', '=', self.id)],
-            'context': {'create': True, 'default_project_id': self.id},
+            "type": "ir.actions.act_window",
+            "name": "Inscriptions",
+            "view_mode": "tree,form",
+            "res_model": "energy_project.inscription",
+            "domain": [("project_id", "=", self.id)],
+            "context": {"create": True, "default_project_id": self.id},
         }
 
     def distribution_table_state(self, actual_state, new_state):
-        distribution_table_to_activate = self.distribution_table_ids.filtered(lambda table: table.state == actual_state)
+        distribution_table_to_activate = self.distribution_table_ids.filtered(
+            lambda table: table.state == actual_state
+        )
         distribution_table_to_activate.write({"state": new_state})
 
     def set_in_activation_state(self):
         for record in self:
-            if not record.distribution_table_ids.filtered_domain([('state', '=', 'validated')]):
+            if not record.distribution_table_ids.filtered_domain(
+                [("state", "=", "validated")]
+            ):
                 raise ValidationError(_("Must have a valid Distribution Table."))
-            record.write({"state": "activation"})        
+            record.write({"state": "activation"})
         self.distribution_table_state("validated", "process")
 
     def activate(self):
@@ -81,19 +94,19 @@ class Selfconsumption(models.Model):
     def action_selfconsumption_import_wizard(self):
         self.ensure_one()
         return {
-            'name': _('Import Inscriptions and Supply Points'),
-            'type': 'ir.actions.act_window',
-            'view_mode': 'form',
-            'res_model': 'energy_selfconsumption.selfconsumption_import.wizard',
-            'views': [(False, 'form')],
-            'view_id': False,
-            'target': 'new',
+            "name": _("Import Inscriptions and Supply Points"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "energy_selfconsumption.selfconsumption_import.wizard",
+            "views": [(False, "form")],
+            "view_id": False,
+            "target": "new",
         }
 
     def set_inscription(self, selfconsumption_state):
         for record in self:
             record.write({"state": "inscription"})
-        if selfconsumption_state == 'activation':
+        if selfconsumption_state == "activation":
             self.distribution_table_state("process", "validated")
 
     def set_draft(self):
