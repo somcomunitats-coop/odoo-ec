@@ -196,6 +196,7 @@ class ResCompany(models.Model):
         return self.env["res.users"].sudo().search(domains_dict["in_kc_and_active"])
 
     def get_users(self, role_codes=False):
+        role_codes = role_codes or []
         if role_codes:
             users = (
                 self.env["res.users.role.line"]

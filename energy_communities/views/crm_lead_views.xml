@@ -22,21 +22,15 @@
 			<xpath expr="//sheet" position="before">
                 <header>
 					<button
-						name="action_assign_crm_to_coordinator_company"
-						type="object"
-						string="Assing CRM to coordinator company"
-						groups="energy_communities.group_platform_manager"
-					/>
-                    <field name="source_id" invisible="1"/>
-                    <field name="finished" invisible="1"/>
-                    <field name="company_hierarchy_level" invisible="1"/>
-					<button
-						name="action_create_community"
-						type="object"
-						string="Create community"
-						groups="energy_communities.group_admin"
-                        attrs="{'invisible': ['|', '|', ('source_id', '!=', %(ce_source_creation_ce_proposal)d), ('finished', '=', False), ('company_hierarchy_level', '!=', 'coordinator')]}"
-                    />
+            name="action_assign_crm_to_coordinator_company"
+            type="object"
+            string="Assing CRM to coordinator company"
+            groups="energy_communities.group_platform_manager"
+          />
+                    <field name="source_id" invisible="1" />
+                    <field name="finished" invisible="1" />
+                    <field name="company_hierarchy_level" invisible="1" />
+					<button name="action_create_community" type="object" string="Create community" />
 				</header>
 			</xpath>
 		</field>

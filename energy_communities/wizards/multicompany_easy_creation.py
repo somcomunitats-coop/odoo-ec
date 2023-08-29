@@ -23,7 +23,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     )
     crm_lead_id = fields.Many2one("crm.lead", string="CRM Lead")
     property_cooperator_account = fields.Many2one(
-        comodel_name="account.account.template",
+        comodel_name="account.account",
         string="Cooperator Account",
         help="This account will be"
         " the default one as the"
@@ -66,9 +66,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         string="ZIP code",
     )
 
-    foundation_date = fields.Date(
-        string="Foundation date"
-    )
+    foundation_date = fields.Date(string="Foundation date")
 
     vat = fields.Char(
         string="ZIP code",
@@ -82,14 +80,28 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         string="Phone",
     )
 
+    website = fields.Char(
+        string="Website",
+    )
+
+    state_id = fields.Many2one(
+        comodel_name="res.country.state",
+        string="State",
+    )
+
     def add_company_managers(self):
-        coord_members = self.parent_id.get_users(["role_coord_admin", "role_coord_worker"])
+        coord_members = self.parent_id.get_users(
+            ["role_coord_admin", "role_coord_worker"]
+        )
         for manager in coord_members:
             manager.make_ce_user(self.new_company_id, "role_ce_manager")
 
     def add_company_log(self):
-        message = _("Community created from: <a href='/web#id={id}&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>")
-        self.new_company_id.message_post(
+        message = _(
+            "Community created from: <a href='/web#id={id}&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
+        )
+        self_new_company = self.with_company(self.new_company_id)
+        self_new_company.new_company_id.message_post(
             body=message.format(
                 id=self.crm_lead_id.id,
                 menu_id=self.env.ref("crm.crm_menu_root").id,
@@ -159,7 +171,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             self.new_company_id.write(vals)
 
     def set_cooperative_account(self):
-        new_company = self.new_company_id
+        self_new_company = self.with_company(new_company_id)
+        new_company = self_new_company.new_company_id
         new_company.write(
             {
                 "property_cooperator_account": self.match_account(
@@ -185,23 +198,28 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
 
     def action_accept(self):
         action = super().action_accept()
-        self.update_values_from_crm_lead()
+        # self.update_values_from_crm_lead()
         if self.property_cooperator_account:
             self.set_cooperative_account()
-        self.new_company_id.create_user = self.create_user
+        self_new_company = self.with_company(self.new_company_id)
+        self_new_company.new_company_id.create_user = self.create_user
         self.update_product_category_company_share()
-        self.create_capital_share_product_template()
+        # self.create_capital_share_product_template()
         self.add_company_managers()
         self.add_company_log()
         return action
 
     def create_company(self):
-        self.new_company_id = self.env["res.company"].create(
-            {
-                "name": self.name,
-                "user_ids": [(6, 0, self.user_ids.ids)],
-                "parent_id": self.parent_id.id,
-            }
+        self.new_company_id = (
+            self.env["res.company"]
+            .sudo()
+            .create(
+                {
+                    "name": self.name,
+                    "user_ids": [(6, 0, self.user_ids.ids)],
+                    "parent_id": self.parent_id.id,
+                }
+            )
         )
         allowed_company_ids = (
             self.env.context.get("allowed_company_ids", []) + self.new_company_id.ids

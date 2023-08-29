@@ -25,15 +25,17 @@
                 <xpath expr="//page" position="before">
                     <page string="Energy Community">
                         <group string="Energy Community">
-                            <field name="parent_id"></field>
-                            <field name="default_lang_id"></field>
-                            <field name="street"></field>
-                            <field name="city"></field>
-                            <field name="zip_code"></field>
-                            <field name="foundation_date"></field>
-                            <field name="vat"></field>
-                            <field name="email"></field>
-                            <field name="phone"></field>
+                            <field name="parent_id" required="1" />
+                            <field name="vat" required="1" />
+                            <field name="state_id" required="1" />
+                            <field name="city" required="1" />
+                            <field name="street" required="1" />
+                            <field name="zip_code" required="1" />
+                            <field name="foundation_date" required="1" />
+                            <field name="email" required="1" />
+                            <field name="phone" required="1" />
+                            <field name="default_lang_id" required="1" />
+                            <field name="website" />
                         </group>
                     </page>
                 </xpath>

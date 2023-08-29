@@ -234,7 +234,9 @@ class CrmLead(models.Model):
 
             if not lead.community_company_id:
                 # Create the new company using very basic starting Data
-                company = self.env['res.company'].create(lead._get_default_community_wizard())
+                company = self.env["res.company"].create(
+                    lead._get_default_community_wizard()
+                )
 
                 # Update Lead & Map Place (if exist) fields accordingly
                 lead.community_company_id = company.id
@@ -251,49 +253,70 @@ class CrmLead(models.Model):
                 lead.community_company_id._create_keycloak_realm()
                 lead.community_company_id._community_post_keycloak_creation_tasks()
 
-    
     def _get_default_community_wizard(self):
         self.ensure_one()
         metadata = {m.key: m.value for m in self.metadata_line_ids}
 
         foundation_date = None
-        if metadata.get('ce_creation_date', False) and metadata['ce_creation_date']:
-            date_formats = ['%Y-%m-%d','%d-%m-%Y','%Y/%m/%d','%d/%m/%Y']
+        if metadata.get("ce_creation_date", False) and metadata["ce_creation_date"]:
+            date_formats = ["%Y-%m-%d", "%d-%m-%Y", "%Y/%m/%d", "%d/%m/%Y"]
             for date_format in date_formats:
                 try:
-                    foundation_date = datetime.strptime(metadata['ce_creation_date'], date_format)
+                    foundation_date = datetime.strptime(
+                        metadata["ce_creation_date"], date_format
+                    )
                 except:
                     pass
             if not foundation_date:
                 raise UserError(
-                    _("The Foundation Date value {} have a non valid format. It must be: yyyy-mm-dd or dd-mm-yyyy or yyyy/mm/dd or dd/mm/yyyy").format(metadata['partner_foundation_date']))
+                    _(
+                        "The Foundation Date value {} have a non valid format. It must be: yyyy-mm-dd or dd-mm-yyyy or yyyy/mm/dd or dd/mm/yyyy"
+                    ).format(metadata["partner_foundation_date"])
+                )
 
         lang_id = None
-        if metadata.get('current_lang',False) and metadata['current_lang'] or None:
-            lang_id = self.env['res.lang'].search([('code','=',metadata['current_lang'])],limit=1)
+        if metadata.get("current_lang", False) and metadata["current_lang"] or None:
+            lang_id = self.env["res.lang"].search(
+                [("code", "=", metadata["current_lang"])], limit=1
+            )
 
         users = [user.id for user in self.company_id.get_users()]
 
         return {
-            'name': self.name,
-            'parent_id': self.company_id.id,
-            'crm_lead_id': self.id,
-            'user_ids': users,
-            'street': metadata.get('ce_address',False) and metadata['ce_address'] or None,
-            'city': metadata.get('ce_city',False) and metadata['ce_city'] or None,
-            'zip_code': metadata.get('ce_zip',False) and metadata['ce_zip'] or None,
-            'phone': metadata.get('contact_phone',False) and metadata['contact_phone'] or None,
-            'email': metadata.get('email_from',False) and metadata['email_from'] or None,
-            'vat': metadata.get('ce_vat',False) and metadata['ce_vat'] or None,
-            'foundation_date': foundation_date,
-            'default_lang_id': lang_id and lang_id.id or None,
-            'hierarchy_level': 'community' if self.source_id == self.env.ref("energy_communities.ce_source_creation_ce_proposal") else None,
-            'chart_template_id': self.env["account.chart.template"].search([("name", "=", "PGCE PYMEs 2008")])[0].id,
-            'update_default_taxes': True,
-            'default_sale_tax_id': self.env["account.tax.template"].search([("name", "=", "IVA 21% (Servicios)")])[0].id,
-            'default_purchase_tax_id': self.env["account.tax.template"].search([("name", "=", "21% IVA soportado (bienes corrientes)")])[0].id,
-            'property_cooperator_account': self.env.ref("l10n_es.account_common_4400").id,
-            'create_user': False,
+            "name": self.name,
+            "parent_id": self.company_id.id,
+            "crm_lead_id": self.id,
+            "user_ids": users,
+            "street": metadata.get("ce_address", False)
+            and metadata["ce_address"]
+            or None,
+            "city": metadata.get("ce_city", False) and metadata["ce_city"] or None,
+            "zip_code": metadata.get("ce_zip", False) and metadata["ce_zip"] or None,
+            "phone": metadata.get("contact_phone", False)
+            and metadata["contact_phone"]
+            or None,
+            "email": metadata.get("email_from", False)
+            and metadata["email_from"]
+            or None,
+            "vat": metadata.get("ce_vat", False) and metadata["ce_vat"] or None,
+            "foundation_date": foundation_date,
+            "default_lang_id": lang_id and lang_id.id or None,
+            "hierarchy_level": "community"
+            if self.source_id
+            == self.env.ref("energy_communities.ce_source_creation_ce_proposal")
+            else None,
+            "chart_template_id": self.env["account.chart.template"]
+            .search([("name", "=", "PGCE PYMEs 2008")])[0]
+            .id,
+            "update_default_taxes": True,
+            "default_sale_tax_id": self.env["account.tax.template"]
+            .search([("name", "=", "IVA 21% (Servicios)")])[0]
+            .id,
+            "default_purchase_tax_id": self.env["account.tax.template"]
+            .search([("name", "=", "21% IVA soportado (bienes corrientes)")])[0]
+            .id,
+            # 'property_cooperator_account': self.env.ref("l10n_es.account_common_4400").id,
+            "create_user": False,
         }
 
     def _create_keycloak_realm(self):
@@ -324,17 +347,17 @@ class CrmLead(models.Model):
 
     def action_create_community(self):
         default_company_vals = {
-            'default_{}'.format(field): value
+            "default_{}".format(field): value
             for field, value in self._get_default_community_wizard().items()
         }
 
         return {
-            'type': 'ir.actions.act_window',
-            'name': 'Create community',
-            'res_model': 'account.multicompany.easy.creation.wiz',
-            'view_mode': 'form',
-            'target': 'new',
-            'context': default_company_vals,
+            "type": "ir.actions.act_window",
+            "name": "Create community",
+            "res_model": "account.multicompany.easy.creation.wiz",
+            "view_mode": "form",
+            "target": "new",
+            "context": default_company_vals,
         }
 
 
