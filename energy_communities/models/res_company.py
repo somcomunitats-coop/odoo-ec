@@ -16,8 +16,8 @@ _HIERARCHY_LEVEL_VALUES = [
 
 
 class ResCompany(models.Model):
-    _name = 'res.company'
-    _inherit = ['res.company', "mail.thread", "mail.activity.mixin"]
+    _name = "res.company"
+    _inherit = ["res.company", "mail.thread", "mail.activity.mixin"]
 
     @api.onchange("hierarchy_level")
     def onchange_hierarchy_level(self):
@@ -75,16 +75,15 @@ class ResCompany(models.Model):
         comodel_name="product.template",
         domain=[("is_share", "=", True)],
         string="Voluntary share to show on website",
-    wordpress_base_url = fields.Char(
-        string=_("Wordpress Base URL (JWT auth)")
     )
+    wordpress_base_url = fields.Char(string=_("Wordpress Base URL (JWT auth)"))
 
     admins = fields.One2many(
-        'res.users',
+        "res.users",
         string="Community admins",
-        compute='_get_admins',
+        compute="_get_admins",
         readonly=True,
-        store=False
+        store=False,
     )
     landing_page_id = fields.Many2one("landing.page", string=_("Landing Page"))
     wordpress_db_username = fields.Char(string=_("Wordpress DB Admin Username"))
@@ -167,21 +166,23 @@ class ResCompany(models.Model):
         return any([user in admins_user_ids for user in company_user_ids])
 
     def _get_admin_role_name(self):
-        if self.hierarchy_level == 'community':
+        if self.hierarchy_level == "community":
             return "role_ce_admin"
-        elif self.hierarchy_level == 'coordinator':
+        elif self.hierarchy_level == "coordinator":
             return "role_coord_admin"
-        elif self.hierarchy_level == 'instance':
+        elif self.hierarchy_level == "instance":
             return "role_platform_admin"
 
     def _get_admins(self):
         role_name = self._get_admin_role_name()
         for rec in self:
-            role_lines = self.env["res.users.role.line"].search([
-                ("company_id.id", "=", self.id),
-                ("active", "=", True),
-                ("role_id.code", "=", role_name)
-            ])
+            role_lines = self.env["res.users.role.line"].search(
+                [
+                    ("company_id.id", "=", self.id),
+                    ("active", "=", True),
+                    ("role_id.code", "=", role_name),
+                ]
+            )
             rec.admins = role_lines.mapped("user_id")
 
     def get_ce_members(self, domain_key="in_kc_and_active"):
@@ -192,30 +193,50 @@ class ResCompany(models.Model):
                 ("active", "=", True),
             ]
         }
-        return self.env["res.users"].sudo().search(
-            domains_dict["in_kc_and_active"]
-        )
+        return self.env["res.users"].sudo().search(domains_dict["in_kc_and_active"])
 
-    def get_users(self, role_codes=[]):
+    def get_users(self, role_codes=False):
         if role_codes:
-            users = self.env["res.users.role.line"].search([
-                ("company_id", "=", self.id),
-                ("role_id.code", "in", role_codes),
-            ]).user_id
+            users = (
+                self.env["res.users.role.line"]
+                .search(
+                    [
+                        ("company_id", "=", self.id),
+                        ("role_id.code", "in", role_codes),
+                    ]
+                )
+                .user_id
+            )
 
         else:
-            users = self.env["res.users.role.line"].search([
-                ("company_id", "=", self.id),
-            ]).user_id
+            users = (
+                self.env["res.users.role.line"]
+                .search(
+                    [
+                        ("company_id", "=", self.id),
+                    ]
+                )
+                .user_id
+            )
 
         wants_platform_admins = (
-            self.env.ref("energy_communities.role_platform_admin").code in role_codes or
-            not role_codes
+            self.env.ref("energy_communities.role_platform_admin").code in role_codes
+            or not role_codes
         )
         if wants_platform_admins:
-            users += self.env["res.users.role.line"].search([
-                ("role_id", "=", self.env.ref("energy_communities.role_platform_admin").id),
-            ]).user_id
+            users += (
+                self.env["res.users.role.line"]
+                .search(
+                    [
+                        (
+                            "role_id",
+                            "=",
+                            self.env.ref("energy_communities.role_platform_admin").id,
+                        ),
+                    ]
+                )
+                .user_id
+            )
 
         return users
         # return lines.user_id  # TODO: Si?
@@ -266,17 +287,19 @@ class ResCompany(models.Model):
         return res
 
     def get_lower_hierarchy_level(self):
-        if self.hierarchy_level == 'instance':
-            return 'coordinator'
-        elif self.hierarchy_level == 'coordinator':
-            return 'community'
-        return ''
+        if self.hierarchy_level == "instance":
+            return "coordinator"
+        elif self.hierarchy_level == "coordinator":
+            return "community"
+        return ""
 
     def get_child_companies(self):
-        return self.env['res.company'].search([
-            ('hierarchy_level' ,'=', self.get_lower_hierarchy_level()),
-            ('parent_id', '=', self.id),
-        ])
+        return self.env["res.company"].search(
+            [
+                ("hierarchy_level", "=", self.get_lower_hierarchy_level()),
+                ("parent_id", "=", self.id),
+            ]
+        )
 
     def get_public_web_landing_url(self):
         # TODO: Get from landing page or company, for now we don't need
