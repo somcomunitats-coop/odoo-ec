@@ -1,93 +1,77 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
         <record id="distribution_table_form_view" model="ir.ui.view">
-            <field
-        name="name"
-      >energy_selfconsumption.distribution_table_form_view.form</field>
+            <field name="name">energy_selfconsumption.distribution_table_form_view.form</field>
             <field name="model">energy_selfconsumption.distribution_table</field>
             <field name="arch" type="xml">
                 <form string="Distribution Table">
                     <header>
                         <button
-              type="object"
-              string="Validate"
-              name="button_validate"
-              states="draft"
-              class="btn btn-primary"
-            />
+                                type="object"
+                                string="Validate"
+                                name="button_validate"
+                                states="draft"
+                                class="btn btn-primary"
+                        />
                         <button
-              type="object"
-              string="Reset to draft"
-              name="button_draft"
-              attrs="{'invisible':['|',('state','not in',['validated']),('selfconsumption_project_state','not in',['inscription'])]}"
-            />
+                            type="object"
+                            string="Reset to draft"
+                            name="button_draft"
+                            attrs="{'invisible':['|',('state','not in',['validated']),('selfconsumption_project_state','not in',['inscription'])]}"
+                        />
                         <button
-              type="object"
-              name="action_distribution_table_import_wizard"
-              string="Import table"
-              states="draft"
-            />
+                                type="object"
+                                name="action_distribution_table_import_wizard"
+                                string="Import table"
+                                states="draft"
+                        />
                         <field
-              name="state"
-              widget="statusbar"
-              readonly="True"
-              statusbar_visible="draft,validated,process,active"
-            />
-                        <field name="selfconsumption_project_state" invisible="1" />
+                                name="state"
+                                widget="statusbar"
+                                readonly="True"
+                                statusbar_visible="draft,validated,process,active"
+                        />
+                        <field name="selfconsumption_project_state" invisible="1"/>
                     </header>
                     <sheet>
                         <widget
-              name="web_ribbon"
-              text="Archived"
-              bg_color="bg-danger"
-              attrs="{'invisible': [('active', '=', True)]}"
-            />
-                        <field name="active" invisible="True" />
+                                name="web_ribbon"
+                                text="Archived"
+                                bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"
+                        />
+                        <field name="active" invisible="True"/>
                         <group>
                             <group>
-                                <field
-                  name="selfconsumption_project_id"
-                  attrs="{'readonly': [('state', 'not in', ['draft'])]}"
-                  options="{'no_create': True}"
-                />
+                                <field name="selfconsumption_project_id"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                       options="{'no_create': True}"/>
                             </group>
                             <group>
-                                <field
-                  name="type"
-                  attrs="{'readonly': [('state', 'not in', ['draft'])]}"
-                />
+                                <field name="type" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
                             </group>
                         </group>
                         <group>
                             <field
-                name="supply_point_assignation_ids"
-                widget="one2many"
-                mode="list"
-                context="{'default_distribution_table_id':id}"
-                attrs="{'readonly': [('state', 'not in', ['draft'])]}"
-              >
+                                    name="supply_point_assignation_ids"
+                                    widget="one2many"
+                                    mode="list"
+                                    context="{'default_distribution_table_id':id}"
+                                    attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                            >
                                 <tree editable="bottom">
+                                    <field name="supply_point_filtered_ids" invisible="True"/>
+                                    <field name="table_coefficient_is_valid" invisible="True"/>
                                     <field
-                    name="supply_point_filtered_ids"
-                    invisible="True"
-                  />
-                                    <field
-                    name="table_coefficient_is_valid"
-                    invisible="True"
-                  />
-                                    <field
-                    name="supply_point_id"
-                    options="{'no_create': True}"
-                    domain="[('id', 'in', supply_point_filtered_ids)]"
-                  />
-                                    <field name="owner_id" />
-                                    <field name="code" />
-                                    <field
-                    name="coefficient"
-                    sum="True"
-                    decoration-success="table_coefficient_is_valid == True"
-                  />
+                                            name="supply_point_id"
+                                            options="{'no_create': True, 'search_more': True}"
+                                            domain="[('id', 'in', supply_point_filtered_ids)]"
+                                    />
+                                    <field name="owner_id"/>
+                                    <field name="code"/>
+                                    <field name="coefficient" sum="True"
+                                           decoration-success="table_coefficient_is_valid == True"/>
                                 </tree>
                             </field>
                         </group>
@@ -101,11 +85,11 @@
             <field name="model">energy_selfconsumption.distribution_table</field>
             <field name="arch" type="xml">
                 <tree string="Distribution Table">
-                    <field name="name" />
-                    <field name="selfconsumption_project_id" />
-                    <field name="create_date" />
-                    <field name="type" />
-                    <field name="state" />
+                    <field name="name"/>
+                    <field name="selfconsumption_project_id"/>
+                    <field name="create_date"/>
+                    <field name="type"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -116,12 +100,8 @@
             <field name="arch" type="xml">
                 <search string="Distribution Table">
                     <group expand="1" string="Group By">
-                        <filter
-              string="Self-consumption Project"
-              name="selfconsumption_project_id"
-              domain="[]"
-              context="{'group_by':'selfconsumption_project_id'}"
-            />
+                        <filter string="Self-consumption Project" name="selfconsumption_project_id" domain="[]"
+                                context="{'group_by':'selfconsumption_project_id'}"/>
                     </group>
                 </search>
             </field>
