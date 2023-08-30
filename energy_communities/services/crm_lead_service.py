@@ -34,19 +34,20 @@ class CRMLeadService(Component):
             template_external_id = self._get_autoresponder_email_template(
                 target_source_xml_id
             )
+            # add followers
+            self.add_follower(self.env["crm.lead"].browse(crm_lead_id))
 
             # send auto responder email and notify admins
             email_values = {
                 "email_to": params["email_from"],
                 "lang": lang
             }
+
             if template_external_id:
                 template = self.env.ref(
                     "energy_communities.{}".format(template_external_id)
-                )
-                template.with_context(email_values).send_mail(crm_lead["id"])
-                # Add template to chatter message
-                self.env["crm.lead"].post_template_to_chatter(template.id)
+                ).with_context(email_values)
+                template.send_mail(force_send=True, res_id=crm_lead_id)
         return crm_lead
 
     def _setup_lead_utm_source(self, lead_id, source_xml_id):
