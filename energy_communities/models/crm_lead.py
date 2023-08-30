@@ -301,10 +301,6 @@ class CrmLead(models.Model):
             "vat": metadata.get("ce_vat", False) and metadata["ce_vat"] or None,
             "foundation_date": foundation_date,
             "default_lang_id": lang_id and lang_id.id or None,
-            "hierarchy_level": "community"
-            if self.source_id
-            == self.env.ref("energy_communities.ce_source_creation_ce_proposal")
-            else None,
             "chart_template_id": self.env["account.chart.template"]
             .search([("name", "=", "PGCE PYMEs 2008")])[0]
             .id,
@@ -346,18 +342,16 @@ class CrmLead(models.Model):
         }
 
     def action_create_community(self):
-        default_company_vals = {
-            "default_{}".format(field): value
-            for field, value in self._get_default_community_wizard().items()
-        }
-
+        data = self._get_default_community_wizard()
+        wizard = self.env["account.multicompany.easy.creation.wiz"].create(data)
         return {
             "type": "ir.actions.act_window",
             "name": "Create community",
             "res_model": "account.multicompany.easy.creation.wiz",
+            "view_type": "form",
             "view_mode": "form",
             "target": "new",
-            "context": default_company_vals,
+            "res_id": wizard.id,
         }
 
 

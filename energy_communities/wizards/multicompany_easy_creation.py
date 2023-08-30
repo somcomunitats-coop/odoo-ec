@@ -171,7 +171,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             self.new_company_id.write(vals)
 
     def set_cooperative_account(self):
-        self_new_company = self.with_company(new_company_id)
+        self_new_company = self.with_company(self.new_company_id)
         new_company = self_new_company.new_company_id
         new_company.write(
             {
@@ -204,7 +204,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         self_new_company = self.with_company(self.new_company_id)
         self_new_company.new_company_id.create_user = self.create_user
         self.update_product_category_company_share()
-        # self.create_capital_share_product_template()
+        self.create_capital_share_product_template()
         self.add_company_managers()
         self.add_company_log()
         return action
