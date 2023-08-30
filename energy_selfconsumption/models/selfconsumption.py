@@ -120,12 +120,12 @@ class Selfconsumption(models.Model):
                     'code': assignation.supply_point_id.code,
                     'coefficient': assignation.coefficient,
                 })
-        file_content = "Code;Coefficient\n"
+        file_content = ""
         for data in report_data:
             line = f"{data['code']};{str(data['coefficient']).replace('.', ',')}\n"
             file_content += line
         txt_file = io.BytesIO(file_content.encode())
-        file_name = "coefficient_report.txt"
+        file_name = "Coeficiente de reparto.txt"
         self.write({
             'report_file': base64.b64encode(txt_file.getvalue()),
             'report_file_name': file_name,
