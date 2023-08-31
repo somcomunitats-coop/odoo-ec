@@ -9,7 +9,7 @@ class ResPartner(models.Model):
             record.supply_point_count = len(record.supply_ids)
 
     supply_ids = fields.One2many(
-        "energy_selfconsumption.supply_point", "owner_id", readonly=True
+        "energy_selfconsumption.supply_point", "partner_id", readonly=True
     )
     supply_point_count = fields.Integer(compute=_compute_supply_point_count)
 
