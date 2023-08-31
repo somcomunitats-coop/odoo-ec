@@ -158,15 +158,15 @@
                     'company_id':ref('coordinator_company'),
                     }),
                    (0, 0, {
-                    'role_id': ref('role_coord_admin'),
+                    'role_id': ref('role_ce_admin'),
                     'company_id':obj(ref('energy_community_company_1_wizard')).new_company_id.id,
                     }),
                    (0, 0, {
-                    'role_id': ref('role_coord_admin'),
+                    'role_id': ref('role_ce_admin'),
                     'company_id':obj(ref('energy_community_company_2_wizard')).new_company_id.id,
                     }),
                    (0, 0, {
-                    'role_id': ref('role_coord_admin'),
+                    'role_id': ref('role_ce_admin'),
                     'company_id':obj(ref('energy_community_company_3_wizard')).new_company_id.id,
                     }),
                 ]"
