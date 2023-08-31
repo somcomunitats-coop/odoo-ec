@@ -20,10 +20,11 @@ class ResPartner(models.Model):
             "name": "Supply Points",
             "view_mode": "tree,form",
             "res_model": "energy_selfconsumption.supply_point",
-            "domain": [("owner_id", "=", self.id)],
+            "domain": [("partner_id", "=", self.id)],
             "context": {
                 "create": True,
                 "default_owner_id": self.id,
+                "default_partner_id": self.id,
                 "default_country_id": self.env.ref("base.es").id,
             },
         }
