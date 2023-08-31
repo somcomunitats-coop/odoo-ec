@@ -12,6 +12,11 @@
             <field name="parent_id" ref="base.main_company" />
         </record>
 
+        <function name="try_loading" model="account.chart.template">
+            <value eval="[ref('l10n_es.account_chart_template_pymes')]" />
+            <value eval="obj(ref('coordinator_company'))" model="res.company" />
+        </function>
+
         <record
       id="energy_community_company_1_wizard"
       model="account.multicompany.easy.creation.wiz"
