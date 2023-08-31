@@ -5,6 +5,7 @@ setuptools.setup(
     odoo_addon={
         "depends_override": {
             "energy_project": "odoo14-addon-energy-project==14.0.1.1.3",
+            "web_m2x_options": "odoo14-addon-web-m2x-options==14.0.1.1.1",
         }
     }
 )

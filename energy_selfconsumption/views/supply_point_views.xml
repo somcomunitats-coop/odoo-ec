@@ -103,7 +103,6 @@
             <field name="model">energy_selfconsumption.supply_point</field>
             <field name="arch" type="xml">
                 <tree string="Supply Points">
-                    <field name="name" />
                     <field name="street" />
                     <field name="code" />
                     <field name="partner_id" />

@@ -58,6 +58,6 @@ class SupplyPoint(models.Model):
     def _compute_supply_point_name(self):
         for record in self:
             if record.owner_id and record.street:
-                record.name = f"{record.owner_id.name} - {record.street}"
+                record.name = f"{record.partner_id.name} - {record.street}"
             else:
                 record.name = _("New Supply Point")
