@@ -5,7 +5,7 @@
             <field name="name">Owners</field>
             <field name="res_model">res.partner</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="domain">[('supply_ids','!=', False)]</field>
+            <field name="domain">[('owner_supply_ids','!=', False)]</field>
             <field name="context">{'create':False}</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
