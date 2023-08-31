@@ -13,7 +13,7 @@
     "0k.io, "
     "Tecnativa, "
     "Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/web",
+    "website": "https://coopdevs.org",
     "license": "AGPL-3",
     "depends": ["web"],
     "data": ["views/view.xml"],
