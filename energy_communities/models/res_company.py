@@ -200,6 +200,7 @@ class ResCompany(models.Model):
         if role_codes:
             users = (
                 self.env["res.users.role.line"]
+                .sudo()
                 .search(
                     [
                         ("company_id", "=", self.id),
@@ -212,6 +213,7 @@ class ResCompany(models.Model):
         else:
             users = (
                 self.env["res.users.role.line"]
+                .sudo()
                 .search(
                     [
                         ("company_id", "=", self.id),
@@ -227,6 +229,7 @@ class ResCompany(models.Model):
         if wants_platform_admins:
             users += (
                 self.env["res.users.role.line"]
+                .sudo()
                 .search(
                     [
                         (

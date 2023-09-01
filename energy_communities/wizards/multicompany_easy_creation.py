@@ -154,6 +154,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         product_category_company_share.write(values)
 
     def create_capital_share_product_template(self):
+        new_company_id = self.new_company_id.id
+        self_new_company = self.with_company(new_company_id)
         # We use sudo to be able to copy the product and not needing to be in the main company
         self.new_product_share_template = self.sudo().product_share_template.copy(
             {
@@ -163,7 +165,9 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 "active": True,
             }
         )
-        self.new_company_id.initial_subscription_share_amount = self.capital_share
+        self_new_company.new_company_id.initial_subscription_share_amount = (
+            self.capital_share
+        )
 
     def update_values_from_crm_lead(self):
         if self.crm_lead_id:
@@ -229,6 +233,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         )
         self.with_context(
             allowed_company_ids=allowed_company_ids
-        ).chart_template_id.try_loading(company=new_company)
+        ).sudo().chart_template_id.try_loading(company=new_company)
         self.create_bank_journals()
         self.create_sequences()

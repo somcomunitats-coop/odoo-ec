@@ -242,14 +242,14 @@ class ResUsers(models.Model):
                 }
             )
 
-    # TODO: Strategy refactor i feature/assign_ce_admin branch
+    # TODO: Strategy refactor?
     def make_ce_user(self, company_id, role_name):
         role = self.env["res.users.role"].search([("code", "=", role_name)])
         current_role = self.env["res.users.role.line"].search(
             [
                 ("user_id", "=", self.id),
                 ("active", "=", True),
-                ("company_id", "=", company_id),  # .id??
+                ("company_id", "=", company_id.id),
             ]
         )
 
@@ -258,7 +258,7 @@ class ResUsers(models.Model):
         else:
             self.write(
                 {
-                    "company_ids": [(4, company_id)],  # .id??
+                    "company_ids": [(4, company_id.id)],
                     "role_line_ids": [
                         (
                             0,
@@ -267,7 +267,7 @@ class ResUsers(models.Model):
                                 "user_id": self.id,
                                 "active": True,
                                 "role_id": role.id,
-                                "company_id": company_id,  # .id??
+                                "company_id": company_id.id,
                             },
                         )
                     ],
