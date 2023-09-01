@@ -1,6 +1,7 @@
-
 import logging
+
 from odoo.addons.component.core import Component
+
 from . import schemas
 
 _logger = logging.getLogger(__name__)
@@ -16,7 +17,7 @@ class LandingService(Component):
 
     # TODO: This is not restful, we should ask for landing_id directly. Refactor WP before fixing this.
     def get(self, _id):
-        related_company = self.env['res.company'].browse(_id)
+        related_company = self.env["res.company"].browse(_id)
         return self._to_dict(related_company.landing_page_id)
 
     @staticmethod

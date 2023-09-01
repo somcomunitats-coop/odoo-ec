@@ -1,20 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
         <record id="cooperator.view_partner_tree" model="ir.ui.view">
             <field name="mode">primary</field>
         </record>
 
-        <record id="cooperator.action_partner_cooperator_form" model="ir.actions.act_window">
-            <field name="view_id" ref="cooperator.view_partner_tree"></field>
+        <record
+      id="cooperator.action_partner_cooperator_form"
+      model="ir.actions.act_window"
+    >
+            <field name="view_id" ref="cooperator.view_partner_tree" />
         </record>
 
-        <record id="cooperator.action_partner_cooperator_candidate_form" model="ir.actions.act_window">
-            <field name="view_id" ref="cooperator.view_partner_tree"></field>
+        <record
+      id="cooperator.action_partner_cooperator_candidate_form"
+      model="ir.actions.act_window"
+    >
+            <field name="view_id" ref="cooperator.view_partner_tree" />
         </record>
 
-        <record id="cooperator.action_company_representative_form" model="ir.actions.act_window">
-            <field name="view_id" ref="cooperator.view_partner_tree"></field>
+        <record
+      id="cooperator.action_company_representative_form"
+      model="ir.actions.act_window"
+    >
+            <field name="view_id" ref="cooperator.view_partner_tree" />
+        </record>
+
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="name">view_partner_form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="cooperator.view_partner_form" />
+            <field name="arch" type="xml">
+                <xpath
+          expr="//page[@name='share']//field[@name='share_ids']/tree"
+          position="attributes"
+        >
+                    <attribute name="delete">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_partner_tree" model="ir.ui.view">
+            <field name="name">view_partner_tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="cooperator.view_partner_tree" />
+            <field name="arch" type="xml">
+                <xpath
+          expr="/tree/field[@name='cooperator_register_number']"
+          position='attributes'
+        >
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+            </field>
         </record>
     </data>
 </odoo>

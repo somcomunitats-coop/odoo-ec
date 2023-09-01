@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <function
+      name="toggle_active"
+      model="res.lang"
+      eval="[ref('base.lang_es')] if not obj(ref('base.lang_es')).active else [False]"
+    />
+        <function
+      name="toggle_active"
+      model="res.lang"
+      eval="[ref('base.lang_ca_ES')] if not obj(ref('base.lang_ca_ES')).active else [False]"
+    />
+        <function
+      name="toggle_active"
+      model="res.lang"
+      eval="[ref('base.lang_eu_ES')] if not obj(ref('base.lang_eu_ES')).active else [False]"
+    />
+    </data>
+</odoo>

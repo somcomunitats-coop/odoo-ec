@@ -4,24 +4,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 11:09+0000\n"
-"PO-Revision-Date: 2023-05-16 13:15+0200\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Take .POT and make magic\n"
+"Project-Id-Version: energy_project\n"
+"Language: es\n"
 
 #. module: energy_project
 #: code:addons/energy_project/models/project.py:0
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__active
 #: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__active
-#, python-format
 msgid "Active"
 msgstr "Activo"
 
@@ -33,7 +26,7 @@ msgstr "Administrador"
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__city
 msgid "City"
-msgstr "Ciudad"
+msgstr ""
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__company_id
@@ -82,12 +75,12 @@ msgstr "Fecha efectiva"
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__project_id
 msgid "Energy Project"
-msgstr "Proyecto Energético"
+msgstr "Proyecto energético"
 
 #. module: energy_project
 #: model:ir.module.category,name:energy_project.energy_projects_category
 msgid "Energy Projects"
-msgstr "Proyectos Energéticos"
+msgstr "Proyecto energético"
 
 #. module: energy_project
 #: model:ir.model,name:energy_project.model_energy_project_project
@@ -104,9 +97,14 @@ msgstr "ID"
 #. module: energy_project
 #: code:addons/energy_project/models/project.py:0
 #: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__activation
-#, python-format
 msgid "In Activation"
 msgstr "En Activación"
+
+#. module: energy_project
+#: code:addons/energy_project/models/project.py:0
+#: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__inscription
+msgid "In Inscription"
+msgstr "En Inscripción"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__inscription_ids
@@ -153,7 +151,6 @@ msgstr "Contacto"
 #. module: energy_project
 #: code:addons/energy_project/models/inscription.py:0
 #: model:ir.model.constraint,message:energy_project.constraint_energy_project_inscription_unique_project_id_partner_id
-#, python-format
 msgid "Partner is already signed up in this project."
 msgstr "El contacto ya está registrado en este proyecto."
 
@@ -171,7 +168,7 @@ msgstr "Calle"
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__street2
 msgid "Street2"
-msgstr "Calle 2"
+msgstr "Calle2"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__type

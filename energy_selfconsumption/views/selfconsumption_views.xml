@@ -9,91 +9,100 @@
                 <form string="Self-consumption Project">
                     <header>
                         <button
-                                type="object"
-                                string="Set in inscription"
-                                name="set_inscription"
-                                args="['draft']"
-                                attrs="{'invisible':[('state','not in',['draft'])]}"
-                                class="btn btn-primary"
-                        />
+              type="object"
+              string="Set in inscription"
+              name="set_inscription"
+              args="['draft']"
+              attrs="{'invisible':[('state','not in',['draft'])]}"
+              class="btn btn-primary"
+            />
                         <button
-                                type="object"
-                                string="Set in activation"
-                                name="set_in_activation_state"
-                                attrs="{'invisible':[('state','not in',['inscription'])]}"
-                                class="btn btn-primary"
-                        />
+              type="object"
+              string="Set in activation"
+              name="set_in_activation_state"
+              attrs="{'invisible':[('state','not in',['inscription'])]}"
+              class="btn btn-primary"
+            />
                         <button
-                                type="object"
-                                string="Activate"
-                                name="activate"
-                                attrs="{'invisible':[('state','not in',['activation'])]}"
-                                class="btn btn-primary"
-                        />
+              type="object"
+              string="Activate"
+              name="activate"
+              attrs="{'invisible':[('state','not in',['activation'])]}"
+              class="btn btn-primary"
+            />
                         <button
-                                type="object"
-                                string="Back to In Inscription status"
-                                name="set_inscription"
-                                args="['activation']"
-                                attrs="{'invisible':[('state','not in',['activation'])]}"
-                                confirm="Are you sure you want to change the project status to the previous step?
+              type="object"
+              string="Back to In Inscription status"
+              name="set_inscription"
+              args="['activation']"
+              attrs="{'invisible':[('state','not in',['activation'])]}"
+              confirm="Are you sure you want to change the project status to the previous step?
                                  If so, the distribution table will return to the 'validated' state."
-                        />
+            />
                         <button
-                                type="object"
-                                string="Set to Draft"
-                                name="set_draft"
-                                attrs="{'invisible':[('state','not in',['inscription'])]}"
-                        />
+              type="object"
+              string="Set to Draft"
+              name="set_draft"
+              attrs="{'invisible':[('state','not in',['inscription'])]}"
+            />
                         <button
-                            type="object"
-                            name="action_selfconsumption_import_wizard"
-                            string="Import inscriptions and supply points"
-                            attrs="{'invisible':[('state','not in',['draft'])]}"
-                        />
+              type="object"
+              name="action_selfconsumption_import_wizard"
+              string="Import inscriptions and supply points"
+              attrs="{'invisible':[('state','not in',['draft', 'inscription'])]}"
+            />
                         <field
-                                name="state"
-                                widget="statusbar"
-                                readonly="True"
-                                statusbar_visible="draft,inscription,activation,active"
-                        />
+              name="state"
+              widget="statusbar"
+              readonly="True"
+              statusbar_visible="draft,inscription,activation,active"
+            />
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
-                            <button class="oe_stat_button" type="object" name="get_inscriptions"
-                                    icon="fa-pencil-square-o" context="{'default_effective_date': today}">
-                                <field string="Inscriptions" name="inscription_count" widget="statinfo"/>
+                            <button
+                class="oe_stat_button"
+                type="object"
+                name="get_inscriptions"
+                icon="fa-pencil-square-o"
+                context="{'default_effective_date': today}"
+              >
+                                <field
+                  string="Inscriptions"
+                  name="inscription_count"
+                  widget="statinfo"
+                />
                             </button>
 
                             <button
-                                class="oe_stat_button"
-                                type="object"
-                                name="get_distribution_tables"
-                                icon="fa-table"
-                                attrs="{'invisible': [('state', '==', 'draft')]}"
-                            >
+                class="oe_stat_button"
+                type="object"
+                name="get_distribution_tables"
+                icon="fa-table"
+                attrs="{'invisible': [('state', '==', 'draft')]}"
+              >
                                 <field
-                                    string="Distribution Tables"
-                                    name="distribution_table_count"
-                                    widget="statinfo"
-                                />
+                  string="Distribution Tables"
+                  name="distribution_table_count"
+                  widget="statinfo"
+                />
                             </button>
                         </div>
                         <widget
-                            name="web_ribbon"
-                            text="Archived"
-                            bg_color="bg-danger"
-                            attrs="{'invisible': [('active', '=', True)]}"
-                        />
+              name="web_ribbon"
+              text="Archived"
+              bg_color="bg-danger"
+              attrs="{'invisible': [('active', '=', True)]}"
+            />
                         <field name="active" invisible="True" />
                         <div class="oe_title">
                             <label for="name" />
                             <h1>
                                 <field
-                                    name="name"
-                                    placeholder="Title"
-                                    attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                                />
+                  name="name"
+                  placeholder="Title"
+                  attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                />
                             </h1>
                         </div>
                         <group>
@@ -102,69 +111,69 @@
                                 <field name="id" invisible="True" />
                                 <field name="type" invisible="True" />
                                 <field
-                                    name="code"
-                                    attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                                />
+                  name="code"
+                  attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                />
                                 <field
-                                    name="cil"
-                                    attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                                />
+                  name="cil"
+                  attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                />
                                 <field
-                                    name="power"
-                                    attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                                />
+                  name="power"
+                  attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                />
                                 <field
-                                        name="owner_id"
-                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                                />
+                  name="owner_id"
+                  attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                />
                             </group>
                             <group>
                                 <span
-                                    class="o_form_label o_td_label"
-                                    name="address_name"
-                                >
+                  class="o_form_label o_td_label"
+                  name="address_name"
+                >
                                     <b>Address</b>
                                 </span>
                                 <div class="o_address_format">
                                     <field
-                                        name="street"
-                                        placeholder="Street..."
-                                        class="o_address_street"
-                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                                    />
+                    name="street"
+                    placeholder="Street..."
+                    class="o_address_street"
+                    attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                  />
                                     <field
-                                        name="street2"
-                                        placeholder="Street 2..."
-                                        class="o_address_street"
-                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                                    />
+                    name="street2"
+                    placeholder="Street 2..."
+                    class="o_address_street"
+                    attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                  />
                                     <field
-                                        name="city"
-                                        placeholder="City"
-                                        class="o_address_city"
-                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                                    />
+                    name="city"
+                    placeholder="City"
+                    class="o_address_city"
+                    attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                  />
                                     <field
-                                        name="state_id"
-                                        class="o_address_state"
-                                        placeholder="State"
-                                        options="{'no_open': True, 'no_quick_create': True}"
-                                        context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"
-                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                                    />
+                    name="state_id"
+                    class="o_address_state"
+                    placeholder="State"
+                    options="{'no_open': True, 'no_quick_create': True}"
+                    context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"
+                    attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                  />
                                     <field
-                                        name="zip"
-                                        placeholder="ZIP"
-                                        class="o_address_zip"
-                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                                    />
+                    name="zip"
+                    placeholder="ZIP"
+                    class="o_address_zip"
+                    attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                  />
                                     <field
-                                        name="country_id"
-                                        placeholder="Country"
-                                        class="o_address_country"
-                                        options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
-                                        attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                                    />
+                    name="country_id"
+                    placeholder="Country"
+                    class="o_address_country"
+                    options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+                    attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                  />
                                 </div>
                             </group>
                         </group>
@@ -183,12 +192,12 @@
             <field name="model">energy_selfconsumption.selfconsumption</field>
             <field name="arch" type="xml">
                 <tree string="Self-Consumption Projects">
-                    <field name="name"/>
-                    <field name="street"/>
-                    <field name="city"/>
-                    <field name="inscription_count"/>
-                    <field name="power"/>
-                    <field name="state"/>
+                    <field name="name" />
+                    <field name="street" />
+                    <field name="city" />
+                    <field name="inscription_count" />
+                    <field name="power" />
+                    <field name="state" />
                 </tree>
             </field>
         </record>
@@ -199,9 +208,9 @@
             <field name="res_model">energy_selfconsumption.selfconsumption</field>
             <field name="view_mode">tree,form</field>
             <field
-                name="context"
-                eval="{'default_type': ref('energy_selfconsumption.selfconsumption_project_type')}"
-            />
+        name="context"
+        eval="{'default_type': ref('energy_selfconsumption.selfconsumption_project_type')}"
+      />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     There is no examples click here to add new Self-consumption Project.
@@ -210,16 +219,16 @@
         </record>
 
         <menuitem
-            name="Self-consumption Management"
-            id="root"
-            web_icon="energy_selfconsumption,static/description/icon.png"
-        />
+      name="Self-consumption Management"
+      id="root"
+      web_icon="energy_selfconsumption,static/description/icon.png"
+    />
         <menuitem name="Management" id="management_category_menu" parent="root" />
         <menuitem
-            name="Project"
-            id="project_menu"
-            parent="management_category_menu"
-            action="selfconsumption_form_view_act_window"
-        />
+      name="Project"
+      id="project_menu"
+      parent="management_category_menu"
+      action="selfconsumption_form_view_act_window"
+    />
     </data>
 </odoo>

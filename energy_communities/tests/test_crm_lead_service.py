@@ -1,10 +1,11 @@
 import json
+
 import requests
+
 import odoo
-
 from odoo.tests.common import TransactionCase, tagged
-from odoo.addons.base_rest.tests.common import BaseRestCase
 
+from odoo.addons.base_rest.tests.common import BaseRestCase
 
 HOST = "localhost"
 PORT = odoo.tools.config["http_port"]
@@ -17,7 +18,7 @@ class TestCRMLeadServiceRestCase(BaseRestCase):
         self.AuthApiKey = self.env["auth.api.key"]
         self.session = requests.Session()
 
-    @tagged('endpoints')
+    @tagged("endpoints")
     def test_route_right_create(self):
         url = "/api/crm-lead"
         data = {
@@ -29,17 +30,17 @@ class TestCRMLeadServiceRestCase(BaseRestCase):
         }
 
         response = self.http_post(url, data=data)
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
         content = json.loads(response.content.decode("utf-8"))
         self.assertIn("id", content)
 
         crm_lead = self.env["crm.lead"].browse(content["id"])
-        self.assertEquals(crm_lead.partner_name, data["partner_name"])
-        self.assertEquals(crm_lead.phone, data["phone"])
-        self.assertEquals(crm_lead.email_from, data["email_from"])
-        self.assertEquals(crm_lead.company_id.id, data["odoo_company_id"])
-        self.assertEquals(crm_lead.source_id.id, data["source_id"])
+        self.assertEqual(crm_lead.partner_name, data["partner_name"])
+        self.assertEqual(crm_lead.phone, data["phone"])
+        self.assertEqual(crm_lead.email_from, data["email_from"])
+        self.assertEqual(crm_lead.company_id.id, data["odoo_company_id"])
+        self.assertEqual(crm_lead.source_id.id, data["source_id"])
 
     def _add_api_key(self, headers):
         key_dict = {"API-KEY": self.api_key_test.key}

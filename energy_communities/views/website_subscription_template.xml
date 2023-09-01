@@ -1,130 +1,164 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="becomecooperator_ccee" inherit_id="cooperator_website.becomecooperator">
+    <template
+    id="becomecooperator_ccee"
+    inherit_id="cooperator_website.becomecooperator"
+  >
         <xpath expr="//div[@id='wrap']//h1" position="replace">
             <h1 class="mt-4 text-center">
-                Become Cooperator of <t t-esc="company.name"/>
+                Become Cooperator of <t t-esc="company.name" />
             </h1>
-            <br/>
-            <p>This form allow you to request be member of the community: <t t-esc="company.name"/>.</p>
+            <br />
+            <p>This form allow you to request be member of the community: <t
+          t-esc="company.name"
+        />.</p>
             <t t-if="share_payment_sepa_direct_debit">
-                <p>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <t t-esc="company.initial_subscription_share_amount"/>€.</p>
+                <p
+        >To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <t
+            t-esc="company.initial_subscription_share_amount"
+          />€.</p>
             </t>
             <t t-else="">
-                <p>To be a member you must fulfill this form and lateron proceed to pay the initial share of <t t-esc="company.initial_subscription_share_amount"/>€ by follow the steps you will receive by email.</p>
+                <p
+        >To be a member you must fulfill this form and lateron proceed to pay the initial share of <t
+            t-esc="company.initial_subscription_share_amount"
+          />€ by follow the steps you will receive by email.</p>
             </t>
-            <p>Once you are a member you can enjoy the services available from the community and be part of a movement
+            <p
+      >Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
         </xpath>
-        <xpath expr="//div[@id='wrap']//a[@t-if='not logged']/." position="replace"/>
+        <xpath expr="//div[@id='wrap']//a[@t-if='not logged']/." position="replace" />
         <xpath expr="//div[@name='confirm_email_container']" position="after">
             <div
-                    t-if="not logged"
-                    style="display: none;"
-                    class="form-group field-login">
+        t-if="not logged"
+        style="display: none;"
+        class="form-group field-login"
+      >
                 <label for="company_id">Target Odoo Company id</label>
                 <input
-                        class="form-control form-control-sm"
-                        autocapitalize="off"
-                        type="text"
-                        name="company_id"
-                        id="company_id"
-                        required="False"
-                        t-attf-value="#{company.id or 1}"
-                />
+          class="form-control form-control-sm"
+          autocapitalize="off"
+          type="text"
+          name="company_id"
+          id="company_id"
+          required="False"
+          t-attf-value="#{company.id or 1}"
+        />
             </div>
         </xpath>
         <xpath expr="//div[@id='wrap']//input[@id='email']" position="attributes">
-            <attribute name="placeholder"></attribute>
+            <attribute name="placeholder" />
         </xpath>
-        <xpath expr="//div[@id='wrap']//input[@id='confirm_email']" position="attributes">
-            <attribute name="placeholder"></attribute>
+        <xpath
+      expr="//div[@id='wrap']//input[@id='confirm_email']"
+      position="attributes"
+    >
+            <attribute name="placeholder" />
         </xpath>
     </template>
 
-    <template id="becomecompanycooperator" inherit_id="cooperator_website.becomecompanycooperator">
+    <template
+    id="becomecompanycooperator"
+    inherit_id="cooperator_website.becomecompanycooperator"
+  >
         <xpath expr="//div[@id='wrap']//h1" position="replace">
             <h1 class="mt-4 text-center">
-                Become Company Cooperator of <t t-esc="company.name"/>
+                Become Company Cooperator of <t t-esc="company.name" />
             </h1>
-            <br/>
-            <p>This form allow you to request be member of the community: <t t-esc="company.name"/>.</p>
+            <br />
+            <p>This form allow you to request be member of the community: <t
+          t-esc="company.name"
+        />.</p>
             <t t-if="share_payment_sepa_direct_debit">
-                <p>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <t t-esc="company.initial_subscription_share_amount"/>€.</p>
+                <p
+        >To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <t
+            t-esc="company.initial_subscription_share_amount"
+          />€.</p>
             </t>
             <t t-else="">
-                <p>To be a member you must fulfill this form and lateron proceed to pay the initial share of <t t-esc="company.initial_subscription_share_amount"/>€ by follow the steps you will receive by email.</p>
+                <p
+        >To be a member you must fulfill this form and lateron proceed to pay the initial share of <t
+            t-esc="company.initial_subscription_share_amount"
+          />€ by follow the steps you will receive by email.</p>
             </t>
-            <p>Once you are a member you can enjoy the services available from the community and be part of a movement
+            <p
+      >Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
         </xpath>
         <xpath expr="//div[@name='confirm_email_container']" position="after">
             <div
-                    t-if="not logged"
-                    style="display: none;"
-                    class="form-group field-login">
+        t-if="not logged"
+        style="display: none;"
+        class="form-group field-login"
+      >
                 <label for="company_id">Target Odoo Company id</label>
                 <input
-                        class="form-control form-control-sm"
-                        autocapitalize="off"
-                        type="text"
-                        name="company_id"
-                        id="company_id"
-                        required="False"
-                        t-attf-value="#{company.id or 1}"
-                />
+          class="form-control form-control-sm"
+          autocapitalize="off"
+          type="text"
+          name="company_id"
+          id="company_id"
+          required="False"
+          t-attf-value="#{company.id or 1}"
+        />
             </div>
         </xpath>
         <xpath expr="//input[@name='company_name']" position="attributes">
-            <attribute name="placeholder"></attribute>
+            <attribute name="placeholder" />
         </xpath>
         <xpath expr="//input[@name='company_email']" position="attributes">
-            <attribute name="placeholder"></attribute>
+            <attribute name="placeholder" />
         </xpath>
         <xpath expr="//input[@name='confirm_email']" position="attributes">
-            <attribute name="placeholder"></attribute>
+            <attribute name="placeholder" />
         </xpath>
         <xpath expr="//input[@name='email']" position="attributes">
-            <attribute name="placeholder"></attribute>
+            <attribute name="placeholder" />
         </xpath>
 
     </template>
 
 
-    <template id="iban_template_es_ccee" inherit_id="l10n_es_cooperator.iban_template_es">
+    <template
+    id="iban_template_es_ccee"
+    inherit_id="l10n_es_cooperator.iban_template_es"
+  >
         <xpath expr="//div[@name='iban_container']" position="replace">
             <t t-if="share_payment_sepa_direct_debit">
                 <div
-                        class="form-group field-bank_account"
-                        t-attf-class="form-group #{error and 'iban' in error and 'has-error' or ''}"
-                        name="iban_container"
-                >
+          class="form-group field-bank_account"
+          t-attf-class="form-group #{error and 'iban' in error and 'has-error' or ''}"
+          name="iban_container"
+        >
                     <label for="iban">Bank Account Number</label>
                     <input
-                            class="form-control form-control-sm"
-                            type="text"
-                            name="iban"
-                            id="iban"
-                            required="True"
-                            t-att-readonly="logged"
-                            t-attf-value="#{iban or ''}"
-                    />
+            class="form-control form-control-sm"
+            type="text"
+            name="iban"
+            id="iban"
+            required="True"
+            t-att-readonly="logged"
+            t-attf-value="#{iban or ''}"
+          />
                 </div>
                 <div
-                        class="col-12"
-                        id="mandate_approved"
-                        name="mandate_approved_container"
-                >
+          class="col-12"
+          id="mandate_approved"
+          name="mandate_approved_container"
+        >
                     <div t-attf-class="form-group">
                         <div class="form-check">
                             <input
-                                    type="checkbox"
-                                    name="mandate_approved"
-                                    class="form-check-input"
-                                    t-att-required="1"
-                            />
+                type="checkbox"
+                name="mandate_approved"
+                class="form-check-input"
+                t-att-required="1"
+              />
                             <label>
-                                <label for="mandate_approved">I accept that the entity issues direct debit receipts to this account.</label>
+                                <label
+                  for="mandate_approved"
+                >I accept that the entity issues direct debit receipts to this account.</label>
                             </label>
                         </div>
                     </div>
@@ -132,34 +166,40 @@
             </t>
         </xpath>
         <xpath expr="//input[@name='vat']" position="attributes">
-            <attribute name="placeholder"></attribute>
+            <attribute name="placeholder" />
         </xpath>
     </template>
 
-    <template id="contact_template_ccee" inherit_id="cooperator_website.contact_template">
+    <template
+    id="contact_template_ccee"
+    inherit_id="cooperator_website.contact_template"
+  >
         <xpath expr="//input[@name='firstname']" position="attributes">
-            <attribute name="placeholder"></attribute>
+            <attribute name="placeholder" />
         </xpath>
         <xpath expr="//input[@id='lastname']" position="attributes">
-            <attribute name="placeholder"></attribute>
+            <attribute name="placeholder" />
         </xpath>
         <xpath expr="//input[@name='birthdate']" position="attributes">
-            <attribute name="placeholder"></attribute>
+            <attribute name="placeholder" />
         </xpath>
         <xpath expr="//input[@id='phone']" position="attributes">
-            <attribute name="placeholder"></attribute>
+            <attribute name="placeholder" />
         </xpath>
     </template>
 
-    <template id="address_template_ccee" inherit_id="cooperator_website.address_template">
+    <template
+    id="address_template_ccee"
+    inherit_id="cooperator_website.address_template"
+  >
         <xpath expr="//input[@id='address']" position="attributes">
-            <attribute name="placeholder"></attribute>
+            <attribute name="placeholder" />
         </xpath>
         <xpath expr="//input[@id='city']" position="attributes">
-            <attribute name="placeholder"></attribute>
+            <attribute name="placeholder" />
         </xpath>
         <xpath expr="//input[@id='zip_code']" position="attributes">
-            <attribute name="placeholder"></attribute>
+            <attribute name="placeholder" />
         </xpath>
     </template>
 
@@ -168,62 +208,60 @@
         <div class="row" name="voluntary_share_div">
             <div class="col-12">
                 <div
-                        class="form-group field-bank_account"
-                        t-attf-class="form-group #{error and 'iban' in error and 'has-error' or ''}"
-                        name="iban_container"
-                >
+          class="form-group field-bank_account"
+          t-attf-class="form-group #{error and 'iban' in error and 'has-error' or ''}"
+          name="iban_container"
+        >
                     <label for="iban">Bank Account Number</label>
                     <input
-                            class="form-control form-control-sm"
-                            type="text"
-                            name="iban"
-                            id="iban"
-                            required="True"
-                            t-att-readonly="logged"
-                            t-attf-value="#{iban or ''}"
-                    />
+            class="form-control form-control-sm"
+            type="text"
+            name="iban"
+            id="iban"
+            required="True"
+            t-att-readonly="logged"
+            t-attf-value="#{iban or ''}"
+          />
 
                 </div>
             </div>
-            <div
-                    class="col-12"
-                    id="mandate_approved"
-                    name="mandate_approved_container"
-            >
+            <div class="col-12" id="mandate_approved" name="mandate_approved_container">
                 <div t-attf-class="form-group">
                     <div class="form-check">
                         <input
-                                type="checkbox"
-                                name="mandate_approved"
-                                class="form-check-input"
-                                t-att-required="1"
-                        />
+              type="checkbox"
+              name="mandate_approved"
+              class="form-check-input"
+              t-att-required="1"
+            />
                         <label>
-                            <label for="mandate_approved">I accept that the entity issues direct debit receipts to this account.</label>
+                            <label
+                for="mandate_approved"
+              >I accept that the entity issues direct debit receipts to this account.</label>
                         </label>
                     </div>
                 </div>
             </div>
             <div class="col-md-5">
                 <div
-                        class="form-group field-parts-type"
-                        t-attf-class="form-group #{error and 'share_product_id' in error and 'has-error' or ''}"
-                        name="share_product_container"
-                >
+          class="form-group field-parts-type"
+          t-attf-class="form-group #{error and 'share_product_id' in error and 'has-error' or ''}"
+          name="share_product_container"
+        >
                     <label for="share_product_id">Share type</label>
                     <select
-                            class="form-control form-control-sm"
-                            id="share_product_id"
-                            name="share_product_id"
-                            required="True"
-                            disabled="True"
-                    >
+            class="form-control form-control-sm"
+            id="share_product_id"
+            name="share_product_id"
+            required="True"
+            disabled="True"
+          >
                         <t t-foreach="products or []" t-as="product">
                             <option
-                                    t-att-value="product.id"
-                                    t-att-selected="product.id == int(share_product_id)"
-                            >
-                                <t t-esc="product.short_name"/>
+                t-att-value="product.id"
+                t-att-selected="product.id == int(share_product_id)"
+              >
+                                <t t-esc="product.short_name" />
                             </option>
                         </t>
                     </select>
@@ -233,34 +271,34 @@
                 <label for="ordered_parts">Share number</label>
                 <div t-attf-class="form-group" name="share_number_container">
                     <input
-                            type="number"
-                            name="ordered_parts"
-                            id="ordered_parts"
-                            step="1"
-                            min="1"
-                            value="1"
-                            class="form-control form-control-sm"
-                    />
+            type="number"
+            name="ordered_parts"
+            id="ordered_parts"
+            step="1"
+            min="1"
+            value="1"
+            class="form-control form-control-sm"
+          />
                 </div>
             </div>
             <div class="col-md-3 col-6" name="total_parts_container">
-                <div id="share_price" style="display: none;"/>
+                <div id="share_price" style="display: none;" />
                 <label for="total_parts">Total</label>
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span
-                                class="input-group-text"
-                                t-esc="company.currency_id.symbol"
-                        />
+              class="input-group-text"
+              t-esc="company.currency_id.symbol"
+            />
                     </div>
                     <input
-                            type="text"
-                            id="total_parts"
-                            class="form-control form-control-sm total"
-                            name="total_parts"
-                            t-att-data-max="company.subscription_maximum_amount"
-                            t-att-readonly="'readonly'"
-                    />
+            type="text"
+            id="total_parts"
+            class="form-control form-control-sm total"
+            name="total_parts"
+            t-att-data-max="company.subscription_maximum_amount"
+            t-att-readonly="'readonly'"
+          />
                 </div>
             </div>
         </div>
@@ -268,29 +306,38 @@
 
     <template id="voluntary_share_text_template" name="voluntary_share_text_template">
         <h1 class="mt-4 text-center">
-            Voluntary Share of <t t-esc="company.name"/>
+            Voluntary Share of <t t-esc="company.name" />
         </h1>
-        <br/>
+        <br />
         <p>
             Hello,
         </p>
         <p>
             This is the form to be able to make Voluntary Contributions to the Social Capital by the members of <t
-                t-esc="company.name"/>.
+        t-esc="company.name"
+      />.
         </p>
         <p>
             Once your request is received, you will receive a confirmation email with the instructions to follow.
         </p>
         <p>
             You
-            can consult the <a href="https://drive.google.com/file/d/1V5OaTX0CwGHDPhJQJ2lMUlsmmL7fUbNP/view?usp=share_link">GENERAL CONDITIONS</a> of Voluntary Contributions.
+            can consult the <a
+        href="https://drive.google.com/file/d/1V5OaTX0CwGHDPhJQJ2lMUlsmmL7fUbNP/view?usp=share_link"
+      >GENERAL CONDITIONS</a> of Voluntary Contributions.
         </p>
         <p> You can consult
             our
-            <a href="https://drive.google.com/file/d/1rtTrk2cnzTHqwGINPsWxi-3KcRtJ_CGk/view?usp=share_link">FREQUENTLY ASKED QUESTIONS</a>.</p>
+            <a
+        href="https://drive.google.com/file/d/1rtTrk2cnzTHqwGINPsWxi-3KcRtJ_CGk/view?usp=share_link"
+      >FREQUENTLY ASKED QUESTIONS</a>.</p>
         <p>Note: Please, if you are not yet a member, you must process it at through
-            these forms: <a t-att-href='"page/become_cooperator?odoo_company_id=" + str(company.id)'>INDIVIDUAL
-                PARTNER</a> and <a t-att-href='"page/become_company_cooperator?odoo_company_id=" + str(company.id)'>
+            these forms: <a
+        t-att-href='"page/become_cooperator?odoo_company_id=" + str(company.id)'
+      >INDIVIDUAL
+                PARTNER</a> and <a
+        t-att-href='"page/become_company_cooperator?odoo_company_id=" + str(company.id)'
+      >
                 LEGAL ENTITY PARTNER</a>.
         </p>
     </template>
@@ -301,106 +348,110 @@
                 <div class="container oe_cooperator">
                     <div class="row justify-content-center">
                         <div class="col-xs-12 col-sm-10  col-md-8 col-lg-6">
-                            <t t-call="energy_communities.voluntary_share_text_template"/>
+                            <t
+                t-call="energy_communities.voluntary_share_text_template"
+              />
                             <form
-                                    action="/subscription/voluntary_share"
-                                    method="post"
-                                    class="form-horizontal mt32 oe_subscription_request_form"
-                                    enctype="multipart/form-data"
-                            >
-                                <t t-call="cooperator_website.error_message_template"/>
+                action="/subscription/voluntary_share"
+                method="post"
+                class="form-horizontal mt32 oe_subscription_request_form"
+                enctype="multipart/form-data"
+              >
+                                <t t-call="cooperator_website.error_message_template" />
 
-                                <t t-call="cooperator_website.csrf_template"/>
+                                <t t-call="cooperator_website.csrf_template" />
 
                                 <div
-                                        class="form-group"
-                                        t-attf-class="form-group #{error and 'vat' in error and 'has-error' or ''}"
-                                        name="company_id_container"
-                                        style="display: none;"
-                                >
+                  class="form-group"
+                  t-attf-class="form-group #{error and 'vat' in error and 'has-error' or ''}"
+                  name="company_id_container"
+                  style="display: none;"
+                >
                                     <label for="company_id">Company</label>
                                     <input
-                                            type="text"
-                                            class="form-control form-control-sm"
-                                            name="company_id"
-                                            required="True"
-                                            t-attf-value="#{company_id or ''}"
-                                    />
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="company_id"
+                    required="True"
+                    t-attf-value="#{company_id or ''}"
+                  />
                                 </div>
 
 
                                 <div
-                                        class="form-group"
-                                        t-attf-class="form-group #{error and 'vat' in error and 'has-error' or ''}"
-                                        name="vat_container"
-                                >
+                  class="form-group"
+                  t-attf-class="form-group #{error and 'vat' in error and 'has-error' or ''}"
+                  name="vat_container"
+                >
                                     <label for="vat">VAT</label>
                                     <input
-                                            type="text"
-                                            class="form-control form-control-sm"
-                                            name="vat"
-                                            required="True"
-                                            t-attf-value="#{vat or ''}"
-                                    />
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="vat"
+                    required="True"
+                    t-attf-value="#{vat or ''}"
+                  />
                                 </div>
 
                                 <div class="form-group field-login">
                                     <label for="email">Email</label>
                                     <input
-                                            class="form-control form-control-sm"
-                                            autocapitalize="off"
-                                            type="email"
-                                            name="email"
-                                            id="email"
-                                            required="True"
-                                            t-att-readonly="logged"
-                                            t-attf-value="#{email or ''}"
-                                    />
+                    class="form-control form-control-sm"
+                    autocapitalize="off"
+                    type="email"
+                    name="email"
+                    id="email"
+                    required="True"
+                    t-att-readonly="logged"
+                    t-attf-value="#{email or ''}"
+                  />
 
                                 </div>
 
                                 <div
-                                        t-if="not logged"
-                                        t-attf-class="form-group #{error and 'email_from' in error and 'has-error' or ''}"
-                                        name="confirm_email_container"
-                                >
+                  t-if="not logged"
+                  t-attf-class="form-group #{error and 'email_from' in error and 'has-error' or ''}"
+                  name="confirm_email_container"
+                >
                                     <label for="confirm_email">Confirm Email</label>
                                     <input
-                                            type="confirm_email"
-                                            class="form-control form-control-sm mandatory-field"
-                                            name="confirm_email"
-                                            t-att-required="not logged"
-                                            t-att-readonly="logged"
-                                            t-attf-value="#{confirm_email or ''}"
-                                    />
+                    type="confirm_email"
+                    class="form-control form-control-sm mandatory-field"
+                    name="confirm_email"
+                    t-att-required="not logged"
+                    t-att-readonly="logged"
+                    t-attf-value="#{confirm_email or ''}"
+                  />
                                 </div>
 
                                 <div
-                                        class="form-group field-phone"
-                                        t-attf-class="form-group #{error and 'phone' in error and 'has-error' or ''}"
-                                        name="phone_container"
-                                >
+                  class="form-group field-phone"
+                  t-attf-class="form-group #{error and 'phone' in error and 'has-error' or ''}"
+                  name="phone_container"
+                >
                                     <label for="phone">Phone</label>
                                     <input
-                                            class="form-control form-control-sm"
-                                            id="phone"
-                                            type="tel"
-                                            name="phone"
-                                            required="True"
-                                            t-att-readonly="logged"
-                                            t-attf-value="#{phone or ''}"
-                                    />
+                    class="form-control form-control-sm"
+                    id="phone"
+                    type="tel"
+                    name="phone"
+                    required="True"
+                    t-att-readonly="logged"
+                    t-attf-value="#{phone or ''}"
+                  />
 
 
                                 </div>
 
-                                <t t-call="energy_communities.voluntary_shares_template"></t>
-                                <t t-call="cooperator_website.rules_template"></t>
+                                <t
+                  t-call="energy_communities.voluntary_shares_template"
+                />
+                                <t t-call="cooperator_website.rules_template" />
 
                                 <div class="text-center">
                                     <button
-                                            class="btn btn-primary mt-3 mb-3 text-center"
-                                    >Send</button>
+                    class="btn btn-primary mt-3 mb-3 text-center"
+                  >Send</button>
                                 </div>
                             </form>
                         </div>

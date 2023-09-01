@@ -7,7 +7,7 @@ class BaseCERestCaseAdmin(BaseCERestCase):
     @classmethod
     def setUpClass(cls, *args, **kwargs):
         # Skip parent class in super to avoid recreating api key
-        super(BaseCERestCaseAdmin, cls).setUpClass(*args, **kwargs)
+        super().setUpClass(*args, **kwargs)
         AuthApiKey = cls.env["auth.api.key"]
         admin = cls.env.ref("base.user_admin")
         cls.api_key_test = AuthApiKey.create(

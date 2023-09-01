@@ -19,7 +19,8 @@ class Project(models.Model):
         "res.company", default=lambda self: self.env.company, readonly=True
     )
     inscription_ids = fields.One2many(
-        "energy_project.inscription", "project_id",
+        "energy_project.inscription",
+        "project_id",
     )
     active = fields.Boolean(default=True)
 
@@ -36,6 +37,9 @@ class Project(models.Model):
         required=True,
     )
     country_id = fields.Many2one(
-        "res.country", string="Country", ondelete="restrict", required=True,
-        default=lambda self: self.env.ref('base.es')
+        "res.country",
+        string="Country",
+        ondelete="restrict",
+        required=True,
+        default=lambda self: self.env.ref("base.es"),
     )
