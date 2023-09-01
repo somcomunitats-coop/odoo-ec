@@ -28,6 +28,7 @@
         "views/res_partner_views.xml",
         "views/distribution_table_views.xml",
         "views/supply_point_assignation_views.xml",
+        "views/report_wizard_view.xml",
         "wizards/selfconsumption_import_wizard_views.xml",
         "wizards/distribution_table_import_wizard_views.xml",
         "reports/selfconsumption_reports.xml",

@@ -45,8 +45,6 @@ class Selfconsumption(models.Model):
         "energy_project.inscription", "project_id", readonly=True
     )
     inscription_count = fields.Integer(compute=_compute_inscription_count)
-    report_file = fields.Binary(string="Report File", attachment=True)
-    report_file_name = fields.Char(string="Report File Name")
 
     def get_distribution_tables(self):
         self.ensure_one()
@@ -141,20 +139,24 @@ class Selfconsumption(models.Model):
                         "coefficient": assignation.coefficient,
                     }
                 )
+
         file_content = ""
         for data in report_data:
             line = f"{data['code']};{str(data['coefficient']).replace('.', ',')}\n"
             file_content += line
-        txt_file = io.BytesIO(file_content.encode())
-        file_name = "Coeficiente de reparto.txt"
-        self.write(
-            {
-                "report_file": base64.b64encode(txt_file.getvalue()),
-                "report_file_name": file_name,
-            }
+
+        wizard = self.env["energy_selfconsumption.report_wizard"].create(
+            {"report_data": file_content, "file_name": "Coeficiente_de_reparto.txt"}
         )
+
         return {
-            "type": "ir.actions.act_url",
-            "url": f"web/content/{self._name}/{self.id}/report_file/{file_name}?download=true",
+            "name": _("Download Partition Coefficient"),
+            "type": "ir.actions.act_window",
+            "res_model": "energy_selfconsumption.report_wizard",
+            "view_mode": "form",
+            "view_id": self.env.ref(
+                "energy_selfconsumption.view_energy_selfconsumption_report_wizard_form"
+            ).id,
+            "res_id": wizard.id,
             "target": "new",
         }
