@@ -13,30 +13,43 @@
             </xpath>
             <xpath expr="//sheet" position="before">
                 <header>
-                    <field name="landing_page_id" invisible="1"/>
+                    <field name="landing_page_id" invisible="1" />
                     <button
-                        name="create_landing"
-                        type="object"
-                        string="Create landing page"
-                        attrs="{'invisible': [('landing_page_id','!=',False)]}"
-                    />
+            name="create_landing"
+            type="object"
+            string="Create landing page"
+            attrs="{'invisible': [('landing_page_id','!=',False)]}"
+          />
                 </header>
             </xpath>
             <xpath expr="//field[@name='logo']" position="before">
                 <div class='oe_button_box'>
-                    <button name="get_landing_page_form" type="object" string="My landing page" class="oe_stat_button" icon="fa-globe" attrs="{'invisible': [('landing_page_id','=',False)]}" />
+                    <button
+            name="get_landing_page_form"
+            type="object"
+            string="My landing page"
+            class="oe_stat_button"
+            icon="fa-globe"
+            attrs="{'invisible': [('landing_page_id','=',False)]}"
+          />
                 </div>
-                <field name="admins" invisible="True"></field>
+                <field name="admins" invisible="True" />
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Energy Communities">
                     <group>
-                        <field name="hierarchy_level"></field>
-                        <field name="parent_id_filtered_ids" invisible="True"></field>
-                        <field name="parent_id" domain="[('id', 'in', parent_id_filtered_ids)]"></field>
-                        <field name="voluntary_share_id"></field>
-                        <field name="ce_tag_ids"/>
-                        <field name="admins"/>
+                        <field name="hierarchy_level" />
+                        <field name="parent_id_filtered_ids" invisible="True" />
+                        <field
+              name="parent_id"
+              domain="[('id', 'in', parent_id_filtered_ids)]"
+            />
+                        <field name="legal_form" />
+                        <field name="legal_name" />
+                        <field name="ce_status" />
+                        <field name="voluntary_share_id" />
+                        <field name="ce_tag_ids" />
+                        <field name="admins" />
                     </group>
                 </page>
             </xpath>
@@ -59,9 +72,9 @@
             </xpath>
             <xpath expr="//form" position="inside">
                 <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers"/>
-                    <field name="activity_ids" widget="mail_activity"/>
-                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
                 </div>
             </xpath>
         </field>

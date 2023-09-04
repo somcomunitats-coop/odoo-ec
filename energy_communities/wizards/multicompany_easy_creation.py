@@ -2,6 +2,8 @@ import logging
 
 from odoo import _, api, fields, models
 
+from ..models.res_company import _CE_STATUS_VALUES, _LEGAL_FROM_VALUES
+
 _logger = logging.getLogger(__name__)
 
 
@@ -69,7 +71,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     foundation_date = fields.Date(string="Foundation date")
 
     vat = fields.Char(
-        string="ZIP code",
+        string="VAT",
     )
 
     email = fields.Char(
@@ -87,6 +89,15 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     state_id = fields.Many2one(
         comodel_name="res.country.state",
         string="State",
+    )
+    legal_form = fields.Selection(
+        selection=_LEGAL_FROM_VALUES,
+        string="Legal form",
+    )
+    legal_name = fields.Char(string="Legal name")
+    ce_status = fields.Selection(
+        selection=_CE_STATUS_VALUES,
+        string="Energy Community state",
     )
 
     def add_company_managers(self):
@@ -169,11 +180,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             self.capital_share
         )
 
-    def update_values_from_crm_lead(self):
-        if self.crm_lead_id:
-            vals = self.crm_lead_id._get_default_community_wizard()
-            self.new_company_id.write(vals)
-
     def set_cooperative_account(self):
         self_new_company = self.with_company(self.new_company_id)
         new_company = self_new_company.new_company_id
@@ -202,7 +208,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
 
     def action_accept(self):
         action = super().action_accept()
-        # self.update_values_from_crm_lead()
         if self.property_cooperator_account:
             self.set_cooperative_account()
         self_new_company = self.with_company(self.new_company_id)
@@ -222,6 +227,18 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "name": self.name,
                     "user_ids": [(6, 0, self.user_ids.ids)],
                     "parent_id": self.parent_id.id,
+                    "street": self.street,
+                    "website": self.website,
+                    "email": self.email,
+                    "foundation_date": self.foundation_date,
+                    "vat": self.vat,
+                    "city": self.city,
+                    "state_id": self.state_id,
+                    "legal_form": self.legal_form,
+                    "legal_name": self.legal_name,
+                    "ce_status": self.ce_status,
+                    "phone": self.phone,
+                    "default_lang_id": self.default_lang_id.id,
                 }
             )
         )

@@ -14,6 +14,22 @@ _HIERARCHY_LEVEL_VALUES = [
     ("community", _("Community")),
 ]
 
+_LEGAL_FROM_VALUES = [
+    ("Societat Cooperativa", _("Societat Cooperativa")),
+    ("Associació sense ànim de lucre", _("Associació sense ànim de lucre")),
+    ("Societat Limitada", _("Societat Limitada")),
+    ("Societat Col·lectiva", _("Societat Col·lectiva")),
+    ("Comunitat de Bens", _("Comunitat de Bens")),
+    ("Societat Comanditària", _("Societat Comanditària")),
+    ("Societat Anónima", _("Societat Anónima")),
+    ("Empresari Individual", _("Empresari Individual")),
+]
+
+_CE_STATUS_VALUES = [
+    ("active", _("active")),
+    ("building", _("building")),
+]
+
 
 class ResCompany(models.Model):
     _name = "res.company"
@@ -85,6 +101,16 @@ class ResCompany(models.Model):
         readonly=True,
         store=False,
     )
+    legal_form = fields.Selection(
+        selection=_LEGAL_FROM_VALUES,
+        string="Legal form",
+    )
+    legal_name = fields.Char(string="Legal name")
+    ce_status = fields.Selection(
+        selection=_CE_STATUS_VALUES,
+        string="Energy Community state",
+    )
+
     landing_page_id = fields.Many2one("landing.page", string=_("Landing Page"))
     wordpress_db_username = fields.Char(string=_("Wordpress DB Admin Username"))
     wordpress_db_password = fields.Char(string=_("Wordpress DB Admin Password"))
