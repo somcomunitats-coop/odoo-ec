@@ -611,10 +611,10 @@
               >
                                 <tr>
                                     <td><t t-esc="index" /> - <t
-                      t-esc="supply_point.supply_point_id.partner_id.name"
+                      t-esc="supply_point.supply_point_id.owner_id.name"
                     /></td>
                                     <td><t
-                      t-esc="supply_point.supply_point_id.partner_id.vat"
+                      t-esc="supply_point.supply_point_id.owner_id.vat"
                     /></td>
                                     <td><t
                       t-esc="supply_point.supply_point_id.code"
