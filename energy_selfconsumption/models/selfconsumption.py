@@ -21,6 +21,22 @@ class Selfconsumption(models.Model):
         for record in self:
             record.inscription_count = len(record.inscription_ids)
 
+    def _compute_report_distribution_table(self):
+        for record in self:
+            table_in_process = record.distribution_table_ids.filtered_domain(
+                [("state", "=", "process")]
+            )
+            table_in_active = record.distribution_table_ids.filtered_domain(
+                [("state", "=", "active")]
+            )
+
+            if table_in_process:
+                record.report_distribution_table = table_in_process
+            elif table_in_active:
+                record.report_distribution_table = table_in_process
+            else:
+                record.report_distribution_table = False
+
     project_id = fields.Many2one(
         "energy_project.project", required=True, ondelete="cascade"
     )
@@ -38,6 +54,11 @@ class Selfconsumption(models.Model):
     distribution_table_ids = fields.One2many(
         "energy_selfconsumption.distribution_table",
         "selfconsumption_project_id",
+        readonly=True,
+    )
+    report_distribution_table = fields.Many2one(
+        "energy_selfconsumption.distribution_table",
+        compute=_compute_report_distribution_table,
         readonly=True,
     )
     distribution_table_count = fields.Integer(compute=_compute_distribution_table_count)

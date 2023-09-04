@@ -555,106 +555,144 @@
                         font-family: "Calibri";
                         text-align: justify;
                     }
+
+                    table, th, td {
+                        border: 1px solid;
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+
+                    th {
+                        background: lightgrey;
+                    }
                 </style>
-                <h5>
-                    <center>
-                        ACUERDO DE REPARTO DE ENERGÍA DE AUTOCONSUMO COLECTIVO
-                        <br />
-                        INSTALACIONES CON EXCEDENTES
-                        <br />
-                        ACOGIDAS A COMPENSACIÓN
-                    </center>
-                </h5>
-                <p>
-                    En aplicación del Real Decreto 244/2019 de 5 de abril, los siguientes consumidores acordamos
-                    asociarnos a la instalación de <b
-          >autoconsumo colectivo de energía eléctrica</b> con las
-                    siguientes
-                    características:
-                </p>
-                <label>CON excedentes acogida a comensación</label>
-                <p>(Completar para cada consumidor asociado)</p>
-                <table>
-                    <tr>
-                        <th><b>CONSUMIDOR ASOCIADO</b>
-                            (titular del suministro)</th>
-                        <th><b>NIF</b></th>
-                        <th><b>CUPS</b></th>
-                        <th><b>COEFICIENTE DE REPARTO (ß)</b></th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td />
-                        <td />
-                        <td />
-                        <td />
-                    </tr>
-                </table>
-                <p
-        >(Si existen varios productores con instalaciones de generación asociadas al autoconsumo, completar
-                    para
-                    cada uno de ellos)</p>
-                <table>
-                    <tr>
-                        <th><b>PRODUCTOR ASOCIADO</b>
-                            (titular de la instalación de generación)</th>
-                        <th>NIF</th>
-                        <th>CIL</th>
-                        <th>COEFICIENTE (α)</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td />
-                        <td />
-                        <td />
-                        <td />
-                    </tr>
-                </table>
-                <p>Con la firma del presente acuerdo, los consumidores <b
-          > nos acogemos voluntariamente al
-                    mecanismo de compensación simplificada </b> entre los déficits del consumo de cada consumidor
-                    y la totalidad de los excedentes de la instalación de autoconsumo, tal como establece el Real
-                    Decreto 244/2019, de 5 de abril.</p>
-                <p>
-                    Les rogamos reciban esta comunicación y procedan a realizar los trámites necesarios.
-                </p>
-                <p>
-                    Del mismo modo, les solicitamos la aplicación del mecanismo de compensación simplificada de
-                    los excedentes de la instalación de autoconsumo a la que nos asociamos, y el inicio del
-                    mecanismo de compensación en el siguiente periodo de facturación desde la recepción de este
-                    acuerdo.
-                </p>
-                <p>
-                    En ,a de de 2023
-                </p>
-                <p>Los <b>CONSUMIDORES</b> asociados:</p>
-                <p>(Completar para cada consumidor asociado)</p>
-                <table>
-                    <td>
-                        <tr>CONSUMIDOR ASOCIADO 1</tr>
-                        <tr>FIRMA</tr>
-                        <tr>NIF: </tr>
-                    </td>
-                    <td>
-                        <tr>CONSUMIDOR ASOCIADO 2</tr>
-                        <tr>FIRMA</tr>
-                        <tr>NIF: </tr>
-                    </td>
-                </table>
-                <p>Los <b>PRODUCTORES</b> asociados:</p>
-                <p>(Completar para cada productor asociado)</p>
-                <table>
-                    <td>
-                        <tr>PRODUCTOR 1</tr>
-                        <tr>FIRMA</tr>
-                        <tr>NIF: </tr>
-                    </td>
-                    <td>
-                        <tr>PRODUCTOR ASOCIADO 2</tr>
-                        <tr>FIRMA</tr>
-                        <tr>NIF: </tr>
-                    </td>
-                </table>
+                <t t-foreach="docs" t-as="o">
+                    <h5>
+                        <center>
+                            ACUERDO DE REPARTO DE ENERGÍA DE AUTOCONSUMO COLECTIVO
+                            <br />
+                            INSTALACIONES CON EXCEDENTES
+                            <br />
+                            ACOGIDAS A COMPENSACIÓN
+                        </center>
+                    </h5>
+                    <p>
+                        En aplicación del Real Decreto 244/2019 de 5 de abril, los siguientes consumidores acordamos
+                        asociarnos a la instalación de <b
+            >autoconsumo colectivo de energía eléctrica</b> con las
+                        siguientes
+                        características:
+                    </p>
+
+                    <input class="form-check-input" type="checkbox" />
+                    <label><b>CON excedentes acogida a comensación</b></label>
+                    <br />
+                    <br />
+                    <table>
+                        <tr>
+                            <td><b>CÓDIGO DE AUTOCONSUMO (CAU)</b></td>
+                            <td><span t-field="o.code" /></td>
+                        </tr>
+                    </table>
+                    <p>(Completar para cada consumidor asociado)</p>
+                    <table>
+                        <tr>
+                            <th><b>CONSUMIDOR ASOCIADO</b>
+                                (titular del suministro)</th>
+                            <th><b>NIF</b></th>
+                            <th><b>CUPS</b></th>
+                            <th><b>COEFICIENTE DE REPARTO (ß)</b></th>
+                        </tr>
+                        <t t-if="o.report_distribution_table">
+                            <t t-set="index" t-value="1" />
+                            <t
+                t-foreach="o.report_distribution_table.supply_point_assignation_ids"
+                t-as="supply_point"
+              >
+                                <tr>
+                                    <td><t t-esc="index" /> - <t
+                      t-esc="supply_point.supply_point_id.partner_id.name"
+                    /></td>
+                                    <td><t
+                      t-esc="supply_point.supply_point_id.partner_id.vat"
+                    /></td>
+                                    <td><t
+                      t-esc="supply_point.supply_point_id.code"
+                    /></td>
+                                    <td style="text-align: right"><t
+                      t-esc="supply_point.coefficient"
+                    /></td>
+                                </tr>
+                                <t t-set="index" t-value="index+1" />
+                            </t>
+                        </t>
+
+                    </table>
+                    <p
+          >(Si existen varios productores con instalaciones de generación asociadas al autoconsumo, completar
+                        para
+                        cada uno de ellos)</p>
+                    <table>
+                        <tr>
+                            <th><b>PRODUCTOR ASOCIADO</b>
+                                (titular de la instalación de generación)</th>
+                            <th>NIF</th>
+                            <th>CIL</th>
+                            <th>COEFICIENTE (α)</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td />
+                            <td />
+                            <td />
+                        </tr>
+                    </table>
+                    <p>Con la firma del presente acuerdo, los consumidores <b
+            > nos acogemos voluntariamente al
+                        mecanismo de compensación simplificada </b> entre los déficits del consumo de cada consumidor
+                        y la totalidad de los excedentes de la instalación de autoconsumo, tal como establece el Real
+                        Decreto 244/2019, de 5 de abril.</p>
+                    <p>
+                        Les rogamos reciban esta comunicación y procedan a realizar los trámites necesarios.
+                    </p>
+                    <p>
+                        Del mismo modo, les solicitamos la aplicación del mecanismo de compensación simplificada de
+                        los excedentes de la instalación de autoconsumo a la que nos asociamos, y el inicio del
+                        mecanismo de compensación en el siguiente periodo de facturación desde la recepción de este
+                        acuerdo.
+                    </p>
+                    <p>
+                        En ,a de de 2023
+                    </p>
+                    <p>Los <b>CONSUMIDORES</b> asociados:</p>
+                    <p>(Completar para cada consumidor asociado)</p>
+                    <table>
+                        <td>
+                            <tr>CONSUMIDOR ASOCIADO 1</tr>
+                            <tr>FIRMA</tr>
+                            <tr>NIF: </tr>
+                        </td>
+                        <td>
+                            <tr>CONSUMIDOR ASOCIADO 2</tr>
+                            <tr>FIRMA</tr>
+                            <tr>NIF: </tr>
+                        </td>
+                    </table>
+                    <p>Los <b>PRODUCTORES</b> asociados:</p>
+                    <p>(Completar para cada productor asociado)</p>
+                    <table>
+                        <td>
+                            <tr>PRODUCTOR 1</tr>
+                            <tr>FIRMA</tr>
+                            <tr>NIF: </tr>
+                        </td>
+                        <td>
+                            <tr>PRODUCTOR ASOCIADO 2</tr>
+                            <tr>FIRMA</tr>
+                            <tr>NIF: </tr>
+                        </td>
+                    </table>
+                </t>
             </t>
         </template>
 
