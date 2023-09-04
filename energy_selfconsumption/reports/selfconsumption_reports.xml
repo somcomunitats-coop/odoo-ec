@@ -665,7 +665,15 @@
                         acuerdo.
                     </p>
                     <p>
-                        En ,a de de 2023
+                        <t
+              t-set="today"
+              t-value=" context_timestamp(datetime.datetime.now())"
+            />
+                        En <span t-field="o.city" /> ,a <t
+              t-esc="today.strftime('%d')"
+            /> de <t t-esc="today.strftime('%m')" /> de <t
+              t-esc="today.strftime('%Y')"
+            />
                     </p>
                     <p>Los <b>CONSUMIDORES</b> asociados:</p>
                     <p>(Completar para cada consumidor asociado)</p>
