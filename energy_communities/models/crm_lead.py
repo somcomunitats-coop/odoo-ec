@@ -311,7 +311,9 @@ class CrmLead(models.Model):
             "default_purchase_tax_id": self.env["account.tax.template"]
             .search([("name", "=", "21% IVA soportado (bienes corrientes)")])[0]
             .id,
-            # 'property_cooperator_account': self.env.ref("l10n_es.account_common_4400").id,
+            "property_cooperator_account": self.env["account.account"]
+            .search([("code", "like", "44000%")], limit=1)
+            .id,
             "create_user": False,
         }
 
