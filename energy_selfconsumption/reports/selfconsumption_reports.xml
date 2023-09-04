@@ -708,16 +708,18 @@
                     <p>Los <b>PRODUCTORES</b> asociados:</p>
                     <p>(Completar para cada productor asociado)</p>
                     <table>
-                        <td>
-                            <tr>PRODUCTOR 1</tr>
-                            <tr>FIRMA</tr>
-                            <tr>NIF: </tr>
-                        </td>
-                        <td>
-                            <tr>PRODUCTOR ASOCIADO 2</tr>
-                            <tr>FIRMA</tr>
-                            <tr>NIF: </tr>
-                        </td>
+                        <tr>
+                            <th><b>PRODUCTOR ASOCIADO</b><br /></th>
+                            <th><b>NIF</b></th>
+                            <th><b>FIRMA</b></th>
+                        </tr>
+                        <t t-if="o.owner_id">
+                            <tr>
+                                <td><t t-esc="o.owner_id.name" /></td>
+                                <td><t t-esc="o.owner_id.vat" /></td>
+                                <td><div style="height: 100px; width: 200px;" /></td>
+                            </tr>
+                        </t>
                     </table>
                 </t>
             </t>
