@@ -1,6 +1,7 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
+
 STATE_VALUES = [
     ("draft", _("Draft")),
     ("validated", _("Validated")),
@@ -48,12 +49,16 @@ class DistributionTable(models.Model):
 
     @api.model
     def create(self, vals):
-        vals["name"] = self.env.ref(
-            "energy_selfconsumption.distribution_table_sequence", False
-        ).next_by_id()
-        return super().create(vals)
+        vals['name'] = self.env.ref('energy_selfconsumption.distribution_table_sequence', False).next_by_id()
+        return super(DistributionTable, self).create(vals)
 
-    @api.onchange("selfconsumption_project_id")
+    @api.constrains('supply_point_assignation_ids')
+    def _supply_point_constrain(self):
+        for record in self:
+            if record.state in ('validated', 'process', 'active'):
+                raise ValidationError(_("The supply point can't be removed because the distribution table state is {table_state}").format(table_state=record.state))
+     
+    @api.onchange('selfconsumption_project_id')
     def _onchange_selfconsumption_project_id(self):
         self.supply_point_assignation_ids = False
 
