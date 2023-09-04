@@ -669,9 +669,9 @@
               t-set="today"
               t-value=" context_timestamp(datetime.datetime.now())"
             />
-                        En <span t-field="o.city" /> ,a <t
-              t-esc="today.strftime('%d')"
-            /> de <t t-esc="today.strftime('%m')" /> de <t
+                        En <span t-field="o.city" />, a <t
+              t-esc="today.strftime('%-d')"
+            /> de <t t-esc="today.strftime('%-m')" /> de <t
               t-esc="today.strftime('%Y')"
             />
                     </p>
