@@ -678,17 +678,33 @@
                     <p>Los <b>CONSUMIDORES</b> asociados:</p>
                     <p>(Completar para cada consumidor asociado)</p>
                     <table>
-                        <td>
-                            <tr>CONSUMIDOR ASOCIADO 1</tr>
-                            <tr>FIRMA</tr>
-                            <tr>NIF: </tr>
-                        </td>
-                        <td>
-                            <tr>CONSUMIDOR ASOCIADO 2</tr>
-                            <tr>FIRMA</tr>
-                            <tr>NIF: </tr>
-                        </td>
+                        <tr>
+                            <th><b>CONSUMIDOR ASOCIADO</b><br /></th>
+                            <th><b>NIF</b></th>
+                            <th><b>FIRMA</b></th>
+                        </tr>
+                        <t t-if="o.report_distribution_table">
+                            <t t-set="index" t-value="1" />
+                            <t
+                t-foreach="o.report_distribution_table.supply_point_assignation_ids"
+                t-as="supply_point"
+              >
+                                <tr>
+                                    <td><t t-esc="index" /> - <t
+                      t-esc="supply_point.supply_point_id.owner_id.name"
+                    /></td>
+                                    <td><t
+                      t-esc="supply_point.supply_point_id.owner_id.vat"
+                    /></td>
+                                    <td>
+                                        <div style="height: 100px; width: 200px;" />
+                                    </td>
+                                </tr>
+                                <t t-set="index" t-value="index+1" />
+                            </t>
+                        </t>
                     </table>
+
                     <p>Los <b>PRODUCTORES</b> asociados:</p>
                     <p>(Completar para cada productor asociado)</p>
                     <table>
