@@ -124,6 +124,12 @@ class Selfconsumption(models.Model):
             "energy_selfconsumption.selfconsumption_manager_authorization_report"
         ).report_action(self)
 
+    def action_power_sharing_agreement_report(self):
+        self.ensure_one()
+        return self.env.ref(
+            "energy_selfconsumption.power_sharing_agreement_report"
+        ).report_action(self)
+
     def action_manager_partition_coefficient_report(self):
         report_data = []
         process_tables = self.distribution_table_ids.filtered(
