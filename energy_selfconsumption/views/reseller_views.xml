@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="reseller_form_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.reseller.form</field>
+            <field name="model">energy_selfconsumption.reseller</field>
+            <field name="arch" type="xml">
+                <form string="Reseller">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" />
+                            <h1>
+                                <field name="name" placeholder="Name" />
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="order" />
+                                <field name="address" />
+                                <field name="zip" />
+                                <field name="city" />
+                                <field name="province" />
+                                <field name="phone" />
+                                <field name="scope" />
+                                <field name="vat" />
+                                <field name="inscription_date" />
+                                <field name="uninscription_date" />
+                                <field name="web" />
+                                <field name="state" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="reseller_tree_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.reseller.tree</field>
+            <field name="model">energy_selfconsumption.reseller</field>
+            <field name="arch" type="xml">
+                <tree string="Reseller" import="True">
+                                <field name="order" />
+                                <field name="name" />
+                                <field name="address" />
+                                <field name="zip" />
+                                <field name="city" />
+                                <field name="province" />
+                                <field name="phone" />
+                                <field name="scope" />
+                                <field name="vat" />
+                                <field name="inscription_date" />
+                                <field name="uninscription_date" />
+                                <field name="web" />
+                                <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="reseller_act_window" model="ir.actions.act_window">
+            <field name="name">Reseller</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">energy_selfconsumption.reseller</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Reseller.
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+      name="Reseller"
+      id="reseller_menu"
+      parent="root"
+      action="reseller_act_window"
+    />
+
+    </data>
+</odoo>
