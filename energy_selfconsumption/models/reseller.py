@@ -5,7 +5,7 @@ class Reseller(models.Model):
     _name = "energy_selfconsumption.reseller"
     _description = "Energy Reseller"
 
-    order = fields.Char(string="Nº de orden", required=True)
+    order = fields.Char(string="Nº de orden")
     name = fields.Char(string="Nombre empresa")
     address = fields.Char(string="Dirección empresa")
     zip = fields.Char(string="C.P.")
@@ -28,4 +28,6 @@ class Reseller(models.Model):
                 new_data_list.append(
                     dict(xml_id=xml_id, values=values, noupdate=data.get("noupdate"))
                 )
+            else:
+                new_data_list.append(data)
         return super()._load_records(new_data_list, update)

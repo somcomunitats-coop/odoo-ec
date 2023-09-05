@@ -16,7 +16,7 @@
                         </div>
                         <group>
                             <group>
-                                <field name="order" />
+                                <field name="order" readonly="True" />
                                 <field name="address" />
                                 <field name="zip" />
                                 <field name="city" />
@@ -39,7 +39,7 @@
             <field name="name">energy_selfconsumption.reseller.tree</field>
             <field name="model">energy_selfconsumption.reseller</field>
             <field name="arch" type="xml">
-                <tree string="Reseller" import="1">
+                <tree string="Reseller" import="1" create="1">
                                 <field name="order" />
                                 <field name="name" />
                                 <field name="address" />
