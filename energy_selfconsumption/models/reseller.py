@@ -25,9 +25,7 @@ class Reseller(models.Model):
             values = data["values"]
             if values.get("order"):
                 xml_id = "energy_selfconsumption.reseller_%s" % (values.get("order"))
-                new_data_list.append(
-                    dict(xml_id=xml_id, values=values, noupdate=data.get("noupdate"))
-                )
+                new_data_list.append(dict(xml_id=xml_id, values=values, noupdate=True))
             else:
                 new_data_list.append(data)
         return super()._load_records(new_data_list, update)
