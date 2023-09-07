@@ -6,7 +6,6 @@
         <field name="arch" type="xml">
             <form string="Generate Partition Coefficient Report">
                 <group>
-                    <field name="report_data" readonly="1" />
                     <field name="file_name" readonly="1" />
                 </group>
                 <footer>

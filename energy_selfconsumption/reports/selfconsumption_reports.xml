@@ -5,7 +5,7 @@
             <t t-call="web.html_container">
                 <style>
                     p {
-                        font-size: 15.3px;
+                        font-size: 14px;
                         line-height: 1.7;
                         font-family: "Calibri";
                     }
@@ -39,7 +39,6 @@
                 style="font-size:13.6;font-weight: bold;text-align:center;"
               >MODELO DE AUTORIZACIÓN PARA EL GESTOR DEL AUTOCONSUMO COLECTIVO</p>
                         <p
-                style="margin-top:48px;"
               >Los consumidores asociados firmantes en el Anexo I otorgan poder de representación a:</p>
                         <p>D./D<sup>2</sup></p>
                         <p>Con CIF/NIF<span
@@ -53,7 +52,7 @@
                 >PARA:</b></p>
                         <p
               >Actuar por cuenta ajena en calidad de GESTOR DEL AUTOCONSUMO COLECTIVO identificado con Código de Autoconsumo Colectivo</p>
-                        <p><b>(CAU):</b><span t-field="o.code" /></p>
+                        <p><b>(CAU): </b><span t-field="o.code" /></p>
                         <p>Inscrito bajo la <b
                 >modalidad de autoconsumo</b> (escoger una opción):</p>
                         <ul
@@ -84,7 +83,7 @@
                   >- Fichero TXT donde figuren los coeficientes de reparto fijos o variables según establece la Orden TED 1247/2021</p>.
                             </li>
                         </ol>
-                        <hr style="margin-left: 0px; width:240px; margin-top:80px" />
+                        <hr style="margin-left: 0px; width:240px; margin-top:120px" />
                         <p style="font-size:13px;line-height:1;"><sup
                 >2</sup>Razón Social, nombre y apellidos del Gestor del Autoconsumo Colectivo.</p>
                         <p style="font-size:13px;line-height:1.2;"><sup
@@ -93,13 +92,12 @@
                     <div>
                         <ol start="2">
                             <li>
-                                <p>Comunicación de cualquier modificación<sup
-                    >4</sup> que se produzca en los coeficientes de reparto–siempre</p>
-                                <p
-                    style="font-size:14px"
-                  >realizada por acuerdo entre todos los consumidores asociados-, en los términos que vienen definidos en</p>
-                                <p
-                  >la Orden TED 1247/2021. Para ello, deberá aportar:</p>
+                                <p>
+                                    Comunicación de cualquier modificación<sup
+                    >4</sup> que se produzca en los coeficientes de reparto–siempre
+                                    realizada por acuerdo entre todos los consumidores asociados-, en los términos que vienen definidos en
+                                    la Orden TED 1247/2021. Para ello, deberá aportar:
+                                </p>
                                 <p
                     style="margin-left:26px"
                   >- Nuevo fichero TXT de coeficientes de reparto</p>
@@ -109,69 +107,48 @@
                             </li>
 
                             <li>
-                                <p
-                    style="font-size:14px"
-                  >Dar de baja a los consumidores que incumplan los compromisos establecidos entre los consumidores</p>
-                                <p
-                    style="font-size:14px"
-                  >asociados al autoconsumo colectivo y dar de alta<sup
-                    >5</sup> a los consumidores que se incorporen al autoconsumo</p>
-                                <p
-                    style="font-size:14px"
-                  >colectivo, adaptando en cualquier caso sus contratos de suministro con su comercializadora actual y</p>
-                                <p
-                    style="font-size:14px"
-                  >reflejándolo en el Anexo I de este documento.</p>
+                                <p>
+                                    Dar de baja a los consumidores que incumplan los compromisos establecidos entre los consumidores
+                                    asociados al autoconsumo colectivo y dar de alta<sup
+                    >5</sup> a los consumidores que se incorporen al autoconsumo
+                                    colectivo, adaptando en cualquier caso sus contratos de suministro con su comercializadora actual y
+                                    reflejándolo en el Anexo I de este documento.
+                                </p>
                             </li>
 
                             <li>
-                                <p
-                    style="font-size:14px"
-                  >El GESTOR DEL AUTOCONSUMO COLECTIVO declara y garantiza que cuenta con la autorización de cada</p>
-                                <p
-                    style="font-size:14px"
-                  >uno de los consumidores asociados, y les ha informado de que sus datos se comunicarán, a su</p>
-                                <p
-                    style="font-size:14px"
-                  >correspondiente comercializadora, para tratarlos de conformidad con lo previsto en el Real Decreto</p>
-                                <p
-                    style="font-size:14px"
-                  >244/2019, de 5 de abril, por el que se regulan las condiciones administrativas, técnicas y económicas del</p>
-                                <p
-                    style="font-size:14px"
-                  >autoconsumo de energía eléctrica y con lo previsto en la Orden TED 1247/2017. En todo caso, el GESTOR</p>
-                                <p
-                    style="font-size:14px"
-                  >DE AUTOCONSUMO COLECTIVO también ha informado a los consumidores de cómo y dónde pueden</p>
-                                <p
-                    style="font-size:14px"
-                  >obtener más información sobre el tratamiento de sus datos llevado a cabo por su comercializadora actual</p>
-                                <p
-                    style="font-size:14px"
-                  >incluida la forma en que pueden ejercer sus derechos en la web de su comercializadora actual.</p>
+                                <p>
+                                    El GESTOR DEL AUTOCONSUMO COLECTIVO declara y garantiza que cuenta con la autorización de cada
+                                    uno de los consumidores asociados, y les ha informado de que sus datos se comunicarán, a su
+                                    correspondiente comercializadora, para tratarlos de conformidad con lo previsto en el Real Decreto
+                                    244/2019, de 5 de abril, por el que se regulan las condiciones administrativas, técnicas y económicas del
+                                    autoconsumo de energía eléctrica y con lo previsto en la Orden TED 1247/2017. En todo caso, el GESTOR
+                                    DE AUTOCONSUMO COLECTIVO también ha informado a los consumidores de cómo y dónde pueden
+                                    obtener más información sobre el tratamiento de sus datos llevado a cabo por su comercializadora actual
+                                    incluida la forma en que pueden ejercer sus derechos en la web de su comercializadora actual.
+                                </p>
                             </li>
 
                             <li>
-                                <p
-                    style="font-size:14px"
-                  >Esta manifestación es fiel y auténtica, y en virtud de ésta, el GESTOR DEL AUTOCONSUMO COLECTIVO</p>
-                                <p
-                    style="font-size:14px"
-                  >asume todas las responsabilidades legales derivadas de toda falsedad u omisión, con indemnidad para</p>
-                                <p
-                    style="font-size:14px"
-                  >las comercializadoras actuales de cada uno de los consumidores asociados.</p>
+                                <p>
+                                    Esta manifestación es fiel y auténtica, y en virtud de ésta, el GESTOR DEL AUTOCONSUMO COLECTIVO
+                                    asume todas las responsabilidades legales derivadas de toda falsedad u omisión, con indemnidad para
+                                    las comercializadoras actuales de cada uno de los consumidores asociados.
+                                </p>
                             </li>
                         </ol>
                         <br />
                         <p>Fecha:<t t-esc="time.strftime('%d-%m-%Y')" /></p>
                         <br />
                         <p>Firma electrónica del Gestor del Autoconsumo Colectivo</p>
-                        <hr style="margin-left: 0px; width:240px; margin-top:160px" />
-                        <p style="font-size:10px"><sup
-                >4</sup>Las modificaciones en los coeficientes de reparto pueden obedecer a: (1) modificaciones sin alteración en los consumidores asociados al colectivo, (2) bajas y/o altas de nuevos consumidores asociados.</p>
-                        <p style="font-size:10px"><sup
-                >5</sup>Se entenderá por nuevas altas solo a los nuevos CUPS; los cambios de titular sobre CUPS existentes se subroúarán al acuerdo de reparto existente, con lo que no hará falta modificar ni fichero txt ni acuerdo de reparto, salvo que se modifiquen también los coeficientes de reparto.</p>
+                        <hr style="margin-left: 0px; width:240px; margin-top:260px" />
+                        <p style="font-size:12px">
+                            <sup
+                >4</sup>Las modificaciones en los coeficientes de reparto pueden obedecer a: (1) modificaciones sin alteración en los consumidores asociados al colectivo, (2) bajas y/o altas de nuevos consumidores asociados.<br
+                />
+                            <sup
+                >5</sup>Se entenderá por nuevas altas solo a los nuevos CUPS; los cambios de titular sobre CUPS existentes se subroúarán al acuerdo de reparto existente, con lo que no hará falta modificar ni fichero txt ni acuerdo de reparto, salvo que se modifiquen también los coeficientes de reparto.
+                        </p>
                     </div>
                     <div>
                         <p style="margin-left:50px"><b
@@ -199,8 +176,10 @@
                     t-foreach="o.report_distribution_table.supply_point_assignation_ids"
                     t-as="supply_point"
                   >
-                                    <tr>
-                                        <td><t t-esc="index" /> - <t
+                                    <tr style="height:100px">
+                                        <td style="margin-left:50px"><t
+                          t-esc="index"
+                        /> - <t
                           t-esc="supply_point.supply_point_id.partner_id.name"
                         /></td>
                                         <td><t
@@ -209,9 +188,7 @@
                                         <td><t
                           t-esc="supply_point.supply_point_id.code"
                         /></td>
-                                        <td style="text-align: right"><t
-                          t-esc="supply_point.coefficient"
-                        /></td>
+                                        <td />
                                     </tr>
                                     <t t-set="index" t-value="index+1" />
                                 </t>
@@ -221,256 +198,6 @@
                 style="margin-top:180px;margin-bottom:400px"
               >Firma electrónica del Gestor del Autoconsumo Colectivo:</p>
                         <div class="pageBreak" />
-                    </div>
-                    <div>
-                        <p style="margin-left:50px"><b
-                >ANEXO I: CONSUMIDORES ASOCIADOS QUE OTORGAN PODER DE REPRESENTACIÓN (2)</b></p>
-                        <p
-              >Los siguientes consumidores asociados abajo firmantes otorgan el poder de representación al Gestor del Autoconsumo Colectivo:</p>
-                        <table>
-                            <tr>
-                                <th
-                    style="width: 280px;background-color: #BEBEBE;"
-                  >NOMBRE Y APELLIDOS (titular del suministro)</th>
-                                <th
-                    style="width: 150px;background-color: #BEBEBE;"
-                  >NIF</th>
-                                <th
-                    style="width: 180px;background-color: #BEBEBE;"
-                  >CUPS</th>
-                                <th
-                    style="width: 150px;background-color: #BEBEBE;"
-                  >FIRMA</th>
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                        </table>
-                        <p
-                style="margin-top:180px;margin-bottom:400px"
-              >Firma electrónica del Gestor del Autoconsumo Colectivo:</p>
-                    </div>
-                    <div>
-                        <p style="margin-left:50px"><b
-                >ANEXO I: CONSUMIDORES ASOCIADOS QUE OTORGAN PODER DE REPRESENTACIÓN (3)</b></p>
-                        <p
-              >Los siguientes consumidores asociados abajo firmantes otorgan el poder de representación al Gestor del Autoconsumo Colectivo:</p>
-                        <table>
-                            <tr>
-                                <th
-                    style="width: 280px;background-color: #BEBEBE;"
-                  >NOMBRE Y APELLIDOS (titular del suministro)</th>
-                                <th
-                    style="width: 150px;background-color: #BEBEBE;"
-                  >NIF</th>
-                                <th
-                    style="width: 180px;background-color: #BEBEBE;"
-                  >CUPS</th>
-                                <th
-                    style="width: 150px;background-color: #BEBEBE;"
-                  >FIRMA</th>
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                        </table>
-                        <p
-                style="margin-top:180px;margin-bottom:400px"
-              >Firma electrónica del Gestor del Autoconsumo Colectivo:</p>
-                    </div>
-                    <div>
-                        <p style="margin-left:50px"><b
-                >ANEXO I: CONSUMIDORES ASOCIADOS QUE OTORGAN PODER DE REPRESENTACIÓN (4)</b></p>
-                        <p
-              >Los siguientes consumidores asociados abajo firmantes otorgan el poder de representación al Gestor del Autoconsumo Colectivo:</p>
-                        <table>
-                            <tr>
-                                <th
-                    style="width: 280px;background-color: #BEBEBE;"
-                  >NOMBRE Y APELLIDOS (titular del suministro)</th>
-                                <th
-                    style="width: 150px;background-color: #BEBEBE;"
-                  >NIF</th>
-                                <th
-                    style="width: 180px;background-color: #BEBEBE;"
-                  >CUPS</th>
-                                <th
-                    style="width: 150px;background-color: #BEBEBE;"
-                  >FIRMA</th>
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                        </table>
-                        <p
-                style="margin-top:180px;margin-bottom:400px"
-              >Firma electrónica del Gestor del Autoconsumo Colectivo:</p>
-                    </div>
-                    <div>
-                        <p style="margin-left:50px"><b
-                >ANEXO I: CONSUMIDORES ASOCIADOS QUE OTORGAN PODER DE REPRESENTACIÓN (5)</b></p>
-                        <p
-              >Los siguientes consumidores asociados abajo firmantes otorgan el poder de representación al Gestor del Autoconsumo Colectivo:</p>
-                        <table style="width:800px;">
-                            <tr style="height:50px;background-color:#BEBEBE;">
-                                <th
-                    style="width: 320px;"
-                  >NOMBRE Y APELLIDOS (titular del suministro)</th>
-                                <th>NIF</th>
-                                <th>CUPS</th>
-                                <th>FIRMA</th>
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                            <tr style="height:100px">
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                            </tr>
-                        </table>
-                        <p
-                style="margin-top:180px"
-              >Firma electrónica del Gestor del Autoconsumo Colectivo:</p>
                     </div>
                 </div>
             </t>
@@ -609,57 +336,39 @@
               t-set="today"
               t-value=" context_timestamp(datetime.datetime.now())"
             />
-                        En <span t-field="o.city" />, a <t
-              t-esc="today.strftime('%-d')"
-            /> de <t t-esc="today.strftime('%-m')" /> de <t
+                        En <span t-field="o.city" /> ,a <t
+              t-esc="today.strftime('%d')"
+            /> de <t t-esc="today.strftime('%m')" /> de <t
               t-esc="today.strftime('%Y')"
             />
                     </p>
                     <p>Los <b>CONSUMIDORES</b> asociados:</p>
                     <p>(Completar para cada consumidor asociado)</p>
                     <table>
-                        <tr>
-                            <th><b>CONSUMIDOR ASOCIADO</b><br /></th>
-                            <th><b>NIF</b></th>
-                            <th><b>FIRMA</b></th>
-                        </tr>
-                        <t t-if="o.report_distribution_table">
-                            <t t-set="index" t-value="1" />
-                            <t
-                t-foreach="o.report_distribution_table.supply_point_assignation_ids"
-                t-as="supply_point"
-              >
-                                <tr>
-                                    <td><t t-esc="index" /> - <t
-                      t-esc="supply_point.supply_point_id.owner_id.name"
-                    /></td>
-                                    <td><t
-                      t-esc="supply_point.supply_point_id.owner_id.vat"
-                    /></td>
-                                    <td>
-                                        <div style="height: 100px; width: 200px;" />
-                                    </td>
-                                </tr>
-                                <t t-set="index" t-value="index+1" />
-                            </t>
-                        </t>
+                        <td>
+                            <tr>CONSUMIDOR ASOCIADO 1</tr>
+                            <tr>FIRMA</tr>
+                            <tr>NIF: </tr>
+                        </td>
+                        <td>
+                            <tr>CONSUMIDOR ASOCIADO 2</tr>
+                            <tr>FIRMA</tr>
+                            <tr>NIF: </tr>
+                        </td>
                     </table>
-
                     <p>Los <b>PRODUCTORES</b> asociados:</p>
                     <p>(Completar para cada productor asociado)</p>
                     <table>
-                        <tr>
-                            <th><b>PRODUCTOR ASOCIADO</b><br /></th>
-                            <th><b>NIF</b></th>
-                            <th><b>FIRMA</b></th>
-                        </tr>
-                        <t t-if="o.owner_id">
-                            <tr>
-                                <td><t t-esc="o.owner_id.name" /></td>
-                                <td><t t-esc="o.owner_id.vat" /></td>
-                                <td><div style="height: 100px; width: 200px;" /></td>
-                            </tr>
-                        </t>
+                        <td>
+                            <tr>PRODUCTOR 1</tr>
+                            <tr>FIRMA</tr>
+                            <tr>NIF: </tr>
+                        </td>
+                        <td>
+                            <tr>PRODUCTOR ASOCIADO 2</tr>
+                            <tr>FIRMA</tr>
+                            <tr>NIF: </tr>
+                        </td>
                     </table>
                 </t>
             </t>

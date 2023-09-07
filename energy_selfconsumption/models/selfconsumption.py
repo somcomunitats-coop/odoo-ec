@@ -1,5 +1,4 @@
-import base64
-import io
+from datetime import datetime
 
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
@@ -172,8 +171,10 @@ class Selfconsumption(models.Model):
             line = f"{data['code']};{str(data['coefficient']).replace('.', ',')}\n"
             file_content += line
 
+        date = datetime.now()
+        year = date.strftime("%Y")
         wizard = self.env["energy_selfconsumption.report_wizard"].create(
-            {"report_data": file_content, "file_name": "Coeficiente_de_reparto.txt"}
+            {"report_data": file_content, "file_name": f"{self.code}_{year}.txt"}
         )
 
         return {
