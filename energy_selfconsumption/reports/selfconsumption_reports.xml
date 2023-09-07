@@ -653,9 +653,7 @@
               t-value=" context_timestamp(datetime.datetime.now())"
             />
                         En <span t-field="o.city" />, a <t
-              t-esc="today.strftime('%-d')"
-            /> de <t t-esc="today.strftime('%-m')" /> de <t
-              t-esc="today.strftime('%Y')"
+              t-esc="today.strftime('%d/%m/%Y')"
             />
                     </p>
                     <p>Los <b>CONSUMIDORES</b> asociados:</p>
@@ -674,9 +672,7 @@
                 t-as="supply_point"
               >
                                 <tr>
-                                                                            <td
-                    style="width: auto"
-                  ><t t-esc="index" /></td>
+                                    <td style="width: auto"><t t-esc="index" /></td>
                                     <td><t
                       t-esc="supply_point.supply_point_id.owner_id.name"
                     /></td>
