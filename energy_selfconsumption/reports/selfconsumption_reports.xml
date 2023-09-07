@@ -28,26 +28,27 @@
                         padding: 8px;
                         text-align: center;
                     }
+
                     .pageBreak {
                         page-break-before: always;
                     }
                 </style>
                 <t t-foreach="docs" t-as="o">
-                <div>
                     <div>
-                        <p
+                        <div>
+                            <p
                 style="font-size:13.6;font-weight: bold;text-align:center;"
               >MODELO DE AUTORIZACIÓN PARA EL GESTOR DEL AUTOCONSUMO COLECTIVO</p>
                         <p
               >Los consumidores asociados firmantes en el Anexo I otorgan poder de representación a:</p>
-                        <p>D./D<sup>2</sup></p>
-                        <p>Con CIF/NIF<span
+                            <p>D./D<sup>2</sup></p>
+                            <p>Con CIF/NIF<span
                   style="margin-left:180px"
                 >y domicilio en (Municipio)</span></p>
-                        <p>(Vía pública y nº)</p>
-                        <p>Con email</p>
-                        <p>y teléfono(s) de contacto</p>
-                        <p
+                            <p>(Vía pública y nº)</p>
+                            <p>Con email</p>
+                            <p>y teléfono(s) de contacto</p>
+                            <p
               >Hasta la fecha: ________/_________/20_______ y prorrogable anualmente, <b
                 >PARA:</b></p>
                         <p
@@ -55,30 +56,33 @@
                         <p><b>(CAU): </b><span t-field="o.code" /></p>
                         <p>Inscrito bajo la <b
                 >modalidad de autoconsumo</b> (escoger una opción):</p>
-                        <ul
+                            <ul
                 style="list-style-type:circle;line-height:1.7;margin-left:0px"
               >
-                            <li
+                                <li
                 >Con excedentes y acogidos a compensación simplificada en factura</li>
-                            <li
+                                <li
                 >Con excedentes NO acogidos a compensación simplificada</li>
-                            <li
+                                <li
                 >Sin excedentes y acogidos a compensación simplificada</li>
-                        </ul>
-                        <br />
-                        <p>Con <b
-                >atribuciones</b> para solicitar exclusivamente las siguientes gestiones ante la(s) comercializadora(s) actual(es) de cada uno de los consumidores asociados:</p>
-                        <br />
-                        <ol>
-                            <li><p>Solicitud de adaptación<sup
-                    >3</sup> del contrato de suministro a la modalidad de autoconsumo y aportación de la documentación requerida a tal efecto:</p>
-                                <p
+                            </ul>
+                            <br />
+                            <p>Con <b
+                >atribuciones</b> para solicitar exclusivamente las siguientes gestiones ante la(s)
+                                comercializadora(s) actual(es) de cada uno de los consumidores asociados:</p>
+                            <br />
+                            <ol>
+                                <li><p>Solicitud de adaptación<sup
+                    >3</sup> del contrato de suministro a la modalidad de autoconsumo y aportación de la
+                                    documentación requerida a tal efecto:</p>
+                                    <p
                     style="margin-left:26px"
-                  >- Certificado de Instalación Eléctrica /documento técnico requerido en cada CCAA</p>
-                                <p
+                  >- Certificado de Instalación Eléctrica /documento técnico requerido en cada
+                                        CCAA</p>
+                                    <p
                     style="margin-left:26px"
                   >- Acuerdo de Reparto firmado por los participantes del autoconsumo colectivo</p>
-                                <p
+                                    <p
                     style="margin-left:26px"
                   >- Fichero TXT donde figuren los coeficientes de reparto fijos o variables según establece la Orden TED 1247/2021</p>.
                             </li>
@@ -101,10 +105,10 @@
                                 <p
                     style="margin-left:26px"
                   >- Nuevo fichero TXT de coeficientes de reparto</p>
-                                <p
+                                    <p
                     style="margin-left:26px"
                   >- Acuerdo de reparto modificado</p>
-                            </li>
+                                </li>
 
                             <li>
                                 <p>
@@ -153,26 +157,27 @@
                     <div>
                         <p style="margin-left:50px"><b
                 >ANEXO I: CONSUMIDORES ASOCIADOS QUE OTORGAN PODER DE REPRESENTACIÓN (1)</b></p>
-                        <p
-              >Los siguientes consumidores asociados abajo firmantes otorgan el poder de representación al Gestor del Autoconsumo Colectivo:</p>
-                        <table>
-                            <tr>
-                                <th
+                            <p
+              >Los siguientes consumidores asociados abajo firmantes otorgan el poder de representación al
+                                Gestor del Autoconsumo Colectivo:</p>
+                            <table>
+                                <tr>
+                                    <th
                     style="width: 280px;background-color: #BEBEBE;"
                   >NOMBRE Y APELLIDOS (titular del suministro)</th>
-                                <th
+                                    <th
                     style="width: 150px;background-color: #BEBEBE;"
                   >NIF</th>
-                                <th
+                                    <th
                     style="width: 180px;background-color: #BEBEBE;"
                   >CUPS</th>
-                                <th
+                                    <th
                     style="width: 150px;background-color: #BEBEBE;"
                   >FIRMA</th>
-                            </tr>
-                            <t t-if="o.report_distribution_table">
-                                <t t-set="index" t-value="1" />
-                                <t
+                                </tr>
+                                <t t-if="o.report_distribution_table">
+                                    <t t-set="index" t-value="1" />
+                                    <t
                     t-foreach="o.report_distribution_table.supply_point_assignation_ids"
                     t-as="supply_point"
                   >
@@ -182,19 +187,18 @@
                         /> - <t
                           t-esc="supply_point.supply_point_id.partner_id.name"
                         /></td>
-                                        <td><t
+                                            <td><t
                           t-esc="supply_point.supply_point_id.partner_id.vat"
                         /></td>
-                                        <td><t
+                                            <td><t
                           t-esc="supply_point.supply_point_id.code"
                         /></td>
                                         <td />
                                     </tr>
                                     <t t-set="index" t-value="index+1" />
                                 </t>
-                            </t>
-                        </table>
-                        <p
+                            </table>
+                            <p
                 style="margin-top:180px;margin-bottom:400px"
               >Firma electrónica del Gestor del Autoconsumo Colectivo:</p>
                         <div class="pageBreak" />
@@ -253,7 +257,7 @@
                         características:
                     </p>
 
-                    <input class="form-check-input" type="checkbox" />
+                    <input class="form-check-input" type="checkbox" checked="checked" />
                     <label><b>CON excedentes acogida a compensación</b></label>
                     <br />
                     <br />
@@ -265,40 +269,46 @@
                     </table>
                     <p>(Completar para cada consumidor asociado)</p>
                     <table>
-                        <tr>
-                            <th><b>CONSUMIDOR ASOCIADO</b><br />
-                                (titular del suministro)</th>
-                            <th><b>NIF</b></th>
-                            <th><b>CUPS</b></th>
-                            <th><b>COEFICIENTE DE REPARTO (ß)</b></th>
-                        </tr>
-                        <t t-if="o.report_distribution_table">
-                            <t t-set="index" t-value="1" />
-                            <t
-                t-foreach="o.report_distribution_table.supply_point_assignation_ids"
-                t-as="supply_point"
-              >
-                                <tr>
-                                    <td><t t-esc="index" /> - <t
-                      t-esc="supply_point.supply_point_id.owner_id.name"
-                    /></td>
-                                    <td><t
-                      t-esc="supply_point.supply_point_id.owner_id.vat"
-                    /></td>
-                                    <td><t
-                      t-esc="supply_point.supply_point_id.code"
-                    /></td>
-                                    <td style="text-align: right"><t
-                      t-esc="supply_point.coefficient"
-                    /></td>
-                                </tr>
-                                <t t-set="index" t-value="index+1" />
+                        <thead>
+                            <tr>
+                                <th style="width: auto" />
+                                <th><b>CONSUMIDOR ASOCIADO</b><br />
+                                    (titular del suministro)</th>
+                                <th><b>NIF</b></th>
+                                <th><b>CUPS</b></th>
+                                <th><b>COEFICIENTE DE REPARTO (ß)</b></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-if="o.report_distribution_table">
+                                <t t-set="index" t-value="1" />
+                                <t
+                  t-foreach="o.report_distribution_table.supply_point_assignation_ids"
+                  t-as="supply_point"
+                >
+                                    <tr>
+                                        <td style="width: auto"><t t-esc="index" /></td>
+                                        <td><t
+                        t-esc="supply_point.supply_point_id.owner_id.name"
+                      /></td>
+                                        <td><t
+                        t-esc="supply_point.supply_point_id.owner_id.vat"
+                      /></td>
+                                        <td><t
+                        t-esc="supply_point.supply_point_id.code"
+                      /></td>
+                                        <td style="text-align: right"><t
+                        t-esc="supply_point.coefficient"
+                      /></td>
+                                    </tr>
+                                    <t t-set="index" t-value="index+1" />
+                                </t>
                             </t>
-                        </t>
-
+                        </tbody>
                     </table>
                     <p
-          >(Si existen varios productores con instalaciones de generación asociadas al autoconsumo, completar para cada uno de ellos)</p>
+          >(Si existen varios productores con instalaciones de generación asociadas al autoconsumo, completar
+                        para cada uno de ellos)</p>
                     <table>
                         <tr>
                             <th><b>PRODUCTOR ASOCIADO</b><br />
@@ -336,25 +346,40 @@
               t-set="today"
               t-value=" context_timestamp(datetime.datetime.now())"
             />
-                        En <span t-field="o.city" /> ,a <t
-              t-esc="today.strftime('%d')"
-            /> de <t t-esc="today.strftime('%m')" /> de <t
-              t-esc="today.strftime('%Y')"
+                        En <span t-field="o.city" />, a <t
+              t-esc="today.strftime('%d/%m/%Y')"
             />
                     </p>
                     <p>Los <b>CONSUMIDORES</b> asociados:</p>
                     <p>(Completar para cada consumidor asociado)</p>
                     <table>
-                        <td>
-                            <tr>CONSUMIDOR ASOCIADO 1</tr>
-                            <tr>FIRMA</tr>
-                            <tr>NIF: </tr>
-                        </td>
-                        <td>
-                            <tr>CONSUMIDOR ASOCIADO 2</tr>
-                            <tr>FIRMA</tr>
-                            <tr>NIF: </tr>
-                        </td>
+                        <tr>
+                            <th style="width: auto" />
+                            <th><b>CONSUMIDOR ASOCIADO</b><br /></th>
+                            <th><b>NIF</b></th>
+                            <th><b>FIRMA</b></th>
+                        </tr>
+                        <t t-if="o.report_distribution_table">
+                            <t t-set="index" t-value="1" />
+                            <t
+                t-foreach="o.report_distribution_table.supply_point_assignation_ids"
+                t-as="supply_point"
+              >
+                                <tr>
+                                    <td style="width: auto"><t t-esc="index" /></td>
+                                    <td><t
+                      t-esc="supply_point.supply_point_id.owner_id.name"
+                    /></td>
+                                    <td><t
+                      t-esc="supply_point.supply_point_id.owner_id.vat"
+                    /></td>
+                                    <td>
+                                        <div style="height: 100px; width: 200px;" />
+                                    </td>
+                                </tr>
+                                <t t-set="index" t-value="index+1" />
+                            </t>
+                        </t>
                     </table>
                     <p>Los <b>PRODUCTORES</b> asociados:</p>
                     <p>(Completar para cada productor asociado)</p>
@@ -382,7 +407,7 @@
       file="Power Sharing Agreement"
       report_type="qweb-pdf"
       paperformat="custom_paperformat_id"
-      print_report_name="(object.name)"
+      print_report_name="'%s - Power Sharing Agreement' % object.name"
     />
 
     </data>
