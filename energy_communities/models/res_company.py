@@ -155,24 +155,6 @@ class ResCompany(models.Model):
                 admins_user_ids.append(role_line.user_id.id)
         return any([user in admins_user_ids for user in company_user_ids])
 
-    def _get_admin_role_name(self):
-        if self.hierarchy_level == 'community':
-            return "role_ce_admin"
-        elif self.hierarchy_level == 'coordinator':
-            return "role_coord_admin"
-        elif self.hierarchy_level == 'instance':
-            return "role_platform_admin"
-
-    def _get_admins(self):
-        role_name = self._get_admin_role_name()
-        for rec in self:
-            role_lines = self.env["res.users.role.line"].search([
-                ("company_id.id", "=", self.id),
-                ("active", "=", True),
-                ("role_id.code", "=", role_name)
-            ])
-            rec.admins = role_lines.mapped("user_id")
-
     def get_ce_members(self, domain_key="in_kc_and_active"):
         domains_dict = {
             "in_kc_and_active": [
@@ -230,17 +212,19 @@ class ResCompany(models.Model):
         return res
 
     def get_lower_hierarchy_level(self):
-        if self.hierarchy_level == 'instance':
-            return 'coordinator'
-        elif self.hierarchy_level == 'coordinator':
-            return 'community'
-        return ''
+        if self.hierarchy_level == "instance":
+            return "coordinator"
+        elif self.hierarchy_level == "coordinator":
+            return "community"
+        return ""
 
     def get_child_companies(self):
-        return self.env['res.company'].search([
-            ('hierarchy_level' ,'=', self.get_lower_hierarchy_level()),
-            ('parent_id', '=', self.id),
-        ])
+        return self.env["res.company"].search(
+            [
+                ("hierarchy_level", "=", self.get_lower_hierarchy_level()),
+                ("parent_id", "=", self.id),
+            ]
+        )
 
     def get_public_web_landing_url(self):
         # TODO: Get from landing page or company, for now we don't need
