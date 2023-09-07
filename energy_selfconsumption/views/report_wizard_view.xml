@@ -31,10 +31,4 @@
         <field name="view_mode">form</field>
         <field name="view_id" ref="view_energy_selfconsumption_report_wizard_form" />
     </record>
-
-    <menuitem
-    name="Generate Partition Coefficient Report"
-    id="menu_energy_selfconsumption_report_wizard"
-    action="action_energy_selfconsumption_report_wizard"
-  />
 </odoo>
