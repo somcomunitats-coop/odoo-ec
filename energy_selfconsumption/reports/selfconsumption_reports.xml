@@ -716,7 +716,7 @@
       file="Power Sharing Agreement"
       report_type="qweb-pdf"
       paperformat="custom_paperformat_id"
-      print_report_name="(object.name)"
+      print_report_name="'%s - Power Sharing Agreement' % object.name"
     />
 
     </data>
