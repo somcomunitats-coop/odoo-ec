@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.distributor</field>
+        <field name="model">energy_project.distributor</field>
+        <field name="priority" eval="10" />
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div
+          class="app_settings_block"
+          data-string="Distribuidoras Eléctricas"
+          string="Distribuidoras Eléctricas"
+          data-key="energy_project"
+          groups="sales_team.group_sale_manager"
+        >
+                    <div
+            style="display: flex; justify-content: center; align-items: center; height: 100vh;"
+          >
+                        <button
+              string="Ver Distribuidoras Eléctricas"
+              type="object"
+              class="btn-link btn-lg btn-primary"
+              name="button_open_distributors"
+            />
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
