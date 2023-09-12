@@ -21,6 +21,10 @@ class Selfconsumption(models.Model):
             record.inscription_count = len(record.inscription_ids)
 
     def _compute_report_distribution_table(self):
+        """
+        This compute field gets the distribution table needed to generate the reports.
+        It prioritizes the table in process and then the active one. It can only be one of each.
+        """
         for record in self:
             table_in_process = record.distribution_table_ids.filtered_domain(
                 [("state", "=", "process")]
