@@ -175,7 +175,11 @@ class Selfconsumption(models.Model):
         file_name = f"{self.code}_{year}.txt"
 
         existing_attachments = self.env["ir.attachment"].search(
-            [("res_model", "=", self._name), ("res_id", "=", self.id)]
+            [
+                ("res_model", "=", self._name),
+                ("res_id", "=", self.id),
+                ("is_custom_generated", "=", True),
+            ]
         )
 
         if len(existing_attachments) > 0:
@@ -188,6 +192,7 @@ class Selfconsumption(models.Model):
                 "type": "binary",
                 "res_model": self._name,
                 "res_id": self.id,
+                "is_custom_generated": True,
             }
         )
 
@@ -196,3 +201,8 @@ class Selfconsumption(models.Model):
             "url": f"/web/content/{attachment.id}?download=true",
             "target": "self",
         }
+
+
+class IrAttachment(models.Model):
+    _inherit = "ir.attachment"
+    is_custom_generated = fields.Boolean(string="Is custom generated", default=False)
