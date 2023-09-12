@@ -32,7 +32,7 @@ class Selfconsumption(models.Model):
             if table_in_process:
                 record.report_distribution_table = table_in_process
             elif table_in_active:
-                record.report_distribution_table = table_in_process
+                record.report_distribution_table = table_in_active
             else:
                 record.report_distribution_table = False
 
