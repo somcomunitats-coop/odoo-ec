@@ -59,7 +59,8 @@
       />
             <value
         eval="{'coop_email_contact':'sants@coop.coop',
-            'email':'sants@fake.com'}"
+            'email':'sants@fake.com',
+            'default_lang_id': ref('base.lang_ca_ES')}"
       />
         </function>
 
@@ -101,7 +102,8 @@
       />
             <value
         eval="{'coop_email_contact':'villanoveta@coop.coop',
-            'email':'villanoveta@fake.com'}"
+            'email':'villanoveta@fake.com',
+            'default_lang_id': ref('base.lang_es')}"
       />
         </function>
 
@@ -142,7 +144,8 @@
       />
             <value
         eval="{'coop_email_contact':'salt@coop.coop',
-            'email':'salt@fake.com'}"
+            'email':'salt@fake.com',
+            'default_lang_id': ref('base.lang_eu_ES')}"
       />
         </function>
     </data>
