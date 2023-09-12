@@ -176,7 +176,7 @@
                                 altas de nuevos consumidores asociados.<br />
                                 <sup
                 >5</sup>Se entenderá por nuevas altas solo a los nuevos CUPS; los cambios de titular
-                                sobre CUPS existentes se subroúarán al acuerdo de reparto existente, con lo que no hará
+                                sobre CUPS existentes se subrogarán al acuerdo de reparto existente, con lo que no hará
                                 falta modificar ni fichero txt ni acuerdo de reparto, salvo que se modifiquen también
                                 los coeficientes de reparto.
                             </p>
@@ -242,7 +242,7 @@
       file="Manager Authorization"
       report_type="qweb-pdf"
       paperformat="custom_paperformat_id"
-      print_report_name="(object.name)"
+      print_report_name="'%s - Authorization' % object.name"
     />
 
         <template id="power_sharing_agreement_template">

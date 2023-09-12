@@ -1,5 +1,5 @@
+import base64
 from datetime import datetime
-
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
 
@@ -20,25 +20,26 @@ class Selfconsumption(models.Model):
         for record in self:
             record.inscription_count = len(record.inscription_ids)
 
+    def get_tables_to_use(self):
+        """
+        Returns distribution tables in "process" or "active" state.
+        """
+        process_tables = self.distribution_table_ids.filtered(
+            lambda table: table.state == "process"
+        )
+        active_tables = self.distribution_table_ids.filtered(
+            lambda table: table.state == "active"
+        )
+        return process_tables or active_tables
+
     def _compute_report_distribution_table(self):
         """
         This compute field gets the distribution table needed to generate the reports.
         It prioritizes the table in process and then the active one. It can only be one of each.
         """
         for record in self:
-            table_in_process = record.distribution_table_ids.filtered_domain(
-                [("state", "=", "process")]
-            )
-            table_in_active = record.distribution_table_ids.filtered_domain(
-                [("state", "=", "active")]
-            )
-
-            if table_in_process:
-                record.report_distribution_table = table_in_process
-            elif table_in_active:
-                record.report_distribution_table = table_in_active
-            else:
-                record.report_distribution_table = False
+            tables_to_use = record.get_tables_to_use()
+            record.report_distribution_table = tables_to_use or False
 
     project_id = fields.Many2one(
         "energy_project.project", required=True, ondelete="cascade"
@@ -153,14 +154,9 @@ class Selfconsumption(models.Model):
         ).report_action(self)
 
     def action_manager_partition_coefficient_report(self):
+        tables_to_use = self.get_tables_to_use()
         report_data = []
-        process_tables = self.distribution_table_ids.filtered(
-            lambda table: table.state == "process"
-        )
-        active_tables = self.distribution_table_ids.filtered(
-            lambda table: table.state == "active"
-        )
-        tables_to_use = process_tables or active_tables
+
         for table in tables_to_use:
             for assignation in table.supply_point_assignation_ids:
                 report_data.append(
@@ -177,18 +173,20 @@ class Selfconsumption(models.Model):
 
         date = datetime.now()
         year = date.strftime("%Y")
-        wizard = self.env["energy_selfconsumption.report_wizard"].create(
-            {"report_data": file_content, "file_name": f"{self.code}_{year}.txt"}
+        file_name = f"{self.code}_{year}.txt"
+
+        attachment = self.env["ir.attachment"].create(
+            {
+                "name": file_name,
+                "datas": base64.b64encode(file_content.encode("utf-8")),
+                "type": "binary",
+                "res_model": self._name,
+                "res_id": self.id,
+            }
         )
 
         return {
-            "name": _("Download Partition Coefficient"),
-            "type": "ir.actions.act_window",
-            "res_model": "energy_selfconsumption.report_wizard",
-            "view_mode": "form",
-            "view_id": self.env.ref(
-                "energy_selfconsumption.view_energy_selfconsumption_report_wizard_form"
-            ).id,
-            "res_id": wizard.id,
-            "target": "new",
+            "type": "ir.actions.act_url",
+            "url": f"/web/content/{attachment.id}?download=true",
+            "target": "self",
         }
