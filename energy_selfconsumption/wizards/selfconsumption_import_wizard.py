@@ -236,7 +236,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
         return self.env["energy_selfconsumption.supply_point"].create(
             {
                 "code": line_dict["code"],
-                "name": line_dict["code"],
+                "name": line_dict["street"],
                 "street": line_dict["street"],
                 "street2": line_dict["street2"],
                 "city": line_dict["city"],
