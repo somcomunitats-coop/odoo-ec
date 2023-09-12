@@ -174,6 +174,13 @@ class Selfconsumption(models.Model):
         year = date.strftime("%Y")
         file_name = f"{self.code}_{year}.txt"
 
+        existing_attachments = self.env["ir.attachment"].search(
+            [("res_model", "=", self._name), ("res_id", "=", self.id)]
+        )
+
+        if len(existing_attachments) > 0:
+            existing_attachments.unlink()
+
         attachment = self.env["ir.attachment"].create(
             {
                 "name": file_name,
