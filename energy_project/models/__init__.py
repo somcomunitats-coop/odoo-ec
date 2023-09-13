@@ -1,4 +1,4 @@
 from . import project
 from . import project_type
 from . import inscription
-from . import distributor
+from . import supplier

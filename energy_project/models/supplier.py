@@ -1,7 +1,7 @@
 from odoo import api, fields, models
 
 
-class Distributor(models.Model):
+class Supplier(models.Model):
     _name = "energy_project.distributor"
     _description = "Energy Distributor"
 
