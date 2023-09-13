@@ -20,5 +20,6 @@
         "security/ir_rule_data.xml",
         "views/inscription_views.xml",
         "views/reseller_views.xml",
+        "views/res_config_settings_views.xml",
     ],
 }
