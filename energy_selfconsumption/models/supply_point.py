@@ -53,3 +53,4 @@ class SupplyPoint(models.Model):
         "supply_point_id",
         readonly=True,
     )
+    supplier_id = fields.Many2one("energy_project.supplier", string="Supplier")
