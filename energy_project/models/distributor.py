@@ -3,13 +3,13 @@ from odoo import api, fields, models
 
 class Distributor(models.Model):
     _name = "energy_project.distributor"
-    _description = "Electrical Distributor"
+    _description = "Energy Distributor"
 
-    nif = fields.Char(string="NIF empresa")
-    order = fields.Char(string="Nº de orden")
-    name = fields.Char(string="Nombre empresa")
-    phone = fields.Char(string="Teléfono Att cliente gratuito")
-    portal = fields.Char(string="Portal de medidas")
+    nif = fields.Char(string="NIF empresa", translate=False)
+    order = fields.Char(string="Nº de orden", translate=False)
+    name = fields.Char(string="Nombre empresa", translate=False)
+    phone = fields.Char(string="Teléfono Att cliente gratuito", translate=False)
+    portal = fields.Char(string="Portal de medidas", translate=False)
 
     def _load_records(self, data_list, update=False):
         new_data_list = []
