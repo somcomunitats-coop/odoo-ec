@@ -345,6 +345,18 @@ class CrmLead(models.Model):
             "target": "new",
         }
 
+    def add_follower(self):
+        instance_admin = self.env.ref("energy_communities.role_ce_manager").id
+        company_id = self.company_id.id
+        followers = self.env["res.users"].search(
+            [
+                ("role_line_ids.role_id", "=", instance_admin),
+                ("company_ids.id", "=", company_id),
+            ]
+        )
+        if followers:
+            self.message_subscribe(partner_ids=followers.partner_id.ids)
+
 
 class CrmTags(models.Model):
     _inherit = "crm.tag"

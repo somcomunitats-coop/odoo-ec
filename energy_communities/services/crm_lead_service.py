@@ -35,13 +35,10 @@ class CRMLeadService(Component):
                 target_source_xml_id
             )
             # add followers
-            self.add_follower(self.env["crm.lead"].browse(crm_lead_id))
+            self.env["crm.lead"].browse(crm_lead_id).add_follower()
 
             # send auto responder email and notify admins
-            email_values = {
-                "email_to": params["email_from"],
-                "lang": lang
-            }
+            email_values = {"email_to": params["email_from"], "lang": lang}
 
             if template_external_id:
                 template = self.env.ref(
@@ -86,15 +83,3 @@ class CRMLeadService(Component):
         elif source_xml_id == "ce_source_general_info":
             template_external_id = "email_templ_lead_request_platform_news_confirm_id"
         return template_external_id
-
-    def add_follower(self, crm_lead_id):
-        instance_admin = self.env.ref("energy_communities.role_ce_manager").id
-        company_id = crm_lead_id.company_id.id
-        followers = self.env["res.users"].search(
-            [
-                ("role_line_ids.role_id", "=", instance_admin),
-                ("company_ids.id", "=", company_id)
-            ]
-        )
-        if followers:
-            crm_lead_id.message_subscribe(partner_ids=followers.partner_id.ids)
