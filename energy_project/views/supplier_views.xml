@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
-        <record id="distributor_form_view" model="ir.ui.view">
-            <field name="name">energy_project.distributor.form</field>
-            <field name="model">energy_project.distributor</field>
+        <record id="supplier_form_view" model="ir.ui.view">
+            <field name="name">energy_project.supplier.form</field>
+            <field name="model">energy_project.supplier</field>
             <field name="arch" type="xml">
-                <form string="Distributor">
+                <form string="Supplier">
                     <sheet>
                         <div class="oe_title">
                             <label for="name" />
@@ -26,11 +26,11 @@
             </field>
         </record>
 
-        <record id="distributor_tree_view" model="ir.ui.view">
-            <field name="name">energy_project.distributor.tree</field>
-            <field name="model">energy_project.distributor</field>
+        <record id="supplier_tree_view" model="ir.ui.view">
+            <field name="name">energy_project.supplier.tree</field>
+            <field name="model">energy_project.supplier</field>
             <field name="arch" type="xml">
-                <tree string="Distributor" import="1" create="1">
+                <tree string="Supplier" import="1" create="1">
                     <field name="nif" />
                     <field name="order" />
                     <field name="name" />
@@ -40,14 +40,14 @@
             </field>
         </record>
 
-        <record id="distributor_act_window" model="ir.actions.act_window">
-            <field name="name">Distributor</field>
+        <record id="supplier_act_window" model="ir.actions.act_window">
+            <field name="name">Supplier</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">energy_project.distributor</field>
+            <field name="res_model">energy_project.supplier</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    There are no energy distributors yet, click here to add a new one.
+                    There are no energy supplier yet, click here to add a new one.
                 </p>
             </field>
         </record>
