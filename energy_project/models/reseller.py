@@ -2,7 +2,7 @@ from odoo import api, fields, models
 
 
 class Reseller(models.Model):
-    _name = "energy_selfconsumption.reseller"
+    _name = "energy_project.reseller"
     _description = "Energy Reseller"
 
     order = fields.Char(string="Nº de orden")
@@ -24,7 +24,7 @@ class Reseller(models.Model):
         for data in data_list:
             values = data["values"]
             if values.get("order"):
-                xml_id = "energy_selfconsumption.reseller_%s" % (values.get("order"))
+                xml_id = "energy_project.reseller_%s" % (values.get("order"))
                 new_data_list.append(dict(xml_id=xml_id, values=values, noupdate=True))
             else:
                 new_data_list.append(data)

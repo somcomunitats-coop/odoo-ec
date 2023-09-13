@@ -4,4 +4,3 @@ from . import partner
 from . import distribution_table
 from . import supply_point_assignation
 from . import project
-from . import reseller

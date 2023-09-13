@@ -19,5 +19,6 @@
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
         "views/inscription_views.xml",
+        "views/reseller_views.xml",
     ],
 }
