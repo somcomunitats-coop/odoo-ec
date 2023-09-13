@@ -15,6 +15,7 @@
         "mail",
     ],
     "data": [
+        "data/energy_project.reseller.csv",
         "security/res_groups.xml",
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
