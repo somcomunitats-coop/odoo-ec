@@ -6,7 +6,7 @@ class Reseller(models.Model):
     _description = "Energy Reseller"
 
     """
-    The string values are in spanish so it can be indentified by Odoo when importing direcly the CSV dowloaded from the CNMC.
+    The string values are in spanish so it can be identified by Odoo when importing directly the CSV downloaded from the CNMC.
     This values can be still be translated without problem.
     """
     order = fields.Char(string="Nº de orden")
