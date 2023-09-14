@@ -7,7 +7,7 @@ class Supplier(models.Model):
 
     """
     The string values are in spanish so it can be identified by Odoo when importing directly the CSV downloaded from the CNMC.
-    This values can be still be translated without problem.
+    This values can still be translated without problem.
     """
     nif = fields.Char(string="NIF empresa")
     order = fields.Char(string="Nº de orden")
