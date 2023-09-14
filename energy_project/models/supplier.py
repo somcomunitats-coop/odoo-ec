@@ -5,11 +5,15 @@ class Supplier(models.Model):
     _name = "energy_project.supplier"
     _description = "Energy Supplier"
 
-    nif = fields.Char(string="NIF empresa", translate=False)
-    order = fields.Char(string="Nº de orden", translate=False)
-    name = fields.Char(string="Nombre empresa", translate=False)
-    phone = fields.Char(string="Teléfono gratuito incidencias", translate=False)
-    portal = fields.Char(string="Portal de medidas", translate=False)
+    """
+    The string values are in spanish so it can be identified by Odoo when importing directly the CSV downloaded from the CNMC.
+    This values can be still be translated without problem.
+    """
+    nif = fields.Char(string="NIF empresa")
+    order = fields.Char(string="Nº de orden")
+    name = fields.Char(string="Nombre empresa")
+    phone = fields.Char(string="Teléfono gratuito incidencias")
+    portal = fields.Char(string="Portal de medidas")
 
     def _load_records(self, data_list, update=False):
         new_data_list = []
