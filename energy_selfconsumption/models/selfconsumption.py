@@ -1,4 +1,3 @@
-import base64
 from datetime import datetime
 
 from odoo import _, fields, models
@@ -172,37 +171,20 @@ class Selfconsumption(models.Model):
 
         date = datetime.now()
         year = date.strftime("%Y")
-        file_name = f"{self.code}_{year}.txt"
-
-        existing_attachments = self.env["ir.attachment"].search(
-            [
-                ("res_model", "=", self._name),
-                ("res_id", "=", self.id),
-                ("is_custom_generated", "=", True),
-            ]
+        self.env["energy_selfconsumption.coefficient_report"].create(
+            {"report_data": file_content, "file_name": f"{self.code}_{year}.txt"}
         )
-
-        if len(existing_attachments) > 0:
-            existing_attachments.unlink()
-
-        attachment = self.env["ir.attachment"].create(
-            {
-                "name": file_name,
-                "datas": base64.b64encode(file_content.encode("utf-8")),
-                "type": "binary",
-                "res_model": self._name,
-                "res_id": self.id,
-                "is_custom_generated": True,
-            }
-        )
-
+        url = "/energy_selfconsumption/download_report?id=%s" % self.id
         return {
             "type": "ir.actions.act_url",
-            "url": f"/web/content/{attachment.id}?download=true",
+            "url": url,
             "target": "self",
         }
 
 
-class IrAttachment(models.Model):
-    _inherit = "ir.attachment"
-    is_custom_generated = fields.Boolean(string="Is custom generated", default=False)
+class CoefficientReport(models.TransientModel):
+    _name = "energy_selfconsumption.coefficient_report"
+    _description = "Generate Partition Coefficient Report"
+
+    report_data = fields.Text("Report Data", readonly=True)
+    file_name = fields.Char("File Name", readonly=True)
