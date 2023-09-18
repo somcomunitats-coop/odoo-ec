@@ -28,6 +28,7 @@ class Client:
         """
         headers = {
             "Authorization": token,
+            "Content-Type": "application/json"
         }
         return self._send_request(
             verb="POST",
@@ -48,6 +49,7 @@ class Client:
         """
         headers = {
             "Authorization": token,
+            "Content-Type": "application/json"
         }
         return self._send_request(
             verb="PUT", url=self._format_url(route), payload=body, extra_headers=headers
