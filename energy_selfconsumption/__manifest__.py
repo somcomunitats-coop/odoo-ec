@@ -15,6 +15,7 @@
         "mail",
         "energy_project",
         "partner_firstname",
+        "web_m2x_options",
     ],
     "data": [
         "security/ir.model.access.csv",

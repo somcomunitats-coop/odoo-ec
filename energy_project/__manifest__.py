@@ -16,11 +16,14 @@
     ],
     "data": [
         "data/energy_project.reseller.csv",
+        "data/energy_project.supplier.csv",
         "security/res_groups.xml",
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
         "views/inscription_views.xml",
         "views/reseller_views.xml",
         "views/res_config_settings_views.xml",
+        "views/supplier_views.xml",
+        "views/res_config_settings_extension.xml",
     ],
 }
