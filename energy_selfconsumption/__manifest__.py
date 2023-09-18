@@ -23,6 +23,7 @@
         "data/project_type_data.xml",
         "data/ir_sequence_data.xml",
         "data/ir_attactment_data.xml",
+        "data/custom_paper_format_views.xml",
         "views/selfconsumption_views.xml",
         "views/supply_point_views.xml",
         "views/res_partner_views.xml",
@@ -30,5 +31,6 @@
         "views/supply_point_assignation_views.xml",
         "wizards/selfconsumption_import_wizard_views.xml",
         "wizards/distribution_table_import_wizard_views.xml",
+        "reports/selfconsumption_reports.xml",
     ],
 }

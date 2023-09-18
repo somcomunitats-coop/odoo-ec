@@ -51,6 +51,25 @@
               string="Import inscriptions and supply points"
               attrs="{'invisible':[('state','not in',['draft', 'inscription'])]}"
             />
+                        <button
+              type="object"
+              name="action_manager_authorization_report"
+              string="Download Self-consumption Manager Authorization"
+              attrs="{'invisible':[('state','not in',['activation', 'active'])]}"
+            />
+                        <button
+              type="object"
+              name="action_power_sharing_agreement_report"
+              string="Download Power Sharing Agreement"
+              attrs="{'invisible':[('state','not in',['activation', 'active'])]}"
+            />
+                        <button
+              type="object"
+              name="action_manager_partition_coefficient_report"
+              string="Download Partition Coefficient"
+              attrs="{'invisible':[('state','not in',['activation', 'active'])]}"
+            />
+
                         <field
               name="state"
               widget="statusbar"
