@@ -22,6 +22,10 @@
                   options="{'no_create': True}"
                 />
                                 <field name="owner_id" />
+                                <field
+                  name="supplier_id"
+                  options="{'no_create': True, 'no_edit':True, 'no_open': True}"
+                />
                             </group>
                             <group>
                                 <span
