@@ -38,6 +38,30 @@
                                 </div>
                             </div>
                         </div>
+                        <h2>Supplier</h2>
+                        <div
+              class="row mt16 o_settings_container"
+              name="supplier_setting_container"
+            >
+                            <div
+                class="col-12 col-lg-6 o_setting_box"
+                id="active_supplier_setting"
+              >
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">
+                                        Supplier
+                                    </span>
+                                    <br />
+                                    <button
+                    string="Manage Supplier"
+                    type="action"
+                    icon="fa-arrow-right"
+                    class="btn-link o_web_settings_access_rights"
+                    name="energy_project.supplier_act_window"
+                  />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </xpath>
             </field>
