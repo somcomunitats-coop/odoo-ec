@@ -31,7 +31,9 @@ class SupplyPoint(models.Model):
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
     )
-    reseller_id = fields.Many2one("energy_project.reseller", string="Reseller")
+    reseller_id = fields.Many2one(
+        "energy_project.reseller", string="Reseller", domain=[("state", "!=", "Baja")]
+    )
 
     # Address fields
     street = fields.Char(required=True)
