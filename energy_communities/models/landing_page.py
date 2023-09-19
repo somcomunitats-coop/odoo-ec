@@ -142,8 +142,8 @@ class LandingPage(models.Model):
                 password = instance_company.wordpress_db_password
                 auth = Authenticate(baseurl, username, password).authenticate()
                 token = "Bearer %s" % auth["token"]
-                landing_page_data = record.to_dict()["landing"]
-                landing_page_data["status"] = new_status
+                landing_page_data = record.to_dict()
+                landing_page_data["landing"]["status"] = new_status
                 LandingPageResource(token, baseurl, record.wp_landing_page_id).update(
                     landing_page_data
                 )
