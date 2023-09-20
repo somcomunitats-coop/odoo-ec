@@ -15,9 +15,7 @@ class LandingPage:
         Creates a Landing Page instance.
         """
         response_data = Client(self.baseurl).post(
-            "{}".format(self._url_path),
-            self.token,
-            body
+            "{}".format(self._url_path), self.token, body
         )
         return response_data
 
@@ -26,12 +24,9 @@ class LandingPage:
         Updates a Landing Page instance.
         """
         response_data = Client(self.baseurl).put(
-            "{url_path}/{id}".format(
-                url_path=self._url_path,
-                id=self.id
-            ),
+            "{url_path}/{id}".format(url_path=self._url_path, id=self.id),
             self.token,
-            body
+            body,
         )
 
         return response_data

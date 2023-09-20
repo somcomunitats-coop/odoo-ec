@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="selfconsumption_manager_authorization_template">
+            <t t-call="web.html_container">
+                <style>
+                    p {
+                        font-size: 14px;
+                        line-height: 1.7;
+                        font-family: "Calibri";
+                    }
+
+                    p-footer {
+                        font-size: 8px;
+                    }
+
+                    sup {
+                        font-size: 10px;
+                    }
+
+                    table {
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+
+                    th, td {
+                        border: 1px solid black;
+                        padding: 8px;
+                        text-align: center;
+                    }
+
+                    .pageBreak {
+                        page-break-before: always;
+                    }
+                </style>
+                <t t-foreach="docs" t-as="o">
+                    <div>
+                        <div>
+                            <p
+                style="font-size:13.6;font-weight: bold;text-align:center;"
+              >MODELO DE AUTORIZACIÓN PARA EL GESTOR DEL AUTOCONSUMO COLECTIVO</p>
+                            <p
+              >Los consumidores asociados firmantes en el Anexo I otorgan poder de representación a:</p>
+                            <p>D./D<sup>2</sup></p>
+                            <p>Con CIF/NIF<span
+                  style="margin-left:180px"
+                >y domicilio en (Municipio)</span></p>
+                            <p>(Vía pública y nº)</p>
+                            <p>Con email</p>
+                            <p>y teléfono(s) de contacto</p>
+                            <p
+              >Hasta la fecha: ________/_________/20_______ y prorrogable anualmente, <b
+                >PARA:</b></p>
+                            <p
+              >Actuar por cuenta ajena en calidad de GESTOR DEL AUTOCONSUMO COLECTIVO identificado con
+                                Código de Autoconsumo Colectivo</p>
+                            <p><b>(CAU): </b><span t-field="o.code" /></p>
+                            <p>Inscrito bajo la <b
+                >modalidad de autoconsumo</b> (escoger una opción):</p>
+                            <ul
+                style="list-style-type:circle;line-height:1.7;margin-left:0px"
+              >
+                                <li
+                >Con excedentes y acogidos a compensación simplificada en factura</li>
+                                <li
+                >Con excedentes NO acogidos a compensación simplificada</li>
+                                <li
+                >Sin excedentes y acogidos a compensación simplificada</li>
+                            </ul>
+                            <br />
+                            <p>Con <b
+                >atribuciones</b> para solicitar exclusivamente las siguientes gestiones ante la(s)
+                                comercializadora(s) actual(es) de cada uno de los consumidores asociados:</p>
+                            <br />
+                            <ol>
+                                <li><p>Solicitud de adaptación<sup
+                    >3</sup> del contrato de suministro a la modalidad de autoconsumo y aportación de la
+                                    documentación requerida a tal efecto:</p>
+                                    <p
+                    style="margin-left:26px"
+                  >- Certificado de Instalación Eléctrica /documento técnico requerido en cada
+                                        CCAA</p>
+                                    <p
+                    style="margin-left:26px"
+                  >- Acuerdo de Reparto firmado por los participantes del autoconsumo colectivo</p>
+                                    <p
+                    style="margin-left:26px"
+                  >- Fichero TXT donde figuren los coeficientes de reparto fijos o variables según
+                                        establece la Orden TED 1247/2021</p>.
+                                </li>
+                            </ol>
+                            <hr
+                style="margin-left: 0px; width:240px; margin-top:120px"
+              />
+                            <p style="font-size:13px;line-height:1;"><sup
+                >2</sup>Razón Social, nombre y apellidos del Gestor del Autoconsumo Colectivo.</p>
+                            <p style="font-size:13px;line-height:1.2;"><sup
+                >3</sup>Tras aportar correctamente la documentación, según establece la normativa, la
+                                comercializadora de cada consumidor asociado al autoconsumo colectivo gestionará con la
+                                distribuidora la modificación del contrato de ATR de cada consumidor, quedando activada
+                                la modalidad de autoconsumo en el contrato de suministro del cliente.</p>
+                        </div>
+                        <div>
+                            <ol start="2">
+                                <li>
+                                    <p>
+                                        Comunicación de cualquier modificación<sup
+                    >4</sup> que se produzca en los coeficientes de reparto–siempre
+                                        realizada por acuerdo entre todos los consumidores asociados-, en los términos
+                                        que vienen definidos en
+                                        la Orden TED 1247/2021. Para ello, deberá aportar:
+                                    </p>
+                                    <p
+                    style="margin-left:26px"
+                  >- Nuevo fichero TXT de coeficientes de reparto</p>
+                                    <p
+                    style="margin-left:26px"
+                  >- Acuerdo de reparto modificado</p>
+                                </li>
+
+                                <li>
+                                    <p>
+                                        Dar de baja a los consumidores que incumplan los compromisos establecidos entre
+                                        los consumidores
+                                        asociados al autoconsumo colectivo y dar de alta<sup
+                    >5</sup> a los consumidores que se incorporen al autoconsumo
+                                        colectivo, adaptando en cualquier caso sus contratos de suministro con su
+                                        comercializadora actual y
+                                        reflejándolo en el Anexo I de este documento.
+                                    </p>
+                                </li>
+
+                                <li>
+                                    <p>
+                                        El GESTOR DEL AUTOCONSUMO COLECTIVO declara y garantiza que cuenta con la
+                                        autorización de cada
+                                        uno de los consumidores asociados, y les ha informado de que sus datos se
+                                        comunicarán, a su
+                                        correspondiente comercializadora, para tratarlos de conformidad con lo previsto
+                                        en el Real Decreto
+                                        244/2019, de 5 de abril, por el que se regulan las condiciones administrativas,
+                                        técnicas y económicas del
+                                        autoconsumo de energía eléctrica y con lo previsto en la Orden TED 1247/2017. En
+                                        todo caso, el GESTOR
+                                        DE AUTOCONSUMO COLECTIVO también ha informado a los consumidores de cómo y dónde
+                                        pueden
+                                        obtener más información sobre el tratamiento de sus datos llevado a cabo por su
+                                        comercializadora actual
+                                        incluida la forma en que pueden ejercer sus derechos en la web de su
+                                        comercializadora actual.
+                                    </p>
+                                </li>
+
+                                <li>
+                                    <p>
+                                        Esta manifestación es fiel y auténtica, y en virtud de ésta, el GESTOR DEL
+                                        AUTOCONSUMO COLECTIVO
+                                        asume todas las responsabilidades legales derivadas de toda falsedad u omisión,
+                                        con indemnidad para
+                                        las comercializadoras actuales de cada uno de los consumidores asociados.
+                                    </p>
+                                </li>
+                            </ol>
+                            <br />
+                            <p>Fecha:<t t-esc="time.strftime('%d-%m-%Y')" /></p>
+                            <br />
+                            <p
+              >Firma electrónica del Gestor del Autoconsumo Colectivo</p>
+                            <hr
+                style="margin-left: 0px; width:240px; margin-top:260px"
+              />
+                            <p style="font-size:12px">
+                                <sup
+                >4</sup>Las modificaciones en los coeficientes de reparto pueden obedecer a: (1)
+                                modificaciones sin alteración en los consumidores asociados al colectivo, (2) bajas y/o
+                                altas de nuevos consumidores asociados.<br />
+                                <sup
+                >5</sup>Se entenderá por nuevas altas solo a los nuevos CUPS; los cambios de titular
+                                sobre CUPS existentes se subrogarán al acuerdo de reparto existente, con lo que no hará
+                                falta modificar ni fichero txt ni acuerdo de reparto, salvo que se modifiquen también
+                                los coeficientes de reparto.
+                            </p>
+                        </div>
+                        <div>
+                            <p style="margin-left:50px"><b
+                >ANEXO I: CONSUMIDORES ASOCIADOS QUE OTORGAN PODER DE REPRESENTACIÓN (1)</b></p>
+                            <p
+              >Los siguientes consumidores asociados abajo firmantes otorgan el poder de representación al
+                                Gestor del Autoconsumo Colectivo:</p>
+                            <table>
+                                <tr>
+                                    <th
+                    style="width: 280px;background-color: #BEBEBE;"
+                  >NOMBRE Y APELLIDOS (titular del suministro)</th>
+                                    <th
+                    style="width: 150px;background-color: #BEBEBE;"
+                  >NIF</th>
+                                    <th
+                    style="width: 180px;background-color: #BEBEBE;"
+                  >CUPS</th>
+                                    <th
+                    style="width: 150px;background-color: #BEBEBE;"
+                  >FIRMA</th>
+                                </tr>
+                                <t t-if="o.report_distribution_table">
+                                    <t t-set="index" t-value="1" />
+                                    <t
+                    t-foreach="o.report_distribution_table.supply_point_assignation_ids"
+                    t-as="supply_point"
+                  >
+                                        <tr style="height:100px">
+                                            <td style="margin-left:50px"><t
+                          t-esc="supply_point.supply_point_id.partner_id.name"
+                        /></td>
+                                            <td><t
+                          t-esc="supply_point.supply_point_id.partner_id.vat"
+                        /></td>
+                                            <td><t
+                          t-esc="supply_point.supply_point_id.code"
+                        /></td>
+                                            <td />
+                                        </tr>
+                                        <t t-set="index" t-value="index+1" />
+                                    </t>
+                                </t>
+                            </table>
+                            <p
+                style="margin-top:180px;margin-bottom:400px"
+              >Firma electrónica del Gestor del Autoconsumo Colectivo:</p>
+                            <div class="pageBreak" />
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <report
+      id="selfconsumption_manager_authorization_report"
+      string="Self-consumption Manager Report"
+      name="energy_selfconsumption.selfconsumption_manager_authorization_template"
+      model="energy_selfconsumption.selfconsumption"
+      file="Manager Authorization"
+      report_type="qweb-pdf"
+      paperformat="custom_paperformat_id"
+      print_report_name="'%s - Authorization' % object.name"
+    />
+
+        <template id="power_sharing_agreement_template">
+            <t t-call="web.html_container">
+                <style>
+                    p {
+                        font-size: 15.3px;
+                        line-height: 1.7;
+                        font-family: "Calibri";
+                        text-align: justify;
+                    }
+
+                    table, th, td {
+                        border: 1px solid;
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+
+                    th {
+                        background: lightgrey;
+                    }
+                </style>
+                <t t-foreach="docs" t-as="o">
+                    <h5>
+                        <center>
+                            ACUERDO DE REPARTO DE ENERGÍA DE AUTOCONSUMO COLECTIVO
+                            <br />
+                            INSTALACIONES CON EXCEDENTES
+                            <br />
+                            ACOGIDAS A COMPENSACIÓN
+                        </center>
+                    </h5>
+                    <p>
+                        En aplicación del Real Decreto 244/2019 de 5 de abril, los siguientes consumidores acordamos
+                        asociarnos a la instalación de <b
+            >autoconsumo colectivo de energía eléctrica</b> con las
+                        siguientes
+                        características:
+                    </p>
+
+                    <input class="form-check-input" type="checkbox" checked="checked" />
+                    <label><b>CON excedentes acogida a compensación</b></label>
+                    <br />
+                    <br />
+                    <table>
+                        <tr>
+                            <td><b>CÓDIGO DE AUTOCONSUMO (CAU)</b></td>
+                            <td><span t-field="o.code" /></td>
+                        </tr>
+                    </table>
+                    <p>(Completar para cada consumidor asociado)</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: auto" />
+                                <th><b>CONSUMIDOR ASOCIADO</b><br />
+                                    (titular del suministro)</th>
+                                <th><b>NIF</b></th>
+                                <th><b>CUPS</b></th>
+                                <th><b>COEFICIENTE DE REPARTO (ß)</b></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-if="o.report_distribution_table">
+                                <t t-set="index" t-value="1" />
+                                <t
+                  t-foreach="o.report_distribution_table.supply_point_assignation_ids"
+                  t-as="supply_point"
+                >
+                                    <tr>
+                                        <td style="width: auto"><t t-esc="index" /></td>
+                                        <td><t
+                        t-esc="supply_point.supply_point_id.owner_id.name"
+                      /></td>
+                                        <td><t
+                        t-esc="supply_point.supply_point_id.owner_id.vat"
+                      /></td>
+                                        <td><t
+                        t-esc="supply_point.supply_point_id.code"
+                      /></td>
+                                        <td style="text-align: right"><t
+                        t-esc="supply_point.coefficient"
+                      /></td>
+                                    </tr>
+                                    <t t-set="index" t-value="index+1" />
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                    <p
+          >(Si existen varios productores con instalaciones de generación asociadas al autoconsumo, completar
+                        para cada uno de ellos)</p>
+                    <table>
+                        <tr>
+                            <th><b>PRODUCTOR ASOCIADO</b><br />
+                                (titular de la instalación de generación)</th>
+                            <th>NIF</th>
+                            <th>CIL</th>
+                            <th>COEFICIENTE (α)</th>
+                        </tr>
+
+                        <t t-if="o.owner_id and o.cil">
+                            <tr>
+                                <td><t t-esc="o.owner_id.name" /></td>
+                                <td><t t-esc="o.owner_id.vat" /></td>
+                                <td><t t-esc="o.cil" /></td>
+                                <td style="text-align: right;">1</td>
+                            </tr>
+                        </t>
+                    </table>
+                    <p>Con la firma del presente acuerdo, los consumidores <b
+            > nos acogemos voluntariamente al
+                        mecanismo de compensación simplificada </b> entre los déficits del consumo de cada consumidor
+                        y la totalidad de los excedentes de la instalación de autoconsumo, tal como establece el Real
+                        Decreto 244/2019, de 5 de abril.</p>
+                    <p>
+                        Les rogamos reciban esta comunicación y procedan a realizar los trámites necesarios.
+                    </p>
+                    <p>
+                        Del mismo modo, les solicitamos la aplicación del mecanismo de compensación simplificada de
+                        los excedentes de la instalación de autoconsumo a la que nos asociamos, y el inicio del
+                        mecanismo de compensación en el siguiente periodo de facturación desde la recepción de este
+                        acuerdo.
+                    </p>
+                    <p>
+                        <t
+              t-set="today"
+              t-value=" context_timestamp(datetime.datetime.now())"
+            />
+                        En <span t-field="o.city" />, a <t
+              t-esc="today.strftime('%d/%m/%Y')"
+            />
+                    </p>
+                    <p>Los <b>CONSUMIDORES</b> asociados:</p>
+                    <p>(Completar para cada consumidor asociado)</p>
+                    <table>
+                        <tr>
+                            <th style="width: auto" />
+                            <th><b>CONSUMIDOR ASOCIADO</b><br /></th>
+                            <th><b>NIF</b></th>
+                            <th><b>FIRMA</b></th>
+                        </tr>
+                        <t t-if="o.report_distribution_table">
+                            <t t-set="index" t-value="1" />
+                            <t
+                t-foreach="o.report_distribution_table.supply_point_assignation_ids"
+                t-as="supply_point"
+              >
+                                <tr>
+                                    <td style="width: auto"><t t-esc="index" /></td>
+                                    <td><t
+                      t-esc="supply_point.supply_point_id.owner_id.name"
+                    /></td>
+                                    <td><t
+                      t-esc="supply_point.supply_point_id.owner_id.vat"
+                    /></td>
+                                    <td>
+                                        <div style="height: 100px; width: 200px;" />
+                                    </td>
+                                </tr>
+                                <t t-set="index" t-value="index+1" />
+                            </t>
+                        </t>
+                    </table>
+                    <p>Los <b>PRODUCTORES</b> asociados:</p>
+                    <p>(Completar para cada productor asociado)</p>
+                    <table>
+                        <tr>
+                            <th><b>PRODUCTOR ASOCIADO</b><br /></th>
+                            <th><b>NIF</b></th>
+                            <th><b>FIRMA</b></th>
+                        </tr>
+                        <t t-if="o.owner_id">
+                            <tr>
+                                <td><t t-esc="o.owner_id.name" /></td>
+                                <td><t t-esc="o.owner_id.vat" /></td>
+                                <td><div style="height: 100px; width: 200px;" /></td>
+                            </tr>
+                        </t>
+                    </table>
+                </t>
+            </t>
+        </template>
+
+        <report
+      id="power_sharing_agreement_report"
+      string="Power Sharing Agreement Report"
+      name="energy_selfconsumption.power_sharing_agreement_template"
+      model="energy_selfconsumption.selfconsumption"
+      file="Power Sharing Agreement"
+      report_type="qweb-pdf"
+      paperformat="custom_paperformat_id"
+      print_report_name="'%s - Power Sharing Agreement' % object.name"
+    />
+
+    </data>
+</odoo>

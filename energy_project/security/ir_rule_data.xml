@@ -5,7 +5,7 @@
         <field name="model_id" ref="energy_project.model_energy_project_project" />
         <field name="global" eval="True" />
         <field
-            name="domain_force"
-        >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+      name="domain_force"
+    >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
     </record>
 </odoo>

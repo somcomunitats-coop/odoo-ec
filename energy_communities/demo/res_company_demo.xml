@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="base.main_company" model="res.company">
+            <field name="name">Som Comunitats</field>
+            <field name="hierarchy_level">instance</field>
+            <field name="email">somcomunitats@fake.com</field>
+            <field name="coop_email_contact">somcomunitats@coop.coop</field>
+        </record>
+
+        <record id="coordinator_company" model="res.company">
+            <field name="name">OECoop</field>
+            <field name="hierarchy_level">coordinator</field>
+            <field name="parent_id" ref="base.main_company" />
+            <field name="email">oecoop@fake.com</field>
+            <field name="coop_email_contact">oecoop@coop.coop</field>
+        </record>
+
+        <function name="try_loading" model="account.chart.template">
+            <value eval="[ref('l10n_es.account_chart_template_pymes')]" />
+            <value eval="obj(ref('coordinator_company'))" model="res.company" />
+        </function>
+
+        <record
+      id="energy_community_company_1_wizard"
+      model="account.multicompany.easy.creation.wiz"
+    >
+            <field name="name">Comunitat Energètica Sants</field>
+            <field name="parent_id" ref="coordinator_company" />
+            <field name="capital_share">100</field>
+            <field
+        name="chart_template_id"
+        ref="l10n_es.account_chart_template_pymes"
+      />
+            <field
+        name="property_cooperator_account"
+        ref="l10n_es.account_common_4300"
+      />
+        </record>
+
+        <!-- action_accept method expects singletons, so it must be called for every community company-->
+        <function
+      name="action_accept"
+      model="account.multicompany.easy.creation.wiz"
+      eval="[[ref('energy_community_company_1_wizard')]]"
+    />
+
+        <function
+      name="set_cooperator_journal"
+      model="account.multicompany.easy.creation.wiz"
+      eval="[[ref('energy_community_company_1_wizard')]]"
+    />
+
+
+        <function name="write" model="res.company">
+            <value
+        model="account.multicompany.easy.creation.wiz"
+        eval="[obj(ref('energy_community_company_1_wizard')).new_company_id.id]"
+      />
+            <value
+        eval="{'coop_email_contact':'sants@coop.coop',
+            'email':'sants@fake.com',
+            'default_lang_id': ref('base.lang_ca_ES')}"
+      />
+        </function>
+
+
+
+        <record
+      id="energy_community_company_2_wizard"
+      model="account.multicompany.easy.creation.wiz"
+    >
+            <field name="name">Comunitat Energètica Villanoveta</field>
+            <field name="parent_id" ref="coordinator_company" />
+            <field name="capital_share">100</field>
+            <field
+        name="chart_template_id"
+        ref="l10n_es.account_chart_template_pymes"
+      />
+            <field
+        name="property_cooperator_account"
+        ref="l10n_es.account_common_4300"
+      />
+        </record>
+
+        <function
+      name="action_accept"
+      model="account.multicompany.easy.creation.wiz"
+      eval="[[ref('energy_community_company_2_wizard')]]"
+    />
+
+        <function
+      name="set_cooperator_journal"
+      model="account.multicompany.easy.creation.wiz"
+      eval="[[ref('energy_community_company_2_wizard')]]"
+    />
+
+                <function name="write" model="res.company">
+            <value
+        model="account.multicompany.easy.creation.wiz"
+        eval="[obj(ref('energy_community_company_2_wizard')).new_company_id.id]"
+      />
+            <value
+        eval="{'coop_email_contact':'villanoveta@coop.coop',
+            'email':'villanoveta@fake.com',
+            'default_lang_id': ref('base.lang_es')}"
+      />
+        </function>
+
+
+        <record
+      id="energy_community_company_3_wizard"
+      model="account.multicompany.easy.creation.wiz"
+    >
+            <field name="name">Comunitat Energètica Salt</field>
+            <field name="parent_id" ref="coordinator_company" />
+            <field name="capital_share">100</field>
+            <field
+        name="chart_template_id"
+        ref="l10n_es.account_chart_template_pymes"
+      />
+            <field
+        name="property_cooperator_account"
+        ref="l10n_es.account_common_4300"
+      />
+        </record>
+
+        <function
+      name="action_accept"
+      model="account.multicompany.easy.creation.wiz"
+      eval="[[ref('energy_community_company_3_wizard')]]"
+    />
+
+        <function
+      name="set_cooperator_journal"
+      model="account.multicompany.easy.creation.wiz"
+      eval="[[ref('energy_community_company_3_wizard')]]"
+    />
+
+                <function name="write" model="res.company">
+            <value
+        model="account.multicompany.easy.creation.wiz"
+        eval="[obj(ref('energy_community_company_3_wizard')).new_company_id.id]"
+      />
+            <value
+        eval="{'coop_email_contact':'salt@coop.coop',
+            'email':'salt@fake.com',
+            'default_lang_id': ref('base.lang_eu_ES')}"
+      />
+        </function>
+    </data>
+</odoo>

@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="subscription_1_community_1_demo" model="subscription.request">
+            <field name="firstname">Ignacio</field>
+            <field name="lastname">Mora Herrera</field>
+            <field name="vat">43549978F</field>
+            <field name="birthdate">1997-06-03</field>
+            <field name="gender">male</field>
+            <field name="email">ignacio@fake.com</field>
+            <field name="phone">603903268</field>
+            <field name="iban">ES4734051800397702714765</field>
+            <field name="address">C. de Sta. Catalina, 55</field>
+            <field name="zip_code">08014</field>
+            <field name="city">Barcelona</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=12)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">es_ES</field>
+            <field name="state">draft</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_1_community_1_demo')]"
+    />
+
+        <!--The method action_invoice_paid does not create the payment, but it sets the cooperator logic that we need in this demo
+        #TODO see how we can pay invoices from data-->
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_1_community_1_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_2_community_1_demo" model="subscription.request">
+            <field name="firstname">Jessica</field>
+            <field name="lastname">Tirado Ruvalcaba</field>
+            <field name="vat">Y6415494A</field>
+            <field name="birthdate">1938-05-04</field>
+            <field name="gender">female</field>
+            <field name="email">jessica@fake.com</field>
+            <field name="phone">797428030</field>
+            <field name="iban">ES2320384438711294132854</field>
+            <field name="address">Carrer de Robrenyo, 9-1</field>
+            <field name="zip_code">08014</field>
+            <field name="city">Barcelona</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=12)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">es_ES</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_2_community_1_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_2_community_1_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_3_community_1_demo" model="subscription.request">
+            <field name="firstname">Ester</field>
+            <field name="lastname">Ojeda Hurtado</field>
+            <field name="vat">X9855477T</field>
+            <field name="birthdate">1996-04-21</field>
+            <field name="gender">female</field>
+            <field name="email">ester@fake.com</field>
+            <field name="phone">698452284</field>
+            <field name="iban">ES3814659665117314353895</field>
+            <field name="address">C/ de Salou, 8</field>
+            <field name="zip_code">08014</field>
+            <field name="city">Barcelona</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=8)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">es_ES</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_3_community_1_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_3_community_1_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_4_community_1_demo" model="subscription.request">
+            <field name="firstname">Marc</field>
+            <field name="lastname">Ortiz Espinosa</field>
+            <field name="vat">21948576K</field>
+            <field name="birthdate">1944-02-14</field>
+            <field name="gender">not_share</field>
+            <field name="email">marc@fake.com</field>
+            <field name="phone">754270202</field>
+            <field name="iban">ES7400815426001346777954</field>
+            <field name="address">C/ de Cerdanyola</field>
+            <field name="zip_code">08028</field>
+            <field name="city">Barcelona</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=2)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">es_ES</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_4_community_1_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_4_community_1_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_5_community_1_demo" model="subscription.request">
+            <field name="firstname">Laura</field>
+            <field name="lastname">Gurule Torres</field>
+            <field name="vat">26309903L</field>
+            <field name="birthdate">2003-05-28</field>
+            <field name="gender">not_binary</field>
+            <field name="email">laura@fake.com</field>
+            <field name="phone">753292718</field>
+            <field name="iban">ES8220388558284295991472</field>
+            <field name="address">Carrer del Rosés, 36.B</field>
+            <field name="zip_code">08028</field>
+            <field name="city">Barcelona</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=1)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">es_ES</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_5_community_1_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_5_community_1_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_6_community_1_demo" model="subscription.request">
+            <field name="firstname">Rufino</field>
+            <field name="lastname">Menchaca Vázquez</field>
+            <field name="vat">13922435Y</field>
+            <field name="birthdate">1943-12-21</field>
+            <field name="gender">male</field>
+            <field name="email">rufino@fake.com</field>
+            <field name="phone">762698037</field>
+            <field name="iban">ES2904875236763496295567</field>
+            <field name="address">Carrer de Badalona, 27-17</field>
+            <field name="zip_code">08014</field>
+            <field name="city">Barcelona</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=3)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">es_ES</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_6_community_1_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_6_community_1_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_7_community_1_demo" model="subscription.request">
+            <field name="firstname">Nataly</field>
+            <field name="lastname">Gamboa Barragán</field>
+            <field name="vat">Z7891647F</field>
+            <field name="birthdate">1988-12-27</field>
+            <field name="gender">female</field>
+            <field name="email">nataly@fake.com</field>
+            <field name="phone">675666845</field>
+            <field name="iban">ES0330047219108724513136</field>
+            <field name="address">Carrer del Vallespir</field>
+            <field name="zip_code">08014</field>
+            <field name="city">Barcelona</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=6)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">ca_ES</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_7_community_1_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_7_community_1_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_8_community_1_demo" model="subscription.request">
+            <field name="firstname">Ana</field>
+            <field name="lastname">Romo Padilla</field>
+            <field name="vat">05321311P</field>
+            <field name="birthdate">1962-10-17</field>
+            <field name="gender">female</field>
+            <field name="email">ana@fake.com</field>
+            <field name="phone">690432088</field>
+            <field name="iban">ES7831906761611617235886</field>
+            <field name="address">Carrer de Robrenyo, 30</field>
+            <field name="zip_code">08014</field>
+            <field name="city">Barcelona</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=2)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">eu_ES</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_8_community_1_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_8_community_1_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_9_community_1_demo" model="subscription.request">
+            <field name="firstname">John</field>
+            <field name="lastname">Zepeda Cervántez</field>
+            <field name="vat">X4259691E</field>
+            <field name="birthdate">1962-07-22</field>
+            <field name="gender">male</field>
+            <field name="email">john@fake.com</field>
+            <field name="phone">763982973</field>
+            <field name="iban">ES1620808978136239877242</field>
+            <field name="address">Carrer d'Olzinelles, 91</field>
+            <field name="zip_code">08014</field>
+            <field name="city">Barcelona</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=5)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">es_ES</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_9_community_1_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_9_community_1_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_10_community_1_demo" model="subscription.request">
+            <field name="firstname">Ampelio</field>
+            <field name="lastname">Guillén Terán</field>
+            <field name="vat">15914625M</field>
+            <field name="birthdate">1973-08-12</field>
+            <field name="gender">male</field>
+            <field name="email">ampelio@fake.com</field>
+            <field name="phone">605893273</field>
+            <field name="iban">ES0501286321203358824444</field>
+            <field name="address">Carrer de Sagunt, 40</field>
+            <field name="zip_code">08014</field>
+            <field name="city">Barcelona</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=5)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">ca_ES</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_10_community_1_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_10_community_1_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_1_community_2_demo" model="subscription.request">
+            <field name="firstname">Josep</field>
+            <field name="lastname">Galván Arce</field>
+            <field name="vat">35860250F</field>
+            <field name="birthdate">1942-03-24</field>
+            <field name="gender">male</field>
+            <field name="email">josep@fake.com</field>
+            <field name="phone">774960502</field>
+            <field name="iban">ES8700815834341438986552</field>
+            <field name="address">Carrer de la Dra. Castells</field>
+            <field name="zip_code">25001</field>
+            <field name="city">Lleida</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=1)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">es_ES</field>
+            <field name="state">draft</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_1_community_2_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_1_community_2_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_2_community_2_demo" model="subscription.request">
+            <field name="firstname">Benjamí</field>
+            <field name="lastname">Tórrez Loera</field>
+            <field name="vat">68229623P</field>
+            <field name="birthdate">1987-01-11</field>
+            <field name="gender">male</field>
+            <field name="email">benjami@fake.com</field>
+            <field name="phone">685525827</field>
+            <field name="iban">ES4930046348057489485658</field>
+            <field name="address">Carrer Mequinensa, 6-8</field>
+            <field name="zip_code">25001</field>
+            <field name="city">Lleida</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=3)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">es_ES</field>
+            <field name="state">draft</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_2_community_2_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_2_community_2_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_3_community_2_demo" model="subscription.request">
+            <field name="firstname">Marta</field>
+            <field name="lastname">Saavedra Negrón</field>
+            <field name="vat">22984129E</field>
+            <field name="birthdate">2001-09-22</field>
+            <field name="gender">female</field>
+            <field name="email">marta@fake.com</field>
+            <field name="phone">771109213</field>
+            <field name="iban">ES1301829331298862657882</field>
+            <field name="address">Carrer Bellavista, 46</field>
+            <field name="zip_code">25001</field>
+            <field name="city">Lleida</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=9)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">es_ES</field>
+            <field name="state">draft</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_3_community_2_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_3_community_2_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_4_community_2_demo" model="subscription.request">
+            <field name="firstname">Sandra</field>
+            <field name="lastname">Mercado Cano</field>
+            <field name="vat">44213606Q</field>
+            <field name="birthdate">1964-12-19</field>
+            <field name="gender">female</field>
+            <field name="email">sandra@fake.com</field>
+            <field name="phone">774577692</field>
+            <field name="iban">ES2721005212985538941126</field>
+            <field name="address">Carrer de Manuel Carrasco i Formiguera, 11</field>
+            <field name="zip_code">25001</field>
+            <field name="city">Lleida</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=3)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">es_ES</field>
+            <field name="state">draft</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_4_community_2_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_4_community_2_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_5_community_2_demo" model="subscription.request">
+            <field name="firstname">Manel</field>
+            <field name="lastname">Cardona Villanueva</field>
+            <field name="vat">52625784J</field>
+            <field name="birthdate">2000-11-11</field>
+            <field name="gender">male</field>
+            <field name="email">manel@fake.com</field>
+            <field name="phone">636985796</field>
+            <field name="iban">ES9701284397719636133264</field>
+            <field name="address">C/ del Riu Ebre, 5</field>
+            <field name="zip_code">25001</field>
+            <field name="city">Lleida</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=6)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">es_ES</field>
+            <field name="state">draft</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_5_community_2_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_5_community_2_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_6_community_2_demo" model="subscription.request">
+            <field name="firstname">Elsy</field>
+            <field name="lastname">Macías Rojas</field>
+            <field name="vat">84047054V</field>
+            <field name="birthdate">2002-06-01</field>
+            <field name="gender">female</field>
+            <field name="email">elsy@fake.com</field>
+            <field name="phone">710948027</field>
+            <field name="iban">ES7001828944373621276255</field>
+            <field name="address">Carrer Quatre Pilans, 22</field>
+            <field name="zip_code">25001</field>
+            <field name="city">Lleida</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=1)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">ca_ES</field>
+            <field name="state">draft</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_6_community_2_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_6_community_2_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_7_community_2_demo" model="subscription.request">
+            <field name="firstname">Noelino</field>
+            <field name="lastname">Gastelum Palomino</field>
+            <field name="vat">71528692A</field>
+            <field name="birthdate">1999-05-06</field>
+            <field name="gender">male</field>
+            <field name="email">noelino@fake.com</field>
+            <field name="phone">726568860</field>
+            <field name="iban">ES1900755799433511861318</field>
+            <field name="address">C/ del Dr. Trueta, 1</field>
+            <field name="zip_code">25001</field>
+            <field name="city">Lleida</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=3)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">eu_ES</field>
+            <field name="state">draft</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_7_community_2_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_7_community_2_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_8_community_2_demo" model="subscription.request">
+            <field name="firstname">Heraldo</field>
+            <field name="lastname">Mondragón Márquez</field>
+            <field name="vat">84021689K</field>
+            <field name="birthdate">1955-08-25</field>
+            <field name="gender">male</field>
+            <field name="email">heraldo@fake.com</field>
+            <field name="phone">759171254</field>
+            <field name="iban">ES6501828138516439762315</field>
+            <field name="address">Avinguda President Josep Irla, 1</field>
+            <field name="zip_code">25001</field>
+            <field name="city">Lleida</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=8)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">eu_ES</field>
+            <field name="state">draft</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_8_community_2_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_8_community_2_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_9_community_2_demo" model="subscription.request">
+            <field name="firstname">Antia</field>
+            <field name="lastname">Barrientos Canales</field>
+            <field name="vat">96476066J</field>
+            <field name="birthdate">1968-12-04</field>
+            <field name="gender">female</field>
+            <field name="email">antia@fake.com</field>
+            <field name="phone">662453150</field>
+            <field name="iban">ES9220802651347332248235</field>
+            <field name="address">Avinguda de Fontanet, 10-18</field>
+            <field name="zip_code">25001</field>
+            <field name="city">Lleida</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=2)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">ca_ES</field>
+            <field name="state">draft</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_9_community_2_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_9_community_2_demo')).capital_release_request.ids"
+      />
+        </function>
+
+        <record id="subscription_10_community_2_demo" model="subscription.request">
+            <field name="firstname">Etelvina</field>
+            <field name="lastname">Zapata Tejada</field>
+            <field name="vat">26077733B</field>
+            <field name="birthdate">1957-02-21</field>
+            <field name="gender">female</field>
+            <field name="email">etelvina@fake.com</field>
+            <field name="phone">619878918</field>
+            <field name="iban">ES5520959667022568625566</field>
+            <field name="address">Carrer Ntra. Sra. del Carme, 4</field>
+            <field name="zip_code">25001</field>
+            <field name="city">Lleida</field>
+            <field name="country_id" ref="base.es" />
+            <field name="date" eval="datetime.now() - timedelta(days=6)" />
+            <field name="source">manual</field>
+            <field name="ordered_parts">1</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_company_id.id"
+      />
+            <field
+        name="share_product_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      />
+            <field name="type">new</field>
+            <field name="lang">eu_ES</field>
+            <field name="state">draft</field>
+        </record>
+
+        <function
+      name="validate_subscription_request_with_company"
+      model="subscription.request"
+      eval="[ref('subscription_10_community_2_demo')]"
+    />
+
+        <function name="action_invoice_paid" model="account.move">
+            <value
+        model="subscription.request"
+        eval="obj(ref('subscription_10_community_2_demo')).capital_release_request.ids"
+      />
+        </function>
+    </data>
+</odoo>

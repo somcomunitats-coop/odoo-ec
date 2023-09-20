@@ -7,9 +7,9 @@
             Module glue between Energy Projects and Energy Communities.
     """,
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
-    "website": "https://somcomunitats.coop/",
+    "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.1.1.2",
+    "version": "14.0.1.2.0",
     "depends": [
         "energy_project",
         "energy_communities",

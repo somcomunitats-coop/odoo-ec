@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Take .POT and make magic\n"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -652,3 +652,367 @@ msgstr "Código Postal"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__zip
 msgid "Zip"
 msgstr "Código Postal"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "<li>Line {line}: {error}</li>\n"
+msgstr "<li>Línea {line}: {error}</li>"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_supply_point_unique_code_company_id
+#, python-format
+msgid "A supply point with this code already exists."
+msgstr "Ya existe un punto de suministro con este código."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid ""
+"Are you sure you want to change the project status to the previous step?"
+"                                  If so, the distribution table will return "
+"to the 'validated' state."
+msgstr ""
+"¿Está seguro de que desea cambiar el estado del proyecto al paso anterior?"
+"                                  Si es así, la tabla de distribución "
+"volverá al estado \"validado\"."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Back to In Inscription status"
+msgstr "Volver al estado En inscripción"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__cil
+msgid "CIL"
+msgstr "CIL"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__partner_id
+msgid "Cooperator"
+msgstr "Socio"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__partner_id
+msgid "Cooperator subscribed to the self-consumption project"
+msgstr "Socio suscrito al proyecto de autoconsumo"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Could not create inscription for {vat}. {error}"
+msgstr "No se ha podido crear la inscripción para {vat}. {error}"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Country code was not found: {country}"
+msgstr "No se ha encontrado el código de país: {country}"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__date_format
+msgid "Date Format"
+msgstr "Formato de fecha"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__date_format
+msgid "Date format for effective date."
+msgstr "Formato para la fecha efectiva."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__delimiter
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__delimiter
+msgid "Delimiter in import CSV file."
+msgstr "Delimitador en archivo CSV de importación."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__distribution_table_count
+msgid "Distribution Table Count"
+msgstr "Recuento de tablas de distribución"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_import_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid ""
+"Download\n"
+"                            Template"
+msgstr "Descargar plantilla"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid "Download State List"
+msgstr "Descargar lista de estados"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__encoding
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__encoding
+msgid "Enconding format in import CSV file."
+msgstr "Formato de codificación en el archivo CSV de importación."
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_project_project
+msgid "Energy project"
+msgstr "Proyecto energético"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Error parsing the file"
+msgstr "Error al analizar el archivo"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__delimiter
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__delimiter
+msgid "File Delimiter"
+msgstr "Delimitador del archivo"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__encoding
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__encoding
+msgid "File Encoding"
+msgstr "Codificación de archivo"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__fname
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__fname
+msgid "File Name"
+msgstr "Nombre del archivo"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__quotechar
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__quotechar
+msgid "File Quotechar"
+msgstr "Archivo Quotechar"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__power
+msgid "Generation Power (kW)"
+msgstr "Potencia de generación (kW)"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_import_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid "Import"
+msgstr "Importar"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: model:ir.actions.act_window,name:energy_selfconsumption.distribution_table_import_wizard_action
+#, python-format
+msgid "Import Distribution Table"
+msgstr "Importar tabla de distribución"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Import Errors"
+msgstr "Importar errores"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__import_file
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__import_file
+msgid "Import File (*.csv)"
+msgstr "Importar archivo (*.csv)"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Import Inscriptions and Supply Points"
+msgstr "Importar inscripciones y puntos de suministro"
+
+#. module: energy_selfconsumption
+#: model:ir.actions.act_window,name:energy_selfconsumption.selfconsumption_import_wizard_action
+msgid "Import data"
+msgstr "Importar datos"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Import errors found: <ul>{list}</ul>"
+msgstr "Se han encontrado errores de importación: <ul>{list}</ul>"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Import inscriptions and supply points"
+msgstr "Importar inscripciones y puntos de suministro"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_form_view
+msgid "Import table"
+msgstr "Importar tabla"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__process
+#, python-format
+msgid "In process"
+msgstr "En proceso"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid ""
+"In the state list file, you can check which code is assigned for your state."
+msgstr ""
+"En el archivo de lista de estados, puede verificar qué código está asignado "
+"para su estado."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__inscription_count
+msgid "Inscription Count"
+msgstr "Recuento de inscripciones"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Inscriptions"
+msgstr "Inscripciones"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Must have a valid Distribution Table."
+msgstr "Debe tener una tabla de distribución válida."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "No valid encoding was found for the attached file"
+msgstr ""
+"No se ha encontrado ninguna codificación válida para el archivo adjunto"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Only csv format files are accepted."
+msgstr "Solo se aceptan archivos en formato csv."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Owner could not be created: {error}"
+msgstr "No se ha podido crear el propietario: {error}"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Partner with VAT:<b>{vat}</b> was not found."
+msgstr "No se ha encontrado al socio con VAT:<b>{vat}</b>."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__owner_id
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__owner_id
+msgid "Partner with the legal obligation of the supply point"
+msgstr "Socio con titularidad legal del punto de suministro"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__cil
+msgid "Production facility code for liquidation purposes"
+msgstr "Código de la instalación de producción a efectos de liquidación"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Project must have a valid CIL."
+msgstr "El proyecto debe tener un CIL válido."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__quotechar
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__quotechar
+msgid "Quotechar in import CSV file."
+msgstr "Quotechar en archivo CSV de importación."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_form_view
+msgid "Reset to draft"
+msgstr "Restablecer a borrador"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+msgid "Self-consumption Projects"
+msgstr "Proyectos de autoconsumo"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#, python-format
+msgid "Self-consumption project already has a table in process"
+msgstr "El proyecto de autoconsumo ya tiene una tabla en proceso"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#, python-format
+msgid "Self-consumption project already has a validated table"
+msgstr "El proyecto de autoconsumo ya tiene una tabla validada"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Set in inscription"
+msgstr "Establecer en inscripción"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Set to Draft"
+msgstr "Establecer a borrador"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "State code was not found: {state}"
+msgstr "No se ha encontrado el código de estado: {state}"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid ""
+"The supply point partner {supply_partner} and the partner {vat} in the "
+"inscription are different."
+msgstr ""
+"El socio del punto de suministro {supply_partner} y el socio {vat} en la "
+"inscripción son diferentes."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#, python-format
+msgid "There isn't any supply point with this code: {code}"
+msgstr "No hay ningún punto de suministro con este código: {code}"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_form_view
+msgid "Validate"
+msgstr "Validar"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__validated
+#, python-format
+msgid "Validated"
+msgstr "Validado"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_import_wizard_form_view
+msgid ""
+"You can download an example template for the import of distribution tables. The template must\n"
+"                            have the following format and be a CSV file."
+msgstr ""
+"Puede descargar una plantilla de ejemplo para la importación de tablas de distribución. La plantilla debe\n"
+"                            tener el siguiente formato y ser un archivo CSV."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid ""
+"You can download an example template for the importation of inscriptions and supply points.\n"
+"                            The template must have the following format and be a CSV file."
+msgstr ""
+"Puede descargar una plantilla de ejemplo para la importación de inscripciones y puntos de suministro.\n"
+"                            La plantilla debe tener el siguiente formato y ser un archivo CSV."
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_distribution_table_import_wizard
+msgid "energy_selfconsumption.distribution_table_import.wizard"
+msgstr "energy_selfconsumption.distribution_table_import.wizard"
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_selfconsumption_import_wizard
+msgid "energy_selfconsumption.selfconsumption_import.wizard"
+msgstr "energy_selfconsumption.selfconsumption_import.wizard"
