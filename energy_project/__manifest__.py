@@ -13,6 +13,7 @@
     "depends": [
         "base",
         "mail",
+        "cooperator",
     ],
     "data": [
         "security/res_groups.xml",
