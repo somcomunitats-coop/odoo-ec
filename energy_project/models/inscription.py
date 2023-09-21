@@ -32,13 +32,15 @@ class Inscription(models.Model):
     )
     effective_date = fields.Date(required=True)
     is_member = fields.Char(
-        string="Typology", compute="_compute_is_member", readonly=True
+        string=_("Typology"), compute="_compute_is_member", readonly=True
     )
 
     @api.depends("partner_id.member")
     def _compute_is_member(self):
         for record in self:
-            record.is_member = "Socia" if record.partner_id.member else "No socia"
+            record.is_member = (
+                _("Partner") if record.partner_id.member else _("Non-partner")
+            )
 
     def has_matching_supply_assignations(self):
         matching_tables = (
