@@ -29,3 +29,6 @@ class ContractGenerationWizard(models.TransientModel):
         string="Recurrence",
         help="Specify Interval for automatic invoice generation.",
     )
+
+    def generate_contracts_button(self):
+        return True
