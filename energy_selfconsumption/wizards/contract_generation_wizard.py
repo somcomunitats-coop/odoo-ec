@@ -29,6 +29,7 @@ class ContractGenerationWizard(models.TransientModel):
         string="Recurrence",
         help="Specify Interval for automatic invoice generation.",
     )
+<<<<<<< HEAD
     selfconsumption_id = fields.Many2one(
         "energy_selfconsumption.selfconsumption", readonly=True
     )
@@ -141,3 +142,5 @@ class ContractGenerationWizard(models.TransientModel):
         self.selfconsumption_id.write({"state": "active"})
         self.selfconsumption_id.distribution_table_state("process", "active")
         return True
+=======
+>>>>>>> aa4e275 ([IMP] energy_selfconsumption: base wizard for generation of contracts)
