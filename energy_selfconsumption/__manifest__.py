@@ -13,6 +13,8 @@
     "depends": [
         "base",
         "mail",
+        "contract",
+        "contract_variable_quantity",
         "energy_project",
         "partner_firstname",
         "web_m2x_options",
