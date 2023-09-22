@@ -1,40 +1,50 @@
 import re
-from odoo import models, fields, api
-from odoo.tools.translate import _
+
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools.translate import _
 
 
 class AssignAdminWizard(models.TransientModel):
-    _name = 'assign.admin.wizard'
-    _description = 'Assign admin Wizard'
+    _name = "assign.admin.wizard"
+    _description = "Assign admin Wizard"
 
     is_new_admin = fields.Boolean(string="Is a new admin?")
     first_name = fields.Char(string="First name")
     last_name = fields.Char(string="Last name")
-    vat = fields.Char(string="VAT")
+    vat = fields.Char(string="VAT", required=True)
     email = fields.Char(string="Email")
-    lang = fields.Many2one('res.lang', string="Language")
-    role = fields.Selection(selection='_get_available_roles', string="Role")
+    lang = fields.Many2one("res.lang", string="Language")
+    role = fields.Selection(selection="_get_available_roles", string="Role")
+    user_is_coordinator_worker = fields.Boolean(compute="_user_is_coordinator_worker")
+
+    def _user_is_coordinator_worker(self):
+        for record in self:
+            role = self.env.ref("energy_communities.role_coord_worker")
+            role_line = self.env["res.users.role.line"].search(
+                [("user_id", "=", self.env.user.id), ("role_id", "=", role.id)], limit=1
+            )
+            record.user_is_coordinator_worker = bool(role_line)
 
     @api.model
     def _get_available_roles(self):
-        company = self.env['res.company'].browse(self.env.company.id)
-        if company.hierarchy_level == 'community':
+        company = self.env["res.company"].browse(self.env.company.id)
+        if company.hierarchy_level == "community":
             return [
-                ('role_ce_admin', _("Energy Community Administrator")),
-                ('role_ce_member', _("Energy Community Member")),
+                ("role_ce_admin", _("Energy Community Administrator")),
+                ("role_ce_member", _("Energy Community Member")),
             ]
-        elif company.hierarchy_level == 'coordinator':
+        elif company.hierarchy_level == "coordinator":
             return [
-                ('role_coord_admin', _("Coordinator Admin")),
-                ('role_coord_worker', _("Coordinator Worker"))
+                ("role_coord_admin", _("Coordinator Admin")),
+                ("role_coord_worker", _("Coordinator Worker")),
             ]
         return []
 
     def process_data(self):
-        vat = re.sub(r"[^a-zA-Z0-9]", "", self.vat).lower()
+        vat = re.sub(r"[^a-zA-Z0-9]", "", self.vat).upper()
         if self.is_new_admin:
-            user = self.env['res.users'].create_energy_community_base_user(
+            user = self.env["res.users"].create_energy_community_base_user(
                 vat=vat,
                 first_name=self.first_name,
                 last_name=self.last_name,
@@ -42,13 +52,18 @@ class AssignAdminWizard(models.TransientModel):
                 email=self.email,
             )
         else:
-            user = self.env['res.users'].search([
-                ('login', 'ilike', vat)
-            ], limit=1)
+            user = self.env["res.users"].search([("login", "ilike", vat)], limit=1)
             if not user:
-                raise ValidationError(_('User not found'))
+                raise ValidationError(_("User not found"))
 
         company_id = self.env.company.id
-        user.add_energy_community_role(company_id, self.role)
+        if self.user_is_coordinator_worker:
+            raise ValidationError(
+                _(
+                    "Since you are not a coordinator admin you are not allowed to assign coordinator admins."
+                )
+            )
+        else:
+            user.add_energy_community_role(company_id, self.role)
 
         return True
