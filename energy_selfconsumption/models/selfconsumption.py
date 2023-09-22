@@ -114,8 +114,18 @@ class Selfconsumption(models.Model):
                 raise ValidationError(_("Project must have a valid CIL."))
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Generation Power."))
-            record.write({"state": "active"})
-            self.distribution_table_state("process", "active")
+            return {
+                "name": _("Generate Contracts"),
+                "type": "ir.actions.act_window",
+                "view_mode": "form",
+                "res_model": "energy_selfconsumption.contract_generation.wizard",
+                "views": [(False, "form")],
+                "view_id": False,
+                "target": "new",
+            }
+            # Move state write to contract wizard
+            # record.write({"state": "active"})
+            # self.distribution_table_state("process", "active")
 
     def action_selfconsumption_import_wizard(self):
         self.ensure_one()
