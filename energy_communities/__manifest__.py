@@ -12,6 +12,7 @@
         "auth_api_key",
         "auth_oauth",
         "auth_oidc",
+        "auth_signup",
         "base_rest",
         "base_technical_features",
         "base_user_role",
