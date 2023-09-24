@@ -223,9 +223,7 @@ class ResUsers(models.Model):
             ]
         )
         if not already_user:
-            role = self.env["res.users.role"].search(
-                [("code", "=", "role_internal_user")]
-            )
+            role = self.env.ref("energy_communities.role_internal_user")
             self.write(
                 {
                     "role_line_ids": [
