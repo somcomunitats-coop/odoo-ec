@@ -170,9 +170,9 @@ class ResCompany(models.Model):
     def _is_not_unique(self, vals):
         # check for VAT
         if vals.get("vat", False) and vals.get("vat"):
-            sanit_vat = re.sub(r"[^a-zA-Z0-9]", "", vals["vat"]).lower()
+            sanit_vat = re.sub(r"[^a-zA-Z0-9]", "", vals["vat"]).upper()
             if sanit_vat in [
-                re.sub(r"[^a-zA-Z0-9]", "", c.vat).lower()
+                re.sub(r"[^a-zA-Z0-9]", "", c.vat).upper()
                 for c in self.search([])
                 if c.vat
             ]:
