@@ -31,4 +31,12 @@ class ContractGenerationWizard(models.TransientModel):
     )
 
     def generate_contracts_button(self):
+        product_id = self.env["product.product"].create(
+            {
+                "name": _("Energy Generated"),
+                "lst_price": self.price_energy,
+                "company_id": self.env.company,
+            }
+        )
+
         return True
