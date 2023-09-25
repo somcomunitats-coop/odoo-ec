@@ -35,8 +35,8 @@ class LandingPage(models.Model):
     )
     # TODO: group_image_link Left for backward compatibility. To be removed
     group_image_link = fields.Char(string="Group image link")
-    primary_image_file = fields.Image("Primary Image")
-    secondary_image_file = fields.Image("Secondary Image")
+    primary_image_file = fields.Binary("Primary Image")
+    secondary_image_file = fields.Binary("Secondary Image")
     short_description = fields.Text(string="Short description", translate=True)
     long_description = fields.Text(string="Long description", translate=True)
     why_become_cooperator = fields.Html(string="Why become cooperator", translate=True)

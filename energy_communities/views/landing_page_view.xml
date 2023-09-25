@@ -47,8 +47,16 @@
                     <field name="group_image_link" />
                 </group>
                 <group col="4">
-                  <field name="primary_image_file" widget="image" />
-                  <field name="secondary_image_file" widget="image" />
+                  <field
+            name="primary_image_file"
+            widget="binary"
+            filename="primary_image_file"
+          />
+                  <field
+            name="secondary_image_file"
+            widget="binary"
+            filename="secondary_image_file"
+          />
                 </group>
                 <group>
                   <field name="short_description" />
