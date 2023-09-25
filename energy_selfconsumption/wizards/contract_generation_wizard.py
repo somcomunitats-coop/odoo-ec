@@ -38,7 +38,7 @@ class ContractGenerationWizard(models.TransientModel):
             {
                 "name": _("Energy Generated"),
                 "lst_price": self.price_energy,
-                "company_id": self.env.company,
+                "company_id": self.env.company.id,
             }
         )
 
