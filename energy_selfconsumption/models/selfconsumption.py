@@ -122,6 +122,7 @@ class Selfconsumption(models.Model):
                 "views": [(False, "form")],
                 "view_id": False,
                 "target": "new",
+                "context": {"default_selfconsumption_id": self.id},
             }
             # Move state write to contract wizard
             # record.write({"state": "active"})
