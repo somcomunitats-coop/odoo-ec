@@ -1,6 +1,6 @@
 import logging
 
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +39,37 @@ class ContractGenerationWizard(models.TransientModel):
                 "name": _("Energy Generated"),
                 "lst_price": self.price_energy,
                 "company_id": self.env.company.id,
+            }
+        )
+
+        journal_id = self.env["account.journal"].search(
+            [("company_id", "=", self.env.company.id), ("type", "=", "sale")], limit=1
+        )
+        if not journal_id:
+            raise UserWarning(_("Accounting Journal not found."))
+
+        contract_template = self.env["contract.template"].create(
+            {
+                "name": _("Contract Template - %s") % self.selfconsumption_id.name,
+                "company_id": self.env.company.id,
+                "contract_type": "sale",
+                "journal_id": journal_id.id,
+                "contract_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": product_id.id,
+                            "company_id": self.env.company.id,
+                            "qty_type": "fixed",
+                            "quantity": 1,
+                            "recurring_interval": self.recurring_interval,
+                            "recurring_rule_type": self.recurring_rule_type,
+                            "recurring_invoicing_type": "post-paid",
+                            "name": _("Energy produced"),
+                        },
+                    )
+                ],
             }
         )
 
