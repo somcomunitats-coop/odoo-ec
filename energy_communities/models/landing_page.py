@@ -137,6 +137,11 @@ class LandingPage(models.Model):
     def action_landing_page_status(self):
         for record in self:
             new_status = "draft" if record.status == "publish" else "publish"
+            self.update_wordpress()
+            record.write({"status": new_status})
+
+    def update_wordpress(self):
+        for record in self:
             instance_company = self.env["res.company"].search(
                 [("hierarchy_level", "=", "instance")]
             )
@@ -152,4 +157,7 @@ class LandingPage(models.Model):
                     landing_page_data
                 )
 
-                record.write({"status": new_status})
+    def write(self, vals):
+        res = super().write(vals)
+        self.update_wordpress()
+        return res
