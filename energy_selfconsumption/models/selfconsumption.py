@@ -52,7 +52,7 @@ class Selfconsumption(models.Model):
         required=True,
         default=lambda self: self.env.company.partner_id,
     )
-    power = fields.Float(string="Generation Power (kW)")
+    power = fields.Float(string="Rated Power (kWn)")
     distribution_table_ids = fields.One2many(
         "energy_selfconsumption.distribution_table",
         "selfconsumption_project_id",
@@ -113,7 +113,7 @@ class Selfconsumption(models.Model):
             if not record.cil:
                 raise ValidationError(_("Project must have a valid CIL."))
             if not record.power or record.power <= 0:
-                raise ValidationError(_("Project must have a valid Generation Power."))
+                raise ValidationError(_("Project must have a valid Rated Power."))
             return {
                 "name": _("Generate Contracts"),
                 "type": "ir.actions.act_window",
