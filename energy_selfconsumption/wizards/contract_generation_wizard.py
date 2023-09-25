@@ -29,6 +29,9 @@ class ContractGenerationWizard(models.TransientModel):
         string="Recurrence",
         help="Specify Interval for automatic invoice generation.",
     )
+    selfconsumption_id = fields.Many2one(
+        "energy_selfconsumption.selfconsumption", readonly=True
+    )
 
     def generate_contracts_button(self):
         product_id = self.env["product.product"].create(
