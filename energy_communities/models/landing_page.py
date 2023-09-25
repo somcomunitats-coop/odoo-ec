@@ -95,6 +95,10 @@ class LandingPage(models.Model):
             map_reference = self.map_place_id.slug_id
         else:
             map_reference = ""
+        if self.why_become_cooperator == "<p><br></p>":
+            self.why_become_cooperator = ""
+        if self.become_cooperator_process == "<p><br></p>":
+            self.become_cooperator_process = ""
         return {
             "landing": {
                 "id": self.id,
@@ -120,8 +124,8 @@ class LandingPage(models.Model):
                 "secondary_image_file": secondary_image_file,
                 "short_description": self.short_description or "",
                 "long_description": self.long_description or "",
-                "why_become_cooperator": self.why_become_cooperator or "",
-                "become_cooperator_process": self.become_cooperator_process or "",
+                "why_become_cooperator": self.why_become_cooperator,
+                "become_cooperator_process": self.become_cooperator_process,
                 "map_geolocation": self.map_geolocation or "",
                 "map_reference": map_reference,
                 "street": self.street or "",
