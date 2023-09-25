@@ -23,7 +23,8 @@ class LandingPage(models.Model):
         string="Allows new members", related="company_id.allow_new_members"
     )
     number_of_members = fields.Integer(string="Number of members")
-    external_website_link = fields.Char(string="External website link", translate=True)
+    external_website_link = fields.Char(
+        string="External website link", translate=True)
     twitter_link = fields.Char(
         string="Twitter link", related="company_id.social_twitter"
     )
@@ -35,11 +36,14 @@ class LandingPage(models.Model):
     )
     # TODO: group_image_link Left for backward compatibility. To be removed
     group_image_link = fields.Char(string="Group image link")
-    primary_image_file = fields.Binary("Primary Image")
-    secondary_image_file = fields.Binary("Secondary Image")
+    primary_image_file = fields.Image("Primary Image")
+    primary_image_file_filename = fields.Char("Primary Image filename")
+    secondary_image_file = fields.Image("Secondary Image")
+    secondary_image_file_filename = fields.Char("Secondary Image filename")
     short_description = fields.Text(string="Short description", translate=True)
     long_description = fields.Text(string="Long description", translate=True)
-    why_become_cooperator = fields.Html(string="Why become cooperator", translate=True)
+    why_become_cooperator = fields.Html(
+        string="Why become cooperator", translate=True)
     become_cooperator_process = fields.Html(
         string="Become cooperator process", translate=True
     )
@@ -78,7 +82,8 @@ class LandingPage(models.Model):
                 base_url
                 + "/web/image/landing.page/"
                 + str(self.id)
-                + "/primary_image_file"
+                + "/primary_image_file/"
+                + self.primary_image_file_filename
             )
         else:
             primary_image_file = ""
@@ -87,7 +92,8 @@ class LandingPage(models.Model):
                 base_url
                 + "/web/image/landing.page/"
                 + str(self.id)
-                + "/secondary_image_file"
+                + "/secondary_image_file/"
+                + self.secondary_image_file_filename
             )
         else:
             secondary_image_file = ""
