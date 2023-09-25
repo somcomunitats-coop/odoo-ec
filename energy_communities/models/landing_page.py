@@ -137,7 +137,6 @@ class LandingPage(models.Model):
     def action_landing_page_status(self):
         for record in self:
             new_status = "draft" if record.status == "publish" else "publish"
-            self.update_wordpress()
             record.write({"status": new_status})
 
     def update_wordpress(self):
@@ -152,7 +151,6 @@ class LandingPage(models.Model):
                 auth = Authenticate(baseurl, username, password).authenticate()
                 token = "Bearer %s" % auth["token"]
                 landing_page_data = record.to_dict()
-                landing_page_data["landing"]["status"] = new_status
                 LandingPageResource(token, baseurl, record.wp_landing_page_id).update(
                     landing_page_data
                 )
