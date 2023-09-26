@@ -42,6 +42,13 @@ class ContractGenerationWizard(models.TransientModel):
             }
         )
 
+        formula_contract_id = self.env["contract.line.qty.formula"].create(
+            {
+                "name": _("Formula - %s") % (self.selfconsumption_id.name),
+                "code": "result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * 30",
+            }
+        )
+
         journal_id = self.env["account.journal"].search(
             [("company_id", "=", self.env.company.id), ("type", "=", "sale")], limit=1
         )
@@ -109,10 +116,12 @@ class ContractGenerationWizard(models.TransientModel):
                         0,
                         {
                             "product_id": product_id.id,
+                            "automatic_price": True,
                             "company_id": self.env.company.id,
-                            "qty_type": "fixed",
-                            "quantity": 1,
+                            "qty_type": "variable",
+                            "qty_formula_id": formula_contract_id.id,
                             "name": _(supply_point_assignation_id.supply_point_id.code),
+                            "supply_point_assignation_id": supply_point_assignation_id.id,
                         },
                     )
                 )
