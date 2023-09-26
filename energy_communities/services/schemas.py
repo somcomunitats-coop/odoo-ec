@@ -129,9 +129,11 @@ S_MEMBER_PROFILE_RETURN_GET = {
     }
 }
 
-S_PROFILE_PUT = {"language": {"type": "string", "required": True, "empty": False}}
+S_PROFILE_PUT = {"language": {
+    "type": "string", "required": True, "empty": False}}
 
-S_MEMBER_PROFILE_PUT = {"role": {"type": "string", "required": True, "empty": False}}
+S_MEMBER_PROFILE_PUT = {
+    "role": {"type": "string", "required": True, "empty": False}}
 
 S_PROFILE_RETURN_PUT = S_PROFILE_RETURN_GET
 
@@ -218,7 +220,9 @@ S_LANDING_PAGE_CREATE = {
             },
             "group_image_link": {"type": "string"},
             "primary_image_file": {"type": "string"},
+            "primary_image_file_write_date": {"type": "string"},
             "secondary_image_file": {"type": "string"},
+            "secondary_image_file_write_date": {"type": "string"},
             "short_description": {"type": "string"},
             "long_description": {"type": "string"},
             "why_become_cooperator": {"type": "string"},

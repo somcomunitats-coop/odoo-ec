@@ -75,6 +75,16 @@ class LandingPage(models.Model):
         string="Community status",
     )
 
+    def _get_image_write_date(self, field_name):
+        file_write_date = ""
+        file_attachment = self.env['ir.attachment'].search([
+            ('res_id', '=', self.id),
+            ('res_model', '=', 'landing.page'),
+            ('res_field', '=', field_name)])
+        if file_attachment:
+            file_write_date = str(file_attachment.write_date)
+        return file_write_date
+
     def to_dict(self):
         base_url = self.env["ir.config_parameter"].get_param("web.base.url")
         if self.primary_image_file:
@@ -85,8 +95,12 @@ class LandingPage(models.Model):
                 + "/primary_image_file/"
                 + self.primary_image_file_filename
             )
+            primary_image_file_write_date = self._get_image_write_date(
+                'primary_image_file')
+
         else:
             primary_image_file = ""
+            primary_image_file_write_date = ""
         if self.secondary_image_file:
             secondary_image_file = (
                 base_url
@@ -95,8 +109,12 @@ class LandingPage(models.Model):
                 + "/secondary_image_file/"
                 + self.secondary_image_file_filename
             )
+            secondary_image_file_write_date = self._get_image_write_date(
+                'secondary_image_file')
+
         else:
             secondary_image_file = ""
+            secondary_image_file_write_date = ""
         if self.map_place_id:
             map_reference = self.map_place_id.slug_id
         else:
@@ -127,7 +145,9 @@ class LandingPage(models.Model):
                 # TODO: group_image_link Left for backward compatibility. To be removed
                 "group_image_link": self.group_image_link or "",
                 "primary_image_file": primary_image_file,
+                "primary_image_file_write_date": primary_image_file_write_date,
                 "secondary_image_file": secondary_image_file,
+                "secondary_image_file_write_date": secondary_image_file_write_date,
                 "short_description": self.short_description or "",
                 "long_description": self.long_description or "",
                 "why_become_cooperator": self.why_become_cooperator,
@@ -145,7 +165,7 @@ class LandingPage(models.Model):
             new_status = "draft" if record.status == "publish" else "publish"
             record.write({"status": new_status})
 
-    def update_wordpress(self):
+    def _update_wordpress(self):
         for record in self:
             instance_company = self.env["res.company"].search(
                 [("hierarchy_level", "=", "instance")]
@@ -163,5 +183,5 @@ class LandingPage(models.Model):
 
     def write(self, vals):
         res = super().write(vals)
-        self.update_wordpress()
+        self._update_wordpress()
         return res
