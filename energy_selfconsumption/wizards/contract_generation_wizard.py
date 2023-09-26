@@ -73,4 +73,31 @@ class ContractGenerationWizard(models.TransientModel):
             }
         )
 
+        distribution_id = (
+            self.selfconsumption_id.distribution_table_ids.filtered_domain(
+                [("state", "=", "process")]
+            )
+        )
+        if not distribution_id:
+            raise _("There is no distribution table in proces of activation.")
+
+        supply_point_assignation_ids = distribution_id.supply_point_assignation_ids
+        partner_list = {}
+
+        for supply_point_assignation in supply_point_assignation_ids:
+            key = (
+                supply_point_assignation.partner_id.id,
+                supply_point_assignation.owner_id.id,
+            )
+            if key not in partner_list:
+                partner_list[key] = {
+                    "parent_id": supply_point_assignation.partner_id,
+                    "owner_id": supply_point_assignation.owner_id,
+                    "supply_point_assignation_ids": [supply_point_assignation],
+                }
+            else:
+                partner_list[key]["supply_point_assignation_ids"].append(
+                    supply_point_assignation
+                )
+
         return True
