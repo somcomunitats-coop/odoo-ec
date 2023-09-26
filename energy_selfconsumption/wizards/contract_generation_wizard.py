@@ -86,12 +86,12 @@ class ContractGenerationWizard(models.TransientModel):
 
         for supply_point_assignation in supply_point_assignation_ids:
             key = (
-                supply_point_assignation.partner_id.id,
+                supply_point_assignation.supply_point_id.partner_id.id,
                 supply_point_assignation.owner_id.id,
             )
             if key not in partner_list:
                 partner_list[key] = {
-                    "parent_id": supply_point_assignation.partner_id,
+                    "parent_id": supply_point_assignation.supply_point_id.partner_id,
                     "owner_id": supply_point_assignation.owner_id,
                     "supply_point_assignation_ids": [supply_point_assignation],
                 }
@@ -99,5 +99,38 @@ class ContractGenerationWizard(models.TransientModel):
                 partner_list[key]["supply_point_assignation_ids"].append(
                     supply_point_assignation
                 )
+
+        for key, value in partner_list.items():
+            contract_lines = []
+            for supply_point_assignation_id in value["supply_point_assignation_ids"]:
+                contract_lines.append(
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": product_id.id,
+                            "company_id": self.env.company.id,
+                            "qty_type": "fixed",
+                            "quantity": 1,
+                            "name": _(supply_point_assignation_id.supply_point_id.code),
+                        },
+                    )
+                )
+
+            self.env["contract.contract"].create(
+                {
+                    "name": _("Contract - %s - %s")
+                    % (self.selfconsumption_id.name, value["parent_id"].name),
+                    "partner_id": value["parent_id"].id,
+                    "invoice_partner_id": value["parent_id"].id,
+                    "journal_id": journal_id.id,
+                    "recurring_interval": self.recurring_interval,
+                    "recurring_rule_type": self.recurring_rule_type,
+                    "recurring_invoicing_type": "post-paid",
+                    "date_start": fields.date.today(),
+                    "company_id": self.env.company.id,
+                    "contract_line_ids": contract_lines,
+                }
+            )
 
         return True
