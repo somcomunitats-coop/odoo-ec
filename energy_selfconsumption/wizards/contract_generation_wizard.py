@@ -39,6 +39,8 @@ class ContractGenerationWizard(models.TransientModel):
         It first creates a product and a contract formula. It then
         aggregates supply point assignations by partner and owner
         to generate the contracts.
+        In the other hand, if the process was successful, the state of self-consumption
+        and the distribution_table changes to 'active'.
 
         Returns:
             bool: Always True, indicating successful execution.
@@ -134,4 +136,7 @@ class ContractGenerationWizard(models.TransientModel):
                 }
             )
 
+        # Update selfconsumption and distribution_table state
+        self.selfconsumption_id.write({"state": "active"})
+        self.selfconsumption_id.distribution_table_state("process", "active")
         return True

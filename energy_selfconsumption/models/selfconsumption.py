@@ -107,6 +107,24 @@ class Selfconsumption(models.Model):
         self.distribution_table_state("validated", "process")
 
     def activate(self):
+        """
+        Activates the energy self-consumption project, performing various validations.
+
+        This method checks for the presence of a valid code, CIL, and rated power
+        for the project. If all validations pass, it opens a wizard for generating
+        contracts for the project.
+
+        Note:
+            The change of state for the 'self-consumption' and 'distribution_table'
+            models is performed in the wizard that gets opened. These state changes
+            are executed only after the contracts have been successfully generated.
+
+        Returns:
+            dict: A dictionary containing the action details for opening the wizard.
+
+        Raises:
+            ValidationError: If the project does not have a valid Code, CIL, or Rated Power.
+        """
         for record in self:
             if not record.code:
                 raise ValidationError(_("Project must have a valid Code."))
@@ -124,9 +142,6 @@ class Selfconsumption(models.Model):
                 "target": "new",
                 "context": {"default_selfconsumption_id": self.id},
             }
-            # Move state write to contract wizard
-            # record.write({"state": "active"})
-            # self.distribution_table_state("process", "active")
 
     def action_selfconsumption_import_wizard(self):
         self.ensure_one()
