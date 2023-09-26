@@ -23,8 +23,7 @@ class LandingPage(models.Model):
         string="Allows new members", related="company_id.allow_new_members"
     )
     number_of_members = fields.Integer(string="Number of members")
-    external_website_link = fields.Char(
-        string="External website link", translate=True)
+    external_website_link = fields.Char(string="External website link", translate=True)
     twitter_link = fields.Char(
         string="Twitter link", related="company_id.social_twitter"
     )
@@ -42,8 +41,7 @@ class LandingPage(models.Model):
     secondary_image_file_filename = fields.Char("Secondary Image filename")
     short_description = fields.Text(string="Short description", translate=True)
     long_description = fields.Text(string="Long description", translate=True)
-    why_become_cooperator = fields.Html(
-        string="Why become cooperator", translate=True)
+    why_become_cooperator = fields.Html(string="Why become cooperator", translate=True)
     become_cooperator_process = fields.Html(
         string="Become cooperator process", translate=True
     )
@@ -77,10 +75,13 @@ class LandingPage(models.Model):
 
     def _get_image_write_date(self, field_name):
         file_write_date = ""
-        file_attachment = self.env['ir.attachment'].search([
-            ('res_id', '=', self.id),
-            ('res_model', '=', 'landing.page'),
-            ('res_field', '=', field_name)])
+        file_attachment = self.env["ir.attachment"].search(
+            [
+                ("res_id", "=", self.id),
+                ("res_model", "=", "landing.page"),
+                ("res_field", "=", field_name),
+            ]
+        )
         if file_attachment:
             file_write_date = str(file_attachment.write_date)
         return file_write_date
@@ -96,7 +97,8 @@ class LandingPage(models.Model):
                 + self.primary_image_file_filename
             )
             primary_image_file_write_date = self._get_image_write_date(
-                'primary_image_file')
+                "primary_image_file"
+            )
 
         else:
             primary_image_file = ""
@@ -110,7 +112,8 @@ class LandingPage(models.Model):
                 + self.secondary_image_file_filename
             )
             secondary_image_file_write_date = self._get_image_write_date(
-                'secondary_image_file')
+                "secondary_image_file"
+            )
 
         else:
             secondary_image_file = ""

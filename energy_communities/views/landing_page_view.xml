@@ -48,17 +48,17 @@
                 </group>
                 <group col="4">
                   <field
-                    name="primary_image_file"
-                    widget="image"
-                    filename="primary_image_file_filename"
-                  />
-                  <field name="primary_image_file_filename" invisible="True"/>
+            name="primary_image_file"
+            widget="image"
+            filename="primary_image_file_filename"
+          />
+                  <field name="primary_image_file_filename" invisible="True" />
                   <field
-                    name="secondary_image_file"
-                    widget="image"
-                    filename="secondary_image_file_filename"
-                  />
-                  <field name="secondary_image_file_filename" invisible="True"/>
+            name="secondary_image_file"
+            widget="image"
+            filename="secondary_image_file_filename"
+          />
+                  <field name="secondary_image_file_filename" invisible="True" />
 
                 </group>
                 <group>

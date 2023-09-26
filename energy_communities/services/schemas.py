@@ -129,11 +129,9 @@ S_MEMBER_PROFILE_RETURN_GET = {
     }
 }
 
-S_PROFILE_PUT = {"language": {
-    "type": "string", "required": True, "empty": False}}
+S_PROFILE_PUT = {"language": {"type": "string", "required": True, "empty": False}}
 
-S_MEMBER_PROFILE_PUT = {
-    "role": {"type": "string", "required": True, "empty": False}}
+S_MEMBER_PROFILE_PUT = {"role": {"type": "string", "required": True, "empty": False}}
 
 S_PROFILE_RETURN_PUT = S_PROFILE_RETURN_GET
 
