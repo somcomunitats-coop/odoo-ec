@@ -20,6 +20,13 @@ class Selfconsumption(models.Model):
         for record in self:
             record.inscription_count = len(record.inscription_ids)
 
+    def _compute_contract_count(self):
+        for record in self:
+            related_contracts = self.env["contract.contract"].search(
+                [("name", "ilike", record.name)]
+            )
+        self.contracts_count = len(related_contracts)
+
     def _compute_report_distribution_table(self):
         """
         This compute field gets the distribution table needed to generate the reports.
@@ -68,6 +75,7 @@ class Selfconsumption(models.Model):
         "energy_project.inscription", "project_id", readonly=True
     )
     inscription_count = fields.Integer(compute=_compute_inscription_count)
+    contracts_count = fields.Integer(compute=_compute_contract_count)
 
     def get_distribution_tables(self):
         self.ensure_one()
@@ -88,6 +96,17 @@ class Selfconsumption(models.Model):
             "view_mode": "tree,form",
             "res_model": "energy_project.inscription",
             "domain": [("project_id", "=", self.id)],
+            "context": {"create": True, "default_project_id": self.id},
+        }
+
+    def get_contracts(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Contracts",
+            "view_mode": "tree,form",
+            "res_model": "contract.contract",
+            "domain": [("name", "ilike", self.name)],
             "context": {"create": True, "default_project_id": self.id},
         }
 

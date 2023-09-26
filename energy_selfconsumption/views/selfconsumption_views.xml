@@ -106,6 +106,22 @@
                   widget="statinfo"
                 />
                             </button>
+
+                            <button
+                class="oe_stat_button"
+                type="object"
+                name="get_contracts"
+                icon="fa-files-o"
+                attrs="{'invisible': [('state', '!=', 'active')]}"
+              >
+                                <field
+                  string="Contracts"
+                  name="contracts_count"
+                  widget="statinfo"
+                />
+                            </button>
+
+
                         </div>
                         <widget
               name="web_ribbon"
