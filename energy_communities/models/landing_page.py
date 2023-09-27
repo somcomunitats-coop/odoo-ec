@@ -71,7 +71,6 @@ class LandingPage(models.Model):
         string="Community status",
     )
 
-
     def _get_image_attachment(self, field_name):
         file_attachment = self.env["ir.attachment"].search(
             [
@@ -88,13 +87,13 @@ class LandingPage(models.Model):
         if file_attachment:
             file_write_date = str(file_attachment.write_date)
         return file_write_date
-    
+
     def _get_image_extension(self, field_name):
         file_write_date = ""
         file_attachment = self._get_image_attachment(field_name)
         extension = ""
         if file_attachment:
-            extension = file_attachment.mimetype.split('/')[1]
+            extension = file_attachment.mimetype.split("/")[1]
         return extension
 
     def _get_image_payload(self, field_name):
@@ -103,8 +102,14 @@ class LandingPage(models.Model):
             base_url
             + "/web/image/landing.page/"
             + str(self.id)
-            + "/"+field_name+"/"
-            + str(self.id)+'-'+field_name+'.'+self._get_image_extension(field_name)
+            + "/"
+            + field_name
+            + "/"
+            + str(self.id)
+            + "-"
+            + field_name
+            + "."
+            + self._get_image_extension(field_name)
         )
 
     def to_dict(self):
