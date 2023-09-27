@@ -36,9 +36,7 @@ class LandingPage(models.Model):
     # TODO: group_image_link Left for backward compatibility. To be removed
     group_image_link = fields.Char(string="Group image link")
     primary_image_file = fields.Image("Primary Image")
-    primary_image_file_filename = fields.Char("Primary Image filename")
     secondary_image_file = fields.Image("Secondary Image")
-    secondary_image_file_filename = fields.Char("Secondary Image filename")
     short_description = fields.Text(string="Short description", translate=True)
     long_description = fields.Text(string="Long description", translate=True)
     why_become_cooperator = fields.Html(string="Why become cooperator", translate=True)
@@ -73,8 +71,8 @@ class LandingPage(models.Model):
         string="Community status",
     )
 
-    def _get_image_write_date(self, field_name):
-        file_write_date = ""
+
+    def _get_image_attachment(self, field_name):
         file_attachment = self.env["ir.attachment"].search(
             [
                 ("res_id", "=", self.id),
@@ -82,39 +80,47 @@ class LandingPage(models.Model):
                 ("res_field", "=", field_name),
             ]
         )
+        return file_attachment
+
+    def _get_image_write_date(self, field_name):
+        file_write_date = ""
+        file_attachment = self._get_image_attachment(field_name)
         if file_attachment:
             file_write_date = str(file_attachment.write_date)
         return file_write_date
+    
+    def _get_image_extension(self, field_name):
+        file_write_date = ""
+        file_attachment = self._get_image_attachment(field_name)
+        extension = ""
+        if file_attachment:
+            extension = file_attachment.mimetype.split('/')[1]
+        return extension
+
+    def _get_image_payload(self, field_name):
+        base_url = self.env["ir.config_parameter"].get_param("web.base.url")
+        return (
+            base_url
+            + "/web/image/landing.page/"
+            + str(self.id)
+            + "/"+field_name+"/"
+            + str(self.id)+'-'+field_name+'.'+self._get_image_extension(field_name)
+        )
 
     def to_dict(self):
-        base_url = self.env["ir.config_parameter"].get_param("web.base.url")
         if self.primary_image_file:
-            primary_image_file = (
-                base_url
-                + "/web/image/landing.page/"
-                + str(self.id)
-                + "/primary_image_file/"
-                + self.primary_image_file_filename
-            )
+            primary_image_file = self._get_image_payload("primary_image_file")
             primary_image_file_write_date = self._get_image_write_date(
                 "primary_image_file"
             )
-
         else:
             primary_image_file = ""
             primary_image_file_write_date = ""
         if self.secondary_image_file:
-            secondary_image_file = (
-                base_url
-                + "/web/image/landing.page/"
-                + str(self.id)
-                + "/secondary_image_file/"
-                + self.secondary_image_file_filename
-            )
+            secondary_image_file = self._get_image_payload("secondary_image_file")
             secondary_image_file_write_date = self._get_image_write_date(
                 "secondary_image_file"
             )
-
         else:
             secondary_image_file = ""
             secondary_image_file_write_date = ""
