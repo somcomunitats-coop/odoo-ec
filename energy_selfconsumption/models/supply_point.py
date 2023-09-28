@@ -31,6 +31,9 @@ class SupplyPoint(models.Model):
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
     )
+    reseller_id = fields.Many2one(
+        "energy_project.reseller", string="Reseller", domain=[("state", "!=", "Baja")]
+    )
 
     # Address fields
     street = fields.Char(required=True)
@@ -53,6 +56,8 @@ class SupplyPoint(models.Model):
         "supply_point_id",
         readonly=True,
     )
+    supplier_id = fields.Many2one("energy_project.supplier", string="Supplier")
+
 
     @api.depends("partner_id", "street")
     def _compute_supply_point_name(self):
@@ -61,3 +66,4 @@ class SupplyPoint(models.Model):
                 record.name = f"{record.partner_id.name} - {record.street}"
             else:
                 record.name = _("New Supply Point")
+
