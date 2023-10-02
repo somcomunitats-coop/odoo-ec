@@ -25,7 +25,7 @@ class Selfconsumption(models.Model):
             related_contracts = self.env["contract.contract"].search_count(
                 [("project_id", "=", record.id)]
             )
-            record.contracts_count = len(related_contracts)
+            record.contracts_count = related_contracts
 
     def _compute_report_distribution_table(self):
         """
