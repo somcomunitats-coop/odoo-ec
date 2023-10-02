@@ -22,10 +22,10 @@ class Selfconsumption(models.Model):
 
     def _compute_contract_count(self):
         for record in self:
-            related_contracts = self.env["contract.contract"].search(
-                [("name", "ilike", record.name)]
+            related_contracts = self.env["contract.contract"].search_count(
+                [("project_id", "=", record.id)]
             )
-        self.contracts_count = len(related_contracts)
+            record.contracts_count = len(related_contracts)
 
     def _compute_report_distribution_table(self):
         """
