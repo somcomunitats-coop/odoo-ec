@@ -106,7 +106,7 @@ class Selfconsumption(models.Model):
             "name": "Contracts",
             "view_mode": "tree,form",
             "res_model": "contract.contract",
-            "domain": [("name", "ilike", self.name)],
+            "domain": [("project_id", "=", self.id)],
             "context": {"create": True, "default_project_id": self.id},
         }
 
