@@ -3,3 +3,4 @@ from . import project_type
 from . import inscription
 from . import reseller
 from . import supplier
+from . import contract
