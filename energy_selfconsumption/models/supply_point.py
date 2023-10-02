@@ -59,7 +59,7 @@ class SupplyPoint(models.Model):
     supplier_id = fields.Many2one("energy_project.supplier", string="Supplier")
 
     @api.onchange("partner_id")
-    def _onchange_cooperator_id(self):
+    def _onchange_partner_id(self):
         self.owner_id = self.partner_id
 
     @api.depends("partner_id", "street")
