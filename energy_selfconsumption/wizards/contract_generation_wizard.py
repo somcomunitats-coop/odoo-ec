@@ -133,6 +133,7 @@ class ContractGenerationWizard(models.TransientModel):
                     "date_start": fields.date.today(),
                     "company_id": self.env.company.id,
                     "contract_line_ids": contract_lines,
+                    "project_id": self.selfconsumption_id.project_id.id,
                 }
             )
 
