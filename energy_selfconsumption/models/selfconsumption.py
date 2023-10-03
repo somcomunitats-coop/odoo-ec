@@ -162,6 +162,18 @@ class Selfconsumption(models.Model):
                 "context": {"default_selfconsumption_id": self.id},
             }
 
+    def set_invoicing_mode(self):
+        return {
+            "name": _("Define Invoicing Mode"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "energy_selfconsumption.define_invoicing_mode.wizard",
+            "views": [(False, "form")],
+            "view_id": False,
+            "target": "new",
+            "context": {"default_selfconsumption_id": self.id},
+        }
+
     def action_selfconsumption_import_wizard(self):
         self.ensure_one()
         return {
