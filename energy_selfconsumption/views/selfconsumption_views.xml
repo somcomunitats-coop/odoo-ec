@@ -69,6 +69,12 @@
               string="Download Partition Coefficient"
               attrs="{'invisible':[('state','not in',['activation', 'active'])]}"
             />
+                        <button
+              type="object"
+              string="Define Invoicing Mode"
+              name="set_invoicing_mode"
+              attrs="{'invisible':[('state','not in',['draft'])]}"
+            />
 
                         <field
               name="state"
