@@ -39,7 +39,7 @@ class ContractGenerationWizard(models.TransientModel):
     )
     recurring_rule_type = fields.Selection(
         RULE_TYPE_OPTIONS,
-        default="monthly",
+        default="monthlylastday",
         string=_("Recurrence"),
         help=_("Specify Interval for automatic invoice generation."),
     )
