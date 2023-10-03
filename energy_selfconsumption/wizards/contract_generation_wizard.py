@@ -114,7 +114,8 @@ class ContractGenerationWizard(models.TransientModel):
                         "company_id": self.env.company.id,
                         "qty_type": "variable",
                         "qty_formula_id": formula_contract_id.id,
-                        "name": _(assignation.supply_point_id.code),
+                        "name": "%s: #START#-#END#"
+                        % (assignation.supply_point_id.code),
                         "supply_point_assignation_id": assignation.id,
                     },
                 )
