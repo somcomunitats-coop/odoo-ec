@@ -34,6 +34,7 @@
         "wizards/selfconsumption_import_wizard_views.xml",
         "wizards/distribution_table_import_wizard_views.xml",
         "wizards/contract_generation_wizard_views.xml",
+        "wizards/define_invoicing_mode_wizard_view.xml",
         "reports/selfconsumption_reports.xml",
     ],
 }
