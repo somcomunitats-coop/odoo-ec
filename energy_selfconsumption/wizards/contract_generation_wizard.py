@@ -53,9 +53,10 @@ class ContractGenerationWizard(models.TransientModel):
         # Create product
         product_id = self.env["product.product"].create(
             {
-                "name": _("Energy Generated"),
+                "name": _("Energy Acquired - %s") % (self.selfconsumption_id.name),
                 "lst_price": self.price_energy,
                 "company_id": self.env.company.id,
+                "must_have_dates": True,
             }
         )
 
@@ -63,7 +64,7 @@ class ContractGenerationWizard(models.TransientModel):
         formula_contract_id = self.env["contract.line.qty.formula"].create(
             {
                 "name": _("Formula - %s") % (self.selfconsumption_id.name),
-                "code": "result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * 30",
+                "code": "result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * (line.start_date - line.end_date)",
             }
         )
 
