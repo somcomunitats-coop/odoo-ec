@@ -122,8 +122,15 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
                         "company_id": self.env.company.id,
                         "qty_type": "variable",
                         "qty_formula_id": formula_contract_id.id,
-                        "name": "%s: #START#-#END#"
-                        % (assignation.supply_point_id.code),
+                        "name": _(
+                            """CUPS: %s
+                        Holder: %s
+                        Invoicing period: #START# - #END#"""
+                        )
+                        % (
+                            assignation.supply_point_id.code,
+                            assignation.supply_point_id.owner_id.display_name,
+                        ),
                         "supply_point_assignation_id": assignation.id,
                     },
                 )
