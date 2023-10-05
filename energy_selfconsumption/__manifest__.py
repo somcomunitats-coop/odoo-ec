@@ -15,6 +15,7 @@
         "mail",
         "contract",
         "contract_variable_quantity",
+        "contract_invoice_start_end_dates",
         "energy_project",
         "partner_firstname",
         "web_m2x_options",
