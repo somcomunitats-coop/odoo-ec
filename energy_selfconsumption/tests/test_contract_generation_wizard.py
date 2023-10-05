@@ -80,3 +80,16 @@ class TestContractGenerationWizard(TransactionCase):
     def test_generation_contracts(self):
         res = self.contract_generation_wizard.generate_contracts_button()
         self.assertEqual(res, True)
+
+        related_contract = self.env["contract.contract"].search(
+            [("project_id", "=", self.selfconsumption.project_id.id)]
+        )
+        contract_line = related_contract[0].contract_line_ids[0]
+        days_timedelta = (
+            contract_line.next_period_date_end - contract_line.next_period_date_start
+        )
+        expected_quantity = 100 * 1 * (days_timedelta.days + 1)
+        related_contract[0].recurring_create_invoice()
+        invoice = related_contract._get_related_invoices()
+        self.assertEqual(invoice.invoice_line_ids[0].quantity, expected_quantity)
+        self.assertEqual(invoice.invoice_line_ids[0].price_unit, 0.1)
