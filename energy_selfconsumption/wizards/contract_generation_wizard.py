@@ -64,7 +64,15 @@ class ContractGenerationWizard(models.TransientModel):
         formula_contract_id = self.env["contract.line.qty.formula"].create(
             {
                 "name": _("Formula - %s") % (self.selfconsumption_id.name),
-                "code": "result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * (line.start_date - line.end_date)",
+                "code": """
+days_timedelta = line.next_period_date_end - line.next_period_date_start
+if days_timedelta:
+  # Add one so it counts the same day too (month = 29 + 1)
+  days_between = days_timedelta.days + 1
+else:
+  days_between = 0
+result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * days_between
+                """,
             }
         )
 
