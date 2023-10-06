@@ -6,3 +6,4 @@ from . import supply_point_assignation
 from . import project
 from . import contract_line
 from . import contract
+from . import product

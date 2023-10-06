@@ -43,3 +43,7 @@ class Project(models.Model):
         required=True,
         default=lambda self: self.env.ref("base.es"),
     )
+    product_ids = fields.One2many(
+        "product.product",
+        "project_id",
+    )
