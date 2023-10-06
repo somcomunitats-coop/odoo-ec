@@ -5,11 +5,11 @@ class ContractGenerationWizard(models.TransientModel):
     _name = "energy_selfconsumption.define_invoicing_mode.wizard"
 
     INVOICING_VALUES = [
-        ("power_acquired", _("By power acquired")),
-        ("energy_delivered", _("By energy delivered")),
+        ("power_acquired", _("(PA) Power Acquired")),
+        ("energy_delivered", _("(ED) Energy Delivered")),
         (
-            "energy_delivered_hourly",
-            _("For energy delivered hourly variable coefficients (CSV)"),
+            "energy_delivered_variable",
+            _("(VHC) Energy Delivered Variable Hourly Coefficient"),
         ),
     ]
 
@@ -43,3 +43,80 @@ class ContractGenerationWizard(models.TransientModel):
         string=_("Recurrence"),
         help=_("Specify Interval for automatic invoice generation."),
     )
+    selfconsumption_id = fields.Many2one(
+        "energy_selfconsumption.selfconsumption", readonly=True
+    )
+
+    def _get_invoicing_mode_value(self):
+        """
+        This method return the invoicing_mode label.
+        """
+        for mode_value, mode_label in self.INVOICING_VALUES:
+            if mode_value == self.invoicing_mode:
+                return _(mode_label)
+        return ""
+
+    def save_data_to_selfconsumption(self):
+        # Create product
+        self.env["product.product"].create(
+            {
+                "name": f"{self._get_invoicing_mode_value()} - {self.selfconsumption_id.name}",
+                "lst_price": self.price,
+                "company_id": self.env.company.id,
+                "project_id": self.selfconsumption_id.project_id.id,
+            }
+        )
+
+        # Create contract formula
+        # TODO:actualizar formula energy_delivered y energy_delivered_variable.
+        #  4.Contract.template (en ivoicing --> configuracion --> create contract tmplate
+
+        if self.invoicing_mode == "power_acquired":
+            self.env["contract.line.qty.formula"].create(
+                {
+                    "name": _("Formula - %s") % (self.selfconsumption_id.name),
+                    "code": f"""
+days_timedelta = line.next_period_date_end - line.next_period_date_start
+if days_timedelta:
+  # Add one so it counts the same day too (month = 29 + 1)
+  days_between = days_timedelta.days + 1
+else:
+  days_between = 0
+result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * {self.price} * days_between
+""",
+                }
+            )
+        elif self.invoicing_mode == "energy_delivered":
+            self.env["contract.line.qty.formula"].create(
+                {
+                    "name": _("Formula - %s") % (self.selfconsumption_id.name),
+                    "code": f"""
+days_timedelta = line.next_period_date_end - line.next_period_date_start
+if days_timedelta:
+    # Add one so it counts the same day too (month = 29 + 1)
+    days_between = days_timedelta.days + 1
+else:
+    days_between = 0
+result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * days_between
+""",
+                }
+            )
+        elif self.invoicing_mode == "energy_delivered_variable":
+            self.env["contract.line.qty.formula"].create(
+                {
+                    "name": _("Formula - %s") % (self.selfconsumption_id.name),
+                    "code": """
+                        days_timedelta = line.next_period_date_end - line.next_period_date_start
+                        if days_timedelta:
+                          # Add one so it counts the same day too (month = 29 + 1)
+                          days_between = days_timedelta.days + 1
+                        else:
+                          days_between = 0
+                        result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * days_between
+                    """,
+                }
+            )
+
+        return {
+            "type": "ir.actions.act_window_close",
+        }
