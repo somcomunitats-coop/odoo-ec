@@ -202,11 +202,13 @@ class ResUsers(models.Model):
         provider_id.validate_admin_provider()
         headers = {"Authorization": "Bearer %s" % self._get_admin_token(provider_id)}
         headers["Content-Type"] = "application/json"
-
-        endpoint = provider_id.reset_password_endpoint.format(kc_uid=self.oauth_uid)
-        response = requests.put(
-            endpoint, headers=headers, data='["UPDATE_PASSWORD", "VERIFY_EMAIL"]'
-        )
+        if provider_id.reset_password_endpoint:
+            endpoint = provider_id.reset_password_endpoint.format(kc_uid=self.oauth_uid)
+            response = requests.put(
+                endpoint, headers=headers, data='["UPDATE_PASSWORD", "VERIFY_EMAIL"]'
+            )
+        else:
+            raise exceptions.UserError(_("Reset password url is not set."))
         if response.status_code != 204:
             raise exceptions.UserError(
                 _(

@@ -1727,6 +1727,12 @@ msgid "Reset password URL"
 msgstr "Pasahitza berrezartzeko esteka"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "Reset password url is not set."
+msgstr "Pasahitza berrezartzeko URLa ez dago konfiguratuta."
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__root_endpoint
 msgid "Root URL"
 msgstr "Erro URLa"

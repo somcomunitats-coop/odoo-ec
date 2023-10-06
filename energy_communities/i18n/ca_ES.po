@@ -1709,6 +1709,12 @@ msgid "Reset password URL"
 msgstr "URL per escriure la contasenya"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "Reset password url is not set."
+msgstr "La URL per restablir la contrasenya no està configurada."
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__root_endpoint
 msgid "Root URL"
 msgstr "URL arrel"

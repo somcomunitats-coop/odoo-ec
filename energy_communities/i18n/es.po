@@ -1551,6 +1551,12 @@ msgid "Reset password URL"
 msgstr "Enlace de reseteo de contraseña"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "Reset password url is not set."
+msgstr "La URL para restablecer la contraseña no está configurada."
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__root_endpoint
 msgid "Root URL"
 msgstr "URL raíz"
