@@ -40,20 +40,11 @@ class ContractGenerationWizard(models.TransientModel):
         "energy_selfconsumption.selfconsumption", readonly=True
     )
 
-    def _get_invoicing_mode_value(self):
-        """
-        This method return the invoicing_mode label.
-        """
-        for mode_value, mode_label in self.INVOICING_VALUES:
-            if mode_value == self.invoicing_mode:
-                return _(mode_label)
-        return ""
-
     def save_data_to_selfconsumption(self):
         # Create product
-        self.env["product.product"].create(
+        product_id = self.env["product.product"].create(
             {
-                "name": f"{self._get_invoicing_mode_value()} - {self.selfconsumption_id.name}",
+                "name": f"{self.invoicing_mode[1]} - {self.selfconsumption_id.name}",
                 "lst_price": self.price,
                 "company_id": self.env.company.id,
                 "project_id": self.selfconsumption_id.project_id.id,
@@ -109,6 +100,13 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
                     """,
                 }
             )
+
+        self.selfconsumption_id.write(
+            {
+                "invoicing_mode": self.invoicing_mode,
+                "product_id": product_id,
+            }
+        )
 
         return {
             "type": "ir.actions.act_window_close",
