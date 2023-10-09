@@ -223,6 +223,20 @@
                                 </div>
                             </group>
                         </group>
+
+                        <notebook colspan="4">
+                            <page
+                string="Invoicing Mode"
+                name="invoicing_mode"
+                autofocus="autofocus"
+              >
+                                <group>
+                                    <field name="invoicing_mode" />
+                                    <field name="product_id" />
+                                </group>
+                            </page>
+                        </notebook>
+
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers" />

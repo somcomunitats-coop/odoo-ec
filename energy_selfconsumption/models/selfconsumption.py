@@ -85,7 +85,9 @@ class Selfconsumption(models.Model):
     )
     inscription_count = fields.Integer(compute=_compute_inscription_count)
     contracts_count = fields.Integer(compute=_compute_contract_count)
-    invoicing_mode = fields.Char()
+    invoicing_mode = fields.Selection(INVOICING_VALUES, string="Invoicing Mode")
+    product_id = fields.Many2one("product.product", string="Product")
+    contract_template_id = fields.Many2one("contract.template")
 
     def get_distribution_tables(self):
         self.ensure_one()
