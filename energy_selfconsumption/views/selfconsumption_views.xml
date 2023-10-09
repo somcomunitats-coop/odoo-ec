@@ -228,6 +228,10 @@
                                 <group>
                                     <field name="invoicing_mode" readonly="True" />
                                     <field name="product_id" readonly="True" />
+                                    <field
+                    name="contract_template_id"
+                    readonly="True"
+                  />
                                 </group>
                             </page>
                         </notebook>

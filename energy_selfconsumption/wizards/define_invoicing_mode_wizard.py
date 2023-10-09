@@ -53,8 +53,7 @@ class ContractGenerationWizard(models.TransientModel):
         )
 
         # Create contract formula
-        # TODO:actualizar formula energy_delivered y energy_delivered_variable.
-        #  4.Contract.template (en ivoicing --> configuracion --> create contract tmplate
+        # TODO:Update formula energy_delivered and energy_delivered_variable.
 
         if self.invoicing_mode == "power_acquired":
             self.env["contract.line.qty.formula"].create(
@@ -102,10 +101,27 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
                 }
             )
 
+        # Search accounting journal
+        journal_id = self.env["account.journal"].search(
+            [("company_id", "=", self.env.company.id), ("type", "=", "sale")], limit=1
+        )
+        if not journal_id:
+            raise UserWarning(_("Accounting Journal not found."))
+
+        # Create Contract Template
+        contract_template_id = self.env["contract.template"].create(
+            {
+                "name": self.selfconsumption_id.name,
+                "journal_id": journal_id.id,
+                "company_id": self.env.company.id,
+            }
+        )
+
         self.selfconsumption_id.write(
             {
                 "invoicing_mode": self.invoicing_mode,
                 "product_id": product_id,
+                "contract_template_id": contract_template_id,
             }
         )
 
