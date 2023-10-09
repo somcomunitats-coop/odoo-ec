@@ -223,10 +223,11 @@
                 string="Invoicing Mode"
                 name="invoicing_mode"
                 autofocus="autofocus"
+                attrs="{'invisible':[('invoicing_mode', '==', False)]}"
               >
                                 <group>
-                                    <field name="invoicing_mode" />
-                                    <field name="product_id" />
+                                    <field name="invoicing_mode" readonly="True" />
+                                    <field name="product_id" readonly="True" />
                                 </group>
                             </page>
                         </notebook>
