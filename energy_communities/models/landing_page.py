@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from odoo import _, api, fields, models
 
 from ..pywordpress_client.resources.authenticate import Authenticate
@@ -70,6 +72,7 @@ class LandingPage(models.Model):
         required=True,
         string="Community status",
     )
+    wp_lastupdate_datetime = fields.Datetime(string="Last wordpress update date")
 
     def _get_image_attachment(self, field_name):
         file_attachment = self.env["ir.attachment"].search(
@@ -179,23 +182,22 @@ class LandingPage(models.Model):
             new_status = "draft" if record.status == "publish" else "publish"
             record.write({"status": new_status})
 
-    def _update_wordpress(self):
+    def action_update_wp(self):
         for record in self:
-            instance_company = self.env["res.company"].search(
-                [("hierarchy_level", "=", "instance")]
-            )
-            if instance_company:
-                baseurl = instance_company.wordpress_base_url
-                username = instance_company.wordpress_db_username
-                password = instance_company.wordpress_db_password
-                auth = Authenticate(baseurl, username, password).authenticate()
-                token = "Bearer %s" % auth["token"]
-                landing_page_data = record.to_dict()
-                LandingPageResource(token, baseurl, record.wp_landing_page_id).update(
-                    landing_page_data
-                )
+            record._update_wordpress()
 
-    def write(self, vals):
-        res = super().write(vals)
-        self._update_wordpress()
-        return res
+    def _update_wordpress(self):
+        instance_company = self.env["res.company"].search(
+            [("hierarchy_level", "=", "instance")]
+        )
+        if instance_company:
+            baseurl = instance_company.wordpress_base_url
+            username = instance_company.wordpress_db_username
+            password = instance_company.wordpress_db_password
+            auth = Authenticate(baseurl, username, password).authenticate()
+            token = "Bearer %s" % auth["token"]
+            landing_page_data = self.to_dict()
+            LandingPageResource(token, baseurl, self.wp_landing_page_id).update(
+                landing_page_data
+            )
+            self.write({"wp_lastupdate_datetime": datetime.now()})
