@@ -42,9 +42,10 @@ class ContractGenerationWizard(models.TransientModel):
 
     def save_data_to_selfconsumption(self):
         # Create product
+
         product_id = self.env["product.product"].create(
             {
-                "name": f"{self.invoicing_mode[1]} - {self.selfconsumption_id.name}",
+                "name": self.selfconsumption_id.name,
                 "lst_price": self.price,
                 "company_id": self.env.company.id,
                 "project_id": self.selfconsumption_id.project_id.id,
