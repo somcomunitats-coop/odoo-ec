@@ -53,9 +53,10 @@ class ContractGenerationWizard(models.TransientModel):
         # Create product
         product_id = self.env["product.product"].create(
             {
-                "name": _("Energy Generated"),
+                "name": _("Energy Acquired - %s") % (self.selfconsumption_id.name),
                 "lst_price": self.price_energy,
                 "company_id": self.env.company.id,
+                "must_have_dates": True,
             }
         )
 
@@ -63,7 +64,15 @@ class ContractGenerationWizard(models.TransientModel):
         formula_contract_id = self.env["contract.line.qty.formula"].create(
             {
                 "name": _("Formula - %s") % (self.selfconsumption_id.name),
-                "code": "result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * 30",
+                "code": """
+days_timedelta = line.next_period_date_end - line.next_period_date_start
+if days_timedelta:
+  # Add one so it counts the same day too (month = 29 + 1)
+  days_between = days_timedelta.days + 1
+else:
+  days_between = 0
+result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * days_between
+                """,
             }
         )
 
@@ -113,7 +122,15 @@ class ContractGenerationWizard(models.TransientModel):
                         "company_id": self.env.company.id,
                         "qty_type": "variable",
                         "qty_formula_id": formula_contract_id.id,
-                        "name": _(assignation.supply_point_id.code),
+                        "name": _(
+                            """CUPS: %s
+                        Holder: %s
+                        Invoicing period: #START# - #END#"""
+                        )
+                        % (
+                            assignation.supply_point_id.code,
+                            assignation.supply_point_id.owner_id.display_name,
+                        ),
                         "supply_point_assignation_id": assignation.id,
                     },
                 )

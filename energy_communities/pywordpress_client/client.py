@@ -84,7 +84,8 @@ class Client:
         if headers.get("Content-Type") == "application/json":
             payload = json.dumps(payload)
 
-        logger.info("{verb} {url} \n {body}".format(verb=verb, url=url, body=payload))
+        logger.info("{verb} {url} \n {body}".format(
+            verb=verb, url=url, body=payload))
 
         try:
             response = requests.request(
