@@ -54,9 +54,9 @@ class ContractGenerationWizard(models.TransientModel):
 
         # Create contract formula
         # TODO:Update formula energy_delivered and energy_delivered_variable.
-
+        formula_contract_id = None
         if self.invoicing_mode == "power_acquired":
-            self.env["contract.line.qty.formula"].create(
+            formula_contract_id = self.env["contract.line.qty.formula"].create(
                 {
                     "name": _("Formula - %s") % (self.selfconsumption_id.name),
                     "code": f"""
@@ -71,7 +71,7 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
                 }
             )
         elif self.invoicing_mode == "energy_delivered":
-            self.env["contract.line.qty.formula"].create(
+            formula_contract_id = self.env["contract.line.qty.formula"].create(
                 {
                     "name": _("Formula - %s") % (self.selfconsumption_id.name),
                     "code": f"""
@@ -86,7 +86,7 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
                 }
             )
         elif self.invoicing_mode == "energy_delivered_variable":
-            self.env["contract.line.qty.formula"].create(
+            formula_contract_id = self.env["contract.line.qty.formula"].create(
                 {
                     "name": _("Formula - %s") % (self.selfconsumption_id.name),
                     "code": """
@@ -109,11 +109,27 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
             raise UserWarning(_("Accounting Journal not found."))
 
         # Create Contract Template
+        contract_line = [
+            (
+                0,
+                0,
+                {
+                    "product_id": product_id.id,
+                    "automatic_price": True,
+                    "company_id": self.env.company.id,
+                    "qty_type": "variable",
+                    "qty_formula_id": formula_contract_id.id,
+                    "name": "",
+                },
+            )
+        ]
+
         contract_template_id = self.env["contract.template"].create(
             {
                 "name": self.selfconsumption_id.name,
                 "journal_id": journal_id.id,
                 "company_id": self.env.company.id,
+                "contract_line_ids": contract_line,
             }
         )
 
