@@ -133,20 +133,6 @@
                 />
                             </button>
 
-                            <button
-                class="oe_stat_button"
-                type="object"
-                name="get_product"
-                icon="fa-file-text"
-                attrs="{'visible': [('invoicing_mode', '!=', False)]}"
-              >
-                                <field
-                  string="Invoicing Mode"
-                  name="invoicing_mode"
-                  widget="statinfo"
-                />
-                            </button>
-
                         </div>
                         <widget
               name="web_ribbon"

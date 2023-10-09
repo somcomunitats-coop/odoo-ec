@@ -3,6 +3,15 @@ from datetime import datetime
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
 
+INVOICING_VALUES = [
+    ("power_acquired", _("Power Acquired")),
+    ("energy_delivered", _("Energy Delivered")),
+    (
+        "energy_delivered_variable",
+        _("Energy Delivered Variable Hourly Coefficient"),
+    ),
+]
+
 
 class Selfconsumption(models.Model):
     _name = "energy_selfconsumption.selfconsumption"
@@ -46,10 +55,6 @@ class Selfconsumption(models.Model):
             else:
                 record.report_distribution_table = False
 
-    def _compute_invoicing_name(self):
-        for record in self:
-            record.invoicing_mode = record.project_id.product_ids[0].name.split("-")[0]
-
     project_id = fields.Many2one(
         "energy_project.project", required=True, ondelete="cascade"
     )
@@ -80,7 +85,7 @@ class Selfconsumption(models.Model):
     )
     inscription_count = fields.Integer(compute=_compute_inscription_count)
     contracts_count = fields.Integer(compute=_compute_contract_count)
-    invoicing_mode = fields.Char(compute=_compute_invoicing_name)
+    invoicing_mode = fields.Char()
 
     def get_distribution_tables(self):
         self.ensure_one()
@@ -111,17 +116,6 @@ class Selfconsumption(models.Model):
             "name": "Contracts",
             "view_mode": "tree,form",
             "res_model": "contract.contract",
-            "domain": [("project_id", "=", self.id)],
-            "context": {"create": True, "default_project_id": self.id},
-        }
-
-    def get_product(self):
-        self.ensure_one()
-        return {
-            "type": "ir.actions.act_window",
-            "name": "Product",
-            "view_mode": "tree,form",
-            "res_model": "product.product",
             "domain": [("project_id", "=", self.id)],
             "context": {"create": True, "default_project_id": self.id},
         }

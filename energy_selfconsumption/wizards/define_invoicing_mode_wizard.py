@@ -1,17 +1,10 @@
 from odoo import _, fields, models
 
+from ..models.selfconsumption import INVOICING_VALUES
+
 
 class ContractGenerationWizard(models.TransientModel):
     _name = "energy_selfconsumption.define_invoicing_mode.wizard"
-
-    INVOICING_VALUES = [
-        ("power_acquired", _("(PA) Power Acquired")),
-        ("energy_delivered", _("(ED) Energy Delivered")),
-        (
-            "energy_delivered_variable",
-            _("(VHC) Energy Delivered Variable Hourly Coefficient"),
-        ),
-    ]
 
     RULE_TYPE_OPTIONS = [
         ("daily", _("Day(s)")),
