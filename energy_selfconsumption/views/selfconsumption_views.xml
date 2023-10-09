@@ -73,7 +73,7 @@
               type="object"
               string="Define Invoicing Mode"
               name="set_invoicing_mode"
-              attrs="{'invisible':[('state','not in',['draft'])]}"
+              attrs="{'invisible':[('invoicing_mode', '!=', False)]}"
             />
 
                         <field
