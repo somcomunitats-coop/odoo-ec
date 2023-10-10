@@ -69,7 +69,7 @@ if days_timedelta:
   days_between = days_timedelta.days + 1
 else:
   days_between = 0
-result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * {self.price} * days_between
+result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient *  days_between
 """,
                 }
             )
