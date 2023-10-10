@@ -19,7 +19,7 @@ class ContractGenerationWizard(models.TransientModel):
 
     invoicing_mode = fields.Selection(
         INVOICING_VALUES,
-        string=_("Invoicing Mode"),
+        string="Invoicing Mode",
         default="power_acquired",
         required=True,
     )
@@ -28,14 +28,14 @@ class ContractGenerationWizard(models.TransientModel):
 
     recurrence_interval = fields.Integer(
         default=1,
-        string=_("Invoice Every"),
+        string="Invoice Every",
         required=True,
         help=_("Invoice every (Days/Week/Month/Year)"),
     )
     recurring_rule_type = fields.Selection(
         RULE_TYPE_OPTIONS,
         default="monthlylastday",
-        string=_("Recurrence"),
+        string="Recurrence",
         required=True,
         help=_("Specify Interval for automatic invoice generation."),
     )
