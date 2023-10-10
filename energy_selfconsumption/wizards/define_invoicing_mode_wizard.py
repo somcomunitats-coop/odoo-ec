@@ -1,4 +1,5 @@
 from odoo import _, fields, models
+from odoo.exceptions import UserError
 
 from ..models.selfconsumption import INVOICING_VALUES
 
@@ -41,8 +42,10 @@ class ContractGenerationWizard(models.TransientModel):
     )
 
     def save_data_to_selfconsumption(self):
-        # Create product
+        if self.invoicing_mode == "energy_delivered_variable":
+            raise UserError("This invoicing mode is not yet implemented")
 
+        # Create product
         product_id = self.env["product.product"].create(
             {
                 "name": self.selfconsumption_id.name,
@@ -89,15 +92,15 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
             formula_contract_id = self.env["contract.line.qty.formula"].create(
                 {
                     "name": _("Formula - %s") % (self.selfconsumption_id.name),
-                    "code": """
-                        days_timedelta = line.next_period_date_end - line.next_period_date_start
-                        if days_timedelta:
-                          # Add one so it counts the same day too (month = 29 + 1)
-                          days_between = days_timedelta.days + 1
-                        else:
-                          days_between = 0
-                        result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * days_between
-                    """,
+                    "code": f"""
+days_timedelta = line.next_period_date_end - line.next_period_date_start
+if days_timedelta:
+    # Add one so it counts the same day too (month = 29 + 1)
+    days_between = days_timedelta.days + 1
+else:
+    days_between = 0
+result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * days_between
+""",
                 }
             )
 
