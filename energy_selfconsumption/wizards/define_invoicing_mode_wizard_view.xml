@@ -21,7 +21,7 @@
                 />
                                 <field
                   name="price"
-                  string="kWn Price per day (€/kWn/dia)"
+                  string="kWn Price per day (€/kWn/day)"
                   attrs="{'invisible': [('invoicing_mode', '!=', 'power_acquired')]}"
                 />
                             </group>
