@@ -125,6 +125,8 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
                     "qty_type": "variable",
                     "qty_formula_id": formula_contract_id.id,
                     "name": "",
+                    "recurring_interval": self.recurrence_interval,
+                    "recurring_rule_type": self.recurring_rule_type,
                 },
             )
         ]
