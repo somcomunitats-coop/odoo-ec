@@ -10,10 +10,10 @@ class AssignAdminWizard(models.TransientModel):
     _description = "Assign admin Wizard"
 
     is_new_admin = fields.Boolean(string="Is a new admin?")
-    first_name = fields.Char(string="First name")
-    last_name = fields.Char(string="Last name")
+    first_name = fields.Char(string="First name", required=True)
+    last_name = fields.Char(string="Last name", required=True)
     vat = fields.Char(string="VAT", required=True)
-    email = fields.Char(string="Email")
+    email = fields.Char(string="Email", required=True)
     lang = fields.Many2one("res.lang", string="Language")
     role = fields.Selection(selection="_get_available_roles", string="Role")
     user_is_coordinator_worker = fields.Boolean(compute="_user_is_coordinator_worker")
