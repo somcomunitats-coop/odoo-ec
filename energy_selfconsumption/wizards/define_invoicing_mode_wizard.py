@@ -29,12 +29,14 @@ class ContractGenerationWizard(models.TransientModel):
     recurrence_interval = fields.Integer(
         default=1,
         string=_("Invoice Every"),
+        required=True,
         help=_("Invoice every (Days/Week/Month/Year)"),
     )
     recurring_rule_type = fields.Selection(
         RULE_TYPE_OPTIONS,
         default="monthlylastday",
         string=_("Recurrence"),
+        required=True,
         help=_("Specify Interval for automatic invoice generation."),
     )
     selfconsumption_id = fields.Many2one(
