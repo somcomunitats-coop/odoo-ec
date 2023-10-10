@@ -17,6 +17,7 @@
         "base_user_role",
         "base_user_role_company",
         "community_maps",
+        "community_maps_fetcher",
         "contacts",
         "cooperator",
         "crm",

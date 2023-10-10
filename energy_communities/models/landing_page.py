@@ -10,6 +10,8 @@ from .res_config_settings import ResConfigSettings
 class LandingPage(models.Model):
     _name = "landing.page"
 
+    _inherit = ["cm.coordinates.mixin"]
+
     name = fields.Char(string="Name", translate=True)
     company_id = fields.Many2one("res.company", string="Company")
     wp_landing_page_id = fields.Integer(string="WP Landing Page")
