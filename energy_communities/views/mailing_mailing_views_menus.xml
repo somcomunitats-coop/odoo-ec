@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <data>
+    <record model="ir.ui.menu" id="mass_mailing.mass_mailing_menu_root">
+      <field
+        name="groups_id"
+        eval="[(6,0,[ref('mass_mailing.group_mass_mailing_user')])]"
+      />
+    </record>
+  </data>
+</odoo>
