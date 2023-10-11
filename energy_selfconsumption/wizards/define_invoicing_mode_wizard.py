@@ -125,8 +125,6 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
                     "qty_type": "variable",
                     "qty_formula_id": formula_contract_id.id,
                     "name": "",
-                    "recurring_interval": self.recurrence_interval,
-                    "recurring_rule_type": self.recurring_rule_type,
                 },
             )
         ]
@@ -137,6 +135,8 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
                 "journal_id": journal_id.id,
                 "company_id": self.env.company.id,
                 "contract_line_ids": contract_line,
+                "recurring_interval": self.recurrence_interval,
+                "recurring_rule_type": self.recurring_rule_type,
             }
         )
 
