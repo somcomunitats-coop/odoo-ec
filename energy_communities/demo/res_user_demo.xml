@@ -161,7 +161,7 @@
       />
         </record>
 
-                <record id="res_partner_user_ce_3_demo" model="res.partner">
+        <record id="res_partner_user_ce_3_demo" model="res.partner">
             <field name="name">Usuari Comunitat Energètica 3</field>
             <field name="is_company" eval="False" />
             <field name="email">user3@coop.coop</field>
@@ -384,5 +384,11 @@
                 ]"
       />
         </record>
+
+        <function
+      name="cron_update_company_ids_from_user"
+      model="res.partner"
+      eval="[[]]"
+    />
     </data>
 </odoo>
