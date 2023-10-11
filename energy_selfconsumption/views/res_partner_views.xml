@@ -5,8 +5,8 @@
             <field name="name">Owners</field>
             <field name="res_model">res.partner</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="domain">[('owner_supply_ids','!=', False)]</field>
-            <field name="context">{'create':False}</field>
+            <field name="domain">[('owner_supply_ids', '!=', False)]</field>
+            <field name="context">{'create': False}</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     Click to add a contact in your address book.
@@ -20,6 +20,26 @@
       id="res_partner_owners_menu"
       parent="contacts_category_menu"
       action="action_partner_owner_form"
+    />
+
+        <record id="action_partner_cooperator_form" model="ir.actions.act_window">
+            <field name="name">Cooperators</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('member', '=', True)]</field>
+            <field name="context">{'create': False}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add a contact in your address book.
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+      name="Cooperators"
+      id="res_partner_cooperators_menu"
+      parent="energy_selfconsumption.contacts_category_menu"
+      action="action_partner_cooperator_form"
     />
 
         <record id="view_partner_form_inherit" model="ir.ui.view">
