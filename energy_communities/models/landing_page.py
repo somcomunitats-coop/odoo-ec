@@ -47,8 +47,6 @@ class LandingPage(models.Model):
     become_cooperator_process = fields.Html(
         string="Become cooperator process", translate=True
     )
-    # TODO: remove this one
-    map_geolocation = fields.Char(string="Map geolocation")
     map_place_id = fields.Many2one("cm.place", "Place reference")
     street = fields.Char(string="Street")
     postal_code = fields.Char(string="Postal code")
@@ -171,7 +169,6 @@ class LandingPage(models.Model):
                 "long_description": self.long_description or "",
                 "why_become_cooperator": self.why_become_cooperator,
                 "become_cooperator_process": self.become_cooperator_process,
-                "map_geolocation": self.map_geolocation or "",
                 "map_reference": map_reference,
                 "street": self.street or "",
                 "postal_code": self.postal_code or "",

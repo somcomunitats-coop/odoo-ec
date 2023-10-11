@@ -225,7 +225,6 @@ S_LANDING_PAGE_CREATE = {
             "long_description": {"type": "string"},
             "why_become_cooperator": {"type": "string"},
             "become_cooperator_process": {"type": "string"},
-            "map_geolocation": {"type": "string"},
             "map_reference": {"type": "string"},
             "street": {"type": "string"},
             "postal_code": {"type": "string"},
