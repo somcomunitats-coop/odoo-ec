@@ -37,8 +37,6 @@ class LandingPage(models.Model):
     instagram_link = fields.Char(
         string="Instagram link", related="company_id.social_instagram"
     )
-    # TODO: group_image_link Left for backward compatibility. To be removed
-    group_image_link = fields.Char(string="Group image link")
     primary_image_file = fields.Image("Primary Image")
     secondary_image_file = fields.Image("Secondary Image")
     short_description = fields.Text(string="Short description", translate=True)
@@ -159,8 +157,6 @@ class LandingPage(models.Model):
                 "instagram_link": self.instagram_link or "",
                 "telegram_link": self.telegram_link or "",
                 "community_active_services": self.company_id.get_active_services(),
-                # TODO: group_image_link Left for backward compatibility. To be removed
-                "group_image_link": self.group_image_link or "",
                 "primary_image_file": primary_image_file,
                 "primary_image_file_write_date": primary_image_file_write_date,
                 "secondary_image_file": secondary_image_file,

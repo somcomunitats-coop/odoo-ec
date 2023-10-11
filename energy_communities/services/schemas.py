@@ -216,7 +216,6 @@ S_LANDING_PAGE_CREATE = {
                 "type": "list",
                 "schema": {"type": "dict", "schema": S_COMMUNITY_SERVICE},
             },
-            "group_image_link": {"type": "string"},
             "primary_image_file": {"type": "string"},
             "primary_image_file_write_date": {"type": "string"},
             "secondary_image_file": {"type": "string"},
