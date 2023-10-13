@@ -2,6 +2,9 @@ from datetime import datetime
 
 from odoo import _, api, fields, models
 
+from ..client_map.resources.landing_cmplace import (
+    LandingCmPlace as LandingCmPlaceResource,
+)
 from ..pywordpress_client.resources.authenticate import Authenticate
 from ..pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
@@ -181,6 +184,10 @@ class LandingPage(models.Model):
         for record in self:
             record._update_wordpress()
 
+    def action_create_landing_place(self):
+        for record in self:
+            record._create_landing_place()
+
     def _update_wordpress(self):
         instance_company = self.env["res.company"].search(
             [("hierarchy_level", "=", "instance")]
@@ -196,3 +203,6 @@ class LandingPage(models.Model):
                 landing_page_data
             )
             self.write({"wp_lastupdate_datetime": datetime.now()})
+
+    def _create_landing_place(self):
+        response = LandingCmPlaceResource(self).create()

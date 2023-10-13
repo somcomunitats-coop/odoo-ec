@@ -100,16 +100,6 @@
 		</field>
 	</record>
 
-	<record id="action_create_map_place_from_lead" model="ir.actions.server">
-            <field name="name">Create Map Place</field>
-            <field name="model_id" ref="crm.model_crm_lead" />
-            <field name="binding_model_id" ref="crm.model_crm_lead" />
-            <field name="state">code</field>
-            <field
-      name="code"
-    > for rec in records: rec._create_map_place_proposal() </field>
-    </record>
-
 	<record id="action_build_community_company_from_lead" model="ir.actions.server">
             <field name="name">Build Community Company</field>
             <field name="model_id" ref="crm.model_crm_lead" />
@@ -119,6 +109,5 @@
       name="code"
     > for rec in records: rec._build_community_company() </field>
     </record>
-
 
 </odoo>
