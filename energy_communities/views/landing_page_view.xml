@@ -18,6 +18,11 @@
             string="Unpublish"
             attrs="{'invisible': [('status','!=','publish')]}"
           />
+          <button
+            name="action_update_wp"
+            type="object"
+            string="Update wordpress data"
+          />
                     <field name="status" widget="statusbar" />
                 </header>
                 <group style="width:40px;">
@@ -31,6 +36,7 @@
           >Draft</h4>
                 </group>
                 <group>
+                    <field name="wp_lastupdate_datetime" readonly="True" />
                     <field name="wp_landing_page_id" readonly="True" />
                     <field name="name" />
                     <field name="allow_new_members" />

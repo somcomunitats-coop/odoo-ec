@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "14.0.2.0.1",
+    "version": "14.0.2.1.0",
     "depends": [
         "account",
         "cooperator_account_banking_mandate",
@@ -23,9 +23,7 @@
         "crm_metadata",
         "crm_metadata_rest_api",
         "crm_rest_api",
-        "energy_project",
         "energy_selfconsumption",
-        "energy_selfconsumption_cooperator",
         "l10n_es_aeat",
         "l10n_es_aeat_sii_oca",
         "l10n_es_cooperator",
@@ -74,6 +72,7 @@
         "views/subscription_request_view.xml",
         "views/res_users_view.xml",
         "views/res_users_role_view.xml",
+        "views/mailing_mailing_views_menus.xml",
         "views/menus.xml",
         "data/mail_template_data.xml",
         "data/mail_template_update_data.xml",
