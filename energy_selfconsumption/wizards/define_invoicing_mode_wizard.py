@@ -43,28 +43,42 @@ class ContractGenerationWizard(models.TransientModel):
         "energy_selfconsumption.selfconsumption", readonly=True
     )
 
+    def _prepare_product_values(self):
+        return {
+            "name": self.selfconsumption_id.name,
+            "lst_price": self.price,
+            "company_id": self.env.company.id,
+            "project_id": self.selfconsumption_id.project_id.id,
+        }
+
+    def _prepare_formula_values(self, code):
+        return {
+            "name": _("Formula - %s") % (self.selfconsumption_id.name),
+            "code": code,
+        }
+
+    def _prepare_contract_values(self, journal_id, contract_line):
+        return {
+            "name": self.selfconsumption_id.name,
+            "journal_id": journal_id.id,
+            "company_id": self.env.company.id,
+            "contract_line_ids": contract_line,
+            "recurring_interval": self.recurrence_interval,
+            "recurring_rule_type": self.recurring_rule_type,
+        }
+
     def save_data_to_selfconsumption(self):
         if self.invoicing_mode == "energy_delivered_variable":
             raise UserError(_("This invoicing mode is not yet implemented"))
 
         # Create product
-        product_id = self.env["product.product"].create(
-            {
-                "name": self.selfconsumption_id.name,
-                "lst_price": self.price,
-                "company_id": self.env.company.id,
-                "project_id": self.selfconsumption_id.project_id.id,
-            }
-        )
+        product_id = self.env["product.product"].create(self._prepare_product_values())
 
         # Create contract formula
         # TODO:Update formula energy_delivered and energy_delivered_variable.
         formula_contract_id = None
         if self.invoicing_mode == "power_acquired":
-            formula_contract_id = self.env["contract.line.qty.formula"].create(
-                {
-                    "name": _("Formula - %s") % (self.selfconsumption_id.name),
-                    "code": f"""
+            code = f"""
 days_timedelta = line.next_period_date_end - line.next_period_date_start
 if days_timedelta:
   # Add one so it counts the same day too (month = 29 + 1)
@@ -72,29 +86,26 @@ if days_timedelta:
 else:
   days_between = 0
 result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient *  days_between
-""",
-                }
+"""
+            formula_contract_id = self.env["contract.line.qty.formula"].create(
+                self._prepare_formula_values(code)
             )
         elif self.invoicing_mode == "energy_delivered":
-            formula_contract_id = self.env["contract.line.qty.formula"].create(
-                {
-                    "name": _("Formula - %s") % (self.selfconsumption_id.name),
-                    "code": f"""
+            code = f"""
 days_timedelta = line.next_period_date_end - line.next_period_date_start
 if days_timedelta:
-    # Add one so it counts the same day too (month = 29 + 1)
-    days_between = days_timedelta.days + 1
+  # Add one so it counts the same day too (month = 29 + 1)
+  days_between = days_timedelta.days + 1
 else:
-    days_between = 0
-result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * days_between
-""",
-                }
+  days_between = 0
+result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient *  days_between
+"""
+            formula_contract_id = self.env["contract.line.qty.formula"].create(
+                self._prepare_formula_values(code)
             )
         elif self.invoicing_mode == "energy_delivered_variable":
-            formula_contract_id = self.env["contract.line.qty.formula"].create(
-                {
-                    "name": _("Formula - %s") % (self.selfconsumption_id.name),
-                    "code": f"""
+            code = (
+                f"""
 days_timedelta = line.next_period_date_end - line.next_period_date_start
 if days_timedelta:
     # Add one so it counts the same day too (month = 29 + 1)
@@ -103,7 +114,9 @@ else:
     days_between = 0
 result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * days_between
 """,
-                }
+            )
+            formula_contract_id = self.env["contract.line.qty.formula"].create(
+                self._prepare_formula_values(code)
             )
 
         # Search accounting journal
@@ -130,14 +143,7 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
         ]
 
         contract_template_id = self.env["contract.template"].create(
-            {
-                "name": self.selfconsumption_id.name,
-                "journal_id": journal_id.id,
-                "company_id": self.env.company.id,
-                "contract_line_ids": contract_line,
-                "recurring_interval": self.recurrence_interval,
-                "recurring_rule_type": self.recurring_rule_type,
-            }
+            self._prepare_contract_values(journal_id, contract_line)
         )
 
         self.selfconsumption_id.write(
