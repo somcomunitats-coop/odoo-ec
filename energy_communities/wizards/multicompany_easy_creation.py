@@ -208,6 +208,10 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
 
     def action_accept(self):
         action = super().action_accept()
+        self.with_delay()._after_action_accept_hook()
+        return action
+
+    def _after_action_accept_hook(self):
         if self.property_cooperator_account:
             self.set_cooperative_account()
         self_new_company = self.with_company(self.new_company_id)
@@ -216,7 +220,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         self.create_capital_share_product_template()
         self.add_company_managers()
         self.add_company_log()
-        return action
 
     def create_company(self):
         self.new_company_id = (
