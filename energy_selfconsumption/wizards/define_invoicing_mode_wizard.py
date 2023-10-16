@@ -20,7 +20,7 @@ class ContractGenerationWizard(models.TransientModel):
     invoicing_mode = fields.Selection(
         INVOICING_VALUES,
         string="Invoicing Mode",
-        default="energy_delivered",
+        default="power_acquired",
         required=True,
     )
 
