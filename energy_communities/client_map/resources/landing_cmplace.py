@@ -1,33 +1,11 @@
 from odoo import _
 from odoo.exceptions import UserError
 
+from ..config import MapClientConfig
+
 
 class LandingCmPlace:
     _name = "landing_cmplace"
-
-    # mapping between landings params and place params
-    _MAPPING__INSTANCE_ID = 1
-    _MAPPING__LANDING_ACTIVE_SERVICES__MAP_FILTER = {
-        "ce_tag_common_generation": "generacio-renovable-comunitaria",
-        "ce_tag_energy_efficiency": "eficiencia-energetica",
-        "ce_tag_sustainable_mobility": "mobilitat-sostenible",
-        "ce_tag_citizen_education": "formacio-ciutadana",
-        "ce_tag_thermal_energy": "energia-termica-i-climatitzacio",
-        "ce_tag_collective_purchases": "compres-col-lectives",
-        "ce_tag_renewable_energy": "subministrament-d-energia-100-renovable",
-        "ce_tag_aggregate_demand": "agregacio-i-flexibilitat-de-la-demanda",
-    }
-    _MAPPING__MAP = "campanya"
-    _MAPPING__LANDING_COMMUNITY_STATUS__MAP_FILTER = {"open": "oberta"}
-    _MAPPING__LANDING_STATUS__MAP_PLACE_STATUS = {
-        "draft": "draft",
-        "publish": "published",
-    }
-    _MAPPING__LANDING_COMMUNITY_TYPE__MAP_CATEGORY = {
-        "citizen": "ciutadania",
-        "industrial": "industrial",
-    }
-    _MAPPING__LANDING_COMMUNITY_STATUS__MAP_PRESENTER = {"open": "CE Oberta"}
 
     def __init__(self, landing):
         self.landing = landing
@@ -37,7 +15,6 @@ class LandingCmPlace:
         Creates a place from a landing instance.
         """
         validate_creation_dict = self._validate_and_prepare_creation()
-        print(validate_creation_dict)
         if validate_creation_dict["errors"]:
             error_msg = ""
             for error in validate_creation_dict["errors"]:
@@ -50,10 +27,9 @@ class LandingCmPlace:
             place._get_slug_id()
             place.build_presenter_metadata_ids()
             # setup description
-            desc_meta = self.landing.env["cm.place.presenter.metadata"].search(
-                [("place_id", "=", place.id), ("key", "=", "po2_description")]
-            )
-            desc_meta.write({"value": self.landing.short_description})
+            self._setup_place_description(place)
+            # apply translations
+            self._apply_place_translations(place)
             # relate place with landing
             self.landing.write({"map_place_id": place.id})
         return True
@@ -76,10 +52,10 @@ class LandingCmPlace:
         """
         ret_dict = {
             "creation_data": {
-                "company_id": self._MAPPING__INSTANCE_ID,
+                "company_id": MapClientConfig.MAPPING__INSTANCE_ID,
                 "name": self.landing.name,
                 "type": "place",
-                "status": self._MAPPING__LANDING_STATUS__MAP_PLACE_STATUS[
+                "status": MapClientConfig.MAPPING__LANDING_STATUS__MAP_PLACE_STATUS[
                     self.landing.status
                 ],
                 "interaction_method": "external_link",
@@ -101,12 +77,14 @@ class LandingCmPlace:
                 )
             )
         # Map reference
-        map = self.landing.env["cm.map"].search([("slug_id", "=", self._MAPPING__MAP)])
+        map = self.landing.env["cm.map"].search(
+            [("slug_id", "=", MapClientConfig.MAPPING__MAP)]
+        )
         if map:
             ret_dict["creation_data"]["map_id"] = map.id
         else:
             ret_dict["errors"].append(
-                _("Map not found slug_id: {}").format(self._MAPPING__MAP)
+                _("Map not found slug_id: {}").format(self.MAPPING__MAP)
             )
         # Lat and Lng
         if self.landing.lat:
@@ -123,9 +101,11 @@ class LandingCmPlace:
             )
         # Place category
         categories = self.landing.env["cm.place.category"].search([])
-        place_category_slug = self._MAPPING__LANDING_COMMUNITY_TYPE__MAP_CATEGORY[
-            self.landing.community_type
-        ]
+        place_category_slug = (
+            MapClientConfig.MAPPING__LANDING_COMMUNITY_TYPE__MAP_CATEGORY[
+                self.landing.community_type
+            ]
+        )
         place_category = categories.filtered(lambda r: r.slug_id == place_category_slug)
         if place_category:
             ret_dict["creation_data"]["place_category_id"] = place_category.id
@@ -136,7 +116,7 @@ class LandingCmPlace:
         # Community status filter
         filters = self.landing.env["cm.filter"].search([])
         place_community_status_slug = (
-            self._MAPPING__LANDING_COMMUNITY_STATUS__MAP_FILTER[
+            MapClientConfig.MAPPING__LANDING_COMMUNITY_STATUS__MAP_FILTER[
                 self.landing.community_status
             ]
         )
@@ -155,15 +135,23 @@ class LandingCmPlace:
                 )
             )
         # Community active services
-        # FINISH THIS!!!!
         for service in self.landing.community_active_services:
-            service_slug = self._MAPPING__LANDING_ACTIVE_SERVICES__MAP_FILTER[
+            service_slug = MapClientConfig.MAPPING__LANDING_ACTIVE_SERVICES__MAP_FILTER[
                 service.tag_ext_id
             ]
+            place_service = filters.filtered(lambda r: r.slug_id == service_slug)
+            if place_service:
+                ret_dict["creation_data"]["filter_mids"].append((4, place_service.id))
+            else:
+                ret_dict["errors"].append(
+                    _("Place status filter not found slug_id: {}").format(service_slug)
+                )
         # Presenter
-        presenter_name = self._MAPPING__LANDING_COMMUNITY_STATUS__MAP_PRESENTER[
-            self.landing.community_status
-        ]
+        presenter_name = (
+            MapClientConfig.MAPPING__LANDING_COMMUNITY_STATUS__MAP_PRESENTER[
+                self.landing.community_status
+            ]
+        )
         presenter = self.landing.env["cm.presenter.model"].search(
             [("name", "=", presenter_name)]
         )
@@ -190,3 +178,83 @@ class LandingCmPlace:
             else:
                 address_txt += " " + self.landing.city
         return address_txt
+
+    def _setup_place_description(self, place):
+        desc_meta = self.landing.env["cm.place.presenter.metadata"].search(
+            [
+                ("place_id", "=", place.id),
+                ("key", "=", MapClientConfig.MAPPING__OPEN_PLACE_DESCRIPTION_META_KEY),
+            ]
+        )
+        desc_meta.write({"value": self.landing.short_description})
+
+    def _apply_place_translations(self, place):
+        for lang_code in self._get_active_languages():
+            # place description
+            landing_short_description_trans = self._get_translation(
+                "landing.page,short_description", self.landing.id, lang_code, True
+            )
+            if landing_short_description_trans:
+                self._apply_place_metadata_translation(
+                    place.id,
+                    MapClientConfig.MAPPING__OPEN_PLACE_DESCRIPTION_META_KEY,
+                    landing_short_description_trans.src,
+                    landing_short_description_trans.value,
+                    lang_code,
+                )
+        # place social headline: es_ES
+        self._apply_place_metadata_translation(
+            place.id,
+            MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_META_KEY,
+            MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_ORIGINAL,
+            MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_TRANSLATION_ES,
+            "es_ES",
+        )
+
+    def _apply_place_metadata_translation(
+        self, place_id, meta_key, original_value, trans_value, lang
+    ):
+        related_meta = self.landing.env["cm.place.presenter.metadata"].search(
+            [("place_id", "=", place_id), ("key", "=", meta_key)]
+        )
+        if related_meta:
+            self._update_translation(
+                "cm.place.presenter.metadata,value",
+                related_meta.id,
+                original_value,
+                trans_value,
+                lang,
+            )
+
+    # TODO: Make all this translation block more compilant with ir.translation model
+    def _get_active_languages(self):
+        return self.landing.env["res.lang"].search([("active", "=", 1)]).mapped("code")
+
+    def _get_translation(self, translation_name, res_id, lang, only_translated=False):
+        query = [
+            ("name", "=", translation_name),
+            ("res_id", "=", res_id),
+            ("lang", "=", lang),
+        ]
+        if only_translated:
+            query.append(("state", "=", "translated"))
+        return self.landing.env["ir.translation"].search(query)
+
+    def _update_translation(
+        self, translation_name, res_id, original_value, trans_value, lang
+    ):
+        translation = self._get_translation(translation_name, res_id, lang)
+        if translation:
+            translation.write({"value": trans_value, "state": "translated"})
+        else:
+            self.landing.env["ir.translation"].create(
+                {
+                    "name": translation_name,
+                    "res_id": res_id,
+                    "lang": lang,
+                    "type": "model",
+                    "src": original_value,
+                    "value": trans_value,
+                    "state": "translated",
+                }
+            )
