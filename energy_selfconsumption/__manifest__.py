@@ -19,6 +19,7 @@
         "energy_project",
         "partner_firstname",
         "web_m2x_options",
+        "l10n_es",
     ],
     "data": [
         "security/ir.model.access.csv",
