@@ -1,6 +1,10 @@
 from odoo import _
 from odoo.exceptions import UserError
 
+from ...pywordpress_client.resources.authenticate import Authenticate
+from ...pywordpress_client.resources.landing_page import (
+    LandingPage as LandingPageResource,
+)
 from ..config import MapClientConfig
 
 
@@ -14,6 +18,10 @@ class LandingCmPlace:
         """
         Creates a place from a landing instance.
         """
+        wp_landing_data = self._get_wp_landing_data()
+        button_configs = self._get_button_color_configs()
+        if button_configs["errors"]:
+            raise UserError(error_msg)
         validate_creation_dict = self._validate_and_prepare_creation()
         if validate_creation_dict["errors"]:
             error_msg = ""
@@ -28,6 +36,10 @@ class LandingCmPlace:
             place.build_presenter_metadata_ids()
             # setup description
             self._setup_place_description(place)
+            # setup external links
+            self._setup_external_links(
+                place, wp_landing_data, button_configs["button_color_configs"]
+            )
             # apply translations
             self._apply_place_translations(place)
             # relate place with landing
@@ -179,6 +191,40 @@ class LandingCmPlace:
                 address_txt += " " + self.landing.city
         return address_txt
 
+    def _get_button_color_configs(self):
+        ret_dict = {"button_color_configs": {}, "errors": []}
+        button_color_configs = self.landing.env["cm.button.color.config"].search([])
+        ret_dict["button_color_configs"]["green"] = button_color_configs.filtered(
+            lambda r: r.name
+            == MapClientConfig.MAPPING__BUTTON_COLOR_CONFIG_NAME["green"]
+        )
+        ret_dict["button_color_configs"]["yellow"] = button_color_configs.filtered(
+            lambda r: r.name
+            == MapClientConfig.MAPPING__BUTTON_COLOR_CONFIG_NAME["yellow"]
+        )
+        if (
+            not ret_dict["button_color_configs"]["green"]
+            or not ret_dict["button_color_configs"]["yellow"]
+        ):
+            ret_dict["errors"] = _("Button configs not found.")
+        return ret_dict
+
+    def _get_wp_landing_data(self):
+        instance_company = self.landing.env["res.company"].search(
+            [("hierarchy_level", "=", "instance")]
+        )
+        if instance_company:
+            baseurl = instance_company.wordpress_base_url
+            username = instance_company.wordpress_db_username
+            password = instance_company.wordpress_db_password
+            auth = Authenticate(baseurl, username, password).authenticate()
+            token = "Bearer %s" % auth["token"]
+            landing_page_wp_data = LandingPageResource(
+                token, baseurl, self.landing.wp_landing_page_id
+            ).get()
+            return landing_page_wp_data
+        return False
+
     def _setup_place_description(self, place):
         desc_meta = self.landing.env["cm.place.presenter.metadata"].search(
             [
@@ -187,6 +233,72 @@ class LandingCmPlace:
             ]
         )
         desc_meta.write({"value": self.landing.short_description})
+
+    def _setup_external_links(self, place, wp_landing_data, button_color_configs):
+        external_links_ids = []
+        external_links = self.landing.env["cm.place.external.link"].search(
+            [("place_id", "=", place.id)]
+        )
+        for external_link in external_links:
+            external_links_ids.append((2, external_link.id))
+        if self.landing.allow_new_members:
+            external_links_ids.append(
+                (
+                    0,
+                    0,
+                    {
+                        "place_id": place.id,
+                        "name": MapClientConfig.MAPPING__EXTERNAL_LINK__BECOME_COOPERATOR__LINK_LABEL[
+                            "ca_ES"
+                        ],
+                        "url": "{base_url}/become_cooperator?odoo_company_id={odoo_company_id}".format(
+                            base_url=self.landing.env["ir.config_parameter"].get_param(
+                                "web.base.url"
+                            ),
+                            odoo_company_id=self.landing.company_id.id,
+                        ),
+                        "target": "_blank",
+                        "button_color_config_id": button_color_configs["yellow"].id,
+                        "sort_order": 0,
+                    },
+                )
+            )
+        else:
+            external_links_ids.append(
+                (
+                    0,
+                    0,
+                    {
+                        "place_id": place.id,
+                        "name": MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL[
+                            "ca_ES"
+                        ],
+                        "url": "{landing_link}/#contacte".format(
+                            landing_link=wp_landing_data["link"]
+                        ),
+                        "target": "_top",
+                        "button_color_config_id": button_color_configs["yellow"].id,
+                        "sort_order": 0,
+                    },
+                )
+            )
+        external_links_ids.append(
+            (
+                0,
+                0,
+                {
+                    "place_id": place.id,
+                    "name": MapClientConfig.MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL[
+                        "ca_ES"
+                    ],
+                    "url": wp_landing_data["link"],
+                    "target": "_top",
+                    "button_color_config_id": button_color_configs["green"].id,
+                    "sort_order": 1,
+                },
+            )
+        )
+        place.write({"external_link_ids": external_links_ids})
 
     def _apply_place_translations(self, place):
         for lang_code in self._get_active_languages():
@@ -207,7 +319,7 @@ class LandingCmPlace:
             place.id,
             MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_META_KEY,
             MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_ORIGINAL,
-            MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_TRANSLATION_ES,
+            MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_TRANSLATION["es_ES"],
             "es_ES",
         )
 
