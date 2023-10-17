@@ -41,7 +41,7 @@ class LandingCmPlace:
                 place, wp_landing_data, button_configs["button_color_configs"]
             )
             # apply translations
-            self._apply_place_translations(place)
+            self._apply_place_metadatas_translations(place)
             # relate place with landing
             self.landing.write({"map_place_id": place.id})
         return True
@@ -235,72 +235,97 @@ class LandingCmPlace:
         desc_meta.write({"value": self.landing.short_description})
 
     def _setup_external_links(self, place, wp_landing_data, button_color_configs):
-        external_links_ids = []
-        external_links = self.landing.env["cm.place.external.link"].search(
-            [("place_id", "=", place.id)]
+        new_external_links_ids = []
+        existing_external_links = (
+            self.landing.env["cm.place.external.link"]
+            .search([("place_id", "=", place.id)])
+            .mapped("id")
         )
-        for external_link in external_links:
-            external_links_ids.append((2, external_link.id))
         if self.landing.allow_new_members:
-            external_links_ids.append(
-                (
-                    0,
-                    0,
-                    {
-                        "place_id": place.id,
-                        "name": MapClientConfig.MAPPING__EXTERNAL_LINK__BECOME_COOPERATOR__LINK_LABEL[
-                            "ca_ES"
-                        ],
-                        "url": "{base_url}/become_cooperator?odoo_company_id={odoo_company_id}".format(
-                            base_url=self.landing.env["ir.config_parameter"].get_param(
-                                "web.base.url"
-                            ),
-                            odoo_company_id=self.landing.company_id.id,
-                        ),
-                        "target": "_blank",
-                        "button_color_config_id": button_color_configs["yellow"].id,
-                        "sort_order": 0,
-                    },
-                )
+            new_external_links_ids.append(
+                self._become_cooperator_external_link(place.id, button_color_configs).id
             )
         else:
-            external_links_ids.append(
-                (
-                    0,
-                    0,
-                    {
-                        "place_id": place.id,
-                        "name": MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL[
-                            "ca_ES"
-                        ],
-                        "url": "{landing_link}/#contacte".format(
-                            landing_link=wp_landing_data["link"]
-                        ),
-                        "target": "_top",
-                        "button_color_config_id": button_color_configs["yellow"].id,
-                        "sort_order": 0,
-                    },
-                )
+            new_external_links_ids.append(
+                self._contact_external_link(
+                    place.id, wp_landing_data["link"], button_color_configs
+                ).id
             )
-        external_links_ids.append(
-            (
-                0,
-                0,
-                {
-                    "place_id": place.id,
-                    "name": MapClientConfig.MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL[
-                        "ca_ES"
-                    ],
-                    "url": wp_landing_data["link"],
-                    "target": "_top",
-                    "button_color_config_id": button_color_configs["green"].id,
-                    "sort_order": 1,
-                },
-            )
+        new_external_links_ids.append(
+            self._landing_external_link(
+                place.id, wp_landing_data["link"], button_color_configs
+            ).id
         )
-        place.write({"external_link_ids": external_links_ids})
 
-    def _apply_place_translations(self, place):
+    def _get_or_create_external_link(
+        self, place_id, name, url, target, button_color_config_id, sort_order
+    ):
+        existing_external_links = self.landing.env["cm.place.external.link"].search(
+            [
+                ("place_id", "=", place_id),
+                ("name", "=", name),
+                ("url", "=", url),
+                ("target", "=", target),
+                ("button_color_config_id", "=", button_color_config_id),
+                ("sort_order", "=", sort_order),
+            ]
+        )
+        if existing_external_links:
+            return existing_external_links[0]
+        else:
+            return self.landing.env["cm.place.external.link"].create(
+                {
+                    "place_id": place_id,
+                    "name": name,
+                    "url": url,
+                    "target": target,
+                    "button_color_config_id": button_color_config_id,
+                    "sort_order": sort_order,
+                }
+            )
+
+    def _become_cooperator_external_link(self, place_id, button_color_configs):
+        return self._get_or_create_external_link(
+            place_id,
+            MapClientConfig.MAPPING__EXTERNAL_LINK__BECOME_COOPERATOR__LINK_LABEL[
+                "ca_ES"
+            ],
+            "{base_url}/become_cooperator?odoo_company_id={odoo_company_id}".format(
+                base_url=self.landing.env["ir.config_parameter"].get_param(
+                    "web.base.url"
+                ),
+                odoo_company_id=self.landing.company_id.id,
+            ),
+            "_blank",
+            button_color_configs["yellow"].id,
+            0,
+        )
+
+    def _contact_external_link(
+        self, place_id, wp_landing_data_link, button_color_configs
+    ):
+        return self._get_or_create_external_link(
+            place_id,
+            MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["ca_ES"],
+            "{landing_link}/#contacte".format(landing_link=wp_landing_data_link),
+            "_top",
+            button_color_configs["yellow"].id,
+            0,
+        )
+
+    def _landing_external_link(
+        self, place_id, wp_landing_data_link, button_color_configs
+    ):
+        return self._get_or_create_external_link(
+            place_id,
+            MapClientConfig.MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL["ca_ES"],
+            wp_landing_data_link,
+            "_top",
+            button_color_configs["green"].id,
+            1,
+        )
+
+    def _apply_place_metadatas_translations(self, place):
         for lang_code in self._get_active_languages():
             # place description
             landing_short_description_trans = self._get_translation(
