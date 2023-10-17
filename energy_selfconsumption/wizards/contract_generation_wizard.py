@@ -124,7 +124,7 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
                         "qty_formula_id": formula_contract_id.id,
                         "name": _(
                             """CUPS: %s
-                        Holder: %s
+                        Owner: %s
                         Invoicing period: #START# - #END#"""
                         )
                         % (
