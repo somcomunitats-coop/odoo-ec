@@ -3,6 +3,15 @@ from datetime import datetime
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
 
+INVOICING_VALUES = [
+    ("power_acquired", _("Power Acquired")),
+    ("energy_delivered", _("Energy Delivered")),
+    (
+        "energy_delivered_variable",
+        _("Energy Delivered Variable Hourly Coefficient"),
+    ),
+]
+
 
 class Selfconsumption(models.Model):
     _name = "energy_selfconsumption.selfconsumption"
@@ -76,6 +85,9 @@ class Selfconsumption(models.Model):
     )
     inscription_count = fields.Integer(compute=_compute_inscription_count)
     contracts_count = fields.Integer(compute=_compute_contract_count)
+    invoicing_mode = fields.Selection(INVOICING_VALUES, string="Invoicing Mode")
+    product_id = fields.Many2one("product.product", string="Product")
+    contract_template_id = fields.Many2one("contract.template")
 
     def get_distribution_tables(self):
         self.ensure_one()
@@ -161,6 +173,18 @@ class Selfconsumption(models.Model):
                 "target": "new",
                 "context": {"default_selfconsumption_id": self.id},
             }
+
+    def set_invoicing_mode(self):
+        return {
+            "name": _("Define Invoicing Mode"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "energy_selfconsumption.define_invoicing_mode.wizard",
+            "views": [(False, "form")],
+            "view_id": False,
+            "target": "new",
+            "context": {"default_selfconsumption_id": self.id},
+        }
 
     def action_selfconsumption_import_wizard(self):
         self.ensure_one()
