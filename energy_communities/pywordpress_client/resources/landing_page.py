@@ -10,6 +10,15 @@ class LandingPage:
         self.token = token
         self.id = id
 
+    def get(self):
+        """
+        Get Landing Page data.
+        """
+        response_data = Client(self.baseurl).get(
+            "{url_path}/{id}".format(url_path=self._url_path, id=self.id), self.token
+        )
+        return response_data
+
     def create(self, body):
         """
         Creates a Landing Page instance.
