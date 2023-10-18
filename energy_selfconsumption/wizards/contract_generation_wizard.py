@@ -87,6 +87,8 @@ class ContractGenerationWizard(models.TransientModel):
                     "contract_line_ids": contract_lines,
                     "project_id": self.selfconsumption_id.project_id.id,
                     "contract_template_id": self.selfconsumption_id.contract_template_id.id,
+                    "recurring_interval": self.selfconsumption_id.contract_template_id.recurring_interval,
+                    "recurring_rule_type": self.selfconsumption_id.contract_template_id.recurring_rule_type,
                 }
             )
 
