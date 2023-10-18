@@ -69,6 +69,9 @@ else:
 result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * line.supply_point_assignation_id.coefficient * days_between
                 """,
             }
+        product_id = self.selfconsumption_id.product_id
+        formula_contract_id = (
+            self.selfconsumption_id.contract_template_id.contract_line_ids.qty_formula_id
         )
 
         # Search accounting journal
