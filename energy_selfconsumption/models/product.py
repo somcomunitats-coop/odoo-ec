@@ -11,3 +11,4 @@ class Product(models.Model):
         string="Energy Project",
         check_company=True,
     )
+    contract_template_id = fields.Many2one("contract.template")

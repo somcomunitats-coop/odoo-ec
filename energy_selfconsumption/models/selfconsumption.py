@@ -87,7 +87,11 @@ class Selfconsumption(models.Model):
     contracts_count = fields.Integer(compute=_compute_contract_count)
     invoicing_mode = fields.Selection(INVOICING_VALUES, string="Invoicing Mode")
     product_id = fields.Many2one("product.product", string="Product")
-    contract_template_id = fields.Many2one("contract.template")
+    contract_template_id = fields.Many2one(
+        "contract.template",
+        string="Contract Template",
+        related="product_id.contract_template_id",
+    )
     reseller_id = fields.Many2one(
         "energy_project.reseller",
         string="Energy Reseller",
