@@ -82,4 +82,6 @@ class CRMLeadService(Component):
             )
         elif source_xml_id == "ce_source_general_info":
             template_external_id = "email_templ_lead_request_platform_news_confirm_id"
+        elif source_xml_id == "ce_source_general_contact":
+            template_external_id == "email_templ_contact_platform_confirm_id"
         return template_external_id
