@@ -160,11 +160,12 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
             self._prepare_contract_values(journal_id, contract_line)
         )
 
+        product_id.write({"contract_template_id": contract_template_id.id})
+
         self.selfconsumption_id.write(
             {
                 "invoicing_mode": self.invoicing_mode,
                 "product_id": product_id,
-                "contract_template_id": contract_template_id,
             }
         )
 
