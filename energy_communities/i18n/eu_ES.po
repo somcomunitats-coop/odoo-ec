@@ -421,6 +421,33 @@ msgstr ""
 "            "
 
 #. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_contact_platform_confirm_id
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for getting in touch.</p>\n"
+"                    <p>We have received your email. We will contact you as soon as possible.</p>\n"
+"                    <br />\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Kaixo,</p>\n"
+"                    <p>Eskerrik asko harremanetan jartzeagatik.</p>\n"
+"                    <p>Zure emaila jaso dugu. Ahalik eta azkarren zurekin harremanetan jarriko gara.</p>\n"
+"                    <br />\n"
+"                    <p>Zinez,</p>\n"
+"                    <p>Taldea Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"                </div>\n"
+"            "
+
+#. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_template_confirmation_company
 msgid ""
 "\n"
@@ -826,6 +853,11 @@ msgstr "Kontaktua"
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_contact
 msgid "Contact a existing CE"
 msgstr "Jarri harremanetan lehendik dagoen CE batekin"
+
+#. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_general_contact
+msgid "Contact to the Platform"
+msgstr "Jarri harremanetan plataformarekin"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_template_confirmation_voluntary_share
@@ -2113,6 +2145,11 @@ msgstr "[Somcomunitats.coop] Jarri harremanetan Energia Komunitatearekin"
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_ce_news_confirm_id
 msgid "[Somcomunitats.coop] Community Newsletter Subscription Request"
 msgstr "[Somcomunitats.coop] Buletinerako harpidetza Energia Komunitatearekin"
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_templ_contact_platform_confirm_id
+msgid "[Somcomunitats.coop] Contact to the platform"
+msgstr "[Somcomunitats.coop] Harremanetarako formularioa"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_advise_future_ce_confirm_id
