@@ -623,6 +623,7 @@ msgstr "Etiquetas de CE"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_creation_ce_proposal
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
 msgid "CE creation"
 msgstr "Creación de CE"
 
@@ -741,6 +742,16 @@ msgstr ""
 #: model:ir.model,name:energy_communities.model_res_partner
 msgid "Contact"
 msgstr "Contacte"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Contact CE"
+msgstr "Contacto CE"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Contact SomComunitats"
+msgstr "Contacto SomComunitats"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_contact
@@ -1204,6 +1215,16 @@ msgstr ""
 "        "
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Newsletter CE"
+msgstr "Boletín CE"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Newsletter SomComunitats"
+msgstr "Boletín SomComunitats"
+
+#. module: energy_communities
 #: code:addons/energy_communities/services/ce_community_service.py:0
 #, python-format
 msgid "No Odoo Company found for odoo_company_id %s"
@@ -1226,6 +1247,11 @@ msgid "No Odoo User found for KeyCloak user id %s"
 msgstr ""
 "No se ha encontrado ningún Usuario de Odoo vinculado al Usuario de KeyCloak:"
 " %s"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "No web form origin"
+msgstr "Sin origen del formulario web"
 
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__gender__not_binary
