@@ -27,6 +27,7 @@
             name="action_create_landing_place"
             type="object"
             string="Create map place"
+            attrs="{'invisible': [('map_place_id','!=',False)]}"
           />
           <field name="status" widget="statusbar" />
         </header>
