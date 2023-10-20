@@ -88,6 +88,11 @@ class Selfconsumption(models.Model):
     invoicing_mode = fields.Selection(INVOICING_VALUES, string="Invoicing Mode")
     product_id = fields.Many2one("product.product", string="Product")
     contract_template_id = fields.Many2one("contract.template")
+    reseller_id = fields.Many2one(
+        "energy_project.reseller",
+        string="Energy Reseller",
+        help="Select the associated Energy Reseller",
+    )
 
     def get_distribution_tables(self):
         self.ensure_one()

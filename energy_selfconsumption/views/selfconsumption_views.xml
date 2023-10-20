@@ -166,6 +166,10 @@
                   name="owner_id"
                   attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
                 />
+                                <field
+                  name="reseller_id"
+                  attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                />
                             </group>
                             <group>
                                 <span
