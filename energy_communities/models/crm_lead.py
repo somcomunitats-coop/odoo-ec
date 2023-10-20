@@ -329,9 +329,6 @@ class CrmLead(models.Model):
                 )
             lead.community_company_id._create_keycloak_realm()
 
-    def post_template_to_chatter(self, template_id):
-        self.message_post_with_template(template_id)
-
     def _create_community_initial_users(self):
         for lead in self:
             pass
