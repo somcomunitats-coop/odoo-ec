@@ -36,6 +36,18 @@ class CrmLead(models.Model):
         help="Community related to this Lead",
     )
 
+    is_instance_company = fields.Boolean(
+        string="Is instance company", compute="_is_instance_company", default=False
+    )
+
+    def _is_instance_company(self):
+        company = self.env.company
+        instance_companies = self.env["res.company"].search(
+            [("hierarchy_level", "=", "instance")]
+        )
+        if company in instance_companies:
+            self.is_instance_company = True
+
     def _create_map_place_proposal(self):
         if not self.env.user.company_id.coordinator:
             raise UserError(
