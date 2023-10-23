@@ -56,7 +56,6 @@ class ContractGenerationWizard(models.TransientModel):
                 "name": _("Energy Acquired - %s") % (self.selfconsumption_id.name),
                 "lst_price": self.price_energy,
                 "company_id": self.env.company.id,
-                "must_have_dates": True,
             }
         )
 
