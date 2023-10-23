@@ -2104,3 +2104,45 @@ msgstr "Enlace de Telegram"
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__twitter_link
 msgid "Twitter link"
 msgstr "Enlace de Twitter"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Only users that belongs to the 'Coordinator' or 'Instance' company can create new Map Places."
+msgstr "Solo usuarios de tipo coordinador de Comunidad o de instancia pueden crear puntos de mapa."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Map not found slug_id: {}"
+msgstr "No se ha encontrado mapa para slug_id: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Landing lat param required for place creation"
+msgstr "La Latitud de la landing es requerida para la creación del punto de mapa."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Landing lng param required for place creation"
+msgstr "La Longitud de la landing es requerida para la creación del punto de mapa."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Place category not found slug_id: {}"
+msgstr "No se ha encontrado categoria de mapa para slug_id: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Place status filter not found slug_id: {}"
+msgstr "No se ha encontrado filtro de mapa para slug_id: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Button configs not found."
+msgstr "Configuración de botones no encontrada."

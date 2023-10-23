@@ -2152,3 +2152,45 @@ msgid "€ by follow the steps you will receive by email."
 msgstr ""
 "€ seguint els passos que t'indicarem per correu electrònic un cop rebem la "
 "teva petició."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Only users that belongs to the 'Coordinator' or 'Instance' company can create new Map Places."
+msgstr "Només els usuaris coordinadors de Comunitat o d'instancia poden crear punts de mapa"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Map not found slug_id: {}"
+msgstr "No s'ha trobat mapa per slug_id: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Landing lat param required for place creation"
+msgstr "La latitud de la landing és requerit per la creació del punt de mapa"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Landing lng param required for place creation"
+msgstr "La longitud de la landing és requerida per la creació del punt de mapa"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Place category not found slug_id: {}"
+msgstr "No s'ha trobat categoria de mapa per slug_id: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Place status filter not found slug_id: {}"
+msgstr "No s'ha trobat filtre de mapa per slug_id: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Button configs not found."
+msgstr "No s'ha trobat configuració de botons"

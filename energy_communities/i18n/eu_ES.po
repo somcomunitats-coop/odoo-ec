@@ -2141,3 +2141,45 @@ msgstr " Borondatezko Ekarpenen."
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "€ by follow the steps you will receive by email."
 msgstr "€ posta elektronikoz jasoko dituzun urratsak jarraituz."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Only users that belongs to the 'Coordinator' or 'Instance' company can create new Map Places."
+msgstr "Komunitate edo Instantzia Koordinatzaile motako erabiltzaileek soilik sor ditzakete mapa-puntuak."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Map not found slug_id: {}"
+msgstr "Ez da maparik aurkitu slug_id-rako: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Landing lat param required for place creation"
+msgstr "Lurreratzearen latitudea behar da mapa-puntua sortzeko."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Landing lng param required for place creation"
+msgstr "Lurreratze-luzera beharrezkoa da mapa-puntua sortzeko."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Place category not found slug_id: {}"
+msgstr "Ez da aurkitu maparen kategoriarik slug_id-erako: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Place status filter not found slug_id: {}"
+msgstr "Ez da aurkitu mapa-iragazkirik slug_id-rako: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Button configs not found."
+msgstr "Ez da aurkitu botoiaren konfigurazioa."
