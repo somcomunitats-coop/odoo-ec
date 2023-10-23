@@ -1,8 +1,4 @@
-import logging
-
 from odoo import _, fields, models
-
-logger = logging.getLogger(__name__)
 
 
 class ContractGenerationWizard(models.TransientModel):
