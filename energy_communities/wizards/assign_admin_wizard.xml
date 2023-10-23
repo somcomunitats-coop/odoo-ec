@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_assign_admin_wizard_form" model="ir.ui.view">
+            <field name="name">assign.admin.wizard.form</field>
+            <field name="model">assign.admin.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Assign Admin Wizard">
+                    <sheet>
+                        <group>
+                            <field name="is_new_admin" />
+                        </group>
+                        <group>
+                            <field name="vat" />
+                            <field
+                name="first_name"
+                attrs="{'invisible':[('is_new_admin', '=', False)]}"
+              />
+                            <field
+                name="last_name"
+                attrs="{'invisible':[('is_new_admin', '=', False)]}"
+              />
+                            <field
+                name="email"
+                attrs="{'invisible':[('is_new_admin', '=', False)]}"
+              />
+                            <field
+                name="lang"
+                attrs="{'invisible':[('is_new_admin', '=', False)]}"
+              />
+                            <field name="role" />
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button
+              name="process_data"
+              string="Process"
+              type="object"
+              class="btn-primary"
+            />
+                        <button
+              string="Cancelar"
+              class="btn-secondary"
+              special="cancel"
+            />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

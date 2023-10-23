@@ -78,4 +78,12 @@
       eval="[('source_id','=', ref('ce_source_creation_ce_proposal'))]"
     />
     </record>
+
+    <record id="action_open_assign_admin_wizard" model="ir.actions.act_window">
+        <field name="name">Create User</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">assign.admin.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
 </odoo>
