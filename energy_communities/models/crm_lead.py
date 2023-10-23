@@ -37,7 +37,7 @@ class CrmLead(models.Model):
     )
 
     is_instance_company = fields.Boolean(
-        string="Is instance company", compute="_is_instance_company", default=False
+        string="Is instance company", compute="_is_instance_company"
     )
 
     def _is_instance_company(self):
@@ -47,6 +47,8 @@ class CrmLead(models.Model):
         )
         if company in instance_companies:
             self.is_instance_company = True
+        else:
+            self.is_instance_company = False
 
     def _create_map_place_proposal(self):
         if not self.env.user.company_id.coordinator:
