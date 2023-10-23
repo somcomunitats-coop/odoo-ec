@@ -15,10 +15,11 @@
         "mail",
         "contract",
         "contract_variable_quantity",
-        "contract_invoice_start_end_dates",
+        "contract_queue_job",
         "energy_project",
         "partner_firstname",
         "web_m2x_options",
+        "l10n_es",
     ],
     "data": [
         "security/ir.model.access.csv",

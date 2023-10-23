@@ -1,8 +1,4 @@
-import logging
-
 from odoo import _, fields, models
-
-logger = logging.getLogger(__name__)
 
 
 class ContractGenerationWizard(models.TransientModel):
@@ -56,7 +52,6 @@ class ContractGenerationWizard(models.TransientModel):
                 "name": _("Energy Acquired - %s") % (self.selfconsumption_id.name),
                 "lst_price": self.price_energy,
                 "company_id": self.env.company.id,
-                "must_have_dates": True,
             }
         )
 
@@ -92,26 +87,8 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
         if not distribution_id:
             raise _("There is no distribution table in proces of activation.")
 
-        # Build partner list and supply point assignment
-        partner_list = {}
-        for supply_point_assignation in distribution_id.supply_point_assignation_ids:
-            key = (
-                supply_point_assignation.supply_point_id.partner_id.id,
-                supply_point_assignation.owner_id.id,
-            )
-            if key not in partner_list:
-                partner_list[key] = {
-                    "parent_id": supply_point_assignation.supply_point_id.partner_id,
-                    "owner_id": supply_point_assignation.owner_id,
-                    "supply_point_assignation_ids": [supply_point_assignation],
-                }
-            else:
-                partner_list[key]["supply_point_assignation_ids"].append(
-                    supply_point_assignation
-                )
-
         # Create contracts
-        for partner_data in partner_list.values():
+        for supply_point_assignation in distribution_id.supply_point_assignation_ids:
             contract_lines = [
                 (
                     0,
@@ -124,25 +101,27 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
                         "qty_formula_id": formula_contract_id.id,
                         "name": _(
                             """CUPS: %s
-                        Holder: %s
+                        Owner: %s
                         Invoicing period: #START# - #END#"""
                         )
                         % (
-                            assignation.supply_point_id.code,
-                            assignation.supply_point_id.owner_id.display_name,
+                            supply_point_assignation.supply_point_id.code,
+                            supply_point_assignation.supply_point_id.owner_id.display_name,
                         ),
-                        "supply_point_assignation_id": assignation.id,
+                        "supply_point_assignation_id": supply_point_assignation.id,
                     },
                 )
-                for assignation in partner_data["supply_point_assignation_ids"]
             ]
 
             self.env["contract.contract"].create(
                 {
                     "name": _("Contract - %s - %s")
-                    % (self.selfconsumption_id.name, partner_data["parent_id"].name),
-                    "partner_id": partner_data["parent_id"].id,
-                    "invoice_partner_id": partner_data["parent_id"].id,
+                    % (
+                        self.selfconsumption_id.name,
+                        supply_point_assignation.supply_point_id.partner_id.name,
+                    ),
+                    "partner_id": supply_point_assignation.supply_point_id.partner_id.id,
+                    "invoice_partner_id": supply_point_assignation.supply_point_id.partner_id.id,
                     "journal_id": journal_id.id,
                     "recurring_interval": self.recurring_interval,
                     "recurring_rule_type": self.recurring_rule_type,
