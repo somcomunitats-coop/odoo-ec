@@ -50,6 +50,7 @@ class ContractGenerationWizard(models.TransientModel):
             "l10n_es.%i_account_tax_template_s_iva21s" % self.env.company.id
         )
         account_tax_id = self.env.ref(account_tax_xml_id)
+        uom_kw_id = self.env.ref("energy_project.kw_uom")
         return {
             "name": self.selfconsumption_id.name,
             "lst_price": self.price,
@@ -59,6 +60,8 @@ class ContractGenerationWizard(models.TransientModel):
             "taxes_id": [account_tax_id.id],
             "sale_ok": True,
             "purchase_ok": False,
+            "uom_id": uom_kw_id.id,
+            "uom_po_id": uom_kw_id.id,
         }
 
     def _prepare_formula_values(self, code):
