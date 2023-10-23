@@ -564,9 +564,9 @@ msgid "Allows new members"
 msgstr "Autoritza nous membres"
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_lastupdate_datetime
-msgid "Last wordpress update date"
-msgstr "Data darrera actualització a wordpress"
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__publicdata_lastupdate_datetime
+msgid "Last wordpress/map update date"
+msgstr "Data darrera actualització a wordpress/mapa"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
@@ -897,8 +897,8 @@ msgstr "Crear pàgina de Landing"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
-msgid "Update wordpress data"
-msgstr "Actualizar dades wordpress"
+msgid "Update (wp landing / map place)"
+msgstr "Actualizar dades wordpress/mapa"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__create_user
