@@ -44,14 +44,14 @@ class ContractGenerationWizard(models.TransientModel):
     )
 
     def _prepare_product_values(self):
-        account_expense_xml_id = "l10n_es.%i_account_common_7050" % self.env.company.id
-        account_expense_id = self.env.ref(account_expense_xml_id)
+        account_income_xml_id = "l10n_es.%i_account_common_7050" % self.env.company.id
+        account_income_id = self.env.ref(account_income_xml_id)
         return {
             "name": self.selfconsumption_id.name,
             "lst_price": self.price,
             "company_id": self.env.company.id,
             "project_id": self.selfconsumption_id.project_id.id,
-            "property_account_expense_id": account_expense_id.id,
+            "property_account_income_id": account_income_id.id,
             "sale_ok": True,
             "purchase_ok": False,
         }
