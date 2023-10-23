@@ -2157,6 +2157,30 @@ msgid "ZIP code not found"
 msgstr "Codi postal no trobat"
 
 #. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
+msgid "[Contact CE]"
+msgstr "[Contacte CE]"
+
+#. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
+msgid "[Contact SomComunitats]"
+msgstr "[Contacte SomComunitats]"
+
+#. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
+msgid "[Newsletter CE]"
+msgstr "[Butlletí CE]"
+
+#. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
+msgid "[Newsletter SomComunitats]"
+msgstr "[Butlletí SomComunitats]"
+
+#. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_template_confirmation_company
 msgid "[Somcomunitats.coop] Application to become Community membership"
 msgstr "[Somcomunitats.coop] Sol·licitud d'adhesió a Comunitat Energètica"
@@ -2202,6 +2226,12 @@ msgid ""
 msgstr ""
 "[Somcomunitats.coop] Sol·licitud d’Alta de Comunitat Energètica a la "
 "plataforma"
+
+#. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
+msgid "[Subscription CE]"
+msgstr "[Alta CE]"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
