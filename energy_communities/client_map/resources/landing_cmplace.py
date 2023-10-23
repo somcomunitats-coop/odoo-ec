@@ -13,57 +13,60 @@ class LandingCmPlace:
 
     def __init__(self, landing):
         self.landing = landing
+        self.wp_landing_data = self._get_wp_landing_data()
+        button_configs = self._get_button_color_configs()
+        if button_configs["errors"]:
+            raise UserError(error_msg)
+        else:
+            self.button_configs = button_configs["button_color_configs"]
 
     def create(self):
         """
         Creates a place from a landing instance.
         """
-        wp_landing_data = self._get_wp_landing_data()
-        button_configs = self._get_button_color_configs()
-        if button_configs["errors"]:
-            raise UserError(error_msg)
-        validate_creation_dict = self._validate_and_prepare_creation()
-        if validate_creation_dict["errors"]:
+        self._create_update_place("create")
+
+    def update(self):
+        """
+        Updates a place from a landing instance.
+        """
+        self._create_update_place("update")
+
+    def _create_update_place(self, mode):
+        validated_place_data = self._validate_and_prepare_place_data()
+        if validated_place_data["errors"]:
             error_msg = ""
-            for error in validate_creation_dict["errors"]:
+            for error in validated_place_data["errors"]:
                 error_msg += error + "\n"
             raise UserError(error_msg)
         else:
-            place = self.landing.env["cm.place"].create(
-                validate_creation_dict["creation_data"]
-            )
-            place._get_slug_id()
-            place.build_presenter_metadata_ids()
-            # setup description
-            self._setup_place_description(place)
-            # setup external links
-            self._setup_external_links(
-                place, wp_landing_data, button_configs["button_color_configs"]
-            )
-            # apply translations
-            self._apply_place_metadatas_translations(place)
-            # relate place with landing
-            self.landing.write({"map_place_id": place.id})
-        return True
+            if mode == "create":
+                place = self.landing.env["cm.place"].create(
+                    validated_place_data["data"]
+                )
+                self.landing.write({"map_place_id": place.id})
+            if mode == "update":
+                place = self.landing.map_place_id
+                place.write(validated_place_data["data"])
+            self._place_extra_data_setup(place)
 
-    # def update(self):
-    #     """
-    #     Updates a place from a landing instance.
-    #     """
-    #     response_data = Client(self.baseurl).put(
-    #         "{url_path}/{id}".format(url_path=self._url_path, id=self.id),
-    #         self.token,
-    #         body,
-    #     )
-    #     return response_data
+    def _place_extra_data_setup(self, place):
+        place._get_slug_id()
+        place.build_presenter_metadata_ids()
+        # setup description
+        self._setup_place_description(place)
+        # setup external links
+        self._setup_external_links(place)
+        # apply translations
+        self._apply_place_metadatas_translations(place)
 
-    def _validate_and_prepare_creation(self):
+    def _validate_and_prepare_place_data(self):
         """
-        Try to generate a place creation dictionary and collect errors if they're
-        @returns: dictionary with 'creatrion_data' key as the dict to be used for place creation and 'errors' key to collect errors if they're
+        Try to generate a place data dictionary and collect errors if they're
+        @returns: dictionary with 'data' key as the dict to be used for place creation or update and 'errors' key to collect errors if they're
         """
         ret_dict = {
-            "creation_data": {
+            "data": {
                 "company_id": MapClientConfig.MAPPING__INSTANCE_ID,
                 "name": self.landing.name,
                 "type": "place",
@@ -71,8 +74,7 @@ class LandingCmPlace:
                     self.landing.status
                 ],
                 "interaction_method": "external_link",
-                "external_link_ids": [],
-                "filter_mids": [],
+                "filter_mids": [(5, 0, 0)],
                 "address_txt": self._get_address_txt(),
             },
             "errors": [],
@@ -93,20 +95,20 @@ class LandingCmPlace:
             [("slug_id", "=", MapClientConfig.MAPPING__MAP)]
         )
         if map:
-            ret_dict["creation_data"]["map_id"] = map.id
+            ret_dict["data"]["map_id"] = map.id
         else:
             ret_dict["errors"].append(
                 _("Map not found slug_id: {}").format(self.MAPPING__MAP)
             )
         # Lat and Lng
         if self.landing.lat:
-            ret_dict["creation_data"]["lat"] = self.landing.lat
+            ret_dict["data"]["lat"] = self.landing.lat
         else:
             ret_dict["errors"].append(
                 _("Landing lat param required for place creation")
             )
         if self.landing.lng:
-            ret_dict["creation_data"]["lng"] = self.landing.lng
+            ret_dict["data"]["lng"] = self.landing.lng
         else:
             ret_dict["errors"].append(
                 _("Landing lng param required for place creation")
@@ -120,7 +122,7 @@ class LandingCmPlace:
         )
         place_category = categories.filtered(lambda r: r.slug_id == place_category_slug)
         if place_category:
-            ret_dict["creation_data"]["place_category_id"] = place_category.id
+            ret_dict["data"]["place_category_id"] = place_category.id
         else:
             ret_dict["errors"].append(
                 _("Place category not found slug_id: {}").format(place_category_slug)
@@ -136,10 +138,8 @@ class LandingCmPlace:
             lambda r: r.slug_id == place_community_status_slug
         )
         if place_community_status:
-            ret_dict["creation_data"]["marker_color"] = place_community_status.id
-            ret_dict["creation_data"]["filter_mids"].append(
-                (4, place_community_status.id)
-            )
+            ret_dict["data"]["marker_color"] = place_community_status.id
+            ret_dict["data"]["filter_mids"].append((4, place_community_status.id))
         else:
             ret_dict["errors"].append(
                 _("Place status filter not found slug_id: {}").format(
@@ -153,7 +153,7 @@ class LandingCmPlace:
             ]
             place_service = filters.filtered(lambda r: r.slug_id == service_slug)
             if place_service:
-                ret_dict["creation_data"]["filter_mids"].append((4, place_service.id))
+                ret_dict["data"]["filter_mids"].append((4, place_service.id))
             else:
                 ret_dict["errors"].append(
                     _("Place status filter not found slug_id: {}").format(service_slug)
@@ -168,7 +168,7 @@ class LandingCmPlace:
             [("name", "=", presenter_name)]
         )
         if presenter:
-            ret_dict["creation_data"]["presenter_model_id"] = presenter.id
+            ret_dict["data"]["presenter_model_id"] = presenter.id
         else:
             ret_dict["errors"].append(
                 _("Place status filter not found slug_id: {}").format(presenter_name)
@@ -234,26 +234,18 @@ class LandingCmPlace:
         )
         desc_meta.write({"value": self.landing.short_description})
 
-    def _setup_external_links(self, place, wp_landing_data, button_color_configs):
+    def _setup_external_links(self, place):
         new_external_links_ids = []
         existing_external_links = self.landing.env["cm.place.external.link"].search(
             [("place_id", "=", place.id)]
         )
         if self.landing.allow_new_members:
             new_external_links_ids.append(
-                self._become_cooperator_external_link(place.id, button_color_configs).id
+                self._become_cooperator_external_link(place.id).id
             )
         else:
-            new_external_links_ids.append(
-                self._contact_external_link(
-                    place.id, wp_landing_data, button_color_configs
-                ).id
-            )
-        new_external_links_ids.append(
-            self._landing_external_link(
-                place.id, wp_landing_data, button_color_configs
-            ).id
-        )
+            new_external_links_ids.append(self._contact_external_link(place.id).id)
+        new_external_links_ids.append(self._landing_external_link(place.id).id)
         # remove old external_links if needed
         for existing_external_link in existing_external_links:
             if existing_external_link.id not in new_external_links_ids:
@@ -286,7 +278,7 @@ class LandingCmPlace:
                 }
             )
 
-    def _become_cooperator_external_link(self, place_id, button_color_configs):
+    def _become_cooperator_external_link(self, place_id):
         external_link = self._get_or_create_external_link(
             place_id,
             MapClientConfig.MAPPING__EXTERNAL_LINK__BECOME_COOPERATOR__LINK_LABEL[
@@ -299,7 +291,7 @@ class LandingCmPlace:
                 odoo_company_id=self.landing.company_id.id,
             ),
             "_blank",
-            button_color_configs["yellow"].id,
+            self.button_configs["yellow"].id,
             0,
         )
         # es_ES Translation
@@ -333,13 +325,15 @@ class LandingCmPlace:
         )
         return external_link
 
-    def _contact_external_link(self, place_id, wp_landing_data, button_color_configs):
+    def _contact_external_link(self, place_id):
         external_link = self._get_or_create_external_link(
             place_id,
             MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["ca_ES"],
-            "{landing_link}/#contacte".format(landing_link=wp_landing_data["link"]),
+            "{landing_link}/#contacte".format(
+                landing_link=self.wp_landing_data["link"]
+            ),
             "_top",
-            button_color_configs["yellow"].id,
+            self.button_configs["yellow"].id,
             0,
         )
         # es_ES Translation
@@ -350,25 +344,27 @@ class LandingCmPlace:
             MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["es_ES"],
             "es_ES",
         )
-        if "es" in wp_landing_data["translations"].keys():
+        if "es" in self.wp_landing_data["translations"].keys():
             self._update_translation(
                 "cm.place.external.link,url",
                 external_link.id,
-                "{landing_link}/#contacte".format(landing_link=wp_landing_data["link"]),
                 "{landing_link}/#contacte".format(
-                    landing_link=wp_landing_data["translations"]["es"]
+                    landing_link=self.wp_landing_data["link"]
+                ),
+                "{landing_link}/#contacte".format(
+                    landing_link=self.wp_landing_data["translations"]["es"]
                 ),
                 "es_ES",
             )
         return external_link
 
-    def _landing_external_link(self, place_id, wp_landing_data, button_color_configs):
+    def _landing_external_link(self, place_id):
         external_link = self._get_or_create_external_link(
             place_id,
             MapClientConfig.MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL["ca_ES"],
-            wp_landing_data["link"],
+            self.wp_landing_data["link"],
             "_top",
-            button_color_configs["green"].id,
+            self.button_configs["green"].id,
             1,
         )
         # es_ES Translation
@@ -379,21 +375,24 @@ class LandingCmPlace:
             MapClientConfig.MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL["es_ES"],
             "es_ES",
         )
-        if "es" in wp_landing_data["translations"].keys():
+        if "es" in self.wp_landing_data["translations"].keys():
             self._update_translation(
                 "cm.place.external.link,url",
                 external_link.id,
-                wp_landing_data["link"],
-                wp_landing_data["translations"]["es"],
+                self.wp_landing_data["link"],
+                self.wp_landing_data["translations"]["es"],
                 "es_ES",
             )
         return external_link
 
     def _apply_place_metadatas_translations(self, place):
         for lang_code in self._get_active_languages():
-            # place description
+            # place description: applied from landing short_description already translated
             landing_short_description_trans = self._get_translation(
-                "landing.page,short_description", self.landing.id, lang_code, True
+                "landing.page,short_description",
+                self.landing.id,
+                lang_code,
+                translated=True,
             )
             if landing_short_description_trans:
                 self._apply_place_metadata_translation(
@@ -431,13 +430,13 @@ class LandingCmPlace:
     def _get_active_languages(self):
         return self.landing.env["res.lang"].search([("active", "=", 1)]).mapped("code")
 
-    def _get_translation(self, translation_name, res_id, lang, only_translated=False):
+    def _get_translation(self, translation_name, res_id, lang, translated=False):
         query = [
             ("name", "=", translation_name),
             ("res_id", "=", res_id),
             ("lang", "=", lang),
         ]
-        if only_translated:
+        if translated:
             query.append(("state", "=", "translated"))
         return self.landing.env["ir.translation"].search(query)
 
@@ -446,7 +445,9 @@ class LandingCmPlace:
     ):
         translation = self._get_translation(translation_name, res_id, lang)
         if translation:
-            translation.write({"value": trans_value, "state": "translated"})
+            translation.write(
+                {"src": original_value, "value": trans_value, "state": "translated"}
+            )
         else:
             self.landing.env["ir.translation"].create(
                 {

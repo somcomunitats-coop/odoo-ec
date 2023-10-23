@@ -29,6 +29,12 @@
             string="Create map place"
             attrs="{'invisible': [('map_place_id','!=',False)]}"
           />
+          <button
+            name="action_update_landing_place"
+            type="object"
+            string="Update map place"
+            attrs="{'invisible': [('map_place_id','=',False)]}"
+          />
           <field name="status" widget="statusbar" />
         </header>
         <group style="width:40px;">

@@ -188,6 +188,10 @@ class LandingPage(models.Model):
         for record in self:
             record._create_landing_place()
 
+    def action_update_landing_place(self):
+        for record in self:
+            record._update_landing_place()
+
     def _update_wordpress(self):
         instance_company = self.env["res.company"].search(
             [("hierarchy_level", "=", "instance")]
@@ -205,4 +209,7 @@ class LandingPage(models.Model):
             self.write({"wp_lastupdate_datetime": datetime.now()})
 
     def _create_landing_place(self):
-        response = LandingCmPlaceResource(self).create()
+        LandingCmPlaceResource(self).create()
+
+    def _update_landing_place(self):
+        LandingCmPlaceResource(self).update()
