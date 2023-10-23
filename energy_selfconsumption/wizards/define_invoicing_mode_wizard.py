@@ -52,6 +52,8 @@ class ContractGenerationWizard(models.TransientModel):
             "company_id": self.env.company.id,
             "project_id": self.selfconsumption_id.project_id.id,
             "property_account_expense_id": account_expense_id.id,
+            "sale_ok": True,
+            "purchase_ok": False,
         }
 
     def _prepare_formula_values(self, code):
