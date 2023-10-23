@@ -80,11 +80,13 @@
 		<field name="arch" type="xml">
 			<xpath expr="//sheet" position="before">
                 <header>
+					<field name="is_instance_company" invisible="1" />
 					<button
             name="action_assign_crm_to_coordinator_company"
             type="object"
             string="Assing CRM to coordinator company"
             groups="energy_communities.group_platform_manager"
+            attrs="{'invisible': [('is_instance_company', '=', False)]}"
           />
 				</header>
 			</xpath>
