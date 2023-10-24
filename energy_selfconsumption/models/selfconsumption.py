@@ -250,6 +250,13 @@ class Selfconsumption(models.Model):
             "target": "self",
         }
 
+    def send_invoicing_reminder(self):
+        # Get the projects method
+        template_id = self.env.ref(
+            "energy_selfconsumption.selfconsumption_invoicing_reminder"
+        )
+        self.message_post_with_template(template_id.id)
+
 
 class CoefficientReport(models.TransientModel):
     _name = "energy_selfconsumption.coefficient_report"

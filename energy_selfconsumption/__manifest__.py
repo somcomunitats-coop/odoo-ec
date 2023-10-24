@@ -28,6 +28,7 @@
         "data/ir_sequence_data.xml",
         "data/ir_attactment_data.xml",
         "data/custom_paper_format_views.xml",
+        "data/mail_template.xml",
         "views/selfconsumption_views.xml",
         "views/supply_point_views.xml",
         "views/res_partner_views.xml",
