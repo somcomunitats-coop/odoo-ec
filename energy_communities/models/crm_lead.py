@@ -44,6 +44,11 @@ class CrmLead(models.Model):
         related="company_id.hierarchy_level",
         readonly=True,
     )
+    can_be_assigned_to_coordinator = fields.Boolean(
+        string="Can be assigned to coordinator",
+        compute="_get_can_be_assigned_to_coordinator",
+        store=False,
+    )
 
     def _create_map_place_proposal(self):
         if not self.env.user.company_id.coordinator:
@@ -355,6 +360,15 @@ class CrmLead(models.Model):
             "target": "new",
             "res_id": wizard.id,
         }
+
+    @api.depends("source_id")
+    def _get_can_be_assigned_to_coordinator(self):
+        for record in self:
+            record.can_be_assigned_to_coordinator = record.source_id.id in [
+                self.env.ref("energy_communities.ce_source_general_info").id,
+                self.env.ref("energy_communities.ce_source_existing_ce_contact").id,
+                self.env.ref("energy_communities.ce_source_creation_ce_proposal").id,
+            ]
 
 
 class CrmTags(models.Model):

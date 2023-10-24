@@ -20,17 +20,25 @@
 		<field name="inherit_id" ref="crm.crm_lead_view_form" />
 		<field name="arch" type="xml">
 			<xpath expr="//sheet" position="before">
-                <header>
+        <header>
+          <field name="source_id" invisible="1" />
+          <field name="finished" invisible="1" />
+          <field name="company_hierarchy_level" invisible="1" />
+          <field name="can_be_assigned_to_coordinator" invisible="1" />
 					<button
             name="action_assign_crm_to_coordinator_company"
             type="object"
             string="Assing CRM to coordinator company"
             groups="energy_communities.group_platform_manager"
+            attrs="{'invisible':[('can_be_assigned_to_coordinator', '!=', True)]}"
           />
-                    <field name="source_id" invisible="1" />
-                    <field name="finished" invisible="1" />
-                    <field name="company_hierarchy_level" invisible="1" />
-					<button name="action_create_community" type="object" string="Create community" />
+          <button
+            name="action_create_community"
+            type="object"
+            string="Create community"
+            groups="energy_communities.group_platform_manager"
+            attrs="{'invisible':[('source_id', '!=', %(ce_source_creation_ce_proposal)d)]}"
+          />
 				</header>
 			</xpath>
 		</field>
