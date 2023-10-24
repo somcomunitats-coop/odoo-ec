@@ -6,16 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-23 12:01+0000\n"
-"PO-Revision-Date: 2023-08-23 14:24+0200\n"
-"Last-Translator: Daniil Digtyar Vasilieva <daniil.digtyar@somit.coop>\n"
+"POT-Creation-Date: 2023-10-24 13:58+0000\n"
+"PO-Revision-Date: 2023-10-24 13:58+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: eu_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 3.0.1\n"
 
 #. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_assigned_to_coordinator_id
@@ -23,248 +21,16 @@ msgid ""
 "\n"
 "                \n"
 "                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"\n"
-"                        <p>Hello,</p>\n"
-"\n"
+"                        <p>Hello,</p><br/>\n"
 "                        <p>There is a new Energy Community registration request.</p>\n"
-"\n"
-"                        <p>Go to Odoo to track this registration.</p>\n"
-"\n"
+"                        <p>Go to Odoo to track this registration.</p><br/>\n"
 "                        <p>Yours faithfully,</p>\n"
-"                        <p>Somcomunitats.coop team </p>\n"
+"                        <p>Somcomunitats.coop team</p>\n"
 "                        <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
-"\n"
 "                    </div>\n"
 "                \n"
 "            "
 msgstr ""
-"\n"
-"                \n"
-"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"\n"
-"                        <p>Kaixo,</p>\n"
-"\n"
-"                        <p>Comunidad Energétican izena emateko eskaera berri bat dago.</p>\n"
-"\n"
-"                        <p>Zoaz Odoo erregistro honi jarraipena emateko.</p>\n"
-"\n"
-"                        <p>Zinez,</p>\n"
-"                        <p>Taldea Somcomunitats.coop</p>\n"
-"                        <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
-"\n"
-"                    </div>\n"
-"                \n"
-"            "
-
-#. module: energy_communities
-#: model:ir.model.fields,help:energy_communities.field_subscription_request__vat
-msgid ""
-"\n"
-"        The Tax Identification Number. Complete it if the contact is "
-"subjected to\n"
-"        government taxes. Used in some legal statements.\"\n"
-"        "
-msgstr ""
-"\n"
-"        El NIF/CIF. Completa este campo si el contacto está subjecto a\n"
-"        las tasas estatales. Se usa en algunos informes legales.\"\n"
-"        Identifikazio Fiskaleko Zenbakia. Osatu kontaktua jasaten badu\n"
-"         gobernuaren zergak. Lege adierazpen batzuetan erabiltzen da\"."
-
-#. module: energy_communities
-#: model:mail.template,body_html:energy_communities.email_template_confirmation_voluntary_share
-msgid ""
-"\n"
-"    <p>Dear ${object.firstname},</p>\n"
-"    <p>\n"
-"        We confirm that we have correctly received your request to make a "
-"voluntary contribution to the capital\n"
-"        social of <b>${object.company_id.name}</b>, with the following "
-"data:\n"
-"    </p>\n"
-"    <ul>\n"
-"        <li>Partner VAT: <b>${object.vat}</b></li>\n"
-"        <li>Partner name: <b>${object.firstname} ${object.lastname}</b></"
-"li>\n"
-"        <li>Charging account: <b>${object.iban}</b></li>\n"
-"        <li>Subscription amount: <b>${object.subscription_amount}€</b></"
-"li>\n"
-"    </ul>\n"
-"    <p>\n"
-"        In the next few days you will receive the bank charge in this "
-"account, please verify that all the data\n"
-"        provided is correct and you have the money you want to invest, to "
-"avoid any incident in the\n"
-"        draft of the receipt.\n"
-"    </p>\n"
-"    <p>\n"
-"        Once the validity of the payment has been verified, you will "
-"receive a new notification confirming the\n"
-"        contribution\n"
-"        made and detailing the particular conditions of your contribution.\n"
-"    </p>\n"
-"    <p>\n"
-"        Thank you for your involvement with the cooperative and inform you "
-"that for any doubt or clarification you can\n"
-"        consult\n"
-"        our website:\n"
-"        <a href=\"${object.company_id.website}\"> ${object.company_id."
-"website}</a>\n"
-"        or send us an email to\n"
-"        <a href=\"${object.company_id.email}\">${object.company_id.email}</"
-"a>\n"
-"    </p>\n"
-"    <p>\n"
-"        Get the word out by explaining the project to family and friends. "
-"The more we are, the further we will go!\n"
-"    </p>\n"
-"    <p>\n"
-"        Thank you very much and good energy!\n"
-"    </p>\n"
-"    <p>\n"
-"        Sincerely,\n"
-"    </p>\n"
-"    <p>\n"
-"        ${object.company_id.name} team\n"
-"    </p>\n"
-"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" "
-"style=\"width: 150px;height: 80px;\"/>\n"
-"            "
-msgstr ""
-"\n"
-"    <p>${object.firstname} agurgarria,</p>\n"
-"    <p>\n"
-"Baieztatzen dizugu zuzen jaso dugula zure eskaera, <b>${object.company_id."
-"name}</b> kapital sozialera borondatezko ekarpena egiteko, datu hauekin:\n"
-"\n"
-"    </p>\n"
-"    <ul>\n"
-"        <li>Bazkidea DNI: <b>${object.vat}</b></li>\n"
-"        <li>Bazkidea: <b>${object.firstname} ${object.lastname}</b></li>\n"
-"        <li>Kargu-kontua: <b>${object.iban}</b></li>\n"
-"        <li>Ekarpenaren zenbatekoa: <b>${object.subscription_amount}€</b></"
-"li>\n"
-"    </ul>\n"
-"    <p>\n"
-"Datozen egunetan kontu honetan jasoko duzu bankuko kargua. Mesedez, "
-"egiaztatu emandako datu guztiak zuzenak direla eta eman nahi duzun dirua "
-"duzula, ordainagiriaren igorpenean gorabeherarik izan ez dadin.\n"
-"    </p>\n"
-"    <p>\n"
-"Egindako ordainketaren balioa egiaztatu ondoren, beste jakinarazpen bat "
-"jasoko duzu, egindako ekarpena baieztatuz eta zure ekarpenaren baldintza "
-"partikularrak zehaztuz.\n"
-"    </p>\n"
-"    <p>\n"
-"Kooperatibarekin duzun inplikazioa eskertu nahi dizugu, eta, edozein "
-"zalantza argitzeko, gure web orria kontsulta dezakezu \n"
-"        <a href=\"${object.company_id.website}\"> ${object.company_id."
-"website}</a>\n"
-"edo mezu elektroniko bat bidali \n"
-"        <a href=\"${object.company_id.email}\">${object.company_id.email}</"
-"a>\n"
-" helbidera.\n"
-"    </p>\n"
-"    <p>\n"
-"Ahoz ahoz proiektua familiakoei, auzokideei eta lagunei azaldu. Zenbat eta "
-"gehiago izan, urrunago iritsiko gara!\n"
-"    </p>\n"
-"    <p>\n"
-"Eskerrik asko eta energia on!\n"
-"    </p>\n"
-"    <p>\n"
-"        Adeitasunez,\n"
-"    </p>\n"
-"    <p>\n"
-"        ${object.company_id.name} taldea\n"
-"    </p>\n"
-"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" "
-"style=\"width: 150px;height: 80px;\"/>\n"
-"            "
-
-#. module: energy_communities
-#: model:mail.template,body_html:energy_communities.email_template_conditions_voluntary_share
-msgid ""
-"\n"
-"    <p>Dear ${object.name},</p>\n"
-"    <p>\n"
-"        Last week we charged your account corresponding to your voluntary "
-"contribution to the share capital of the\n"
-"        <b>${object.company_id.name}</b>.\n"
-"    </p>\n"
-"    <p>\n"
-"        We attach the contract with the conditions of your investment and "
-"we remind you that for any doubt or\n"
-"        clarification in relation to the contribution made you can send an "
-"email to\n"
-"        <a href=\"${object.company_id.email}\">${object.company_id.email}</"
-"a> or consult the website\n"
-"        <a href=\"${object.company_id.website}\"> ${object.company_id."
-"website}</a>.\n"
-"    </p>\n"
-"    <p>\n"
-"        We take this opportunity to thank you, once again, for your "
-"involvement with the <b>${object.company_id.name}</b>\n"
-"        objective to promote those actions or projects that contribute to "
-"an energy, economic and social transition\n"
-"        in ${object.company_id.city}.\n"
-"    </p>\n"
-"    <p>\n"
-"        Get the word out by explaining the project to family and friends. "
-"The more we are, the further we will go!\n"
-"    </p>\n"
-"    <p>\n"
-"        Thank you very much and good energy!\n"
-"    </p>\n"
-"    <p>\n"
-"        Sincerely,\n"
-"    </p>\n"
-"    <p>\n"
-"        ${object.company_id.name} team\n"
-"    </p>\n"
-"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" "
-"style=\"width: 150px;height: 80px;\"/>\n"
-"            "
-msgstr ""
-"\n"
-"    <p>${object.firstname} estimatua,</p>\n"
-"    <p>\n"
-"        Jakinarazten dizuegu zuen bankuari igorri diogula \n"
-"        <b>${object.company_id.name}</b> kooperatibaren kapital sozialari "
-"egin diozun borondatezko ekarpenari dagokion kargua.\n"
-"    </p>\n"
-"    <p>\n"
-"        Zure inbertsioaren baldintzak jasotzen dituen kontratua eransten "
-"dizugu eta gogorarazten dizugu egindako ekarpenari buruzko edozein zalantza "
-"argitzeko posta elektroniko bat bidal dezakezula\n"
-"        <a href=\"${object.company_id.email}\">${object.company_id.email}</"
-"a> helbidera edo \n"
-"        <a href=\"${object.company_id.website}\"> ${object.company_id."
-"website}</a>web orria kontsultatu.\n"
-"    </p>\n"
-"    <p>\n"
-"        Bide batez eskerrak eman nahi dizkizugu beste behin ere, "
-"<b>${object.company_id.name}</b>\n"
-"        xedearekin duzun inplikazioagatik,  ${object.company_id.city} "
-"energia, ekonomia eta gizarte trantsizioan laguntzen duten ekintzak edo "
-"proiektuak bultzatzeko.\n"
-"    </p>\n"
-"    <p>\n"
-"Ahoz aho proiektua familiakoei, auzokideei eta lagunei azaldu. Zenbat eta "
-"gehiago izan, urrunago iritsiko gara.\n"
-"    </p>\n"
-"    <p>\n"
-"Eskerrik asko eta energia on!\n"
-"    </p>\n"
-"    <p>\n"
-"        Adeitasunez,\n"
-"    </p>\n"
-"    <p>\n"
-"        ${object.company_id.name} taldea\n"
-"    </p>\n"
-"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" "
-"style=\"width: 150px;height: 80px;\"/>\n"
-"            "
 
 #. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_contact_confirm_id
@@ -284,14 +50,14 @@ msgid ""
 msgstr ""
 "\n"
 "                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"                    <p>Kaixo,</p>\n"
-"                    <p>Eskerrik asko harremanetan jartzeagatik.</p>\n"
-"                    <p>Zure e-posta jaso dugu eta Komunitateari birbidali diogu, ahalik eta azkarren zurekin harremanetan jartzeko.</p>\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gràcies per contactar.</p>\n"
+"                    <p>Hem rebut el teu correu electrònic i ho hem reenviat a la Comunitat perquè puguin contactar amb tu el més aviat possible.</p>\n"
 "                    <br />\n"
-"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara.</p>\n"
-"                    <p>Zinez,</p>\n"
-"                    <p>Taldea Somcomunitats.coop</p>\n"
-"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"                    <p>WSeguim en contacte per a qualsevol consulta.</p>\n"
+"                    <p>Atentament,</p>\n"
+"                    <p>Equip de Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos i preguntes freqüents</a></p>\n"
 "                </div>\n"
 "            "
 
@@ -300,39 +66,17 @@ msgstr ""
 msgid ""
 "\n"
 "                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"\n"
 "                    <p>Hello,</p>\n"
-"\n"
 "                    <p>Thank you for filling out the form and requesting the membership of your Energy Community on the Somcomunitats.coop platform.</p>\n"
-"\n"
 "                    <p>In the coming weeks we will study the application and contact you to indicate the steps and the information necessary to complete the registration process for the Community and the people who are part of it.</p>\n"
-"\n"
 "                    <br />\n"
 "                    <p>We keep in touch for any questions.</p>\n"
 "                    <p>Yours faithfully,</p>\n"
 "                    <p>Somcomunitats.coop team </p>\n"
 "                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
-"\n"
 "                </div>\n"
 "            "
 msgstr ""
-"\n"
-"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"\n"
-"                    <p>Kaixo,</p>\n"
-"\n"
-"                    <p>Eskerrik asko formularioa bete eta Somcomunitats.coop plataforman zure Energia Komunitatearen kide izatea eskatzeagatik.</p>\n"
-"\n"
-"                    <p>Datozen asteetan aplikazioa aztertuko dugu eta zurekin harremanetan jarriko gara Komunitatearen eta bertan dauden pertsonen erregistro-prozesua burutzeko beharrezkoak diren urratsak eta informazioa adierazteko.</p>\n"
-"\n"
-"                    <br />\n"
-"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara.</p>\n"
-"                    <p>Zinez,</p>\n"
-"                    <p>Taldea Somcomunitats.coop</p>\n"
-"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
-"\n"
-"                </div>\n"
-"            "
 
 #. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_advise_future_ce_confirm_id
@@ -352,14 +96,14 @@ msgid ""
 msgstr ""
 "\n"
 "                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"                    <p>Kaixo,</p>\n"
-"                    <p>Eskerrik asko formularioa betetzeagatik.</p>\n"
-"                    <p>Zure auzoan edo udalerrian Energia Komunitate bat aktibatzen bada, dauden eskaerak kontsultatu eta zurekin harremanetan jartzeko aukera izango dute. Gizarte eraldaketarako mugimendua eta eredu energetikoa sustatzeko interesa agertu izanaz haratago euren aldetik inolako konpromisorik gabe.</p>\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gràcies per omplir el formulari.</p>\n"
+"                    <p>En cas que s’activi una Comunitat Energètica en el teu barri o municipi, podran consultar les peticions existents i posar-se en contacte amb tu. Sense cap compromís per part teva més enllà d’haver mostrat interès en impulsar un moviment de transformació social i de model energètic.</p>\n"
 "                    <br />\n"
-"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara.</p>\n"
-"                    <p>Zinez,</p>\n"
-"                    <p>Taldea Somcomunitats.coop</p>\n"
-"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"                    <p>Seguim en contacte per qualsevol consulta.</p>\n"
+"                    <p>Atentament,</p>\n"
+"                    <p>Equip de Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos i preguntes freqüents</a></p>\n"
 "                </div>\n"
 "            "
 
@@ -380,16 +124,15 @@ msgid ""
 msgstr ""
 "\n"
 "                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"                    <p>Kaixo,</p>\n"
-"                    <p>Eskerrik asko formularioa betetzeagatik.</p>\n"
-"                    <p>Behar bezala harpidetu zara Komunitatearen buletinera.</p>\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gràcies per omplir el formulari.</p>\n"
+"                    <p>Et confirmem que t’has subscrit correctament al butlletí.</p>\n"
 "                    <br />\n"
-"                    <p>Zinez,</p>\n"
-"                    <p>Taldea Somcomunitats.coop</p>\n"
-"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"                    <p>Atentament,</p>\n"
+"                    <p>Equip de Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos i preguntes freqüents</a></p>\n"
 "                </div>\n"
 "            "
-
 
 #. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_platform_news_confirm_id
@@ -409,14 +152,14 @@ msgid ""
 msgstr ""
 "\n"
 "                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"                    <p>Kaixo,</p>\n"
-"                    <p>Eskerrik asko formularioa betetzeagatik.</p>\n"
-"                    <p>Buletinera ondo harpidetu zara.</p>\n"
-"                    <p>Proiektuari buruzko edozein berriren berri emango dizuegu.</p>\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gràcies per omplir el formulari.</p>\n"
+"                    <p>Et confirmem que t'has subscrit correctament al butlletí.</p>\n"
+"                    <p>T'avisarem en cas que hi hagi alguna novetat en el projecte.</p>\n"
 "                    <br />\n"
-"                    <p>Zinez,</p>\n"
-"                    <p>Taldea Somcomunitats.coop</p>\n"
-"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"                    <p>Atentament,</p>\n"
+"                    <p>Equip de Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos i preguntes freqüents</a></p>\n"
 "                </div>\n"
 "            "
 
@@ -437,33 +180,191 @@ msgid ""
 msgstr ""
 "\n"
 "                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"                    <p>Kaixo,</p>\n"
-"                    <p>Eskerrik asko harremanetan jartzeagatik.</p>\n"
-"                    <p>Zure emaila jaso dugu. Ahalik eta azkarren zurekin harremanetan jarriko gara.</p>\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gràcies per posar-te en contacte.</p>\n"
+"                    <p>Hem rebut el teu correu electrònic. Ens posarem en contacte amb tu tan aviat com ens sigui possible.</p>\n"
 "                    <br />\n"
-"                    <p>Zinez,</p>\n"
-"                    <p>Taldea Somcomunitats.coop</p>\n"
-"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"                    <p>Atentament,</p>\n"
+"                    <p>Equip de Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Recursos i preguntes freqüents</a></p>\n"
 "                </div>\n"
+"            "
+
+#. module: energy_communities
+#: model:ir.model.fields,help:energy_communities.field_subscription_request__vat
+msgid ""
+"\n"
+"        The Tax Identification Number. Complete it if the contact is subjected to\n"
+"        government taxes. Used in some legal statements.\"\n"
+"        "
+msgstr ""
+"\n"
+"        El NIF/CIF. Completa aquest camp si el contacte està subjecte a\n"
+"        les taxes estatals. Es fa servir en alguns  informes legals.\"\n"
+"        "
+
+#. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_template_confirmation_voluntary_share
+msgid ""
+"\n"
+"    <p>Dear ${object.firstname},</p>\n"
+"    <p>\n"
+"        We confirm that we have correctly received your request to make a voluntary contribution to the capital\n"
+"        social of <b>${object.company_id.name}</b>, with the following data:\n"
+"    </p>\n"
+"    <ul>\n"
+"        <li>Partner VAT: <b>${object.vat}</b></li>\n"
+"        <li>Partner name: <b>${object.firstname} ${object.lastname}</b></li>\n"
+"        <li>Charging account: <b>${object.iban}</b></li>\n"
+"        <li>Subscription amount: <b>${object.subscription_amount}€</b></li>\n"
+"    </ul>\n"
+"    <p>\n"
+"        In the next few days you will receive the bank charge in this account, please verify that all the data\n"
+"        provided is correct and you have the money you want to invest, to avoid any incident in the\n"
+"        draft of the receipt.\n"
+"    </p>\n"
+"    <p>\n"
+"        Once the validity of the payment has been verified, you will receive a new notification confirming the\n"
+"        contribution\n"
+"        made and detailing the particular conditions of your contribution.\n"
+"    </p>\n"
+"    <p>\n"
+"        Thank you for your involvement with the cooperative and inform you that for any doubt or clarification you can\n"
+"        consult\n"
+"        our website:\n"
+"        <a href=\"${object.company_id.website}\"> ${object.company_id.website}</a>\n"
+"        or send us an email to\n"
+"        <a href=\"${object.company_id.email}\">${object.company_id.email}</a>\n"
+"    </p>\n"
+"    <p>\n"
+"        Get the word out by explaining the project to family and friends. The more we are, the further we will go!\n"
+"    </p>\n"
+"    <p>\n"
+"        Thank you very much and good energy!\n"
+"    </p>\n"
+"    <p>\n"
+"        Sincerely,\n"
+"    </p>\n"
+"    <p>\n"
+"        ${object.company_id.name} team\n"
+"    </p>\n"
+"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" style=\"width: 150px;height: 80px;\"/>\n"
+"            "
+msgstr ""
+"\n"
+"    <p>Apreciat/ada ${object.firstname},</p>\n"
+"    <p>\n"
+"        Et confirmem que hem rebut correctament la teva sol·licitud per realitzar una aportació voluntària al capital social de <b>${object.company_id.name}</b>, amb les següents dades:\n"
+"    </p>\n"
+"    <ul>\n"
+"        <li>Soci/sòcia NIF: <b>${object.vat}</b></li>\n"
+"        <li>Soci/sòcia: <b>${object.firstname} ${object.lastname}</b></li>\n"
+"        <li>Compte bancari: <b>${object.iban}</b></li>\n"
+"        <li>Import d'aportació: <b>${object.subscription_amount}€</b></li>\n"
+"    </ul>\n"
+"    <p>\n"
+"En els pròxims dies rebràs el càrrec bancari en aquest compte, si us plau verifica que totes les teves dades siguin correctes i disposis dels diners que vulguis invertir, per evitar qualsevol incidència en el gir del rebut.\n"
+"    </p>\n"
+"    <p>\n"
+"Una vegada verificat el pagament, rebràs una notificació confirmant l'aportació realitzada i detallant les condicions particulars de la teva aportació.\n"
+"    </p>\n"
+"    <p>\n"
+"Agraïm la teva implicació amb la cooperativa i t'informem que pots aclarir qualsevol dubte en la nostra pàgina web \n"
+"        <a href=\"${object.company_id.website}\"> ${object.company_id.website}</a>\n"
+"o enviar-nos un correu electrònic a\n"
+"        <a href=\"${object.company_id.email}\">${object.company_id.email}</a>\n"
+"    </p>\n"
+"    <p>\n"
+"Fes que corri la veu explicant el nostre projecte a familiars i amics/amigues. Com més siguem, més lluny arribarem!\n"
+"    </p>\n"
+"    <p>\n"
+"Moltes gràcies i bona energia!\n"
+"    </p>\n"
+"    <p>\n"
+"        Atentament,\n"
+"    </p>\n"
+"    <p>\n"
+"        L'equip de ${object.company_id.name}\n"
+"    </p>\n"
+"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" style=\"width: 150px;height: 80px;\"/>\n"
+"            "
+
+#. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_template_conditions_voluntary_share
+msgid ""
+"\n"
+"    <p>Dear ${object.name},</p>\n"
+"    <p>\n"
+"        Last week we charged your account corresponding to your voluntary contribution to the share capital of the\n"
+"        <b>${object.company_id.name}</b>.\n"
+"    </p>\n"
+"    <p>\n"
+"        We attach the contract with the conditions of your investment and we remind you that for any doubt or\n"
+"        clarification in relation to the contribution made you can send an email to\n"
+"        <a href=\"${object.company_id.email}\">${object.company_id.email}</a> or consult the website\n"
+"        <a href=\"${object.company_id.website}\"> ${object.company_id.website}</a>.\n"
+"    </p>\n"
+"    <p>\n"
+"        We take this opportunity to thank you, once again, for your involvement with the <b>${object.company_id.name}</b>\n"
+"        objective to promote those actions or projects that contribute to an energy, economic and social transition\n"
+"        in ${object.company_id.city}.\n"
+"    </p>\n"
+"    <p>\n"
+"        Get the word out by explaining the project to family and friends. The more we are, the further we will go!\n"
+"    </p>\n"
+"    <p>\n"
+"        Thank you very much and good energy!\n"
+"    </p>\n"
+"    <p>\n"
+"        Sincerely,\n"
+"    </p>\n"
+"    <p>\n"
+"        ${object.company_id.name} team\n"
+"    </p>\n"
+"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" style=\"width: 150px;height: 80px;\"/>\n"
+"            "
+msgstr ""
+"\n"
+"    <p>Apreciat/ada ${object.firstname},</p>\n"
+"    <p>\n"
+"        Et confirmem que la setmana passada vam fer el càrrec corresponent a la teva aportació al capital voluntari de \n"
+"        <b>${object.company_id.name}</b>.\n"
+"    </p>\n"
+"    <p>\n"
+"\tAdjuntem el contracte amb les condicions de la teva aportació i quedem a la teva disposició per qualsevol dubte o aclariment que necessitis a partir del nostre correu electrònic \n"
+"        <a href=\"${object.company_id.email}\">${object.company_id.email}</a> o la nostra pàgina web \n"
+"        <a href=\"${object.company_id.website}\"> ${object.company_id.website}</a>.\n"
+"    </p>\n"
+"    <p>\n"
+"        Aprofitem per agrair-te, un cop més, la teva implicació amb l'objectiu de <b>${object.company_id.name}</b>\n"
+"        per impulsar aquelles accions o projecte que contribueixin a una transició energètica, economia i social a ${object.company_id.city}.\n"
+"    </p>\n"
+"    <p>\n"
+"Fes que corri la veu explicant el nostre projecte a familiars i amics/amigues. Com més siguem, més lluny arribarem!\n"
+"    </p>\n"
+"    <p>\n"
+"Moltes gràcies i bona energia!\n"
+"    </p>\n"
+"    <p>\n"
+"        Atentament,\n"
+"    </p>\n"
+"    <p>\n"
+"       L'equip de ${object.company_id.name}\n"
+"    </p>\n"
+"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" style=\"width: 150px;height: 80px;\"/>\n"
 "            "
 
 #. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_template_confirmation_company
 msgid ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
-"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
-"\">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
 "    <p>Hello,</p>\n"
-"    <p>Thank you for filling out the form and request to join the Community."
-"</p>\n"
-"    <p>In the coming weeks we will contact you to indicate the next steps</"
-"p>\n"
+"    <p>Thank you for filling out the form and request to join the Community.</p>\n"
+"    <p>In the coming weeks we will contact you to indicate the next steps</p>\n"
 "    <p>Here is a copy of the data we received:</p>\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
-"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
-"34); background-color: #FFF; \">\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "        <p> - Request to join: ${object.company_id.name}</p>\n"
 "        <p> - Company Name: ${object.company_name}</p>\n"
 "        <p> - Company Email: ${object.company_email}</p>\n"
@@ -477,554 +378,424 @@ msgid ""
 "        <p> - Function: ${object.contact_person_function}</p>\n"
 "        <p> - Email: ${object.email}</p>\n"
 "        <p> - Phone: ${(object.phone or '')}</p>\n"
-"        <p> - Gender: ${dict(object.fields_get(allfields=['gender'])"
-"['gender']['selection'])[object.gender]}</p>\n"
+"        <p> - Gender: ${dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]}</p>\n"
 "        <p> - Birthdate: ${object.birthdate}</p>\n"
-"        <p> - Language: ${dict(object.fields_get(allfields=['lang'])['lang']"
-"['selection'])[object.lang]}</p>\n"
+"        <p> - Language: ${dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}</p>\n"
 "        <p> - Initial share amount: ${object.subscription_amount}</p>\n"
-"    % if object.payment_mode_id.payment_method_id.code == "
-"'sepa_direct_debit': \n"
+"    % if object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit':\n"
 "        <p> - Bank account: ${object.iban}</p>\n"
-"        <p> - I authorize bank receipts to be sent to this account: "
-"${object.mandate_approved and 'SI' or 'NO'}</p> \n"
+"        <p> - I authorize bank receipts to be sent to this account: ${object.mandate_approved and 'SI' or 'NO'}</p>\n"
 "    % endif\n"
 "    </div>\n"
 "    <br />\n"
 "    <p>We keep in touch for any questions.</p>\n"
 "    <p>Yours faithfully,</p>\n"
 "    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
-"and FAQs</a></p>\n"
+"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
 "</div>\n"
 "            "
 msgstr ""
-"\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
-"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
-"\">\n"
-"\n"
-"    <p>Hola,</p>\n"
-"    <p>Gracias por rellenar el formulario y solicitar la adhesión a la "
-"Comunidad Energética.</p>\n"
-"    <p>En las próximas semanas nos pondremos en contacto contigo para "
-"indicarte los siguientes pasos.</p>\n"
-"    <p>Aquí tienes una copia de los datos que hemos recibido:</p>\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
-"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
-"34); background-color: #FFF; \">\n"
-"        <p> - Comunidad: ${object.company_id.name}</p>\n"
-"        <p> - Nombre empresa: ${object.company_name}</p>\n"
-"        <p> - Correo empresa: ${object.company_email}</p>\n"
-"        <p> - NIF/CIF empresa: ${object.vat}</p>\n"
-"        <p> - Dirección empresa: ${object.address}</p>\n"
-"        <p> - Código postal empresa: ${object.zip_code}</p>\n"
-"        <p> - Ciudad empresa: ${object.city}</p>\n"
-"        <p> - País empresa: ${object.country_id.name}</p>\n"
-"        <p> - Nombre persona representante: ${object.firstname}</p>\n"
-"        <p> - Apellidos persona representante: ${object.lastname}</p>\n"
-"        <p> - Cargo representante: ${object.contact_person_function}</p>\n"
-"        <p> - Correo representante: ${object.email}</p>\n"
-"        <p> - Teléfono representante: ${(object.phone or '')}</p>\n"
-"        <p> - Género representante: ${dict(object."
-"fields_get(allfields=['gender'])['gender']['selection'])[object.gender]}</"
-"p>\n"
-"        <p> - Fecha nacimiento representante: ${object.birthdate}</p>\n"
-"        <p> - Idioma comunicaciones: ${dict(object."
-"fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}</p>\n"
-"        <p> - Importe aportación inicial: ${object.subscription_amount}</"
-"p>\n"
-"    % if object.payment_mode_id.payment_method_id.code == "
-"'sepa_direct_debit': \n"
-"        <p> - Cuenta bancaria: ${object.iban}</p>\n"
-"        <p> - Autorizo giros bancarios a esta cuenta: ${object."
-"mandate_approved and 'SI' or 'NO'}</p> \n"
-"    % endif\n"
-"    </div>\n"
-"    <br />\n"
-"    <p>Seguimos en contacto para cualquier duda.</p>\n"
-"    <p>Atentamente,</p>\n"
-"    <p>Equipo Somcomunitats.coop</p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
-"and FAQs</a></p>\n"
-"</div>\n"
-"            "
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser_pwd
 msgid "\"Superuser\" user password"
-msgstr "\"Supererabiltzailea\" erabiltzailearen pasahitza"
+msgstr "Contrasenya del super-usuari"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser
 msgid "A super power user that is able to CRUD users on KC."
-msgstr ""
-"KC-n CRUD erabiltzaileak egiteko gai den botere handiko erabiltzailea."
+msgstr "Un super-usuari amb permisos pper CRUD en KC."
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_account_chart_template
 msgid "Account Chart Template"
-msgstr "Kontu-diagrama txantiloia"
+msgstr "Plantilla de gràfic de comptes"
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "Address not found"
-msgstr "Helbidea ez da aurkitu"
+#: model:ir.model,name:energy_communities.model_cm_coordinates_mixin
+msgid "Add map coordinates to any model"
+msgstr "Afegeix coordenades de mapa a qualsevol model del sistema."
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__is_admin_provider
 msgid "Admin provider"
-msgstr "Admin hornitzailea"
+msgstr "ProveÏdor AUTH  taques administratives"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_admin
 msgid "Administrator"
-msgstr "Administratzailea"
+msgstr ""
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_aggregate_demand
 msgid "Agregació i flexibilitat de la demanda"
-msgstr "Eskariaren malgutasuna eta agregazioa"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__allow_new_members
 msgid "Allow new members"
-msgstr "Onartu kide berriak"
+msgstr "Autoritza nous membres"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__allow_new_members
 msgid "Allows new members"
-msgstr "Kide berriei baimena ematea"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_landing_page__publicdata_lastupdate_datetime
-msgid "Last wordpress/map update date"
-msgstr "Wordpress/Mapa eguneratzearen azken data"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#, python-format
-msgid "An instance company already exists"
-msgstr "Instantzia-enpresa bat dagoeneko existitzen da"
+msgstr "Autoritza nous membres"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_crm_to_coordinator_wizard_form
 msgid "Assign"
-msgstr "Esleitu"
+msgstr "Assignar"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
+msgid "Assign Admin Wizard"
+msgstr "Assistent per assignar una administradora"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_crm_to_coordinator_wizard_form
 msgid "Assign CRM to Coordinator Company Wizard"
-msgstr "Esleitu CRM Koordinatzailearen Enpresa Morroiari"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
-#, python-format
-msgid "Assign CRM to coordinator company"
-msgstr "Esleitu CRM enpresa koordinatzaileari"
+msgstr "Assignar CRM a empresa coordinadora"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_assign_crm_to_coordinator_company_wizard
 msgid "Assign CRM to coordinator company wizard"
-msgstr "Esleitu CRM enpresa koordinatzailearen morroiari"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__assigned_company_id
-msgid "Assigned company"
-msgstr "Esleitutako enpresa"
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.ce_crm_lead_view_form
-msgid "Assing CRM to coordinator company"
-msgstr "Enpresa koordinatzaileari CRM gehitzea"
-
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
-msgid "Assign Admin Wizard"
-msgstr "Administratzailea sortzeko morroia"
+msgstr "Assignar CRM a l'assistent de l'empresa coordinadora"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_assign_admin_wizard
 msgid "Assign admin Wizard"
-msgstr "Administratzailea sortzeko morroia"
+msgstr "Assistent per assignar una administradora"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
-msgid "Assing administrator"
-msgstr "Esleitu administratzailea"
+#: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__assigned_company_id
+msgid "Assigned company"
+msgstr "Empresa assignada"
 
 #. module: energy_communities
-#: code:addons/energy_communities/services/ce_community_service.py:0
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_service.py:0
-#, python-format
-msgid "Authorization token not found"
-msgstr "Ez da aurkitu baimen-tokena"
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_crm_lead_view_form
+msgid "Assing CRM to coordinator company"
+msgstr "Assignar CRM a empresa coordinadora"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.iban_template_es_ccee
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "Bank Account Number"
-msgstr "Banku-kontuaren zenbakia"
+msgstr "Número de compte bancari"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 msgid "Become Company Cooperator of"
-msgstr "Izan zaitez Enpresa Kolaboratzaile"
+msgstr "Esdevé empresa membre de"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "Become Cooperator of"
-msgstr "Izan Kolaboratzaile"
+msgstr "Esdevé membre de"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__become_cooperator_process
 msgid "Become cooperator process"
-msgstr "Bihurtu kooperatzaile prozesua"
+msgstr "Fer-te col·laborador"
 
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.action_build_community_company_from_lead
 msgid "Build Community Company"
-msgstr "Eraiki Komunitatea Enpresa"
+msgstr "Genera la companyia al Odoo"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_crm_lead__ce_tag_ids
 msgid "CE Classify and analyze categories"
-msgstr "CE Kategoriak sailkatu eta aztertzea"
+msgstr "Classifica i analitza categories CE"
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_leads_ce_contact_action
 msgid "CE Contact"
-msgstr "CE Kontaktua"
+msgstr "Contacte de CE"
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_leads_ce_info_action
 msgid "CE Information"
-msgstr "CE Informazioa"
+msgstr "Informació de CE"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__ce_tag_ids
 msgid "CE Tags"
-msgstr "CE Etiketak"
+msgstr "Etiquetes de CE"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_creation_ce_proposal
 #: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
 msgid "CE creation"
-msgstr "CE sorrera"
+msgstr "Creació de CE"
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_leads_new_ce_request_action
 msgid "CE creation requests"
-msgstr "CE sortzeko eskaerak"
+msgstr "Sol·licituds creació CE"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__crm_lead_id
 msgid "CRM Lead"
-msgstr "CRM liderra"
+msgstr "Iniciativa CRM"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_crm_tag
 msgid "CRM Tag"
-msgstr "CRM etiketa"
+msgstr "Etiqueta CRM"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_crm_to_coordinator_wizard_form
 msgid "Cancel"
-msgstr "Utzi"
+msgstr "Cancel.lar"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
 msgid "Cancelar"
-msgstr ""
+msgstr "Cancel·lar"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__chart_template_id
 msgid "Chart Template"
-msgstr "Diagrama txantiloia"
+msgstr "Plantilla plan contable"
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_type__citizen
-#, python-format
 msgid "Citizen"
-msgstr "Herritarra"
+msgstr "Ciutadà"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__city
 msgid "City"
-msgstr "Hiria"
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "City not found"
-msgstr "Ez da aurkitu hiria"
+msgstr "Ciutat"
 
 #. module: energy_communities
 #: model_terms:ir.actions.act_window,help:energy_communities.ce_utm_sources_action
 msgid "Click to define a new Source."
-msgstr "Egin klik Iturburu berri bat definitzeko."
+msgstr "Clica per definir un nou Source."
 
 #. module: energy_communities
 #: model_terms:ir.actions.act_window,help:energy_communities.ce_crm_lead_tags_action
 msgid "Click to define a new tag."
-msgstr "Egin klik etiketa berri bat definitzeko."
+msgstr "Clica per definir una nova etiqueta."
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_status__closed
-#, python-format
 msgid "Closed"
-msgstr "Itxita"
+msgstr "Tancat"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role__code
 msgid "Code"
-msgstr "Kodea"
+msgstr "Codi"
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__community
-#, python-format
 msgid "Community"
-msgstr "Komunitatea"
+msgstr "Comunitat"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__community_active_services
 msgid "Community active services"
-msgstr "Komunitate-zerbitzu aktibo"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__admins
-#, python-format
-msgid "Community admins"
-msgstr "komunitateko administratzaileak"
+msgstr "Serveis actius a la Comunitat"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_crm_lead__community_company_id
 msgid "Community related to this Lead"
-msgstr "Comunitad relacionada"
+msgstr "Comunitat relacionada"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__community_secondary_type
 msgid "Community secondary type"
-msgstr "Komunitate bigarren mailako mota"
+msgstr "Tipus secundari Comunitat"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__community_status
 msgid "Community status"
-msgstr "Erkidego-egoera"
+msgstr "Estat Comunitat"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__community_type
 msgid "Community type"
-msgstr "Komunitate mota"
+msgstr "Tipus de Comunitat"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_company
 msgid "Companies"
-msgstr "Enpresak"
+msgstr "Empreses"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__company_id
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "Company"
-msgstr "Konpainia"
-
-#. module: energy_communities
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#, python-format
-msgid "Company not found"
-msgstr "Enpresa ez da aurkitu"
+msgstr "Companyia"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_collective_purchases
 msgid "Compres col·lectives"
-msgstr "Konprimitu kolektiboak"
+msgstr ""
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_template_conditions_voluntary_share
 msgid ""
 "Conditions Share Capital to ${object.company_id.name} Ref. ACSV${object.id}"
 msgstr ""
-"${object.company_id.name} kapital sozialaren baldintzak Ref. ACSV${object."
-"id}"
+"Condicions Capital Social ${object.company_id.name} Ref. ACSV${object.id}"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_config_settings
 msgid "Config Settings"
-msgstr "Konfigurazio ezarpenak"
+msgstr "Configuració"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_config_menu
 msgid "Configuration"
-msgstr "Konfigurazioa"
+msgstr "Configuració"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "Confirm Email"
-msgstr "Posta elektronikoa berretsi"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_users.py:0
-#, python-format
-msgid ""
-"Conflict on user values. Please verify that all values supposed to be "
-"unique are really unique. %(detail)s"
-msgstr ""
-"Erabiltzaileen baloreen arteko gatazka. Egiaztatu bakarrak izan behar diren "
-"balio guztiak benetan bakarrak direla. %(detail)s"
+msgstr "Confirmar el correu electrònic"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_partner
 msgid "Contact"
-msgstr "Kontaktua"
+msgstr "Contacte"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
 msgid "Contact CE"
-msgstr "Kontactua CE"
+msgstr "Contacte CE"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter_platform_admins
 msgid "Contact SomComunitats"
-msgstr "Kontactua SomComunitats"
+msgstr ""
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_contact
 msgid "Contact a existing CE"
-msgstr "Jarri harremanetan lehendik dagoen CE batekin"
+msgstr "Contactar una CE existent"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_general_contact
 msgid "Contact to the Platform"
-msgstr "Jarri harremanetan plataformarekin"
+msgstr "Contactar amb la plataforma"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_template_confirmation_voluntary_share
 msgid "Contribute to ${object.company_id.name} Ref. ACSV${object.id}"
 msgstr ""
-"${object.company_id.name} autofinantzaketan ematea Erref. ACSV${object.id}"
+"Aportació voluntària a ${object.company_id.name} Ref. ACSV${object.id}"
 
 #. module: energy_communities
 #: model:product.template,name:energy_communities.share_capital_product_template
 msgid "Contribution to Share Capital"
-msgstr "Kapital Sozialerako ekarpena"
+msgstr "Aportació al Capital Social"
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/operation_request.py:0
-#, python-format
-msgid "Converting just part of the shares is not yet implemented"
-msgstr "Akzioen zati bat besterik ez bihurtzea oraindik ez da inplementatu"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__cooperative
-#, python-format
 msgid "Cooperative"
-msgstr "Kooperatiba"
+msgstr "Cooperativa"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
 msgid "Cooperator"
-msgstr "Kooperatzailea"
+msgstr "Sòcia"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__property_cooperator_account
 msgid "Cooperator Account"
-msgstr "Kooperatzaileen Kontua"
+msgstr "Compte sòcies"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__cooperator_journal
 msgid "Cooperator Journal"
-msgstr "Kooperatzaileen Aldizkaria"
+msgstr "Diari Sòcies"
 
 #. module: energy_communities
-#: model:res.groups,name:energy_communities.role_coordination_res_groups
-#: model:res.users.role,name:energy_communities.role_coordination
-msgid "Coordination role"
-msgstr "Koordinazio-eginkizuna"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__coordinator
-#: model:res.groups,name:energy_communities.group_coordinator
-#, python-format
 msgid "Coordinator"
-msgstr "Koordinatzailea"
+msgstr "Coordinadora"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_coord_admin_res_groups
 #: model:res.users.role,name:energy_communities.role_coord_admin
 msgid "Coordinator Admin"
-msgstr "Koordinatzailea Admin"
+msgstr "Administrador de Coordinadora"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_coord_worker_res_groups
 #: model:res.users.role,name:energy_communities.role_coord_worker
 msgid "Coordinator Worker"
-msgstr "Koordinatzailea Langilea"
+msgstr "Treballador de Coordinadora"
 
 #. module: energy_communities
-#: model:ir.actions.server,name:energy_communities.action_create_map_place_from_lead
-msgid "Create Map Place"
-msgstr "Sortu mapa-lekua"
+#: model:ir.actions.act_window,name:energy_communities.action_open_assign_admin_wizard
+msgid "Create User"
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
 msgid "Create from CRM Lead"
-msgstr "Sortu CRM Lead-etik"
+msgstr "Crear desde CRM Lead"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "Create landing page"
-msgstr "Sortu helmuga orria"
+msgstr "Crear pàgina de Landing"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
-msgid "Update (wp landing / map place)"
-msgstr "Eguneratu wordpress/mapa datuak"
+msgid "Create map place"
+msgstr "Crear punt de mapa"
+
+#. module: energy_communities
+#: model:ir.ui.menu,name:energy_communities.ce_create_user_wizard
+msgid "Create user"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__create_user
 msgid "Create user for cooperator"
-msgstr "Sortu erabiltzailea kooperatibarentzat"
+msgstr "Crear usuari d'Odoo desde la sòcia"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__create_user_in_keycloak
 msgid "Create user for keycloak"
-msgstr "Sortu erabiltzailea keycloak-erako"
+msgstr "Crear usuari de keyCloak/SSO desde la sòcia"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_uid
+#: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_uid
 msgid "Created by"
-msgstr "Sortua"
+msgstr "Creat per"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_date
+#: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_date
 msgid "Created on"
-msgstr "Urtean sortua"
+msgstr "Creat el"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__crm_lead_id
 msgid "Crm Lead"
-msgstr "Crm Beruna"
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_users_form_form_inherit
 msgid "DNI"
-msgstr "DNI"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_chart_template__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_account_move__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_cm_coordinates_mixin__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__display_name
@@ -1035,69 +806,53 @@ msgstr "DNI"
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_res_users_role_line__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__display_name
 msgid "Display Name"
-msgstr "Izena erakutsi"
+msgstr "Nom a mostrar"
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__status__draft
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
-#, python-format
 msgid "Draft"
-msgstr "Zirriborroa"
+msgstr "Esborany"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_ce_contact_menu
 msgid "EC Contact"
-msgstr "EC Kontaktua"
+msgstr "Contacte CE"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_new_ce_request_menu
 msgid "EC Creation"
-msgstr "EC Sorkuntza"
+msgstr "Creació CE"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_ce_info_menu
 msgid "EC Information"
-msgstr "EC Informazioa"
+msgstr "Informació CE"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_energy_efficiency
 msgid "Eficiencia energètica"
-msgstr "Eraginkortasun energetikoa"
+msgstr "Eficiència Energètica"
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__email
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
-#, python-format
 msgid "Email"
-msgstr "Posta elektronikoa"
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "Email and confirmation email addresses don't match."
-msgstr "E-posta eta berrespen-helbide elektronikoak ez datoz bat."
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "Email not found"
-msgstr "Ez da aurkitu helbide elektronikoa"
+msgstr "Correu electrònic"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_thermal_energy
 msgid "Energia tèrmica i climatització"
-msgstr "Energia termikoa eta klimatizazioa"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_lead_tags_action
 msgid "Energy Actions"
-msgstr "Energia Ekintzak"
+msgstr "Accions Energètiques"
 
 #. module: energy_communities
 #: model:ir.module.category,name:energy_communities.energy_communities_category
@@ -1105,139 +860,121 @@ msgstr "Energia Ekintzak"
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 #: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
 msgid "Energy Communities"
-msgstr "Energia Komunitateak"
+msgstr "Comunitats Energètiques"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_ce_admin_res_groups
 #: model:res.users.role,name:energy_communities.role_ce_admin
 msgid "Energy Community Administrator"
-msgstr "Energia Erkidegoko Administratzailea"
+msgstr ""
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_ce_manager_res_groups
 #: model:res.users.role,name:energy_communities.role_ce_manager
 msgid "Energy Community Manager"
-msgstr "Energy Community Manager"
+msgstr "Responsable de la Comunitat Energètica"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_ce_member_res_groups
 #: model:res.users.role,name:energy_communities.role_ce_member
 msgid "Energy Community Member"
-msgstr "Energia Erkidegoko kidea"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__ce_tag_ids
 msgid "Energy Community Services"
-msgstr "Energia Komunitatearen Zerbitzuak"
+msgstr "Serveis Comunitat Energètica"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_config_energy_actions_menu
 msgid "Energy actions in progress"
-msgstr "Energy actions in progress"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#, python-format
-msgid "Error: One role line can't have multiple users"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#, python-format
-msgid "Error: This user have multiple roles for this company"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#, python-format
-msgid "Error: You can't remove {} role"
-msgstr ""
+msgstr "Accions energètiques en curs"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__external_website_link
 msgid "External website link"
-msgstr "Kanpoko webgunearen esteka"
+msgstr "Enllaç al lloc web extern"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid "FREQUENTLY ASKED QUESTIONS"
-msgstr "OHIKO GALDERAK"
+msgstr "PREGUNTES FREQÜENTS"
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__first_name
-#, python-format
 msgid "First name"
-msgstr "Izena"
+msgstr "Nom"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_citizen_education
 msgid "Formació ciutadana"
-msgstr "Herritarren prestakuntza"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__foundation_date
 msgid "Foundation date"
-msgstr "Fundazio data"
+msgstr "Data creació"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid "GENERAL CONDITIONS"
-msgstr "BALDINTZA OROKORRAK"
+msgstr "CONDICIONS GENERALS"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__gender
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__gender
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request__gender
 msgid "Gender"
-msgstr "Generoa"
+msgstr "Gènere"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_common_generation
 msgid "Generació renovable comunitaria"
-msgstr "Komunitateko belaunaldi berritzailea"
+msgstr "Generació renovable comunitària"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_menu_general_settings
 msgid "General"
-msgstr "Orokorra"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_leads_general_info_action
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_general_info_menu
 msgid "General Information"
-msgstr "Informazio orokorra"
+msgstr "Informació general"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid "Hello,"
-msgstr "Kaixo,"
+msgstr "Hola,"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__hierarchy_level
 msgid "Hierarchy level"
-msgstr "Hierarkia maila"
+msgstr "Nivell jeràrquic"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.iban_template_es_ccee
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "I accept that the entity issues direct debit receipts to this account."
 msgstr ""
-"Onartzen dut entitateak kontu honetara helbideratutako ordainagiriak "
-"jaulkitzea"
+"Confirmo que la persona titular del compte bancari, sigui jo mateixa o una "
+"altra, autoritza la domiciliació dels rebuts."
 
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__gender__not_share
 #: model:ir.model.fields.selection,name:energy_communities.selection__subscription_request__gender__not_share
 msgid "I prefer to not share it"
-msgstr "Nahiago dut ez partekatzea"
+msgstr "Prefereixo no compartir-ho"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_chart_template__id
 #: model:ir.model.fields,field_description:energy_communities.field_account_move__id
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__id
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__id
+#: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__id
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__id
+#: model:ir.model.fields,field_description:energy_communities.field_cm_coordinates_mixin__id
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__id
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag__id
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__id
@@ -1248,137 +985,135 @@ msgstr "Nahiago dut ez partekatzea"
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__id
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__id
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role__id
+#: model:ir.model.fields,field_description:energy_communities.field_res_users_role_line__id
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request__id
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_mailing_mailing__source_ext_id
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__source_ext_id
 msgid "ID Ext Source"
-msgstr "ID Ext Source"
+msgstr "ID Font Ext"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag__tag_ext_id
 msgid "ID Ext tag"
-msgstr "ID Ext tag"
+msgstr "Etiqueta ID Ext"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid ""
 "INDIVIDUAL\n"
 "                PARTNER"
-msgstr "PERTSONA FISIKOKO BAZKIDEAREN ALTA"
+msgstr "SOCI FÍSIC"
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_type__industrial
-#, python-format
 msgid "Industrial"
-msgstr "Industriala"
+msgstr ""
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_general_info
 msgid "Information Newsletter (general)"
-msgstr "Informazio Buletina (orokorra)"
+msgstr "Rebre butlletí informació general plataforma"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_info
 msgid "Information about existing CE"
-msgstr "Lehendik dagoen CEri buruzko informazioa"
+msgstr "Rebre butlletí informació sobre una CE"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_future_location_ce_info
 msgid "Information about future CE by location"
-msgstr "Etorkizuneko CEri buruzko informazioa kokapenaren arabera"
+msgstr "Rebre informació sobre futures CCEE en la meva zona"
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_leads_future_zone_info_action
 msgid "Information future CE's by location"
-msgstr "Etorkizuneko CEei buruzko informazioa kokapenaren arabera"
+msgstr "Rebre informació sobre CCEE de la meva zona"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_future_zone_info_menu
 msgid "Information future EC's by location"
-msgstr "Etorkizuneko EKren informazioa kokapenaren arabera"
+msgstr "Rebre informació sobre CCEE de la meva zona"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__initial_subscription_share_amount
 msgid "Initial Subscription Share Amount"
-msgstr "Hasierako Harpidetza Partaidetzaren zenbatekoa"
+msgstr "Import inicial alta sòcia"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__capital_share
 msgid "Initial capital share"
-msgstr "Hasierako kapital-kuota"
+msgstr "Quota inicial alta sòcia"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__instagram_link
 msgid "Instagram link"
-msgstr "Instagram esteka"
+msgstr "Enllaç d'Instagram"
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__instance
-#, python-format
 msgid "Instance"
-msgstr "Instantzia"
+msgstr "Instància"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_internal_user_res_groups
 #: model:res.users.role,name:energy_communities.role_internal_user
 msgid "Internal User"
-msgstr "Barne Erabiltzailea"
+msgstr "Usuari intern"
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__is_new_admin
-#, python-format
 msgid "Is a new admin?"
-msgstr "Administratzaile berria al zara?"
+msgstr "És un administrador nou a la plataforma?"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead__is_instance_company
+msgid "Is instance company"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request__is_voluntary
 msgid "Is voluntary contribution"
-msgstr "Borondatezko ekarpena da"
+msgstr "És una aportació voluntària"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_account_move
 msgid "Journal Entry"
-msgstr "Egunkari-sarrera"
+msgstr "Assentament comptable"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__is_keycloak_provider
 msgid "Keycloak provider"
-msgstr "Keycloak hornitzailea"
+msgstr "Proveïdor KeyCloak"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid "LEGAL ENTITY PARTNER"
-msgstr "PERTSONA JURIDIKOKO BAZKIDEAREN ALTA"
+msgstr "ENTITAT JURÍDICA SOCIA"
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__landing_page_id
-#, python-format
 msgid "Landing Page"
-msgstr "Helmuga orria"
+msgstr "Pàgina de destinació"
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__lang
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__lang
-#, python-format
 msgid "Language"
-msgstr "Hizkuntza"
+msgstr "Idioma"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_chart_template____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_account_move____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_cm_coordinates_mixin____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page____last_update
@@ -1389,124 +1124,116 @@ msgstr "Hizkuntza"
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_res_users____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_res_users_role_line____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source____last_update
 msgid "Last Modified on"
-msgstr "Azken aldaketa"
+msgstr "Última modificació el "
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_uid
+#: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_uid
 msgid "Last Updated by"
-msgstr "Azken eguneratua"
+msgstr "Última actualització per"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_date
+#: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_date
 msgid "Last Updated on"
-msgstr "Azken eguneratzea egunean"
+msgstr "Última actualització el"
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__last_name
-#, python-format
 msgid "Last name"
-msgstr "Abizenak"
+msgstr "Cognom"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__publicdata_lastupdate_datetime
+msgid "Last wordpress/map update date"
+msgstr "Darrera data de modificació (wordpress/mapa)"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_cm_coordinates_mixin__lat
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__lat
+msgid "Latitude"
+msgstr "Latitud"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_crm_lead
 msgid "Lead/Opportunity"
-msgstr "Ekimena/Aukera"
+msgstr "Iniciativa/Oportunitat"
 
 #. module: energy_communities
 #: model:auth.oauth.provider,body:energy_communities.keycloak_admin_provider
 #: model:auth.oauth.provider,body:energy_communities.keycloak_login_provider
 msgid "Login with Keycloak"
-msgstr "Hasi saioa Keycloak-ekin"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__long_description
 msgid "Long description"
-msgstr "Deskribapen luzea"
+msgstr "Descripció llarga"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_cm_coordinates_mixin__lng
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__lng
+msgid "Longitude"
+msgstr "Longitud"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_subscription_request_filter_inherit
 msgid "Mandatory Shares"
-msgstr "Nahitaezko akzioak"
+msgstr "Aportacions obligatòries"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_sustainable_mobility
 msgid "Mobilitat sostenible"
-msgstr "Mugikortasun jasangarria"
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "My landing page"
-msgstr "Hire helmuga orria"
+msgstr "La meva pàgina de destinació"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__name
 msgid "Name"
-msgstr "Izena"
+msgstr "Nom"
 
 #. module: energy_communities
-#: model:ir.module.category,description:energy_communities.energy_communities_category
-msgid ""
-"Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats "
-"Energètiques\n"
-"        "
-msgstr "Erabiltzaileen sarbide maila Energia Komunitateen Odoo plataformara"
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__new_product_share_template
+msgid "New Product Share Template"
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
 msgid "Newsletter CE"
-msgstr "Buletinera CE"
+msgstr "Butlletí CE"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter_platform_admins
 msgid "Newsletter SomComunitats"
-msgstr "Buletinera SomComunitats"
-
-#. module: energy_communities
-#: code:addons/energy_communities/services/ce_community_service.py:0
-#, python-format
-msgid "No Odoo Company found for odoo_company_id %s"
-msgstr "Ez da Odoo konpainiarik aurkitu odoo_company_id %srentzat"
-
-#. module: energy_communities
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_service.py:0
-#, python-format
-msgid "No Odoo Partner found for Odoo user with login username %s"
 msgstr ""
-"Ez da aurkitu %s saioa hasteko erabiltzaile-izena duen Odoo "
-"erabiltzailearentzako Odoo Partner"
 
 #. module: energy_communities
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_service.py:0
-#, python-format
-msgid "No Odoo User found for KeyCloak user id %s"
+#: model:ir.module.category,description:energy_communities.energy_communities_category
+msgid ""
+"Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats Energètiques\n"
+"        "
 msgstr ""
-"Ez da aurkitu Odoo erabiltzailerik KeyCloak %s erabiltzailearen IDarentzat"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
 msgid "No web form origin"
-msgstr "Web-inprimakiaren jatorririk ez"
+msgstr "Sense origen de formulari web"
 
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__gender__not_binary
 #: model:ir.model.fields.selection,name:energy_communities.selection__subscription_request__gender__not_binary
 msgid "Not binary"
-msgstr "Ez bitarra"
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "Not valid parameter value [odoo_company_id]"
-msgstr "Ez du balio parametroaren balio [odoo_company_id]"
+msgstr "No binari"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
@@ -1514,31 +1241,29 @@ msgid ""
 "Note: Please, if you are not yet a member, you must process it at through\n"
 "            these forms:"
 msgstr ""
-"Oharra: Mesedez, oraindik kide ez bazara, helbide honetan prozesatu behar "
-"duzu\n"
-"             forma hauek:"
+"Nota: si encara no ets membre, has de processar-ho a través de\n"
+"            aquets formularis:"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__number_of_members
 msgid "Number of members"
-msgstr "Kide kopurua"
+msgstr "Nombre de socis"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_auth_oauth_provider
 msgid "OAuth2 provider"
-msgstr "OAuth2 hornitzailea"
+msgstr "Proveïdor OAuth2"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid ""
-"Once you are a member you can enjoy the services available from the "
-"community and be part of a movement\n"
+"Once you are a member you can enjoy the services available from the community and be part of a movement\n"
 "                of social and energy model transformation."
 msgstr ""
-"Behin kide zarenean komunitateak eskura dituen zerbitzuez gozatu eta "
-"mugimendu baten parte izan zaitezke\n"
-"                 eredu sozial eta energetikoa eraldatzeko."
+"Una vegada siguis soci/a podràs gaudir dels serveis disponibles de la "
+"comunitat energètica i, alhora, formar part d'un moviment de transformació "
+"social i de model energètic."
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
@@ -1546,351 +1271,229 @@ msgid ""
 "Once your request is received, you will receive a confirmation email with "
 "the instructions to follow."
 msgstr ""
-"Zure eskaera jasotakoan, berrespen mezu bat jasoko duzu, jarraitu beharreko "
-"jarraibideekin."
+"Un cop rebuda la teva sol·licitud, rebràs un correu electrònic de "
+"confirmació amb les instruccions a seguir."
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
-#, python-format
-msgid ""
-"Only users that belongs to the 'Coordinator' company can create new "
-"Companies from Leads."
-msgstr ""
-"'Koordinatzailea' konpainiako erabiltzaileek soilik sor ditzakete Enpresa "
-"berriak Lead-etatik."
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
-#, python-format
-msgid ""
-"Only users that belongs to the 'Coordinator' company can create new Map "
-"Places from Leads."
-msgstr ""
-"'Koordinatzailea' konpainiako erabiltzaileek soilik sor ditzakete Map "
-"Places berriak Lead-ekin."
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_status__open
-#, python-format
 msgid "Open"
-msgstr "Ireki"
+msgstr "Obert"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_operation_request
 msgid "Operation request"
-msgstr "Eragiketa eskaera"
+msgstr "Sol·licitud d'operació"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__parent_id
 msgid "Parent Coordinator Company"
-msgstr "Guraso Koordinatzailea Enpresa"
+msgstr "Empresa principal Coordinadora"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__parent_id_filtered_ids
 msgid "Parent Id Filtered"
-msgstr "Gurasoen ID Iragazita"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#, python-format
-msgid "Parent company must be coordinator hierarchy level."
-msgstr "Enpresa nagusiak koordinatzaile hierarkia maila izan behar du."
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#, python-format
-msgid "Parent company must be instance hierarchy level."
-msgstr "Enpresa nagusiak instantzia hierarkia maila izan behar du."
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "Partner not found"
-msgstr "Ez da bikotekidea aurkitu"
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "Phone"
-msgstr "Telefonoa"
+msgstr "Telèfon"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__map_place_id
 msgid "Place reference"
-msgstr "Leku erreferentzia"
+msgstr "Referència del lloc"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_platform_manager
 msgid "Platform Manager"
-msgstr "Plataforma kudeatzailea"
+msgstr ""
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_platform_admin_res_groups
 #: model:res.users.role,name:energy_communities.role_platform_admin
 msgid "Platform admin role"
-msgstr "Plataformaren administratzaile rola"
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#, python-format
-msgid "Please upload a scan of your ID card."
-msgstr "Mesedez, kargatu zure NANaren eskaneatu bat."
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__postal_code
 msgid "Postal code"
-msgstr "Posta kodea"
+msgstr "Codi Postal"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__primary_image_file
 msgid "Primary Image"
-msgstr "Lehen irudia"
+msgstr "Imatge primària"
 
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
-msgid "Procesar"
-msgstr "Prozesua"
+msgid "Process"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__product_share_template
 msgid "Product Share Template"
-msgstr "Produktuak partekatzeko txantiloia"
+msgstr "Plantilla de producte aportació"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_product_template
 msgid "Product Template"
-msgstr "Produktuaren txantiloia"
+msgstr "Plantilla de producte"
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "Provided IBAN is not valid."
-msgstr "IBAN baliozkoa ez bada."
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__status__publish
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
-#, python-format
 msgid "Publish"
-msgstr "Argitaratu"
+msgstr "Publicar"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
 msgid "Published"
-msgstr "Argitaratua"
+msgstr "Publicat"
 
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.print_instance
 msgid "Push user to Keycloak"
-msgstr "Bultza ezazu erabiltzailea Keycloakera"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__realm_name
 msgid "Realm name"
-msgstr "Erreinuaren izena"
+msgstr "Nom REALM"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__redirect_admin_url
 msgid "Redirect Link after update password"
-msgstr "Birbideratu esteka pasahitza eguneratu ondoren"
+msgstr "Enllaç de redirecció un cop actualitzada la contrasenya"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__community_company_id
 msgid "Related Community"
-msgstr "Erlazionatutako komunitatea"
+msgstr "Comunitat relacionada"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_menu
 msgid "Requests"
-msgstr "Eskaerak"
+msgstr "Sol·licituds"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__reset_password_endpoint
 msgid "Reset password URL"
-msgstr "Pasahitza berrezartzeko esteka"
+msgstr "URL per escriure la contasenya"
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_users.py:0
-#, python-format
-msgid "Reset password url is not set."
-msgstr "Pasahitza berrezartzeko URLa ez dago konfiguratuta."
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__role
+msgid "Role"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__root_endpoint
 msgid "Root URL"
-msgstr "Erro URLa"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/account_chart_template.py:0
-#, python-format
-msgid "SUBJ"
-msgstr "SUBJ"
+msgstr "URL arrel"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__secondary_image_file
 msgid "Secondary Image"
-msgstr "Bigarren mailako irudia"
+msgstr "Imatge secundària"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "Send"
-msgstr "Bidali"
+msgstr "Enviar"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "Share number"
-msgstr "Ekarpenak"
+msgstr "Número d'aportació"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "Share type"
-msgstr "Ekarpen mota"
+msgstr "Tipus d'aportació"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__short_description
 msgid "Short description"
-msgstr "Deskribapen laburra"
+msgstr "Descripció breu"
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#, python-format
-msgid "Some mandatory fields have not been filled."
-msgstr "Derrigorrezko eremuak betetzeko zain daude"
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner__signup_expiration
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__signup_expiration
+msgid "Signup Expiration"
+msgstr "Inscripció caducada"
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_users.py:0
-#, python-format
-msgid "Something went wrong. Mail can not be sended. More details: {}"
-msgstr ""
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner__signup_token
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__signup_token
+msgid "Signup Token"
+msgstr "Fitxa de registre"
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_users.py:0
-#, python-format
-msgid "Something went wrong. Please check logs."
-msgstr "Zerbait gaizki joan da. Mesedez, egiaztatu erregistroak."
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner__signup_type
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__signup_type
+msgid "Signup Token Type"
+msgstr "Tipus de paraula d'ingrés"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_config_sources_menu
 msgid "Source types"
-msgstr "Iturburu motak"
+msgstr "Tipus d'origens"
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_utm_sources_action
 msgid "Sources"
-msgstr "Iturriak"
+msgstr "Origens"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__status
 msgid "Status"
-msgstr "Estatusa"
+msgstr "Estat"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__street
 msgid "Street"
-msgstr "Kalea"
+msgstr "Carrer"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_renewable_energy
 msgid "Subministrament d'energia 100% renovable"
-msgstr "100% energia-hornidura berriztagarria"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/account_chart_template.py:0
-#, python-format
-msgid "Subscription Journal"
-msgstr "Harpidetza Aldizkaria"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_subscription_request
 msgid "Subscription Request"
-msgstr "Harpidetza eskaera"
+msgstr "Sol·licitud de Subscripció"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__superuser
 msgid "Superuser"
-msgstr "Supererabiltzailea"
+msgstr "Super Usuari"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__superuser_pwd
 msgid "Superuser password"
-msgstr "Supererabiltzaile pasahitza"
+msgstr "Contrasenya super usuari"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "Target Odoo Company id"
-msgstr "Helburua Odoo Enpresaren ID"
+msgstr "Companyia Odoo de destí"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request__vat
 msgid "Tax ID"
-msgstr "NAN fiskala"
+msgstr "NIF/CIF"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__social_telegram
 msgid "Telegram Account"
-msgstr "Telegram kontua"
+msgstr "Compte Telegram"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__telegram_link
 msgid "Telegram link"
-msgstr "Telegram esteka"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
-#, python-format
-msgid ""
-"The Foundation Date value {} have a non valid format. It must be: yyyy-mm-"
-"dd or dd-mm-yyyy or yyyy/mm/dd or dd/mm/yyyy"
-msgstr ""
-"{} fundazioaren data balioak balio ez duen formatua du. Hau izan behar du: "
-"aaaa-mm-dd edo dd-mm-aaaa edo aaaa/mm/dd edo dd/mm/aaaa"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
-#, python-format
-msgid "The Source {} of Lead {} do not allow the creation of Map Proposals"
-msgstr "Lead {} iturriak {} ez du onartzen Map Proposamenak sortzea"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
-#, python-format
-msgid "The Source {} of Lead {} do not allow the creation of new Companies"
-msgstr "Lead {} iturriak ez du onartzen Enpresa berriak sortzea"
-
-#. module: energy_communities
-#: code:addons/energy_communities/services/ce_community_service.py:0
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_service.py:0
-#, python-format
-msgid ""
-"The received oauth KeyCloak token have not been validated by KeyCloak : {}"
-msgstr "Jasotako oauth KeyCloak tokena ez du balioztatu KeyCloak-ek: {}"
-
-#. module: energy_communities
-#: code:addons/energy_communities/services/ce_member_service.py:0
-#, python-format
-msgid "The role code '{}' is not a valid one"
-msgstr "'{}' rol-kodea ez da baliozkoa"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
-#, python-format
-msgid "There is an allready existing Map Place related to this Lead: {}."
-msgstr ""
-"Dagoeneko lehendik dagoen Map Place bat dago eragile honekin erlazionatuta: "
-"{}."
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#, python-format
-msgid ""
-"There is an existing account for this vat number on this community. Please "
-"contact with the community administrators."
-msgstr ""
-"Komunitate honetan badago kontu bat bez-zenbaki honetarako. Mesedez, jarri "
-"harremanetan komunitateko administratzaileekin."
+msgstr "Enllaç de Telegram"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_account_multicompany_easy_creation_wiz__property_cooperator_account
@@ -1898,27 +1501,25 @@ msgid ""
 "This account will be the default one as the receivable account for the "
 "cooperators"
 msgstr ""
-"Kontu hau lehenetsitakoa izango da kooperatibistaren kobratzeko kontu gisa"
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "This company doesn't have a voluntary product share selected."
-msgstr "Enpresa honek ez du borondatezko produktuen partekatzerik hautatu."
+"Aquest serà el compte per defecte per al cobrament de les aportacions de les"
+" sòcies"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "This form allow you to request be member of the community:"
 msgstr ""
-"Inprimaki honek komunitateko kide izatea eskatzeko aukera ematen dizu:"
+"Aquest és el formulari per a sol·licitar adherir-te com a soci/a a la "
+"comunitat energètica:"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid ""
 "This is the form to be able to make Voluntary Contributions to the Social "
 "Capital by the members of"
-msgstr "Hau da Gizarte Kapitalaren Borondatezko Ekarpenetarako formularioa:"
+msgstr ""
+"Aquest és el formulari per poder fer Aportacions Voluntàries ries al Capital"
+" Social per part dels socis de"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_res_company__cooperator_journal
@@ -1926,26 +1527,8 @@ msgid ""
 "This journal will be the default one as the receivable journal for the "
 "cooperators"
 msgstr ""
-"Aldizkari hau lehenetsitako aldizkaria izango da kooperatibistarentzat "
-"kobragarri gisa"
-
-#. module: energy_communities
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#, python-format
-msgid "This language code %s is not active in Odoo. Active ones: %s"
-msgstr "%s hizkuntza-kode hau ez dago aktibo Odoo-n. Aktiboak: %s"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/operation_request.py:0
-#, python-format
-msgid "This operation is not yet implemented."
-msgstr "Eragiketa hau oraindik ez da gauzatu."
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/operation_request.py:0
-#, python-format
-msgid "This operation must be approved before to be executed"
-msgstr "Eragiketa hau exekutatu aurretik onartu behar da"
+"Aquest diari serà el que s'usarà per defecte per als cobraments de les altes"
+" de sòcies"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
@@ -1954,8 +1537,8 @@ msgid ""
 "To be a member you must fulfill this form and lateron proceed to pay the "
 "initial share of"
 msgstr ""
-"Bazkide izateko inprimaki hau bete behar duzu eta ondoren hasierako kuota "
-"ordaintzen jarraitu"
+"Per a associar-t’hi primer cal omplir aquest qüestionari i després "
+"formalitzar l’aportació econòmica d’entrada de"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
@@ -1965,372 +1548,220 @@ msgid ""
 "and authorization to issue a bank receipt to collect the initial mandatory "
 "financial contribution of"
 msgstr ""
-"Sartzeko, lehenik eta behin formulario hau bete behar duzu, non banku-kontu "
-"bat eskatzen dugu eta bankuko ordainagiria igortzeko baimena eskatzen dugun "
-"hasierako derrigorrezko ekarpen ekonomikoa kobratzeko."
+"Per ser soci/a, primer has d'omplir aquest formulari on et demanem un compte"
+" bancari i la autorització per girar un rebut bancari per cobrar la "
+"aportació obligatòria inicial de"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "Total"
-msgstr "Guztira"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__twitter_link
 msgid "Twitter link"
-msgstr "Twitter esteka"
+msgstr "Enllaç a Twitter"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_utm_source
 msgid "UTM Source"
-msgstr "UTM iturria"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#, python-format
-msgid ""
-"Unable to create new company because there is an allready existing company "
-"with this NAME: {}"
-msgstr ""
-"Ezin da enpresa berria sortu lehendik dagoen enpresa bat dagoelako IZENA "
-"honekin: {}"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#, python-format
-msgid ""
-"Unable to create new company because there is an allready existing company "
-"with this VAT number: {}"
-msgstr ""
-"Ezin da enpresa berririk sortu BEZ-zenbaki honekin lehendik dagoen enpresa "
-"bat dagoelako: {}"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
-#, python-format
-msgid ""
-"Unable to create the KeyCloack entities from Lead: {}, because it is not "
-"yet related to any Community company"
-msgstr ""
-"Ezin dira sortu KeyCloack-en entitateak Lead: {}, oraindik ez dagoelako "
-"erlazionatuta komunitateko edozein enpresarekin"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
-#, python-format
-msgid "Unable to get the Category (mandatory map place field) from Lead: {}"
-msgstr ""
-"Ezin izan da Kategoria (derrigorrezkoa den mapako tokiaren eremua) Lead-"
-"etik lortu: {}"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
-#, python-format
-msgid "Unable to get the Latitude (mandatory map place field) from Lead: {}"
-msgstr ""
-"Ezin izan da Latitude (mapako tokiaren eremua derrigorrezkoa) eskuratu Lead-"
-"etik: {}"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
-#, python-format
-msgid "Unable to get the Longitude (mandatory map place field) from Lead: {}"
-msgstr ""
-"Ezin da lortu luzera (mapako tokiaren eremua derrigorrezkoa) Lead-etik: {}"
-
-#. module: energy_communities
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#, python-format
-msgid ""
-"Unable to update the lang in Keycloak for the related KC user ID: {}.{}"
-msgstr ""
-"Ezin da Keycloak-en hizkuntza eguneratu erlazionatutako KC erabiltzaile "
-"IDaren: {}.{}"
-
-#. module: energy_communities
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#, python-format
-msgid "Unable to validate the received oauth KeyCloak token: {}"
-msgstr "Ezin izan da jasotako oauth KeyCloak tokena baliozkotu: {}"
+msgstr "Font UTM"
 
 #. module: energy_communities
 #: model:product.template,uom_name:energy_communities.share_capital_product_template
 #: model:product.template,uom_name:energy_communities.voluntary_share_capital_product_template
 msgid "Units"
-msgstr "unitate"
+msgstr "Unitats"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
 msgid "Unpublish"
-msgstr "Argitaratu gabe"
+msgstr "Despublicar"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
+msgid "Update (wp landing / map place)"
+msgstr "Actualitzar wordpress landing / punt del mapa"
 
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.update_company_ids_from_partners_users_ir_actions_server
 #: model:ir.cron,cron_name:energy_communities.update_company_ids_from_partners_users
 #: model:ir.cron,name:energy_communities.update_company_ids_from_partners_users
 msgid "Update company_ids from res.parters with users"
-msgstr "Eguneratu res.partners-en konpainiaren IDak erabiltzaileekin"
+msgstr "Actualitzeu els identificadors d'empresa de res.partners amb usuaris"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_user
 msgid "User"
-msgstr "Erabiltzailea"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__user_is_coordinator_worker
+msgid "User Is Coordinator Worker"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__admin_user_endpoint
 msgid "User admin URL"
-msgstr "Erabiltzaile administratzailearen URLa"
+msgstr "URL usuari admin"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_users_role
 msgid "User role"
-msgstr "Erabiltzaile rola"
+msgstr "Rol d'usuari"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_users
+#: model:ir.ui.menu,name:energy_communities.ce_users_menu
 msgid "Users"
-msgstr "Erabiltzaileak"
+msgstr "Usuaris"
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_res_users_role_line
+msgid "Users associated to a role"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_res_company__create_user_in_keycloak
 msgid "Users created by cooperator are pushed automatically to keycloak"
 msgstr ""
-"Cooperator-ek sortutako erabiltzaileak automatikoki bultzatzen ditu giltza-"
-"gailara"
+"Els usuaris creats pel mòdul Cooperator són replicats automàticament a "
+"KeyCloak"
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__vat
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
-#, python-format
 msgid "VAT"
-msgstr "IFZ"
+msgstr "NIF"
 
 #. module: energy_communities
 #: model:product.template,name:energy_communities.voluntary_share_capital_product_template
 msgid "Voluntary Contribution to Share Capital"
-msgstr "Kapital Sozialerako Borondatezko Ekarpena"
+msgstr "Aportació Voluntaria la Capital Social"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid "Voluntary Share of"
-msgstr "ren Borondatezko Ekarpena"
+msgstr "Aportació voluntaria de"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_subscription_request_filter_inherit
 msgid "Voluntary Shares"
-msgstr "Borondatezko Akzioak"
+msgstr "Aportacions voluntàries"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__voluntary_share_id
 msgid "Voluntary share to show on website"
-msgstr "Webgunean erakusteko borondatezko partekatzea"
+msgstr "Formulari d'aportació voluntària per ensenyar a la web"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_landing_page_id
 msgid "WP Landing Page"
-msgstr "WP Helmuga orria"
+msgstr "Pàgina de destinació WP"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_menu_webforms_settings
 msgid "Webforms"
-msgstr "Web-inprimakiak"
+msgstr "Formularis Web"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__why_become_cooperator
 msgid "Why become cooperator"
-msgstr "Zergatik bihurtu kooperante"
+msgstr "Per què fer-se soci"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_account_multicompany_easy_creation_wiz
 msgid "Wizard Account Multi-company Easy Creation"
-msgstr "Kontu morroia Enpresa anitzeko sorrera erraza"
+msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_config_settings.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__wordpress_base_url
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__wordpress_base_url
-#, python-format
 msgid "Wordpress Base URL (JWT auth)"
-msgstr "Wordpress Base URLa (JWT autentifikazioa)"
+msgstr "URL base de Wordpress (autenticació JWT)"
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_config_settings.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__wordpress_db_password
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__wordpress_db_password
-#, python-format
 msgid "Wordpress DB Admin Password"
-msgstr "Wordpress DB Administratzailearen pasahitza"
+msgstr "Contrasenya d'administració de base de dades de Wordpress"
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_config_settings.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__wordpress_db_username
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__wordpress_db_username
-#, python-format
 msgid "Wordpress DB Admin Username"
-msgstr "Wordpress DB Administratzailearen erabiltzaile-izena"
+msgstr "Nom d'usuari de l'administrador de la base de dades de Wordpress"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.connect_res_config_settings_view_form
 msgid "Wordpress credentials"
-msgstr "Wordpress kredentzialak"
+msgstr "Credencials de Wordpress"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid ""
 "You\n"
 "            can consult the"
-msgstr ""
-" Zuk\n"
-"             kontsultatu daiteke"
+msgstr "Pots consultar "
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid ""
 "You can consult\n"
 "            our"
-msgstr ""
-" Kontsultatu dezakezu\n"
-"             gurea"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/subscription_request.py:0
-#, python-format
-msgid "You can't create a voluntary subscription share for a new cooperator."
-msgstr ""
-"Ezin duzu borondatezko harpidetza-partekaketarik sortu kooperatibatzaile "
-"berri baterako."
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#, python-format
-msgid ""
-"You can't subscribe for an amount that exceeds {amount}{currency_symbol}."
-msgstr ""
-"Ezin duzu harpidetu {amount}{currency_symbol} gainditzen duen kopuru "
-"batengatik."
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#, python-format
-msgid "You can't subscribe to two different types of share."
-msgstr "Ezin duzu bi partekatze mota ezberdinetara harpidetu."
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#, python-format
-msgid "You cannot create a instance company with a parent company."
-msgstr "Ezin duzu instantzia enpresarik sortu enpresa nagusi batekin."
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "You must check the SEPA transference."
-msgstr "SEPA transferentzia egiaztatu behar duzu."
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/account_move.py:0
-#, python-format
-msgid ""
-"You must have a company specific sequence number for register.operation"
-msgstr ""
-"Enpresaren sekuentzia-zenbaki espezifiko bat izan behar duzu erregistroa "
-"egiteko"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/account_move.py:0
-#, python-format
-msgid ""
-"You must have a company specific sequence number for subscription.register"
-msgstr ""
-"Enpresaren sekuentzia-zenbaki espezifiko bat izan behar duzu harpidetzarako."
-"register"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/subscription_request.py:0
-#, python-format
-msgid "You must set a cooperator journal on you company."
-msgstr "Kolaboratzaileen aldizkari bat ezarri behar duzu zure enpresan."
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "ZIP code not found"
-msgstr "Ez da posta kodea aurkitu"
-
-#. module: energy_communities
-#: code:addons/energy_communities/services/crm_lead_service.py:0
-#, python-format
-msgid "[Contact CE]"
-msgstr "[Kontaktua CE]"
-
-#. module: energy_communities
-#: code:addons/energy_communities/services/crm_lead_service.py:0
-#, python-format
-msgid "[Contact SomComunitats]"
-msgstr "[Kontaktua SomComunitats]"
-
-#. module: energy_communities
-#: code:addons/energy_communities/services/crm_lead_service.py:0
-#, python-format
-msgid "[Newsletter CE]"
-msgstr "[Buletinerako CE]"
-
-#. module: energy_communities
-#: code:addons/energy_communities/services/crm_lead_service.py:0
-#, python-format
-msgid "[Newsletter SomComunitats]"
-msgstr "[Buletinerako SomComunitats]"
+msgstr "Pots consultar la nostra"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_template_confirmation_company
 msgid "[Somcomunitats.coop] Application to become Community membership"
-msgstr "[Somcomunitats.coop] Erkidegoko kide izateko eskaera"
+msgstr "[Somcomunitats.coop] Sol·licitud d'adhesió a Comunitat Energètica"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_contact_confirm_id
 msgid "[Somcomunitats.coop] Community Contact Request"
-msgstr "[Somcomunitats.coop] Jarri harremanetan Energia Komunitatearekin"
+msgstr "[Somcomunitats.coop] Contacte Comunitat Energètica"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_ce_news_confirm_id
 msgid "[Somcomunitats.coop] Community Newsletter Subscription Request"
-msgstr "[Somcomunitats.coop] Buletinerako harpidetza Energia Komunitatearekin"
+msgstr ""
+"[Somcomunitats.coop] Subscripció al butlletí d’una Comunitat Energètica"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_contact_platform_confirm_id
 msgid "[Somcomunitats.coop] Contact to the platform"
-msgstr "[Somcomunitats.coop] Harremanetarako formularioa"
+msgstr "[Somcomunitats.coop] Formulari de contacte"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_advise_future_ce_confirm_id
 msgid "[Somcomunitats.coop] Interested in Communities in your area"
-msgstr "[Somcomunitats.coop] Zure inguruko komunitateetan interesatzen zaizu"
+msgstr "[Somcomunitats.coop] Mostra d’interès rebuda"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_ce_creation_receipt_confirm_id
 msgid "[Somcomunitats.coop] New Community Creation Request to the platform"
 msgstr ""
-"[Somcomunitats.coop] Energia Erkidegoa inskribatzeko eskaera "
+"[Somcomunitats.coop] Sol·licitud d’Alta de Comunitat Energètica a la "
 "plataforma"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_platform_news_confirm_id
 msgid "[Somcomunitats.coop] Platform Newsletter Subscription Request"
-msgstr "[Somcomunitats.coop] Plataformako buletinen harpidetza"
+msgstr "[Somcomunitats.coop] Subscripció al butlletí"
 
 #. module: energy_communities
-#: code:addons/energy_communities/services/crm_lead_service.py:0
-#, python-format
-msgid "[Subscription CE]"
-msgstr "[Harpidetza CE]"
+#: model:mail.template,subject:energy_communities.email_templ_lead_assigned_to_coordinator_id
+msgid ""
+"[Somcomunitats.coop] Request for registration of the Energy Community on the"
+" platform"
+msgstr ""
+"[Somcomunitats.coop] Sol·licitud d’Alta de Comunitat Energètica a la "
+"plataforma"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid "and"
-msgstr "eta"
+msgstr "i"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_landing_page
@@ -2340,52 +1771,12 @@ msgstr ""
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid "of Voluntary Contributions."
-msgstr " Borondatezko Ekarpenen."
+msgstr "de Aportacións Voluntaries."
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "€ by follow the steps you will receive by email."
-msgstr "€ posta elektronikoz jasoko dituzun urratsak jarraituz."
-
-#. module: energy_communities
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
-msgid "Only users that belongs to the 'Coordinator' or 'Instance' company can create new Map Places."
-msgstr "Komunitate edo Instantzia Koordinatzaile motako erabiltzaileek soilik sor ditzakete mapa-puntuak."
-
-#. module: energy_communities
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
-msgid "Map not found slug_id: {}"
-msgstr "Ez da maparik aurkitu slug_id-rako: {}"
-
-#. module: energy_communities
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
-msgid "Landing lat param required for place creation"
-msgstr "Lurreratzearen latitudea behar da mapa-puntua sortzeko."
-
-#. module: energy_communities
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
-msgid "Landing lng param required for place creation"
-msgstr "Lurreratze-luzera beharrezkoa da mapa-puntua sortzeko."
-
-#. module: energy_communities
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
-msgid "Place category not found slug_id: {}"
-msgstr "Ez da aurkitu maparen kategoriarik slug_id-erako: {}"
-
-#. module: energy_communities
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
-msgid "Place status filter not found slug_id: {}"
-msgstr "Ez da aurkitu mapa-iragazkirik slug_id-rako: {}"
-
-#. module: energy_communities
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
-msgid "Button configs not found."
-msgstr "Ez da aurkitu botoiaren konfigurazioa."
+msgstr ""
+"€ seguint els passos que t'indicarem per correu electrònic un cop rebem la "
+"teva petició."
