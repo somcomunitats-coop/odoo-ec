@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "14.0.2.0.1",
+    "version": "14.0.2.1.0",
     "depends": [
         "account",
         "cooperator_account_banking_mandate",
@@ -12,6 +12,7 @@
         "auth_api_key",
         "auth_oauth",
         "auth_oidc",
+        "auth_signup",
         "base_rest",
         "base_technical_features",
         "base_user_role",
@@ -78,6 +79,7 @@
         "data/mail_template_update_data.xml",
         "wizards/assign_crm_to_coordinator_company.xml",
         "wizards/multicompany_easy_creation.xml",
+        "wizards/assign_admin_wizard.xml",
     ],
     "installable": True,
     "application": True,

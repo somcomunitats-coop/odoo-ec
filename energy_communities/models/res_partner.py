@@ -1,6 +1,7 @@
 import logging
 
 from odoo import SUPERUSER_ID, api, fields, models
+from odoo.exceptions import ValidationError
 
 logger = logging.getLogger(__name__)
 
@@ -13,6 +14,15 @@ class ResPartner(models.Model):
             ("not_binary", "Not binary"),
             ("not_share", "I prefer to not share it"),
         ]
+    )
+    signup_token = fields.Char(
+        groups="base.group_erp_manager,energy_communities.group_admin"
+    )
+    signup_type = fields.Char(
+        groups="base.group_erp_manager,energy_communities.group_admin",
+    )
+    signup_expiration = fields.Datetime(
+        groups="base.group_erp_manager,energy_communities.group_admin"
     )
 
     @api.model
@@ -27,6 +37,15 @@ class ResPartner(models.Model):
 
         new_partner = super().create(vals)
         return new_partner
+
+    # @api.constrains('email') # TODO: Remove!!
+    # def _check_email(self):
+    #     count_users = self.env['res.partner'].search_count([
+    #         ('email', '=', self.email),
+    #         ('user_ids', '!=', False)
+    #     ])
+    #     if self.email and count_users > 0:
+    #         raise ValidationError(_('The email already registered, please use another email!'))
 
     def cron_update_company_ids_from_user(self):
         partner_with_users = self.search(

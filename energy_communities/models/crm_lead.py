@@ -24,6 +24,20 @@ class CrmLead(models.Model):
         help="Community related to this Lead",
     )
 
+    is_instance_company = fields.Boolean(
+        string="Is instance company", compute="_is_instance_company"
+    )
+
+    def _is_instance_company(self):
+        company = self.env.company
+        instance_companies = self.env["res.company"].search(
+            [("hierarchy_level", "=", "instance")]
+        )
+        if company in instance_companies:
+            self.is_instance_company = True
+        else:
+            self.is_instance_company = False
+
     def _build_community_company(self):
         if not self.env.user.company_id.coordinator:
             raise UserError(
@@ -150,9 +164,6 @@ class CrmLead(models.Model):
                     ).format(lead.name)
                 )
             lead.community_company_id._create_keycloak_realm()
-
-    def post_template_to_chatter(self, template_id):
-        self.message_post_with_template(template_id)
 
     def _create_community_initial_users(self):
         for lead in self:

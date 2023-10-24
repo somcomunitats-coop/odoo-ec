@@ -34,6 +34,16 @@
           attrs="{'invisible': ['|', ('is_admin_provider','=',False),
                 ('is_keycloak_provider', '=', False)]}"
         />
+                <field
+          name="redirect_admin_url"
+          attrs="{'invisible': ['|', ('is_admin_provider','=',False),
+                ('is_keycloak_provider', '=', False)]}"
+        />
+                <field
+          name="reset_password_endpoint"
+          attrs="{'invisible': ['|', ('is_admin_provider','=',False),
+                ('is_keycloak_provider', '=', False)]}"
+        />
             </xpath>
         </field>
     </record>

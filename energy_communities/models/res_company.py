@@ -170,9 +170,9 @@ class ResCompany(models.Model):
     def _is_not_unique(self, vals):
         # check for VAT
         if vals.get("vat", False) and vals.get("vat"):
-            sanit_vat = re.sub(r"[^a-zA-Z0-9]", "", vals["vat"]).lower()
+            sanit_vat = re.sub(r"[^a-zA-Z0-9]", "", vals["vat"]).upper()
             if sanit_vat in [
-                re.sub(r"[^a-zA-Z0-9]", "", c.vat).lower()
+                re.sub(r"[^a-zA-Z0-9]", "", c.vat).upper()
                 for c in self.search([])
                 if c.vat
             ]:
@@ -210,6 +210,21 @@ class ResCompany(models.Model):
         for tag in self.ce_tag_ids:
             res.append({"id": tag.id, "name": tag.name, "ext_id": tag.tag_ext_id})
         return res
+
+    def get_lower_hierarchy_level(self):
+        if self.hierarchy_level == "instance":
+            return "coordinator"
+        elif self.hierarchy_level == "coordinator":
+            return "community"
+        return ""
+
+    def get_child_companies(self):
+        return self.env["res.company"].search(
+            [
+                ("hierarchy_level", "=", self.get_lower_hierarchy_level()),
+                ("parent_id", "=", self.id),
+            ]
+        )
 
     def get_public_web_landing_url(self):
         # TODO: Get from landing page or company, for now we don't need
