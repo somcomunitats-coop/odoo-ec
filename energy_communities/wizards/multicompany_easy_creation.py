@@ -207,9 +207,18 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         )
 
     def action_accept(self):
-        action = super().action_accept()
+        super().action_accept()
         self.with_delay()._after_action_accept_hook()
-        return action
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "type": "success",
+                "title": _("Company creation successful"),
+                "message": _("The new community has been correctly created"),
+                "sticky": False,
+            },
+        }
 
     def _after_action_accept_hook(self):
         if self.property_cooperator_account:
