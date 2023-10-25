@@ -48,31 +48,7 @@ class ContractGenerationWizard(models.TransientModel):
 
         # Create contracts
         for supply_point_assignation in distribution_id.supply_point_assignation_ids:
-            contract_lines = [
-                (
-                    0,
-                    0,
-                    {
-                        "product_id": product_id.id,
-                        "automatic_price": True,
-                        "company_id": self.env.company.id,
-                        "qty_type": "variable",
-                        "qty_formula_id": formula_contract_id.id,
-                        "name": _(
-                            """CUPS: %s
-                        Owner: %s
-                        Invoicing period: #START# - #END#"""
-                        )
-                        % (
-                            supply_point_assignation.supply_point_id.code,
-                            supply_point_assignation.supply_point_id.owner_id.display_name,
-                        ),
-                        "supply_point_assignation_id": supply_point_assignation.id,
-                    },
-                )
-            ]
-
-            self.env["contract.contract"].create(
+            contract = self.env["contract.contract"].create(
                 {
                     "name": _("Contract - %s - %s")
                     % (
@@ -80,18 +56,15 @@ class ContractGenerationWizard(models.TransientModel):
                         supply_point_assignation.supply_point_id.partner_id.name,
                     ),
                     "partner_id": supply_point_assignation.supply_point_id.partner_id.id,
-                    "invoice_partner_id": supply_point_assignation.supply_point_id.partner_id.id,
-                    "recurring_invoicing_type": "post-paid",
-                    "date_start": fields.date.today(),
-                    "company_id": self.env.company.id,
-                    "contract_line_ids": contract_lines,
-                    "project_id": self.selfconsumption_id.project_id.id,
-                    "contract_template_id": self.selfconsumption_id.product_id.contract_template_id.id,
+                    "journal_id": journal_id.id,
                     "recurring_interval": self.selfconsumption_id.product_id.contract_template_id.recurring_interval,
                     "recurring_rule_type": self.selfconsumption_id.product_id.contract_template_id.recurring_rule_type,
+                    "recurring_invoicing_type": "post-paid",
+                    "date_start": fields.date.today(),
+                    "contract_template_id": self.selfconsumption_id.product_id.contract_template_id.id,
                 }
             )
-
+            contract._onchange_contract_template_id()
         # Update selfconsumption and distribution_table state
         self.selfconsumption_id.write({"state": "active"})
         self.selfconsumption_id.distribution_table_state("process", "active")
