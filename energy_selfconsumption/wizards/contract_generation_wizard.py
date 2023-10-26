@@ -64,7 +64,14 @@ class ContractGenerationWizard(models.TransientModel):
                     "contract_template_id": self.selfconsumption_id.product_id.contract_template_id.id,
                 }
             )
+            # We use the next method from the contract model to update the contract fields with contract template
             contract._onchange_contract_template_id()
+            # Now, we need to update the name field using the code and display_name fields
+            name = _("""CUPS: %s\nOwner: %s\nInvoicing period: #START# - #END#""") % (
+                supply_point_assignation.supply_point_id.code,
+                supply_point_assignation.supply_point_id.owner_id.display_name,
+            )
+            contract.contract_line_ids.name = name
         # Update selfconsumption and distribution_table state
         self.selfconsumption_id.write({"state": "active"})
         self.selfconsumption_id.distribution_table_state("process", "active")
