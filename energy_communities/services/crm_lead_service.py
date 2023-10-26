@@ -28,6 +28,7 @@ class CRMLeadService(Component):
         if target_source_xml_id:
             # setup utm source on crm lead
             crm_lead_id = crm_lead.get("id", False)
+            self._set_name(crm_lead_id, params)
             self._setup_lead_utm_source(crm_lead_id, target_source_xml_id)
 
             # select autoresponder notification id based on utm source
@@ -68,6 +69,39 @@ class CRMLeadService(Component):
                 lang = data["value"]
         return lang
 
+    def _get_ce_name(self, params):
+        metadata = params["metadata"]
+        for data in metadata:
+            if data["key"] == "ce_name":
+                ce_name = data["value"]
+        return ce_name
+
+    def _set_name(self, lead_id, params):
+        source_xml_id = self._get_source_xml_id(params)
+        lead = self.env["crm.lead"].browse(lead_id)
+        email = params["email_from"]
+        prefix = None
+        if source_xml_id == "ce_source_existing_ce_contact":
+            prefix = _("[Contact CE]")
+        elif source_xml_id == "ce_source_existing_ce_info":
+            prefix = _("[Newsletter CE]")
+        elif source_xml_id == "ce_source_general_contact":
+            prefix = _("[Contact SomComunitats]")
+        elif source_xml_id == "ce_source_general_info":
+            prefix = _("[Newsletter SomComunitats]")
+        if source_xml_id == "ce_source_creation_ce_proposal":
+            prefix = _("[Subscription CE]")
+            ce_name = self._get_ce_name(params)
+            name = "{prefix} {lead_id} {ce_name}".format(
+                prefix=prefix, lead_id=lead_id, ce_name=ce_name
+            )
+        else:
+            name = "{prefix} {lead_id} {email}".format(
+                prefix=prefix, lead_id=lead_id, email=email
+            )
+        if lead:
+            lead.write({"name": name})
+
     def _get_autoresponder_email_template(self, source_xml_id):
         template_external_id = None
         if source_xml_id == "ce_source_creation_ce_proposal":
@@ -82,4 +116,6 @@ class CRMLeadService(Component):
             )
         elif source_xml_id == "ce_source_general_info":
             template_external_id = "email_templ_lead_request_platform_news_confirm_id"
+        elif source_xml_id == "ce_source_general_contact":
+            template_external_id == "email_templ_contact_platform_confirm_id"
         return template_external_id
