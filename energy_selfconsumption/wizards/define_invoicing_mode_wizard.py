@@ -56,7 +56,6 @@ class ContractGenerationWizard(models.TransientModel):
             "type": "service",
             "lst_price": self.price,
             "company_id": self.env.company.id,
-            "project_id": self.selfconsumption_id.project_id.id,
             "property_account_income_id": account_income_id.id,
             "taxes_id": [account_tax_id.id],
             "sale_ok": True,
