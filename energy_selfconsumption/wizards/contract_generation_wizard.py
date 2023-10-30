@@ -56,6 +56,7 @@ class ContractGenerationWizard(models.TransientModel):
                         supply_point_assignation.supply_point_id.partner_id.name,
                     ),
                     "partner_id": supply_point_assignation.supply_point_id.partner_id.id,
+                    "company_id": self.env.company.id,
                     "journal_id": journal_id.id,
                     "recurring_interval": self.selfconsumption_id.product_id.contract_template_id.recurring_interval,
                     "recurring_rule_type": self.selfconsumption_id.product_id.contract_template_id.recurring_rule_type,
