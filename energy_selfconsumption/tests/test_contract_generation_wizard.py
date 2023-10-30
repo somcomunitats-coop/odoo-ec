@@ -66,18 +66,34 @@ class TestContractGenerationWizard(TransactionCase):
                 "coefficient": 1,
             }
         )
+        self.define_invoicing_mode_wizard = self.env[
+            "energy_selfconsumption.define_invoicing_mode.wizard"
+        ].create(
+            {
+                "selfconsumption_id": self.selfconsumption.id,
+                "price": 0.1,
+                "recurrence_interval": 1,
+                "recurring_rule_type": "monthly",
+                "invoicing_mode": "power_acquired",
+            }
+        )
         self.contract_generation_wizard = self.env[
             "energy_selfconsumption.contract_generation.wizard"
         ].create(
             {
-                "price_energy": 0.1,
-                "recurring_interval": 1,
-                "recurring_rule_type": "monthly",
                 "selfconsumption_id": self.selfconsumption.id,
             }
         )
 
     def test_generation_contracts(self):
+        res = self.define_invoicing_mode_wizard.save_data_to_selfconsumption()
+        self.assertEqual(
+            res,
+            {
+                "type": "ir.actions.act_window_close",
+            },
+        )
+
         res = self.contract_generation_wizard.generate_contracts_button()
         self.assertEqual(res, True)
 
