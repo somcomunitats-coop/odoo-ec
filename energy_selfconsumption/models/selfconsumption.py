@@ -172,6 +172,10 @@ class Selfconsumption(models.Model):
                 raise ValidationError(_("Project must have a valid CIL."))
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Rated Power."))
+            if not record.invoicing_mode:
+                raise ValidationError(
+                    _("Project must have defined a invoicing mode before activation.")
+                )
 
             # Create ContractGenerationWizard
             contract_wizard = self.env[
