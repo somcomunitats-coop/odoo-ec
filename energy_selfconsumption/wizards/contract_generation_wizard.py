@@ -30,13 +30,6 @@ class ContractGenerationWizard(models.TransientModel):
             self.selfconsumption_id.product_id.contract_template_id.contract_line_ids.qty_formula_id
         )
 
-        # Search accounting journal
-        journal_id = self.env["account.journal"].search(
-            [("company_id", "=", self.env.company.id), ("type", "=", "sale")], limit=1
-        )
-        if not journal_id:
-            raise UserWarning(_("Accounting Journal not found."))
-
         # Get distribution table
         distribution_id = (
             self.selfconsumption_id.distribution_table_ids.filtered_domain(
@@ -57,10 +50,6 @@ class ContractGenerationWizard(models.TransientModel):
                     ),
                     "partner_id": supply_point_assignation.supply_point_id.partner_id.id,
                     "company_id": self.env.company.id,
-                    "journal_id": journal_id.id,
-                    "recurring_interval": self.selfconsumption_id.product_id.contract_template_id.recurring_interval,
-                    "recurring_rule_type": self.selfconsumption_id.product_id.contract_template_id.recurring_rule_type,
-                    "recurring_invoicing_type": "post-paid",
                     "date_start": fields.date.today(),
                     "contract_template_id": self.selfconsumption_id.product_id.contract_template_id.id,
                 }
