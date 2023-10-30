@@ -61,7 +61,7 @@ class ContractGenerationWizard(models.TransientModel):
                 supply_point_assignation.supply_point_id.code,
                 supply_point_assignation.supply_point_id.owner_id.display_name,
             )
-            contract.contract_line_ids.name = name
+            contract.contract_line_ids.write({"name": name})
         # Update selfconsumption and distribution_table state
         self.selfconsumption_id.write({"state": "active"})
         self.selfconsumption_id.distribution_table_state("process", "active")
