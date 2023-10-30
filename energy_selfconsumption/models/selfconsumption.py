@@ -87,7 +87,11 @@ class Selfconsumption(models.Model):
     contracts_count = fields.Integer(compute=_compute_contract_count)
     invoicing_mode = fields.Selection(INVOICING_VALUES, string="Invoicing Mode")
     product_id = fields.Many2one("product.product", string="Product")
-    contract_template_id = fields.Many2one("contract.template")
+    contract_template_id = fields.Many2one(
+        "contract.template",
+        string="Contract Template",
+        related="product_id.contract_template_id",
+    )
     reseller_id = fields.Many2one(
         "energy_project.reseller",
         string="Energy Reseller",
@@ -147,7 +151,7 @@ class Selfconsumption(models.Model):
         Activates the energy self-consumption project, performing various validations.
 
         This method checks for the presence of a valid code, CIL, and rated power
-        for the project. If all validations pass, it opens a wizard for generating
+        for the project. If all validations pass, it instances a wizard and generating
         contracts for the project.
 
         Note:
@@ -168,16 +172,18 @@ class Selfconsumption(models.Model):
                 raise ValidationError(_("Project must have a valid CIL."))
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Rated Power."))
-            return {
-                "name": _("Generate Contracts"),
-                "type": "ir.actions.act_window",
-                "view_mode": "form",
-                "res_model": "energy_selfconsumption.contract_generation.wizard",
-                "views": [(False, "form")],
-                "view_id": False,
-                "target": "new",
-                "context": {"default_selfconsumption_id": self.id},
-            }
+            if not record.invoicing_mode:
+                raise ValidationError(
+                    _("Project must have defined a invoicing mode before activation.")
+                )
+
+            # Create ContractGenerationWizard
+            contract_wizard = self.env[
+                "energy_selfconsumption.contract_generation.wizard"
+            ].create({"selfconsumption_id": self.id})
+
+            # Generate Contracts
+            contract_wizard.generate_contracts_button()
 
     def set_invoicing_mode(self):
         return {

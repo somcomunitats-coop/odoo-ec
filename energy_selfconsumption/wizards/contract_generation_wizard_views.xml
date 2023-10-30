@@ -11,17 +11,6 @@
       >energy_selfconsumption.contract_generation.wizard</field>
             <field name="arch" type="xml">
                 <form string="Contract Generation">
-                    <sheet>
-                        <group>
-                            <group>
-                                <field name="price_energy" />
-                            </group>
-                            <group>
-                                <field name="recurring_interval" />
-                                <field name="recurring_rule_type" />
-                            </group>
-                        </group>
-                    </sheet>
                      <footer>
                         <button
               type="object"

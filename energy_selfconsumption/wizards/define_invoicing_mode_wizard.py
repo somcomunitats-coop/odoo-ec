@@ -71,7 +71,7 @@ class ContractGenerationWizard(models.TransientModel):
             "code": code,
         }
 
-    def _prepare_contract_values(self, journal_id, contract_line):
+    def _prepare_contract_template_values(self, journal_id, contract_line):
         return {
             "name": self.selfconsumption_id.name,
             "journal_id": journal_id.id,
@@ -79,6 +79,19 @@ class ContractGenerationWizard(models.TransientModel):
             "contract_line_ids": contract_line,
             "recurring_interval": self.recurrence_interval,
             "recurring_rule_type": self.recurring_rule_type,
+            "recurring_invoicing_type": "post-paid",
+        }
+
+    def _prepare_contract_line_template_values(self, product_id, formula_contract_id):
+        return {
+            "product_id": product_id.id,
+            "automatic_price": True,
+            "company_id": self.env.company.id,
+            "qty_type": "variable",
+            "qty_formula_id": formula_contract_id.id,
+            "uom_id": product_id.uom_id.id,
+            # Values are formatted in contract_generation_wizard
+            "name": """CUPS: {code}\nOwner: {owner_id}\nInvoicing period: #START# - #END#""",
         }
 
     def save_data_to_selfconsumption(self):
@@ -145,26 +158,22 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
             (
                 0,
                 0,
-                {
-                    "product_id": product_id.id,
-                    "automatic_price": True,
-                    "company_id": self.env.company.id,
-                    "qty_type": "variable",
-                    "qty_formula_id": formula_contract_id.id,
-                    "name": "",
-                },
+                self._prepare_contract_line_template_values(
+                    product_id, formula_contract_id
+                ),
             )
         ]
 
         contract_template_id = self.env["contract.template"].create(
-            self._prepare_contract_values(journal_id, contract_line)
+            self._prepare_contract_template_values(journal_id, contract_line)
         )
+
+        product_id.write({"contract_template_id": contract_template_id.id})
 
         self.selfconsumption_id.write(
             {
                 "invoicing_mode": self.invoicing_mode,
                 "product_id": product_id,
-                "contract_template_id": contract_template_id,
             }
         )
 

@@ -1,8 +1,8 @@
 from odoo import fields, models
 
 
-class Product(models.Model):
-    _inherit = "product.product"
+class Contract(models.Model):
+    _inherit = "contract.contract"
 
     project_id = fields.Many2one(
         "energy_project.project",
@@ -11,4 +11,3 @@ class Product(models.Model):
         string="Energy Project",
         check_company=True,
     )
-    contract_template_id = fields.Many2one("contract.template")
