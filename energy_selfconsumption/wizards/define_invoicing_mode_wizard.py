@@ -6,15 +6,8 @@ from ..models.selfconsumption import INVOICING_VALUES
 
 class ContractGenerationWizard(models.TransientModel):
     _name = "energy_selfconsumption.define_invoicing_mode.wizard"
-
-    RULE_TYPE_OPTIONS = [
-        ("daily", _("Day(s)")),
-        ("weekly", _("Week(s)")),
-        ("monthly", _("Month(s)")),
-        ("monthlylastday", _("Month(s) last day")),
-        ("quarterly", _("Quarter(s)")),
-        ("semesterly", _("Semester(s)")),
-        ("yearly", _("Year(s)")),
+    _inherit = [
+        "contract.recurrency.mixin",
     ]
 
     invoicing_mode = fields.Selection(
@@ -26,18 +19,12 @@ class ContractGenerationWizard(models.TransientModel):
 
     price = fields.Float(required=True)
 
-    recurrence_interval = fields.Integer(
-        default=1,
-        string="Invoice Every",
+    recurring_interval = fields.Integer(
         required=True,
-        help=_("Invoice every (Days/Week/Month/Year)"),
     )
     recurring_rule_type = fields.Selection(
-        RULE_TYPE_OPTIONS,
         default="monthlylastday",
-        string="Recurrence",
         required=True,
-        help=_("Specify Interval for automatic invoice generation."),
     )
     selfconsumption_id = fields.Many2one(
         "energy_selfconsumption.selfconsumption", readonly=True
@@ -76,7 +63,7 @@ class ContractGenerationWizard(models.TransientModel):
             "journal_id": journal_id.id,
             "company_id": self.env.company.id,
             "contract_line_ids": contract_line,
-            "recurring_interval": self.recurrence_interval,
+            "recurring_interval": self.recurring_interval,
             "recurring_rule_type": self.recurring_rule_type,
             "recurring_invoicing_type": "post-paid",
         }
