@@ -24,12 +24,6 @@ class ContractGenerationWizard(models.TransientModel):
             UserWarning: When no accounting journal is found.
             SomeException: When no distribution table in process of activation is found.
         """
-
-        product_id = self.selfconsumption_id.product_id
-        formula_contract_id = (
-            self.selfconsumption_id.product_id.contract_template_id.contract_line_ids.qty_formula_id
-        )
-
         # Get distribution table
         distribution_id = (
             self.selfconsumption_id.distribution_table_ids.filtered_domain(
