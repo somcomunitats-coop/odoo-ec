@@ -72,7 +72,7 @@ class TestContractGenerationWizard(TransactionCase):
             {
                 "selfconsumption_id": self.selfconsumption.id,
                 "price": 0.1,
-                "recurrence_interval": 1,
+                "recurring_interval": 1,
                 "recurring_rule_type": "monthly",
                 "invoicing_mode": "power_acquired",
             }
