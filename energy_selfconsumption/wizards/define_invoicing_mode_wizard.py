@@ -82,6 +82,16 @@ class ContractGenerationWizard(models.TransientModel):
             "recurring_invoicing_type": "post-paid",
         }
 
+    def _prepare_contract_line_template_values(self, product_id, formula_contract_id):
+        return {
+            "product_id": product_id.id,
+            "automatic_price": True,
+            "company_id": self.env.company.id,
+            "qty_type": "variable",
+            "qty_formula_id": formula_contract_id.id,
+            "name": "",
+        }
+
     def save_data_to_selfconsumption(self):
         if self.invoicing_mode == "energy_delivered_variable":
             raise UserError(_("This invoicing mode is not yet implemented"))
@@ -146,14 +156,9 @@ result = line.supply_point_assignation_id.distribution_table_id.selfconsumption_
             (
                 0,
                 0,
-                {
-                    "product_id": product_id.id,
-                    "automatic_price": True,
-                    "company_id": self.env.company.id,
-                    "qty_type": "variable",
-                    "qty_formula_id": formula_contract_id.id,
-                    "name": "",
-                },
+                self._prepare_contract_line_template_values(
+                    product_id, formula_contract_id
+                ),
             )
         ]
 
