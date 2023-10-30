@@ -89,6 +89,7 @@ class ContractGenerationWizard(models.TransientModel):
             "company_id": self.env.company.id,
             "qty_type": "variable",
             "qty_formula_id": formula_contract_id.id,
+            "uom_id": product_id.uom_id.id,
             # Values are formatted in contract_generation_wizard
             "name": """CUPS: {code}\nOwner: {owner_id}\nInvoicing period: #START# - #END#""",
         }
