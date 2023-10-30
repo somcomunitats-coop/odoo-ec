@@ -49,6 +49,7 @@ class ContractGenerationWizard(models.TransientModel):
                         supply_point_assignation.supply_point_id.partner_id.name,
                     ),
                     "partner_id": supply_point_assignation.supply_point_id.partner_id.id,
+                    "project_id": self.selfconsumption_id.id,
                     "company_id": self.env.company.id,
                     "date_start": fields.date.today(),
                     "contract_template_id": self.selfconsumption_id.product_id.contract_template_id.id,
