@@ -43,7 +43,7 @@ class ContractGenerationWizard(models.TransientModel):
                         supply_point_assignation.supply_point_id.partner_id.name,
                     ),
                     "partner_id": supply_point_assignation.supply_point_id.partner_id.id,
-                    "project_id": self.selfconsumption_id.id,
+                    "supply_point_assignation_id": supply_point_assignation.id,
                     "company_id": self.env.company.id,
                     "date_start": fields.date.today(),
                     "contract_template_id": self.selfconsumption_id.product_id.contract_template_id.id,
@@ -58,7 +58,6 @@ class ContractGenerationWizard(models.TransientModel):
                             code=supply_point_assignation.supply_point_id.code,
                             owner_id=supply_point_assignation.supply_point_id.owner_id.display_name,
                         ),
-                        "supply_point_assignation_id": supply_point_assignation.id,
                     }
                 )
         # Update selfconsumption and distribution_table state
