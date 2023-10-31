@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
@@ -262,11 +262,44 @@ class Selfconsumption(models.Model):
         }
 
     def send_invoicing_reminder(self):
-        # Get the projects method
-        template_id = self.env.ref(
-            "energy_selfconsumption.selfconsumption_invoicing_reminder"
+        today = date.today()
+        date_validation = today + timedelta(days=3)
+
+        filtered_contracts = self.env["contract.contract"].search(
+            [
+                (
+                    "project_id.selfconsumption_id.invoicing_mode",
+                    "=",
+                    "energy_delivered",
+                ),
+                ("recurring_next_date", "=", date_validation),
+            ]
         )
-        self.message_post_with_template(template_id.id)
+        project_controller = []
+        for contract in filtered_contracts:
+            project_name = contract.project_id.name
+            if project_name in project_controller:
+                continue
+            project_controller.append(project_name)
+
+            first_date = contract.next_period_date_start
+            last_date = contract.next_period_date_end
+
+            next_invoicing = last_date + timedelta(days=1)
+            ctx = {
+                "project_name": project_name,
+                "next_invoicing": next_invoicing.strftime("%d-%m-%Y"),
+                "first_date": first_date.strftime("%d-%m-%Y"),
+                "last_date": last_date.strftime("%d-%m-%Y"),
+            }
+
+            template = (
+                self.env.ref(
+                    "energy_selfconsumption.selfconsumption_invoicing_reminder", False
+                )
+                .with_context(ctx)
+                .send_mail(self.id, raise_exception=True)
+            )
 
 
 class CoefficientReport(models.TransientModel):

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<odoo noupdate="1">
+<odoo>
     <record id="selfconsumption_invoicing_reminder" model="mail.template">
         <field name="name">Selfconsumption Invoicing Reminder</field>
         <field name="email_from">${object.company_id.email}</field>
@@ -11,16 +11,11 @@
     />
         <field name="body_html">
             <![CDATA[
-                <p>Hola,</p>
-                <p>Recuerda que el proyecto de autoconsumo colectivo
-                 ${object.project_id.name} de la comunidad energética ${object.reseller_id} debe facturar el día
-                 ${object.contract_template_id.recurring_next_date}.</p>
-                <p>Es necesario, por lo tanto, que introduzcas en Odoo la energía generada en kWh durante el periodo
-                 ***dd/mm/aaaa - dd/mm/aaaa > període de facturació***.</p>
-                <p>Para hacerlo, ves a la ficha de proyecto, entra en la vista de contratos, selecciona los contratos
-                 que deban facturar y apreta el botón Facturar.</p>
-                <p>Para cualquier duda o incidencia, ponte en contacto con el equipo de soporte;
-                 soporte@somcomunitats.coop.</p>
+                <p>Hola,</br>
+Recuerda que el proyecto de autoconsumo colectivo <b>${ ctx['project_name'] }</b> de la comunidad energética <b>${ object.project_id.company_id.name }</b> debe facturar el día <b>${ ctx['next_invoicing'] }</b>.</br>
+Es necesario, por lo tanto, que introduzcas en Odoo la energía generada en kWh durante el periodo <b>${ ctx['first_date'] }</b> - <b>${ ctx['last_date'] }</b>.</br>
+Para hacerlo, ves a la ficha de proyecto, entra en la vista de contratos, selecciona los contratos que deban facturar y apreta el botón Facturar.</br>
+Para cualquier duda o incidencia, ponte en contacto con el equipo de soporte; soporte@somcomunitats.coop.</p>
             ]]>
         </field>
     </record>
