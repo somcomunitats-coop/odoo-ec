@@ -1,280 +1,213 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="contact_template" name="contact_template">
+    <template
+    id="community_data_form_fields_template"
+    name="community_data_form_fields_template"
+  >
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div
-          class="form-group field-firstname"
-          t-attf-class="form-group #{error and 'firstname' in error and 'has-error' or ''}"
-          name="firstname_container"
+          class="form-group field-cd_community_name"
+          t-attf-class="form-group #{error and 'cd_community_name' in error and 'has-error' or ''}"
+          name="cd_community_name_container"
         >
-            <label for="firstname">First Name</label>
+            <label for="cd_community_name"><t t-esc="cd_community_name_label" /></label>
             <input
             class="form-control form-control-sm"
-            id="firstname"
+            id="cd_community_name"
             type="text"
-            name="firstname"
-            required="True"
-            placeholder="Didier"
-            t-attf-value="#{firstname or ''}"
+            name="cd_community_name"
+            t-attf-value="#{cd_community_name or ''}"
           />
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div
-          class="form-group field-lastname"
-          t-attf-class="form-group #{error and 'lastname' in error and 'has-error' or ''}"
-          name="lastname_container"
+          class="form-group field-cd_address"
+          t-attf-class="form-group #{error and 'cd_address' in error and 'has-error' or ''}"
+          name="cd_address_container"
         >
-            <label for="lastname">Last Name</label>
+            <label for="cd_address"><t t-esc="cd_address_label" /></label>
             <input
             class="form-control form-control-sm"
-            id="lastname"
+            id="cd_address"
             type="text"
-            name="lastname"
-            required="True"
-            placeholder="Bourdon"
+            name="cd_address"
+            t-attf-value="#{cd_address or ''}"
           />
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <!--<div-->
-          <!--  class="form-group field-gender"-->
-          <!--  t-attf-class="form-group #{error and 'gender' in error and 'has-error' or ''}"-->
-          <!--  name="gender_container"-->
-          <!-->-->
-          <!--  <label for="gender">Gender</label>-->
-          <!--  <select-->
-          <!--    class="form-control form-control-sm"-->
-          <!--    id="gender"-->
-          <!--    name="gender"-->
-          <!--    required="False"-->
-          <!--  >-->
-          <!--    <option value="">-->
-          <!--      <t t-foreach="genders or []" t-as="type">-->
-          <!--        <option-->
-          <!--          t-att-value="type[0]"-->
-          <!--          t-att-selected="type[0] == gender"-->
-          <!--        >-->
-          <!--          <t t-esc="type[1]" />-->
-          <!--        </option>-->
-          <!--      </t>-->
-          <!--    </option>-->
-          <!--  </select>-->
-          <!--</div>-->
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div
-          class="form-group field-phone"
-          t-attf-class="form-group #{error and 'phone' in error and 'has-error' or ''}"
-          name="phone_container"
+          class="form-group field-cd_zip"
+          t-attf-class="form-group #{error and 'cd_zip' in error and 'has-error' or ''}"
+          name="cd_zip_container"
         >
-            <label for="phone">Phone</label>
+            <label for="cd_zip"><t t-esc="cd_zip_label" /></label>
             <input
             class="form-control form-control-sm"
-            id="phone"
-            type="tel"
-            name="phone"
-            required="True"
-            placeholder="+32 456 926 5059"
+            id="cd_zip"
+            type="text"
+            name="cd_zip"
+            t-attf-value="#{cd_zip or ''}"
           />
           </div>
         </div>
-      </div>
-    </template>
-
-    <template id="iban_template" name="iban_template">
-        <div name="iban_template_container">
-        <!-- Empty container to be filled by EMC localization modules -->
+        <div class="col-md-12">
+          <div
+          class="form-group field-cd_state_id"
+          t-attf-class="form-group #{error and 'cd_state_id' in error and 'has-error' or ''}"
+          name="cd_state_id_container"
+        >
+            <label for="cd_state_id"><t t-esc="cd_state_id_label" /></label>
+            <select
+            class="form-control form-control-sm"
+            id="cd_state_id"
+            name="cd_state_id"
+            t-attf-value="#{cd_state_id or ''}"
+          >
+              <option value="">Please choose an option</option>
+              <t t-foreach="states or []" t-as="state">
+                <option
+                t-att-value="state.id"
+                t-att-selected="state.id == int(cd_state_id)"
+              >
+                  <t t-esc="state.name" />
+                </option>
+              </t>
+            </select>
+          </div>
         </div>
-    </template>
-
-    <template id="address_template" name="address_template">
-      <div
-      class="form-group field-primary-image"
-      t-attf-class="form-group #{error and 'primary_image' in error and 'has-error' or ''}"
-      name="primary_image_container"
-    >
-        <label for="primary_image">Primary Image</label>
-        <div class="row">
-        <div class="col-md-7 col-sm-8">
-          <input
+        <div class="col-md-12">
+          <div
+          class="form-group field-cd_contact_email"
+          t-attf-class="form-group #{error and 'cd_contact_email' in error and 'has-error' or ''}"
+          name="cd_contact_email_conatiner"
+        >
+            <label for="cd_contact_email"><t t-esc="cd_contact_email_label" /></label>
+            <input
+            class="form-control form-control-sm"
+            autocapitalize="off"
+            type="email"
+            name="cd_contact_email"
+            id="cd_contact_email"
+            t-attf-value="#{cd_contact_email or ''}"
+          />
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div
+          t-attf-class="form-group #{error and 'cd_primary_image_file' in error and 'has-error' or ''}"
+          name="cd_primary_image_file_container"
+        >
+            <label for="cd_primary_image_file"><t
+              t-esc="cd_primary_image_file_label"
+            /></label>
+            <input
             type="file"
             class="form-control form-control-sm"
-            name="primary_image"
-            t-attf-value="#{primary_image or ''}"
+            name="cd_primary_image_file"
+            t-attf-value="#{cd_primary_image_file or ''}"
           />
+          </div>
         </div>
-        </div>
-      </div>
-      <div
-      class="form-group field-address"
-      t-attf-class="form-group #{error and 'address' in error and 'has-error' or ''}"
-      name="address_container"
-    >
-        <label for="address">Address</label>
-        <input
-        class="form-control form-control-sm"
-        type="text"
-        name="address"
-        id="address"
-        required="True"
-        t-att-readonly="logged"
-        t-attf-value="#{address or ''}"
-        placeholder="rue Van Hove 199"
-      />
-      </div>
-      <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div
-          class="form-group field-city"
-          t-attf-class="form-group #{error and 'zip_code' in error and 'has-error' or ''}"
-          name="zip_code_city_container"
+          t-attf-class="form-group #{error and 'cd_secondary_image_file' in error and 'has-error' or ''}"
+          name="cd_secondary_image_file_container"
         >
-            <label for="city">City</label>
+            <label for="cd_secondary_image_file"><t
+              t-esc="cd_secondary_image_file_label"
+            /></label>
             <input
+            type="file"
             class="form-control form-control-sm"
-            id="city"
-            type="text"
-            name="city"
-            required="True"
-            t-att-readonly="logged"
-            t-attf-value="#{city or ''}"
-            placeholder="Bruxelles"
-          />
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group field-zip_code">
-            <label for="zip_code">Zip / Postal Code</label>
-            <input
-            class="form-control form-control-sm"
-            id="zip_code"
-            type="text"
-            name="zip_code"
-            required="True"
-            t-att-readonly="logged"
-            t-attf-value="#{zip_code or ''}"
-            placeholder="1030"
+            name="cd_secondary_image_file"
+            t-attf-value="#{cd_secondary_image_file or ''}"
           />
           </div>
         </div>
       </div>
-      <!--<div-->
-      <!--  class="form-group field-country"-->
-      <!--  t-attf-class="form-group #{error and 'country_id' in error and 'has-error' or ''}"-->
-      <!--  name="country_container"-->
-      <!-->-->
-      <!--  <label for="country_id">Country</label>-->
-      <!--  <select-->
-      <!--    class="form-control form-control-sm"-->
-      <!--    id="country_id"-->
-      <!--    name="country_id"-->
-      <!--    required="False"-->
-      <!--    t-att-readonly="logged"-->
-      <!--  >-->
-      <!--    <option value="">Country...</option>-->
-      <!--    <t t-foreach="countries or []" t-as="country">-->
-      <!--      <option-->
-      <!--        t-att-value="country.id"-->
-      <!--        t-att-selected="country.id == int(country_id)"-->
-      <!--      >-->
-      <!--        <t t-esc="country.name" />-->
-      <!--      </option>-->
-      <!--    </t>-->
-      <!--  </select>-->
-      <!--</div>-->
     </template>
 
-    <template id="error_message_template" name="error_message_template">
-      <p style="color:red;">
-        <!-- <t t-debug="ipdb"></t>                     -->
-        <t t-raw="error_msg" />
-      </p>
+    <template
+    id="community_data_close_message_template"
+    name="community_data_close_message_template"
+  >
+        <button type="button" class="close" data-dismiss="alert">
+          &amp;times;
+        </button>
     </template>
 
-    <template id="csrf_template" name="csrf_template">
+    <template
+    id="community_data_error_message_template"
+    name="community_data_error_message_template"
+  >
+      <t t-foreach="error_msgs or []" t-as="error_msg">
+        <div class="alert alert-danger">
+          <t t-raw="error_msg" />
+        </div>
+      </t>
+    </template>
+
+    <template
+    id="community_data_form_successful_msg"
+    name="community_data_form_successful_msg"
+  >
+      <div class="alert alert-success">
+        <p>
+          Your data has been successfully registered.
+        </p>
+        <a type="button" t-attf-href="#{page_url}" class="btn btn-light">
+          Submit more data
+        </a>
+      </div>
+    </template>
+
+    <template
+    id="community_data_form_csrf_template"
+    name="community_data_form_csrf_template"
+  >
       <div name="csrf_token_container">
         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
       </div>
     </template>
 
-    <template id="community_data_form" name="Communnity data">
+    <template id="community_data_form" name="community_data_form">
+      <form
+      t-attf-action="#{form_submit_url}"
+      method="post"
+      class="form-horizontal mt32 oe_subscription_request_form"
+      enctype="multipart/form-data"
+    >
+        <t t-call="energy_communities.community_data_form_csrf_template" />
+        <t t-call="energy_communities.community_data_form_fields_template" />
+        <div class="text-center">
+          <button class="btn btn-primary mt-3 mb-3 text-center">Send</button>
+        </div>
+      </form>
+    </template>
+
+    <template id="community_data_page" name="Communnity data">
       <t t-call="website.layout">
         <div id="wrap" class="o_portal_wrap">
           <div class="container oe_cooperator">
             <div class="row justify-content-center">
               <div class="col-xs-12 col-sm-10  col-md-8 col-lg-6">
                 <h1 class="mt-4 text-center">Community data</h1>
-                <form
-                action="/community-data/submit"
-                method="post"
-                class="form-horizontal mt32 oe_subscription_request_form"
-                enctype="multipart/form-data"
-              >
-                  <t t-call="energy_communities.error_message_template" />
-
-                  <t t-call="energy_communities.csrf_template" />
-
-                  <t t-call="energy_communities.contact_template" />
-
-                  <t t-call="energy_communities.iban_template" />
-
-                  <t t-call="energy_communities.address_template" />
-
-                  <div class="text-center">
-                    <button class="btn btn-primary mt-3 mb-3 text-center">Send</button>
-                  </div>
-                </form>
+                <t t-call="energy_communities.community_data_error_message_template" />
+                <t
+                t-if="display_success"
+                t-call="energy_communities.community_data_form_successful_msg"
+              />
+                <t
+                t-if="display_form"
+                t-call="energy_communities.community_data_form"
+              />
               </div>
             </div>
           </div>
         </div>
       </t>
     </template>
-
-    <template id="community_data_confirmation" name="Community data confirmation">
-      <t t-call="website.layout">
-        <div id="wrap">
-          <div class="oe_structure" />
-            <div class="container">
-              <h1>Thanks!</h1>
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="alert alert-success">
-                    Your data has been successfully registered.
-                    <button
-                  type="button"
-                  class="close"
-                  data-dismiss="alert"
-                >&amp;times;</button>
-                  </div>
-                  <p>
-                    We will get back to you shortly.
-                  </p>
-                  <ul class="list-unstyled">
-                    <li>
-                      <i class="fa fa-phone" />
-                      :
-                      <span t-field="res_company.phone" />
-                    </li>
-                    <li>
-                      <i class="fa fa-envelope" />
-                      :
-                      <span t-field="res_company.email" />
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-md-4">
-                  <t t-call="website.company_description" />
-                </div>
-              </div>
-            </div>
-          <div class="oe_structure" />
-        </div>
-      </t>
-    </template>
-
 </odoo>

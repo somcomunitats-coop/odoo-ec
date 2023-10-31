@@ -216,6 +216,7 @@ class CrmLead(models.Model):
 
         return ret
 
+    # TODO: Check if all this method is used and remove it if not in a single MR
     def _build_community_company(self):
         if not self.env.user.company_id.coordinator:
             raise UserError(
@@ -367,6 +368,17 @@ class CrmLead(models.Model):
         )
         if followers:
             self.message_subscribe(partner_ids=followers.partner_id.ids)
+
+    def create_update_metadata(self, meta_key, meta_value):
+        existing_meta = self.metadata_line_ids.filtered(
+            lambda record: record.key == meta_key
+        )
+        if existing_meta:
+            existing_meta.write({"value": meta_value})
+        else:
+            self.env["crm.lead.metadata.line"].create(
+                {"key": meta_key, "value": meta_value, "crm_lead_id": self.id}
+            )
 
 
 class CrmTags(models.Model):

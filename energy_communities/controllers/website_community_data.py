@@ -1,34 +1,28 @@
+import base64
 from datetime import datetime
 
 from odoo import http
 from odoo.http import request
 from odoo.tools.translate import _
 
-# Only use for behavior, don't stock it
-# Used to filter the session dict to keep only the form fields
-_TECHNICAL = ["view_from", "view_callback"]
-# Allow in description
-_BLACKLIST = [
-    "id",
-    "create_uid",
-    "create_date",
-    "write_uid",
-    "write_date",
-    "user_id",
-    "active",
-]
-
-_COMMUNITY_DATA__FORM_FIELD = [
-    "firstname",
-    "lastname",
-    "gender",
-    "phone",
-    "address",
-    "city",
-    "zip_code",
-    "country_id",
-    "error_msg",
-]
+_COMMUNITY_DATA__FIELDS = {}
+_COMMUNITY_DATA__GENERAL_FIELDS = {
+    "cd_community_name": _("Energy Community Name"),
+    "cd_address": _("Address (Street, number, appartment number)"),
+    "cd_zip": _("Postal Code"),
+    "cd_state_id": _("State"),
+    "cd_contact_email": _("Contact Email"),
+}
+_COMMUNITY_DATA__FIELDS.update(_COMMUNITY_DATA__GENERAL_FIELDS)
+_COMMUNITY_DATA__IMAGE_FIELDS = {
+    "cd_primary_image_file": _("Primary Image Field"),
+    "cd_secondary_image_file": _("Secondary Image Field"),
+}
+_COMMUNITY_DATA__FIELDS.update(_COMMUNITY_DATA__IMAGE_FIELDS)
+_COMMUNITY_DATA__URL_PARAMS = {
+    "lead_id": _("lead_id on website url"),
+}
+_COMMUNITY_DATA__FIELDS.update(_COMMUNITY_DATA__URL_PARAMS)
 
 
 class WebsiteCommunityData(http.Controller):
@@ -40,158 +34,13 @@ class WebsiteCommunityData(http.Controller):
     )
     def display_community_data_page(self, **kwargs):
         values = {}
-        logged = False
-        if request.env.user.login != "public":
-            logged = True
-            partner = request.env.user.partner_id
+        # lead_id validation
+        response = self._page_render_validation(kwargs)
+        if response is not True:
+            return response
         # prefill values
-        values = self._fill_values()
-        # for field in _COMMUNITY_DATA__FORM_FIELD:
-        #     if kwargs.get(field):
-        #         values[field] = kwargs.pop(field)
-        values.update(kwargs=kwargs.items())
-        # redirect url to fall back on community data in template redirection
-        values["redirect_url"] = request.httprequest.url
-        values["firstname"] = "populate name"
-        return request.render("energy_communities.community_data_form", values)
-
-    def _fill_values(self):
-        return {"lead": False}
-
-    def pre_render_thanks(self, values, kwargs):
-        """
-        Allows to modify values passed to the "thanks" template by overriding
-        this method.
-        """
-        return {"_values": values, "_kwargs": kwargs}
-
-    def get_community_data_submit_response(self, values, kwargs):
-        values = self.pre_render_thanks(values, kwargs)
-        return request.render("energy_communities.community_data_confirmation", values)
-
-    def get_date_string(self, date_val):
-        if date_val:
-            return datetime.strftime(date_val, "%Y-%m-%d")
-        return False
-
-    # def _additional_validate(self, kwargs, logged, values, post_file):
-    #     """
-    #     Validation hook that can be reimplemented in dependent modules.
-
-    #     This should return a boolean value indicating whether the validation
-    #     succeeded or not. If it did not succeed, an error message should be
-    #     assigned to values["error_msg"].
-    #     """
-    #     return True
-
-    # def validation(
-    #     self, kwargs, logged, values, post_file
-    # ):
-    #     user_obj = request.env["res.users"]
-    #     sub_req_obj = request.env["subscription.request"]
-
-    #     redirect = "cooperator_website.becomecooperator"
-
-    #     # url to use for "already have an account button" to go to become cooperator
-    #     # rather than subscribe share after a failed validation
-    #     # it is deleted at the end of the validation
-    #     values["redirect_url"] = urljoin(
-    #         request.httprequest.host_url, "become_cooperator"
-    #     )
-
-    #     email = kwargs.get("email")
-    #     is_company = kwargs.get("is_company") == "on"
-
-    #     if is_company:
-    #         is_company = True
-    #         redirect = "cooperator_website.becomecompanycooperator"
-    #         email = kwargs.get("company_email")
-    #     # Check that required field from model subscription_request exists
-    #     required_fields = sub_req_obj.sudo().get_required_field()
-    #     error = {field for field in required_fields if not values.get(field)}  # noqa
-
-    #     if error:
-    #         values = self.fill_values(values, is_company, logged)
-    #         values["error_msg"] = _("Some mandatory fields have not been filled.")
-    #         values = dict(values, error=error, kwargs=kwargs.items())
-    #         return request.render(redirect, values)
-
-    #     if not logged and email:
-    #         user = user_obj.sudo().search([("login", "=", email)])
-    #         if user:
-    #             values = self.fill_values(values, is_company, logged)
-    #             values.update(kwargs)
-    #             values["error_msg"] = _(
-    #                 "An account already exists for this email address. "
-    #                 "Please log in before filling in the form."
-    #             )
-
-    #             return request.render(redirect, values)
-    #         else:
-    #             confirm_email = kwargs.get("confirm_email")
-    #             if email != confirm_email:
-    #                 values = self.fill_values(values, is_company, logged)
-    #                 values.update(kwargs)
-    #                 values["error_msg"] = _(
-    #                     "Email and confirmation email addresses don't match."
-    #                 )
-    #                 return request.render(redirect, values)
-
-    #     # There's no issue with the email, so we can remember the confirmation email
-    #     values["confirm_email"] = email
-
-    #     company = request.website.company_id
-    #     if company.allow_id_card_upload:
-    #         if not post_file:
-    #             values = self.fill_values(values, is_company, logged)
-    #             values.update(kwargs)
-    #             values["error_msg"] = _("Please upload a scan of your ID card.")
-    #             return request.render(redirect, values)
-
-    #     if "iban" in required_fields:
-    #         iban = kwargs.get("iban")
-    #         if iban.strip():
-    #             valid = sub_req_obj.check_iban(iban)
-
-    #             if not valid:
-    #                 values = self.fill_values(values, is_company, logged)
-    #                 values["error_msg"] = _("Provided IBAN is not valid.")
-    #                 return request.render(redirect, values)
-
-    #     # check the subscription's amount
-    #     max_amount = company.subscription_maximum_amount
-    #     if logged:
-    #         partner = request.env.user.partner_id
-    #         if partner.member:
-    #             max_amount = max_amount - partner.total_value
-    #             if company.unmix_share_type:
-    #                 share = self.get_selected_share(kwargs)
-    #                 if partner.cooperator_type != share.default_code:
-    #                     values = self.fill_values(values, is_company, logged)
-    #                     values["error_msg"] = _(
-    #                         "You can't subscribe to two different types of share."
-    #                     )
-    #                     return request.render(redirect, values)
-    #     total_amount = float(kwargs.get("total_parts"))
-
-    #     if max_amount > 0 and total_amount > max_amount:
-    #         values = self.fill_values(values, is_company, logged)
-    #         values["error_msg"] = _(
-    #             "You can't subscribe for an amount that exceeds "
-    #             "{amount}{currency_symbol}."
-    #         ).format(amount=max_amount, currency_symbol=company.currency_id.symbol)
-    #         return request.render(redirect, values)
-
-    #     if not self._additional_validate(kwargs, logged, values, post_file):
-    #         values = self.fill_values(values, is_company, logged)
-    #         return request.render(redirect, values)
-
-    #     # remove non-model attributes (used internally when re-rendering the
-    #     # form in case of a validation error)
-    #     del values["redirect_url"]
-    #     del values["confirm_email"]
-
-    #     return True
+        values = self._fill_values(kwargs)
+        return request.render("energy_communities.community_data_page", values)
 
     @http.route(
         ["/community-data/submit"],
@@ -200,34 +49,34 @@ class WebsiteCommunityData(http.Controller):
         website=True,
     )
     def community_data_submit(self, **kwargs):
-        crm_lead_obj = request.env["subscription.request"]
-
-        # List of file to add to ir_attachment once we have the ID
-        post_file = []
-        # Info to add after the message
-        post_description = []
         values = {}
+        form_values = {}
 
+        # data structures contruction
         for field_name, field_value in kwargs.items():
-            if hasattr(field_value, "filename"):
-                post_file.append(field_value)
-            elif field_name in crm_lead_obj._fields and field_name not in _BLACKLIST:
+            if field_name in _COMMUNITY_DATA__URL_PARAMS.keys():
                 values[field_name] = field_value
-            # allow to add some free fields or blacklisted field like ID
-            elif field_name not in _TECHNICAL:
-                post_description.append("{}: {}".format(field_name, field_value))
+            if field_name in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
+                if field_value:
+                    values[field_name] = field_value
+                    form_values[field_name] = field_value
+            if field_name in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
+                if field_value.filename:
+                    values[field_name] = field_value
+                    form_values[field_name] = field_value
 
-        logged = kwargs.get("logged") == "on"
-        is_company = kwargs.get("is_company") == "on"
-
-        # response = self.validation(kwargs, logged, values, post_file)
-        # if response is not True:
-        #     return response
-
-        lastname = kwargs.get("lastname")
-        firstname = kwargs.get("firstname")
-        values["lastname"] = lastname
-        values["firstname"] = firstname
+        # avoid form resubmission by ctrl+r
+        if form_values:
+            # validation
+            response = self._form_submit_validation(values)
+            if response is not True:
+                return response
+            # TODO: process lead metadata here
+            self._process_lead_metadata(values)
+            # success
+            return self._get_community_data_submit_response(values)
+        else:
+            return request.redirect(self._get_community_data_page_url(values))
 
         # values["birthdate"] = datetime.strptime(
         #     kwargs.get("birthdate"), "%Y-%m-%d"
@@ -239,16 +88,138 @@ class WebsiteCommunityData(http.Controller):
         #             "[^0-9a-zA-Z]+", "", kwargs.get("company_register_number")
         #         )
 
-        # crm_lead_obj.sudo().write(values)
+    def _get_community_data_submit_response(self, values):
+        values = self._fill_values(values, True, False)
+        return request.render("energy_communities.community_data_page", values)
 
-        # attachments
-        # for field_value in post_file:
-        #     attachment_value = {
-        #         "name": field_value.filename,
-        #         "res_model": "subscription.request",
-        #         "res_id": subscription_id,
-        #         "datas": base64.encodestring(field_value.read()),
-        #     }
-        #     request.env["ir.attachment"].sudo().create(attachment_value)
+    def _get_date_string(self, date_val):
+        if date_val:
+            return datetime.strftime(date_val, "%Y-%m-%d")
+        return False
 
-        return self.get_community_data_submit_response(values, kwargs)
+    def _get_community_data_page_url(self, values):
+        return "{base_url}/community-data?lead_id={lead_id}".format(
+            base_url=request.env["ir.config_parameter"]
+            .sudo()
+            .get_param("web.base.url"),
+            lead_id=values["lead_id"],
+        )
+
+    def _get_states(self):
+        company = request.website.company_id
+        return (
+            request.env["res.country.state"]
+            .sudo()
+            .search([("country_id", "=", company.default_country_id.id)], order="name")
+        )
+
+    def _fill_values(self, values, display_success=False, display_form=True):
+        # urls
+        values["page_url"] = self._get_community_data_page_url(values)
+        values["form_submit_url"] = "community-data/submit?lead_id={lead_id}".format(
+            lead_id=values["lead_id"]
+        )
+        # form labels
+        for field_key in _COMMUNITY_DATA__FIELDS.keys():
+            values[field_key + "_label"] = _COMMUNITY_DATA__FIELDS[field_key]
+        # state list
+        values["states"] = self._get_states()
+        # state_id initial
+        if "cd_state_id" not in values.keys():
+            values["cd_state_id"] = False
+        elif values["cd_state_id"] == "":
+            values["cd_state_id"] = False
+        values["display_success"] = display_success
+        values["display_form"] = display_form
+        return values
+
+    def _lead_id_validation(self, values):
+        values["lead_id"] = values.get("lead_id", False)
+        if not values["lead_id"]:
+            values["error_msgs"] = [
+                _("lead_id must be defined on the url in order to use the form")
+            ]
+            values = self._fill_values(values, False, False)
+            return values
+        try:
+            values["lead_id"] = int(values["lead_id"])
+        except ValueError:
+            values["error_msgs"] = [
+                _("lead_id must be defined on the url as a numeric value")
+            ]
+            values = self._fill_values(values, False, False)
+            return values
+
+        related_lead = (
+            request.env["crm.lead"].sudo().search([("id", "=", values["lead_id"])])
+        )
+        if not related_lead:
+            values["error_msgs"] = [
+                _(
+                    "Related Lead not found. The url is not correct. lead_id param invalid."
+                )
+            ]
+            values = self._fill_values(values, False, False)
+            return values
+        return values
+
+    def _page_render_validation(self, values):
+        values = self._lead_id_validation(values)
+        if "error_msgs" in values.keys():
+            return request.render("energy_communities.community_data_page", values)
+        return True
+
+    def _form_submit_validation(self, values):
+        error = []
+        error_msgs = []
+
+        # lead_id validation
+        values = self._lead_id_validation(values)
+        if "error_msgs" in values.keys():
+            return request.render("energy_communities.community_data_page", values)
+
+        # image validation
+        for image_field_key in _COMMUNITY_DATA__IMAGE_FIELDS:
+            if image_field_key in values.keys():
+                if values[image_field_key].filename:
+                    if "image" not in values[image_field_key].mimetype:
+                        error.append(image_field_key)
+                        error_msgs.append(
+                            "{} must be of type image (jpg/jpeg/png)".format(
+                                _COMMUNITY_DATA__IMAGE_FIELDS[image_field_key]
+                            )
+                        )
+        if error_msgs:
+            values["error"] = error
+            values["error_msgs"] = error_msgs
+            values = self._fill_values(values, False, True)
+            return request.render("energy_communities.community_data_page", values)
+        return True
+
+    def _process_lead_metadata(self, values):
+        print("PROCESS metadata")
+        print(values)
+        related_lead = (
+            request.env["crm.lead"].sudo().search([("id", "=", values["lead_id"])])
+        )
+        for meta_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
+            if meta_key in values.keys():
+                related_lead.create_update_metadata(meta_key, values[meta_key])
+        for meta_key in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
+            if meta_key in values.keys():
+                attachment = self._create_attachment(related_lead, values[meta_key])
+                related_lead.create_update_metadata(meta_key, attachment.id)
+
+    def _create_attachment(self, lead, value):
+        return (
+            request.env["ir.attachment"]
+            .sudo()
+            .create(
+                {
+                    "name": value.filename,
+                    "res_model": "crm.lead",
+                    "res_id": lead.id,
+                    "datas": base64.encodestring(value.read()),
+                }
+            )
+        )
