@@ -125,7 +125,10 @@ class Selfconsumption(models.Model):
         return {
             "type": "ir.actions.act_window",
             "name": "Contracts",
-            "view_mode": "tree,form",
+            "views": [
+                [self.env.ref("energy_selfconsumption.contract_tree_view").id, "tree"],
+                [False, "form"],
+            ],
             "res_model": "contract.contract",
             "domain": [("project_id", "=", self.id)],
             "context": {"create": True, "default_project_id": self.id},
