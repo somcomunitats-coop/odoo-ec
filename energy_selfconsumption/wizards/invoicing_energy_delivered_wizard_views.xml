@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="invoicing_energy_delivered_wizard_form_view" model="ir.ui.view">
+            <field
+        name="name"
+      >energy_selfconsumption.invoicing_energy_delivered_wizard.form
+            </field>
+            <field name="model">energy_selfconsumption.invoicing_energy_delivered.wizard
+            </field>
+            <field name="arch" type="xml">
+                <form string="Invoicing Energy Delivered">
+                    <footer>
+                        <button type="object" name="generate_invoices">Generate</button>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
