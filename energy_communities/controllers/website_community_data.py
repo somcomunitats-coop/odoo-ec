@@ -71,7 +71,7 @@ class WebsiteCommunityData(http.Controller):
             response = self._form_submit_validation(values)
             if response is not True:
                 return response
-            # TODO: process lead metadata here
+            # metadata processing
             self._process_lead_metadata(values)
             # success
             return self._get_community_data_submit_response(values)
