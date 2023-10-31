@@ -197,8 +197,6 @@ class WebsiteCommunityData(http.Controller):
         return True
 
     def _process_lead_metadata(self, values):
-        print("PROCESS metadata")
-        print(values)
         related_lead = (
             request.env["crm.lead"].sudo().search([("id", "=", values["lead_id"])])
         )
