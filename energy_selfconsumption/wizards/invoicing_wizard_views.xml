@@ -2,18 +2,16 @@
 <odoo>
     <data>
 
-        <record id="invoicing_energy_delivered_wizard_form_view" model="ir.ui.view">
-            <field
-        name="name"
-      >energy_selfconsumption.invoicing_energy_delivered_wizard.form
+        <record id="invoicing_wizard_form_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.invoicing_wizard.form
             </field>
-            <field
-        name="model"
-      >energy_selfconsumption.invoicing_energy_delivered.wizard</field>
+            <field name="model">energy_selfconsumption.invoicing.wizard</field>
             <field name="arch" type="xml">
                 <form string="Invoicing Energy Delivered">
                     <sheet>
+                        <group>
                         <field name="power" />
+                        </group>
                     </sheet>
                     <footer>
                         <button type="object" name="generate_invoices">Generate</button>
@@ -22,15 +20,10 @@
             </field>
         </record>
 
-        <record
-      id="invoicing_energy_delivered_wizard_act_window"
-      model="ir.actions.act_window"
-    >
+        <record id="invoicing_wizard_act_window" model="ir.actions.act_window">
             <field name="name">Invoice Energy Delivered</field>
             <field name="type">ir.actions.act_window</field>
-            <field
-        name="res_model"
-      >energy_selfconsumption.invoicing_energy_delivered.wizard</field>
+            <field name="res_model">energy_selfconsumption.invoicing.wizard</field>
             <field name="binding_model_id" ref="contract.model_contract_contract" />
             <field name="binding_type">action</field>
             <field name="binding_view_types">list,form</field>

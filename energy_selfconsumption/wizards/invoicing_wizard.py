@@ -1,8 +1,8 @@
 from odoo import _, fields, models
 
 
-class InvoicingEnergyDeliveredWizard(models.TransientModel):
-    _name = "energy_selfconsumption.invoicing_energy_delivered.wizard"
+class InvoicingWizard(models.TransientModel):
+    _name = "energy_selfconsumption.invoicing.wizard"
 
     power = fields.Float(string="Total Energy Generated (kWh)")
 
