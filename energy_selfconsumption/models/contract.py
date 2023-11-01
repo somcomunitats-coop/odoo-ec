@@ -18,3 +18,10 @@ class Contract(models.Model):
     supply_point_name = fields.Char(
         related="supply_point_assignation_id.supply_point_id.name"
     )
+
+
+class ContractRecurrencyMixin(models.AbstractModel):
+    _inherit = "contract.recurrency.mixin"
+
+    next_period_date_start = fields.Date(store=True)
+    next_period_date_end = fields.Date(store=True)
