@@ -131,7 +131,12 @@ class Selfconsumption(models.Model):
             ],
             "res_model": "contract.contract",
             "domain": [("project_id", "=", self.id)],
-            "context": {"create": True, "default_project_id": self.id},
+            "context": {
+                "create": True,
+                "default_project_id": self.id,
+                "search_default_filter_next_period_date_start": True,
+                "search_default_filter_next_period_date_end": True,
+            },
         }
 
     def distribution_table_state(self, actual_state, new_state):
