@@ -1,4 +1,5 @@
-from odoo import _, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class InvoicingWizard(models.TransientModel):
@@ -6,6 +7,22 @@ class InvoicingWizard(models.TransientModel):
 
     power = fields.Float(string="Total Energy Generated (kWh)")
     contract_ids = fields.Many2many("contract.contract")
+
+    @api.constrains("contract_ids")
+    def constraint_contract_ids(self):
+        for record in self:
+            contract_list = record.contract_ids
+            all_equal_period = all(
+                element.next_period_date_start
+                == contract_list[0].next_period_date_start
+                and element.next_period_date_end
+                == contract_list[0].next_period_date_end
+                for element in contract_list
+            )
+            if not all_equal_period:
+                raise ValidationError(
+                    _("Select only contracts with the same period of invoicing.")
+                )
 
     def generate_invoices(self):
         return self.with_context(
