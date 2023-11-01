@@ -21,7 +21,16 @@ class InvoicingWizard(models.TransientModel):
             )
             if not all_equal_period:
                 raise ValidationError(
-                    _("Select only contracts with the same period of invoicing.")
+                    _(
+                        """
+Select only contracts with the same period of invoicing.
+Make sure that all the selected contracts have the same next period start and end.
+Next period start: {next_period_date_start}
+Next period end: {next_period_date_end}"""
+                    ).format(
+                        next_period_date_start=contract_list[0].next_period_date_start,
+                        next_period_date_end=contract_list[0].next_period_date_end,
+                    )
                 )
 
     def generate_invoices(self):
