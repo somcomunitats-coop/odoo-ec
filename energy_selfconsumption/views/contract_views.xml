@@ -13,6 +13,32 @@
                     <field name="next_period_date_end" />
                 </tree>
             </field>
+
         </record>
+        <record id="contract_search_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.contract.search</field>
+            <field name="model">contract.contract</field>
+            <field name="inherit_id" ref="contract.contract_contract_search_view" />
+            <field name="arch" type="xml">
+                <xpath expr="/search" position="inside">
+                    <group expand="1" string="Group By">
+                        <filter
+              string="Next Period Date Start"
+              name="filter_next_period_date_start"
+              domain="[]"
+              context="{'group_by':'next_period_date_start'}"
+            />
+                        <filter
+              string="Next Period Date End"
+              name="filter_next_period_date_end"
+              domain="[]"
+              context="{'group_by':'next_period_date_end'}"
+            />
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+
     </data>
 </odoo>
