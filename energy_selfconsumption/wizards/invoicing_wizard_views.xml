@@ -11,6 +11,7 @@
                     <sheet>
                         <group>
                         <field name="power" />
+                        <field name="contract_ids" />
                         </group>
                     </sheet>
                     <footer>
@@ -30,6 +31,7 @@
             <field name="groups_id" eval="[(4,ref('energy_project.group_admin'))]" />
             <field name="view_mode">form</field>
             <field name="target">new</field>
+            <field name="context">{'default_contract_ids': active_ids}</field>
         </record>
     </data>
 </odoo>
