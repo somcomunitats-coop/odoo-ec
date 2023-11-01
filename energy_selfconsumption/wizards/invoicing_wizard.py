@@ -8,4 +8,6 @@ class InvoicingWizard(models.TransientModel):
     contract_ids = fields.Many2many("contract.contract")
 
     def generate_invoices(self):
-        return True
+        return self.with_context(
+            {"energy_delivered": self.power}
+        ).contract_ids._recurring_create_invoice()
