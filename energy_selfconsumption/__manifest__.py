@@ -39,6 +39,7 @@
         "wizards/distribution_table_import_wizard_views.xml",
         "wizards/contract_generation_wizard_views.xml",
         "wizards/define_invoicing_mode_wizard_view.xml",
+        "wizards/invoicing_energy_delivered_wizard_views.xml",
         "reports/selfconsumption_reports.xml",
     ],
 }
