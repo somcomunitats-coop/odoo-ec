@@ -99,6 +99,18 @@ Next period end: {next_period_date_end}"""
                 )
 
     def generate_invoices(self):
+        for contract in self.contract_ids:
+            template_name = contract.contract_template_id.contract_line_ids[0].name
+            template_name += _("Energy Delivered: {energy_delivered} kWh")
+            contract.contract_line_ids.write(
+                {
+                    "name": template_name.format(
+                        energy_delivered=self.power,
+                        code=contract.supply_point_assignation_id.supply_point_id.code,
+                        owner_id=contract.supply_point_assignation_id.supply_point_id.owner_id.display_name,
+                    )
+                }
+            )
         return self.with_context(
             {"energy_delivered": self.power}
         ).contract_ids._recurring_create_invoice()
