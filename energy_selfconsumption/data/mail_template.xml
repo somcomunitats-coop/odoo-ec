@@ -11,11 +11,11 @@
     />
         <field name="body_html">
             <![CDATA[
-                <p>Hola,</br>
-Recuerda que el proyecto de autoconsumo colectivo <b>${ ctx['project_name'] }</b> de la comunidad energética <b>${ object.project_id.company_id.name }</b> debe facturar el día <b>${ ctx['next_invoicing'] }</b>.</br>
-Es necesario, por lo tanto, que introduzcas en Odoo la energía generada en kWh durante el periodo <b>${ ctx['first_date'] }</b> - <b>${ ctx['last_date'] }</b>.</br>
-Para hacerlo, ves a la ficha de proyecto, entra en la vista de contratos, selecciona los contratos que deban facturar y apreta el botón Facturar.</br>
-Para cualquier duda o incidencia, ponte en contacto con el equipo de soporte; soporte@somcomunitats.coop.</p>
+                <p>Hi,</br>
+Remember that the collective self-consumption project <b>${ ctx['project_name'] }</b>  of the energy community <b>${ object.project_id.company_id.name }</b> must invoice on the day <b>${ ctx['next_invoicing'] }</b>.</br>
+It is necessary, therefore, that you enter into Odoo the energy generated in kWh during the period <b>${ ctx['first_date'] }</b> - <b>${ ctx['last_date'] }</b>.</br>
+To do so, go to the project file, enter the contracts view, select the contracts that must be invoiced and press the Invoice button.</br>
+For any questions or incidents, contact the support team; support@somcomunitats.coop.</p>
             ]]>
         </field>
     </record>
