@@ -7,6 +7,27 @@ class InvoicingWizard(models.TransientModel):
 
     power = fields.Float(string="Total Energy Generated (kWh)")
     contract_ids = fields.Many2many("contract.contract", readonly=True)
+    next_period_date_start = fields.Date(
+        string="Next Period Start",
+        compute="_compute_next_period_date_start_and_end",
+        readonly=True,
+    )
+    next_period_date_end = fields.Date(
+        string="Next Period End",
+        compute="_compute_next_period_date_start_and_end",
+        readonly=True,
+    )
+
+    @api.depends("contract_ids")
+    def _compute_next_period_date_start_and_end(self):
+        for record in self:
+            if len(record.contract_ids) > 0:
+                record.next_period_date_start = record.contract_ids[
+                    0
+                ].next_period_date_start
+                record.next_period_date_end = record.contract_ids[
+                    0
+                ].next_period_date_end
 
     @api.constrains("contract_ids")
     def constraint_contract_ids(self):
