@@ -12,6 +12,25 @@ class InvoicingWizard(models.TransientModel):
     def constraint_contract_ids(self):
         for record in self:
             contract_list = record.contract_ids
+
+            valid_invoicing_mode = ["energy_delivered"]
+
+            all_invoicing_mode = all(
+                element.project_id.selfconsumption_id.invoicing_mode
+                in valid_invoicing_mode
+                for element in contract_list
+            )
+            if not all_invoicing_mode:
+                raise ValidationError(
+                    _(
+                        """
+Some of the contract selected are not defined as energy delivered self-consumption projects.
+
+Please make sure that you are invoicing the correct self-consumption project.
+"""
+                    )
+                )
+
             all_equal_period = all(
                 element.next_period_date_start
                 == contract_list[0].next_period_date_start
