@@ -10,8 +10,16 @@
                 <form string="Invoicing Energy Delivered">
                     <sheet>
                         <group>
-                        <field name="power" />
-                        <field name="contract_ids" />
+                            <field name="power" />
+                            <field name="contract_ids">
+                                <tree>
+                                    <field name="partner_id" />
+                                    <field name="supply_point_name" />
+                                    <field name="code" />
+                                    <field name="next_period_date_start" />
+                                    <field name="next_period_date_end" />
+                                </tree>
+                            </field>
                         </group>
                     </sheet>
                     <footer>

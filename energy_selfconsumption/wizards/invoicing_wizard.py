@@ -6,7 +6,7 @@ class InvoicingWizard(models.TransientModel):
     _name = "energy_selfconsumption.invoicing.wizard"
 
     power = fields.Float(string="Total Energy Generated (kWh)")
-    contract_ids = fields.Many2many("contract.contract")
+    contract_ids = fields.Many2many("contract.contract", readonly=True)
 
     @api.constrains("contract_ids")
     def constraint_contract_ids(self):
