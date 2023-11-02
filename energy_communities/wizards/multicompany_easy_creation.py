@@ -168,12 +168,16 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         new_company_id = self.new_company_id.id
         self_new_company = self.with_company(new_company_id)
         # We use sudo to be able to copy the product and not needing to be in the main company
+        taxes_id = self.env.ref(
+            "l10n_es.{}_account_tax_template_s_iva_ns".format(self.new_company_id.id)
+        )
         self.new_product_share_template = self.sudo().product_share_template.copy(
             {
                 "name": self.product_share_template.name,
                 "company_id": self.new_company_id.id,
                 "list_price": self.capital_share,
                 "active": True,
+                "taxes_id": taxes_id,
             }
         )
         self_new_company.new_company_id.initial_subscription_share_amount = (
