@@ -34,6 +34,23 @@ class InvoicingWizard(models.TransientModel):
         for record in self:
             contract_list = record.contract_ids
 
+            all_same_project = all(
+                element.project_id == contract_list[0].project_id
+                for element in contract_list
+            )
+            if not all_same_project:
+                raise ValidationError(
+                    _(
+                        """
+Some of the contract selected are not of the same self-consumption project.
+
+Please make sure that you are invoicing for only the same self-consumption project ({project_name}.
+"""
+                    ).format(
+                        project_name=contract_list[0].project_id.selfconsumption_id.name
+                    )
+                )
+
             valid_invoicing_mode = ["energy_delivered"]
 
             all_invoicing_mode = all(
