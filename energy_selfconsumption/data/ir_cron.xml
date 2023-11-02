@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="send_invoicing_reminder_to_admin" model="ir.cron">
+            <field name="name">Send Invoicing Reminder to Admin User</field>
+            <field name="model_id" ref="energy_selfconsumption.selfconsumption" />
+            <field
+        name="code"
+      >energy_selfconsumption.selfconsumption.send_invoicing_reminder()</field>
+            <field name="user_id" ref="base.user_root" />
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False" />
+        </record>
+    </data>
+</odoo>
