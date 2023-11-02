@@ -5,7 +5,7 @@
             <field name="name">energy_selfconsumption.contract.tree</field>
             <field name="model">contract.contract</field>
             <field name="arch" type="xml">
-                <tree string="Contracts">
+                <tree string="Contracts" expand="1">
                     <field name="partner_id" />
                     <field name="supply_point_name" />
                     <field name="code" />
