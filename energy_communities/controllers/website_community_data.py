@@ -1,9 +1,8 @@
 import base64
 from datetime import datetime
 
-from odoo import http
+from odoo import _, http
 from odoo.http import request
-from odoo.tools.translate import _
 
 _COMMUNITY_DATA__FIELDS = {}
 _COMMUNITY_DATA__GENERAL_FIELDS = {
@@ -137,7 +136,7 @@ class WebsiteCommunityData(http.Controller):
         values["lead_id"] = values.get("lead_id", False)
         if not values["lead_id"]:
             values["error_msgs"] = [
-                _("lead_id must be defined on the url in order to use the form")
+                _("lead_id param must be defined on the url in order to use the form")
             ]
             values = self._fill_values(values, False, False)
             return values
