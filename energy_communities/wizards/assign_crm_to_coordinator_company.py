@@ -22,7 +22,9 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
     def assign_to_coordinator_company(self):
         self.ensure_one()
         self.remove_follower()
-        self.crm_lead_id.write({"company_id": self.assigned_company_id})
+        self.crm_lead_id.write(
+            {"company_id": self.assigned_company_id, "team_id": None}
+        )
         self.add_follower()
 
     def remove_follower(self):
@@ -49,9 +51,8 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
         if followers:
             self.crm_lead_id.message_subscribe(partner_ids=followers.partner_id.ids)
             # notify followers
-            for follower in followers:
-                email_values = {"email_to": follower.partner_id.email}
-                template = self.env.ref(
-                    "energy_communities.email_templ_lead_assigned_to_coordinator_id"
-                ).with_context(email_values)
-                self.crm_lead_id.message_post_with_template(template.id)
+            email_values = {"email_to": followers.mapped("partner_id.email")}
+            template = self.env.ref(
+                "energy_communities.email_templ_lead_assigned_to_coordinator_id"
+            ).with_context(email_values)
+            self.crm_lead_id.message_post_with_template(template.id)

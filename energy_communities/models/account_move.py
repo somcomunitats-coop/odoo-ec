@@ -80,3 +80,12 @@ class AccountMove(models.Model):
         # TODO Remove it and implement a configuration
         if not self.subscription_request.is_voluntary:
             return super().send_capital_release_request_mail()
+
+    def _get_starting_sequence(self):
+        self.ensure_one()
+        if not self.release_capital_request:
+            return super()._get_starting_sequence()
+        starting_sequence = "%s/%04d/000" % (self.journal_id.code, self.date.year)
+        if self.journal_id.refund_sequence and self.move_type in ('out_refund', 'in_refund'):
+            starting_sequence = "R" + starting_sequence
+        return starting_sequence

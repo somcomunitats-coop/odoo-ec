@@ -38,12 +38,48 @@
   />
 
     <menuitem id="ce_crm_leads_menu" name="Requests" parent="ce_root_menu" />
-        <menuitem id="ce_crm_leads_ce_info_menu" name="EC Information" parent="ce_crm_leads_menu" action="ce_crm_leads_ce_info_action" groups="group_admin" />
-        <menuitem id="ce_crm_leads_ce_contact_menu" name="EC Contact" parent="ce_crm_leads_menu" action="ce_crm_leads_ce_contact_action" groups="group_admin" />
-        <menuitem id="ce_crm_leads_general_info_menu" name="General Information" parent="ce_crm_leads_menu" action="ce_crm_leads_general_info_action" groups="group_admin" />
-        <menuitem id="ce_crm_leads_future_zone_info_menu" name="Information future EC's by location" parent="ce_crm_leads_menu" action="ce_crm_leads_future_zone_info_action" groups="group_platform_manager" />
-        <menuitem id="ce_crm_leads_new_ce_request_menu" name="EC Creation" parent="ce_crm_leads_menu" action="ce_crm_leads_new_ce_request_action" groups="group_platform_manager" />
+        <menuitem
+    id="ce_crm_leads_ce_info_menu"
+    name="EC Information"
+    parent="ce_crm_leads_menu"
+    action="ce_crm_leads_ce_info_action"
+    groups="group_admin"
+  />
+        <menuitem
+    id="ce_crm_leads_ce_contact_menu"
+    name="EC Contact"
+    parent="ce_crm_leads_menu"
+    action="ce_crm_leads_ce_contact_action"
+    groups="group_admin"
+  />
+        <menuitem
+    id="ce_crm_leads_general_info_menu"
+    name="General Information"
+    parent="ce_crm_leads_menu"
+    action="ce_crm_leads_general_info_action"
+    groups="group_admin"
+  />
+        <menuitem
+    id="ce_crm_leads_future_zone_info_menu"
+    name="Information future EC's by location"
+    parent="ce_crm_leads_menu"
+    action="ce_crm_leads_future_zone_info_action"
+    groups="group_platform_manager"
+  />
+        <menuitem
+    id="ce_crm_leads_new_ce_request_menu"
+    name="EC Creation"
+    parent="ce_crm_leads_menu"
+    action="ce_crm_leads_new_ce_request_action"
+    groups="group_platform_manager"
+  />
 
     <menuitem id="ce_users_menu" name="Users" parent="ce_root_menu" />
-        <menuitem id="ce_create_user_wizard" name="Create user" parent="ce_users_menu" action="action_open_assign_admin_wizard" groups="group_admin" />
+        <menuitem
+    id="ce_create_user_wizard"
+    name="Create user"
+    parent="ce_users_menu"
+    action="action_open_assign_admin_wizard"
+    groups="group_admin"
+  />
 </odoo>

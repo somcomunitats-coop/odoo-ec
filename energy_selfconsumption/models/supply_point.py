@@ -1,4 +1,4 @@
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 
 
 class SupplyPoint(models.Model):
@@ -14,7 +14,7 @@ class SupplyPoint(models.Model):
         )
     }
 
-    name = fields.Char(required=True)
+    name = fields.Char(compute="_compute_supply_point_name", store=True)
     code = fields.Char(string="CUPS", required=True)
     owner_id = fields.Many2one(
         "res.partner",
@@ -24,12 +24,15 @@ class SupplyPoint(models.Model):
     )
     partner_id = fields.Many2one(
         "res.partner",
-        string="Partner",
+        string="Cooperator",
         required=True,
-        help="Partner subscribed to the self-consumption project",
+        help="Cooperator subscribed to the self-consumption project",
     )
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
+    )
+    reseller_id = fields.Many2one(
+        "energy_project.reseller", string="Reseller", domain=[("state", "!=", "Baja")]
     )
 
     # Address fields
@@ -53,3 +56,16 @@ class SupplyPoint(models.Model):
         "supply_point_id",
         readonly=True,
     )
+    supplier_id = fields.Many2one("energy_project.supplier", string="Supplier")
+
+    @api.onchange("partner_id")
+    def _onchange_partner_id(self):
+        self.owner_id = self.partner_id
+
+    @api.depends("partner_id", "street")
+    def _compute_supply_point_name(self):
+        for record in self:
+            if record.partner_id and record.street:
+                record.name = f"{record.partner_id.name} - {record.street}"
+            else:
+                record.name = _("New Supply Point")

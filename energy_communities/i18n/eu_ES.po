@@ -231,248 +231,181 @@ msgstr ""
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_contact_confirm_id
 msgid ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
-"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
-"\">\n"
-"\n"
-"    <p>Hello,</p>\n"
-"\n"
-"    <p>Thank you for contact.</p>\n"
-"\n"
-"    <p>We have received your email and we have we have forwarded it to the "
-"Community so that they can contact you as soon as possible.</p>\n"
-"\n"
-"    <p>Here is a copy of the data we received:</p>\n"
-"\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
-"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
-"34); background-color: #FFF; \">\n"
-"    <p> - Contact name: ${object.name}</p>\n"
-"    <p> - Email: ${object.email_from}</p>\n"
-"    <p> - Phone: ${object.phone}</p>\n"
-"    <p> - Message: ${object.description}</p>\n"
-"    <p></p>\n"
-"    % if object.tag_ids:\n"
-"    <p> - Interested in:</p>\n"
-"        % for tag in object.tag_ids:\n"
-"        <p>     ${tag.name}</p>\n"
-"        % endfor\n"
-"    % endif\n"
-"    </div>\n"
-"    <br />\n"
-"    <p>We keep in touch for any questions.</p>\n"
-"    <p>Yours faithfully,</p>\n"
-"    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
-"and FAQs</a></p>\n"
-"\n"
-"</div>\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for contact.</p>\n"
+"                    <p>We have received your email and we have we have forwarded it to the Community so that they can contact you as soon as possible.</p>\n"
+"                    <br />\n"
+"                    <p>We keep in touch for any questions.</p>\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"                </div>\n"
 "            "
 msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Kaixo,</p>\n"
+"                    <p>Eskerrik asko harremanetan jartzeagatik.</p>\n"
+"                    <p>Zure e-posta jaso dugu eta Komunitateari birbidali diogu, ahalik eta azkarren zurekin harremanetan jartzeko.</p>\n"
+"                    <br />\n"
+"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara.</p>\n"
+"                    <p>Zinez,</p>\n"
+"                    <p>Taldea Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"                </div>\n"
+"            "
 
 #. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_ce_creation_receipt_confirm_id
 msgid ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
-"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
-"\">\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
-"    <p>Hello,</p>\n"
+"                    <p>Hello,</p>\n"
 "\n"
-"    <p>Thank you for filling out the form and requesting the membership of "
-"your Energy Community on the Somcomunitats.coop platform.</p>\n"
+"                    <p>Thank you for filling out the form and requesting the membership of your Energy Community on the Somcomunitats.coop platform.</p>\n"
 "\n"
-"    <p>In the coming weeks we will study the application and contact you to "
-"indicate the steps and the information necessary to complete the "
-"registration process for the Community and the people who are part of it.</"
-"p>\n"
+"                    <p>In the coming weeks we will study the application and contact you to indicate the steps and the information necessary to complete the registration process for the Community and the people who are part of it.</p>\n"
 "\n"
-"    <p>Here is a copy of the data we received:</p>\n"
+"                    <br />\n"
+"                    <p>We keep in touch for any questions.</p>\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
 "\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
-"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
-"34); background-color: #FFF; \">\n"
-"    <p> - Community name: ${object.name}</p>\n"
-"    <p> - Description: ${object.description}</p>\n"
-"    <p> - Address: ${object.street}</p>\n"
-"    <p> - Zip code: ${object.zip}</p>\n"
-"    <p> - City: ${object.city}</p>\n"
-"    <p> - Email: ${object.email_from}</p>\n"
-"    <p> - Phone: ${object.phone}</p>\n"
-"    <p></p>\n"
-"    % if object.form_submission_metadata_ids:\n"
-"        % for meta in object.form_submission_metadata_ids:\n"
-"            % if meta.value:\n"
-"                % if meta.key == 'partner_qty_members':\n"
-"                    <p> - Members: ${meta.value}</p>\n"
-"                % endif\n"
-"                % if meta.key == 'partner_legal_state':\n"
-"                    <p> - Activity state: ${meta.value}</p>\n"
-"                % endif\n"
-"                % if meta.key == 'partner_foundation_date':\n"
-"                    <p> - Foundation date: ${meta.value}</p>\n"
-"                % endif\n"
-"                % if meta.key == 'partner_vat':\n"
-"                    <p> - Activity state: ${meta.value}</p>\n"
-"                % endif\n"
-"                % if meta.key == 'partner_comments':\n"
-"                    <p> - Comments: ${meta.value}</p>\n"
-"                % endif\n"
-"                % if meta.key == 'partner_firstname':\n"
-"                    <p> - Contact firstname: ${meta.value}</p>\n"
-"                % endif\n"
-"                % if meta.key == 'partner_lastname':\n"
-"                    <p> - Contact lastname: ${meta.value}</p>\n"
-"                % endif\n"
-"                % if meta.key == 'contact2_firstname':\n"
-"                    <p> - Contact 2 firstname: ${meta.value}</p>\n"
-"                % endif\n"
-"                % if meta.key == 'contact2_lastname':\n"
-"                    <p> - Contact 2 lastname: ${meta.value}</p>\n"
-"                % endif\n"
-"                % if meta.key == 'contact2_email':\n"
-"                    <p> - Contact 2 email: ${meta.value}</p>\n"
-"                % endif\n"
-"                % if meta.key == 'contact2_mobile':\n"
-"                    <p> - Contact 2 phone: ${meta.value}</p>\n"
-"                % endif\n"
-"            % endif\n"
-"        % endfor\n"
-"    % endif\n"
-"    % if object.tag_ids:\n"
-"    <p> - Interested in:</p>\n"
-"        % for tag in object.tag_ids:\n"
-"        <p>     ${tag.name}</p>\n"
-"        % endfor\n"
-"    % endif\n"
-"    </div>\n"
-"    <br />\n"
-"    <p>We keep in touch for any questions.</p>\n"
-"    <p>Yours faithfully,</p>\n"
-"    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
-"and FAQs</a></p>\n"
-"\n"
-"</div>\n"
+"                </div>\n"
 "            "
 msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"                    <p>Kaixo,</p>\n"
+"\n"
+"                    <p>Eskerrik asko formularioa bete eta Somcomunitats.coop plataforman zure Energia Komunitatearen kide izatea eskatzeagatik.</p>\n"
+"\n"
+"                    <p>Datozen asteetan aplikazioa aztertuko dugu eta zurekin harremanetan jarriko gara Komunitatearen eta bertan dauden pertsonen erregistro-prozesua burutzeko beharrezkoak diren urratsak eta informazioa adierazteko.</p>\n"
+"\n"
+"                    <br />\n"
+"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara.</p>\n"
+"                    <p>Zinez,</p>\n"
+"                    <p>Taldea Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"\n"
+"                </div>\n"
+"            "
 
 #. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_advise_future_ce_confirm_id
 msgid ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
-"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
-"\">\n"
-"\n"
-"    <p>Hello,</p>\n"
-"\n"
-"    <p>Thank you for filling out the form.</p>\n"
-"\n"
-"    <p>In case an Energy Community is activated in your neighborhood or "
-"municipality, they can consult the existing requests and contact you. "
-"Without any commitment on your part beyond having shown interest in "
-"promoting a movement of social transformation and an energy model.</p>\n"
-"\n"
-"    <p>Here is a copy of the data we received:</p>\n"
-"\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
-"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
-"34); background-color: #FFF; \">\n"
-"    <p> - Contact name: ${object.name}</p>\n"
-"    <p> - Address: ${object.street}</p>\n"
-"    <p> - Zip code: ${object.zip}</p>\n"
-"    <p> - City: ${object.city}</p>\n"
-"    <p> - Email: ${object.email_from}</p>\n"
-"    <p> - Phone: ${object.phone}</p>\n"
-"    <p></p>\n"
-"    % if object.tag_ids:\n"
-"    <p> - Interested in:</p>\n"
-"        % for tag in object.tag_ids:\n"
-"        <p>     ${tag.name}</p>\n"
-"        % endfor\n"
-"    % endif\n"
-"    </div>\n"
-"    <br />\n"
-"    <p>We keep in touch for any questions.</p>\n"
-"    <p>Yours faithfully,</p>\n"
-"    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
-"and FAQs</a></p>\n"
-"\n"
-"</div>\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for filling out the form.</p>\n"
+"                    <p>In case an Energy Community is activated in your neighborhood or municipality, they can consult the existing requests and contact you. Without any commitment on your part beyond having shown interest in promoting a movement of social transformation and an energy model.</p>\n"
+"                    <br />\n"
+"                    <p>We keep in touch for any questions.</p>\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"                </div>\n"
 "            "
 msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Kaixo,</p>\n"
+"                    <p>Eskerrik asko formularioa betetzeagatik.</p>\n"
+"                    <p>Zure auzoan edo udalerrian Energia Komunitate bat aktibatzen bada, dauden eskaerak kontsultatu eta zurekin harremanetan jartzeko aukera izango dute. Gizarte eraldaketarako mugimendua eta eredu energetikoa sustatzeko interesa agertu izanaz haratago euren aldetik inolako konpromisorik gabe.</p>\n"
+"                    <br />\n"
+"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara.</p>\n"
+"                    <p>Zinez,</p>\n"
+"                    <p>Taldea Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"                </div>\n"
+"            "
 
 #. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_ce_news_confirm_id
 msgid ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
-"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
-"\">\n"
-"\n"
-"    <p>Hello,</p>\n"
-"\n"
-"    <p>Thank you for filling out the form.</p>\n"
-"\n"
-"    <p>You have been subscribed correctly to the Community Newsletter.</p>\n"
-"\n"
-"    <p>Here is a copy of the data we received:</p>\n"
-"\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
-"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
-"34); background-color: #FFF; \">\n"
-"    <p> - Community name: ${object.company_id.name}</p>\n"
-"    <p> - Email: ${object.email_from}</p>\n"
-"    <p> - Language: ${object.company_id.default_lang_id.code or object."
-"company_id.partner_id.lang}</p>\n"
-"    </div>\n"
-"    <br />\n"
-"    <p>Yours faithfully,</p>\n"
-"    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
-"and FAQs</a></p>\n"
-"\n"
-"</div>\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for filling out the form.</p>\n"
+"                    <p>You have been subscribed correctly to the Community Newsletter.</p>\n"
+"                    <br />\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"                </div>\n"
 "            "
 msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Kaixo,</p>\n"
+"                    <p>Eskerrik asko formularioa betetzeagatik.</p>\n"
+"                    <p>Behar bezala harpidetu zara Komunitatearen buletinera.</p>\n"
+"                    <br />\n"
+"                    <p>Zinez,</p>\n"
+"                    <p>Taldea Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"                </div>\n"
+"            "
 
 #. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_platform_news_confirm_id
 msgid ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
-"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
-"\">\n"
-"\n"
-"    <p>Hello,</p>\n"
-"\n"
-"    <p>Thank you for filling out the form.</p>\n"
-"\n"
-"    <p>You have been subscribed correctly to the Platform Newsletter.</p>\n"
-"\n"
-"    <p>We'll let you know if there's any news about the project.</p>\n"
-"\n"
-"    <p>Here is a copy of the data we received:</p>\n"
-"\n"
-"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', "
-"Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, "
-"34); background-color: #FFF; \">\n"
-"    <p> - Email: ${object.email_from}</p>\n"
-"    <p> - Language: ${object.company_id.default_lang_id.code or object."
-"company_id.partner_id.lang}</p>\n"
-"    </div>\n"
-"    <br />\n"
-"    <p>Yours faithfully,</p>\n"
-"    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources "
-"and FAQs</a></p>\n"
-"\n"
-"</div>\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for filling out the form.</p>\n"
+"                    <p>You have been subscribed correctly to the Platform Newsletter.</p>\n"
+"                    <p>We'll let you know if there's any news about the project.</p>\n"
+"                    <br />\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"                </div>\n"
 "            "
 msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Kaixo,</p>\n"
+"                    <p>Eskerrik asko formularioa betetzeagatik.</p>\n"
+"                    <p>Buletinera ondo harpidetu zara.</p>\n"
+"                    <p>Proiektuari buruzko edozein berriren berri emango dizuegu.</p>\n"
+"                    <br />\n"
+"                    <p>Zinez,</p>\n"
+"                    <p>Taldea Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"                </div>\n"
+"            "
+
+#. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_contact_platform_confirm_id
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for getting in touch.</p>\n"
+"                    <p>We have received your email. We will contact you as soon as possible.</p>\n"
+"                    <br />\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Kaixo,</p>\n"
+"                    <p>Eskerrik asko harremanetan jartzeagatik.</p>\n"
+"                    <p>Zure emaila jaso dugu. Ahalik eta azkarren zurekin harremanetan jarriko gara.</p>\n"
+"                    <br />\n"
+"                    <p>Zinez,</p>\n"
+"                    <p>Taldea Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"                </div>\n"
+"            "
 
 #. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_template_confirmation_company
@@ -625,6 +558,11 @@ msgid "Allows new members"
 msgstr "Kide berriei baimena ematea"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_lastupdate_datetime
+msgid "Last wordpress update date"
+msgstr "Wordpress eguneratzearen azken data"
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid "An instance company already exists"
@@ -660,6 +598,20 @@ msgstr "Esleitutako enpresa"
 #: model_terms:ir.ui.view,arch_db:energy_communities.ce_crm_lead_view_form
 msgid "Assing CRM to coordinator company"
 msgstr "Esleitu CRM enpresa liderrari"
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
+msgid "Assign Admin Wizard"
+msgstr "Administratzailea sortzeko morroia"
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_assign_admin_wizard
+msgid "Assign admin Wizard"
+msgstr "Administratzailea sortzeko morroia"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
+msgid "Assing administrator"
+msgstr "Esleitu administratzailea"
+
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
 msgid "Assign Admin Wizard"
 msgstr "Administratzailea sortzeko morroia"
@@ -730,6 +682,7 @@ msgstr "CE Etiketak"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_creation_ce_proposal
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
 msgid "CE creation"
 msgstr "CE sorrera"
 
@@ -903,9 +856,24 @@ msgid "Contact"
 msgstr "Kontaktua"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Contact CE"
+msgstr "Kontactua CE"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter_platform_admins
+msgid "Contact SomComunitats"
+msgstr "Kontactua SomComunitats"
+
+#. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_contact
 msgid "Contact a existing CE"
 msgstr "Jarri harremanetan lehendik dagoen CE batekin"
+
+#. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_general_contact
+msgid "Contact to the Platform"
+msgstr "Jarri harremanetan plataformarekin"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_template_confirmation_voluntary_share
@@ -986,6 +954,11 @@ msgstr "Sortu CRM Lead-etik"
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "Create landing page"
 msgstr "Sortu helmuga orria"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
+msgid "Update wordpress data"
+msgstr "Eguneratu wordpress datuak"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__create_user
@@ -1468,6 +1441,16 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Newsletter CE"
+msgstr "Buletinera CE"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter_platform_admins
+msgid "Newsletter SomComunitats"
+msgstr "Buletinera SomComunitats"
+
+#. module: energy_communities
 #: code:addons/energy_communities/services/ce_community_service.py:0
 #, python-format
 msgid "No Odoo Company found for odoo_company_id %s"
@@ -1489,6 +1472,11 @@ msgstr ""
 msgid "No Odoo User found for KeyCloak user id %s"
 msgstr ""
 "Ez da aurkitu Odoo erabiltzailerik KeyCloak %s erabiltzailearen IDarentzat"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "No web form origin"
+msgstr "Web-inprimakiaren jatorririk ez"
 
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__gender__not_binary
@@ -1641,6 +1629,10 @@ msgstr "Posta kodea"
 msgid "Procesar"
 msgstr "Prozesua"
 
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
+msgid "Procesar"
+msgstr "Prozesua"
+
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__product_share_template
 msgid "Product Share Template"
@@ -1700,6 +1692,12 @@ msgstr "Eskaerak"
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__reset_password_endpoint
 msgid "Reset password URL"
 msgstr "Pasahitza berrezartzeko esteka"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "Reset password url is not set."
+msgstr "Pasahitza berrezartzeko URLa ez dago konfiguratuta."
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__root_endpoint
@@ -2246,6 +2244,30 @@ msgid "ZIP code not found"
 msgstr "Ez da posta kodea aurkitu"
 
 #. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
+msgid "[Contact CE]"
+msgstr "[Kontaktua CE]"
+
+#. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
+msgid "[Contact SomComunitats]"
+msgstr "[Kontaktua SomComunitats]"
+
+#. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
+msgid "[Newsletter CE]"
+msgstr "[Buletinerako CE]"
+
+#. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
+msgid "[Newsletter SomComunitats]"
+msgstr "[Buletinerako SomComunitats]"
+
+#. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_template_confirmation_company
 msgid "[Somcomunitats.coop] Application to become Community membership"
 msgstr "[Somcomunitats.coop] Erkidegoko kide izateko eskaera"
@@ -2253,27 +2275,40 @@ msgstr "[Somcomunitats.coop] Erkidegoko kide izateko eskaera"
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_contact_confirm_id
 msgid "[Somcomunitats.coop] Community Contact Request"
-msgstr ""
+msgstr "[Somcomunitats.coop] Jarri harremanetan Energia Komunitatearekin"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_ce_news_confirm_id
 msgid "[Somcomunitats.coop] Community Newsletter Subscription Request"
-msgstr ""
+msgstr "[Somcomunitats.coop] Buletinerako harpidetza Energia Komunitatearekin"
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_templ_contact_platform_confirm_id
+msgid "[Somcomunitats.coop] Contact to the platform"
+msgstr "[Somcomunitats.coop] Harremanetarako formularioa"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_advise_future_ce_confirm_id
 msgid "[Somcomunitats.coop] Interested in Communities in your area"
-msgstr ""
+msgstr "[Somcomunitats.coop] Zure inguruko komunitateetan interesatzen zaizu"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_ce_creation_receipt_confirm_id
 msgid "[Somcomunitats.coop] New Community Creation Request to the platform"
 msgstr ""
+"[Somcomunitats.coop] Energia Erkidegoa inskribatzeko eskaera "
+"plataforma"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_platform_news_confirm_id
 msgid "[Somcomunitats.coop] Platform Newsletter Subscription Request"
-msgstr ""
+msgstr "[Somcomunitats.coop] Plataformako buletinen harpidetza"
+
+#. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
+msgid "[Subscription CE]"
+msgstr "[Harpidetza CE]"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template

@@ -202,11 +202,13 @@ class ResUsers(models.Model):
         provider_id.validate_admin_provider()
         headers = {"Authorization": "Bearer %s" % self._get_admin_token(provider_id)}
         headers["Content-Type"] = "application/json"
-
-        endpoint = provider_id.reset_password_endpoint.format(kc_uid=self.oauth_uid)
-        response = requests.put(
-            endpoint, headers=headers, data='["UPDATE_PASSWORD", "VERIFY_EMAIL"]'
-        )
+        if provider_id.reset_password_endpoint:
+            endpoint = provider_id.reset_password_endpoint.format(kc_uid=self.oauth_uid)
+            response = requests.put(
+                endpoint, headers=headers, data='["UPDATE_PASSWORD", "VERIFY_EMAIL"]'
+            )
+        else:
+            raise exceptions.UserError(_("Reset password url is not set."))
         if response.status_code != 204:
             raise exceptions.UserError(
                 _(
@@ -223,9 +225,7 @@ class ResUsers(models.Model):
             ]
         )
         if not already_user:
-            role = self.env["res.users.role"].search(
-                [("code", "=", "role_internal_user")]
-            )
+            role = self.env.ref("energy_communities.role_internal_user")
             self.write(
                 {
                     "role_line_ids": [
@@ -242,14 +242,13 @@ class ResUsers(models.Model):
                 }
             )
 
-    # TODO: Strategy refactor?
     def make_ce_user(self, company_id, role_name):
         role = self.env["res.users.role"].search([("code", "=", role_name)])
         current_role = self.env["res.users.role.line"].search(
             [
                 ("user_id", "=", self.id),
                 ("active", "=", True),
-                ("company_id", "=", company_id.id),
+                ("company_id", "=", company_id),
             ]
         )
 
@@ -258,7 +257,7 @@ class ResUsers(models.Model):
         else:
             self.write(
                 {
-                    "company_ids": [(4, company_id.id)],
+                    "company_ids": [(4, company_id)],
                     "role_line_ids": [
                         (
                             0,
@@ -267,7 +266,7 @@ class ResUsers(models.Model):
                                 "user_id": self.id,
                                 "active": True,
                                 "role_id": role.id,
-                                "company_id": company_id.id,
+                                "company_id": company_id,
                             },
                         )
                     ],
@@ -328,8 +327,7 @@ class ResUsers(models.Model):
             "lang": lang_code,
             "email": email,
         }
-        user = cls.create(vals)
-
+        user = cls.sudo().with_context(no_reset_password=True).create(vals)
         user.make_internal_user()
         user.create_users_on_keycloak()
         user.send_reset_password_mail()

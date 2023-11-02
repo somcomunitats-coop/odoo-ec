@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data noupdate="1">
+    <data>
 
         <record id="email_templ_lead_assigned_to_coordinator_id" model="mail.template">
             <field
@@ -12,7 +12,7 @@
       >[Somcomunitats.coop] Request for registration of the Energy Community on the platform</field>
             <field name="email_to">${ctx.get('email_to')}</field>
             <field name="model_id" ref="model_crm_lead" />
-            <field name="auto_delete" eval="True" />
+            <field name="auto_delete" eval="False" />
             <field name="lang">${object.company_id.partner_id.lang}</field>
             <field name="body_html">
                 <![CDATA[
@@ -30,97 +30,27 @@
 
     <record id="email_templ_lead_ce_creation_receipt_confirm_id" model="mail.template">
             <field name="name">Confirmation Email for CE Creation Lead Receipt</field>
-            <field name="email_from">
-                ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
-            </field>
+            <field name="email_from">${object.company_id.email}</field>
             <field
         name="subject"
       >[Somcomunitats.coop] New Community Creation Request to the platform</field>
-            <field name="email_to">${object.email_from}</field>
-            <field name="email_cc">${object.company_id.email}</field>
-            <field name="reply_to">
-                ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
-            </field>
+            <field name="email_to">${ctx.get('email_to')}</field>
             <field name="model_id" ref="model_crm_lead" />
-            <field name="auto_delete" eval="True" />
-            <field
-        name="lang"
-      >${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+            <field name="auto_delete" eval="False" />
+            <field name="lang">${ctx.get('lang')}</field>
             <field
         name="body_html"
       ><![CDATA[
-<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
-
-    <p>Hello,</p>
-
-    <p>Thank you for filling out the form and requesting the membership of your Energy Community on the Somcomunitats.coop platform.</p>
-
-    <p>In the coming weeks we will study the application and contact you to indicate the steps and the information necessary to complete the registration process for the Community and the people who are part of it.</p>
-
-    <p>Here is a copy of the data we received:</p>
-
-    <div id="field_list_div" style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; ">
-    <p> - Community name: ${object.name}</p>
-    <p> - Description: ${object.description}</p>
-    <p> - Address: ${object.street}</p>
-    <p> - Zip code: ${object.zip}</p>
-    <p> - City: ${object.city}</p>
-    <p> - Email: ${object.email_from}</p>
-    <p> - Phone: ${object.phone}</p>
-    <p></p>
-    % if object.form_submission_metadata_ids:
-        % for meta in object.form_submission_metadata_ids:
-            % if meta.value:
-                % if meta.key == 'partner_qty_members':
-                    <p> - Members: ${meta.value}</p>
-                % endif
-                % if meta.key == 'partner_legal_state':
-                    <p> - Activity state: ${meta.value}</p>
-                % endif
-                % if meta.key == 'partner_foundation_date':
-                    <p> - Foundation date: ${meta.value}</p>
-                % endif
-                % if meta.key == 'partner_vat':
-                    <p> - Activity state: ${meta.value}</p>
-                % endif
-                % if meta.key == 'partner_comments':
-                    <p> - Comments: ${meta.value}</p>
-                % endif
-                % if meta.key == 'partner_firstname':
-                    <p> - Contact firstname: ${meta.value}</p>
-                % endif
-                % if meta.key == 'partner_lastname':
-                    <p> - Contact lastname: ${meta.value}</p>
-                % endif
-                % if meta.key == 'contact2_firstname':
-                    <p> - Contact 2 firstname: ${meta.value}</p>
-                % endif
-                % if meta.key == 'contact2_lastname':
-                    <p> - Contact 2 lastname: ${meta.value}</p>
-                % endif
-                % if meta.key == 'contact2_email':
-                    <p> - Contact 2 email: ${meta.value}</p>
-                % endif
-                % if meta.key == 'contact2_mobile':
-                    <p> - Contact 2 phone: ${meta.value}</p>
-                % endif
-            % endif
-        % endfor
-    % endif
-    % if object.tag_ids:
-    <p> - Interested in:</p>
-        % for tag in object.tag_ids:
-        <p>     ${tag.name}</p>
-        % endfor
-    % endif
-    </div>
-    <br />
-    <p>We keep in touch for any questions.</p>
-    <p>Yours faithfully,</p>
-    <p>Somcomunitats.coop team </p>
-    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
-
-</div>
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Hello,</p>
+                    <p>Thank you for filling out the form and requesting the membership of your Energy Community on the Somcomunitats.coop platform.</p>
+                    <p>In the coming weeks we will study the application and contact you to indicate the steps and the information necessary to complete the registration process for the Community and the people who are part of it.</p>
+                    <br />
+                    <p>We keep in touch for any questions.</p>
+                    <p>Yours faithfully,</p>
+                    <p>Somcomunitats.coop team </p>
+                    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                </div>
             ]]></field>
         </record>
 
@@ -128,103 +58,56 @@
             <field
         name="name"
       >Confirmation Email for CE Contact Request Lead Receipt</field>
-            <field name="email_from">
-                ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
-            </field>
+            <field name="email_from">${object.company_id.email}</field>
             <field name="subject">[Somcomunitats.coop] Community Contact Request</field>
             <field name="email_to">${object.email_from}</field>
-            <field name="email_cc">info+contacteCE@somcomunitats.coop</field>
             <field name="email_cc">${object.company_id.email}</field>
-            <field name="reply_to">
-                ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
-            </field>
+            <field name="reply_to">${object.company_id.email}</field>
             <field name="model_id" ref="model_crm_lead" />
-            <field name="auto_delete" eval="True" />
-            <field
-        name="lang"
-      >${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+            <field name="auto_delete" eval="False" />
+            <field name="lang">${ctx.get('lang')}</field>
             <field
         name="body_html"
       ><![CDATA[
-<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
-
-    <p>Hello,</p>
-
-    <p>Thank you for contact.</p>
-
-    <p>We have received your email and we have we have forwarded it to the Community so that they can contact you as soon as possible.</p>
-
-    <p>Here is a copy of the data we received:</p>
-
-    <div id="field_list_div" style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; ">
-    <p> - Contact name: ${object.name}</p>
-    <p> - Email: ${object.email_from}</p>
-    <p> - Phone: ${object.phone}</p>
-    <p> - Message: ${object.description}</p>
-    <p></p>
-    % if object.tag_ids:
-    <p> - Interested in:</p>
-        % for tag in object.tag_ids:
-        <p>     ${tag.name}</p>
-        % endfor
-    % endif
-    </div>
-    <br />
-    <p>We keep in touch for any questions.</p>
-    <p>Yours faithfully,</p>
-    <p>Somcomunitats.coop team </p>
-    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
-
-</div>
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Hello,</p>
+                    <p>Thank you for contact.</p>
+                    <p>We have received your email and we have we have forwarded it to the Community so that they can contact you as soon as possible.</p>
+                    <br />
+                    <p>We keep in touch for any questions.</p>
+                    <p>Yours faithfully,</p>
+                    <p>Somcomunitats.coop team </p>
+                    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                </div>
             ]]></field>
         </record>
 
-
-    <record id="email_templ_lead_request_ce_news_confirm_id" model="mail.template">
+        <record id="email_templ_lead_request_ce_news_confirm_id" model="mail.template">
             <field
         name="name"
       >Confirmation Email for CE News Request Lead Receipt</field>
-            <field name="email_from">
-                ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
-            </field>
+            <field name="email_from">${object.company_id.email}</field>
             <field
         name="subject"
       >[Somcomunitats.coop] Community Newsletter Subscription Request</field>
             <field name="email_to">${object.email_from}</field>
-            <field name="email_cc">info+butlletiCE@somcomunitats.coop</field>
             <field name="email_cc">${object.company_id.email}</field>
-            <field name="reply_to">
-                ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
-            </field>
+            <field name="reply_to">${object.company_id.email}</field>
             <field name="model_id" ref="model_crm_lead" />
-            <field name="auto_delete" eval="True" />
-            <field
-        name="lang"
-      >${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+            <field name="auto_delete" eval="False" />
+            <field name="lang">${ctx.get('lang')}</field>
             <field
         name="body_html"
       ><![CDATA[
-<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
-
-    <p>Hello,</p>
-
-    <p>Thank you for filling out the form.</p>
-
-    <p>You have been subscribed correctly to the Community Newsletter.</p>
-
-    <p>Here is a copy of the data we received:</p>
-
-    <div id="field_list_div" style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; ">
-    <p> - Community name: ${object.company_id.name}</p>
-    <p> - Email: ${object.email_from}</p>
-    <p> - Language: ${object.company_id.default_lang_id.code or object.company_id.partner_id.lang}</p>
-    </div>
-    <br />
-    <p>Yours faithfully,</p>
-    <p>Somcomunitats.coop team </p>
-    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
-
-</div>
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Hello,</p>
+                    <p>Thank you for filling out the form.</p>
+                    <p>You have been subscribed correctly to the Community Newsletter.</p>
+                    <br />
+                    <p>Yours faithfully,</p>
+                    <p>Somcomunitats.coop team </p>
+                    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                </div>
             ]]></field>
         </record>
 
@@ -235,110 +118,87 @@
             <field
         name="name"
       >Confirmation Email for furture CE Contact Request Lead Receipt</field>
-            <field name="email_from">
-                ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
-            </field>
+            <field name="email_from">${object.company_id.email}</field>
             <field
         name="subject"
       >[Somcomunitats.coop] Interested in Communities in your area</field>
             <field name="email_to">${object.email_from}</field>
             <field name="email_cc">${object.company_id.email}</field>
-            <field name="reply_to">
-                ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
-            </field>
+            <field name="reply_to">${object.company_id.email}</field>
             <field name="model_id" ref="model_crm_lead" />
-            <field name="auto_delete" eval="True" />
-            <field
-        name="lang"
-      >${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+            <field name="auto_delete" eval="False" />
+            <field name="lang">${ctx.get('lang')}</field>
             <field
         name="body_html"
       ><![CDATA[
-<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
-
-    <p>Hello,</p>
-
-    <p>Thank you for filling out the form.</p>
-
-    <p>In case an Energy Community is activated in your neighborhood or municipality, they can consult the existing requests and contact you. Without any commitment on your part beyond having shown interest in promoting a movement of social transformation and an energy model.</p>
-
-    <p>Here is a copy of the data we received:</p>
-
-    <div id="field_list_div" style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; ">
-    <p> - Contact name: ${object.name}</p>
-    <p> - Address: ${object.street}</p>
-    <p> - Zip code: ${object.zip}</p>
-    <p> - City: ${object.city}</p>
-    <p> - Email: ${object.email_from}</p>
-    <p> - Phone: ${object.phone}</p>
-    <p></p>
-    % if object.tag_ids:
-    <p> - Interested in:</p>
-        % for tag in object.tag_ids:
-        <p>     ${tag.name}</p>
-        % endfor
-    % endif
-    </div>
-    <br />
-    <p>We keep in touch for any questions.</p>
-    <p>Yours faithfully,</p>
-    <p>Somcomunitats.coop team </p>
-    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
-
-</div>
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Hello,</p>
+                    <p>Thank you for filling out the form.</p>
+                    <p>In case an Energy Community is activated in your neighborhood or municipality, they can consult the existing requests and contact you. Without any commitment on your part beyond having shown interest in promoting a movement of social transformation and an energy model.</p>
+                    <br />
+                    <p>We keep in touch for any questions.</p>
+                    <p>Yours faithfully,</p>
+                    <p>Somcomunitats.coop team </p>
+                    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                </div>
             ]]></field>
         </record>
 
-    <record
+        <record
       id="email_templ_lead_request_platform_news_confirm_id"
       model="mail.template"
     >
             <field
         name="name"
       >Confirmation Email for Platform News Request Lead Receipt</field>
-            <field name="email_from">info+butlleti@somcomunitats.coop</field>
+            <field name="email_from">${object.company_id.email}</field>
             <field
         name="subject"
       >[Somcomunitats.coop] Platform Newsletter Subscription Request</field>
             <field name="email_to">${object.email_from}</field>
-            <field name="email_cc">info+butlleti@somcomunitats.coop</field>
             <field name="email_cc">${object.company_id.email}</field>
-            <field name="reply_to">
-                ${(object.company_id.coop_email_contact or object.company_id.email)|safe}
-            </field>
+            <field name="reply_to">${object.company_id.email}</field>
             <field name="model_id" ref="model_crm_lead" />
-            <field name="auto_delete" eval="True" />
-            <field
-        name="lang"
-      >${(object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+            <field name="auto_delete" eval="False" />
+            <field name="lang">${ctx.get('lang')}</field>
             <field
         name="body_html"
       ><![CDATA[
-<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
-
-    <p>Hello,</p>
-
-    <p>Thank you for filling out the form.</p>
-
-    <p>You have been subscribed correctly to the Platform Newsletter.</p>
-
-    <p>We'll let you know if there's any news about the project.</p>
-
-    <p>Here is a copy of the data we received:</p>
-
-    <div id="field_list_div" style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; ">
-    <p> - Email: ${object.email_from}</p>
-    <p> - Language: ${object.company_id.default_lang_id.code or object.company_id.partner_id.lang}</p>
-    </div>
-    <br />
-    <p>Yours faithfully,</p>
-    <p>Somcomunitats.coop team </p>
-    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
-
-</div>
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Hello,</p>
+                    <p>Thank you for filling out the form.</p>
+                    <p>You have been subscribed correctly to the Platform Newsletter.</p>
+                    <p>We'll let you know if there's any news about the project.</p>
+                    <br />
+                    <p>Yours faithfully,</p>
+                    <p>Somcomunitats.coop team </p>
+                    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                </div>
             ]]></field>
         </record>
 
-</data>
+        <record id="email_templ_contact_platform_confirm_id" model="mail.template">
+            <field name="name">Confirmation Email Contact Platform Receipt</field>
+            <field name="email_from">${object.company_id.email}</field>
+            <field name="subject">[Somcomunitats.coop] Contact to the platform</field>
+            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="model_id" ref="model_crm_lead" />
+            <field name="auto_delete" eval="False" />
+            <field name="lang">${ctx.get('lang')}</field>
+            <field
+        name="body_html"
+      ><![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Hello,</p>
+                    <p>Thank you for getting in touch.</p>
+                    <p>We have received your email. We will contact you as soon as possible.</p>
+                    <br />
+                    <p>Yours faithfully,</p>
+                    <p>Somcomunitats.coop team </p>
+                    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                </div>
+            ]]></field>
+        </record>
 
+    </data>
 </odoo>

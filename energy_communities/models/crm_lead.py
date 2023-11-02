@@ -28,14 +28,12 @@ class CrmLead(models.Model):
         string="CE Tags",
         help="CE Classify and analyze categories",
     )
-
     community_company_id = fields.Many2one(
         string="Related Community",
         comodel_name="res.company",
         domain="[('coordinator','!=',True)]",
         help="Community related to this Lead",
     )
-
     finished = fields.Boolean(
         related="stage_id.is_won",
         readonly=True,
@@ -49,6 +47,19 @@ class CrmLead(models.Model):
         compute="_get_can_be_assigned_to_coordinator",
         store=False,
     )
+    is_instance_company = fields.Boolean(
+        string="Is instance company", compute="_is_instance_company"
+    )
+
+    def _is_instance_company(self):
+        company = self.env.company
+        instance_companies = self.env["res.company"].search(
+            [("hierarchy_level", "=", "instance")]
+        )
+        if company in instance_companies:
+            self.is_instance_company = True
+        else:
+            self.is_instance_company = False
 
     def _create_map_place_proposal(self):
         if not self.env.user.company_id.coordinator:
@@ -332,9 +343,6 @@ class CrmLead(models.Model):
                 )
             lead.community_company_id._create_keycloak_realm()
 
-    def post_template_to_chatter(self, template_id):
-        self.message_post_with_template(template_id)
-
     def _create_community_initial_users(self):
         for lead in self:
             pass
@@ -369,6 +377,18 @@ class CrmLead(models.Model):
                 self.env.ref("energy_communities.ce_source_existing_ce_contact").id,
                 self.env.ref("energy_communities.ce_source_creation_ce_proposal").id,
             ]
+
+    def add_follower(self):
+        instance_admin = self.env.ref("energy_communities.role_ce_manager").id
+        company_id = self.company_id.id
+        followers = self.env["res.users"].search(
+            [
+                ("role_line_ids.role_id", "=", instance_admin),
+                ("company_ids.id", "=", company_id),
+            ]
+        )
+        if followers:
+            self.message_subscribe(partner_ids=followers.partner_id.ids)
 
 
 class CrmTags(models.Model):

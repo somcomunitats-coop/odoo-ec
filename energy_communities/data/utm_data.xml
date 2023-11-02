@@ -13,6 +13,9 @@
     <record model="utm.source" id="ce_source_existing_ce_contact">
         <field name="name">Contact a existing CE</field>
     </record>
+    <record model="utm.source" id="ce_source_general_contact">
+        <field name="name">Contact to the Platform</field>
+    </record>
     <!-- CE Other Sources -->
     <record model="utm.source" id="ce_source_creation_ce_proposal">
         <field name="name">CE creation</field>

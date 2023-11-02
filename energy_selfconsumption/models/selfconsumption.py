@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
 
@@ -18,6 +20,25 @@ class Selfconsumption(models.Model):
         for record in self:
             record.inscription_count = len(record.inscription_ids)
 
+    def _compute_report_distribution_table(self):
+        """
+        This compute field gets the distribution table needed to generate the reports.
+        It prioritizes the table in process and then the active one. It can only be one of each.
+        """
+        for record in self:
+            table_in_process = record.distribution_table_ids.filtered_domain(
+                [("state", "=", "process")]
+            )
+            table_in_active = record.distribution_table_ids.filtered_domain(
+                [("state", "=", "active")]
+            )
+            if table_in_process:
+                record.report_distribution_table = table_in_process
+            elif table_in_active:
+                record.report_distribution_table = table_in_active
+            else:
+                record.report_distribution_table = False
+
     project_id = fields.Many2one(
         "energy_project.project", required=True, ondelete="cascade"
     )
@@ -35,6 +56,11 @@ class Selfconsumption(models.Model):
     distribution_table_ids = fields.One2many(
         "energy_selfconsumption.distribution_table",
         "selfconsumption_project_id",
+        readonly=True,
+    )
+    report_distribution_table = fields.Many2one(
+        "energy_selfconsumption.distribution_table",
+        compute=_compute_report_distribution_table,
         readonly=True,
     )
     distribution_table_count = fields.Integer(compute=_compute_distribution_table_count)
@@ -112,3 +138,53 @@ class Selfconsumption(models.Model):
     def set_draft(self):
         for record in self:
             record.write({"state": "draft"})
+
+    def action_manager_authorization_report(self):
+        self.ensure_one()
+        return self.env.ref(
+            "energy_selfconsumption.selfconsumption_manager_authorization_report"
+        ).report_action(self)
+
+    def action_power_sharing_agreement_report(self):
+        self.ensure_one()
+        return self.env.ref(
+            "energy_selfconsumption.power_sharing_agreement_report"
+        ).report_action(self)
+
+    def action_manager_partition_coefficient_report(self):
+        tables_to_use = self.report_distribution_table
+        report_data = []
+
+        for table in tables_to_use:
+            for assignation in table.supply_point_assignation_ids:
+                report_data.append(
+                    {
+                        "code": assignation.supply_point_id.code,
+                        "coefficient": assignation.coefficient,
+                    }
+                )
+
+        file_content = ""
+        for data in report_data:
+            line = f"{data['code']};{str(data['coefficient']).replace('.', ',')}\n"
+            file_content += line
+
+        date = datetime.now()
+        year = date.strftime("%Y")
+        self.env["energy_selfconsumption.coefficient_report"].create(
+            {"report_data": file_content, "file_name": f"{self.code}_{year}.txt"}
+        )
+        url = "/energy_selfconsumption/download_report?id=%s" % self.id
+        return {
+            "type": "ir.actions.act_url",
+            "url": url,
+            "target": "self",
+        }
+
+
+class CoefficientReport(models.TransientModel):
+    _name = "energy_selfconsumption.coefficient_report"
+    _description = "Generate Partition Coefficient Report"
+
+    report_data = fields.Text("Report Data", readonly=True)
+    file_name = fields.Char("File Name", readonly=True)
