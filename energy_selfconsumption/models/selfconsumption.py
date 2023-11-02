@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
@@ -125,18 +125,10 @@ class Selfconsumption(models.Model):
         return {
             "type": "ir.actions.act_window",
             "name": "Contracts",
-            "views": [
-                [self.env.ref("energy_selfconsumption.contract_tree_view").id, "tree"],
-                [False, "form"],
-            ],
+            "view_mode": "tree,form",
             "res_model": "contract.contract",
             "domain": [("project_id", "=", self.id)],
-            "context": {
-                "create": True,
-                "default_project_id": self.id,
-                "search_default_filter_next_period_date_start": True,
-                "search_default_filter_next_period_date_end": True,
-            },
+            "context": {"create": True, "default_project_id": self.id},
         }
 
     def distribution_table_state(self, actual_state, new_state):
@@ -268,6 +260,46 @@ class Selfconsumption(models.Model):
             "url": url,
             "target": "self",
         }
+
+    def send_invoicing_reminder(self):
+        today = date.today()
+        date_validation = today + timedelta(days=3)
+
+        filtered_contracts = self.env["contract.contract"].search(
+            [
+                (
+                    "project_id.selfconsumption_id.invoicing_mode",
+                    "=",
+                    "energy_delivered",
+                ),
+                ("recurring_next_date", "=", date_validation),
+            ]
+        )
+        project_controller = []
+        for contract in filtered_contracts:
+            project_name = contract.project_id.name
+            if project_name in project_controller:
+                continue
+            project_controller.append(project_name)
+
+            first_date = contract.next_period_date_start
+            last_date = contract.next_period_date_end
+
+            next_invoicing = last_date + timedelta(days=1)
+            ctx = {
+                "project_name": project_name,
+                "next_invoicing": next_invoicing.strftime("%d-%m-%Y"),
+                "first_date": first_date.strftime("%d-%m-%Y"),
+                "last_date": last_date.strftime("%d-%m-%Y"),
+            }
+
+            template = (
+                self.env.ref(
+                    "energy_selfconsumption.selfconsumption_invoicing_reminder", False
+                )
+                .with_context(ctx)
+                .send_mail(self.id, raise_exception=True)
+            )
 
 
 class CoefficientReport(models.TransientModel):
