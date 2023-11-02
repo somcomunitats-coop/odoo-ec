@@ -19,6 +19,20 @@ class Contract(models.Model):
         related="supply_point_assignation_id.supply_point_id.name"
     )
 
+    def invoicing_wizard_action(self):
+        """
+        We create the wizard first, so it triggers the constraint of the contract_ids
+        :return: Window action with the wizard already created
+        """
+        wizard_id = self.env["energy_selfconsumption.invoicing.wizard"].create(
+            {"contract_ids": [(6, 0, self.ids)]}
+        )
+        action = self.env.ref(
+            "energy_selfconsumption.invoicing_wizard_act_window"
+        ).read()[0]
+        action["res_id"] = wizard_id.id
+        return action
+
 
 class ContractRecurrencyMixin(models.AbstractModel):
     _inherit = "contract.recurrency.mixin"
