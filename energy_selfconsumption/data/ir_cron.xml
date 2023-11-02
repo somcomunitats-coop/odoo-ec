@@ -3,7 +3,10 @@
     <data>
         <record id="send_invoicing_reminder_to_admin" model="ir.cron">
             <field name="name">Send Invoicing Reminder to Admin User</field>
-            <field name="model_id" ref="energy_selfconsumption.selfconsumption" />
+            <field
+        name="model_id"
+        ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"
+      />
             <field
         name="code"
       >energy_selfconsumption.selfconsumption.send_invoicing_reminder()</field>
