@@ -33,6 +33,14 @@ Next period end: {next_period_date_end}"""
                     )
                 )
 
+    @api.constrains("power")
+    def constraint_power(self):
+        for record in self:
+            if not record.power or record.power <= 0:
+                raise ValidationError(
+                    _("You must enter a valid total energy generated (kWh).")
+                )
+
     def generate_invoices(self):
         return self.with_context(
             {"energy_delivered": self.power}
