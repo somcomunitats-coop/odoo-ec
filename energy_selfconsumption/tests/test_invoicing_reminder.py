@@ -1,9 +1,6 @@
-import logging
 from datetime import date, datetime, timedelta
 
 from odoo.tests import TransactionCase
-
-logger = logging.getLogger(__name__)
 
 
 class TestInvoicingReminder(TransactionCase):
@@ -104,7 +101,7 @@ class TestInvoicingReminder(TransactionCase):
         )
         self.assertTrue(reminder_mail, "El correo de recordatorio no se envió.")
 
-        # Delete sent email
+        # Delete sent email to make other test
         reminder_mail.unlink()
 
         # Test using the send_invoicing_reminder() method with a record with a date outside the parameter (3 days)
