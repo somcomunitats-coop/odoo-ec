@@ -1,3 +1,4 @@
+
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* energy_communities
@@ -6,16 +7,55 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-07 06:55+0000\n"
-"PO-Revision-Date: 2023-07-12 06:27+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2023-08-23 12:01+0000\n"
+"PO-Revision-Date: 2023-08-23 14:24+0200\n"
+"Last-Translator: Daniil Digtyar Vasilieva <daniil.digtyar@somit.coop>\n"
 "Language-Team: \n"
 "Language: eu_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 3.0.1\n"
+
+#. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_lead_assigned_to_coordinator_id
+msgid ""
+"\n"
+"                \n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"                        <p>Hello,</p>\n"
+"\n"
+"                        <p>There is a new Energy Community registration request.</p>\n"
+"\n"
+"                        <p>Go to Odoo to track this registration.</p>\n"
+"\n"
+"                        <p>Yours faithfully,</p>\n"
+"                        <p>Somcomunitats.coop team </p>\n"
+"                        <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"\n"
+"                    </div>\n"
+"                \n"
+"            "
+msgstr ""
+"\n"
+"                \n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"                        <p>Kaixo,</p>\n"
+"\n"
+"                        <p>Comunidad Energétican izena emateko eskaera berri bat dago.</p>\n"
+"\n"
+"                        <p>Zoaz Odoo erregistro honi jarraipena emateko.</p>\n"
+"\n"
+"                        <p>Zinez,</p>\n"
+"                        <p>Taldea Somcomunitats.coop</p>\n"
+"                        <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"\n"
+"                    </div>\n"
+"                \n"
+"            "
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_subscription_request__vat
@@ -351,6 +391,7 @@ msgstr ""
 "                </div>\n"
 "            "
 
+
 #. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_platform_news_confirm_id
 msgid ""
@@ -540,7 +581,7 @@ msgstr "Admin hornitzailea"
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_admin
 msgid "Administrator"
-msgstr "Administratua"
+msgstr "Administratzailea"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_aggregate_demand
@@ -597,20 +638,7 @@ msgstr "Esleitutako enpresa"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.ce_crm_lead_view_form
 msgid "Assing CRM to coordinator company"
-msgstr "Esleitu CRM enpresa liderrari"
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
-msgid "Assign Admin Wizard"
-msgstr "Administratzailea sortzeko morroia"
-
-#. module: energy_communities
-#: model:ir.model,name:energy_communities.model_assign_admin_wizard
-msgid "Assign admin Wizard"
-msgstr "Administratzailea sortzeko morroia"
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
-msgid "Assing administrator"
-msgstr "Esleitu administratzailea"
+msgstr "Enpresa koordinatzaileari CRM gehitzea"
 
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
 msgid "Assign Admin Wizard"
@@ -1084,13 +1112,19 @@ msgstr "Energia Komunitateak"
 #: model:res.groups,name:energy_communities.role_ce_admin_res_groups
 #: model:res.users.role,name:energy_communities.role_ce_admin
 msgid "Energy Community Administrator"
-msgstr ""
+msgstr "Energia Erkidegoko Administratzailea"
+
+#. module: energy_communities
+#: model:res.groups,name:energy_communities.role_ce_manager_res_groups
+#: model:res.users.role,name:energy_communities.role_ce_manager
+msgid "Energy Community Manager"
+msgstr "Energy Community Manager"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_ce_member_res_groups
 #: model:res.users.role,name:energy_communities.role_ce_member
 msgid "Energy Community Member"
-msgstr ""
+msgstr "Energia Erkidegoko kidea"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__ce_tag_ids
@@ -1400,7 +1434,7 @@ msgstr "Ekimena/Aukera"
 #: model:auth.oauth.provider,body:energy_communities.keycloak_admin_provider
 #: model:auth.oauth.provider,body:energy_communities.keycloak_login_provider
 msgid "Login with Keycloak"
-msgstr ""
+msgstr "Hasi saioa Keycloak-ekin"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__long_description
@@ -1438,7 +1472,7 @@ msgid ""
 "Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats "
 "Energètiques\n"
 "        "
-msgstr ""
+msgstr "Erabiltzaileen sarbide maila Energia Komunitateen Odoo plataformara"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
@@ -1605,13 +1639,13 @@ msgstr "Leku erreferentzia"
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_platform_manager
 msgid "Platform Manager"
-msgstr ""
+msgstr "Plataforma kudeatzailea"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_platform_admin_res_groups
 #: model:res.users.role,name:energy_communities.role_platform_admin
 msgid "Platform admin role"
-msgstr ""
+msgstr "Plataformaren administratzaile rola"
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
@@ -1625,9 +1659,9 @@ msgid "Postal code"
 msgstr "Posta kodea"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
-msgid "Procesar"
-msgstr "Prozesua"
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__primary_image_file
+msgid "Primary Image"
+msgstr "Lehen irudia"
 
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
 msgid "Procesar"
@@ -1666,7 +1700,7 @@ msgstr "Argitaratua"
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.print_instance
 msgid "Push user to Keycloak"
-msgstr ""
+msgstr "Bultza ezazu erabiltzailea Keycloakera"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__realm_name
@@ -2056,7 +2090,7 @@ msgstr "Eguneratu res.partners-en konpainiaren IDak erabiltzaileekin"
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_user
 msgid "User"
-msgstr ""
+msgstr "Erabiltzailea"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__admin_user_endpoint
@@ -2330,3 +2364,4 @@ msgstr " Borondatezko Ekarpenen."
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "€ by follow the steps you will receive by email."
 msgstr "€ posta elektronikoz jasoko dituzun urratsak jarraituz."
+
