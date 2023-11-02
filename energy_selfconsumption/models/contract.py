@@ -18,6 +18,14 @@ class Contract(models.Model):
     supply_point_name = fields.Char(
         related="supply_point_assignation_id.supply_point_id.name"
     )
+    last_period_date_start = fields.Date(
+        string="Last Period Start",
+        readonly=True,
+    )
+    last_period_date_end = fields.Date(
+        string="Last Period End",
+        readonly=True,
+    )
 
     def invoicing_wizard_action(self):
         """
@@ -32,6 +40,21 @@ class Contract(models.Model):
         ).read()[0]
         action["res_id"] = wizard_id.id
         return action
+
+    def _recurring_create_invoice(self, date_ref=False):
+        last_period_date_start = last_period_date_end = False
+        if len(self) > 1:
+            last_period_date_start = self[0].next_period_date_start
+            last_period_date_end = self[0].next_period_date_end
+        res = super()._recurring_create_invoice(date_ref=date_ref)
+        if res and last_period_date_start and last_period_date_end:
+            self.write(
+                {
+                    "last_period_date_start": last_period_date_start,
+                    "last_period_date_end": last_period_date_end,
+                }
+            )
+        return res
 
 
 class ContractRecurrencyMixin(models.AbstractModel):
