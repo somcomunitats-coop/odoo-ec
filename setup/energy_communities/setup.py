@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(
-    setup_requires=['setuptools-odoo', 'faker'],
+    setup_requires=['setuptools-odoo'],
     odoo_addon={
         "depends_override": {
             "account_lock_date_update": "odoo14-addon-account-lock-date-update==14.0.2.0.1.dev10",
