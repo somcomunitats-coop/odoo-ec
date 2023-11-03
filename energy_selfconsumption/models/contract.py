@@ -1,5 +1,7 @@
 from odoo import fields, models
 
+from .selfconsumption import Selfconsumption
+
 
 class Contract(models.Model):
     _inherit = "contract.contract"
@@ -56,6 +58,8 @@ class Contract(models.Model):
                     "last_period_date_end": last_period_date_end,
                 }
             )
+
+        self.send_power_acquired_invoicing_reminder()
         return res
 
     def _get_contracts_to_invoice_domain(self, date_ref=None):
