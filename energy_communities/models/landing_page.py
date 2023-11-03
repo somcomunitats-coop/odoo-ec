@@ -191,6 +191,18 @@ class LandingPage(models.Model):
             record._update_wordpress()
             record._update_landing_place()
             self.write({"publicdata_lastupdate_datetime": datetime.now()})
+            return {
+                "type": "ir.actions.client",
+                "tag": "display_notification",
+                "params": {
+                    "type": "success",
+                    "title": _("Public data update successful"),
+                    "message": _(
+                        "Wordpress landing and map place has been successfully updated."
+                    ),
+                    "sticky": False,
+                },
+            }
 
     def _update_wordpress(self):
         instance_company = self.env["res.company"].search(

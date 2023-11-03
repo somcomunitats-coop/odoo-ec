@@ -37,5 +37,4 @@ class LandingPage:
             self.token,
             body,
         )
-
         return response_data

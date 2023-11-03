@@ -171,7 +171,7 @@ class LandingCmPlace:
             ret_dict["data"]["presenter_model_id"] = presenter.id
         else:
             ret_dict["errors"].append(
-                _("Place status filter not found slug_id: {}").format(presenter_name)
+                _("Place presenter not found slug_id: {}").format(presenter_name)
             )
         return ret_dict
 
