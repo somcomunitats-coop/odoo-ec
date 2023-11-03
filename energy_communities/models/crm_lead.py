@@ -317,16 +317,16 @@ class CrmLead(models.Model):
             "vat": metadata.get("ce_vat", False) and metadata["ce_vat"] or None,
             "foundation_date": foundation_date,
             "default_lang_id": lang_id and lang_id.id or None,
-            "chart_template_id": self.env["account.chart.template"].ref(
+            "chart_template_id": self.env.ref(
                 "l10n_es.account_chart_template_pymes"
-            ),
+            ).id,
             "update_default_taxes": True,
-            "default_sale_tax_id": self.env["account.tax.template"].ref(
+            "default_sale_tax_id": self.env.ref(
                 "l10n_es.account_tax_template_s_iva21s"
-            ),
-            "default_purchase_tax_id": self.env["account.tax.template"].ref(
+            ).id,
+            "default_purchase_tax_id": self.env.ref(
                 "l10n_es.account_tax_template_p_iva21_bc"
-            ),
+            ).id,
             "property_cooperator_account": self.env["account.account"]
             .search([("code", "like", "44000%")], limit=1)
             .id,
@@ -361,7 +361,7 @@ class CrmLead(models.Model):
         wizard = self.env["account.multicompany.easy.creation.wiz"].create(data)
         return {
             "type": "ir.actions.act_window",
-            "name": "Create community",
+            "name": _("Create community"),
             "res_model": "account.multicompany.easy.creation.wiz",
             "view_type": "form",
             "view_mode": "form",
