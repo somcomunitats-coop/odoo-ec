@@ -69,6 +69,12 @@
               string="Download Partition Coefficient"
               attrs="{'invisible':[('state','not in',['activation', 'active'])]}"
             />
+                        <button
+              type="object"
+              string="Define Invoicing Mode"
+              name="set_invoicing_mode"
+              attrs="{'invisible':[('invoicing_mode', '!=', False)]}"
+            />
 
                         <field
               name="state"
@@ -106,6 +112,21 @@
                   widget="statinfo"
                 />
                             </button>
+
+                            <button
+                class="oe_stat_button"
+                type="object"
+                name="get_contracts"
+                icon="fa-files-o"
+                attrs="{'invisible': [('state', '!=', 'active')]}"
+              >
+                                <field
+                  string="Contracts"
+                  name="contracts_count"
+                  widget="statinfo"
+                />
+                            </button>
+
                         </div>
                         <widget
               name="web_ribbon"
@@ -144,6 +165,11 @@
                                 <field
                   name="owner_id"
                   attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                />
+                                <field
+                  name="reseller_id"
+                  attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
+                  options="{'no_create': True, 'no_edit':True, 'no_open': True}"
                 />
                             </group>
                             <group>
@@ -196,6 +222,25 @@
                                 </div>
                             </group>
                         </group>
+
+                        <notebook colspan="4">
+                            <page
+                string="Invoicing Mode"
+                name="invoicing_mode"
+                autofocus="autofocus"
+                attrs="{'invisible':[('invoicing_mode', '==', False)]}"
+              >
+                                <group>
+                                    <field name="invoicing_mode" readonly="True" />
+                                    <field name="product_id" readonly="True" />
+                                    <field
+                    name="contract_template_id"
+                    readonly="True"
+                  />
+                                </group>
+                            </page>
+                        </notebook>
+
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers" />
