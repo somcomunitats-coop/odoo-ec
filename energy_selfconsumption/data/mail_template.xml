@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="selfconsumption_invoicing_reminder" model="mail.template">
-        <field name="name">Selfconsumption Invoicing Reminder</field>
+    <record
+    id="selfconsumption_energy_delivered_invoicing_reminder"
+    model="mail.template"
+  >
+        <field name="name">Selfconsumption Energy Delivered Invoicing Reminder</field>
         <field name="email_from">${object.company_id.email}</field>
         <field name="email_to">${object.email}</field>
-        <field name="subject">Selfconsumption - Invoicing Reminder</field>
+        <field
+      name="subject"
+    >Selfconsumption - Energy Delivered Invoicing Reminder</field>
         <field
       name="model_id"
       ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"

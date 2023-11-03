@@ -303,7 +303,8 @@ class Selfconsumption(models.Model):
 
             template = (
                 self.env.ref(
-                    "energy_selfconsumption.selfconsumption_invoicing_reminder", False
+                    "energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder",
+                    False,
                 )
                 .with_context(ctx)
                 .send_mail(self.id, raise_exception=True)
