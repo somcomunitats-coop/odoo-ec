@@ -96,7 +96,7 @@
             type="object"
             string="Create community"
             groups="energy_communities.group_platform_manager"
-            attrs="{'invisible':[('source_id', '!=', %(ce_source_creation_ce_proposal)d)]}"
+            attrs="{'invisible':['|',('source_id', '!=', %(ce_source_creation_ce_proposal)d),('probability','=',100)]}"
           />
 				</header>
 			</xpath>

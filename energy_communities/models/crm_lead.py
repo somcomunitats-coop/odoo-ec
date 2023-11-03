@@ -372,11 +372,17 @@ class CrmLead(models.Model):
     @api.depends("source_id")
     def _get_can_be_assigned_to_coordinator(self):
         for record in self:
-            record.can_be_assigned_to_coordinator = record.source_id.id in [
-                self.env.ref("energy_communities.ce_source_general_info").id,
-                self.env.ref("energy_communities.ce_source_existing_ce_contact").id,
-                self.env.ref("energy_communities.ce_source_creation_ce_proposal").id,
-            ]
+            record.can_be_assigned_to_coordinator = (
+                record.source_id.id
+                in [
+                    self.env.ref("energy_communities.ce_source_general_info").id,
+                    self.env.ref("energy_communities.ce_source_existing_ce_contact").id,
+                    self.env.ref(
+                        "energy_communities.ce_source_creation_ce_proposal"
+                    ).id,
+                ]
+                and self.company_id.hierarchy_level == "instance"
+            )
 
     def add_follower(self):
         instance_admin = self.env.ref("energy_communities.role_ce_manager").id
