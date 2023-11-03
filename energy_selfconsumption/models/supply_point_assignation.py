@@ -72,7 +72,7 @@ class SupplyPointAssignation(models.Model):
     @api.constrains("supply_point_id")
     def constraint_supply_point_id(self):
         for record in self:
-            supply_points = record.distribution_table_id.selfconsumption_project_id.project_id.inscription_ids.mapped(
+            supply_points = record.distribution_table_id.selfconsumption_project_id.inscription_ids.mapped(
                 "partner_id.supply_ids"
             )
             if record.supply_point_id.id not in supply_points.ids:
