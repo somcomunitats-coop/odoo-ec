@@ -209,6 +209,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     def action_accept(self):
         super().action_accept()
         self.with_delay()._after_action_accept_hook()
+        self.crm_lead_id.action_set_won_rainbowman()
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",
@@ -217,6 +218,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 "title": _("Company creation successful"),
                 "message": _("The new community has been correctly created"),
                 "sticky": False,
+                "next": {"type": "ir.actions.act_window_close"},
             },
         }
 
