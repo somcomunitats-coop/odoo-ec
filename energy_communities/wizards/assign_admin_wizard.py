@@ -14,8 +14,10 @@ class AssignAdminWizard(models.TransientModel):
     last_name = fields.Char(string="Last name", required=True)
     vat = fields.Char(string="VAT", required=True)
     email = fields.Char(string="Email", required=True)
-    lang = fields.Many2one("res.lang", string="Language")
-    role = fields.Selection(selection="_get_available_roles", string="Role")
+    lang = fields.Many2one("res.lang", string="Language", required=True)
+    role = fields.Selection(
+        selection="_get_available_roles", string="Role", required=True
+    )
     user_is_coordinator_worker = fields.Boolean(compute="_user_is_coordinator_worker")
 
     def _user_is_coordinator_worker(self):
