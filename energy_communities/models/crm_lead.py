@@ -317,16 +317,16 @@ class CrmLead(models.Model):
             "vat": metadata.get("ce_vat", False) and metadata["ce_vat"] or None,
             "foundation_date": foundation_date,
             "default_lang_id": lang_id and lang_id.id or None,
-            "chart_template_id": self.env["account.chart.template"]
-            .search([("name", "=", "PGCE PYMEs 2008")])[0]
-            .id,
+            "chart_template_id": self.env["account.chart.template"].ref(
+                "l10n_es.account_chart_template_pymes"
+            ),
             "update_default_taxes": True,
-            "default_sale_tax_id": self.env["account.tax.template"]
-            .search([("name", "=", "IVA 21% (Servicios)")])[0]
-            .id,
-            "default_purchase_tax_id": self.env["account.tax.template"]
-            .search([("name", "=", "21% IVA soportado (bienes corrientes)")])[0]
-            .id,
+            "default_sale_tax_id": self.env["account.tax.template"].ref(
+                "l10n_es.account_tax_template_s_iva21s"
+            ),
+            "default_purchase_tax_id": self.env["account.tax.template"].ref(
+                "l10n_es.account_tax_template_p_iva21_bc"
+            ),
             "property_cooperator_account": self.env["account.account"]
             .search([("code", "like", "44000%")], limit=1)
             .id,
