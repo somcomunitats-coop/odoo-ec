@@ -178,17 +178,17 @@ class LandingCmPlace:
     def _get_address_txt(self):
         address_txt = ""
         if self.landing.street:
-            address_txt += self.landing.street
+            address_txt = self.landing.street
         if self.landing.postal_code:
             if address_txt == "":
-                address_txt += self.landing.postal_code
+                address_txt = self.landing.postal_code
             else:
                 address_txt += ", " + self.landing.postal_code
         if self.landing.city:
             if address_txt == "":
-                address_txt += self.landing.city
+                address_txt = self.landing.city
             else:
-                address_txt += " " + self.landing.city
+                address_txt += ", " + self.landing.city
         return address_txt
 
     def _get_button_color_configs(self):
