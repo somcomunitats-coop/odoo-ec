@@ -269,7 +269,7 @@ class Selfconsumption(models.Model):
             "target": "self",
         }
 
-    def send_invoicing_reminder(self):
+    def send_energy_delivery_invoicing_reminder(self):
         today = date.today()
         date_validation = today + timedelta(days=3)
 

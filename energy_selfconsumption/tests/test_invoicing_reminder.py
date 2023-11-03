@@ -85,8 +85,8 @@ class TestInvoicingReminder(TransactionCase):
             }
         )
 
-    def test_send_invoicing_reminder(self):
-        # Test using send_invoicing_reminder() method to send correctly email
+    def test_send_energy_delivery_invoicing_reminder(self):
+        # Test using send_energy_delivery_invoicing_reminder() method to send correctly email
         validation_date = date.today() + timedelta(days=3)
         self.define_invoicing_mode_wizard.save_data_to_selfconsumption()
         self.contract_generation_wizard.generate_contracts_button()
@@ -95,19 +95,23 @@ class TestInvoicingReminder(TransactionCase):
         )
         contract.recurring_next_date = validation_date
 
-        self.env["energy_selfconsumption.selfconsumption"].send_invoicing_reminder()
+        self.env[
+            "energy_selfconsumption.selfconsumption"
+        ].send_energy_delivery_invoicing_reminder()
         reminder_mail = self.env["mail.mail"].search(
-            [("subject", "=", "Selfconsumption - Invoicing Reminder")]
+            [("subject", "=", "Selfconsumption - Energy Delivered Invoicing Reminder")]
         )
         self.assertTrue(reminder_mail, "El correo de recordatorio no se envió.")
 
         # Delete sent email to make other test
         reminder_mail.unlink()
 
-        # Test using the send_invoicing_reminder() method with a record with a date outside the parameter (3 days)
+        # Test using the send_energy_delivery_invoicing_reminder() method with a record with a date outside the parameter (3 days)
         contract.recurring_next_date = validation_date + timedelta(days=1)
-        self.env["energy_selfconsumption.selfconsumption"].send_invoicing_reminder()
+        self.env[
+            "energy_selfconsumption.selfconsumption"
+        ].send_energy_delivery_invoicing_reminder()
         reminder_mail = self.env["mail.mail"].search(
-            [("subject", "=", "Selfconsumption - Invoicing Reminder")]
+            [("subject", "=", "Selfconsumption - Energy Delivered Invoicing Reminder")]
         )
         self.assertFalse(reminder_mail, "El correo de recordatorio no se envió.")
