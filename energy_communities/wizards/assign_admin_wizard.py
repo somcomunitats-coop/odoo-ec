@@ -30,7 +30,7 @@ class AssignAdminWizard(models.TransientModel):
 
     @api.model
     def _get_available_roles(self):
-        company = self.env["res.company"].browse(self.env.company.id)
+        company = self.env.company
         if company.hierarchy_level == "community":
             return [
                 ("role_ce_admin", _("Energy Community Administrator")),
@@ -40,6 +40,13 @@ class AssignAdminWizard(models.TransientModel):
             return [
                 ("role_coord_admin", _("Coordinator Admin")),
                 ("role_coord_worker", _("Coordinator Worker")),
+            ]
+        elif company.hierarchy_level == "instance":
+            return [
+                ("role_coord_admin", _("Coordinator Admin")),
+                ("role_coord_worker", _("Coordinator Worker")),
+                ("role_ce_admin", _("Energy Community Administrator")),
+                ("role_ce_member", _("Energy Community Member")),
             ]
         return []
 
