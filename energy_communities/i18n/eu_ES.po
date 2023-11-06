@@ -598,9 +598,9 @@ msgid "Allows new members"
 msgstr "Kide berriei baimena ematea"
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_lastupdate_datetime
-msgid "Last wordpress update date"
-msgstr "Wordpress eguneratzearen azken data"
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__publicdata_lastupdate_datetime
+msgid "Last wordpress/map update date"
+msgstr "Wordpress/Mapa eguneratzearen azken data"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
@@ -984,8 +984,8 @@ msgstr "Sortu helmuga orria"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
-msgid "Update wordpress data"
-msgstr "Eguneratu wordpress datuak"
+msgid "Update (wp landing / map place)"
+msgstr "Eguneratu wordpress/mapa datuak"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__create_user
@@ -1207,11 +1207,6 @@ msgstr "Orokorra"
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_general_info_menu
 msgid "General Information"
 msgstr "Informazio orokorra"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_landing_page__group_image_link
-msgid "Group image link"
-msgstr "Taldeko irudiaren esteka"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
@@ -1444,11 +1439,6 @@ msgstr "Deskribapen luzea"
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_subscription_request_filter_inherit
 msgid "Mandatory Shares"
 msgstr "Nahitaezko akzioak"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_landing_page__map_geolocation
-msgid "Map geolocation"
-msgstr "Maparen geokokapena"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_sustainable_mobility
@@ -2363,3 +2353,45 @@ msgstr " Borondatezko Ekarpenen."
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "€ by follow the steps you will receive by email."
 msgstr "€ posta elektronikoz jasoko dituzun urratsak jarraituz."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Only users that belongs to the 'Coordinator' or 'Instance' company can create new Map Places."
+msgstr "Komunitate edo Instantzia Koordinatzaile motako erabiltzaileek soilik sor ditzakete mapa-puntuak."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Map not found slug_id: {}"
+msgstr "Ez da maparik aurkitu slug_id-rako: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Landing lat param required for place creation"
+msgstr "Lurreratzearen latitudea behar da mapa-puntua sortzeko."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Landing lng param required for place creation"
+msgstr "Lurreratze-luzera beharrezkoa da mapa-puntua sortzeko."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Place category not found slug_id: {}"
+msgstr "Ez da aurkitu maparen kategoriarik slug_id-erako: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Place status filter not found slug_id: {}"
+msgstr "Ez da aurkitu mapa-iragazkirik slug_id-rako: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Button configs not found."
+msgstr "Ez da aurkitu botoiaren konfigurazioa."
