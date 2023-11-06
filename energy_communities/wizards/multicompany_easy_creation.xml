@@ -23,12 +23,22 @@
                     </page>
                 </xpath>
                 <xpath expr="//page" position="before">
-                    <page string="Energy Communities">
-                        <group string="Energy Communities">
-                            <field name="parent_id" />
-                        </group>
-                        <group string="Create from CRM Lead">
-                            <field name="crm_lead_id" />
+                    <page string="Energy Community">
+                        <group string="Energy Community">
+                            <field name="parent_id" required="1" />
+                            <field name="vat" required="1" />
+                            <field name="state_id" required="1" />
+                            <field name="city" required="1" />
+                            <field name="street" required="1" />
+                            <field name="zip_code" required="1" />
+                            <field name="foundation_date" required="1" />
+                            <field name="email" required="1" />
+                            <field name="legal_form" required="1" />
+                            <field name="legal_name" required="1" />
+                            <field name="ce_status" />
+                            <field name="phone" required="1" />
+                            <field name="default_lang_id" required="1" />
+                            <field name="website" />
                         </group>
                     </page>
                 </xpath>

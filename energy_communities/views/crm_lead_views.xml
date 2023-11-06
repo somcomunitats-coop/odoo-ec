@@ -14,7 +14,6 @@
 		<field name="search_view_id" ref="crm.view_crm_case_opportunities_filter" />
 	</record>
 	-->
-
 	<record id="ce_view_crm_case_opportunities_filter" model="ir.ui.view">
 		<field name="name">ce.view.crm.opportunities.leads.filter</field>
 		<field name="model">crm.lead</field>
@@ -79,14 +78,25 @@
 		<field name="inherit_id" ref="crm.crm_lead_view_form" />
 		<field name="arch" type="xml">
 			<xpath expr="//sheet" position="before">
-                <header>
+        <header>
+          <field name="source_id" invisible="1" />
+          <field name="finished" invisible="1" />
+          <field name="company_hierarchy_level" invisible="1" />
+          <field name="can_be_assigned_to_coordinator" invisible="1" />
 					<field name="is_instance_company" invisible="1" />
 					<button
             name="action_assign_crm_to_coordinator_company"
             type="object"
             string="Assing CRM to coordinator company"
             groups="energy_communities.group_platform_manager"
-            attrs="{'invisible': [('is_instance_company', '=', False)]}"
+            attrs="{'invisible':[('can_be_assigned_to_coordinator', '!=', True)]}"
+          />
+          <button
+            name="action_create_community"
+            type="object"
+            string="Create community"
+            groups="energy_communities.group_platform_manager"
+            attrs="{'invisible':['|',('source_id', '!=', %(ce_source_creation_ce_proposal)d),('probability','=',100)]}"
           />
 				</header>
 			</xpath>

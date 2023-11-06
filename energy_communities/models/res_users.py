@@ -274,36 +274,9 @@ class ResUsers(models.Model):
             )
 
     def make_coord_user(self, company_id, role_name):
-        role = self.env["res.users.role"].search([("code", "=", role_name)])
-        current_role = self.env["res.users.role.line"].search(
-            [
-                ("user_id", "=", self.id),
-                ("active", "=", True),
-                ("company_id", "=", company_id),
-            ]
-        )
-
-        if current_role:
-            current_role.write({"role_id": role})
-        else:
-            self.write(
-                {
-                    "company_ids": [(4, company_id)],
-                    "role_line_ids": [
-                        (
-                            0,
-                            0,
-                            {
-                                "user_id": self.id,
-                                "active": True,
-                                "role_id": role.id,
-                                "company_id": company_id,
-                            },
-                        )
-                    ],
-                }
-            )
-
+        # create ce user on this company
+        self.make_ce_user(company_id, role_name)
+        # apply manager role the child companies
         company = self.env["res.company"].browse(company_id)
         child_companies = company.get_child_companies()
         for child_company in child_companies:
@@ -328,7 +301,6 @@ class ResUsers(models.Model):
             "email": email,
         }
         user = cls.sudo().with_context(no_reset_password=True).create(vals)
-
         user.make_internal_user()
         user.create_users_on_keycloak()
         user.send_reset_password_mail()

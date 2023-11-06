@@ -16,14 +16,25 @@ class CrmLead(models.Model):
         string="CE Tags",
         help="CE Classify and analyze categories",
     )
-
     community_company_id = fields.Many2one(
         string="Related Community",
         comodel_name="res.company",
         domain="[('coordinator','!=',True)]",
         help="Community related to this Lead",
     )
-
+    finished = fields.Boolean(
+        related="stage_id.is_won",
+        readonly=True,
+    )
+    company_hierarchy_level = fields.Selection(
+        related="company_id.hierarchy_level",
+        readonly=True,
+    )
+    can_be_assigned_to_coordinator = fields.Boolean(
+        string="Can be assigned to coordinator",
+        compute="_get_can_be_assigned_to_coordinator",
+        store=False,
+    )
     is_instance_company = fields.Boolean(
         string="Is instance company", compute="_is_instance_company"
     )
@@ -62,7 +73,7 @@ class CrmLead(models.Model):
             if not lead.community_company_id:
                 # Create the new company using very basic starting Data
                 company = self.env["res.company"].create(
-                    lead._get_company_create_vals()
+                    lead._get_default_community_wizard()
                 )
 
                 # Update Lead & Map Place (if exist) fields accordingly
@@ -80,20 +91,17 @@ class CrmLead(models.Model):
                 lead.community_company_id._create_keycloak_realm()
                 lead.community_company_id._community_post_keycloak_creation_tasks()
 
-    def _get_company_create_vals(self):
+    def _get_default_community_wizard(self):
         self.ensure_one()
-        m_dict = {m.key: m.value for m in self.form_submission_metadata_ids}
+        metadata = {m.key: m.value for m in self.metadata_line_ids}
 
         foundation_date = None
-        if (
-            m_dict.get("partner_foundation_date", False)
-            and m_dict["partner_foundation_date"]
-        ):
+        if metadata.get("ce_creation_date", False) and metadata["ce_creation_date"]:
             date_formats = ["%Y-%m-%d", "%d-%m-%Y", "%Y/%m/%d", "%d/%m/%Y"]
             for date_format in date_formats:
                 try:
                     foundation_date = datetime.strptime(
-                        m_dict["partner_foundation_date"], date_format
+                        metadata["ce_creation_date"], date_format
                     )
                 except:
                     pass
@@ -101,59 +109,51 @@ class CrmLead(models.Model):
                 raise UserError(
                     _(
                         "The Foundation Date value {} have a non valid format. It must be: yyyy-mm-dd or dd-mm-yyyy or yyyy/mm/dd or dd/mm/yyyy"
-                    ).format(m_dict["partner_foundation_date"])
+                    ).format(metadata["partner_foundation_date"])
                 )
 
-        initial_share_amount = 0.00
-        if (
-            m_dict.get("partner_initial_share_amount", False)
-            and m_dict["partner_initial_share_amount"]
-            or None
-        ):
-            try:
-                initial_share_amount = float(m_dict["partner_initial_share_amount"])
-            except:
-                pass
-
         lang_id = None
-        if m_dict.get("partner_language", False) and m_dict["partner_language"] or None:
+        if metadata.get("current_lang", False) and metadata["current_lang"] or None:
             lang_id = self.env["res.lang"].search(
-                [("code", "=", m_dict["partner_language"])], limit=1
+                [("code", "=", metadata["current_lang"])], limit=1
             )
 
-        create_vals = {
-            "name": self.name,
-            "street": self.street,
-            "street2": self.street2,
-            "city": self.city,
-            "zip": self.zip,
-            "state_id": self.state_id.id,
-            "country_id": self.country_id.id,
-            "website": self.website,
-            "phone": self.phone,
-            "email": self.email_from
-            or (m_dict.get("contact_email", False) and m_dict["contact_email"])
-            or None,
-            "vat": m_dict.get("partner_vat", False) and m_dict["partner_vat"] or None,
-            "social_twitter": m_dict.get("partner_twitter", False)
-            and m_dict["partner_twitter"]
-            or None,
-            "social_facebook": m_dict.get("partner_facebook", False)
-            and m_dict["partner_facebook"]
-            or None,
-            "social_instagram": m_dict.get("partner_instagram", False)
-            and m_dict["partner_instagram"]
-            or None,
-            "social_telegram": m_dict.get("partner_telegram", False)
-            and m_dict["partner_telegram"]
-            or None,
-            "create_user": True,
-            "foundation_date": foundation_date,
-            "initial_subscription_share_amount": initial_share_amount,
-            "default_lang_id": lang_id and lang_id.id or None,
-        }
+        users = [user.id for user in self.company_id.get_users()]
 
-        return create_vals
+        return {
+            "name": self.name,
+            "parent_id": self.company_id.id,
+            "crm_lead_id": self.id,
+            "user_ids": users,
+            "street": metadata.get("ce_address", False)
+            and metadata["ce_address"]
+            or None,
+            "city": metadata.get("ce_city", False) and metadata["ce_city"] or None,
+            "zip_code": metadata.get("ce_zip", False) and metadata["ce_zip"] or None,
+            "phone": metadata.get("contact_phone", False)
+            and metadata["contact_phone"]
+            or None,
+            "email": metadata.get("email_from", False)
+            and metadata["email_from"]
+            or None,
+            "vat": metadata.get("ce_vat", False) and metadata["ce_vat"] or None,
+            "foundation_date": foundation_date,
+            "default_lang_id": lang_id and lang_id.id or None,
+            "chart_template_id": self.env.ref(
+                "l10n_es.account_chart_template_pymes"
+            ).id,
+            "update_default_taxes": True,
+            "default_sale_tax_id": self.env.ref(
+                "l10n_es.account_tax_template_s_iva21s"
+            ).id,
+            "default_purchase_tax_id": self.env.ref(
+                "l10n_es.account_tax_template_p_iva21_bc"
+            ).id,
+            "property_cooperator_account": self.env["account.account"]
+            .search([("code", "like", "44000%")], limit=1)
+            .id,
+            "create_user": False,
+        }
 
     def _create_keycloak_realm(self):
         for lead in self:
@@ -177,6 +177,34 @@ class CrmLead(models.Model):
             "view_mode": "form",
             "target": "new",
         }
+
+    def action_create_community(self):
+        data = self._get_default_community_wizard()
+        wizard = self.env["account.multicompany.easy.creation.wiz"].create(data)
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Create community"),
+            "res_model": "account.multicompany.easy.creation.wiz",
+            "view_type": "form",
+            "view_mode": "form",
+            "target": "new",
+            "res_id": wizard.id,
+        }
+
+    @api.depends("source_id")
+    def _get_can_be_assigned_to_coordinator(self):
+        for record in self:
+            record.can_be_assigned_to_coordinator = (
+                record.source_id.id
+                in [
+                    self.env.ref("energy_communities.ce_source_general_info").id,
+                    self.env.ref("energy_communities.ce_source_existing_ce_contact").id,
+                    self.env.ref(
+                        "energy_communities.ce_source_creation_ce_proposal"
+                    ).id,
+                ]
+                and self.company_id.hierarchy_level == "instance"
+            )
 
     def add_follower(self):
         instance_admin = self.env.ref("energy_communities.role_ce_manager").id
