@@ -2,6 +2,9 @@ from datetime import datetime
 
 from odoo import _, api, fields, models
 
+from ..client_map.resources.landing_cmplace import (
+    LandingCmPlace as LandingCmPlaceResource,
+)
 from ..pywordpress_client.resources.authenticate import Authenticate
 from ..pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
@@ -11,6 +14,8 @@ from .res_config_settings import ResConfigSettings
 
 class LandingPage(models.Model):
     _name = "landing.page"
+
+    _inherit = ["cm.coordinates.mixin"]
 
     name = fields.Char(string="Name", translate=True)
     company_id = fields.Many2one("res.company", string="Company")
@@ -35,8 +40,6 @@ class LandingPage(models.Model):
     instagram_link = fields.Char(
         string="Instagram link", related="company_id.social_instagram"
     )
-    # TODO: group_image_link Left for backward compatibility. To be removed
-    group_image_link = fields.Char(string="Group image link")
     primary_image_file = fields.Image("Primary Image")
     secondary_image_file = fields.Image("Secondary Image")
     short_description = fields.Text(string="Short description", translate=True)
@@ -45,8 +48,6 @@ class LandingPage(models.Model):
     become_cooperator_process = fields.Html(
         string="Become cooperator process", translate=True
     )
-    # TODO: remove this one
-    map_geolocation = fields.Char(string="Map geolocation")
     map_place_id = fields.Many2one("cm.place", "Place reference")
     street = fields.Char(string="Street")
     postal_code = fields.Char(string="Postal code")
@@ -72,7 +73,9 @@ class LandingPage(models.Model):
         required=True,
         string="Community status",
     )
-    wp_lastupdate_datetime = fields.Datetime(string="Last wordpress update date")
+    publicdata_lastupdate_datetime = fields.Datetime(
+        string="Last wordpress/map update date"
+    )
 
     def _get_image_attachment(self, field_name):
         file_attachment = self.env["ir.attachment"].search(
@@ -159,8 +162,6 @@ class LandingPage(models.Model):
                 "instagram_link": self.instagram_link or "",
                 "telegram_link": self.telegram_link or "",
                 "community_active_services": self.company_id.get_active_services(),
-                # TODO: group_image_link Left for backward compatibility. To be removed
-                "group_image_link": self.group_image_link or "",
                 "primary_image_file": primary_image_file,
                 "primary_image_file_write_date": primary_image_file_write_date,
                 "secondary_image_file": secondary_image_file,
@@ -169,7 +170,6 @@ class LandingPage(models.Model):
                 "long_description": self.long_description or "",
                 "why_become_cooperator": self.why_become_cooperator,
                 "become_cooperator_process": self.become_cooperator_process,
-                "map_geolocation": self.map_geolocation or "",
                 "map_reference": map_reference,
                 "street": self.street or "",
                 "postal_code": self.postal_code or "",
@@ -182,9 +182,27 @@ class LandingPage(models.Model):
             new_status = "draft" if record.status == "publish" else "publish"
             record.write({"status": new_status})
 
-    def action_update_wp(self):
+    def action_create_landing_place(self):
+        for record in self:
+            record._create_landing_place()
+
+    def action_update_public_data(self):
         for record in self:
             record._update_wordpress()
+            record._update_landing_place()
+            self.write({"publicdata_lastupdate_datetime": datetime.now()})
+            return {
+                "type": "ir.actions.client",
+                "tag": "display_notification",
+                "params": {
+                    "type": "success",
+                    "title": _("Public data update successful"),
+                    "message": _(
+                        "Wordpress landing and map place has been successfully updated."
+                    ),
+                    "sticky": False,
+                },
+            }
 
     def _update_wordpress(self):
         instance_company = self.env["res.company"].search(
@@ -200,4 +218,9 @@ class LandingPage(models.Model):
             LandingPageResource(token, baseurl, self.wp_landing_page_id).update(
                 landing_page_data
             )
-            self.write({"wp_lastupdate_datetime": datetime.now()})
+
+    def _create_landing_place(self):
+        LandingCmPlaceResource(self).create()
+
+    def _update_landing_place(self):
+        LandingCmPlaceResource(self).update()

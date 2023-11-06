@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="contract_generation_wizard_form_view" model="ir.ui.view">
+            <field
+        name="name"
+      >energy_selfconsumption.contract_generation_wizard.form</field>
+            <field
+        name="model"
+      >energy_selfconsumption.contract_generation.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Contract Generation">
+                     <footer>
+                        <button
+              type="object"
+              name="generate_contracts_button"
+            >Generate</button>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="power_acquired_formula" model="contract.line.qty.formula">
+            <field name="name">Power Acquired Formula</field>
+            <field name="code">
+days_timedelta = contract.next_period_date_end - contract.next_period_date_start
+if days_timedelta:
+  # Add one so it counts the same day too (month = 29 + 1)
+  days_between = days_timedelta.days + 1
+else:
+  days_between = 0
+result = contract.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.power * contract.supply_point_assignation_id.coefficient *  days_between
+            </field>
+        </record>
+        <record id="energy_delivered_formula" model="contract.line.qty.formula">
+            <field name="name">Energy Delivered Formula</field>
+            <field name="code">
+days_timedelta = contract.next_period_date_end - contract.next_period_date_start
+energy_delivered = 0
+if days_timedelta:
+  # Add one so it counts the same day too (month = 29 + 1)
+  days_between = days_timedelta.days + 1
+else:
+  days_between = 0
+if 'energy_delivered' in context:
+  energy_delivered = context['energy_delivered']
+result = energy_delivered * contract.supply_point_assignation_id.coefficient *  days_between
+            </field>
+        </record>
+        <record
+      id="energy_delivered_variable_formula"
+      model="contract.line.qty.formula"
+    >
+            <field name="name">Energy Delivered Variable Formula</field>
+            <field name="code">
+result = 0
+            </field>
+        </record>
+    </data>
+</odoo>
