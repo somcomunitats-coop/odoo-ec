@@ -6,7 +6,7 @@ from odoo.http import request
 
 _COMMUNITY_DATA__FIELDS = {}
 _COMMUNITY_DATA__GENERAL_FIELDS = {
-    "cd_community_name": _("Energy Community Name"),
+    "ce_name": _("Energy Community Name"),
     "cd_address": _("Address (Street, number, appartment number)"),
     "cd_zip": _("Postal Code"),
     "cd_state_id": _("State"),
@@ -38,6 +38,8 @@ class WebsiteCommunityData(http.Controller):
         if response is not True:
             return response
         # prefill values
+        print("ARGS ON RENDER")
+        print(kwargs)
         values = self._fill_values(kwargs)
         return request.render("energy_communities.community_data_page", values)
 

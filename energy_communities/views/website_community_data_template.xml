@@ -7,17 +7,17 @@
       <div class="row">
         <div class="col-md-12">
           <div
-          class="form-group field-cd_community_name"
-          t-attf-class="form-group #{error and 'cd_community_name' in error and 'has-error' or ''}"
-          name="cd_community_name_container"
+          class="form-group field-ce_name"
+          t-attf-class="form-group #{error and 'ce_name' in error and 'has-error' or ''}"
+          name="ce_name_container"
         >
-            <label for="cd_community_name"><t t-esc="cd_community_name_label" /></label>
+            <label for="ce_name_name"><t t-esc="ce_name_label" /></label>
             <input
             class="form-control form-control-sm"
-            id="cd_community_name"
+            id="ce_name"
             type="text"
-            name="cd_community_name"
-            t-attf-value="#{cd_community_name or ''}"
+            name="ce_name"
+            t-attf-value="#{ce_name or ''}"
           />
           </div>
         </div>
