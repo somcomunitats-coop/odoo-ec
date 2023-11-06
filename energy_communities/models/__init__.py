@@ -1,3 +1,4 @@
+from . import cm_coordinates_mixin
 from . import auth_oauth_provider
 from . import account_chart_template
 from . import landing_page

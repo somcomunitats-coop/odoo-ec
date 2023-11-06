@@ -31,7 +31,6 @@ class TestAssingAdminWizard(UserSetupMixin, common.TransactionCase):
                 "vat": "43217763g",
             }
         )
-
         wizard.process_data()
 
         add_energy_community_role_mocked.assert_called_once()

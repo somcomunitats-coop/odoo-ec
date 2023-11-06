@@ -1,3 +1,4 @@
+
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* energy_communities
@@ -135,9 +136,9 @@ msgstr ""
 "Una vez verificada la validez del pago realizado recibirás una nueva notificación confirmando la aportación realizada y detallando las condiciones particulares de tu aportación.\n"
 "    </p>\n"
 "    <p>\n"
-"Agradecer tu implicación con la cooperativa y informarte que para cualquier duda o aclaración puedes consultar nuestra web \n"
+"Agradecer tu implicación con la cooperativa y informarte que para cualquier duda o aclaración puedes consultar nuestra web \n"
 "        <a href=\"${object.company_id.website}\"> ${object.company_id.website}</a>\n"
-"         o enviarnos un correo electrónico \n"
+"         o enviarnos un correo electrónico \n"
 "        <a href=\"${object.company_id.email}\">${object.company_id.email}</a>\n"
 "    </p>\n"
 "    <p>\n"
@@ -526,9 +527,9 @@ msgid "Allows new members"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_lastupdate_datetime
-msgid "Last wordpress update date"
-msgstr "Fecha última actualización de wordpress"
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__publicdata_lastupdate_datetime
+msgid "Last wordpress/map update date"
+msgstr "Fecha última actualización de wordpress/mapa"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
@@ -856,8 +857,8 @@ msgstr "Crear página de Landing"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
-msgid "Update wordpress data"
-msgstr "Actualizar datos wordpress"
+msgid "Update (wp landing / map place)"
+msgstr "Actualizar datos wordpress/mapa"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__create_user
@@ -1276,11 +1277,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_subscription_request_filter_inherit
 msgid "Mandatory Shares"
 msgstr "Aportaciones obligatorias"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_landing_page__map_geolocation
-msgid "Map geolocation"
-msgstr ""
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_sustainable_mobility
@@ -2272,11 +2268,6 @@ msgid "Energy Community Manager"
 msgstr "Gerente de la Comunidad de Energía"
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_landing_page__group_image_link
-msgid "Group image link"
-msgstr "Enlace de imagen de grupo"
-
-#. module: energy_communities
 #: code:addons/energy_communities/models/landing_page.py:0
 #: code:addons/energy_communities/models/landing_page.py:0
 #: code:addons/setup/energy_communities/odoo/addons/energy_communities/models/landing_page.py:0
@@ -2329,3 +2320,46 @@ msgstr "Enlace de Telegram"
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__twitter_link
 msgid "Twitter link"
 msgstr "Enlace de Twitter"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Only users that belongs to the 'Coordinator' or 'Instance' company can create new Map Places."
+msgstr "Solo usuarios de tipo coordinador de Comunidad o de instancia pueden crear puntos de mapa."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Map not found slug_id: {}"
+msgstr "No se ha encontrado mapa para slug_id: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Landing lat param required for place creation"
+msgstr "La Latitud de la landing es requerida para la creación del punto de mapa."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Landing lng param required for place creation"
+msgstr "La Longitud de la landing es requerida para la creación del punto de mapa."
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Place category not found slug_id: {}"
+msgstr "No se ha encontrado categoria de mapa para slug_id: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Place status filter not found slug_id: {}"
+msgstr "No se ha encontrado filtro de mapa para slug_id: {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
+#, python-format
+msgid "Button configs not found."
+msgstr "Configuración de botones no encontrada."
+
