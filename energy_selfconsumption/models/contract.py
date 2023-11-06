@@ -1,7 +1,5 @@
 from odoo import fields, models
 
-from .selfconsumption import Selfconsumption
-
 
 class Contract(models.Model):
     _inherit = "contract.contract"
