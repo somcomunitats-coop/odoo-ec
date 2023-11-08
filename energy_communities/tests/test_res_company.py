@@ -1,8 +1,10 @@
 from odoo.exceptions import ValidationError
 from odoo.tests import common
 
+from .helpers import CompanySetupMixin, UserSetupMixin
 
-class TestResCompany(common.SingleTransactionCase):
+
+class TestResCompany(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
     def test_hierarchy_level_company_instance(self):
         company_instance = self.env["res.company"].search(
             [("hierarchy_level", "=", "instance")]
@@ -95,3 +97,52 @@ class TestResCompany(common.SingleTransactionCase):
                     "parent_id": company_community.id,
                 }
             )
+
+    def test__get_users__without_roles(self):
+        # Given a coord company and coord admin
+        company_instance = self.env["res.company"].search(
+            [("hierarchy_level", "=", "instance")]
+        )
+        company_coordinator = self.create_company(
+            "Som", "coordinator", company_instance.id
+        )
+        user = self.create_user("Tom", "Bombadil")
+        self.make_coord_user(company_coordinator, user)
+
+        # When we want all users of company_coordinator
+        community_users = company_coordinator.get_users()
+
+        # Then returns all community users
+        platform_admins = (
+            self.env["res.users.role.line"]
+            .search(
+                [
+                    (
+                        "role_id",
+                        "=",
+                        self.env.ref("energy_communities.role_platform_admin").id,
+                    ),
+                ]
+            )
+            .user_id
+        )
+        self.assertEqual(community_users, user + platform_admins)
+
+    def test__get_users__with_roles(self):
+        # Given a coord company and coord admin
+        company_instance = self.env["res.company"].search(
+            [("hierarchy_level", "=", "instance")]
+        )
+        company_coordinator = self.create_company(
+            "Som", "coordinator", company_instance.id
+        )
+        first_user = self.create_user("Tom", "Bombadil")
+        second_user = self.create_user("Frodo", "Baggins")
+        self.make_coord_user(company_coordinator, first_user)
+        self.make_coord_user(company_coordinator, second_user, "role_coord_worker")
+
+        # When we want all users of company_coordinator
+        community_users = company_coordinator.get_users(["role_coord_worker"])
+
+        # Then returns all community users
+        self.assertEqual(community_users, second_user)

@@ -3,6 +3,15 @@ from datetime import datetime
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
 
+INVOICING_VALUES = [
+    ("power_acquired", _("Power Acquired")),
+    ("energy_delivered", _("Energy Delivered")),
+    (
+        "energy_delivered_variable",
+        _("Energy Delivered Variable Hourly Coefficient"),
+    ),
+]
+
 
 class Selfconsumption(models.Model):
     _name = "energy_selfconsumption.selfconsumption"
@@ -19,6 +28,13 @@ class Selfconsumption(models.Model):
     def _compute_inscription_count(self):
         for record in self:
             record.inscription_count = len(record.inscription_ids)
+
+    def _compute_contract_count(self):
+        for record in self:
+            related_contracts = self.env["contract.contract"].search_count(
+                [("project_id", "=", record.id)]
+            )
+            record.contracts_count = related_contracts
 
     def _compute_report_distribution_table(self):
         """
@@ -52,7 +68,7 @@ class Selfconsumption(models.Model):
         required=True,
         default=lambda self: self.env.company.partner_id,
     )
-    power = fields.Float(string="Generation Power (kW)")
+    power = fields.Float(string="Rated Power (kWn)")
     distribution_table_ids = fields.One2many(
         "energy_selfconsumption.distribution_table",
         "selfconsumption_project_id",
@@ -68,6 +84,19 @@ class Selfconsumption(models.Model):
         "energy_project.inscription", "project_id", readonly=True
     )
     inscription_count = fields.Integer(compute=_compute_inscription_count)
+    contracts_count = fields.Integer(compute=_compute_contract_count)
+    invoicing_mode = fields.Selection(INVOICING_VALUES, string="Invoicing Mode")
+    product_id = fields.Many2one("product.product", string="Product")
+    contract_template_id = fields.Many2one(
+        "contract.template",
+        string="Contract Template",
+        related="product_id.contract_template_id",
+    )
+    reseller_id = fields.Many2one(
+        "energy_project.reseller",
+        string="Energy Reseller",
+        help="Select the associated Energy Reseller",
+    )
 
     def get_distribution_tables(self):
         self.ensure_one()
@@ -91,6 +120,17 @@ class Selfconsumption(models.Model):
             "context": {"create": True, "default_project_id": self.id},
         }
 
+    def get_contracts(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Contracts",
+            "view_mode": "tree,form",
+            "res_model": "contract.contract",
+            "domain": [("project_id", "=", self.id)],
+            "context": {"create": True, "default_project_id": self.id},
+        }
+
     def distribution_table_state(self, actual_state, new_state):
         distribution_table_to_activate = self.distribution_table_ids.filtered(
             lambda table: table.state == actual_state
@@ -107,15 +147,55 @@ class Selfconsumption(models.Model):
         self.distribution_table_state("validated", "process")
 
     def activate(self):
+        """
+        Activates the energy self-consumption project, performing various validations.
+
+        This method checks for the presence of a valid code, CIL, and rated power
+        for the project. If all validations pass, it instances a wizard and generating
+        contracts for the project.
+
+        Note:
+            The change of state for the 'self-consumption' and 'distribution_table'
+            models is performed in the wizard that gets opened. These state changes
+            are executed only after the contracts have been successfully generated.
+
+        Returns:
+            dict: A dictionary containing the action details for opening the wizard.
+
+        Raises:
+            ValidationError: If the project does not have a valid Code, CIL, or Rated Power.
+        """
         for record in self:
             if not record.code:
                 raise ValidationError(_("Project must have a valid Code."))
             if not record.cil:
                 raise ValidationError(_("Project must have a valid CIL."))
             if not record.power or record.power <= 0:
-                raise ValidationError(_("Project must have a valid Generation Power."))
-            record.write({"state": "active"})
-            self.distribution_table_state("process", "active")
+                raise ValidationError(_("Project must have a valid Rated Power."))
+            if not record.invoicing_mode:
+                raise ValidationError(
+                    _("Project must have defined a invoicing mode before activation.")
+                )
+
+            # Create ContractGenerationWizard
+            contract_wizard = self.env[
+                "energy_selfconsumption.contract_generation.wizard"
+            ].create({"selfconsumption_id": self.id})
+
+            # Generate Contracts
+            contract_wizard.generate_contracts_button()
+
+    def set_invoicing_mode(self):
+        return {
+            "name": _("Define Invoicing Mode"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "energy_selfconsumption.define_invoicing_mode.wizard",
+            "views": [(False, "form")],
+            "view_id": False,
+            "target": "new",
+            "context": {"default_selfconsumption_id": self.id},
+        }
 
     def action_selfconsumption_import_wizard(self):
         self.ensure_one()

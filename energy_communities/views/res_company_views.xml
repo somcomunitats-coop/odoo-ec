@@ -33,6 +33,7 @@
             attrs="{'invisible': [('landing_page_id','=',False)]}"
           />
                 </div>
+                <field name="admins" invisible="True" />
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Energy Communities">
@@ -43,8 +44,12 @@
               name="parent_id"
               domain="[('id', 'in', parent_id_filtered_ids)]"
             />
+                        <field name="legal_form" />
+                        <field name="legal_name" />
+                        <field name="ce_status" />
                         <field name="voluntary_share_id" />
                         <field name="ce_tag_ids" />
+                        <field name="admins" />
                     </group>
                 </page>
             </xpath>
@@ -64,6 +69,13 @@
             </xpath>
             <xpath expr="//field[@name='create_user']" position="after">
                 <field name="create_user_in_keycloak" />
+            </xpath>
+            <xpath expr="//form" position="inside">
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
             </xpath>
         </field>
     </record>

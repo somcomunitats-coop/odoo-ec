@@ -1,4 +1,3 @@
-# Add faker into requirements.txt ?? 🤔
 from unittest.mock import patch
 
 from faker import Faker
@@ -90,7 +89,6 @@ class TestResUsers(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
 
     def test__make_ce_user__already_user(self):
         self.community_admin.make_ce_user(self.community.id, "role_ce_member")
-
         rl = self.role_line_model.search(
             [
                 ("user_id", "=", self.community_admin.id),
@@ -103,7 +101,6 @@ class TestResUsers(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
 
     def test__make_ce_user__new_user(self):
         self.random_user.make_ce_user(self.community.id, "role_ce_member")
-
         rl = self.role_line_model.search(
             [
                 ("user_id", "=", self.random_user.id),

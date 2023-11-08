@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="energy_uom_category" model="uom.category">
+            <field name="name">Energy</field>
+        </record>
+
+        <record id="kw_uom" model="uom.uom">
+            <field name="name">kW</field>
+            <field name="uom_type">reference</field>
+            <field name="category_id" ref="energy_uom_category" />
+            <field name="active">1</field>
+            <field name="rounding">0.01000</field>
+        </record>
+    </data>
+</odoo>

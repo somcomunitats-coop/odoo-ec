@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.2.0.0",
+    "version": "14.0.2.1.0",
     "depends": [
         "base",
         "mail",
@@ -18,6 +18,7 @@
     "data": [
         "data/energy_project.reseller.csv",
         "data/energy_project.supplier.csv",
+        "data/uom_data.xml",
         "security/res_groups.xml",
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",

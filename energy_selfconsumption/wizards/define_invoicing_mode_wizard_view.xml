@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="define_invoicing_mode_wizard_form_view">
+            <field
+        name="name"
+      >energy_selfconsumption.define_invoicing_mode.wizard.form</field>
+            <field
+        name="model"
+      >energy_selfconsumption.define_invoicing_mode.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Define Invoicing Mode Wizard">
+                    <sheet>
+                        <group>
+                            <group col="1">
+                                <field name="invoicing_mode" />
+                                <field
+                  name="price"
+                  string="kWh Price (€/kWh)"
+                  attrs="{'invisible': [('invoicing_mode', 'not in', ['energy_delivered', 'energy_delivered_variable'])]}"
+                />
+                                <field
+                  name="price"
+                  string="kWn Price per day (€/kWn/day)"
+                  attrs="{'invisible': [('invoicing_mode', '!=', 'power_acquired')]}"
+                />
+                            </group>
+                            <group col="2">
+                                <field name="recurring_interval" />
+                                <field name="recurring_rule_type" />
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button
+              name="save_data_to_selfconsumption"
+              string="Save Data"
+              type="object"
+              class="btn-primary"
+            />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
