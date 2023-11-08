@@ -7,10 +7,14 @@ from odoo.http import request
 _COMMUNITY_DATA__FIELDS = {}
 _COMMUNITY_DATA__GENERAL_FIELDS = {
     "ce_name": _("Energy Community Name"),
-    "cd_address": _("Address (Street, number, appartment number)"),
-    "cd_zip": _("Postal Code"),
+    "ce_fiscal_name": _("Fiscal Name"),
+    "ce_description": _("Community short description"),
+    "ce_long_description": _("Community long description"),
+    "ce_address": _("Address (Street, number, appartment)"),
+    "ce_zip": _("Postal Code"),
+    "ce_city": _("City"),
     "cd_state_id": _("State"),
-    "cd_contact_email": _("Contact Email"),
+    "email_from": _("Contact Email"),
 }
 _COMMUNITY_DATA__FIELDS.update(_COMMUNITY_DATA__GENERAL_FIELDS)
 _COMMUNITY_DATA__IMAGE_FIELDS = {
@@ -38,9 +42,9 @@ class WebsiteCommunityData(http.Controller):
         if response is not True:
             return response
         # prefill values
-        print("ARGS ON RENDER")
-        print(kwargs)
-        values = self._fill_values(kwargs)
+        lead_values = self._get_lead_values(kwargs["lead_id"])
+        lead_values.update(kwargs)
+        values = self._fill_values(lead_values)
         return request.render("energy_communities.community_data_page", values)
 
     @http.route(
@@ -114,6 +118,37 @@ class WebsiteCommunityData(http.Controller):
             .search([("country_id", "=", company.default_country_id.id)], order="name")
         )
 
+    def _get_lead_values(self, lead_id):
+        lead_values = {}
+        lead = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])[0]
+        # TODO: When we know how to populate form fields need to move this to iterate trough _COMMUNITY_DATA__FORM_FIELDS
+        for field_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
+            meta_line = lead.metadata_line_ids.filtered(
+                lambda meta_data_line: meta_data_line.key == field_key
+            )
+            if meta_line:
+                lead_values[field_key] = meta_line.value
+        for field_key in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
+            meta_line = lead.metadata_line_ids.filtered(
+                lambda meta_data_line: meta_data_line.key == field_key
+            )
+            if meta_line:
+                attachment = (
+                    request.env["ir.attachment"]
+                    .sudo()
+                    .search([("id", "=", meta_line.value)])
+                )
+                if attachment:
+                    lead_values[
+                        field_key
+                    ] = "{base_url}/web/image/{attachment_id}".format(
+                        base_url=request.env["ir.config_parameter"]
+                        .sudo()
+                        .get_param("web.base.url"),
+                        attachment_id=attachment.id,
+                    )
+        return lead_values
+
     def _fill_values(self, values, display_success=False, display_form=True):
         # urls
         values["page_url"] = self._get_community_data_page_url(values)
@@ -121,8 +156,10 @@ class WebsiteCommunityData(http.Controller):
             lead_id=values["lead_id"]
         )
         # form labels
+        # form keys
         for field_key in _COMMUNITY_DATA__FIELDS.keys():
             values[field_key + "_label"] = _COMMUNITY_DATA__FIELDS[field_key]
+            values[field_key + "_key"] = field_key
         # state list
         values["states"] = self._get_states()
         # state_id initial
@@ -219,6 +256,7 @@ class WebsiteCommunityData(http.Controller):
                     "res_model": "crm.lead",
                     "res_id": lead.id,
                     "datas": base64.encodestring(value.read()),
+                    "public": True,
                 }
             )
         )

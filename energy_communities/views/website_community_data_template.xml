@@ -1,59 +1,113 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <template id="community_data_form_field_text" name="community_data_form_field_text">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
+    >
+        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <input
+        class="form-control form-control-sm"
+        t-attf-id="#{key}"
+        type="text"
+        t-attf-name="#{key}"
+        t-attf-value="#{value or ''}"
+      />
+      </div>
+    </template>
+    <template
+    id="community_data_form_field_email"
+    name="community_data_form_field_email"
+  >
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
+    >
+        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <input
+        class="form-control form-control-sm"
+        t-attf-id="#{key}"
+        autocapitalize="off"
+        type="email"
+        t-attf-name="#{key}"
+        t-attf-value="#{value or ''}"
+      />
+      </div>
+    </template>
+    <template
+    id="community_data_form_field_textarea"
+    name="community_data_form_field_textarea"
+  >
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
+    >
+        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <textarea
+        class="form-control form-control-sm"
+        t-attf-id="#{key}"
+        t-attf-name="#{key}"
+        t-attf-rows="#{rows}"
+      ><t t-esc="value or ''" /></textarea>
+      </div>
+    </template>
     <template
     id="community_data_form_fields_template"
     name="community_data_form_fields_template"
   >
       <div class="row">
         <div class="col-md-12">
-          <div
-          class="form-group field-ce_name"
-          t-attf-class="form-group #{error and 'ce_name' in error and 'has-error' or ''}"
-          name="ce_name_container"
-        >
-            <label for="ce_name_name"><t t-esc="ce_name_label" /></label>
-            <input
-            class="form-control form-control-sm"
-            id="ce_name"
-            type="text"
-            name="ce_name"
-            t-attf-value="#{ce_name or ''}"
-          />
-          </div>
+          <t t-call="energy_communities.community_data_form_field_text">
+            <t t-set="value" t-value="ce_name" />
+            <t t-set="key" t-value="ce_name_key" />
+            <t t-set="label" t-value="ce_name_label" />
+          </t>
         </div>
         <div class="col-md-12">
-          <div
-          class="form-group field-cd_address"
-          t-attf-class="form-group #{error and 'cd_address' in error and 'has-error' or ''}"
-          name="cd_address_container"
-        >
-            <label for="cd_address"><t t-esc="cd_address_label" /></label>
-            <input
-            class="form-control form-control-sm"
-            id="cd_address"
-            type="text"
-            name="cd_address"
-            t-attf-value="#{cd_address or ''}"
-          />
-          </div>
+          <t t-call="energy_communities.community_data_form_field_text">
+            <t t-set="value" t-value="ce_fiscal_name" />
+            <t t-set="key" t-value="ce_fiscal_name_key" />
+            <t t-set="label" t-value="ce_fiscal_name_label" />
+          </t>
         </div>
         <div class="col-md-12">
-          <div
-          class="form-group field-cd_zip"
-          t-attf-class="form-group #{error and 'cd_zip' in error and 'has-error' or ''}"
-          name="cd_zip_container"
-        >
-            <label for="cd_zip"><t t-esc="cd_zip_label" /></label>
-            <input
-            class="form-control form-control-sm"
-            id="cd_zip"
-            type="text"
-            name="cd_zip"
-            t-attf-value="#{cd_zip or ''}"
-          />
-          </div>
+          <t t-call="energy_communities.community_data_form_field_textarea">
+            <t t-set="value" t-value="ce_description" />
+            <t t-set="key" t-value="ce_description_key" />
+            <t t-set="label" t-value="ce_description_label" />
+            <t t-set="rows" t-value="5" />
+          </t>
         </div>
         <div class="col-md-12">
+          <t t-call="energy_communities.community_data_form_field_textarea">
+            <t t-set="value" t-value="ce_long_description" />
+            <t t-set="key" t-value="ce_long_description_key" />
+            <t t-set="label" t-value="ce_long_description_label" />
+            <t t-set="rows" t-value="5" />
+          </t>
+        </div>
+        <div class="col-md-6">
+          <t t-call="energy_communities.community_data_form_field_text">
+            <t t-set="value" t-value="ce_address" />
+            <t t-set="key" t-value="ce_address_key" />
+            <t t-set="label" t-value="ce_address_label" />
+          </t>
+        </div>
+        <div class="col-md-6">
+          <t t-call="energy_communities.community_data_form_field_text">
+            <t t-set="value" t-value="ce_zip" />
+            <t t-set="key" t-value="ce_zip_key" />
+            <t t-set="label" t-value="ce_zip_label" />
+          </t>
+        </div>
+        <div class="col-md-6">
+          <t t-call="energy_communities.community_data_form_field_text">
+            <t t-set="value" t-value="ce_city" />
+            <t t-set="key" t-value="ce_city_key" />
+            <t t-set="label" t-value="ce_city_label" />
+          </t>
+        </div>
+        <div class="col-md-6">
           <div
           class="form-group field-cd_state_id"
           t-attf-class="form-group #{error and 'cd_state_id' in error and 'has-error' or ''}"
@@ -79,23 +133,13 @@
           </div>
         </div>
         <div class="col-md-12">
-          <div
-          class="form-group field-cd_contact_email"
-          t-attf-class="form-group #{error and 'cd_contact_email' in error and 'has-error' or ''}"
-          name="cd_contact_email_conatiner"
-        >
-            <label for="cd_contact_email"><t t-esc="cd_contact_email_label" /></label>
-            <input
-            class="form-control form-control-sm"
-            autocapitalize="off"
-            type="email"
-            name="cd_contact_email"
-            id="cd_contact_email"
-            t-attf-value="#{cd_contact_email or ''}"
-          />
-          </div>
+          <t t-call="energy_communities.community_data_form_field_email">
+            <t t-set="value" t-value="email_from" />
+            <t t-set="key" t-value="email_from_key" />
+            <t t-set="label" t-value="email_from_label" />
+          </t>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
           <div
           t-attf-class="form-group #{error and 'cd_primary_image_file' in error and 'has-error' or ''}"
           name="cd_primary_image_file_container"
@@ -103,15 +147,26 @@
             <label for="cd_primary_image_file"><t
               t-esc="cd_primary_image_file_label"
             /></label>
+            <label
+            style="font-size:13px;font-family:'Roboto',sans-serif;font-weight:300;"
+            t-if="cd_primary_image_file"
+          >Upload a new one to change</label>
             <input
             type="file"
-            class="form-control form-control-sm"
+            accept="image/*"
+            class="form-control form-control-sm primary-file"
             name="cd_primary_image_file"
-            t-attf-value="#{cd_primary_image_file or ''}"
           />
           </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
+            <img
+          t-if="cd_primary_image_file"
+          t-attf-src="#{cd_primary_image_file}"
+          width="100px"
+        />
+        </div>
+        <div class="col-md-6">
           <div
           t-attf-class="form-group #{error and 'cd_secondary_image_file' in error and 'has-error' or ''}"
           name="cd_secondary_image_file_container"
@@ -119,13 +174,24 @@
             <label for="cd_secondary_image_file"><t
               t-esc="cd_secondary_image_file_label"
             /></label>
+            <label
+            style="font-size:13px;font-family:'Roboto',sans-serif;font-weight:300;"
+            t-if="cd_secondary_image_file"
+          >Upload a new one to change</label>
             <input
             type="file"
+            accept="image/*"
             class="form-control form-control-sm"
             name="cd_secondary_image_file"
-            t-attf-value="#{cd_secondary_image_file or ''}"
           />
           </div>
+        </div>
+        <div class="col-md-6">
+            <img
+          t-if="cd_secondary_image_file"
+          t-attf-src="#{cd_secondary_image_file}"
+          width="100px"
+        />
         </div>
       </div>
     </template>
