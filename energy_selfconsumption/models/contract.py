@@ -13,6 +13,7 @@ class Contract(models.Model):
         ondelete="restrict",
         string="Energy Project",
         related="supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.project_id",
+        auto_join=True,
     )
     code = fields.Char(related="supply_point_assignation_id.supply_point_id.code")
     supply_point_name = fields.Char(
@@ -55,6 +56,13 @@ class Contract(models.Model):
                 }
             )
         return res
+
+    def _get_contracts_to_invoice_domain(self, date_ref=None):
+        domain = super()._get_contracts_to_invoice_domain(date_ref)
+        domain.extend(
+            [("project_id.selfconsumption_id.invoicing_mode", "!=", "energy_delivered")]
+        )
+        return domain
 
 
 class ContractRecurrencyMixin(models.AbstractModel):
