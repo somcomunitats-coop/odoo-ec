@@ -7,3 +7,4 @@ class EnergyProject(models.Model):
     selfconsumption_id = fields.One2many(
         "energy_selfconsumption.selfconsumption", "project_id"
     )
+    contract_ids = fields.One2many("contract.contract", "project_id", readonly=True)
