@@ -19,7 +19,7 @@
         <p>Hi,</p>
         <p>
             Remember that the collective self-consumption project
-            <b>${ ctx['project_name'] }</b>
+            <b>${ object.name }</b>
             of the energy community
             <b>${ object.project_id.company_id.name }</b>
             must invoice on the day <b>${ ctx['next_invoicing'] }</b>.
