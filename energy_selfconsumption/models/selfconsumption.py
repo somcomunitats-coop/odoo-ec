@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
@@ -270,10 +270,10 @@ class Selfconsumption(models.Model):
         }
 
     def send_energy_delivery_invoicing_reminder(self):
-        today = date.today()
+        today = fields.date.today()
         date_validation = today + timedelta(days=3)
 
-        filtered_contracts = self.env["contract.contract"].search(
+        projects = self.env["contract.contract"].read_group(
             [
                 (
                     "project_id.selfconsumption_id.invoicing_mode",
@@ -281,33 +281,27 @@ class Selfconsumption(models.Model):
                     "energy_delivered",
                 ),
                 ("recurring_next_date", "=", date_validation),
-            ]
+            ],
+            ["project_id"],
+            ["project_id"],
         )
-        project_controller = []
-        for contract in filtered_contracts:
-            project_name = contract.project_id.name
-            if project_name in project_controller:
-                continue
-            project_controller.append(project_name)
-
+        for project in projects:
+            selfconsumption_id = self.browse(project["project_id"][0])
+            contract = selfconsumption_id.contract_ids[0]
             first_date = contract.next_period_date_start
             last_date = contract.next_period_date_end
-
-            next_invoicing = last_date + timedelta(days=1)
+            next_invoicing = contract.recurring_next_date
             ctx = {
                 "next_invoicing": next_invoicing.strftime("%d-%m-%Y"),
                 "first_date": first_date.strftime("%d-%m-%Y"),
                 "last_date": last_date.strftime("%d-%m-%Y"),
             }
 
-            template = (
-                self.env.ref(
-                    "energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder",
-                    False,
-                )
-                .with_context(ctx)
-                .send_mail(self.id, raise_exception=True)
-            )
+            self.env.ref(
+                "energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder",
+                False,
+            ).with_context(ctx).send_mail(selfconsumption_id.id, raise_exception=True)
+        return True
 
 
 class CoefficientReport(models.TransientModel):
