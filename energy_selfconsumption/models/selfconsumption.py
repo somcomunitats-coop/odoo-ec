@@ -285,6 +285,10 @@ class Selfconsumption(models.Model):
             ["project_id"],
             ["project_id"],
         )
+        template = self.env.ref(
+            "energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder",
+            True,
+        )
         for project in projects:
             selfconsumption_id = self.browse(project["project_id"][0])
             contract = selfconsumption_id.contract_ids[0]
@@ -296,11 +300,8 @@ class Selfconsumption(models.Model):
                 "first_date": first_date.strftime("%d-%m-%Y"),
                 "last_date": last_date.strftime("%d-%m-%Y"),
             }
+            selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
 
-            self.env.ref(
-                "energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder",
-                False,
-            ).with_context(ctx).send_mail(selfconsumption_id.id, raise_exception=True)
         return True
 
 
