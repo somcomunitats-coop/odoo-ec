@@ -16,11 +16,26 @@
     />
         <field name="body_html">
             <![CDATA[
-                <p>Hi,</br>
-Remember that the collective self-consumption project <b>${ object.name }</b>  of the energy community <b>${ object.company_id.name }</b> must invoice on the day <b>${ ctx['next_invoicing'] }</b>.</br>
-It is necessary, therefore, that you enter into Odoo the energy generated in kWh during the period <b>${ ctx['first_date'] }</b> - <b>${ ctx['last_date'] }</b>.</br>
-To do so, go to the project file, enter the contracts view, select the contracts that must be invoiced and press the Invoice button.</br>
-For any questions or incidents, contact the support team; support@somcomunitats.coop.</p>
+        <p>Hi,</p>
+        <p>
+            Remember that the collective self-consumption project
+            <b>${ ctx['project_name'] }</b>
+            of the energy community
+            <b>${ object.project_id.company_id.name }</b>
+            must invoice on the day <b>${ ctx['next_invoicing'] }</b>.
+        </p>
+        <p>
+            It is necessary, therefore, that you enter into Odoo the energy generated in kWh during the period
+            <b>${ ctx['first_date'] }</b>
+            - <b>${ ctx['last_date'] }</b>.
+        </p>
+        <p>
+            To do so, go to the project file, enter the contracts view, select the contracts that must be invoiced and
+            press the Invoice button.</br>
+        </p>
+        <p>
+            For any questions or incidents, contact the support team; support@somcomunitats.coop.
+        </p>
             ]]>
         </field>
     </record>
