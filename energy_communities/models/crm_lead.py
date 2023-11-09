@@ -3,6 +3,12 @@ from datetime import datetime
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
+_TAG_TYPE_VALUES = [
+    ("regular", _("Regular")),
+    ("energy_service", _("Energy Service")),
+    ("service_plan", _("Service Plan")),
+]
+
 
 class CrmLead(models.Model):
     _inherit = "crm.lead"
@@ -234,6 +240,7 @@ class CrmTags(models.Model):
     _inherit = "crm.tag"
 
     tag_ext_id = fields.Char("ID Ext tag", compute="compute_ext_id_tag")
+    tag_type = fields.Selection(_TAG_TYPE_VALUES, string="Tag type", default="regular")
 
     def compute_ext_id_tag(self):
         for record in self:

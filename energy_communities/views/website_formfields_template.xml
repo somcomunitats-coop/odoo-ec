@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="form_field_part_description" name="form_field_part_description">
+      <label
+      style="font-size:13px;font-family:'Roboto',sans-serif;font-weight:300;"
+      t-if="description"
+    ><t t-esc="description" /></label>
+    </template>
+    <template id="form_field_text" name="form_field_text">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
+    >
+      <label t-att="{'for': key}"><t t-esc="label" /></label>
+      <t t-call="energy_communities.form_field_part_description">
+        <t t-set="description" t-value="field_description" />
+      </t>
+        <input
+        class="form-control form-control-sm"
+        t-attf-id="#{key}"
+        type="text"
+        t-attf-name="#{key}"
+        t-attf-value="#{value or ''}"
+      />
+      </div>
+    </template>
+    <template id="form_field_number" name="form_field_number">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
+    >
+        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="description" t-value="field_description" />
+        </t>
+        <input
+        class="form-control form-control-sm"
+        t-attf-id="#{key}"
+        type="number"
+        t-attf-name="#{key}"
+        min="1"
+        t-attf-value="#{value or ''}"
+      />
+      </div>
+    </template>
+    <template id="form_field_email" name="form_field_email">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
+    >
+        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="description" t-value="field_description" />
+        </t>
+        <input
+        class="form-control form-control-sm"
+        t-attf-id="#{key}"
+        autocapitalize="off"
+        type="email"
+        t-attf-name="#{key}"
+        t-attf-value="#{value or ''}"
+      />
+      </div>
+    </template>
+    <template id="form_field_textarea" name="form_field_textarea">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
+    >
+        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="description" t-value="field_description" />
+        </t>
+        <textarea
+        class="form-control form-control-sm"
+        t-attf-id="#{key}"
+        t-attf-name="#{key}"
+        t-attf-rows="#{rows}"
+        t-attf-maxlength="#{maxlength}"
+      ><t t-esc="value or ''" /></textarea>
+      </div>
+    </template>
+    <template id="form_field_selection" name="form_field_selection">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
+    >
+        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="description" t-value="field_description" />
+        </t>
+          <select
+        class="form-control form-control-sm"
+        t-attf-id="#{key}"
+        t-attf-name="#{key}"
+      >
+            <option value="">Please choose an option</option>
+            <t t-foreach="options or []" t-as="option">
+              <option
+            t-att-value="option['id']"
+            t-att-selected="str(option['id']) == str(value)"
+          >
+                <t t-esc="option['name']" />
+              </option>
+            </t>
+          </select>
+      </div>
+    </template>
+    <template id="form_field_selection_checkbox" name="form_field_selection_checkbox">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
+    >
+      <fieldset>
+        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="description" t-value="field_description" />
+        </t>
+        <t t-foreach="options or []" t-as="option">
+          <div>
+            <input
+              type="checkbox"
+              t-att-id="option['id']"
+              t-att-name="option['id']"
+              t-if="option['id'] in value"
+              checked="0"
+            />
+            <input
+              type="checkbox"
+              t-att-id="option['id']"
+              t-att-name="option['id']"
+              t-if="option['id'] not in value"
+            />
+            <span><t t-esc="option['name']" /></span>
+          </div>
+        </t>
+      </fieldset>
+    </div>
+    </template>
+    <template id="form_field_selection_radio" name="form_field_selection_radio">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
+    >
+      <fieldset>
+        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="description" t-value="field_description" />
+        </t>
+        <t t-foreach="options or []" t-as="option">
+          <div>
+            <input
+              type="radio"
+              t-att-id="option['id']"
+              t-att-value="option['id']"
+              t-att-name="key"
+              t-if="option['id'] == value"
+              checked="0"
+            />
+            <input
+              type="radio"
+              t-att-id="option['id']"
+              t-att-value="option['id']"
+              t-att-name="key"
+              t-if="option['id'] != value"
+            />
+            <span><t t-esc="option['name']" /></span>
+          </div>
+        </t>
+      </fieldset>
+    </div>
+    </template>
+    <template id="form_field_image" name="form_field_image">
+      <div class="col-md-6">
+        <div
+        t-attf-name="#{key}_container"
+        t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
+      >
+          <label t-att="{'for': key}"><t t-esc="label" /></label>
+          <t t-call="energy_communities.form_field_part_description">
+            <t t-set="description" t-value="field_description" />
+          </t>
+          <t t-call="energy_communities.form_field_part_description">
+            <t t-set="description">
+              Upload a new one to change
+            </t>
+          </t>
+          <input
+          type="file"
+          accept="image/*"
+          class="form-control form-control-sm #{key}"
+          t-attf-name="#{key}"
+        />
+        </div>
+      </div>
+      <div class="col-md-6">
+          <img t-if="value" t-attf-src="#{value}" width="100px" />
+      </div>
+    </template>
+</odoo>

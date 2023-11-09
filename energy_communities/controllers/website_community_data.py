@@ -4,6 +4,8 @@ from datetime import datetime
 from odoo import _, http
 from odoo.http import request
 
+from ..models.res_company import _LEGAL_FORM_VALUES
+
 _COMMUNITY_DATA__FIELDS = {}
 _COMMUNITY_DATA__GENERAL_FIELDS = {
     "ce_name": _("Energy Community Name"),
@@ -13,19 +15,47 @@ _COMMUNITY_DATA__GENERAL_FIELDS = {
     "ce_address": _("Address (Street, number, appartment)"),
     "ce_zip": _("Postal Code"),
     "ce_city": _("City"),
-    "cd_state_id": _("State"),
-    "email_from": _("Contact Email"),
+    "ce_state": _("State"),
+    "email_from": _("Community Email"),
+    "contact_phone": _("Community Phone"),
+    "current_lang": _(
+        "Predefined language for the Community (communication will be used on this language.)"
+    ),
+    "ce_services": _("Community active services"),
+    "ce_number_of_members": _("Number of members"),
+    "ce_status": _("Is the community open to accept new members or already closed?"),
+    "ce_why_become_cooperator": _("Why become cooperator"),
+    "ce_become_cooperator_process": _("Become cooperator process"),
+    "ce_type": _("Community type"),
+    "ce_constitution_state": _("Constitution state"),
+    "ce_constitution_state_other": _("Which one?"),
+    "ce_legal_form": _("Community legal form"),
 }
 _COMMUNITY_DATA__FIELDS.update(_COMMUNITY_DATA__GENERAL_FIELDS)
 _COMMUNITY_DATA__IMAGE_FIELDS = {
-    "cd_primary_image_file": _("Primary Image Field"),
-    "cd_secondary_image_file": _("Secondary Image Field"),
+    "ce_primary_image_file": _("Primary Image"),
+    "ce_secondary_image_file": _("Secondary Image"),
+    "ce_logo_image_file": _("Community Logo"),
 }
 _COMMUNITY_DATA__FIELDS.update(_COMMUNITY_DATA__IMAGE_FIELDS)
 _COMMUNITY_DATA__URL_PARAMS = {
     "lead_id": _("lead_id on website url"),
 }
 _COMMUNITY_DATA__FIELDS.update(_COMMUNITY_DATA__URL_PARAMS)
+_COMMUNITY_STATUS_OPTIONS = [
+    {"id": "open", "name": _("Open")},
+    {"id": "closed", "name": _("Closed")},
+]
+_COMMUNITY_TYPE_OPTIONS = [
+    {"id": "citizen", "name": _("Citizen")},
+    {"id": "industrial", "name": _("Industrial")},
+]
+_COMMUNITY_CONSTITUTION_STATE_OPTIONS = [
+    {"id": "constituted", "name": _("Legally constituted")},
+    {"id": "in_progress", "name": _("Constitution in progress")},
+    {"id": "in_definition", "name": _("Definition in progress")},
+    {"id": "other", "name": _("Other")},
+]
 
 
 class WebsiteCommunityData(http.Controller):
@@ -57,6 +87,12 @@ class WebsiteCommunityData(http.Controller):
         values = {}
         form_values = {}
 
+        energy_services = self._get_energy_service_tag_ids()
+        form_energy_services = []
+
+        print("Processing values")
+        print(kwargs)
+
         # data structures contruction
         for field_name, field_value in kwargs.items():
             if field_name in _COMMUNITY_DATA__URL_PARAMS.keys():
@@ -69,6 +105,20 @@ class WebsiteCommunityData(http.Controller):
                 if field_value.filename:
                     values[field_name] = field_value
                     form_values[field_name] = field_value
+            if field_name in energy_services:
+                form_energy_services.append(field_name)
+
+        # convert form_energy_services on meta string
+        for i, form_energy_service in enumerate(form_energy_services):
+            if i == 0:
+                form_values["ce_services"] = form_energy_service
+                values["ce_services"] = form_energy_service
+            else:
+                form_values["ce_services"] += form_energy_service
+                values["ce_services"] += form_energy_service
+            if i != len(form_energy_services) - 1:
+                form_values["ce_services"] += ","
+                values["ce_services"] += ","
 
         # avoid form resubmission by ctrl+r
         if form_values:
@@ -116,7 +166,40 @@ class WebsiteCommunityData(http.Controller):
             request.env["res.country.state"]
             .sudo()
             .search([("country_id", "=", company.default_country_id.id)], order="name")
+            .mapped(lambda r: {"id": r.id, "name": r.name})
         )
+
+    def _get_langs(self):
+        return (
+            request.env["res.lang"]
+            .search([("active", "=", 1)])
+            .mapped(lambda r: {"id": r.code, "name": r.name})
+        )
+
+    def _get_energy_service_tags(self):
+        return (
+            request.env["crm.tag"]
+            .search([("tag_type", "=", "energy_service")])
+            .mapped(
+                lambda r: {
+                    "id": r.tag_ext_id.replace("energy_communities.", ""),
+                    "name": r.name,
+                }
+            )
+        )
+
+    def _get_energy_service_tag_ids(self):
+        return (
+            request.env["crm.tag"]
+            .search([("tag_type", "=", "energy_service")])
+            .mapped(lambda r: r.tag_ext_id.replace("energy_communities.", ""))
+        )
+
+    def _get_legal_forms(self):
+        legal_forms = []
+        for legal_form_id, legal_form_name in _LEGAL_FORM_VALUES:
+            legal_forms.append({"id": legal_form_id, "name": legal_form_name})
+        return legal_forms
 
     def _get_lead_values(self, lead_id):
         lead_values = {}
@@ -160,13 +243,31 @@ class WebsiteCommunityData(http.Controller):
         for field_key in _COMMUNITY_DATA__FIELDS.keys():
             values[field_key + "_label"] = _COMMUNITY_DATA__FIELDS[field_key]
             values[field_key + "_key"] = field_key
-        # state list
-        values["states"] = self._get_states()
-        # state_id initial
-        if "cd_state_id" not in values.keys():
-            values["cd_state_id"] = False
-        elif values["cd_state_id"] == "":
-            values["cd_state_id"] = False
+        # language selection
+        values["lang_options"] = self._get_langs()
+        if "current_lang" not in values.keys() or values["current_lang"] == "":
+            values["current_lang"] = False
+        # state selection
+        values["state_options"] = self._get_states()
+        if (
+            "ce_state" not in values.keys()
+            or values["ce_state"] == ""
+            or not values["ce_state"].isnumeric()
+        ):
+            values["ce_state"] = False
+        # energy_services selection
+        values["energy_service_options"] = self._get_energy_service_tags()
+        # community_status selection
+        values["community_status_options"] = _COMMUNITY_STATUS_OPTIONS
+        # community_type selection
+        values["community_type_options"] = _COMMUNITY_TYPE_OPTIONS
+        # community_constitution_state selection
+        values[
+            "community_constitution_state_options"
+        ] = _COMMUNITY_CONSTITUTION_STATE_OPTIONS
+        # community_legal_form selection
+        values["community_legal_form_options"] = self._get_legal_forms()
+        # form/messages visibility
         values["display_success"] = display_success
         values["display_form"] = display_form
         return values

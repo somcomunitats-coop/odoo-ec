@@ -74,6 +74,7 @@
         "views/res_users_role_view.xml",
         "views/mailing_mailing_views_menus.xml",
         "views/menus.xml",
+        "views/website_formfields_template.xml",
         "views/website_subscription_template.xml",
         "views/website_community_data_template.xml",
         "data/mail_template_data.xml",

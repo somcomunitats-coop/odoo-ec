@@ -14,7 +14,7 @@ _HIERARCHY_LEVEL_VALUES = [
     ("community", _("Community")),
 ]
 
-_LEGAL_FROM_VALUES = [
+_LEGAL_FORM_VALUES = [
     ("Societat Cooperativa", _("Societat Cooperativa")),
     ("Associació sense ànim de lucre", _("Associació sense ànim de lucre")),
     ("Societat Limitada", _("Societat Limitada")),
@@ -102,7 +102,7 @@ class ResCompany(models.Model):
         store=False,
     )
     legal_form = fields.Selection(
-        selection=_LEGAL_FROM_VALUES,
+        selection=_LEGAL_FORM_VALUES,
         string="Legal form",
     )
     legal_name = fields.Char(string="Legal name")
