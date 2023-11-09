@@ -295,7 +295,6 @@ class Selfconsumption(models.Model):
 
             next_invoicing = last_date + timedelta(days=1)
             ctx = {
-                "project_name": project_name,
                 "next_invoicing": next_invoicing.strftime("%d-%m-%Y"),
                 "first_date": first_date.strftime("%d-%m-%Y"),
                 "last_date": last_date.strftime("%d-%m-%Y"),
