@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+
+  <template
+    id="assets_frontend"
+    inherit_id="web.assets_frontend"
+    name="community_data_website_script"
+  >
+        <xpath expr="." position="inside">
+            <script
+        type="text/javascript"
+        src="/energy_communities/static/src/js/community-data-website.js"
+      />
+        </xpath>
+    </template>
+
     <template
     id="community_data_form_fields_template"
     name="community_data_form_fields_template"
@@ -192,6 +206,13 @@
             <t t-set="options" t-value="community_legal_form_options" />
           </t>
         </div>
+        <div class="col-md-12">
+          <t t-call="energy_communities.form_field_date_past">
+            <t t-set="value" t-value="ce_constitution_date" />
+            <t t-set="key" t-value="ce_constitution_date_key" />
+            <t t-set="label" t-value="ce_constitution_date_label" />
+          </t>
+        </div>
       </div>
     </template>
 
@@ -256,7 +277,7 @@
     <template id="community_data_page" name="Communnity data">
       <t t-call="website.layout">
         <div id="wrap" class="o_portal_wrap">
-          <div class="container oe_cooperator">
+          <div class="container oe_community_data">
             <div class="row justify-content-center">
               <div class="col-xs-12 col-sm-10  col-md-8 col-lg-6">
                 <h1 class="mt-4 text-center">Community data</h1>

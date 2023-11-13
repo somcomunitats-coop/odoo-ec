@@ -197,4 +197,24 @@
           <img t-if="value" t-attf-src="#{value}" width="100px" />
       </div>
     </template>
+    <template id="form_field_date_past" name="form_field_date_past">
+        <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
+    >
+          <t t-set="date_placeholder" t-if="lang=='ca_ES'">dd/mm/aaaa</t>
+          <t t-set="date_placeholder" t-if="lang=='es_ES'">dd/mm/aaaa</t>
+          <t t-set="date_placeholder" t-if="lang=='en_US'">dd/mm/yyyy</t>
+          <label t-att="{'for': key}"><t t-esc="label" /></label>
+          <input
+        class="form-control form-control-sm o_website_form_date_past"
+        type="text"
+        t-attf-id="#{key}"
+        t-attf-name="#{key}"
+        t-attf-value="#{value or ''}"
+        t-attf-data-locale="#{lang}"
+        t-attf-placeholder="#{date_placeholder}"
+      />
+        </div>
+    </template>
 </odoo>

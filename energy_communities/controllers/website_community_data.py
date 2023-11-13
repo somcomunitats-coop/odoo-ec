@@ -30,6 +30,7 @@ _COMMUNITY_DATA__GENERAL_FIELDS = {
     "ce_constitution_state": _("Constitution state"),
     "ce_constitution_state_other": _("Which one?"),
     "ce_legal_form": _("Community legal form"),
+    "ce_constitution_date": _("Constitution date"),
 }
 _COMMUNITY_DATA__FIELDS.update(_COMMUNITY_DATA__GENERAL_FIELDS)
 _COMMUNITY_DATA__IMAGE_FIELDS = {
@@ -328,6 +329,8 @@ class WebsiteCommunityData(http.Controller):
                                 _COMMUNITY_DATA__IMAGE_FIELDS[image_field_key]
                             )
                         )
+
+        # TODO: Date validation!!
         if error_msgs:
             values["error"] = error
             values["error_msgs"] = error_msgs
