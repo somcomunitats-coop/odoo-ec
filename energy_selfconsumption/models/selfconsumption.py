@@ -97,7 +97,10 @@ class Selfconsumption(models.Model):
         string="Energy Reseller",
         help="Select the associated Energy Reseller",
     )
-
+    contract_id = fields.Many2one(
+        "contract.contract",
+        realted="project_id.project_id"
+    )
     def get_distribution_tables(self):
         self.ensure_one()
         return {
