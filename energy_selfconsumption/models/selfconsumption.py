@@ -97,9 +97,10 @@ class Selfconsumption(models.Model):
         string="Energy Reseller",
         help="Select the associated Energy Reseller",
     )
+    # TODO: Review how can I make this relation to get the invoice period
     contract_id = fields.Many2one(
         "contract.contract",
-        related="project_id.project_id"
+        related="project_id"
     )
     def get_distribution_tables(self):
         self.ensure_one()

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template inherit_id="account.report_invoice_document" id="energy_delivered_invoice_template">
+            <xpath expr="//table[@class='table table-sm o_main_table']" position="replace">
+                <h3>sss print field</h3>
+                <p>Test: <span t-field="o.name"/></p>
+                <tr t-foreach='o.invoice_line_ids' t-as='line'>
+                    <td>
+                        <span t-field="line.selfconsumption_id.invoicing_mode"/>
+                        <span t-field="line.selfconsumption_id.distribution_table_ids.supply_point_assignation_ids.code"/>
+                        <span t-field="line.selfconsumption_id.owner_id"/>
+                        <span t-field="line.selfconsumption_id.code"/>
+                    </td>
+                </tr>
+            </xpath>
+        </template>
+    </data>
+</odoo>

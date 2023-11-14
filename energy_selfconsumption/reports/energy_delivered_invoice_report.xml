@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_energy_delivered_invoice" model="ir.actions.report">
+        <field name="name">Energy Delivered Invoices</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">energy_selfconsumption.energy_delivered_invoice_template</field>
+        <field name="report_file">energy_selfconsumption.energy_delivered_invoice_template</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
