@@ -99,7 +99,7 @@ class Selfconsumption(models.Model):
     )
     contract_id = fields.Many2one(
         "contract.contract",
-        realted="project_id.project_id"
+        related="project_id.project_id"
     )
     def get_distribution_tables(self):
         self.ensure_one()
