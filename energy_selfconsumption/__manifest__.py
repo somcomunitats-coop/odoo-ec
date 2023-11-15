@@ -43,7 +43,6 @@
         "wizards/define_invoicing_mode_wizard_view.xml",
         "wizards/invoicing_wizard_views.xml",
         "reports/selfconsumption_reports.xml",
-        "reports/energy_delivered_invoice_template.xml",
-        "reports/energy_delivered_invoice_report.xml",
+        "reports/energy_delivered_invoice_template.xml"
     ],
 }
