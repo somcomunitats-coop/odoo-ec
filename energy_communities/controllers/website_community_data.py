@@ -1,4 +1,5 @@
 import base64
+import re
 from datetime import datetime
 
 from odoo import _, http
@@ -27,11 +28,67 @@ _COMMUNITY_DATA__GENERAL_FIELDS = {
     "ce_why_become_cooperator": _("Why become cooperator"),
     "ce_become_cooperator_process": _("Become cooperator process"),
     "ce_type": _("Community type"),
-    "ce_constitution_state": _("Constitution state"),
-    "ce_constitution_state_other": _("Which one?"),
+    "ce_creation_date": _("Constitution date"),
+    "ce_constitution_status": _("Constitution status"),
+    "ce_constitution_status_other": _("Which one?"),
     "ce_legal_form": _("Community legal form"),
-    "ce_constitution_date": _("Constitution date"),
+    "ce_member_mandatory_contribution": _(
+        "What amount of mandatory contribution to the social capital do you ask for when a new member joins?"
+    ),
+    "ce_registration_tool": _(
+        "Describe which system is currently used by the Register of members (historical register of additions/dismissals and official list of members)"
+    ),
+    "ce_account_management": _(
+        "Do you plan to use Odoo (management program) of the platform to keep the accounts of the Energy Community? or will an external management take it to you?"
+    ),
+    "ce_tax_management": _(
+        "Do you plan to use the platform's Odoo (management program) to carry out tax management: generation of tax reports from the Treasury (303, 390,...) or will it be carried out by an external management company?"
+    ),
+    "ce_management_can_enter_platform": _(
+        "Do you think that management could enter Odoo to generate the models from Odoo itself?"
+    ),
+    "ce_manager": _(
+        "Who will do the day-to-day corporate management of the Energy Community? (person/s with user access to the Odoo corporate/accounting/tax management program of the Energy Community)"
+    ),
+    "ce_manager_firstname": _("Name"),
+    "ce_manager_surname": _("Surnames"),
+    "ce_manager_email": _("Email"),
+    "ce_manager_phone": _("Phone"),
+    "ce_payment_method": _(
+        "Which payment method will you use to collect the mandatory contributions to the share capital (registration of new partners)?"
+    ),
+    "ce_iban_1": _("IBAN (bank account) used by the Energy Community"),
+    "ce_iban_2": _(
+        "IBAN 2 (bank account) used by the Energy Community (only if you use more than one)"
+    ),
+    "ce_extra_charges": _(
+        "Are members charged any type of recurring fee? For what concepts? How are they charged? How often?"
+    ),
+    "ce_voluntary_contributions": _(
+        "Do the members currently make voluntary contributions to the social capital of the Energy Community? How it works?"
+    ),
+    "ce_other_comments": _(
+        "Do you want to comment on any other particular / important aspect of your corporate management?"
+    ),
+    "ce_web_url": _("Web url"),
+    "ce_twitter_url": _("Twitter url"),
+    "ce_instagram_url": _("Instagram url"),
+    "ce_facebook_url": _("Facebook url"),
+    "ce_telegram_url": _("Telegram url"),
 }
+_COMMUNITY_DATA__LEGAL_DOC_FIELDS = {
+    "ce_vat": _("VAT"),
+}
+_COMMUNITY_DATA__GENERAL_FIELDS.update(_COMMUNITY_DATA__LEGAL_DOC_FIELDS)
+_COMMUNITY_DATA__BOOLEAN_FIELDS = {
+    "ce_privacy_policy": _("I have read and accept the privacy policy"),
+}
+_COMMUNITY_DATA__GENERAL_FIELDS.update(_COMMUNITY_DATA__BOOLEAN_FIELDS)
+_COMMUNITY_DATA__PAST_DATE_FIELDS = {
+    "ce_creation_date": _("Constitution date"),
+}
+_COMMUNITY_DATA__DATE_FIELDS = _COMMUNITY_DATA__PAST_DATE_FIELDS
+_COMMUNITY_DATA__GENERAL_FIELDS.update(_COMMUNITY_DATA__DATE_FIELDS)
 _COMMUNITY_DATA__FIELDS.update(_COMMUNITY_DATA__GENERAL_FIELDS)
 _COMMUNITY_DATA__IMAGE_FIELDS = {
     "ce_primary_image_file": _("Primary Image"),
@@ -43,6 +100,7 @@ _COMMUNITY_DATA__URL_PARAMS = {
     "lead_id": _("lead_id on website url"),
 }
 _COMMUNITY_DATA__FIELDS.update(_COMMUNITY_DATA__URL_PARAMS)
+# OPTIONS
 _COMMUNITY_STATUS_OPTIONS = [
     {"id": "open", "name": _("Open")},
     {"id": "closed", "name": _("Closed")},
@@ -51,15 +109,49 @@ _COMMUNITY_TYPE_OPTIONS = [
     {"id": "citizen", "name": _("Citizen")},
     {"id": "industrial", "name": _("Industrial")},
 ]
-_COMMUNITY_CONSTITUTION_STATE_OPTIONS = [
+_COMMUNITY_CONSTITUTION_STATUS_OPTIONS = [
     {"id": "constituted", "name": _("Legally constituted")},
     {"id": "in_progress", "name": _("Constitution in progress")},
     {"id": "in_definition", "name": _("Definition in progress")},
     {"id": "other", "name": _("Other")},
 ]
+_COMMUNITY_MANAGEMENT_OPTIONS = [
+    {"id": "our_platform", "name": _("Our platform")},
+    {"id": "external_management", "name": _("External management")},
+]
+_YES_NO_OPTIONS = [
+    {"id": "yes", "name": _("Yes")},
+    {"id": "no", "name": _("No")},
+]
+_COMMUNITY_MANAGER_OPTIONS = [
+    {
+        "id": "coordinator",
+        "name": _(
+            "It will be delegated to people from the Coordinating entity that supports the Energy Community on the Platform"
+        ),
+    },
+    {
+        "id": "member_admin",
+        "name": _("One or more of a person linked to the Energy Community itself"),
+    },
+    {"id": "both", "name": _("Both of the above options")},
+]
+_COMMUNITY_PAYMENT_METHOD_OPTIONS = [
+    {
+        "id": "transfer",
+        "name": _("Transfer of the candidate to partner to the entity's account"),
+    },
+    {
+        "id": "sepa",
+        "name": _("Bank transfer to the account of the candidate for membership"),
+    },
+]
 
 
 class WebsiteCommunityData(http.Controller):
+    #
+    # ROUTER
+    #
     @http.route(
         ["/page/community-data", "/community-data"],
         type="http",
@@ -91,9 +183,6 @@ class WebsiteCommunityData(http.Controller):
         energy_services = self._get_energy_service_tag_ids()
         form_energy_services = []
 
-        print("Processing values")
-        print(kwargs)
-
         # data structures contruction
         for field_name, field_value in kwargs.items():
             if field_name in _COMMUNITY_DATA__URL_PARAMS.keys():
@@ -109,6 +198,11 @@ class WebsiteCommunityData(http.Controller):
             if field_name in energy_services:
                 form_energy_services.append(field_name)
 
+        # enter boolean if not set
+        for boolean_key in _COMMUNITY_DATA__BOOLEAN_FIELDS.keys():
+            if boolean_key not in kwargs.keys():
+                values[boolean_key] = "off"
+
         # convert form_energy_services on meta string
         for i, form_energy_service in enumerate(form_energy_services):
             if i == 0:
@@ -121,7 +215,7 @@ class WebsiteCommunityData(http.Controller):
                 form_values["ce_services"] += ","
                 values["ce_services"] += ","
 
-        # avoid form resubmission by ctrl+r
+        # avoid form resubmission by accessing /submit url
         if form_values:
             # validation
             response = self._form_submit_validation(values)
@@ -134,16 +228,9 @@ class WebsiteCommunityData(http.Controller):
         else:
             return request.redirect(self._get_community_data_page_url(values))
 
-        # values["birthdate"] = datetime.strptime(
-        #     kwargs.get("birthdate"), "%Y-%m-%d"
-        # ).date()
-
-        # if is_company:
-        #     if kwargs.get("company_register_number"):
-        #         values["company_register_number"] = re.sub(
-        #             "[^0-9a-zA-Z]+", "", kwargs.get("company_register_number")
-        #         )
-
+    #
+    # GETTERS
+    #
     def _get_community_data_submit_response(self, values):
         values = self._fill_values(values, True, False)
         return request.render("energy_communities.community_data_page", values)
@@ -205,7 +292,6 @@ class WebsiteCommunityData(http.Controller):
     def _get_lead_values(self, lead_id):
         lead_values = {}
         lead = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])[0]
-        # TODO: When we know how to populate form fields need to move this to iterate trough _COMMUNITY_DATA__FORM_FIELDS
         for field_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
             meta_line = lead.metadata_line_ids.filtered(
                 lambda meta_data_line: meta_data_line.key == field_key
@@ -233,10 +319,13 @@ class WebsiteCommunityData(http.Controller):
                     )
         return lead_values
 
+    #
+    # UTILS
+    #
     def _fill_values(self, values, display_success=False, display_form=True):
         # urls
         values["page_url"] = self._get_community_data_page_url(values)
-        values["form_submit_url"] = "community-data/submit?lead_id={lead_id}".format(
+        values["form_submit_url"] = "/community-data/submit?lead_id={lead_id}".format(
             lead_id=values["lead_id"]
         )
         # form labels
@@ -259,13 +348,21 @@ class WebsiteCommunityData(http.Controller):
         # energy_services selection
         values["energy_service_options"] = self._get_energy_service_tags()
         # community_status selection
+        values["yes_no_options"] = _YES_NO_OPTIONS
+        # community_status selection
         values["community_status_options"] = _COMMUNITY_STATUS_OPTIONS
         # community_type selection
         values["community_type_options"] = _COMMUNITY_TYPE_OPTIONS
-        # community_constitution_state selection
+        # community_management selection
+        values["community_management_options"] = _COMMUNITY_MANAGEMENT_OPTIONS
+        # community_manager selection
+        values["community_manager_options"] = _COMMUNITY_MANAGER_OPTIONS
+        # community_payment_method_options
+        values["community_payment_method_options"] = _COMMUNITY_PAYMENT_METHOD_OPTIONS
+        # community_constitution_status selection
         values[
-            "community_constitution_state_options"
-        ] = _COMMUNITY_CONSTITUTION_STATE_OPTIONS
+            "community_constitution_status_options"
+        ] = _COMMUNITY_CONSTITUTION_STATUS_OPTIONS
         # community_legal_form selection
         values["community_legal_form_options"] = self._get_legal_forms()
         # form/messages visibility
@@ -273,6 +370,9 @@ class WebsiteCommunityData(http.Controller):
         values["display_form"] = display_form
         return values
 
+    #
+    # VALIDATION
+    #
     def _lead_id_validation(self, values):
         values["lead_id"] = values.get("lead_id", False)
         if not values["lead_id"]:
@@ -303,6 +403,16 @@ class WebsiteCommunityData(http.Controller):
             return values
         return values
 
+    def _validate_regex(self, value, regex_string):
+        regex = re.compile(regex_string)
+        match = regex.match(str(value))
+        return bool(match)
+
+    def _validate_past_date(self, date_string):
+        form_date = datetime.strptime(date_string, "%d/%m/%Y").strftime("%Y-%m-%d")
+        now = datetime.today().strftime("%Y-%m-%d")
+        return form_date <= now
+
     def _page_render_validation(self, values):
         values = self._lead_id_validation(values)
         if "error_msgs" in values.keys():
@@ -319,7 +429,7 @@ class WebsiteCommunityData(http.Controller):
             return request.render("energy_communities.community_data_page", values)
 
         # image validation
-        for image_field_key in _COMMUNITY_DATA__IMAGE_FIELDS:
+        for image_field_key in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
             if image_field_key in values.keys():
                 if values[image_field_key].filename:
                     if "image" not in values[image_field_key].mimetype:
@@ -330,7 +440,33 @@ class WebsiteCommunityData(http.Controller):
                             )
                         )
 
-        # TODO: Date validation!!
+        # date validation
+        for date_field_key in _COMMUNITY_DATA__DATE_FIELDS.keys():
+            # import ipdb; ipdb.set_trace()
+            if date_field_key in values.keys():
+                if not self._validate_regex(
+                    values[date_field_key],
+                    r"(((0[1-9])|([12][0-9])|(3[01]))\/((0[0-9])|(1[012]))\/((20[012]\d|19\d\d)|(1\d|2[0123])))",
+                ):
+                    error.append(date_field_key)
+                    error_msgs.append(
+                        "{} field must have date format (dd/mm/yyyy)".format(
+                            _COMMUNITY_DATA__DATE_FIELDS[date_field_key]
+                        )
+                    )
+                elif date_field_key in _COMMUNITY_DATA__PAST_DATE_FIELDS:
+                    if not self._validate_past_date(values[date_field_key]):
+                        error.append(date_field_key)
+                        error_msgs.append(
+                            "{} field must be a past date".format(
+                                _COMMUNITY_DATA__DATE_FIELDS[date_field_key]
+                            )
+                        )
+
+        # TODO: legal docs validation
+        # TODO: iban validator
+        # TODO: url validator
+
         if error_msgs:
             values["error"] = error
             values["error_msgs"] = error_msgs
@@ -338,6 +474,9 @@ class WebsiteCommunityData(http.Controller):
             return request.render("energy_communities.community_data_page", values)
         return True
 
+    #
+    # DATA PROCESSING
+    #
     def _process_lead_metadata(self, values):
         related_lead = (
             request.env["crm.lead"].sudo().search([("id", "=", values["lead_id"])])

@@ -137,6 +137,27 @@
       </fieldset>
     </div>
     </template>
+    <template id="form_field_checkbox" name="form_field_checkbox">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
+    >
+        <div>
+          <input
+          type="checkbox"
+          t-att-id="key"
+          t-att-name="key"
+          t-if="value=='on'"
+          checked="0"
+        />
+          <input type="checkbox" t-att-id="key" t-att-name="key" t-if="value=='off'" />
+          <label t-att="{'for': key}"><t t-esc="label" /></label>
+        </div>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="description" t-value="field_description" />
+        </t>
+    </div>
+    </template>
     <template id="form_field_selection_radio" name="form_field_selection_radio">
       <div
       t-attf-name="#{key}_container"
