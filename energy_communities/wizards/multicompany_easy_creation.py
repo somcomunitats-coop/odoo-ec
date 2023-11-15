@@ -213,7 +213,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     def action_accept(self):
         super().action_accept()
         self.with_delay()._after_action_accept_hook()
-        self.crm_lead_id.action_set_won_rainbowman()
+        if self.crm_lead_id:
+            self.crm_lead_id.action_set_won_rainbowman()
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",
