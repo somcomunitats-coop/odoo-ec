@@ -13,6 +13,7 @@ class Contract(models.Model):
         ondelete="restrict",
         string="Energy Project",
         related="supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.project_id",
+        store=True,
         auto_join=True,
     )
     code = fields.Char(related="supply_point_assignation_id.supply_point_id.code")

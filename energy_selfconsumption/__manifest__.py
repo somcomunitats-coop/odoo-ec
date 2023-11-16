@@ -29,6 +29,8 @@
         "data/ir_attactment_data.xml",
         "data/custom_paper_format_views.xml",
         "data/contract_line_qty_formula_data.xml",
+        "data/mail_template.xml",
+        "data/ir_cron.xml",
         "views/contract_views.xml",
         "views/selfconsumption_views.xml",
         "views/supply_point_views.xml",
