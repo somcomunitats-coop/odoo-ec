@@ -24,6 +24,7 @@
             <t t-set="value" t-value="ce_name" />
             <t t-set="key" t-value="ce_name_key" />
             <t t-set="label" t-value="ce_name_label" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -31,6 +32,7 @@
             <t t-set="value" t-value="ce_fiscal_name" />
             <t t-set="key" t-value="ce_fiscal_name_key" />
             <t t-set="label" t-value="ce_fiscal_name_label" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_1 or pack_2">
@@ -39,6 +41,7 @@
             <t t-set="key" t-value="ce_description_key" />
             <t t-set="label" t-value="ce_description_label" />
             <t t-set="rows" t-value="5" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_1 or pack_2">
@@ -47,6 +50,7 @@
             <t t-set="key" t-value="ce_long_description_key" />
             <t t-set="label" t-value="ce_long_description_label" />
             <t t-set="rows" t-value="10" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-6" t-if="pack_1 or pack_2">
@@ -54,6 +58,7 @@
             <t t-set="value" t-value="ce_address" />
             <t t-set="key" t-value="ce_address_key" />
             <t t-set="label" t-value="ce_address_label" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-6" t-if="pack_1 or pack_2">
@@ -61,6 +66,7 @@
             <t t-set="value" t-value="ce_zip" />
             <t t-set="key" t-value="ce_zip_key" />
             <t t-set="label" t-value="ce_zip_label" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-6" t-if="pack_1 or pack_2">
@@ -68,6 +74,7 @@
             <t t-set="value" t-value="ce_city" />
             <t t-set="key" t-value="ce_city_key" />
             <t t-set="label" t-value="ce_city_label" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-6" t-if="pack_1 or pack_2">
@@ -76,6 +83,7 @@
             <t t-set="key" t-value="ce_state_key" />
             <t t-set="label" t-value="ce_state_label" />
             <t t-set="options" t-value="state_options" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-6" t-if="pack_1 or pack_2">
@@ -83,6 +91,7 @@
             <t t-set="value" t-value="email_from" />
             <t t-set="key" t-value="email_from_key" />
             <t t-set="label" t-value="email_from_label" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-6" t-if="pack_1 or pack_2">
@@ -90,6 +99,7 @@
             <t t-set="value" t-value="contact_phone" />
             <t t-set="key" t-value="contact_phone_key" />
             <t t-set="label" t-value="contact_phone_label" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_1 or pack_2">
@@ -98,6 +108,7 @@
             <t t-set="key" t-value="current_lang_key" />
             <t t-set="label" t-value="current_lang_label" />
             <t t-set="options" t-value="lang_options" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_1 or pack_2">
@@ -106,6 +117,7 @@
             <t t-set="key" t-value="ce_services_key" />
             <t t-set="label" t-value="ce_services_label" />
             <t t-set="options" t-value="energy_service_options" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_1 or pack_2">
@@ -113,6 +125,7 @@
             <t t-set="value" t-value="ce_number_of_members" />
             <t t-set="key" t-value="ce_number_of_members_key" />
             <t t-set="label" t-value="ce_number_of_members_label" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_1 or pack_2">
@@ -121,6 +134,7 @@
             <t t-set="key" t-value="ce_status_key" />
             <t t-set="label" t-value="ce_status_label" />
             <t t-set="options" t-value="community_status_options" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_1 or pack_2">
@@ -131,7 +145,7 @@
             <t t-set="rows" t-value="5" />
             <t t-set="maxlength" t-value="100" />
             <t
-            t-set="field_description"
+            t-set="description"
           >In this section you can briefly explain the advantages of joining the community</t>
           </t>
         </div>
@@ -143,7 +157,7 @@
             <t t-set="rows" t-value="5" />
             <t t-set="maxlength" t-value="100" />
             <t
-            t-set="field_description"
+            t-set="description"
           >Explain the process to become cooperator. Include payment information.</t>
           </t>
         </div>
@@ -153,7 +167,8 @@
               <t t-set="value" t-value="ce_primary_image_file" />
               <t t-set="key" t-value="ce_primary_image_file_key" />
               <t t-set="label" t-value="ce_primary_image_file_label" />
-              <t t-set="field_description">If possible upload a group image</t>
+              <t t-set="description">If possible upload a group image</t>
+              <t t-set="required" t-value="True" />
             </t>
           </div>
         </div>
@@ -163,6 +178,7 @@
               <t t-set="value" t-value="ce_secondary_image_file" />
               <t t-set="key" t-value="ce_secondary_image_file_key" />
               <t t-set="label" t-value="ce_secondary_image_file_label" />
+              <t t-set="required" t-value="True" />
             </t>
           </div>
         </div>
@@ -181,6 +197,7 @@
             <t t-set="key" t-value="ce_type_key" />
             <t t-set="label" t-value="ce_type_label" />
             <t t-set="options" t-value="community_type_options" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -189,6 +206,7 @@
             <t t-set="key" t-value="ce_constitution_status_key" />
             <t t-set="label" t-value="ce_constitution_status_label" />
             <t t-set="options" t-value="community_constitution_status_options" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -196,6 +214,7 @@
             <t t-set="value" t-value="ce_constitution_status_other" />
             <t t-set="key" t-value="ce_constitution_status_other_key" />
             <t t-set="label" t-value="ce_constitution_status_other_label" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-6" t-if="pack_2">
@@ -204,6 +223,7 @@
             <t t-set="key" t-value="ce_legal_form_key" />
             <t t-set="label" t-value="ce_legal_form_label" />
             <t t-set="options" t-value="community_legal_form_options" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -211,6 +231,7 @@
             <t t-set="value" t-value="ce_creation_date" />
             <t t-set="key" t-value="ce_creation_date_key" />
             <t t-set="label" t-value="ce_creation_date_label" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -218,6 +239,7 @@
             <t t-set="value" t-value="ce_vat" />
             <t t-set="key" t-value="ce_vat_key" />
             <t t-set="label" t-value="ce_vat_label" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -225,6 +247,7 @@
             <t t-set="value" t-value="ce_member_mandatory_contribution" />
             <t t-set="key" t-value="ce_member_mandatory_contribution_key" />
             <t t-set="label" t-value="ce_member_mandatory_contribution_label" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -233,9 +256,9 @@
             <t t-set="key" t-value="ce_registration_tool_key" />
             <t t-set="label" t-value="ce_registration_tool_label" />
             <t t-set="rows" t-value="5" />
-            <!--<t t-set="maxlength" t-value="100" />-->
+            <t t-set="required" t-value="pack_2" />
             <t
-            t-set="field_description"
+            t-set="description"
           >Non-computer support, Excels, computer program (which one?)</t>
           </t>
         </div>
@@ -245,6 +268,7 @@
             <t t-set="key" t-value="ce_account_management_key" />
             <t t-set="label" t-value="ce_account_management_label" />
             <t t-set="options" t-value="community_management_options" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -253,6 +277,7 @@
             <t t-set="key" t-value="ce_tax_management_key" />
             <t t-set="label" t-value="ce_tax_management_label" />
             <t t-set="options" t-value="community_management_options" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -261,6 +286,7 @@
             <t t-set="key" t-value="ce_management_can_enter_platform_key" />
             <t t-set="label" t-value="ce_management_can_enter_platform_label" />
             <t t-set="options" t-value="yes_no_options" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -269,6 +295,7 @@
             <t t-set="key" t-value="ce_manager_key" />
             <t t-set="label" t-value="ce_manager_label" />
             <t t-set="options" t-value="community_manager_options" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -280,6 +307,7 @@
             <t t-set="value" t-value="ce_manager_firstname" />
             <t t-set="key" t-value="ce_manager_firstname_key" />
             <t t-set="label" t-value="ce_manager_firstname_label" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-6" t-if="pack_2">
@@ -287,6 +315,7 @@
             <t t-set="value" t-value="ce_manager_surname" />
             <t t-set="key" t-value="ce_manager_surname_key" />
             <t t-set="label" t-value="ce_manager_surname_label" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-6" t-if="pack_2">
@@ -294,6 +323,7 @@
             <t t-set="value" t-value="ce_manager_email" />
             <t t-set="key" t-value="ce_manager_email_key" />
             <t t-set="label" t-value="ce_manager_email_label" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-6" t-if="pack_2">
@@ -301,6 +331,7 @@
             <t t-set="value" t-value="ce_manager_phone" />
             <t t-set="key" t-value="ce_manager_phone_key" />
             <t t-set="label" t-value="ce_manager_phone_label" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -309,6 +340,7 @@
             <t t-set="key" t-value="ce_payment_method_key" />
             <t t-set="label" t-value="ce_payment_method_label" />
             <t t-set="options" t-value="community_payment_method_options" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -316,6 +348,7 @@
             <t t-set="value" t-value="ce_iban_1" />
             <t t-set="key" t-value="ce_iban_1_key" />
             <t t-set="label" t-value="ce_iban_1_label" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -331,6 +364,7 @@
             <t t-set="key" t-value="ce_extra_charges_key" />
             <t t-set="label" t-value="ce_extra_charges_label" />
             <t t-set="rows" t-value="5" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -339,6 +373,7 @@
             <t t-set="key" t-value="ce_voluntary_contributions_key" />
             <t t-set="label" t-value="ce_voluntary_contributions_label" />
             <t t-set="rows" t-value="5" />
+            <t t-set="required" t-value="pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -389,6 +424,7 @@
             <t t-set="value" t-value="ce_privacy_policy" />
             <t t-set="key" t-value="ce_privacy_policy_key" />
             <t t-set="label" t-value="ce_privacy_policy_label" />
+            <t t-set="required" t-value="True" />
           </t>
         </div>
         <!-- TODO: Make this description dynamic and db translatable -->

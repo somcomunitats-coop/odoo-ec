@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <template id="form_field_part_description" name="form_field_part_description">
-      <label
-      style="font-size:13px;font-family:'Roboto',sans-serif;font-weight:300;"
-      t-if="description"
-    ><t t-esc="description" /></label>
+      <span
+      style="display:block;font-size:13px;font-family:'Roboto',sans-serif;font-weight:300;"
+      t-if="field_description"
+    ><t t-esc="field_description" /></span>
+    </template>
+    <template id="form_field_part_label" name="form_field_part_label">
+      <label t-att="{'for': field_key}"><t t-esc="field_label" /><span
+        t-if="field_required"
+      > *</span></label>
     </template>
     <template id="form_field_text" name="form_field_text">
       <div
       t-attf-name="#{key}_container"
       t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
     >
-      <label t-att="{'for': key}"><t t-esc="label" /></label>
+      <t t-call="energy_communities.form_field_part_label">
+        <t t-set="field_key" t-value="key" />
+        <t t-set="field_label" t-value="label" />
+        <t t-set="field_required" t-value="required" />
+      </t>
       <t t-call="energy_communities.form_field_part_description">
-        <t t-set="description" t-value="field_description" />
+        <t t-set="field_description" t-value="description" />
       </t>
         <input
         class="form-control form-control-sm"
@@ -21,6 +30,7 @@
         type="text"
         t-attf-name="#{key}"
         t-attf-value="#{value or ''}"
+        t-att-required="required"
       />
       </div>
     </template>
@@ -29,9 +39,13 @@
       t-attf-name="#{key}_container"
       t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
     >
-        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <t t-call="energy_communities.form_field_part_label">
+          <t t-set="field_key" t-value="key" />
+          <t t-set="field_label" t-value="label" />
+          <t t-set="field_required" t-value="required" />
+        </t>
         <t t-call="energy_communities.form_field_part_description">
-          <t t-set="description" t-value="field_description" />
+          <t t-set="field_description" t-value="description" />
         </t>
         <input
         class="form-control form-control-sm"
@@ -40,6 +54,7 @@
         t-attf-name="#{key}"
         min="1"
         t-attf-value="#{value or ''}"
+        t-att-required="required"
       />
       </div>
     </template>
@@ -48,9 +63,13 @@
       t-attf-name="#{key}_container"
       t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
     >
-        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <t t-call="energy_communities.form_field_part_label">
+          <t t-set="field_key" t-value="key" />
+          <t t-set="field_label" t-value="label" />
+          <t t-set="field_required" t-value="required" />
+        </t>
         <t t-call="energy_communities.form_field_part_description">
-          <t t-set="description" t-value="field_description" />
+          <t t-set="field_description" t-value="description" />
         </t>
         <input
         class="form-control form-control-sm"
@@ -59,6 +78,7 @@
         type="email"
         t-attf-name="#{key}"
         t-attf-value="#{value or ''}"
+        t-att-required="required"
       />
       </div>
     </template>
@@ -67,9 +87,13 @@
       t-attf-name="#{key}_container"
       t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
     >
-        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <t t-call="energy_communities.form_field_part_label">
+          <t t-set="field_key" t-value="key" />
+          <t t-set="field_label" t-value="label" />
+          <t t-set="field_required" t-value="required" />
+        </t>
         <t t-call="energy_communities.form_field_part_description">
-          <t t-set="description" t-value="field_description" />
+          <t t-set="field_description" t-value="description" />
         </t>
         <textarea
         class="form-control form-control-sm"
@@ -77,6 +101,7 @@
         t-attf-name="#{key}"
         t-attf-rows="#{rows}"
         t-attf-maxlength="#{maxlength}"
+        t-att-required="required"
       ><t t-esc="value or ''" /></textarea>
       </div>
     </template>
@@ -85,14 +110,19 @@
       t-attf-name="#{key}_container"
       t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
     >
-        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <t t-call="energy_communities.form_field_part_label">
+          <t t-set="field_key" t-value="key" />
+          <t t-set="field_label" t-value="label" />
+          <t t-set="field_required" t-value="required" />
+        </t>
         <t t-call="energy_communities.form_field_part_description">
-          <t t-set="description" t-value="field_description" />
+          <t t-set="field_description" t-value="description" />
         </t>
           <select
         class="form-control form-control-sm"
         t-attf-id="#{key}"
         t-attf-name="#{key}"
+        t-att-required="required"
       >
             <option value="">Please choose an option</option>
             <t t-foreach="options or []" t-as="option">
@@ -111,10 +141,15 @@
       t-attf-name="#{key}_container"
       t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
     >
-      <fieldset>
-        <label t-att="{'for': key}"><t t-esc="label" /></label>
+      <!-- TODO: Required validation trough javascript -->
+      <fieldset t-att-required="required">
+        <t t-call="energy_communities.form_field_part_label">
+          <t t-set="field_key" t-value="key" />
+          <t t-set="field_label" t-value="label" />
+          <t t-set="field_required" t-value="required" />
+        </t>
         <t t-call="energy_communities.form_field_part_description">
-          <t t-set="description" t-value="field_description" />
+          <t t-set="field_description" t-value="description" />
         </t>
         <t t-foreach="options or []" t-as="option">
           <div>
@@ -122,14 +157,7 @@
               type="checkbox"
               t-att-id="option['id']"
               t-att-name="option['id']"
-              t-if="option['id'] in value"
-              checked="0"
-            />
-            <input
-              type="checkbox"
-              t-att-id="option['id']"
-              t-att-name="option['id']"
-              t-if="option['id'] not in value"
+              t-att-checked="option['id'] in value"
             />
             <span><t t-esc="option['name']" /></span>
           </div>
@@ -147,14 +175,17 @@
           type="checkbox"
           t-att-id="key"
           t-att-name="key"
-          t-if="value=='on'"
-          checked="0"
+          t-att-checked="value=='on'"
+          t-att-required="required"
         />
-          <input type="checkbox" t-att-id="key" t-att-name="key" t-if="value=='off'" />
-          <label t-att="{'for': key}"><t t-esc="label" /></label>
+          <t t-call="energy_communities.form_field_part_label">
+            <t t-set="field_key" t-value="key" />
+            <t t-set="field_label" t-value="label" />
+            <t t-set="field_required" t-value="required" />
+          </t>
         </div>
         <t t-call="energy_communities.form_field_part_description">
-          <t t-set="description" t-value="field_description" />
+          <t t-set="field_description" t-value="description" />
         </t>
     </div>
     </template>
@@ -164,9 +195,13 @@
       t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
     >
       <fieldset>
-        <label t-att="{'for': key}"><t t-esc="label" /></label>
+        <t t-call="energy_communities.form_field_part_label">
+          <t t-set="field_key" t-value="key" />
+          <t t-set="field_label" t-value="label" />
+          <t t-set="field_required" t-value="required" />
+        </t>
         <t t-call="energy_communities.form_field_part_description">
-          <t t-set="description" t-value="field_description" />
+          <t t-set="field_description" t-value="description" />
         </t>
         <t t-foreach="options or []" t-as="option">
           <div>
@@ -175,15 +210,8 @@
               t-att-id="option['id']"
               t-att-value="option['id']"
               t-att-name="key"
-              t-if="option['id'] == value"
-              checked="0"
-            />
-            <input
-              type="radio"
-              t-att-id="option['id']"
-              t-att-value="option['id']"
-              t-att-name="key"
-              t-if="option['id'] != value"
+              t-att-checked="option['id'] == value"
+              t-att-required="required"
             />
             <span><t t-esc="option['name']" /></span>
           </div>
@@ -197,12 +225,16 @@
         t-attf-name="#{key}_container"
         t-attf-class="form-group #{error and key in error and 'has-error' or ''} field-#{key}"
       >
-          <label t-att="{'for': key}"><t t-esc="label" /></label>
-          <t t-call="energy_communities.form_field_part_description">
-            <t t-set="description" t-value="field_description" />
+          <t t-call="energy_communities.form_field_part_label">
+            <t t-set="field_key" t-value="key" />
+            <t t-set="field_label" t-value="label" />
+            <t t-set="field_required" t-value="required" />
           </t>
           <t t-call="energy_communities.form_field_part_description">
-            <t t-set="description">
+            <t t-set="field_description" t-value="description" />
+          </t>
+          <t t-call="energy_communities.form_field_part_description">
+            <t t-set="field_description">
               Upload a new one to change
             </t>
           </t>
@@ -211,6 +243,7 @@
           accept="image/*"
           class="form-control form-control-sm #{key}"
           t-attf-name="#{key}"
+          t-att-required="required and not value"
         />
         </div>
       </div>
@@ -226,7 +259,11 @@
           <t t-set="date_placeholder" t-if="lang=='ca_ES'">dd/mm/aaaa</t>
           <t t-set="date_placeholder" t-if="lang=='es_ES'">dd/mm/aaaa</t>
           <t t-set="date_placeholder" t-if="lang=='en_US'">dd/mm/yyyy</t>
-          <label t-att="{'for': key}"><t t-esc="label" /></label>
+          <t t-call="energy_communities.form_field_part_label">
+            <t t-set="field_key" t-value="key" />
+            <t t-set="field_label" t-value="label" />
+            <t t-set="field_required" t-value="required" />
+          </t>
           <input
         class="form-control form-control-sm o_website_form_date_past"
         type="text"
@@ -235,6 +272,7 @@
         t-attf-value="#{value or ''}"
         t-attf-data-locale="#{lang}"
         t-attf-placeholder="#{date_placeholder}"
+        t-att-required="required"
       />
         </div>
     </template>

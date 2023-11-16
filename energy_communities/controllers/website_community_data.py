@@ -356,6 +356,8 @@ class WebsiteCommunityData(http.Controller):
         ):
             values["ce_state"] = False
         # energy_services selection
+        if "ce_services" not in values.keys() or values["ce_services"] == "":
+            values["ce_services"] = []
         values["energy_service_options"] = self._get_energy_service_tags()
         # community_status selection
         values["yes_no_options"] = _YES_NO_OPTIONS
@@ -375,6 +377,12 @@ class WebsiteCommunityData(http.Controller):
         ] = _COMMUNITY_CONSTITUTION_STATUS_OPTIONS
         # community_legal_form selection
         values["community_legal_form_options"] = self._get_legal_forms()
+        # image preselection from db (if necessary)
+        for image_field_key in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
+            if image_field_key not in values.keys():
+                lead_values = self._get_lead_values(values["lead_id"])
+                if image_field_key in lead_values:
+                    values[image_field_key] = lead_values[image_field_key]
         # form/messages visibility
         values["display_success"] = display_success
         values["display_form"] = display_form
@@ -437,6 +445,13 @@ class WebsiteCommunityData(http.Controller):
         values = self._lead_id_validation(values)
         if "error_msgs" in values.keys():
             return request.render("energy_communities.community_data_page", values)
+
+        # ce_services validation
+        if "ce_services" not in values.keys():
+            error.append("ce_services")
+            error_msgs.append(
+                "Please select at least one Energy service in order to submit the form"
+            )
 
         # image validation
         for image_field_key in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
