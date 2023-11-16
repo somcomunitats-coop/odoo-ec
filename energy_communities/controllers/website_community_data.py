@@ -276,6 +276,13 @@ class WebsiteCommunityData(http.Controller):
             )
         )
 
+    def _is_lead_pack(self, lead_id, pack_tag_ext_id):
+        lead = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])[0]
+        pack_tag = lead.tag_ids.filtered(
+            lambda tag: tag.tag_ext_id == "energy_communities." + pack_tag_ext_id
+        )
+        return bool(pack_tag)
+
     def _get_energy_service_tag_ids(self):
         return (
             request.env["crm.tag"]
@@ -328,6 +335,9 @@ class WebsiteCommunityData(http.Controller):
         values["form_submit_url"] = "/community-data/submit?lead_id={lead_id}".format(
             lead_id=values["lead_id"]
         )
+        # packs
+        values["pack_1"] = self._is_lead_pack(values["lead_id"], "pack_1")
+        values["pack_2"] = self._is_lead_pack(values["lead_id"], "pack_2")
         # form labels
         # form keys
         for field_key in _COMMUNITY_DATA__FIELDS.keys():
