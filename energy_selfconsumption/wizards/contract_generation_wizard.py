@@ -52,15 +52,26 @@ class ContractGenerationWizard(models.TransientModel):
             # We use the next method from the contract model to update the contract fields with contract template
             contract._onchange_contract_template_id()
             for contract_line_id in contract.contract_line_ids:
+                data = {"code": supply_point_assignation.supply_point_id.code, "owner_id": supply_point_assignation.supply_point_id.owner_id.display_name,}
+                # Each invoicing type has different data in the description column, so we need to check and modify
+                if self.selfconsumption_id.invoicing_mode == 'power_acquired':
+                    contract_line_id.name += """\nCAU: {cau}\nTotal installed nominal power (kW): {power}\nPartition coefficient: {coefficient}"""
+                    data["cau"] = self.selfconsumption_id.code
+                    data["power"] = self.selfconsumption_id.power
+                    data["coefficient"] = self.get_coefficient(self.selfconsumption_id.distribution_table_ids.supply_point_assignation_ids, supply_point_assignation.supply_point_id.owner_id.display_name)
+                    
                 contract_line_id.write(
                     {
-                        "name": contract_line_id.name.format(
-                            code=supply_point_assignation.supply_point_id.code,
-                            owner_id=supply_point_assignation.supply_point_id.owner_id.display_name,
-                        ),
+                        "name": contract_line_id.name.format(**data)
                     }
                 )
         # Update selfconsumption and distribution_table state
         self.selfconsumption_id.write({"state": "active"})
         self.selfconsumption_id.distribution_table_state("process", "active")
         return True
+
+    def get_coefficient(self, supply_point_assignation_ids, owner_name):
+        for assignation in supply_point_assignation_ids:
+            if assignation.owner_id.name == owner_name:
+                return assignation.coefficient
+        return None

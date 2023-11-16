@@ -21,24 +21,6 @@
             <xpath expr="//th[@name='th_invoiced_days']" position="after">
                 <th name="th_quantity"><span>Quantity</span></th>
             </xpath>
-            
-            <xpath expr="//td[@name='account_invoice_line_name']" position="replace">
-                <td name="account_invoice_line_name">    
-                    <span>CAU: <span t-field="line.selfconsumption_id.code" /></span>
-                    <br/>
-                    <span t-field="line.name" t-options="{'widget': 'text'}"/>
-                    <br/>
-                    <span>Total installed nominal power (kW): <span t-field="line.selfconsumption_id.power" /></span>
-                    <br/>
-                    <span>Partition coefficient: 
-                        <t t-foreach="line.selfconsumption_id.distribution_table_ids.supply_point_assignation_ids" t-as="assignation">
-                            <t t-if="assignation.owner_id.name == line.partner_id.name">
-                                <span t-field="assignation.coefficient"/>
-                            </t>
-                        </t>
-                    </span>
-                </td>
-            </xpath>
 
             <xpath expr="//td[@name='account_invoice_line_name']" position="after">
                 <td name="td_power_acquired">
