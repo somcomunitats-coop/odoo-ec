@@ -4,11 +4,11 @@
         <template inherit_id="account.report_invoice_document" id="power_acquired_invoice_template" primary="True">
 
             <xpath expr="//th[@name='th_quantity']" position="replace">
-                <th name="th_total_installation_generation"><span>Total installation generation</span></th>
+                <th name="th_power_acquired"><span>Power acquired</span></th>
             </xpath>
 
-            <xpath expr="//th[@name='th_total_installation_generation']" position="after">
-                <th name="th_partition_coefficient"><span>Partition coefficient</span></th>
+            <xpath expr="//th[@name='th_power_acquired']" position="after">
+                <th name="th_invoiced_days"><span>Invoiced days</span></th>
             </xpath>
             
             <xpath expr="//th[@name='th_priceunit']" position="after">
@@ -18,8 +18,8 @@
             <xpath expr="//th[@name='th_taxes']" position="replace"></xpath>
             <xpath expr="//th[@name='th_subtotal']" position="replace"></xpath>
             
-            <xpath expr="//th[@name='th_partition_coefficient']" position="after">
-                <th name="th_total_amount_invoiced"><span>Total amount invoiced</span></th>
+            <xpath expr="//th[@name='th_invoiced_days']" position="after">
+                <th name="th_quantity"><span>Quantity</span></th>
             </xpath>
             
             <xpath expr="//td[@name='account_invoice_line_name']" position="replace">
@@ -27,30 +27,50 @@
                     <span>CAU: <span t-field="line.selfconsumption_id.code" /></span>
                     <br/>
                     <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                    <br/>
+                    <span>Total installed nominal power (kW): <span t-field="line.selfconsumption_id.power" /></span>
+                    <br/>
+                    <span>Partition coefficient: 
+                        <t t-foreach="line.selfconsumption_id.distribution_table_ids.supply_point_assignation_ids" t-as="assignation">
+                            <t t-if="assignation.owner_id.name == line.partner_id.name">
+                                <span t-field="assignation.coefficient"/>
+                            </t>
+                        </t>
+                    </span>
                 </td>
             </xpath>
 
             <xpath expr="//td[@name='account_invoice_line_name']" position="after">
-                <td name="td_total_installation_generation">    
-                    <span t-field="line.selfconsumption_id.power" /><span> kWh</span>
-                </td>
-            </xpath>
-
-            <xpath expr="//td[@name='td_total_installation_generation']" position="after">
-                <td name="td_partition_coefficient">    
-                    <t t-foreach="line.selfconsumption_id.distribution_table_ids.supply_point_assignation_ids" t-as="assignation">
-                        <t t-if="assignation.owner_id.name == line.partner_id.name">
-                            <span t-field="assignation.coefficient"/>
+                <td name="td_power_acquired">
+                    <t t-foreach="line.selfconsumption_id.contract_ids" t-as="contract">
+                        <t t-if="contract.next_period_date_start and contract.next_period_date_end">
+                            <t t-esc="(((contract.next_period_date_end - contract.next_period_date_start).days) + 1)* line.selfconsumption_id.power"/><span> kW/day</span>
+                        </t>
+                        <t t-else="contract.next_period_date_start or contract.next_period_date_end">
+                            0 kW/day
                         </t>
                     </t>
                 </td>
             </xpath>
 
-            <xpath expr="//td[@name='td_partition_coefficient']" position="after">
-                <td name="td_total_amount_invoiced">kWh</td>
+            <xpath expr="//td[@name='td_power_acquired']" position="after">
+                <td name="td_invoiced_days">    
+                     <t t-foreach="line.selfconsumption_id.contract_ids" t-as="contract">
+                        <t t-if="contract.next_period_date_start and contract.next_period_date_end">
+                            <t t-esc="((contract.next_period_date_end - contract.next_period_date_start).days) + 1"/>
+                        </t>
+                        <t t-else="contract.next_period_date_start or contract.next_period_date_end">
+                            0
+                        </t>
+                    </t>
+                </td>
             </xpath>
 
-            <xpath expr="//td[@name='td_total_amount_invoiced']" position="after">
+            <xpath expr="//td[@name='td_invoiced_days']" position="after">
+                <td name="td_quantity">kWh</td>
+            </xpath>
+
+            <xpath expr="//td[@name='td_quantity']" position="after">
                 <td name="td_total_amount_invoiced">    
                     <span t-field="line.selfconsumption_id.product_id.lst_price"/><span> €/kWh</span>
                 </td>
