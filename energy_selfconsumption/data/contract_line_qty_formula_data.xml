@@ -16,16 +16,10 @@ result = contract.supply_point_assignation_id.distribution_table_id.selfconsumpt
         <record id="energy_delivered_formula" model="contract.line.qty.formula">
             <field name="name">Energy Delivered Formula</field>
             <field name="code">
-days_timedelta = contract.next_period_date_end - contract.next_period_date_start
 energy_delivered = 0
-if days_timedelta:
-  # Add one so it counts the same day too (month = 29 + 1)
-  days_between = days_timedelta.days + 1
-else:
-  days_between = 0
 if 'energy_delivered' in context:
   energy_delivered = context['energy_delivered']
-result = energy_delivered * contract.supply_point_assignation_id.coefficient *  days_between
+result = energy_delivered * contract.supply_point_assignation_id.coefficient
             </field>
         </record>
         <record
