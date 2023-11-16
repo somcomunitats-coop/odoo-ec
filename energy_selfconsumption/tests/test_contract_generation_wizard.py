@@ -66,7 +66,7 @@ class TestContractGenerationWizard(TransactionCase):
                 "coefficient": 1,
             }
         )
-        self.define_invoicing_mode_wizard = self.env[
+        self.define_invoicing_mode_power_acquired_wizard = self.env[
             "energy_selfconsumption.define_invoicing_mode.wizard"
         ].create(
             {
@@ -85,8 +85,10 @@ class TestContractGenerationWizard(TransactionCase):
             }
         )
 
-    def test_generation_contracts(self):
-        res = self.define_invoicing_mode_wizard.save_data_to_selfconsumption()
+    def test_power_acquired_generation_contracts(self):
+        res = (
+            self.define_invoicing_mode_power_acquired_wizard.save_data_to_selfconsumption()
+        )
         self.assertEqual(
             res,
             {
