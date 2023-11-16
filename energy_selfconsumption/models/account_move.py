@@ -17,6 +17,6 @@ class AccountMove(models.Model):
         self.ensure_one()
         if self.invoice_line_ids.selfconsumption_id.invoicing_mode == 'energy_delivered':
             return 'energy_selfconsumption.energy_delivered_invoice_template'
-        elif self.invoice_line_ids.selfconsumption_id.invoicing_mode == 'power_acquire':
-            return 'energy_selfconsumption.power_acquire_invoice_template'
+        elif self.invoice_line_ids.selfconsumption_id.invoicing_mode == 'power_acquired':
+            return 'energy_selfconsumption.power_acquired_invoice_template'
         return super()._get_name_invoice_report()

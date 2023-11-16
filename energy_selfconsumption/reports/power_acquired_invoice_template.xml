@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <template inherit_id="account.report_invoice_document" id="energy_delivered_invoice_template" primary="True">
+        <template inherit_id="account.report_invoice_document" id="power_acquired_invoice_template" primary="True">
 
             <xpath expr="//th[@name='th_quantity']" position="replace">
                 <th name="th_total_installation_generation"><span>Total installation generation</span></th>
@@ -64,8 +64,8 @@
 
         <template id="report_invoice_with_payments" inherit_id="account.report_invoice_with_payments">
             <xpath expr='//t[@t-call="account.report_invoice_document"]' position="after">
-                <t t-if="o._get_name_invoice_report() == 'energy_selfconsumption.energy_delivered_invoice_template'"
-                    t-call="energy_selfconsumption.energy_delivered_invoice_template" t-lang="lang"/>
+                <t t-if="o._get_name_invoice_report() == 'energy_selfconsumption.power_acquired_invoice_template'"
+                    t-call="energy_selfconsumption.power_acquired_invoice_template" t-lang="lang"/>
             </xpath>
         </template>
     </data>
