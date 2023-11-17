@@ -260,6 +260,7 @@ class WebsiteCommunityData(http.Controller):
     def _get_langs(self):
         return (
             request.env["res.lang"]
+            .sudo()
             .search([("active", "=", 1)])
             .mapped(lambda r: {"id": r.code, "name": r.name})
         )
@@ -267,6 +268,7 @@ class WebsiteCommunityData(http.Controller):
     def _get_energy_service_tags(self):
         return (
             request.env["crm.tag"]
+            .sudo()
             .search([("tag_type", "=", "energy_service")])
             .mapped(
                 lambda r: {
@@ -286,6 +288,7 @@ class WebsiteCommunityData(http.Controller):
     def _get_energy_service_tag_ids(self):
         return (
             request.env["crm.tag"]
+            .sudo()
             .search([("tag_type", "=", "energy_service")])
             .mapped(lambda r: r.tag_ext_id.replace("energy_communities.", ""))
         )
@@ -503,16 +506,40 @@ class WebsiteCommunityData(http.Controller):
     # DATA PROCESSING
     #
     def _process_lead_metadata(self, values):
+        changed_data = []
         related_lead = (
             request.env["crm.lead"].sudo().search([("id", "=", values["lead_id"])])
         )
         for meta_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
             if meta_key in values.keys():
-                related_lead.create_update_metadata(meta_key, values[meta_key])
+                changed = related_lead.create_update_metadata(
+                    meta_key, values[meta_key]
+                )
+                if changed:
+                    changed_data.append(meta_key)
         for meta_key in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
             if meta_key in values.keys():
                 attachment = self._create_attachment(related_lead, values[meta_key])
-                related_lead.create_update_metadata(meta_key, attachment.id)
+                changed = related_lead.create_update_metadata(meta_key, attachment.id)
+                if changed:
+                    changed_data.append(meta_key)
+        # notification message
+        if bool(changed_data):
+            changed_data_msg_body = "<h6>{}</h6><ul>".format(
+                _("Public community data changed:")
+            )
+            for meta_key in changed_data:
+                changed_data_msg_body += "<li>{label}: {value}</li>".format(
+                    label=_COMMUNITY_DATA__FIELDS[meta_key], value=values[meta_key]
+                )
+            changed_data_msg_body += "</ul>"
+            related_lead.sudo().message_post(
+                subject="{} public form submission".format(related_lead.name),
+                body=changed_data_msg_body,
+                subtype_id=None,
+                message_type="notification",
+                subtype_xmlid="mail.mt_comment",
+            )
 
     def _create_attachment(self, lead, value):
         return (

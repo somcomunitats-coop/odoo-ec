@@ -229,11 +229,15 @@ class CrmLead(models.Model):
             lambda record: record.key == meta_key
         )
         if existing_meta:
-            existing_meta.write({"value": meta_value})
+            if existing_meta.value != meta_value:
+                existing_meta.write({"value": meta_value})
+                return True
         else:
             self.env["crm.lead.metadata.line"].create(
                 {"key": meta_key, "value": meta_value, "crm_lead_id": self.id}
             )
+            return True
+        return False
 
 
 class CrmTags(models.Model):
