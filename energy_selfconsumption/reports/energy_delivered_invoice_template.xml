@@ -38,20 +38,7 @@
                 </td>
             </xpath>
 
-            <xpath expr="//td[@name='td_partition_coefficient']" position="after">
-                <td name="td_total_amount_invoiced">kWh</td>
-            </xpath>
-
-            <xpath expr="//td[@name='td_total_amount_invoiced']" position="after">
-                <td name="td_total_amount_invoiced">    
-                    <span t-field="line.selfconsumption_id.product_id.lst_price"/><span> €/kWh</span>
-                </td>
-            </xpath>
-
-            <xpath expr="//span[@t-field='line.price_unit']" position="replace"></xpath>
-            <xpath expr="//span[@id='line_tax_ids']" position="replace"></xpath>
-            <xpath expr="//td[@class='text-right o_price_total']" position="replace"></xpath>
-            
+            <xpath expr="//span[@id='line_tax_ids']" position="replace"></xpath>            
         </template>
 
         <template id="report_invoice_with_payments" inherit_id="account.report_invoice_with_payments">
