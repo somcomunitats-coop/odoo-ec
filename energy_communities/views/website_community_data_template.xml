@@ -207,6 +207,9 @@
             <t t-set="label" t-value="ce_constitution_status_label" />
             <t t-set="options" t-value="community_constitution_status_options" />
             <t t-set="required" t-value="pack_2" />
+            <t
+            t-set="trigger"
+          >ce_constitution_status_other,ce_legal_form,ce_creation_date,ce_vat</t>
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -215,6 +218,8 @@
             <t t-set="key" t-value="ce_constitution_status_other_key" />
             <t t-set="label" t-value="ce_constitution_status_other_label" />
             <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_constitution_status:other</t>
+            <t t-set="disabled">True</t>
           </t>
         </div>
         <div class="col-md-6" t-if="pack_2">
@@ -224,6 +229,8 @@
             <t t-set="label" t-value="ce_legal_form_label" />
             <t t-set="options" t-value="community_legal_form_options" />
             <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_constitution_status:constituted</t>
+            <t t-set="disabled">True</t>
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -232,6 +239,8 @@
             <t t-set="key" t-value="ce_creation_date_key" />
             <t t-set="label" t-value="ce_creation_date_label" />
             <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_constitution_status:constituted</t>
+            <t t-set="disabled">True</t>
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -240,6 +249,8 @@
             <t t-set="key" t-value="ce_vat_key" />
             <t t-set="label" t-value="ce_vat_label" />
             <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_constitution_status:constituted</t>
+            <t t-set="disabled">True</t>
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -296,11 +307,20 @@
             <t t-set="label" t-value="ce_manager_label" />
             <t t-set="options" t-value="community_manager_options" />
             <t t-set="required" t-value="pack_2" />
+            <t
+            t-set="trigger"
+          >ce_manager_headline,ce_manager_firstname,ce_manager_surname,ce_manager_email,ce_manager_phone</t>
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
-          <label
-        >Contact person for the administrative management of the Energy Community</label>
+          <t t-call="energy_communities.form_headline">
+            <t t-set="key">ce_manager_headline</t>
+            <t t-set="showif">ce_manager:member_admin,both</t>
+            <t t-set="disabled">True</t>
+            <t
+            t-set="headline"
+          >Contact person for the administrative management of the Energy Community</t>
+          </t>
         </div>
         <div class="col-md-6" t-if="pack_2">
           <t t-call="energy_communities.form_field_text">
@@ -308,6 +328,8 @@
             <t t-set="key" t-value="ce_manager_firstname_key" />
             <t t-set="label" t-value="ce_manager_firstname_label" />
             <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_manager:member_admin,both</t>
+            <t t-set="disabled">True</t>
           </t>
         </div>
         <div class="col-md-6" t-if="pack_2">
@@ -316,6 +338,8 @@
             <t t-set="key" t-value="ce_manager_surname_key" />
             <t t-set="label" t-value="ce_manager_surname_label" />
             <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_manager:member_admin,both</t>
+            <t t-set="disabled">True</t>
           </t>
         </div>
         <div class="col-md-6" t-if="pack_2">
@@ -324,6 +348,8 @@
             <t t-set="key" t-value="ce_manager_email_key" />
             <t t-set="label" t-value="ce_manager_email_label" />
             <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_manager:member_admin,both</t>
+            <t t-set="disabled">True</t>
           </t>
         </div>
         <div class="col-md-6" t-if="pack_2">
@@ -332,6 +358,8 @@
             <t t-set="key" t-value="ce_manager_phone_key" />
             <t t-set="label" t-value="ce_manager_phone_label" />
             <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_manager:member_admin,both</t>
+            <t t-set="disabled">True</t>
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -500,7 +528,7 @@
     <!-- TODO: Make this description dynamic and db translatable -->
     <template id="community_data_headline" name="community_data_headline">
       <t t-if="pack_2">
-        <h1
+        <h2
         class="mt-4 text-center"
       >Data collection form required for the integration of <strong><t
             t-esc="ce_name"
@@ -508,20 +536,20 @@
           href="https://somcomunitats.coop"
           target="_blank"
         >web</a> and to our <strong
-        >administrative management space</strong> (Odoo program for corporate, accounting and financial management)</h1>
+        >administrative management space</strong> (Odoo program for corporate, accounting and financial management)</h2>
       </t>
       <t t-else="pack_1">
-        <h1
+        <h2
         class="mt-4 text-center"
       >Data collection form required for the integration of <strong><t
             t-esc="ce_name"
           /></strong> to the <strong>public spaces</strong> of our <a
           href="https://somcomunitats.coop"
           target="_blank"
-        >web</a></h1>
+        >web</a></h2>
       </t>
       <br />
-      <div class="alert alert-warning">
+      <div class="alert alert-warning" t-if="not display_success">
         <p><strong
         >Alert!</strong> The content you enter in this form is what we will show directly on your page within Som Comunitats.</p>
         <p
@@ -535,7 +563,7 @@
         <div id="wrap" class="o_portal_wrap">
           <div class="container oe_community_data">
             <div class="row justify-content-center">
-              <div class="col-xs-12 col-sm-10  col-md-10 col-lg-10">
+              <div class="col-xs-12 col-sm-10  col-md-8 col-lg-8">
 
                 <t t-call="energy_communities.community_data_headline" />
                 <t t-call="energy_communities.community_data_error_message_template" />
