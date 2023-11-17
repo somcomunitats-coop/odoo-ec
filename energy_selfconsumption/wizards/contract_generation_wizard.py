@@ -55,6 +55,7 @@ class ContractGenerationWizard(models.TransientModel):
                 data = {"code": supply_point_assignation.supply_point_id.code, "owner_id": supply_point_assignation.supply_point_id.owner_id.display_name,}
                 # Each invoicing type has different data in the description column, so we need to check and modify
                 if self.selfconsumption_id.invoicing_mode == 'energy_delivered':
+                    contract_line_id.name += """\nCAU: {cau}\n"""
                     data["cau"] = self.selfconsumption_id.code
 
                 contract_line_id.write(

@@ -21,14 +21,6 @@
             <xpath expr="//th[@name='th_partition_coefficient']" position="after">
                 <th name="th_total_amount_invoiced"><span>Total amount invoiced</span></th>
             </xpath>
-            
-            <xpath expr="//td[@name='account_invoice_line_name']" position="replace">
-                <td name="account_invoice_line_name">    
-                    <span>CAU: <span t-field="line.selfconsumption_id.code" /></span>
-                    <br/>
-                    <span t-field="line.name" t-options="{'widget': 'text'}"/>
-                </td>
-            </xpath>
 
             <xpath expr="//td[@name='account_invoice_line_name']" position="after">
                 <td name="td_total_installation_generation">    
