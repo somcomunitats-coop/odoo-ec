@@ -11,6 +11,9 @@
       >energy_selfconsumption.contract_generation.wizard</field>
             <field name="arch" type="xml">
                 <form string="Contract Generation">
+                    <group>
+                        <field name="start_date" />
+                    </group>
                      <footer>
                         <button
               type="object"

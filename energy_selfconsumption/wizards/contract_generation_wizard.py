@@ -1,4 +1,7 @@
-from odoo import _, fields, models
+import datetime
+
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class ContractGenerationWizard(models.TransientModel):
@@ -6,6 +9,12 @@ class ContractGenerationWizard(models.TransientModel):
 
     selfconsumption_id = fields.Many2one(
         "energy_selfconsumption.selfconsumption", readonly=True
+    )
+    start_date = fields.Date(
+        string="Start date",
+        help="Starting date of the invoicing",
+        required=True,
+        default=fields.Date.today(),
     )
 
     def generate_contracts_button(self):
@@ -45,7 +54,7 @@ class ContractGenerationWizard(models.TransientModel):
                     "partner_id": supply_point_assignation.supply_point_id.partner_id.id,
                     "supply_point_assignation_id": supply_point_assignation.id,
                     "company_id": self.env.company.id,
-                    "date_start": fields.date.today(),
+                    "date_start": self.start_date,
                     "contract_template_id": self.selfconsumption_id.product_id.contract_template_id.id,
                 }
             )
@@ -64,3 +73,12 @@ class ContractGenerationWizard(models.TransientModel):
         self.selfconsumption_id.write({"state": "active"})
         self.selfconsumption_id.distribution_table_state("process", "active")
         return True
+
+    @api.constrains("start_date")
+    def constraint_date_start(self):
+        three_months_ago = fields.Date.today() - datetime.timedelta(days=90)
+        for record in self:
+            if record.start_date < three_months_ago:
+                raise ValidationError(
+                    _("Start date can't be more that three months old")
+                )
