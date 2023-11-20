@@ -20,7 +20,7 @@
       >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
             <field
         name="subject"
-      >[Somcomunitats.coop] Application to become Community membership</field>
+      >[Som Comunitats] Application to become Community membership</field>
             <field name="email_to">${object.email}</field>
             <field name="email_cc">info+altausuari@somcomunitats.coop</field>
             <field
@@ -97,7 +97,7 @@
       >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
             <field
         name="subject"
-      >[Somcomunitats.coop] Request to become member of Energy Community ${object.company_id.name}</field>
+      >[Som Comunitats] Request to become member of Energy Community ${object.company_id.name}</field>
             <field name="partner_to">${object.partner_id.id}</field>
             <field name="email_cc">info+altausuari@somcomunitats.coop</field>
             <!--<field name="email_bcc">${object.company_id.email}</field>-->
@@ -287,7 +287,7 @@
       >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
             <field
         name="subject"
-      >[Somcomunitats.coop] Application to become Community membership</field>
+      >[Som Comunitats] Application to become Community membership</field>
             <field name="email_to">${object.email}</field>
             <field name="email_cc">info+altausuari@somcomunitats.coop</field>
             <field

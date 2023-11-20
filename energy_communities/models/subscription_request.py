@@ -137,3 +137,9 @@ class SubscriptionRequest(models.Model):
         """
         self = self.with_company(self.company_id)
         return self.validate_subscription_request()
+
+    def _prepare_invoice_line(self, product, partner, qty):
+        res = super()._prepare_invoice_line(product, partner, qty)
+        res["tax_ids"] = product.taxes_id
+
+        return res

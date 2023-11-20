@@ -9,7 +9,7 @@
             <field name="email_from">${object.company_id.email}</field>
             <field
         name="subject"
-      >[Somcomunitats.coop] Request for registration of the Energy Community on the platform</field>
+      >[Som Comunitats] Request for registration of the Energy Community on the platform</field>
             <field name="email_to">${ctx.get('email_to')}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
@@ -22,7 +22,7 @@
                         <p>Go to Odoo to track this registration.</p><br/>
                         <p>Yours faithfully,</p>
                         <p>Somcomunitats.coop team</p>
-                        <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                        <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                     </div>
                 ]]>
             </field>
@@ -33,7 +33,7 @@
             <field name="email_from">${object.company_id.email}</field>
             <field
         name="subject"
-      >[Somcomunitats.coop] New Community Creation Request to the platform</field>
+      >[Som Comunitats] New Community Creation Request</field>
             <field name="email_to">${ctx.get('email_to')}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
@@ -49,7 +49,7 @@
                     <p>We keep in touch for any questions.</p>
                     <p>Yours faithfully,</p>
                     <p>Somcomunitats.coop team </p>
-                    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             ]]></field>
         </record>
@@ -59,7 +59,7 @@
         name="name"
       >Confirmation Email for CE Contact Request Lead Receipt</field>
             <field name="email_from">${object.company_id.email}</field>
-            <field name="subject">[Somcomunitats.coop] Community Contact Request</field>
+            <field name="subject">[Som Comunitats] Community Contact Request</field>
             <field name="email_to">${object.email_from}</field>
             <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">${object.company_id.email}</field>
@@ -74,10 +74,9 @@
                     <p>Thank you for contact.</p>
                     <p>We have received your email and we have we have forwarded it to the Community so that they can contact you as soon as possible.</p>
                     <br />
-                    <p>We keep in touch for any questions.</p>
                     <p>Yours faithfully,</p>
                     <p>Somcomunitats.coop team </p>
-                    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             ]]></field>
         </record>
@@ -89,7 +88,7 @@
             <field name="email_from">${object.company_id.email}</field>
             <field
         name="subject"
-      >[Somcomunitats.coop] Community Newsletter Subscription Request</field>
+      >[Som Comunitats] Community Newsletter Subscription Request</field>
             <field name="email_to">${object.email_from}</field>
             <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">${object.company_id.email}</field>
@@ -103,10 +102,13 @@
                     <p>Hello,</p>
                     <p>Thank you for filling out the form.</p>
                     <p>You have been subscribed correctly to the Community Newsletter.</p>
+                    <p>We will notify you if there is anything new in this community.</p>
+                    <br />
+                    <p>We remain in contact for any questions.</p>
                     <br />
                     <p>Yours faithfully,</p>
                     <p>Somcomunitats.coop team </p>
-                    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             ]]></field>
         </record>
@@ -121,7 +123,7 @@
             <field name="email_from">${object.company_id.email}</field>
             <field
         name="subject"
-      >[Somcomunitats.coop] Interested in Communities in your area</field>
+      >[Som Comunitats] Interested in Communities in your area</field>
             <field name="email_to">${object.email_from}</field>
             <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">${object.company_id.email}</field>
@@ -139,7 +141,7 @@
                     <p>We keep in touch for any questions.</p>
                     <p>Yours faithfully,</p>
                     <p>Somcomunitats.coop team </p>
-                    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             ]]></field>
         </record>
@@ -154,7 +156,7 @@
             <field name="email_from">${object.company_id.email}</field>
             <field
         name="subject"
-      >[Somcomunitats.coop] Platform Newsletter Subscription Request</field>
+      >[Som Comunitats] Newsletter Subscription Request</field>
             <field name="email_to">${object.email_from}</field>
             <field name="email_cc">${object.company_id.email}</field>
             <field name="reply_to">${object.company_id.email}</field>
@@ -172,7 +174,7 @@
                     <br />
                     <p>Yours faithfully,</p>
                     <p>Somcomunitats.coop team </p>
-                    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             ]]></field>
         </record>
@@ -180,7 +182,7 @@
         <record id="email_templ_contact_platform_confirm_id" model="mail.template">
             <field name="name">Confirmation Email Contact Platform Receipt</field>
             <field name="email_from">${object.company_id.email}</field>
-            <field name="subject">[Somcomunitats.coop] Contact to the platform</field>
+            <field name="subject">[Som Comunitats] Contact to the platform</field>
             <field name="email_to">${ctx.get('email_to')}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
@@ -195,7 +197,7 @@
                     <br />
                     <p>Yours faithfully,</p>
                     <p>Somcomunitats.coop team </p>
-                    <p><a href="https://web-test.somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             ]]></field>
         </record>

@@ -99,6 +99,10 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         selection=_CE_STATUS_VALUES,
         string="Energy Community state",
     )
+    # Used in demo data, so it can finish the process before continuing with the rest of the demo data.
+    hook_cron = fields.Boolean(
+        default=True, string="Run the post hook in a cron job or not"
+    )
 
     def add_company_managers(self):
         coord_members = self.parent_id.get_users(
@@ -168,12 +172,16 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         new_company_id = self.new_company_id.id
         self_new_company = self.with_company(new_company_id)
         # We use sudo to be able to copy the product and not needing to be in the main company
+        taxes_id = self.env.ref(
+            "l10n_es.{}_account_tax_template_s_iva_ns".format(self.new_company_id.id)
+        )
         self.new_product_share_template = self.sudo().product_share_template.copy(
             {
                 "name": self.product_share_template.name,
                 "company_id": self.new_company_id.id,
                 "list_price": self.capital_share,
                 "active": True,
+                "taxes_id": taxes_id,
             }
         )
         self_new_company.new_company_id.initial_subscription_share_amount = (
@@ -208,8 +216,12 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
 
     def action_accept(self):
         super().action_accept()
-        self.with_delay()._after_action_accept_hook()
-        self.crm_lead_id.action_set_won_rainbowman()
+        if self.hook_cron:
+            self.with_delay()._after_action_accept_hook()
+        else:
+            self._after_action_accept_hook()
+        if self.crm_lead_id:
+            self.crm_lead_id.action_set_won_rainbowman()
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",

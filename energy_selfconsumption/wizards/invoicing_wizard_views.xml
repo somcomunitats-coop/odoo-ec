@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="invoicing_wizard_form_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.invoicing_wizard.form
+            </field>
+            <field name="model">energy_selfconsumption.invoicing.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Invoicing Energy Delivered">
+                    <sheet>
+                        <group>
+                            <field name="next_period_date_start" />
+                            <field name="next_period_date_end" />
+                        </group>
+                        <group>
+                            <field name="power" />
+                            <field name="contract_ids">
+                                <tree>
+                                    <field name="partner_id" />
+                                    <field name="supply_point_name" />
+                                    <field name="code" />
+                                    <field name="next_period_date_start" />
+                                    <field name="next_period_date_end" />
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button type="object" name="generate_invoices">Generate</button>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="invoicing_wizard_act_window" model="ir.actions.act_window">
+            <field name="name">Invoice Energy Delivered</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">energy_selfconsumption.invoicing.wizard</field>
+            <field name="groups_id" eval="[(4,ref('energy_project.group_admin'))]" />
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

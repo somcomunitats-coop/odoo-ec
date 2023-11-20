@@ -1,10 +1,9 @@
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
-from odoo.exceptions import ValidationError
-from odoo.tests.common import TransactionCase
+from odoo.tests import TransactionCase
 
 
-class TestContractGenerationWizard(TransactionCase):
+class TestInvoicingReminder(TransactionCase):
     def setUp(self):
         super().setUp()
         self.partner = self.env["res.partner"].create({"name": "test partner"})
@@ -25,6 +24,7 @@ class TestContractGenerationWizard(TransactionCase):
                 "city": "Barcelona",
                 "state_id": self.env.ref("base.state_es_b").id,
                 "country_id": self.env.ref("base.es").id,
+                "invoicing_mode": "energy_delivered",
             }
         )
         self.inscription = self.env["energy_project.inscription"].create(
@@ -66,18 +66,7 @@ class TestContractGenerationWizard(TransactionCase):
                 "coefficient": 1,
             }
         )
-        self.define_invoicing_mode_power_acquired_wizard = self.env[
-            "energy_selfconsumption.define_invoicing_mode.wizard"
-        ].create(
-            {
-                "selfconsumption_id": self.selfconsumption.id,
-                "price": 0.1,
-                "recurring_interval": 1,
-                "recurring_rule_type": "monthly",
-                "invoicing_mode": "power_acquired",
-            }
-        )
-        self.define_invoicing_mode_energy_delivered_wizard = self.env[
+        self.define_invoicing_mode_wizard = self.env[
             "energy_selfconsumption.define_invoicing_mode.wizard"
         ].create(
             {
@@ -96,60 +85,33 @@ class TestContractGenerationWizard(TransactionCase):
             }
         )
 
-    def test_power_acquired_generation_contracts(self):
-        res = (
-            self.define_invoicing_mode_power_acquired_wizard.save_data_to_selfconsumption()
+    def test_send_energy_delivery_invoicing_reminder(self):
+        # Test using send_energy_delivery_invoicing_reminder() method to send correctly email
+        validation_date = date.today() + timedelta(days=3)
+        self.define_invoicing_mode_wizard.save_data_to_selfconsumption()
+        self.contract_generation_wizard.generate_contracts_button()
+        contract = self.env["contract.contract"].search(
+            [("name", "=", "Contract - test Selfconsumption Project - test partner")]
         )
-        self.assertEqual(
-            res,
-            {
-                "type": "ir.actions.act_window_close",
-            },
-        )
+        contract.recurring_next_date = validation_date
 
-        res = self.contract_generation_wizard.generate_contracts_button()
-        self.assertEqual(res, True)
-
-        related_contract = self.env["contract.contract"].search(
-            [("project_id", "=", self.selfconsumption.project_id.id)]
+        self.env[
+            "energy_selfconsumption.selfconsumption"
+        ].send_energy_delivery_invoicing_reminder()
+        reminder_mail = self.env["mail.mail"].search(
+            [("subject", "=", "Selfconsumption - Energy Delivered Invoicing Reminder")]
         )
-        contract_line = related_contract[0].contract_line_ids[0]
-        days_timedelta = (
-            contract_line.next_period_date_end - contract_line.next_period_date_start
-        )
-        expected_quantity = 100 * 1 * (days_timedelta.days + 1)
-        related_contract[0].recurring_create_invoice()
-        invoice = related_contract._get_related_invoices()
-        self.assertEqual(invoice.invoice_line_ids[0].quantity, expected_quantity)
-        self.assertEqual(invoice.invoice_line_ids[0].price_unit, 0.1)
+        self.assertTrue(reminder_mail, "El correo de recordatorio no se envió.")
 
-    def test_energy_delivered_generation_contracts(self):
-        res = (
-            self.define_invoicing_mode_energy_delivered_wizard.save_data_to_selfconsumption()
-        )
-        self.assertEqual(
-            res,
-            {
-                "type": "ir.actions.act_window_close",
-            },
-        )
+        # Delete sent email to make other test
+        reminder_mail.unlink()
 
-        res = self.contract_generation_wizard.generate_contracts_button()
-        self.assertEqual(res, True)
-
-        related_contract = self.env["contract.contract"].search(
-            [("project_id", "=", self.selfconsumption.project_id.id)]
+        # Test using the send_energy_delivery_invoicing_reminder() method with a record with a date outside the parameter (3 days)
+        contract.recurring_next_date = validation_date + timedelta(days=1)
+        self.env[
+            "energy_selfconsumption.selfconsumption"
+        ].send_energy_delivery_invoicing_reminder()
+        reminder_mail = self.env["mail.mail"].search(
+            [("subject", "=", "Selfconsumption - Energy Delivered Invoicing Reminder")]
         )
-
-        wizard_id = self.env["energy_selfconsumption.invoicing.wizard"].create(
-            {
-                "contract_ids": [(6, 0, related_contract.ids)],
-                "power": 200,
-            }
-        )
-
-        expected_quantity = 200 * 1
-        wizard_id.generate_invoices()
-        invoice = related_contract._get_related_invoices()
-        self.assertEqual(invoice.invoice_line_ids[0].quantity, expected_quantity)
-        self.assertEqual(invoice.invoice_line_ids[0].price_unit, 0.1)
+        self.assertFalse(reminder_mail, "El correo de recordatorio no se envió.")
