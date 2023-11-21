@@ -323,6 +323,10 @@ class WebsiteCommunityData(http.Controller):
                     ),
                 }
             )
+        print("LANGUAGES!")
+        print(request.env.context["lang"])
+        print("Those are the legal forms")
+        print(legal_forms)
         return legal_forms
 
     def _get_lead_values(self, lead_id):
