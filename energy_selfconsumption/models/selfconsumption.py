@@ -98,6 +98,7 @@ class Selfconsumption(models.Model):
         help="Select the associated Energy Reseller",
     )
 
+
     def get_distribution_tables(self):
         self.ensure_one()
         return {
