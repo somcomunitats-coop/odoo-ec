@@ -68,45 +68,48 @@ odoo.define("community_data.oe_community_data", function (require) {
             // condition is an array. first element defines field key and second field value condition
             let showifcondition = impacted_field.data("showif").split(":");
             // get dom element for the condition_field
-            let condition_field = $(".field-" + showifcondition[0]);
-            // try to see if condition_field is a fieldset
-            let condition_field_fieldset = condition_field.find("fieldset");
-            if (condition_field_fieldset.length > 0) {
-              // if a condition_field is a fieldset iterate trough inputs to see if they're marked and meet condition
-              condition_field_fieldset.find("input").each(function () {
-                if (
-                  $(this).is(":checked") &&
-                  showifcondition[1].split(",").includes($(this).attr("id"))
-                ) {
-                  condition_satisfied = true;
-                }
-              });
-            } else {
-              // if a condition_field is not fieldset get the input, it can be of type input or select.
-              let condition_field_input = false;
-              let condition_field_input_input = condition_field.find("input");
-              if (condition_field_input_input.length > 0) {
-                condition_field_input = condition_field_input_input;
-              }
-              let condition_field_input_select = condition_field.find("select");
-              if (condition_field_input_select.length > 0) {
-                condition_field_input = condition_field_input_select;
-              }
-              // check if it's a checkbox or radio. if so, check if checked to verify condition
-              let condition_field_type = condition_field_input.attr("type");
-              if (
-                condition_field_type == "radio" ||
-                condition_field_type == "checkbox"
-              ) {
-                if (condition_field_input.is(":checked")) {
-                  condition_satisfied = true;
-                }
+            let showifcondition_fields = showifcondition[0].split(",");
+            for (let i = 0; i < showifcondition_fields.length; i++) {
+              let condition_field = $(".field-" + showifcondition_fields[i]);
+              // try to see if condition_field is a fieldset
+              let condition_field_fieldset = condition_field.find("fieldset");
+              if (condition_field_fieldset.length > 0) {
+                // if a condition_field is a fieldset iterate trough inputs to see if they're marked and meet condition
+                condition_field_fieldset.find("input").each(function () {
+                  if (
+                    $(this).is(":checked") &&
+                    showifcondition[1].split(",").includes($(this).attr("id"))
+                  ) {
+                    condition_satisfied = true;
+                  }
+                });
               } else {
-                // if condition_field is a regular input, check condition as a regular text
+                // if a condition_field is not fieldset get the input, it can be of type input or select.
+                let condition_field_input = false;
+                let condition_field_input_input = condition_field.find("input");
+                if (condition_field_input_input.length > 0) {
+                  condition_field_input = condition_field_input_input;
+                }
+                let condition_field_input_select = condition_field.find("select");
+                if (condition_field_input_select.length > 0) {
+                  condition_field_input = condition_field_input_select;
+                }
+                // check if it's a checkbox or radio. if so, check if checked to verify condition
+                let condition_field_type = condition_field_input.attr("type");
                 if (
-                  showifcondition[1].split(",").includes(condition_field_input.val())
+                  condition_field_type == "radio" ||
+                  condition_field_type == "checkbox"
                 ) {
-                  condition_satisfied = true;
+                  if (condition_field_input.is(":checked")) {
+                    condition_satisfied = true;
+                  }
+                } else {
+                  // if condition_field is a regular input, check condition as a regular text
+                  if (
+                    showifcondition[1].split(",").includes(condition_field_input.val())
+                  ) {
+                    condition_satisfied = true;
+                  }
                 }
               }
             }

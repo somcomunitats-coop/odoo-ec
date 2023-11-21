@@ -280,6 +280,7 @@
             <t t-set="label" t-value="ce_account_management_label" />
             <t t-set="options" t-value="community_management_options" />
             <t t-set="required" t-value="pack_2" />
+            <t t-set="trigger">ce_management_can_enter_platform</t>
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -289,6 +290,7 @@
             <t t-set="label" t-value="ce_tax_management_label" />
             <t t-set="options" t-value="community_management_options" />
             <t t-set="required" t-value="pack_2" />
+            <t t-set="trigger">ce_management_can_enter_platform</t>
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -298,6 +300,10 @@
             <t t-set="label" t-value="ce_management_can_enter_platform_label" />
             <t t-set="options" t-value="yes_no_options" />
             <t t-set="required" t-value="pack_2" />
+            <t
+            t-set="showif"
+          >ce_account_management,ce_tax_management:external_management</t>
+            <t t-set="disabled">True</t>
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
