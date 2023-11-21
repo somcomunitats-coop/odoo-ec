@@ -10,7 +10,20 @@
                 <form string="Invoicing Energy Delivered">
                     <sheet>
                         <group>
-                        <field name="power" />
+                            <field name="next_period_date_start" />
+                            <field name="next_period_date_end" />
+                        </group>
+                        <group>
+                            <field name="power" />
+                            <field name="contract_ids">
+                                <tree>
+                                    <field name="partner_id" />
+                                    <field name="supply_point_name" />
+                                    <field name="code" />
+                                    <field name="next_period_date_start" />
+                                    <field name="next_period_date_end" />
+                                </tree>
+                            </field>
                         </group>
                     </sheet>
                     <footer>
@@ -24,11 +37,8 @@
             <field name="name">Invoice Energy Delivered</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">energy_selfconsumption.invoicing.wizard</field>
-            <field name="binding_model_id" ref="contract.model_contract_contract" />
-            <field name="binding_type">action</field>
-            <field name="binding_view_types">list,form</field>
             <field name="groups_id" eval="[(4,ref('energy_project.group_admin'))]" />
-            <field name="views" eval="[(False,'form')]" />
+            <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
     </data>
