@@ -44,6 +44,12 @@ class ContractGenerationWizard(models.TransientModel):
 
         # Create contracts
         for supply_point_assignation in distribution_id.supply_point_assignation_ids:
+            # We write the date_start on the template, so it is not overwrite from the template
+            self.selfconsumption_id.product_id.contract_template_id.write(
+                {
+                    "date_start": self.start_date,
+                }
+            )
             contract = self.env["contract.contract"].create(
                 {
                     "name": _("Contract - %s - %s")
@@ -54,7 +60,6 @@ class ContractGenerationWizard(models.TransientModel):
                     "partner_id": supply_point_assignation.supply_point_id.partner_id.id,
                     "supply_point_assignation_id": supply_point_assignation.id,
                     "company_id": self.env.company.id,
-                    "date_start": self.start_date,
                     "contract_template_id": self.selfconsumption_id.product_id.contract_template_id.id,
                 }
             )
