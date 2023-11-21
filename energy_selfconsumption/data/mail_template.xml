@@ -60,7 +60,7 @@
             <b>${ object.name }</b>
             of the energy community
             <b>${ object.project_id.company_id.name }</b>
-            has started the billing process on <b>${ ctx['next_invoicing'] }</b> according to the established recurrence.
+            has started the invoicing process on <b>${ ctx['next_invoicing'] }</b> according to the established recurrence.
         </p>
         <p>
             Invoices are created in “draft” and it is therefore necessary that they be validated and sent as soon as possible.

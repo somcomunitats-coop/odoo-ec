@@ -304,6 +304,35 @@ class Selfconsumption(models.Model):
 
         return True
 
+    def send_power_acquired_invoicing_reminder(self):
+        today = fields.date.today()
+        projects = self.env["contract.contract"].read_group(
+            [
+                (
+                    "project_id.selfconsumption_id.invoicing_mode",
+                    "=",
+                    "power_acquired",
+                ),
+                ("recurring_next_date", "=", today),
+            ],
+            ["project_id"],
+            ["project_id"],
+        )
+        template = self.env.ref(
+            "energy_selfconsumption.selfconsumption_power_acquired_invoicing_reminder",
+            True,
+        )
+        for project in projects:
+            selfconsumption_id = self.browse(project["project_id"][0])
+            contract = selfconsumption_id.contract_ids[0]
+            next_invoicing = contract.recurring_next_date
+            ctx = {
+                "next_invoicing": next_invoicing.strftime("%d-%m-%Y"),
+            }
+            selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
+
+        return True
+
 
 class CoefficientReport(models.TransientModel):
     _name = "energy_selfconsumption.coefficient_report"
