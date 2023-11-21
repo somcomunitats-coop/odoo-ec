@@ -21,6 +21,14 @@ class Selfconsumption(models.Model):
     }
     _description = "Self-consumption Energy Project"
 
+    _sql_constraints = [
+        (
+            "unique_code",
+            "UNIQUE(code)",
+            _("A project with this CAU already exists."),
+        ),
+    ]
+
     def _compute_distribution_table_count(self):
         for record in self:
             record.distribution_table_count = len(record.distribution_table_ids)
