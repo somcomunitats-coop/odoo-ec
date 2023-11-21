@@ -97,6 +97,7 @@ class Selfconsumption(models.Model):
         string="Energy Reseller",
         help="Select the associated Energy Reseller",
     )
+    cadastral_reference = fields.Char(string="Cadastral reference")
 
     def get_distribution_tables(self):
         self.ensure_one()
