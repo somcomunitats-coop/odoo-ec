@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
 
-from odoo import _, fields, models
+from stdnum.es import cups
+
+from odoo import _, api, exceptions, fields, models
 from odoo.exceptions import ValidationError
 
 INVOICING_VALUES = [
@@ -315,6 +317,21 @@ class Selfconsumption(models.Model):
             selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
 
         return True
+
+    @api.constrains("code")
+    def _check_valid_code(self):
+        for record in self:
+            if record.code:
+                cups_number = record.code
+                if not cups_number.startswith("ES"):
+                    cups_number = "ES" + cups_number
+                try:
+                    cups.validate(cups_number[:22])
+                except cups.ValidationError as e:
+                    error_message = _(
+                        "The first characters related to CUPS are incorrect: {error}"
+                    ).format(error=e)
+                    raise exceptions.Warning(error_message)
 
 
 class CoefficientReport(models.TransientModel):
