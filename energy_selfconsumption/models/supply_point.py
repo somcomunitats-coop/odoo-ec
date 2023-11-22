@@ -1,4 +1,6 @@
-from odoo import _, api, fields, models
+from stdnum.es import cups
+
+from odoo import _, api, exceptions, fields, models
 
 
 class SupplyPoint(models.Model):
@@ -73,3 +75,14 @@ class SupplyPoint(models.Model):
                 record.name = f"{record.partner_id.name} - {record.street}"
             else:
                 record.name = _("New Supply Point")
+
+    @api.constrains("code")
+    def _check_valid_code(self):
+        for record in self:
+            if not record.code.startswith("ES"):
+                record.code = "ES" + record.code
+            try:
+                cups.validate(record.code)
+            except cups.ValidationError as e:
+                error_message = _("Invalid CUPS: {error}").format(error=e)
+                raise exceptions.Warning(error_message)
