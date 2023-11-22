@@ -8,5 +8,8 @@ setuptools.setup(
             "web_m2x_options": "odoo14-addon-web-m2x-options==14.0.1.1.1",
             "contract_queue_job": "odoo14-addon-contract-queue-job==14.0.1.0.1.dev3",
         }
-    }
+    },
+    install_requires=[
+        'python-stdnum==1.19',
+    ],
 )
