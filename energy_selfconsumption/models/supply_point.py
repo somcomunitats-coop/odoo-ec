@@ -17,7 +17,7 @@ class SupplyPoint(models.Model):
     }
 
     name = fields.Char(compute="_compute_supply_point_name", store=True)
-    code = fields.Char(string="CUPS", required=True)
+    code = fields.Char(string="CUPS")
     owner_id = fields.Many2one(
         "res.partner",
         string="Owner",
@@ -79,10 +79,12 @@ class SupplyPoint(models.Model):
     @api.constrains("code")
     def _check_valid_code(self):
         for record in self:
-            if not record.code.startswith("ES"):
-                record.code = "ES" + record.code
-            try:
-                cups.validate(record.code)
-            except cups.ValidationError as e:
-                error_message = _("Invalid CUPS: {error}").format(error=e)
-                raise exceptions.Warning(error_message)
+            original_code = record.code
+            if original_code:
+                if not original_code.startswith("ES"):
+                    original_code = "ES" + original_code
+                try:
+                    cups.validate(original_code)
+                except cups.ValidationError as e:
+                    error_message = _("Invalid CUPS: {error}").format(error=e)
+                    raise exceptions.Warning(error_message)
