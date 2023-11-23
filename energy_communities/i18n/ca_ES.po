@@ -522,7 +522,7 @@ msgstr "El número de compte ha de ser únic"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_needaction
 msgid "Action Needed"
-msgstr "Acció necessària"
+msgstr "Acció requerida"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__activity_ids
@@ -589,7 +589,7 @@ msgstr "Autoritza nous membres"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__allow_new_members
 msgid "Allows new members"
-msgstr "Autoritza nous membres"
+msgstr "Accepta nous membres"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
@@ -695,7 +695,7 @@ msgstr "Esdevé membre de"
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__become_cooperator_process
 #, python-format
 msgid "Become cooperator process"
-msgstr "Fer-te col·laborador"
+msgstr "Procés per fer-te col·laborador"
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0
@@ -1565,12 +1565,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_mailing_mailing__source_ext_id
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__source_ext_id
 msgid "ID Ext Source"
-msgstr "ID Font Ext"
+msgstr "ID Externa de font"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag__tag_ext_id
 msgid "ID Ext tag"
-msgstr "Etiqueta ID Ext"
+msgstr "ID Externa de etiqueta"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
@@ -2338,7 +2338,7 @@ msgstr "Publicat"
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.print_instance
 msgid "Push user to Keycloak"
-msgstr ""
+msgstr "Promoure usuari a Keycloak"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__realm_name
@@ -2485,7 +2485,7 @@ msgstr ""
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Some mandatory fields have not been filled."
-msgstr ""
+msgstr "Alguns camps requerits no han sigut emplenats."
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
@@ -2983,7 +2983,7 @@ msgid ""
 "What amount of mandatory contribution to the social capital do you ask for "
 "when a new member joins?"
 msgstr ""
-"Quin import d'Aportació Obligatòria al Capital Social demaneu en la "
+"Quin import d'aportació obligatòria al capital social demaneu en la "
 "incorporació d'una nova sòcia? (€)"
 
 #. module: energy_communities
@@ -3010,7 +3010,7 @@ msgid ""
 "(person/s with user access to the Odoo corporate/accounting/tax management "
 "program of the Energy Community)"
 msgstr ""
-"Quí farà la gestiósocietària del dia a dia de la Comunitat Energètica? "
+"Quí farà la gestió societària del dia a dia de la Comunitat Energètica? "
 "(persona/es amb usuari d'accés al programa Odoo de gestió "
 "societària/comptable/tributària de la Comunitat Energètica)"
 
@@ -3370,7 +3370,7 @@ msgstr ""
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline
 msgid "to the <strong>public spaces</strong> of our"
-msgstr "als <strong>espais públics</strong> de la"
+msgstr "als <strong>espais públics</strong> de la "
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline
