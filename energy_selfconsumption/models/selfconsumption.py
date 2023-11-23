@@ -320,18 +320,46 @@ class Selfconsumption(models.Model):
 
     @api.constrains("code")
     def _check_valid_code(self):
+        """
+        The following are evaluated:
+            1. The first 20 or 22 digits correspond to the CUPS.
+            2. The character after CUPS is A
+            3. And the last 3 characters are numbers.
+            4. Taking into account that the length of the CUPS can vary, the length of the CAU can be 24 or 26 characters.
+        """
         for record in self:
             if record.code:
-                cups_number = record.code
-                if not cups_number.startswith("ES"):
-                    cups_number = "ES" + cups_number
-                try:
-                    cups.validate(cups_number[:22])
-                except cups.ValidationError as e:
-                    error_message = _(
-                        "The first characters related to CUPS are incorrect: {error}"
-                    ).format(error=e)
+                # Validate the total length of the CAU, check if the first digits are CUPS and get the last 4 characters
+                if len(record.code) == 24:
+                    self.validate_cups(record.code[:20])
+                    last_digits = record.code[20:]
+                elif len(record.code) == 26:
+                    self.validate_cups(record.code[:22])
+                    last_digits = record.code[22:]
+                else:
+                    error_message = _("Invalid CAU: The length is not correct")
                     raise exceptions.Warning(error_message)
+
+                # Check if the character after CUPS is 'A'
+                if not last_digits.startswith("A"):
+                    error_message = _("Invalid CAU: The character after CUPS is not A")
+                    raise exceptions.Warning(error_message)
+
+                # Check if the last 3 characters are numbers
+                if not last_digits[-3:].isdigit():
+                    error_message = _("Invalid CAU: Last 3 digits are not numbers")
+                    raise exceptions.Warning(error_message)
+
+    def validate_cups(self, cups_number):
+        if not cups_number.startswith("ES"):
+            cups_number = "ES" + cups_number
+        try:
+            cups.validate(cups_number)
+        except cups.ValidationError as e:
+            error_message = _(
+                "Invalid CAU: The first characters related to CUPS are incorrect.\n{error}"
+            ).format(error=e)
+            raise exceptions.Warning(error_message)
 
 
 class CoefficientReport(models.TransientModel):
