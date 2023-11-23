@@ -1,4 +1,4 @@
-from stdnum.es import cups
+from stdnum.es import cups, referenciacatastral
 
 from odoo import _, api, exceptions, fields, models
 
@@ -87,4 +87,16 @@ class SupplyPoint(models.Model):
                     cups.validate(original_code)
                 except cups.ValidationError as e:
                     error_message = _("Invalid CUPS: {error}").format(error=e)
+                    raise exceptions.Warning(error_message)
+
+    @api.constrains("cadastral_reference")
+    def _check_valid_cadastral_reference(self):
+        for record in self:
+            if record.cadastral_reference:
+                try:
+                    referenciacatastral.validate(self.cadastral_reference)
+                except Exception as e:
+                    error_message = _("Invalid Cadastral Reference: {error}").format(
+                        error=e
+                    )
                     raise exceptions.Warning(error_message)

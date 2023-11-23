@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from stdnum.es import cups
+from stdnum.es import cups, referenciacatastral
 
 from odoo import _, api, exceptions, fields, models
 from odoo.exceptions import ValidationError
@@ -359,6 +359,18 @@ class Selfconsumption(models.Model):
                 "Invalid CAU: The first characters related to CUPS are incorrect.\n{error}"
             ).format(error=e)
             raise exceptions.Warning(error_message)
+
+    @api.constrains("cadastral_reference")
+    def _check_valid_cadastral_reference(self):
+        for record in self:
+            if record.cadastral_reference:
+                try:
+                    referenciacatastral.validate(self.cadastral_reference)
+                except Exception as e:
+                    error_message = _("Invalid Cadastral Reference: {error}").format(
+                        error=e
+                    )
+                    raise exceptions.Warning(error_message)
 
 
 class CoefficientReport(models.TransientModel):
