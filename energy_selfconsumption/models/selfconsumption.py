@@ -109,7 +109,6 @@ class Selfconsumption(models.Model):
     )
     cadastral_reference = fields.Char(string="Cadastral reference")
 
-
     def get_distribution_tables(self):
         self.ensure_one()
         return {
