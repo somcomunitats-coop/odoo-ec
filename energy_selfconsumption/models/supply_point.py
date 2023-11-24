@@ -1,4 +1,5 @@
 from stdnum.es import cups, referenciacatastral
+from stdnum.eu import vat
 
 from odoo import _, api, exceptions, fields, models
 
@@ -99,4 +100,17 @@ class SupplyPoint(models.Model):
                     error_message = _("Invalid Cadastral Reference: {error}").format(
                         error=e
                     )
+                    raise exceptions.Warning(error_message)
+
+    @api.constrains("owner_id")
+    def _check_valid_vat(self):
+        for record in self:
+            original_vat = record.owner_id.vat
+            if original_vat:
+                if not original_vat.startswith("ES"):
+                    original_vat = "ES" + original_vat
+                try:
+                    vat.validate(original_vat)
+                except Exception as e:
+                    error_message = _("Invalid VAT: {error}").format(error=e)
                     raise exceptions.Warning(error_message)
