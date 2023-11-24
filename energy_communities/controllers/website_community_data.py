@@ -326,8 +326,14 @@ class WebsiteCommunityData(http.Controller):
         return legal_forms
 
     def _get_lead_values(self, lead_id):
-        lead_values = {}
         lead = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])[0]
+        lead_values = {
+            "lead_probability": lead.probability,
+            "lead_stage_won": False,
+        }
+        if lead.stage_id:
+            lead_values["lead_stage_won"] = lead.stage_id.is_won
+
         for field_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
             meta_line = lead.metadata_line_ids.filtered(
                 lambda meta_data_line: meta_data_line.key == field_key
@@ -431,6 +437,14 @@ class WebsiteCommunityData(http.Controller):
         # form/messages visibility
         values["display_success"] = display_success
         values["display_form"] = display_form
+        values["closed_form"] = False
+        # if lead is won close form
+        if "lead_probability" in values.keys():
+            if values["lead_probability"] >= 100:
+                values["closed_form"] = True
+        if "lead_stage_won" in values.keys():
+            if values["lead_stage_won"]:
+                values["closed_form"] = True
         return values
 
     #
