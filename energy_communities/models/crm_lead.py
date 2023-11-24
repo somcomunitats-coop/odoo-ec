@@ -3,6 +3,12 @@ from datetime import datetime
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
+_TAG_TYPE_VALUES = [
+    ("regular", _("Regular")),
+    ("energy_service", _("Energy Service")),
+    ("service_plan", _("Service Plan")),
+]
+
 
 class CrmLead(models.Model):
     _inherit = "crm.lead"
@@ -218,11 +224,27 @@ class CrmLead(models.Model):
         if followers:
             self.message_subscribe(partner_ids=followers.partner_id.ids)
 
+    def create_update_metadata(self, meta_key, meta_value):
+        existing_meta = self.metadata_line_ids.filtered(
+            lambda record: record.key == meta_key
+        )
+        if existing_meta:
+            if existing_meta.value != meta_value:
+                existing_meta.write({"value": meta_value})
+                return True
+        else:
+            self.env["crm.lead.metadata.line"].create(
+                {"key": meta_key, "value": meta_value, "crm_lead_id": self.id}
+            )
+            return True
+        return False
+
 
 class CrmTags(models.Model):
     _inherit = "crm.tag"
 
     tag_ext_id = fields.Char("ID Ext tag", compute="compute_ext_id_tag")
+    tag_type = fields.Selection(_TAG_TYPE_VALUES, string="Tag type", default="regular")
 
     def compute_ext_id_tag(self):
         for record in self:

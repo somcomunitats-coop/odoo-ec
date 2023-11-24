@@ -2,7 +2,7 @@ import logging
 
 from odoo import _, api, fields, models
 
-from ..models.res_company import _CE_STATUS_VALUES, _LEGAL_FROM_VALUES
+from ..models.res_company import _CE_STATUS_VALUES, _LEGAL_FORM_VALUES
 
 _logger = logging.getLogger(__name__)
 
@@ -91,7 +91,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         string="State",
     )
     legal_form = fields.Selection(
-        selection=_LEGAL_FROM_VALUES,
+        selection=_LEGAL_FORM_VALUES,
         string="Legal form",
     )
     legal_name = fields.Char(string="Legal name")
