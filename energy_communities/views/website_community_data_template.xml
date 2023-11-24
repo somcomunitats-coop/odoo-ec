@@ -555,12 +555,34 @@
         >web</a></h2>
       </t>
       <br />
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template
+    id="community_data_headline_message_open"
+    name="community_data_headline_message_open"
+  >
       <div class="alert alert-warning" t-if="not display_success">
         <p><strong
         >Alert!</strong> The content you enter in this form is what we will show directly on your page within Som Comunitats.</p>
         <p
       >Please check the grammatical and spelling quality of the texts and translations before submitting.</p>
         <p><strong>Thank you so much!</strong></p>
+      </div>
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template
+    id="community_data_headline_message_closed"
+    name="community_data_headline_message_closed"
+  >
+      <div class="alert alert-warning" t-if="not display_success">
+        <p>Necessary data for the integration of the Community: <strong><t
+            t-esc="ce_name"
+          /></strong> to the technology platform Som Comunitats has been successfully submitted.</p>
+        <p>You can contact <a
+          href="mailto:suport@somcomunitats.coop"
+        >suport@somcomunitats.coop</a> for further assistance.</p>
       </div>
     </template>
 
@@ -572,15 +594,25 @@
               <div class="col-xs-12 col-sm-10  col-md-8 col-lg-8">
 
                 <t t-call="energy_communities.community_data_headline" />
-                <t t-call="energy_communities.community_data_error_message_template" />
-                <t
-                t-if="display_success"
-                t-call="energy_communities.community_data_form_successful_msg"
-              />
-                <t
-                t-if="display_form"
-                t-call="energy_communities.community_data_form"
-              />
+                <t t-if="closed_form">
+                  <t
+                  t-call="energy_communities.community_data_headline_message_closed"
+                />
+                </t>
+                <t t-if="not closed_form">
+                  <t t-call="energy_communities.community_data_headline_message_open" />
+                  <t
+                  t-call="energy_communities.community_data_error_message_template"
+                />
+                  <t
+                  t-if="display_success"
+                  t-call="energy_communities.community_data_form_successful_msg"
+                />
+                  <t
+                  t-if="display_form"
+                  t-call="energy_communities.community_data_form"
+                />
+                </t>
               </div>
             </div>
           </div>
