@@ -231,6 +231,22 @@ class WebsiteCommunityData(http.Controller):
     #
     # GETTERS
     #
+    def _get_localized_options(self, original_options):
+        localized_options = []
+        for option in original_options:
+            localized_options.append(
+                {
+                    "id": option["id"],
+                    "name": request.env["ir.translation"]._get_source(
+                        name="addons/energy_communities/controllers/website_community_data.py",
+                        types="code",
+                        lang=request.env.context["lang"],
+                        source=option["name"],
+                    ),
+                }
+            )
+        return localized_options
+
     def _get_community_data_submit_response(self, values):
         values = self._fill_values(values, True, False)
         return request.render("energy_communities.community_data_page", values)
@@ -296,7 +312,17 @@ class WebsiteCommunityData(http.Controller):
     def _get_legal_forms(self):
         legal_forms = []
         for legal_form_id, legal_form_name in _LEGAL_FORM_VALUES:
-            legal_forms.append({"id": legal_form_id, "name": legal_form_name})
+            legal_forms.append(
+                {
+                    "id": legal_form_id,
+                    "name": request.env["ir.translation"]._get_source(
+                        name="addons/energy_communities/models/res_company.py",
+                        types="code",
+                        lang=request.env.context["lang"],
+                        source=legal_form_name,
+                    ),
+                }
+            )
         return legal_forms
 
     def _get_lead_values(self, lead_id):
@@ -344,7 +370,13 @@ class WebsiteCommunityData(http.Controller):
         # form labels
         # form keys
         for field_key in _COMMUNITY_DATA__FIELDS.keys():
-            values[field_key + "_label"] = _COMMUNITY_DATA__FIELDS[field_key]
+            # values[field_key + "_label"] = _COMMUNITY_DATA__FIELDS[field_key]
+            values[field_key + "_label"] = request.env["ir.translation"]._get_source(
+                name="addons/energy_communities/controllers/website_community_data.py",
+                types="code",
+                lang=request.env.context["lang"],
+                source=_COMMUNITY_DATA__FIELDS[field_key],
+            )
             values[field_key + "_key"] = field_key
         # language selection
         values["lang_options"] = self._get_langs()
@@ -362,22 +394,32 @@ class WebsiteCommunityData(http.Controller):
         if "ce_services" not in values.keys() or values["ce_services"] == "":
             values["ce_services"] = []
         values["energy_service_options"] = self._get_energy_service_tags()
+        # yes_no selection
+        values["yes_no_options"] = self._get_localized_options(_YES_NO_OPTIONS)
         # community_status selection
-        values["yes_no_options"] = _YES_NO_OPTIONS
-        # community_status selection
-        values["community_status_options"] = _COMMUNITY_STATUS_OPTIONS
+        values["community_status_options"] = self._get_localized_options(
+            _COMMUNITY_STATUS_OPTIONS
+        )
         # community_type selection
-        values["community_type_options"] = _COMMUNITY_TYPE_OPTIONS
+        values["community_type_options"] = self._get_localized_options(
+            _COMMUNITY_TYPE_OPTIONS
+        )
         # community_management selection
-        values["community_management_options"] = _COMMUNITY_MANAGEMENT_OPTIONS
+        values["community_management_options"] = self._get_localized_options(
+            _COMMUNITY_MANAGEMENT_OPTIONS
+        )
         # community_manager selection
-        values["community_manager_options"] = _COMMUNITY_MANAGER_OPTIONS
+        values["community_manager_options"] = self._get_localized_options(
+            _COMMUNITY_MANAGER_OPTIONS
+        )
         # community_payment_method_options
-        values["community_payment_method_options"] = _COMMUNITY_PAYMENT_METHOD_OPTIONS
+        values["community_payment_method_options"] = self._get_localized_options(
+            _COMMUNITY_PAYMENT_METHOD_OPTIONS
+        )
         # community_constitution_status selection
-        values[
-            "community_constitution_status_options"
-        ] = _COMMUNITY_CONSTITUTION_STATUS_OPTIONS
+        values["community_constitution_status_options"] = self._get_localized_options(
+            _COMMUNITY_CONSTITUTION_STATUS_OPTIONS
+        )
         # community_legal_form selection
         values["community_legal_form_options"] = self._get_legal_forms()
         # image preselection from db (if necessary)
