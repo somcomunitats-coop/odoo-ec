@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-27 16:56+0000\n"
-"PO-Revision-Date: 2023-11-27 16:56+0000\n"
+"POT-Creation-Date: 2023-11-27 17:41+0000\n"
+"PO-Revision-Date: 2023-11-27 17:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -265,7 +265,7 @@ msgid ""
 "    <p>We keep in touch for any questions.</p>\n"
 "    <p>Yours faithfully,</p>\n"
 "    <p>Somcomunitats.coop team </p>\n"
-"    <p><a href=\"https://web-test.somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"    <p><a href=\"https://somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
 "</div>\n"
 "            "
 msgstr ""
@@ -273,6 +273,38 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser_pwd
 msgid "\"Superuser\" user password"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.form_field_date_past
+msgid "#{date_placeholder}"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_close_message_template
+msgid "&amp;times;"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid ". Additional information:"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline_message_open
+msgid ""
+"<strong>Alert!</strong> The content you enter in this form is what we will "
+"show directly on your page within Som Comunitats."
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline_message_closed
+msgid "<strong>Closed form</strong>"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline_message_open
+msgid "<strong>Thank you so much!</strong>"
 msgstr ""
 
 #. module: energy_communities
@@ -327,7 +359,12 @@ msgid "Address"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Address (Street, number, appartment)"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Address not found"
@@ -361,10 +398,16 @@ msgstr ""
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid "An instance company already exists"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Are members charged any type of recurring fee? For what concepts? How are "
+"they charged? How often?"
 msgstr ""
 
 #. module: energy_communities
@@ -383,7 +426,6 @@ msgid "Assign CRM to Coordinator Company Wizard"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
 #: code:addons/energy_communities/models/crm_lead.py:0
 #, python-format
 msgid "Assign CRM to coordinator company"
@@ -410,26 +452,13 @@ msgid "Assing CRM to coordinator company"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__associació_sense_ànim_de_lucre
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__associació_sense_ànim_de_lucre
-#, python-format
-msgid "Associació sense ànim de lucre"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_community_service.py:0
-#: code:addons/energy_communities/services/ce_community_service.py:0
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_service.py:0
-#: code:addons/energy_communities/services/ce_member_service.py:0
 #: code:addons/energy_communities/services/ce_member_service.py:0
 #: code:addons/energy_communities/services/ce_member_service.py:0
 #, python-format
@@ -448,6 +477,12 @@ msgid "Bank Accounts"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Bank transfer to the account of the candidate for membership"
+msgstr ""
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 msgid "Become Company Cooperator of"
 msgstr ""
@@ -458,8 +493,16 @@ msgid "Become Cooperator of"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__become_cooperator_process
+#, python-format
 msgid "Become cooperator process"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Both of the above options"
 msgstr ""
 
 #. module: energy_communities
@@ -468,7 +511,6 @@ msgid "Build Community Company"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Button configs not found."
@@ -536,7 +578,7 @@ msgid "Chart Template"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_type__citizen
 #, python-format
@@ -544,13 +586,14 @@ msgid "Citizen"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__city
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__city
+#, python-format
 msgid "City"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "City not found"
@@ -567,7 +610,7 @@ msgid "Click to define a new tag."
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_status__closed
 #, python-format
@@ -581,14 +624,33 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__community
 #, python-format
 msgid "Community"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Community Email"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Community Logo"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Community Phone"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__community_active_services
+#, python-format
 msgid "Community active services"
 msgstr ""
 
@@ -599,11 +661,22 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
-#: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
 #, python-format
 msgid ""
 "Community created from: <a "
 "href='/web#id={id}&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Community legal form"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Community long description"
 msgstr ""
 
 #. module: energy_communities
@@ -617,12 +690,20 @@ msgid "Community secondary type"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Community short description"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__community_status
 msgid "Community status"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__community_type
+#, python-format
 msgid "Community type"
 msgstr ""
 
@@ -639,7 +720,6 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
-#: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
 #, python-format
 msgid "Company creation successful"
 msgstr ""
@@ -647,15 +727,6 @@ msgstr ""
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_collective_purchases
 msgid "Compres col·lectives"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__comunitat_de_bens
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__comunitat_de_bens
-#, python-format
-msgid "Comunitat de Bens"
 msgstr ""
 
 #. module: energy_communities
@@ -681,11 +752,29 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
-#: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid ""
 "Conflict on user values. Please verify that all values supposed to be unique"
 " are really unique. %(detail)s"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Constitution date"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Constitution in progress"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Constitution status"
 msgstr ""
 
 #. module: energy_communities
@@ -709,6 +798,12 @@ msgid "Contact a existing CE"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid ""
+"Contact person for the administrative management of the Energy Community"
+msgstr ""
+
+#. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_general_contact
 msgid "Contact to the Platform"
 msgstr ""
@@ -725,15 +820,16 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/operation_request.py:0
-#: code:addons/energy_communities/models/operation_request.py:0
 #, python-format
 msgid "Converting just part of the shares is not yet implemented"
 msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/landing_page.py:0
-#: code:addons/energy_communities/models/landing_page.py:0
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__cooperative
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__cooperative
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__cooperative
 #, python-format
 msgid "Cooperative"
 msgstr ""
@@ -755,15 +851,12 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__coordinator
 #, python-format
 msgid "Coordinator"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:res.groups,name:energy_communities.role_coord_admin_res_groups
@@ -773,8 +866,6 @@ msgid "Coordinator Admin"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:res.groups,name:energy_communities.role_coord_worker_res_groups
@@ -789,7 +880,6 @@ msgid "Create User"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
 #: code:addons/energy_communities/models/crm_lead.py:0
 #: model_terms:ir.ui.view,arch_db:energy_communities.ce_crm_lead_view_form
 #, python-format
@@ -841,8 +931,35 @@ msgid "Crm Lead"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid ""
+"DATA PROTECTION INFORMATION. Purposes: to respond to your requests. Rights: "
+"you can withdraw your consent at any time, as well as access, rectify and "
+"delete your data and other rights at"
+msgstr ""
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_users_form_form_inherit
 msgid "DNI"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline
+msgid "Data collection form required for the integration of"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Definition in progress"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Describe which system is currently used by the Register of members "
+"(historical register of additions/dismissals and official list of members)"
 msgstr ""
 
 #. module: energy_communities
@@ -854,6 +971,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_cm_coordinates_mixin__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_line__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_operation_request__display_name
@@ -871,7 +989,48 @@ msgid "Display Name"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Do the members currently make voluntary contributions to the social capital "
+"of the Energy Community? How it works?"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Do you plan to use Odoo (management program) of the platform to keep the "
+"accounts of the Energy Community? or will an external management take it to "
+"you?"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Do you plan to use the platform's Odoo (management program) to carry out tax"
+" management: generation of tax reports from the Treasury (303, 390,...) or "
+"will it be carried out by an external management company?"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Do you think that management could enter Odoo to generate the models from "
+"Odoo itself?"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Do you want to comment on any other particular / important aspect of your "
+"corporate management?"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__status__draft
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
@@ -900,16 +1059,16 @@ msgid "Eficiencia energètica"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__email
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__email
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
+#, python-format
 msgid "Email"
 msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Email and confirmation email addresses don't match."
@@ -917,18 +1076,8 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Email not found"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__empresari_individual
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__empresari_individual
-#, python-format
-msgid "Empresari Individual"
 msgstr ""
 
 #. module: energy_communities
@@ -956,8 +1105,6 @@ msgstr ""
 #. module: energy_communities
 #: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:res.groups,name:energy_communities.role_ce_admin_res_groups
 #: model:res.users.role,name:energy_communities.role_ce_admin
 #, python-format
@@ -973,12 +1120,16 @@ msgstr ""
 #. module: energy_communities
 #: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:res.groups,name:energy_communities.role_ce_member_res_groups
 #: model:res.users.role,name:energy_communities.role_ce_member
 #, python-format
 msgid "Energy Community Member"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Energy Community Name"
 msgstr ""
 
 #. module: energy_communities
@@ -993,8 +1144,26 @@ msgid "Energy Community state"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/crm_lead.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__crm_tag__tag_type__energy_service
+#, python-format
+msgid "Energy Service"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_config_energy_actions_menu
 msgid "Energy actions in progress"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid "Explain the process to become cooperator. Include payment information."
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "External management"
 msgstr ""
 
 #. module: energy_communities
@@ -1008,6 +1177,12 @@ msgid "FREQUENTLY ASKED QUESTIONS"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Facebook url"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__failed_message_ids
 msgid "Failed Messages"
 msgstr ""
@@ -1015,6 +1190,12 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__first_name
 msgid "First name"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Fiscal Name"
 msgstr ""
 
 #. module: energy_communities
@@ -1077,6 +1258,14 @@ msgid "General Information"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__general_partnership
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__general_partnership
+#, python-format
+msgid "General partnership"
+msgstr ""
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid "Hello,"
 msgstr ""
@@ -1094,9 +1283,29 @@ msgid "I accept that the entity issues direct debit receipts to this account."
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "I have read and accept the privacy policy"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__gender__not_share
 #: model:ir.model.fields.selection,name:energy_communities.selection__subscription_request__gender__not_share
 msgid "I prefer to not share it"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "IBAN (bank account) used by the Energy Community"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"IBAN 2 (bank account) used by the Energy Community (only if you use more "
+"than one)"
 msgstr ""
 
 #. module: energy_communities
@@ -1108,6 +1317,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__id
 #: model:ir.model.fields,field_description:energy_communities.field_cm_coordinates_mixin__id
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__id
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_line__id
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag__id
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__id
 #: model:ir.model.fields,field_description:energy_communities.field_operation_request__id
@@ -1164,7 +1374,27 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid "If possible upload a group image"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid ""
+"In this section you can briefly explain the advantages of joining the "
+"community"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__individual_entrepreneur
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__individual_entrepreneur
+#, python-format
+msgid "Individual entrepreneur"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_type__industrial
 #, python-format
@@ -1212,7 +1442,12 @@ msgid "Instagram link"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Instagram url"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__instance
 #, python-format
@@ -1246,8 +1481,22 @@ msgid "Is instance company"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Is the community open to accept new members or already closed?"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request__is_voluntary
 msgid "Is voluntary contribution"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"It will be delegated to people from the Coordinating entity that supports "
+"the Energy Community on the Platform"
 msgstr ""
 
 #. module: energy_communities
@@ -1267,7 +1516,6 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__landing_page_id
 #, python-format
 msgid "Landing Page"
@@ -1275,13 +1523,11 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Landing lat param required for place creation"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Landing lng param required for place creation"
@@ -1303,6 +1549,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_cm_coordinates_mixin____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_line____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_operation_request____last_update
@@ -1367,6 +1614,28 @@ msgid "Legal name"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Legally constituted"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__limited_company
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__limited_company
+#, python-format
+msgid "Limited company"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__limited_partnership
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__limited_partnership
+#, python-format
+msgid "Limited partnership"
+msgstr ""
+
+#. module: energy_communities
 #: model:auth.oauth.provider,body:energy_communities.keycloak_admin_provider
 #: model:auth.oauth.provider,body:energy_communities.keycloak_login_provider
 msgid "Login with Keycloak"
@@ -1394,7 +1663,6 @@ msgid "Mandatory Shares"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Map not found slug_id: {}"
@@ -1426,8 +1694,15 @@ msgid "My landing page"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__name
+#, python-format
 msgid "Name"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline_message_closed
+msgid "Necessary data for the integration of the Community:"
 msgstr ""
 
 #. module: energy_communities
@@ -1468,7 +1743,12 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/services/ce_community_service.py:0
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "No"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/services/ce_community_service.py:0
 #, python-format
 msgid "No Odoo Company found for odoo_company_id %s"
@@ -1476,8 +1756,6 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_service.py:0
 #: code:addons/energy_communities/services/ce_member_service.py:0
 #, python-format
 msgid "No Odoo Partner found for Odoo user with login username %s"
@@ -1485,8 +1763,6 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_service.py:0
 #: code:addons/energy_communities/services/ce_member_service.py:0
 #, python-format
 msgid "No Odoo User found for KeyCloak user id %s"
@@ -1495,6 +1771,19 @@ msgstr ""
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
 msgid "No web form origin"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__non_profit
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__non_profit
+#, python-format
+msgid "Non profit association"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid "Non-computer support, Excels, computer program (which one?)"
 msgstr ""
 
 #. module: energy_communities
@@ -1507,11 +1796,6 @@ msgstr ""
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
@@ -1536,7 +1820,9 @@ msgid "Number of errors"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__number_of_members
+#, python-format
 msgid "Number of members"
 msgstr ""
 
@@ -1576,7 +1862,12 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "One or more of a person linked to the Energy Community itself"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
 #, python-format
 msgid ""
@@ -1586,7 +1877,6 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid ""
 "Only users that belongs to the 'Coordinator' or 'Instance' company can "
@@ -1594,7 +1884,7 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_status__open
 #, python-format
@@ -1604,6 +1894,28 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_operation_request
 msgid "Operation request"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Other"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Our platform"
+msgstr ""
+
+#. module: energy_communities
+#: model:crm.tag,name:energy_communities.pack_1
+msgid "Pack 1"
+msgstr ""
+
+#. module: energy_communities
+#: model:crm.tag,name:energy_communities.pack_2
+msgid "Pack 2"
 msgstr ""
 
 #. module: energy_communities
@@ -1619,15 +1931,11 @@ msgstr ""
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid "Parent company must be coordinator hierarchy level."
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
 #: code:addons/energy_communities/models/res_company.py:0
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
@@ -1640,30 +1948,25 @@ msgstr ""
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Partner not found"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__phone
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
+#, python-format
 msgid "Phone"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Place category not found slug_id: {}"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Place presenter not found slug_id: {}"
@@ -1675,8 +1978,6 @@ msgid "Place reference"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
@@ -1695,10 +1996,33 @@ msgid "Platform admin role"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline_message_open
+msgid ""
+"Please check the grammatical and spelling quality of the texts and "
+"translations before submitting."
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.form_field_selection
+msgid "Please choose an option"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Please select at least one Energy service in order to submit the form"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Please upload a scan of your ID card."
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Postal Code"
 msgstr ""
 
 #. module: energy_communities
@@ -1707,8 +2031,23 @@ msgid "Postal code"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Predefined language for the Community (communication will be used on this "
+"language.)"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__primary_image_file
+#, python-format
 msgid "Primary Image"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid "Privacy policy"
 msgstr ""
 
 #. module: energy_communities
@@ -1728,22 +2067,24 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Provided IBAN is not valid."
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Public community data changed:"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/landing_page.py:0
 #, python-format
 msgid "Public data update successful"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/landing_page.py:0
 #: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__status__publish
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
@@ -1772,8 +2113,27 @@ msgid "Redirect Link after update password"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/crm_lead.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__crm_tag__tag_type__regular
+#, python-format
+msgid "Regular"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__community_company_id
 msgid "Related Community"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Related Lead closed."
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Related Lead not found. The url is not correct. lead_id param invalid."
 msgstr ""
 
 #. module: energy_communities
@@ -1787,7 +2147,6 @@ msgid "Reset password URL"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_users.py:0
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid "Reset password url is not set."
@@ -1805,7 +2164,6 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
-#: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid "Role not found"
 msgstr ""
@@ -1816,20 +2174,34 @@ msgid "Root URL"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/account_chart_template.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__hook_cron
+msgid "Run the post hook in a cron job or not"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/account_chart_template.py:0
 #, python-format
 msgid "SUBJ"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__secondary_image_file
+#, python-format
 msgid "Secondary Image"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "Send"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/crm_lead.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__crm_tag__tag_type__service_plan
+#, python-format
+msgid "Service Plan"
 msgstr ""
 
 #. module: energy_communities
@@ -1867,7 +2239,6 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #, python-format
 msgid ""
 "Since you are not a coordinator admin you are not allowed to assign "
@@ -1875,52 +2246,6 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__societat_anónima
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__societat_anónima
-#, python-format
-msgid "Societat Anónima"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__societat_col·lectiva
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__societat_col·lectiva
-#, python-format
-msgid "Societat Col·lectiva"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__societat_comanditària
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__societat_comanditària
-#, python-format
-msgid "Societat Comanditària"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__societat_cooperativa
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__societat_cooperativa
-#, python-format
-msgid "Societat Cooperativa"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__societat_limitada
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__societat_limitada
-#, python-format
-msgid "Societat Limitada"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Some mandatory fields have not been filled."
@@ -1928,13 +2253,11 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
-#: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid "Something went wrong. Mail can not be sended. More details: {}"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_users.py:0
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid "Something went wrong. Please check logs."
@@ -1951,7 +2274,9 @@ msgid "Sources"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__state_id
+#, python-format
 msgid "State"
 msgstr ""
 
@@ -1970,6 +2295,14 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__stock_company
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__stock_company
+#, python-format
+msgid "Stock company"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__street
 msgid "Street"
 msgstr ""
@@ -1980,7 +2313,11 @@ msgid "Subministrament d'energia 100% renovable"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/account_chart_template.py:0
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_successful_msg
+msgid "Submit more data"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/account_chart_template.py:0
 #, python-format
 msgid "Subscription Journal"
@@ -1999,6 +2336,17 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__superuser_pwd
 msgid "Superuser password"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Surnames"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_tag__tag_type
+msgid "Tag type"
 msgstr ""
 
 #. module: energy_communities
@@ -2023,7 +2371,12 @@ msgid "Telegram link"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/crm_lead.py:0
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Telegram url"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
 #, python-format
 msgid ""
@@ -2033,13 +2386,11 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
-#: code:addons/energy_communities/models/crm_lead.py:0
 #, python-format
 msgid "The Source {} of Lead {} do not allow the creation of new Companies"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
 #: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
 #, python-format
 msgid "The new community has been correctly created"
@@ -2047,11 +2398,7 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_community_service.py:0
-#: code:addons/energy_communities/services/ce_community_service.py:0
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_service.py:0
-#: code:addons/energy_communities/services/ce_member_service.py:0
 #: code:addons/energy_communities/services/ce_member_service.py:0
 #: code:addons/energy_communities/services/ce_member_service.py:0
 #, python-format
@@ -2061,13 +2408,11 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_service.py:0
-#: code:addons/energy_communities/services/ce_member_service.py:0
 #, python-format
 msgid "The role code '{}' is not a valid one"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid ""
@@ -2083,7 +2428,6 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "This company doesn't have a voluntary product share selected."
@@ -2111,20 +2455,17 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
 #, python-format
 msgid "This language code %s is not active in Odoo. Active ones: %s"
 msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/operation_request.py:0
-#: code:addons/energy_communities/models/operation_request.py:0
 #, python-format
 msgid "This operation is not yet implemented."
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/operation_request.py:0
 #: code:addons/energy_communities/models/operation_request.py:0
 #, python-format
 msgid "This operation must be approved before to be executed"
@@ -2153,8 +2494,25 @@ msgid "Total"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Transfer of the candidate to partner to the entity's account"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid "True"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__twitter_link
 msgid "Twitter link"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Twitter url"
 msgstr ""
 
 #. module: energy_communities
@@ -2169,7 +2527,6 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid ""
 "Unable to create new company because there is an allready existing company "
@@ -2177,7 +2534,6 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid ""
@@ -2187,7 +2543,6 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/crm_lead.py:0
-#: code:addons/energy_communities/models/crm_lead.py:0
 #, python-format
 msgid ""
 "Unable to create the KeyCloack entities from Lead: {}, because it is not yet"
@@ -2196,14 +2551,12 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
 #, python-format
 msgid ""
 "Unable to update the lang in Keycloak for the related KC user ID: {}.{}"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/services/ce_member_profile_service.py:0
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
 #, python-format
 msgid "Unable to validate the received oauth KeyCloak token: {}"
@@ -2243,6 +2596,11 @@ msgid "Update company_ids from res.parters with users"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.form_field_image
+msgid "Upload a new one to change"
+msgstr ""
+
+#. module: energy_communities
 #: model:res.groups,name:energy_communities.group_user
 msgid "User"
 msgstr ""
@@ -2258,7 +2616,6 @@ msgid "User admin URL"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #, python-format
 msgid "User not found"
@@ -2286,10 +2643,17 @@ msgid "Users created by cooperator are pushed automatically to keycloak"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__vat
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__vat
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
+#, python-format
 msgid "VAT"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_line__value
+msgid "Value"
 msgstr ""
 
 #. module: energy_communities
@@ -2318,6 +2682,12 @@ msgid "WP Landing Page"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Web url"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_menu_webforms_settings
 msgid "Webforms"
 msgstr ""
@@ -2338,7 +2708,40 @@ msgid "Website communication history"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"What amount of mandatory contribution to the social capital do you ask for "
+"when a new member joins?"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Which one?"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Which payment method will you use to collect the mandatory contributions to "
+"the share capital (registration of new partners)?"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Who will do the day-to-day corporate management of the Energy Community? "
+"(person/s with user access to the Odoo corporate/accounting/tax management "
+"program of the Energy Community)"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__why_become_cooperator
+#, python-format
 msgid "Why become cooperator"
 msgstr ""
 
@@ -2350,9 +2753,6 @@ msgstr ""
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_config_settings.py:0
 #: code:addons/energy_communities/models/res_config_settings.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__wordpress_base_url
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__wordpress_base_url
@@ -2362,8 +2762,6 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_config_settings.py:0
 #: code:addons/energy_communities/models/res_config_settings.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__wordpress_db_password
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__wordpress_db_password
@@ -2373,8 +2771,6 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_config_settings.py:0
 #: code:addons/energy_communities/models/res_config_settings.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__wordpress_db_username
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__wordpress_db_username
@@ -2389,9 +2785,14 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/landing_page.py:0
-#: code:addons/energy_communities/models/landing_page.py:0
 #, python-format
 msgid "Wordpress landing and map place has been successfully updated."
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "Yes"
 msgstr ""
 
 #. module: energy_communities
@@ -2409,14 +2810,17 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/subscription_request.py:0
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline_message_closed
+msgid "You can contact"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/subscription_request.py:0
 #, python-format
 msgid "You can't create a voluntary subscription share for a new cooperator."
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid ""
@@ -2425,14 +2829,11 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid "You can't subscribe to two different types of share."
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
-#: code:addons/energy_communities/models/res_company.py:0
 #: code:addons/energy_communities/models/res_company.py:0
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
@@ -2441,13 +2842,11 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "You must check the SEPA transference."
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/account_move.py:0
 #: code:addons/energy_communities/models/account_move.py:0
 #, python-format
 msgid ""
@@ -2456,7 +2855,6 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/account_move.py:0
-#: code:addons/energy_communities/models/account_move.py:0
 #, python-format
 msgid ""
 "You must have a company specific sequence number for subscription.register"
@@ -2464,9 +2862,13 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/subscription_request.py:0
-#: code:addons/energy_communities/models/subscription_request.py:0
 #, python-format
 msgid "You must set a cooperator journal on you company."
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_successful_msg
+msgid "Your data has been successfully registered."
 msgstr ""
 
 #. module: energy_communities
@@ -2476,13 +2878,11 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "ZIP code not found"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/services/crm_lead_service.py:0
 #: code:addons/energy_communities/services/crm_lead_service.py:0
 #, python-format
 msgid "[Contact CE]"
@@ -2490,20 +2890,17 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/crm_lead_service.py:0
-#: code:addons/energy_communities/services/crm_lead_service.py:0
 #, python-format
 msgid "[Contact SomComunitats]"
 msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/crm_lead_service.py:0
-#: code:addons/energy_communities/services/crm_lead_service.py:0
 #, python-format
 msgid "[Newsletter CE]"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/services/crm_lead_service.py:0
 #: code:addons/energy_communities/services/crm_lead_service.py:0
 #, python-format
 msgid "[Newsletter SomComunitats]"
@@ -2553,13 +2950,11 @@ msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/crm_lead_service.py:0
-#: code:addons/energy_communities/services/crm_lead_service.py:0
 #, python-format
 msgid "[Subscription CE]"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__ce_status__active
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__ce_status__active
@@ -2573,7 +2968,13 @@ msgid "and"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_company.py:0
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline
+msgid ""
+"and to our <strong>administrative management space</strong> (Odoo program "
+"for corporate, accounting and financial management)"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__ce_status__building
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__ce_status__building
@@ -2582,13 +2983,144 @@ msgid "building"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid "ce_account_management,ce_tax_management:external_management"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid "ce_constitution_status:constituted"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid "ce_constitution_status:other"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid "ce_constitution_status_other,ce_legal_form,ce_creation_date,ce_vat"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid "ce_management_can_enter_platform"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid "ce_manager:member_admin,both"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid "ce_manager_headline"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid ""
+"ce_manager_headline,ce_manager_firstname,ce_manager_surname,ce_manager_email,ce_manager_phone"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__community_of_property
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__community_of_property
+#, python-format
+msgid "community of property"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_crm_lead_metadata_line
+msgid "crm.lead.metadata.line"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.form_field_date_past
+msgid "dd/mm/aaaa"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.form_field_date_past
+msgid "dd/mm/yyyy"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline_message_closed
+msgid "for further assistance."
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model,name:energy_communities.model_landing_page
 msgid "landing.page"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "lead_id must be defined on the url as a numeric value"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "lead_id on website url"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "lead_id param must be defined on the url in order to use the form"
+msgstr ""
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid "of Voluntary Contributions."
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
+msgid "somenergia@delegado-datos.com"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline_message_closed
+msgid "suport@somcomunitats.coop"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline
+msgid "to the <strong>public spaces</strong> of our"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline_message_closed
+msgid ""
+"to the technology platform Som Comunitats has been successfully submitted."
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline
+msgid "web"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "{} field must be a past date"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "{} field must have date format (dd/mm/yyyy)"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "{} must be of type image (jpg/jpeg/png)"
 msgstr ""
 
 #. module: energy_communities
