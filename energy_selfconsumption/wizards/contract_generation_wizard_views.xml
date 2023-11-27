@@ -11,11 +11,26 @@
       >energy_selfconsumption.contract_generation.wizard</field>
             <field name="arch" type="xml">
                 <form string="Contract Generation">
+                                        <p>
+                        <b
+            >Attention!</b> You are activating a project and thus activating its recurring billing.
+                    </p>
+                    <p>
+                        To activate the recurring invoicing process, define the date from which you want
+                        every supply point associated with this project to start invoicing according to the
+                        established recurrence.
+                    </p>
+
+                    <group>
+                        <field name="start_date" />
+                    </group>
                      <footer>
                         <button
+              class="btn-primary"
               type="object"
               name="generate_contracts_button"
-            >Generate</button>
+            >Accept</button>
+                         <button string="Cancel" special="cancel" />
                     </footer>
                 </form>
             </field>
