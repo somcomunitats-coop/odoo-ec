@@ -344,18 +344,19 @@ class LandingCmPlace:
             MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["es_ES"],
             "es_ES",
         )
-        if "es" in self.wp_landing_data["translations"].keys():
-            self._update_translation(
-                "cm.place.external.link,url",
-                external_link.id,
-                "{landing_link}/#contacte".format(
-                    landing_link=self.wp_landing_data["link"]
-                ),
-                "{landing_link}/#contacte".format(
-                    landing_link=self.wp_landing_data["translations"]["es"]
-                ),
-                "es_ES",
-            )
+        if self.wp_landing_data["translations"]:
+            if "es" in self.wp_landing_data["translations"].keys():
+                self._update_translation(
+                    "cm.place.external.link,url",
+                    external_link.id,
+                    "{landing_link}/#contacte".format(
+                        landing_link=self.wp_landing_data["link"]
+                    ),
+                    "{landing_link}/#contacte".format(
+                        landing_link=self.wp_landing_data["translations"]["es"]
+                    ),
+                    "es_ES",
+                )
         return external_link
 
     def _landing_external_link(self, place_id):
