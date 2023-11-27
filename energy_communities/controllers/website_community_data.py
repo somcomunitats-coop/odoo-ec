@@ -177,6 +177,11 @@ class WebsiteCommunityData(http.Controller):
         website=True,
     )
     def community_data_submit(self, **kwargs):
+        # lead_id validation
+        response = self._page_render_validation(kwargs)
+        if response is not True:
+            return response
+
         values = {}
         form_values = {}
 
