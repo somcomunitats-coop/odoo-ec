@@ -532,7 +532,9 @@ class WebsiteCommunityData(http.Controller):
         if "ce_services" not in values.keys():
             error.append("ce_services")
             error_msgs.append(
-                "Please select at least one Energy service in order to submit the form"
+                _(
+                    "Please select at least one Energy service in order to submit the form"
+                )
             )
 
         # image validation
@@ -542,7 +544,7 @@ class WebsiteCommunityData(http.Controller):
                     if "image" not in values[image_field_key].mimetype:
                         error.append(image_field_key)
                         error_msgs.append(
-                            "{} must be of type image (jpg/jpeg/png)".format(
+                            _("{} must be of type image (jpg/jpeg/png)").format(
                                 _COMMUNITY_DATA__IMAGE_FIELDS[image_field_key]
                             )
                         )
@@ -557,7 +559,7 @@ class WebsiteCommunityData(http.Controller):
                 ):
                     error.append(date_field_key)
                     error_msgs.append(
-                        "{} field must have date format (dd/mm/yyyy)".format(
+                        _("{} field must have date format (dd/mm/yyyy)").format(
                             _COMMUNITY_DATA__DATE_FIELDS[date_field_key]
                         )
                     )
@@ -565,7 +567,7 @@ class WebsiteCommunityData(http.Controller):
                     if not self._validate_past_date(values[date_field_key]):
                         error.append(date_field_key)
                         error_msgs.append(
-                            "{} field must be a past date".format(
+                            _("{} field must be a past date").format(
                                 _COMMUNITY_DATA__DATE_FIELDS[date_field_key]
                             )
                         )
