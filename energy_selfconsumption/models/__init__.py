@@ -7,3 +7,4 @@ from . import project
 from . import contract
 from . import contract_line
 from . import product
+from . import account_move
