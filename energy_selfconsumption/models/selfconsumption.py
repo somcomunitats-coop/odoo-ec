@@ -184,14 +184,16 @@ class Selfconsumption(models.Model):
                 raise ValidationError(
                     _("Project must have defined a invoicing mode before activation.")
                 )
-
-            # Create ContractGenerationWizard
-            contract_wizard = self.env[
-                "energy_selfconsumption.contract_generation.wizard"
-            ].create({"selfconsumption_id": self.id})
-
-            # Generate Contracts
-            contract_wizard.generate_contracts_button()
+            return {
+                "name": _("Generate Contracts"),
+                "type": "ir.actions.act_window",
+                "view_mode": "form",
+                "res_model": "energy_selfconsumption.contract_generation.wizard",
+                "views": [(False, "form")],
+                "view_id": False,
+                "target": "new",
+                "context": {"default_selfconsumption_id": self.id},
+            }
 
     def set_invoicing_mode(self):
         return {
