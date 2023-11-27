@@ -236,6 +236,14 @@ class WebsiteCommunityData(http.Controller):
     #
     # GETTERS
     #
+    def _get_translation(self, source):
+        return request.env["ir.translation"]._get_source(
+            name="addons/energy_communities/controllers/website_community_data.py",
+            types="code",
+            lang=request.env.context["lang"],
+            source=source,
+        )
+
     def _get_localized_options(self, original_options):
         localized_options = []
         for option in original_options:
@@ -545,13 +553,14 @@ class WebsiteCommunityData(http.Controller):
                         error.append(image_field_key)
                         error_msgs.append(
                             _("{} must be of type image (jpg/jpeg/png)").format(
-                                _COMMUNITY_DATA__IMAGE_FIELDS[image_field_key]
+                                self._get_translation(
+                                    _COMMUNITY_DATA__IMAGE_FIELDS[image_field_key]
+                                )
                             )
                         )
 
         # date validation
         for date_field_key in _COMMUNITY_DATA__DATE_FIELDS.keys():
-            # import ipdb; ipdb.set_trace()
             if date_field_key in values.keys():
                 if not self._validate_regex(
                     values[date_field_key],
@@ -560,7 +569,9 @@ class WebsiteCommunityData(http.Controller):
                     error.append(date_field_key)
                     error_msgs.append(
                         _("{} field must have date format (dd/mm/yyyy)").format(
-                            _COMMUNITY_DATA__DATE_FIELDS[date_field_key]
+                            self._get_translation(
+                                _COMMUNITY_DATA__DATE_FIELDS[date_field_key]
+                            )
                         )
                     )
                 elif date_field_key in _COMMUNITY_DATA__PAST_DATE_FIELDS:
@@ -568,7 +579,9 @@ class WebsiteCommunityData(http.Controller):
                         error.append(date_field_key)
                         error_msgs.append(
                             _("{} field must be a past date").format(
-                                _COMMUNITY_DATA__DATE_FIELDS[date_field_key]
+                                self._get_translation(
+                                    _COMMUNITY_DATA__DATE_FIELDS[date_field_key]
+                                )
                             )
                         )
 
