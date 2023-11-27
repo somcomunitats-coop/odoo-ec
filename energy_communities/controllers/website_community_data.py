@@ -295,11 +295,13 @@ class WebsiteCommunityData(http.Controller):
         )
 
     def _is_lead_pack(self, lead_id, pack_tag_ext_id):
-        lead = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])[0]
-        pack_tag = lead.tag_ids.filtered(
-            lambda tag: tag.tag_ext_id == "energy_communities." + pack_tag_ext_id
-        )
-        return bool(pack_tag)
+        leads = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])
+        if leads:
+            lead = leads[0]
+            pack_tag = lead.tag_ids.filtered(
+                lambda tag: tag.tag_ext_id == "energy_communities." + pack_tag_ext_id
+            )
+            return bool(pack_tag)
 
     def _get_energy_service_tag_ids(self):
         return (
@@ -326,39 +328,38 @@ class WebsiteCommunityData(http.Controller):
         return legal_forms
 
     def _get_lead_values(self, lead_id):
-        lead = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])[0]
-        lead_values = {
-            "lead_probability": lead.probability,
-            "lead_stage_won": False,
-        }
-        if lead.stage_id:
-            lead_values["lead_stage_won"] = lead.stage_id.is_won
+        leads = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])
+        lead_values = {"closed_lead": False}
+        if leads:
+            lead = leads[0]
+            if lead.probability >= 100 or lead.stage_id.is_won:
+                lead_values["closed_lead"] = True
 
-        for field_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
-            meta_line = lead.metadata_line_ids.filtered(
-                lambda meta_data_line: meta_data_line.key == field_key
-            )
-            if meta_line:
-                lead_values[field_key] = meta_line.value
-        for field_key in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
-            meta_line = lead.metadata_line_ids.filtered(
-                lambda meta_data_line: meta_data_line.key == field_key
-            )
-            if meta_line:
-                attachment = (
-                    request.env["ir.attachment"]
-                    .sudo()
-                    .search([("id", "=", meta_line.value)])
+            for field_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
+                meta_line = lead.metadata_line_ids.filtered(
+                    lambda meta_data_line: meta_data_line.key == field_key
                 )
-                if attachment:
-                    lead_values[
-                        field_key
-                    ] = "{base_url}/web/image/{attachment_id}".format(
-                        base_url=request.env["ir.config_parameter"]
+                if meta_line:
+                    lead_values[field_key] = meta_line.value
+            for field_key in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
+                meta_line = lead.metadata_line_ids.filtered(
+                    lambda meta_data_line: meta_data_line.key == field_key
+                )
+                if meta_line:
+                    attachment = (
+                        request.env["ir.attachment"]
                         .sudo()
-                        .get_param("web.base.url"),
-                        attachment_id=attachment.id,
+                        .search([("id", "=", meta_line.value)])
                     )
+                    if attachment:
+                        lead_values[
+                            field_key
+                        ] = "{base_url}/web/image/{attachment_id}".format(
+                            base_url=request.env["ir.config_parameter"]
+                            .sudo()
+                            .get_param("web.base.url"),
+                            attachment_id=attachment.id,
+                        )
         return lead_values
 
     #
@@ -439,45 +440,62 @@ class WebsiteCommunityData(http.Controller):
         values["display_form"] = display_form
         values["closed_form"] = False
         # if lead is won close form
-        if "lead_probability" in values.keys():
-            if values["lead_probability"] >= 100:
-                values["closed_form"] = True
-        if "lead_stage_won" in values.keys():
-            if values["lead_stage_won"]:
-                values["closed_form"] = True
+        if "closed_lead" in values.keys():
+            values["closed_form"] = values["closed_lead"]
         return values
 
     #
     # VALIDATION
     #
     def _lead_id_validation(self, values):
+        # lead_id not defined
         values["lead_id"] = values.get("lead_id", False)
         if not values["lead_id"]:
-            values["error_msgs"] = [
-                _("lead_id param must be defined on the url in order to use the form")
-            ]
-            values = self._fill_values(values, False, False)
-            return values
+            return {
+                "error_msgs": [
+                    _(
+                        "lead_id param must be defined on the url in order to use the form"
+                    )
+                ],
+                "global_error": True,
+            }
+        # lead_id numeric
         try:
             values["lead_id"] = int(values["lead_id"])
         except ValueError:
-            values["error_msgs"] = [
-                _("lead_id must be defined on the url as a numeric value")
-            ]
-            values = self._fill_values(values, False, False)
-            return values
-
+            return {
+                "error_msgs": [
+                    _("lead_id must be defined on the url as a numeric value")
+                ],
+                "global_error": True,
+            }
+        # lead_id not lost
+        related_lead = (
+            request.env["crm.lead"]
+            .sudo()
+            .search([("active", "=", False), ("id", "=", values["lead_id"])])
+        )
+        if related_lead:
+            return {
+                "error_msgs": [_("Related Lead closed.")],
+                "ce_name": related_lead.name,
+                "display_success": False,
+                "display_form": False,
+                "closed_form": True,
+            }
+        # lead_id not found
         related_lead = (
             request.env["crm.lead"].sudo().search([("id", "=", values["lead_id"])])
         )
         if not related_lead:
-            values["error_msgs"] = [
-                _(
-                    "Related Lead not found. The url is not correct. lead_id param invalid."
-                )
-            ]
-            values = self._fill_values(values, False, False)
-            return values
+            return {
+                "error_msgs": [
+                    _(
+                        "Related Lead not found. The url is not correct. lead_id param invalid."
+                    )
+                ],
+                "global_error": True,
+            }
         return values
 
     def _validate_regex(self, value, regex_string):

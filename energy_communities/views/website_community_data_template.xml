@@ -487,6 +487,7 @@
     name="community_data_error_message_template"
   >
       <t t-foreach="error_msgs or []" t-as="error_msg">
+        <br />
         <div class="alert alert-danger">
           <t t-raw="error_msg" />
         </div>
@@ -554,7 +555,6 @@
           target="_blank"
         >web</a></h2>
       </t>
-      <br />
     </template>
 
     <!-- TODO: Make this description dynamic and db translatable -->
@@ -562,6 +562,7 @@
     id="community_data_headline_message_open"
     name="community_data_headline_message_open"
   >
+      <br />
       <div class="alert alert-warning" t-if="not display_success">
         <p><strong
         >Alert!</strong> The content you enter in this form is what we will show directly on your page within Som Comunitats.</p>
@@ -576,10 +577,16 @@
     id="community_data_headline_message_closed"
     name="community_data_headline_message_closed"
   >
+      <br />
       <div class="alert alert-warning" t-if="not display_success">
-        <p>Necessary data for the integration of the Community: <strong><t
-            t-esc="ce_name"
-          /></strong> to the technology platform Som Comunitats has been successfully submitted.</p>
+        <t t-if="not error_msgs">
+          <p>Necessary data for the integration of the Community: <strong><t
+              t-esc="ce_name"
+            /></strong> to the technology platform Som Comunitats has been successfully submitted.</p>
+        </t>
+        <t t-if="error_msgs">
+          <p><strong>Closed form</strong></p>
+        </t>
         <p>You can contact <a
           href="mailto:suport@somcomunitats.coop"
         >suport@somcomunitats.coop</a> for further assistance.</p>
@@ -592,26 +599,34 @@
           <div class="container oe_community_data">
             <div class="row justify-content-center">
               <div class="col-xs-12 col-sm-10  col-md-8 col-lg-8">
-
-                <t t-call="energy_communities.community_data_headline" />
-                <t t-if="closed_form">
-                  <t
-                  t-call="energy_communities.community_data_headline_message_closed"
-                />
-                </t>
-                <t t-if="not closed_form">
-                  <t t-call="energy_communities.community_data_headline_message_open" />
+                <t t-if="global_error">
                   <t
                   t-call="energy_communities.community_data_error_message_template"
                 />
-                  <t
-                  t-if="display_success"
-                  t-call="energy_communities.community_data_form_successful_msg"
-                />
-                  <t
-                  t-if="display_form"
-                  t-call="energy_communities.community_data_form"
-                />
+                </t>
+                <t t-if="not global_error">
+                  <t t-if="closed_form">
+                    <t
+                    t-call="energy_communities.community_data_headline_message_closed"
+                  />
+                  </t>
+                  <t t-if="not closed_form">
+                    <t t-call="energy_communities.community_data_headline" />
+                    <t
+                    t-call="energy_communities.community_data_headline_message_open"
+                  />
+                    <t
+                    t-call="energy_communities.community_data_error_message_template"
+                  />
+                    <t
+                    t-if="display_success"
+                    t-call="energy_communities.community_data_form_successful_msg"
+                  />
+                    <t
+                    t-if="display_form"
+                    t-call="energy_communities.community_data_form"
+                  />
+                  </t>
                 </t>
               </div>
             </div>
