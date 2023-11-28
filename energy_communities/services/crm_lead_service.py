@@ -79,6 +79,20 @@ class CRMLeadService(Component):
                 ce_name = data["value"]
         return ce_name
 
+    def _get_ce_description(self, params):
+        metadata = params["metadata"]
+        for data in metadata:
+            if data["key"] == "ce_description":
+                ce_description = data["value"]
+        return ce_description
+
+    def _get_comments(self, params):
+        metadata = params["metadata"]
+        for data in metadata:
+            if data["key"] == "comments":
+                comments = data["value"]
+        return comments
+
     def _set_name(self, lead_id, params):
         source_xml_id = self._get_source_xml_id(params)
         lead = self.env["crm.lead"].browse(lead_id)
