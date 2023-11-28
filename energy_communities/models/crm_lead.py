@@ -11,7 +11,8 @@ _TAG_TYPE_VALUES = [
 
 
 class CrmLead(models.Model):
-    _inherit = "crm.lead"
+    _name = "crm.lead"
+    _inherit = ["crm.lead", "external.id.mixin"]
 
     lang = fields.Char(string="Language")
     ce_tag_ids = fields.Many2many(

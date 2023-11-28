@@ -99,7 +99,10 @@
             attrs="{'invisible':['|',('source_id', '!=', %(ce_source_creation_ce_proposal)d),('probability','>=',100)]}"
           />
 				</header>
-			</xpath>
+      </xpath>
+      <xpath expr="//field[@name='company_id']" position="after">
+        <field name="external_id" readonly="1" />
+      </xpath>
 		</field>
 	</record>
 
