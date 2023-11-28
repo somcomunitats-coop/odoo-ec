@@ -29,6 +29,7 @@ class CRMLeadService(Component):
             # setup utm source on crm lead
             crm_lead_id = crm_lead.get("id", False)
             self._set_name(crm_lead_id, params)
+            self._set_description(crm_lead_id, params)
             self._setup_lead_utm_source(crm_lead_id, target_source_xml_id)
 
             # select autoresponder notification id based on utm source
@@ -118,6 +119,18 @@ class CRMLeadService(Component):
             )
         if lead:
             lead.write({"name": name})
+
+    def _set_description(self, lead_id, params):
+        source_xml_id = self._get_source_xml_id(params)
+        lead = self.env["crm.lead"].browse(lead_id)
+        if source_xml_id == "ce_source_creation_ce_proposal":
+            ce_description = self._get_ce_description(params)
+            comments = self._get_comments(params)
+            description = "{ce_description} {comments}".format(
+                ce_description=ce_description, comments=comments
+            )
+        if lead:
+            lead.write({"description": description})
 
     def _get_autoresponder_email_template(self, source_xml_id):
         template_external_id = None
