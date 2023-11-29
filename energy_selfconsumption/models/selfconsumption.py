@@ -321,7 +321,7 @@ class Selfconsumption(models.Model):
     def _check_valid_code(self):
         """
         The following are evaluated:
-            1. The first 20 or 22 digits correspond to the CUPS.
+            1. The first 22 digits correspond to the CUPS.
             2. The character after CUPS is A
             3. And the last 3 characters are numbers.
             4. Taking into account that the length of the CUPS can vary, the length of the CAU can be 24 or 26 characters.
