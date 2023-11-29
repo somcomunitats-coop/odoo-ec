@@ -329,10 +329,7 @@ class Selfconsumption(models.Model):
         for record in self:
             if record.code:
                 # Validate the total length of the CAU, check if the first digits are CUPS and get the last 4 characters
-                if len(record.code) == 24:
-                    self.validate_cups(record.code[:20])
-                    last_digits = record.code[20:]
-                elif len(record.code) == 26:
+                if len(record.code) == 26:
                     self.validate_cups(record.code[:22])
                     last_digits = record.code[22:]
                 else:
@@ -350,8 +347,6 @@ class Selfconsumption(models.Model):
                     raise exceptions.Warning(error_message)
 
     def validate_cups(self, cups_number):
-        if not cups_number.startswith("ES"):
-            cups_number = "ES" + cups_number
         try:
             cups.validate(cups_number)
         except cups.ValidationError as e:
