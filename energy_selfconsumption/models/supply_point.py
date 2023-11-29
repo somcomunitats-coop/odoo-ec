@@ -80,15 +80,11 @@ class SupplyPoint(models.Model):
     @api.constrains("code")
     def _check_valid_code(self):
         for record in self:
-            original_code = record.code
-            if original_code:
-                if not original_code.startswith("ES"):
-                    original_code = "ES" + original_code
-                try:
-                    cups.validate(original_code)
-                except cups.ValidationError as e:
-                    error_message = _("Invalid CUPS: {error}").format(error=e)
-                    raise exceptions.Warning(error_message)
+            try:
+                cups.validate(record.code)
+            except cups.ValidationError as e:
+                error_message = _("Invalid CUPS: {error}").format(error=e)
+                raise exceptions.Warning(error_message)
 
     @api.constrains("cadastral_reference")
     def _check_valid_cadastral_reference(self):
