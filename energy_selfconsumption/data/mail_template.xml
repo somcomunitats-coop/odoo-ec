@@ -5,7 +5,8 @@
     model="mail.template"
   >
         <field name="name">Selfconsumption Energy Delivered Invoicing Reminder</field>
-        <field name="email_from">${object.company_id.email}</field>
+        <field name="email_from">info@somcomunitats.coop</field>
+        <field name="email_to">${object.company_id.email}</field>
         <field
       name="subject"
     >Selfconsumption - Energy Delivered Invoicing Reminder</field>
