@@ -94,6 +94,22 @@ class CRMLeadService(Component):
                 comments = data["value"]
         return comments
 
+    def _get_contact_motive(self, params):
+        metadata = params["metadata"]
+        contact_motive = None
+        for data in metadata:
+            if data["key"] == "contact_motive":
+                contact_motive = data["value"]
+        return contact_motive
+
+    def _get_message(self, params):
+        metadata = params["metadata"]
+        message = None
+        for data in metadata:
+            if data["key"] == "message":
+                message = data["value"]
+        return message
+
     def _set_name(self, lead_id, params):
         source_xml_id = self._get_source_xml_id(params)
         lead = self.env["crm.lead"].browse(lead_id)
@@ -123,11 +139,21 @@ class CRMLeadService(Component):
     def _set_description(self, lead_id, params):
         source_xml_id = self._get_source_xml_id(params)
         lead = self.env["crm.lead"].browse(lead_id)
+        description = None
         if source_xml_id == "ce_source_creation_ce_proposal":
             ce_description = self._get_ce_description(params)
             comments = self._get_comments(params)
             description = "{ce_description} {comments}".format(
                 ce_description=ce_description, comments=comments
+            )
+        if (
+            source_xml_id == "ce_source_existing_ce_contact"
+            or source_xml_id == "ce_source_general_contact"
+        ):
+            contact_motive = self._get_contact_motive(params)
+            message = self._get_message(params)
+            description = "{contact_motive}: {message}".format(
+                contact_motive=contact_motive, message=message
             )
         if lead:
             lead.write({"description": description})
