@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from stdnum.es import cups, referenciacatastral
 
-from odoo import _, api, exceptions, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 INVOICING_VALUES = [
@@ -333,17 +333,17 @@ class Selfconsumption(models.Model):
                     last_digits = record.code[22:]
                 else:
                     error_message = _("Invalid CAU: The length is not correct")
-                    raise exceptions.Warning(error_message)
+                    raise ValidationError(error_message)
 
                 # Check if the character after CUPS is 'A'
                 if not last_digits.startswith("A"):
                     error_message = _("Invalid CAU: The character after CUPS is not A")
-                    raise exceptions.Warning(error_message)
+                    raise ValidationError(error_message)
 
                 # Check if the last 3 characters are numbers
                 if not last_digits[-3:].isdigit():
                     error_message = _("Invalid CAU: Last 3 digits are not numbers")
-                    raise exceptions.Warning(error_message)
+                    raise ValidationError(error_message)
 
     def validate_cups(self, cups_number):
         try:
@@ -352,7 +352,7 @@ class Selfconsumption(models.Model):
             error_message = _(
                 "Invalid CAU: The first characters related to CUPS are incorrect.\n{error}"
             ).format(error=e)
-            raise exceptions.Warning(error_message)
+            raise ValidationError(error_message)
 
     @api.constrains("cadastral_reference")
     def _check_valid_cadastral_reference(self):
@@ -364,7 +364,7 @@ class Selfconsumption(models.Model):
                     error_message = _("Invalid Cadastral Reference: {error}").format(
                         error=e
                     )
-                    raise exceptions.Warning(error_message)
+                    raise ValidationError(error_message)
 
 
 class CoefficientReport(models.TransientModel):
