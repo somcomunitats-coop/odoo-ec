@@ -59,7 +59,7 @@ class CRMLeadService(Component):
 
     def _get_source_xml_id(self, params):
         metadata = params["metadata"]
-        target_source_xml_id = None
+        target_source_xml_id = ""
         for data in metadata:
             if data["key"] == "source_xml_id":
                 target_source_xml_id = data["value"]
@@ -68,6 +68,7 @@ class CRMLeadService(Component):
     def _get_lang(self, params):
         lang = False
         metadata = params["metadata"]
+        lang = ""
         for data in metadata:
             if data["key"] == "current_lang":
                 lang = data["value"]
@@ -75,6 +76,7 @@ class CRMLeadService(Component):
 
     def _get_ce_name(self, params):
         metadata = params["metadata"]
+        ce_name = ""
         for data in metadata:
             if data["key"] == "ce_name":
                 ce_name = data["value"]
@@ -82,6 +84,7 @@ class CRMLeadService(Component):
 
     def _get_ce_description(self, params):
         metadata = params["metadata"]
+        ce_description = ""
         for data in metadata:
             if data["key"] == "ce_description":
                 ce_description = data["value"]
@@ -89,6 +92,7 @@ class CRMLeadService(Component):
 
     def _get_comments(self, params):
         metadata = params["metadata"]
+        comments = ""
         for data in metadata:
             if data["key"] == "comments":
                 comments = data["value"]
@@ -96,7 +100,7 @@ class CRMLeadService(Component):
 
     def _get_contact_motive(self, params):
         metadata = params["metadata"]
-        contact_motive = None
+        contact_motive = ""
         for data in metadata:
             if data["key"] == "contact_motive":
                 contact_motive = data["value"]
@@ -104,7 +108,7 @@ class CRMLeadService(Component):
 
     def _get_message(self, params):
         metadata = params["metadata"]
-        message = None
+        message = ""
         for data in metadata:
             if data["key"] == "message":
                 message = data["value"]
@@ -114,7 +118,7 @@ class CRMLeadService(Component):
         source_xml_id = self._get_source_xml_id(params)
         lead = self.env["crm.lead"].browse(lead_id)
         email = params["email_from"]
-        prefix = None
+        prefix = ""
         if source_xml_id == "ce_source_existing_ce_contact":
             prefix = _("[Contact CE]")
         elif source_xml_id == "ce_source_existing_ce_info":
@@ -139,7 +143,7 @@ class CRMLeadService(Component):
     def _set_description(self, lead_id, params):
         source_xml_id = self._get_source_xml_id(params)
         lead = self.env["crm.lead"].browse(lead_id)
-        description = None
+        description = ""
         if source_xml_id == "ce_source_creation_ce_proposal":
             ce_description = self._get_ce_description(params)
             comments = self._get_comments(params)
