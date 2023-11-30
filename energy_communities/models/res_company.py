@@ -14,15 +14,15 @@ _HIERARCHY_LEVEL_VALUES = [
     ("community", _("Community")),
 ]
 
-_LEGAL_FROM_VALUES = [
-    ("Societat Cooperativa", _("Societat Cooperativa")),
-    ("Associació sense ànim de lucre", _("Associació sense ànim de lucre")),
-    ("Societat Limitada", _("Societat Limitada")),
-    ("Societat Col·lectiva", _("Societat Col·lectiva")),
-    ("Comunitat de Bens", _("Comunitat de Bens")),
-    ("Societat Comanditària", _("Societat Comanditària")),
-    ("Societat Anónima", _("Societat Anónima")),
-    ("Empresari Individual", _("Empresari Individual")),
+_LEGAL_FORM_VALUES = [
+    ("cooperative", _("Cooperative")),
+    ("non_profit", _("Non profit association")),
+    ("limited_company", _("Limited company")),
+    ("general_partnership", _("General partnership")),
+    ("community_of_property", _("community of property")),
+    ("limited_partnership", _("Limited partnership")),
+    ("stock_company", _("Stock company")),
+    ("individual_entrepreneur", _("Individual entrepreneur")),
 ]
 
 _CE_STATUS_VALUES = [
@@ -102,7 +102,7 @@ class ResCompany(models.Model):
         store=False,
     )
     legal_form = fields.Selection(
-        selection=_LEGAL_FROM_VALUES,
+        selection=_LEGAL_FORM_VALUES,
         string="Legal form",
     )
     legal_name = fields.Char(string="Legal name")

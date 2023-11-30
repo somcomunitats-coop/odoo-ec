@@ -36,6 +36,7 @@
         name="property_cooperator_account"
         ref="l10n_es.account_common_4300"
       />
+            <field name="hook_cron">False</field>
         </record>
 
         <!-- action_accept method expects singletons, so it must be called for every community company-->
@@ -81,6 +82,7 @@
         name="property_cooperator_account"
         ref="l10n_es.account_common_4300"
       />
+            <field name="hook_cron">False</field>
         </record>
 
         <function
@@ -123,6 +125,7 @@
         name="property_cooperator_account"
         ref="l10n_es.account_common_4300"
       />
+            <field name="hook_cron">False</field>
         </record>
 
         <function

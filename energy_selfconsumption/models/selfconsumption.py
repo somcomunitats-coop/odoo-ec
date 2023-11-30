@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
@@ -98,6 +98,7 @@ class Selfconsumption(models.Model):
         help="Select the associated Energy Reseller",
     )
 
+
     def get_distribution_tables(self):
         self.ensure_one()
         return {
@@ -125,10 +126,18 @@ class Selfconsumption(models.Model):
         return {
             "type": "ir.actions.act_window",
             "name": "Contracts",
-            "view_mode": "tree,form",
+            "views": [
+                [self.env.ref("energy_selfconsumption.contract_tree_view").id, "tree"],
+                [False, "form"],
+            ],
             "res_model": "contract.contract",
             "domain": [("project_id", "=", self.id)],
-            "context": {"create": True, "default_project_id": self.id},
+            "context": {
+                "create": True,
+                "default_project_id": self.id,
+                "search_default_filter_next_period_date_start": True,
+                "search_default_filter_next_period_date_end": True,
+            },
         }
 
     def distribution_table_state(self, actual_state, new_state):
@@ -176,14 +185,16 @@ class Selfconsumption(models.Model):
                 raise ValidationError(
                     _("Project must have defined a invoicing mode before activation.")
                 )
-
-            # Create ContractGenerationWizard
-            contract_wizard = self.env[
-                "energy_selfconsumption.contract_generation.wizard"
-            ].create({"selfconsumption_id": self.id})
-
-            # Generate Contracts
-            contract_wizard.generate_contracts_button()
+            return {
+                "name": _("Generate Contracts"),
+                "type": "ir.actions.act_window",
+                "view_mode": "form",
+                "res_model": "energy_selfconsumption.contract_generation.wizard",
+                "views": [(False, "form")],
+                "view_id": False,
+                "target": "new",
+                "context": {"default_selfconsumption_id": self.id},
+            }
 
     def set_invoicing_mode(self):
         return {
@@ -260,6 +271,41 @@ class Selfconsumption(models.Model):
             "url": url,
             "target": "self",
         }
+
+    def send_energy_delivery_invoicing_reminder(self):
+        today = fields.date.today()
+        date_validation = today + timedelta(days=3)
+
+        projects = self.env["contract.contract"].read_group(
+            [
+                (
+                    "project_id.selfconsumption_id.invoicing_mode",
+                    "=",
+                    "energy_delivered",
+                ),
+                ("recurring_next_date", "=", date_validation),
+            ],
+            ["project_id"],
+            ["project_id"],
+        )
+        template = self.env.ref(
+            "energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder",
+            True,
+        )
+        for project in projects:
+            selfconsumption_id = self.browse(project["project_id"][0])
+            contract = selfconsumption_id.contract_ids[0]
+            first_date = contract.next_period_date_start
+            last_date = contract.next_period_date_end
+            next_invoicing = contract.recurring_next_date
+            ctx = {
+                "next_invoicing": next_invoicing.strftime("%d-%m-%Y"),
+                "first_date": first_date.strftime("%d-%m-%Y"),
+                "last_date": last_date.strftime("%d-%m-%Y"),
+            }
+            selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
+
+        return True
 
 
 class CoefficientReport(models.TransientModel):

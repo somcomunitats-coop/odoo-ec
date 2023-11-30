@@ -2,7 +2,7 @@ import logging
 
 from odoo import _, api, fields, models
 
-from ..models.res_company import _CE_STATUS_VALUES, _LEGAL_FROM_VALUES
+from ..models.res_company import _CE_STATUS_VALUES, _LEGAL_FORM_VALUES
 
 _logger = logging.getLogger(__name__)
 
@@ -91,13 +91,17 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         string="State",
     )
     legal_form = fields.Selection(
-        selection=_LEGAL_FROM_VALUES,
+        selection=_LEGAL_FORM_VALUES,
         string="Legal form",
     )
     legal_name = fields.Char(string="Legal name")
     ce_status = fields.Selection(
         selection=_CE_STATUS_VALUES,
         string="Energy Community state",
+    )
+    # Used in demo data, so it can finish the process before continuing with the rest of the demo data.
+    hook_cron = fields.Boolean(
+        default=True, string="Run the post hook in a cron job or not"
     )
 
     def add_company_managers(self):
@@ -212,8 +216,12 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
 
     def action_accept(self):
         super().action_accept()
-        self.with_delay()._after_action_accept_hook()
-        self.crm_lead_id.action_set_won_rainbowman()
+        if self.hook_cron:
+            self.with_delay()._after_action_accept_hook()
+        else:
+            self._after_action_accept_hook()
+        if self.crm_lead_id:
+            self.crm_lead_id.action_set_won_rainbowman()
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",

@@ -26,17 +26,17 @@
                     <page string="Energy Community">
                         <group string="Energy Community">
                             <field name="parent_id" required="1" />
-                            <field name="vat" required="1" />
+                            <field name="vat" />
                             <field name="state_id" required="1" />
                             <field name="city" required="1" />
                             <field name="street" required="1" />
                             <field name="zip_code" required="1" />
-                            <field name="foundation_date" required="1" />
+                            <field name="foundation_date" />
                             <field name="email" required="1" />
-                            <field name="legal_form" required="1" />
-                            <field name="legal_name" required="1" />
+                            <field name="legal_form" />
+                            <field name="legal_name" />
                             <field name="ce_status" />
-                            <field name="phone" required="1" />
+                            <field name="phone" />
                             <field name="default_lang_id" required="1" />
                             <field name="website" />
                         </group>
