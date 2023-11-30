@@ -324,7 +324,6 @@ class Selfconsumption(models.Model):
             1. The first 22 digits correspond to the CUPS.
             2. The character after CUPS is A
             3. And the last 3 characters are numbers.
-            4. Taking into account that the length of the CUPS can vary, the length of the CAU can be 24 or 26 characters.
         """
         for record in self:
             if record.code:
