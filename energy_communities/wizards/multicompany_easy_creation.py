@@ -109,7 +109,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             ["role_coord_admin", "role_coord_worker"]
         )
         for manager in coord_members:
-            manager.make_ce_user(self.new_company_id, "role_ce_manager")
+            manager.make_ce_user(self.new_company_id.id, "role_ce_manager")
 
     def add_company_log(self):
         message = _(
