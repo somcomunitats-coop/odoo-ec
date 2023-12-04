@@ -177,6 +177,11 @@ class WebsiteCommunityData(http.Controller):
         website=True,
     )
     def community_data_submit(self, **kwargs):
+        # lead_id validation
+        response = self._page_render_validation(kwargs)
+        if response is not True:
+            return response
+
         values = {}
         form_values = {}
 
@@ -231,6 +236,14 @@ class WebsiteCommunityData(http.Controller):
     #
     # GETTERS
     #
+    def _get_translation(self, source):
+        return request.env["ir.translation"]._get_source(
+            name="addons/energy_communities/controllers/website_community_data.py",
+            types="code",
+            lang=request.env.context["lang"],
+            source=source,
+        )
+
     def _get_localized_options(self, original_options):
         localized_options = []
         for option in original_options:
@@ -295,11 +308,13 @@ class WebsiteCommunityData(http.Controller):
         )
 
     def _is_lead_pack(self, lead_id, pack_tag_ext_id):
-        lead = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])[0]
-        pack_tag = lead.tag_ids.filtered(
-            lambda tag: tag.tag_ext_id == "energy_communities." + pack_tag_ext_id
-        )
-        return bool(pack_tag)
+        leads = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])
+        if leads:
+            lead = leads[0]
+            pack_tag = lead.tag_ids.filtered(
+                lambda tag: tag.tag_ext_id == "energy_communities." + pack_tag_ext_id
+            )
+            return bool(pack_tag)
 
     def _get_energy_service_tag_ids(self):
         return (
@@ -326,33 +341,38 @@ class WebsiteCommunityData(http.Controller):
         return legal_forms
 
     def _get_lead_values(self, lead_id):
-        lead_values = {}
-        lead = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])[0]
-        for field_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
-            meta_line = lead.metadata_line_ids.filtered(
-                lambda meta_data_line: meta_data_line.key == field_key
-            )
-            if meta_line:
-                lead_values[field_key] = meta_line.value
-        for field_key in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
-            meta_line = lead.metadata_line_ids.filtered(
-                lambda meta_data_line: meta_data_line.key == field_key
-            )
-            if meta_line:
-                attachment = (
-                    request.env["ir.attachment"]
-                    .sudo()
-                    .search([("id", "=", meta_line.value)])
+        leads = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])
+        lead_values = {"closed_lead": False}
+        if leads:
+            lead = leads[0]
+            if lead.probability >= 100 or lead.stage_id.is_won:
+                lead_values["closed_lead"] = True
+
+            for field_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
+                meta_line = lead.metadata_line_ids.filtered(
+                    lambda meta_data_line: meta_data_line.key == field_key
                 )
-                if attachment:
-                    lead_values[
-                        field_key
-                    ] = "{base_url}/web/image/{attachment_id}".format(
-                        base_url=request.env["ir.config_parameter"]
+                if meta_line:
+                    lead_values[field_key] = meta_line.value
+            for field_key in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
+                meta_line = lead.metadata_line_ids.filtered(
+                    lambda meta_data_line: meta_data_line.key == field_key
+                )
+                if meta_line:
+                    attachment = (
+                        request.env["ir.attachment"]
                         .sudo()
-                        .get_param("web.base.url"),
-                        attachment_id=attachment.id,
+                        .search([("id", "=", meta_line.value)])
                     )
+                    if attachment:
+                        lead_values[
+                            field_key
+                        ] = "{base_url}/web/image/{attachment_id}".format(
+                            base_url=request.env["ir.config_parameter"]
+                            .sudo()
+                            .get_param("web.base.url"),
+                            attachment_id=attachment.id,
+                        )
         return lead_values
 
     #
@@ -431,39 +451,64 @@ class WebsiteCommunityData(http.Controller):
         # form/messages visibility
         values["display_success"] = display_success
         values["display_form"] = display_form
+        values["closed_form"] = False
+        # if lead is won close form
+        if "closed_lead" in values.keys():
+            values["closed_form"] = values["closed_lead"]
         return values
 
     #
     # VALIDATION
     #
     def _lead_id_validation(self, values):
+        # lead_id not defined
         values["lead_id"] = values.get("lead_id", False)
         if not values["lead_id"]:
-            values["error_msgs"] = [
-                _("lead_id param must be defined on the url in order to use the form")
-            ]
-            values = self._fill_values(values, False, False)
-            return values
+            return {
+                "error_msgs": [
+                    _(
+                        "lead_id param must be defined on the url in order to use the form"
+                    )
+                ],
+                "global_error": True,
+            }
+        # lead_id numeric
         try:
             values["lead_id"] = int(values["lead_id"])
         except ValueError:
-            values["error_msgs"] = [
-                _("lead_id must be defined on the url as a numeric value")
-            ]
-            values = self._fill_values(values, False, False)
-            return values
-
+            return {
+                "error_msgs": [
+                    _("lead_id must be defined on the url as a numeric value")
+                ],
+                "global_error": True,
+            }
+        # lead_id not lost
+        related_lead = (
+            request.env["crm.lead"]
+            .sudo()
+            .search([("active", "=", False), ("id", "=", values["lead_id"])])
+        )
+        if related_lead:
+            return {
+                "error_msgs": [_("Related Lead closed.")],
+                "ce_name": related_lead.name,
+                "display_success": False,
+                "display_form": False,
+                "closed_form": True,
+            }
+        # lead_id not found
         related_lead = (
             request.env["crm.lead"].sudo().search([("id", "=", values["lead_id"])])
         )
         if not related_lead:
-            values["error_msgs"] = [
-                _(
-                    "Related Lead not found. The url is not correct. lead_id param invalid."
-                )
-            ]
-            values = self._fill_values(values, False, False)
-            return values
+            return {
+                "error_msgs": [
+                    _(
+                        "Related Lead not found. The url is not correct. lead_id param invalid."
+                    )
+                ],
+                "global_error": True,
+            }
         return values
 
     def _validate_regex(self, value, regex_string):
@@ -495,7 +540,9 @@ class WebsiteCommunityData(http.Controller):
         if "ce_services" not in values.keys():
             error.append("ce_services")
             error_msgs.append(
-                "Please select at least one Energy service in order to submit the form"
+                _(
+                    "Please select at least one Energy service in order to submit the form"
+                )
             )
 
         # image validation
@@ -505,14 +552,15 @@ class WebsiteCommunityData(http.Controller):
                     if "image" not in values[image_field_key].mimetype:
                         error.append(image_field_key)
                         error_msgs.append(
-                            "{} must be of type image (jpg/jpeg/png)".format(
-                                _COMMUNITY_DATA__IMAGE_FIELDS[image_field_key]
+                            _("{} must be of type image (jpg/jpeg/png)").format(
+                                self._get_translation(
+                                    _COMMUNITY_DATA__IMAGE_FIELDS[image_field_key]
+                                )
                             )
                         )
 
         # date validation
         for date_field_key in _COMMUNITY_DATA__DATE_FIELDS.keys():
-            # import ipdb; ipdb.set_trace()
             if date_field_key in values.keys():
                 if not self._validate_regex(
                     values[date_field_key],
@@ -520,16 +568,20 @@ class WebsiteCommunityData(http.Controller):
                 ):
                     error.append(date_field_key)
                     error_msgs.append(
-                        "{} field must have date format (dd/mm/yyyy)".format(
-                            _COMMUNITY_DATA__DATE_FIELDS[date_field_key]
+                        _("{} field must have date format (dd/mm/yyyy)").format(
+                            self._get_translation(
+                                _COMMUNITY_DATA__DATE_FIELDS[date_field_key]
+                            )
                         )
                     )
                 elif date_field_key in _COMMUNITY_DATA__PAST_DATE_FIELDS:
                     if not self._validate_past_date(values[date_field_key]):
                         error.append(date_field_key)
                         error_msgs.append(
-                            "{} field must be a past date".format(
-                                _COMMUNITY_DATA__DATE_FIELDS[date_field_key]
+                            _("{} field must be a past date").format(
+                                self._get_translation(
+                                    _COMMUNITY_DATA__DATE_FIELDS[date_field_key]
+                                )
                             )
                         )
 
