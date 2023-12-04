@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 from stdnum.es import cups, referenciacatastral
+from stdnum.exceptions import *
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
@@ -348,10 +349,19 @@ class Selfconsumption(models.Model):
     def validate_cups(self, cups_number):
         try:
             cups.validate(cups_number)
-        except cups.ValidationError as e:
+        except InvalidLength:
             error_message = _(
-                "Invalid CAU: The first characters related to CUPS are incorrect.\n{error}"
-            ).format(error=e)
+                "Invalid CAU: The first characters related to CUPS are incorrect. The length is incorrect."
+            )
+            raise ValidationError(error_message)
+        except InvalidComponent:
+            error_message = _("Invalid CAU: The CUPS does not start with 'ES'.")
+            raise ValidationError(error_message)
+        except InvalidFormat:
+            error_message = _("Invalid CAU: The CUPS has an incorrect format.")
+            raise ValidationError(error_message)
+        except InvalidChecksum:
+            error_message = _("Invalid CAU: The checksum of the CUPS is incorrect.")
             raise ValidationError(error_message)
 
     @api.constrains("cadastral_reference")

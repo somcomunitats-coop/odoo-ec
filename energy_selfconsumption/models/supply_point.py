@@ -1,5 +1,6 @@
 from stdnum.es import cups, referenciacatastral
 from stdnum.eu import vat
+from stdnum.exceptions import *
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
@@ -83,8 +84,17 @@ class SupplyPoint(models.Model):
         for record in self:
             try:
                 cups.validate(record.code)
-            except cups.ValidationError as e:
-                error_message = _("Invalid CUPS: {error}").format(error=e)
+            except InvalidLength:
+                error_message = _("Invalid CUPS: The length is incorrect.")
+                raise ValidationError(error_message)
+            except InvalidComponent:
+                error_message = _("Invalid CUPS: does not start with 'ES'.")
+                raise ValidationError(error_message)
+            except InvalidFormat:
+                error_message = _("Invalid CUPS: has an incorrect format.")
+                raise ValidationError(error_message)
+            except InvalidChecksum:
+                error_message = _("Invalid CUPS: The checksum is incorrect.")
                 raise ValidationError(error_message)
 
     @api.constrains("cadastral_reference")
