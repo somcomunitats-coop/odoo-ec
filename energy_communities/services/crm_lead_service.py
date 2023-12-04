@@ -39,7 +39,9 @@ class CRMLeadService(Component):
             self.env["crm.lead"].browse(crm_lead_id).add_follower()
 
             # send auto responder email and notify admins
-            email_values = {"email_to": params["email_from"], "lang": lang}
+            email_values = {"email_to": params["email_from"]}
+            if lang:
+                email_values["lang"] = lang
 
             if template_external_id:
                 template = self.env.ref(
@@ -63,6 +65,7 @@ class CRMLeadService(Component):
         return target_source_xml_id
 
     def _get_lang(self, params):
+        lang = False
         metadata = params["metadata"]
         for data in metadata:
             if data["key"] == "current_lang":

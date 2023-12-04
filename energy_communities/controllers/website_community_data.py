@@ -308,7 +308,7 @@ class WebsiteCommunityData(http.Controller):
         )
 
     def _is_lead_pack(self, lead_id, pack_tag_ext_id):
-        leads = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])
+        leads = request.env["crm.lead"].sudo().search([("external_id", "=", lead_id)])
         if leads:
             lead = leads[0]
             pack_tag = lead.tag_ids.filtered(
@@ -341,7 +341,7 @@ class WebsiteCommunityData(http.Controller):
         return legal_forms
 
     def _get_lead_values(self, lead_id):
-        leads = request.env["crm.lead"].sudo().search([("id", "=", lead_id)])
+        leads = request.env["crm.lead"].sudo().search([("external_id", "=", lead_id)])
         lead_values = {"closed_lead": False}
         if leads:
             lead = leads[0]
@@ -472,21 +472,11 @@ class WebsiteCommunityData(http.Controller):
                 ],
                 "global_error": True,
             }
-        # lead_id numeric
-        try:
-            values["lead_id"] = int(values["lead_id"])
-        except ValueError:
-            return {
-                "error_msgs": [
-                    _("lead_id must be defined on the url as a numeric value")
-                ],
-                "global_error": True,
-            }
         # lead_id not lost
         related_lead = (
             request.env["crm.lead"]
             .sudo()
-            .search([("active", "=", False), ("id", "=", values["lead_id"])])
+            .search([("active", "=", False), ("external_id", "=", values["lead_id"])])
         )
         if related_lead:
             return {
@@ -498,7 +488,9 @@ class WebsiteCommunityData(http.Controller):
             }
         # lead_id not found
         related_lead = (
-            request.env["crm.lead"].sudo().search([("id", "=", values["lead_id"])])
+            request.env["crm.lead"]
+            .sudo()
+            .search([("external_id", "=", values["lead_id"])])
         )
         if not related_lead:
             return {
@@ -602,7 +594,9 @@ class WebsiteCommunityData(http.Controller):
     def _process_lead_metadata(self, values):
         changed_data = []
         related_lead = (
-            request.env["crm.lead"].sudo().search([("id", "=", values["lead_id"])])
+            request.env["crm.lead"]
+            .sudo()
+            .search([("external_id", "=", values["lead_id"])])
         )
         for meta_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
             if meta_key in values.keys():
