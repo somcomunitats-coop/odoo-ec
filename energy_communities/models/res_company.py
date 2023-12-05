@@ -30,6 +30,15 @@ _CE_STATUS_VALUES = [
     ("building", _("building")),
 ]
 
+_CE_MEMBER_STATUS_VALUES = [
+    ("open", _("Open")),
+    ("closed", _("Closed")),
+]
+_CE_TYPE = [
+    ("citizen", _("Citizen")),
+    ("industrial", _("Industrial")),
+]
+
 
 class ResCompany(models.Model):
     _name = "res.company"
