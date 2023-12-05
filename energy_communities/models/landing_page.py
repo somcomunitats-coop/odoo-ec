@@ -9,6 +9,7 @@ from ..pywordpress_client.resources.authenticate import Authenticate
 from ..pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
 )
+from .res_company import _CE_MEMBER_STATUS_VALUES, _CE_TYPE, _LEGAL_FORM_VALUES
 from .res_config_settings import ResConfigSettings
 
 
@@ -56,19 +57,19 @@ class LandingPage(models.Model):
         string="Community active services", related="company_id.ce_tag_ids"
     )
     community_type = fields.Selection(
-        selection=[("citizen", _("Citizen")), ("industrial", _("Industrial"))],
+        selection=_CE_TYPE,
         default="citizen",
         required=True,
         string="Community type",
     )
     community_secondary_type = fields.Selection(
-        selection=[("cooperative", _("Cooperative"))],
+        selection=_LEGAL_FORM_VALUES,
         default="cooperative",
         required=True,
         string="Community secondary type",
     )
     community_status = fields.Selection(
-        selection=[("open", _("Open")), ("closed", _("Closed"))],
+        selection=_CE_MEMBER_STATUS_VALUES,
         default="open",
         required=True,
         string="Community status",
