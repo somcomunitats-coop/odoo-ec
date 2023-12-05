@@ -115,6 +115,9 @@ class ResCompany(models.Model):
         string="Footer doc policy text", translate=True
     )
     display_footer_doc_policy_text = fields.Boolean("Display footer doc policy text")
+    voluntary_share_form_header_text = fields.Html(
+        string="Voluntary share form header text", translate=True
+    )
 
     # COMPUTED FIELDS
     @api.depends("hierarchy_level")

@@ -19,6 +19,9 @@
                     <field name="display_footer_doc_policy_text" />
                     <field name="footer_doc_policy_text" />
                 </group>
+                <group name="voluntary_shares" string="Voluntary Shares">
+                    <field name="voluntary_share_form_header_text" />
+                </group>
             </group>
             <xpath expr="//sheet" position="before">
                 <header>
