@@ -376,7 +376,11 @@
                     t-attf-value="#{company_id or ''}"
                   />
                                 </div>
-
+                                <div name="voluntary_share_form_header_text_container">
+                                    <p><t
+                      t-raw="company.voluntary_share_form_header_text"
+                    /></p>
+                                </div>
 
                                 <div
                   class="form-group"
