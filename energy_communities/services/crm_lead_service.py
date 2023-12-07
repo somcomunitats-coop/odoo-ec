@@ -20,10 +20,10 @@ class CRMLeadService(Component):
         crm_lead = json.loads(create_dict.response[0].decode("utf-8"))
 
         # get user lang from payload
-        lang = self._get_lang(params)
+        lang = self._get_metadata_value(params, "lang")
 
         # get utm source from payload
-        target_source_xml_id = self._get_source_xml_id(params)
+        target_source_xml_id = self._get_metadata_value(params, "source_xml_id")
 
         if target_source_xml_id:
             # setup utm source on crm lead
@@ -57,65 +57,16 @@ class CRMLeadService(Component):
             utm_source = self.env.ref("energy_communities." + source_xml_id)
             lead.write({"source_id": utm_source.id})
 
-    def _get_source_xml_id(self, params):
+    def _get_metadata_value(self, params, key):
         metadata = params["metadata"]
-        target_source_xml_id = ""
+        value = ""
         for data in metadata:
-            if data["key"] == "source_xml_id":
-                target_source_xml_id = data["value"]
-        return target_source_xml_id
-
-    def _get_lang(self, params):
-        lang = False
-        metadata = params["metadata"]
-        lang = ""
-        for data in metadata:
-            if data["key"] == "current_lang":
-                lang = data["value"]
-        return lang
-
-    def _get_ce_name(self, params):
-        metadata = params["metadata"]
-        ce_name = ""
-        for data in metadata:
-            if data["key"] == "ce_name":
-                ce_name = data["value"]
-        return ce_name
-
-    def _get_ce_description(self, params):
-        metadata = params["metadata"]
-        ce_description = ""
-        for data in metadata:
-            if data["key"] == "ce_description":
-                ce_description = data["value"]
-        return ce_description
-
-    def _get_comments(self, params):
-        metadata = params["metadata"]
-        comments = ""
-        for data in metadata:
-            if data["key"] == "comments":
-                comments = data["value"]
-        return comments
-
-    def _get_contact_motive(self, params):
-        metadata = params["metadata"]
-        contact_motive = ""
-        for data in metadata:
-            if data["key"] == "contact_motive":
-                contact_motive = data["value"]
-        return contact_motive
-
-    def _get_message(self, params):
-        metadata = params["metadata"]
-        message = ""
-        for data in metadata:
-            if data["key"] == "message":
-                message = data["value"]
-        return message
+            if data["key"] == key:
+                value = data["value"]
+        return value
 
     def _set_name(self, lead_id, params):
-        source_xml_id = self._get_source_xml_id(params)
+        source_xml_id = self._get_metadata_value(params, "source_xml_id")
         lead = self.env["crm.lead"].browse(lead_id)
         email = params["email_from"]
         prefix = ""
@@ -129,7 +80,7 @@ class CRMLeadService(Component):
             prefix = _("[Newsletter SomComunitats]")
         if source_xml_id == "ce_source_creation_ce_proposal":
             prefix = _("[Subscription CE]")
-            ce_name = self._get_ce_name(params)
+            ce_name = self._get_metadata_value(params, "ce_name")
             name = "{prefix} {lead_id} {ce_name}".format(
                 prefix=prefix, lead_id=lead_id, ce_name=ce_name
             )
@@ -141,12 +92,12 @@ class CRMLeadService(Component):
             lead.write({"name": name})
 
     def _set_description(self, lead_id, params):
-        source_xml_id = self._get_source_xml_id(params)
+        source_xml_id = self._get_metadata_value(params, "source_xml_id")
         lead = self.env["crm.lead"].browse(lead_id)
         description = ""
         if source_xml_id == "ce_source_creation_ce_proposal":
-            ce_description = self._get_ce_description(params)
-            comments = self._get_comments(params)
+            ce_description = self._get_metadata_value(params, "ce_description")
+            comments = self._get_metadata_value(params, "comments")
             description = "{ce_description} {comments}".format(
                 ce_description=ce_description, comments=comments
             )
@@ -154,8 +105,8 @@ class CRMLeadService(Component):
             source_xml_id == "ce_source_existing_ce_contact"
             or source_xml_id == "ce_source_general_contact"
         ):
-            contact_motive = self._get_contact_motive(params)
-            message = self._get_message(params)
+            contact_motive = self._get_metadata_value(params, "contact_motive")
+            message = self._get_metadata_value(params, "message")
             description = "{contact_motive}: {message}".format(
                 contact_motive=contact_motive, message=message
             )
