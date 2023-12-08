@@ -111,6 +111,10 @@ class ResCompany(models.Model):
         string="Footer doc policy text", translate=True
     )
     display_footer_doc_policy_text = fields.Boolean("Display footer doc policy text")
+    footer_doc_policy_text = fields.Html(
+        string="Footer doc policy text", translate=True
+    )
+    display_footer_doc_policy_text = fields.Boolean("Display footer doc policy text")
 
     # COMPUTED FIELDS
     @api.depends("hierarchy_level")
