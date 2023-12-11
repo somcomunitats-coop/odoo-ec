@@ -109,7 +109,6 @@ class CrmLead(models.Model):
                 lead.community_company_id._create_keycloak_realm()
                 lead.community_company_id._community_post_keycloak_creation_tasks()
 
-    # getattr(parent, relation_name)
     def _get_default_community_wizard(self):
         self.ensure_one()
         creation_dict = self._get_metadata_values()
