@@ -1,4 +1,4 @@
-_MAP__LEAD_METADATA_COMPANY_CREATION_WIZARD = {
+_MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD = {
     "ce_name": "name",
     "ce_fiscal_name": "legal_name",
     "ce_description": "landing_short_description",

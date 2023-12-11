@@ -3,6 +3,8 @@ from datetime import datetime
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
+from .model_mapping_conf import _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD
+
 _TAG_TYPE_VALUES = [
     ("regular", _("Regular")),
     ("energy_service", _("Energy Service")),
@@ -98,6 +100,7 @@ class CrmLead(models.Model):
                 lead.community_company_id._create_keycloak_realm()
                 lead.community_company_id._community_post_keycloak_creation_tasks()
 
+    # getattr(parent, relation_name)
     def _get_default_community_wizard(self):
         self.ensure_one()
         metadata = {m.key: m.value for m in self.metadata_line_ids}
@@ -118,14 +121,14 @@ class CrmLead(models.Model):
                         "The Foundation Date value {} have a non valid format. It must be: yyyy-mm-dd or dd-mm-yyyy or yyyy/mm/dd or dd/mm/yyyy"
                     ).format(metadata["partner_foundation_date"])
                 )
-
         lang_id = None
         if metadata.get("current_lang", False) and metadata["current_lang"] or None:
             lang_id = self.env["res.lang"].search(
                 [("code", "=", metadata["current_lang"])], limit=1
             )
-
         users = [user.id for user in self.company_id.get_users()]
+
+        # data_dict = self._get_metadata_values()
 
         return {
             "name": self.name,
@@ -161,6 +164,10 @@ class CrmLead(models.Model):
             .id,
             "create_user": False,
         }
+
+    # def _get_metadata_values(self):
+    #     for wizard_key in _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD.keys():
+    #         meta_value = self.metadata_line_ids
 
     def _create_keycloak_realm(self):
         for lead in self:
