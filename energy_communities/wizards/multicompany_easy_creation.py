@@ -236,6 +236,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         self._after_action_accept_hook()
         if self.crm_lead_id:
             self.crm_lead_id.action_set_won_rainbowman()
+        return True
 
     def _after_action_accept_hook(self):
         if self.property_cooperator_account:
