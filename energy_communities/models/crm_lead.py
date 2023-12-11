@@ -109,6 +109,7 @@ class CrmLead(models.Model):
                 lead.community_company_id._create_keycloak_realm()
                 lead.community_company_id._community_post_keycloak_creation_tasks()
 
+    # getattr(parent, relation_name)
     def _get_default_community_wizard(self):
         self.ensure_one()
         creation_dict = self._get_metadata_values()
@@ -198,6 +199,10 @@ class CrmLead(models.Model):
             except:
                 pass
         return format_date
+
+    # def _get_metadata_values(self):
+    #     for wizard_key in _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD.keys():
+    #         meta_value = self.metadata_line_ids
 
     def _create_keycloak_realm(self):
         for lead in self:
