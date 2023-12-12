@@ -13,7 +13,8 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountMulticompanyEasyCreationWiz(models.TransientModel):
-    _inherit = "account.multicompany.easy.creation.wiz"
+    _name = "account.multicompany.easy.creation.wiz"
+    _inherit = ["account.multicompany.easy.creation.wiz", "cm.coordinates.mixin"]
 
     def _default_product_share_template(self):
         return self.env.ref(
@@ -132,7 +133,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     ce_twitter_url = fields.Char(string="Twitter link")
     ce_telegram_url = fields.Char(string="Telegram link")
     ce_instagram_url = fields.Char(string="Instagram link")
-    ce_facebook_url = fields.Char(string="Instagram link")
+    ce_facebook_url = fields.Char(string="Facebook link")
 
     def add_company_managers(self):
         coord_members = self.parent_id.get_users(
@@ -245,8 +246,9 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         )
 
     def action_accept(self):
-        company_data = self.create_company()
+        self.create_company()
         self.add_company_managers()
+        self.create_public_data()
         self.add_company_log()
         if self.crm_lead_id:
             self.crm_lead_id.action_set_won_rainbowman()
@@ -265,6 +267,67 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 "next": {"type": "ir.actions.act_window_close"},
             },
         }
+
+    def create_company(self):
+        self.new_company_id = (
+            self.env["res.company"]
+            .sudo()
+            .create(
+                {
+                    "name": self.name,
+                    "user_ids": [(6, 0, self.user_ids.ids)],
+                    "parent_id": self.parent_id.id,
+                    "street": self.street,
+                    "website": self.website,
+                    "email": self.email,
+                    "foundation_date": self.foundation_date,
+                    "vat": self.vat,
+                    "city": self.city,
+                    "state_id": self.state_id,
+                    "zip": self.zip_code,
+                    "legal_form": self.legal_form,
+                    "legal_name": self.legal_name,
+                    "ce_status": self.ce_status,
+                    "phone": self.phone,
+                    "default_lang_id": self.default_lang_id.id,
+                    "allow_new_members": True
+                    if self.ce_member_status == "open"
+                    else False,
+                    "social_twitter": self.ce_twitter_url,
+                    "social_telegram": self.ce_telegram_url,
+                    "social_instagram": self.ce_instagram_url,
+                    "social_facebook": self.ce_facebook_url,
+                    "logo": self.landing_logo_file,
+                    "ce_tag_ids": self.ce_tag_ids,
+                }
+            )
+        )
+
+    # TODO: maybe ask for the submission goal on place creation and propagate to place?
+    # TODO: what do we do with cooperator contact data on the public form?
+    def create_public_data(self):
+        new_landing = self.new_company_id.sudo().create_landing()
+        new_landing.sudo().write(
+            {
+                "number_of_members": self.ce_number_of_members,
+                "community_type": self.landing_community_type,
+                "community_secondary_type": self.legal_form,
+                "community_status": self.ce_member_status,
+                "external_website_link": self.website,
+                "primary_image_file": self.landing_primary_image_file,
+                "secondary_image_file": self.landing_secondary_image_file,
+                "short_description": self.landing_short_description,
+                "long_description": self.landing_long_description,
+                "why_become_cooperator": self.landing_why_become_cooperator,
+                "become_cooperator_process": self.landing_become_cooperator_process,
+                "lat": self.lat,
+                "lng": self.lng,
+                "street": self.street,
+                "postal_code": self.zip_code,
+                "city": self.city,
+            }
+        )
+        new_landing.create_landing_place()
 
     def thread_action_accept(self):
         self.configure_community_accounting()
@@ -287,28 +350,3 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         ).sudo().chart_template_id.try_loading(company=new_company)
         self.create_bank_journals()
         self.create_sequences()
-
-    def create_company(self):
-        self.new_company_id = (
-            self.env["res.company"]
-            .sudo()
-            .create(
-                {
-                    "name": self.name,
-                    "user_ids": [(6, 0, self.user_ids.ids)],
-                    "parent_id": self.parent_id.id,
-                    "street": self.street,
-                    "website": self.website,
-                    "email": self.email,
-                    "foundation_date": self.foundation_date,
-                    "vat": self.vat,
-                    "city": self.city,
-                    "state_id": self.state_id,
-                    "legal_form": self.legal_form,
-                    "legal_name": self.legal_name,
-                    "ce_status": self.ce_status,
-                    "phone": self.phone,
-                    "default_lang_id": self.default_lang_id.id,
-                }
-            )
-        )

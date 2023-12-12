@@ -217,7 +217,6 @@ class ResCompany(models.Model):
                 )
                 .user_id
             )
-
         else:
             users = (
                 self.env["res.users.role.line"]
@@ -321,6 +320,18 @@ class ResCompany(models.Model):
         login_provider_id = self.env.ref("energy_communities.keycloak_login_provider")
         return login_provider_id.get_auth_link()
 
+    def action_create_landing(self):
+        new_landing = self.create_landing()
+        return {
+            "type": "ir.actions.act_window",
+            "view_type": "form",
+            "view_mode": "form",
+            "res_model": "landing.page",
+            "res_id": new_landing.id,
+            "target": "current",
+            "context": context,
+        }
+
     def create_landing(self):
         landing_page = self.env["landing.page"]
         vals = {"company_id": self.id, "name": self.name, "status": "draft"}
@@ -332,15 +343,7 @@ class ResCompany(models.Model):
         }
         self.write({"landing_page_id": new_landing.id})
         self.action_create_wp_landing()
-        return {
-            "type": "ir.actions.act_window",
-            "view_type": "form",
-            "view_mode": "form",
-            "res_model": "landing.page",
-            "res_id": new_landing.id,
-            "target": "current",
-            "context": context,
-        }
+        return new_landing
 
     def action_create_wp_landing(self, fields=None):
         instance_company = self.env["res.company"].search(

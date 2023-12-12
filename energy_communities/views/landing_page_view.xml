@@ -68,8 +68,8 @@
           <field name="become_cooperator_process" widget="html" />
         </group>
         <group>
-          <field name="lat" />
-          <field name="lng" />
+          <field name="lat" required="1" />
+          <field name="lng" required="1" />
           <field name="map_place_id" />
           <field name="street" />
           <field name="postal_code" />
