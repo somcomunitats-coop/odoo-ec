@@ -51,9 +51,9 @@
                             <field name="landing_long_description" />
                             <field name="landing_why_become_cooperator" />
                             <field name="landing_become_cooperator_process" />
-                            <field name="landing_primary_image_file" />
-                            <field name="landing_secondary_image_file" />
-                            <field name="landing_logo_file" />
+                            <field name="landing_primary_image_file" widget="image" />
+                            <field name="landing_secondary_image_file" widget="image" />
+                            <field name="landing_logo_file" widget="image" />
                             <field name="ce_tag_ids" />
                             <field name="website" />
                             <field name="ce_twitter_url" />
