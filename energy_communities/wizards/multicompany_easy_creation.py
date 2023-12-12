@@ -284,27 +284,31 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         )
         self.with_context(
             allowed_company_ids=allowed_company_ids
-        ).chart_template_id.try_loading(company=new_company)
+        ).sudo().chart_template_id.try_loading(company=new_company)
         self.create_bank_journals()
         self.create_sequences()
 
     def create_company(self):
-        self.new_company_id = self.env["res.company"].create(
-            {
-                "name": self.name,
-                "user_ids": [(6, 0, self.user_ids.ids)],
-                "parent_id": self.parent_id.id,
-                "street": self.street,
-                "website": self.website,
-                "email": self.email,
-                "foundation_date": self.foundation_date,
-                "vat": self.vat,
-                "city": self.city,
-                "state_id": self.state_id,
-                "legal_form": self.legal_form,
-                "legal_name": self.legal_name,
-                "ce_status": self.ce_status,
-                "phone": self.phone,
-                "default_lang_id": self.default_lang_id.id,
-            }
+        self.new_company_id = (
+            self.env["res.company"]
+            .sudo()
+            .create(
+                {
+                    "name": self.name,
+                    "user_ids": [(6, 0, self.user_ids.ids)],
+                    "parent_id": self.parent_id.id,
+                    "street": self.street,
+                    "website": self.website,
+                    "email": self.email,
+                    "foundation_date": self.foundation_date,
+                    "vat": self.vat,
+                    "city": self.city,
+                    "state_id": self.state_id,
+                    "legal_form": self.legal_form,
+                    "legal_name": self.legal_name,
+                    "ce_status": self.ce_status,
+                    "phone": self.phone,
+                    "default_lang_id": self.default_lang_id.id,
+                }
+            )
         )
