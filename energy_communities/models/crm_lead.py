@@ -67,48 +67,6 @@ class CrmLead(models.Model):
         else:
             self.is_instance_company = False
 
-    def _build_community_company(self):
-        if not self.env.user.company_id.coordinator:
-            raise UserError(
-                _(
-                    "Only users that belongs to the 'Coordinator' company can create new Companies from Leads."
-                )
-            )
-
-        creation_ce_source_id = self.env["ir.model.data"].get_object_reference(
-            "ce", "ce_source_creation_ce_proposal"
-        )[1]
-
-        # build company for each Lead
-        for lead in self:
-            if not lead.source_id or lead.source_id.id != creation_ce_source_id:
-                raise UserError(
-                    _(
-                        "The Source {} of Lead {} do not allow the creation of new Companies"
-                    ).format(lead.source_id.name, lead.name)
-                )
-
-            if not lead.community_company_id:
-                # Create the new company using very basic starting Data
-                company = self.env["res.company"].create(
-                    lead._get_default_community_wizard()
-                )
-
-                # Update Lead & Map Place (if exist) fields accordingly
-                lead.community_company_id = company.id
-                if lead.team_id and lead.team_type == "map_place_proposal":
-                    lead.team_id.community_company_id = company.id
-
-        # we need to do this commit before proceed to call KeyCloak API calls to build the related KC realms
-        # TODO Check if this commit is needed, commented to comply the pre-commit
-        # self._cr.commit()
-
-        # build keyKloac realm for each new existing new company
-        for lead in self:
-            if lead.community_company_id:
-                lead.community_company_id._create_keycloak_realm()
-                lead.community_company_id._community_post_keycloak_creation_tasks()
-
     def _get_default_community_wizard(self):
         self.ensure_one()
         creation_dict = self._get_metadata_values()
