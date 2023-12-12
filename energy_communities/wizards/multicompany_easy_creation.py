@@ -245,6 +245,11 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         )
 
     def action_accept(self):
+        company_data = self.create_company()
+        self.add_company_managers()
+        self.add_company_log()
+        if self.crm_lead_id:
+            self.crm_lead_id.action_set_won_rainbowman()
         if self.hook_cron:
             self.with_delay().thread_action_accept()
         else:
@@ -255,52 +260,22 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             "params": {
                 "type": "success",
                 "title": _("Company creation successful"),
-                "message": _("The new community has been correctly created"),
+                "message": _("Community creation process has been started."),
                 "sticky": False,
                 "next": {"type": "ir.actions.act_window_close"},
             },
         }
 
     def thread_action_accept(self):
-        super().action_accept()
-        self._after_action_accept_hook()
-        if self.crm_lead_id:
-            self.crm_lead_id.action_set_won_rainbowman()
-
-    def _after_action_accept_hook(self):
+        self.configure_community_accounting()
+        self.update_taxes()
+        self.update_properties()
         if self.property_cooperator_account:
             self.set_cooperative_account()
-        self_new_company = self.with_company(self.new_company_id)
-        self_new_company.new_company_id.create_user = self.create_user
         self.update_product_category_company_share()
         self.create_capital_share_product_template()
-        self.add_company_managers()
-        self.add_company_log()
 
-    def create_company(self):
-        self.new_company_id = (
-            self.env["res.company"]
-            .sudo()
-            .create(
-                {
-                    "name": self.name,
-                    "user_ids": [(6, 0, self.user_ids.ids)],
-                    "parent_id": self.parent_id.id,
-                    "street": self.street,
-                    "website": self.website,
-                    "email": self.email,
-                    "foundation_date": self.foundation_date,
-                    "vat": self.vat,
-                    "city": self.city,
-                    "state_id": self.state_id,
-                    "legal_form": self.legal_form,
-                    "legal_name": self.legal_name,
-                    "ce_status": self.ce_status,
-                    "phone": self.phone,
-                    "default_lang_id": self.default_lang_id.id,
-                }
-            )
-        )
+    def configure_community_accounting(self):
         allowed_company_ids = (
             self.env.context.get("allowed_company_ids", []) + self.new_company_id.ids
         )
@@ -309,6 +284,27 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         )
         self.with_context(
             allowed_company_ids=allowed_company_ids
-        ).sudo().chart_template_id.try_loading(company=new_company)
+        ).chart_template_id.try_loading(company=new_company)
         self.create_bank_journals()
         self.create_sequences()
+
+    def create_company(self):
+        self.new_company_id = self.env["res.company"].create(
+            {
+                "name": self.name,
+                "user_ids": [(6, 0, self.user_ids.ids)],
+                "parent_id": self.parent_id.id,
+                "street": self.street,
+                "website": self.website,
+                "email": self.email,
+                "foundation_date": self.foundation_date,
+                "vat": self.vat,
+                "city": self.city,
+                "state_id": self.state_id,
+                "legal_form": self.legal_form,
+                "legal_name": self.legal_name,
+                "ce_status": self.ce_status,
+                "phone": self.phone,
+                "default_lang_id": self.default_lang_id.id,
+            }
+        )
