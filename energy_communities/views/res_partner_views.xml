@@ -37,6 +37,23 @@
         >
                     <attribute name="delete">0</attribute>
                 </xpath>
+                <xpath expr="//field[@name='vat']" position="after">
+                  <field name="company_hierarchy_level" invisible="1" />
+                </xpath>
+                <xpath expr="//field[@name='name']" position="before">
+                  <h4
+            style="color:green;"
+            attrs="{'invisible': [('company_hierarchy_level', '!=', 'instance')]}"
+          >Platform company</h4>
+                  <h4
+            style="color:green;"
+            attrs="{'invisible': [('company_hierarchy_level', '!=', 'coordinator')]}"
+          >Coordinator company</h4>
+                  <h4
+            style="color:green;"
+            attrs="{'invisible': [('company_hierarchy_level', '!=', 'community')]}"
+          >Community company</h4>
+                </xpath>
             </field>
         </record>
 

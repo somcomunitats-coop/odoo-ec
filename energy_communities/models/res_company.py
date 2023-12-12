@@ -9,7 +9,7 @@ from ..pywordpress_client.resources.landing_page import (
 )
 
 _HIERARCHY_LEVEL_VALUES = [
-    ("instance", _("Instance")),
+    ("instance", _("Platform")),
     ("coordinator", _("Coordinator")),
     ("community", _("Community")),
 ]
