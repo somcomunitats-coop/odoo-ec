@@ -152,33 +152,6 @@ class ResCompany(models.Model):
                     _("Parent company must be coordinator hierarchy level.")
                 )
 
-    @api.constrains("hierarchy_level", "parent_id")
-    def _check_hierarchy_level(self):
-        for rec in self:
-            if rec.hierarchy_level == "instance":
-                if self.search_count(
-                    [("hierarchy_level", "=", "instance"), ("id", "!=", rec.id)]
-                ):
-                    raise ValidationError(_("An instance company already exists"))
-                if rec.parent_id:
-                    raise ValidationError(
-                        _("You cannot create a instance company with a parent company.")
-                    )
-            if (
-                rec.hierarchy_level == "coordinator"
-                and rec.parent_id.hierarchy_level != "instance"
-            ):
-                raise ValidationError(
-                    _("Parent company must be instance hierarchy level.")
-                )
-            if (
-                rec.hierarchy_level == "community"
-                and rec.parent_id.hierarchy_level != "coordinator"
-            ):
-                raise ValidationError(
-                    _("Parent company must be coordinator hierarchy level.")
-                )
-
     @api.model
     def get_real_ce_company_id(self, api_param_odoo_compant_id):
         if api_param_odoo_compant_id == self.API_PARAM_ID_VALUE_FOR_COORDINADORA:
