@@ -6,14 +6,209 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-18 09:05+0000\n"
-"PO-Revision-Date: 2023-08-18 09:05+0000\n"
+"POT-Creation-Date: 2023-12-11 21:40+0000\n"
+"PO-Revision-Date: 2023-12-11 21:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: energy_selfconsumption
+#: model:mail.template,body_html:energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder
+msgid ""
+"\n"
+"            \n"
+"        <p>Hi,</p>\n"
+"        <p>\n"
+"            Remember that the collective self-consumption project\n"
+"            <b>${ object.name }</b>\n"
+"            of the energy community\n"
+"            <b>${ object.project_id.company_id.name }</b>\n"
+"            must invoice on the day <b>${ ctx['next_invoicing'] }</b>.\n"
+"        </p>\n"
+"        <p>\n"
+"            It is necessary, therefore, that you enter into Odoo the energy generated in kWh during the period\n"
+"            <b>${ ctx['first_date'] }</b>\n"
+"            - <b>${ ctx['last_date'] }</b>.\n"
+"        </p>\n"
+"        <p>\n"
+"            To do so, go to the project file, enter the contracts view, select the contracts that must be invoiced and\n"
+"            press the Invoice button.</br>\n"
+"        </p>\n"
+"        <p>\n"
+"            For any questions or incidents, contact the support team; support@somcomunitats.coop.\n"
+"        </p>\n"
+"            \n"
+"        "
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid ""
+"\n"
+"Select only contracts with the same period of invoicing.\n"
+"Make sure that all the selected contracts have the same next period start and end.\n"
+"Next period start: {next_period_date_start}\n"
+"Next period end: {next_period_date_end}"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid ""
+"\n"
+"Some of the contract selected are not defined as energy delivered self-consumption projects.\n"
+"\n"
+"Please make sure that you are invoicing the correct self-consumption project.\n"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid ""
+"\n"
+"Some of the contract selected are not of the same self-consumption project.\n"
+"\n"
+"Please make sure that you are invoicing for only the same self-consumption project ({project_name}.\n"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.actions.report,print_report_name:energy_selfconsumption.selfconsumption_manager_authorization_report
+msgid "'%s - Authorization' % object.name"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.actions.report,print_report_name:energy_selfconsumption.power_sharing_agreement_report
+msgid "'%s - Power Sharing Agreement' % object.name"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "(Completar para cada consumidor asociado)"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "(Completar para cada productor asociado)"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid ""
+"(Si existen varios productores con instalaciones de generación asociadas al autoconsumo, completar\n"
+"                        para cada uno de ellos)"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "(Vía pública y nº)"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"- Acuerdo de Reparto firmado por los participantes del autoconsumo colectivo"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "- Acuerdo de reparto modificado"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"- Certificado de Instalación Eléctrica /documento técnico requerido en cada\n"
+"                                        CCAA"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"- Fichero TXT donde figuren los coeficientes de reparto fijos o variables según\n"
+"                                        establece la Orden TED 1247/2021"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "- Nuevo fichero TXT de coeficientes de reparto"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "<b>(CAU): </b>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"<b>ANEXO I: CONSUMIDORES ASOCIADOS QUE OTORGAN PODER DE REPRESENTACIÓN "
+"(1)</b>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
+msgid ""
+"<b>Attention!</b> You are activating a project and thus activating its "
+"recurring billing."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "<b>COEFICIENTE DE REPARTO (ß)</b>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "<b>CON excedentes acogida a compensación</b>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "<b>CONSUMIDOR ASOCIADO</b><br/>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid ""
+"<b>CONSUMIDOR ASOCIADO</b><br/>\n"
+"                                    (titular del suministro)"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "<b>CUPS</b>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "<b>CÓDIGO DE AUTOCONSUMO (CAU)</b>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "<b>FIRMA</b>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "<b>NIF</b>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "<b>PRODUCTOR ASOCIADO</b><br/>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid ""
+"<b>PRODUCTOR ASOCIADO</b><br/>\n"
+"                                (titular de la instalación de generación)"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
@@ -31,10 +226,91 @@ msgid ""
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.energy_delivered_invoice_template
+msgid "<span> kWh</span>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.energy_delivered_invoice_template
+msgid "<span>Import</span>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.energy_delivered_invoice_template
+msgid "<span>Partition coefficient</span>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.energy_delivered_invoice_template
+msgid "<span>Total amount invoiced</span>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.energy_delivered_invoice_template
+msgid "<span>Total installation generation</span>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"<sup>2</sup>Razón Social, nombre y apellidos del Gestor del Autoconsumo "
+"Colectivo."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"<sup>3</sup>Tras aportar correctamente la documentación, según establece la normativa, la\n"
+"                                comercializadora de cada consumidor asociado al autoconsumo colectivo gestionará con la\n"
+"                                distribuidora la modificación del contrato de ATR de cada consumidor, quedando activada\n"
+"                                la modalidad de autoconsumo en el contrato de suministro del cliente."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"<sup>4</sup>Las modificaciones en los coeficientes de reparto pueden obedecer a: (1)\n"
+"                                modificaciones sin alteración en los consumidores asociados al colectivo, (2) bajas y/o\n"
+"                                altas de nuevos consumidores asociados.<br/>\n"
+"                                <sup>5</sup>Se entenderá por nuevas altas solo a los nuevos CUPS; los cambios de titular\n"
+"                                sobre CUPS existentes se subrogarán al acuerdo de reparto existente, con lo que no hará\n"
+"                                falta modificar ni fichero txt ni acuerdo de reparto, salvo que se modifiquen también\n"
+"                                los coeficientes de reparto."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_selfconsumption_unique_code
+#, python-format
+msgid "A project with this CAU already exists."
+msgstr ""
+
+#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_supply_point_unique_code_company_id
 #, python-format
 msgid "A supply point with this code already exists."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid ""
+"ACUERDO DE REPARTO DE ENERGÍA DE AUTOCONSUMO COLECTIVO\n"
+"                            <br/>\n"
+"                            INSTALACIONES CON EXCEDENTES\n"
+"                            <br/>\n"
+"                            ACOGIDAS A COMPENSACIÓN"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
+msgid "Accept"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
+#, python-format
+msgid "Accounting Journal not found."
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -82,6 +358,13 @@ msgid "Activity Type Icon"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"Actuar por cuenta ajena en calidad de GESTOR DEL AUTOCONSUMO COLECTIVO identificado con\n"
+"                                Código de Autoconsumo Colectivo"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid ""
 "Are you sure you want to change the project status to the previous step?"
@@ -107,13 +390,31 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__cil
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid "CIL"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "COEFICIENTE (α)"
 msgstr ""
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__code
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__code
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "CUPS"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__cadastral_reference
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__cadastral_reference
+msgid "Cadastral reference"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
+msgid "Cancel"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -125,6 +426,7 @@ msgid "City"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.actions.act_window,help:energy_selfconsumption.action_partner_cooperator_form
 #: model_terms:ir.actions.act_window,help:energy_selfconsumption.action_partner_owner_form
 msgid "Click to add a contact in your address book."
 msgstr ""
@@ -133,6 +435,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__coefficient_is_valid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__table_coefficient_is_valid
 msgid "Coefficient Is Valid"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
+#, python-format
+msgid "Coefficient can't be negative."
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -150,6 +458,53 @@ msgid "Company"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"Comunicación de cualquier modificación<sup>4</sup> que se produzca en los coeficientes de reparto–siempre\n"
+"                                        realizada por acuerdo entre todos los consumidores asociados-, en los términos\n"
+"                                        que vienen definidos en\n"
+"                                        la Orden TED 1247/2021. Para ello, deberá aportar:"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"Con <b>atribuciones</b> para solicitar exclusivamente las siguientes gestiones ante la(s)\n"
+"                                comercializadora(s) actual(es) de cada uno de los consumidores asociados:"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"Con CIF/NIF<span style=\"margin-left:180px\">y domicilio en "
+"(Municipio)</span>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "Con email"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "Con excedentes NO acogidos a compensación simplificada"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "Con excedentes y acogidos a compensación simplificada en factura"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid ""
+"Con la firma del presente acuerdo, los consumidores <b> nos acogemos voluntariamente al\n"
+"                        mecanismo de compensación simplificada </b> entre los déficits del consumo de cada consumidor\n"
+"                        y la totalidad de los excedentes de la instalación de autoconsumo, tal como establece el Real\n"
+"                        Decreto 244/2019, de 5 de abril."
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model,name:energy_selfconsumption.model_res_partner
 msgid "Contact"
 msgstr ""
@@ -160,6 +515,52 @@ msgid "Contacts"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_contract_contract
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_project_project__contract_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__contract_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__contract_ids
+msgid "Contract"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#, python-format
+msgid "Contract - %s - %s"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
+msgid "Contract Generation"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_contract_line
+msgid "Contract Line"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__contract_template_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_product_product__contract_template_id
+msgid "Contract Template"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
+msgid "Contracted power"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_tree_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Contracts"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__contracts_count
+msgid "Contracts Count"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__partner_id
 msgid "Cooperator"
 msgstr ""
@@ -167,6 +568,12 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__partner_id
 msgid "Cooperator subscribed to the self-consumption project"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.actions.act_window,name:energy_selfconsumption.action_partner_cooperator_form
+#: model:ir.ui.menu,name:energy_selfconsumption.res_partner_cooperators_menu
+msgid "Cooperators"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -190,8 +597,12 @@ msgid "Country code was not found: {country}"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__create_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__create_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__create_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__create_uid
@@ -200,8 +611,12 @@ msgid "Created by"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__create_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__create_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__create_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__create_date
@@ -211,13 +626,65 @@ msgid "Created on"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "D./D<sup>2</sup>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"Dar de baja a los consumidores que incumplan los compromisos establecidos entre\n"
+"                                        los consumidores\n"
+"                                        asociados al autoconsumo colectivo y dar de alta<sup>5</sup> a los consumidores que se incorporen al autoconsumo\n"
+"                                        colectivo, adaptando en cualquier caso sus contratos de suministro con su\n"
+"                                        comercializadora actual y\n"
+"                                        reflejándolo en el Anexo I de este documento."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__date_end
+msgid "Date End"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__date_format
 msgid "Date Format"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__date_start
+msgid "Date Start"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__date_format
 msgid "Date format for effective date."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_next_date
+msgid "Date of Next Invoice"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+#, python-format
+msgid "Define Invoicing Mode"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.define_invoicing_mode_wizard_form_view
+msgid "Define Invoicing Mode Wizard"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid ""
+"Del mismo modo, les solicitamos la aplicación del mecanismo de compensación simplificada de\n"
+"                        los excedentes de la instalación de autoconsumo a la que nos asociamos, y el inicio del\n"
+"                        mecanismo de compensación en el siguiente periodo de facturación desde la recepción de este\n"
+"                        acuerdo."
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -227,13 +694,23 @@ msgid "Delimiter in import CSV file."
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_account_move__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_line__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_recurrency_mixin__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_project_project__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_product_product__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__display_name
 msgid "Display Name"
 msgstr ""
@@ -273,6 +750,21 @@ msgid ""
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Download Partition Coefficient"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Download Power Sharing Agreement"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Download Self-consumption Manager Authorization"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
 msgid "Download State List"
 msgstr ""
@@ -285,9 +777,86 @@ msgid "Draft"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"El GESTOR DEL AUTOCONSUMO COLECTIVO declara y garantiza que cuenta con la\n"
+"                                        autorización de cada\n"
+"                                        uno de los consumidores asociados, y les ha informado de que sus datos se\n"
+"                                        comunicarán, a su\n"
+"                                        correspondiente comercializadora, para tratarlos de conformidad con lo previsto\n"
+"                                        en el Real Decreto\n"
+"                                        244/2019, de 5 de abril, por el que se regulan las condiciones administrativas,\n"
+"                                        técnicas y económicas del\n"
+"                                        autoconsumo de energía eléctrica y con lo previsto en la Orden TED 1247/2017. En\n"
+"                                        todo caso, el GESTOR\n"
+"                                        DE AUTOCONSUMO COLECTIVO también ha informado a los consumidores de cómo y dónde\n"
+"                                        pueden\n"
+"                                        obtener más información sobre el tratamiento de sus datos llevado a cabo por su\n"
+"                                        comercializadora actual\n"
+"                                        incluida la forma en que pueden ejercer sus derechos en la web de su\n"
+"                                        comercializadora actual."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "En"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid ""
+"En aplicación del Real Decreto 244/2019 de 5 de abril, los siguientes consumidores acordamos\n"
+"                        asociarnos a la instalación de <b>autoconsumo colectivo de energía eléctrica</b> con las\n"
+"                        siguientes\n"
+"                        características:"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__encoding
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__encoding
 msgid "Enconding format in import CSV file."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__energy_delivered
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_delivered
+#, python-format
+msgid "Energy Delivered"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:contract.line.qty.formula,name:energy_selfconsumption.energy_delivered_formula
+msgid "Energy Delivered Formula"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:contract.line.qty.formula,name:energy_selfconsumption.energy_delivered_variable_formula
+msgid "Energy Delivered Variable Formula"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__energy_delivered_variable
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_delivered_variable
+#, python-format
+msgid "Energy Delivered Variable Hourly Coefficient"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid "Energy Delivered: {energy_delivered} kWh"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__project_id
+msgid "Energy Project"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__reseller_id
+msgid "Energy Reseller"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -308,6 +877,26 @@ msgid "Error parsing the file"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"Esta manifestación es fiel y auténtica, y en virtud de ésta, el GESTOR DEL\n"
+"                                        AUTOCONSUMO COLECTIVO\n"
+"                                        asume todas las responsabilidades legales derivadas de toda falsedad u omisión,\n"
+"                                        con indemnidad para\n"
+"                                        las comercializadoras actuales de cada uno de los consumidores asociados."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "FIRMA"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "Fecha:"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__delimiter
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__delimiter
 msgid "File Delimiter"
@@ -320,6 +909,7 @@ msgid "File Encoding"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__file_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__fname
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__fname
 msgid "File Name"
@@ -329,6 +919,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__quotechar
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__quotechar
 msgid "File Quotechar"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "Firma electrónica del Gestor del Autoconsumo Colectivo"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "Firma electrónica del Gestor del Autoconsumo Colectivo:"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -363,23 +963,52 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__power
-msgid "Generation Power (kW)"
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
+msgid "Generate"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Generate Contracts"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_coefficient_report
+msgid "Generate Partition Coefficient Report"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_search_view
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_search_view
 msgid "Group By"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"Hasta la fecha: ________/_________/20_______ y prorrogable anualmente, "
+"<b>PARA:</b>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_account_move__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_account_move_line__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_line__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_recurrency_mixin__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_project_project__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_product_product__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__id
 msgid "ID"
 msgstr ""
@@ -491,26 +1120,112 @@ msgid "Inscriptions"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "Inscrito bajo la <b>modalidad de autoconsumo</b> (escoger una opción):"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.actions.act_window,name:energy_selfconsumption.invoicing_wizard_act_window
+msgid "Invoice Energy Delivered"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.actions.server,name:energy_selfconsumption.contract_invoicing_wizard_action
+msgid "Invoice Energy Recurrency"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_interval
+msgid "Invoice Every"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_interval
+msgid "Invoice every (Days/Week/Month/Year)"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
+msgid "Invoicing Energy Delivered"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__invoicing_mode
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Invoicing Mode"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_invoicing_offset
+msgid "Invoicing offset"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_invoicing_type
+msgid "Invoicing type"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_is_follower
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_is_follower
 msgid "Is Follower"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__last_date_invoiced
+msgid "Last Date Invoiced"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_account_move____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_account_move_line____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_line____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_recurrency_mixin____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_project_project____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_product_product____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__last_period_date_end
+msgid "Last Period End"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__last_period_date_start
+msgid "Last Period Start"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__write_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__write_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__write_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__write_uid
@@ -519,13 +1234,53 @@ msgid "Last Updated by"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__write_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__write_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__write_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid ""
+"Les rogamos reciban esta comunicación y procedan a realizar los trámites "
+"necesarios."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "Los <b>CONSUMIDORES</b> asociados:"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+msgid "Los <b>PRODUCTORES</b> asociados:"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"Los consumidores asociados firmantes en el Anexo I otorgan poder de "
+"representación a:"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"Los siguientes consumidores asociados abajo firmantes otorgan el poder de representación al\n"
+"                                Gestor del Autoconsumo Colectivo:"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "MODELO DE AUTORIZACIÓN PARA EL GESTOR DEL AUTOCONSUMO COLECTIVO"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -569,11 +1324,29 @@ msgid "My Activity Deadline"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "NIF"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "NOMBRE Y APELLIDOS (titular del suministro)"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__supply_point_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__name
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
 msgid "Name"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#, python-format
+msgid "New Supply Point"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -595,6 +1368,34 @@ msgid "Next Activity Type"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_search_view
+msgid "Next Period Date End"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_search_view
+msgid "Next Period Date Start"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__next_period_date_end
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_line__next_period_date_end
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_recurrency_mixin__next_period_date_end
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__next_period_date_end
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_end
+msgid "Next Period End"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__next_period_date_start
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_line__next_period_date_start
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_recurrency_mixin__next_period_date_start
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__next_period_date_start
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
+msgid "Next Period Start"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
@@ -605,6 +1406,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_needaction_counter
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__message_needaction_counter
 msgid "Number of Actions"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_invoicing_offset
+msgid ""
+"Number of days to offset the invoice from the period end date (in post-paid "
+"mode) or start date (in pre-paid mode)."
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -646,6 +1454,12 @@ msgid "Owner"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__owner_supply_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_users__owner_supply_ids
+msgid "Owner Supply"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Owner could not be created: {error}"
@@ -667,6 +1481,35 @@ msgstr ""
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__owner_id
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__owner_id
 msgid "Partner with the legal obligation of the supply point"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__power_acquired
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__power_acquired
+#, python-format
+msgid "Power Acquired"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:contract.line.qty.formula,name:energy_selfconsumption.power_acquired_formula
+msgid "Power Acquired Formula"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.actions.report,name:energy_selfconsumption.power_sharing_agreement_report
+msgid "Power Sharing Agreement Report"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__price
+msgid "Price"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_product_product
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__product_id
+msgid "Product"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -695,13 +1538,54 @@ msgstr ""
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
-msgid "Project must have a valid Generation Power."
+msgid "Project must have a valid Rated Power."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Project must have defined a invoicing mode before activation."
 msgstr ""
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__quotechar
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__quotechar
 msgid "Quotechar in import CSV file."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__power
+msgid "Rated Power (kWn)"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type
+msgid "Recurrence"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_contract_recurrency_mixin
+msgid "Recurrency mixin for contract models"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__code
+msgid "Reference"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__report_data
+msgid "Report Data"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__report_distribution_table
+msgid "Report Distribution Table"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__reseller_id
+msgid "Reseller"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -713,6 +1597,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_user_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_user_id
 msgid "Responsible User"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.define_invoicing_mode_wizard_form_view
+msgid "Save Data"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__reseller_id
+msgid "Select the associated Energy Reseller"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -728,6 +1622,11 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model:ir.ui.menu,name:energy_selfconsumption.root
 msgid "Self-consumption Management"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.actions.report,name:energy_selfconsumption.selfconsumption_manager_authorization_report
+msgid "Self-consumption Manager Report"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -755,9 +1654,35 @@ msgid "Self-consumption project already has a validated table"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_account_move_line__selfconsumption_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_project_project__selfconsumption_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__selfconsumption_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__selfconsumption_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__selfconsumption_id
+msgid "Selfconsumption"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:mail.template,subject:energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder
+msgid "Selfconsumption - Energy Delivered Invoicing Reminder"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__selfconsumption_project_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__selfconsumption_project_id
 msgid "Selfconsumption Project"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__supply_point_assignation_id
+msgid "Selfconsumption project"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.actions.server,name:energy_selfconsumption.send_energy_delivered_invoicing_reminder_to_admin_ir_actions_server
+#: model:ir.cron,cron_name:energy_selfconsumption.send_energy_delivered_invoicing_reminder_to_admin
+#: model:ir.cron,name:energy_selfconsumption.send_energy_delivered_invoicing_reminder_to_admin
+msgid "Send Energy Delivered Invoicing Reminder to Admin User"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -773,6 +1698,46 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid "Set to Draft"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "Sin excedentes y acogidos a compensación simplificada"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid ""
+"Solicitud de adaptación<sup>3</sup> del contrato de suministro a la modalidad de autoconsumo y aportación de la\n"
+"                                    documentación requerida a tal efecto:"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type
+msgid "Specify Interval for automatic invoice generation."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_invoicing_type
+msgid ""
+"Specify if the invoice must be generated at the beginning (pre-paid) or end "
+"(post-paid) of the period."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__start_date
+msgid "Start date"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#, python-format
+msgid "Start date can't be more that three months old"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__start_date
+msgid "Starting date of the invoicing"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -828,6 +1793,11 @@ msgid "Street2"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__supplier_id
+msgid "Supplier"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__supply_ids
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_users__supply_ids
 msgid "Supply"
@@ -872,8 +1842,22 @@ msgid "Supply Points"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
+#, python-format
+msgid "The partner of the supply point is not subscribed to the project"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__coefficient
 msgid "The sum of all the coefficients must result in 1"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#, python-format
+msgid ""
+"The supply point can't be removed because the distribution table state is "
+"{table_state}"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -882,6 +1866,12 @@ msgstr ""
 msgid ""
 "The supply point partner {supply_partner} and the partner {vat} in the "
 "inscription are different."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#, python-format
+msgid "There is no distribution table in proces of activation."
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -906,9 +1896,28 @@ msgid "There isn't any supply point with this code: {code}"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
+#, python-format
+msgid "This invoicing mode is not yet implemented"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
 msgid "Title"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
+msgid ""
+"To activate the recurring invoicing process, define the date from which you want\n"
+"                        every supply point associated with this project to start invoicing according to the\n"
+"                        established recurrence."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__power
+msgid "Total Energy Generated (kWh)"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -952,6 +1961,23 @@ msgid "Validated"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
+msgid "Value in kilowatts (kW)"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__website_message_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__website_message_ids
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_import_wizard_form_view
 msgid ""
 "You can download an example template for the import of distribution tables. The template must\n"
@@ -963,6 +1989,20 @@ msgstr ""
 msgid ""
 "You can download an example template for the importation of inscriptions and supply points.\n"
 "                            The template must have the following format and be a CSV file."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/contract_line.py:0
+#, python-format
+msgid ""
+"You can't have a date of next invoice anterior to the start of the contract "
+"line '%s'"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid "You must enter a valid total energy generated (kWh)."
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -978,11 +2018,41 @@ msgid "Zip"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_contract_generation_wizard
+msgid "energy_selfconsumption.contract_generation.wizard"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_define_invoicing_mode_wizard
+msgid "energy_selfconsumption.define_invoicing_mode.wizard"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_distribution_table_import_wizard
 msgid "energy_selfconsumption.distribution_table_import.wizard"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_invoicing_wizard
+msgid "energy_selfconsumption.invoicing.wizard"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_selfconsumption_import_wizard
 msgid "energy_selfconsumption.selfconsumption_import.wizard"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.define_invoicing_mode_wizard_form_view
+msgid "kWh Price (€/kWh)"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.define_invoicing_mode_wizard_form_view
+msgid "kWn Price per day (€/kWn/day)"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
+msgid "y teléfono(s) de contacto"
 msgstr ""
