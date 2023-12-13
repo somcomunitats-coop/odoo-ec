@@ -24,7 +24,7 @@ class TestInvoicingReminder(TransactionCase):
                 "city": "Barcelona",
                 "state_id": self.env.ref("base.state_es_b").id,
                 "country_id": self.env.ref("base.es").id,
-                "invoicing_mode": "energy_delivered",
+                "invoicing_mode": "power_acquired",
             }
         )
         self.inscription = self.env["energy_project.inscription"].create(

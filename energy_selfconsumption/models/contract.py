@@ -56,6 +56,8 @@ class Contract(models.Model):
                     "last_period_date_end": last_period_date_end,
                 }
             )
+
+        self.project_id.selfconsumption_id.send_power_acquired_invoicing_reminder()
         return res
 
     def _get_contracts_to_invoice_domain(self, date_ref=None):

@@ -44,5 +44,6 @@
         "wizards/invoicing_wizard_views.xml",
         "reports/selfconsumption_reports.xml",
         "reports/energy_delivered_invoice_template.xml",
+        "reports/power_acquired_invoice_template.xml",
     ],
 }
