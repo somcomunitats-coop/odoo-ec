@@ -249,8 +249,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         self.create_company()
         self.add_company_managers()
         self.create_public_data()
-        self.add_company_log()
         if self.crm_lead_id:
+            self.add_company_log()
             self.crm_lead_id.action_set_won_rainbowman()
         if self.hook_cron:
             self.with_delay().thread_action_accept()
@@ -269,12 +269,20 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         }
 
     def create_company(self):
+        pack_2_tag = self.env.ref("energy_communities.pack_2")
+        allow_new_members = False
+        if self.crm_lead_id:
+            crm_pack_2_tag = self.crm_lead_id.tag_ids.filtered(
+                lambda tag: tag.id == pack_2_tag.id
+            )
+            if crm_pack_2_tag and self.ce_member_status == "open":
+                allow_new_members = True
         self.new_company_id = (
             self.env["res.company"]
             .sudo()
             .create(
                 {
-                    "name": self.name,
+                    "name": self.legal_name,
                     "user_ids": [(6, 0, self.user_ids.ids)],
                     "parent_id": self.parent_id.id,
                     "street": self.street,
@@ -286,13 +294,11 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "state_id": self.state_id,
                     "zip": self.zip_code,
                     "legal_form": self.legal_form,
-                    "legal_name": self.legal_name,
+                    "comercial_name": self.name,
                     "ce_status": self.ce_status,
                     "phone": self.phone,
                     "default_lang_id": self.default_lang_id.id,
-                    "allow_new_members": True
-                    if self.ce_member_status == "open"
-                    else False,
+                    "allow_new_members": allow_new_members,
                     "social_twitter": self.ce_twitter_url,
                     "social_telegram": self.ce_telegram_url,
                     "social_instagram": self.ce_instagram_url,

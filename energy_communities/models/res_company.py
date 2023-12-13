@@ -114,7 +114,7 @@ class ResCompany(models.Model):
         selection=_LEGAL_FORM_VALUES,
         string="Legal form",
     )
-    legal_name = fields.Char(string="Legal name")
+    comercial_name = fields.Char(string="Comercial name")
     ce_status = fields.Selection(
         selection=_CE_STATUS_VALUES,
         string="Energy Community state",
@@ -334,7 +334,7 @@ class ResCompany(models.Model):
 
     def create_landing(self):
         landing_page = self.env["landing.page"]
-        vals = {"company_id": self.id, "name": self.name, "status": "draft"}
+        vals = {"company_id": self.id, "name": self.comercial_name, "status": "draft"}
         new_landing = landing_page.create(vals)
         context = {
             "__last_update": {},
