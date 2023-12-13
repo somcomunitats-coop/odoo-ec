@@ -270,11 +270,11 @@ class Selfconsumption(models.Model):
         }
 
     def send_power_acquired_invoicing_reminder(self):
-        today = date.today()
+        today = fields.date.today()
         subjects = [
             "Selfconsumption - Power Acquired Invoicing Reminder",
             "Autoconsumo - Recordatorio Facturación Energía Adquirida",
-            "Autoconsum - Recordatori de facturació d'energia adquirida"
+            "Autoconsum - Recordatori de facturació d'energia adquirida",
         ]
         proj_email_check = self.env["mail.mail"].search(
             [
