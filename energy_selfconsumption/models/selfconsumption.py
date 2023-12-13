@@ -1,6 +1,9 @@
 from datetime import datetime, timedelta
 
-from odoo import _, fields, models
+from stdnum.es import cups, referenciacatastral
+from stdnum.exceptions import *
+
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 INVOICING_VALUES = [
@@ -364,6 +367,64 @@ class Selfconsumption(models.Model):
             selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
 
         return True
+
+    @api.constrains("code")
+    def _check_valid_code(self):
+        """
+        The following are evaluated:
+            1. The first 22 digits correspond to the CUPS.
+            2. The character after CUPS is A
+            3. And the last 3 characters are numbers.
+        """
+        for record in self:
+            if record.code:
+                # Validate the total length of the CAU, check if the first digits are CUPS and get the last 4 characters
+                if len(record.code) == 26:
+                    self.validate_cups(record.code[:22])
+                    last_digits = record.code[22:]
+                else:
+                    error_message = _("Invalid CAU: The length is not correct")
+                    raise ValidationError(error_message)
+
+                # Check if the character after CUPS is 'A'
+                if not last_digits.startswith("A"):
+                    error_message = _("Invalid CAU: The character after CUPS is not A")
+                    raise ValidationError(error_message)
+
+                # Check if the last 3 characters are numbers
+                if not last_digits[-3:].isdigit():
+                    error_message = _("Invalid CAU: Last 3 digits are not numbers")
+                    raise ValidationError(error_message)
+
+    def validate_cups(self, cups_number):
+        try:
+            cups.validate(cups_number)
+        except InvalidLength:
+            error_message = _(
+                "Invalid CAU: The first characters related to CUPS are incorrect. The length is incorrect."
+            )
+            raise ValidationError(error_message)
+        except InvalidComponent:
+            error_message = _("Invalid CAU: The CUPS does not start with 'ES'.")
+            raise ValidationError(error_message)
+        except InvalidFormat:
+            error_message = _("Invalid CAU: The CUPS has an incorrect format.")
+            raise ValidationError(error_message)
+        except InvalidChecksum:
+            error_message = _("Invalid CAU: The checksum of the CUPS is incorrect.")
+            raise ValidationError(error_message)
+
+    @api.constrains("cadastral_reference")
+    def _check_valid_cadastral_reference(self):
+        for record in self:
+            if record.cadastral_reference:
+                try:
+                    referenciacatastral.validate(self.cadastral_reference)
+                except Exception as e:
+                    error_message = _("Invalid Cadastral Reference: {error}").format(
+                        error=e
+                    )
+                    raise ValidationError(error_message)
 
 
 class CoefficientReport(models.TransientModel):
