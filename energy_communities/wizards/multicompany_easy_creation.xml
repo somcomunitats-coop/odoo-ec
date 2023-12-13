@@ -45,7 +45,13 @@
                 </xpath>
                 <xpath expr="//page" position="after">
                     <page string="Landing Page">
-                        <group string="Landing Page">
+                        <group string="Create Landing">
+                            <field name="create_landing" />
+                        </group>
+                        <group
+              string="Landing Page"
+              attrs="{'invisible': [('create_landing','=', False)]}"
+            >
                             <field name="ce_number_of_members" />
                             <field name="ce_member_status" />
                             <field name="landing_community_type" />
