@@ -2,7 +2,12 @@ import logging
 
 from odoo import _, api, fields, models
 
-from ..models.res_company import _CE_STATUS_VALUES, _LEGAL_FORM_VALUES
+from ..models.res_company import (
+    _CE_MEMBER_STATUS_VALUES,
+    _CE_STATUS_VALUES,
+    _CE_TYPE,
+    _LEGAL_FORM_VALUES,
+)
 
 _logger = logging.getLogger(__name__)
 
@@ -103,6 +108,31 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     hook_cron = fields.Boolean(
         default=True, string="Run the post hook in a cron job or not"
     )
+    # landing / public data
+    landing_short_description = fields.Text(string="Short description")
+    landing_long_description = fields.Text(string="Long description")
+    ce_tag_ids = fields.Many2many("crm.tag", string="Energy Community Services")
+    ce_number_of_members = fields.Integer(string="Number of members")
+    ce_member_status = fields.Selection(
+        selection=_CE_MEMBER_STATUS_VALUES,
+        default="open",
+        string="Community status",
+    )
+    landing_why_become_cooperator = fields.Html(string="Why become cooperator")
+    landing_become_cooperator_process = fields.Html(string="Become cooperator process")
+    landing_primary_image_file = fields.Image("Primary Image")
+    landing_secondary_image_file = fields.Image("Secondary Image")
+    landing_logo_file = fields.Image("Logo Image")
+    landing_community_type = fields.Selection(
+        selection=_CE_TYPE,
+        default="citizen",
+        required=True,
+        string="Community type",
+    )
+    ce_twitter_url = fields.Char(string="Twitter link")
+    ce_telegram_url = fields.Char(string="Telegram link")
+    ce_instagram_url = fields.Char(string="Instagram link")
+    ce_facebook_url = fields.Char(string="Instagram link")
 
     def add_company_managers(self):
         coord_members = self.parent_id.get_users(
