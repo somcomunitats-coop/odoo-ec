@@ -100,7 +100,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         selection=_LEGAL_FORM_VALUES,
         string="Legal form",
     )
-    legal_name = fields.Char(string="Legal name")
+    legal_name = fields.Char(string="Legal name", required=True)
     ce_status = fields.Selection(
         selection=_CE_STATUS_VALUES,
         string="Energy Community state",
