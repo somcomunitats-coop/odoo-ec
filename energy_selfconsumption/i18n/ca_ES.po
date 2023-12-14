@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 14:00+0000\n"
-"PO-Revision-Date: 2023-08-24 16:40+0200\n"
+"PO-Revision-Date: 2023-12-14 12:10+0100\n"
 "Last-Translator: Daniil Digtyar Vasilieva <daniil.digtyar@somit.coop>\n"
 "Language-Team: \n"
 "Language: ca_ES\n"
@@ -92,12 +92,11 @@ msgstr "Icona de tipus d'activitat"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid ""
-"Are you sure you want to change the project status to the previous step?"
-"                                  If so, the distribution table will return "
-"to the 'validated' state."
+"Are you sure you want to change the project status to the previous step?                                  If so, "
+"the distribution table will return to the 'validated' state."
 msgstr ""
-"Esteu segur que voleu canviar l'estat del projecte al pas anterior?\t\t\t\t "
-"Si és així, la taula de distribució tornarà a l'estat \"validat\"."
+"Esteu segur que voleu canviar l'estat del projecte al pas anterior?\t\t\t\t Si és així, la taula de distribució "
+"tornarà a l'estat \"validat\"."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__message_attachment_count
@@ -483,11 +482,8 @@ msgstr "En procés"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
-msgid ""
-"In the state list file, you can check which code is assigned for your state."
-msgstr ""
-"Al fitxer de llista de províncies, podeu comprovar quin codi està assignat a"
-" la vostra província."
+msgid "In the state list file, you can check which code is assigned for your state."
+msgstr "Al fitxer de llista de províncies, podeu comprovar quin codi està assignat a la vostra província."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__inscription_ids
@@ -903,18 +899,13 @@ msgstr "La suma de tots els coeficients ha de resultar 1"
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
-msgid ""
-"The supply point partner {supply_partner} and the partner {vat} in the "
-"inscription are different."
-msgstr ""
-"El soci del punt de subministrament {supply_partner} i el soci {vat} de la "
-"inscripció són diferents."
+msgid "The supply point partner {supply_partner} and the partner {vat} in the inscription are different."
+msgstr "El soci del punt de subministrament {supply_partner} i el soci {vat} de la inscripció són diferents."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.actions.act_window,help:energy_selfconsumption.distribution_table_act_window
 msgid "There is no examples click here to add new Distribution Table."
-msgstr ""
-"No hi ha exemples, feu clic aquí per afegir una nova taula de distribució."
+msgstr "No hi ha exemples, feu clic aquí per afegir una nova taula de distribució."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.actions.act_window,help:energy_selfconsumption.selfconsumption_form_view_act_window
@@ -924,8 +915,7 @@ msgstr "No hi ha exemples feu clic aquí per afegir nou Projecte d'autoconsum."
 #. module: energy_selfconsumption
 #: model_terms:ir.actions.act_window,help:energy_selfconsumption.supply_point_form_act_window
 msgid "There is no examples click here to add new Supply Points."
-msgstr ""
-"No hi ha exemples, feu clic aquí per afegir nous punts de subministrament."
+msgstr "No hi ha exemples, feu clic aquí per afegir nous punts de subministrament."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
@@ -1040,7 +1030,8 @@ msgid ""
 "            - <b>${ ctx['last_date'] }</b>.\n"
 "        </p>\n"
 "        <p>\n"
-"            To do so, go to the project file, enter the contracts view, select the contracts that must be invoiced and\n"
+"            To do so, go to the project file, enter the contracts view, select the contracts that must be "
+"invoiced and\n"
 "            press the Invoice button.</br>\n"
 "        </p>\n"
 "        <p>\n"
@@ -1049,9 +1040,12 @@ msgid ""
 "            \n"
 "        "
 msgstr ""
+"\n"
+"            \n"
+"\n"
 "<p> Hola, </p>\n"
 "        <p>\n"
-"            Recordeu que el projecte d’autoconsumpció col·lectiu\n"
+"            Recordeu que el projecte d’autoconsum col·lectiu\n"
 "            <b> $ {object.name} </b>\n"
 "            de la comunitat energètica\n"
 "            <b> $ {object.project_id.company_id.name} </b>\n"
@@ -1063,11 +1057,13 @@ msgstr ""
 "            - <b> $ {ctx ['last_date']} </b>.\n"
 "        </p>\n"
 "        <p>\n"
-"            Per fer -ho, aneu al fitxer del projecte, introduïu la vista de contractes, seleccioneu els contractes que s’han de facturar i\n"
+"            Per fer -ho, aneu al fitxer del projecte, introduïu la vista de contractes, seleccioneu els "
+"contractes que s’han de facturar i\n"
 "            Premeu el botó de factura. </br>\n"
 "        </p>\n"
 "        <p>\n"
-"            Per a qualsevol pregunta o incidència, poseu -vos en contacte amb l’equip d’assistència;support@somcomunitatts.coop.\n"
+"            Per a qualsevol pregunta o incidència, poseu -vos en contacte amb l’equip d’assistència;"
+"support@somcomunitatts.coop.\n"
 "        </p>"
 
 #. module: energy_selfconsumption
@@ -1080,6 +1076,7 @@ msgid ""
 "Next period start: {next_period_date_start}\n"
 "Next period end: {next_period_date_end}"
 msgstr ""
+"\n"
 "Seleccioneu només contractes amb el mateix període de facturació.\n"
 "Assegureu -vos que tots els contractes seleccionats tinguin el mateix període següent i finalitzeu.\n"
 "Inici del període següent: {next_period_date_start}\n"
@@ -1094,9 +1091,10 @@ msgid ""
 "\n"
 "Please make sure that you are invoicing the correct self-consumption project.\n"
 msgstr ""
+"\n"
 "Alguns del contracte seleccionats no es defineixen com a projectes d’autoconsumpció lliurats energèticament.\n"
 "\n"
-"Assegureu-vos que esteu facturant el projecte d’autoconsumpció correcte."
+"Assegureu-vos que esteu facturant el projecte d’autoconsumpció correcte.\n"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
@@ -1107,9 +1105,10 @@ msgid ""
 "\n"
 "Please make sure that you are invoicing for only the same self-consumption project ({project_name}.\n"
 msgstr ""
+"\n"
 "Alguns del contracte seleccionats no són del mateix projecte d’autoconsumpció.\n"
 "\n"
-"Assegureu-vos que només esteu facturant el mateix projecte d'autoconsumpció ({nom_name}."
+"Assegureu-vos que només esteu facturant el mateix projecte d'autoconsumpció ({project_name}.\n"
 
 #. module: energy_selfconsumption
 #: model:ir.actions.report,print_report_name:energy_selfconsumption.selfconsumption_manager_authorization_report
@@ -1137,20 +1136,18 @@ msgid ""
 "(Si existen varios productores con instalaciones de generación asociadas al autoconsumo, completar\n"
 "                        para cada uno de ellos)"
 msgstr ""
-"(Si hi ha diversos productors amb instal·lacions de generació associades a l’auto -consum, complet\n"
+"(Si hi ha diversos productors amb instal·lacions de generació associades a l’autoconsum, complet\n"
 "                        Per a cadascun d’ells)"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "(Vía pública y nº)"
-msgstr "(Carreteres públiques i nº)"
+msgstr "(Via pública i nº)"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
-msgid ""
-"- Acuerdo de Reparto firmado por los participantes del autoconsumo colectivo"
-msgstr ""
-"- Acord de lliurament signat per participants en autoconsumpció col·lectius"
+msgid "- Acuerdo de Reparto firmado por los participantes del autoconsumo colectivo"
+msgstr "- Acord de lliurament signat per participants en autoconsumpció col·lectius"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1163,7 +1160,7 @@ msgid ""
 "- Certificado de Instalación Eléctrica /documento técnico requerido en cada\n"
 "                                        CCAA"
 msgstr ""
-"- Certificat d'instal·lació elèctrica /document tècnic necessari en cadascun\n"
+"- Certificat d'instal·lació elèctrica /document tècnic necessari en cada\n"
 "                                        CCAA"
 
 #. module: energy_selfconsumption
@@ -1172,13 +1169,13 @@ msgid ""
 "- Fichero TXT donde figuren los coeficientes de reparto fijos o variables según\n"
 "                                        establece la Orden TED 1247/2021"
 msgstr ""
-"- fitxer txt on apareixen els coeficients de distribució fixos o variables\n"
-"                                        Establir la comanda TED 1247/2021"
+"- Fitxer TXT on apareixen els coeficients de distribució fixos o variables\n"
+"                                        establir la Odre TED 1247/2021"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "- Nuevo fichero TXT de coeficientes de reparto"
-msgstr "- Nou fitxer txt de coeficients de repartiment"
+msgstr "- Nou fitxer TXT de coeficients de repartiment"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1187,36 +1184,28 @@ msgstr "<b> (CAU): </b>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
-msgid ""
-"<b>ANEXO I: CONSUMIDORES ASOCIADOS QUE OTORGAN PODER DE REPRESENTACIÓN "
-"(1)</b>"
-msgstr ""
-"<b> annex i: Consumidors associats que concedeixen el poder de representació"
-" (1) </b>"
+msgid "<b>ANEXO I: CONSUMIDORES ASOCIADOS QUE OTORGAN PODER DE REPRESENTACIÓN (1)</b>"
+msgstr "<b> Annex i: Consumidors associats que concedeixen el poder de representació (1) </b>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
-msgid ""
-"<b>Attention!</b> You are activating a project and thus activating its "
-"recurring billing."
-msgstr ""
-"<b> Atenció! </b> Esteu activant un projecte i, per tant, activeu la seva "
-"facturació recurrent."
+msgid "<b>Attention!</b> You are activating a project and thus activating its recurring billing."
+msgstr "<b> Atenció! </b> Esteu activant un projecte i, per tant, activeu la seva facturació recurrent."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid "<b>COEFICIENTE DE REPARTO (ß)</b>"
-msgstr "<b> coeficient de distribució (ß) </b>"
+msgstr "<b> Coeficient de repartiment (ß) </b>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid "<b>CON excedentes acogida a compensación</b>"
-msgstr "<b> amb excedents recepció a la compensació </b>"
+msgstr "<b> AMB excedents recepció a la compensació </b>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid "<b>CONSUMIDOR ASOCIADO</b><br/>"
-msgstr "<b> va demanar al consumidor </b> <br/>"
+msgstr "<b> Consumidor associat </b> <br/>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
@@ -1230,22 +1219,22 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid "<b>CUPS</b>"
-msgstr "<b> tasses </b>"
+msgstr "<b> CUPS </b>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid "<b>CÓDIGO DE AUTOCONSUMO (CAU)</b>"
-msgstr "<b> Codi d'auto -consciència (CAU) </b>"
+msgstr "<b> Codi d'autoconsum (CAU) </b>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid "<b>FIRMA</b>"
-msgstr "<b> firma </b>"
+msgstr "<b> Firma </b>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid "<b>NIF</b>"
-msgstr "<b> nif </b>"
+msgstr "<b> NIF </b>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
@@ -1274,57 +1263,63 @@ msgstr "<ppan> import </span>"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.energy_delivered_invoice_template
 msgid "<span>Partition coefficient</span>"
-msgstr "<pan> coeficient de partició </span>"
+msgstr "<pan> Coeficient de partició </span>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.energy_delivered_invoice_template
 msgid "<span>Total amount invoiced</span>"
-msgstr "<ppan> quantitat total facturada </span>"
+msgstr "<ppan> Quantitat total facturada </span>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.energy_delivered_invoice_template
 msgid "<span>Total installation generation</span>"
-msgstr "<ppan> Generació total d'instal·lació </span>"
+msgstr "<ppan> Generació total de la instal·lació </span>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
-msgid ""
-"<sup>2</sup>Razón Social, nombre y apellidos del Gestor del Autoconsumo "
-"Colectivo."
-msgstr ""
-"<p> 2 </p> Nom corporatiu, nom i cognom del Gestor d'autosumpció col·lectiu."
+msgid "<sup>2</sup>Razón Social, nombre y apellidos del Gestor del Autoconsumo Colectivo."
+msgstr "<p> 2 </p> Nom corporatiu, nom i cognom del Gestor d'autoconsum col·lectiu."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid ""
 "<sup>3</sup>Tras aportar correctamente la documentación, según establece la normativa, la\n"
-"                                comercializadora de cada consumidor asociado al autoconsumo colectivo gestionará con la\n"
-"                                distribuidora la modificación del contrato de ATR de cada consumidor, quedando activada\n"
+"                                comercializadora de cada consumidor asociado al autoconsumo colectivo gestionará "
+"con la\n"
+"                                distribuidora la modificación del contrato de ATR de cada consumidor, quedando "
+"activada\n"
 "                                la modalidad de autoconsumo en el contrato de suministro del cliente."
 msgstr ""
-"<p> 3 </p> després de proporcionar correctament la documentació, tal i com va establir el Reglament, el\n"
-"                                El màrqueting de cada consumidor associat a l’autosumptament col·lectiu es gestionarà amb el\n"
-"                                Distribuïdor La modificació del contracte ATR de cada consumidor, activada\n"
-"                                La modalitat d’auto -incrustació en el contracte de subministrament del client."
+"<p> 3 </p> després de proporcionar correctament la documentació, tal i com va establir el Reglament, la\n"
+"\t\t\t\tcomercialitzadora de cada consumidor associat a l’autoconsum col·lectiu es gestionarà amb el\n"
+"                                distribuïdor la modificació del contracte ATR de cada consumidor, activada\n"
+"                                la modalitat d’autoconsum en el contracte de subministrament del client."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid ""
 "<sup>4</sup>Las modificaciones en los coeficientes de reparto pueden obedecer a: (1)\n"
-"                                modificaciones sin alteración en los consumidores asociados al colectivo, (2) bajas y/o\n"
+"                                modificaciones sin alteración en los consumidores asociados al colectivo, (2) "
+"bajas y/o\n"
 "                                altas de nuevos consumidores asociados.<br/>\n"
-"                                <sup>5</sup>Se entenderá por nuevas altas solo a los nuevos CUPS; los cambios de titular\n"
-"                                sobre CUPS existentes se subrogarán al acuerdo de reparto existente, con lo que no hará\n"
-"                                falta modificar ni fichero txt ni acuerdo de reparto, salvo que se modifiquen también\n"
+"                                <sup>5</sup>Se entenderá por nuevas altas solo a los nuevos CUPS; los cambios de "
+"titular\n"
+"                                sobre CUPS existentes se subrogarán al acuerdo de reparto existente, con lo que "
+"no hará\n"
+"                                falta modificar ni fichero txt ni acuerdo de reparto, salvo que se modifiquen "
+"también\n"
 "                                los coeficientes de reparto."
 msgstr ""
-"<p> 4 </p> Les modificacions en els coeficients de distribució poden obeir: (1)\n"
-"                                modificacions sense alteració dels consumidors associats a les víctimes col·lectives, (2) víctimes i/o\n"
-"                                Alt de nous consumidors associats. <br/>\n"
-"                                <p> 5 </p> s’entendrà com a nou a les noves tasses;Canvis de títol\n"
-"                                Sobre les tasses existents estaran subrogades a l’acord de distribució existent, que no ho farà\n"
-"                                Falta modifica ni el fitxer txt ni un acord de distribució, tret que també es modifiquin\n"
-"                                Els coeficients de repartiment."
+"<p> 4 </p> Les modificacions en els coeficients de distribució poden obeir a: (1)\n"
+"                                modificacions sense alteració dels consumidors associats al col·lectiu, (2) "
+"baixes i/o\n"
+"                                altes de nous consumidors associats. <br/>\n"
+"                                <p> 5 </p> S’entendrà com a nou altes als nous CUPS; canvis de títol\n"
+"                                sobre CUPS existents estaran subrogades a l’acord de distribució existent, que "
+"farà\n"
+"                                falta modifica ni el fitxer txt ni un acord de distribució, tret que també es "
+"modifiquin\n"
+"                                els coeficients de repartiment."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
@@ -1346,7 +1341,7 @@ msgstr ""
 "                            <br/>\n"
 "                            Instal·lacions excedents\n"
 "                            <br/>\n"
-"                            Compensació d'allotjament"
+"                            Acollida a compensació"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
@@ -1357,7 +1352,7 @@ msgstr "Acceptar"
 #: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
 #, python-format
 msgid "Accounting Journal not found."
-msgstr "Diari de comptabilitat que no es troba."
+msgstr "No s'ha trobat cap diari de comptabilitat configurat"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1382,7 +1377,7 @@ msgstr "Referència cadastral"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
 msgid "Cancel"
-msgstr "Cancel · lar"
+msgstr "Cancel·lar"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
@@ -1394,14 +1389,15 @@ msgstr "El coeficient no pot ser negatiu."
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid ""
 "Comunicación de cualquier modificación<sup>4</sup> que se produzca en los coeficientes de reparto–siempre\n"
-"                                        realizada por acuerdo entre todos los consumidores asociados-, en los términos\n"
+"                                        realizada por acuerdo entre todos los consumidores asociados-, en los "
+"términos\n"
 "                                        que vienen definidos en\n"
 "                                        la Orden TED 1247/2021. Para ello, deberá aportar:"
 msgstr ""
-"Comunicació de qualsevol modificació <Promesa> 4 </p> que es produeix en els coeficients de distribució - sempre\n"
+"Comunicació de qualsevol modificació <sup> 4 </sup> que es produeix en els coeficients de distribució - sempre\n"
 "                                        fet per acord entre tots els consumidors associats, en termes\n"
 "                                        que es defineixen a\n"
-"                                        La comanda TED 1247/2021.Per fer -ho, heu de contribuir:"
+"                                        l'Ordre TED 1247/2021.Per fer -ho, heu d'aportar:"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1410,20 +1406,17 @@ msgid ""
 "                                comercializadora(s) actual(es) de cada uno de los consumidores asociados:"
 msgstr ""
 "Amb <b> Atribucions </b> sol·licitar exclusivament els esforços següents abans de les (s)\n"
-"                                Màrqueting actual de cadascun dels consumidors associats:"
+"                                comercialitzadores actuals de cadascun dels consumidors associats:"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
-msgid ""
-"Con CIF/NIF<span style=\"margin-left:180px\">y domicilio en "
-"(Municipio)</span>"
-msgstr ""
-"Amb cif/nif <span style = \"margin-left: 180px\"> i adreça a (municipi) </s"
+msgid "Con CIF/NIF<span style=\"margin-left:180px\">y domicilio en (Municipio)</span>"
+msgstr "Amb CIF/NIF <span style = \"margin-left: 180px\"> i adreça a (municipi) </span>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "Con email"
-msgstr "Contra correu electrònic"
+msgstr "Amb correu electrònic"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1439,13 +1432,17 @@ msgstr "Amb excedents i acollit a una compensació simplificada a la factura"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid ""
 "Con la firma del presente acuerdo, los consumidores <b> nos acogemos voluntariamente al\n"
-"                        mecanismo de compensación simplificada </b> entre los déficits del consumo de cada consumidor\n"
-"                        y la totalidad de los excedentes de la instalación de autoconsumo, tal como establece el Real\n"
+"                        mecanismo de compensación simplificada </b> entre los déficits del consumo de cada "
+"consumidor\n"
+"                        y la totalidad de los excedentes de la instalación de autoconsumo, tal como establece el "
+"Real\n"
 "                        Decreto 244/2019, de 5 de abril."
 msgstr ""
-"Amb la signatura d’aquest Acord, els <b> consumidors van donar voluntàriament\n"
-"                        Mecanisme de compensació simplificat </b> entre els dèficits de consum de consum\n"
-"                        i tots els excedents de la instal·lació de l’auto -increment, tal com s’estableix el real\n"
+"Amb la signatura d’aquest Acord, els <b> consumidors s'acullen voluntàriament al\n"
+"                        mecanisme de compensació simplificat </b> entre els dèficits de consum de cada "
+"consumidor\n"
+"                        i la totalitat dels excedents de la instal·lació de l’autoconsum, tal com s’estableix el "
+"Rela\n"
 "                        Decret 244/2019, del 5 d'abril."
 
 #. module: energy_selfconsumption
@@ -1492,13 +1489,13 @@ msgstr "Contractes"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__contracts_count
 msgid "Contracts Count"
-msgstr "Comptar els contractes"
+msgstr "Nombre de contractes"
 
 #. module: energy_selfconsumption
 #: model:ir.actions.act_window,name:energy_selfconsumption.action_partner_cooperator_form
 #: model:ir.ui.menu,name:energy_selfconsumption.res_partner_cooperators_menu
 msgid "Cooperators"
-msgstr "Cooperadors"
+msgstr "Socis"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1510,17 +1507,21 @@ msgstr "D./d <sup> 2 </sup>"
 msgid ""
 "Dar de baja a los consumidores que incumplan los compromisos establecidos entre\n"
 "                                        los consumidores\n"
-"                                        asociados al autoconsumo colectivo y dar de alta<sup>5</sup> a los consumidores que se incorporen al autoconsumo\n"
-"                                        colectivo, adaptando en cualquier caso sus contratos de suministro con su\n"
+"                                        asociados al autoconsumo colectivo y dar de alta<sup>5</sup> a los "
+"consumidores que se incorporen al autoconsumo\n"
+"                                        colectivo, adaptando en cualquier caso sus contratos de suministro con "
+"su\n"
 "                                        comercializadora actual y\n"
 "                                        reflejándolo en el Anexo I de este documento."
 msgstr ""
-"Desconnecteu els consumidors que no compleixen els compromisos establerts entre\n"
-"                                        els consumidors\n"
-"                                        associat a l’auto -incrustació col·lectiva i descàrrega <P> 5 </p> als consumidors incorporats a l’auto -incrustació\n"
-"                                        col·lectiu, adaptant -se en qualsevol cas que el vostre subministrament contracti amb el vostre\n"
-"                                        comercialitzador actual i\n"
-"                                        reflectint -lo a l’annex I d’aquest document."
+"Donar de baixa als consumidors que incompleixin els compromisos establerts entre\n"
+"                                         els consumidors\n"
+"                                         associats a l'autoconsum col·lectiu i donar d'alta <sup>5</sup> els "
+"consumidors que s'incorporin a l'autoconsum\n"
+"                                         col·lectiu, adaptant en qualsevol cas els seus contractes de "
+"subministrament amb el seu\n"
+"                                         comercialitzadora actual i\n"
+"                                         reflectint-ho a l'Annex I d'aquest document."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__date_end
@@ -1554,13 +1555,15 @@ msgstr "Definiu l'assistent de mode de facturació"
 msgid ""
 "Del mismo modo, les solicitamos la aplicación del mecanismo de compensación simplificada de\n"
 "                        los excedentes de la instalación de autoconsumo a la que nos asociamos, y el inicio del\n"
-"                        mecanismo de compensación en el siguiente periodo de facturación desde la recepción de este\n"
+"                        mecanismo de compensación en el siguiente periodo de facturación desde la recepción de "
+"este\n"
 "                        acuerdo."
 msgstr ""
-"De la mateixa manera, sol·licitem l’aplicació del mecanisme de compensació simplificat de\n"
-"                        Els excedents de la instal·lació de l’auto -increment a què associem i l’inici del\n"
-"                        Mecanisme de compensació en el següent període de facturació de rebre això\n"
-"                        acord."
+"De la mateixa manera, us sol·licitem l'aplicació del mecanisme de compensació simplificada de\n"
+"                         els excedents de la instal·lació d'autoconsum a què ens associem, i l'inici del\n"
+"                         mecanisme de compensació en el següent període de facturació des de la recepció "
+"d'aquest\n"
+"                         acord."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -1582,37 +1585,48 @@ msgstr "Descarregueu l'autorització del gestor d'autoconsumpció"
 msgid ""
 "El GESTOR DEL AUTOCONSUMO COLECTIVO declara y garantiza que cuenta con la\n"
 "                                        autorización de cada\n"
-"                                        uno de los consumidores asociados, y les ha informado de que sus datos se\n"
+"                                        uno de los consumidores asociados, y les ha informado de que sus datos "
+"se\n"
 "                                        comunicarán, a su\n"
-"                                        correspondiente comercializadora, para tratarlos de conformidad con lo previsto\n"
+"                                        correspondiente comercializadora, para tratarlos de conformidad con lo "
+"previsto\n"
 "                                        en el Real Decreto\n"
-"                                        244/2019, de 5 de abril, por el que se regulan las condiciones administrativas,\n"
+"                                        244/2019, de 5 de abril, por el que se regulan las condiciones "
+"administrativas,\n"
 "                                        técnicas y económicas del\n"
-"                                        autoconsumo de energía eléctrica y con lo previsto en la Orden TED 1247/2017. En\n"
+"                                        autoconsumo de energía eléctrica y con lo previsto en la Orden TED "
+"1247/2017. En\n"
 "                                        todo caso, el GESTOR\n"
-"                                        DE AUTOCONSUMO COLECTIVO también ha informado a los consumidores de cómo y dónde\n"
+"                                        DE AUTOCONSUMO COLECTIVO también ha informado a los consumidores de cómo "
+"y dónde\n"
 "                                        pueden\n"
-"                                        obtener más información sobre el tratamiento de sus datos llevado a cabo por su\n"
+"                                        obtener más información sobre el tratamiento de sus datos llevado a cabo "
+"por su\n"
 "                                        comercializadora actual\n"
 "                                        incluida la forma en que pueden ejercer sus derechos en la web de su\n"
 "                                        comercializadora actual."
 msgstr ""
-"El gestor de l’auto -consciència col·lectiu declara i garanteix que té el\n"
-"                                        autorització de cadascun\n"
-"                                        Un dels consumidors associats i els ha informat que les seves dades\n"
-"                                        es comunicarà, al seu\n"
-"                                        corresponent comercialitzador, per tractar -los d’acord amb l’esperat\n"
-"                                        Al Decret Reial\n"
-"                                        244/2019, del 5 d’abril, que regula les condicions administratives,\n"
-"                                        tècnic i econòmic\n"
-"                                        Autosumpció d’energia elèctrica i amb les disposicions de l’Ordre TED 1247/2017.Dins de\n"
-"                                        Qualsevol cas, el gestor\n"
-"                                        De l’auto -inconsumpció col·lectiu també ha informat als consumidors de com i on\n"
-"                                        Ells poden\n"
-"                                        Obteniu més informació sobre el processament de les vostres dades realitzades pel vostre\n"
-"                                        Màrqueting actual\n"
-"                                        inclòs la manera com poden exercir els seus drets al lloc web del seu\n"
-"                                        Màrqueting actual."
+"El GESTOR DE L'AUTOCONSUM COL·LECTIU declara i garanteix que compta amb la\n"
+"                                         autorització de cada\n"
+"                                         un dels consumidors associats, i els ha informat que les seves dades "
+"es\n"
+"                                         comunicaran, a la seva\n"
+"                                         corresponent comercialitzadora, per tractar-los de conformitat amb allò "
+"previst\n"
+"                                         al Reial decret\n"
+"                                         244/2019, de 5 d'abril, pel qual es regulen les condicions "
+"administratives,\n"
+"                                         tècniques i econàmiques del\n"
+"                                         autoconsum d'energia elèctrica i amb allò previst a l'Ordre TED "
+"1247/2017. A\n"
+"                                         tot cas, el GESTOR\n"
+"                                         D'AUTOCONSUM COL·LECTIU també ha informat els consumidors de com i on\n"
+"                                         poden\n"
+"                                         obtenir més informació sobre el tractament de les seves dades dut a "
+"terme per la seva\n"
+"                                         comercialitzadora actual\n"
+"                                         inclosa la manera com poden exercir els seus drets a la web del seu\n"
+"                                         comercialitzadora actual."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
@@ -1623,14 +1637,16 @@ msgstr "Dins de"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid ""
 "En aplicación del Real Decreto 244/2019 de 5 de abril, los siguientes consumidores acordamos\n"
-"                        asociarnos a la instalación de <b>autoconsumo colectivo de energía eléctrica</b> con las\n"
+"                        asociarnos a la instalación de <b>autoconsumo colectivo de energía eléctrica</b> con "
+"las\n"
 "                        siguientes\n"
 "                        características:"
 msgstr ""
 "En l'aplicació del decret real 244/2019 del 5 d'abril, els consumidors següents estan d'acord\n"
-"                        associar -nos a la instal·lació de <b> col·lectiu autosumpció de l'electricitat </b> amb el\n"
+"                        associar -nos a la instal·lació de <b> col·lectiu autosumpció de l'electricitat </b> amb "
+"el\n"
 "                        proper\n"
-"                        Característiques:"
+"                        característiques:"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
@@ -1638,17 +1654,17 @@ msgstr ""
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_delivered
 #, python-format
 msgid "Energy Delivered"
-msgstr "Energia proporcionada"
+msgstr "Energia entregada"
 
 #. module: energy_selfconsumption
 #: model:contract.line.qty.formula,name:energy_selfconsumption.energy_delivered_formula
 msgid "Energy Delivered Formula"
-msgstr "Fórmula energètica lliurada"
+msgstr "Fórmula entregada "
 
 #. module: energy_selfconsumption
 #: model:contract.line.qty.formula,name:energy_selfconsumption.energy_delivered_variable_formula
 msgid "Energy Delivered Variable Formula"
-msgstr "Fórmula variable lliurada energètica"
+msgstr "Fórmula variable d'energia entregada"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
@@ -1656,13 +1672,13 @@ msgstr "Fórmula variable lliurada energètica"
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_delivered_variable
 #, python-format
 msgid "Energy Delivered Variable Hourly Coefficient"
-msgstr "Energia lliurada coeficient horari variable"
+msgstr "Energia entregada coeficient d'horari variable"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid "Energy Delivered: {energy_delivered} kWh"
-msgstr "Energia lliurada: {energy_delivered} kWh"
+msgstr "Energia entregada: {energy_delivered} kWh"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__project_id
@@ -1684,15 +1700,17 @@ msgstr "Projecte energètic"
 msgid ""
 "Esta manifestación es fiel y auténtica, y en virtud de ésta, el GESTOR DEL\n"
 "                                        AUTOCONSUMO COLECTIVO\n"
-"                                        asume todas las responsabilidades legales derivadas de toda falsedad u omisión,\n"
+"                                        asume todas las responsabilidades legales derivadas de toda falsedad u "
+"omisión,\n"
 "                                        con indemnidad para\n"
 "                                        las comercializadoras actuales de cada uno de los consumidores asociados."
 msgstr ""
-"Aquesta manifestació és fidel i autèntica, i sota ella, el gerent del\n"
-"                                        CONSUMPTIMENT COL·LECTIVA\n"
-"                                        Assumeix totes les responsabilitats legals derivades de tota falsesa o omissió,\n"
-"                                        indemnització per\n"
-"                                        Els venedors actuals de cadascun dels consumidors associats."
+"Aquesta manifestació és fidel i autèntica, i en virtut d'aquesta, el GESTOR DEL\n"
+"                                         AUTOCONSUM COL·LECTIU\n"
+"                                         assumeix totes les responsabilitats legals derivades de tota falsedat o "
+"omissió,\n"
+"                                         amb indemnitat per\n"
+"                                         les comercialitzadores actuals de cadascun dels consumidors associats."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1707,7 +1725,7 @@ msgstr "Data:"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "Firma electrónica del Gestor del Autoconsumo Colectivo"
-msgstr "Signatura electrònica del Gestor Collectiu de Consumpció"
+msgstr "Signatura electrònica del Gestor de l'Autoconsum Col·lectiu"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1732,18 +1750,13 @@ msgstr "Generar informe de coeficients de partició"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
-msgid ""
-"Hasta la fecha: ________/_________/20_______ y prorrogable anualmente, "
-"<b>PARA:</b>"
-msgstr ""
-"Fins a la data: ________/_________/20_______ i s’extensiona anualment, "
-"<b>PER A: </b>"
+msgid "Hasta la fecha: ________/_________/20_______ y prorrogable anualmente, <b>PARA:</b>"
+msgstr "Fins a la data: ________/_________/20_______ i prorrogable anualment, <b>PER A: </b>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "Inscrito bajo la <b>modalidad de autoconsumo</b> (escoger una opción):"
 msgstr "Inscrit sota la <b>modalitat d'autoconsum</b> (escollir una opció):"
-
 
 #. module: energy_selfconsumption
 #: model:ir.actions.act_window,name:energy_selfconsumption.invoicing_wizard_act_window
@@ -1768,7 +1781,7 @@ msgstr "Factura cada (dies/setmana/mes/any)"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
 msgid "Invoicing Energy Delivered"
-msgstr "Facturació Energia Lliurada"
+msgstr "Facturació Energia Entregada"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode
@@ -1780,7 +1793,7 @@ msgstr "Mode de facturació"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_invoicing_offset
 msgid "Invoicing offset"
-msgstr "Desplaçament de facturació"
+msgstr "Compensació de facturació"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_invoicing_type
@@ -1810,16 +1823,12 @@ msgstr "Final de l'últim període"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__last_period_date_start
 msgid "Last Period Start"
-msgstr "Inici del darrer període"
+msgstr "Inici de l'últim període"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
-msgid ""
-"Les rogamos reciban esta comunicación y procedan a realizar los trámites "
-"necesarios."
-msgstr ""
-"Preguem rebre aquesta comunicació i procedir a dur a terme els procediments "
-"necessaris."
+msgid "Les rogamos reciban esta comunicación y procedan a realizar los trámites necesarios."
+msgstr "Us preguem que rebeu aquesta comunicacio i procediu a realitzar els tràmits necessaris."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
@@ -1833,11 +1842,8 @@ msgstr "Els <b> PRODUCTORS </b> associats:"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
-msgid ""
-"Los consumidores asociados firmantes en el Anexo I otorgan poder de "
-"representación a:"
-msgstr ""
-"Els consumidors associats a l’annex I atorguen el poder de representació a:"
+msgid "Los consumidores asociados firmantes en el Anexo I otorgan poder de representación a:"
+msgstr "Els consumidors associats signants a l'Annex I atorguen poder de representació a:"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1845,8 +1851,8 @@ msgid ""
 "Los siguientes consumidores asociados abajo firmantes otorgan el poder de representación al\n"
 "                                Gestor del Autoconsumo Colectivo:"
 msgstr ""
-"Els següents consumidors associats a sota dels signants concedeixen el poder de representació al\n"
-"                                Gestor d'autosumpció col·lectiu:"
+"Els següents consumidors associats sota signants atorguen el poder de representació al\n"
+"                                 Gestor de l'Autoconsum Col·lectiu:"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1873,12 +1879,12 @@ msgstr "Nou punt de subministrament"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_search_view
 msgid "Next Period Date End"
-msgstr "Data del període següent final"
+msgstr "Final del període següent"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_search_view
 msgid "Next Period Date Start"
-msgstr "Començar la data següent del període"
+msgstr "Inici del període següent"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__next_period_date_end
@@ -1901,17 +1907,17 @@ msgstr "Inici del període següent"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_invoicing_offset
 msgid ""
-"Number of days to offset the invoice from the period end date (in post-paid "
-"mode) or start date (in pre-paid mode)."
+"Number of days to offset the invoice from the period end date (in post-paid mode) or start date (in pre-paid "
+"mode)."
 msgstr ""
-"Nombre de dies per compensar la factura des de la data de finalització del "
-"període (en mode post-pagat) o la data d'inici (en mode pre-pagat)."
+"Nombre de dies per compensar la factura des de la data de finalització del període (en mode de postpagament) o "
+"la data d'inici (en mode de prepagament)."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__owner_supply_ids
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_users__owner_supply_ids
 msgid "Owner Supply"
-msgstr "Subministrament del propietari"
+msgstr "Propietari del subministrament"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
@@ -1952,8 +1958,7 @@ msgstr "El projecte ha de tenir una potència nominal vàlida."
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Project must have defined a invoicing mode before activation."
-msgstr ""
-"El projecte ha d’haver definit un mode de facturació abans de l’activació."
+msgstr "El projecte ha d’haver definit un mode de facturació abans de l’activació."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__power
@@ -2017,7 +2022,7 @@ msgstr "Autoconsum"
 #. module: energy_selfconsumption
 #: model:mail.template,subject:energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder
 msgid "Selfconsumption - Energy Delivered Invoicing Reminder"
-msgstr "Autoconsum - Recordatori de Facturació de Energia lliurada"
+msgstr "Autoconsum - Recordatori de Facturació de Energia Entregada"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__supply_point_assignation_id
@@ -2029,8 +2034,7 @@ msgstr "Projecte d’autoconsum"
 #: model:ir.cron,cron_name:energy_selfconsumption.send_energy_delivered_invoicing_reminder_to_admin
 #: model:ir.cron,name:energy_selfconsumption.send_energy_delivered_invoicing_reminder_to_admin
 msgid "Send Energy Delivered Invoicing Reminder to Admin User"
-msgstr ""
-"Envieu un recordatori de facturació de Energia lliurada a l'usuari d'administració"
+msgstr "Envieu un recordatori de facturació de Energia lliurada a l'usuari d'administració"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -2043,7 +2047,8 @@ msgid ""
 "Solicitud de adaptación<sup>3</sup> del contrato de suministro a la modalidad de autoconsumo y aportación de la\n"
 "                                    documentación requerida a tal efecto:"
 msgstr ""
-"Sol·licitud d'adaptació<sup>3</sup> del contracte de subministrament a la modalitat d'autoconsum i aportació de la \n"
+"Sol·licitud d'adaptació<sup>3</sup> del contracte de subministrament a la modalitat d'autoconsum i aportació de "
+"la \n"
 "                                    documentació requerida a aquest efecte:"
 
 #. module: energy_selfconsumption
@@ -2053,12 +2058,8 @@ msgstr "Especifiqueu l’interval per a la generació automàtica de factures."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_invoicing_type
-msgid ""
-"Specify if the invoice must be generated at the beginning (pre-paid) or end "
-"(post-paid) of the period."
-msgstr ""
-"Especifiqueu si la factura s’ha de generar al principi (pre-pagada) o final "
-"(post-pagat) del període."
+msgid "Specify if the invoice must be generated at the beginning (pre-paid) or end (post-paid) of the period."
+msgstr "Especifiqueu si la factura s’ha de generar al principi (pre-pagada) o final (post-pagat) del període."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__start_date
@@ -2069,7 +2070,7 @@ msgstr "Data d'inici"
 #: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
 #, python-format
 msgid "Start date can't be more that three months old"
-msgstr "La data d’inici no pot tenir més de tres mesos"
+msgstr "La data d’inici no pot ser anterior als tres mesos"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__start_date
@@ -2090,12 +2091,8 @@ msgstr "El soci del punt de subministrament no està subscrit al projecte"
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #, python-format
-msgid ""
-"The supply point can't be removed because the distribution table state is "
-"{table_state}"
-msgstr ""
-"El punt de subministrament no es pot eliminar perquè l'estat de la taula de "
-"distribució és {table_state}"
+msgid "The supply point can't be removed because the distribution table state is {table_state}"
+msgstr "El punt de subministrament no es pot eliminar perquè l'estat de la taula de distribució és {table_state}"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
@@ -2117,8 +2114,9 @@ msgid ""
 "                        established recurrence."
 msgstr ""
 "Per activar el procés de facturació recurrent, definiu la data de la qual voleu\n"
-"                        cada punt de subministrament associat a aquest projecte per iniciar la facturació segons el\n"
-"                        Recurrència establerta."
+"                        cada punt de subministrament associat a aquest projecte per iniciar la facturació segons "
+"el\n"
+"                        recurrència establerta."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__power
@@ -2145,12 +2143,8 @@ msgstr "Historial de la comunicació del lloc web"
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/contract_line.py:0
 #, python-format
-msgid ""
-"You can't have a date of next invoice anterior to the start of the contract "
-"line '%s'"
-msgstr ""
-"No podeu tenir una data de la següent factura anterior fins a l'inici de la "
-"línia de contracte '%s'"
+msgid "You can't have a date of next invoice anterior to the start of the contract line '%s'"
+msgstr "No podeu tenir una data de la següent factura anterior fins a l'inici de la línia de contracte '%s'"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
