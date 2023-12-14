@@ -57,6 +57,10 @@ class SupplyPoint(models.Model):
         readonly=True,
     )
     supplier_id = fields.Many2one("energy_project.supplier", string="Supplier")
+    cadastral_reference = fields.Char(string="Cadastral reference")
+    contracted_power = fields.Float(
+        string="Contracted power", digits=(10, 2), help="Value in kilowatts (kW)"
+    )
 
     @api.onchange("partner_id")
     def _onchange_partner_id(self):

@@ -109,7 +109,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             ["role_coord_admin", "role_coord_worker"]
         )
         for manager in coord_members:
-            manager.make_ce_user(self.new_company_id, "role_ce_manager")
+            manager.make_ce_user(self.new_company_id.id, "role_ce_manager")
 
     def add_company_log(self):
         message = _(
@@ -215,13 +215,10 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         )
 
     def action_accept(self):
-        super().action_accept()
         if self.hook_cron:
-            self.with_delay()._after_action_accept_hook()
+            self.with_delay().thread_action_accept()
         else:
-            self._after_action_accept_hook()
-        if self.crm_lead_id:
-            self.crm_lead_id.action_set_won_rainbowman()
+            self.thread_action_accept()
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",
@@ -233,6 +230,12 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 "next": {"type": "ir.actions.act_window_close"},
             },
         }
+
+    def thread_action_accept(self):
+        super().action_accept()
+        self._after_action_accept_hook()
+        if self.crm_lead_id:
+            self.crm_lead_id.action_set_won_rainbowman()
 
     def _after_action_accept_hook(self):
         if self.property_cooperator_account:
