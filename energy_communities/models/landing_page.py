@@ -62,6 +62,7 @@ class LandingPage(models.Model):
         required=True,
         string="Community type",
     )
+    # TODO: Get legal form from company. Requires migration script and adjust API
     community_secondary_type = fields.Selection(
         selection=_LEGAL_FORM_VALUES,
         default="cooperative",
@@ -185,7 +186,7 @@ class LandingPage(models.Model):
 
     def action_create_landing_place(self):
         for record in self:
-            record._create_landing_place()
+            record.create_landing_place()
 
     def action_update_public_data(self):
         for record in self:
@@ -220,7 +221,7 @@ class LandingPage(models.Model):
                 landing_page_data
             )
 
-    def _create_landing_place(self):
+    def create_landing_place(self):
         LandingCmPlaceResource(self).create()
 
     def _update_landing_place(self):
