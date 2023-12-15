@@ -30,6 +30,15 @@ _CE_STATUS_VALUES = [
     ("building", _("building")),
 ]
 
+_CE_MEMBER_STATUS_VALUES = [
+    ("open", _("Open")),
+    ("closed", _("Closed")),
+]
+_CE_TYPE = [
+    ("citizen", _("Citizen")),
+    ("industrial", _("Industrial")),
+]
+
 
 class ResCompany(models.Model):
     _name = "res.company"
@@ -105,7 +114,7 @@ class ResCompany(models.Model):
         selection=_LEGAL_FORM_VALUES,
         string="Legal form",
     )
-    legal_name = fields.Char(string="Legal name")
+    comercial_name = fields.Char(string="Comercial name")
     ce_status = fields.Selection(
         selection=_CE_STATUS_VALUES,
         string="Energy Community state",
@@ -115,33 +124,6 @@ class ResCompany(models.Model):
     wordpress_db_username = fields.Char(string=_("Wordpress DB Admin Username"))
     wordpress_db_password = fields.Char(string=_("Wordpress DB Admin Password"))
     wordpress_base_url = fields.Char(string=_("Wordpress Base URL (JWT auth)"))
-
-    @api.constrains("hierarchy_level", "parent_id")
-    def _check_hierarchy_level(self):
-        for rec in self:
-            if rec.hierarchy_level == "instance":
-                if self.search_count(
-                    [("hierarchy_level", "=", "instance"), ("id", "!=", rec.id)]
-                ):
-                    raise ValidationError(_("An instance company already exists"))
-                if rec.parent_id:
-                    raise ValidationError(
-                        _("You cannot create a instance company with a parent company.")
-                    )
-            if (
-                rec.hierarchy_level == "coordinator"
-                and rec.parent_id.hierarchy_level != "instance"
-            ):
-                raise ValidationError(
-                    _("Parent company must be instance hierarchy level.")
-                )
-            if (
-                rec.hierarchy_level == "community"
-                and rec.parent_id.hierarchy_level != "coordinator"
-            ):
-                raise ValidationError(
-                    _("Parent company must be coordinator hierarchy level.")
-                )
 
     @api.constrains("hierarchy_level", "parent_id")
     def _check_hierarchy_level(self):
@@ -235,7 +217,6 @@ class ResCompany(models.Model):
                 )
                 .user_id
             )
-
         else:
             users = (
                 self.env["res.users.role.line"]
@@ -339,17 +320,8 @@ class ResCompany(models.Model):
         login_provider_id = self.env.ref("energy_communities.keycloak_login_provider")
         return login_provider_id.get_auth_link()
 
-    def create_landing(self):
-        landing_page = self.env["landing.page"]
-        vals = {"company_id": self.id, "name": self.name, "status": "draft"}
-        new_landing = landing_page.create(vals)
-        context = {
-            "__last_update": {},
-            "active_model": "landing.page",
-            "active_id": new_landing.id,
-        }
-        self.write({"landing_page_id": new_landing.id})
-        self.action_create_wp_landing()
+    def action_create_landing(self):
+        new_landing = self.create_landing()
         return {
             "type": "ir.actions.act_window",
             "view_type": "form",
@@ -359,6 +331,19 @@ class ResCompany(models.Model):
             "target": "current",
             "context": context,
         }
+
+    def create_landing(self):
+        landing_page = self.env["landing.page"]
+        vals = {"company_id": self.id, "name": self.comercial_name, "status": "draft"}
+        new_landing = landing_page.create(vals)
+        context = {
+            "__last_update": {},
+            "active_model": "landing.page",
+            "active_id": new_landing.id,
+        }
+        self.write({"landing_page_id": new_landing.id})
+        self.action_create_wp_landing()
+        return new_landing
 
     def action_create_wp_landing(self, fields=None):
         instance_company = self.env["res.company"].search(

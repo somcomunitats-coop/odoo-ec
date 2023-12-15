@@ -2,13 +2,19 @@ import logging
 
 from odoo import _, api, fields, models
 
-from ..models.res_company import _CE_STATUS_VALUES, _LEGAL_FORM_VALUES
+from ..models.res_company import (
+    _CE_MEMBER_STATUS_VALUES,
+    _CE_STATUS_VALUES,
+    _CE_TYPE,
+    _LEGAL_FORM_VALUES,
+)
 
 _logger = logging.getLogger(__name__)
 
 
 class AccountMulticompanyEasyCreationWiz(models.TransientModel):
-    _inherit = "account.multicompany.easy.creation.wiz"
+    _name = "account.multicompany.easy.creation.wiz"
+    _inherit = ["account.multicompany.easy.creation.wiz", "cm.coordinates.mixin"]
 
     def _default_product_share_template(self):
         return self.env.ref(
@@ -94,7 +100,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         selection=_LEGAL_FORM_VALUES,
         string="Legal form",
     )
-    legal_name = fields.Char(string="Legal name")
+    legal_name = fields.Char(string="Legal name", required=True)
     ce_status = fields.Selection(
         selection=_CE_STATUS_VALUES,
         string="Energy Community state",
@@ -103,6 +109,32 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     hook_cron = fields.Boolean(
         default=True, string="Run the post hook in a cron job or not"
     )
+    # landing / public data
+    create_landing = fields.Boolean(string="Create Landing", default=False)
+    landing_short_description = fields.Text(string="Short description")
+    landing_long_description = fields.Text(string="Long description")
+    ce_tag_ids = fields.Many2many("crm.tag", string="Energy Community Services")
+    ce_number_of_members = fields.Integer(string="Number of members")
+    ce_member_status = fields.Selection(
+        selection=_CE_MEMBER_STATUS_VALUES,
+        default="open",
+        string="Community status",
+    )
+    landing_why_become_cooperator = fields.Html(string="Why become cooperator")
+    landing_become_cooperator_process = fields.Html(string="Become cooperator process")
+    landing_primary_image_file = fields.Image("Primary Image")
+    landing_secondary_image_file = fields.Image("Secondary Image")
+    landing_logo_file = fields.Image("Logo Image")
+    landing_community_type = fields.Selection(
+        selection=_CE_TYPE,
+        default="citizen",
+        required=True,
+        string="Community type",
+    )
+    ce_twitter_url = fields.Char(string="Twitter link")
+    ce_telegram_url = fields.Char(string="Telegram link")
+    ce_instagram_url = fields.Char(string="Instagram link")
+    ce_facebook_url = fields.Char(string="Facebook link")
 
     def add_company_managers(self):
         coord_members = self.parent_id.get_users(
@@ -215,6 +247,13 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         )
 
     def action_accept(self):
+        self.create_company()
+        self.add_company_managers()
+        if self.create_landing:
+            self.create_public_data()
+        if self.crm_lead_id:
+            self.add_company_log()
+            self.crm_lead_id.action_set_won_rainbowman()
         if self.hook_cron:
             self.with_delay().thread_action_accept()
         else:
@@ -225,35 +264,27 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             "params": {
                 "type": "success",
                 "title": _("Company creation successful"),
-                "message": _("The new community has been correctly created"),
+                "message": _("Community creation process has been started."),
                 "sticky": False,
                 "next": {"type": "ir.actions.act_window_close"},
             },
         }
 
-    def thread_action_accept(self):
-        super().action_accept()
-        self._after_action_accept_hook()
-        if self.crm_lead_id:
-            self.crm_lead_id.action_set_won_rainbowman()
-
-    def _after_action_accept_hook(self):
-        if self.property_cooperator_account:
-            self.set_cooperative_account()
-        self_new_company = self.with_company(self.new_company_id)
-        self_new_company.new_company_id.create_user = self.create_user
-        self.update_product_category_company_share()
-        self.create_capital_share_product_template()
-        self.add_company_managers()
-        self.add_company_log()
-
     def create_company(self):
+        pack_2_tag = self.env.ref("energy_communities.pack_2")
+        allow_new_members = False
+        if self.crm_lead_id:
+            crm_pack_2_tag = self.crm_lead_id.tag_ids.filtered(
+                lambda tag: tag.id == pack_2_tag.id
+            )
+            if crm_pack_2_tag and self.ce_member_status == "open":
+                allow_new_members = True
         self.new_company_id = (
             self.env["res.company"]
             .sudo()
             .create(
                 {
-                    "name": self.name,
+                    "name": self.legal_name,
                     "user_ids": [(6, 0, self.user_ids.ids)],
                     "parent_id": self.parent_id.id,
                     "street": self.street,
@@ -263,14 +294,59 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "vat": self.vat,
                     "city": self.city,
                     "state_id": self.state_id,
+                    "zip": self.zip_code,
                     "legal_form": self.legal_form,
-                    "legal_name": self.legal_name,
+                    "comercial_name": self.name,
                     "ce_status": self.ce_status,
                     "phone": self.phone,
                     "default_lang_id": self.default_lang_id.id,
+                    "allow_new_members": allow_new_members,
+                    "social_twitter": self.ce_twitter_url,
+                    "social_telegram": self.ce_telegram_url,
+                    "social_instagram": self.ce_instagram_url,
+                    "social_facebook": self.ce_facebook_url,
+                    "logo": self.landing_logo_file,
+                    "ce_tag_ids": self.ce_tag_ids,
                 }
             )
         )
+
+    # TODO: maybe ask for the submission goal on place creation and propagate to place?
+    # TODO: what do we do with cooperator contact data on the public form?
+    def create_public_data(self):
+        new_landing = self.new_company_id.sudo().create_landing()
+        new_landing.sudo().write(
+            {
+                "number_of_members": self.ce_number_of_members,
+                "community_type": self.landing_community_type,
+                "community_secondary_type": self.legal_form,
+                "community_status": self.ce_member_status,
+                "external_website_link": self.website,
+                "primary_image_file": self.landing_primary_image_file,
+                "secondary_image_file": self.landing_secondary_image_file,
+                "short_description": self.landing_short_description,
+                "long_description": self.landing_long_description,
+                "why_become_cooperator": self.landing_why_become_cooperator,
+                "become_cooperator_process": self.landing_become_cooperator_process,
+                "lat": self.lat,
+                "lng": self.lng,
+                "street": self.street,
+                "postal_code": self.zip_code,
+                "city": self.city,
+            }
+        )
+        new_landing.create_landing_place()
+
+    def thread_action_accept(self):
+        self.configure_community_accounting()
+        self.update_taxes()
+        self.update_properties()
+        if self.property_cooperator_account:
+            self.set_cooperative_account()
+        self.update_product_category_company_share()
+        self.create_capital_share_product_template()
+
+    def configure_community_accounting(self):
         allowed_company_ids = (
             self.env.context.get("allowed_company_ids", []) + self.new_company_id.ids
         )
