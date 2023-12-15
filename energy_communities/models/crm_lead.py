@@ -161,19 +161,15 @@ class CrmLead(models.Model):
     #     for wizard_key in _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD.keys():
     #         meta_value = self.metadata_line_ids
 
-    def _create_keycloak_realm(self):
-        for lead in self:
-            if not lead.community_company_id:
-                raise UserError(
-                    _(
-                        "Unable to create the KeyCloack entities from Lead: {}, because it is not yet related to any Community company"
-                    ).format(lead.name)
-                )
-            lead.community_company_id._create_keycloak_realm()
-
-    def _create_community_initial_users(self):
-        for lead in self:
-            pass
+    def _format_date_for_creation(self, date_val):
+        format_date = False
+        date_formats = ["%Y-%m-%d", "%d-%m-%Y", "%Y/%m/%d", "%d/%m/%Y"]
+        for date_format in date_formats:
+            try:
+                format_date = datetime.strptime(date_val, date_format)
+            except:
+                pass
+        return format_date
 
     def action_assign_crm_to_coordinator_company(self):
         return {
