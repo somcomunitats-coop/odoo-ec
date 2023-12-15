@@ -5,6 +5,13 @@ from odoo.http import request
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
+    mail_template = fields.Many2one(
+        comodel_name="mail.template",
+        string="Certificate email template",
+        domain=[("model", "=", "res.partner")],
+        help="If left empty, the default global mail template will be used.",
+    )
+
     def get_web_share_products(self, is_company):
         """We are fully overriding this function in order to make it multi-company sensitive"""
 
