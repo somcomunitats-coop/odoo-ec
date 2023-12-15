@@ -82,20 +82,21 @@ class SupplyPoint(models.Model):
     @api.constrains("code")
     def _check_valid_code(self):
         for record in self:
-            try:
-                cups.validate(record.code)
-            except InvalidLength:
-                error_message = _("Invalid CUPS: The length is incorrect.")
-                raise ValidationError(error_message)
-            except InvalidComponent:
-                error_message = _("Invalid CUPS: does not start with 'ES'.")
-                raise ValidationError(error_message)
-            except InvalidFormat:
-                error_message = _("Invalid CUPS: has an incorrect format.")
-                raise ValidationError(error_message)
-            except InvalidChecksum:
-                error_message = _("Invalid CUPS: The checksum is incorrect.")
-                raise ValidationError(error_message)
+            if record.code:
+                try:
+                    cups.validate(record.code)
+                except InvalidLength:
+                    error_message = _("Invalid CUPS: The length is incorrect.")
+                    raise ValidationError(error_message)
+                except InvalidComponent:
+                    error_message = _("Invalid CUPS: does not start with 'ES'.")
+                    raise ValidationError(error_message)
+                except InvalidFormat:
+                    error_message = _("Invalid CUPS: has an incorrect format.")
+                    raise ValidationError(error_message)
+                except InvalidChecksum:
+                    error_message = _("Invalid CUPS: The checksum is incorrect.")
+                    raise ValidationError(error_message)
 
     @api.constrains("cadastral_reference")
     def _check_valid_cadastral_reference(self):
