@@ -563,6 +563,14 @@
     name="community_data_headline_message_open"
   >
       <br />
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template
+    id="community_data_headline_message_open"
+    name="community_data_headline_message_open"
+  >
+      <br />
       <div class="alert alert-warning" t-if="not display_success">
         <p><strong
         >Alert!</strong> The content you enter in this form is what we will show directly on your page within Som Comunitats.</p>

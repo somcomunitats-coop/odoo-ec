@@ -3429,6 +3429,24 @@ msgid "{} must be of type image (jpg/jpeg/png)"
 msgstr "{} debe ser de tipo imagen (jpg/jpeg/png)"
 
 #. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "{} field must be a past date"
+msgstr "El campo {} tiene que ser una fecha en pasado"
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "{} field must have date format (dd/mm/yyyy)"
+msgstr "El campo {} debe tener formato de fecha (dd/mm/aaaa)"
+
+#. module: energy_communities
+#: code:addons/energy_communities/controllers/website_community_data.py:0
+#, python-format
+msgid "{} must be of type image (jpg/jpeg/png)"
+msgstr "{} debe ser de tipo imagen (jpg/jpeg/png)"
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "€ by follow the steps you will receive by email."
