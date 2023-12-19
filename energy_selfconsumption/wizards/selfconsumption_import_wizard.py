@@ -108,15 +108,17 @@ class SelfconsumptionImportWizard(models.TransientModel):
             "partner_vat": line[0] or False,
             "effective_date": line[1] or False,
             "code": line[2] or False,
-            "street": line[3] or False,
-            "street2": line[4] or False,
-            "city": line[5] or False,
-            "state": line[6] or False,
-            "postal_code": line[7] or False,
-            "country": line[8] or False,
-            "owner_vat": line[9] or False,
-            "owner_firstname": line[10] or False,
-            "owner_lastname": line[11] or False,
+            "contracted_power": line[3] or False,
+            "street": line[4] or False,
+            "street2": line[5] or False,
+            "city": line[6] or False,
+            "state": line[7] or False,
+            "postal_code": line[8] or False,
+            "country": line[9] or False,
+            "cadastral_reference": line[10] or False,
+            "owner_vat": line[11] or False,
+            "owner_firstname": line[12] or False,
+            "owner_lastname": line[13] or False,
         }
 
     def _parse_file(self, data_file):
@@ -245,5 +247,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 "country_id": country.id,
                 "owner_id": owner.id,
                 "partner_id": partner.id,
+                "contracted_power": line_dict["contracted_power"],
+                "cadastral_reference": line_dict["cadastral_reference"],
             }
         )
