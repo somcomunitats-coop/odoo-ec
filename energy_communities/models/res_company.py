@@ -347,22 +347,23 @@ class ResCompany(models.Model):
         }
 
     # TODO: Unused functions. Delete if really not needed.
-    # @api.model
-    # def get_real_ce_company_id(self, api_param_odoo_compant_id):
-    #     if api_param_odoo_compant_id == self.API_PARAM_ID_VALUE_FOR_COORDINADORA:
-    #         return self.search([("coordinator", "=", True)], limit=1) or None
-    #     else:
-    #         return self.search([("id", "=", api_param_odoo_compant_id)]) or None
-    # def check_ce_has_admin(self):
-    #     self.ensure_one()
-    #     admin_roles_ids = [
-    #         r["odoo_role_id"]
-    #         for r in self.env["res.users"].ce_user_roles_mapping().values()
-    #         if r["is_admin"]
-    #     ]
-    #     company_user_ids = self.get_ce_members().ids
-    #     admins_user_ids = []
-    #     for admin_role in self.env["res.users.role"].sudo().browse(admin_roles_ids):
-    #         for role_line in admin_role.line_ids:
-    #             admins_user_ids.append(role_line.user_id.id)
-    #     return any([user in admins_user_ids for user in company_user_ids])
+    @api.model
+    def get_real_ce_company_id(self, api_param_odoo_compant_id):
+        if api_param_odoo_compant_id == self.API_PARAM_ID_VALUE_FOR_COORDINADORA:
+            return self.search([("coordinator", "=", True)], limit=1) or None
+        else:
+            return self.search([("id", "=", api_param_odoo_compant_id)]) or None
+
+    def check_ce_has_admin(self):
+        self.ensure_one()
+        admin_roles_ids = [
+            r["odoo_role_id"]
+            for r in self.env["res.users"].ce_user_roles_mapping().values()
+            if r["is_admin"]
+        ]
+        company_user_ids = self.get_ce_members().ids
+        admins_user_ids = []
+        for admin_role in self.env["res.users.role"].sudo().browse(admin_roles_ids):
+            for role_line in admin_role.line_ids:
+                admins_user_ids.append(role_line.user_id.id)
+        return any([user in admins_user_ids for user in company_user_ids])
