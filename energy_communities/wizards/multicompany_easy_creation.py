@@ -100,7 +100,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         selection=_LEGAL_FORM_VALUES,
         string="Legal form",
     )
-    legal_name = fields.Char(string="Legal name")
+    legal_name = fields.Char(string="Legal name", required=True)
     ce_status = fields.Selection(
         selection=_CE_STATUS_VALUES,
         string="Energy Community state",
@@ -110,6 +110,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         default=True, string="Run the post hook in a cron job or not"
     )
     # landing / public data
+    create_landing = fields.Boolean(string="Create Landing", default=False)
     landing_short_description = fields.Text(string="Short description")
     landing_long_description = fields.Text(string="Long description")
     ce_tag_ids = fields.Many2many("crm.tag", string="Energy Community Services")
@@ -248,7 +249,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     def action_accept(self):
         self.create_company()
         self.add_company_managers()
-        self.create_public_data()
+        if self.create_landing:
+            self.create_public_data()
         if self.crm_lead_id:
             self.add_company_log()
             self.crm_lead_id.action_set_won_rainbowman()
