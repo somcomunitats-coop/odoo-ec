@@ -119,18 +119,21 @@ class ResCompany(models.Model):
                     [("hierarchy_level", "=", "coordinator")]
                 )
 
-    @api.depends("hierarchy_level")
+    # TODO: Admin funtion not working
     def _compute_admins(self):
-        role_name = self._get_admin_role_name_from_hierarchy_level()
-        for rec in self:
-            role_lines = self.env["res.users.role.line"].search(
-                [
-                    ("company_id.id", "=", self.id),
-                    ("active", "=", True),
-                    ("role_id.code", "=", role_name),
-                ]
-            )
-            rec.admins = role_lines.mapped("user_id")
+        pass
+        # for rec in self:
+        #     role_name = rec._get_admin_role_name_from_hierarchy_level()
+        #     print("ROLE NAME")
+        #     print(role_name)
+        #     role_lines = self.env["res.users.role.line"].search(
+        #         [
+        #             ("company_id.id", "=", rec.id),
+        #             ("active", "=", True),
+        #             ("role_id.code", "=", role_name),
+        #         ]
+        #     )
+        #     rec.admins = role_lines.mapped("user_id")
 
     # ONCHANGE ACTIONS
     @api.onchange("hierarchy_level")
@@ -143,10 +146,14 @@ class ResCompany(models.Model):
         for rec in self:
             rec._validate_uniqueness()
 
-    @api.constrains("hierarchy_level", "parent_id")
+    @api.constrains("hierarchy_level", "parent_id", "partner_id")
     def _check_hierarchy_level(self):
         for rec in self:
             rec._validate_hierarchy()
+            # rec._reorganize_partner_companies()
+
+    # UTILS
+    # def _reorganize_partner_companies(self):
 
     # VALIDATION
     def _validate_hierarchy(self):
