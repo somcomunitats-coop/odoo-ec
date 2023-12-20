@@ -119,21 +119,17 @@ class ResCompany(models.Model):
                     [("hierarchy_level", "=", "coordinator")]
                 )
 
-    # TODO: Admin funtion not working
     def _compute_admins(self):
-        pass
-        # for rec in self:
-        #     role_name = rec._get_admin_role_name_from_hierarchy_level()
-        #     print("ROLE NAME")
-        #     print(role_name)
-        #     role_lines = self.env["res.users.role.line"].search(
-        #         [
-        #             ("company_id.id", "=", rec.id),
-        #             ("active", "=", True),
-        #             ("role_id.code", "=", role_name),
-        #         ]
-        #     )
-        #     rec.admins = role_lines.mapped("user_id")
+        for rec in self:
+            role_name = rec._get_admin_role_name_from_hierarchy_level()
+            role_lines = self.env["res.users.role.line"].search(
+                [
+                    ("company_id.id", "=", rec.id),
+                    ("active", "=", True),
+                    ("role_id.code", "=", role_name),
+                ]
+            )
+            rec.admins = role_lines.mapped("user_id")
 
     # ONCHANGE ACTIONS
     @api.onchange("hierarchy_level")
@@ -150,10 +146,6 @@ class ResCompany(models.Model):
     def _check_hierarchy_level(self):
         for rec in self:
             rec._validate_hierarchy()
-            # rec._reorganize_partner_companies()
-
-    # UTILS
-    # def _reorganize_partner_companies(self):
 
     # VALIDATION
     def _validate_hierarchy(self):
@@ -185,7 +177,7 @@ class ResCompany(models.Model):
             sanit_vat = re.sub(r"[^a-zA-Z0-9]", "", self.vat).upper()
             if sanit_vat in [
                 re.sub(r"[^a-zA-Z0-9]", "", c.vat).upper()
-                for c in self.env["res.company"].search([])
+                for c in self.env["res.company"].search([("id", "!=", self.id)])
                 if c.vat
             ]:
                 raise UserError(
@@ -196,13 +188,16 @@ class ResCompany(models.Model):
         # check for name
         if self.name:
             existing_company = self.env["res.company"].search(
-                [("name", "=", self.name)]
+                [
+                    ("id", "!=", self.id),
+                    ("name", "=", self.name),
+                ]
             )
             if existing_company:
                 raise UserError(
                     _(
                         "Unable to create new company because there is an allready existing company with this NAME: {}"
-                    ).format(vals["name"])
+                    ).format(self.name)
                 )
 
     # GETTERS
