@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template inherit_id="account.report_invoice_document" id="energy_delivered_invoice_template" primary="True">
+
+            <xpath expr="//th[@name='th_quantity']" position="replace">
+                <th name="th_total_installation_generation"><span>Total installation generation</span></th>
+            </xpath>
+
+            <xpath expr="//th[@name='th_total_installation_generation']" position="after">
+                <th name="th_partition_coefficient"><span>Partition coefficient</span></th>
+            </xpath>
+
+            <xpath expr="//th[@name='th_priceunit']" position="after">
+                <th name="th_import"><span>Import</span></th>
+            </xpath>
+
+            <xpath expr="//th[@name='th_taxes']" position="replace"></xpath>
+            <xpath expr="//th[@name='th_subtotal']" position="replace"></xpath>
+
+            <xpath expr="//th[@name='th_partition_coefficient']" position="after">
+                <th name="th_total_amount_invoiced"><span>Total amount invoiced</span></th>
+            </xpath>
+
+            <xpath expr="//td[@name='account_invoice_line_name']" position="after">
+                <td name="td_total_installation_generation">
+                    <span t-field="line.selfconsumption_id.power"/><span> kWh</span>
+                </td>
+            </xpath>
+
+            <xpath expr="//td[@name='td_total_installation_generation']" position="after">
+                <td name="td_partition_coefficient">
+                    <t t-if="line.contract_line_id.contract_id.supply_point_assignation_id.coefficient">
+                        <span t-field="line.contract_line_id.contract_id.supply_point_assignation_id.coefficient"/>
+                    </t>
+                </td>
+            </xpath>
+
+            <xpath expr="//span[@id='line_tax_ids']" position="replace"></xpath>
+        </template>
+
+        <template id="report_invoice_with_payments" inherit_id="account.report_invoice_with_payments">
+            <xpath expr='//t[@t-call="account.report_invoice_document"]' position="after">
+                <t t-if="o._get_name_invoice_report() == 'energy_selfconsumption.energy_delivered_invoice_template'"
+                   t-call="energy_selfconsumption.energy_delivered_invoice_template" t-lang="lang"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

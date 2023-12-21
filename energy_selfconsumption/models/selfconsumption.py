@@ -1,6 +1,9 @@
 from datetime import datetime, timedelta
 
-from odoo import _, fields, models
+from stdnum.es import cups, referenciacatastral
+from stdnum.exceptions import *
+
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 INVOICING_VALUES = [
@@ -20,6 +23,14 @@ class Selfconsumption(models.Model):
         "energy_project.project": "project_id",
     }
     _description = "Self-consumption Energy Project"
+
+    _sql_constraints = [
+        (
+            "unique_code",
+            "UNIQUE(code)",
+            _("A project with this CAU already exists."),
+        ),
+    ]
 
     def _compute_distribution_table_count(self):
         for record in self:
@@ -97,6 +108,7 @@ class Selfconsumption(models.Model):
         string="Energy Reseller",
         help="Select the associated Energy Reseller",
     )
+    cadastral_reference = fields.Char(string="Cadastral reference")
 
     def get_distribution_tables(self):
         self.ensure_one()
@@ -184,14 +196,16 @@ class Selfconsumption(models.Model):
                 raise ValidationError(
                     _("Project must have defined a invoicing mode before activation.")
                 )
-
-            # Create ContractGenerationWizard
-            contract_wizard = self.env[
-                "energy_selfconsumption.contract_generation.wizard"
-            ].create({"selfconsumption_id": self.id})
-
-            # Generate Contracts
-            contract_wizard.generate_contracts_button()
+            return {
+                "name": _("Generate Contracts"),
+                "type": "ir.actions.act_window",
+                "view_mode": "form",
+                "res_model": "energy_selfconsumption.contract_generation.wizard",
+                "views": [(False, "form")],
+                "view_id": False,
+                "target": "new",
+                "context": {"default_selfconsumption_id": self.id},
+            }
 
     def set_invoicing_mode(self):
         return {
@@ -324,6 +338,94 @@ class Selfconsumption(models.Model):
             selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
 
         return True
+
+
+    def send_power_acquired_invoicing_reminder(self):
+        today = fields.date.today()
+        projects = self.env["contract.contract"].read_group(
+            [
+                (
+                    "project_id.selfconsumption_id.invoicing_mode",
+                    "=",
+                    "power_acquired",
+                ),
+                ("recurring_next_date", "=", today),
+            ],
+            ["project_id"],
+            ["project_id"],
+        )
+        template = self.env.ref(
+            "energy_selfconsumption.selfconsumption_power_acquired_invoicing_reminder",
+            True,
+        )
+        for project in projects:
+            selfconsumption_id = self.browse(project["project_id"][0])
+            contract = selfconsumption_id.contract_ids[0]
+            next_invoicing = contract.recurring_next_date
+            ctx = {
+                "next_invoicing": next_invoicing.strftime("%d-%m-%Y"),
+            }
+            selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
+
+        return True
+
+    @api.constrains("code")
+    def _check_valid_code(self):
+        """
+        The following are evaluated:
+            1. The first 22 digits correspond to the CUPS.
+            2. The character after CUPS is A
+            3. And the last 3 characters are numbers.
+        """
+        for record in self:
+            if record.code:
+                # Validate the total length of the CAU, check if the first digits are CUPS and get the last 4 characters
+                if len(record.code) == 26:
+                    self.validate_cups(record.code[:22])
+                    last_digits = record.code[22:]
+                else:
+                    error_message = _("Invalid CAU: The length is not correct")
+                    raise ValidationError(error_message)
+
+                # Check if the character after CUPS is 'A'
+                if not last_digits.startswith("A"):
+                    error_message = _("Invalid CAU: The character after CUPS is not A")
+                    raise ValidationError(error_message)
+
+                # Check if the last 3 characters are numbers
+                if not last_digits[-3:].isdigit():
+                    error_message = _("Invalid CAU: Last 3 digits are not numbers")
+                    raise ValidationError(error_message)
+
+    def validate_cups(self, cups_number):
+        try:
+            cups.validate(cups_number)
+        except InvalidLength:
+            error_message = _(
+                "Invalid CAU: The first characters related to CUPS are incorrect. The length is incorrect."
+            )
+            raise ValidationError(error_message)
+        except InvalidComponent:
+            error_message = _("Invalid CAU: The CUPS does not start with 'ES'.")
+            raise ValidationError(error_message)
+        except InvalidFormat:
+            error_message = _("Invalid CAU: The CUPS has an incorrect format.")
+            raise ValidationError(error_message)
+        except InvalidChecksum:
+            error_message = _("Invalid CAU: The checksum of the CUPS is incorrect.")
+            raise ValidationError(error_message)
+
+    @api.constrains("cadastral_reference")
+    def _check_valid_cadastral_reference(self):
+        for record in self:
+            if record.cadastral_reference:
+                try:
+                    referenciacatastral.validate(self.cadastral_reference)
+                except Exception as e:
+                    error_message = _("Invalid Cadastral Reference: {error}").format(
+                        error=e
+                    )
+                    raise ValidationError(error_message)
 
 
 class CoefficientReport(models.TransientModel):

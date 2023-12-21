@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+  <template
+    id="assets_frontend"
+    inherit_id="web.assets_frontend"
+    name="community_data_website_script"
+  >
+        <xpath expr="." position="inside">
+            <script
+        type="text/javascript"
+        src="/energy_communities/static/src/js/community-data-website.js"
+      />
+        </xpath>
+    </template>
+
+    <template
+    id="community_data_form_fields_template"
+    name="community_data_form_fields_template"
+  >
+      <div class="row">
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_name" />
+            <t t-set="key" t-value="ce_name_key" />
+            <t t-set="label" t-value="ce_name_label" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_fiscal_name" />
+            <t t-set="key" t-value="ce_fiscal_name_key" />
+            <t t-set="label" t-value="ce_fiscal_name_label" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_textarea">
+            <t t-set="value" t-value="ce_description" />
+            <t t-set="key" t-value="ce_description_key" />
+            <t t-set="label" t-value="ce_description_label" />
+            <t t-set="rows" t-value="5" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_textarea">
+            <t t-set="value" t-value="ce_long_description" />
+            <t t-set="key" t-value="ce_long_description_key" />
+            <t t-set="label" t-value="ce_long_description_label" />
+            <t t-set="rows" t-value="10" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <div class="col-md-6" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_address" />
+            <t t-set="key" t-value="ce_address_key" />
+            <t t-set="label" t-value="ce_address_label" />
+            <t t-set="required" t-value="pack_2" />
+          </t>
+        </div>
+        <div class="col-md-6" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_zip" />
+            <t t-set="key" t-value="ce_zip_key" />
+            <t t-set="label" t-value="ce_zip_label" />
+            <t t-set="required" t-value="pack_2" />
+          </t>
+        </div>
+        <div class="col-md-6" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_city" />
+            <t t-set="key" t-value="ce_city_key" />
+            <t t-set="label" t-value="ce_city_label" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <div class="col-md-6" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_selection">
+            <t t-set="value" t-value="ce_state" />
+            <t t-set="key" t-value="ce_state_key" />
+            <t t-set="label" t-value="ce_state_label" />
+            <t t-set="options" t-value="state_options" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <div class="col-md-6" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_email">
+            <t t-set="value" t-value="email_from" />
+            <t t-set="key" t-value="email_from_key" />
+            <t t-set="label" t-value="email_from_label" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <div class="col-md-6" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="contact_phone" />
+            <t t-set="key" t-value="contact_phone_key" />
+            <t t-set="label" t-value="contact_phone_label" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_selection">
+            <t t-set="value" t-value="current_lang" />
+            <t t-set="key" t-value="current_lang_key" />
+            <t t-set="label" t-value="current_lang_label" />
+            <t t-set="options" t-value="lang_options" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_selection_checkbox">
+            <t t-set="value" t-value="ce_services" />
+            <t t-set="key" t-value="ce_services_key" />
+            <t t-set="label" t-value="ce_services_label" />
+            <t t-set="options" t-value="energy_service_options" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_number">
+            <t t-set="value" t-value="ce_number_of_members" />
+            <t t-set="key" t-value="ce_number_of_members_key" />
+            <t t-set="label" t-value="ce_number_of_members_label" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_selection_radio">
+            <t t-set="value" t-value="ce_status" />
+            <t t-set="key" t-value="ce_status_key" />
+            <t t-set="label" t-value="ce_status_label" />
+            <t t-set="options" t-value="community_status_options" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_textarea">
+            <t t-set="value" t-value="ce_why_become_cooperator" />
+            <t t-set="key" t-value="ce_why_become_cooperator_key" />
+            <t t-set="label" t-value="ce_why_become_cooperator_label" />
+            <t t-set="rows" t-value="5" />
+            <t t-set="maxlength" t-value="100" />
+            <t
+            t-set="description"
+          >In this section you can briefly explain the advantages of joining the community</t>
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_textarea">
+            <t t-set="value" t-value="ce_become_cooperator_process" />
+            <t t-set="key" t-value="ce_become_cooperator_process_key" />
+            <t t-set="label" t-value="ce_become_cooperator_process_label" />
+            <t t-set="rows" t-value="5" />
+            <t t-set="maxlength" t-value="100" />
+            <t
+            t-set="description"
+          >Explain the process to become cooperator. Include payment information.</t>
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <div class="row">
+            <t t-call="energy_communities.form_field_image">
+              <t t-set="value" t-value="ce_primary_image_file" />
+              <t t-set="key" t-value="ce_primary_image_file_key" />
+              <t t-set="label" t-value="ce_primary_image_file_label" />
+              <t t-set="description">If possible upload a group image</t>
+              <t t-set="required" t-value="True" />
+            </t>
+          </div>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <div class="row">
+            <t t-call="energy_communities.form_field_image">
+              <t t-set="value" t-value="ce_secondary_image_file" />
+              <t t-set="key" t-value="ce_secondary_image_file_key" />
+              <t t-set="label" t-value="ce_secondary_image_file_label" />
+              <t t-set="required" t-value="True" />
+            </t>
+          </div>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <div class="row">
+            <t t-call="energy_communities.form_field_image">
+              <t t-set="value" t-value="ce_logo_image_file" />
+              <t t-set="key" t-value="ce_logo_image_file_key" />
+              <t t-set="label" t-value="ce_logo_image_file_label" />
+            </t>
+          </div>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_selection_radio">
+            <t t-set="value" t-value="ce_type" />
+            <t t-set="key" t-value="ce_type_key" />
+            <t t-set="label" t-value="ce_type_label" />
+            <t t-set="options" t-value="community_type_options" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_selection_radio">
+            <t t-set="value" t-value="ce_constitution_status" />
+            <t t-set="key" t-value="ce_constitution_status_key" />
+            <t t-set="label" t-value="ce_constitution_status_label" />
+            <t t-set="options" t-value="community_constitution_status_options" />
+            <t t-set="required" t-value="pack_2" />
+            <t
+            t-set="trigger"
+          >ce_constitution_status_other,ce_legal_form,ce_creation_date,ce_vat</t>
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_constitution_status_other" />
+            <t t-set="key" t-value="ce_constitution_status_other_key" />
+            <t t-set="label" t-value="ce_constitution_status_other_label" />
+            <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_constitution_status:other</t>
+            <t t-set="disabled">True</t>
+          </t>
+        </div>
+        <div class="col-md-6" t-if="pack_2">
+          <t t-call="energy_communities.form_field_selection">
+            <t t-set="value" t-value="ce_legal_form" />
+            <t t-set="key" t-value="ce_legal_form_key" />
+            <t t-set="label" t-value="ce_legal_form_label" />
+            <t t-set="options" t-value="community_legal_form_options" />
+            <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_constitution_status:constituted</t>
+            <t t-set="disabled">True</t>
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_date_past">
+            <t t-set="value" t-value="ce_creation_date" />
+            <t t-set="key" t-value="ce_creation_date_key" />
+            <t t-set="label" t-value="ce_creation_date_label" />
+            <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_constitution_status:constituted</t>
+            <t t-set="disabled">True</t>
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_vat" />
+            <t t-set="key" t-value="ce_vat_key" />
+            <t t-set="label" t-value="ce_vat_label" />
+            <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_constitution_status:constituted</t>
+            <t t-set="disabled">True</t>
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_number">
+            <t t-set="value" t-value="ce_member_mandatory_contribution" />
+            <t t-set="key" t-value="ce_member_mandatory_contribution_key" />
+            <t t-set="label" t-value="ce_member_mandatory_contribution_label" />
+            <t t-set="required" t-value="pack_2" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_textarea">
+            <t t-set="value" t-value="ce_registration_tool" />
+            <t t-set="key" t-value="ce_registration_tool_key" />
+            <t t-set="label" t-value="ce_registration_tool_label" />
+            <t t-set="rows" t-value="5" />
+            <t t-set="required" t-value="pack_2" />
+            <t
+            t-set="description"
+          >Non-computer support, Excels, computer program (which one?)</t>
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_selection_radio">
+            <t t-set="value" t-value="ce_account_management" />
+            <t t-set="key" t-value="ce_account_management_key" />
+            <t t-set="label" t-value="ce_account_management_label" />
+            <t t-set="options" t-value="community_management_options" />
+            <t t-set="required" t-value="pack_2" />
+            <t t-set="trigger">ce_management_can_enter_platform</t>
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_selection_radio">
+            <t t-set="value" t-value="ce_tax_management" />
+            <t t-set="key" t-value="ce_tax_management_key" />
+            <t t-set="label" t-value="ce_tax_management_label" />
+            <t t-set="options" t-value="community_management_options" />
+            <t t-set="required" t-value="pack_2" />
+            <t t-set="trigger">ce_management_can_enter_platform</t>
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_selection_radio">
+            <t t-set="value" t-value="ce_management_can_enter_platform" />
+            <t t-set="key" t-value="ce_management_can_enter_platform_key" />
+            <t t-set="label" t-value="ce_management_can_enter_platform_label" />
+            <t t-set="options" t-value="yes_no_options" />
+            <t t-set="required" t-value="pack_2" />
+            <t
+            t-set="showif"
+          >ce_account_management,ce_tax_management:external_management</t>
+            <t t-set="disabled">True</t>
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_selection_radio">
+            <t t-set="value" t-value="ce_manager" />
+            <t t-set="key" t-value="ce_manager_key" />
+            <t t-set="label" t-value="ce_manager_label" />
+            <t t-set="options" t-value="community_manager_options" />
+            <t t-set="required" t-value="pack_2" />
+            <t
+            t-set="trigger"
+          >ce_manager_headline,ce_manager_firstname,ce_manager_surname,ce_manager_email,ce_manager_phone</t>
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_headline">
+            <t t-set="key">ce_manager_headline</t>
+            <t t-set="showif">ce_manager:member_admin,both</t>
+            <t t-set="disabled">True</t>
+            <t
+            t-set="headline"
+          >Contact person for the administrative management of the Energy Community</t>
+          </t>
+        </div>
+        <div class="col-md-6" t-if="pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_manager_firstname" />
+            <t t-set="key" t-value="ce_manager_firstname_key" />
+            <t t-set="label" t-value="ce_manager_firstname_label" />
+            <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_manager:member_admin,both</t>
+            <t t-set="disabled">True</t>
+          </t>
+        </div>
+        <div class="col-md-6" t-if="pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_manager_surname" />
+            <t t-set="key" t-value="ce_manager_surname_key" />
+            <t t-set="label" t-value="ce_manager_surname_label" />
+            <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_manager:member_admin,both</t>
+            <t t-set="disabled">True</t>
+          </t>
+        </div>
+        <div class="col-md-6" t-if="pack_2">
+          <t t-call="energy_communities.form_field_email">
+            <t t-set="value" t-value="ce_manager_email" />
+            <t t-set="key" t-value="ce_manager_email_key" />
+            <t t-set="label" t-value="ce_manager_email_label" />
+            <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_manager:member_admin,both</t>
+            <t t-set="disabled">True</t>
+          </t>
+        </div>
+        <div class="col-md-6" t-if="pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_manager_phone" />
+            <t t-set="key" t-value="ce_manager_phone_key" />
+            <t t-set="label" t-value="ce_manager_phone_label" />
+            <t t-set="required" t-value="pack_2" />
+            <t t-set="showif">ce_manager:member_admin,both</t>
+            <t t-set="disabled">True</t>
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_selection_radio">
+            <t t-set="value" t-value="ce_payment_method" />
+            <t t-set="key" t-value="ce_payment_method_key" />
+            <t t-set="label" t-value="ce_payment_method_label" />
+            <t t-set="options" t-value="community_payment_method_options" />
+            <t t-set="required" t-value="pack_2" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_iban_1" />
+            <t t-set="key" t-value="ce_iban_1_key" />
+            <t t-set="label" t-value="ce_iban_1_label" />
+            <t t-set="required" t-value="pack_2" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_iban_2" />
+            <t t-set="key" t-value="ce_iban_2_key" />
+            <t t-set="label" t-value="ce_iban_2_label" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_textarea">
+            <t t-set="value" t-value="ce_extra_charges" />
+            <t t-set="key" t-value="ce_extra_charges_key" />
+            <t t-set="label" t-value="ce_extra_charges_label" />
+            <t t-set="rows" t-value="5" />
+            <t t-set="required" t-value="pack_2" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_textarea">
+            <t t-set="value" t-value="ce_voluntary_contributions" />
+            <t t-set="key" t-value="ce_voluntary_contributions_key" />
+            <t t-set="label" t-value="ce_voluntary_contributions_label" />
+            <t t-set="rows" t-value="5" />
+            <t t-set="required" t-value="pack_2" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_2">
+          <t t-call="energy_communities.form_field_textarea">
+            <t t-set="value" t-value="ce_other_comments" />
+            <t t-set="key" t-value="ce_other_comments_key" />
+            <t t-set="label" t-value="ce_other_comments_label" />
+            <t t-set="rows" t-value="5" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_web_url" />
+            <t t-set="key" t-value="ce_web_url_key" />
+            <t t-set="label" t-value="ce_web_url_label" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_twitter_url" />
+            <t t-set="key" t-value="ce_twitter_url_key" />
+            <t t-set="label" t-value="ce_twitter_url_label" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_instagram_url" />
+            <t t-set="key" t-value="ce_instagram_url_key" />
+            <t t-set="label" t-value="ce_instagram_url_label" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_facebook_url" />
+            <t t-set="key" t-value="ce_facebook_url_key" />
+            <t t-set="label" t-value="ce_facebook_url_label" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_telegram_url" />
+            <t t-set="key" t-value="ce_telegram_url_key" />
+            <t t-set="label" t-value="ce_telegram_url_label" />
+          </t>
+        </div>
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <t t-call="energy_communities.form_field_checkbox">
+            <t t-set="value" t-value="ce_privacy_policy" />
+            <t t-set="key" t-value="ce_privacy_policy_key" />
+            <t t-set="label" t-value="ce_privacy_policy_label" />
+            <t t-set="required" t-value="True" />
+          </t>
+        </div>
+        <!-- TODO: Make this description dynamic and db translatable -->
+        <div class="col-md-12" t-if="pack_1 or pack_2">
+          <p
+        >DATA PROTECTION INFORMATION. Purposes: to respond to your requests. Rights: you can withdraw your consent at any time, as well as access, rectify and delete your data and other rights at <a
+            href="mailto:somenergia@delegado-datos.com"
+          >somenergia@delegado-datos.com</a>. Additional information: <a
+            href="https://somcomunitats.coop/politica-de-privacitat/"
+            target="_blank"
+          >Privacy policy</a>.</p>
+        </div>
+      </div>
+    </template>
+    <template
+    id="community_data_close_message_template"
+    name="community_data_close_message_template"
+  >
+        <button type="button" class="close" data-dismiss="alert">
+          &amp;times;
+        </button>
+    </template>
+
+    <template
+    id="community_data_error_message_template"
+    name="community_data_error_message_template"
+  >
+      <t t-foreach="error_msgs or []" t-as="error_msg">
+        <br />
+        <div class="alert alert-danger">
+          <t t-raw="error_msg" />
+        </div>
+      </t>
+    </template>
+
+    <template
+    id="community_data_form_successful_msg"
+    name="community_data_form_successful_msg"
+  >
+      <div class="alert alert-success">
+        <p>
+          Your data has been successfully registered.
+        </p>
+        <a type="button" t-attf-href="#{page_url}" class="btn btn-light">
+          Submit more data
+        </a>
+      </div>
+    </template>
+
+    <template
+    id="community_data_form_csrf_template"
+    name="community_data_form_csrf_template"
+  >
+      <div name="csrf_token_container">
+        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+      </div>
+    </template>
+
+    <template id="community_data_form" name="community_data_form">
+      <form
+      t-attf-action="#{form_submit_url}"
+      method="post"
+      class="form-horizontal mt32 oe_subscription_request_form"
+      enctype="multipart/form-data"
+    >
+        <t t-call="energy_communities.community_data_form_csrf_template" />
+        <t t-call="energy_communities.community_data_form_fields_template" />
+        <div class="text-center">
+          <button class="btn btn-primary mt-3 mb-3 text-center">Send</button>
+        </div>
+      </form>
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template id="community_data_headline" name="community_data_headline">
+      <t t-if="pack_2">
+        <h2
+        class="mt-4 text-center"
+      >Data collection form required for the integration of <strong><t
+            t-esc="ce_name"
+          /></strong> to the <strong>public spaces</strong> of our <a
+          href="https://somcomunitats.coop"
+          target="_blank"
+        >web</a> and to our <strong
+        >administrative management space</strong> (Odoo program for corporate, accounting and financial management)</h2>
+      </t>
+      <t t-else="pack_1">
+        <h2
+        class="mt-4 text-center"
+      >Data collection form required for the integration of <strong><t
+            t-esc="ce_name"
+          /></strong> to the <strong>public spaces</strong> of our <a
+          href="https://somcomunitats.coop"
+          target="_blank"
+        >web</a></h2>
+      </t>
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template
+    id="community_data_headline_message_open"
+    name="community_data_headline_message_open"
+  >
+      <br />
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template
+    id="community_data_headline_message_open"
+    name="community_data_headline_message_open"
+  >
+      <br />
+      <div class="alert alert-warning" t-if="not display_success">
+        <p><strong
+        >Alert!</strong> The content you enter in this form is what we will show directly on your page within Som Comunitats.</p>
+        <p
+      >Please check the grammatical and spelling quality of the texts and translations before submitting.</p>
+        <p><strong>Thank you so much!</strong></p>
+      </div>
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template
+    id="community_data_headline_message_closed"
+    name="community_data_headline_message_closed"
+  >
+      <br />
+      <div class="alert alert-warning" t-if="not display_success">
+        <t t-if="not error_msgs">
+          <p>Necessary data for the integration of the Community: <strong><t
+              t-esc="ce_name"
+            /></strong> to the technology platform Som Comunitats has been successfully submitted.</p>
+        </t>
+        <t t-if="error_msgs">
+          <p><strong>Closed form</strong></p>
+        </t>
+        <p>You can contact <a
+          href="mailto:suport@somcomunitats.coop"
+        >suport@somcomunitats.coop</a> for further assistance.</p>
+      </div>
+    </template>
+
+    <template id="community_data_page" name="community_data_page">
+      <t t-call="website.layout">
+        <div id="wrap" class="o_portal_wrap">
+          <div class="container oe_community_data">
+            <div class="row justify-content-center">
+              <div class="col-xs-12 col-sm-10  col-md-8 col-lg-8">
+                <t t-if="global_error">
+                  <t
+                  t-call="energy_communities.community_data_error_message_template"
+                />
+                </t>
+                <t t-if="not global_error">
+                  <t t-if="closed_form">
+                    <t
+                    t-call="energy_communities.community_data_headline_message_closed"
+                  />
+                  </t>
+                  <t t-if="not closed_form">
+                    <t t-call="energy_communities.community_data_headline" />
+                    <t
+                    t-call="energy_communities.community_data_headline_message_open"
+                  />
+                    <t
+                    t-call="energy_communities.community_data_error_message_template"
+                  />
+                    <t
+                    t-if="display_success"
+                    t-call="energy_communities.community_data_form_successful_msg"
+                  />
+                    <t
+                    t-if="display_form"
+                    t-call="energy_communities.community_data_form"
+                  />
+                  </t>
+                </t>
+              </div>
+            </div>
+          </div>
+        </div>
+      </t>
+    </template>
+</odoo>

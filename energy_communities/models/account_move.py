@@ -86,6 +86,20 @@ class AccountMove(models.Model):
         if not self.release_capital_request:
             return super()._get_starting_sequence()
         starting_sequence = "%s/%04d/000" % (self.journal_id.code, self.date.year)
-        if self.journal_id.refund_sequence and self.move_type in ('out_refund', 'in_refund'):
+        if self.journal_id.refund_sequence and self.move_type in (
+            "out_refund",
+            "in_refund",
+        ):
             starting_sequence = "R" + starting_sequence
         return starting_sequence
+
+    def get_mail_template_certificate(self):
+        if self.subscription_request.is_voluntary:
+            mail_template = (
+                "energy_communities.email_template_conditions_voluntary_share"
+            )
+        elif self.partner_id.member:
+            mail_template = "cooperator.email_template_certificat_increase"
+        else:
+            mail_template = "cooperator.email_template_certificat"
+        return self.env.ref(mail_template)

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="form_field_part_description" name="form_field_part_description">
+      <span
+      style="display:block;font-size:13px;font-family:'Roboto',sans-serif;font-weight:300;"
+      t-if="field_description"
+    ><t t-esc="field_description" /></span>
+    </template>
+    <template id="form_field_part_label" name="form_field_part_label">
+      <label t-att="{'for': field_key}"><t t-esc="field_label" /><span
+        t-if="field_required"
+      > *</span></label>
+    </template>
+    <template id="form_headline" name="form_headline">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group field-#{key} #{disabled and ' form-group-disabled'}"
+      t-att-data-showif="showif"
+    >
+      <label><t t-esc="headline" /></label>
+      </div>
+    </template>
+    <template id="form_field_text" name="form_field_text">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-att-data-showif="showif"
+    >
+      <t t-call="energy_communities.form_field_part_label">
+        <t t-set="field_key" t-value="key" />
+        <t t-set="field_label" t-value="label" />
+        <t t-set="field_required" t-value="required" />
+      </t>
+      <t t-call="energy_communities.form_field_part_description">
+        <t t-set="field_description" t-value="description" />
+      </t>
+        <input
+        t-attf-class="form-control form-control-sm#{trigger and ' data-trigger' or ''}"
+        t-attf-id="#{key}"
+        type="text"
+        t-attf-name="#{key}"
+        t-attf-value="#{value or ''}"
+        t-att-required="required"
+        t-att-disabled="disabled"
+        t-att-data-trigger="trigger"
+      />
+      </div>
+    </template>
+    <template id="form_field_number" name="form_field_number">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-att-data-showif="showif"
+    >
+        <t t-call="energy_communities.form_field_part_label">
+          <t t-set="field_key" t-value="key" />
+          <t t-set="field_label" t-value="label" />
+          <t t-set="field_required" t-value="required" />
+        </t>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="field_description" t-value="description" />
+        </t>
+        <input
+        t-attf-class="form-control form-control-sm#{trigger and ' data-trigger'}"
+        t-attf-id="#{key}"
+        type="number"
+        t-attf-name="#{key}"
+        min="1"
+        t-attf-value="#{value or ''}"
+        t-att-required="required"
+        t-att-disabled="disabled"
+        t-att-data-trigger="trigger"
+      />
+      </div>
+    </template>
+    <template id="form_field_email" name="form_field_email">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-att-data-showif="showif"
+    >
+        <t t-call="energy_communities.form_field_part_label">
+          <t t-set="field_key" t-value="key" />
+          <t t-set="field_label" t-value="label" />
+          <t t-set="field_required" t-value="required" />
+        </t>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="field_description" t-value="description" />
+        </t>
+        <input
+        t-attf-class="form-control form-control-sm#{trigger and ' data-trigger'}"
+        t-attf-id="#{key}"
+        autocapitalize="off"
+        type="email"
+        t-attf-name="#{key}"
+        t-attf-value="#{value or ''}"
+        t-att-required="required"
+        t-att-disabled="disabled"
+        t-att-data-trigger="trigger"
+      />
+      </div>
+    </template>
+    <template id="form_field_textarea" name="form_field_textarea">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-att-data-showif="showif"
+    >
+        <t t-call="energy_communities.form_field_part_label">
+          <t t-set="field_key" t-value="key" />
+          <t t-set="field_label" t-value="label" />
+          <t t-set="field_required" t-value="required" />
+        </t>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="field_description" t-value="description" />
+        </t>
+        <textarea
+        t-attf-class="form-control form-control-sm#{trigger and ' data-trigger'}"
+        t-attf-id="#{key}"
+        t-attf-name="#{key}"
+        t-attf-rows="#{rows}"
+        t-attf-maxlength="#{maxlength}"
+        t-att-required="required"
+        t-att-disabled="disabled"
+        t-att-data-trigger="trigger"
+      ><t t-esc="value or ''" /></textarea>
+      </div>
+    </template>
+    <template id="form_field_selection" name="form_field_selection">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-att-data-showif="showif"
+    >
+        <t t-call="energy_communities.form_field_part_label">
+          <t t-set="field_key" t-value="key" />
+          <t t-set="field_label" t-value="label" />
+          <t t-set="field_required" t-value="required" />
+        </t>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="field_description" t-value="description" />
+        </t>
+          <select
+        t-attf-class="form-control form-control-sm#{trigger and ' data-trigger'}"
+        t-attf-id="#{key}"
+        t-attf-name="#{key}"
+        t-att-required="required"
+        t-att-disabled="disabled"
+        t-att-data-trigger="trigger"
+      >
+            <option value="">Please choose an option</option>
+            <t t-foreach="options or []" t-as="option">
+              <option
+            t-att-value="option['id']"
+            t-att-selected="str(option['id']) == str(value)"
+          >
+                <t t-esc="option['name']" />
+              </option>
+            </t>
+          </select>
+      </div>
+    </template>
+    <template id="form_field_selection_checkbox" name="form_field_selection_checkbox">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-att-data-showif="showif"
+    >
+      <!-- TODO: Possible required validation trough javascript -->
+      <fieldset
+        t-att-required="required"
+        t-attf-class="#{trigger and 'data-trigger'}"
+        t-att-data-trigger="trigger"
+      >
+        <t t-call="energy_communities.form_field_part_label">
+          <t t-set="field_key" t-value="key" />
+          <t t-set="field_label" t-value="label" />
+          <t t-set="field_required" t-value="required" />
+        </t>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="field_description" t-value="description" />
+        </t>
+        <t t-foreach="options or []" t-as="option">
+          <div>
+            <input
+              type="checkbox"
+              t-att-id="option['id']"
+              t-att-name="option['id']"
+              t-att-checked="option['id'] in value"
+              t-att-disabled="disabled"
+            />
+            <span><t t-esc="option['name']" /></span>
+          </div>
+        </t>
+      </fieldset>
+    </div>
+    </template>
+    <template id="form_field_checkbox" name="form_field_checkbox">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-att-data-showif="showif"
+    >
+        <div>
+          <input
+          t-attf-class="#{trigger and ' data-trigger'}"
+          t-att-data-trigger="trigger"
+          type="checkbox"
+          t-att-id="key"
+          t-att-name="key"
+          t-att-checked="value=='on'"
+          t-att-required="required"
+          t-att-disabled="disabled"
+        />
+          <t t-call="energy_communities.form_field_part_label">
+            <t t-set="field_key" t-value="key" />
+            <t t-set="field_label" t-value="label" />
+            <t t-set="field_required" t-value="required" />
+          </t>
+        </div>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="field_description" t-value="description" />
+        </t>
+    </div>
+    </template>
+    <template id="form_field_selection_radio" name="form_field_selection_radio">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-att-data-showif="showif"
+    >
+      <fieldset
+        t-attf-class="#{trigger and 'data-trigger'}"
+        t-att-data-trigger="trigger"
+      >
+        <t t-call="energy_communities.form_field_part_label">
+          <t t-set="field_key" t-value="key" />
+          <t t-set="field_label" t-value="label" />
+          <t t-set="field_required" t-value="required" />
+        </t>
+        <t t-call="energy_communities.form_field_part_description">
+          <t t-set="field_description" t-value="description" />
+        </t>
+        <t t-foreach="options or []" t-as="option">
+          <div>
+            <input
+              type="radio"
+              t-att-id="option['id']"
+              t-att-value="option['id']"
+              t-att-name="key"
+              t-att-checked="option['id'] == value"
+              t-att-required="required"
+              t-att-disabled="disabled"
+            />
+            <span><t t-esc="option['name']" /></span>
+          </div>
+        </t>
+      </fieldset>
+    </div>
+    </template>
+    <template id="form_field_image" name="form_field_image">
+      <div class="col-md-6">
+        <div
+        t-attf-name="#{key}_container"
+        t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+        t-att-data-showif="showif"
+      >
+          <t t-call="energy_communities.form_field_part_label">
+            <t t-set="field_key" t-value="key" />
+            <t t-set="field_label" t-value="label" />
+            <t t-set="field_required" t-value="required" />
+          </t>
+          <t t-call="energy_communities.form_field_part_description">
+            <t t-set="field_description" t-value="description" />
+          </t>
+          <t t-call="energy_communities.form_field_part_description">
+            <t t-set="field_description">
+              Upload a new one to change
+            </t>
+          </t>
+          <input
+          type="file"
+          accept="image/*"
+          t-attf-class="form-control form-control-sm #{key}#{trigger and ' data-trigger'}"
+          t-attf-name="#{key}"
+          t-att-required="required and not value"
+          t-att-disabled="disabled"
+          t-att-data-trigger="trigger"
+        />
+        </div>
+      </div>
+      <div class="col-md-6">
+          <img t-if="value" t-attf-src="#{value}" width="100px" />
+      </div>
+    </template>
+    <template id="form_field_date_past" name="form_field_date_past">
+        <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-att-data-showif="showif"
+    >
+          <t t-set="date_placeholder" t-if="lang=='ca_ES'">dd/mm/aaaa</t>
+          <t t-set="date_placeholder" t-if="lang=='es_ES'">dd/mm/aaaa</t>
+          <t t-set="date_placeholder" t-if="lang=='en_US'">dd/mm/yyyy</t>
+          <t t-call="energy_communities.form_field_part_label">
+            <t t-set="field_key" t-value="key" />
+            <t t-set="field_label" t-value="label" />
+            <t t-set="field_required" t-value="required" />
+          </t>
+          <input
+        t-attf-class="form-control form-control-sm o_website_form_date_past#{trigger and ' data-trigger'}"
+        type="text"
+        t-attf-id="#{key}"
+        t-attf-name="#{key}"
+        t-attf-value="#{value or ''}"
+        t-attf-data-locale="#{lang}"
+        t-attf-placeholder="#{date_placeholder}"
+        t-att-required="required"
+        t-att-disabled="disabled"
+        t-att-data-trigger="trigger"
+      />
+        </div>
+    </template>
+</odoo>

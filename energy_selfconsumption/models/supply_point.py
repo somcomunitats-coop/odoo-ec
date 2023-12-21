@@ -1,4 +1,9 @@
+from stdnum.es import cups, referenciacatastral
+from stdnum.eu import vat
+from stdnum.exceptions import *
+
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class SupplyPoint(models.Model):
@@ -15,7 +20,7 @@ class SupplyPoint(models.Model):
     }
 
     name = fields.Char(compute="_compute_supply_point_name", store=True)
-    code = fields.Char(string="CUPS", required=True)
+    code = fields.Char(string="CUPS")
     owner_id = fields.Many2one(
         "res.partner",
         string="Owner",
@@ -57,6 +62,10 @@ class SupplyPoint(models.Model):
         readonly=True,
     )
     supplier_id = fields.Many2one("energy_project.supplier", string="Supplier")
+    cadastral_reference = fields.Char(string="Cadastral reference")
+    contracted_power = fields.Float(
+        string="Contracted power", digits=(10, 2), help="Value in kilowatts (kW)"
+    )
 
     @api.onchange("partner_id")
     def _onchange_partner_id(self):
@@ -69,3 +78,47 @@ class SupplyPoint(models.Model):
                 record.name = f"{record.partner_id.name} - {record.street}"
             else:
                 record.name = _("New Supply Point")
+
+    @api.constrains("code")
+    def _check_valid_code(self):
+        for record in self:
+            if record.code:
+                try:
+                    cups.validate(record.code)
+                except InvalidLength:
+                    error_message = _("Invalid CUPS: The length is incorrect.")
+                    raise ValidationError(error_message)
+                except InvalidComponent:
+                    error_message = _("Invalid CUPS: does not start with 'ES'.")
+                    raise ValidationError(error_message)
+                except InvalidFormat:
+                    error_message = _("Invalid CUPS: has an incorrect format.")
+                    raise ValidationError(error_message)
+                except InvalidChecksum:
+                    error_message = _("Invalid CUPS: The checksum is incorrect.")
+                    raise ValidationError(error_message)
+
+    @api.constrains("cadastral_reference")
+    def _check_valid_cadastral_reference(self):
+        for record in self:
+            if record.cadastral_reference:
+                try:
+                    referenciacatastral.validate(self.cadastral_reference)
+                except Exception as e:
+                    error_message = _("Invalid Cadastral Reference: {error}").format(
+                        error=e
+                    )
+                    raise ValidationError(error_message)
+
+    @api.constrains("owner_id")
+    def _check_valid_vat(self):
+        for record in self:
+            original_vat = record.owner_id.vat
+            if original_vat:
+                if not original_vat.startswith("ES"):
+                    original_vat = "ES" + original_vat
+                try:
+                    vat.validate(original_vat)
+                except Exception as e:
+                    error_message = _("Invalid VAT: {error}").format(error=e)
+                    raise ValidationError(error_message)
