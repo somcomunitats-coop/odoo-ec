@@ -283,27 +283,6 @@ class Selfconsumption(models.Model):
             "target": "self",
         }
 
-    def send_power_acquired_invoicing_reminder(self):
-        today = fields.date.today()
-        subjects = [
-            "Selfconsumption - Power Acquired Invoicing Reminder",
-            "Autoconsumo - Recordatorio Facturación Energía Adquirida",
-            "Autoconsum - Recordatori de facturació d'energia adquirida",
-        ]
-        proj_email_check = self.env["mail.mail"].search(
-            [
-                ("subject", "in", subjects),
-                ("date", ">=", datetime.combine(today, datetime.min.time())),
-                ("date", "<=", datetime.combine(today, datetime.max.time())),
-                ("body_html", "ilike", self.project_id.company_id.name),
-            ]
-        )
-        if len(proj_email_check) == 0:
-            self.env.ref(
-                "energy_selfconsumption.selfconsumption_power_aquired_invoicing_reminder",
-                False,
-            ).send_mail(self.id, raise_exception=True)
-
     def send_energy_delivery_invoicing_reminder(self):
         today = fields.date.today()
         date_validation = today + timedelta(days=3)
@@ -338,7 +317,6 @@ class Selfconsumption(models.Model):
             selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
 
         return True
-
 
     def send_power_acquired_invoicing_reminder(self):
         today = fields.date.today()
