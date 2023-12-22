@@ -249,6 +249,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     def action_accept(self):
         self.create_company()
         self.add_company_managers()
+        self.add_new_company_to_system_users()
         if self.create_landing:
             self.create_public_data()
         if self.crm_lead_id:
@@ -311,8 +312,19 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             )
         )
 
-    # TODO: maybe ask for the submission goal on place creation and propagate to place?
-    # TODO: what do we do with cooperator contact data on the public form?
+    def add_new_company_to_system_users(self):
+        print("Add admins")
+        print(self.env.ref("base.user_admin"))
+        print(self.env.ref("base.user_admin").company_ids)
+        # Add new company to admin
+        self.env.ref("base.user_admin").with_context(
+            company_ids=self.env.ref("base.user_admin").company_ids
+        ).write({"company_ids": (4, self.new_company_id.id)})
+        # Add new company to public user
+        self.env.ref("base.public_user").with_context(
+            company_ids=self.env.ref("base.user_admin").company_ids
+        ).write({"company_ids": (4, self.new_company_id.id)})
+
     def create_public_data(self):
         new_landing = self.new_company_id.sudo().create_landing()
         new_landing.sudo().write(

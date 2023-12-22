@@ -90,6 +90,7 @@ class CrmLead(models.Model):
                 .search([("code", "like", "44000%")], limit=1)
                 .id,
                 "create_user": False,
+                "create_landing": True,
             }
         )
         return creation_dict
