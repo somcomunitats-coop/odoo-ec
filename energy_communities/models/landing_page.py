@@ -43,8 +43,8 @@ class LandingPage(models.Model):
     )
     primary_image_file = fields.Image("Primary Image")
     secondary_image_file = fields.Image("Secondary Image")
-    short_description = fields.Text(string="Short description", translate=True)
-    long_description = fields.Text(string="Long description", translate=True)
+    short_description = fields.Html(string="Short description", translate=True)
+    long_description = fields.Html(string="Long description", translate=True)
     why_become_cooperator = fields.Html(string="Why become cooperator", translate=True)
     become_cooperator_process = fields.Html(
         string="Become cooperator process", translate=True

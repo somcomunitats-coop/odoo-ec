@@ -62,8 +62,8 @@
           <field name="secondary_image_file" widget="image" />
         </group>
         <group>
-          <field name="short_description" />
-          <field name="long_description" />
+          <field name="short_description" widget="html" />
+          <field name="long_description" widget="html" />
           <field name="why_become_cooperator" widget="html" />
           <field name="become_cooperator_process" widget="html" />
         </group>
