@@ -207,9 +207,7 @@
             <t t-set="label" t-value="ce_constitution_status_label" />
             <t t-set="options" t-value="community_constitution_status_options" />
             <t t-set="required" t-value="pack_2" />
-            <t
-            t-set="trigger"
-          >ce_constitution_status_other,ce_legal_form,ce_creation_date,ce_vat</t>
+            <t t-set="trigger">ce_constitution_status_other,ce_creation_date,ce_vat</t>
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
@@ -222,15 +220,13 @@
             <t t-set="disabled">True</t>
           </t>
         </div>
-        <div class="col-md-6" t-if="pack_2">
+        <div class="col-md-6" t-if="pack_1 or pack_2">
           <t t-call="energy_communities.form_field_selection">
             <t t-set="value" t-value="ce_legal_form" />
             <t t-set="key" t-value="ce_legal_form_key" />
             <t t-set="label" t-value="ce_legal_form_label" />
             <t t-set="options" t-value="community_legal_form_options" />
-            <t t-set="required" t-value="pack_2" />
-            <t t-set="showif">ce_constitution_status:constituted</t>
-            <t t-set="disabled">True</t>
+            <t t-set="required" t-value="pack_1 or pack_2" />
           </t>
         </div>
         <div class="col-md-12" t-if="pack_2">
