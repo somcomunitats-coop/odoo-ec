@@ -72,6 +72,11 @@ class CrmLead(models.Model):
         self.ensure_one()
         creation_dict = self._get_metadata_values()
         users = [user.id for user in self.company_id.get_users()]
+        # add system users to user_ids recordset
+        users = users + [
+            self.env.ref("base.user_admin").id,
+            self.env.ref("base.public_user").id,
+        ]
         creation_dict.update(
             {
                 "parent_id": self.company_id.id,
