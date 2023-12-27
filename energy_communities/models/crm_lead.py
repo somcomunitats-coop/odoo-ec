@@ -153,7 +153,7 @@ class CrmLead(models.Model):
                     else:
                         meta_dict[wizard_key] = meta_entry.value
                 if "name" not in meta_dict.keys():
-                    return UserError(
+                    raise UserError(
                         _("Metadata 'ce_name' must be defined for creating a company")
                     )
                 if "legal_name" not in meta_dict.keys():
