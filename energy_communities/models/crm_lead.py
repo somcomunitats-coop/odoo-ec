@@ -9,6 +9,7 @@ from odoo.exceptions import UserError
 from .model_mapping_conf import (
     _LEAD_METADATA__DATE_FIELDS,
     _LEAD_METADATA__ENERGY_TAGS_FIELDS,
+    _LEAD_METADATA__EXTID_FIELDS,
     _LEAD_METADATA__IMAGE_FIELDS,
     _LEAD_METADATA__LANG_FIELDS,
     _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD,
@@ -145,7 +146,18 @@ class CrmLead(models.Model):
                         meta_dict[wizard_key] = base64.b64encode(response.content)
                 # all other fields
                 else:
-                    meta_dict[wizard_key] = meta_entry.value
+                    # control external ids numeric
+                    if meta_key in _LEAD_METADATA__EXTID_FIELDS:
+                        if meta_entry.value.isdigit():
+                            meta_dict[wizard_key] = meta_entry.value
+                    else:
+                        meta_dict[wizard_key] = meta_entry.value
+                if "name" not in meta_dict.keys():
+                    return UserError(
+                        _("Metadata 'ce_name' must be defined for creating a company")
+                    )
+                if "legal_name" not in meta_dict.keys():
+                    meta_dict["legal_name"] = meta_dict["name"]
         return meta_dict
 
     def _format_date_for_creation(self, date_val):
