@@ -146,6 +146,7 @@ class ResCompany(models.Model):
     def _check_hierarchy_level(self):
         for rec in self:
             rec._validate_hierarchy()
+            rec.partner_id.compute_company_hierarchy_level()
 
     # VALIDATION
     def _validate_hierarchy(self):

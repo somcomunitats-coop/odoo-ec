@@ -31,12 +31,12 @@ class ResPartner(models.Model):
         _COMPANY_HIERARCHY_LEVEL,
         string="Company hierarchy level",
         default="none",
-        compute="_compute_company_hierarchy_level",
+        compute="compute_company_hierarchy_level",
         store=True,
     )
 
     @api.depends("company_id", "company_ids")
-    def _compute_company_hierarchy_level(self):
+    def compute_company_hierarchy_level(self):
         for record in self:
             rel_company = self.env["res.company"].search(
                 [("partner_id", "=", record.id)]
