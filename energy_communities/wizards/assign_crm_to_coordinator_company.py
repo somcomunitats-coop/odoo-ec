@@ -22,9 +22,20 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
     def assign_to_coordinator_company(self):
         self.ensure_one()
         self.remove_follower()
-        self.crm_lead_id.write(
-            {"company_id": self.assigned_company_id, "team_id": None}
+        new_crm_lead = self.crm_lead_id.copy(
+            {"team_id": None, "user_id": None, "stage_id": 1}  # New
         )
+        new_crm_lead.write(
+            {
+                "company_id": self.assigned_company_id,
+            }
+        )
+        self.crm_lead_id.write({"stage_id": 4, "ce_child_lead_id": new_crm_lead})  # Won
+        crm_lead_metadata = self.env["crm.lead.metadata.line"].search(
+            [("crm_lead_id", "=", self.crm_lead_id.id)]
+        )
+        for metadata in crm_lead_metadata:
+            new_crm_lead_metadata = metadata.copy({"crm_lead_id": new_crm_lead.id})
         self.add_follower()
 
     def remove_follower(self):
