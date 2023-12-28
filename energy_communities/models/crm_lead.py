@@ -57,6 +57,7 @@ class CrmLead(models.Model):
     is_instance_company = fields.Boolean(
         string="Is instance company", compute="_is_instance_company"
     )
+    ce_child_lead_id = fields.Many2one(comodel_name="crm.lead", string="Crm lead child")
 
     def _is_instance_company(self):
         company = self.env.company
