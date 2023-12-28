@@ -381,7 +381,19 @@
                       t-raw="company.voluntary_share_form_header_text"
                     /></p>
                                 </div>
+                <div name="become_cooperator_terms">
+                            <p
+                  >Note: Please, if you are not yet a member, you must process it through
+            these forms: <a
+                      t-att-href='"page/become_cooperator?odoo_company_id=" + str(company.id)'
+                    >INDIVIDUAL
+                PARTNER</a> and <a
+                      t-att-href='"page/become_company_cooperator?odoo_company_id=" + str(company.id)'
+                    >
+                LEGAL ENTITY PARTNER</a>.
+        </p>
 
+                </div>
                                 <div
                   class="form-group"
                   t-attf-class="form-group #{error and 'vat' in error and 'has-error' or ''}"
