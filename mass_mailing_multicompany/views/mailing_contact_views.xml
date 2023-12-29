@@ -1,0 +1,18 @@
+<odoo>
+  <data>
+    <record id="mailing_contact_view_form_inherit" model="ir.ui.view">
+        <field name="name">mailing.contact.view.form.inherit</field>
+        <field name="model">mailing.contact</field>
+        <field name="inherit_id" ref="mass_mailing.mailing_contact_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+              <group>
+                <group>
+                  <field name="company_id" />
+                </group>
+              </group>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+    <!--<record id="utm_campaign_view_form_inherit" model="ir.ui.view">-->
+    <!--    <field name="name">utm.campaign.view.form.inherit</field>-->
+    <!--    <field name="model">utm.campaign</field>-->
+    <!--    <field name="inherit_id" ref="mass_mailing.utm_campaign_view_form" />-->
+    <!--    <field name="arch" type="xml">-->
+    <!--        <xpath-->
+    <!--          expr="//notebook"-->
+    <!--          position="after"-->
+    <!--        >-->
+    <!--          <group>-->
+    <!--            <field name="company_id" />-->
+    <!--          </group>-->
+    <!--        </xpath>-->
+    <!--    </field>-->
+    <!--</record>-->
+    <record id="utm_stage_view_tree_inherit" model="ir.ui.view">
+        <field name="name">utm.stage.view.tree.inherit</field>
+        <field name="model">utm.stage</field>
+        <field name="inherit_id" ref="utm.utm_stage_view_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="company_id" />
+            </xpath>
+        </field>
+    </record>
+    <record id="utm_tag_view_tree_inherit" model="ir.ui.view">
+        <field name="name">utm.tag.view.tree.inherit</field>
+        <field name="model">utm.tag</field>
+        <field name="inherit_id" ref="utm.utm_tag_view_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="company_id" />
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>
