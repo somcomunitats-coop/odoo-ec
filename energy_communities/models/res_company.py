@@ -348,13 +348,6 @@ class ResCompany(models.Model):
         }
 
     # TODO: Unused functions. Delete if really not needed.
-    @api.model
-    def get_real_ce_company_id(self, api_param_odoo_compant_id):
-        if api_param_odoo_compant_id == self.API_PARAM_ID_VALUE_FOR_COORDINADORA:
-            return self.search([("coordinator", "=", True)], limit=1) or None
-        else:
-            return self.search([("id", "=", api_param_odoo_compant_id)]) or None
-
     def check_ce_has_admin(self):
         self.ensure_one()
         admin_roles_ids = [

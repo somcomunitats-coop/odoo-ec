@@ -35,7 +35,6 @@ class ResPartner(models.Model):
         store=True,
     )
 
-    @api.depends("company_id", "company_ids")
     def compute_company_hierarchy_level(self):
         for record in self:
             rel_company = self.env["res.company"].search(
