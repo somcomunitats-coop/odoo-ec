@@ -15,6 +15,7 @@ _HIERARCHY_LEVEL_VALUES = [
 ]
 
 _LEGAL_FORM_VALUES = [
+    ("undefined", _("Under definition")),
     ("cooperative", _("Cooperative")),
     ("non_profit", _("Non profit association")),
     ("limited_company", _("Limited company")),

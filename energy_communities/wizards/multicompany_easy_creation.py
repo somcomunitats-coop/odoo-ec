@@ -109,6 +109,10 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     hook_cron = fields.Boolean(
         default=True, string="Run the post hook in a cron job or not"
     )
+    # overwrite users domain
+    user_ids = fields.Many2many(
+        comodel_name="res.users", string="Users allowed", domain=[]
+    )
     # landing / public data
     create_landing = fields.Boolean(string="Create Landing", default=False)
     landing_short_description = fields.Text(string="Short description")
@@ -311,8 +315,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             )
         )
 
-    # TODO: maybe ask for the submission goal on place creation and propagate to place?
-    # TODO: what do we do with cooperator contact data on the public form?
     def create_public_data(self):
         new_landing = self.new_company_id.sudo().create_landing()
         new_landing.sudo().write(
