@@ -145,6 +145,7 @@ class LandingPage(models.Model):
             self.why_become_cooperator = ""
         if self.become_cooperator_process == "<p><br></p>":
             self.become_cooperator_process = ""
+        legal_form_dict = dict(_LEGAL_FORM_VALUES)
         return {
             "landing": {
                 "id": self.id,
@@ -156,6 +157,12 @@ class LandingPage(models.Model):
                 "status": self.status,
                 "community_type": self.community_type,
                 "community_secondary_type": self.community_secondary_type,
+                "legal_form": self.env["ir.translation"]._get_source(
+                    name="addons/energy_communities/models/res_company.py",
+                    types="code",
+                    lang=self.env.context["lang"],
+                    source=legal_form_dict[self.community_secondary_type],
+                ),
                 "community_status": self.community_status,
                 "allow_new_members": self.allow_new_members,
                 "number_of_members": self.number_of_members,

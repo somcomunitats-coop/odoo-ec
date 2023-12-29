@@ -4,6 +4,10 @@ from odoo import SUPERUSER_ID, api, fields, models
 
 logger = logging.getLogger(__name__)
 
+from .res_company import _HIERARCHY_LEVEL_VALUES
+
+_COMPANY_HIERARCHY_LEVEL = _HIERARCHY_LEVEL_VALUES + [("none", "NONE")]
+
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
@@ -23,6 +27,21 @@ class ResPartner(models.Model):
     signup_expiration = fields.Datetime(
         groups="base.group_erp_manager,energy_communities.group_admin"
     )
+    company_hierarchy_level = fields.Selection(
+        _COMPANY_HIERARCHY_LEVEL,
+        string="Company hierarchy level",
+        default="none",
+        compute="compute_company_hierarchy_level",
+        store=True,
+    )
+
+    def compute_company_hierarchy_level(self):
+        for record in self:
+            rel_company = self.env["res.company"].search(
+                [("partner_id", "=", record.id)]
+            )
+            if rel_company:
+                record.company_hierarchy_level = rel_company.hierarchy_level
 
     @api.model
     def create(self, vals):

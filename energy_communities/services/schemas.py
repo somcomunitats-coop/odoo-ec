@@ -205,6 +205,7 @@ S_LANDING_PAGE_CREATE = {
             "status": {"type": "string"},
             "community_type": {"type": "string"},
             "community_secondary_type": {"type": "string"},
+            "legal_form": {"type": "string"},
             "community_status": {"type": "string"},
             "allow_new_members": {"type": "boolean"},
             "number_of_members": {"type": "integer"},

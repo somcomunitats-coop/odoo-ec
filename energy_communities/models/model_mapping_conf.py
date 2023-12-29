@@ -31,6 +31,12 @@ _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD = {
 _LEAD_METADATA__DATE_FIELDS = ["ce_creation_date"]
 _LEAD_METADATA__ENERGY_TAGS_FIELDS = ["ce_services"]
 _LEAD_METADATA__LANG_FIELDS = ["current_lang"]
+_LEAD_METADATA__EXTID_FIELDS = [
+    "ce_state",
+    "ce_primary_image_file",
+    "ce_secondary_image_file",
+    "ce_logo_image_file",
+]
 _LEAD_METADATA__IMAGE_FIELDS = [
     "ce_primary_image_file",
     "ce_secondary_image_file",
