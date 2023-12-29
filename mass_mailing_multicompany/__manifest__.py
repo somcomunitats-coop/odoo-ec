@@ -14,16 +14,17 @@
     # any module necessary for this one to work correctly
     "depends": [
         "base",
+        # "base_multi_company",
+        "utm",
         "mass_mailing",
-        # 'utm',
     ],
     # always loaded
     "data": [
-        # 'security/ir_rule_data.xml',
-        # 'views/mailing_mailing_views.xml',
-        # 'views/mailing_list_views.xml',
-        # 'views/mailing_contact_views.xml',
-        # 'views/utm_views.xml',
+        "security/ir_rule_data.xml",
+        "views/mailing_mailing_views.xml",
+        "views/mailing_list_views.xml",
+        "views/mailing_contact_views.xml",
+        "views/utm_views.xml",
     ],
     # only loaded in demonstration mode
     # 'demo': [
