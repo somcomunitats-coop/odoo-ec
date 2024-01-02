@@ -171,10 +171,6 @@
                   attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
                   options="{'no_create': True, 'no_edit':True, 'no_open': True}"
                 />
-                                <field
-                  name="cadastral_reference"
-                  attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
-                />
                             </group>
                             <group>
                                 <span

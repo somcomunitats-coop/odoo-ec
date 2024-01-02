@@ -14,29 +14,20 @@ _HIERARCHY_LEVEL_VALUES = [
     ("community", _("Community")),
 ]
 
-_LEGAL_FORM_VALUES = [
-    ("cooperative", _("Cooperative")),
-    ("non_profit", _("Non profit association")),
-    ("limited_company", _("Limited company")),
-    ("general_partnership", _("General partnership")),
-    ("community_of_property", _("community of property")),
-    ("limited_partnership", _("Limited partnership")),
-    ("stock_company", _("Stock company")),
-    ("individual_entrepreneur", _("Individual entrepreneur")),
+_LEGAL_FROM_VALUES = [
+    ("Societat Cooperativa", _("Societat Cooperativa")),
+    ("Associació sense ànim de lucre", _("Associació sense ànim de lucre")),
+    ("Societat Limitada", _("Societat Limitada")),
+    ("Societat Col·lectiva", _("Societat Col·lectiva")),
+    ("Comunitat de Bens", _("Comunitat de Bens")),
+    ("Societat Comanditària", _("Societat Comanditària")),
+    ("Societat Anónima", _("Societat Anónima")),
+    ("Empresari Individual", _("Empresari Individual")),
 ]
 
 _CE_STATUS_VALUES = [
     ("active", _("active")),
     ("building", _("building")),
-]
-
-_CE_MEMBER_STATUS_VALUES = [
-    ("open", _("Open")),
-    ("closed", _("Closed")),
-]
-_CE_TYPE = [
-    ("citizen", _("Citizen")),
-    ("industrial", _("Industrial")),
 ]
 
 
@@ -111,10 +102,10 @@ class ResCompany(models.Model):
         store=False,
     )
     legal_form = fields.Selection(
-        selection=_LEGAL_FORM_VALUES,
+        selection=_LEGAL_FROM_VALUES,
         string="Legal form",
     )
-    comercial_name = fields.Char(string="Comercial name")
+    legal_name = fields.Char(string="Legal name")
     ce_status = fields.Selection(
         selection=_CE_STATUS_VALUES,
         string="Energy Community state",
@@ -124,6 +115,33 @@ class ResCompany(models.Model):
     wordpress_db_username = fields.Char(string=_("Wordpress DB Admin Username"))
     wordpress_db_password = fields.Char(string=_("Wordpress DB Admin Password"))
     wordpress_base_url = fields.Char(string=_("Wordpress Base URL (JWT auth)"))
+
+    @api.constrains("hierarchy_level", "parent_id")
+    def _check_hierarchy_level(self):
+        for rec in self:
+            if rec.hierarchy_level == "instance":
+                if self.search_count(
+                    [("hierarchy_level", "=", "instance"), ("id", "!=", rec.id)]
+                ):
+                    raise ValidationError(_("An instance company already exists"))
+                if rec.parent_id:
+                    raise ValidationError(
+                        _("You cannot create a instance company with a parent company.")
+                    )
+            if (
+                rec.hierarchy_level == "coordinator"
+                and rec.parent_id.hierarchy_level != "instance"
+            ):
+                raise ValidationError(
+                    _("Parent company must be instance hierarchy level.")
+                )
+            if (
+                rec.hierarchy_level == "community"
+                and rec.parent_id.hierarchy_level != "coordinator"
+            ):
+                raise ValidationError(
+                    _("Parent company must be coordinator hierarchy level.")
+                )
 
     @api.constrains("hierarchy_level", "parent_id")
     def _check_hierarchy_level(self):
@@ -217,6 +235,7 @@ class ResCompany(models.Model):
                 )
                 .user_id
             )
+
         else:
             users = (
                 self.env["res.users.role.line"]
@@ -320,8 +339,17 @@ class ResCompany(models.Model):
         login_provider_id = self.env.ref("energy_communities.keycloak_login_provider")
         return login_provider_id.get_auth_link()
 
-    def action_create_landing(self):
-        new_landing = self.create_landing()
+    def create_landing(self):
+        landing_page = self.env["landing.page"]
+        vals = {"company_id": self.id, "name": self.name, "status": "draft"}
+        new_landing = landing_page.create(vals)
+        context = {
+            "__last_update": {},
+            "active_model": "landing.page",
+            "active_id": new_landing.id,
+        }
+        self.write({"landing_page_id": new_landing.id})
+        self.action_create_wp_landing()
         return {
             "type": "ir.actions.act_window",
             "view_type": "form",
@@ -331,19 +359,6 @@ class ResCompany(models.Model):
             "target": "current",
             "context": context,
         }
-
-    def create_landing(self):
-        landing_page = self.env["landing.page"]
-        vals = {"company_id": self.id, "name": self.comercial_name, "status": "draft"}
-        new_landing = landing_page.create(vals)
-        context = {
-            "__last_update": {},
-            "active_model": "landing.page",
-            "active_id": new_landing.id,
-        }
-        self.write({"landing_page_id": new_landing.id})
-        self.action_create_wp_landing()
-        return new_landing
 
     def action_create_wp_landing(self, fields=None):
         instance_company = self.env["res.company"].search(

@@ -26,48 +26,19 @@
                     <page string="Energy Community">
                         <group string="Energy Community">
                             <field name="parent_id" required="1" />
-                            <field name="vat" />
+                            <field name="vat" required="1" />
                             <field name="state_id" required="1" />
                             <field name="city" required="1" />
                             <field name="street" required="1" />
                             <field name="zip_code" required="1" />
-                            <field name="lat" required="1" />
-                            <field name="lng" required="1" />
-                            <field name="foundation_date" />
+                            <field name="foundation_date" required="1" />
                             <field name="email" required="1" />
-                            <field name="legal_form" />
-                            <field name="legal_name" />
+                            <field name="legal_form" required="1" />
+                            <field name="legal_name" required="1" />
                             <field name="ce_status" />
-                            <field name="phone" />
+                            <field name="phone" required="1" />
                             <field name="default_lang_id" required="1" />
-                        </group>
-                    </page>
-                </xpath>
-                <xpath expr="//page" position="after">
-                    <page string="Landing Page">
-                        <group string="Create Landing">
-                            <field name="create_landing" />
-                        </group>
-                        <group
-              string="Landing Page"
-              attrs="{'invisible': [('create_landing','=', False)]}"
-            >
-                            <field name="ce_number_of_members" />
-                            <field name="ce_member_status" />
-                            <field name="landing_community_type" />
-                            <field name="landing_short_description" />
-                            <field name="landing_long_description" />
-                            <field name="landing_why_become_cooperator" />
-                            <field name="landing_become_cooperator_process" />
-                            <field name="landing_primary_image_file" widget="image" />
-                            <field name="landing_secondary_image_file" widget="image" />
-                            <field name="landing_logo_file" widget="image" />
-                            <field name="ce_tag_ids" />
                             <field name="website" />
-                            <field name="ce_twitter_url" />
-                            <field name="ce_telegram_url" />
-                            <field name="ce_instagram_url" />
-                            <field name="ce_facebook_url" />
                         </group>
                     </page>
                 </xpath>

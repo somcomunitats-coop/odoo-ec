@@ -1,9 +1,6 @@
 from datetime import datetime, timedelta
 
-from stdnum.es import cups, referenciacatastral
-from stdnum.exceptions import *
-
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 from odoo.exceptions import ValidationError
 
 INVOICING_VALUES = [
@@ -23,14 +20,6 @@ class Selfconsumption(models.Model):
         "energy_project.project": "project_id",
     }
     _description = "Self-consumption Energy Project"
-
-    _sql_constraints = [
-        (
-            "unique_code",
-            "UNIQUE(code)",
-            _("A project with this CAU already exists."),
-        ),
-    ]
 
     def _compute_distribution_table_count(self):
         for record in self:
@@ -108,7 +97,6 @@ class Selfconsumption(models.Model):
         string="Energy Reseller",
         help="Select the associated Energy Reseller",
     )
-    cadastral_reference = fields.Char(string="Cadastral reference")
 
     def get_distribution_tables(self):
         self.ensure_one()
@@ -196,16 +184,14 @@ class Selfconsumption(models.Model):
                 raise ValidationError(
                     _("Project must have defined a invoicing mode before activation.")
                 )
-            return {
-                "name": _("Generate Contracts"),
-                "type": "ir.actions.act_window",
-                "view_mode": "form",
-                "res_model": "energy_selfconsumption.contract_generation.wizard",
-                "views": [(False, "form")],
-                "view_id": False,
-                "target": "new",
-                "context": {"default_selfconsumption_id": self.id},
-            }
+
+            # Create ContractGenerationWizard
+            contract_wizard = self.env[
+                "energy_selfconsumption.contract_generation.wizard"
+            ].create({"selfconsumption_id": self.id})
+
+            # Generate Contracts
+            contract_wizard.generate_contracts_button()
 
     def set_invoicing_mode(self):
         return {

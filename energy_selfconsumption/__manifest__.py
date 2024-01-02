@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.3.3.0",
+    "version": "14.0.3.0.0",
     "depends": [
         "base",
         "mail",
@@ -44,6 +44,5 @@
         "wizards/invoicing_wizard_views.xml",
         "reports/selfconsumption_reports.xml",
         "reports/power_acquired_invoice_template.xml",
-        "reports/energy_delivered_invoice_template.xml",
     ],
 }

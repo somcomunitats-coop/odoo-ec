@@ -96,13 +96,10 @@
             type="object"
             string="Create community"
             groups="energy_communities.group_platform_manager"
-            attrs="{'invisible':['|',('source_id', '!=', %(ce_source_creation_ce_proposal)d),('probability','>=',100)]}"
+            attrs="{'invisible':['|',('source_id', '!=', %(ce_source_creation_ce_proposal)d),('probability','=',100)]}"
           />
 				</header>
-      </xpath>
-      <xpath expr="//field[@name='company_id']" position="after">
-        <field name="external_id" readonly="1" />
-      </xpath>
+			</xpath>
 		</field>
 	</record>
 
@@ -173,5 +170,15 @@
 			</field>
 		</field>
 	</record>
+
+	<record id="action_build_community_company_from_lead" model="ir.actions.server">
+            <field name="name">Build Community Company</field>
+            <field name="model_id" ref="crm.model_crm_lead" />
+            <field name="binding_model_id" ref="crm.model_crm_lead" />
+            <field name="state">code</field>
+            <field
+      name="code"
+    > for rec in records: rec._build_community_company() </field>
+    </record>
 
 </odoo>

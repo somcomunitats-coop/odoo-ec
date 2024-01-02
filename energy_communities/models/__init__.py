@@ -1,5 +1,4 @@
 from . import cm_coordinates_mixin
-from . import external_id_mixin
 from . import auth_oauth_provider
 from . import account_chart_template
 from . import landing_page
@@ -12,7 +11,6 @@ from . import res_users_role
 from . import subscription_request
 from . import product
 from . import utm_source
-from . import crm_lead_metadata_line
 from . import crm_lead
 from . import account_move
 from . import operation_request

@@ -92,14 +92,3 @@ class AccountMove(models.Model):
         ):
             starting_sequence = "R" + starting_sequence
         return starting_sequence
-
-    def get_mail_template_certificate(self):
-        if self.subscription_request.is_voluntary:
-            mail_template = (
-                "energy_communities.email_template_conditions_voluntary_share"
-            )
-        elif self.partner_id.member:
-            mail_template = "cooperator.email_template_certificat_increase"
-        else:
-            mail_template = "cooperator.email_template_certificat"
-        return self.env.ref(mail_template)

@@ -9,7 +9,6 @@ from ..pywordpress_client.resources.authenticate import Authenticate
 from ..pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
 )
-from .res_company import _CE_MEMBER_STATUS_VALUES, _CE_TYPE, _LEGAL_FORM_VALUES
 from .res_config_settings import ResConfigSettings
 
 
@@ -57,20 +56,19 @@ class LandingPage(models.Model):
         string="Community active services", related="company_id.ce_tag_ids"
     )
     community_type = fields.Selection(
-        selection=_CE_TYPE,
+        selection=[("citizen", _("Citizen")), ("industrial", _("Industrial"))],
         default="citizen",
         required=True,
         string="Community type",
     )
-    # TODO: Get legal form from company. Requires migration script and adjust API
     community_secondary_type = fields.Selection(
-        selection=_LEGAL_FORM_VALUES,
+        selection=[("cooperative", _("Cooperative"))],
         default="cooperative",
         required=True,
         string="Community secondary type",
     )
     community_status = fields.Selection(
-        selection=_CE_MEMBER_STATUS_VALUES,
+        selection=[("open", _("Open")), ("closed", _("Closed"))],
         default="open",
         required=True,
         string="Community status",
@@ -186,7 +184,7 @@ class LandingPage(models.Model):
 
     def action_create_landing_place(self):
         for record in self:
-            record.create_landing_place()
+            record._create_landing_place()
 
     def action_update_public_data(self):
         for record in self:
@@ -221,7 +219,7 @@ class LandingPage(models.Model):
                 landing_page_data
             )
 
-    def create_landing_place(self):
+    def _create_landing_place(self):
         LandingCmPlaceResource(self).create()
 
     def _update_landing_place(self):
