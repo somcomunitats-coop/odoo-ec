@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="service_assignation_form_view" model="ir.ui.view">
+            <field name="name">energy_project.service_assignation.form</field>
+            <field name="model">energy_project.service_assignation</field>
+            <field name="arch" type="xml">
+                <form string="Energy Service">
+                    <sheet>
+                        <group>
+                            <field
+                name="service_id"
+                options="{'no_create':True, 'no_edit':True, 'no_open': True}"
+              />
+                            <field
+                name="provider_id"
+                options="{'no_create':True, 'no_edit':True, 'no_open': True}"
+              />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="service_assignation_tree_view" model="ir.ui.view">
+            <field name="name">energy_project.service_assignation.tree</field>
+            <field name="model">energy_project.service_assignation</field>
+            <field name="arch" type="xml">
+                <tree string="Energy Services" editable="bottom">
+                    <field
+            name="service_id"
+            options="{'no_create':True, 'no_edit':True, 'no_open': True}"
+          />
+                    <field
+            name="provider_id"
+            options="{'no_create':True, 'no_edit':True, 'no_open': True}"
+          />
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>
