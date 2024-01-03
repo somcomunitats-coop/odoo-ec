@@ -4,3 +4,4 @@ from . import inscription
 from . import reseller
 from . import supplier
 from . import service
+from . import provider
