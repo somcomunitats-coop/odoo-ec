@@ -26,6 +26,7 @@
         "views/reseller_views.xml",
         "views/supplier_views.xml",
         "views/service_views.xml",
+        "views/provider_views.xml",
         "views/res_config_settings_views.xml",
     ],
 }

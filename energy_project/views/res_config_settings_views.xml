@@ -85,6 +85,25 @@
                   />
                                 </div>
                             </div>
+                                                        <div
+                class="col-12 col-lg-6 o_setting_box"
+                id="active_provider_setting"
+              >
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">
+                                        Energy Provider
+                                    </span>
+                                    <br />
+                                    <button
+                    string="Manage Energy Service Providers"
+                    type="action"
+                    icon="fa-arrow-right"
+                    class="btn-link o_web_settings_access_rights"
+                    name="energy_project.provider_act_window"
+                  />
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </xpath>
