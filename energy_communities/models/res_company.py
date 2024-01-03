@@ -104,6 +104,9 @@ class ResCompany(models.Model):
     wordpress_db_username = fields.Char(string=_("Wordpress DB Admin Username"))
     wordpress_db_password = fields.Char(string=_("Wordpress DB Admin Password"))
     wordpress_base_url = fields.Char(string=_("Wordpress Base URL (JWT auth)"))
+    voluntary_share_form_header_text = fields.Html(
+        string="Voluntary share form header text", translate=True
+    )
 
     # COMPUTED FIELDS
     @api.depends("hierarchy_level")

@@ -1668,7 +1668,7 @@ msgid "ID Ext tag"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
+#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid ""
 "INDIVIDUAL\n"
 "                PARTNER"
@@ -1839,7 +1839,7 @@ msgid "Keycloak provider"
 msgstr "Proveedor KeyCloak"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
+#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "LEGAL ENTITY PARTNER"
 msgstr "PERTSONA JURIDIKOKO BAZKIDEAREN ALTA"
 
@@ -2165,9 +2165,9 @@ msgid "Not valid parameter value [odoo_company_id]"
 msgstr "El valor para el parámetro [odoo_company_id] no es válido"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
+#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid ""
-"Note: Please, if you are not yet a member, you must process it at through\n"
+"Note: Please, if you are not yet a member, you must process it through\n"
 "            these forms:"
 msgstr ""
 "Oharra: Mesedez, oraindik bazkide ez bazara, inprimaki hauen bidez tramitatu"
@@ -3069,9 +3069,15 @@ msgid "Voluntary Share of"
 msgstr "ren Borondatezko Ekarpena"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_subscription_request_filter_inherit
 msgid "Voluntary Shares"
 msgstr "Aportaciones voluntarias"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__voluntary_share_form_header_text
+msgid "Voluntary share form header text"
+msgstr "Borondatezko parte hartzeko formularioaren testua"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__voluntary_share_id
@@ -3382,7 +3388,7 @@ msgid "active"
 msgstr "activa"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
+#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "and"
 msgstr "eta"
 
