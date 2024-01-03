@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+    id="external_layout_standard"
+    inherit_id="web.external_layout_standard"
+    primary="True"
+  >
+        <xpath
+      expr="//div[@t-attf-class='footer o_standard_footer o_company_#{company.id}_layout']"
+      position="inside"
+    >
+            <div name="data_protection_container" style="font-size: 0.8em;">
+                <div
+          t-if="company.display_footer_doc_policy_text"
+          name="data_protection"
+          style="font-size: 0.8em;"
+        >
+                    <p><t t-raw="company.footer_doc_policy_text" /></p>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

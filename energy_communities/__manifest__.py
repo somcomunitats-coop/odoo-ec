@@ -60,6 +60,7 @@
         "data/product_data.xml",
         "data/auth_oauth_provider_data.xml",
         "data/ir_cron.xml",
+        "report/report_templates.xml",
         "views/crm_lead_views.xml",
         "views/landing_page_view.xml",
         "views/res_company_views.xml",

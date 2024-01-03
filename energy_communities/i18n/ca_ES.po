@@ -1258,6 +1258,11 @@ msgid "Crm Lead"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
+msgid "Customize documents text"
+msgstr "Personalització de textos en documents"
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
 msgid ""
 "DATA PROTECTION INFORMATION. Purposes: to respond to your requests. Rights: "
@@ -1320,6 +1325,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__display_name
 msgid "Display Name"
 msgstr "Nom a mostrar"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__display_footer_doc_policy_text
+msgid "Display footer doc policy text"
+msgstr "Mostrar text legal a peu de documents"
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0
@@ -1582,6 +1592,11 @@ msgstr "Seguidors (Partners)"
 #: model:ir.model.fields,help:energy_communities.field_res_company__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Icona de Font awesome, p.ex. fa-tasks"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__footer_doc_policy_text
+msgid "Footer doc policy text"
+msgstr "Text legal a peu de documents"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_citizen_education
