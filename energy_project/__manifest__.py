@@ -27,7 +27,7 @@
         "views/supplier_views.xml",
         "views/service_views.xml",
         "views/provider_views.xml",
-        "views/service_assignation_views.xml",
+        "views/service_contracted_views.xml",
         "views/res_config_settings_views.xml",
     ],
 }

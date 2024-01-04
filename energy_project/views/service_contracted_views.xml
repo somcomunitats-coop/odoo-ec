@@ -2,9 +2,9 @@
 <odoo>
     <data>
 
-        <record id="service_assignation_form_view" model="ir.ui.view">
-            <field name="name">energy_project.service_assignation.form</field>
-            <field name="model">energy_project.service_assignation</field>
+        <record id="service_contracted_form_view" model="ir.ui.view">
+            <field name="name">energy_project.service_contracted.form</field>
+            <field name="model">energy_project.service_contracted</field>
             <field name="arch" type="xml">
                 <form string="Energy Service">
                     <sheet>
@@ -23,9 +23,9 @@
             </field>
         </record>
 
-        <record id="service_assignation_tree_view" model="ir.ui.view">
-            <field name="name">energy_project.service_assignation.tree</field>
-            <field name="model">energy_project.service_assignation</field>
+        <record id="service_contracted_tree_view" model="ir.ui.view">
+            <field name="name">energy_project.service_contracted.tree</field>
+            <field name="model">energy_project.service_contracted</field>
             <field name="arch" type="xml">
                 <tree string="Energy Services" editable="bottom">
                     <field name="available_providers_ids" invisible="True" />

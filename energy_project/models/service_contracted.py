@@ -2,9 +2,9 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
-class ServiceAssignation(models.Model):
-    _name = "energy_project.service_assignation"
-    _description = "Energy Services Assignation"
+class ServiceContracted(models.Model):
+    _name = "energy_project.service_contracted"
+    _description = "Energy Services Contracted"
 
     _sql_constraints = {
         (
@@ -16,9 +16,9 @@ class ServiceAssignation(models.Model):
 
     @api.depends("service_id")
     def _compute_available_providers_ids(self):
-        for service_assignation in self:
-            service_assignation.available_providers_ids = (
-                service_assignation.service_id.provider_ids.ids
+        for service_contracted in self:
+            service_contracted.available_providers_ids = (
+                service_contracted.service_id.provider_ids.ids
             )
 
     service_id = fields.Many2one(
