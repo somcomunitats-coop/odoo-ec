@@ -33,6 +33,7 @@ class ServiceContracted(models.Model):
         string="Available Providers",
     )
     project_id = fields.Many2one("energy_project.project", required=True)
+    active = fields.Boolean(string="Active", required=True, default=True)
 
     @api.onchange("service_id")
     def _onchange_service_id(self):

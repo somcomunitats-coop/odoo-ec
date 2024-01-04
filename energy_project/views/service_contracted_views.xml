@@ -17,6 +17,7 @@
                 name="provider_id"
                 options="{'no_create':True, 'no_edit':True, 'no_open': True}"
               />
+                            <field name="active" />
                         </group>
                     </sheet>
                 </form>
@@ -38,6 +39,7 @@
             options="{'no_create':True, 'no_edit':True, 'no_open': True}"
             domain="[('id', 'in', available_providers_ids)]"
           />
+                                                <field name="active" />
                 </tree>
             </field>
         </record>
