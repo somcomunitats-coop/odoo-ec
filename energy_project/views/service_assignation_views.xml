@@ -28,6 +28,7 @@
             <field name="model">energy_project.service_assignation</field>
             <field name="arch" type="xml">
                 <tree string="Energy Services" editable="bottom">
+                    <field name="available_providers_ids" invisible="True" />
                     <field
             name="service_id"
             options="{'no_create':True, 'no_edit':True, 'no_open': True}"
@@ -35,6 +36,7 @@
                     <field
             name="provider_id"
             options="{'no_create':True, 'no_edit':True, 'no_open': True}"
+            domain="[('id', 'in', available_providers_ids)]"
           />
                 </tree>
             </field>

@@ -1,4 +1,5 @@
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class ServiceAssignation(models.Model):
@@ -13,10 +14,46 @@ class ServiceAssignation(models.Model):
         )
     }
 
+    @api.depends("service_id")
+    def _compute_available_providers_ids(self):
+        for service_assignation in self:
+            service_assignation.available_providers_ids = (
+                service_assignation.service_id.provider_ids.ids
+            )
+
     service_id = fields.Many2one(
         "energy_project.service", string="Service", required=True
     )
     provider_id = fields.Many2one(
         "energy_project.provider", string="Provider", required=True
     )
+    available_providers_ids = fields.Many2many(
+        "energy_project.provider",
+        compute=_compute_available_providers_ids,
+        string="Available Providers",
+    )
     project_id = fields.Many2one("energy_project.project", required=True)
+
+    @api.onchange("service_id")
+    def _onchange_service_id(self):
+        if self._provider_is_available():
+            self.provider_id = False
+
+    @api.constrains("provider_id")
+    def _check_provider_id(self):
+        for record in self:
+            if record._provider_is_available():
+                raise ValidationError(
+                    _(
+                        "The {provider_name} provider doesn't provide this {service_name} service."
+                    ).format(
+                        **{
+                            "provider_name": record.provider_id.name,
+                            "service_name": record.service_id.name,
+                        }
+                    )
+                )
+
+    def _provider_is_available(self):
+        self.ensure_one()
+        return self.provider_id.id not in self.available_providers_ids.ids
