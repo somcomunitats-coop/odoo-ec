@@ -11,17 +11,20 @@ class TestServiceContracted(common.TransactionCase):
         self.service_1 = self.env["energy_project.service"].create(
             {"name": "Service 1"}
         )
-        self.provider_1 = self.env["energy_project.provider"].create(
-            {"name": "Provider 1", "service_ids": [(4, self.service_1.id)]}
-        )
         self.service_2 = self.env["energy_project.service"].create(
             {"name": "Service 2"}
         )
-        self.provider_2 = self.env["energy_project.provider"].create(
-            {"name": "Provider 2", "service_ids": [(4, self.service_2.id)]}
-        )
         self.service_3 = self.env["energy_project.service"].create(
             {"name": "Service 3"}
+        )
+        self.provider_1 = self.env["energy_project.provider"].create(
+            {
+                "name": "Provider 1",
+                "service_ids": [(4, self.service_1.id), (4, self.service_2.id)],
+            }
+        )
+        self.provider_2 = self.env["energy_project.provider"].create(
+            {"name": "Provider 2", "service_ids": [(4, self.service_2.id)]}
         )
         self.provider_3 = self.env["energy_project.provider"].create(
             {
@@ -114,3 +117,40 @@ class TestServiceContracted(common.TransactionCase):
                     ]
                 }
             )
+
+    def test_compute_available_providers_ids(self):
+        self.service_contracted_1 = self.env[
+            "energy_project.service_contracted"
+        ].create(
+            {
+                "service_id": self.service_3.id,
+                "provider_id": self.provider_3.id,
+                "project_id": self.project.id,
+                "active": True,
+            }
+        )
+        expected_available_providers_ids_1 = [self.provider_3.id]
+        self.assertEqual(
+            self.service_contracted_1.available_providers_ids.ids,
+            expected_available_providers_ids_1,
+        )
+
+        self.service_contracted_2 = self.env[
+            "energy_project.service_contracted"
+        ].create(
+            {
+                "service_id": self.service_2.id,
+                "provider_id": self.provider_2.id,
+                "project_id": self.project.id,
+                "active": True,
+            }
+        )
+        expected_available_providers_ids_2 = [
+            self.provider_1.id,
+            self.provider_2.id,
+            self.provider_3.id,
+        ]
+        self.assertEqual(
+            self.service_contracted_2.available_providers_ids.ids,
+            expected_available_providers_ids_2,
+        )
