@@ -13,10 +13,10 @@
                             <h1>
                                 <field name="name" placeholder="Name" />
                             </h1>
-                            <group>
-                                <field name="service_ids" />
-                            </group>
                         </div>
+                        <group>
+                            <field name="service_ids" />
+                        </group>
                     </sheet>
                 </form>
             </field>
@@ -27,7 +27,7 @@
             <field name="model">energy_project.provider</field>
             <field name="arch" type="xml">
                 <tree string="Energy Providers">
-                                <field name="name" />
+                    <field name="name" />
                 </tree>
             </field>
         </record>

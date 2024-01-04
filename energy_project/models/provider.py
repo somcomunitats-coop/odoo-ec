@@ -6,6 +6,11 @@ class Provider(models.Model):
     _description = "Energy Service Provider"
 
     name = fields.Char()
+    # Inverse of provider_ids in energy_project.service
     service_ids = fields.Many2many(
-        "energy_project.service", string="Available Services"
+        "energy_project.service",
+        string="Available Services",
+        relation="provider_service_rel",
+        column1="provider_id",
+        column2="service_id",
     )
