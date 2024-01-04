@@ -31,6 +31,8 @@
         "data/contract_line_qty_formula_data.xml",
         "data/mail_template.xml",
         "data/ir_cron.xml",
+        "data/service_data.xml",
+        "data/provider_data.xml",
         "views/contract_views.xml",
         "views/selfconsumption_views.xml",
         "views/supply_point_views.xml",
