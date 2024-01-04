@@ -81,3 +81,36 @@ class TestServiceContracted(common.TransactionCase):
                     ]
                 }
             )
+
+    def test_check_provider_id(self):
+        self.assertTrue(
+            self.project.write(
+                {
+                    "service_contracted_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "service_id": self.service_1.id,
+                                "provider_id": self.provider_1.id,
+                            },
+                        )
+                    ]
+                }
+            )
+        )
+        with self.assertRaises(ValidationError):
+            self.project.write(
+                {
+                    "service_contracted_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "service_id": self.service_1.id,
+                                "provider_id": self.provider_2.id,
+                            },
+                        )
+                    ]
+                }
+            )
