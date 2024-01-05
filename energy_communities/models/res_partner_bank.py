@@ -7,7 +7,7 @@ class ResPartnerBank(models.Model):
     _sql_constraints = [
         (
             "unique_number",
-            "unique(sanitized_acc_number, company_id, partner_id)",
+            "CHECK(1=1)",
             "Account Number must be unique",
         ),
     ]
