@@ -102,11 +102,11 @@
       </xpath>
       <field name="company_id" position="after">
         <field name="external_id" readonly="1" />
-		<field name="is_instance_company" invisible="1" />
 		<field
           name="ce_child_lead_id"
           string="Crm lead child"
-          attrs="{'invisible':[('source_id', '!=', %(ce_source_creation_ce_proposal)d), ('is_instance_company', '=', False)]}"
+          readonly="1"
+          attrs="{'invisible':['|',('source_id', '!=', %(ce_source_creation_ce_proposal)d), ('company_hierarchy_level', '!=', 'instance')]}"
         />
       </field>
 		</field>
