@@ -54,20 +54,7 @@ class CrmLead(models.Model):
         compute="_get_can_be_assigned_to_coordinator",
         store=False,
     )
-    is_instance_company = fields.Boolean(
-        string="Is instance company", compute="_is_instance_company"
-    )
     ce_child_lead_id = fields.Many2one(comodel_name="crm.lead", string="Crm lead child")
-
-    def _is_instance_company(self):
-        company = self.env.company
-        instance_companies = self.env["res.company"].search(
-            [("hierarchy_level", "=", "instance")]
-        )
-        if company in instance_companies:
-            self.is_instance_company = True
-        else:
-            self.is_instance_company = False
 
     def _get_default_community_wizard(self):
         self.ensure_one()
