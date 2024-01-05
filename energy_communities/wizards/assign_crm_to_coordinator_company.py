@@ -1,3 +1,5 @@
+import re
+
 from odoo import _, api, fields, models
 
 
@@ -25,7 +27,9 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
         new_crm_lead = self.crm_lead_id.sudo().copy(
             {"team_id": None, "user_id": None, "stage_id": 1}  # New
         )
-        new_crm_lead.write({"company_id": self.assigned_company_id})
+        original_name = self.crm_lead_id.name
+        new_name = re.sub(r"\d+", str(new_crm_lead.id), original_name)
+        new_crm_lead.write({"company_id": self.assigned_company_id, "name": new_name})
         new_crm_msg = _(
             "Opportunity assigned to Coordinator %s (ID: %s), where %s is the id of the original instance-level record."
             % (self.assigned_company_id.name, new_crm_lead.id, self.crm_lead_id.id)
