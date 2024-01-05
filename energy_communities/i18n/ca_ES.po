@@ -2308,6 +2308,26 @@ msgid "Operation request"
 msgstr "Sol·licitud d'operació"
 
 #. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_crm_to_coordinator_company.py:0
+#, python-format
+msgid ""
+"Opportunity assigned to Coordinator 'Assigned Coordinator Name' (ID: %s), "
+"where %s is the id of the original instance-level record."
+msgstr ""
+"Oportunitat assignada a la coordinadora 'Nom de la coordinadora assignada' (ID: %s)", "
+"on %s és el id del registre original a nivell de Instància."
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_crm_to_coordinator_company.py:0
+#, python-format
+msgid ""
+"Opportunity created from Instance opportunity with ID %s, where %s is the id"
+" of the new record generated at the Coordinator level"
+msgstr ""
+"Oportunitat creada desde la oportunitat de Instància amb ID %s, on %s és el id"
+" del nou  registre generat a nivell de Coordinadora."
+
+#. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0
 #, python-format
 msgid "Other"
