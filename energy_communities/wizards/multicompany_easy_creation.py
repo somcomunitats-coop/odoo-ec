@@ -336,6 +336,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     def control_company_partner_visibility(self):
         company_hierarchy_level = self.new_company_id.hierarchy_level
         if company_hierarchy_level == "coordinator":
+            # apply to new company-partner all visible companies (company_ids)
             self.new_company_id.partner_id.write(
                 {
                     "company_ids": [
@@ -345,11 +346,20 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 }
             )
         if company_hierarchy_level == "community":
+            # apply to new company-partner all visible companies (company_ids)
             self.new_company_id.partner_id.write(
                 {
                     "company_ids": [
                         (4, self.env.ref("base.main_company").id),
                         (4, self.parent_id.id),
+                        (4, self.new_company_id.id),
+                    ]
+                }
+            )
+            # apply new company to coordinator-partner visible companies (company_ids)
+            self.parent_id.partner_id.sudo().write(
+                {
+                    "company_ids": [
                         (4, self.new_company_id.id),
                     ]
                 }
