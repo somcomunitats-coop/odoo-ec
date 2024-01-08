@@ -6,6 +6,7 @@ from ..models.res_company import (
     _CE_MEMBER_STATUS_VALUES,
     _CE_STATUS_VALUES,
     _CE_TYPE,
+    _HIERARCHY_LEVEL_BASE_VALUES,
     _LEGAL_FORM_VALUES,
 )
 
@@ -129,6 +130,31 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     ce_telegram_url = fields.Char(string="Telegram link")
     ce_instagram_url = fields.Char(string="Instagram link")
     ce_facebook_url = fields.Char(string="Facebook link")
+    # enable coordinator companies creation
+    hierarchy_level = fields.Selection(
+        selection=_HIERARCHY_LEVEL_BASE_VALUES,
+        required=True,
+        string="Hierarchy level",
+        default="community",
+    )
+
+    @api.onchange("hierarchy_level")
+    def onchange_hierarchy_level(self):
+        for record in self:
+            if record.hierarchy_level == "community":
+                if self.crm_lead_id:
+                    company_id = self.crm_lead_id.company_id.id
+                else:
+                    company_id = False
+                return {
+                    "value": {"parent_id": company_id},
+                    "domain": {"parent_id": [("hierarchy_level", "=", "coordinator")]},
+                }
+            if record.hierarchy_level == "coordinator":
+                return {
+                    "value": {"parent_id": self.env.ref("base.main_company").id},
+                    "domain": {"parent_id": [("hierarchy_level", "=", "instance")]},
+                }
 
     def add_company_managers(self):
         coord_members = self.parent_id.get_users(
@@ -242,6 +268,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
 
     def action_accept(self):
         self.create_company()
+        self.control_company_partner_visibility()
         self.add_company_managers()
         if self.create_landing:
             self.create_public_data()
@@ -279,6 +306,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             .create(
                 {
                     "name": self.legal_name,
+                    "hierarchy_level": self.hierarchy_level,
                     "user_ids": [(6, 0, self.user_ids.ids)],
                     "parent_id": self.parent_id.id,
                     "street": self.street,
@@ -304,6 +332,19 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 }
             )
         )
+
+    def control_company_partner_visibility(self):
+        company_hierarchy_level = self.new_company_id.hierarchy_level
+        if company_hierarchy_level == "coordinator":
+            self.new_company_id.partner_id.write(
+                {
+                    "company_ids": [
+                        (4, self.env.ref("base.main_company").id),
+                        (4, self.new_company_id.id),
+                    ]
+                }
+            )
+        # if company_hierarchy_level == 'community':
 
     def create_public_data(self):
         new_landing = self.new_company_id.sudo().create_landing()

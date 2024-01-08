@@ -25,6 +25,7 @@
                 <xpath expr="//page" position="before">
                     <page string="Energy Community">
                         <group string="Energy Community">
+                            <field name="hierarchy_level" required="1" />
                             <field name="parent_id" required="1" />
                             <field name="vat" />
                             <field name="state_id" required="1" />
