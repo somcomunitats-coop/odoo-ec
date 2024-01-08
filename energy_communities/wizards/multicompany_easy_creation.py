@@ -344,7 +344,16 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     ]
                 }
             )
-        # if company_hierarchy_level == 'community':
+        if company_hierarchy_level == "community":
+            self.new_company_id.partner_id.write(
+                {
+                    "company_ids": [
+                        (4, self.env.ref("base.main_company").id),
+                        (4, self.parent_id.id),
+                        (4, self.new_company_id.id),
+                    ]
+                }
+            )
 
     def create_public_data(self):
         new_landing = self.new_company_id.sudo().create_landing()
