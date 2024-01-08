@@ -320,26 +320,6 @@
         <p>
             Once your request is received, you will receive a confirmation email with the instructions to follow.
         </p>
-        <p>
-            You
-            can consult the <a
-        href="https://drive.google.com/file/d/1V5OaTX0CwGHDPhJQJ2lMUlsmmL7fUbNP/view?usp=share_link"
-      >GENERAL CONDITIONS</a> of Voluntary Contributions.
-        </p>
-        <p> You can consult
-            our
-            <a
-        href="https://drive.google.com/file/d/1rtTrk2cnzTHqwGINPsWxi-3KcRtJ_CGk/view?usp=share_link"
-      >FREQUENTLY ASKED QUESTIONS</a>.</p>
-        <p>Note: Please, if you are not yet a member, you must process it at through
-            these forms: <a
-        t-att-href='"page/become_cooperator?odoo_company_id=" + str(company.id)'
-      >INDIVIDUAL
-                PARTNER</a> and <a
-        t-att-href='"page/become_company_cooperator?odoo_company_id=" + str(company.id)'
-      >
-                LEGAL ENTITY PARTNER</a>.
-        </p>
     </template>
 
     <template id="voluntary_share" name="Voluntary Share Template">
@@ -376,8 +356,24 @@
                     t-attf-value="#{company_id or ''}"
                   />
                                 </div>
+                                <div name="voluntary_share_form_header_text_container">
+                                    <p><t
+                      t-raw="company.voluntary_share_form_header_text"
+                    /></p>
+                                </div>
+                <div name="become_cooperator_terms">
+                            <p
+                  >Note: Please, if you are not yet a member, you must process it through
+            these forms: <a
+                      t-att-href='"page/become_cooperator?odoo_company_id=" + str(company.id)'
+                    >INDIVIDUAL
+                PARTNER</a> and <a
+                      t-att-href='"page/become_company_cooperator?odoo_company_id=" + str(company.id)'
+                    >
+                LEGAL ENTITY PARTNER</a>.
+        </p>
 
-
+                </div>
                                 <div
                   class="form-group"
                   t-attf-class="form-group #{error and 'vat' in error and 'has-error' or ''}"

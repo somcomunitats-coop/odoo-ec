@@ -26,8 +26,60 @@
             <field name="view_id" ref="cooperator.view_partner_tree" />
         </record>
 
+        <record id="view_res_partner_filter" model="ir.ui.view">
+          <field name="name">view_res_partner_filter</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_res_partner_filter" />
+          <field name="arch" type="xml">
+            <xpath expr="//filter[@name='inactive']" position="before">
+              <filter
+            string="Energy Communities"
+            name="energy_communities_partners"
+            domain="[('company_hierarchy_level','=','community')]"
+          />
+              <filter
+            string="Coordinators"
+            name="energy_communities_partners"
+            domain="[('company_hierarchy_level','=','coordinator')]"
+          />
+              <filter
+            string="Platform"
+            name="energy_communities_partners"
+            domain="[('company_hierarchy_level','=','instance')]"
+          />
+              <separator />
+            </xpath>
+          </field>
+        </record>
+
+
         <record id="view_partner_form" model="ir.ui.view">
             <field name="name">view_partner_form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after">
+                  <field name="company_hierarchy_level" invisible="1" />
+                </xpath>
+                <xpath expr="//field[@name='name']" position="before">
+                  <h4
+            style="color:green;"
+            attrs="{'invisible': [('company_hierarchy_level', '!=', 'instance')]}"
+          >Platform company</h4>
+                  <h4
+            style="color:green;"
+            attrs="{'invisible': [('company_hierarchy_level', '!=', 'coordinator')]}"
+          >Coordinator company</h4>
+                  <h4
+            style="color:green;"
+            attrs="{'invisible': [('company_hierarchy_level', '!=', 'community')]}"
+          >Community company</h4>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="cooperator_view_partner_form" model="ir.ui.view">
+            <field name="name">cooperator_view_partner_form</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="cooperator.view_partner_form" />
             <field name="arch" type="xml">

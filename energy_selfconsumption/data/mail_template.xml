@@ -5,7 +5,7 @@
     model="mail.template"
   >
         <field name="name">Selfconsumption Energy Delivered Invoicing Reminder</field>
-        <field name="email_from">${object.company_id.email}</field>
+        <field name="email_from">info@somcomunitats.coop</field>
         <field
       name="subject"
     >Selfconsumption - Energy Delivered Invoicing Reminder</field>
@@ -31,6 +31,39 @@
         <p>
             To do so, go to the project file, enter the contracts view, select the contracts that must be invoiced and
             press the Invoice button.</br>
+        </p>
+        <p>
+            For any questions or incidents, contact the support team; support@somcomunitats.coop.
+        </p>
+            ]]>
+        </field>
+    </record>
+
+    <record
+    id="selfconsumption_power_acquired_invoicing_reminder"
+    model="mail.template"
+  >
+        <field name="name">Selfconsumption Power Acquired Invoicing Reminder</field>
+        <field name="email_from">info@somcomunitats.coop</field>
+        <field
+      name="subject"
+    >Selfconsumption - Power Acquired Invoicing Reminder</field>
+        <field
+      name="model_id"
+      ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"
+    />
+        <field name="body_html">
+            <![CDATA[
+        <p>Hi,</p>
+        <p>
+            The collective self-consumption project
+            <b>${ object.name }</b>
+            of the energy community
+            <b>${ object.project_id.company_id.name }</b>
+            has started the invoicing process on <b>${ ctx['next_invoicing'] }</b> according to the established recurrence.
+        </p>
+        <p>
+            Invoices are created in “draft” and it is therefore necessary that they be validated and sent as soon as possible.
         </p>
         <p>
             For any questions or incidents, contact the support team; support@somcomunitats.coop.

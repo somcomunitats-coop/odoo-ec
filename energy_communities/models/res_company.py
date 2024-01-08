@@ -9,12 +9,13 @@ from ..pywordpress_client.resources.landing_page import (
 )
 
 _HIERARCHY_LEVEL_VALUES = [
-    ("instance", _("Instance")),
+    ("instance", _("Platform")),
     ("coordinator", _("Coordinator")),
     ("community", _("Community")),
 ]
 
 _LEGAL_FORM_VALUES = [
+    ("undefined", _("Under definition")),
     ("cooperative", _("Cooperative")),
     ("non_profit", _("Non profit association")),
     ("limited_company", _("Limited company")),
@@ -44,24 +45,6 @@ class ResCompany(models.Model):
     _name = "res.company"
     _inherit = ["res.company", "mail.thread", "mail.activity.mixin"]
 
-    @api.onchange("hierarchy_level")
-    def onchange_hierarchy_level(self):
-        self.parent_id = False
-
-    @api.depends("hierarchy_level")
-    def _compute_parent_id_filtered_ids(self):
-        for rec in self:
-            if rec.hierarchy_level == "instance":
-                rec.parent_id_filtered_ids = False
-            elif rec.hierarchy_level == "coordinator":
-                rec.parent_id_filtered_ids = self.search(
-                    [("hierarchy_level", "=", "instance")]
-                )
-            elif rec.hierarchy_level == "community":
-                rec.parent_id_filtered_ids = self.search(
-                    [("hierarchy_level", "=", "coordinator")]
-                )
-
     hierarchy_level = fields.Selection(
         selection=_HIERARCHY_LEVEL_VALUES,
         required=True,
@@ -70,7 +53,7 @@ class ResCompany(models.Model):
     )
     parent_id_filtered_ids = fields.One2many(
         "res.company",
-        compute=_compute_parent_id_filtered_ids,
+        compute="_compute_parent_id_filtered_ids",
         readonly=True,
         store=False,
     )
@@ -84,7 +67,6 @@ class ResCompany(models.Model):
         " receivable journal for the"
         " cooperators",
     )
-
     foundation_date = fields.Date("Foundation date")
     social_telegram = fields.Char("Telegram Account")
     initial_subscription_share_amount = fields.Float(
@@ -102,11 +84,10 @@ class ResCompany(models.Model):
         string="Voluntary share to show on website",
     )
     wordpress_base_url = fields.Char(string=_("Wordpress Base URL (JWT auth)"))
-
     admins = fields.One2many(
         "res.users",
         string="Community admins",
-        compute="_get_admins",
+        compute="_compute_admins",
         readonly=True,
         store=False,
     )
@@ -119,79 +100,130 @@ class ResCompany(models.Model):
         selection=_CE_STATUS_VALUES,
         string="Energy Community state",
     )
-
     landing_page_id = fields.Many2one("landing.page", string=_("Landing Page"))
     wordpress_db_username = fields.Char(string=_("Wordpress DB Admin Username"))
     wordpress_db_password = fields.Char(string=_("Wordpress DB Admin Password"))
     wordpress_base_url = fields.Char(string=_("Wordpress Base URL (JWT auth)"))
+    voluntary_share_form_header_text = fields.Html(
+        string="Voluntary share form header text", translate=True
+    )
+    footer_doc_policy_text = fields.Html(
+        string="Footer doc policy text", translate=True
+    )
+    display_footer_doc_policy_text = fields.Boolean("Display footer doc policy text")
+    footer_doc_policy_text = fields.Html(
+        string="Footer doc policy text", translate=True
+    )
+    display_footer_doc_policy_text = fields.Boolean("Display footer doc policy text")
+    voluntary_share_form_header_text = fields.Html(
+        string="Voluntary share form header text", translate=True
+    )
 
-    @api.constrains("hierarchy_level", "parent_id")
-    def _check_hierarchy_level(self):
+    # COMPUTED FIELDS
+    @api.depends("hierarchy_level")
+    def _compute_parent_id_filtered_ids(self):
         for rec in self:
             if rec.hierarchy_level == "instance":
-                if self.search_count(
-                    [("hierarchy_level", "=", "instance"), ("id", "!=", rec.id)]
-                ):
-                    raise ValidationError(_("An instance company already exists"))
-                if rec.parent_id:
-                    raise ValidationError(
-                        _("You cannot create a instance company with a parent company.")
-                    )
-            if (
-                rec.hierarchy_level == "coordinator"
-                and rec.parent_id.hierarchy_level != "instance"
-            ):
-                raise ValidationError(
-                    _("Parent company must be instance hierarchy level.")
+                rec.parent_id_filtered_ids = False
+            elif rec.hierarchy_level == "coordinator":
+                rec.parent_id_filtered_ids = self.search(
+                    [("hierarchy_level", "=", "instance")]
                 )
-            if (
-                rec.hierarchy_level == "community"
-                and rec.parent_id.hierarchy_level != "coordinator"
-            ):
-                raise ValidationError(
-                    _("Parent company must be coordinator hierarchy level.")
+            elif rec.hierarchy_level == "community":
+                rec.parent_id_filtered_ids = self.search(
+                    [("hierarchy_level", "=", "coordinator")]
                 )
 
-    @api.model
-    def get_real_ce_company_id(self, api_param_odoo_compant_id):
-        if api_param_odoo_compant_id == self.API_PARAM_ID_VALUE_FOR_COORDINADORA:
-            return self.search([("coordinator", "=", True)], limit=1) or None
-        else:
-            return self.search([("id", "=", api_param_odoo_compant_id)]) or None
+    def _compute_admins(self):
+        for rec in self:
+            role_name = rec._get_admin_role_name_from_hierarchy_level()
+            role_lines = self.env["res.users.role.line"].search(
+                [
+                    ("company_id.id", "=", rec.id),
+                    ("active", "=", True),
+                    ("role_id.code", "=", role_name),
+                ]
+            )
+            rec.admins = role_lines.mapped("user_id")
 
-    def check_ce_has_admin(self):
-        self.ensure_one()
-        admin_roles_ids = [
-            r["odoo_role_id"]
-            for r in self.env["res.users"].ce_user_roles_mapping().values()
-            if r["is_admin"]
-        ]
-        company_user_ids = self.get_ce_members().ids
-        admins_user_ids = []
-        for admin_role in self.env["res.users.role"].sudo().browse(admin_roles_ids):
-            for role_line in admin_role.line_ids:
-                admins_user_ids.append(role_line.user_id.id)
-        return any([user in admins_user_ids for user in company_user_ids])
+    # ONCHANGE ACTIONS
+    @api.onchange("hierarchy_level")
+    def onchange_hierarchy_level(self):
+        self.parent_id = False
 
-    def _get_admin_role_name(self):
+    # CONSTRAINS
+    @api.constrains("name", "vat")
+    def _check_uniqueness(self):
+        for rec in self:
+            rec._validate_uniqueness()
+
+    @api.constrains("hierarchy_level", "parent_id", "partner_id")
+    def _check_hierarchy_level(self):
+        for rec in self:
+            rec._validate_hierarchy()
+            rec.partner_id.compute_company_hierarchy_level()
+
+    # VALIDATION
+    def _validate_hierarchy(self):
+        if self.hierarchy_level == "instance":
+            if self.search_count(
+                [("hierarchy_level", "=", "instance"), ("id", "!=", self.id)]
+            ):
+                raise ValidationError(_("An instance company already exists"))
+            if self.parent_id:
+                raise ValidationError(
+                    _("You cannot create a instance company with a parent company.")
+                )
+        if (
+            self.hierarchy_level == "coordinator"
+            and self.parent_id.hierarchy_level != "instance"
+        ):
+            raise ValidationError(_("Parent company must be instance hierarchy level."))
+        if (
+            self.hierarchy_level == "community"
+            and self.parent_id.hierarchy_level != "coordinator"
+        ):
+            raise ValidationError(
+                _("Parent company must be coordinator hierarchy level.")
+            )
+
+    def _validate_uniqueness(self):
+        # check for VAT
+        if self.vat:
+            sanit_vat = re.sub(r"[^a-zA-Z0-9]", "", self.vat).upper()
+            if sanit_vat in [
+                re.sub(r"[^a-zA-Z0-9]", "", c.vat).upper()
+                for c in self.env["res.company"].search([("id", "!=", self.id)])
+                if c.vat
+            ]:
+                raise UserError(
+                    _(
+                        "Unable to create new company because there is an allready existing company with this VAT number: {}"
+                    ).format(self.vat)
+                )
+        # check for name
+        if self.name:
+            existing_company = self.env["res.company"].search(
+                [
+                    ("id", "!=", self.id),
+                    ("name", "=", self.name),
+                ]
+            )
+            if existing_company:
+                raise UserError(
+                    _(
+                        "Unable to create new company because there is an allready existing company with this NAME: {}"
+                    ).format(self.name)
+                )
+
+    # GETTERS
+    def _get_admin_role_name_from_hierarchy_level(self):
         if self.hierarchy_level == "community":
             return "role_ce_admin"
         elif self.hierarchy_level == "coordinator":
             return "role_coord_admin"
         elif self.hierarchy_level == "instance":
             return "role_platform_admin"
-
-    def _get_admins(self):
-        role_name = self._get_admin_role_name()
-        for rec in self:
-            role_lines = self.env["res.users.role.line"].search(
-                [
-                    ("company_id.id", "=", self.id),
-                    ("active", "=", True),
-                    ("role_id.code", "=", role_name),
-                ]
-            )
-            rec.admins = role_lines.mapped("user_id")
 
     def get_ce_members(self, domain_key="in_kc_and_active"):
         domains_dict = {
@@ -228,7 +260,6 @@ class ResCompany(models.Model):
                 )
                 .user_id
             )
-
         wants_platform_admins = (
             self.env.ref("energy_communities.role_platform_admin").code in role_codes
             or not role_codes
@@ -248,46 +279,7 @@ class ResCompany(models.Model):
                 )
                 .user_id
             )
-
         return users
-        # return lines.user_id  # TODO: Si?
-
-    @api.model
-    def _is_not_unique(self, vals):
-        # check for VAT
-        if vals.get("vat", False) and vals.get("vat"):
-            sanit_vat = re.sub(r"[^a-zA-Z0-9]", "", vals["vat"]).upper()
-            if sanit_vat in [
-                re.sub(r"[^a-zA-Z0-9]", "", c.vat).upper()
-                for c in self.search([])
-                if c.vat
-            ]:
-                raise UserError(
-                    _(
-                        "Unable to create new company because there is an allready existing company with this VAT number: {}"
-                    ).format(vals["vat"])
-                )
-
-        # check for name
-        if vals.get("name", False) and vals.get("name"):
-            # sanit_name = slugify(vals['name'])
-            sanit_name = vals["name"]
-            # if sanit_name in [slugify(c.name) for c in self.search([]) if c.name]:
-            if sanit_name in [c.name for c in self.search([]) if c.name]:
-                raise UserError(
-                    _(
-                        "Unable to create new company because there is an allready existing company with this NAME: {}"
-                    ).format(vals["name"])
-                )
-
-    @api.model
-    def create(self, vals):
-        # check that we are not creating duplicate companies by vat or by name
-        self._is_not_unique(vals)
-
-        new_company = super().create(vals)
-
-        return new_company
 
     def get_active_services(self):
         """Return a list of dicts with the key data of each active Service"""
@@ -320,6 +312,7 @@ class ResCompany(models.Model):
         login_provider_id = self.env.ref("energy_communities.keycloak_login_provider")
         return login_provider_id.get_auth_link()
 
+    # LANDING
     def action_create_landing(self):
         new_landing = self.create_landing()
         return {
@@ -368,3 +361,18 @@ class ResCompany(models.Model):
             "res_id": self.landing_page_id.id,
             "target": "current",
         }
+
+    # TODO: Unused functions. Delete if really not needed.
+    def check_ce_has_admin(self):
+        self.ensure_one()
+        admin_roles_ids = [
+            r["odoo_role_id"]
+            for r in self.env["res.users"].ce_user_roles_mapping().values()
+            if r["is_admin"]
+        ]
+        company_user_ids = self.get_ce_members().ids
+        admins_user_ids = []
+        for admin_role in self.env["res.users.role"].sudo().browse(admin_roles_ids):
+            for role_line in admin_role.line_ids:
+                admins_user_ids.append(role_line.user_id.id)
+        return any([user in admins_user_ids for user in company_user_ids])

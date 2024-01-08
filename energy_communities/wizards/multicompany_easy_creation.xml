@@ -35,8 +35,8 @@
                             <field name="lng" required="1" />
                             <field name="foundation_date" />
                             <field name="email" required="1" />
-                            <field name="legal_form" />
-                            <field name="legal_name" />
+                            <field name="legal_form" required="1" />
+                            <field name="legal_name" required="1" />
                             <field name="ce_status" />
                             <field name="phone" />
                             <field name="default_lang_id" required="1" />
