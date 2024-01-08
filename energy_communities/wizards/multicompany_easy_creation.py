@@ -56,42 +56,32 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         string="New Product Share Template",
         readonly=True,
     )
-
     default_lang_id = fields.Many2one(
         comodel_name="res.lang",
         string="Language",
     )
-
     street = fields.Char(
         string="Address",
     )
-
     city = fields.Char(
         string="City",
     )
-
     zip_code = fields.Char(
         string="ZIP code",
     )
-
     foundation_date = fields.Date(string="Foundation date")
-
     vat = fields.Char(
         string="VAT",
     )
-
     email = fields.Char(
         string="Email",
     )
-
     phone = fields.Char(
         string="Phone",
     )
-
     website = fields.Char(
         string="Website",
     )
-
     state_id = fields.Many2one(
         comodel_name="res.country.state",
         string="State",
