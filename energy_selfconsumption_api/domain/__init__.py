@@ -1,0 +1,1 @@
+from .selfconsumption_project import get_selfconsumption_projects
