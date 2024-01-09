@@ -28,41 +28,38 @@
 
             <xpath expr="//td[@name='account_invoice_line_name']" position="after">
                 <td name="td_power_acquired">
+                    <t t-set="found" t-value="False" />
                     <t t-foreach="line.selfconsumption_id.contract_ids" t-as="contract">
                         <t
-              t-if="contract.next_period_date_start and contract.next_period_date_end"
+              t-if="contract.next_period_date_start and contract.next_period_date_end and contract.partner_id == line.partner_id"
             >
                             <t
                 t-esc="(((contract.next_period_date_end - contract.next_period_date_start).days) + 1)* line.selfconsumption_id.power"
               /><span> kW/day</span>
                         </t>
-                        <t
-              t-else="contract.next_period_date_start or contract.next_period_date_end"
-            >
-                            0 kW/day
-                        </t>
+                        <t t-set="found" t-value="True" />
+                    </t>
+                    <t t-if="not found">
+                        0 kW/day
                     </t>
                 </td>
             </xpath>
 
             <xpath expr="//td[@name='td_power_acquired']" position="after">
                 <td name="td_invoiced_days">
-                     <t
-            t-foreach="line.selfconsumption_id.contract_ids"
-            t-as="contract"
-          >
+                    <t t-set="found" t-value="False" />
+                    <t t-foreach="line.selfconsumption_id.contract_ids" t-as="contract">
                         <t
-              t-if="contract.next_period_date_start and contract.next_period_date_end"
+              t-if="contract.next_period_date_start and contract.next_period_date_end and contract.partner_id == line.partner_id"
             >
                             <t
                 t-esc="((contract.next_period_date_end - contract.next_period_date_start).days) + 1"
               />
                         </t>
-                        <t
-              t-else="contract.next_period_date_start or contract.next_period_date_end"
-            >
-                            0
-                        </t>
+                        <t t-set="found" t-value="True" />
+                    </t>
+                    <t t-if="not found">
+                        0
                     </t>
                 </td>
             </xpath>
