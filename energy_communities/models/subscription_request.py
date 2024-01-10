@@ -76,6 +76,13 @@ class SubscriptionRequest(models.Model):
             )
         super().validate_subscription_request()
 
+    def get_bank(self):
+        bank_id = self.partner_id.bank_ids.search(
+            [("acc_number", "=", self.iban), ("partner_id", "=", self.partner_id.id)]
+        )
+        bank_account = super().get_bank()
+        return bank_account
+
     def get_partner_vals(self):
         vals = super().get_partner_vals()
         vals["company_id"] = self.company_id.id
