@@ -1051,32 +1051,31 @@ msgid ""
 msgstr ""
 "\n"
 "            \n"
-"        <p> Kaixo, </ p>\n"
+"        <p> Kaixo, </p>\n"
 "        <p>\n"
 "            Gogoratu auto-kontsumo proiektu kolektiboa dela\n"
-"            <b> $ {object.name} </ b>\n"
+"            <b> $ {object.name} </b>\n"
 "            energiaren komunitatearena\n"
-"            <b> $ {object.project_id.company_id.name} </ b>\n"
-"            Egunean fakturatu behar da <b> $ {ctx ['next_invoicing']} </ b>.\n"
-"        </ p>\n"
+"            <b> $ {object.project_id.company_id.name} </b>\n"
+"            Egunean fakturatu behar da <b> $ {ctx ['next_invoicing']} </b>.\n"
+"        </p>\n"
 "        <p>\n"
 "            Beharrezkoa da, beraz, KWh-n sortutako energia kWh-n sartzea epean\n"
-"            <b> $ {ctx ['first_date']} </ b>\n"
-"            - <b> $ {ctx ['last_date']} </ b>.\n"
-"        </ p>\n"
+"            <b> $ {ctx ['first_date']} </b>\n"
+"            - <b> $ {ctx ['last_date']} </b>.\n"
+"        </p>\n"
 "        <p>\n"
 "            Horretarako, joan proiektuaren fitxategira, idatzi kontratuen ikuspegia, hautatu fakturatu behar diren kontratuak eta\n"
 "            Sakatu faktura botoia. </br>\n"
-"        </ p>\n"
+"        </p>\n"
 "        <p>\n"
 "            Edozein zalantza edo gertakariren truke, jarri harremanetan laguntza-taldearekin;support@somcomunitats.coop.\n"
-"        </ p>"
+"        </p>"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid ""
-"\n"
 "Select only contracts with the same period of invoicing.\n"
 "Make sure that all the selected contracts have the same next period start and end.\n"
 "Next period start: {next_period_date_start}\n"
@@ -1091,14 +1090,13 @@ msgstr ""
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid ""
-"\n"
 "Some of the contract selected are not defined as energy delivered self-consumption projects.\n"
 "\n"
 "Please make sure that you are invoicing the correct self-consumption project.\n"
 msgstr ""
-"Aukeratutako kontratu batzuk ez dira energia kontsumitzeko proiektuak eskaintzen diren bezala definitzen.\n"
+"Aukeratutako kontratuetako batzuk ez dira energia hornidura duten autokontsumoko proiektu gisa definitzen.\n"
 "\n"
-"Mesedez, ziurtatu auto-kontsumo zuzeneko proiektua fakturatzen ari zarela."
+"Mesedez, ziurtatu autokontsumo proiektu zuzena fakturatzen ari zarela."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
@@ -1107,11 +1105,11 @@ msgid ""
 "\n"
 "Some of the contract selected are not of the same self-consumption project.\n"
 "\n"
-"Please make sure that you are invoicing for only the same self-consumption project ({project_name}.\n"
+"Please make sure that you are invoicing for only the same self-consumption project {project_name}.\n"
 msgstr ""
 "Aukeratutako kontratu batzuk ez dira auto-kontsumo proiektu berekoak.\n"
 "\n"
-"Mesedez, ziurtatu auto-kontsumo proiektu berberari soilik fakturatzen ari zarela ({project_name}."
+"Mesedez, ziurtatu auto-kontsumo proiektu berberari soilik fakturatzen ari zarela {project_name}."
 
 #. module: energy_selfconsumption
 #: model:ir.actions.report,print_report_name:energy_selfconsumption.selfconsumption_manager_authorization_report
@@ -1185,7 +1183,7 @@ msgstr "- Aktore koefizienteen txt fitxategi berria"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "<b>(CAU): </b>"
-msgstr "<b> (CAU): </ b>"
+msgstr "<b> (CAU): </b>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1276,7 +1274,7 @@ msgstr "<span> Inportatu</span>"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.energy_delivered_invoice_template
 msgid "<span>Partition coefficient</span>"
-msgstr "<span> partizio koefizientea </ span>"
+msgstr "<span> partizio koefizientea </span>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.energy_delivered_invoice_template
@@ -1308,7 +1306,7 @@ msgstr ""
 "<sup>3</sup>Dokumentazioa behar bezala aurkeztu du, araudiaren arabera ezartzen da, la\n"
 "                               komertzializatzailea de cada consumidor asociado al autoconsumo colectivo con la gestión\n"
 "                               ATR de cada kontsumitzaileen kontratuaren aldaketaren banatzailea, aktibatuta geratuz\n"
-"                               la modalidad de autoconsumo en el contrato de suministro del cliente".
+"                               la modalidad de autoconsumo en el contrato de suministro del cliente."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1327,7 +1325,7 @@ msgstr ""
 "                               <sup>5</sup>Se entenderá por nuevas altas solo a los nuevos CUPS; los cambios de titular\n"
 "                               sobre CUPS existentes se subrogarán al acuerdo de reparto existente, con lo que no hará\n"
 "                               falta modificar ni fichero txt ni acuerdo de reparto, salvo que se modifiquen ere\n"
-"                               los coeficientes de reparto".
+"                               los coeficientes de reparto."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
@@ -1564,7 +1562,7 @@ msgstr ""
 "Era berean, konpentsazio mekanismo sinplifikatua aplikatzea eskatzen dugu\n"
 "                       lotuta gauden autokontsumo instalazioaren soberakinak eta\n"
 "                       konpentsazio-mekanismoa hurrengo fakturazio-aldian hau jasotzen denetik\n"
-"                       akordioa".
+"                       akordioa."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -1603,8 +1601,8 @@ msgid ""
 msgstr ""
 "AUTOKONTSUMO KOLEKTIBOKO ARDURADUNAK deklaratu eta bermatzen du\n"
 "                                       bakoitzaren baimena\n"
-"                                       elkartutako kontsumitzaileetako bat, eta haien datuak\n" direla jakinarazi dio
-"                                       komunikatuko dira, beren\n"
+"                                       elkartutako kontsumitzaileetako bat, eta haien datuak\n"
+"                                       direla jakinarazi dio komunikatuko dira, beren\n"
 "                                       dagokion marketin-enpresa, xedapenen arabera tratatzeko\n"
 "                                       Errege Dekretuan\n"
 "                                       244/2019, apirilaren 5ekoa, administrazio-baldintzak arautzen dituena,\n"
@@ -1616,7 +1614,7 @@ msgstr ""
 "                                       lor ezazu zure datuen tratamenduari buruzko informazio gehiago zure\n"
 "                                       egungo merkataria\n"
 "                                       zure webgunean zure eskubideak nola egikari ditzakezun barne\n"
-"                                       egungo merkataria".
+"                                       egungo merkataria."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
@@ -1692,11 +1690,11 @@ msgid ""
 "                                        con indemnidad para\n"
 "                                        las comercializadoras actuales de cada uno de los consumidores asociados."
 msgstr ""
-"Adierazpen hau fidela eta benetakoa da, eta, horren ondorioz,\n"-KO ZUZENDARITZA.
+"Adierazpen hau fidela eta benetakoa da, eta, horren ondorioz,\n"
 "                                       AUTO KONTSUMO KOLEKTIBOA\n"
 "                                       edozein faltsukeria edo hutsegitetik eratorritako legezko erantzukizun guztiak bere gain hartzen ditu,\n"
 "                                       indemnizazioarekin\n"
-"                                       lotutako kontsumitzaile bakoitzaren egungo merkaturatzaileak".
+"                                       lotutako kontsumitzaile bakoitzaren egungo merkaturatzaileak."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1823,7 +1821,7 @@ msgid ""
 "necesarios."
 msgstr ""
 "Komunikazio hau jaso eta izapideak egiten jarraitzeko eskatzen dizugu"
-"beharrezkoa".
+"beharrezkoa."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
@@ -2097,7 +2095,7 @@ msgid ""
 "The supply point can't be removed because the distribution table state is "
 "{table_state}"
 msgstr ""
-"Ezin da hornidura-puntua ezabatu banaketa-taularen egoera" delako.
+"Ezin da hornidura-puntua ezabatu banaketa-taularen egoera" 
 "{table_state}"
 
 #. module: energy_selfconsumption
@@ -2121,7 +2119,7 @@ msgid ""
 msgstr ""
 "Aldizkako fakturazio-prozesua aktibatzeko, zehaztu zein den nahi duzun data\n"
 "                       proiektu honekin lotutako hornikuntza-puntu guztiak fakturatzen hasteko\n"
-"                       ezarritako errepikapena".
+"                       ezarritako errepikapena."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__power
