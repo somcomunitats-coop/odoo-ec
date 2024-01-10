@@ -1,1 +1,4 @@
-from .selfconsumption_project import SelfConsumptionProjectInfo
+from .selfconsumption_project import (
+    SelfConsumptionProjectInfo,
+    SelfConsumptionProjectMember,
+)
