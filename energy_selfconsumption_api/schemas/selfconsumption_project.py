@@ -11,7 +11,7 @@ class SelfConsumptionProjectInfo(BaseModel):
     power: float
 
 
-class SelfConsumptionMember(BaseModel):
+class SelfConsumptionProjectMember(BaseModel):
     cups: str
     cups_address: str
     cups_postalcode: str
