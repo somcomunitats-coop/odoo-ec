@@ -17,14 +17,14 @@ from ..schemas import SelfConsumptionProjectInfo
 router = APIRouter(prefix="/energy_selfconsumption", tags=["energy_selfconsumption"])
 
 
-@router.get("/project", response_model=List[SelfConsumptionProjectInfo])
+@router.get("/projects", response_model=List[SelfConsumptionProjectInfo])
 def selfconsumption_projects(
     env: Annotated[Environment, Depends(odoo_env)]
 ) -> List[SelfConsumptionProjectInfo]:
-    return get_selfconsumption_projects(env)
+    return get_selfconsumption_projects(env, cau=None)
 
 
-@router.get("/project/{cau}", response_model=List[SelfConsumptionProjectInfo])
+@router.get("/projects/{cau}", response_model=List[SelfConsumptionProjectInfo])
 def get_selfconsumption_project_by_cau(
     cau: str, env: Annotated[Environment, Depends(odoo_env)]
 ) -> List[SelfConsumptionProjectInfo]:

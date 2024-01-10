@@ -3,7 +3,7 @@ import sys
 if sys.version_info >= (3, 9):
     from typing import Any, List
 else:
-    from typing_extensions import Annotated, List
+    from typing_extensions import Any, Annotated, List
 
 from odoo.api import Environment
 
@@ -14,7 +14,7 @@ def get_selfconsumption_projects(
     env: Environment,
     cau: Any,
 ) -> List[SelfConsumptionProjectInfo]:
-    search_domain = [("cau", "=", cau)] and bool(cau) or []
+    search_domain = [("code", "=", cau)] and bool(cau) or []
     return [
         SelfConsumptionProjectInfo(
             cau=project.code,
