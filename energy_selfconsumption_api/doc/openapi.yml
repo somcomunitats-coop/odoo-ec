@@ -1,0 +1,275 @@
+openapi: 3.0.3
+info:
+  title: Energy selfconsumption API-REST
+  description: API-REST documentation for selfconsumption module.
+  termsOfService: https://somcomunitats.coop/avis-legal/
+  contact:
+    email: a@a.foo
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.en.html
+  version: 14.0.1.0.0
+servers:
+  - url: https://apifoo.org
+tags:
+  - name: selfconsumption_projects
+    description: All information about selfconsumption projects in an energy community
+paths:
+  /energy_selfconsumption/projects:
+    get:
+      tags:
+        - selfconsumption_projects
+      summary: Obtain all selfconsumption in a energy community
+      description:
+        Get a list of selfconsumption projects that belongs to the energy community of
+        the user
+      responses:
+        200:
+          $ref: "#/components/responses/SelfConsumptionProjectsInfoResponse"
+        400:
+          $ref: "#/components/responses/BadRequestResponse"
+        401:
+          $ref: "#/components/responses/UnauthorizedResponse"
+      security:
+        - odooCEAuth: []
+  /energy_selfconsumption/projects/{cau}:
+    get:
+      tags:
+        - selfconsumption_projects
+      summary: Find selfconsumption project by cau
+      description: Returns the project that match with cau
+      parameters:
+        - $ref: "#/components/parameters/CauParam"
+      responses:
+        200:
+          $ref: "#/components/responses/SelfConsumptionSingleProjectInfoResponse"
+        400:
+          $ref: "#/components/responses/BadRequestResponse"
+        401:
+          $ref: "#/components/responses/UnauthorizedResponse"
+      security:
+        - odooCEAuth: []
+  /energy_selfconsumption/projects/{cau}/members:
+    get:
+      tags:
+        - selfconsumption_projects
+      summary:
+        Find all members of an energy community that belongs to an especific
+        selfconsumption project
+      description:
+        Get a list of members of an  energy community that aire involve in a
+        selfconsumption project - installation defined by cau
+      parameters:
+        - $ref: "#/components/parameters/CauParam"
+      responses:
+        200:
+          $ref: "#/components/responses/SelfConsumptionSingleProjectMembersResponse"
+        400:
+          $ref: "#/components/responses/BadRequestResponse"
+        401:
+          $ref: "#/components/responses/UnauthorizedResponse"
+      security:
+        - odooCEAuth: []
+components:
+  securitySchemes:
+    odooCEAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer
+  parameters:
+    CauParam:
+      name: cau
+      in: path
+      description: cau of an specific installation
+      required: true
+      schema:
+        type: string
+  responses:
+    BadRequestResponse:
+      description: This response is generated if you have built incorrectly your request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            badrequest-response-example:
+              $ref: "#/components/examples/badrequest-response-example"
+    UnauthorizedResponse:
+      description:
+        If you try to request some endpoint, and you are not authorized, the api will
+        answer you with this response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            unauthorized-response-example:
+              $ref: "#/components/examples/unauthorized-response-example"
+    SelfConsumptionProjectsInfoResponse:
+      description:
+        Returns a set of selfconsumption projects with the number of results and the
+        corresponding data.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ProjectsInfoListResponse"
+          examples:
+            contracts-response-example:
+              $ref: "#/components/examples/selfconsumption_projectsinfo-response-example"
+    SelfConsumptionSingleProjectInfoResponse:
+      description: Returns a single selfconsumption project information.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SingleProjectInfoResponse"
+          examples:
+            single-contract-response-example:
+              $ref: "#/components/examples/selfconsumption_singleprojectinfo-response-example"
+    SelfConsumptionSingleProjectMembersResponse:
+      description: Returns the member list of a especific selfconsumption installation
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SelfConsumptionSingleProjectMembers"
+          examples:
+            single-contract-response-example:
+              $ref: "#/components/examples/selfconsumption_singleprojectmembers-response-example"
+  schemas:
+    SelfConsumptionProjectInfo:
+      type: object
+      properties:
+        cau:
+          type: string
+          description: installation cau
+          example: ""
+        project_name:
+          type: string
+          description: Name of the project
+          example: Super chachi solar and wind installation
+        ce_id:
+          type: string
+          description: ID of energy community that belongs this installation
+          example: ""
+        ce_name:
+          type: string
+          description: Name of the energy community that belongs this installation
+          example: "GaresBide"
+        power:
+          type: integer
+          description: Total power of the installation, in kW
+          example: 6.2
+    SelfConsumptionSingleProjectMembers:
+      type: object
+      properties:
+        cups:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        description:
+          type: string
+          description: Error description
+    # ============================
+    # Request and Response schemas
+    # ============================
+    BaseResponse:
+      type: object
+      properties:
+        state:
+          type: string
+          enum: [ok, fail]
+          description:
+            State of the request. ok means that the request went successful, fail
+            otherwise.
+    ErrorResponse:
+      allOf:
+        - $ref: "#/components/schemas/BaseResponse"
+        - type: object
+          properties:
+            error:
+              $ref: "#/components/schemas/Error"
+    ProjectsInfoListResponse:
+      allOf:
+        - $ref: "#/components/schemas/BaseResponse"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/SelfConsumptionProjectInfo"
+    SingleProjectInfoResponse:
+      allOf:
+        - $ref: "#/components/schemas/BaseResponse"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/SelfConsumptionProjectInfo"
+  examples:
+    selfconsumption_projectsinfo-response-example:
+      value:
+        state: ok
+        data:
+          - cau: ""
+            project_name: ""
+            ce_id: ""
+            ce_name: ""
+            power: 5.6
+          - cau: ""
+            project_name: ""
+            ce_id: ""
+            ce_name: ""
+            power: 4.6
+    selfconsumption_singleprojectinfo-response-example:
+      value:
+        state: ok
+        data:
+          cau: ""
+          project_name: ""
+          ce_id: ""
+          ce_name: ""
+          power: 5.6
+    selfconsumption_singleprojectmembers-response-example:
+      value:
+        state: ok
+        data:
+          - cups: "ES0021158966826855BS"
+            cups_address: Travesía iglesia, 50
+            cups_postalcode: 08742
+            cups_city: Sant Quintí de Mediona
+            cups_state: Barcelona
+            beta: 0.5
+            owner_name: Maria Amparo
+            owner_surname1: Caballé
+            owner_surname2: Roig
+            owner_vat: 39656908D
+          - cups: "ES0022957057732644JV"
+            cups_address: Cuesta Iglesia, 42
+            cups_postalcode: 08066
+            cups_city: Olvan
+            cups_state: Barcelona
+            beta: 0.5
+            owner_name: Víctor
+            owner_surname1: Puig
+            owner_surname2: de la Serra
+            owner_vat: 06454209H
+    badrequest-response-example:
+      value:
+        state: fail
+        error:
+          code: bad_request
+          message: "Sorry, I couldn't process this request  ¯\_(ツ)_/¯"
+    badauthrequest-response-example:
+      value:
+        state: fail
+        error:
+          code: bad_request
+          message: Missing username or password.
+    unauthorized-response-example:
+      value:
+        state: fail
+        error:
+          code: unauthorized
+          message: Auth required.
