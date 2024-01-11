@@ -104,7 +104,7 @@ class Selfconsumption(models.Model):
         related="product_id.contract_template_id",
     )
     reseller_id = fields.Many2one(
-        "energy_project.reseller",
+        "energy_project.supplier",
         string="Energy Reseller",
         help="Select the associated Energy Reseller",
     )
@@ -317,7 +317,6 @@ class Selfconsumption(models.Model):
             selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
 
         return True
-
 
     def send_power_acquired_invoicing_reminder(self):
         today = fields.date.today()
