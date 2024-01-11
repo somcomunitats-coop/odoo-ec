@@ -14,6 +14,8 @@
         "fastapi",
         "energy_selfconsumption",
     ],
-    "data": [],
+    "data": [
+        "data/fastapi_endpoint_data.xml",
+    ],
     "demo": ["demo/energy_selfconsumption_app_demo.xml"],
 }
