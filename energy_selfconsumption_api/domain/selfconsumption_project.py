@@ -14,7 +14,7 @@ def get_selfconsumption_projects(
     env: Environment,
     cau: Any,
 ) -> List[SelfConsumptionProjectInfo]:
-    search_domain = [("code", "=", cau)] and bool(cau) or []
+    search_domain = bool(cau) and [("code", "=", cau)] or []
     return [
         SelfConsumptionProjectInfo(
             cau=project.code,
