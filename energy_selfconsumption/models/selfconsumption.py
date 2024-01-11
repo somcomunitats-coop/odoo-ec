@@ -170,7 +170,7 @@ class Selfconsumption(models.Model):
         """
         Activates the energy self-consumption project, performing various validations.
 
-        This method checks for the presence of a valid code, CIL, and rated power
+        This method checks for the presence of a valid code, and rated power
         for the project. If all validations pass, it instances a wizard and generating
         contracts for the project.
 
@@ -183,13 +183,11 @@ class Selfconsumption(models.Model):
             dict: A dictionary containing the action details for opening the wizard.
 
         Raises:
-            ValidationError: If the project does not have a valid Code, CIL, or Rated Power.
+            ValidationError: If the project does not have a valid Code, or Rated Power.
         """
         for record in self:
             if not record.code:
                 raise ValidationError(_("Project must have a valid Code."))
-            if not record.cil:
-                raise ValidationError(_("Project must have a valid CIL."))
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Rated Power."))
             if not record.invoicing_mode:
@@ -317,7 +315,6 @@ class Selfconsumption(models.Model):
             selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
 
         return True
-
 
     def send_power_acquired_invoicing_reminder(self):
         today = fields.date.today()
