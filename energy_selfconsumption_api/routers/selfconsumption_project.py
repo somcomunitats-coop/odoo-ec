@@ -14,7 +14,7 @@ from odoo.addons.fastapi.dependencies import odoo_env
 from ..domain import get_selfconsumption_projects
 from ..schemas import SelfConsumptionProjectInfo
 
-router = APIRouter(prefix="/energy_selfconsumption", tags=["energy_selfconsumption"])
+router = APIRouter(tags=["energy_selfconsumption"])
 
 
 @router.get("/projects", response_model=List[SelfConsumptionProjectInfo])
