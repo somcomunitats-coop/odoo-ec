@@ -103,10 +103,10 @@ class Selfconsumption(models.Model):
         string="Contract Template",
         related="product_id.contract_template_id",
     )
-    reseller_id = fields.Many2one(
+    supplier_id = fields.Many2one(
         "energy_project.supplier",
-        string="Energy Reseller",
-        help="Select the associated Energy Reseller",
+        string="Energy Supplier",
+        help="Select the associated Energy Supplier",
     )
     cadastral_reference = fields.Char(string="Cadastral reference")
 

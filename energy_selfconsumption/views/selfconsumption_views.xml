@@ -167,7 +167,7 @@
                   attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
                 />
                                 <field
-                  name="reseller_id"
+                  name="supplier_id"
                   attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
                   options="{'no_create': True, 'no_edit':True, 'no_open': True}"
                 />
