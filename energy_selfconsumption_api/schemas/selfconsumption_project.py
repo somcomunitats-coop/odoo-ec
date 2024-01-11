@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class SelfConsumptionProjectInfo(BaseModel):
     cau: str
     project_name: str
-    ce_id: str
+    ce_id: int
     ce_name: str
     # d'on surt aquests state????
     # state: int
