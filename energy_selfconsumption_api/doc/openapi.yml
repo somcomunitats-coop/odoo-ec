@@ -130,7 +130,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/SelfConsumptionSingleProjectMembers"
+            $ref: "#/components/schemas/SingleProjectMembersResponse"
           examples:
             single-contract-response-example:
               $ref: "#/components/examples/selfconsumption_singleprojectmembers-response-example"
@@ -163,6 +163,34 @@ components:
       properties:
         cups:
           type: string
+          description: CUPS code for this member
+        cups_address:
+          type: string
+          description: Addess of CUPS
+        cups_postalcode:
+          type: string
+          description: Postalcode of CUPS
+        cups_city:
+          type: string
+          description: city / town or village of this cups
+        cups_state:
+          type: string
+          description: State of this cups
+        beta:
+          type: integer
+          description: Sharing coeficient for this cups
+        owner_name:
+          type: string
+          description: Name of the owner of the cups
+        owner_surname1:
+          type: string
+          description: First surname of the owner
+        owner_surname2:
+          type: string
+          description: Second surname of the owner
+        owner_vat:
+          type: string
+          description: ID of the owner
     Error:
       type: object
       properties:
@@ -184,6 +212,42 @@ components:
           description:
             State of the request. ok means that the request went successful, fail
             otherwise.
+    BaseListResponse:
+      allOf:
+        - $ref: "#/components/schemas/BaseResponse"
+        - type: object
+          properties:
+            total_results:
+              type: integer
+              description: Total results in general for this request
+            count:
+              type: integer
+              description: Number of results on this response
+    PaginationLimits:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: maximum number of elements per page
+        offset:
+          type: integer
+          description: offset of this page
+    PaginationLinks:
+      type: object
+      properties:
+        self:
+          type: string
+          description: Actual results url
+        next_page:
+          type: string
+          description: Url of next results. If null you are in the las page
+        previous_page:
+          type: string
+          description: Url of the previous results. If null you are in the first page
+    PaginationResponse:
+      allOf:
+        - $ref: "#/components/schemas/PaginationLimits"
+        - $ref: "#/components/schemas/PaginationLinks"
     ErrorResponse:
       allOf:
         - $ref: "#/components/schemas/BaseResponse"
@@ -193,13 +257,15 @@ components:
               $ref: "#/components/schemas/Error"
     ProjectsInfoListResponse:
       allOf:
-        - $ref: "#/components/schemas/BaseResponse"
+        - $ref: "#/components/schemas/BaseListResponse"
         - type: object
           properties:
             data:
               type: array
               items:
                 $ref: "#/components/schemas/SelfConsumptionProjectInfo"
+            _links:
+              $ref: "#/components/schemas/PaginationResponse"
     SingleProjectInfoResponse:
       allOf:
         - $ref: "#/components/schemas/BaseResponse"
@@ -207,6 +273,20 @@ components:
           properties:
             data:
               $ref: "#/components/schemas/SelfConsumptionProjectInfo"
+            _links:
+              $ref: "#/components/schemas/PaginationLinks"
+    SingleProjectMembersResponse:
+      allOf:
+        - $ref: "#/components/schemas/BaseListResponse"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/SelfConsumptionSingleProjectMembers"
+            _links:
+              $ref: "#/components/schemas/PaginationResponse"
+
   examples:
     selfconsumption_projectsinfo-response-example:
       value:
@@ -222,15 +302,27 @@ components:
             ce_id: ""
             ce_name: ""
             power: 4.6
+        total_results: 10
+        count: 2
+        _links:
+          self: https://somcomunitats.coop/api/energy_selfconsumption/projects?limit=2&offset=2
+          previous: https://somcomunitats.coop/api/energy_selfconsumption/projects?limit=2&offset=0
+          next: https://somcomunitats.coop/api/energy_selfconsumption/projects?limit=2&offset=4
+          limit: 2
+          offset: 2
     selfconsumption_singleprojectinfo-response-example:
       value:
         state: ok
         data:
-          cau: ""
-          project_name: ""
-          ce_id: ""
-          ce_name: ""
+          cau: "ES0021158966826855BSA008"
+          project_name: "Taulada den Xurri"
+          ce_id: "2"
+          ce_name: "Energia caSOLana"
           power: 5.6
+        _links:
+          self: https://somcomunitats.coop/api/energy_selfconsumption/projects/ES0021158966826855BSA008
+          previous: null
+          next: null
     selfconsumption_singleprojectmembers-response-example:
       value:
         state: ok
@@ -255,6 +347,14 @@ components:
             owner_surname1: Puig
             owner_surname2: de la Serra
             owner_vat: 06454209H
+        total_results: 20
+        count: 2
+        _links:
+          self: https://somcomunitats.coop/api/energy_selfconsumption/projects?limit=2&offset=2
+          previous: https://somcomunitats.coop/api/energy_selfconsumption/projects?limit=2&offset=0
+          next: https://somcomunitats.coop/api/energy_selfconsumption/projects?limit=2&offset=4
+          limit: 2
+          offset: 2
     badrequest-response-example:
       value:
         state: fail
