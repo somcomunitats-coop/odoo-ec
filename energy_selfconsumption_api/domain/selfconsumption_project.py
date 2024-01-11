@@ -19,7 +19,7 @@ def get_selfconsumption_projects(
         SelfConsumptionProjectInfo(
             cau=project.code,
             project_name=project.name,
-            ce_id=project.project_id,
+            ce_id=project.project_id.id,
             ce_name=project.company_id.name,
             power=project.power,
         )
