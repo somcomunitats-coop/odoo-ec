@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="energy_selfconsumption_endpoint_data" model="fastapi.endpoint">
+            <field name="name">Energy Selfconsumption - Fast API Endpoint</field>
+            <field name="app">energy_selfconsumption</field>
+            <field name="root_path">/energy_selfconsumption</field>
+        </record>
+    </data>
+</odoo>
