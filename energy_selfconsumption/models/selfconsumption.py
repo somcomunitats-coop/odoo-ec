@@ -268,7 +268,7 @@ class Selfconsumption(models.Model):
 
         file_content = ""
         for data in report_data:
-            line = f"{data['code']};{str(data['coefficient']).replace('.', ',')}\n"
+            line = f"{data['code']};{str(data['coefficient']).replace('.', ',')}\r\n"
             file_content += line
 
         file_content = file_content.encode("utf-8")
