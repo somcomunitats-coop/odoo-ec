@@ -271,6 +271,8 @@ class Selfconsumption(models.Model):
             line = f"{data['code']};{str(data['coefficient']).replace('.', ',')}\n"
             file_content += line
 
+        file_content = file_content.encode("utf-8")
+
         date = datetime.now()
         year = date.strftime("%Y")
         self.env["energy_selfconsumption.coefficient_report"].create(
@@ -317,7 +319,6 @@ class Selfconsumption(models.Model):
             selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
 
         return True
-
 
     def send_power_acquired_invoicing_reminder(self):
         today = fields.date.today()
