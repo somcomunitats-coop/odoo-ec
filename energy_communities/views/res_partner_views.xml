@@ -60,6 +60,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='vat']" position="after">
                   <field name="company_hierarchy_level" invisible="1" />
+                  <field name="user_current_role" />
                 </xpath>
                 <xpath expr="//field[@name='name']" position="before">
                   <h4
