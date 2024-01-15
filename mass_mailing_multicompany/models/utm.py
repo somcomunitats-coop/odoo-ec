@@ -6,10 +6,11 @@ class UtmCampaign(models.Model):
     _inherit = "utm.campaign"
 
     company_id = fields.Many2one(
-        "res.company", default=lambda self: self.env.company, required=True
+        "res.company",
+        default=lambda self: self.env.company,
+        required=True,
+        readonly=False,
     )
-    # TODO: The creation of this field only used for inherited view being able to be rendered. Not used at all. Why do we need it on the view??
-    state = fields.Char()
 
 
 class UtmStage(models.Model):

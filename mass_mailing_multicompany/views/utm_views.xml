@@ -3,10 +3,9 @@
     <record id="utm_campaign_view_form_inherit" model="ir.ui.view">
         <field name="name">utm.campaign.view.form.inherit</field>
         <field name="model">utm.campaign</field>
-        <field name="inherit_id" ref="mass_mailing.utm_campaign_view_form" />
+        <field name="inherit_id" ref="utm.utm_campaign_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='tag_ids']" position="after">
-                <field name="state" invisible="1" />
                 <field name="company_id" />
             </xpath>
         </field>
