@@ -34,9 +34,9 @@ class ResPartner(models.Model):
         compute="compute_company_hierarchy_level",
         store=True,
     )
-    user_current_role = fields.Char(compute="_get_user_current_role", store=False)
+    user_current_role = fields.Char(compute="_compute_user_current_role", store=False)
 
-    def _get_user_current_role(self):
+    def _compute_user_current_role(self):
         for record in self:
             record.user_current_role = self.env.user.get_current_role()
 
