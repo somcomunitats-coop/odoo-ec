@@ -71,8 +71,65 @@
     </record>
 
     <record model="ir.rule" id="base.res_partner_rule">
+      <field name="perm_read" eval="True" />
+      <field name="perm_write" eval="False" />
+      <field name="perm_create" eval="False" />
+      <field name="perm_unlink" eval="False" />
         <field
       name="domain_force"
     >['|', ('company_ids', '=', False), ('company_ids', 'in', company_ids)]</field>
+    </record>
+
+    <record model="ir.rule" id="base.res_partner_rule_private_employee">
+      <field name="perm_read" eval="True" />
+      <field name="perm_write" eval="False" />
+      <field name="perm_create" eval="False" />
+      <field name="perm_unlink" eval="False" />
+    </record>
+
+    <record model="ir.rule" id="base.res_partner_rule_private_group">
+      <field name="perm_read" eval="True" />
+      <field name="perm_write" eval="False" />
+      <field name="perm_create" eval="False" />
+      <field name="perm_unlink" eval="False" />
+    </record>
+
+    <record model="ir.rule" id="res_partner_platform_admin_rule">
+      <field name="name">res.partner Platform-admin multi-company</field>
+      <field name="model_id" ref="base.model_res_partner" />
+      <field name="groups" eval="[(4, ref('base.group_user'))]" />
+      <field
+      name="domain_force"
+    >[('user_current_role', '=', 'role_platform_admin')]</field>
+      <field name="perm_read" eval="False" />
+      <field name="perm_write" eval="True" />
+      <field name="perm_create" eval="True" />
+      <field name="perm_unlink" eval="False" />
+    </record>
+
+    <record model="ir.rule" id="res_partner_coordinator_admin_worker_rule">
+      <field name="name">res.partner Coordinator-admin-worker multi-company</field>
+      <field name="model_id" ref="base.model_res_partner" />
+      <field name="groups" eval="[(4, ref('base.group_user'))]" />
+      <field
+      name="domain_force"
+    >[('user_current_role', 'in', ['role_coord_admin','role_coord_worker']),('company_hierarchy_level','!=','instance')]</field>
+      <field name="perm_read" eval="False" />
+      <field name="perm_write" eval="True" />
+      <field name="perm_create" eval="True" />
+      <field name="perm_unlink" eval="False" />
+    </record>
+
+    <record model="ir.rule" id="res_partner_community_manager_admin_rule">
+      <field name="name">res.partner Community-manager-admin multi-company</field>
+      <field name="model_id" ref="base.model_res_partner" />
+      <field name="groups" eval="[(4, ref('base.group_user'))]" />
+      <field
+      name="domain_force"
+    >[('user_current_role', 'in', ['role_ce_manager','role_ce_admin']),('company_hierarchy_level','not in',['instance','coordinator'])]</field>
+      <field name="perm_read" eval="False" />
+      <field name="perm_write" eval="True" />
+      <field name="perm_create" eval="True" />
+      <field name="perm_unlink" eval="False" />
     </record>
 </odoo>
