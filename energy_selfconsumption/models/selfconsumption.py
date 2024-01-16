@@ -259,7 +259,7 @@ class Selfconsumption(models.Model):
 
         for table in tables_to_use:
             for assignation in table.supply_point_assignation_ids:
-                coefficient_format = f"{assignation.coefficient:.7f}"  # we need to make sure it has 8 digits
+                coefficient_format = f"{assignation.coefficient:.6f}"  # we need to make sure it has 7 digits
                 report_data.append(
                     {
                         "code": assignation.supply_point_id.code,
@@ -268,8 +268,10 @@ class Selfconsumption(models.Model):
                 )
 
         file_content = ""
-        for data in report_data:
-            line = f"{data['code']};{data['coefficient'].replace('.', ',')}\r\n"
+        for i, data in enumerate(report_data):
+            line = f"{data['code']};{data['coefficient'].replace('.', ',')}"
+            if i < len(report_data) - 1:
+                line += "\r\n"
             file_content += line
 
         file_content = file_content.encode("utf-8")
