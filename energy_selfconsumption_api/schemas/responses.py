@@ -5,6 +5,8 @@ if sys.version_info >= (3, 9):
 else:
     from typing_extensions import List
 
+from pydantic import Field
+
 from .base import (
     BaseListResponse,
     BaseResponse,
@@ -23,7 +25,7 @@ class SingleProjectInfoResponse(BaseResponse):
     """
 
     data: SelfConsumptionProjectInfo
-    _links: PaginationLinks
+    links: PaginationLinks = Field(alias="_links")
 
 
 class ProjectsInfoListResponse(BaseListResponse):
@@ -32,7 +34,7 @@ class ProjectsInfoListResponse(BaseListResponse):
     """
 
     data: List[SelfConsumptionProjectInfo]
-    _links: PaginationModel
+    links: PaginationModel = Field(alias="_links")
 
 
 class ProjectMembersResponse(BaseListResponse):
@@ -41,4 +43,4 @@ class ProjectMembersResponse(BaseListResponse):
     """
 
     data: List[SelfConsumptionProjectMember]
-    _links: PaginationModel
+    links: PaginationModel = Field(alias="_links")
