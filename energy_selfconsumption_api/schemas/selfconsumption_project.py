@@ -2,22 +2,20 @@ from pydantic import BaseModel
 
 
 class SelfConsumptionProjectInfo(BaseModel):
-    cau: str
+    project_code: str
     project_name: str
-    ce_id: int
-    ce_name: str
-    # d'on surt aquests state????
-    # state: int
+    energy_community_id: int
+    energy_community_name: str
     power: float
 
 
 class SelfConsumptionProjectMember(BaseModel):
-    cups: str
-    cups_address: str
-    cups_postalcode: str
-    cups_town: str
-    cups_state: str
-    beta: float
+    supply_point_code: str
+    supply_point_address: str
+    supply_point_postalcode: str
+    supply_point_town: str
+    supply_point_state: str
+    distribution_coefficient: float
     owner_name: str
     owner_surname1: str
     owner_surname2: str
