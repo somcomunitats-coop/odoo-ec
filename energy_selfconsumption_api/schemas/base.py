@@ -1,15 +1,12 @@
-from pydantic import BaseModel
+from typing import Optional
 
-OK = "ok"
-FAIL = "fail"
+from pydantic import BaseModel
 
 
 class BaseResponse(BaseModel):
     """
     Base response class. All rest of responses will inherit from this one
     """
-
-    state: str
 
 
 class BaseListResponse(BaseResponse):
@@ -37,8 +34,8 @@ class PaginationLinks(BaseModel):
     """
 
     self_: str
-    next_page: str
-    previous_page: str
+    next_page: Optional[str] = None
+    previous_page: Optional[str] = None
 
 
 class PaginationModel(PaginationLimits, PaginationLinks):
@@ -54,12 +51,3 @@ class Error(BaseModel):
 
     code: str
     description: str
-
-
-class ErrorResponse(BaseResponse):
-    """
-    When there is some error processing a request (unauthorized, body badly construncted...),
-    this model will be returned
-    """
-
-    error: Error

@@ -1,15 +1,11 @@
-import sys
-
-if sys.version_info >= (3, 9):
-    from typing import List
-else:
-    from typing_extensions import List
+from typing import List, Optional
 
 from pydantic import Field
 
 from .base import (
     BaseListResponse,
     BaseResponse,
+    Error,
     PaginationLinks,
     PaginationModel,
 )
@@ -19,12 +15,21 @@ from .selfconsumption_project import (
 )
 
 
+class ErrorResponse(BaseResponse):
+    """
+    When there is some error processing a request (unauthorized, body badly construncted...),
+    this model will be returned
+    """
+
+    error: Error
+
+
 class SingleProjectInfoResponse(BaseResponse):
     """
     When a single project is requested, this model will be returned
     """
 
-    data: SelfConsumptionProjectInfo
+    data: Optional[SelfConsumptionProjectInfo] = {}
     links: PaginationLinks = Field(alias="_links")
 
 
