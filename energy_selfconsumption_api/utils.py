@@ -1,11 +1,5 @@
-import sys
+from typing import Any
 
-if sys.version_info >= (3, 9):
-    from typing import Any
-else:
-    from typing_extensions import Any
-
-from .schemas.base import FAIL, OK
 from .schemas.responses import (
     ProjectsInfoListResponse,
     SingleProjectInfoResponse,
@@ -29,10 +23,13 @@ def _get_pagination(object_: Any):
 
 
 def make_single_response(object_: Any) -> SingleProjectInfoResponse:
-    return SingleProjectInfoResponse(state=OK, data=object_, _links=_get_links(object_))
+    return SingleProjectInfoResponse(data=object_, _links=_get_links(object_))
 
 
 def make_list_response(object_: Any) -> ProjectsInfoListResponse:
     return ProjectsInfoListResponse(
-        state=OK, data=object_, _links=_get_pagination(object_)
+        total_results=len(object_),
+        count=len(object_),
+        data=object_,
+        _links=_get_pagination(object_),
     )
