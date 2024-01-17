@@ -17,10 +17,10 @@ def get_selfconsumption_projects(
     search_domain = bool(cau) and [("code", "=", cau)] or []
     return [
         SelfConsumptionProjectInfo(
-            cau=project.code,
+            project_code=project.code,
             project_name=project.name,
-            ce_id=project.project_id.id,
-            ce_name=project.company_id.name,
+            energy_community_id=project.project_id.id,
+            energy_community_name=project.company_id.name,
             power=project.power,
         )
         for project in env["energy_selfconsumption.selfconsumption"].search(

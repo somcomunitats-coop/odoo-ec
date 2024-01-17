@@ -30,10 +30,11 @@ def selfconsumption_projects(
     return make_list_response(projects)
 
 
-@router.get("/projects/{cau}", response_model=SingleProjectInfoResponse)
+@router.get("/projects/{project_code}", response_model=SingleProjectInfoResponse)
 def get_selfconsumption_project_by_cau(
-    cau: str, env: Annotated[Environment, Depends(odoo_env)]
+    project_code: str,
 ) -> SingleProjectInfoResponse:
-    project = get_selfconsumption_projects(env, cau)
+    projects = get_selfconsumption_projects(env, project_code)
+    project = projects[0] if projects and len(projects) > 0 else None
 
     return make_single_response(project)
