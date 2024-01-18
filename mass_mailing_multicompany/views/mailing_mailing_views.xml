@@ -6,13 +6,7 @@
         <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="before">
-                <field name="company_id" />
-                <!--<field-->
-                <!--    name="company_ids"-->
-                <!--    groups="base.group_multi_company"-->
-                <!--    widget="many2many_tags"-->
-                <!--    options="{'no_create': True}"-->
-                <!--/>-->
+                <field name="company_id" groups="base.group_multi_company" />
             </xpath>
         </field>
     </record>
