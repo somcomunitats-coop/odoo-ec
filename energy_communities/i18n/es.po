@@ -1258,6 +1258,11 @@ msgid "Crm Lead"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
+msgid "Customize documents text"
+msgstr "Personalización de textos en documentos"
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
 msgid ""
 "DATA PROTECTION INFORMATION. Purposes: to respond to your requests. Rights: "
@@ -1321,6 +1326,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__display_footer_doc_policy_text
+msgid "Display footer doc policy text"
+msgstr "Mostrar texto legal a pie de documentos"
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0
@@ -1585,6 +1595,11 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Iconos de Font awesome p.ej. fa-tasks"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__footer_doc_policy_text
+msgid "Footer doc policy text"
+msgstr "Texto legal a pie de documentos"
+
+#. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_citizen_education
 msgid "Formació ciutadana"
 msgstr "Formación ciudadana"
@@ -1594,11 +1609,6 @@ msgstr "Formación ciudadana"
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__foundation_date
 msgid "Foundation date"
 msgstr "Fecha creación"
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
-msgid "GENERAL CONDITIONS"
-msgstr "CONDICIONES GENERALES"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__gender
@@ -1718,7 +1728,7 @@ msgid "ID Ext tag"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
+#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid ""
 "INDIVIDUAL\n"
 "                PARTNER"
@@ -1889,7 +1899,7 @@ msgid "Keycloak provider"
 msgstr "Proveedor KeyCloak"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
+#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "LEGAL ENTITY PARTNER"
 msgstr "ALTA SOCIA PERSONA JURÍDICA"
 
@@ -2213,9 +2223,9 @@ msgid "Not valid parameter value [odoo_company_id]"
 msgstr "El valor para el parámetro [odoo_company_id] no es válido"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
+#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid ""
-"Note: Please, if you are not yet a member, you must process it at through\n"
+"Note: Please, if you are not yet a member, you must process it through\n"
 "            these forms:"
 msgstr ""
 "Nota: Por favor, si aún no eres socia, debes tramitarlo a través de estos "
@@ -3121,9 +3131,15 @@ msgid "Voluntary Share of"
 msgstr "Aportación voluntaria de"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_subscription_request_filter_inherit
 msgid "Voluntary Shares"
 msgstr "Aportaciones voluntarias"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__voluntary_share_form_header_text
+msgid "Voluntary share form header text"
+msgstr "Texto del formulario de participación voluntaria"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__voluntary_share_id
@@ -3256,25 +3272,6 @@ msgstr "Página landing y punto de mapa actualizados satisfactoriamente"
 #, python-format
 msgid "Yes"
 msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
-msgid ""
-"You\n"
-"            can consult the"
-msgstr "Puedes consultar las"
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
-msgid ""
-"You can consult\n"
-"            our"
-msgstr "Puedes consultar nuestras"
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline_message_closed
-msgid "You can contact"
-msgstr "Puedes contactar"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/subscription_request.py:0
@@ -3433,7 +3430,7 @@ msgid "active"
 msgstr "activa"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
+#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "and"
 msgstr "y"
 
@@ -3540,11 +3537,6 @@ msgstr "lead_id en la url web"
 #, python-format
 msgid "lead_id param must be defined on the url in order to use the form"
 msgstr "lead_id debe estar definido en la url para usar el formulario"
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
-msgid "of Voluntary Contributions."
-msgstr "de aportaciones voluntarias."
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
