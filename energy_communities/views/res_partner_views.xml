@@ -60,6 +60,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='vat']" position="after">
                   <field name="company_hierarchy_level" invisible="1" />
+                  <field name="user_current_role" />
                 </xpath>
                 <xpath expr="//field[@name='name']" position="before">
                   <h4
@@ -105,5 +106,30 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="res_partner_view_form" model="ir.ui.view">
+            <field name="name">res_partner_view_form.inherit</field>
+            <field name="model">res.partner</field>
+            <field
+        name="inherit_id"
+        ref="partner_multi_company.res_partner_view_form"
+      />
+            <field name="arch" type="xml">
+                <xpath
+          expr="//page[@name='sales_purchases']//field[@name='company_ids']"
+          position="replace"
+        >
+                  <field name="user_current_role" invisible="1" />
+                  <field
+            name="company_ids"
+            groups="base.group_multi_company"
+            widget="many2many_tags"
+            options="{'no_create': True}"
+            attrs="{'readonly': [('user_current_role', '!=', 'role_platform_admin')]}"
+          />
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </odoo>
