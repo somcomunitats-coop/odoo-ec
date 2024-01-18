@@ -241,19 +241,29 @@ class Selfconsumption(models.Model):
         for record in self:
             record.write({"state": "draft"})
 
+    def validate_state(self, state):
+        if state not in ("activation", "active"):
+            error_message = _(
+                "The report can be downloaded when the project is in activation or active status."
+            )
+            raise ValidationError(error_message)
+
     def action_manager_authorization_report(self):
         self.ensure_one()
+        self.validate_state(self.state)
         return self.env.ref(
             "energy_selfconsumption.selfconsumption_manager_authorization_report"
         ).report_action(self)
 
     def action_power_sharing_agreement_report(self):
         self.ensure_one()
+        self.validate_state(self.state)
         return self.env.ref(
             "energy_selfconsumption.power_sharing_agreement_report"
         ).report_action(self)
 
     def action_manager_partition_coefficient_report(self):
+        self.validate_state(self.state)
         tables_to_use = self.report_distribution_table
         report_data = []
 
@@ -317,7 +327,6 @@ class Selfconsumption(models.Model):
             selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
 
         return True
-
 
     def send_power_acquired_invoicing_reminder(self):
         today = fields.date.today()
