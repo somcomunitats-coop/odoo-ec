@@ -35,6 +35,17 @@ class ResPartner(models.Model):
         store=True,
     )
     user_current_role = fields.Char(compute="_compute_user_current_role", store=False)
+    company_ids_info = fields.Many2many(
+        string="Companies",
+        comodel_name="res.company",
+        compute="_compute_company_ids_info",
+        store=False,
+    )
+
+    @api.depends("company_ids")
+    def _compute_company_ids_info(self):
+        for record in self:
+            record.company_ids_info = record.company_ids
 
     def _compute_user_current_role(self):
         for record in self:

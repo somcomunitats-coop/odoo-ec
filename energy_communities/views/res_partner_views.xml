@@ -119,13 +119,18 @@
           expr="//page[@name='sales_purchases']//field[@name='company_ids']"
           position="replace"
         >
-                  <field name="user_current_role" invisible="1" />
                   <field
             name="company_ids"
             groups="base.group_multi_company"
             widget="many2many_tags"
             options="{'no_create': True}"
-            attrs="{'readonly': [('user_current_role', '!=', 'role_platform_admin')]}"
+            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')]}"
+          />
+                    <field
+            name="company_ids_info"
+            groups="base.group_multi_company"
+            widget="many2many_tags"
+            attrs="{'invisible': [('user_current_role', '=', 'role_platform_admin')]}"
           />
                 </xpath>
             </field>
