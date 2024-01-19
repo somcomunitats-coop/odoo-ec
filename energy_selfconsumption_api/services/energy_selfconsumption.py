@@ -1,19 +1,15 @@
-import sys
-
-if sys.version_info >= (3, 9):
-    from typing import Any, List
-else:
-    from typing_extensions import Any, Annotated, List
+from typing import List
 
 from odoo.api import Environment
+
+from odoo.addons.base.models.res_users import Users
 
 from ..schemas import SelfConsumptionProjectInfo
 
 
 class EnergySelfconsumptionService:
-    def __init__(self, env: Environment) -> None:
-        self._env = env
-        self.model = env["energy_selfconsumption.selfconsumption"]
+    def __init__(self, env: Environment, user: Users) -> None:
+        self.model = env["energy_selfconsumption.selfconsumption"].with_user(user)
 
     def selfconsumption_projects(
         self,
