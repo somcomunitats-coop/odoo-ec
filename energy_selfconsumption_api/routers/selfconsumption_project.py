@@ -1,25 +1,25 @@
-import sys
-
-if sys.version_info >= (3, 9):
-    from typing import Annotated, List
-else:
-    from typing_extensions import Annotated, List
-
 import logging
+from typing import Any
 
 from fastapi import APIRouter, Depends
+from typing_extensions import Annotated
 
 from odoo.api import Environment
 
 from odoo.addons.base.models.res_partner import Partner
-from odoo.addons.fastapi.dependencies import authenticated_partner, odoo_env
+from odoo.addons.fastapi.dependencies import (
+    authenticated_partner,
+    fastapi_endpoint,
+    odoo_env,
+)
+from odoo.addons.fastapi.models import FastapiEndpoint
 
-from ..dependencies import AuthHeader
-from ..domain import get_selfconsumption_projects
+from ..dependencies import AuthHeader, authenticated_endpoint
 from ..schemas.responses import (
     ProjectsInfoListResponse,
     SingleProjectInfoResponse,
 )
+from ..services import EnergySelfconsumptionService
 from ..utils import make_list_response, make_single_response
 
 logger = logging.getLogger("__name__")
@@ -30,11 +30,10 @@ router = APIRouter(tags=["energy_selfconsumption"])
 @router.get("/projects", response_model=ProjectsInfoListResponse)
 def selfconsumption_projects(
     env: Annotated[Environment, Depends(odoo_env)],
-    api_key: Annotated[str, Depends(AuthHeader)],
-    partner: Annotated[Partner, Depends(authenticated_partner)],
+    auth_required: Annotated[Any, Depends(authenticated_endpoint)],
 ) -> ProjectsInfoListResponse:
-    logger.debug("EEEPP partner %s buscant projectes", partner.name)
-    projects = get_selfconsumption_projects(env, cau=None)
+    energy_selfconsumption_service = EnergySelfconsumptionService(env)
+    projects = energy_selfconsumption_service.selfconsumption_projects()
 
     return make_list_response(projects)
 
@@ -43,10 +42,10 @@ def selfconsumption_projects(
 def get_selfconsumption_project_by_cau(
     project_code: str,
     env: Annotated[Environment, Depends(odoo_env)],
-    api_key: Annotated[str, Depends(AuthHeader)],
-    partner: Annotated[Partner, Depends(authenticated_partner)],
+    auth_required: Annotated[Any, Depends(authenticated_endpoint)],
 ) -> SingleProjectInfoResponse:
-    projects = get_selfconsumption_projects(env, project_code)
+    energy_selfconsumption_service = EnergySelfconsumptionService(env)
+    projects = energy_selfconsumption_service.selfconsumption_projects(project_code)
     project = projects[0] if projects and len(projects) > 0 else None
 
     return make_single_response(project)
