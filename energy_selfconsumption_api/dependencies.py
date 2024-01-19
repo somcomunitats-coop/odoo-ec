@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Query, status
 from fastapi.security import APIKeyHeader
 from typing_extensions import Annotated
 
@@ -7,10 +7,15 @@ from odoo.api import Environment
 from odoo.addons.base.models.res_users import Users
 from odoo.addons.fastapi.dependencies import odoo_env
 
+from .schemas import PaginationLimits
+
 AuthHeader = APIKeyHeader(
     name="api-token",
     description="Api token header",
 )
+
+
+DEFAULT_PAGE_SIZE = 20
 
 
 def api_key_authentication(
@@ -30,4 +35,11 @@ def api_key_authentication(
 
 
 def authenticated_endpoint(user: Annotated[Users, Depends(api_key_authentication)]):
-    pass
+    return user
+
+
+def paging(
+    page: Annotated[int, Query(gte=1)] = 1,
+    page_size: Annotated[int, Query(gte=1)] = DEFAULT_PAGE_SIZE,
+):
+    return PaginationLimits(limit=page_size, offset=(page - 1) * page_size)
