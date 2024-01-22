@@ -132,3 +132,18 @@ class SupplyPoint(models.Model):
                 except Exception as e:
                     error_message = _("Invalid VAT: {error}").format(error=e)
                     raise ValidationError(error_message)
+
+    @api.constrains("access_fee", "contracted_power")
+    def _check_contracted_power(self):
+        for record in self:
+            if record.access_fee == "2.0TD" and not (
+                0 <= record.contracted_power <= 15
+            ):
+                raise ValidationError(
+                    "For the 2.0TD rate, the contracted power must be between 0 and 15 kW."
+                )
+            elif record.access_fee == "3.0TD" and record.contracted_power <= 15:
+                raise ValidationError(
+                    "For the 3.0TD rate, the contracted power must be greater than 15 kW."
+                )
+            # No hay validación para 6.1TD, 6.2TD, 6.3TD y 6.4TD según lo especificado.
