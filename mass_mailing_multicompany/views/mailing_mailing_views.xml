@@ -7,7 +7,23 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="before">
                 <field name="company_id" groups="base.group_multi_company" />
+                <field name="user_current_company" invisible="1" />
             </xpath>
+            <xpath expr="//field[@name='contact_list_ids']" position="attributes">
+            <attribute
+            name="domain"
+          >[('company_id', '=', user_current_company)]</attribute>
+          </xpath>
+          <xpath expr="//field[@name='mail_server_id']" position="attributes">
+            <attribute
+            name="domain"
+          >[('company_id', '=', user_current_company)]</attribute>
+          </xpath>
+          <xpath expr="//field[@name='campaign_id']" position="attributes">
+            <attribute
+            name="domain"
+          >[('company_id', '=', user_current_company)]</attribute>
+          </xpath>
         </field>
     </record>
   </data>
