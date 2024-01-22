@@ -25,6 +25,7 @@
         "views/mailing_list_views.xml",
         "views/mailing_contact_views.xml",
         "views/utm_views.xml",
+        "wizard/mail_compose_message_views.xml",
         "wizard/partner_mail_list_wizard.xml",
     ],
     # only loaded in demonstration mode
