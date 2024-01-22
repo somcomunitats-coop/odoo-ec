@@ -19,6 +19,15 @@ class SupplyPoint(models.Model):
         )
     }
 
+    _ACCESS_FEE_VALUES = [
+        ("2.0TD", "2.0TD"),
+        ("3.0TD", "3.0TD"),
+        ("6.1TD", "6.1TD"),
+        ("6.2TD", "6.2TD"),
+        ("6.3TD", "6.3TD"),
+        ("6.4TD", "6.4TD"),
+    ]
+
     name = fields.Char(compute="_compute_supply_point_name", store=True)
     code = fields.Char(string="CUPS")
     owner_id = fields.Many2one(
@@ -66,6 +75,7 @@ class SupplyPoint(models.Model):
     contracted_power = fields.Float(
         string="Contracted power", digits=(10, 2), help="Value in kilowatts (kW)"
     )
+    access_fee = fields.Selection(_ACCESS_FEE_VALUES, "Access fee")
 
     @api.onchange("partner_id")
     def _onchange_partner_id(self):
