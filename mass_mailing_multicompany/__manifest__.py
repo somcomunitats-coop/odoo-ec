@@ -14,7 +14,9 @@
     # any module necessary for this one to work correctly
     "depends": [
         "sale",
+        "energy_communities",
         "mass_mailing",
+        "mass_mailing_partner",
     ],
     # always loaded
     "data": [
@@ -23,6 +25,7 @@
         "views/mailing_list_views.xml",
         "views/mailing_contact_views.xml",
         "views/utm_views.xml",
+        "wizard/partner_mail_list_wizard.xml",
     ],
     # only loaded in demonstration mode
     # 'demo': [

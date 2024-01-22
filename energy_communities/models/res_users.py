@@ -32,7 +32,7 @@ class ResUsers(models.Model):
             record.current_role = record.get_current_role()
 
     def get_current_role(self):
-        current_company = self.env.context["allowed_company_ids"][0]
+        current_company = self.get_current_company()
         current_role_lines = self.role_line_ids.filtered(
             lambda role_line: role_line.company_id.id == current_company
         )
@@ -47,6 +47,9 @@ class ResUsers(models.Model):
             if admin_role_lines:
                 return "role_platform_admin"
         return False
+
+    def get_current_company(self):
+        return self.env.context["allowed_company_ids"][0]
 
     def _get_admin_token(self, provider_id):
         """Retrieve auth token from Keycloak."""
