@@ -11,4 +11,7 @@ class UserCurrentCompanyMixin(models.AbstractModel):
 
     def _compute_user_current_company(self):
         for record in self:
-            record.user_current_company = self.env.user.get_current_company()
+            record.user_current_company = record.get_user_current_company()
+
+    def get_user_current_company(self):
+        return self.env.user.get_current_company()
