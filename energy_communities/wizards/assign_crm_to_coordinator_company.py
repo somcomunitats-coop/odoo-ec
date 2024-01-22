@@ -28,13 +28,13 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
         new_crm_lead.write({"company_id": self.assigned_company_id})
         new_crm_msg = _(
             "Opportunity assigned to Coordinator 'Assigned Coordinator Name' (ID: %s), where %s is the id of the original instance-level record."
-            % (self.crm_lead_id.id, new_crm_lead.id)
+            % (new_crm_lead.id, self.crm_lead_id.id)
         )
         new_crm_lead.message_post(body=new_crm_msg)
         self.crm_lead_id.write({"stage_id": 4, "ce_child_lead_id": new_crm_lead})  # Won
         won_crm_msg = _(
             "Opportunity created from Instance opportunity with ID %s, where %s is the id of the new record generated at the Coordinator level"
-            % (new_crm_lead.id, self.crm_lead_id.id)
+            % (self.crm_lead_id.id, new_crm_lead.id)
         )
         self.crm_lead_id.message_post(body=won_crm_msg)
         crm_lead_metadata = self.env["crm.lead.metadata.line"].search(
