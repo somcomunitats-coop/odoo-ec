@@ -146,4 +146,9 @@ class SupplyPoint(models.Model):
                 raise ValidationError(
                     "For the 3.0TD rate, the contracted power must be greater than 15 kW."
                 )
-            # No hay validación para 6.1TD, 6.2TD, 6.3TD y 6.4TD según lo especificado.
+
+            if record.contracted_power > 100:
+                message = _(
+                    "The indicated contracted power is very high. Please check that this is correct. Remember that we use '.' to express decimals, not ','."
+                )
+                record.message_post(body=message, subtype_xmlid="mail.mt_comment")
