@@ -20,19 +20,25 @@ class TestServiceContracted(common.TransactionCase):
         self.provider_1 = self.env["energy_project.provider"].create(
             {
                 "name": "Provider 1",
-                "service_ids": [(4, self.service_1.id), (4, self.service_2.id)],
+                "service_available_ids": [
+                    (0, 0, {"service_id": self.service_1.id}),
+                    (0, 0, {"service_id": self.service_2.id}),
+                ],
             }
         )
         self.provider_2 = self.env["energy_project.provider"].create(
-            {"name": "Provider 2", "service_ids": [(4, self.service_2.id)]}
+            {
+                "name": "Provider 2",
+                "service_available_ids": [(0, 0, {"service_id": self.service_2.id})],
+            }
         )
         self.provider_3 = self.env["energy_project.provider"].create(
             {
                 "name": "Provider 3",
-                "service_ids": [
-                    (4, self.service_1.id),
-                    (4, self.service_2.id),
-                    (4, self.service_3.id),
+                "service_available_ids": [
+                    (0, 0, {"service_id": self.service_1.id}),
+                    (0, 0, {"service_id": self.service_2.id}),
+                    (0, 0, {"service_id": self.service_3.id}),
                 ],
             }
         )
