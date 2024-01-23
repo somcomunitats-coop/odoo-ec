@@ -34,7 +34,9 @@ class ServiceContracted(models.Model):
         compute=_compute_available_providers_ids,
         string="Available Providers",
     )
-    project_id = fields.Many2one("energy_project.project", required=True)
+    project_id = fields.Many2one(
+        "energy_project.project", required=True, ondelete="cascade"
+    )
     active = fields.Boolean(string="Active", required=True, default=True)
 
     @api.onchange("service_id")
