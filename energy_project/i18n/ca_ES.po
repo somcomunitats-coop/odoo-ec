@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-23 12:25+0000\n"
-"PO-Revision-Date: 2023-08-23 14:26+0200\n"
+"POT-Creation-Date: 2024-01-23 12:01+0000\n"
+"PO-Revision-Date: 2024-01-23 13:09+0100\n"
 "Last-Translator: Daniil Digtyar Vasilieva <daniil.digtyar@somit.coop>\n"
 "Language-Team: \n"
 "Language: ca_ES\n"
@@ -18,192 +18,43 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #. module: energy_project
-#: code:addons/energy_project/models/project.py:0
-#: code:addons/setup/energy_project/odoo/addons/energy_project/models/project.py:0
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__active
-#: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__active
-#, python-format
-msgid "Active"
-msgstr "Actiu"
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">\n"
+"                                        Energy Provider\n"
+"                                    </span>\n"
+"                                    <br/>"
+msgstr ""
+"<span class=\"o_form_label\">\n"
+"                                         Proveïdor d'energia\n"
+"                                     </span>\n"
+"                                     <br/>"
 
 #. module: energy_project
-#: model:res.groups,name:energy_project.group_admin
-msgid "Administrator"
-msgstr "Administrador"
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">\n"
+"                                        Energy Service\n"
+"                                    </span>\n"
+"                                    <br/>"
+msgstr ""
+"<span class=\"o_form_label\">\n"
+"                                         Servei Enèrgetic\n"
+"                                     </span>\n"
+"                                     <br/>"
 
 #. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__city
-msgid "City"
-msgstr "Ciutat"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__company_id
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__company_id
-msgid "Company"
-msgstr "Companyia"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__country_id
-msgid "Country"
-msgstr "País"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__create_uid
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__create_uid
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__create_uid
-msgid "Created by"
-msgstr "Creat per"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__create_date
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__create_date
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__create_date
-msgid "Created on"
-msgstr "Creat el"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__display_name
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__display_name
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__display_name
-msgid "Display Name"
-msgstr "Nom Visible"
-
-#. module: energy_project
-#: code:addons/energy_project/models/project.py:0
-#: code:addons/setup/energy_project/odoo/addons/energy_project/models/project.py:0
-#: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__draft
-#, python-format
-msgid "Draft"
-msgstr "Esborrany"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__effective_date
-msgid "Effective Date"
-msgstr "Dia efectiu"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__project_id
-msgid "Energy Project"
-msgstr "Projecte Energètic"
-
-#. module: energy_project
-#: model:ir.module.category,name:energy_project.energy_projects_category
-msgid "Energy Projects"
-msgstr "Projectes Energètics"
-
-#. module: energy_project
-#: model:ir.model,name:energy_project.model_energy_project_project
-msgid "Energy project"
-msgstr "Projecte energètic"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__id
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__id
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__id
-msgid "ID"
-msgstr "ID"
-
-#. module: energy_project
-#: code:addons/energy_project/models/project.py:0
-#: code:addons/setup/energy_project/odoo/addons/energy_project/models/project.py:0
-#: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__activation
-#, python-format
-msgid "In Activation"
-msgstr "En activació"
-
-#. module: energy_project
-#: code:addons/energy_project/models/project.py:0
-#: code:addons/setup/energy_project/odoo/addons/energy_project/models/project.py:0
-#: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__inscription
-#, python-format
-msgid "In Inscription"
-msgstr "En Inscripció"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__inscription_ids
-msgid "Inscription"
-msgstr "Inscripció"
-
-#. module: energy_project
-#: model:ir.model,name:energy_project.model_energy_project_inscription
-msgid "Inscriptions for a project"
-msgstr "Inscripcions per a un projecte"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription____last_update
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project____last_update
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type____last_update
-msgid "Last Modified on"
-msgstr "Última modificació el"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__write_uid
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__write_uid
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__write_uid
-msgid "Last Updated by"
-msgstr "Última actualització per"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__write_date
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__write_date
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__write_date
-msgid "Last Updated on"
-msgstr "Última actualització el"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__name
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__name
-msgid "Name"
-msgstr "Nom del projecte"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__partner_id
-msgid "Partner"
-msgstr "Soci"
-
-#. module: energy_project
-#: code:addons/energy_project/models/inscription.py:0
-#: code:addons/setup/energy_project/odoo/addons/energy_project/models/inscription.py:0
-#: model:ir.model.constraint,message:energy_project.constraint_energy_project_inscription_unique_project_id_partner_id
-#, python-format
-msgid "Partner is already signed up in this project."
-msgstr "El soci ja està inscrit en aquest projecte."
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__state
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__state_id
-msgid "State"
-msgstr "Estat"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__street
-msgid "Street"
-msgstr "Carrer"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__street2
-msgid "Street2"
-msgstr "Carrer 2"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__type
-msgid "Type"
-msgstr "Tipus"
-
-#. module: energy_project
-#: model:ir.model,name:energy_project.model_energy_project_project_type
-msgid "Type for energy project"
-msgstr "Tipus per a projecte energètic"
-
-#. module: energy_project
-#: model:res.groups,name:energy_project.group_user
-msgid "User"
-msgstr "Usuari"
-
-#. module: energy_project
-#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__zip
-msgid "Zip"
-msgstr "Codi Postal"
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">\n"
+"                                        Energy Service Available\n"
+"                                    </span>\n"
+"                                    <br/>"
+msgstr ""
+"<span class=\"o_form_label\">\n"
+"                                        Serveis energètics disponibles\n"
+"                                    </span>\n"
+"                                    <br/>"
 
 #. module: energy_project
 #: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
@@ -232,14 +83,100 @@ msgstr ""
 "                                    <br/>"
 
 #. module: energy_project
+#: code:addons/energy_project/models/project.py:0
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__active
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__active
+#: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__active
+#, python-format
+msgid "Active"
+msgstr "Actiu"
+
+#. module: energy_project
+#: model:res.groups,name:energy_project.group_admin
+msgid "Administrator"
+msgstr "Administrador"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__available_providers_ids
+msgid "Available Providers"
+msgstr "Proveïdors disponibles"
+
+#. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__zip
 msgid "C.P."
 msgstr "C.P."
 
 #. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__city
+msgid "City"
+msgstr "Ciutat"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__company_id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__company_id
+msgid "Company"
+msgstr "Companyia"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__country_id
+msgid "Country"
+msgstr "País"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__create_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__create_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__create_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__create_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__create_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__create_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__create_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__create_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__create_uid
+msgid "Created by"
+msgstr "Creat per"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__create_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__create_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__create_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__create_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__create_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__create_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__create_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__create_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__create_date
+msgid "Created on"
+msgstr "Creat el"
+
+#. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__address
 msgid "Dirección empresa"
-msgstr "Dirección empresa"
+msgstr "Direcció empresa"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__display_name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__display_name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__display_name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__display_name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__display_name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__display_name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__display_name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__display_name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__display_name
+msgid "Display Name"
+msgstr "Nom Visible"
+
+#. module: energy_project
+#: code:addons/energy_project/models/project.py:0
+#: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__draft
+#, python-format
+msgid "Draft"
+msgstr "Esborrany"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__effective_date
+msgid "Effective Date"
+msgstr "Dia efectiu"
 
 #. module: energy_project
 #: model:uom.category,name:energy_project.energy_uom_category
@@ -247,14 +184,77 @@ msgid "Energy"
 msgstr "Energia"
 
 #. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__project_id
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid "Energy Project"
+msgstr "Projecte Energètic"
+
+#. module: energy_project
+#: model:ir.module.category,name:energy_project.energy_projects_category
+msgid "Energy Projects"
+msgstr "Projectes Energètics"
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.provider_form_view
+msgid "Energy Provider"
+msgstr "Proveïdor Serveis Energètics"
+
+#. module: energy_project
+#: model:ir.actions.act_window,name:energy_project.provider_act_window
+#: model_terms:ir.ui.view,arch_db:energy_project.provider_tree_view
+msgid "Energy Providers"
+msgstr "Proveïdors Serveis Energètics"
+
+#. module: energy_project
 #: model:ir.model,name:energy_project.model_energy_project_reseller
 msgid "Energy Reseller"
 msgstr "Distribuïdor d'energia"
 
 #. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.service_contract_form_view
+#: model_terms:ir.ui.view,arch_db:energy_project.service_form_view
+msgid "Energy Service"
+msgstr "Servei Energètic"
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.service_available_form_view
+msgid "Energy Service Available"
+msgstr "Servei Energètic Disponible"
+
+#. module: energy_project
+#: model:ir.model,name:energy_project.model_energy_project_provider
+msgid "Energy Service Provider"
+msgstr "Proveïdor de Serveis Energètics"
+
+#. module: energy_project
+#: model:ir.actions.act_window,name:energy_project.service_act_window
+#: model:ir.model,name:energy_project.model_energy_project_service
+#: model_terms:ir.ui.view,arch_db:energy_project.service_contract_tree_view
+#: model_terms:ir.ui.view,arch_db:energy_project.service_tree_view
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid "Energy Services"
+msgstr "Serveis Energètics"
+
+#. module: energy_project
+#: model:ir.actions.act_window,name:energy_project.service_available_act_window
+#: model_terms:ir.ui.view,arch_db:energy_project.service_available_tree_view
+msgid "Energy Services Available"
+msgstr "Serveis energètics disponibles"
+
+#. module: energy_project
+#: model:ir.model,name:energy_project.model_energy_project_service_contract
+msgid "Energy Services Contract"
+msgstr "Contracte de Serveis Energètics"
+
+#. module: energy_project
 #: model:ir.model,name:energy_project.model_energy_project_supplier
 msgid "Energy Supplier"
 msgstr "Proveïdor d'energia"
+
+#. module: energy_project
+#: model:ir.model,name:energy_project.model_energy_project_project
+msgid "Energy project"
+msgstr "Projecte energètic"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__state
@@ -272,6 +272,97 @@ msgid "Fecha baja"
 msgstr "Data baixa"
 
 #. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__id
+msgid "ID"
+msgstr "ID"
+
+#. module: energy_project
+#: code:addons/energy_project/models/project.py:0
+#: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__activation
+#, python-format
+msgid "In Activation"
+msgstr "En activació"
+
+#. module: energy_project
+#: code:addons/energy_project/models/project.py:0
+#: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__inscription
+#, python-format
+msgid "In Inscription"
+msgstr "En Inscripció"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__inscription_ids
+msgid "Inscription"
+msgstr "Inscripció"
+
+#. module: energy_project
+#: model:ir.model,name:energy_project.model_energy_project_inscription
+msgid "Inscriptions for a project"
+msgstr "Inscripcions per a un projecte"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription____last_update
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project____last_update
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type____last_update
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider____last_update
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller____last_update
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service____last_update
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available____last_update
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract____last_update
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier____last_update
+msgid "Last Modified on"
+msgstr "Última modificació el"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__write_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__write_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__write_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__write_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__write_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__write_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__write_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__write_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__write_uid
+msgid "Last Updated by"
+msgstr "Última actualització per"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__write_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__write_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__write_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__write_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__write_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__write_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__write_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__write_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__write_date
+msgid "Last Updated on"
+msgstr "Última actualització el"
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid "Manage Energy Service Providers"
+msgstr "Gestionar els proveïdors de serveis energètics"
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid "Manage Energy Services"
+msgstr "Gestionar els serveis energètics"
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid "Manage Energy Services Available"
+msgstr "Gestioneu els serveis energètics disponibles"
+
+#. module: energy_project
 #: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
 msgid "Manage Resellers"
 msgstr "Gestiona els distribuïdors"
@@ -284,13 +375,25 @@ msgstr "Gestiona el proveïdor"
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__city
 msgid "Municipio empresa"
-msgstr "Municipio empresa"
+msgstr "Municipi empresa"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__vat
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__nif
 msgid "NIF empresa"
 msgstr "NIF empresa"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__name
+#: model_terms:ir.ui.view,arch_db:energy_project.provider_form_view
+#: model_terms:ir.ui.view,arch_db:energy_project.reseller_form_view
+#: model_terms:ir.ui.view,arch_db:energy_project.service_form_view
+#: model_terms:ir.ui.view,arch_db:energy_project.supplier_form_view
+msgid "Name"
+msgstr "Nom del projecte"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__name
@@ -311,14 +414,39 @@ msgid "Nº de orden"
 msgstr "Nº d'ordre"
 
 #. module: energy_project
+#: code:addons/energy_project/models/inscription.py:0
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__partner_id
+#, python-format
+msgid "Partner"
+msgstr "Soci"
+
+#. module: energy_project
+#: code:addons/energy_project/models/inscription.py:0
+#: model:ir.model.constraint,message:energy_project.constraint_energy_project_inscription_unique_project_id_partner_id
+#, python-format
+msgid "Partner is already signed up in this project."
+msgstr "El soci ja està inscrit en aquest projecte."
+
+#. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__portal
 msgid "Portal de medidas"
 msgstr "Portal de mesures"
 
 #. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__project_id
+msgid "Project"
+msgstr "Projecte"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__provider_id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__provider_id
+msgid "Provider"
+msgstr "Proveïdor"
+
+#. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__province
 msgid "Provincia empresa"
-msgstr "Provincia empresa"
+msgstr "Província empresa"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__web
@@ -336,6 +464,40 @@ msgstr "Distribuïdor"
 #: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
 msgid "Resellers"
 msgstr "Distribuïdors"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__service_id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__service_id
+msgid "Service"
+msgstr "Servei"
+
+#. module: energy_project
+#: model:ir.model,name:energy_project.model_energy_project_service_available
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__service_available_ids
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__service_available_ids
+msgid "Service Available"
+msgstr "Servei disponible"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__service_contract_ids
+msgid "Service Contract"
+msgstr "Contracte de servei"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__state
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__state_id
+msgid "State"
+msgstr "Estat"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__street
+msgid "Street"
+msgstr "Carrer"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__street2
+msgid "Street2"
+msgstr "Carrer 2"
 
 #. module: energy_project
 #: model:ir.actions.act_window,name:energy_project.supplier_act_window
@@ -366,11 +528,40 @@ msgstr ""
 "distribució amb l'estat: {table_state}"
 
 #. module: energy_project
+#: code:addons/energy_project/models/service_contract.py:0
+#, python-format
+msgid ""
+"The {provider_name} provider doesn't provide this {service_name} service."
+msgstr ""
+"El proveïdor de {provider_name} no ofereix aquest servei de {service_name}."
+
+#. module: energy_project
+#: model_terms:ir.actions.act_window,help:energy_project.provider_act_window
+msgid "There are no energy providers yet, click here to add a new one."
+msgstr ""
+"Encara no hi ha proveïdors de serveis energetics, feu clic aquí per afegir-"
+"ne un de nou."
+
+#. module: energy_project
 #: model_terms:ir.actions.act_window,help:energy_project.reseller_act_window
 msgid "There are no energy reseller yet, click here to add a new one."
 msgstr ""
 "Encara no hi ha cap distribuïdor d'energia, fes clic aquí per afegir-ne un "
 "de nou."
+
+#. module: energy_project
+#: model_terms:ir.actions.act_window,help:energy_project.service_available_act_window
+msgid ""
+"There are no energy services available yet, click here to add a new one."
+msgstr ""
+"Encara no hi ha serveis energètics disponibles, feu clic aquí per afegir-ne "
+"un de nou."
+
+#. module: energy_project
+#: model_terms:ir.actions.act_window,help:energy_project.service_act_window
+msgid "There are no energy services yet, click here to add a new one."
+msgstr ""
+"Encara no hi ha serveis energètics, feu clic aquí per afegir-ne un de nou."
 
 #. module: energy_project
 #: model_terms:ir.actions.act_window,help:energy_project.supplier_act_window
@@ -380,11 +571,45 @@ msgstr ""
 "nou."
 
 #. module: energy_project
+#: code:addons/energy_project/models/service_contract.py:0
+#: model:ir.model.constraint,message:energy_project.constraint_energy_project_service_contract_unique_service_id_provider_id_project_id
+#, python-format
+msgid "There's already a service with this provider assigned to this project."
+msgstr "Ja hi ha un servei amb aquest proveïdor assignat a aquest projecte."
+
+#. module: energy_project
+#: code:addons/energy_project/models/service_available.py:0
+#: model:ir.model.constraint,message:energy_project.constraint_energy_project_service_available_unique_service_id_provider_id
+#, python-format
+msgid "This service is already assigned to this provider."
+msgstr "Aquest servei ja està assignat a aquest proveïdor."
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__type
+msgid "Type"
+msgstr "Tipus"
+
+#. module: energy_project
+#: model:ir.model,name:energy_project.model_energy_project_project_type
+msgid "Type for energy project"
+msgstr "Tipus per a projecte energètic"
+
+#. module: energy_project
 #: code:addons/energy_project/models/inscription.py:0
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__is_member
 #, python-format
 msgid "Typology"
 msgstr "Tipologia "
+
+#. module: energy_project
+#: model:res.groups,name:energy_project.group_user
+msgid "User"
+msgstr "Usuari"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__zip
+msgid "Zip"
+msgstr "Codi Postal"
 
 #. module: energy_project
 #: model:uom.uom,name:energy_project.kw_uom
