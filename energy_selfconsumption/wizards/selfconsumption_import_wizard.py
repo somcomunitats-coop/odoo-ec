@@ -235,7 +235,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 state=line_dict["state"]
             )
         if not line_dict["code"]:
-            return False, _("Invalid CUPS")
+            return False, _(
+                "The CUPS field is required. Please make sure you provide a valid CUPS"
+            )
 
         return self.env["energy_selfconsumption.supply_point"].create(
             {
