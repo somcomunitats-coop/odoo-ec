@@ -3,13 +3,6 @@
     <data>
         <record id="provider_arkenova" model="energy_project.provider">
             <field name="name">Arkenova</field>
-            <field
-        name="service_ids"
-        model="energy_project.service"
-        eval="[
-            (4, ref('service_selfconsumption_monitoring')),
-            ]"
-      />
         </record>
     </data>
 </odoo>
