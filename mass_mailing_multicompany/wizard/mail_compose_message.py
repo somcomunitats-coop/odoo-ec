@@ -8,3 +8,7 @@ class MailComposeMessage(models.TransientModel):
     @api.depends("campaign_id")
     def _compute_user_current_company(self):
         super()._compute_user_current_company()
+
+    @api.depends("campaign_id")
+    def _compute_allowed_companies(self):
+        super()._compute_allowed_companies()

@@ -8,3 +8,7 @@ class PartnerMailListWizard(models.TransientModel):
     @api.depends("mail_list_id")
     def _compute_user_current_company(self):
         super()._compute_user_current_company()
+
+    @api.depends("mail_list_id")
+    def _compute_allowed_companies(self):
+        super()._compute_allowed_companies()
