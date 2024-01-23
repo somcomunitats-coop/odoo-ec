@@ -6,4 +6,4 @@ from . import supplier
 from . import service
 from . import provider
 from . import service_available
-from . import service_contracted
+from . import service_contract

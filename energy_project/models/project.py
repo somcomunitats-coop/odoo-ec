@@ -23,8 +23,8 @@ class Project(models.Model):
         "project_id",
     )
     active = fields.Boolean(default=True)
-    service_contracted_ids = fields.One2many(
-        "energy_project.service_contracted", "project_id"
+    service_contract_ids = fields.One2many(
+        "energy_project.service_contract", "project_id"
     )
 
     # address fields

@@ -5,7 +5,7 @@ from odoo.tests import common
 from odoo.tools import mute_logger
 
 
-class TestServiceContracted(common.TransactionCase):
+class TestServiceContract(common.TransactionCase):
     def setUp(self):
         super().setUp()
         self.service_1 = self.env["energy_project.service"].create(
@@ -62,7 +62,7 @@ class TestServiceContracted(common.TransactionCase):
     def test_unique(self):
         self.project.write(
             {
-                "service_contracted_ids": [
+                "service_contract_ids": [
                     (
                         0,
                         0,
@@ -78,7 +78,7 @@ class TestServiceContracted(common.TransactionCase):
         with self.assertRaises(IntegrityError):
             self.project.write(
                 {
-                    "service_contracted_ids": [
+                    "service_contract_ids": [
                         (
                             0,
                             0,
@@ -95,7 +95,7 @@ class TestServiceContracted(common.TransactionCase):
         self.assertTrue(
             self.project.write(
                 {
-                    "service_contracted_ids": [
+                    "service_contract_ids": [
                         (
                             0,
                             0,
@@ -111,7 +111,7 @@ class TestServiceContracted(common.TransactionCase):
         with self.assertRaises(ValidationError):
             self.project.write(
                 {
-                    "service_contracted_ids": [
+                    "service_contract_ids": [
                         (
                             0,
                             0,
@@ -125,9 +125,7 @@ class TestServiceContracted(common.TransactionCase):
             )
 
     def test_compute_available_providers_ids(self):
-        self.service_contracted_1 = self.env[
-            "energy_project.service_contracted"
-        ].create(
+        self.service_contract_1 = self.env["energy_project.service_contract"].create(
             {
                 "service_id": self.service_3.id,
                 "provider_id": self.provider_3.id,
@@ -137,13 +135,11 @@ class TestServiceContracted(common.TransactionCase):
         )
         expected_available_providers_ids_1 = [self.provider_3.id]
         self.assertEqual(
-            self.service_contracted_1.available_providers_ids.ids,
+            self.service_contract_1.available_providers_ids.ids,
             expected_available_providers_ids_1,
         )
 
-        self.service_contracted_2 = self.env[
-            "energy_project.service_contracted"
-        ].create(
+        self.service_contract_2 = self.env["energy_project.service_contract"].create(
             {
                 "service_id": self.service_2.id,
                 "provider_id": self.provider_2.id,
@@ -157,6 +153,6 @@ class TestServiceContracted(common.TransactionCase):
             self.provider_3.id,
         ]
         self.assertEqual(
-            self.service_contracted_2.available_providers_ids.ids,
+            self.service_contract_2.available_providers_ids.ids,
             expected_available_providers_ids_2,
         )
