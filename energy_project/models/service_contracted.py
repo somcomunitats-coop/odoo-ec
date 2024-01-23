@@ -18,7 +18,9 @@ class ServiceContracted(models.Model):
     def _compute_available_providers_ids(self):
         for service_contracted in self:
             service_contracted.available_providers_ids = (
-                service_contracted.service_id.provider_ids.ids
+                service_contracted.service_id.service_available_ids.mapped(
+                    "provider_id"
+                ).ids
             )
 
     service_id = fields.Many2one(
