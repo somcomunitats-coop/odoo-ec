@@ -22,7 +22,6 @@ class MassMailing(models.Model):
     @api.onchange("company_id")
     def _onchange_company_id(self):
         for record in self:
-            # record_user_current_company = record.get_user_current_company()
             return {
                 "domain": {
                     "contact_list_ids": [("company_id", "=", record.company_id.id)],

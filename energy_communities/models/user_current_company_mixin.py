@@ -23,13 +23,14 @@ class UserCurrentCompanyMixin(models.AbstractModel):
         for record in self:
             record.user_current_company = record.get_user_current_company()
 
-    def get_user_current_company(self):
-        return self.get_current_company()
+    def get_current_company_id(self):
+        # return self.env.context["allowed_company_ids"][0]
+        return self.env.company.id
 
     def get_current_role(self):
-        current_company = self.get_current_company()
+        current_company_id = self.get_current_company_id()
         current_role_lines = self.role_line_ids.filtered(
-            lambda role_line: role_line.company_id.id == current_company
+            lambda role_line: role_line.company_id.id == current_company_id
         )
         if current_role_lines:
             return current_role_lines[
@@ -42,6 +43,3 @@ class UserCurrentCompanyMixin(models.AbstractModel):
             if admin_role_lines:
                 return "role_platform_admin"
         return False
-
-    def get_current_company(self):
-        return self.env.context["allowed_company_ids"][0]
