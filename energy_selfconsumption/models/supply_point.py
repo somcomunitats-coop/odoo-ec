@@ -19,7 +19,7 @@ class SupplyPoint(models.Model):
         )
     }
 
-    _ACCESS_FEE_VALUES = [
+    _ACCESS_TARIFF_VALUES = [
         ("2.0TD", "2.0TD"),
         ("3.0TD", "3.0TD"),
         ("6.1TD", "6.1TD"),
@@ -75,7 +75,7 @@ class SupplyPoint(models.Model):
     contracted_power = fields.Float(
         string="Contracted power", digits=(10, 2), help="Value in kilowatts (kW)"
     )
-    access_fee = fields.Selection(_ACCESS_FEE_VALUES, "Access fee")
+    tariff = fields.Selection(_ACCESS_TARIFF_VALUES, "Access tariff")
 
     @api.onchange("partner_id")
     def _onchange_partner_id(self):
@@ -133,16 +133,14 @@ class SupplyPoint(models.Model):
                     error_message = _("Invalid VAT: {error}").format(error=e)
                     raise ValidationError(error_message)
 
-    @api.constrains("access_fee", "contracted_power")
+    @api.constrains("tariff", "contracted_power")
     def _check_contracted_power(self):
         for record in self:
-            if record.access_fee == "2.0TD" and not (
-                0 <= record.contracted_power <= 15
-            ):
+            if record.tariff == "2.0TD" and not (0 <= record.contracted_power <= 15):
                 raise ValidationError(
                     "For the 2.0TD rate, the contracted power must be between 0 and 15 kW."
                 )
-            elif record.access_fee == "3.0TD" and record.contracted_power <= 15:
+            elif record.tariff == "3.0TD" and record.contracted_power <= 15:
                 raise ValidationError(
                     "For the 3.0TD rate, the contracted power must be greater than 15 kW."
                 )
