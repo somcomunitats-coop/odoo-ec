@@ -41,7 +41,7 @@ class SubscriptionRequest(models.Model):
         if not self.iban:
             raise ValidationError(_("Must assign a valid iban."))
         bank_id = self.partner_id.bank_ids.search(
-            [("acc_number", "=", self.iban)]
+            [("acc_number", "=", self.iban), ("partner_id", "=", self.partner_id.id)]
         )  # TODO normalize iban
         if bank_id:
             return bank_id
