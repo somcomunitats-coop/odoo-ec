@@ -109,7 +109,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
             "effective_date": line[1] or False,
             "code": line[2] or False,
             "contracted_power": line[3] or False,
-            "access_fee": line[4] or False,
+            "tariff": line[4] or False,
             "street": line[5] or False,
             "street2": line[6] or False,
             "city": line[7] or False,
@@ -249,7 +249,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 "owner_id": owner.id,
                 "partner_id": partner.id,
                 "contracted_power": line_dict["contracted_power"],
-                "access_fee": line_dict["access_fee"],
+                "tariff": line_dict["tariff"],
                 "cadastral_reference": line_dict["cadastral_reference"],
             }
         )
