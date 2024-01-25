@@ -362,22 +362,22 @@ class Selfconsumption(models.Model):
                     except InvalidLength:
                         error_message = _(
                             "Invalid CAU: The first characters related to CUPS are incorrect. The length is incorrect."
-                        ).format(field=field)
+                        )
                         raise ValidationError(error_message)
                     except InvalidComponent:
                         error_message = _(
                             "Invalid CAU: The CUPS does not start with 'ES'."
-                        ).format(field=field)
+                        )
                         raise ValidationError(error_message)
                     except InvalidFormat:
                         error_message = _(
                             "Invalid CAU: The CUPS has an incorrect format."
-                        ).format(field=field)
+                        )
                         raise ValidationError(error_message)
                     except InvalidChecksum:
                         error_message = _(
                             "Invalid CAU: The checksum of the CUPS is incorrect."
-                        ).format(field=field)
+                        )
                         raise ValidationError(error_message)
                     last_digits = record.code[22:]
                 else:
@@ -409,22 +409,22 @@ class Selfconsumption(models.Model):
                     except InvalidLength:
                         error_message = _(
                             "Invalid CIL: The first characters related to CUPS are incorrect. The length is incorrect."
-                        ).format(field=field)
+                        )
                         raise ValidationError(error_message)
                     except InvalidComponent:
                         error_message = _(
                             "Invalid CIL: The CUPS does not start with 'ES'."
-                        ).format(field=field)
+                        )
                         raise ValidationError(error_message)
                     except InvalidFormat:
                         error_message = _(
                             "Invalid CIL: The CUPS has an incorrect format."
-                        ).format(field=field)
+                        )
                         raise ValidationError(error_message)
                     except InvalidChecksum:
                         error_message = _(
                             "Invalid CIL: The checksum of the CUPS is incorrect."
-                        ).format(field=field)
+                        )
                         raise ValidationError(error_message)
                     last_digits = record.cil[20:]
                 elif len(record.cil) == 25:
@@ -433,22 +433,22 @@ class Selfconsumption(models.Model):
                     except InvalidLength:
                         error_message = _(
                             "Invalid {field}: The first characters related to CUPS are incorrect. The length is incorrect."
-                        ).format(field=field)
+                        )
                         raise ValidationError(error_message)
                     except InvalidComponent:
                         error_message = _(
                             "Invalid {field}: The CUPS does not start with 'ES'."
-                        ).format(field=field)
+                        )
                         raise ValidationError(error_message)
                     except InvalidFormat:
                         error_message = _(
                             "Invalid {field}: The CUPS has an incorrect format."
-                        ).format(field=field)
+                        )
                         raise ValidationError(error_message)
                     except InvalidChecksum:
                         error_message = _(
                             "Invalid {field}: The checksum of the CUPS is incorrect."
-                        ).format(field=field)
+                        )
                         raise ValidationError(error_message)
                     last_digits = record.cil[22:]
                 else:
