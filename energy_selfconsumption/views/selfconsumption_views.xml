@@ -283,7 +283,7 @@
 
         <!--Reports in Action menu-->
         <record id="manager_authorization_report_action" model="ir.actions.server">
-            <field name="name">Manager Authorization</field>
+            <field name="name">Download Self-consumption Manager Authorization</field>
             <field name="model_id" ref="model_energy_selfconsumption_selfconsumption" />
             <field
         name="binding_model_id"
@@ -298,7 +298,7 @@
         </record>
 
         <record id="power_sharing_agreement_report_action" model="ir.actions.server">
-            <field name="name">Power Sharing Agreement</field>
+            <field name="name">Download Power Sharing Agreement</field>
             <field name="model_id" ref="model_energy_selfconsumption_selfconsumption" />
             <field
         name="binding_model_id"
@@ -316,7 +316,7 @@
       id="manager_partition_coefficient_report_action"
       model="ir.actions.server"
     >
-            <field name="name">Partition Coefficient</field>
+            <field name="name">Download Partition Coefficient</field>
             <field name="model_id" ref="model_energy_selfconsumption_selfconsumption" />
             <field
         name="binding_model_id"
