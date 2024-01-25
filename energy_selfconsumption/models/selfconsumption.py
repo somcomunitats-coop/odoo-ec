@@ -432,22 +432,22 @@ class Selfconsumption(models.Model):
                         cups.validate(cups_number)
                     except InvalidLength:
                         error_message = _(
-                            "Invalid {field}: The first characters related to CUPS are incorrect. The length is incorrect."
+                            "Invalid CIL: The first characters related to CUPS are incorrect. The length is incorrect."
                         )
                         raise ValidationError(error_message)
                     except InvalidComponent:
                         error_message = _(
-                            "Invalid {field}: The CUPS does not start with 'ES'."
+                            "Invalid CIL: The CUPS does not start with 'ES'."
                         )
                         raise ValidationError(error_message)
                     except InvalidFormat:
                         error_message = _(
-                            "Invalid {field}: The CUPS has an incorrect format."
+                            "Invalid CIL: The CUPS has an incorrect format."
                         )
                         raise ValidationError(error_message)
                     except InvalidChecksum:
                         error_message = _(
-                            "Invalid {field}: The checksum of the CUPS is incorrect."
+                            "Invalid CIL: The checksum of the CUPS is incorrect."
                         )
                         raise ValidationError(error_message)
                     last_digits = record.cil[22:]
