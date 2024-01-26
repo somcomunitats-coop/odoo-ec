@@ -5,6 +5,7 @@ from datetime import datetime
 from io import StringIO
 
 import chardet
+from stdnum.es import iban
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
@@ -165,6 +166,12 @@ class SelfconsumptionImportWizard(models.TransientModel):
             )
         if not line_dict["iban"]:
             return False, _("The IBAN field cannot be empty.")
+
+        try:
+            iban.validate(line_dict["iban"])
+        except Exception as e:
+            error_message = _("Invalid IBAN: {error}").format(error=e)
+            raise ValidationError(error_message)
 
         bank_account = self.env["res.partner.bank"].search(
             [("acc_number", "=", line_dict["iban"]), ("partner_id", "=", partner.id)],
