@@ -34,6 +34,12 @@ class Inscription(models.Model):
     is_member = fields.Char(
         string=_("Typology"), compute="_compute_is_member", readonly=True
     )
+    bank_id = fields.Many2one("res.partner.bank", required=True, string="Bank account")
+    bank_filtered_ids = fields.One2many(
+        "res.partner.bank",
+        related="partner_id.bank_ids",
+        readonly=True,
+    )
 
     @api.depends("partner_id.member")
     def _compute_is_member(self):
