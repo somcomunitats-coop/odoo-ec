@@ -1,47 +1,54 @@
 import logging
-from typing import Any
 
 from fastapi import APIRouter, Depends, Request
 from typing_extensions import Annotated
 
-from odoo.api import Environment
-
-from odoo.addons.fastapi.dependencies import odoo_env
-
-from ..dependencies import authenticated_endpoint, paging
+from ..dependencies import energy_selfconsumption_service, paging
 from ..schemas import PaginationLimits
 from ..schemas.responses import (
     ProjectsInfoListResponse,
     SingleProjectInfoResponse,
 )
 from ..services import EnergySelfconsumptionService
-from ..utils import make_list_response, make_single_response
+from ..utils import collection_response, make_single_response
 
 logger = logging.getLogger("__name__")
 
 router = APIRouter(tags=["energy_selfconsumption"])
 
 
-@router.get("/projects", response_model=ProjectsInfoListResponse)
+@router.get(
+    "/projects",
+    response_model=ProjectsInfoListResponse,
+    name="selfconsumption_projects",
+)
 def selfconsumption_projects(
     request: Request,
-    env: Annotated[Environment, Depends(odoo_env)],
-    auth_user: Annotated[Any, Depends(authenticated_endpoint)],
     paging: Annotated[PaginationLimits, Depends(paging)],
+    energy_selfconsumption_service: Annotated[
+        EnergySelfconsumptionService, Depends(energy_selfconsumption_service)
+    ],
 ) -> ProjectsInfoListResponse:
-    energy_selfconsumption_service = EnergySelfconsumptionService(env, auth_user)
-    projects = energy_selfconsumption_service.selfconsumption_projects()
-    return make_list_response(projects, request)
+    total_projects = energy_selfconsumption_service.total_selfconsumption_projects
+    projects = energy_selfconsumption_service.selfconsumption_projects(
+        limit=paging.limit, offset=paging.offset
+    )
+
+    return collection_response(request, projects, total_projects, paging)
 
 
-@router.get("/projects/{project_code}", response_model=SingleProjectInfoResponse)
-def get_selfconsumption_project_by_cau(
+@router.get(
+    "/projects/{project_code}",
+    response_model=SingleProjectInfoResponse,
+    name="selfconsumption_project_by_code",
+)
+def get_selfconsumption_project_by_code(
     project_code: str,
     request: Request,
-    env: Annotated[Environment, Depends(odoo_env)],
-    auth_user: Annotated[Any, Depends(authenticated_endpoint)],
+    energy_selfconsumption_service: Annotated[
+        EnergySelfconsumptionService, Depends(energy_selfconsumption_service)
+    ],
 ) -> SingleProjectInfoResponse:
-    energy_selfconsumption_service = EnergySelfconsumptionService(env, auth_user)
     projects = energy_selfconsumption_service.selfconsumption_projects(project_code)
     project = projects[0] if projects and len(projects) > 0 else None
 

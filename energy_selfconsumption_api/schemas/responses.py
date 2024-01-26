@@ -2,13 +2,7 @@ from typing import List, Optional
 
 from pydantic import Field
 
-from .base import (
-    BaseListResponse,
-    BaseResponse,
-    Error,
-    PaginationLinks,
-    PaginationModel,
-)
+from .base import BaseListResponse, BaseResponse, Error, PaginationLinks
 from .selfconsumption_project import (
     SelfConsumptionProjectInfo,
     SelfConsumptionProjectMember,
@@ -39,7 +33,7 @@ class ProjectsInfoListResponse(BaseListResponse):
     """
 
     data: List[SelfConsumptionProjectInfo]
-    links: PaginationModel = Field(alias="_links")
+    links: PaginationLinks = Field(alias="_links")
 
 
 class ProjectMembersResponse(BaseListResponse):
@@ -48,4 +42,4 @@ class ProjectMembersResponse(BaseListResponse):
     """
 
     data: List[SelfConsumptionProjectMember]
-    links: PaginationModel = Field(alias="_links")
+    links: PaginationLinks = Field(alias="_links")

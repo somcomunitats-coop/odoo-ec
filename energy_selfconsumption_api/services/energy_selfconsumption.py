@@ -14,6 +14,8 @@ class EnergySelfconsumptionService:
     def selfconsumption_projects(
         self,
         project_code: str = None,
+        limit: int = None,
+        offset: int = None,
     ) -> List[SelfConsumptionProjectInfo]:
         search_domain = bool(project_code) and [("code", "=", project_code)] or []
         return [
@@ -24,5 +26,9 @@ class EnergySelfconsumptionService:
                 energy_community_name=project.company_id.name,
                 power=project.power,
             )
-            for project in self.model.search(search_domain)
+            for project in self.model.search(search_domain, limit=limit, offset=offset)
         ]
+
+    @property
+    def total_selfconsumption_projects(self) -> int:
+        return self.model.search_count([])
