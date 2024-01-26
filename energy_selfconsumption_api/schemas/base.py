@@ -16,6 +16,7 @@ class BaseListResponse(BaseResponse):
 
     total_results: int
     count: int
+    page: Optional[int]
 
 
 class PaginationLimits(BaseModel):
@@ -26,6 +27,7 @@ class PaginationLimits(BaseModel):
 
     limit: int
     offset: int
+    page: int
 
 
 class PaginationLinks(BaseModel):
@@ -34,14 +36,8 @@ class PaginationLinks(BaseModel):
     """
 
     self_: str
-    next_page: Optional[str] = None
-    previous_page: Optional[str] = None
-
-
-class PaginationModel(PaginationLimits, PaginationLinks):
-    """
-    If a request is paginated, this model will be included to navegate through the results
-    """
+    next_page: Optional[str]
+    previous_page: Optional[str]
 
 
 class Error(BaseModel):
