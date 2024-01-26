@@ -163,6 +163,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
             return False, _("Partner with VAT:<b>{vat}</b> was not found.").format(
                 vat=line_dict["partner_vat"]
             )
+        if not line_dict["iban"]:
+            return False, _("The IBAN field cannot be empty.")
+
         bank_account = self.env["res.partner.bank"].search(
             [("acc_number", "=", line_dict["iban"]), ("partner_id", "=", partner.id)],
             limit=1,
