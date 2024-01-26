@@ -11,7 +11,7 @@ odoo.define("cooperator.oe_cooperator_inherit", function (require) {
         var quantity = $link[0].value;
         // This block of code will grab submission value to take it into consideration
         if ($ordered_parts.data("submission_value")) {
-          $ordered_parts.val($ordered_parts.data("value"));
+          $ordered_parts.val($ordered_parts.data("submission_value"));
           $ordered_parts.data("submission_value", null);
         }
         var total_part = quantity * $share_price;
