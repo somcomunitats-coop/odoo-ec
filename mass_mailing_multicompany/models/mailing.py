@@ -29,3 +29,16 @@ class MassMailing(models.Model):
                     "campaign_id": [("company_id", "=", record.company_id.id)],
                 }
             }
+
+    def _get_default_mailing_domain(self):
+        mailing_domain = super()._get_default_mailing_domain()
+        print(self.mailing_model_real)
+        if self.mailing_model_real == "res.partner":
+            mailing_domain.append(
+                ("company_ids", "in", [self.env.user.get_current_company_id()])
+            )
+        else:  # crm.lead, mailing.contact, sale.order, mailing.contact
+            mailing_domain.append(
+                ("company_id", "=", self.env.user.get_current_company_id())
+            )
+        return mailing_domain
