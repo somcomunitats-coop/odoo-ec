@@ -86,6 +86,29 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
     def voluntary_share_validation(  # noqa: C901 (method too complex)
         self, kwargs, logged, values, post_file
     ):
+        target_odoo_company_id = False
+        if kwargs.get("company_id", False):
+            try:
+                target_odoo_company_id = int(kwargs.get("company_id"))
+            except:
+                pass
+
+        if ("odoo_company_id" in kwargs) and (
+            not target_odoo_company_id
+            or not request.env["res.company"]
+            .sudo()
+            .search([("id", "=", target_odoo_company_id)])
+        ):
+            return http.Response(
+                _("Not valid parameter value [odoo_company_id]"), status=500
+            )
+
+        ctx = dict(request.context)
+        ctx.update({"target_odoo_company_id": target_odoo_company_id})
+        request.context = ctx
+
+        company_id = request.env["res.company"].sudo().browse(target_odoo_company_id)
+
         user_obj = request.env["res.users"]
         sub_req_obj = request.env["subscription.request"]
 
@@ -121,6 +144,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                 values["error_msg"] = _(
                     "Email and confirmation email addresses don't match."
                 )
+                values.update({"share_product_id": company_id.voluntary_share_id.id})
                 return request.render(redirect, values)
 
         # There's no issue with the email, so we can remember the confirmation email
@@ -139,6 +163,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         if not mandate_approved:
             values = self.fill_values(values, is_company, logged)
             values["error_msg"] = _("You must check the SEPA transference.")
+            values.update({"share_product_id": company_id.voluntary_share_id.id})
             return request.render(redirect, values)
 
         if "iban" in required_fields:
@@ -149,6 +174,9 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                 if not valid:
                     values = self.fill_values(values, is_company, logged)
                     values["error_msg"] = _("Provided IBAN is not valid.")
+                    values.update(
+                        {"share_product_id": company_id.voluntary_share_id.id}
+                    )
                     return request.render(redirect, values)
 
         """
