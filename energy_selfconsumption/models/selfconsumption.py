@@ -349,16 +349,41 @@ class Selfconsumption(models.Model):
     def _check_valid_code(self):
         """
         The following are evaluated:
-            1. The first 22 digits correspond to the CUPS.
+            1. The first 20 or 22 digits correspond to the CUPS.
             2. The character after CUPS is A
             3. And the last 3 characters are numbers.
+            4. Taking into account that the length of the CUPS can vary, the length of the CAU can be 24 or 26 characters.
         """
         for record in self:
             if record.code:
                 # Validate the total length of the CAU, check if the first digits are CUPS and get the last 4 characters
-                if len(record.code) == 26:
+                if len(record.code) == 24:
                     try:
-                        cups.validate(cups_number)
+                        cups.validate(record.code[:20])
+                    except InvalidLength:
+                        error_message = _(
+                            "Invalid CAU: The first characters related to CUPS are incorrect. The length is incorrect."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidComponent:
+                        error_message = _(
+                            "Invalid CAU: The CUPS does not start with 'ES'."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidFormat:
+                        error_message = _(
+                            "Invalid CAU: The CUPS has an incorrect format."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidChecksum:
+                        error_message = _(
+                            "Invalid CAU: The checksum of the CUPS is incorrect."
+                        )
+                        raise ValidationError(error_message)
+                    last_digits = record.code[20:]
+                elif len(record.code) == 26:
+                    try:
+                        cups.validate(record.code[:22])
                     except InvalidLength:
                         error_message = _(
                             "Invalid CAU: The first characters related to CUPS are incorrect. The length is incorrect."
