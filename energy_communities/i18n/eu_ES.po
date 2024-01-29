@@ -1817,11 +1817,6 @@ msgid "Is a new admin?"
 msgstr "Administratzaile berria al zara?"
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_crm_lead__is_instance_company
-msgid "Is instance company"
-msgstr "Es una compañía instancia"
-
-#. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0
 #, python-format
 msgid "Is the community open to accept new members or already closed?"
@@ -2275,6 +2270,26 @@ msgstr "Ireki"
 #: model:ir.model,name:energy_communities.model_operation_request
 msgid "Operation request"
 msgstr "Solicitud operación"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_crm_to_coordinator_company.py:0
+#, python-format
+msgid ""
+"Opportunity assigned to Coordinator %s (ID: %s), "
+"where %s is the id of the original instance-level record."
+msgstr ""
+"Koordinatzaileari esleitutako aukera %s (ID: %s), "
+"non %s jatorrizko erregistroaren IDa den Instantzia mailan."
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_crm_to_coordinator_company.py:0
+#, python-format
+msgid ""
+"Opportunity created from Instance opportunity with ID %s, where %s is the id"
+" of the new record generated at the Coordinator level"
+msgstr ""
+"Aukera %s IDa duen Instantzia aukeratik sortu da, non %s IDa den"
+"Koordinadora mailan sortutako errekor berriarena."
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0
