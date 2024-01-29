@@ -21,6 +21,7 @@
     # always loaded
     "data": [
         "security/ir_rule_data.xml",
+        "views/mailing_mailing_views_menus.xml",
         "views/mailing_mailing_views.xml",
         "views/mailing_list_views.xml",
         "views/mailing_contact_views.xml",
