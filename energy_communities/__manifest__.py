@@ -71,6 +71,7 @@
         "views/auth_oauth_views.xml",
         "views/view_users_form.xml",
         "views/subscription_request_view.xml",
+        "views/product_views.xml",
         "views/res_users_view.xml",
         "views/res_users_role_view.xml",
         "views/mailing_mailing_views_menus.xml",
