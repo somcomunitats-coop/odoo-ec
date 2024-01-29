@@ -6,7 +6,12 @@
         <field name="inherit_id" ref="utm.utm_campaign_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='tag_ids']" position="after">
-                <field name="company_id" groups="base.group_multi_company" />
+                <field name="allowed_companies" invisible="1" />
+                <field
+            name="company_id"
+            groups="base.group_multi_company"
+            domain="[('id','in',allowed_companies)]"
+          />
             </xpath>
         </field>
     </record>
@@ -16,7 +21,12 @@
         <field name="inherit_id" ref="utm.utm_stage_view_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
-                <field name="company_id" groups="base.group_multi_company" />
+                <field name="allowed_companies" invisible="1" />
+                <field
+            name="company_id"
+            groups="base.group_multi_company"
+            domain="[('id','in',allowed_companies)]"
+          />
             </xpath>
         </field>
     </record>
@@ -26,7 +36,12 @@
         <field name="inherit_id" ref="utm.utm_tag_view_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
-                <field name="company_id" groups="base.group_multi_company" />
+              <field name="allowed_companies" invisible="1" />
+              <field
+            name="company_id"
+            groups="base.group_multi_company"
+            domain="[('id','in',allowed_companies)]"
+          />
             </xpath>
         </field>
     </record>

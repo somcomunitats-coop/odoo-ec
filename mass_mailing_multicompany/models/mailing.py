@@ -11,14 +11,6 @@ class MassMailing(models.Model):
         required=True,
     )
 
-    @api.depends("company_id")
-    def _compute_user_current_company(self):
-        super()._compute_user_current_company()
-
-    @api.depends("company_id")
-    def _compute_allowed_companies(self):
-        super()._compute_allowed_companies()
-
     @api.onchange("company_id")
     def _onchange_company_id(self):
         for record in self:

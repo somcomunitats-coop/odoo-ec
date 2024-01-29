@@ -3,7 +3,7 @@ from odoo import api, fields, models
 
 class MassMailingContact(models.Model):
     _name = "mailing.contact"
-    _inherit = "mailing.contact"
+    _inherit = ["mailing.contact", "user.currentcompany.mixin"]
 
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, required=True

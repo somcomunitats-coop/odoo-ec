@@ -16,14 +16,6 @@ class ResUsers(models.Model):
 
     current_role = fields.Char(computed="_compute_current_role", store=False)
 
-    @api.depends("company_id")
-    def _compute_user_current_company(self):
-        super()._compute_user_current_company()
-
-    @api.depends("company_id")
-    def _compute_allowed_companies(self):
-        super()._compute_allowed_companies()
-
     def _compute_current_role(self):
         for record in self:
             record.current_role = record.get_current_role()

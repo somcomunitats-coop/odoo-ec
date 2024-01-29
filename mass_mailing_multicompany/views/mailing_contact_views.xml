@@ -8,7 +8,12 @@
             <xpath expr="//div[hasclass('oe_title')]" position="after">
               <group>
                 <group>
-                  <field name="company_id" groups="base.group_multi_company" />
+                  <field name="allowed_companies" invisible="1" />
+                  <field
+                name="company_id"
+                groups="base.group_multi_company"
+                domain="[('id','in',allowed_companies)]"
+              />
                 </group>
               </group>
             </xpath>

@@ -15,13 +15,15 @@ class UserCurrentCompanyMixin(models.AbstractModel):
         store=False,
     )
 
+    @api.depends("company_id")
     def _compute_allowed_companies(self):
         for record in self:
             record.allowed_companies = record.env.context["allowed_company_ids"]
 
+    @api.depends("company_id")
     def _compute_user_current_company(self):
         for record in self:
-            record.user_current_company = record.get_user_current_company()
+            record.user_current_company = self.env.company
 
     def get_current_company_id(self):
         # return self.env.context["allowed_company_ids"][0]
