@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+
+  <template
+    id="assets_frontend_cooperator"
+    inherit_id="web.assets_frontend"
+    name="cooperator_website_script"
+  >
+        <xpath expr="." position="inside">
+            <script
+        type="text/javascript"
+        src="/energy_communities/static/src/js/cooperator.js"
+      />
+        </xpath>
+  </template>
+
     <template
     id="becomecooperator_ccee"
     inherit_id="cooperator_website.becomecooperator"
@@ -276,7 +290,7 @@
             id="ordered_parts"
             step="1"
             min="1"
-            value="1"
+            t-attf-data-submission_value="#{ordered_parts}"
             class="form-control form-control-sm"
           />
                 </div>
