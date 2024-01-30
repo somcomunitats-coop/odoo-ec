@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.2.1.0",
+    "version": "14.0.2.1.1",
     "depends": [
         "base",
         "mail",
