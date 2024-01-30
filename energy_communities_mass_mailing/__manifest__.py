@@ -1,15 +1,15 @@
 {
-    "name": "Mass mailing multicompany",
+    "name": "Mass mailing - Energy Communities",
     "summary": """
-        Use mass_mailing on a multicompany odoo setup
+        Use mass_mailing on a energy communities setup
     """,
     "description": """
-        Use mass_mailing on a multicompany odoo setup
+        Use mass_mailing on a energy communities setup
     """,
     "author": "Som Comunitats",
     "website": "https://coopdevs.org",
     "category": "Marketing",
-    "version": "14.0.0.0.0",
+    "version": "14.0.0.0.1",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
@@ -29,8 +29,4 @@
         "wizard/mail_compose_message_views.xml",
         "wizard/partner_mail_list_wizard.xml",
     ],
-    # only loaded in demonstration mode
-    # 'demo': [
-    #     'demo/demo.xml',
-    # ],
 }
