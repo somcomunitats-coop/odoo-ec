@@ -278,10 +278,10 @@ class Selfconsumption(models.Model):
 
         date = datetime.now()
         year = date.strftime("%Y")
-        self.env["energy_selfconsumption.coefficient_report"].create(
+        report = self.env["energy_selfconsumption.coefficient_report"].create(
             {"report_data": file_content, "file_name": f"{self.code}_{year}.txt"}
         )
-        url = "/energy_selfconsumption/download_report?id=%s" % self.id
+        url = "/energy_selfconsumption/download_report?id=%s" % report.id
         return {
             "type": "ir.actions.act_url",
             "url": url,
