@@ -430,7 +430,7 @@ class Selfconsumption(models.Model):
             if record.cil:
                 if len(record.cil) == 23:
                     try:
-                        cups.validate(cups_number)
+                        cups.validate(record.code[:20])
                     except InvalidLength:
                         error_message = _(
                             "Invalid CIL: The first characters related to CUPS are incorrect. The length is incorrect."
@@ -454,7 +454,7 @@ class Selfconsumption(models.Model):
                     last_digits = record.cil[20:]
                 elif len(record.cil) == 25:
                     try:
-                        cups.validate(cups_number)
+                        cups.validate(record.code[:22])
                     except InvalidLength:
                         error_message = _(
                             "Invalid CIL: The first characters related to CUPS are incorrect. The length is incorrect."
