@@ -86,28 +86,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
     def voluntary_share_validation(  # noqa: C901 (method too complex)
         self, kwargs, logged, values, post_file
     ):
-        target_odoo_company_id = False
-        if kwargs.get("company_id", False):
-            try:
-                target_odoo_company_id = int(kwargs.get("company_id"))
-            except:
-                pass
-
-        if ("odoo_company_id" in kwargs) and (
-            not target_odoo_company_id
-            or not request.env["res.company"]
-            .sudo()
-            .search([("id", "=", target_odoo_company_id)])
-        ):
-            return http.Response(
-                _("Not valid parameter value [odoo_company_id]"), status=500
-            )
-
-        ctx = dict(request.context)
-        ctx.update({"target_odoo_company_id": target_odoo_company_id})
-        request.context = ctx
-
-        company_id = request.env["res.company"].sudo().browse(target_odoo_company_id)
+        company_id = request.env["res.company"].browse(int(kwargs.get("company_id")))
 
         user_obj = request.env["res.users"]
         sub_req_obj = request.env["subscription.request"]
