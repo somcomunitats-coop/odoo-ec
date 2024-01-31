@@ -10,7 +10,7 @@
                     <header>
                         <button
               type="object"
-              string="Set in inscription"
+              string="Advance to In Inscription"
               name="set_inscription"
               args="['draft']"
               attrs="{'invisible':[('state','not in',['draft'])]}"
@@ -18,21 +18,21 @@
             />
                         <button
               type="object"
-              string="Set in activation"
+              string="Advance to Activation"
               name="set_in_activation_state"
               attrs="{'invisible':[('state','not in',['inscription'])]}"
               class="btn btn-primary"
             />
                         <button
               type="object"
-              string="Activate"
+              string="Advance to Active"
               name="activate"
               attrs="{'invisible':[('state','not in',['activation'])]}"
               class="btn btn-primary"
             />
                         <button
               type="object"
-              string="Back to In Inscription status"
+              string="Return to In Inscription"
               name="set_inscription"
               args="['activation']"
               attrs="{'invisible':[('state','not in',['activation'])]}"
@@ -41,7 +41,7 @@
             />
                         <button
               type="object"
-              string="Set to Draft"
+              string="Return to Draft"
               name="set_draft"
               attrs="{'invisible':[('state','not in',['inscription'])]}"
             />
