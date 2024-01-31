@@ -43,7 +43,9 @@ def paging(
     page_size: Annotated[int, Query(gte=1)] = DEFAULT_PAGE_SIZE,
 ) -> PaginationLimits:
     return PaginationLimits(
-        limit=page_size, offset=(page - 1) * page_size, page=page, page_size=page_size
+        limit=page_size,
+        offset=(page - 1) * page_size,
+        page=page,
     )
 
 
@@ -52,3 +54,9 @@ def energy_selfconsumption_service(
     auth_user: Annotated[Users, Depends(authenticated_endpoint)],
 ) -> EnergySelfconsumptionService:
     return EnergySelfconsumptionService(env=env, user=auth_user)
+
+
+PagingDep = Annotated[PaginationLimits, Depends(paging)]
+EnergySelfconsumptionDep = Annotated[
+    EnergySelfconsumptionService, Depends(energy_selfconsumption_service)
+]

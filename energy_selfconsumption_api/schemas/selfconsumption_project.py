@@ -17,6 +17,5 @@ class SelfConsumptionProjectMember(BaseModel):
     supply_point_state: str
     distribution_coefficient: float
     owner_name: str
-    owner_surname1: str
-    owner_surname2: str
+    owner_surnames: str
     owner_vat: str

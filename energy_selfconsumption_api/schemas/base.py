@@ -36,8 +36,8 @@ class PaginationLinks(BaseModel):
     """
 
     self_: str
-    next_page: Optional[str]
-    previous_page: Optional[str]
+    next_page: Optional[str] = None
+    previous_page: Optional[str] = None
 
 
 class Error(BaseModel):
