@@ -2673,6 +2673,13 @@ msgid "Short description"
 msgstr "Descripció breu"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__show_web_link_on_header
+#, python-format
+msgid "Show external website link also in header"
+msgstr "Mostrar enllaç lloc web extern també en capçalera"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__signup_expiration
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__signup_expiration
 msgid "Signup Expiration"
