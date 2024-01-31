@@ -1,10 +1,11 @@
 from typing import Any, List
 
-from fastapi import Request
+from fastapi import Depends, Request
+from typing_extensions import Annotated
 
-from .dependencies import DEFAULT_PAGE_SIZE
 from .schemas import (
     PaginationLimits,
+    PaginationLinks,
     ProjectsInfoListResponse,
     SingleProjectInfoResponse,
 )
@@ -12,7 +13,7 @@ from .schemas import (
 
 def get_pagination_links(
     request: Request, actual_count: int, total_results: int, paging: PaginationLimits
-) -> dict:
+) -> PaginationLinks:
     page = paging.page
     page_size = paging.limit
     next_url = (
@@ -25,27 +26,34 @@ def get_pagination_links(
         if page > 1
         else None
     )
+    return PaginationLinks(
+        self_=request.url._url,
+        next_page=next_url,
+        previous_page=previous_url,
+    )
 
-    return {
-        "self_": request.url._url,
-        "next_page": next_url,
-        "previous_page": previous_url,
-    }
+
+def get_links(request: Request) -> PaginationLinks:
+    return PaginationLinks(self_=request.url._url)
 
 
-def make_single_response(object_: Any, request: Request) -> SingleProjectInfoResponse:
-    return SingleProjectInfoResponse(data=object_, _links=_get_links(request))
+def make_single_response(
+    request: Request,
+    response_class: Any,
+    object_: Any,
+) -> Any:
+    return response_class(data=object_, _links=get_links(request))
 
 
 def collection_response(
     request: Request,
+    response_class: Any,
     collection: List[Any],
     total_results: int,
     paging: PaginationLimits,
-) -> ProjectsInfoListResponse:
+) -> Any:
     actual_count = len(collection)
-
-    return ProjectsInfoListResponse(
+    return response_class(
         total_results=total_results,
         count=actual_count,
         page=paging.page,

@@ -1,4 +1,4 @@
-from .base import PaginationLimits
+from .base import PaginationLimits, PaginationLinks
 from .selfconsumption_project import (
     SelfConsumptionProjectInfo,
     SelfConsumptionProjectMember,
