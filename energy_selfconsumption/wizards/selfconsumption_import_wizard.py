@@ -145,6 +145,10 @@ class SelfconsumptionImportWizard(models.TransientModel):
             raise UserError(_("Error parsing the file"))
 
     def import_line(self, line_dict, project):
+        if not line_dict["code"]:
+            return False, _(
+                "The CUPS field is required. Please make sure you provide a valid CUPS"
+            )
         partner = self.env["res.partner"].search(
             [
                 "|",
