@@ -105,11 +105,6 @@ msgid "Attachment Count"
 msgstr "Recompte de fitxers adjunts"
 
 #. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
-msgid "Back to In Inscription status"
-msgstr "Tornar a l'estat d'inscripció"
-
-#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__code
 msgid "CAU"
 msgstr "CAU"
@@ -776,18 +771,8 @@ msgstr "Projecte d'autoconsum"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
-msgid "Set in activation"
-msgstr "Estableix en activació"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid "Set in inscription"
 msgstr "Estableix en inscripció"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
-msgid "Set to Draft"
-msgstr "Estableix com a Esborrany"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__selfconsumption_project_state
@@ -1686,11 +1671,6 @@ msgid "Energy Project"
 msgstr "Projecte energètic"
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__reseller_id
-msgid "Energy Reseller"
-msgstr "Distribuïdor Energètic"
-
-#. module: energy_selfconsumption
 #: model:ir.model,name:energy_selfconsumption.model_energy_project_project
 msgid "Energy project"
 msgstr "Projecte energètic"
@@ -2001,11 +1981,6 @@ msgid "Save Data"
 msgstr "Desa les dades"
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__reseller_id
-msgid "Select the associated Energy Reseller"
-msgstr "Seleccioneu el distribuïdor energètic associat"
-
-#. module: energy_selfconsumption
 #: model:ir.actions.report,name:energy_selfconsumption.selfconsumption_manager_authorization_report
 msgid "Self-consumption Manager Report"
 msgstr "Informe del gestor d'autoconsumpció"
@@ -2181,3 +2156,278 @@ msgstr "Preu kWn per dia (€/kWn/dia)"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "y teléfono(s) de contacto"
 msgstr "i telèfon(s) de contacte"
+
+#. module: energy_selfconsumption
+#: model:mail.template,body_html:energy_selfconsumption.selfconsumption_power_acquired_invoicing_reminder
+msgid ""
+"\n"
+"            \n"
+"        <p>Hi,</p>\n"
+"        <p>\n"
+"            The collective self-consumption project\n"
+"            <b>${ object.name }</b>\n"
+"            of the energy community\n"
+"            <b>${ object.project_id.company_id.name }</b>\n"
+"            has started the invoicing process on <b>${ ctx['next_invoicing'] }</b> according to the established recurrence.\n"
+"        </p>\n"
+"        <p>\n"
+"            Invoices are created in “draft” and it is therefore necessary that they be validated and sent as soon as possible.\n"
+"        </p>\n"
+"        <p>\n"
+"            For any questions or incidents, contact the support team; support@somcomunitats.coop.\n"
+"        </p>\n"
+"            \n"
+"        "
+msgstr ""
+"<p>Hola,</p>\n"
+"        <p>\n"
+"            El projecte d'autoconsum col·lectiu\n"
+"            <b>${ object.name }</b>\n"
+"            de la comunitat energètica\n"
+"            <b>${ object.project_id.company_id.name }</b>\n"
+"            ha iniciat el procés de facturació el <b>${ ctx['next_invoicing'] }</b> segons la periodicitat establerta.\n"
+"        </p>\n"
+"        <p>\n"
+"            Les factures es creen en “esborrany” i, per tant, és necessari que siguin validades i enviades el més aviat possible.\n"
+"        </p>\n"
+"        <p>\n"
+"            Per a qualsevol pregunta o incidència, poseu-vos en contacte amb l'equip d'assistència; support@somcomunitats.coop.\n"
+"        </p>"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid ""
+"\n"
+"Some of the contract selected are not of the same self-consumption project.\n"
+"\n"
+"Please make sure that you are invoicing for only the same self-consumption project {project_name}.\n"
+msgstr ""
+"Alguns dels contractes seleccionats no són del mateix projecte d'autoconsum.\n"
+"\n"
+"Assegureu-vos que només esteu facturant el mateix projecte d'autoconsum {project_name}."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__2_0td
+msgid "2.0TD"
+msgstr "2.0TD"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__3_0td
+msgid "3.0TD"
+msgstr "3.0TD"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_1td
+msgid "6.1TD"
+msgstr "6.1TD"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_2td
+msgid "6.2TD"
+msgstr "6.2TD"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_3td
+msgid "6.3TD"
+msgstr "6.3TD"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_4td
+msgid "6.4TD"
+msgstr "6.4TD"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__tariff
+msgid "Access tariff"
+msgstr "Tarifa d'accés"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Advance to Activation"
+msgstr "Avanç a l'activació"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Advance to Active"
+msgstr "Avançar a actiu"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Advance to Inscription"
+msgstr "Avanç a la inscripció"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__supplier_id
+msgid "Energy Supplier"
+msgstr "Proveïdor d'energia"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Invalid CAU: Last 3 digits are not numbers"
+msgstr "CAU no vàlid: els 3 últims dígits no són números"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Invalid CAU: The CUPS does not start with 'ES'."
+msgstr "CAU no vàlid: el CUPS no comença amb \"ES\"."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Invalid CAU: The CUPS has an incorrect format."
+msgstr "CAU no vàlid: el CUPS té un format incorrecte."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Invalid CAU: The character after CUPS is not A"
+msgstr "CAU no vàlid: el caràcter després de CUPS no és A"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Invalid CAU: The checksum of the CUPS is incorrect."
+msgstr "CAU no vàlid: la suma de comprovació del CUPS és incorrecta."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid ""
+"Invalid CAU: The first characters related to CUPS are incorrect. The length "
+"is incorrect."
+msgstr ""
+"CAU no vàlid: els primers caràcters relacionats amb CUPS són incorrectes. La"
+" longitud és incorrecta."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Invalid CAU: The length is not correct"
+msgstr "CAU no vàlid: la longitud no és correcta"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Invalid CIL: Last 3 digits are not numbers"
+msgstr "CIL no vàlid: els 3 últims dígits no són números"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Invalid CIL: The CUPS does not start with 'ES'."
+msgstr "CIL no vàlid: el CUPS no comença amb \"ES\"."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Invalid CIL: The CUPS has an incorrect format."
+msgstr "CIL no vàlid: el CUPS té un format incorrecte."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Invalid CIL: The checksum of the CUPS is incorrect."
+msgstr "CIL no vàlid: la suma de comprovació del CUPS és incorrecta."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid ""
+"Invalid CIL: The first characters related to CUPS are incorrect. The length "
+"is incorrect."
+msgstr ""
+"CIL no vàlid: els primers caràcters relacionats amb CUPS són incorrectes. La"
+" longitud és incorrecta."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Invalid CIL: The length is not correct"
+msgstr "CIL no vàlid: la longitud no és correcta"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#, python-format
+msgid "Invalid CUPS: The checksum is incorrect."
+msgstr "CUPS no vàlid: la suma de comprovació és incorrecta."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#, python-format
+msgid "Invalid CUPS: The length is incorrect."
+msgstr "CUPS no vàlid: la longitud és incorrecta."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#, python-format
+msgid "Invalid CUPS: does not start with 'ES'."
+msgstr "CUPS no vàlid: no comença amb \"ES\"."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#, python-format
+msgid "Invalid CUPS: has an incorrect format."
+msgstr "CUPS no vàlid: té un format incorrecte."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#, python-format
+msgid "Invalid Cadastral Reference: {error}"
+msgstr "Referència cadastral no vàlida: {error}"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#, python-format
+msgid "Invalid VAT: {error}"
+msgstr "IVA no vàlid: {error}"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Return to Draft"
+msgstr "Torna a Esborrany"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Return to In Inscription"
+msgstr "Tornar a Inscripció"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__supplier_id
+msgid "Select the associated Energy Supplier"
+msgstr "Seleccioneu el proveïdor d'energia associat"
+
+#. module: energy_selfconsumption
+#: model:mail.template,subject:energy_selfconsumption.selfconsumption_power_acquired_invoicing_reminder
+msgid "Selfconsumption - Power Acquired Invoicing Reminder"
+msgstr "Autoconsum - Recordatori de facturació d'energia adquirida"
+
+#. module: energy_selfconsumption
+#: model:ir.actions.server,name:energy_selfconsumption.send_power_acquired_invoicing_reminder_to_admin_ir_actions_server
+#: model:ir.cron,cron_name:energy_selfconsumption.send_power_acquired_invoicing_reminder_to_admin
+#: model:ir.cron,name:energy_selfconsumption.send_power_acquired_invoicing_reminder_to_admin
+msgid "Send Power Acquired Invoicing Reminder to Admin User"
+msgstr ""
+"Envieu un recordatori de facturació adquirida a l'usuari administrador"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#, python-format
+msgid ""
+"The indicated contracted power is very high. Please check that this is "
+"correct. Remember that we use '.' to express decimals, not ','."
+msgstr ""
+"La potència contractada indicada és molt elevada. Si us plau, comproveu que "
+"això sigui correcte. Recordeu que fem servir '.' per expressar decimals, no "
+"','."
