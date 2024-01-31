@@ -1862,11 +1862,6 @@ msgid "Is a new admin?"
 msgstr "Es una administradora nueva?"
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_crm_lead__is_instance_company
-msgid "Is instance company"
-msgstr "Es una compañía instancia"
-
-#. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0
 #, python-format
 msgid "Is the community open to accept new members or already closed?"
@@ -2318,6 +2313,26 @@ msgstr "Abierto"
 #: model:ir.model,name:energy_communities.model_operation_request
 msgid "Operation request"
 msgstr "Solicitud operación"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_crm_to_coordinator_company.py:0
+#, python-format
+msgid ""
+"Opportunity assigned to Coordinator %s (ID: %s), "
+"where %s is the id of the original instance-level record."
+msgstr ""
+"Oportunidad asignada a la coordinadora %s (ID: %s), "
+"donde %s es el id del registro original a nivel de Instancia."
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_crm_to_coordinator_company.py:0
+#, python-format
+msgid ""
+"Opportunity created from Instance opportunity with ID %s, where %s is the id"
+" of the new record generated at the Coordinator level"
+msgstr ""
+"Oportunidad creada desde la oportunidad de Instancia con ID %s, donde %s es el id"
+" del nuevo registro generado a nivel de Coordinadora."
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0

@@ -204,3 +204,194 @@ msgstr "Usuari"
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__zip
 msgid "Zip"
 msgstr "Codi Postal"
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">\n"
+"                                        Resellers\n"
+"                                    </span>\n"
+"                                    <br/>"
+msgstr ""
+"<span class=\"o_form_label\">\n"
+"                                        Distribuïdors\n"
+"                                    </span>\n"
+"                                    <br/>"
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">\n"
+"                                        Supplier\n"
+"                                    </span>\n"
+"                                    <br/>"
+msgstr ""
+"<span class=\"o_form_label\">\n"
+"                                        Proveïdor\n"
+"                                    </span>\n"
+"                                    <br/>"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__zip
+msgid "C.P."
+msgstr "C.P."
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__address
+msgid "Dirección empresa"
+msgstr "Dirección empresa"
+
+#. module: energy_project
+#: model:uom.category,name:energy_project.energy_uom_category
+msgid "Energy"
+msgstr "Energia"
+
+#. module: energy_project
+#: model:ir.model,name:energy_project.model_energy_project_reseller
+msgid "Energy Reseller"
+msgstr "Distribuïdor d'energia"
+
+#. module: energy_project
+#: model:ir.model,name:energy_project.model_energy_project_supplier
+msgid "Energy Supplier"
+msgstr "Proveïdor d'energia"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__state
+msgid "Estado"
+msgstr "Estat"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__inscription_date
+msgid "Fecha alta"
+msgstr "Data alta"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__uninscription_date
+msgid "Fecha baja"
+msgstr "Data baixa"
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid "Manage Resellers"
+msgstr "Gestiona els distribuïdors"
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid "Manage Supplier"
+msgstr "Gestiona el proveïdor"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__city
+msgid "Municipio empresa"
+msgstr "Municipio empresa"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__vat
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__nif
+msgid "NIF empresa"
+msgstr "NIF empresa"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__name
+msgid "Nombre empresa"
+msgstr "Nom de l'Empresa"
+
+#. module: energy_project
+#: code:addons/energy_project/models/inscription.py:0
+#, python-format
+msgid "Non-partner"
+msgstr "No soci"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__order
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__order
+msgid "Nº de orden"
+msgstr "Nº d'ordre"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__portal
+msgid "Portal de medidas"
+msgstr "Portal de mesures"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__province
+msgid "Provincia empresa"
+msgstr "Provincia empresa"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__web
+msgid "Página web"
+msgstr "Pàgina web"
+
+#. module: energy_project
+#: model:ir.actions.act_window,name:energy_project.reseller_act_window
+#: model_terms:ir.ui.view,arch_db:energy_project.reseller_form_view
+#: model_terms:ir.ui.view,arch_db:energy_project.reseller_tree_view
+msgid "Reseller"
+msgstr "Distribuïdor"
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid "Resellers"
+msgstr "Distribuïdors"
+
+#. module: energy_project
+#: model:ir.actions.act_window,name:energy_project.supplier_act_window
+#: model_terms:ir.ui.view,arch_db:energy_project.supplier_form_view
+#: model_terms:ir.ui.view,arch_db:energy_project.supplier_tree_view
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid "Supplier"
+msgstr "Proveïdor"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__phone
+msgid "Teléfono Att cliente gratuito"
+msgstr "Telèfon Att client gratuït"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__phone
+msgid "Teléfono gratuito incidencias"
+msgstr "Telèfon gratuït incidències"
+
+#. module: energy_project
+#: code:addons/energy_project/models/inscription.py:0
+#, python-format
+msgid ""
+"The inscription cannot be deleted. It is related to a distribution table "
+"with state: {table_state}"
+msgstr ""
+"La inscripció no es pot eliminar. Està relacionat amb una taula de "
+"distribució amb l'estat: {table_state}"
+
+#. module: energy_project
+#: model_terms:ir.actions.act_window,help:energy_project.reseller_act_window
+msgid "There are no energy reseller yet, click here to add a new one."
+msgstr ""
+"Encara no hi ha cap distribuïdor d'energia, fes clic aquí per afegir-ne un "
+"de nou."
+
+#. module: energy_project
+#: model_terms:ir.actions.act_window,help:energy_project.supplier_act_window
+msgid "There are no energy supplier yet, click here to add a new one."
+msgstr ""
+"Encara no hi ha cap proveïdor d'energia, fes clic aquí per afegir-ne un de "
+"nou."
+
+#. module: energy_project
+#: code:addons/energy_project/models/inscription.py:0
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__is_member
+#, python-format
+msgid "Typology"
+msgstr "Tipologia "
+
+#. module: energy_project
+#: model:uom.uom,name:energy_project.kw_uom
+msgid "kW"
+msgstr "kWunit description in lists"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__scope
+msgid "Ámbito actuación"
+msgstr "Àmbito actuació"

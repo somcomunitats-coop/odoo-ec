@@ -40,9 +40,8 @@ class SubscriptionRequest(models.Model):
     def get_bank(self):
         if not self.iban:
             raise ValidationError(_("Must assign a valid iban."))
-        bank_id = self.partner_id.bank_ids.search(
-            [("acc_number", "=", self.iban)]
-        )  # TODO normalize iban
+        bank_id = self.partner_id.bank_ids.filtered(lambda x: x.acc_number)
+        # TODO normalize iban
         if bank_id:
             return bank_id
         return self.env["res.partner.bank"].create(

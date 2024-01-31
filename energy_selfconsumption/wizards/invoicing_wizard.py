@@ -44,7 +44,7 @@ class InvoicingWizard(models.TransientModel):
                         """
 Some of the contract selected are not of the same self-consumption project.
 
-Please make sure that you are invoicing for only the same self-consumption project ({project_name}.
+Please make sure that you are invoicing for only the same self-consumption project {project_name}.
 """
                     ).format(
                         project_name=contract_list[0].project_id.selfconsumption_id.name
