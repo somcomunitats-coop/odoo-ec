@@ -29,15 +29,24 @@
             <xpath expr="//td[@name='account_invoice_line_name']" position="after">
                 <td name="td_power_acquired">
                     <t t-set="found" t-value="False" />
-                    <t t-foreach="line.selfconsumption_id.contract_ids" t-as="contract">
-                        <t
-              t-if="contract.next_period_date_start and contract.next_period_date_end and contract.partner_id == line.partner_id"
-            >
-                            <t
-                t-esc="(((contract.next_period_date_end - contract.next_period_date_start).days) + 1)* line.selfconsumption_id.power"
-              /><span> kW/day</span>
+                    <t t-foreach="line.selfconsumption_id" t-as="selfconsumption">
+                        <t t-foreach="selfconsumption.contract_ids" t-as="contract">
+                            <t t-if="contract.partner_id == line.partner_id">
+                                <t
+                  t-foreach="selfconsumption.report_distribution_table.supply_point_assignation_ids"
+                  t-as="assignation"
+                >
+                                    <t t-if="assignation.owner_id == line.partner_id">
+                                        <t
+                      t-set="power_acquired"
+                      t-value="selfconsumption.power * assignation.coefficient"
+                    />
+                                        <t t-esc="power_acquired" /><span> kW/day</span>
+                                        <t t-set="found" t-value="True" />
+                                    </t>
+                                </t>
+                            </t>
                         </t>
-                        <t t-set="found" t-value="True" />
                     </t>
                     <t t-if="not found">
                         0 kW/day
