@@ -70,9 +70,13 @@ class CrmLead(models.Model):
 
     def _get_default_community_wizard(self):
         self.ensure_one()
+        # form values from metadata
         creation_dict = self._get_metadata_values()
+        # all other populated form fields.
+        creation_partner = self._search_partner_for_company_wizard_creation(
+            creation_dict
+        )
         users = [user.id for user in self.company_id.get_users()]
-        # add system users to user_ids recordset
         users = users + [
             self.env.ref("base.user_admin").id,
             self.env.ref("base.public_user").id,
@@ -80,6 +84,7 @@ class CrmLead(models.Model):
         creation_dict.update(
             {
                 "parent_id": self.company_id.id,
+                "creation_partner": creation_partner.id,
                 "crm_lead_id": self.id,
                 "user_ids": users,
                 "chart_template_id": self.env.ref(
@@ -111,7 +116,9 @@ class CrmLead(models.Model):
                 wizard_key = _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD[meta_key]
                 # date meta
                 if meta_key in _LEAD_METADATA__DATE_FIELDS:
-                    format_date = self._format_date_for_creation(meta_entry.value)
+                    format_date = self._format_date_for_company_wizard_creation(
+                        meta_entry.value
+                    )
                     if format_date:
                         meta_dict[wizard_key] = format_date
                 # lang meta
@@ -163,23 +170,33 @@ class CrmLead(models.Model):
                     )
                 if "legal_name" not in meta_dict.keys():
                     meta_dict["legal_name"] = meta_dict["name"]
+                if "vat" in meta_dict.keys():
+                    meta_dict["vat"] = meta_dict["vat"].replace(" ", "").upper()
+                if "email" in meta_dict.keys():
+                    meta_dict["email"] = meta_dict["email"].strip()
         return meta_dict
 
-    def _format_date_for_creation(self, date_val):
-        format_date = False
-        date_formats = ["%Y-%m-%d", "%d-%m-%Y", "%Y/%m/%d", "%d/%m/%Y"]
-        for date_format in date_formats:
-            try:
-                format_date = datetime.strptime(date_val, date_format)
-            except:
-                pass
-        return format_date
+    def _search_partner_for_company_wizard_creation(self, creation_dict):
+        creation_partner = False
+        if "vat" in creation_dict.keys():
+            creation_partners = self.env["res.partner"].search(
+                [
+                    ("company_id", "=", self.env.user.get_current_company_id()),
+                    ("vat", "=", creation_dict["vat"]),
+                ]
+            )
+            if creation_partners:
+                creation_partner = creation_partners[0]
+                # more than one partner found -> filter by email
+                if len(creation_partners) > 1 and "email" in creation_dict.keys():
+                    email_creation_partners = creation_partners.filtered(
+                        lambda record: record.email == creation_dict["email"]
+                    )
+                    if email_creation_partners:
+                        creation_partner = email_creation_partners[0]
+        return creation_partner
 
-    # def _get_metadata_values(self):
-    #     for wizard_key in _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD.keys():
-    #         meta_value = self.metadata_line_ids
-
-    def _format_date_for_creation(self, date_val):
+    def _format_date_for_company_wizard_creation(self, date_val):
         format_date = False
         date_formats = ["%Y-%m-%d", "%d-%m-%Y", "%Y/%m/%d", "%d/%m/%Y"]
         for date_format in date_formats:
