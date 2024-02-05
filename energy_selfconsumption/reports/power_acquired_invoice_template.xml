@@ -29,23 +29,19 @@
             <xpath expr="//td[@name='account_invoice_line_name']" position="after">
                 <td name="td_power_acquired">
                     <t t-set="found" t-value="False" />
-                    <t t-foreach="line.selfconsumption_id" t-as="selfconsumption">
-                        <t t-foreach="selfconsumption.contract_ids" t-as="contract">
-                            <t t-if="contract.partner_id == line.partner_id">
-                                <t
-                  t-foreach="selfconsumption.report_distribution_table.supply_point_assignation_ids"
-                  t-as="assignation"
-                >
-                                    <t t-if="assignation.owner_id == line.partner_id">
-                                        <t
-                      t-set="power_acquired"
-                      t-value="selfconsumption.power * assignation.coefficient"
-                    />
-                                        <t t-esc="power_acquired" /><span> kW/day</span>
-                                        <t t-set="found" t-value="True" />
-                                    </t>
-                                </t>
-                            </t>
+                    <t
+            t-foreach="line.selfconsumption_id.distribution_table_ids.supply_point_assignation_ids"
+            t-as="assignation"
+          >
+                        <t
+              t-if="line.partner_id == assignation.owner_id and line.ref == assignation.code"
+            >
+                            <t
+                t-set="power_acquired"
+                t-value="line.selfconsumption_id.power * assignation.coefficient"
+              />
+                            <t t-esc="power_acquired" /><span> kWn/day</span>
+                            <t t-set="found" t-value="True" />
                         </t>
                     </t>
                     <t t-if="not found">
@@ -56,19 +52,17 @@
 
             <xpath expr="//td[@name='td_power_acquired']" position="after">
                 <td name="td_invoiced_days">
-                    <t t-set="found" t-value="False" />
-                    <t t-foreach="line.selfconsumption_id.contract_ids" t-as="contract">
-                        <t
-              t-if="contract.next_period_date_start and contract.next_period_date_end and contract.partner_id == line.partner_id"
-            >
+                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                        <t t-foreach="line.contract_line_id" t-as="contract_line">
                             <t
-                t-esc="((contract.next_period_date_end - contract.next_period_date_start).days) + 1"
-              />
+                t-if="contract_line.contract_id.partner_id == line.partner_id"
+              >
+                                <span t-field="contract_line.days_invoiced" />
+                            </t>
+                            <t t-else="">
+                                0
+                            </t>
                         </t>
-                        <t t-set="found" t-value="True" />
-                    </t>
-                    <t t-if="not found">
-                        0
                     </t>
                 </td>
             </xpath>
