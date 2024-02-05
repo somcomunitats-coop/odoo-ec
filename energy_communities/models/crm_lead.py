@@ -76,6 +76,8 @@ class CrmLead(models.Model):
         creation_partner = self._search_partner_for_company_wizard_creation(
             creation_dict
         )
+        if creation_partner:
+            creation_dict["creation_partner"] = creation_partner.id
         users = [user.id for user in self.company_id.get_users()]
         users = users + [
             self.env.ref("base.user_admin").id,
@@ -84,7 +86,6 @@ class CrmLead(models.Model):
         creation_dict.update(
             {
                 "parent_id": self.company_id.id,
-                "creation_partner": creation_partner.id,
                 "crm_lead_id": self.id,
                 "user_ids": users,
                 "chart_template_id": self.env.ref(
