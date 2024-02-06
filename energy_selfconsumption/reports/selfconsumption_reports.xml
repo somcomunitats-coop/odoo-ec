@@ -343,16 +343,26 @@
                             <th>CIL</th>
                             <th>COEFICIENTE (α)</th>
                         </tr>
-
-                        <t t-if="o.owner_id and o.cil">
-                            <tr>
-                                <td><t t-esc="o.owner_id.name" /></td>
-                                <td><t t-esc="o.owner_id.vat" /></td>
-                                <td><t t-esc="o.cil" /></td>
-                                <td style="text-align: right;">1</td>
-                            </tr>
-                        </t>
+                        <tr>
+                            <td>
+                                <t t-if="o.owner_id and o.owner_id.name">
+                                    <t t-esc="o.owner_id.name" />
+                                </t>
+                            </td>
+                            <td>
+                                <t t-if="o.owner_id and o.owner_id.vat">
+                                    <t t-esc="o.owner_id.vat" />
+                                </t>
+                            </td>
+                            <td>
+                                <t t-if="o.cil">
+                                    <t t-esc="o.cil" />
+                                </t>
+                            </td>
+                            <td style="text-align: right;">1</td>
+                        </tr>
                     </table>
+
                     <p>Con la firma del presente acuerdo, los consumidores <b
             > nos acogemos voluntariamente al
                         mecanismo de compensación simplificada </b> entre los déficits del consumo de cada consumidor
