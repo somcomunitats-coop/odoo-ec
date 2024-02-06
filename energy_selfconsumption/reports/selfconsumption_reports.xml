@@ -349,7 +349,6 @@
                                     <t t-esc="o.owner_id.name" />
                                 </t>
                                 <t t-else="">
-                                    N/A
                                 </t>
                             </td>
                             <td>
@@ -357,7 +356,6 @@
                                     <t t-esc="o.owner_id.vat" />
                                 </t>
                                 <t t-else="">
-                                    N/A
                                 </t>
                             </td>
                             <td>
@@ -365,7 +363,6 @@
                                     <t t-esc="o.cil" />
                                 </t>
                                 <t t-else="">
-                                    N/A
                                 </t>
                             </td>
                             <td style="text-align: right;">1</td>
