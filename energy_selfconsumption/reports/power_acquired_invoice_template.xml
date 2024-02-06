@@ -38,7 +38,7 @@
             >
                             <t
                 t-set="power_acquired"
-                t-value="line.selfconsumption_id.power * assignation.coefficient"
+                t-value="'{:.2f}'.format(line.selfconsumption_id.power * assignation.coefficient)"
               />
                             <t t-esc="power_acquired" /><span> kWn/day</span>
                             <t t-set="found" t-value="True" />
