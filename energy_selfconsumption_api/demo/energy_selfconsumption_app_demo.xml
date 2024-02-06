@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- Copyright 2022 ACSONE SA/NV
-     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL). -->
 <odoo>
-  <!-- This is the user that will be used to run the demo app -->
-  <record
-    id="my_demo_app_user"
-    model="res.users"
-    context="{'no_reset_password': True, 'no_reset_password': True}"
-  >
-    <field name="name">My Demo Endpoint User</field>
-    <field name="login">my_demo_app_user</field>
-    <field name="groups_id" eval="[(6, 0, [])]" />
-  </record>
+    <data>
+        <record id="api_app" model="fastapi.endpoint">
+            <field
+        name="user_id"
+        ref="energy_communities.res_users_admin_plataforma_demo"
+      />
+        </record>
+
+        <record id="apikey_administrador_plataforma" model="auth.api.key">
+            <field name="name">API key admin platform</field>
+            <field name="key">12345</field>
+            <field
+        name="user_id"
+        ref="energy_communities.res_users_admin_plataforma_demo"
+      />
+        </record>
+    </data>
 </odoo>
