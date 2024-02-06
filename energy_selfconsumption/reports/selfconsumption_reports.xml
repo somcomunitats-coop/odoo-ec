@@ -348,21 +348,15 @@
                                 <t t-if="o.owner_id and o.owner_id.name">
                                     <t t-esc="o.owner_id.name" />
                                 </t>
-                                <t t-else="">
-                                </t>
                             </td>
                             <td>
                                 <t t-if="o.owner_id and o.owner_id.vat">
                                     <t t-esc="o.owner_id.vat" />
                                 </t>
-                                <t t-else="">
-                                </t>
                             </td>
                             <td>
                                 <t t-if="o.cil">
                                     <t t-esc="o.cil" />
-                                </t>
-                                <t t-else="">
                                 </t>
                             </td>
                             <td style="text-align: right;">1</td>
