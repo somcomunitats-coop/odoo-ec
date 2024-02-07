@@ -8,11 +8,11 @@ from ..pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
 )
 
-_HIERARCHY_LEVEL_VALUES = [
-    ("instance", _("Platform")),
+_HIERARCHY_LEVEL_BASE_VALUES = [
     ("coordinator", _("Coordinator")),
     ("community", _("Community")),
 ]
+_HIERARCHY_LEVEL_VALUES = _HIERARCHY_LEVEL_BASE_VALUES + [("instance", _("Platform"))]
 
 _LEGAL_FORM_VALUES = [
     ("undefined", _("Under definition")),
