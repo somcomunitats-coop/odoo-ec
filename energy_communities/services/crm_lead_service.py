@@ -26,11 +26,13 @@ class CRMLeadService(Component):
         target_source_xml_id = self._get_metadata_value(params, "source_xml_id")
 
         if target_source_xml_id:
-            # setup utm source on crm lead
             crm_lead_id = crm_lead.get("id", False)
+            # setup lead name and description
             self._set_name(crm_lead_id, params)
             self._set_description(crm_lead_id, params)
-            self._setup_lead_utm_source(crm_lead_id, target_source_xml_id)
+            # setup utm source on crm lead
+            utm_source = self._setup_lead_utm_source(crm_lead_id, target_source_xml_id)
+            # map lead fields based on configuration
 
             # select autoresponder notification id based on utm source
             template_external_id = self._get_autoresponder_email_template(
@@ -38,12 +40,10 @@ class CRMLeadService(Component):
             )
             # add followers
             self.env["crm.lead"].browse(crm_lead_id).add_follower()
-
             # send auto responder email and notify admins
             email_values = {"email_to": params["email_from"]}
             if lang:
                 email_values["lang"] = lang
-
             if template_external_id:
                 template = self.env.ref(
                     "energy_communities.{}".format(template_external_id)
@@ -56,6 +56,8 @@ class CRMLeadService(Component):
         if lead:
             utm_source = self.env.ref("energy_communities." + source_xml_id)
             lead.write({"source_id": utm_source.id})
+            return utm_source
+        return False
 
     def _get_metadata_value(self, params, key):
         metadata = params["metadata"]

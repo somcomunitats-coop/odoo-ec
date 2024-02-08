@@ -5,6 +5,7 @@ class UtmSource(models.Model):
     _inherit = "utm.source"
 
     source_ext_id = fields.Char("ID Ext Source", compute="compute_ext_id_source")
+    crm_lead_metadata_mapping_id = fields.Many2one("crm.lead.metadata.mapping")
 
     def compute_ext_id_source(self):
         for record in self:
