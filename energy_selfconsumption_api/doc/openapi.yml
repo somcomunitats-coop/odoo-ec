@@ -32,14 +32,16 @@ paths:
           $ref: "#/components/responses/UnauthorizedResponse"
       security:
         - odooCEAuth: []
-  /energy_selfconsumption/projects/{cau}:
+  /energy_selfconsumption/projects/{project_code}:
     get:
       tags:
         - selfconsumption_projects
       summary: Find selfconsumption project by cau
       description: Returns the project that match with cau
       parameters:
-        - $ref: "#/components/parameters/CauParam"
+        - $ref: "#/components/parameters/ProjectcodeParam"
+        - $ref: "#/components/parameters/PageParam"
+        - $ref: "#/components/parameters/LimitParam"
       responses:
         200:
           $ref: "#/components/responses/SelfConsumptionSingleProjectInfoResponse"
@@ -49,7 +51,7 @@ paths:
           $ref: "#/components/responses/UnauthorizedResponse"
       security:
         - odooCEAuth: []
-  /energy_selfconsumption/projects/{cau}/members:
+  /energy_selfconsumption/projects/{project_code}/members:
     get:
       tags:
         - selfconsumption_projects
@@ -60,7 +62,9 @@ paths:
         Get a list of members of an  energy community that aire involve in a
         selfconsumption project - installation defined by cau
       parameters:
-        - $ref: "#/components/parameters/CauParam"
+        - $ref: "#/components/parameters/ProjectcodeParam"
+        - $ref: "#/components/parameters/PageParam"
+        - $ref: "#/components/parameters/LimitParam"
       responses:
         200:
           $ref: "#/components/responses/SelfConsumptionSingleProjectMembersResponse"
@@ -75,15 +79,36 @@ components:
     odooCEAuth:
       type: http
       scheme: bearer
-      bearerFormat: Bearer
+      bearerFormat: api-key
   parameters:
-    CauParam:
-      name: cau
+    ProjectcodeParam:
+      name: project_code
       in: path
-      description: cau of an specific installation
+      description: project code of an specific installation
       required: true
       schema:
         type: string
+      example: ES1234123456789012JY1FA000
+    PageParam:
+      name: page
+      in: query
+      description: >
+        Actual page when results are paginted
+      required: false
+      style: form
+      schema:
+        type: integer
+        example: 2
+    LimitParam:
+      name: limit
+      in: query
+      description: >
+        Number of results per page when a search es paginated
+      required: false
+      style: form
+      schema:
+        type: integer
+        example: 50
   responses:
     BadRequestResponse:
       description: This response is generated if you have built incorrectly your request
@@ -138,7 +163,7 @@ components:
     SelfConsumptionProjectInfo:
       type: object
       properties:
-        cau:
+        project_code:
           type: string
           description: installation cau
           example: ""
@@ -146,11 +171,11 @@ components:
           type: string
           description: Name of the project
           example: Super chachi solar and wind installation
-        ce_id:
+        energy_community_id:
           type: string
           description: ID of energy community that belongs this installation
           example: ""
-        ce_name:
+        energy_community_name:
           type: string
           description: Name of the energy community that belongs this installation
           example: "GaresBide"
@@ -161,33 +186,30 @@ components:
     SelfConsumptionSingleProjectMembers:
       type: object
       properties:
-        cups:
+        supply_point:
           type: string
-          description: CUPS code for this member
-        cups_address:
+          description: supply_point code for this member
+        supply_point_address:
           type: string
-          description: Addess of CUPS
-        cups_postalcode:
+          description: Addess of supply_point
+        supply_point_postalcode:
           type: string
-          description: Postalcode of CUPS
-        cups_city:
+          description: Postalcode of supply_point
+        supply_point_city:
           type: string
-          description: city / town or village of this cups
-        cups_state:
+          description: city / town or village of this supply_point
+        supply_point_state:
           type: string
-          description: State of this cups
+          description: State of this supply_point
         beta:
           type: integer
-          description: Sharing coeficient for this cups
+          description: Sharing coeficient for this supply_point
         owner_name:
           type: string
-          description: Name of the owner of the cups
-        owner_surname1:
+          description: Name of the owner of the supply_point
+        owner_surnames:
           type: string
-          description: First surname of the owner
-        owner_surname2:
-          type: string
-          description: Second surname of the owner
+          description: Surname of the owner
         owner_vat:
           type: string
           description: ID of the owner
@@ -203,35 +225,18 @@ components:
     # ============================
     # Request and Response schemas
     # ============================
-    BaseResponse:
-      type: object
-      properties:
-        state:
-          type: string
-          enum: [ok, fail]
-          description:
-            State of the request. ok means that the request went successful, fail
-            otherwise.
     BaseListResponse:
-      allOf:
-        - $ref: "#/components/schemas/BaseResponse"
-        - type: object
-          properties:
-            total_results:
-              type: integer
-              description: Total results in general for this request
-            count:
-              type: integer
-              description: Number of results on this response
-    PaginationLimits:
       type: object
       properties:
-        limit:
+        total_results:
           type: integer
-          description: maximum number of elements per page
-        offset:
+          description: Total results in general for this request
+        count:
           type: integer
-          description: offset of this page
+          description: Number of results on this response
+        page:
+          type: integer
+          description: Number of the page in where whe are
     PaginationLinks:
       type: object
       properties:
@@ -244,13 +249,8 @@ components:
         previous_page:
           type: string
           description: Url of the previous results. If null you are in the first page
-    PaginationResponse:
-      allOf:
-        - $ref: "#/components/schemas/PaginationLimits"
-        - $ref: "#/components/schemas/PaginationLinks"
     ErrorResponse:
       allOf:
-        - $ref: "#/components/schemas/BaseResponse"
         - type: object
           properties:
             error:
@@ -265,10 +265,9 @@ components:
               items:
                 $ref: "#/components/schemas/SelfConsumptionProjectInfo"
             _links:
-              $ref: "#/components/schemas/PaginationResponse"
+              $ref: "#/components/schemas/PaginationLinks"
     SingleProjectInfoResponse:
       allOf:
-        - $ref: "#/components/schemas/BaseResponse"
         - type: object
           properties:
             data:
@@ -285,34 +284,30 @@ components:
               items:
                 $ref: "#/components/schemas/SelfConsumptionSingleProjectMembers"
             _links:
-              $ref: "#/components/schemas/PaginationResponse"
-
+              $ref: "#/components/schemas/PaginationLinks"
   examples:
     selfconsumption_projectsinfo-response-example:
       value:
-        state: ok
-        data:
-          - cau: ""
-            project_name: ""
-            ce_id: ""
-            ce_name: ""
-            power: 5.6
-          - cau: ""
-            project_name: ""
-            ce_id: ""
-            ce_name: ""
-            power: 4.6
         total_results: 10
         count: 2
+        page: 2
+        data:
+          - project_code: "ES1234123456789012JY1FA000"
+            project_name: "Taulada Escola Oficis"
+            energy_community_id: 1
+            energy_community_name: "Comunitat energètica Sol-ete"
+            power: 5.6
+          - project_code: "ES0288529987082650SF1FA000"
+            project_name: "Autoconsum comunitat veins carrer industria"
+            energy_community_id: 1
+            energy_community_name: "Comunitat energètica Sol-ete"
+            power: 7.6
         _links:
-          self: https://somcomunitats.coop/api/energy_selfconsumption/projects?limit=2&offset=2
-          previous: https://somcomunitats.coop/api/energy_selfconsumption/projects?limit=2&offset=0
-          next: https://somcomunitats.coop/api/energy_selfconsumption/projects?limit=2&offset=4
-          limit: 2
-          offset: 2
+          self: https://somcomunitats.coop/api/energy_selfconsumption/projects?page=2&size=2
+          previous_page: https://somcomunitats.coop/api/energy_selfconsumption/projects?page=2&size=0
+          next_page: https://somcomunitats.coop/api/energy_selfconsumption/projects?page=3&size=2
     selfconsumption_singleprojectinfo-response-example:
       value:
-        state: ok
         data:
           cau: "ES0021158966826855BSA008"
           project_name: "Taulada den Xurri"
@@ -321,55 +316,50 @@ components:
           power: 5.6
         _links:
           self: https://somcomunitats.coop/api/energy_selfconsumption/projects/ES0021158966826855BSA008
-          previous: null
-          next: null
+          previous_page: null
+          next_page: null
     selfconsumption_singleprojectmembers-response-example:
       value:
-        state: ok
+        total_results: 10
+        count: 2
+        page: 1
         data:
-          - cups: "ES0021158966826855BS"
-            cups_address: Travesía iglesia, 50
-            cups_postalcode: 08742
-            cups_city: Sant Quintí de Mediona
-            cups_state: Barcelona
-            beta: 0.5
+          - supply_point: "ES0021158966826855BS"
+            supply_point_address: Travesía iglesia, 50
+            supply_point_postalcode: 08742
+            supply_point_town: Sant Quintí de Mediona
+            supply_point_state: Barcelona
+            distribution_coefficient: 0.5
             owner_name: Maria Amparo
             owner_surname1: Caballé
             owner_surname2: Roig
             owner_vat: 39656908D
-          - cups: "ES0022957057732644JV"
-            cups_address: Cuesta Iglesia, 42
-            cups_postalcode: 08066
-            cups_city: Olvan
-            cups_state: Barcelona
-            beta: 0.5
+          - supply_point: "ES0022957057732644JV"
+            supply_point_address: Cuesta Iglesia, 42
+            supply_point_postalcode: 08066
+            supply_point_city: Olvan
+            supply_point_state: Barcelona
+            distribution_coefficient: 0.5
             owner_name: Víctor
             owner_surname1: Puig
             owner_surname2: de la Serra
             owner_vat: 06454209H
-        total_results: 20
-        count: 2
         _links:
-          self: https://somcomunitats.coop/api/energy_selfconsumption/projects?limit=2&offset=2
-          previous: https://somcomunitats.coop/api/energy_selfconsumption/projects?limit=2&offset=0
-          next: https://somcomunitats.coop/api/energy_selfconsumption/projects?limit=2&offset=4
-          limit: 2
-          offset: 2
+          self: https://somcomunitats.coop/api/energy_selfconsumption/projects/ES1234123456789012JY1FA000/members?page_size=2
+          previous_page: null
+          next_page: https://somcomunitats.coop/api/energy_selfconsumption/projects/ES1234123456789012JY1FA000/members?page=2&page_size=2
     badrequest-response-example:
       value:
-        state: fail
         error:
           code: bad_request
           message: "Sorry, I couldn't process this request  ¯\_(ツ)_/¯"
     badauthrequest-response-example:
       value:
-        state: fail
         error:
           code: bad_request
           message: Missing username or password.
     unauthorized-response-example:
       value:
-        state: fail
         error:
           code: unauthorized
           message: Auth required.
