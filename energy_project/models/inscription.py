@@ -89,3 +89,14 @@ class Inscription(models.Model):
         if supply_point_assignations:
             supply_point_assignations.unlink()
         return super().unlink()
+
+    @api.constrains("bank_id", "partner_id")
+    def _check_bank_id_belongs_to_partner(self):
+        for record in self:
+            if record.bank_id and record.partner_id:
+                if record.bank_id.partner_id != record.partner_id:
+                    raise ValidationError(
+                        _(
+                            "The selected bank account does not belong to the chosen partner."
+                        )
+                    )
