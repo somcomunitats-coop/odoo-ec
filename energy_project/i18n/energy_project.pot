@@ -6,14 +6,41 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-11 09:15+0000\n"
-"PO-Revision-Date: 2023-12-11 09:15+0000\n"
+"POT-Creation-Date: 2024-01-23 12:00+0000\n"
+"PO-Revision-Date: 2024-01-23 12:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">\n"
+"                                        Energy Provider\n"
+"                                    </span>\n"
+"                                    <br/>"
+msgstr ""
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">\n"
+"                                        Energy Service\n"
+"                                    </span>\n"
+"                                    <br/>"
+msgstr ""
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">\n"
+"                                        Energy Service Available\n"
+"                                    </span>\n"
+"                                    <br/>"
+msgstr ""
 
 #. module: energy_project
 #: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
@@ -36,6 +63,7 @@ msgstr ""
 #. module: energy_project
 #: code:addons/energy_project/models/project.py:0
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__active
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__active
 #: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__active
 #, python-format
 msgid "Active"
@@ -44,6 +72,11 @@ msgstr ""
 #. module: energy_project
 #: model:res.groups,name:energy_project.group_admin
 msgid "Administrator"
+msgstr ""
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__available_providers_ids
+msgid "Available Providers"
 msgstr ""
 
 #. module: energy_project
@@ -71,7 +104,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__create_uid
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__create_uid
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__create_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__create_uid
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__create_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__create_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__create_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__create_uid
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__create_uid
 msgid "Created by"
 msgstr ""
@@ -80,7 +117,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__create_date
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__create_date
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__create_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__create_date
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__create_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__create_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__create_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__create_date
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__create_date
 msgid "Created on"
 msgstr ""
@@ -94,7 +135,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__display_name
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__display_name
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__display_name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__display_name
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__display_name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__display_name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__display_name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__display_name
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__display_name
 msgid "Display Name"
 msgstr ""
@@ -128,8 +173,55 @@ msgid "Energy Projects"
 msgstr ""
 
 #. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.provider_form_view
+msgid "Energy Provider"
+msgstr ""
+
+#. module: energy_project
+#: model:ir.actions.act_window,name:energy_project.provider_act_window
+#: model_terms:ir.ui.view,arch_db:energy_project.provider_tree_view
+msgid "Energy Providers"
+msgstr ""
+
+#. module: energy_project
 #: model:ir.model,name:energy_project.model_energy_project_reseller
 msgid "Energy Reseller"
+msgstr ""
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.service_contract_form_view
+#: model_terms:ir.ui.view,arch_db:energy_project.service_form_view
+msgid "Energy Service"
+msgstr ""
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.service_available_form_view
+msgid "Energy Service Available"
+msgstr ""
+
+#. module: energy_project
+#: model:ir.model,name:energy_project.model_energy_project_provider
+msgid "Energy Service Provider"
+msgstr ""
+
+#. module: energy_project
+#: model:ir.actions.act_window,name:energy_project.service_act_window
+#: model:ir.model,name:energy_project.model_energy_project_service
+#: model_terms:ir.ui.view,arch_db:energy_project.service_contract_tree_view
+#: model_terms:ir.ui.view,arch_db:energy_project.service_tree_view
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid "Energy Services"
+msgstr ""
+
+#. module: energy_project
+#: model:ir.actions.act_window,name:energy_project.service_available_act_window
+#: model_terms:ir.ui.view,arch_db:energy_project.service_available_tree_view
+msgid "Energy Services Available"
+msgstr ""
+
+#. module: energy_project
+#: model:ir.model,name:energy_project.model_energy_project_service_contract
+msgid "Energy Services Contract"
 msgstr ""
 
 #. module: energy_project
@@ -161,7 +253,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__id
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__id
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__id
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__id
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__id
 msgid "ID"
 msgstr ""
@@ -194,7 +290,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription____last_update
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project____last_update
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type____last_update
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider____last_update
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller____last_update
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service____last_update
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available____last_update
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract____last_update
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier____last_update
 msgid "Last Modified on"
 msgstr ""
@@ -203,7 +303,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__write_uid
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__write_uid
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__write_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__write_uid
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__write_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__write_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__write_uid
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__write_uid
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__write_uid
 msgid "Last Updated by"
 msgstr ""
@@ -212,9 +316,28 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__write_date
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__write_date
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__write_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__write_date
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__write_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__write_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__write_date
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__write_date
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid "Manage Energy Service Providers"
+msgstr ""
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid "Manage Energy Services"
+msgstr ""
+
+#. module: energy_project
+#: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
+msgid "Manage Energy Services Available"
 msgstr ""
 
 #. module: energy_project
@@ -241,7 +364,11 @@ msgstr ""
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__name
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__name
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__name
+#: model_terms:ir.ui.view,arch_db:energy_project.provider_form_view
 #: model_terms:ir.ui.view,arch_db:energy_project.reseller_form_view
+#: model_terms:ir.ui.view,arch_db:energy_project.service_form_view
 #: model_terms:ir.ui.view,arch_db:energy_project.supplier_form_view
 msgid "Name"
 msgstr ""
@@ -284,6 +411,17 @@ msgid "Portal de medidas"
 msgstr ""
 
 #. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__project_id
+msgid "Project"
+msgstr ""
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__provider_id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__provider_id
+msgid "Provider"
+msgstr ""
+
+#. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__province
 msgid "Provincia empresa"
 msgstr ""
@@ -303,6 +441,24 @@ msgstr ""
 #. module: energy_project
 #: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
 msgid "Resellers"
+msgstr ""
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_available__service_id
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__service_id
+msgid "Service"
+msgstr ""
+
+#. module: energy_project
+#: model:ir.model,name:energy_project.model_energy_project_service_available
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__service_available_ids
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_service__service_available_ids
+msgid "Service Available"
+msgstr ""
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__service_contract_ids
+msgid "Service Contract"
 msgstr ""
 
 #. module: energy_project
@@ -348,13 +504,50 @@ msgid ""
 msgstr ""
 
 #. module: energy_project
+#: code:addons/energy_project/models/service_contract.py:0
+#, python-format
+msgid ""
+"The {provider_name} provider doesn't provide this {service_name} service."
+msgstr ""
+
+#. module: energy_project
+#: model_terms:ir.actions.act_window,help:energy_project.provider_act_window
+msgid "There are no energy providers yet, click here to add a new one."
+msgstr ""
+
+#. module: energy_project
 #: model_terms:ir.actions.act_window,help:energy_project.reseller_act_window
 msgid "There are no energy reseller yet, click here to add a new one."
 msgstr ""
 
 #. module: energy_project
+#: model_terms:ir.actions.act_window,help:energy_project.service_available_act_window
+msgid ""
+"There are no energy services available yet, click here to add a new one."
+msgstr ""
+
+#. module: energy_project
+#: model_terms:ir.actions.act_window,help:energy_project.service_act_window
+msgid "There are no energy services yet, click here to add a new one."
+msgstr ""
+
+#. module: energy_project
 #: model_terms:ir.actions.act_window,help:energy_project.supplier_act_window
 msgid "There are no energy supplier yet, click here to add a new one."
+msgstr ""
+
+#. module: energy_project
+#: code:addons/energy_project/models/service_contract.py:0
+#: model:ir.model.constraint,message:energy_project.constraint_energy_project_service_contract_unique_service_id_provider_id_project_id
+#, python-format
+msgid "There's already a service with this provider assigned to this project."
+msgstr ""
+
+#. module: energy_project
+#: code:addons/energy_project/models/service_available.py:0
+#: model:ir.model.constraint,message:energy_project.constraint_energy_project_service_available_unique_service_id_provider_id
+#, python-format
+msgid "This service is already assigned to this provider."
 msgstr ""
 
 #. module: energy_project

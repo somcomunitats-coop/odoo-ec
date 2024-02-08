@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record
+      id="service_available_selfconsumption_monitoring_arkenova"
+      model="energy_project.service_available"
+    >
+            <field
+        name="service_id"
+        ref="energy_selfconsumption.service_selfconsumption_monitoring"
+      />
+            <field name="provider_id" ref="energy_selfconsumption.provider_arkenova" />
+        </record>
+    </data>
+</odoo>
