@@ -34,12 +34,21 @@ class Inscription(models.Model):
     is_member = fields.Char(
         string=_("Typology"), compute="_compute_is_member", readonly=True
     )
-    bank_id = fields.Many2one("res.partner.bank", required=True, string="Bank account")
-    bank_filtered_ids = fields.One2many(
-        "res.partner.bank",
-        related="partner_id.bank_ids",
-        readonly=True,
+    mandate_id = fields.Many2one(
+        "account.banking.mandate", required=True, string="Bank Mandate"
     )
+    mandate_filtered_ids = fields.One2many(
+        "account.banking.mandate", compute="_compute_mandate_filtered_ids"
+    )
+
+    @api.depends("partner_id")
+    def _compute_mandate_filtered_ids(self):
+        for record in self:
+            if record.partner_id:
+                mandates = self.env["account.banking.mandate"].search(
+                    [("partner_id", "=", record.partner_id.id)]
+                )
+                record.mandate_filtered_ids = mandates
 
     @api.depends("partner_id.member")
     def _compute_is_member(self):

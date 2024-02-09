@@ -13,8 +13,11 @@
           />
                     <field name="is_member" readonly="1" />
                     <field name="effective_date" width="50%" />
-                    <field name="bank_filtered_ids" invisible="True" />
-                    <field name="bank_id" domain="[('id', 'in', bank_filtered_ids)]" />
+                    <field name="mandate_filtered_ids" invisible="True" />
+                    <field
+            name="mandate_id"
+            domain="[('id', 'in', mandate_filtered_ids)]"
+          />
                 </tree>
             </field>
         </record>
