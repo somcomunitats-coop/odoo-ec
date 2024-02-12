@@ -110,18 +110,19 @@ class SelfconsumptionImportWizard(models.TransientModel):
             "effective_date": line[1] or False,
             "code": line[2] or False,
             "contracted_power": line[3] or False,
-            "street": line[4] or False,
-            "street2": line[5] or False,
-            "city": line[6] or False,
-            "state": line[7] or False,
-            "postal_code": line[8] or False,
-            "country": line[9] or False,
-            "cadastral_reference": line[10] or False,
-            "owner_vat": line[11] or False,
-            "owner_firstname": line[12] or False,
-            "owner_lastname": line[13] or False,
-            "iban": line[14] or False,
-            "mandate_auth_date": line[15] or False,
+            "tariff": line[4] or False,
+            "street": line[5] or False,
+            "street2": line[6] or False,
+            "city": line[7] or False,
+            "state": line[8] or False,
+            "postal_code": line[9] or False,
+            "country": line[10] or False,
+            "cadastral_reference": line[11] or False,
+            "owner_vat": line[12] or False,
+            "owner_firstname": line[13] or False,
+            "owner_lastname": line[14] or False,
+            "iban": line[15] or False,
+            "mandate_auth_date": line[16] or False,
         }
 
     def _parse_file(self, data_file):
@@ -185,17 +186,18 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "partner_id": partner.id,
                 }
             )
-        mandate = self.env["account.banking.mandate"].create(
-            {
-                "format": "sepa",
-                "type": "recurrent",
-                "state": "valid",
-                "signature_date": self.date,
-                "partner_bank_id": bank_account.id,
-                "partner_id": self.partner.id,
-                "company_id": self.env.user.company_id.id,
-            }
-        )
+            company_id = self.env.context.get("allowed_company_ids", [])[0]
+            mandate = self.env["account.banking.mandate"].create(
+                {
+                    "format": "sepa",
+                    "type": "recurrent",
+                    "state": "valid",
+                    "signature_date": line_dict["mandate_auth_date"],
+                    "partner_bank_id": bank_account.id,
+                    "partner_id": partner.id,
+                    "company_id": company_id,
+                }
+            )
 
         if not project.inscription_ids.filtered_domain(
             [("partner_id", "=", partner.id)]
