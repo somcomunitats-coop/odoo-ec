@@ -210,6 +210,7 @@ S_LANDING_PAGE_CREATE = {
             "allow_new_members": {"type": "boolean"},
             "number_of_members": {"type": "integer"},
             "external_website_link": {"type": "string"},
+            "show_web_link_on_header": {"type": "boolean"},
             "twitter_link": {"type": "string"},
             "instagram_link": {"type": "string"},
             "telegram_link": {"type": "string"},
