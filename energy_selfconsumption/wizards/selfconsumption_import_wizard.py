@@ -175,7 +175,11 @@ class SelfconsumptionImportWizard(models.TransientModel):
             raise ValidationError(error_message)
 
         bank_account = self.env["res.partner.bank"].search(
-            [("acc_number", "=", line_dict["iban"]), ("partner_id", "=", partner.id)],
+            [
+                ("acc_number", "=", line_dict["iban"]),
+                ("partner_id", "=", partner.id),
+                ("company_id", "=", self.env.company.id),
+            ],
             limit=1,
         )
 
@@ -184,19 +188,28 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 {
                     "acc_number": line_dict["iban"],
                     "partner_id": partner.id,
+                    "company_id": self.env.company.id,
                 }
             )
-        mandate = self.env["account.banking.mandate"].create(
-            {
-                "format": "sepa",
-                "type": "recurrent",
-                "state": "valid",
-                "signature_date": line_dict["mandate_auth_date"],
-                "partner_bank_id": bank_account.id,
-                "partner_id": partner.id,
-                "company_id": self.env.company.id,
-            }
-        )
+        try:
+            mandate_auth_date = datetime.strptime(
+                line_dict["mandate_auth_date"], self.date_format
+            ).date()
+            mandate = self.env["account.banking.mandate"].create(
+                {
+                    "format": "sepa",
+                    "type": "recurrent",
+                    "state": "valid",
+                    "signature_date": mandate_auth_date,
+                    "partner_bank_id": bank_account.id,
+                    "partner_id": partner.id,
+                    "company_id": self.env.company.id,
+                }
+            )
+        except Exception as e:
+            return False, _("Could not create mandate for {vat}. {error}").format(
+                vat=line_dict["partner_vat"], error=e
+            )
 
         if not project.inscription_ids.filtered_domain(
             [("partner_id", "=", partner.id)]
