@@ -47,8 +47,10 @@ class LandingCmPlace:
                 self.landing.write({"map_place_id": place.id})
             if mode == "update":
                 place = self.landing.map_place_id
-                place.write(validated_place_data["data"])
-            self._place_extra_data_setup(place)
+                if place:
+                    place.write(validated_place_data["data"])
+            if place:
+                self._place_extra_data_setup(place)
 
     def _place_extra_data_setup(self, place):
         place._get_slug_id()
@@ -244,8 +246,8 @@ class LandingCmPlace:
                 self._become_cooperator_external_link(place.id).id
             )
         else:
-            new_external_links_ids.append(self._contact_external_link(place.id).id)
-        new_external_links_ids.append(self._landing_external_link(place.id).id)
+            new_external_links_ids.append(self._contact_external_link(place).id)
+        new_external_links_ids.append(self._landing_external_link(place).id)
         # remove old external_links if needed
         for existing_external_link in existing_external_links:
             if existing_external_link.id not in new_external_links_ids:
@@ -325,9 +327,9 @@ class LandingCmPlace:
         )
         return external_link
 
-    def _contact_external_link(self, place_id):
+    def _contact_external_link(self, place):
         external_link = self._get_or_create_external_link(
-            place_id,
+            place.id,
             MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["ca_ES"],
             "{landing_link}/#contacte".format(
                 landing_link=self.wp_landing_data["link"]
@@ -359,15 +361,17 @@ class LandingCmPlace:
                 )
         return external_link
 
-    def _landing_external_link(self, place_id):
+    def _landing_external_link(self, place):
         external_link = self._get_or_create_external_link(
-            place_id,
+            place.id,
             MapClientConfig.MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL["ca_ES"],
             self.wp_landing_data["link"],
             "_top",
             self.button_configs["green"].id,
             1,
         )
+        # setup social sahreable url for better sharing
+        place.write({"social_shareable_url": self.wp_landing_data["link"]})
         # es_ES Translation
         self._update_translation(
             "cm.place.external.link,name",
@@ -381,6 +385,13 @@ class LandingCmPlace:
                 self._update_translation(
                     "cm.place.external.link,url",
                     external_link.id,
+                    self.wp_landing_data["link"],
+                    self.wp_landing_data["translations"]["es"],
+                    "es_ES",
+                )
+                self._update_translation(
+                    "cm.place,social_shareable_url",
+                    place.id,
                     self.wp_landing_data["link"],
                     self.wp_landing_data["translations"]["es"],
                     "es_ES",
