@@ -20,9 +20,6 @@ class CRMLeadService(Component):
         create_dict = super().create(params)
         crm_lead = json.loads(create_dict.response[0].decode("utf-8"))
 
-        # get user lang from payload
-        lang = self._get_metadata_value(params, "current_lang")
-
         # get utm source from payload
         target_source_xml_id = self._get_metadata_value(params, "source_xml_id")
 
@@ -35,21 +32,11 @@ class CRMLeadService(Component):
             utm_source = self._setup_lead_utm_source(crm_lead_id, target_source_xml_id)
             # map lead fields based on configuration
             self._map_metadata_crm_fields(crm_lead_id, utm_source, params)
-            # select autoresponder notification id based on utm source
-            template_external_id = self._get_autoresponder_email_template(
-                target_source_xml_id
+            # email autoresponder
+            self._lead_creation_email_autoresponder(
+                crm_lead_id, target_source_xml_id, params
             )
-            # add followers
-            self.env["crm.lead"].browse(crm_lead_id).add_follower()
-            # send auto responder email and notify admins
-            email_values = {"email_to": params["email_from"]}
-            if lang:
-                email_values["lang"] = lang
-            if template_external_id:
-                template = self.env.ref(
-                    "energy_communities.{}".format(template_external_id)
-                ).with_context(email_values)
-                template.send_mail(force_send=True, res_id=crm_lead_id)
+
         return crm_lead
 
     def _setup_lead_utm_source(self, lead_id, source_xml_id):
@@ -101,6 +88,29 @@ class CRMLeadService(Component):
             if crm_update_dict:
                 self.env["crm.lead"].browse(crm_lead_id).write(crm_update_dict)
                 return True
+        return False
+
+    def _lead_creation_email_autoresponder(
+        self, crm_lead_id, target_source_xml_id, params
+    ):
+        # get user lang from payload
+        lang = self._get_metadata_value(params, "current_lang")
+        # select autoresponder notification id based on utm source
+        template_external_id = self._get_autoresponder_email_template(
+            target_source_xml_id
+        )
+        # add followers
+        self.env["crm.lead"].browse(crm_lead_id).add_follower()
+        # send auto responder email and notify admins
+        email_values = {"email_to": params["email_from"]}
+        if lang:
+            email_values["lang"] = lang
+        if template_external_id:
+            template = self.env.ref(
+                "energy_communities.{}".format(template_external_id)
+            ).with_context(email_values)
+            template.send_mail(force_send=True, res_id=crm_lead_id)
+            return True
         return False
 
     def _get_metadata_value(self, params, key):
