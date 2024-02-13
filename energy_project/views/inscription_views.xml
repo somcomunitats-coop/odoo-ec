@@ -16,7 +16,7 @@
                     <field name="mandate_filtered_ids" invisible="True" />
                     <field
             name="mandate_id"
-            domain="[('id', 'in', mandate_filtered_ids), ('state', '=', 'valid')]"
+            domain="[('id', 'in', mandate_filtered_ids)]"
           />
                 </tree>
             </field>

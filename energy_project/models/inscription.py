@@ -44,11 +44,14 @@ class Inscription(models.Model):
     @api.depends("partner_id")
     def _compute_mandate_filtered_ids(self):
         for record in self:
-            if record.partner_id:
-                mandates = self.env["account.banking.mandate"].search(
-                    [("partner_id", "=", record.partner_id.id)]
-                )
-                record.mandate_filtered_ids = mandates
+            mandates = self.env["account.banking.mandate"].search(
+                [
+                    ("partner_id", "=", record.partner_id.id),
+                    ("company_id", "=", record.company_id.id),
+                    ("state", "=", "valid"),
+                ]
+            )
+            record.mandate_filtered_ids = mandates or False
 
     @api.depends("partner_id.member")
     def _compute_is_member(self):
@@ -99,13 +102,11 @@ class Inscription(models.Model):
             supply_point_assignations.unlink()
         return super().unlink()
 
-    @api.constrains("bank_id", "partner_id")
-    def _check_bank_id_belongs_to_partner(self):
+    @api.constrains("mandate_id", "partner_id")
+    def _check_mandate_id_belongs_to_partner(self):
         for record in self:
-            if record.bank_id and record.partner_id:
-                if record.bank_id.partner_id != record.partner_id:
+            if record.mandate_id and record.partner_id:
+                if record.mandate_id.partner_id != record.partner_id:
                     raise ValidationError(
-                        _(
-                            "The selected bank account does not belong to the chosen partner."
-                        )
+                        _("The selected mandate does not belong to the chosen partner.")
                     )
