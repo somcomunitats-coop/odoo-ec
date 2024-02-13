@@ -186,18 +186,17 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "partner_id": partner.id,
                 }
             )
-            company_id = self.env.context.get("allowed_company_ids", [])[0]
-            mandate = self.env["account.banking.mandate"].create(
-                {
-                    "format": "sepa",
-                    "type": "recurrent",
-                    "state": "valid",
-                    "signature_date": line_dict["mandate_auth_date"],
-                    "partner_bank_id": bank_account.id,
-                    "partner_id": partner.id,
-                    "company_id": company_id,
-                }
-            )
+        mandate = self.env["account.banking.mandate"].create(
+            {
+                "format": "sepa",
+                "type": "recurrent",
+                "state": "valid",
+                "signature_date": line_dict["mandate_auth_date"],
+                "partner_bank_id": bank_account.id,
+                "partner_id": partner.id,
+                "company_id": self.env.company.id,
+            }
+        )
 
         if not project.inscription_ids.filtered_domain(
             [("partner_id", "=", partner.id)]
