@@ -8,7 +8,11 @@ class CrmLeadMetadataMapping(models.Model):
     utm_source_ids = fields.One2many(
         "utm.source", "crm_lead_metadata_mapping_id", string="Related sources"
     )
-    mapping_configuration = fields.Text(string="Mapping configuration")
+    metadata_mapping_field_ids = fields.One2many(
+        "crm.lead.metadata.mapping.field",
+        "crm_lead_metadata_mapping_id",
+        string="Related mapping fields",
+    )
 
     @api.depends("utm_source_ids")
     def _compute_name(self):

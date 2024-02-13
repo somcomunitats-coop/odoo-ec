@@ -36,7 +36,41 @@
                   />
                 </group>
                 <group>
-                  <field name="mapping_configuration" required="1" />
+                  <field name="metadata_mapping_field_ids" widget="one2many">
+                    <tree>
+                      <field name="name" />
+                    </tree>
+                    <form>
+                      <group>
+                        <field name="destination_field_key" />
+                        <field name="type" />
+                      </group>
+                      <group attrs="{'invisible': [('type','!=','value_field')]}">
+                        <field name="metadata_key" />
+                      </group>
+                      <group
+                        attrs="{'invisible': [('type','!=','many2one_relation_field')]}"
+                      >
+                        <label for="mapping_model_id" string="Recipients" />
+                        <div name="mapping_model_id_container">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-3">
+                                    <field name="mapping_model_id" widget="selection" />
+                                </div>
+                            </div>
+                            <field name="mapping_model_name" invisible="1" />
+                            <field name="mapping_model_real" invisible="1" />
+                            <div>
+                                <field
+                              name="mapping_domain"
+                              widget="domain"
+                              options="{'model': 'mapping_model_real'}"
+                            />
+                            </div>
+                        </div>
+                      </group>
+                    </form>
+                  </field>
                 </group>
               </page>
             </notebook>
