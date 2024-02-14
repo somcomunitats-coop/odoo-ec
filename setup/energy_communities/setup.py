@@ -9,7 +9,7 @@ setuptools.setup(
             "community_maps": "odoo14-addon-community-maps==14.0.0.2.1",
             "cooperator_account_payment": "odoo14-addon-cooperator-account-payment==14.0.1.1.0",
             "cooperator_account_banking_mandate": "odoo14-addon-cooperator-account-banking-mandate==14.0.1.1.1",
-            "energy_selfconsumption": "odoo14-addon-energy-selfconsumption==14.0.3.5.1",
+            "energy_selfconsumption": "odoo14-addon-energy-selfconsumption==14.0.3.6.0",
             "crm_metadata": "odoo14-addon-crm-metadata==14.0.1.0.0",
             "crm_metadata_rest_api": "odoo14-addon-crm-metadata-rest-api==14.0.1.0.2",
             "crm_rest_api": "odoo14-addon-crm-rest-api==14.0.1.0.2",
