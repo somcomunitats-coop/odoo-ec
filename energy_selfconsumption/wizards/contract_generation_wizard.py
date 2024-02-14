@@ -90,7 +90,7 @@ class ContractGenerationWizard(models.TransientModel):
                     "company_id": self.env.company.id,
                     "contract_template_id": self.selfconsumption_id.product_id.contract_template_id.id,
                     "payment_mode_id": self.payment_mode.id,
-                    "mandate_id": inscription_id.mandate_id,
+                    "mandate_id": inscription_id.mandate_id.id,
                 }
             )
             # We use the next method from the contract model to update the contract fields with contract template
