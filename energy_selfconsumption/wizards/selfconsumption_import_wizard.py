@@ -109,17 +109,18 @@ class SelfconsumptionImportWizard(models.TransientModel):
             "effective_date": line[1] or False,
             "code": line[2] or False,
             "contracted_power": line[3] or False,
-            "tariff": line[4] or False,
-            "street": line[5] or False,
-            "street2": line[6] or False,
-            "city": line[7] or False,
-            "state": line[8] or False,
-            "postal_code": line[9] or False,
-            "country": line[10] or False,
-            "cadastral_reference": line[11] or False,
-            "owner_vat": line[12] or False,
-            "owner_firstname": line[13] or False,
-            "owner_lastname": line[14] or False,
+            "street": line[4] or False,
+            "street2": line[5] or False,
+            "city": line[6] or False,
+            "state": line[7] or False,
+            "postal_code": line[8] or False,
+            "country": line[9] or False,
+            "cadastral_reference": line[10] or False,
+            "owner_vat": line[11] or False,
+            "owner_firstname": line[12] or False,
+            "owner_lastname": line[13] or False,
+            "iban": line[14] or False,
+            "mandate_auth_date": line[15] or False,
         }
 
     def _parse_file(self, data_file):
@@ -162,6 +163,18 @@ class SelfconsumptionImportWizard(models.TransientModel):
             return False, _("Partner with VAT:<b>{vat}</b> was not found.").format(
                 vat=line_dict["partner_vat"]
             )
+        bank_account = self.env["res.partner.bank"].search(
+            [("acc_number", "=", line_dict["iban"]), ("partner_id", "=", partner.id)],
+            limit=1,
+        )
+
+        if not bank_account:
+            bank_account = self.env["res.partner.bank"].create(
+                {
+                    "acc_number": line_dict["iban"],
+                    "partner_id": partner.id,
+                }
+            )
 
         if not project.inscription_ids.filtered_domain(
             [("partner_id", "=", partner.id)]
@@ -179,6 +192,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                         "project_id": project.id,
                         "partner_id": partner.id,
                         "effective_date": effective_date,
+                        "bank_id": bank_account.id,
                     }
                 )
             except Exception as e:
