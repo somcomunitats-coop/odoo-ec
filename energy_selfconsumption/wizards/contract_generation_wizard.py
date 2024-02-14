@@ -16,6 +16,17 @@ class ContractGenerationWizard(models.TransientModel):
         required=True,
         default=fields.Date.today(),
     )
+    payment_mode = fields.Many2one(
+        "account.payment.mode",
+        string="Payment method",
+        default=lambda self: self._default_payment_mode(),
+    )
+
+    @api.model
+    def _default_payment_mode(self):
+        return self.env["account.payment.mode"].search(
+            [("company_id", "=", self.env.company.id), ("payment_type", "=", "inbound")]
+        )
 
     def generate_contracts_button(self):
         """
