@@ -62,6 +62,7 @@
         "data/ir_cron.xml",
         "report/report_templates.xml",
         "views/crm_lead_metadata_mapping_views.xml",
+        "views/account_move_views.xml",
         "views/crm_lead_views.xml",
         "views/landing_page_view.xml",
         "views/res_company_views.xml",
