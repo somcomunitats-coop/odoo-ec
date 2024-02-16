@@ -16,6 +16,9 @@
     ],
     "data": [
         "data/fastapi_endpoint_data.xml",
+        "data/provider_data.xml",
+        "data/service_data.xml",
+        "data/service_available_data.xml",
     ],
     "demo": ["demo/energy_selfconsumption_app_demo.xml"],
 }
