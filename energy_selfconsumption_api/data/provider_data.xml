@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="partner_arkenova_api" model="res.partner">
+            <field name="name">Arkenova API</field>
+        </record>
+        <record id="user_arkenova_api" model="res.users">
+            <field name="partner_id" ref="partner_arkenova_api" />
+            <field name="name">Arkenova API</field>
+            <field name="login">Arkenova</field>
+        </record>
+
+        <record id="provider_arkenova" model="energy_project.provider">
+            <field name="name">Arkenova</field>
+            <field name="user_id" ref="user_arkenova_api" />
+        </record>
+    </data>
+</odoo>
