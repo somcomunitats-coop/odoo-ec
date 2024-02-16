@@ -15,6 +15,8 @@
         "energy_selfconsumption",
     ],
     "data": [
+        "security/ir_rule_data.xml",
+        "security/res_users_role_data.xml",
         "data/fastapi_endpoint_data.xml",
         "data/provider_data.xml",
         "data/service_data.xml",
