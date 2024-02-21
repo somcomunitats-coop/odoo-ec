@@ -1,4 +1,5 @@
 from . import cm_coordinates_mixin
+from . import cm_map
 from . import external_id_mixin
 from . import auth_oauth_provider
 from . import account_chart_template
