@@ -1,14 +1,13 @@
 <?xml version="1.0" ?>
 <odoo>
     <record model="ir.rule" id="landing_page_company_rule">
-        <field name="name">API Authorization</field>
+        <field name="name">Energy Project provider</field>
         <field name="model_id" ref="energy_project.model_energy_project_project" />
         <field name="groups" eval="[(4, ref('group_api_energy_selfconsumption'))]" />
-        <field
-      name="domain_force"
-      model="energy_project.project"
-      eval="obj()._get_ir_rule_service_selfconsumption_monitoring()"
-    >
+        <field name="domain_force">[
+            ('service_contract_ids.active', '=', True),
+            ('service_contract_ids.provider_id.user_id', '=', user.id)
+        ]
         </field>
     </record>
 </odoo>

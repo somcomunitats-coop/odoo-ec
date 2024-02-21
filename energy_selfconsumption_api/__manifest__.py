@@ -15,12 +15,12 @@
         "energy_selfconsumption",
     ],
     "data": [
-        "security/ir_rule_data.xml",
-        "security/res_users_role_data.xml",
+        "data/service_data.xml",
         "data/fastapi_endpoint_data.xml",
         "data/provider_data.xml",
-        "data/service_data.xml",
         "data/service_available_data.xml",
+        "security/res_users_role_data.xml",
+        "security/ir_rule_data.xml",
     ],
     "demo": ["demo/energy_selfconsumption_app_demo.xml"],
 }
