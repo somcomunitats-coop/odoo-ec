@@ -1,3 +1,7 @@
+_MAP_COMPANY_MEMBER_STATUS__CUSTOM_FILTER_SLUGIDS = {
+    "to-activate": "per-activar",
+    "open": "oberta",
+}
 _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD = {
     "ce_name": "name",
     "ce_fiscal_name": "legal_name",
