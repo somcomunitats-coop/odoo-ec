@@ -2,7 +2,7 @@ from ast import literal_eval
 
 from odoo import api, fields, models
 
-MAPPING_BUSINESS_MODELS = ["res.lang"]
+MAPPING_BUSINESS_MODELS = ["res.lang", "res.country.state"]
 
 
 class CrmLeadMetadataMappingField(models.Model):
