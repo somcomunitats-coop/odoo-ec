@@ -67,7 +67,7 @@
                 context="{'default_distribution_table_id':id}"
                 attrs="{'readonly': ['|', ('type', '=', 'variable_schedule'), '&amp;', ('type', '=', 'fixed'), ('state', 'not in', ['draft'])]}"
               >
-              >
+
                                 <tree editable="bottom">
                                     <field
                     name="supply_point_filtered_ids"
