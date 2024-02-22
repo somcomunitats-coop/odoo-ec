@@ -65,7 +65,8 @@
                 widget="one2many"
                 mode="list"
                 context="{'default_distribution_table_id':id}"
-                attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                attrs="{'readonly': ['|', ('type', '=', 'variable_schedule'), '&amp;', ('type', '=', 'fixed'), ('state', 'not in', ['draft'])]}"
+              >
               >
                                 <tree editable="bottom">
                                     <field
