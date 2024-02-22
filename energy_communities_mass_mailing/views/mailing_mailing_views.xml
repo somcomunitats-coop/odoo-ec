@@ -1,0 +1,19 @@
+<odoo>
+  <data>
+    <record id="view_mail_mass_mailing_form_inherit" model="ir.ui.view">
+        <field name="name">mailing.mailing.form.inherit</field>
+        <field name="model">mailing.mailing</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="allowed_companies" invisible="1" />
+                <field
+            name="company_id"
+            groups="base.group_multi_company"
+            domain="[('id','in',allowed_companies)]"
+          />
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

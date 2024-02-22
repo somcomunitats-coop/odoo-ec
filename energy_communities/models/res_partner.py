@@ -67,7 +67,8 @@ class ResPartner(models.Model):
             self.env.ref("base.user_admin"),
         ):
             if vals.get("company_ids", False):
-                vals["company_ids"][0][-1].append(current_company.id)
+                # vals["company_ids"][0][-1].append(current_company.id)
+                vals["company_ids"] = [(4, current_company.id)]
 
         new_partner = super().create(vals)
         return new_partner
