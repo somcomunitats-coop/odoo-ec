@@ -1,0 +1,90 @@
+<odoo>
+  <data>
+
+    <record id="view_crm_lead_metadata_mapping_window" model="ir.actions.act_window">
+      <field name="name">CrmLead Metadata mapping</field>
+      <field name="res_model">crm.lead.metadata.mapping</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_crm_lead_metadata_mapping_tree" model="ir.ui.view">
+      <field name="name">crm.lead.metadata.mapping.tree</field>
+      <field name="model">crm.lead.metadata.mapping</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_crm_lead_metadata_mapping_form" model="ir.ui.view">
+      <field name="name">crm.lead.metadata.mapping.form</field>
+      <field name="model">crm.lead.metadata.mapping</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <notebook>
+              <page string="General">
+                <group>
+                  <field
+                    name="utm_source_ids"
+                    required="1"
+                    widget="many2many_tags"
+                    options="{'no_create_edit': True}"
+                  />
+                </group>
+                <group>
+                  <field name="metadata_mapping_field_ids" widget="one2many">
+                    <tree>
+                      <field name="name" />
+                    </tree>
+                    <form>
+                      <group>
+                        <field name="destination_field_key" />
+                        <field name="type" />
+                      </group>
+                      <group attrs="{'invisible': [('type','!=','value_field')]}">
+                        <field name="metadata_key" />
+                      </group>
+                      <group
+                        attrs="{'invisible': [('type','!=','many2one_relation_field')]}"
+                      >
+                        <label for="mapping_model_id" string="Recipients" />
+                        <div name="mapping_model_id_container">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-3">
+                                    <field name="mapping_model_id" widget="selection" />
+                                </div>
+                            </div>
+                            <field name="mapping_model_name" invisible="1" />
+                            <field name="mapping_model_real" invisible="1" />
+                            <div>
+                                <field
+                              name="mapping_domain"
+                              widget="domain"
+                              options="{'model': 'mapping_model_real'}"
+                            />
+                            </div>
+                        </div>
+                      </group>
+                    </form>
+                  </field>
+                </group>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <menuitem
+      name="CrmLead Metadata mapping"
+      id="view_crm_lead_metadata_mapping_menu"
+      parent="crm.crm_menu_config"
+      action="view_crm_lead_metadata_mapping_window"
+    />
+
+  </data>
+</odoo>

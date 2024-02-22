@@ -1,3 +1,4 @@
+import ast
 import json
 import logging
 
@@ -19,36 +20,23 @@ class CRMLeadService(Component):
         create_dict = super().create(params)
         crm_lead = json.loads(create_dict.response[0].decode("utf-8"))
 
-        # get user lang from payload
-        lang = self._get_metadata_value(params, "lang")
-
         # get utm source from payload
         target_source_xml_id = self._get_metadata_value(params, "source_xml_id")
 
         if target_source_xml_id:
-            # setup utm source on crm lead
             crm_lead_id = crm_lead.get("id", False)
+            # setup lead name and description
             self._set_name(crm_lead_id, params)
             self._set_description(crm_lead_id, params)
-            self._setup_lead_utm_source(crm_lead_id, target_source_xml_id)
-
-            # select autoresponder notification id based on utm source
-            template_external_id = self._get_autoresponder_email_template(
-                target_source_xml_id
+            # setup utm source on crm lead
+            utm_source = self._setup_lead_utm_source(crm_lead_id, target_source_xml_id)
+            # map lead fields based on configuration
+            self._map_metadata_crm_fields(crm_lead_id, utm_source, params)
+            # email autoresponder
+            self._lead_creation_email_autoresponder(
+                crm_lead_id, target_source_xml_id, params
             )
-            # add followers
-            self.env["crm.lead"].browse(crm_lead_id).add_follower()
 
-            # send auto responder email and notify admins
-            email_values = {"email_to": params["email_from"]}
-            if lang:
-                email_values["lang"] = lang
-
-            if template_external_id:
-                template = self.env.ref(
-                    "energy_communities.{}".format(template_external_id)
-                ).with_context(email_values)
-                template.send_mail(force_send=True, res_id=crm_lead_id)
         return crm_lead
 
     def _setup_lead_utm_source(self, lead_id, source_xml_id):
@@ -56,6 +44,74 @@ class CRMLeadService(Component):
         if lead:
             utm_source = self.env.ref("energy_communities." + source_xml_id)
             lead.write({"source_id": utm_source.id})
+            return utm_source
+        return False
+
+    def _map_metadata_crm_fields(self, crm_lead_id, utm_source, params):
+        rel_mapping = utm_source.crm_lead_metadata_mapping_id
+        if rel_mapping:
+            crm_update_dict = {}
+            for mapping_field in rel_mapping.metadata_mapping_field_ids:
+                if mapping_field.type == "value_field":
+                    crm_update_dict[
+                        mapping_field.destination_field_key
+                    ] = self._get_metadata_value(params, mapping_field.metadata_key)
+                if mapping_field.type == "many2one_relation_field":
+                    mapping_domain_initial = mapping_field.parse_mapping_domain()
+                    mapping_domain = []
+                    for domain_item in mapping_domain_initial:
+                        if type(domain_item) is list:
+                            # if the condition is a dict then construct a new domain based on the metadata value
+                            try:
+                                domain_item_value = ast.literal_eval(domain_item[2])
+                                mapping_domain.append(
+                                    [
+                                        domain_item[0],
+                                        domain_item[1],
+                                        self._get_metadata_value(
+                                            params, domain_item_value["metadata"]
+                                        ),
+                                    ]
+                                )
+                            # normal domain
+                            except:
+                                mapping_domain.append(domain_item)
+                        else:
+                            mapping_domain.append(domain_item)
+                    res_ids = self.env[mapping_field.mapping_model_real].search(
+                        mapping_domain
+                    )
+                    if res_ids:
+                        crm_update_dict[mapping_field.destination_field_key] = res_ids[
+                            0
+                        ].id
+            if crm_update_dict:
+                self.env["crm.lead"].browse(crm_lead_id).write(crm_update_dict)
+                return True
+        return False
+
+    def _lead_creation_email_autoresponder(
+        self, crm_lead_id, target_source_xml_id, params
+    ):
+        # get user lang from payload
+        lang = self._get_metadata_value(params, "current_lang")
+        # select autoresponder notification id based on utm source
+        template_external_id = self._get_autoresponder_email_template(
+            target_source_xml_id
+        )
+        # add followers
+        self.env["crm.lead"].browse(crm_lead_id).add_follower()
+        # send auto responder email and notify admins
+        email_values = {"email_to": params["email_from"]}
+        if lang:
+            email_values["lang"] = lang
+        if template_external_id:
+            template = self.env.ref(
+                "energy_communities.{}".format(template_external_id)
+            ).with_context(email_values)
+            template.send_mail(force_send=True, res_id=crm_lead_id)
+            return True
+        return False
 
     def _get_metadata_value(self, params, key):
         metadata = params["metadata"]
