@@ -102,4 +102,5 @@ class DistributionTable(models.Model):
             "views": [(False, "form")],
             "view_id": False,
             "target": "new",
+            "context": {"type": self.type},
         }

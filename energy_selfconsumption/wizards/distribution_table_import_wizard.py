@@ -55,9 +55,15 @@ class DistributionTableImportWizard(models.TransientModel):
         return True
 
     def download_template_button(self):
-        distribution_table_example_attachment = self.env.ref(
-            "energy_selfconsumption.distribution_table_example_attachment"
-        )
+        type = self.env.context.get("type")
+        if type == "fixed":
+            template = (
+                "energy_selfconsumption.distribution_table_fixed_example_attachment"
+            )
+        elif type == "variable_schedule":
+            template = "energy_selfconsumption.distribution_table_variable_schedule_example_attachment"
+
+        distribution_table_example_attachment = self.env.ref(template)
         download_url = "/web/content/{}/?download=true".format(
             str(distribution_table_example_attachment.id)
         )
