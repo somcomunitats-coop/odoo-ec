@@ -311,6 +311,9 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             )
             if crm_pack_2_tag and self.ce_member_status == "open":
                 allow_new_members = True
+        vat = False
+        if self.vat:
+            vat = self.vat.replace(" ", "").upper()
         self.new_company_id = (
             self.env["res.company"]
             .sudo()
@@ -325,7 +328,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "website": self.website,
                     "email": self.email.strip(),
                     "foundation_date": self.foundation_date,
-                    "vat": self.vat.replace(" ", "").upper(),
+                    "vat": vat,
                     "city": self.city,
                     "state_id": self.state_id,
                     "zip": self.zip_code,
