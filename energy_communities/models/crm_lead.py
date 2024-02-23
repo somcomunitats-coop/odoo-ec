@@ -170,7 +170,7 @@ class CrmLead(models.Model):
         if "vat" in creation_dict.keys():
             creation_partners = self.env["res.partner"].search(
                 [
-                    ("company_id", "=", self.env.user.get_current_company_id()),
+                    ("company_ids", "in", self.env.user.get_current_company_id()),
                     ("vat", "=", creation_dict["vat"]),
                 ]
             )

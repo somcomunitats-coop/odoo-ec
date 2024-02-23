@@ -53,7 +53,7 @@ class LandingCmPlace:
                 self._place_extra_data_setup(place)
 
     def _place_extra_data_setup(self, place):
-        place._get_slug_id()
+        place.setup_slug_id()
         place.build_presenter_metadata_ids()
         # setup description
         self._setup_place_description(place)
