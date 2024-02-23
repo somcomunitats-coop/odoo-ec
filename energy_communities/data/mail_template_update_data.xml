@@ -343,7 +343,11 @@
         name="subject"
       >Contribute to ${object.company_id.name} Ref. ACSV${object.id}</field>
             <field name="email_to">${object.email}</field>
-            <field name="email_cc" />
+            <field
+        name="email_cc"
+      >${((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and
+      object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or
+      object.company_id.parent_id.email)) or '')|safe}</field>
             <field
         name="reply_to"
       >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
