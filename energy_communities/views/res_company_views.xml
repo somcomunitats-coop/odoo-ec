@@ -56,6 +56,10 @@
               name="parent_id"
               domain="[('id', 'in', parent_id_filtered_ids)]"
             />
+                        <field
+              name="notify_to_coord_child_ccee_submissions"
+              attrs="{'invisible': [('hierarchy_level', '!=', 'coordinator')]}"
+            />
                         <field name="legal_form" />
                         <field name="comercial_name" />
                         <field name="ce_status" />
