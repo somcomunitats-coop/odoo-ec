@@ -18,15 +18,6 @@ class DistributionTable(models.Model):
     _name = "energy_selfconsumption.distribution_table"
     _description = "Distribution Table"
 
-    @api.depends("supply_point_assignation_ids.coefficient")
-    def _compute_coefficient_is_valid(self):
-        for record in self:
-            record.coefficient_is_valid = not fields.Float.compare(
-                sum(record.supply_point_assignation_ids.mapped("coefficient")),
-                1.00000,
-                precision_rounding=0.00001,
-            )
-
     name = fields.Char(readonly=True)
     selfconsumption_project_id = fields.Many2one(
         "energy_selfconsumption.selfconsumption", required=True
@@ -38,23 +29,104 @@ class DistributionTable(models.Model):
         TYPE_VALUES, default="fixed", required=True, string="Modality"
     )
     state = fields.Selection(STATE_VALUES, default="draft", required=True)
-    supply_point_assignation_ids = fields.One2many(
-        "energy_selfconsumption.supply_point_assignation", "distribution_table_id"
-    )
-    coefficient_is_valid = fields.Boolean(
-        compute=_compute_coefficient_is_valid, readonly=True, store=False
-    )
     active = fields.Boolean(default=True)
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
     )
+    supply_point_assignation_ids = fields.One2many(
+        "energy_selfconsumption.supply_point_assignation", "distribution_table_id"
+    )
 
-    @api.model
     def create(self, vals):
         vals["name"] = self.env.ref(
             "energy_selfconsumption.distribution_table_sequence", False
         ).next_by_id()
-        return super().create(vals)
+
+        new_record = super().create(vals)
+
+        if vals.get("type") == "fixed":
+            self.env["energy_selfconsumption.distribution_table_fixed"].create(
+                {"distribution_table_id": new_record.id}
+            )
+        # elif vals.get('type') == 'variable_schedule':
+        #     self.env['energy_selfconsumption.distribution_table_variable'].create({
+        #         'distribution_table_id': new_record.id
+        #     })
+
+        return new_record
+
+    def write(self, vals):
+        result = super().write(vals)
+        for record in self:
+            if record.type == "fixed":
+                # Busca y actualiza el registro en DistributionTableFixed, si existe
+                fixed_record = self.env[
+                    "energy_selfconsumption.distribution_table_fixed"
+                ].search([("distribution_table_id", "=", record.id)], limit=1)
+                if fixed_record:
+                    # Actualiza el registro fixed si es necesario
+                    pass
+                else:
+                    # Crea un nuevo registro si no existe
+                    self.env["energy_selfconsumption.distribution_table_fixed"].create(
+                        {"distribution_table_id": record.id}
+                    )
+            elif record.type == "variable_schedule":
+                # Implementa lógica similar para DistributionTableVariable
+                pass
+        return result
+
+    def button_draft(self):
+        for record in self:
+            record.write({"state": "draft"})
+
+    def action_distribution_table_import_wizard(self):
+        self.ensure_one()
+        return {
+            "name": _("Import Distribution Table"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "energy_selfconsumption.distribution_table_import.wizard",
+            "views": [(False, "form")],
+            "view_id": False,
+            "target": "new",
+            "context": {"type": self.type},
+        }
+
+    @api.onchange("selfconsumption_project_id")
+    def _onchange_selfconsumption_project_id(self):
+        self.supply_point_assignation_ids = False
+
+    def button_validate_proxy(self):
+        # This method acts as a proxy.
+        self.ensure_one()
+        if self.type == "fixed":
+            fixed_record = self.env[
+                "energy_selfconsumption.distribution_table_fixed"
+            ].search([("distribution_table_id", "=", self.id)], limit=1)
+            fixed_record.button_validate()
+
+
+class DistributionTableFixed(models.Model):
+    _name = "energy_selfconsumption.distribution_table_fixed"
+    _inherits = {"energy_selfconsumption.distribution_table": "distribution_table_id"}
+
+    @api.depends("supply_point_assignation_ids.coefficient")
+    def _compute_coefficient_is_valid(self):
+        for record in self:
+            record.coefficient_is_valid = not fields.Float.compare(
+                sum(record.supply_point_assignation_ids.mapped("coefficient")),
+                1.00000,
+                precision_rounding=0.00001,
+            )
+
+    distribution_table_id = fields.Many2one(
+        "energy_selfconsumption.distribution_table", required=True, ondelete="cascade"
+    )
+
+    coefficient_is_valid = fields.Boolean(
+        compute=_compute_coefficient_is_valid, readonly=True, store=False
+    )
 
     @api.constrains("supply_point_assignation_ids")
     def _supply_point_constrain(self):
@@ -65,10 +137,6 @@ class DistributionTable(models.Model):
                         "The supply point can't be removed because the distribution table state is {table_state}"
                     ).format(table_state=record.state)
                 )
-
-    @api.onchange("selfconsumption_project_id")
-    def _onchange_selfconsumption_project_id(self):
-        self.supply_point_assignation_ids = False
 
     def button_validate(self):
         for record in self:
@@ -87,20 +155,3 @@ class DistributionTable(models.Model):
                     _("Self-consumption project already has a table in process")
                 )
             record.write({"state": "validated"})
-
-    def button_draft(self):
-        for record in self:
-            record.write({"state": "draft"})
-
-    def action_distribution_table_import_wizard(self):
-        self.ensure_one()
-        return {
-            "name": _("Import Distribution Table"),
-            "type": "ir.actions.act_window",
-            "view_mode": "form",
-            "res_model": "energy_selfconsumption.distribution_table_import.wizard",
-            "views": [(False, "form")],
-            "view_id": False,
-            "target": "new",
-            "context": {"type": self.type},
-        }
