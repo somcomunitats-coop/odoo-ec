@@ -241,6 +241,18 @@ class CrmLead(models.Model):
             return True
         return False
 
+    def delete_metadata(self, meta_key):
+        existing_meta = self.metadata_line_ids.filtered(
+            lambda record: record.key == meta_key
+        )
+        if existing_meta:
+            existing_meta.unlink()
+            return True
+        return False
+
+    def get_metadata(self, meta_key):
+        return self.metadata_line_ids.filtered(lambda record: record.key == meta_key)
+
 
 class CrmTags(models.Model):
     _inherit = "crm.tag"
