@@ -73,7 +73,6 @@
         "views/subscription_request_view.xml",
         "views/res_users_view.xml",
         "views/res_users_role_view.xml",
-        "views/mailing_mailing_views_menus.xml",
         "views/menus.xml",
         "views/website_formfields_template.xml",
         "views/website_subscription_template.xml",
