@@ -12,7 +12,7 @@ class ReportController(http.Controller):
         return request.make_response(
             content,
             [
-                ("Content-Type", "application/text"),
+                ("Content-Type", "application/text; charset=utf-8"),
                 (
                     "Content-Disposition",
                     "attachment; filename=" + coefficient_report.file_name,

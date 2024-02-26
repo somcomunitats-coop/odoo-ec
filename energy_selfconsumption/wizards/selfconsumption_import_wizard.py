@@ -109,16 +109,17 @@ class SelfconsumptionImportWizard(models.TransientModel):
             "effective_date": line[1] or False,
             "code": line[2] or False,
             "contracted_power": line[3] or False,
-            "street": line[4] or False,
-            "street2": line[5] or False,
-            "city": line[6] or False,
-            "state": line[7] or False,
-            "postal_code": line[8] or False,
-            "country": line[9] or False,
-            "cadastral_reference": line[10] or False,
-            "owner_vat": line[11] or False,
-            "owner_firstname": line[12] or False,
-            "owner_lastname": line[13] or False,
+            "tariff": line[4] or False,
+            "street": line[5] or False,
+            "street2": line[6] or False,
+            "city": line[7] or False,
+            "state": line[8] or False,
+            "postal_code": line[9] or False,
+            "country": line[10] or False,
+            "cadastral_reference": line[11] or False,
+            "owner_vat": line[12] or False,
+            "owner_firstname": line[13] or False,
+            "owner_lastname": line[14] or False,
         }
 
     def _parse_file(self, data_file):
@@ -144,6 +145,10 @@ class SelfconsumptionImportWizard(models.TransientModel):
             raise UserError(_("Error parsing the file"))
 
     def import_line(self, line_dict, project):
+        if not line_dict["code"]:
+            return False, _(
+                "The CUPS field is required. Please make sure you provide a valid CUPS"
+            )
         partner = self.env["res.partner"].search(
             [
                 "|",
@@ -248,6 +253,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 "owner_id": owner.id,
                 "partner_id": partner.id,
                 "contracted_power": line_dict["contracted_power"],
+                "tariff": line_dict["tariff"],
                 "cadastral_reference": line_dict["cadastral_reference"],
             }
         )

@@ -19,6 +19,15 @@ class SupplyPoint(models.Model):
         )
     }
 
+    _ACCESS_TARIFF_VALUES = [
+        ("2.0TD", "2.0TD"),
+        ("3.0TD", "3.0TD"),
+        ("6.1TD", "6.1TD"),
+        ("6.2TD", "6.2TD"),
+        ("6.3TD", "6.3TD"),
+        ("6.4TD", "6.4TD"),
+    ]
+
     name = fields.Char(compute="_compute_supply_point_name", store=True)
     code = fields.Char(string="CUPS")
     owner_id = fields.Many2one(
@@ -64,8 +73,9 @@ class SupplyPoint(models.Model):
     supplier_id = fields.Many2one("energy_project.supplier", string="Supplier")
     cadastral_reference = fields.Char(string="Cadastral reference")
     contracted_power = fields.Float(
-        string="Contracted power", digits=(10, 2), help="Value in kilowatts (kW)"
+        string="Contracted power", digits=(10, 6), help="Value in kilowatts (kW)"
     )
+    tariff = fields.Selection(_ACCESS_TARIFF_VALUES, "Access tariff")
 
     @api.onchange("partner_id")
     def _onchange_partner_id(self):
@@ -122,3 +132,21 @@ class SupplyPoint(models.Model):
                 except Exception as e:
                     error_message = _("Invalid VAT: {error}").format(error=e)
                     raise ValidationError(error_message)
+
+    @api.constrains("tariff", "contracted_power")
+    def _check_contracted_power(self):
+        for record in self:
+            if record.tariff == "2.0TD" and not (0 <= record.contracted_power <= 15):
+                raise ValidationError(
+                    "For the 2.0TD rate, the contracted power must be between 0 and 15 kW."
+                )
+            elif record.tariff == "3.0TD" and record.contracted_power <= 15:
+                raise ValidationError(
+                    "For the 3.0TD rate, the contracted power must be greater than 15 kW."
+                )
+
+            if record.contracted_power > 100:
+                message = _(
+                    "The indicated contracted power is very high. Please check that this is correct. Remember that we use '.' to express decimals, not ','."
+                )
+                record.message_post(body=message, subtype_xmlid="mail.mt_comment")

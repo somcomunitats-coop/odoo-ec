@@ -12,6 +12,12 @@ class ProductTemplate(models.Model):
         help="If left empty, the default global mail template will be used.",
     )
 
+    @api.model
+    def default_get(self, fields):
+        defaults = super().default_get(fields)
+        defaults["company_id"] = self.env.company.id
+        return defaults
+
     def get_web_share_products(self, is_company):
         """We are fully overriding this function in order to make it multi-company sensitive"""
 

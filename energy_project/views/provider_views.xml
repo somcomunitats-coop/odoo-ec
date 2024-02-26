@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="provider_form_view" model="ir.ui.view">
+            <field name="name">energy_project.provider.form</field>
+            <field name="model">energy_project.provider</field>
+            <field name="arch" type="xml">
+                <form string="Energy Provider">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" />
+                            <h1>
+                                <field name="name" placeholder="Name" />
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="service_available_ids" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="provider_tree_view" model="ir.ui.view">
+            <field name="name">energy_project.provider.tree</field>
+            <field name="model">energy_project.provider</field>
+            <field name="arch" type="xml">
+                <tree string="Energy Providers">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="provider_act_window" model="ir.actions.act_window">
+            <field name="name">Energy Providers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">energy_project.provider</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There are no energy providers yet, click here to add a new one.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

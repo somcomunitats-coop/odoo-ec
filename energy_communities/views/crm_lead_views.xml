@@ -83,7 +83,6 @@
           <field name="finished" invisible="1" />
           <field name="company_hierarchy_level" invisible="1" />
           <field name="can_be_assigned_to_coordinator" invisible="1" />
-					<field name="is_instance_company" invisible="1" />
 					<button
             name="action_assign_crm_to_coordinator_company"
             type="object"
@@ -100,9 +99,15 @@
           />
 				</header>
       </xpath>
-      <xpath expr="//field[@name='company_id']" position="after">
+      <field name="company_id" position="after">
         <field name="external_id" readonly="1" />
-      </xpath>
+		<field
+          name="ce_child_lead_id"
+          string="Crm lead child"
+          readonly="1"
+          attrs="{'invisible':['|',('source_id', '!=', %(ce_source_creation_ce_proposal)d), ('company_hierarchy_level', '!=', 'instance')]}"
+        />
+      </field>
 		</field>
 	</record>
 

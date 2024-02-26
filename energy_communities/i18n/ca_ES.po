@@ -1862,11 +1862,6 @@ msgid "Is a new admin?"
 msgstr "És un administrador nou a la plataforma?"
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_crm_lead__is_instance_company
-msgid "Is instance company"
-msgstr "És una companyia instància"
-
-#. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0
 #, python-format
 msgid "Is the community open to accept new members or already closed?"
@@ -2313,6 +2308,26 @@ msgid "Operation request"
 msgstr "Sol·licitud d'operació"
 
 #. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_crm_to_coordinator_company.py:0
+#, python-format
+msgid ""
+"Opportunity assigned to Coordinator %s (ID: %s), "
+"where %s is the id of the original instance-level record."
+msgstr ""
+"Oportunitat assignada a la coordinadora %s (ID: %s), "
+"on %s és el id del registre original a nivell de Instància."
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/assign_crm_to_coordinator_company.py:0
+#, python-format
+msgid ""
+"Opportunity created from Instance opportunity with ID %s, where %s is the id"
+" of the new record generated at the Coordinator level"
+msgstr ""
+"Oportunitat creada desde la oportunitat de Instància amb ID %s, on %s és el id"
+" del nou  registre generat a nivell de Coordinadora."
+
+#. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0
 #, python-format
 msgid "Other"
@@ -2656,6 +2671,13 @@ msgstr "Tipus d'aportació"
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__short_description
 msgid "Short description"
 msgstr "Descripció breu"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__show_web_link_on_header
+#, python-format
+msgid "Show external website link also in header"
+msgstr "Mostrar enllaç lloc web extern també en capçalera"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__signup_expiration

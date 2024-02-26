@@ -103,10 +103,10 @@ class Selfconsumption(models.Model):
         string="Contract Template",
         related="product_id.contract_template_id",
     )
-    reseller_id = fields.Many2one(
-        "energy_project.reseller",
-        string="Energy Reseller",
-        help="Select the associated Energy Reseller",
+    supplier_id = fields.Many2one(
+        "energy_project.supplier",
+        string="Energy Supplier",
+        help="Select the associated Energy Supplier",
     )
     cadastral_reference = fields.Char(string="Cadastral reference")
 
@@ -170,7 +170,7 @@ class Selfconsumption(models.Model):
         """
         Activates the energy self-consumption project, performing various validations.
 
-        This method checks for the presence of a valid code, CIL, and rated power
+        This method checks for the presence of a valid code, and rated power
         for the project. If all validations pass, it instances a wizard and generating
         contracts for the project.
 
@@ -183,13 +183,11 @@ class Selfconsumption(models.Model):
             dict: A dictionary containing the action details for opening the wizard.
 
         Raises:
-            ValidationError: If the project does not have a valid Code, CIL, or Rated Power.
+            ValidationError: If the project does not have a valid Code, or Rated Power.
         """
         for record in self:
             if not record.code:
                 raise ValidationError(_("Project must have a valid Code."))
-            if not record.cil:
-                raise ValidationError(_("Project must have a valid CIL."))
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Rated Power."))
             if not record.invoicing_mode:
@@ -241,42 +239,57 @@ class Selfconsumption(models.Model):
         for record in self:
             record.write({"state": "draft"})
 
+    def validate_state(self, state):
+        if state not in ("activation", "active"):
+            error_message = _(
+                "The report can be downloaded when the project is in activation or active status."
+            )
+            raise ValidationError(error_message)
+
     def action_manager_authorization_report(self):
         self.ensure_one()
+        self.validate_state(self.state)
         return self.env.ref(
             "energy_selfconsumption.selfconsumption_manager_authorization_report"
         ).report_action(self)
 
     def action_power_sharing_agreement_report(self):
         self.ensure_one()
+        self.validate_state(self.state)
         return self.env.ref(
             "energy_selfconsumption.power_sharing_agreement_report"
         ).report_action(self)
 
     def action_manager_partition_coefficient_report(self):
+        self.validate_state(self.state)
         tables_to_use = self.report_distribution_table
         report_data = []
 
         for table in tables_to_use:
             for assignation in table.supply_point_assignation_ids:
+                coefficient_format = f"{assignation.coefficient:.6f}"  # we need to make sure it has 7 digits
                 report_data.append(
                     {
                         "code": assignation.supply_point_id.code,
-                        "coefficient": assignation.coefficient,
+                        "coefficient": coefficient_format,
                     }
                 )
 
         file_content = ""
-        for data in report_data:
-            line = f"{data['code']};{str(data['coefficient']).replace('.', ',')}\n"
+        for i, data in enumerate(report_data):
+            line = f"{data['code']};{data['coefficient'].replace('.', ',')}"
+            if i < len(report_data) - 1:
+                line += "\r\n"
             file_content += line
+
+        file_content = file_content.encode("utf-8")
 
         date = datetime.now()
         year = date.strftime("%Y")
-        self.env["energy_selfconsumption.coefficient_report"].create(
+        report = self.env["energy_selfconsumption.coefficient_report"].create(
             {"report_data": file_content, "file_name": f"{self.code}_{year}.txt"}
         )
-        url = "/energy_selfconsumption/download_report?id=%s" % self.id
+        url = "/energy_selfconsumption/download_report?id=%s" % report.id
         return {
             "type": "ir.actions.act_url",
             "url": url,
@@ -318,7 +331,6 @@ class Selfconsumption(models.Model):
 
         return True
 
-
     def send_power_acquired_invoicing_reminder(self):
         today = fields.date.today()
         projects = self.env["contract.contract"].read_group(
@@ -352,15 +364,61 @@ class Selfconsumption(models.Model):
     def _check_valid_code(self):
         """
         The following are evaluated:
-            1. The first 22 digits correspond to the CUPS.
+            1. The first 20 or 22 digits correspond to the CUPS.
             2. The character after CUPS is A
             3. And the last 3 characters are numbers.
+            4. Taking into account that the length of the CUPS can vary, the length of the CAU can be 24 or 26 characters.
         """
         for record in self:
             if record.code:
                 # Validate the total length of the CAU, check if the first digits are CUPS and get the last 4 characters
-                if len(record.code) == 26:
-                    self.validate_cups(record.code[:22])
+                if len(record.code) == 24:
+                    try:
+                        cups.validate(record.code[:20])
+                    except InvalidLength:
+                        error_message = _(
+                            "Invalid CAU: The first characters related to CUPS are incorrect. The length is incorrect."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidComponent:
+                        error_message = _(
+                            "Invalid CAU: The CUPS does not start with 'ES'."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidFormat:
+                        error_message = _(
+                            "Invalid CAU: The CUPS has an incorrect format."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidChecksum:
+                        error_message = _(
+                            "Invalid CAU: The checksum of the CUPS is incorrect."
+                        )
+                        raise ValidationError(error_message)
+                    last_digits = record.code[20:]
+                elif len(record.code) == 26:
+                    try:
+                        cups.validate(record.code[:22])
+                    except InvalidLength:
+                        error_message = _(
+                            "Invalid CAU: The first characters related to CUPS are incorrect. The length is incorrect."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidComponent:
+                        error_message = _(
+                            "Invalid CAU: The CUPS does not start with 'ES'."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidFormat:
+                        error_message = _(
+                            "Invalid CAU: The CUPS has an incorrect format."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidChecksum:
+                        error_message = _(
+                            "Invalid CAU: The checksum of the CUPS is incorrect."
+                        )
+                        raise ValidationError(error_message)
                     last_digits = record.code[22:]
                 else:
                     error_message = _("Invalid CAU: The length is not correct")
@@ -376,23 +434,71 @@ class Selfconsumption(models.Model):
                     error_message = _("Invalid CAU: Last 3 digits are not numbers")
                     raise ValidationError(error_message)
 
-    def validate_cups(self, cups_number):
-        try:
-            cups.validate(cups_number)
-        except InvalidLength:
-            error_message = _(
-                "Invalid CAU: The first characters related to CUPS are incorrect. The length is incorrect."
-            )
-            raise ValidationError(error_message)
-        except InvalidComponent:
-            error_message = _("Invalid CAU: The CUPS does not start with 'ES'.")
-            raise ValidationError(error_message)
-        except InvalidFormat:
-            error_message = _("Invalid CAU: The CUPS has an incorrect format.")
-            raise ValidationError(error_message)
-        except InvalidChecksum:
-            error_message = _("Invalid CAU: The checksum of the CUPS is incorrect.")
-            raise ValidationError(error_message)
+    @api.constrains("cil")
+    def _check_valid_cil(self):
+        """
+        The following are evaluated:
+            1. The first 20 or 22 digits correspond to the CUPS.
+            2. And the last 3 characters are numbers.
+        """
+        for record in self:
+            if record.cil:
+                if len(record.cil) == 23:
+                    try:
+                        cups.validate(record.code[:20])
+                    except InvalidLength:
+                        error_message = _(
+                            "Invalid CIL: The first characters related to CUPS are incorrect. The length is incorrect."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidComponent:
+                        error_message = _(
+                            "Invalid CIL: The CUPS does not start with 'ES'."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidFormat:
+                        error_message = _(
+                            "Invalid CIL: The CUPS has an incorrect format."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidChecksum:
+                        error_message = _(
+                            "Invalid CIL: The checksum of the CUPS is incorrect."
+                        )
+                        raise ValidationError(error_message)
+                    last_digits = record.cil[20:]
+                elif len(record.cil) == 25:
+                    try:
+                        cups.validate(record.code[:22])
+                    except InvalidLength:
+                        error_message = _(
+                            "Invalid CIL: The first characters related to CUPS are incorrect. The length is incorrect."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidComponent:
+                        error_message = _(
+                            "Invalid CIL: The CUPS does not start with 'ES'."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidFormat:
+                        error_message = _(
+                            "Invalid CIL: The CUPS has an incorrect format."
+                        )
+                        raise ValidationError(error_message)
+                    except InvalidChecksum:
+                        error_message = _(
+                            "Invalid CIL: The checksum of the CUPS is incorrect."
+                        )
+                        raise ValidationError(error_message)
+                    last_digits = record.cil[22:]
+                else:
+                    error_message = _("Invalid CIL: The length is not correct")
+                    raise ValidationError(error_message)
+
+                # Check if the last 3 characters are numbers
+                if not last_digits[-3:].isdigit():
+                    error_message = _("Invalid CIL: Last 3 digits are not numbers")
+                    raise ValidationError(error_message)
 
     @api.constrains("cadastral_reference")
     def _check_valid_cadastral_reference(self):

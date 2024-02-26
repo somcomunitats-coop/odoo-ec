@@ -86,6 +86,8 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
     def voluntary_share_validation(  # noqa: C901 (method too complex)
         self, kwargs, logged, values, post_file
     ):
+        company_id = request.env["res.company"].browse(int(kwargs.get("company_id")))
+
         user_obj = request.env["res.users"]
         sub_req_obj = request.env["subscription.request"]
 
@@ -121,6 +123,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                 values["error_msg"] = _(
                     "Email and confirmation email addresses don't match."
                 )
+                values.update({"share_product_id": company_id.voluntary_share_id.id})
                 return request.render(redirect, values)
 
         # There's no issue with the email, so we can remember the confirmation email
@@ -139,6 +142,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         if not mandate_approved:
             values = self.fill_values(values, is_company, logged)
             values["error_msg"] = _("You must check the SEPA transference.")
+            values.update({"share_product_id": company_id.voluntary_share_id.id})
             return request.render(redirect, values)
 
         if "iban" in required_fields:
@@ -149,6 +153,9 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                 if not valid:
                     values = self.fill_values(values, is_company, logged)
                     values["error_msg"] = _("Provided IBAN is not valid.")
+                    values.update(
+                        {"share_product_id": company_id.voluntary_share_id.id}
+                    )
                     return request.render(redirect, values)
 
         """

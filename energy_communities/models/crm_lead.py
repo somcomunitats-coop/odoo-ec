@@ -54,25 +54,19 @@ class CrmLead(models.Model):
         compute="_get_can_be_assigned_to_coordinator",
         store=False,
     )
-    is_instance_company = fields.Boolean(
-        string="Is instance company", compute="_is_instance_company"
-    )
-
-    def _is_instance_company(self):
-        company = self.env.company
-        instance_companies = self.env["res.company"].search(
-            [("hierarchy_level", "=", "instance")]
-        )
-        if company in instance_companies:
-            self.is_instance_company = True
-        else:
-            self.is_instance_company = False
+    ce_child_lead_id = fields.Many2one(comodel_name="crm.lead", string="Crm lead child")
 
     def _get_default_community_wizard(self):
         self.ensure_one()
+        # form values from metadata
         creation_dict = self._get_metadata_values()
+        # all other populated form fields.
+        creation_partner = self._search_partner_for_company_wizard_creation(
+            creation_dict
+        )
+        if creation_partner:
+            creation_dict["creation_partner"] = creation_partner.id
         users = [user.id for user in self.company_id.get_users()]
-        # add system users to user_ids recordset
         users = users + [
             self.env.ref("base.user_admin").id,
             self.env.ref("base.public_user").id,
@@ -111,7 +105,9 @@ class CrmLead(models.Model):
                 wizard_key = _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD[meta_key]
                 # date meta
                 if meta_key in _LEAD_METADATA__DATE_FIELDS:
-                    format_date = self._format_date_for_creation(meta_entry.value)
+                    format_date = self._format_date_for_company_wizard_creation(
+                        meta_entry.value
+                    )
                     if format_date:
                         meta_dict[wizard_key] = format_date
                 # lang meta
@@ -163,23 +159,33 @@ class CrmLead(models.Model):
                     )
                 if "legal_name" not in meta_dict.keys():
                     meta_dict["legal_name"] = meta_dict["name"]
+                if "vat" in meta_dict.keys():
+                    meta_dict["vat"] = meta_dict["vat"].replace(" ", "").upper()
+                if "email" in meta_dict.keys():
+                    meta_dict["email"] = meta_dict["email"].strip()
         return meta_dict
 
-    def _format_date_for_creation(self, date_val):
-        format_date = False
-        date_formats = ["%Y-%m-%d", "%d-%m-%Y", "%Y/%m/%d", "%d/%m/%Y"]
-        for date_format in date_formats:
-            try:
-                format_date = datetime.strptime(date_val, date_format)
-            except:
-                pass
-        return format_date
+    def _search_partner_for_company_wizard_creation(self, creation_dict):
+        creation_partner = False
+        if "vat" in creation_dict.keys():
+            creation_partners = self.env["res.partner"].search(
+                [
+                    ("company_ids", "in", self.env.user.get_current_company_id()),
+                    ("vat", "=", creation_dict["vat"]),
+                ]
+            )
+            if creation_partners:
+                creation_partner = creation_partners[0]
+                # more than one partner found -> filter by email
+                if len(creation_partners) > 1 and "email" in creation_dict.keys():
+                    email_creation_partners = creation_partners.filtered(
+                        lambda record: record.email == creation_dict["email"]
+                    )
+                    if email_creation_partners:
+                        creation_partner = email_creation_partners[0]
+        return creation_partner
 
-    # def _get_metadata_values(self):
-    #     for wizard_key in _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD.keys():
-    #         meta_value = self.metadata_line_ids
-
-    def _format_date_for_creation(self, date_val):
+    def _format_date_for_company_wizard_creation(self, date_val):
         format_date = False
         date_formats = ["%Y-%m-%d", "%d-%m-%Y", "%Y/%m/%d", "%d/%m/%Y"]
         for date_format in date_formats:
@@ -252,6 +258,18 @@ class CrmLead(models.Model):
             )
             return True
         return False
+
+    def delete_metadata(self, meta_key):
+        existing_meta = self.metadata_line_ids.filtered(
+            lambda record: record.key == meta_key
+        )
+        if existing_meta:
+            existing_meta.unlink()
+            return True
+        return False
+
+    def get_metadata(self, meta_key):
+        return self.metadata_line_ids.filtered(lambda record: record.key == meta_key)
 
 
 class CrmTags(models.Model):

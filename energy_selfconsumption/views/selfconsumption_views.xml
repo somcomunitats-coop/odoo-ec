@@ -10,7 +10,7 @@
                     <header>
                         <button
               type="object"
-              string="Set in inscription"
+              string="Advance to In Inscription"
               name="set_inscription"
               args="['draft']"
               attrs="{'invisible':[('state','not in',['draft'])]}"
@@ -18,21 +18,21 @@
             />
                         <button
               type="object"
-              string="Set in activation"
+              string="Advance to Activation"
               name="set_in_activation_state"
               attrs="{'invisible':[('state','not in',['inscription'])]}"
               class="btn btn-primary"
             />
                         <button
               type="object"
-              string="Activate"
+              string="Advance to Active"
               name="activate"
               attrs="{'invisible':[('state','not in',['activation'])]}"
               class="btn btn-primary"
             />
                         <button
               type="object"
-              string="Back to In Inscription status"
+              string="Return to In Inscription"
               name="set_inscription"
               args="['activation']"
               attrs="{'invisible':[('state','not in',['activation'])]}"
@@ -41,7 +41,7 @@
             />
                         <button
               type="object"
-              string="Set to Draft"
+              string="Return to Draft"
               name="set_draft"
               attrs="{'invisible':[('state','not in',['inscription'])]}"
             />
@@ -50,24 +50,6 @@
               name="action_selfconsumption_import_wizard"
               string="Import inscriptions and supply points"
               attrs="{'invisible':[('state','not in',['draft', 'inscription'])]}"
-            />
-                        <button
-              type="object"
-              name="action_manager_authorization_report"
-              string="Download Self-consumption Manager Authorization"
-              attrs="{'invisible':[('state','not in',['activation', 'active'])]}"
-            />
-                        <button
-              type="object"
-              name="action_power_sharing_agreement_report"
-              string="Download Power Sharing Agreement"
-              attrs="{'invisible':[('state','not in',['activation', 'active'])]}"
-            />
-                        <button
-              type="object"
-              name="action_manager_partition_coefficient_report"
-              string="Download Partition Coefficient"
-              attrs="{'invisible':[('state','not in',['activation', 'active'])]}"
             />
                         <button
               type="object"
@@ -167,7 +149,7 @@
                   attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
                 />
                                 <field
-                  name="reseller_id"
+                  name="supplier_id"
                   attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
                   options="{'no_create': True, 'no_edit':True, 'no_open': True}"
                 />
@@ -243,6 +225,12 @@
                   />
                                 </group>
                             </page>
+                              <page string="External Services" name="energy_services">
+                                <group>
+                                    <field name="service_contract_ids" />
+                                </group>
+                            </page>
+
                         </notebook>
 
                     </sheet>
@@ -298,5 +286,54 @@
       parent="management_category_menu"
       action="selfconsumption_form_view_act_window"
     />
+
+        <!--Reports in Action menu-->
+        <record id="manager_authorization_report_action" model="ir.actions.server">
+            <field name="name">Download Self-consumption Manager Authorization</field>
+            <field name="model_id" ref="model_energy_selfconsumption_selfconsumption" />
+            <field
+        name="binding_model_id"
+        ref="model_energy_selfconsumption_selfconsumption"
+      />
+            <field name="binding_type">action</field>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field
+        name="code"
+      >action = records.action_manager_authorization_report()</field>
+        </record>
+
+        <record id="power_sharing_agreement_report_action" model="ir.actions.server">
+            <field name="name">Download Power Sharing Agreement</field>
+            <field name="model_id" ref="model_energy_selfconsumption_selfconsumption" />
+            <field
+        name="binding_model_id"
+        ref="model_energy_selfconsumption_selfconsumption"
+      />
+            <field name="binding_type">action</field>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field
+        name="code"
+      >action = records.action_power_sharing_agreement_report()</field>
+        </record>
+
+        <record
+      id="manager_partition_coefficient_report_action"
+      model="ir.actions.server"
+    >
+            <field name="name">Download Partition Coefficient</field>
+            <field name="model_id" ref="model_energy_selfconsumption_selfconsumption" />
+            <field
+        name="binding_model_id"
+        ref="model_energy_selfconsumption_selfconsumption"
+      />
+            <field name="binding_type">action</field>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field
+        name="code"
+      >action = records.action_manager_partition_coefficient_report()</field>
+        </record>
     </data>
 </odoo>
