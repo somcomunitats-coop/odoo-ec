@@ -27,7 +27,7 @@
             name="company_id"
             groups="base.group_multi_company"
             domain="[('id','in',allowed_companies)]"
-            widget="selection"
+            options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
           />
             </xpath>
         </field>
@@ -43,7 +43,7 @@
             name="company_id"
             groups="base.group_multi_company"
             domain="[('id','in',allowed_companies)]"
-            widget="selection"
+            options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
           />
             </xpath>
         </field>
