@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record model="ir.rule" id="mailing_mailing_company_rule">
+        <field name="name">Mailing multicompany</field>
+        <field name="model_id" ref="mass_mailing.model_mailing_mailing" />
+        <field name="global" eval="True" />
+        <field
+      name="domain_force"
+    >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record model="ir.rule" id="mailing_list_company_rule">
+        <field name="name">Mailing List multicompany</field>
+        <field name="model_id" ref="mass_mailing.model_mailing_list" />
+        <field name="global" eval="True" />
+        <field
+      name="domain_force"
+    >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record model="ir.rule" id="mailing_contact_company_rule">
+        <field name="name">Mailing Contact multicompany</field>
+        <field name="model_id" ref="mass_mailing.model_mailing_contact" />
+        <field name="global" eval="True" />
+        <field
+      name="domain_force"
+    >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record model="ir.rule" id="utm_campaign_company_rule">
+        <field name="name">Utm Campaign multicompany</field>
+        <field name="model_id" ref="utm.model_utm_campaign" />
+        <field name="global" eval="True" />
+        <field
+      name="domain_force"
+    >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record model="ir.rule" id="utm_stage_company_rule">
+        <field name="name">Utm Stage multicompany</field>
+        <field name="model_id" ref="utm.model_utm_stage" />
+        <field name="global" eval="True" />
+        <field
+      name="domain_force"
+    >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record model="ir.rule" id="utm_tag_company_rule">
+        <field name="name">Utm Tag multicompany</field>
+        <field name="model_id" ref="utm.model_utm_tag" />
+        <field name="global" eval="True" />
+        <field
+      name="domain_force"
+    >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record model="ir.rule" id="link_tracker_company_rule">
+        <field name="name">Link Tracker multicompany</field>
+        <field name="model_id" ref="link_tracker.model_link_tracker" />
+        <field name="global" eval="True" />
+        <field
+      name="domain_force"
+    >['|', ('mass_mailing_id.company_id', '=', False), ('mass_mailing_id.company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

@@ -10,6 +10,10 @@
     </record>
 
     <!-- new groups -->
+    <record model="res.groups" id="mass_mailing_super_user">
+        <field name="name">Mass Mailing Superuser</field>
+    </record>
+
     <record model="res.groups" id="group_user">
         <field name="name">User</field>
         <field name="category_id" ref="energy_communities_category" />
@@ -154,6 +158,7 @@
                (5, 0, 0),
                (4, ref('group_platform_manager')),
                (4, ref('group_admin')),
+               (4, ref('mass_mailing_super_user')),
                (4, ref('energy_project.group_admin')),
                (4, ref('base.group_erp_manager')),
                (4, ref('sale.group_delivery_invoice_address')),

@@ -61,15 +61,22 @@ class ResPartner(models.Model):
 
     @api.model
     def create(self, vals):
-        current_company = self.env.company
-        if self.env.user not in (
-            self.env.ref("base.user_root"),
-            self.env.ref("base.user_admin"),
-        ):
-            if vals.get("company_ids", False):
-                vals["company_ids"][0][-1].append(current_company.id)
-
         new_partner = super().create(vals)
+        current_user = self.env.user
+        if (
+            not new_partner.company_ids
+            and
+            # TODO: is really necessary user not being root or admin?
+            current_user
+            not in (
+                self.env.ref("base.user_root"),
+                self.env.ref("base.user_admin"),
+            )
+        ):
+            new_partner.write(
+                {"company_ids": [(4, current_user.get_current_company_id())]}
+            )
+
         return new_partner
 
     def cron_update_company_ids_from_user(self):

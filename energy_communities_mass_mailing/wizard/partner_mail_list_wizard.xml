@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+      <record id="partner_mail_list_wizard_form_inherit" model="ir.ui.view">
+            <field name="name">partner.mail.list.form.inherit</field>
+            <field name="model">partner.mail.list.wizard</field>
+            <field
+        name="inherit_id"
+        ref="mass_mailing_partner.partner_mail_list_wizard_form"
+      />
+            <field name="arch" type="xml">
+            <xpath expr="//field[@name='mail_list_id']" position="before">
+              <field name="user_current_company" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='mail_list_id']" position="attributes">
+            <attribute
+            name="domain"
+          >[('company_id', '=', user_current_company)]</attribute>
+          </xpath>
+          </field>
+        </record>
+    </data>
+</odoo>
