@@ -1,5 +1,15 @@
 <odoo>
   <data>
+    <record id="view_mail_mass_mailing_tree_inherit" model="ir.ui.view">
+        <field name="name">mailing.mailing.tree.inherit</field>
+        <field name="model">mailing.mailing</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='subject']" position="before">
+                <field name="name" />
+            </xpath>
+        </field>
+    </record>
     <record id="view_mail_mass_mailing_form_inherit" model="ir.ui.view">
         <field name="name">mailing.mailing.form.inherit</field>
         <field name="model">mailing.mailing</field>
