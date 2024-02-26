@@ -90,8 +90,10 @@ class DistributionTableImportWizard(models.TransientModel):
             except UnicodeDecodeError:
                 detected_encoding = chardet.detect(data_file).get("encoding", False)
                 if not detected_encoding:
-                    raise UserError(
-                        _("No valid encoding was found for the attached file"))
+                    self.notification("Error",
+                                      _("No valid encoding was found for the attached file"))
+                    # raise UserError(
+                    #     _("No valid encoding was found for the attached file"))
                 decoded_file = data_file.decode(detected_encoding)
 
             df = pd.read_csv(StringIO(decoded_file), delimiter=self.delimiter,
@@ -99,7 +101,8 @@ class DistributionTableImportWizard(models.TransientModel):
             return df
         except Exception:
             logger.warning("Parser error", exc_info=True)
-            raise UserError(_("Error parsing the file"))
+            self.notification("Error", _("Error parsing the file"))
+            # raise UserError(_("Error parsing the file"))
 
     def check_data_validity(self, df, table_type):
         logger.info("\n\n check_data_validity")
@@ -108,9 +111,11 @@ class DistributionTableImportWizard(models.TransientModel):
             invalid_hours = grouped[round(grouped.sum(axis=1), 5) != 1]
             if not invalid_hours.empty:
                 invalid_hours_list = invalid_hours.index.tolist()
-                raise ValidationError(
-                    _("The sum of coefficients for the following hours is not equal to 1: %s" % ", ".join(
+                self.notification("Error", _("The sum of coefficients for the following hours is not equal to 1: %s" % ", ".join(
                         map(str, invalid_hours_list))))
+                # raise ValidationError(
+                #     _("The sum of coefficients for the following hours is not equal to 1: %s" % ", ".join(
+                #         map(str, invalid_hours_list))))
 
     def import_all_lines(self, df, distribution_table):
         logger.info("\n\n import_all_lines")
@@ -181,7 +186,8 @@ class DistributionTableImportWizard(models.TransientModel):
             self.env.cr.execute(query)
             self.env.cr.commit()
         except Exception as e:
-            raise ValidationError("\n\n Error query :"+str(e))
+            self.notification("Error query", str(e))
+            # raise ValidationError("\n\n Error query :"+str(e))
 
         query = f""" INSERT INTO energy_selfconsumption_supply_point_group_rel 
         (energy_selfconsumption_distribution_table_id,
@@ -195,7 +201,8 @@ class DistributionTableImportWizard(models.TransientModel):
             self.env.cr.execute(query)
             self.env.cr.commit()
         except Exception as e:
-            raise ValidationError("\n\n Error query :"+str(e))
+            self.notification("Error query", str(e))
+            # raise ValidationError("\n\n Error query :"+str(e))
 
     def get_supply_point_assignation_values(self, row, distribution_table):
         return {
@@ -219,9 +226,12 @@ class DistributionTableImportWizard(models.TransientModel):
         supply_point_id = self.env["energy_selfconsumption.supply_point"].search_read(
             [("code", "=", code)], ["id"])
         if not supply_point_id:
-            raise ValidationError(
-                _("There isn't any supply point with this code: {code}").format(
+            self.notification("Error",
+                     _("There isn't any supply point with this code: {code}").format(
                     code=code))
+            # raise ValidationError(
+            #     _("There isn't any supply point with this code: {code}").format(
+            #         code=code))
         return supply_point_id[0]["id"]
 
     def get_coefficient(self, coefficient):

@@ -203,7 +203,29 @@
                   >FIRMA</th>
                                 </tr>
                                 <t t-if="o.report_distribution_table">
-                                    <t t-set="index" t-value="1" />
+                                    <t t-if="o.report_distribution_table.type == 'hourly'">
+                                        <t t-set="index" t-value="1" />
+                                    <t
+                    t-foreach="o.report_distribution_table.supply_point_group_ids"
+                    t-as="supply_point"
+                  >
+                                        <tr style="height:100px">
+                                            <td style="margin-left:50px"><t
+                          t-esc="supply_point.supply_point_id.partner_id.name"
+                        /></td>
+                                            <td><t
+                          t-esc="supply_point.supply_point_id.partner_id.vat"
+                        /></td>
+                                            <td><t
+                          t-esc="supply_point.supply_point_id.code"
+                        /></td>
+                                            <td />
+                                        </tr>
+                                        <t t-set="index" t-value="index+1" />
+                                        </t>
+                                    </t>
+                                    <t t-if="o.report_distribution_table.type == 'fixed'">
+                                        <t t-set="index" t-value="1" />
                                     <t
                     t-foreach="o.report_distribution_table.supply_point_assignation_ids"
                     t-as="supply_point"
@@ -221,6 +243,7 @@
                                             <td />
                                         </tr>
                                         <t t-set="index" t-value="index+1" />
+                                        </t>
                                     </t>
                                 </t>
                             </table>
@@ -307,7 +330,32 @@
                         </thead>
                         <tbody>
                             <t t-if="o.report_distribution_table">
-                                <t t-set="index" t-value="1" />
+                                <t t-if="o.report_distribution_table.type == 'hourly'">
+                                    <t t-set="index" t-value="1" />
+                                <t
+                  t-foreach="o.report_distribution_table.supply_point_group_ids"
+                  t-as="supply_point"
+                >
+                                    <tr>
+                                        <td style="width: auto"><t t-esc="index" /></td>
+                                        <td><t
+                        t-esc="supply_point.supply_point_id.owner_id.name"
+                      /></td>
+                                        <td><t
+                        t-esc="supply_point.supply_point_id.owner_id.vat"
+                      /></td>
+                                        <td><t
+                        t-esc="supply_point.supply_point_id.code"
+                      /></td>
+                                        <td style="text-align: right"><t
+                        t-esc="*"
+                      /></td>
+                                    </tr>
+                                    <t t-set="index" t-value="index+1" />
+                                    </t>
+                                </t>
+                                <t t-if="o.report_distribution_table.type == 'fixed'">
+                                    <t t-set="index" t-value="1" />
                                 <t
                   t-foreach="o.report_distribution_table.supply_point_assignation_ids"
                   t-as="supply_point"
@@ -328,6 +376,7 @@
                       /></td>
                                     </tr>
                                     <t t-set="index" t-value="index+1" />
+                                    </t>
                                 </t>
                             </t>
                         </tbody>
@@ -396,7 +445,29 @@
                             <th><b>FIRMA</b></th>
                         </tr>
                         <t t-if="o.report_distribution_table">
-                            <t t-set="index" t-value="1" />
+                            <t t-if="o.report_distribution_table.type == 'hourly'">
+                                <t t-set="index" t-value="1" />
+                            <t
+                t-foreach="o.report_distribution_table.supply_point_group_ids"
+                t-as="supply_point"
+              >
+                                <tr>
+                                    <td style="width: auto"><t t-esc="index" /></td>
+                                    <td><t
+                      t-esc="supply_point.supply_point_id.owner_id.name"
+                    /></td>
+                                    <td><t
+                      t-esc="supply_point.supply_point_id.owner_id.vat"
+                    /></td>
+                                    <td>
+                                        <div style="height: 100px; width: 200px;" />
+                                    </td>
+                                </tr>
+                                <t t-set="index" t-value="index+1" />
+                                </t>
+                            </t>
+                            <t t-if="o.report_distribution_table.type == 'fixed'">
+                                <t t-set="index" t-value="1" />
                             <t
                 t-foreach="o.report_distribution_table.supply_point_assignation_ids"
                 t-as="supply_point"
@@ -414,6 +485,7 @@
                                     </td>
                                 </tr>
                                 <t t-set="index" t-value="index+1" />
+                                </t>
                             </t>
                         </t>
                     </table>

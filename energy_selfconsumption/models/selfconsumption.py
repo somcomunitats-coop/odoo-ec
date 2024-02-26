@@ -278,25 +278,30 @@ class Selfconsumption(models.Model):
 
     def action_manager_partition_coefficient_report(self):
         self.validate_state(self.state)
-        tables_to_use = self.report_distribution_table
-        report_data = []
+        if self.report_distribution_table:
+            sql = f"""
+                select dt.type,sp.code,spa.hour,spa.coefficient 
+                from energy_selfconsumption_distribution_table as dt
+                    inner join energy_selfconsumption_supply_point_assignation as spa 
+                        on spa.distribution_table_id = dt.id
+                    inner join energy_selfconsumption_supply_point as sp 
+                        on sp.id = spa.supply_point_id
+                        where dt.id={self.report_distribution_table.id};
+            """
+            self.env.cr.execute(sql)
+            file_content = ""
+            report_data = self.env.cr.fetchall()
+            for i, record in enumerate(report_data):
+                line = ""
+                coefficient_format = f"{record[3]:.6f}"
+                if record[0] == "hourly":
+                    line = f"{record[1]};{record[2]};{coefficient_format.replace('.', ',')}"
+                else:
+                    line = f"{record[1]};{coefficient_format.replace('.', ',')}"
 
-        for table in tables_to_use:
-            for assignation in table.supply_point_assignation_ids:
-                coefficient_format = f"{assignation.coefficient:.6f}"  # we need to make sure it has 7 digits
-                report_data.append(
-                    {
-                        "code": assignation.supply_point_id.code,
-                        "coefficient": coefficient_format,
-                    }
-                )
-
-        file_content = ""
-        for i, data in enumerate(report_data):
-            line = f"{data['code']};{data['coefficient'].replace('.', ',')}"
-            if i < len(report_data) - 1:
-                line += "\r\n"
-            file_content += line
+                if i < len(report_data) - 1:
+                    line += "\r\n"
+                file_content += line
 
         file_content = file_content.encode("utf-8")
 
