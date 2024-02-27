@@ -80,7 +80,7 @@ class ContractLine(models.Model):
             )
 
             if not first_date_invoiced or not last_date_invoiced:
-                record.day = 0
+                record.days_invoced = 0
                 continue
 
             record.days_invoiced = (last_date_invoiced - first_date_invoiced).days + 1
