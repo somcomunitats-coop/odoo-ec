@@ -8,3 +8,16 @@ class MassMailingList(models.Model):
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, required=True
     )
+    sync_domain = fields.Char(
+        string="Synchronization critera",
+        default="[('is_blacklisted', '=', False),('email', '!=', False),('company_ids', '!=', False)]",
+        required=True,
+        help="Filter partners to sync in this list",
+    )
+
+    def _get_default_sync_domain(self):
+        return [
+            ("is_blacklisted", "=", False),
+            ("email", "!=", False),
+            ("company_ids", "!=", False),
+        ]
