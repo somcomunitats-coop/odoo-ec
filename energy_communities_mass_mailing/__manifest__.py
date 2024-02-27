@@ -17,6 +17,7 @@
         "energy_communities",
         "mass_mailing",
         "mass_mailing_partner",
+        "mass_mailing_list_dynamic",
     ],
     # always loaded
     "data": [

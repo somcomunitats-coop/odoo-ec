@@ -24,7 +24,6 @@ class MassMailing(models.Model):
 
     def _get_default_mailing_domain(self):
         mailing_domain = super()._get_default_mailing_domain()
-        print(self.mailing_model_real)
         if self.mailing_model_real == "res.partner":
             mailing_domain.append(
                 ("company_ids", "in", [self.env.user.get_current_company_id()])
