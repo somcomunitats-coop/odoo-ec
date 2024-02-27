@@ -18,6 +18,9 @@
                 </group>
               </group>
             </xpath>
+            <xpath expr="//field[@name='is_public']" position="attributes">
+              <attribute name="invisible">1</attribute>
+            </xpath>
         </field>
     </record>
   </data>
