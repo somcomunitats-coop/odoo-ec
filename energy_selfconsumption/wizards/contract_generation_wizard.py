@@ -66,11 +66,18 @@ class ContractGenerationWizard(models.TransientModel):
             # We use the next method from the contract model to update the contract fields with contract template
             contract._onchange_contract_template_id()
             for contract_line_id in contract.contract_line_ids:
-                data = {"code": supply_point_assignation.supply_point_id.code, "owner_id": supply_point_assignation.supply_point_id.owner_id.display_name,}
+                data = {
+                    "code": supply_point_assignation.supply_point_id.code,
+                    "owner_id": supply_point_assignation.supply_point_id.owner_id.display_name,
+                    "cau": self.selfconsumption_id.code,
+                }
                 # Each invoicing type has different data in the description column, so we need to check and modify
-                if self.selfconsumption_id.invoicing_mode == 'energy_delivered':
+                if self.selfconsumption_id.invoicing_mode == "energy_delivered":
                     contract_line_id.name += """\nCAU: {cau}\n"""
-                    data["cau"] = self.selfconsumption_id.code
+                elif self.selfconsumption_id.invoicing_mode == "power_acquired":
+                    contract_line_id.name += """\nCAU: {cau}\nTotal installed nominal power (kW): {power}\nPartition coefficient: {coefficient}"""
+                    data["power"] = self.selfconsumption_id.power
+                    data["coefficient"] = supply_point_assignation.coefficient
 
                 contract_line_id.write(
                     {

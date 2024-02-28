@@ -239,42 +239,57 @@ class Selfconsumption(models.Model):
         for record in self:
             record.write({"state": "draft"})
 
+    def validate_state(self, state):
+        if state not in ("activation", "active"):
+            error_message = _(
+                "The report can be downloaded when the project is in activation or active status."
+            )
+            raise ValidationError(error_message)
+
     def action_manager_authorization_report(self):
         self.ensure_one()
+        self.validate_state(self.state)
         return self.env.ref(
             "energy_selfconsumption.selfconsumption_manager_authorization_report"
         ).report_action(self)
 
     def action_power_sharing_agreement_report(self):
         self.ensure_one()
+        self.validate_state(self.state)
         return self.env.ref(
             "energy_selfconsumption.power_sharing_agreement_report"
         ).report_action(self)
 
     def action_manager_partition_coefficient_report(self):
+        self.validate_state(self.state)
         tables_to_use = self.report_distribution_table
         report_data = []
 
         for table in tables_to_use:
             for assignation in table.supply_point_assignation_ids:
+                coefficient_format = f"{assignation.coefficient:.6f}"  # we need to make sure it has 7 digits
                 report_data.append(
                     {
                         "code": assignation.supply_point_id.code,
-                        "coefficient": assignation.coefficient,
+                        "coefficient": coefficient_format,
                     }
                 )
 
         file_content = ""
-        for data in report_data:
-            line = f"{data['code']};{str(data['coefficient']).replace('.', ',')}\n"
+        for i, data in enumerate(report_data):
+            line = f"{data['code']};{data['coefficient'].replace('.', ',')}"
+            if i < len(report_data) - 1:
+                line += "\r\n"
             file_content += line
+
+        file_content = file_content.encode("utf-8")
 
         date = datetime.now()
         year = date.strftime("%Y")
-        self.env["energy_selfconsumption.coefficient_report"].create(
+        report = self.env["energy_selfconsumption.coefficient_report"].create(
             {"report_data": file_content, "file_name": f"{self.code}_{year}.txt"}
         )
-        url = "/energy_selfconsumption/download_report?id=%s" % self.id
+        url = "/energy_selfconsumption/download_report?id=%s" % report.id
         return {
             "type": "ir.actions.act_url",
             "url": url,

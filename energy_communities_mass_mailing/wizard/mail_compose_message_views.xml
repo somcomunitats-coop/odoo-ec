@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+        <!-- Add mass mail campaign to the mail.compose.message form view -->
+        <record model="ir.ui.view" id="email_compose_form_mass_mailing">
+            <field name="name">mail.compose.message.form.mass_mailing.inhertit</field>
+            <field name="model">mail.compose.message</field>
+            <field
+      name="inherit_id"
+      ref="mass_mailing.email_compose_form_mass_mailing"
+    />
+            <field name="arch" type="xml">
+              <xpath expr="//field[@name='campaign_id']" position="before">
+                <field name="user_current_company" invisible="1" />
+              </xpath>
+              <xpath expr="//field[@name='campaign_id']" position="attributes">
+                <attribute
+          name="domain"
+        >[('company_id', '=', user_current_company)]</attribute>
+              </xpath>
+            </field>
+        </record>
+
+</odoo>

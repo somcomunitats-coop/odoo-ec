@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="service_contract_form_view" model="ir.ui.view">
+            <field name="name">energy_project.service_contract.form</field>
+            <field name="model">energy_project.service_contract</field>
+            <field name="arch" type="xml">
+                <form string="Energy Service">
+                    <sheet>
+                        <group>
+                            <field
+                name="service_id"
+                options="{'no_create':True, 'no_edit':True, 'no_open': True}"
+              />
+                            <field
+                name="provider_id"
+                options="{'no_create':True, 'no_edit':True, 'no_open': True}"
+              />
+                            <field name="active" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="service_contract_tree_view" model="ir.ui.view">
+            <field name="name">energy_project.service_contract.tree</field>
+            <field name="model">energy_project.service_contract</field>
+            <field name="arch" type="xml">
+                <tree string="Energy Services" editable="bottom">
+                    <field name="available_providers_ids" invisible="True" />
+                    <field
+            name="service_id"
+            options="{'no_create':True, 'no_edit':True, 'no_open': True}"
+          />
+                    <field
+            name="provider_id"
+            options="{'no_create':True, 'no_edit':True, 'no_open': True}"
+            domain="[('id', 'in', available_providers_ids)]"
+          />
+                                                <field name="active" />
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

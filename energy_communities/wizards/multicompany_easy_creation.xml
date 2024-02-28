@@ -25,7 +25,13 @@
                 <xpath expr="//page" position="before">
                     <page string="Energy Community">
                         <group string="Energy Community">
+                            <field name="user_current_company" invisible="1" />
+                            <field name="hierarchy_level" required="1" />
                             <field name="parent_id" required="1" />
+                            <field
+                name="creation_partner"
+                domain="[('company_id', '=', user_current_company)]"
+              />
                             <field name="vat" />
                             <field name="state_id" required="1" />
                             <field name="city" required="1" />

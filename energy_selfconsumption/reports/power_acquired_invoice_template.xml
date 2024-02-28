@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template
+      inherit_id="account.report_invoice_document"
+      id="power_acquired_invoice_template"
+      primary="True"
+    >
+
+            <xpath expr="//th[@name='th_quantity']" position="replace">
+                <th name="th_power_acquired"><span>Power acquired</span></th>
+            </xpath>
+
+            <xpath expr="//th[@name='th_power_acquired']" position="after">
+                <th name="th_invoiced_days"><span>Invoiced days</span></th>
+            </xpath>
+
+            <xpath expr="//th[@name='th_priceunit']" position="after">
+                <th name="th_import"><span>Import</span></th>
+            </xpath>
+
+            <xpath expr="//th[@name='th_taxes']" position="replace" />
+            <xpath expr="//th[@name='th_subtotal']" position="replace" />
+
+            <xpath expr="//th[@name='th_invoiced_days']" position="after">
+                <th name="th_quantity"><span>Quantity</span></th>
+            </xpath>
+
+            <xpath expr="//td[@name='account_invoice_line_name']" position="after">
+                <td name="td_power_acquired">
+                    <t t-set="found" t-value="False" />
+                    <t
+            t-foreach="line.selfconsumption_id.distribution_table_ids.supply_point_assignation_ids"
+            t-as="assignation"
+          >
+                        <t
+              t-if="line.partner_id == assignation.owner_id and line.ref == assignation.code"
+            >
+                            <t
+                t-set="power_acquired"
+                t-value="'{:.2f}'.format(line.selfconsumption_id.power * assignation.coefficient)"
+              />
+                            <t t-esc="power_acquired" /><span> kWn/day</span>
+                            <t t-set="found" t-value="True" />
+                        </t>
+                    </t>
+                    <t t-if="not found">
+                        0 kW/day
+                    </t>
+                </td>
+            </xpath>
+
+            <xpath expr="//td[@name='td_power_acquired']" position="after">
+                <td name="td_invoiced_days">
+                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                        <t t-foreach="line.contract_line_id" t-as="contract_line">
+                            <t
+                t-if="contract_line.contract_id.partner_id == line.partner_id"
+              >
+                                <span t-field="contract_line.days_invoiced" />
+                            </t>
+                            <t t-else="">
+                                0
+                            </t>
+                        </t>
+                    </t>
+                </td>
+            </xpath>
+
+            <xpath expr="//span[@id='line_tax_ids']" position="replace" />
+        </template>
+
+        <template
+      id="report_invoice_with_payments"
+      inherit_id="account.report_invoice_with_payments"
+    >
+            <xpath
+        expr='//t[@t-call="account.report_invoice_document"]'
+        position="after"
+      >
+                <t
+          t-if="o._get_name_invoice_report() == 'energy_selfconsumption.power_acquired_invoice_template'"
+          t-call="energy_selfconsumption.power_acquired_invoice_template"
+          t-lang="lang"
+        />
+            </xpath>
+        </template>
+    </data>
+</odoo>

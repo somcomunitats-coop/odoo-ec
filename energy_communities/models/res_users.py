@@ -9,9 +9,16 @@ logger = logging.getLogger(__name__)
 
 
 class ResUsers(models.Model):
-    _inherit = "res.users"
+    _name = "res.users"
+    _inherit = ["res.users", "user.currentcompany.mixin"]
 
     _LOGIN_MATCH_KEY = "id:login"
+
+    current_role = fields.Char(computed="_compute_current_role", store=False)
+
+    def _compute_current_role(self):
+        for record in self:
+            record.current_role = record.get_current_role()
 
     def _generate_signup_values(self, provider, validation, params):
         """
@@ -193,6 +200,7 @@ class ResUsers(models.Model):
         # so we are forced to do anothe call to get its data :(
         return self._get_kc_users(token, provider_id, search=data["username"])[0]
 
+    # TODO: Modify this method to make it compatible with currentuser mixin
     def get_role_codes(self):
         # TODO Map all code to company and enable (We should update the API schema too)
         return self.role_line_ids[0].role_id.code
