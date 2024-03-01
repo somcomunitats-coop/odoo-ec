@@ -38,6 +38,8 @@ class DistributionTable(models.Model):
     )
 
     def create(self, vals):
+        if isinstance(vals, list):
+            vals = vals[0]
         vals["name"] = self.env.ref(
             "energy_selfconsumption.distribution_table_sequence", False
         ).next_by_id()
@@ -48,10 +50,10 @@ class DistributionTable(models.Model):
             self.env["energy_selfconsumption.distribution_table_fixed"].create(
                 {"distribution_table_id": new_record.id}
             )
-        # elif vals.get('type') == 'variable_schedule':
-        #     self.env['energy_selfconsumption.distribution_table_variable'].create({
-        #         'distribution_table_id': new_record.id
-        #     })
+        elif vals.get('type') == 'variable_schedule':
+            self.env['energy_selfconsumption.distribution_table_variable'].create({
+                'distribution_table_id': new_record.id
+            })
 
         return new_record
 
@@ -59,20 +61,16 @@ class DistributionTable(models.Model):
         result = super().write(vals)
         for record in self:
             if record.type == "fixed":
-                # Busca y actualiza el registro en DistributionTableFixed, si existe
                 fixed_record = self.env[
                     "energy_selfconsumption.distribution_table_fixed"
                 ].search([("distribution_table_id", "=", record.id)], limit=1)
                 if fixed_record:
-                    # Actualiza el registro fixed si es necesario
                     pass
                 else:
-                    # Crea un nuevo registro si no existe
                     self.env["energy_selfconsumption.distribution_table_fixed"].create(
                         {"distribution_table_id": record.id}
                     )
             elif record.type == "variable_schedule":
-                # Implementa lógica similar para DistributionTableVariable
                 pass
         return result
 
@@ -155,3 +153,32 @@ class DistributionTableFixed(models.Model):
                     _("Self-consumption project already has a table in process")
                 )
             record.write({"state": "validated"})
+
+
+class DistributionTableVariable(models.Model):
+    _name = "energy_selfconsumption.distribution_table_variable"
+    _description = "Variable Distribution Table for CUPS"
+    _inherits = {"energy_selfconsumption.distribution_table": "distribution_table_id"}
+
+    distribution_table_id = fields.Many2one(
+        "energy_selfconsumption.distribution_table", 
+        required=True, 
+        ondelete="cascade",
+        auto_join=True
+    )
+    cups_id = fields.Char(string="CUPS Number", required=True)
+
+
+class DistributionTableVariableCoefficient(models.Model):
+    _name = "energy_selfconsumption.distribution_table_variable_coefficient"
+    _description = "Hourly Coefficients for Variable Distribution Table"
+
+    distribution_table_variable_id = fields.Many2one(
+        "energy_selfconsumption.distribution_table_variable", 
+        required=True, 
+        ondelete="cascade", 
+        index=True
+    )
+    hour = fields.Integer(string="Hour", required=True)
+    coefficient = fields.Float(string="Coefficient", required=True)
+
