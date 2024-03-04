@@ -1,7 +1,6 @@
 from . import cm_coordinates_mixin
 from . import external_id_mixin
 from . import auth_oauth_provider
-from . import account_chart_template
 from . import landing_page
 from . import res_company
 from . import res_config_settings
