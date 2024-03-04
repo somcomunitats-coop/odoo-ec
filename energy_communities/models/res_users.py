@@ -9,11 +9,16 @@ logger = logging.getLogger(__name__)
 
 
 class ResUsers(models.Model):
-    _inherit = "res.users"
+    _name = "res.users"
+    _inherit = ["res.users", "user.currentcompany.mixin"]
 
     _LOGIN_MATCH_KEY = "id:login"
 
     current_role = fields.Char(computed="_compute_current_role", store=False)
+
+    def _compute_current_role(self):
+        for record in self:
+            record.current_role = record.get_current_role()
 
     def _generate_signup_values(self, provider, validation, params):
         """
@@ -26,27 +31,6 @@ class ResUsers(models.Model):
         values = super()._generate_signup_values(provider, validation, params)
         values["login"] = validation["user_id"]
         return values
-
-    def _compute_current_role(self):
-        for record in self:
-            record.current_role = record.get_current_role()
-
-    def get_current_role(self):
-        current_company = self.env.context["allowed_company_ids"][0]
-        current_role_lines = self.role_line_ids.filtered(
-            lambda role_line: role_line.company_id.id == current_company
-        )
-        if current_role_lines:
-            return current_role_lines[
-                0
-            ].role_id.code  # avoid misconfiguration, only one role per company TODO: constrain company_id on role to avoid this misconfigurations
-        else:
-            admin_role_lines = self.role_line_ids.filtered(
-                lambda role_line: role_line.role_id.code == "role_platform_admin"
-            )
-            if admin_role_lines:
-                return "role_platform_admin"
-        return False
 
     def _get_admin_token(self, provider_id):
         """Retrieve auth token from Keycloak."""
@@ -216,6 +200,7 @@ class ResUsers(models.Model):
         # so we are forced to do anothe call to get its data :(
         return self._get_kc_users(token, provider_id, search=data["username"])[0]
 
+    # TODO: Modify this method to make it compatible with currentuser mixin
     def get_role_codes(self):
         # TODO Map all code to company and enable (We should update the API schema too)
         return self.role_line_ids[0].role_id.code

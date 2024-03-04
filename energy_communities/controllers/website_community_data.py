@@ -185,6 +185,12 @@ class WebsiteCommunityData(http.Controller):
         values = {}
         form_values = {}
 
+        related_lead = (
+            request.env["crm.lead"]
+            .sudo()
+            .search([("external_id", "=", kwargs["lead_id"])])
+        )
+
         energy_services = self._get_energy_service_tag_ids()
         form_energy_services = []
 
@@ -196,6 +202,11 @@ class WebsiteCommunityData(http.Controller):
                 if field_value:
                     values[field_name] = field_value
                     form_values[field_name] = field_value
+                else:
+                    lead_meta = related_lead.get_metadata(field_name)
+                    if lead_meta:
+                        lead_meta.unlink()
+
             if field_name in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
                 if field_value.filename:
                     values[field_name] = field_value
@@ -227,7 +238,7 @@ class WebsiteCommunityData(http.Controller):
             if response is not True:
                 return response
             # metadata processing
-            self._process_lead_metadata(values)
+            self._process_lead_metadata(related_lead, values)
             # success
             return self._get_community_data_submit_response(values)
         else:
@@ -591,13 +602,8 @@ class WebsiteCommunityData(http.Controller):
     #
     # DATA PROCESSING
     #
-    def _process_lead_metadata(self, values):
+    def _process_lead_metadata(self, related_lead, values):
         changed_data = []
-        related_lead = (
-            request.env["crm.lead"]
-            .sudo()
-            .search([("external_id", "=", values["lead_id"])])
-        )
         for meta_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
             if meta_key in values.keys():
                 changed = related_lead.create_update_metadata(
