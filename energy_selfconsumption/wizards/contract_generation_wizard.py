@@ -18,7 +18,7 @@ class ContractGenerationWizard(models.TransientModel):
     )
     payment_mode = fields.Many2one(
         "account.payment.mode",
-        string="Payment method",
+        string="Payment mode",
         default=lambda self: self._default_payment_mode(),
     )
 
