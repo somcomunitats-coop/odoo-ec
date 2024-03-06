@@ -79,6 +79,7 @@
         "views/website_formfields_template.xml",
         "views/website_subscription_template.xml",
         "views/website_community_data_template.xml",
+        "views/account_banking_mandate_views.xml",
         "data/mail_template_data.xml",
         "data/mail_template_update_data.xml",
         "wizards/assign_crm_to_coordinator_company.xml",
