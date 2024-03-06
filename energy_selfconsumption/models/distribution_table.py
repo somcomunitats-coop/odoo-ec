@@ -37,6 +37,7 @@ class DistributionTable(models.Model):
         "energy_selfconsumption.supply_point_assignation", "distribution_table_id"
     )
 
+    @api.model
     def create(self, vals):
         if isinstance(vals, list):
             vals = vals[0]
@@ -157,7 +158,6 @@ class DistributionTableFixed(models.Model):
 
 class DistributionTableVariable(models.Model):
     _name = "energy_selfconsumption.distribution_table_variable"
-    _description = "Variable Distribution Table for CUPS"
     _inherits = {"energy_selfconsumption.distribution_table": "distribution_table_id"}
 
     distribution_table_id = fields.Many2one(
@@ -166,12 +166,12 @@ class DistributionTableVariable(models.Model):
         ondelete="cascade",
         auto_join=True
     )
-    cups_id = fields.Char(string="CUPS Number", required=True)
+    cups_id = fields.Char(string="CUPS", required=True)
+    # one2many to coefficient
 
 
 class DistributionTableVariableCoefficient(models.Model):
     _name = "energy_selfconsumption.distribution_table_variable_coefficient"
-    _description = "Hourly Coefficients for Variable Distribution Table"
 
     distribution_table_variable_id = fields.Many2one(
         "energy_selfconsumption.distribution_table_variable", 

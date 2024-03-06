@@ -36,7 +36,7 @@ class DistributionTableImportWizard(models.TransientModel):
         string="File Encoding",
         help="Enconding format in import CSV file.",
     )
-
+    
     @api.constrains("import_file")
     def _constrains_import_file(self):
         if self.fname:
@@ -51,8 +51,26 @@ class DistributionTableImportWizard(models.TransientModel):
         distribution_table = self.env[
             "energy_selfconsumption.distribution_table"
         ].browse(active_id)
-        self.import_all_lines(parsing_data, distribution_table)
-        return True
+        type = self.env.context.get("type")
+
+        if type == 'variable_schedule':
+            # Para 'variable_schedule', encola el trabajo
+            self.env['queue.job'].sudo().with_delay().import_all_lines(parsing_data, distribution_table.id)
+            message = 'La importación de la programación variable se está procesando en segundo plano.'
+        else:
+            # Para cualquier otro tipo, procesa de manera síncrona
+            self.import_all_lines(parsing_data, distribution_table)
+            message = 'La importación ha finalizado.'
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('Importación Iniciada'),
+                'message': message,
+                'sticky': False,
+            }
+        }
 
     def download_template_button(self):
         type = self.env.context.get("type")
@@ -96,16 +114,42 @@ class DistributionTableImportWizard(models.TransientModel):
             raise UserError(_("Error parsing the file"))
 
     def import_all_lines(self, data, distribution_table):
-        supply_point_assignation_values_list = []
+        type = self.env.context.get("type")
+        if type == 'fixed':
+            supply_point_assignation_values_list = []
 
-        for index, line in enumerate(data[1:]):
-            value = self.get_supply_point_assignation_values(line)
+            for index, line in enumerate(data[1:]):
+                value = self.get_supply_point_assignation_values(line)
 
-            supply_point_assignation_values_list.append((0, 0, value))
+                supply_point_assignation_values_list.append((0, 0, value))
 
-        distribution_table.write(
-            {"supply_point_assignation_ids": supply_point_assignation_values_list}
-        )
+            distribution_table.write(
+                {"supply_point_assignation_ids": supply_point_assignation_values_list}
+            )
+        elif type == 'variable_schedule':
+            DistributionTableVariable = self.env['energy_selfconsumption.distribution_table_variable']
+            DistributionTableVariableCoefficient = self.env['energy_selfconsumption.distribution_table_variable_coefficient']
+
+            cups_ids = data[0][1:]  # Get CUPS
+            hours_data = data[1:]  # Get hours and coefficients
+
+            for cups_index, cups_id in enumerate(cups_ids, start=1):
+                # Create or find the record in DistributionTableVariable for the current CUPS
+                variable_record, _ = DistributionTableVariable.find_or_create({
+                    'distribution_table_id': distribution_table.id,
+                    'cups_id': cups_id,
+                })
+
+                # Proccess every hour and coefficient for this CUPS
+                for row in hours_data:
+                    hour = int(row[0])
+                    coefficient = float(row[cups_index])  # Get the coefficient for the current hour and CUPS
+                    # Create the coefficient record
+                    DistributionTableVariableCoefficient.create({
+                        'distribution_table_variable_id': variable_record.id,
+                        'hour': hour,
+                        'coefficient': coefficient,
+                    })
 
     def get_supply_point_assignation_values(self, line):
         return {
