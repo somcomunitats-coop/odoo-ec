@@ -61,31 +61,6 @@
       />
         </record>
 
-        <record id="partner_bank_1_community_1_demo" model="res.partner.bank">
-            <field name="acc_number">ES4734051800397702714765</field>
-            <field
-        name="partner_id"
-        eval="obj(ref('subscription_1_community_1_demo')).partner_id"
-        model="subscription.request"
-      />
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_1_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-        </record>
-
-        <record id="mandate_1_community_1_demo" model="account.banking.mandate">
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_1_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id" ref="partner_bank_1_community_1_demo" />
-        </record>
 
         <record
       id="inscription_1_selfconsumption_1_demo"
@@ -107,33 +82,6 @@
         eval="obj(ref('subscription_1_community_1_demo')).company_id"
         model="subscription.request"
       />
-            <field name="mandate_id" ref="mandate_1_community_1_demo" />
-        </record>
-
-        <record id="partner_bank_2_community_1_demo" model="res.partner.bank">
-            <field name="acc_number">ES2320384438711294132854</field>
-            <field
-        name="partner_id"
-        eval="obj(ref('subscription_2_community_1_demo')).partner_id"
-        model="subscription.request"
-      />
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_2_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-        </record>
-
-        <record id="mandate_2_community_1_demo" model="account.banking.mandate">
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_2_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id" ref="partner_bank_2_community_1_demo" />
         </record>
 
         <record
@@ -156,33 +104,6 @@
         eval="obj(ref('subscription_2_community_1_demo')).company_id"
         model="subscription.request"
       />
-            <field name="mandate_id" ref="mandate_2_community_1_demo" />
-        </record>
-
-        <record id="partner_bank_3_community_1_demo" model="res.partner.bank">
-            <field name="acc_number">ES3814659665117314353895</field>
-            <field
-        name="partner_id"
-        eval="obj(ref('subscription_3_community_1_demo')).partner_id"
-        model="subscription.request"
-      />
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_3_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-        </record>
-
-        <record id="mandate_3_community_1_demo" model="account.banking.mandate">
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_3_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id" ref="partner_bank_3_community_1_demo" />
         </record>
 
         <record
@@ -205,33 +126,6 @@
         eval="obj(ref('subscription_3_community_1_demo')).company_id"
         model="subscription.request"
       />
-            <field name="mandate_id" ref="mandate_3_community_1_demo" />
-        </record>
-
-        <record id="partner_bank_4_community_1_demo" model="res.partner.bank">
-            <field name="acc_number">ES7400815426001346777954</field>
-            <field
-        name="partner_id"
-        eval="obj(ref('subscription_4_community_1_demo')).partner_id"
-        model="subscription.request"
-      />
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_4_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-        </record>
-
-        <record id="mandate_4_community_1_demo" model="account.banking.mandate">
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_4_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id" ref="partner_bank_4_community_1_demo" />
         </record>
 
         <record
@@ -254,35 +148,7 @@
         eval="obj(ref('subscription_4_community_1_demo')).company_id"
         model="subscription.request"
       />
-            <field name="mandate_id" ref="mandate_4_community_1_demo" />
         </record>
-
-        <record id="partner_bank_5_community_1_demo" model="res.partner.bank">
-            <field name="acc_number">ES8220388558284295991472</field>
-            <field
-        name="partner_id"
-        eval="obj(ref('subscription_5_community_1_demo')).partner_id"
-        model="subscription.request"
-      />
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_5_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-        </record>
-
-        <record id="mandate_5_community_1_demo" model="account.banking.mandate">
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_5_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id" ref="partner_bank_5_community_1_demo" />
-        </record>
-
         <record
       id="inscription_5_selfconsumption_1_demo"
       model="energy_project.inscription"
@@ -303,35 +169,7 @@
         eval="obj(ref('subscription_5_community_1_demo')).company_id"
         model="subscription.request"
       />
-            <field name="mandate_id" ref="mandate_5_community_1_demo" />
         </record>
-
-        <record id="partner_bank_6_community_1_demo" model="res.partner.bank">
-            <field name="acc_number">ES2904875236763496295567</field>
-            <field
-        name="partner_id"
-        eval="obj(ref('subscription_6_community_1_demo')).partner_id"
-        model="subscription.request"
-      />
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_6_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-        </record>
-
-        <record id="mandate_6_community_1_demo" model="account.banking.mandate">
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_6_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id" ref="partner_bank_6_community_1_demo" />
-        </record>
-
         <record
       id="inscription_6_selfconsumption_1_demo"
       model="energy_project.inscription"
@@ -352,35 +190,7 @@
         eval="obj(ref('subscription_6_community_1_demo')).company_id"
         model="subscription.request"
       />
-            <field name="mandate_id" ref="mandate_6_community_1_demo" />
         </record>
-
-        <record id="partner_bank_7_community_1_demo" model="res.partner.bank">
-            <field name="acc_number">ES0330047219108724513136</field>
-            <field
-        name="partner_id"
-        eval="obj(ref('subscription_7_community_1_demo')).partner_id"
-        model="subscription.request"
-      />
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_7_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-        </record>
-
-        <record id="mandate_7_community_1_demo" model="account.banking.mandate">
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_7_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id" ref="partner_bank_7_community_1_demo" />
-        </record>
-
         <record
       id="inscription_7_selfconsumption_1_demo"
       model="energy_project.inscription"
@@ -401,35 +211,7 @@
         eval="obj(ref('subscription_7_community_1_demo')).company_id"
         model="subscription.request"
       />
-            <field name="mandate_id" ref="mandate_7_community_1_demo" />
         </record>
-
-        <record id="partner_bank_8_community_1_demo" model="res.partner.bank">
-            <field name="acc_number">ES7831906761611617235886</field>
-            <field
-        name="partner_id"
-        eval="obj(ref('subscription_8_community_1_demo')).partner_id"
-        model="subscription.request"
-      />
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_8_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-        </record>
-
-        <record id="mandate_8_community_1_demo" model="account.banking.mandate">
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_8_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id" ref="partner_bank_8_community_1_demo" />
-        </record>
-
         <record
       id="inscription_8_selfconsumption_1_demo"
       model="energy_project.inscription"
@@ -450,35 +232,7 @@
         eval="obj(ref('subscription_8_community_1_demo')).company_id"
         model="subscription.request"
       />
-            <field name="mandate_id" ref="mandate_8_community_1_demo" />
         </record>
-
-        <record id="partner_bank_9_community_1_demo" model="res.partner.bank">
-            <field name="acc_number">ES1620808978136239877242</field>
-            <field
-        name="partner_id"
-        eval="obj(ref('subscription_9_community_1_demo')).partner_id"
-        model="subscription.request"
-      />
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_9_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-        </record>
-
-        <record id="mandate_9_community_1_demo" model="account.banking.mandate">
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_9_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id" ref="partner_bank_9_community_1_demo" />
-        </record>
-
         <record
       id="inscription_9_selfconsumption_1_demo"
       model="energy_project.inscription"
@@ -499,35 +253,7 @@
         eval="obj(ref('subscription_9_community_1_demo')).company_id"
         model="subscription.request"
       />
-            <field name="mandate_id" ref="mandate_9_community_1_demo" />
         </record>
-
-        <record id="partner_bank_10_communit_1_demo" model="res.partner.bank">
-            <field name="acc_number">ES0501286321203358824444</field>
-            <field
-        name="partner_id"
-        eval="obj(ref('subscription_10_community_1_demo')).partner_id"
-        model="subscription.request"
-      />
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_10_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-        </record>
-
-        <record id="mandate_10_community_1_demo" model="account.banking.mandate">
-            <field
-        name="company_id"
-        eval="obj(ref('subscription_10_community_1_demo')).company_id"
-        model="subscription.request"
-      />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id" ref="partner_bank_10_communit_1_demo" />
-        </record>
-
         <record
       id="inscription_10_selfconsumption_1_demo"
       model="energy_project.inscription"
@@ -548,7 +274,6 @@
         eval="obj(ref('subscription_10_community_1_demo')).company_id"
         model="subscription.request"
       />
-            <field name="mandate_id" ref="mandate_10_community_1_demo" />
         </record>
 
         <record
