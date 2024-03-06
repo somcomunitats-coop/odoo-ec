@@ -18,6 +18,7 @@
                     <field
             name="mandate_id"
             domain="[('id', 'in', mandate_filtered_ids)]"
+            context="{'default_partner_id': partner_id}"
           />
                 </tree>
             </field>
