@@ -70,10 +70,13 @@
             <field name="format">sepa</field>
             <field name="scheme">CORE</field>
             <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id"
+            <field
+        name="partner_bank_id"
         eval="obj(ref('subscription_1_community_1_demo')).partner_id.bank_ids[0]"
         model="subscription.request"
       />
+            <field name="signature_date" eval="datetime.today()" />
+            <field name="state">valid</field>
         </record>
 
         <record
@@ -108,10 +111,13 @@
             <field name="format">sepa</field>
             <field name="scheme">CORE</field>
             <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id"
+            <field
+        name="partner_bank_id"
         eval="obj(ref('subscription_2_community_1_demo')).partner_id.bank_ids[0]"
         model="subscription.request"
       />
+            <field name="signature_date" eval="datetime.today()" />
+            <field name="state">valid</field>
         </record>
 
         <record
@@ -146,10 +152,13 @@
             <field name="format">sepa</field>
             <field name="scheme">CORE</field>
             <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id"
+            <field
+        name="partner_bank_id"
         eval="obj(ref('subscription_3_community_1_demo')).partner_id.bank_ids[0]"
         model="subscription.request"
       />
+                        <field name="signature_date" eval="datetime.today()" />
+            <field name="state">valid</field>
         </record>
 
         <record
@@ -184,10 +193,13 @@
             <field name="format">sepa</field>
             <field name="scheme">CORE</field>
             <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id"
+            <field
+        name="partner_bank_id"
         eval="obj(ref('subscription_4_community_1_demo')).partner_id.bank_ids[0]"
         model="subscription.request"
       />
+                        <field name="signature_date" eval="datetime.today()" />
+            <field name="state">valid</field>
         </record>
 
         <record
@@ -222,10 +234,13 @@
             <field name="format">sepa</field>
             <field name="scheme">CORE</field>
             <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id"
+            <field
+        name="partner_bank_id"
         eval="obj(ref('subscription_5_community_1_demo')).partner_id.bank_ids[0]"
         model="subscription.request"
       />
+                        <field name="signature_date" eval="datetime.today()" />
+            <field name="state">valid</field>
         </record>
 
         <record
@@ -260,10 +275,13 @@
             <field name="format">sepa</field>
             <field name="scheme">CORE</field>
             <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id"
+            <field
+        name="partner_bank_id"
         eval="obj(ref('subscription_6_community_1_demo')).partner_id.bank_ids[0]"
         model="subscription.request"
       />
+                        <field name="signature_date" eval="datetime.today()" />
+            <field name="state">valid</field>
         </record>
 
         <record
@@ -298,10 +316,13 @@
             <field name="format">sepa</field>
             <field name="scheme">CORE</field>
             <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id"
+            <field
+        name="partner_bank_id"
         eval="obj(ref('subscription_7_community_1_demo')).partner_id.bank_ids[0]"
         model="subscription.request"
       />
+                        <field name="signature_date" eval="datetime.today()" />
+            <field name="state">valid</field>
         </record>
 
         <record
@@ -336,10 +357,13 @@
             <field name="format">sepa</field>
             <field name="scheme">CORE</field>
             <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id"
+            <field
+        name="partner_bank_id"
         eval="obj(ref('subscription_8_community_1_demo')).partner_id.bank_ids[0]"
         model="subscription.request"
       />
+                        <field name="signature_date" eval="datetime.today()" />
+            <field name="state">valid</field>
         </record>
 
         <record
@@ -374,10 +398,13 @@
             <field name="format">sepa</field>
             <field name="scheme">CORE</field>
             <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id"
+            <field
+        name="partner_bank_id"
         eval="obj(ref('subscription_9_community_1_demo')).partner_id.bank_ids[0]"
         model="subscription.request"
       />
+                        <field name="signature_date" eval="datetime.today()" />
+            <field name="state">valid</field>
         </record>
 
         <record
@@ -412,10 +439,13 @@
             <field name="format">sepa</field>
             <field name="scheme">CORE</field>
             <field name="recurrent_sequence_type">first</field>
-            <field name="partner_bank_id"
+            <field
+        name="partner_bank_id"
         eval="obj(ref('subscription_10_community_1_demo')).partner_id.bank_ids[0]"
         model="subscription.request"
       />
+                        <field name="signature_date" eval="datetime.today()" />
+            <field name="state">valid</field>
         </record>
 
         <record
