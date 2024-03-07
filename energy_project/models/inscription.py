@@ -34,6 +34,25 @@ class Inscription(models.Model):
     is_member = fields.Char(
         string=_("Typology"), compute="_compute_is_member", readonly=True
     )
+    mandate_id = fields.Many2one(
+        "account.banking.mandate", string="Bank Mandate", required=True
+    )
+    acc_number = fields.Char(related="mandate_id.partner_bank_id.acc_number")
+    mandate_filtered_ids = fields.One2many(
+        "account.banking.mandate", compute="_compute_mandate_filtered_ids"
+    )
+
+    @api.depends("partner_id")
+    def _compute_mandate_filtered_ids(self):
+        for record in self:
+            mandates = self.env["account.banking.mandate"].search(
+                [
+                    ("partner_id", "=", record.partner_id.id),
+                    ("company_id", "=", record.company_id.id),
+                    ("state", "=", "valid"),
+                ]
+            )
+            record.mandate_filtered_ids = mandates or False
 
     @api.depends("partner_id.member")
     def _compute_is_member(self):
@@ -83,3 +102,12 @@ class Inscription(models.Model):
         if supply_point_assignations:
             supply_point_assignations.unlink()
         return super().unlink()
+
+    @api.constrains("mandate_id", "partner_id")
+    def _check_mandate_id_belongs_to_partner(self):
+        for record in self:
+            if record.mandate_id and record.partner_id:
+                if record.mandate_id.partner_id != record.partner_id:
+                    raise ValidationError(
+                        _("The selected mandate does not belong to the chosen partner.")
+                    )

@@ -5,6 +5,7 @@ from datetime import datetime
 from io import StringIO
 
 import chardet
+from stdnum.es import iban
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
@@ -120,6 +121,8 @@ class SelfconsumptionImportWizard(models.TransientModel):
             "owner_vat": line[12] or False,
             "owner_firstname": line[13] or False,
             "owner_lastname": line[14] or False,
+            "iban": line[15] or False,
+            "mandate_auth_date": line[16] or False,
         }
 
     def _parse_file(self, data_file):
@@ -162,6 +165,51 @@ class SelfconsumptionImportWizard(models.TransientModel):
             return False, _("Partner with VAT:<b>{vat}</b> was not found.").format(
                 vat=line_dict["partner_vat"]
             )
+        if not line_dict["iban"]:
+            return False, _("The IBAN field cannot be empty.")
+
+        try:
+            iban.validate(line_dict["iban"])
+        except Exception as e:
+            error_message = _("Invalid IBAN: {error}").format(error=e)
+            raise ValidationError(error_message)
+
+        bank_account = self.env["res.partner.bank"].search(
+            [
+                ("acc_number", "=", line_dict["iban"]),
+                ("partner_id", "=", partner.id),
+                ("company_id", "=", self.env.company.id),
+            ],
+            limit=1,
+        )
+
+        if not bank_account:
+            bank_account = self.env["res.partner.bank"].create(
+                {
+                    "acc_number": line_dict["iban"],
+                    "partner_id": partner.id,
+                    "company_id": self.env.company.id,
+                }
+            )
+        try:
+            mandate_auth_date = datetime.strptime(
+                line_dict["mandate_auth_date"], self.date_format
+            ).date()
+            mandate = self.env["account.banking.mandate"].create(
+                {
+                    "format": "sepa",
+                    "type": "recurrent",
+                    "state": "valid",
+                    "signature_date": mandate_auth_date,
+                    "partner_bank_id": bank_account.id,
+                    "partner_id": partner.id,
+                    "company_id": self.env.company.id,
+                }
+            )
+        except Exception as e:
+            return False, _("Could not create mandate for {vat}. {error}").format(
+                vat=line_dict["partner_vat"], error=e
+            )
 
         if not project.inscription_ids.filtered_domain(
             [("partner_id", "=", partner.id)]
@@ -179,6 +227,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                         "project_id": project.id,
                         "partner_id": partner.id,
                         "effective_date": effective_date,
+                        "mandate_id": mandate.id,
                     }
                 )
             except Exception as e:

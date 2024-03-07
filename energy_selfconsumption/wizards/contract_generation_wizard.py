@@ -16,6 +16,16 @@ class ContractGenerationWizard(models.TransientModel):
         required=True,
         default=fields.Date.today(),
     )
+    payment_mode = fields.Many2one(
+        "account.payment.mode",
+        string="Payment mode",
+        default=lambda self: self._default_payment_mode(),
+    )
+
+    def _default_payment_mode(self):
+        return self.env["account.payment.mode"].search(
+            [("company_id", "=", self.env.company.id), ("payment_type", "=", "inbound")]
+        )
 
     def generate_contracts_button(self):
         """
@@ -50,6 +60,24 @@ class ContractGenerationWizard(models.TransientModel):
                     "date_start": self.start_date,
                 }
             )
+
+            inscription_id = self.selfconsumption_id.inscription_ids.filtered_domain(
+                [
+                    (
+                        "partner_id",
+                        "=",
+                        supply_point_assignation.supply_point_id.partner_id.id,
+                    )
+                ]
+            )
+
+            if not inscription_id.mandate_id:
+                raise ValidationError(
+                    _("Mandate not found for {partner}").format(
+                        partner=supply_point_assignation.supply_point_id.partner_id.name
+                    )
+                )
+
             contract = self.env["contract.contract"].create(
                 {
                     "name": _("Contract - %s - %s")
@@ -61,6 +89,8 @@ class ContractGenerationWizard(models.TransientModel):
                     "supply_point_assignation_id": supply_point_assignation.id,
                     "company_id": self.env.company.id,
                     "contract_template_id": self.selfconsumption_id.product_id.contract_template_id.id,
+                    "payment_mode_id": self.payment_mode.id,
+                    "mandate_id": inscription_id.mandate_id.id,
                 }
             )
             # We use the next method from the contract model to update the contract fields with contract template

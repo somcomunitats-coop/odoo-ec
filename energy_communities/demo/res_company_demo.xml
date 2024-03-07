@@ -66,6 +66,27 @@
       />
         </function>
 
+        <record
+      id="energy_community_company_1_payment_mode"
+      model="account.payment.mode"
+    >
+            <field name="name">SEPA Direct Debit</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_company_id.id"
+      />
+            <field
+        name="payment_method_id"
+        ref="account_banking_sepa_direct_debit.sepa_direct_debit"
+      />
+            <field name="bank_account_link">fixed</field>
+            <field
+        name="fixed_journal_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_1_wizard')).new_company_id.bank_journal_ids[0]"
+      />
+        </record>
 
 
         <record
@@ -111,6 +132,28 @@
       />
         </function>
 
+        <record
+      id="energy_community_company_2_payment_mode"
+      model="account.payment.mode"
+    >
+            <field name="name">SEPA Direct Debit</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_company_id.id"
+      />
+            <field
+        name="payment_method_id"
+        ref="account_banking_sepa_direct_debit.sepa_direct_debit"
+      />
+            <field name="bank_account_link">fixed</field>
+            <field
+        name="fixed_journal_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_2_wizard')).new_company_id.bank_journal_ids[0]"
+      />
+        </record>
+
 
         <record
       id="energy_community_company_3_wizard"
@@ -154,5 +197,27 @@
             'default_lang_id': ref('base.lang_eu_ES')}"
       />
         </function>
+
+                <record
+      id="energy_community_company_3_payment_mode"
+      model="account.payment.mode"
+    >
+            <field name="name">SEPA Direct Debit</field>
+            <field
+        name="company_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_3_wizard')).new_company_id.id"
+      />
+            <field
+        name="payment_method_id"
+        ref="account_banking_sepa_direct_debit.sepa_direct_debit"
+      />
+            <field name="bank_account_link">fixed</field>
+            <field
+        name="fixed_journal_id"
+        model="account.multicompany.easy.creation.wiz"
+        eval="obj(ref('energy_community_company_3_wizard')).new_company_id.bank_journal_ids[0]"
+      />
+        </record>
     </data>
 </odoo>

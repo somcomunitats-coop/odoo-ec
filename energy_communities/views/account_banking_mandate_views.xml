@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="account_banking_mandate_form_inherit" model="ir.ui.view">
+		<field name="name">account_banking_mandate_form_inherit</field>
+		<field name="model">account.banking.mandate</field>
+		<field name="inherit_id" ref="account_banking_mandate.view_mandate_form" />
+		<field name="arch" type="xml">
+			
+        <xpath expr="//field[@name='partner_bank_id']" position="attributes">
+            <attribute name="context">{'default_partner_id': context.get('default_partner_id')}</attribute>
+        </xpath>
+		</field>
+	</record>
+</odoo>
