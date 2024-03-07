@@ -10,6 +10,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.http import request
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -45,21 +46,21 @@ class DistributionTableImportWizard(models.TransientModel):
                 raise ValidationError(_("Only csv format files are accepted."))
 
     def import_file_button(self):
+        # Button to import file, checks whether it is necessary to enqueue or not according to the type field
         file_data = base64.b64decode(self.import_file)
         parsing_data = self.with_context(active_id=self.ids[0])._parse_file(file_data)
         active_id = self.env.context.get("active_id")
-        distribution_table = self.env[
-            "energy_selfconsumption.distribution_table"
-        ].browse(active_id)
-        type = self.env.context.get("type")
-
+        distribution_table = self.env['energy_selfconsumption.distribution_table'].browse(active_id)
+        
+        type = distribution_table.type
+        
         if type == 'variable_schedule':
-            # Para 'variable_schedule', encola el trabajo
-            self.env['queue.job'].sudo().with_delay().import_all_lines(parsing_data, distribution_table.id)
+            # For 'variable_schedule', queue job
+            self.with_delay().import_all_lines(parsing_data, active_id)
             message = 'La importación de la programación variable se está procesando en segundo plano.'
         else:
-            # Para cualquier otro tipo, procesa de manera síncrona
-            self.import_all_lines(parsing_data, distribution_table)
+            # For other type, syncron type
+            self.import_all_lines(parsing_data, active_id)
             message = 'La importación ha finalizado.'
 
         return {
@@ -114,7 +115,9 @@ class DistributionTableImportWizard(models.TransientModel):
             raise UserError(_("Error parsing the file"))
 
     def import_all_lines(self, data, distribution_table):
-        type = self.env.context.get("type")
+        logger.debug('Inicio de la importación para la Distribution Table con ID: %s', distribution_table)
+        type = self.env['energy_selfconsumption.distribution_table'].browse(distribution_table).type
+        logger.debug('El valor de type es: %s', type)
         if type == 'fixed':
             supply_point_assignation_values_list = []
 
@@ -127,29 +130,41 @@ class DistributionTableImportWizard(models.TransientModel):
                 {"supply_point_assignation_ids": supply_point_assignation_values_list}
             )
         elif type == 'variable_schedule':
+            logger.debug('Procesando importación tipo "variable_schedule"')
             DistributionTableVariable = self.env['energy_selfconsumption.distribution_table_variable']
-            DistributionTableVariableCoefficient = self.env['energy_selfconsumption.distribution_table_variable_coefficient']
-
+            DistributionTableVariableCoefficient = self.env['energy_selfconsumption.distribution_table_var_coeff']
             cups_ids = data[0][1:]  # Get CUPS
+            logger.debug('CUPS IDs encontrados: %s', cups_ids)
             hours_data = data[1:]  # Get hours and coefficients
 
             for cups_index, cups_id in enumerate(cups_ids, start=1):
                 # Create or find the record in DistributionTableVariable for the current CUPS
-                variable_record, _ = DistributionTableVariable.find_or_create({
-                    'distribution_table_id': distribution_table.id,
-                    'cups_id': cups_id,
-                })
+                logger.debug('Procesando CUPS ID: %s', cups_id)
+                # Check if record exist
+                variable_record = DistributionTableVariable.search([
+                    ('distribution_table_id', '=', distribution_table),
+                    ('cups_id', '=', cups_id),
+                ], limit=1)
+
+                # If not exist, create
+                if not variable_record:
+                    variable_record = DistributionTableVariable.create({
+                        'distribution_table_id': distribution_table,
+                        'cups_id': cups_id,
+                    })
 
                 # Proccess every hour and coefficient for this CUPS
                 for row in hours_data:
                     hour = int(row[0])
                     coefficient = float(row[cups_index])  # Get the coefficient for the current hour and CUPS
+                    logger.debug('Añadiendo coeficiente %s para la hora %s del CUPS ID: %s', coefficient, hour, cups_id)
                     # Create the coefficient record
                     DistributionTableVariableCoefficient.create({
                         'distribution_table_variable_id': variable_record.id,
                         'hour': hour,
                         'coefficient': coefficient,
                     })
+        logger.debug('Finalización de la importación para la Distribution Table con ID: %s', distribution_table)
 
     def get_supply_point_assignation_values(self, line):
         return {

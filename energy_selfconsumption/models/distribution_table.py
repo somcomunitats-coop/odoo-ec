@@ -171,7 +171,7 @@ class DistributionTableVariable(models.Model):
 
 
 class DistributionTableVariableCoefficient(models.Model):
-    _name = "energy_selfconsumption.distribution_table_variable_coefficient"
+    _name = "energy_selfconsumption.distribution_table_var_coeff"
 
     distribution_table_variable_id = fields.Many2one(
         "energy_selfconsumption.distribution_table_variable", 
