@@ -23,6 +23,10 @@
 
                     <group>
                         <field name="start_date" />
+                        <field
+              name="payment_mode"
+              domain="[('company_id', '=', context.get('default_company_id', False)), ('payment_type', '=', 'inbound')]"
+            />
                     </group>
                      <footer>
                         <button

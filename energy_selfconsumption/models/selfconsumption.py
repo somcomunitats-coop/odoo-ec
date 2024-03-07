@@ -202,7 +202,10 @@ class Selfconsumption(models.Model):
                 "views": [(False, "form")],
                 "view_id": False,
                 "target": "new",
-                "context": {"default_selfconsumption_id": self.id},
+                "context": {
+                    "default_selfconsumption_id": self.id,
+                    "default_company_id": self.env.company.id,
+                },
             }
 
     def set_invoicing_mode(self):
