@@ -187,6 +187,11 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             )
         )
 
+    def create_default_utm_stage(self):
+        self.env["utm.stage"].sudo().create(
+            {"name": _("New"), "company_id": self.new_company_id.id}
+        )
+
     def update_product_category_company_share(self):
         new_company_id = self.new_company_id.id
         self_new_company = self.with_company(new_company_id)
@@ -281,6 +286,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         self.create_company()
         self.control_company_partner_visibility()
         self.add_company_managers()
+        self.create_default_utm_stage()
         if self.create_landing:
             self.create_public_data()
         if self.crm_lead_id:
