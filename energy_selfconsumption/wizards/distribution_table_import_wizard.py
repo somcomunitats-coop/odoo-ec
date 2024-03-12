@@ -9,7 +9,10 @@ import werkzeug
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.http import request
+from stdnum.es import cups
+from stdnum.exceptions import *
 
+import math
 
 logger = logging.getLogger(__name__)
 
@@ -56,27 +59,23 @@ class DistributionTableImportWizard(models.TransientModel):
         
         if type == 'variable_schedule':
             # For 'variable_schedule', queue job
+            distribution_table.message_post(
+                subject=_("Importation in Progress"),
+                body=_("The distribution table import is being processed in the background. Any errors will be reported here."),
+            )
+
             header, data_rows = parsing_data[0], parsing_data[1:]
             cups_groups = self._divide_in_groups(data_rows, 20) # Divide parsing_data in groups to optimized the memory use
             for group in cups_groups:
                 # Add header before to process
+                if distribution_table.import_error_found:
+                    break
                 group_with_header = [header] + group
-                self.with_delay().process_variable_schedule(group_with_header, active_id)
-            message = 'The variable schedule import is being processed in the background.'
+                self.with_delay().process_variable_schedule(group_with_header, active_id)  
         else:
             # For other type, syncron type
-            self.process_variable_schedule(parsing_data, active_id)
-            message = 'The import is complete.'
-
-        return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': _('Import Started'),
-                'message': message,
-                'sticky': False,
-            }
-        }
+            self.import_all_lines(parsing_data, distribution_table)
+        return True
 
     def _divide_in_groups(self, data, group_size):
         """Divide the data into groups to process them separately."""
@@ -124,29 +123,28 @@ class DistributionTableImportWizard(models.TransientModel):
             raise UserError(_("Error parsing the file"))
 
     def import_all_lines(self, data, distribution_table):
-        logger.debug('Starting import for Distribution Table with ID: %s', distribution_table)
-        type = self.env['energy_selfconsumption.distribution_table'].browse(distribution_table).type
-        if type == 'fixed':
-            supply_point_assignation_values_list = []
+        supply_point_assignation_values_list = []
 
-            for index, line in enumerate(data[1:]):
-                value = self.get_supply_point_assignation_values(line)
+        for index, line in enumerate(data[1:]):
+            value = self.get_supply_point_assignation_values(line)
 
-                supply_point_assignation_values_list.append((0, 0, value))
+            supply_point_assignation_values_list.append((0, 0, value))
 
             distribution_table.write(
                 {"supply_point_assignation_ids": supply_point_assignation_values_list}
-            )
-        elif type == 'variable_schedule':
-            logger.debug('Processing import type "variable_schedule"')
-            self.process_variable_schedule(data, distribution_table)
-    
+            )    
     
     def process_variable_schedule(self, data, distribution_table):
         DistributionTableVariable = self.env['energy_selfconsumption.distribution_table_variable']
         DistributionTableVariableCoefficient = self.env['energy_selfconsumption.distribution_table_var_coeff']
         cups_ids = data[0][1:]  # Get CUPS from header row
         logger.debug('CUPS IDs found: %s', cups_ids)
+        # Validate CUPS before to process
+        for cups in cups_ids:
+            is_valid, error_message = self.validate_cups_id(cups, distribution_table)
+            if not is_valid:
+                logger.error(error_message)
+                return
         hours_data = data[1:]  # The rest of the data contains hours and coefficients
         coefficients_batch = []
         batch_size = 50
@@ -161,6 +159,13 @@ class DistributionTableImportWizard(models.TransientModel):
 
         for row_index, row in enumerate(hours_data, start=1):
             hour = int(row[0])
+            coefficients = list(map(float, row[1:]))  # Convert coefficients to float
+            # Validate that the sum of coefficients is 1
+            is_valid, error_message = self.validate_coefficients(coefficients, hour, distribution_table)
+            if not is_valid:
+                logger.error(error_message)
+                return
+
             logger.debug('Processing data for time: %d', hour)
             for cups_index, coefficient in enumerate(row[1:], start=1):
                 cups_id = cups_ids[cups_index - 1]
@@ -190,6 +195,39 @@ class DistributionTableImportWizard(models.TransientModel):
 
         logger.debug('Completing the import process for the Distribution Table with ID: %s', distribution_table)
 
+    def validate_cups_id(self, cups_id, distribution_table_id):
+        try:
+            cups.validate(cups_id)
+            return True, ""
+        except InvalidLength:
+            error_message = _("Invalid CUPS %s: The length is incorrect." % (cups_id))
+        except InvalidComponent:
+            error_message = _("Invalid CUPS %s: The CUPS does not start with 'ES'." % (cups_id))
+        except InvalidFormat:
+            error_message = _("Invalid CUPS %s: The CUPS has an incorrect format." % (cups_id))
+        except InvalidChecksum:
+            error_message = _("Invalid CUPS %s: The checksum of the CUPS is incorrect." % (cups_id))
+
+        distribution_table = self.env['energy_selfconsumption.distribution_table'].browse(distribution_table_id)
+        message_status = distribution_table.message_post(
+            subject=_("CUPS Validation Error"),
+            body=error_message,
+        )
+        return False, error_message
+
+    def validate_coefficients(self, coefficients, hour, distribution_table_id):
+        total_sum = sum(coefficients)
+        # Added tolerance margin to account for floating-point arithmetic imprecision.
+        if not math.isclose(total_sum, 1.0, rel_tol=1e-9):
+            error_message = _('The sum of coefficients for hour %s does not equal 1' % hour)
+            distribution_table = self.env['energy_selfconsumption.distribution_table'].browse(distribution_table_id)
+            message_status = distribution_table.message_post(
+                subject=_("Coefficient Validation Error"),
+                body=error_message,
+            )
+            distribution_table.import_error_found = True
+            return False, error_message
+        return True, ""
 
     def get_supply_point_assignation_values(self, line):
         return {

@@ -17,6 +17,7 @@ TYPE_VALUES = [
 class DistributionTable(models.Model):
     _name = "energy_selfconsumption.distribution_table"
     _description = "Distribution Table"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     name = fields.Char(readonly=True)
     selfconsumption_project_id = fields.Many2one(
@@ -36,7 +37,8 @@ class DistributionTable(models.Model):
     supply_point_assignation_ids = fields.One2many(
         "energy_selfconsumption.supply_point_assignation", "distribution_table_id"
     )
-
+    import_error_found = fields.Boolean(default=False)
+    
     @api.model
     def create(self, vals):
         if isinstance(vals, list):
