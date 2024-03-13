@@ -41,22 +41,13 @@ class DistributionTable(models.Model):
     
     @api.model
     def create(self, vals):
-        if isinstance(vals, list):
-            vals = vals[0]
+        # if isinstance(vals, list):
+        #     vals = vals[0]
         vals["name"] = self.env.ref(
             "energy_selfconsumption.distribution_table_sequence", False
         ).next_by_id()
+        return super().create(vals)
 
-        new_record = super().create(vals)
-
-        if vals.get("type") == "fixed":
-            self.env["energy_selfconsumption.distribution_table_fixed"].create(
-                {"distribution_table_id": new_record.id}
-            )
-        elif vals.get('type') == 'variable_schedule':
-            self.env['energy_selfconsumption.distribution_table_variable'].create({
-                'distribution_table_id': new_record.id
-            })
 
         return new_record
 
@@ -168,7 +159,7 @@ class DistributionTableVariable(models.Model):
         ondelete="cascade",
         auto_join=True
     )
-    cups_id = fields.Char(string="CUPS", required=True)
+    cups_id = fields.Char(string="CUPS")
     # one2many to coefficient
 
 
