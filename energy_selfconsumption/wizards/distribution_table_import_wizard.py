@@ -134,14 +134,14 @@ class DistributionTableImportWizard(models.TransientModel):
                 {"supply_point_assignation_ids": supply_point_assignation_values_list}
             )    
     
-    def process_variable_schedule(self, data, distribution_table):
+    def process_variable_schedule(self, data, distribution_table_id):
         DistributionTableVariable = self.env['energy_selfconsumption.distribution_table_variable']
         DistributionTableVariableCoefficient = self.env['energy_selfconsumption.distribution_table_var_coeff']
         cups_ids = data[0][1:]  # Get CUPS from header row
         logger.debug('CUPS IDs found: %s', cups_ids)
         # Validate CUPS before to process
         for cups in cups_ids:
-            is_valid, error_message = self.validate_cups_id(cups, distribution_table)
+            is_valid, error_message = self.validate_cups_id(cups, distribution_table_id)
             if not is_valid:
                 logger.error(error_message)
                 return
@@ -152,7 +152,7 @@ class DistributionTableImportWizard(models.TransientModel):
         # Pre-search existing records to avoid repeated searches
         existing_variables = DistributionTableVariable.search([
             ('cups_id', 'in', cups_ids), 
-            ('distribution_table_id', '=', distribution_table)
+            ('distribution_table_id', '=', distribution_table_id)
         ])
         existing_cups_map = {var.cups_id: var for var in existing_variables}
         logger.debug('Preloaded %d existing records from DistributionTableVariable', len(existing_variables))
@@ -161,7 +161,7 @@ class DistributionTableImportWizard(models.TransientModel):
             hour = int(row[0])
             coefficients = list(map(float, row[1:]))  # Convert coefficients to float
             # Validate that the sum of coefficients is 1
-            is_valid, error_message = self.validate_coefficients(coefficients, hour, distribution_table)
+            is_valid, error_message = self.validate_coefficients(coefficients, hour, distribution_table_id)
             if not is_valid:
                 logger.error(error_message)
                 return
@@ -172,7 +172,7 @@ class DistributionTableImportWizard(models.TransientModel):
                 variable_record = existing_cups_map.get(cups_id)
                 if not variable_record:
                     variable_record = DistributionTableVariable.create({
-                        'distribution_table_id': distribution_table,
+                        'distribution_table_id': distribution_table_id,
                         'cups_id': cups_id,
                     })
                     existing_cups_map[cups_id] = variable_record
@@ -189,11 +189,17 @@ class DistributionTableImportWizard(models.TransientModel):
                 logger.debug('Batch processing of %d coefficients for time %d', len(coefficients_batch), hour)
                 coefficients_batch.clear()
 
+            if hour == 8760:
+                distribution_table = self.env['energy_selfconsumption.distribution_table'].browse(distribution_table_id)
+                distribution_table.message_post(
+                    body=_("The import process has been completed successfully."),
+                    subject=_("Import Completed"),
+                )
         if coefficients_batch:
             DistributionTableVariableCoefficient.create(coefficients_batch)
             logger.debug('Processed last batch of %d coefficients', len(coefficients_batch))
 
-        logger.debug('Completing the import process for the Distribution Table with ID: %s', distribution_table)
+        logger.debug('Completing the import process for the Distribution Table with ID: %s', distribution_table_id)
 
     def validate_cups_id(self, cups_id, distribution_table_id):
         try:
