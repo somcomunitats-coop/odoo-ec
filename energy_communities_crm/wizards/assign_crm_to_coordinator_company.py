@@ -70,6 +70,6 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
             # notify followers
             email_values = {"email_to": followers.mapped("partner_id.email")}
             template = self.env.ref(
-                "energy_communities.email_templ_lead_assigned_to_coordinator_id"
+                "energy_communities_crm.email_templ_lead_assigned_to_coordinator_id"
             ).with_context(email_values)
             self.crm_lead_id.message_post_with_template(template.id)

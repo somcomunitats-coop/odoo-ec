@@ -6,7 +6,7 @@ import requests
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
-from .model_mapping_conf import (
+from .metadata_mapping_conf import (
     _LEAD_METADATA__DATE_FIELDS,
     _LEAD_METADATA__ENERGY_TAGS_FIELDS,
     _LEAD_METADATA__EXTID_FIELDS,

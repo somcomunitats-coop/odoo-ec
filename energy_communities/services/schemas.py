@@ -8,60 +8,60 @@ def ce_state_validator(field, value, error):
         error(field, "Must be 'active' or 'on_building'")
 
 
-S_CRM_LEAD_RETURN_CREATE = {
-    "id": {"type": "integer"},
-}
+# S_CRM_LEAD_RETURN_CREATE = {
+#     "id": {"type": "integer"},
+# }
 
-S_CRM_LEAD_CREATE = {
-    "partner_name": {"type": "string"},
-    "partner_email": {"type": "string"},
-    "partner_phone": {"type": "string"},
-    "partner_full_address": {"type": "string"},
-    "partner_city": {"type": "string"},
-    "partner_zip": {"type": "string"},
-    "odoo_company_id": {"type": "integer"},
-    "source_xml_id": {"type": "string"},
-    "tag_ids": {
-        "type": "list",
-        "schema": {
-            "type": "integer",
-        },
-    },
-    "partner_description": {"type": "string"},
-}
+# S_CRM_LEAD_CREATE = {
+#     "partner_name": {"type": "string"},
+#     "partner_email": {"type": "string"},
+#     "partner_phone": {"type": "string"},
+#     "partner_full_address": {"type": "string"},
+#     "partner_city": {"type": "string"},
+#     "partner_zip": {"type": "string"},
+#     "odoo_company_id": {"type": "integer"},
+#     "source_xml_id": {"type": "string"},
+#     "tag_ids": {
+#         "type": "list",
+#         "schema": {
+#             "type": "integer",
+#         },
+#     },
+#     "partner_description": {"type": "string"},
+# }
 
-S_CRM_LEAD_CREATE_ALTA_CE = {
-    "partner_name": {"type": "string", "required": True},
-    "partner_description": {"type": "string", "required": True},
-    "partner_full_address": {"type": "string", "required": True},
-    "partner_zip": {"type": "string", "required": True},
-    "partner_city": {"type": "string", "required": True},
-    "partner_state": {"type": "string", "required": True},
-    "partner_qty_members": {"type": "integer", "required": True},
-    "partner_legal_state": {"type": "string", "check_with": ce_state_validator},
-    "tag_ids": {
-        "type": "list",
-        "schema": {
-            "type": "integer",
-        },
-        "required": True,
-    },
-    "partner_foundation_date": {"type": "string"},
-    "partner_vat": {"type": "string"},
-    "partner_comments": {"type": "string"},
-    "partner_firstname": {"type": "string", "required": True},
-    "partner_lastname": {"type": "string", "required": True},
-    "partner_email": {"type": "string", "required": True},
-    "partner_phone": {"type": "string", "required": True},
-    "contact2_firstname": {"type": "string"},
-    "contact2_lastname": {"type": "string"},
-    "contact2_email": {"type": "string"},
-    "contact2_mobile": {"type": "string"},
-    "odoo_company_id": {"type": "integer", "required": True},
-    "source_xml_id": {"type": "string", "required": True},
-    "partner_map_place_form_url": {"type": "string", "required": False},
-    "partner_language": {"type": "string"},
-}
+# S_CRM_LEAD_CREATE_ALTA_CE = {
+#     "partner_name": {"type": "string", "required": True},
+#     "partner_description": {"type": "string", "required": True},
+#     "partner_full_address": {"type": "string", "required": True},
+#     "partner_zip": {"type": "string", "required": True},
+#     "partner_city": {"type": "string", "required": True},
+#     "partner_state": {"type": "string", "required": True},
+#     "partner_qty_members": {"type": "integer", "required": True},
+#     "partner_legal_state": {"type": "string", "check_with": ce_state_validator},
+#     "tag_ids": {
+#         "type": "list",
+#         "schema": {
+#             "type": "integer",
+#         },
+#         "required": True,
+#     },
+#     "partner_foundation_date": {"type": "string"},
+#     "partner_vat": {"type": "string"},
+#     "partner_comments": {"type": "string"},
+#     "partner_firstname": {"type": "string", "required": True},
+#     "partner_lastname": {"type": "string", "required": True},
+#     "partner_email": {"type": "string", "required": True},
+#     "partner_phone": {"type": "string", "required": True},
+#     "contact2_firstname": {"type": "string"},
+#     "contact2_lastname": {"type": "string"},
+#     "contact2_email": {"type": "string"},
+#     "contact2_mobile": {"type": "string"},
+#     "odoo_company_id": {"type": "integer", "required": True},
+#     "source_xml_id": {"type": "string", "required": True},
+#     "partner_map_place_form_url": {"type": "string", "required": False},
+#     "partner_language": {"type": "string"},
+# }
 
 S_PROFILE_COMMUNITY_GET = {
     "type": "dict",

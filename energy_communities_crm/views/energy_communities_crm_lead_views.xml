@@ -1,0 +1,54 @@
+<odoo>
+    <record id="ce_crm_leads_ce_newsletter_action" model="ir.actions.act_window">
+        <field name="name">EC Newsletter</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" eval="False" /> <!-- Force empty -->
+        <field name="view_id" eval="False" /> <!-- Force empty -->
+        <field
+      name="domain"
+      eval="[('source_id','=', ref('energy_communities.ce_source_existing_ce_info'))]"
+    />
+    </record>
+
+    <record id="ce_crm_leads_ce_contact_action" model="ir.actions.act_window">
+        <field name="name">CE Contact</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" eval="False" /> <!-- Force empty -->
+        <field name="view_id" eval="False" /> <!-- Force empty -->
+        <field
+      name="domain"
+      eval="[('source_id','=', ref('energy_communities.ce_source_existing_ce_contact'))]"
+    />
+    </record>
+
+    <record id="ce_crm_leads_general_info_action" model="ir.actions.act_window">
+        <field name="name">General Newsletter</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" eval="False" /> <!-- Force empty -->
+        <field name="view_id" eval="False" /> <!-- Force empty -->
+        <field
+      name="domain"
+      eval="[('source_id','=', ref('energy_communities.ce_source_general_info'))]"
+    />
+    </record>
+
+    <record id="ce_crm_leads_new_ce_request_action" model="ir.actions.act_window">
+        <field name="name">CE creation requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" eval="False" /> <!-- Force empty -->
+        <field name="view_id" eval="False" /> <!-- Force empty -->
+        <field
+      name="domain"
+      eval="[('source_id','=', ref('energy_communities.ce_source_creation_ce_proposal'))]"
+    />
+    </record>
+
+</odoo>

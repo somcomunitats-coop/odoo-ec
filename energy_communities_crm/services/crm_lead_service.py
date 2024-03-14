@@ -107,7 +107,7 @@ class CRMLeadService(Component):
             email_values["lang"] = lang
         if template_external_id:
             template = self.env.ref(
-                "energy_communities.{}".format(template_external_id)
+                "energy_communities_crm.{}".format(template_external_id)
             ).with_context(email_values)
             template.send_mail(force_send=False, res_id=crm_lead_id)
             return True
