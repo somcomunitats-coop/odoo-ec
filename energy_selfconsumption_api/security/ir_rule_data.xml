@@ -6,8 +6,9 @@
         <field name="groups" eval="[(4, ref('group_api_energy_selfconsumption'))]" />
         <field name="domain_force">[
             ('service_contract_ids.active', '=', True),
-            ('service_contract_ids.provider_id.user_id', '=', user.id)
-        ]
+            ('service_contract_ids.provider_id.user_id', '=', user.id),
+            ('state', 'in', ['activation', 'active']),
+            ]
         </field>
     </record>
 </odoo>

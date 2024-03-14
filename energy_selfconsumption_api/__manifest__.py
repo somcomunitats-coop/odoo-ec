@@ -10,10 +10,7 @@
     "website": "https://coopdevs.org",
     "category": "Customizations",
     "version": "14.0.1.0.1",
-    "depends": [
-        "fastapi",
-        "energy_selfconsumption",
-    ],
+    "depends": ["fastapi", "energy_selfconsumption", "energy_communities"],
     "data": [
         "data/fastapi_endpoint_data.xml",
         "security/res_users_role_data.xml",
@@ -23,6 +20,6 @@
         "demo/service_demo.xml",
         "demo/provider_demo.xml",
         "demo/service_available_demo.xml",
-        "demo/energy_selfconsumption_app_demo.xml",
+        # "demo/energy_selfconsumption_app_demo.xml",
     ],
 }

@@ -58,6 +58,8 @@ class EnergySelfconsumptionService:
         offset: int = None,
     ) -> List[SelfConsumptionProjectMember]:
         project = self._get_selfconsumption_project(project_code)
+        if not project:
+            return []
 
         search_domain = [
             ("selfconsumption_project_id", "=", project.id),
