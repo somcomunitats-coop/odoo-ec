@@ -5,7 +5,9 @@ from datetime import datetime
 from odoo import _, http
 from odoo.http import request
 
-from ..models.res_company import _LEGAL_FORM_VALUES
+from odoo.addons.energy_communities.models.res_company import (
+    _LEGAL_FORM_VALUES,
+)
 
 _COMMUNITY_DATA__FIELDS = {}
 _COMMUNITY_DATA__GENERAL_FIELDS = {

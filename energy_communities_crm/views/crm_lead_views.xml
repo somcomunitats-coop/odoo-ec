@@ -23,17 +23,17 @@
 				<filter
           name="ce_source_existing_ce_info"
           string="Newsletter CE"
-          domain="[('source_id','=', %(ce_source_existing_ce_info)d)]"
+          domain="[('source_id','=', %(energy_communities.ce_source_existing_ce_info)d)]"
         />
 				<filter
           name="ce_source_existing_ce_contact"
           string="Contact CE"
-          domain="[('source_id','=', %(ce_source_existing_ce_contact)d)]"
+          domain="[('source_id','=', %(energy_communities.ce_source_existing_ce_contact)d)]"
         />
 				<filter
           name="ce_source_creation_ce_proposal"
           string="CE creation"
-          domain="[('source_id','=', %(ce_source_creation_ce_proposal)d)]"
+          domain="[('source_id','=', %(energy_communities.ce_source_creation_ce_proposal)d)]"
         />
 				<filter
           name="no_web_form_origin"
@@ -50,7 +50,7 @@
 		<field name="model">crm.lead</field>
 		<field
       name="inherit_id"
-      ref="energy_communities.ce_view_crm_case_opportunities_filter"
+      ref="energy_communities_crm.ce_view_crm_case_opportunities_filter"
     />
 		<field
       name="groups_id"
@@ -61,12 +61,12 @@
 				<filter
           name="ce_source_general_info"
           string="Newsletter SomComunitats"
-          domain="[('source_id','=', %(ce_source_general_info)d)]"
+          domain="[('source_id','=', %(energy_communities.ce_source_general_info)d)]"
         />
 						<filter
           name="ce_source_general_contact"
           string="Contact SomComunitats"
-          domain="[('source_id','=', %(ce_source_general_contact)d)]"
+          domain="[('source_id','=', %(energy_communities.ce_source_general_contact)d)]"
         />
 		</filter>
 		</field>
@@ -95,7 +95,7 @@
             type="object"
             string="Create community"
             groups="energy_communities.group_platform_manager"
-            attrs="{'invisible':['|',('source_id', '!=', %(ce_source_creation_ce_proposal)d),('probability','>=',100)]}"
+            attrs="{'invisible':['|',('source_id', '!=', %(energy_communities.ce_source_creation_ce_proposal)d),('probability','>=',100)]}"
           />
 				</header>
       </xpath>
@@ -105,7 +105,7 @@
           name="ce_child_lead_id"
           string="Crm lead child"
           readonly="1"
-          attrs="{'invisible':['|',('source_id', '!=', %(ce_source_creation_ce_proposal)d), ('company_hierarchy_level', '!=', 'instance')]}"
+          attrs="{'invisible':['|',('source_id', '!=', %(energy_communities.ce_source_creation_ce_proposal)d), ('company_hierarchy_level', '!=', 'instance')]}"
         />
       </field>
 		</field>
@@ -121,7 +121,7 @@
           name="ce_tag_ids"
           widget="many2many_tags"
           options="{'color_field': 'color', 'no_create_edit': True}"
-          attrs="{'invisible':[('source_id', '!=', %(ce_source_creation_ce_proposal)d)]}"
+          attrs="{'invisible':[('source_id', '!=', %(energy_communities.ce_source_creation_ce_proposal)d)]}"
         />
 				<field name="source_id" />
 				<field name="community_company_id" readonly="1" />
