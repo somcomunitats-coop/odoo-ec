@@ -20,7 +20,7 @@ router = APIRouter(tags=["energy_selfconsumption"])
     response_model=ProjectsInfoListResponse,
     name="selfconsumption_projects",
 )
-def selfconsumption_projects(
+async def selfconsumption_projects(
     request: Request,
     paging: PagingDep,
     energy_selfconsumption_service: EnergySelfconsumptionDep,
@@ -39,7 +39,7 @@ def selfconsumption_projects(
     response_model=SingleProjectInfoResponse,
     name="selfconsumption_project_by_code",
 )
-def get_selfconsumption_project_by_code(
+async def get_selfconsumption_project_by_code(
     project_code: str,
     request: Request,
     energy_selfconsumption_service: EnergySelfconsumptionDep,
@@ -54,7 +54,7 @@ def get_selfconsumption_project_by_code(
     response_model=ProjectMembersResponse,
     name="selfconsumption_project_members",
 )
-def selfconsumption_project_members(
+async def selfconsumption_project_members(
     project_code: str,
     request: Request,
     paging: PagingDep,
