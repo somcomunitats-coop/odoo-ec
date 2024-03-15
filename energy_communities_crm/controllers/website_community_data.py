@@ -275,7 +275,7 @@ class WebsiteCommunityData(http.Controller):
 
     def _get_community_data_submit_response(self, values):
         values = self._fill_values(values, True, False)
-        return request.render("energy_communities.community_data_page", values)
+        return request.render("energy_communities_crm.community_data_page", values)
 
     def _get_date_string(self, date_val):
         if date_val:
@@ -529,7 +529,7 @@ class WebsiteCommunityData(http.Controller):
     def _page_render_validation(self, values):
         values = self._lead_id_validation(values)
         if "error_msgs" in values.keys():
-            return request.render("energy_communities.community_data_page", values)
+            return request.render("energy_communities_crm.community_data_page", values)
         return True
 
     def _form_submit_validation(self, values):
@@ -539,7 +539,7 @@ class WebsiteCommunityData(http.Controller):
         # lead_id validation
         values = self._lead_id_validation(values)
         if "error_msgs" in values.keys():
-            return request.render("energy_communities.community_data_page", values)
+            return request.render("energy_communities_crm.community_data_page", values)
 
         # ce_services validation
         if "ce_services" not in values.keys():
@@ -598,7 +598,7 @@ class WebsiteCommunityData(http.Controller):
             values["error"] = error
             values["error_msgs"] = error_msgs
             values = self._fill_values(values, False, True)
-            return request.render("energy_communities.community_data_page", values)
+            return request.render("energy_communities_crm.community_data_page", values)
         return True
 
     #
