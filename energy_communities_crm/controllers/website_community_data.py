@@ -170,7 +170,7 @@ class WebsiteCommunityData(http.Controller):
         lead_values = self._get_lead_values(kwargs["lead_id"])
         lead_values.update(kwargs)
         values = self._fill_values(lead_values)
-        return request.render("energy_communities.community_data_page", values)
+        return request.render("energy_communities_crm.community_data_page", values)
 
     @http.route(
         ["/community-data/submit"],
