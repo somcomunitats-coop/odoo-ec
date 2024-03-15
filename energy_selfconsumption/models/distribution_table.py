@@ -38,6 +38,11 @@ class DistributionTable(models.Model):
         "energy_selfconsumption.supply_point_assignation", "distribution_table_id"
     )
     import_error_found = fields.Boolean(default=False)
+    distribution_table_variable_coefficient_ids = fields.One2many(
+        'energy_selfconsumption.distribution_table_var_coeff', 
+        'distribution_table_variable_id', 
+        string='Variable Coefficients'
+    )
     
     @api.model
     def create(self, vals):
@@ -47,9 +52,6 @@ class DistributionTable(models.Model):
             "energy_selfconsumption.distribution_table_sequence", False
         ).next_by_id()
         return super().create(vals)
-
-
-        return new_record
 
     def write(self, vals):
         result = super().write(vals)
@@ -174,4 +176,10 @@ class DistributionTableVariableCoefficient(models.Model):
     )
     hour = fields.Integer(string="Hour", required=True)
     coefficient = fields.Float(string="Coefficient", required=True)
-
+    coefficient_display = fields.Char(default="*", string="Coefficient")
+    cups_id = fields.Char(
+        related='distribution_table_variable_id.cups_id',
+        string="CUPS", 
+        readonly=True, 
+        store=False
+    )

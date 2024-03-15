@@ -59,7 +59,7 @@
                 />
                             </group>
                         </group>
-                        <group>
+                        <group attrs="{'invisible': [('type', '!=', 'fixed')]}">
                             <field
                 name="supply_point_assignation_ids"
                 widget="one2many"
@@ -89,6 +89,15 @@
                     sum="True"
                     decoration-success="table_coefficient_is_valid == True"
                   />
+                                </tree>
+                            </field>
+                        </group>
+                        <group attrs="{'invisible': [('type', '!=', 'variable_schedule')]}">
+                            <field name="distribution_table_variable_coefficient_ids" widget="one2many_list" options="{'no_create': True}">
+                                <tree>
+                                    <field name="hour"/>
+                                    <field name="cups_id"/>
+                                    <field name="coefficient_display"/>
                                 </tree>
                             </field>
                         </group>
@@ -142,6 +151,18 @@
                 <p class="oe_view_nocontent_create">
                     There is no examples click here to add new Distribution Table.
                 </p>
+            </field>
+        </record>
+
+        <record id="distribution_table_variable_coefficient_tree_view" model="ir.ui.view">
+            <field name="name">distribution.table.variable.coefficient.tree.view</field>
+            <field name="model">energy_selfconsumption.distribution_table_var_coeff</field>
+            <field name="arch" type="xml">
+                <tree string="Variable Schedule Coefficients">
+                    <field name="hour"/>
+                    <field name="distribution_table_variable_id" string="CUPS" widget='many2one' options="{'no_open': True}" domain="[('type','=','variable_schedule')]" context="{'tree_view_ref':'your_module_name.distribution_table_variable_tree_view'}"/>
+                    <field name="coefficient"/>
+                </tree>
             </field>
         </record>
     </data>
