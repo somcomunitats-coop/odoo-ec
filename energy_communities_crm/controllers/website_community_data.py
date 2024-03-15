@@ -251,7 +251,7 @@ class WebsiteCommunityData(http.Controller):
     #
     def _get_translation(self, source):
         return request.env["ir.translation"]._get_source(
-            name="addons/energy_communities/controllers/website_community_data.py",
+            name="addons/energy_communities_crm/controllers/website_community_data.py",
             types="code",
             lang=request.env.context["lang"],
             source=source,
@@ -264,7 +264,7 @@ class WebsiteCommunityData(http.Controller):
                 {
                     "id": option["id"],
                     "name": request.env["ir.translation"]._get_source(
-                        name="addons/energy_communities/controllers/website_community_data.py",
+                        name="addons/energy_communities_crm/controllers/website_community_data.py",
                         types="code",
                         lang=request.env.context["lang"],
                         source=option["name"],
@@ -405,7 +405,7 @@ class WebsiteCommunityData(http.Controller):
         for field_key in _COMMUNITY_DATA__FIELDS.keys():
             # values[field_key + "_label"] = _COMMUNITY_DATA__FIELDS[field_key]
             values[field_key + "_label"] = request.env["ir.translation"]._get_source(
-                name="addons/energy_communities/controllers/website_community_data.py",
+                name="addons/energy_communities_crm/controllers/website_community_data.py",
                 types="code",
                 lang=request.env.context["lang"],
                 source=_COMMUNITY_DATA__FIELDS[field_key],
