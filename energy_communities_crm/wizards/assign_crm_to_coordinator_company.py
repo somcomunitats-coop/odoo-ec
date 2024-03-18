@@ -21,10 +21,13 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
 
     def assign_to_coordinator_company(self):
         self.ensure_one()
+        # remove followers
         self.remove_follower()
+        # duplicate opportunity
         new_crm_lead = self.crm_lead_id.sudo().copy(
-            {"team_id": None, "user_id": None, "stage_id": 1}  # New
+            {"team_id": None, "user_id": None, "tag_ids": None, "stage_id": 1}
         )
+        # notifications
         new_crm_lead.write({"company_id": self.assigned_company_id})
         new_crm_msg = _(
             "Opportunity assigned to Coordinator %s (ID: %s), where %s is the id of the original instance-level record."
@@ -37,11 +40,13 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
             % (self.crm_lead_id.id, new_crm_lead.id)
         )
         self.crm_lead_id.message_post(body=won_crm_msg)
+        # duplicate metadatas
         crm_lead_metadata = self.env["crm.lead.metadata.line"].search(
             [("crm_lead_id", "=", self.crm_lead_id.id)]
         )
         for metadata in crm_lead_metadata:
             new_crm_lead_metadata = metadata.copy({"crm_lead_id": new_crm_lead.id})
+        # add followers
         self.add_follower()
 
     def remove_follower(self):
