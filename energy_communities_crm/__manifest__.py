@@ -23,6 +23,7 @@
     # always loaded
     "data": [
         "security/ir.model.access.csv",
+        "security/ir_rule_data.xml",
         "data/mail_template_data.xml",
         "views/crm_lead_metadata_mapping_views.xml",
         "views/crm_lead_views.xml",

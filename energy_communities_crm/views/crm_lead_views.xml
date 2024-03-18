@@ -175,6 +175,12 @@
 			<field name="name" position="after">
 				<field name="tag_ext_id" />
 				<field name="id" />
+        <field name="allowed_companies" invisible="1" />
+        <field
+          name="company_id"
+          groups="base.group_multi_company"
+          domain="[('id','in',allowed_companies)]"
+        />
 			</field>
 		</field>
 	</record>
