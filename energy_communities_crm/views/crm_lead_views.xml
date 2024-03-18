@@ -181,6 +181,7 @@
           groups="base.group_multi_company"
           domain="[('id','in',allowed_companies)]"
         />
+        <field name="user_current_role" />
 			</field>
 		</field>
 	</record>

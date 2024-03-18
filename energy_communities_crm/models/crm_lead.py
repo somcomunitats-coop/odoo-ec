@@ -281,7 +281,6 @@ class CrmTags(models.Model):
     company_id = fields.Many2one(
         "res.company",
         default=lambda self: self.env.company,
-        required=True,
     )
 
     def compute_ext_id_tag(self):

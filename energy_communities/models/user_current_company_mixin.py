@@ -15,6 +15,8 @@ class UserCurrentCompanyMixin(models.AbstractModel):
         store=False,
     )
 
+    user_current_role = fields.Char(compute="_compute_user_current_role", store=False)
+
     @api.depends("company_id")
     def _compute_allowed_companies(self):
         for record in self:
@@ -25,13 +27,21 @@ class UserCurrentCompanyMixin(models.AbstractModel):
         for record in self:
             record.user_current_company = self.env.company
 
+    @api.depends("company_id")
+    def _compute_user_current_role(self):
+        for record in self:
+            record.user_current_role = record.get_current_role()
+
     def get_current_company_id(self):
-        # return self.env.context["allowed_company_ids"][0]
         return self.env.company.id
+
+    def get_current_user(self):
+        return self.env.user
 
     def get_current_role(self):
         current_company_id = self.get_current_company_id()
-        current_role_lines = self.role_line_ids.filtered(
+        current_user = self.get_current_user()
+        current_role_lines = current_user.role_line_ids.filtered(
             lambda role_line: role_line.company_id.id == current_company_id
         )
         if current_role_lines:
@@ -39,7 +49,7 @@ class UserCurrentCompanyMixin(models.AbstractModel):
                 0
             ].role_id.code  # avoid misconfiguration, only one role per company TODO: constrain company_id on role to avoid this misconfigurations
         else:
-            admin_role_lines = self.role_line_ids.filtered(
+            admin_role_lines = current_user.role_line_ids.filtered(
                 lambda role_line: role_line.role_id.code == "role_platform_admin"
             )
             if admin_role_lines:
