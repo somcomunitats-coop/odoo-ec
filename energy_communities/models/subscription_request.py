@@ -95,15 +95,10 @@ class SubscriptionRequest(models.Model):
 
     def get_mail_template_notif(self, is_company=False):
         if self.is_voluntary:
-            mail_template = (
+            return self.env.ref(
                 "energy_communities.email_template_confirmation_voluntary_share"
             )
-        else:
-            if is_company:
-                mail_template = "energy_communities.email_template_confirmation_company"
-            else:
-                mail_template = "cooperator.email_template_confirmation"
-        return self.env.ref(mail_template, False)
+        return super().get_mail_template_notif(is_company)
 
     def _send_confirmation_mail(self):
         if self.company_id.send_confirmation_email:
