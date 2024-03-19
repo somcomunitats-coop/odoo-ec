@@ -18,6 +18,9 @@
     "depends": [
         "base",
         "crm",
+        "crm_metadata",
+        "crm_metadata_rest_api",
+        "crm_rest_api",
         "energy_communities",
     ],
     # always loaded
