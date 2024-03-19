@@ -3,3 +3,57 @@ from . import controllers
 from . import services
 from . import wizards
 from . import tests
+
+import logging
+from odoo import SUPERUSER_ID, api
+
+logger = logging.getLogger(__name__)
+
+
+def post_setup_multicompany_tags(cr, registry):
+    logger.info("Running crm.tag post migration")
+    env = api.Environment(cr, SUPERUSER_ID, {})
+    tags = env["crm.tag"].search([])
+    tag_count = 0
+    # convert system tags on not company dependant tags
+    for tag in tags:
+        if tag.company_id and tag.tag_ext_id:
+            tag.write({"company_id": False})
+            tag_count += 1
+    leads = env["crm.lead"].search([])
+    lead_count = 0
+    tags_to_analize = []
+    # edit tag_ids from leads
+    for lead in leads:
+        if lead.tag_ids:
+            new_tag_ids = []
+            for tag in lead.tag_ids:
+                if tag.company_id and tag.company_id.id != lead.company_id.id:
+                    new_tag_ids.append((3, tag.id))
+                    duplicated_tag = env["crm.tag"].search(
+                        [
+                            ("name", "=", tag.name),
+                            ("company_id", "=", lead.company_id.id),
+                        ]
+                    )
+                    if duplicated_tag:
+                        new_tag_ids.append((4, duplicated_tag.id))
+                    else:
+                        new_tag = tag.copy({"company_id": lead.company_id.id})
+                        new_tag_ids.append((4, new_tag.id))
+                    if tag not in tags_to_analize:
+                        tags_to_analize.append(tag)
+                else:
+                    new_tag_ids.append((4, tag.id))
+            lead.write({"tag_ids": new_tag_ids})
+            lead_count += 1
+    # delete unused tags
+    for tag in tags_to_analize:
+        existing_lead = env["crm.lead"].search([("tag_ids", "in", tag.id)])
+        if not existing_lead:
+            tag.unlink()
+    logger.info(
+        "Migration applied to {tag_count} tags and {lead_count} leads".format(
+            tag_count=tag_count, lead_count=lead_count
+        )
+    )

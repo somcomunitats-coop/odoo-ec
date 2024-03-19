@@ -15,12 +15,6 @@ from .metadata_mapping_conf import (
     _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD,
 )
 
-_TAG_TYPE_VALUES = [
-    ("regular", _("Regular")),
-    ("energy_service", _("Energy Service")),
-    ("service_plan", _("Service Plan")),
-]
-
 
 class CrmLead(models.Model):
     _name = "crm.lead"
@@ -270,22 +264,3 @@ class CrmLead(models.Model):
 
     def get_metadata(self, meta_key):
         return self.metadata_line_ids.filtered(lambda record: record.key == meta_key)
-
-
-class CrmTags(models.Model):
-    _name = "crm.tag"
-    _inherit = ["crm.tag", "user.currentcompany.mixin"]
-
-    tag_ext_id = fields.Char("ID Ext tag", compute="compute_ext_id_tag")
-    tag_type = fields.Selection(_TAG_TYPE_VALUES, string="Tag type", default="regular")
-    company_id = fields.Many2one(
-        "res.company",
-        default=lambda self: self.env.company,
-    )
-
-    def compute_ext_id_tag(self):
-        for record in self:
-            res = record.get_external_id()
-            record.tag_ext_id = False
-            if res.get(record.id):
-                record.tag_ext_id = res.get(record.id)

@@ -32,6 +32,7 @@
         "views/website_community_data_template.xml",
         "wizards/assign_crm_to_coordinator_company.xml",
     ],
+    "post_init_hook": "post_setup_multicompany_tags",
     # only loaded in demonstration mode
     "demo": [],
 }
