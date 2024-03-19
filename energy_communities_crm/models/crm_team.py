@@ -1,0 +1,29 @@
+from odoo import _, api, fields, models
+
+
+class CrmTeam(models.Model):
+    _name = "crm.team"
+    _inherit = "crm.team"
+
+    @api.model
+    def get_create_sale_team(self, company):
+        if company.hierarchy_level != "instance":
+            existing_team = self.env["crm.team"].search(
+                [("company_id", "=", company.id)]
+            )
+            if not existing_team:
+                return (
+                    self.env["crm.team"]
+                    .sudo()
+                    .create(
+                        {
+                            "name": company.name,
+                            "use_opportunities": True,
+                            "company_id": company.id,
+                        }
+                    )
+                )
+            else:
+                return existing_team
+        else:
+            return self.env.ref("sales_team.team_sales_department")

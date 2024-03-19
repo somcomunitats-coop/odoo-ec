@@ -21,6 +21,7 @@
         "crm_metadata",
         "crm_metadata_rest_api",
         "crm_rest_api",
+        "sales_team",
         "energy_communities",
     ],
     # always loaded
