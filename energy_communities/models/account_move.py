@@ -40,40 +40,6 @@ class AccountMove(models.Model):
                     user.create_users_on_keycloak()
         return user
 
-    def get_sequence_register(self):
-        ret = super().get_sequence_register()
-        company_seq = self.env["ir.sequence"].search(
-            [
-                ("code", "=", "subscription.register"),
-                ("company_id", "=", self.env.company.id),
-                ("active", "=", True),
-            ]
-        )
-        if not company_seq:
-            raise ValidationError(
-                _(
-                    "You must have a company specific sequence number for subscription.register"
-                )
-            )
-        return company_seq
-
-    def get_sequence_operation(self):
-        ret = super().get_sequence_operation()
-        company_seq = self.env["ir.sequence"].search(
-            [
-                ("code", "=", "register.operation"),
-                ("company_id", "=", self.env.company.id),
-                ("active", "=", True),
-            ]
-        )
-        if not company_seq:
-            raise ValidationError(
-                _(
-                    "You must have a company specific sequence number for register.operation"
-                )
-            )
-        return company_seq
-
     def send_capital_release_request_mail(self):
         # temporal fix por Gares Bide needs
         # capital_release_mail only must be sent when is a mandatory share
