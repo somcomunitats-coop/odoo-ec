@@ -32,19 +32,6 @@ class SubscriptionRequest(models.Model):
         store=True,
     )
 
-    def get_journal(self):
-        """Need to override in order to use in multicompany enviroment"""
-
-        j = super().get_journal()
-
-        if self.company_id.id != 1:
-            if self.company_id.cooperator_journal:
-                j = self.company_id.cooperator_journal
-            else:
-                raise UserError(_("You must set a cooperator journal on you company."))
-
-        return j
-
     def get_required_field(self):
         required_fields = super().get_required_field()
         if "iban" in required_fields:
