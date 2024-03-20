@@ -31,12 +31,14 @@
         "data/mail_template_data.xml",
         "views/crm_lead_metadata_mapping_views.xml",
         "views/crm_lead_views.xml",
+        "views/crm_tag_views.xml",
+        "views/crm_team_views.xml",
         "views/energy_communities_crm_lead_views.xml",
         "views/menus.xml",
         "views/website_community_data_template.xml",
         "wizards/assign_crm_to_coordinator_company.xml",
     ],
-    "post_init_hook": "post_setup_multicompany_tags",
+    "post_init_hook": "post_setup_multicompany_crm",
     # only loaded in demonstration mode
     "demo": [],
 }

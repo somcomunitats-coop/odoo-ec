@@ -18,7 +18,7 @@ from .metadata_mapping_conf import (
 
 class CrmLead(models.Model):
     _name = "crm.lead"
-    _inherit = ["crm.lead", "external.id.mixin"]
+    _inherit = ["crm.lead", "external.id.mixin", "user.currentcompany.mixin"]
 
     lang = fields.Char(string="Language")
     ce_tag_ids = fields.Many2many(
@@ -49,6 +49,19 @@ class CrmLead(models.Model):
         store=False,
     )
     ce_child_lead_id = fields.Many2one(comodel_name="crm.lead", string="Crm lead child")
+
+    @api.onchange("company_id")
+    def _auto_setup_team_id_domain(self):
+        for record in self:
+            return {
+                "domain": {"team_id": [("company_id", "=", record.company_id.id)]},
+            }
+
+    @api.depends("company_id")
+    def _compute_team_id(self):
+        for record in self:
+            team = self.env["crm.team"].get_create_sale_team(record.company_id)
+            record.team_id = team.id
 
     def _get_default_community_wizard(self):
         self.ensure_one()

@@ -10,7 +10,7 @@ from odoo import SUPERUSER_ID, api
 logger = logging.getLogger(__name__)
 
 
-def post_setup_multicompany_tags(cr, registry):
+def post_setup_multicompany_crm(cr, registry):
     logger.info("Running crm.tag post migration")
     env = api.Environment(cr, SUPERUSER_ID, {})
     tags = env["crm.tag"].search([])
@@ -21,7 +21,6 @@ def post_setup_multicompany_tags(cr, registry):
             tag.write({"company_id": False})
             tag_count += 1
     leads = env["crm.lead"].search([])
-    lead_count = 0
     tags_to_analize = []
     # edit tag_ids from leads
     for lead in leads:
@@ -46,14 +45,21 @@ def post_setup_multicompany_tags(cr, registry):
                 else:
                     new_tag_ids.append((4, tag.id))
             lead.write({"tag_ids": new_tag_ids})
-            lead_count += 1
     # delete unused tags
     for tag in tags_to_analize:
         existing_lead = env["crm.lead"].search([("tag_ids", "in", tag.id)])
         if not existing_lead:
             tag.unlink()
-    logger.info(
-        "Migration applied to {tag_count} tags and {lead_count} leads".format(
-            tag_count=tag_count, lead_count=lead_count
-        )
-    )
+    # setup sales teams
+    instance_crm_team = env.ref("sales_team.team_sales_department")
+    instance_crm_team.write({"is_default_team": True})
+    companies = env["res.company"].sudo().search([])
+    for company in companies:
+        if company.hierarchy_level != "instance":
+            related_team = env["crm.team"].get_create_sale_team(company)
+            related_leads = (
+                env["crm.lead"].sudo().search([("company_id", "=", company.id)])
+            )
+            for lead in related_leads:
+                lead.write({"team_id": related_team.id})
+    logger.info("Migration applied to tags, teams and leads on crm")

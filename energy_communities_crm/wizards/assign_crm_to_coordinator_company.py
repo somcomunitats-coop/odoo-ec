@@ -24,9 +24,8 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
         # remove followers
         self.remove_follower()
         # duplicate opportunity
-        team = self.env["crm.team"].get_create_sale_team(self.assigned_company_id)
         new_crm_lead = self.crm_lead_id.sudo().copy(
-            {"team_id": team.id, "user_id": None, "tag_ids": None, "stage_id": 1}
+            {"user_id": None, "tag_ids": None, "stage_id": 1}
         )
         # notifications
         new_crm_lead.write({"company_id": self.assigned_company_id})
