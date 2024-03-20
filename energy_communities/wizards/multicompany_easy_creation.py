@@ -200,6 +200,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 "name": self.new_company_id.name,
                 "use_opportunities": True,
                 "company_id": self.new_company_id.id,
+                "is_default_team": True,
             }
         )
 
