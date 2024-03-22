@@ -134,6 +134,10 @@ class CRMLeadService(Component):
             prefix = _("[Contact SomComunitats]")
         elif source_xml_id == "ce_source_general_info":
             prefix = _("[Newsletter SomComunitats]")
+        elif source_xml_id == "ce_source_coord_web_hiring":
+            prefix = _("[Hire Coord]")
+        elif source_xml_id == "ce_source_coord_web_other":
+            prefix = _("[Other Coord]")
         if source_xml_id == "ce_source_creation_ce_proposal":
             prefix = _("[Subscription CE]")
             ce_name = self._get_metadata_value(params, "ce_name")
@@ -185,4 +189,8 @@ class CRMLeadService(Component):
             template_external_id = "email_templ_lead_request_platform_news_confirm_id"
         elif source_xml_id == "ce_source_general_contact":
             template_external_id = "email_templ_contact_platform_confirm_id"
+        elif source_xml_id == "ce_source_coord_web_hiring":
+            template_external_id = "email_templ_lead_ce_source_coord_web_hiring_id"
+        elif source_xml_id == "ce_source_coord_web_other":
+            template_external_id = "email_templ_lead_ce_source_coord_web_other_id"
         return template_external_id

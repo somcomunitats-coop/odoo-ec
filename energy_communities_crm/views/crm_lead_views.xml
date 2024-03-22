@@ -36,6 +36,16 @@
           domain="[('source_id','=', %(energy_communities.ce_source_creation_ce_proposal)d)]"
         />
 				<filter
+          name="ce_source_coord_web_hiring"
+          string="Hire COORD"
+          domain="[('source_id','=', %(energy_communities.ce_source_coord_web_hiring)d)]"
+        />
+				<filter
+          name="ce_source_coord_web_other"
+          string="Other COORD"
+          domain="[('source_id','=', %(energy_communities.ce_source_coord_web_other)d)]"
+        />
+				<filter
           name="no_web_form_origin"
           string="No web form origin"
           domain="[('source_id','=', False)]"

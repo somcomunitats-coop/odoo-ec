@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-15 17:03+0000\n"
-"PO-Revision-Date: 2024-03-15 17:03+0000\n"
+"POT-Creation-Date: 2024-03-22 11:17+0000\n"
+"PO-Revision-Date: 2024-03-22 11:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -364,7 +364,7 @@ msgstr "Administrador"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_cm_map__admins_to_notify
 msgid "Admins to notify"
-msgstr ""
+msgstr "Administradores a notificar"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_aggregate_demand
@@ -380,7 +380,7 @@ msgstr "Autoriza nuevos miembros"
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__allowed_companies
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__allowed_companies
 msgid "Allowed Companies"
-msgstr ""
+msgstr "Compañias permitidas"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__allow_new_members
@@ -469,7 +469,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_product_product__mail_template
 #: model:ir.model.fields,field_description:energy_communities.field_product_template__mail_template
 msgid "Certificate email template"
-msgstr ""
+msgstr "Plantilla de email de certificado"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__chart_template_id
@@ -645,6 +645,11 @@ msgid "Contact"
 msgstr "Kontaktua"
 
 #. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_coord_web_hiring
+msgid "Contact a coordinator"
+msgstr "Contactar a una coordinadora"
+
+#. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_contact
 msgid "Contact a existing CE"
 msgstr "Contactar una CE existente"
@@ -782,15 +787,9 @@ msgid "Created on"
 msgstr "Urtean sortua"
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_mailing_mailing__crm_lead_metadata_mapping_id
-#: model:ir.model.fields,field_description:energy_communities.field_utm_source__crm_lead_metadata_mapping_id
-msgid "Crm Lead Metadata Mapping"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__current_role
 msgid "Current Role"
-msgstr ""
+msgstr "Rol actual"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
@@ -857,7 +856,7 @@ msgstr "Posta elektronikoa"
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Email and confirmation email addresses don't match."
-msgstr ""
+msgstr "El email i su confirmación no coinciden"
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
@@ -896,7 +895,7 @@ msgstr "Administradora Comunidades Energética"
 #: model:res.groups,name:energy_communities.role_ce_manager_res_groups
 #: model:res.users.role,name:energy_communities.role_ce_manager
 msgid "Energy Community Manager"
-msgstr ""
+msgstr "Manager de comunidad energética"
 
 #. module: energy_communities
 #: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
@@ -1096,10 +1095,22 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcado, algunos mensages tienen problemas de entrega"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields,help:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
+#, python-format
+msgid ""
+"If it is checked, the Coordinator will receive a copy of each auto-response "
+"email that is generated in any of its CCEE when a new Member Subscription "
+"request is received."
+msgstr "Markatuz gero, Koordinatzaileak erantzun automatikoko mezu elektroniko bakoitzaren kopia bat jasoko du "
+"enpresa berri bat jasotzen denean bere CCEEren batean sortzen dena "
+"EEko bazkide gisa"
+
+#. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_product_product__mail_template
 #: model:ir.model.fields,help:energy_communities.field_product_template__mail_template
 msgid "If left empty, the default global mail template will be used."
-msgstr ""
+msgstr "Si se deja sin rellenar se usará la plantilla de correo de sistema."
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
@@ -1122,6 +1133,11 @@ msgstr "Industriala"
 #: model:utm.source,name:energy_communities.ce_source_general_info
 msgid "Information Newsletter (general)"
 msgstr "Recibir boletín información general plataforma"
+
+#. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_coord_web_other
+msgid "Information about coordinators"
+msgstr "Información sobre coordinadora"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_info
@@ -1470,6 +1486,13 @@ msgstr ""
 " beharko duzu bazkide izateko:"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
+#, python-format
+msgid "Notify the Coordinator of new Subscriptions of their CCEE"
+msgstr "Jakinarazi Koordinatzaileari zure CCEE harpidetza berriak"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_needaction_counter
 msgid "Number of Actions"
 msgstr "Número de acciones"
@@ -1654,7 +1677,7 @@ msgstr "Escoge una opción"
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Please upload a scan of your ID card."
-msgstr ""
+msgstr "Por favor sube un scan de tu identificación"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__postal_code
@@ -1687,7 +1710,7 @@ msgstr "Produktuaren txantiloia"
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Provided IBAN is not valid."
-msgstr ""
+msgstr "El IBAN no es válido"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/landing_page.py:0
@@ -1832,7 +1855,7 @@ msgstr ""
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Some mandatory fields have not been filled."
-msgstr ""
+msgstr "Alguns campos obligatorios no han sido rellenados."
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
@@ -2150,7 +2173,7 @@ msgstr "Sube una nueva para cambiar"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__creation_partner
 msgid "Use existing partner linked to new company"
-msgstr ""
+msgstr "Utilizar usuario existene para lincarlo a la compañia"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_user
@@ -2162,13 +2185,13 @@ msgstr "Usuario"
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__user_current_company
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__user_current_company
 msgid "User Current Company"
-msgstr ""
+msgstr "Companyia actual del usuario"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__user_current_role
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__user_current_role
 msgid "User Current Role"
-msgstr ""
+msgstr "Rol actual del usuario"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__user_is_coordinator_worker
@@ -2200,7 +2223,7 @@ msgstr "Erabiltzaileak"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__user_ids
 msgid "Users allowed"
-msgstr ""
+msgstr "Usuaris autoritzats"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_users_role_line

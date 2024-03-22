@@ -18,11 +18,15 @@
             <field
         name="email_from"
       >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
+      <field
+        name="email_cc"
+      >${((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and
+      object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or
+      object.company_id.parent_id.email)) or '')|safe}</field>
             <field
         name="subject"
       >[Som Comunitats] Application to become Community membership</field>
             <field name="email_to">${object.email}</field>
-            <field name="email_cc">info+altausuari@somcomunitats.coop</field>
             <field
         name="reply_to"
       >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
@@ -99,8 +103,6 @@
         name="subject"
       >[Som Comunitats] Request to become member of Energy Community ${object.company_id.name}</field>
             <field name="partner_to">${object.partner_id.id}</field>
-            <field name="email_cc">info+altausuari@somcomunitats.coop</field>
-            <!--<field name="email_bcc">${object.company_id.email}</field>-->
             <field
         name="reply_to"
       >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
@@ -206,8 +208,6 @@
         name="subject"
       >Wellcome to the Energy Community ${object.env.company.name}!</field>
             <field name="partner_to">${object.id}</field>
-            <field name="email_cc">info+altausuari@somcomunitats.coop</field>
-            <!--<field name="email_bcc">${object.company_id.email}</field>-->
             <field
         name="reply_to"
       >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
@@ -286,10 +286,14 @@
         name="email_from"
       >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
             <field
+        name="email_cc"
+      >${((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and
+      object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or
+      object.company_id.parent_id.email)) or '')|safe}</field>
+            <field
         name="subject"
       >[Som Comunitats] Application to become Community membership</field>
             <field name="email_to">${object.email}</field>
-            <field name="email_cc">info+altausuari@somcomunitats.coop</field>
             <field
         name="reply_to"
       >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
@@ -349,7 +353,11 @@
         name="subject"
       >Contribute to ${object.company_id.name} Ref. ACSV${object.id}</field>
             <field name="email_to">${object.email}</field>
-            <field name="email_cc" />
+            <field
+        name="email_cc"
+      >${((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and
+      object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or
+      object.company_id.parent_id.email)) or '')|safe}</field>
             <field
         name="reply_to"
       >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
