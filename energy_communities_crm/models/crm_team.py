@@ -8,7 +8,7 @@ class CrmTeam(models.Model):
     is_default_team = fields.Boolean(string="Is default team")
 
     @api.model
-    def get_create_sale_team(self, company):
+    def get_create_default_sale_team(self, company):
         if company.hierarchy_level != "instance":
             existing_team = (
                 self.env["crm.team"]

@@ -15,7 +15,7 @@
 		<field name="inherit_id" ref="sales_team.crm_team_view_form" />
 		<field name="arch" type="xml">
       <xpath expr="//field[@name='company_id']" position="after">
-        <field name="is_default_team" />
+        <field name="is_default_team" readonly="1" />
       </xpath>
     </field>
   </record>

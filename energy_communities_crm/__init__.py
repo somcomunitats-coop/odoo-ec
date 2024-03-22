@@ -50,16 +50,26 @@ def post_setup_multicompany_crm(cr, registry):
         existing_lead = env["crm.lead"].search([("tag_ids", "in", tag.id)])
         if not existing_lead:
             tag.unlink()
-    # setup sales teams
+    # setup sales teams and stages
     instance_crm_team = env.ref("sales_team.team_sales_department")
     instance_crm_team.write({"is_default_team": True})
+    # create all of them
     companies = env["res.company"].sudo().search([])
     for company in companies:
-        if company.hierarchy_level != "instance":
-            related_team = env["crm.team"].get_create_sale_team(company)
-            related_leads = (
-                env["crm.lead"].sudo().search([("company_id", "=", company.id)])
+        default_team = env["crm.team"].get_create_default_sale_team(company)
+        default_stages = env["crm.stage"].get_create_default_stages_dict(company)
+        for default_stage in default_stages.values():
+            default_stage.write({"team_id": default_team.id})
+    # setup team and stage for leads (adjust stages if necessary)
+    existing_leads = env["crm.lead"].search([])
+    for lead in existing_leads:
+        # setup team_id for lead
+        if not lead.team_id:
+            default_team_for_lead = env["crm.team"].get_create_default_sale_team(
+                lead.company_id
             )
-            for lead in related_leads:
-                lead.write({"team_id": related_team.id})
+            lead.write({"team_id": default_team_for_lead.id})
+            # TODO: setup properly newly created stages
+
+    # setup stages
     logger.info("Migration applied to tags, teams and leads on crm")
