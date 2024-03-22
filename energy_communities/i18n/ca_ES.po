@@ -1755,6 +1755,18 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Si està marcat, alguns missatges tenen un error d'entrega."
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields,help:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
+#, python-format
+msgid ""
+"If it is checked, the Coordinator will receive a copy of each auto-response "
+"email that is generated in any of its CCEE when a new Member Subscription "
+"request is received."
+msgstr "Si està marcat la Coordinadora rebrà una còpia de cada correu d’autoresposta "
+"que es generi en qualsevol de les seves CCEE quan es rebi una nova socilitud "
+"de sòcia a la CE"
+
+#. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_product_product__mail_template
 #: model:ir.model.fields,help:energy_communities.field_product_template__mail_template
 msgid "If left empty, the default global mail template will be used."
@@ -2218,6 +2230,12 @@ msgid ""
 msgstr ""
 "Nota: si encara no ets sòcia, has de tramitar-ho a través d'\n"
 "            aquests formularis:"
+
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
+#, python-format
+msgid "Notify the Coordinator of new Subscriptions of their CCEE"
+msgstr "Notificar a la Coordinadora noves subscripcions de les seves CCEE"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_needaction_counter

@@ -2071,6 +2071,18 @@ msgid "Message Delivery error"
 msgstr "Error de entrega de mensage"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields,help:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
+#, python-format
+msgid ""
+"If it is checked, the Coordinator will receive a copy of each auto-response "
+"email that is generated in any of its CCEE when a new Member Subscription "
+"request is received."
+msgstr "Si está marcado la Coordinadora recibirá una copia de cada correo de autorespuesta "
+"que se genere en cualquiera de sus CCEE cuando se reciba una nueva sociedad "
+"de socia en la CE"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_ids
 msgid "Messages"
 msgstr "Mensages"
@@ -2225,6 +2237,12 @@ msgid ""
 msgstr ""
 "Nota: Por favor, si aún no eres socia, debes tramitarlo a través de estos "
 "formularios:"
+
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
+#, python-format
+msgid "Notify the Coordinator of new Subscriptions of their CCEE"
+msgstr "Notificar a la Coordinadora nuevas suscripciones de sus CCEE"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_needaction_counter

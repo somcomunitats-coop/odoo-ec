@@ -1449,6 +1449,16 @@ msgid "If checked, new messages require your attention."
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields,help:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
+#, python-format
+msgid ""
+"If it is checked, the Coordinator will receive a copy of each auto-response "
+"email that is generated in any of its CCEE when a new Member Subscription "
+"request is received."
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_res_company__message_has_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
@@ -1907,6 +1917,12 @@ msgstr ""
 msgid ""
 "Note: Please, if you are not yet a member, you must process it through\n"
 "            these forms:"
+msgstr ""
+
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
+#, python-format
+msgid "Notify the Coordinator of new Subscriptions of their CCEE"
 msgstr ""
 
 #. module: energy_communities
