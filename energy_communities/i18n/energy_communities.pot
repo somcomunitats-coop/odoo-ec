@@ -6,50 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-15 17:03+0000\n"
-"PO-Revision-Date: 2024-03-15 17:03+0000\n"
+"POT-Creation-Date: 2024-03-22 11:17+0000\n"
+"PO-Revision-Date: 2024-03-22 11:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: energy_communities
-#: model:mail.template,body_html:energy_communities.email_templ_lead_ce_source_coord_web_other_id
-msgid ""
-"\n"
-"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"                    <p>Hello,</p>\n"
-"                    <p>Thank you for filling out the form to request contact regarding the Coordinators.</p>\n"
-"                    <p>We have successfully received your details.</p>\n"
-"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
-"                    <br />\n"
-"                    <p>We keep in touch for any questions.</p>\n"
-"                    <p>Yours faithfully,</p>\n"
-"                    <p>Somcomunitats.coop team </p>\n"
-"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
-"                </div>\n"
-"            "
-msgstr ""
-
-#. module: energy_communities
-#: model:mail.template,body_html:energy_communities.email_templ_lead_ce_source_coord_web_hiring_id
-msgid ""
-"\n"
-"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"                    <p>Hello,</p>\n"
-"                    <p>Thank you for filling out the form to request the hiring of a Coordinator.</p>\n"
-"                    <p>We have successfully received your details</p>\n"
-"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
-"                    <br />\n"
-"                    <p>We keep in touch for any questions.</p>\n"
-"                    <p>Yours faithfully,</p>\n"
-"                    <p>Somcomunitats.coop team </p>\n"
-"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
-"                </div>\n"
-"            "
-msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_subscription_request__vat
@@ -542,16 +506,6 @@ msgid "Contact"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
-msgid "Contact CE"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter_platform_admins
-msgid "Contact SomComunitats"
-msgstr ""
-
-#. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_coord_web_hiring
 msgid "Contact a coordinator"
 msgstr ""
@@ -562,12 +516,6 @@ msgid "Contact a existing CE"
 msgstr ""
 
 #. module: energy_communities
-#: model:utm.source,name:energy_communities.ce_source_existing_ce_contact
-msgid "Contact a existing CE"
-msgstr ""
-
-#. module: energy_communities
->>>>>>> 5261c6da95e36b7375765b6724a02f4d7f3a73dd
 #: model:utm.source,name:energy_communities.ce_source_general_contact
 msgid "Contact to the Platform"
 msgstr ""
@@ -695,12 +643,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_date
 msgid "Created on"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_mailing_mailing__crm_lead_metadata_mapping_id
-#: model:ir.model.fields,field_description:energy_communities.field_utm_source__crm_lead_metadata_mapping_id
-msgid "Crm Lead Metadata Mapping"
 msgstr ""
 
 #. module: energy_communities
@@ -939,11 +881,6 @@ msgid "Hierarchy level"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
-msgid "Hire COORD"
-msgstr ""
-
-#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.iban_template_es_ccee
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "I accept that the entity issues direct debit receipts to this account."
@@ -1010,6 +947,11 @@ msgid "If checked, new messages require your attention."
 msgstr ""
 
 #. module: energy_communities
+#: model:ir.model.fields,help:energy_communities.field_res_company__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields,help:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
 #, python-format
@@ -1017,11 +959,6 @@ msgid ""
 "If it is checked, the Coordinator will receive a copy of each auto-response "
 "email that is generated in any of its CCEE when a new Member Subscription "
 "request is received."
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,help:energy_communities.field_res_company__message_has_error
-msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: energy_communities
@@ -1393,6 +1330,7 @@ msgid ""
 "            these forms:"
 msgstr ""
 
+#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
 #, python-format
@@ -1469,11 +1407,6 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_operation_request
 msgid "Operation request"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
-msgid "Other COORD"
 msgstr ""
 
 #. module: energy_communities
@@ -2283,25 +2216,8 @@ msgid "ZIP code not found"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/services/crm_lead_service.py:0
-#, python-format
-msgid "[Hire Coord]"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/services/crm_lead_service.py:0
-#, python-format
-msgid "[Other Coord]"
-msgstr ""
-
-#. module: energy_communities
-#: model:mail.template,subject:energy_communities.email_templ_lead_ce_source_coord_web_hiring_id
-msgid "[Som Comunitats] Application for Recruitment Coordinator"
-msgstr ""
-
-#. module: energy_communities
-#: model:mail.template,subject:energy_communities.email_templ_lead_ce_source_coord_web_other_id
-msgid "[Som Comunitats] Contact request in relation to Coordinators"
+#: model:mail.template,subject:energy_communities.email_template_confirmation_company
+msgid "[Som Comunitats] Application to become Community membership"
 msgstr ""
 
 #. module: energy_communities
