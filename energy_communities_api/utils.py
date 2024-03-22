@@ -37,7 +37,7 @@ def get_links(request: Request) -> PaginationLinks:
     return PaginationLinks(self_=request.url._url)
 
 
-def make_single_response(
+def single_response(
     request: Request,
     response_class: Any,
     object_: Any,

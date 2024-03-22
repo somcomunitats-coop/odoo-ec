@@ -8,7 +8,7 @@ from ..schemas.responses import (
     ProjectsInfoListResponse,
     SingleProjectInfoResponse,
 )
-from ..utils import collection_response, make_single_response
+from ..utils import collection_response, single_response
 
 logger = logging.getLogger("__name__")
 
@@ -46,7 +46,7 @@ async def get_selfconsumption_project_by_code(
 ) -> SingleProjectInfoResponse:
     projects = energy_selfconsumption_service.selfconsumption_projects(project_code)
     project = projects[0] if projects and len(projects) > 0 else None
-    return make_single_response(request, SingleProjectInfoResponse, project)
+    return single_response(request, SingleProjectInfoResponse, project)
 
 
 @router.get(
