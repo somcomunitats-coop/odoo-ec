@@ -109,6 +109,70 @@ msgstr ""
 "            "
 
 #. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_lead_ce_source_coord_web_other_id
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for filling out the form to request contact regarding the Coordinators.</p>\n"
+"                    <p>We have successfully received your details.</p>\n"
+"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
+"                    <br />\n"
+"                    <p>We keep in touch for any questions.</p>\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gràcies per omplir el formulari per demanar contacte en relació a les Coordinadores.</p>\n"
+"                    <p>Hem rebut correctament les teves dades.</p>\n"
+"                    <p>Durant els propers dies estudiarem la sol·licitud i ens posarem en contacte amb vosaltres.</p>\n"
+"                    <br />\n"
+"                    <p>Seguim en contacte per qualsevol consulta.</p>\n"
+"                    <p>Atentament,</p>\n"
+"                    <p>Equip de Som Comunitats</p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Recursos i preguntes freqüents</a></p>\n"
+"\n"
+"                </div>\n"
+"            "
+
+#. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_lead_ce_source_coord_web_hiring_id
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for filling out the form to request the hiring of a Coordinator.</p>\n"
+"                    <p>We have successfully received your details</p>\n"
+"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
+"                    <br />\n"
+"                    <p>We keep in touch for any questions.</p>\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gràcies per omplir el formulari per demanar la contractació d’una Coordinadora.</p>\n"
+"                    <p>Hem rebut correctament les teves dades.</p>\n"
+"                    <p>Durant els propers dies estudiarem la sol·licitud i ens posarem en contacte amb vosaltres.</p>\n"
+"                    <br />\n"
+"                    <p>Seguim en contacte per qualsevol consulta.</p>\n"
+"                    <p>Atentament,</p>\n"
+"                    <p>Equip de Som Comunitats</p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Recursos i preguntes freqüents</a></p>\n"
+"\n"
+"                </div>\n"
+"            "
+
+#. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_advise_future_ce_confirm_id
 msgid ""
 "\n"
@@ -1102,6 +1166,11 @@ msgid "Contact SomComunitats"
 msgstr "Contacte SomComunitats"
 
 #. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_coord_web_hiring
+msgid "Contact a coordinator"
+msgstr "Vull contractar una coordinadora"
+
+#. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_contact
 msgid "Contact a existing CE"
 msgstr "Contactar una CE existent"
@@ -1653,6 +1722,11 @@ msgid "Hierarchy level"
 msgstr "Nivell jeràrquic"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Hire COORD"
+msgstr "Contractar COORD"
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.iban_template_es_ccee
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "I accept that the entity issues direct debit receipts to this account."
@@ -1809,6 +1883,11 @@ msgstr ""
 #: model:utm.source,name:energy_communities.ce_source_general_info
 msgid "Information Newsletter (general)"
 msgstr "Rebre butlletí informació general plataforma"
+
+#. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_coord_web_other
+msgid "Information about coordinators"
+msgstr "Altres: contacte genèric en relació a Coordinadores"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_info
@@ -2350,6 +2429,11 @@ msgstr ""
 #, python-format
 msgid "Other"
 msgstr "Altres"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Other COORD"
+msgstr "Altres COORD"
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0
@@ -3396,6 +3480,12 @@ msgstr "[Contacte SomComunitats]"
 #. module: energy_communities
 #: code:addons/energy_communities/services/crm_lead_service.py:0
 #, python-format
+msgid "[Hire Coord]"
+msgstr "[Contractar Coord]"
+
+#. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
 msgid "[Newsletter CE]"
 msgstr "[Butlletí CE]"
 
@@ -3406,6 +3496,17 @@ msgid "[Newsletter SomComunitats]"
 msgstr "[Butlletí SomComunitats]"
 
 #. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
+msgid "[Other Coord]"
+msgstr "[Altres Coord]"
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_templ_lead_ce_source_coord_web_hiring_id
+msgid "[Som Comunitats] Application for Recruitment Coordinator"
+msgstr "[Som Comunitats] Sol·licitud Contractació Coordinadora"
+
+#. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_template_confirmation_company
 msgid "[Som Comunitats] Application to become Community membership"
 msgstr "[Som Comunitats] Sol·licitud d'adhesió a Comunitat Energètica"
@@ -3414,6 +3515,11 @@ msgstr "[Som Comunitats] Sol·licitud d'adhesió a Comunitat Energètica"
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_contact_confirm_id
 msgid "[Som Comunitats] Community Contact Request"
 msgstr "[Som Comunitats] Contacte Comunitat Energètica"
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_templ_lead_ce_source_coord_web_other_id
+msgid "[Som Comunitats] Contact request in relation to Coordinators"
+msgstr "[Som Comunitats] Sol·licitud contacte en relació a Coordinadores"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_lead_request_ce_news_confirm_id

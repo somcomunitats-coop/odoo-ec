@@ -202,5 +202,65 @@
             ]]></field>
         </record>
 
+        <record
+      id="email_templ_lead_ce_source_coord_web_hiring_id"
+      model="mail.template"
+    >
+            <field name="name">Confirmation Email for CE Coordinator Recruitment</field>
+            <field name="email_from">${object.company_id.email}</field>
+            <field
+        name="subject"
+      >[Som Comunitats] Application for Recruitment Coordinator</field>
+            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="model_id" ref="model_crm_lead" />
+            <field name="auto_delete" eval="False" />
+            <field name="lang">${ctx.get('lang')}</field>
+            <field
+        name="body_html"
+      ><![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Hello,</p>
+                    <p>Thank you for filling out the form to request the hiring of a Coordinator.</p>
+                    <p>We have successfully received your details</p>
+                    <p>Over the next few days we will study the request and get in touch with you.</p>
+                    <br />
+                    <p>We keep in touch for any questions.</p>
+                    <p>Yours faithfully,</p>
+                    <p>Somcomunitats.coop team </p>
+                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                </div>
+            ]]></field>
+        </record>
+
+        <record
+      id="email_templ_lead_ce_source_coord_web_other_id"
+      model="mail.template"
+    >
+            <field name="name">Confirmation Email for CE info about Coordinators</field>
+            <field name="email_from">${object.company_id.email}</field>
+            <field
+        name="subject"
+      >[Som Comunitats] Contact request in relation to Coordinators</field>
+            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="model_id" ref="model_crm_lead" />
+            <field name="auto_delete" eval="False" />
+            <field name="lang">${ctx.get('lang')}</field>
+            <field
+        name="body_html"
+      ><![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Hello,</p>
+                    <p>Thank you for filling out the form to request contact regarding the Coordinators.</p>
+                    <p>We have successfully received your details.</p>
+                    <p>Over the next few days we will study the request and get in touch with you.</p>
+                    <br />
+                    <p>We keep in touch for any questions.</p>
+                    <p>Yours faithfully,</p>
+                    <p>Somcomunitats.coop team </p>
+                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                </div>
+            ]]></field>
+        </record>
+
     </data>
 </odoo>
