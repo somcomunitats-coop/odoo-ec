@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-15 15:32+0000\n"
-"PO-Revision-Date: 2024-03-15 15:32+0000\n"
+"POT-Creation-Date: 2024-03-22 10:15+0000\n"
+"PO-Revision-Date: 2024-03-22 10:15+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -105,6 +105,68 @@ msgstr ""
 "                    <p>Equipo de Somos Comunidades</p>\n"
 "                    <p><a href=\"https://somcomunitats.coop/recursos/\">Recursos y preguntas frecuentes</a></p>\n"
 "\n"
+"                </div>\n"
+"            "
+
+#. module: energy_communities_crm
+#: model:mail.template,body_html:energy_communities_crm.email_templ_lead_ce_source_coord_web_other_id
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for filling out the form to request contact regarding the Coordinators.</p>\n"
+"                    <p>We have successfully received your details.</p>\n"
+"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
+"                    <br />\n"
+"                    <p>We keep in touch for any questions.</p>\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gracias por rellenar el formulario para pedir información en relación a las Coordinadoras.</p>\n"
+"                    <p>Hemos recibido correctamente tus datos</p>\n"
+"                    <p>Durante los próximos días estudiaremos la solicitud y nos pondremos en contacto con usted.</p>\n"
+"                    <br />\n"
+"                    <p>Seguimos en contacto para cualquier consulta.</p>\n"
+"                    <p>Atentamente,</p>\n"
+"                    <p>Equipo de Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Recursos y preguntas frecuentes</a></p>\n"
+"                </div>\n"
+"            "
+
+#. module: energy_communities_crm
+#: model:mail.template,body_html:energy_communities_crm.email_templ_lead_ce_source_coord_web_hiring_id
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for filling out the form to request the hiring of a Coordinator.</p>\n"
+"                    <p>We have successfully received your details</p>\n"
+"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
+"                    <br />\n"
+"                    <p>We keep in touch for any questions.</p>\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gracias por rellenar el formulario para pedir la contratación de una Coordinadora.</p>\n"
+"                    <p>Hemos recibido correctamente tus datos</p>\n"
+"                    <p>Durante los próximos días estudiaremos la solicitud y nos pondremos en contacto con usted.</p>\n"
+"                    <br />\n"
+"                    <p>Seguimos en contacto para cualquier consulta.</p>\n"
+"                    <p>Atentamente,</p>\n"
+"                    <p>Equipo de Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Recursos y preguntas frecuentes</a></p>\n"
 "                </div>\n"
 "            "
 
@@ -509,6 +571,8 @@ msgstr ""
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping_field__crm_lead_metadata_mapping_id
+#: model:ir.model.fields,field_description:energy_communities_crm.field_mailing_mailing__crm_lead_metadata_mapping_id
+#: model:ir.model.fields,field_description:energy_communities_crm.field_utm_source__crm_lead_metadata_mapping_id
 msgid "Crm Lead Metadata Mapping"
 msgstr "Mapping de metadatos en CRM Lead"
 
@@ -564,6 +628,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping__display_name
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping_field__display_name
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_tag__display_name
+#: model:ir.model.fields,field_description:energy_communities_crm.field_utm_source__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
@@ -576,7 +641,6 @@ msgid ""
 msgstr ""
 "Las socias hacen actualmente Aportaciones Voluntarias al Capital Social de "
 "la Comunidad Energética? ¿Cómo funciona?"
-
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
@@ -601,7 +665,6 @@ msgstr ""
 "Tiene previsto usar el Odoo (programa de gestión) de la plataforma para "
 "llevarla gestión tributaria: generación de informes tributarios de Hacienda "
 "(303, 390,...) ¿o se lo llevará una gestoría externa?"
-
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
@@ -720,6 +783,11 @@ msgid "Hierarchy level"
 msgstr "Nivel jerárquico"
 
 #. module: energy_communities_crm
+#: model_terms:ir.ui.view,arch_db:energy_communities_crm.ce_view_crm_case_opportunities_filter
+msgid "Hire COORD"
+msgstr "Contratar Coordinadora"
+
+#. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "I have read and accept the privacy policy"
@@ -748,6 +816,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping__id
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping_field__id
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_tag__id
+#: model:ir.model.fields,field_description:energy_communities_crm.field_utm_source__id
 msgid "ID"
 msgstr "Identificador"
 
@@ -816,6 +885,7 @@ msgstr "Idioma"
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping____last_update
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping_field____last_update
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_tag____last_update
+#: model:ir.model.fields,field_description:energy_communities_crm.field_utm_source____last_update
 msgid "Last Modified on"
 msgstr "Última modificación el"
 
@@ -946,8 +1016,8 @@ msgid ""
 "Opportunity assigned to Coordinator %s (ID: %s), where %s is the id of the "
 "original instance-level record."
 msgstr ""
-"Lead asignado a la coordinadora %s (ID: %s), donde %s es la id del "
-"lead original"
+"Lead asignado a la coordinadora %s (ID: %s), donde %s es la id del lead "
+"original"
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/wizards/assign_crm_to_coordinator_company.py:0
@@ -956,14 +1026,19 @@ msgid ""
 "Opportunity created from Instance opportunity with ID %s, where %s is the id"
 " of the new record generated at the Coordinator level"
 msgstr ""
-"Lead creado desde el lead de la plataforma con ID %s, donde %s es la id"
-" del nuevo lead generado en la coordinadora"
+"Lead creado desde el lead de la plataforma con ID %s, donde %s es la id del "
+"nuevo lead generado en la coordinadora"
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Other"
 msgstr "Otros"
+
+#. module: energy_communities_crm
+#: model_terms:ir.ui.view,arch_db:energy_communities_crm.ce_view_crm_case_opportunities_filter
+msgid "Other COORD"
+msgstr "Otros, Coordinadora"
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
@@ -1008,7 +1083,6 @@ msgstr ""
 "Idioma predeterminado de la Comunidad Energética (todas las comunicaciones "
 "que se hagan desde la CE se harán por defecto en este idioma)"
 
-
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
@@ -1026,7 +1100,6 @@ msgstr "Política de privacidad"
 msgid "Public community data changed:"
 msgstr ""
 "Se han registrado cambios en los datos públicos de la comunidad energética."
-
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.view_crm_lead_metadata_mapping_form
@@ -1134,6 +1207,11 @@ msgid "Twitter url"
 msgstr "Twitter"
 
 #. module: energy_communities_crm
+#: model:ir.model,name:energy_communities_crm.model_utm_source
+msgid "UTM Source"
+msgstr "Origen UTM"
+
+#. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "VAT"
@@ -1165,7 +1243,6 @@ msgstr ""
 "¿Qué importe de aportación obligatoria al capital social se pide en la "
 "incorporación de una nueva socia? (€)"
 
-
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
@@ -1182,7 +1259,6 @@ msgstr ""
 "Qué forma de pago se usará para cobrar las aportaciones obligatorias al "
 "capital social (alta de nuevas socias)?"
 
-
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
@@ -1194,7 +1270,6 @@ msgstr ""
 "¿Quién hará la gestión societaria del día a día de la Comunidad Energética? "
 "(persona/s con usuario de acceso al programa Odoo de gestión "
 "societaria/contable/tributaria de la Comunidad Energética)"
-
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
@@ -1233,6 +1308,12 @@ msgstr "[Contacto SomComunitats]"
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/services/crm_lead_service.py:0
 #, python-format
+msgid "[Hire Coord]"
+msgstr "[Contratar Coordinadora]"
+
+#. module: energy_communities_crm
+#: code:addons/energy_communities_crm/services/crm_lead_service.py:0
+#, python-format
 msgid "[Newsletter CE]"
 msgstr "[Boletín CE]"
 
@@ -1241,6 +1322,17 @@ msgstr "[Boletín CE]"
 #, python-format
 msgid "[Newsletter SomComunitats]"
 msgstr "[Boletín SomComunitats]"
+
+#. module: energy_communities_crm
+#: code:addons/energy_communities_crm/services/crm_lead_service.py:0
+#, python-format
+msgid "[Other Coord]"
+msgstr "[Otros, Coordinadora]"
+
+#. module: energy_communities_crm
+#: model:mail.template,subject:energy_communities_crm.email_templ_lead_ce_source_coord_web_hiring_id
+msgid "[Som Comunitats] Application for Recruitment Coordinator"
+msgstr "[Somos Comunidades] Solicitud Contractación Coordinadora"
 
 #. module: energy_communities_crm
 #: model:mail.template,subject:energy_communities_crm.email_templ_lead_request_contact_confirm_id
@@ -1252,6 +1344,11 @@ msgstr "[Somos Comunidades] Contacto Comunidad Energética"
 msgid "[Som Comunitats] Community Newsletter Subscription Request"
 msgstr ""
 "[Somos Comunidades] Subscripción al boletín de una Comunidad Energética"
+
+#. module: energy_communities_crm
+#: model:mail.template,subject:energy_communities_crm.email_templ_lead_ce_source_coord_web_other_id
+msgid "[Som Comunitats] Contact request in relation to Coordinators"
+msgstr "[Somos Comunidades] Solicitud de contacto en relación a Coordinadoras"
 
 #. module: energy_communities_crm
 #: model:mail.template,subject:energy_communities_crm.email_templ_contact_platform_confirm_id
