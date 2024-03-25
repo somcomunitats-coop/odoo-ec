@@ -50,26 +50,79 @@ def post_setup_multicompany_crm(cr, registry):
         existing_lead = env["crm.lead"].search([("tag_ids", "in", tag.id)])
         if not existing_lead:
             tag.unlink()
-    # setup sales teams and stages
+
     instance_crm_team = env.ref("sales_team.team_sales_department")
     instance_crm_team.write({"is_default_team": True})
-    # create all of them
+
+    # auto reference existing stages
+    existing_stages = env["crm.stage"].sudo().search([])
+    for stage in existing_stages:
+        stage.sudo().write(
+            {"team_id": instance_crm_team.id, "original_stage_id": stage.id}
+        )
+
+    # create stages for existing sale teams
+    existing_sale_teams = env["crm.team"].sudo().search([])
+    for sale_team in existing_sale_teams:
+        if sale_team.id != instance_crm_team.id:
+            default_stages = env["crm.stage"].get_create_default_stages(
+                sale_team.company_id
+            )
+            for stage in default_stages:
+                stage.sudo().copy(
+                    {
+                        "name": stage.name + " - " + sale_team.name,
+                        "original_stage_id": stage.id,
+                        "team_id": sale_team.id,
+                    }
+                )
+
+    # create missing stages/sale_teams for all companies
     companies = env["res.company"].sudo().search([])
     for company in companies:
         default_team = env["crm.team"].get_create_default_sale_team(company)
-        default_stages = env["crm.stage"].get_create_default_stages_dict(company)
-        for default_stage in default_stages.values():
-            default_stage.write({"team_id": default_team.id})
-    # setup team and stage for leads (adjust stages if necessary)
-    existing_leads = env["crm.lead"].search([])
-    for lead in existing_leads:
-        # setup team_id for lead
-        if not lead.team_id:
-            default_team_for_lead = env["crm.team"].get_create_default_sale_team(
-                lead.company_id
-            )
-            lead.write({"team_id": default_team_for_lead.id})
-            # TODO: setup properly newly created stages
+        default_stages = env["crm.stage"].get_create_default_stages(company)
+        for default_stage in default_stages:
+            default_stage.sudo().write({"team_id": default_team.id})
 
-    # setup stages
+    # setup stages/sale_teams for leads
+    existing_leads = env["crm.lead"].sudo().search([])
+    for lead in existing_leads:
+        default_team = env["crm.team"].get_create_default_sale_team(lead.company_id)
+        # we want to setup team_id on all leads except the ones belonging to the existing  ones custom created
+        custom_existing_sale_team_ids = existing_sale_teams.mapped("id")
+        custom_existing_sale_team_ids.remove(instance_crm_team.id)
+        l_w_dict = {}
+        if lead.team_id.id not in custom_existing_sale_team_ids:
+            lead_team = default_team
+            l_w_dict["team_id"] = default_team.id
+        else:
+            lead_team = lead.team_id
+            # lead.write({"team_id": default_team.id})
+        # the lead belongs to a stage that doesn't correspond. Look for the related one.
+        if lead.stage_id.team_id.id != lead_team.id:
+            new_stage = (
+                env["crm.stage"]
+                .sudo()
+                .search(
+                    [
+                        ("team_id", "=", lead_team.id),
+                        ("original_stage_id", "=", lead.stage_id.id),
+                    ]
+                )
+            )
+            if not new_stage:
+                new_stage = lead.stage_id.sudo().copy(
+                    {
+                        "name": lead.stage_id.name + " - " + lead_team.name,
+                        "original_stage_id": lead.stage_id.id,
+                        "team_id": lead_team.id,
+                    }
+                )
+            else:
+                new_stage = new_stage[0]
+            l_w_dict["stage_id"] = new_stage.id
+        if l_w_dict:
+            lead.write(l_w_dict)
+
     logger.info("Migration applied to tags, teams and leads on crm")
