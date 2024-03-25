@@ -9,7 +9,7 @@
     "author": "Som Comunitats",
     "website": "https://coopdevs.org",
     "category": "Marketing",
-    "version": "14.0.0.0.1",
+    "version": "14.0.0.1.3",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
@@ -17,6 +17,7 @@
         "energy_communities",
         "mass_mailing",
         "mass_mailing_partner",
+        "mass_mailing_list_dynamic",
     ],
     # always loaded
     "data": [

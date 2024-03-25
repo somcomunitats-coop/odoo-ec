@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "14.0.7.2.0",
+    "version": "14.0.8.0.1",
     "depends": [
         "account",
         "cooperator_account_banking_mandate",
@@ -62,6 +62,7 @@
         "data/ir_cron.xml",
         "report/report_templates.xml",
         "views/crm_lead_metadata_mapping_views.xml",
+        "views/account_move_views.xml",
         "views/crm_lead_views.xml",
         "views/landing_page_view.xml",
         "views/res_company_views.xml",
@@ -75,7 +76,6 @@
         "views/product_views.xml",
         "views/res_users_view.xml",
         "views/res_users_role_view.xml",
-        "views/mailing_mailing_views_menus.xml",
         "views/menus.xml",
         "views/website_formfields_template.xml",
         "views/website_subscription_template.xml",
