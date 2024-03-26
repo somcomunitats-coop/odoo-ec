@@ -792,6 +792,30 @@ msgid "Current Role"
 msgstr "Rol actual"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__crm_lead_metadata_mapping_id
+#: model:ir.model.fields,field_description:energy_communities.field_mailing_mailing__crm_lead_metadata_mapping_id
+#: model:ir.model.fields,field_description:energy_communities.field_utm_source__crm_lead_metadata_mapping_id
+msgid "Crm Lead Metadata Mapping"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead__ce_child_lead_id
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_crm_lead_view_form
+msgid "Crm lead child"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.actions.act_window,name:energy_communities.view_crm_lead_metadata_mapping_window
+#: model:ir.ui.menu,name:energy_communities.view_crm_lead_metadata_mapping_menu
+msgid "CrmLead Metadata mapping"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__current_role
+msgid "Current Role"
+msgstr ""
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "Customize documents text"
 msgstr "Dokumentuetako testuak pertsonalizatzea"
@@ -942,6 +966,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__failed_message_ids
 msgid "Failed Messages"
 msgstr "Mensages fallidos"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__type
+msgid "Field mapping type"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__first_name
@@ -1102,7 +1131,8 @@ msgid ""
 "If it is checked, the Coordinator will receive a copy of each auto-response "
 "email that is generated in any of its CCEE when a new Member Subscription "
 "request is received."
-msgstr "Markatuz gero, Koordinatzaileak erantzun automatikoko mezu elektroniko bakoitzaren kopia bat jasoko du "
+msgstr ""
+"Markatuz gero, Koordinatzaileak erantzun automatikoko mezu elektroniko bakoitzaren kopia bat jasoko du "
 "enpresa berri bat jasotzen denean bere CCEEren batean sortzen dena "
 "EEko bazkide gisa"
 
@@ -1347,6 +1377,11 @@ msgid "Mandatory Shares"
 msgstr "Aportaciones obligatorias"
 
 #. module: energy_communities
+#: model:ir.model.fields.selection,name:energy_communities.selection__crm_lead_metadata_mapping_field__type__many2one_relation_field
+msgid "Many2one relation field"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Map not found slug_id: {}"
@@ -1391,6 +1426,12 @@ msgstr "Nínguno"
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__name
 msgid "Name"
 msgstr "Izena"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
+#, python-format
+msgid "New"
+msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
@@ -1740,6 +1781,11 @@ msgstr "Enviar usuario al KeyCloak"
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__realm_name
 msgid "Realm name"
 msgstr "Nombre REALM"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_crm_lead_metadata_mapping_form
+msgid "Recipients"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__redirect_admin_url
@@ -2435,6 +2481,11 @@ msgstr "eta"
 #, python-format
 msgid "building"
 msgstr "En construcción"
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_cm_map
+msgid "cm.map"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_cm_map

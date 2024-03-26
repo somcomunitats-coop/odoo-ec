@@ -838,6 +838,30 @@ msgid "Current Role"
 msgstr "Rol actual"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__crm_lead_metadata_mapping_id
+#: model:ir.model.fields,field_description:energy_communities.field_mailing_mailing__crm_lead_metadata_mapping_id
+#: model:ir.model.fields,field_description:energy_communities.field_utm_source__crm_lead_metadata_mapping_id
+msgid "Crm Lead Metadata Mapping"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead__ce_child_lead_id
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_crm_lead_view_form
+msgid "Crm lead child"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.actions.act_window,name:energy_communities.view_crm_lead_metadata_mapping_window
+#: model:ir.ui.menu,name:energy_communities.view_crm_lead_metadata_mapping_menu
+msgid "CrmLead Metadata mapping"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__current_role
+msgid "Current Role"
+msgstr ""
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "Customize documents text"
 msgstr "Personalización de textos en documentos"
@@ -988,6 +1012,11 @@ msgstr "Link de Facebook"
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__failed_message_ids
 msgid "Failed Messages"
 msgstr "Mensages fallidos"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__type
+msgid "Field mapping type"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__first_name
@@ -1148,7 +1177,8 @@ msgid ""
 "If it is checked, the Coordinator will receive a copy of each auto-response "
 "email that is generated in any of its CCEE when a new Member Subscription "
 "request is received."
-msgstr "Si está marcado la Coordinadora recibirá una copia de cada correo de autorespuesta "
+msgstr ""
+"Si está marcado la Coordinadora recibirá una copia de cada correo de autorespuesta "
 "que se genere en cualquiera de sus CCEE cuando se reciba una nueva sociedad "
 "de socia en la CE"
 
@@ -1183,7 +1213,7 @@ msgstr "Recibir boletín información general plataforma"
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_coord_web_other
 msgid "Information about coordinators"
-msgstr "Otros: contacto genérico en relación a Coordinadoras"
+msgstr ""
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_info
@@ -1393,6 +1423,11 @@ msgid "Mandatory Shares"
 msgstr "Aportaciones obligatorias"
 
 #. module: energy_communities
+#: model:ir.model.fields.selection,name:energy_communities.selection__crm_lead_metadata_mapping_field__type__many2one_relation_field
+msgid "Many2one relation field"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Map not found slug_id: {}"
@@ -1443,6 +1478,12 @@ msgstr "Nombre"
 #, python-format
 msgid "New"
 msgstr "Nuevo"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
+#, python-format
+msgid "New"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__new_product_share_template
@@ -1784,6 +1825,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__realm_name
 msgid "Realm name"
 msgstr "Nombre REALM"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_crm_lead_metadata_mapping_form
+msgid "Recipients"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__redirect_admin_url
@@ -2221,7 +2267,7 @@ msgstr "Sube una nueva para cambiar"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__creation_partner
 msgid "Use existing partner linked to new company"
-msgstr "Utilizar usuario existene para lincarlo a la compañia"
+msgstr "Utilizar usuario existene para vincularlo a la compañia"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_user
@@ -2240,6 +2286,19 @@ msgstr "Companyia actual del usuario"
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__user_current_role
 msgid "User Current Role"
 msgstr "Rol actual del usuario"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__user_current_company
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__user_current_company
+#: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__user_current_company
+msgid "User Current Company"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner__user_current_role
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__user_current_role
+msgid "User Current Role"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__user_is_coordinator_worker
@@ -2481,6 +2540,11 @@ msgstr "y"
 #, python-format
 msgid "building"
 msgstr "En construcción"
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_cm_map
+msgid "cm.map"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_cm_map
