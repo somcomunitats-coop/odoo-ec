@@ -118,6 +118,12 @@ class ResCompany(models.Model):
     voluntary_share_form_header_text = fields.Html(
         string="Voluntary share form header text", translate=True
     )
+    notify_to_coord_child_ccee_submissions = fields.Boolean(
+        string=_("Notify the Coordinator of new Subscriptions of their CCEE"),
+        help=_(
+            "If it is checked, the Coordinator will receive a copy of each auto-response email that is generated in any of its CCEE when a new Member Subscription request is received."
+        ),
+    )
 
     # COMPUTED FIELDS
     @api.depends("hierarchy_level")

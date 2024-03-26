@@ -1,0 +1,33 @@
+<odoo>
+  <data>
+    <record id="mailing_list_view_form_inherit" model="ir.ui.view">
+        <field name="name">mailing.list.form.inherit</field>
+        <field name="model">mailing.list</field>
+        <field name="inherit_id" ref="mass_mailing.mailing_list_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+              <group>
+                <group>
+                  <field name="allowed_companies" invisible="1" />
+                  <field
+                name="company_id"
+                groups="base.group_multi_company"
+                domain="[('id','in',allowed_companies)]"
+                widget="selection"
+              />
+                </group>
+              </group>
+            </xpath>
+            <xpath expr="//field[@name='is_public']" position="attributes">
+              <attribute
+            name="groups"
+          >energy_communities.mass_mailing_super_user</attribute>
+            </xpath>
+            <!-- TODO: Decide if we implement this or we uninstall website_mass_mailing unused module -->
+            <!--<xpath expr="//page[@name='website_popups']" position="attributes">-->
+            <!--  <attribute name="invisible">1</attribute>-->
+            <!--</xpath>-->
+        </field>
+    </record>
+  </data>
+</odoo>

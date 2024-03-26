@@ -4,9 +4,9 @@ from datetime import datetime
 import requests
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
-from .model_mapping_conf import (
+from .metadata_mapping_conf import (
     _LEAD_METADATA__DATE_FIELDS,
     _LEAD_METADATA__ENERGY_TAGS_FIELDS,
     _LEAD_METADATA__EXTID_FIELDS,
@@ -15,16 +15,10 @@ from .model_mapping_conf import (
     _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD,
 )
 
-_TAG_TYPE_VALUES = [
-    ("regular", _("Regular")),
-    ("energy_service", _("Energy Service")),
-    ("service_plan", _("Service Plan")),
-]
-
 
 class CrmLead(models.Model):
     _name = "crm.lead"
-    _inherit = ["crm.lead", "external.id.mixin"]
+    _inherit = ["crm.lead", "external.id.mixin", "user.currentcompany.mixin"]
 
     lang = fields.Char(string="Language")
     ce_tag_ids = fields.Many2many(
@@ -34,12 +28,6 @@ class CrmLead(models.Model):
         "tag_id",
         string="CE Tags",
         help="CE Classify and analyze categories",
-    )
-    community_company_id = fields.Many2one(
-        string="Related Community",
-        comodel_name="res.company",
-        domain="[('coordinator','!=',True)]",
-        help="Community related to this Lead",
     )
     finished = fields.Boolean(
         related="stage_id.is_won",
@@ -56,11 +44,56 @@ class CrmLead(models.Model):
     )
     ce_child_lead_id = fields.Many2one(comodel_name="crm.lead", string="Crm lead child")
 
+    @api.constrains("company_id")
+    def validate_lead_conf(self):
+        for record in self:
+            if record.team_id.company_id.id != record.company_id.id:
+                raise ValidationError(
+                    _(
+                        "Crm Lead team {team_name} doesn't match it's company {company_name}"
+                    ).format(
+                        **{
+                            "team_name": record.team_id.name,
+                            "company_name": record.company_id.name,
+                        }
+                    )
+                )
+            if record.stage_id.team_id.id != record.team_id.id:
+                raise ValidationError(
+                    _(
+                        "Crm Lead stage {stage_name} doesn't match it's company {company_name}"
+                    ).format(
+                        **{
+                            "stage_name": record.stage_id.name,
+                            "company_name": record.company_id.name,
+                        }
+                    )
+                )
+
+    @api.onchange("company_id")
+    def _auto_setup_team_id_domain(self):
+        for record in self:
+            return {
+                "domain": {"team_id": [("company_id", "=", record.company_id.id)]},
+            }
+
+    @api.depends("company_id")
+    def _compute_team_id(self):
+        for record in self:
+            team = self.env["crm.team"].get_create_default_sale_team(record.company_id)
+            record.team_id = team.id
+
     def _get_default_community_wizard(self):
         self.ensure_one()
+        # form values from metadata
         creation_dict = self._get_metadata_values()
+        # all other populated form fields.
+        creation_partner = self._search_partner_for_company_wizard_creation(
+            creation_dict
+        )
+        if creation_partner:
+            creation_dict["creation_partner"] = creation_partner.id
         users = [user.id for user in self.company_id.get_users()]
-        # add system users to user_ids recordset
         users = users + [
             self.env.ref("base.user_admin").id,
             self.env.ref("base.public_user").id,
@@ -99,7 +132,9 @@ class CrmLead(models.Model):
                 wizard_key = _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD[meta_key]
                 # date meta
                 if meta_key in _LEAD_METADATA__DATE_FIELDS:
-                    format_date = self._format_date_for_creation(meta_entry.value)
+                    format_date = self._format_date_for_company_wizard_creation(
+                        meta_entry.value
+                    )
                     if format_date:
                         meta_dict[wizard_key] = format_date
                 # lang meta
@@ -151,23 +186,33 @@ class CrmLead(models.Model):
                     )
                 if "legal_name" not in meta_dict.keys():
                     meta_dict["legal_name"] = meta_dict["name"]
+                if "vat" in meta_dict.keys():
+                    meta_dict["vat"] = meta_dict["vat"].replace(" ", "").upper()
+                if "email" in meta_dict.keys():
+                    meta_dict["email"] = meta_dict["email"].strip()
         return meta_dict
 
-    def _format_date_for_creation(self, date_val):
-        format_date = False
-        date_formats = ["%Y-%m-%d", "%d-%m-%Y", "%Y/%m/%d", "%d/%m/%Y"]
-        for date_format in date_formats:
-            try:
-                format_date = datetime.strptime(date_val, date_format)
-            except:
-                pass
-        return format_date
+    def _search_partner_for_company_wizard_creation(self, creation_dict):
+        creation_partner = False
+        if "vat" in creation_dict.keys():
+            creation_partners = self.env["res.partner"].search(
+                [
+                    ("company_ids", "in", self.env.user.get_current_company_id()),
+                    ("vat", "=", creation_dict["vat"]),
+                ]
+            )
+            if creation_partners:
+                creation_partner = creation_partners[0]
+                # more than one partner found -> filter by email
+                if len(creation_partners) > 1 and "email" in creation_dict.keys():
+                    email_creation_partners = creation_partners.filtered(
+                        lambda record: record.email == creation_dict["email"]
+                    )
+                    if email_creation_partners:
+                        creation_partner = email_creation_partners[0]
+        return creation_partner
 
-    # def _get_metadata_values(self):
-    #     for wizard_key in _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD.keys():
-    #         meta_value = self.metadata_line_ids
-
-    def _format_date_for_creation(self, date_val):
+    def _format_date_for_company_wizard_creation(self, date_val):
         format_date = False
         date_formats = ["%Y-%m-%d", "%d-%m-%Y", "%Y/%m/%d", "%d/%m/%Y"]
         for date_format in date_formats:
@@ -241,16 +286,14 @@ class CrmLead(models.Model):
             return True
         return False
 
+    def delete_metadata(self, meta_key):
+        existing_meta = self.metadata_line_ids.filtered(
+            lambda record: record.key == meta_key
+        )
+        if existing_meta:
+            existing_meta.unlink()
+            return True
+        return False
 
-class CrmTags(models.Model):
-    _inherit = "crm.tag"
-
-    tag_ext_id = fields.Char("ID Ext tag", compute="compute_ext_id_tag")
-    tag_type = fields.Selection(_TAG_TYPE_VALUES, string="Tag type", default="regular")
-
-    def compute_ext_id_tag(self):
-        for record in self:
-            res = record.get_external_id()
-            record.tag_ext_id = False
-            if res.get(record.id):
-                record.tag_ext_id = res.get(record.id)
+    def get_metadata(self, meta_key):
+        return self.metadata_line_ids.filtered(lambda record: record.key == meta_key)

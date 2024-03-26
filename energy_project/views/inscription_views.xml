@@ -13,6 +13,13 @@
           />
                     <field name="is_member" readonly="1" />
                     <field name="effective_date" width="50%" />
+                    <field name="mandate_filtered_ids" invisible="True" />
+                    <field name="acc_number" />
+                    <field
+            name="mandate_id"
+            domain="[('id', 'in', mandate_filtered_ids)]"
+            context="{'default_partner_id': partner_id}"
+          />
                 </tree>
             </field>
         </record>

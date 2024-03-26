@@ -10,7 +10,8 @@ _COMPANY_HIERARCHY_LEVEL = _HIERARCHY_LEVEL_VALUES + [("none", "NONE")]
 
 
 class ResPartner(models.Model):
-    _inherit = "res.partner"
+    _name = "res.partner"
+    _inherit = ["res.partner", "user.currentcompany.mixin"]
 
     gender = fields.Selection(
         selection_add=[
@@ -34,7 +35,6 @@ class ResPartner(models.Model):
         compute="compute_company_hierarchy_level",
         store=True,
     )
-    user_current_role = fields.Char(compute="_compute_user_current_role", store=False)
     company_ids_info = fields.Many2many(
         string="Companies",
         comodel_name="res.company",
@@ -47,10 +47,6 @@ class ResPartner(models.Model):
         for record in self:
             record.company_ids_info = record.company_ids
 
-    def _compute_user_current_role(self):
-        for record in self:
-            record.user_current_role = self.env.user.get_current_role()
-
     def compute_company_hierarchy_level(self):
         for record in self:
             rel_company = self.env["res.company"].search(
@@ -61,15 +57,22 @@ class ResPartner(models.Model):
 
     @api.model
     def create(self, vals):
-        current_company = self.env.company
-        if self.env.user not in (
-            self.env.ref("base.user_root"),
-            self.env.ref("base.user_admin"),
-        ):
-            if vals.get("company_ids", False):
-                vals["company_ids"][0][-1].append(current_company.id)
-
         new_partner = super().create(vals)
+        current_user = self.env.user
+        if (
+            not new_partner.company_ids
+            and
+            # TODO: is really necessary user not being root or admin?
+            current_user
+            not in (
+                self.env.ref("base.user_root"),
+                self.env.ref("base.user_admin"),
+            )
+        ):
+            new_partner.write(
+                {"company_ids": [(4, current_user.get_current_company_id())]}
+            )
+
         return new_partner
 
     def cron_update_company_ids_from_user(self):

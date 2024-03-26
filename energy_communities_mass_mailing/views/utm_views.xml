@@ -1,0 +1,52 @@
+<odoo>
+  <data>
+    <record id="utm_campaign_view_form_inherit" model="ir.ui.view">
+        <field name="name">utm.campaign.view.form.inherit</field>
+        <field name="model">utm.campaign</field>
+        <field name="inherit_id" ref="utm.utm_campaign_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="allowed_companies" invisible="1" />
+                <field
+            name="company_id"
+            groups="base.group_multi_company"
+            domain="[('id','in',allowed_companies)]"
+            widget="selection"
+          />
+            </xpath>
+        </field>
+    </record>
+    <record id="utm_stage_view_tree_inherit" model="ir.ui.view">
+        <field name="name">utm.stage.view.tree.inherit</field>
+        <field name="model">utm.stage</field>
+        <field name="inherit_id" ref="utm.utm_stage_view_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="allowed_companies" invisible="1" />
+                <field
+            name="company_id"
+            groups="base.group_multi_company"
+            domain="[('id','in',allowed_companies)]"
+            options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+          />
+            </xpath>
+        </field>
+    </record>
+    <record id="utm_tag_view_tree_inherit" model="ir.ui.view">
+        <field name="name">utm.tag.view.tree.inherit</field>
+        <field name="model">utm.tag</field>
+        <field name="inherit_id" ref="utm.utm_tag_view_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+              <field name="allowed_companies" invisible="1" />
+              <field
+            name="company_id"
+            groups="base.group_multi_company"
+            domain="[('id','in',allowed_companies)]"
+            options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+          />
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

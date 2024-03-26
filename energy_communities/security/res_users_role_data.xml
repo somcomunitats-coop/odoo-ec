@@ -10,6 +10,10 @@
     </record>
 
     <!-- new groups -->
+    <record model="res.groups" id="mass_mailing_super_user">
+        <field name="name">Mass Mailing Superuser</field>
+    </record>
+
     <record model="res.groups" id="group_user">
         <field name="name">User</field>
         <field name="category_id" ref="energy_communities_category" />
@@ -62,6 +66,8 @@
                (4, ref('account_payment_order.group_account_payment')),
                (4, ref('crm.group_use_lead')),
                (4, ref('l10n_es_aeat.group_account_aeat')),
+               (4, ref('mass_mailing.group_mass_mailing_user')),
+               (4, ref('mass_mailing.group_mass_mailing_campaign')),
         ]"
     />
     </record>
@@ -89,6 +95,8 @@
                (4, ref('account_payment_order.group_account_payment')),
                (4, ref('crm.group_use_lead')),
                (4, ref('l10n_es_aeat.group_account_aeat')),
+               (4, ref('mass_mailing.group_mass_mailing_user')),
+               (4, ref('mass_mailing.group_mass_mailing_campaign')),
         ]"
     />
     </record>
@@ -115,6 +123,8 @@
                (4, ref('account_payment_order.group_account_payment')),
                (4, ref('crm.group_use_lead')),
                (4, ref('l10n_es_aeat.group_account_aeat')),
+               (4, ref('mass_mailing.group_mass_mailing_user')),
+               (4, ref('mass_mailing.group_mass_mailing_campaign')),
         ]"
     />
     </record>
@@ -141,6 +151,8 @@
                (4, ref('account_payment_order.group_account_payment')),
                (4, ref('crm.group_use_lead')),
                (4, ref('l10n_es_aeat.group_account_aeat')),
+               (4, ref('mass_mailing.group_mass_mailing_user')),
+               (4, ref('mass_mailing.group_mass_mailing_campaign')),
         ]"
     />
     </record>
@@ -171,7 +183,9 @@
                (4, ref('account.group_account_manager')),
                (4, ref('account_payment_order.group_account_payment')),
                (4, ref('crm.group_use_lead')),
+               (4, ref('mass_mailing_super_user')),
                (4, ref('mass_mailing.group_mass_mailing_user')),
+               (4, ref('mass_mailing.group_mass_mailing_campaign')),
                (4, ref('l10n_es_aeat.group_account_aeat')),
                (4, ref('queue_job.group_queue_job_manager')),
         ]"

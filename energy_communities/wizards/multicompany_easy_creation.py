@@ -137,6 +137,17 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         string="Hierarchy level",
         default="community",
     )
+    creation_partner = fields.Many2one(
+        "res.partner", string="Use existing partner linked to new company"
+    )
+    user_current_company = fields.Many2one(
+        "res.company", compute="_compute_user_current_company", store=False
+    )
+
+    @api.depends("parent_id")
+    def _compute_user_current_company(self):
+        for record in self:
+            record.user_current_company = self.env.user.user_current_company
 
     @api.onchange("hierarchy_level")
     def onchange_hierarchy_level(self):
@@ -174,6 +185,11 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 menu_id=self.env.ref("crm.crm_menu_root").id,
                 name=self.crm_lead_id.name,
             )
+        )
+
+    def create_default_utm_stage(self):
+        self.env["utm.stage"].sudo().create(
+            {"name": _("New"), "company_id": self.new_company_id.id}
         )
 
     def update_product_category_company_share(self):
@@ -270,6 +286,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         self.create_company()
         self.control_company_partner_visibility()
         self.add_company_managers()
+        self.create_default_utm_stage()
         if self.create_landing:
             self.create_public_data()
         if self.crm_lead_id:
@@ -300,6 +317,9 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             )
             if crm_pack_2_tag and self.ce_member_status == "open":
                 allow_new_members = True
+        vat = False
+        if self.vat:
+            vat = self.vat.replace(" ", "").upper()
         self.new_company_id = (
             self.env["res.company"]
             .sudo()
@@ -309,11 +329,12 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "hierarchy_level": self.hierarchy_level,
                     "user_ids": [(6, 0, self.user_ids.ids)],
                     "parent_id": self.parent_id.id,
+                    "partner_id": self.creation_partner.id,
                     "street": self.street,
                     "website": self.website,
-                    "email": self.email,
+                    "email": self.email.strip(),
                     "foundation_date": self.foundation_date,
-                    "vat": self.vat,
+                    "vat": vat,
                     "city": self.city,
                     "state_id": self.state_id,
                     "zip": self.zip_code,

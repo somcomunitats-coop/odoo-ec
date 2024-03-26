@@ -1,0 +1,58 @@
+<odoo>
+  <data>
+    <record id="view_mail_mass_mailing_tree_inherit" model="ir.ui.view">
+        <field name="name">mailing.mailing.tree.inherit</field>
+        <field name="model">mailing.mailing</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='subject']" position="before">
+                <field name="name" />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_mail_mass_mailing_kanban_inherit" model="ir.ui.view">
+        <field name="name">mailing.mailing.kanban.inherit</field>
+        <field name="model">mailing.mailing</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_kanban" />
+        <field name="arch" type="xml">
+          <xpath
+          expr="//div[@class='o_kanban_record_headings']/div[@class='row']/h3/field[@name='subject']"
+          position="after"
+        >
+            <h4 class="my-1 col-8 o_text_overflow"><field name="name" /></h4>
+          </xpath>
+          <xpath
+          expr="//div[@class='o_kanban_record_headings']/h3/field[@name='subject']"
+          position="after"
+        >
+            <h4><field name="name" /></h4>
+          </xpath>
+        </field>
+    </record>
+    <record id="view_mail_mass_mailing_form_inherit" model="ir.ui.view">
+        <field name="name">mailing.mailing.form.inherit</field>
+        <field name="model">mailing.mailing</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='subject']" position="before">
+              <field name="name" />
+            </xpath>
+            <xpath expr="//field[@name='subject']" position="after">
+                <field name="allowed_companies" invisible="1" />
+                <field
+            name="company_id"
+            groups="base.group_multi_company"
+            domain="[('id','in',allowed_companies)]"
+            widget="selection"
+          />
+            </xpath>
+            <xpath
+          expr="//page[@name='settings']/group/group/field[@name='name']"
+          position="attributes"
+        >
+              <attribute name="invisible">True</attribute>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

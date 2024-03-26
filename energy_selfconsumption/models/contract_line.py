@@ -65,3 +65,22 @@ class ContractLine(models.Model):
             }
         )
         return invoice_line_vals
+
+    @api.depends("last_date_invoiced", "recurring_next_date")
+    def _compute_days_invoiced(self):
+        for record in self:
+            (
+                first_date_invoiced,
+                last_date_invoiced,
+                recurring_next_date,
+            ) = record._get_period_to_invoice(
+                record.last_date_invoiced,
+                record.recurring_next_date,
+                stop_at_date_end=True,
+            )
+
+            if not first_date_invoiced or not last_date_invoiced:
+                record.days_invoiced = 0
+                continue
+
+            record.days_invoiced = (last_date_invoiced - first_date_invoiced).days + 1

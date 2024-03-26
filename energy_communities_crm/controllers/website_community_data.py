@@ -5,7 +5,9 @@ from datetime import datetime
 from odoo import _, http
 from odoo.http import request
 
-from ..models.res_company import _LEGAL_FORM_VALUES
+from odoo.addons.energy_communities.models.res_company import (
+    _LEGAL_FORM_VALUES,
+)
 
 _COMMUNITY_DATA__FIELDS = {}
 _COMMUNITY_DATA__GENERAL_FIELDS = {
@@ -168,7 +170,7 @@ class WebsiteCommunityData(http.Controller):
         lead_values = self._get_lead_values(kwargs["lead_id"])
         lead_values.update(kwargs)
         values = self._fill_values(lead_values)
-        return request.render("energy_communities.community_data_page", values)
+        return request.render("energy_communities_crm.community_data_page", values)
 
     @http.route(
         ["/community-data/submit"],
@@ -185,6 +187,12 @@ class WebsiteCommunityData(http.Controller):
         values = {}
         form_values = {}
 
+        related_lead = (
+            request.env["crm.lead"]
+            .sudo()
+            .search([("external_id", "=", kwargs["lead_id"])])
+        )
+
         energy_services = self._get_energy_service_tag_ids()
         form_energy_services = []
 
@@ -196,6 +204,11 @@ class WebsiteCommunityData(http.Controller):
                 if field_value:
                     values[field_name] = field_value
                     form_values[field_name] = field_value
+                else:
+                    lead_meta = related_lead.get_metadata(field_name)
+                    if lead_meta:
+                        lead_meta.unlink()
+
             if field_name in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
                 if field_value.filename:
                     values[field_name] = field_value
@@ -227,7 +240,7 @@ class WebsiteCommunityData(http.Controller):
             if response is not True:
                 return response
             # metadata processing
-            self._process_lead_metadata(values)
+            self._process_lead_metadata(related_lead, values)
             # success
             return self._get_community_data_submit_response(values)
         else:
@@ -238,7 +251,7 @@ class WebsiteCommunityData(http.Controller):
     #
     def _get_translation(self, source):
         return request.env["ir.translation"]._get_source(
-            name="addons/energy_communities/controllers/website_community_data.py",
+            name="addons/energy_communities_crm/controllers/website_community_data.py",
             types="code",
             lang=request.env.context["lang"],
             source=source,
@@ -251,7 +264,7 @@ class WebsiteCommunityData(http.Controller):
                 {
                     "id": option["id"],
                     "name": request.env["ir.translation"]._get_source(
-                        name="addons/energy_communities/controllers/website_community_data.py",
+                        name="addons/energy_communities_crm/controllers/website_community_data.py",
                         types="code",
                         lang=request.env.context["lang"],
                         source=option["name"],
@@ -262,7 +275,7 @@ class WebsiteCommunityData(http.Controller):
 
     def _get_community_data_submit_response(self, values):
         values = self._fill_values(values, True, False)
-        return request.render("energy_communities.community_data_page", values)
+        return request.render("energy_communities_crm.community_data_page", values)
 
     def _get_date_string(self, date_val):
         if date_val:
@@ -392,7 +405,7 @@ class WebsiteCommunityData(http.Controller):
         for field_key in _COMMUNITY_DATA__FIELDS.keys():
             # values[field_key + "_label"] = _COMMUNITY_DATA__FIELDS[field_key]
             values[field_key + "_label"] = request.env["ir.translation"]._get_source(
-                name="addons/energy_communities/controllers/website_community_data.py",
+                name="addons/energy_communities_crm/controllers/website_community_data.py",
                 types="code",
                 lang=request.env.context["lang"],
                 source=_COMMUNITY_DATA__FIELDS[field_key],
@@ -516,7 +529,7 @@ class WebsiteCommunityData(http.Controller):
     def _page_render_validation(self, values):
         values = self._lead_id_validation(values)
         if "error_msgs" in values.keys():
-            return request.render("energy_communities.community_data_page", values)
+            return request.render("energy_communities_crm.community_data_page", values)
         return True
 
     def _form_submit_validation(self, values):
@@ -526,7 +539,7 @@ class WebsiteCommunityData(http.Controller):
         # lead_id validation
         values = self._lead_id_validation(values)
         if "error_msgs" in values.keys():
-            return request.render("energy_communities.community_data_page", values)
+            return request.render("energy_communities_crm.community_data_page", values)
 
         # ce_services validation
         if "ce_services" not in values.keys():
@@ -585,19 +598,14 @@ class WebsiteCommunityData(http.Controller):
             values["error"] = error
             values["error_msgs"] = error_msgs
             values = self._fill_values(values, False, True)
-            return request.render("energy_communities.community_data_page", values)
+            return request.render("energy_communities_crm.community_data_page", values)
         return True
 
     #
     # DATA PROCESSING
     #
-    def _process_lead_metadata(self, values):
+    def _process_lead_metadata(self, related_lead, values):
         changed_data = []
-        related_lead = (
-            request.env["crm.lead"]
-            .sudo()
-            .search([("external_id", "=", values["lead_id"])])
-        )
         for meta_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
             if meta_key in values.keys():
                 changed = related_lead.create_update_metadata(
