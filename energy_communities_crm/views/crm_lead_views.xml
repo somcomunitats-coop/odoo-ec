@@ -130,32 +130,4 @@
 		</field>
 	</record>
 
-	<record id="ce_crm_lead_opportunities_form_view" model="ir.ui.view">
-		<field name="name">crm.lead.form.opportunity</field>
-		<field name="model">crm.lead</field>
-		<field name="inherit_id" ref="crm.quick_create_opportunity_form" />
-		<field name="arch" type="xml">
-			<field name="title" position="after">
-				<field
-          name="ce_tag_ids"
-          widget="many2many_tags"
-          options="{'color_field': 'color', 'no_create_edit': True}"
-          attrs="{'invisible':[('source_id', '!=', %(energy_communities.ce_source_creation_ce_proposal)d)]}"
-        />
-				<field name="source_id" />
-			</field>
-		</field>
-	</record>
-
-	<record id="ce_quick_create_opportunity_form" model="ir.ui.view">
-		<field name="name">crm.lead.form.quick_create</field>
-		<field name="model">crm.lead</field>
-		<field name="inherit_id" ref="crm.quick_create_opportunity_form" />
-		<field name="arch" type="xml">
-			<field name="partner_id" position="after">
-				<field name="source_id" />
-			</field>
-		</field>
-	</record>
-
 </odoo>
