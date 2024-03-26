@@ -1,10 +1,10 @@
 {
-    "name": "Energy self-onsumption API/REST addon",
+    "name": "Energy Communities API/REST addon",
     "summary": """
-        This addon enables API/REST communication with ce_odoo for the module energy selfconsumption
+        API/REST endpoints for energy communities
     """,
     "description": """
-        API/REST endpoints for selfconfumption module
+        This addon enables an API/REST communication with energy communities platform based in Fastapi framework
     """,
     "author": "Coopdevs Treball SCCL & Som Energia SCCL & SomIT",
     "website": "https://coopdevs.org",
