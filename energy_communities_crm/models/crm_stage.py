@@ -9,16 +9,6 @@ class Stage(models.Model):
     original_stage_id = fields.Many2one("crm.stage")
 
     @api.model
-    def get_create_default_stages_dict(self, company):
-        stage_1, stage_2, stage_3, stage_4 = self.get_create_default_stages(company)
-        return {
-            stage_1.original_stage_id.id: stage_1,
-            stage_2.original_stage_id.id: stage_2,
-            stage_3.original_stage_id.id: stage_3,
-            stage_4.original_stage_id.id: stage_4,
-        }
-
-    @api.model
     def get_create_default_stages(self, company):
         system_stage_1 = self.env.ref("crm.stage_lead1")
         system_stage_2 = self.env.ref("crm.stage_lead2")

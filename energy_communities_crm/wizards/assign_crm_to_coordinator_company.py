@@ -23,12 +23,24 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
         self.ensure_one()
         # remove followers
         self.remove_follower()
+        # make sure default stages and team exists for assigned company
+        default_stages = self.env["crm.stage"].get_create_default_stages(
+            self.assigned_company_id
+        )
+        default_team = self.env["crm.team"].get_create_default_sale_team(
+            self.assigned_company_id
+        )
         # duplicate opportunity
         new_crm_lead = self.crm_lead_id.sudo().copy(
-            {"user_id": None, "tag_ids": None, "stage_id": 1}
+            {
+                "user_id": None,
+                "tag_ids": None,
+                "stage_id": default_stages[0].id,
+                "team_id": default_team.id,
+                "company_id": self.assigned_company_id.id,
+            }
         )
         # notifications
-        new_crm_lead.write({"company_id": self.assigned_company_id})
         new_crm_msg = _(
             "Opportunity assigned to Coordinator %s (ID: %s), where %s is the id of the original instance-level record."
             % (self.assigned_company_id.name, new_crm_lead.id, self.crm_lead_id.id)
