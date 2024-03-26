@@ -2,7 +2,7 @@ import logging
 
 from fastapi import APIRouter, Request
 
-from ..dependencies import EnergySelfconsumptionDep, PagingDep
+from ..dependencies import EnergySelfconsumptionDependency, PagingDependency
 from ..schemas.responses import (
     ProjectMembersResponse,
     ProjectsInfoListResponse,
@@ -22,8 +22,8 @@ router = APIRouter(tags=["energy_selfconsumption"])
 )
 async def selfconsumption_projects(
     request: Request,
-    paging: PagingDep,
-    energy_selfconsumption_service: EnergySelfconsumptionDep,
+    paging: PagingDependency,
+    energy_selfconsumption_service: EnergySelfconsumptionDependency,
 ) -> ProjectsInfoListResponse:
     total_projects = energy_selfconsumption_service.total_selfconsumption_projects
     projects = energy_selfconsumption_service.selfconsumption_projects(
@@ -42,7 +42,7 @@ async def selfconsumption_projects(
 async def get_selfconsumption_project_by_code(
     project_code: str,
     request: Request,
-    energy_selfconsumption_service: EnergySelfconsumptionDep,
+    energy_selfconsumption_service: EnergySelfconsumptionDependency,
 ) -> SingleProjectInfoResponse:
     projects = energy_selfconsumption_service.selfconsumption_projects(project_code)
     project = projects[0] if projects and len(projects) > 0 else None
@@ -57,8 +57,8 @@ async def get_selfconsumption_project_by_code(
 async def selfconsumption_project_members(
     project_code: str,
     request: Request,
-    paging: PagingDep,
-    energy_selfconsumption_service: EnergySelfconsumptionDep,
+    paging: PagingDependency,
+    energy_selfconsumption_service: EnergySelfconsumptionDependency,
 ) -> ProjectMembersResponse:
     total_projectmembers = energy_selfconsumption_service.total_project_members(
         project_code

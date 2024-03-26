@@ -56,7 +56,7 @@ def energy_selfconsumption_service(
     return EnergySelfconsumptionService(env=env, user=auth_user)
 
 
-PagingDep = Annotated[PaginationLimits, Depends(paging)]
-EnergySelfconsumptionDep = Annotated[
+PagingDependency = Annotated[PaginationLimits, Depends(paging)]
+EnergySelfconsumptionDependency = Annotated[
     EnergySelfconsumptionService, Depends(energy_selfconsumption_service)
 ]
