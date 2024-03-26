@@ -330,7 +330,7 @@ msgstr "Adreça postal (Carrer, nº porta, pis,...)"
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__allowed_companies
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_tag__allowed_companies
 msgid "Allowed Companies"
-msgstr ""
+msgstr "Companyies autoritzades"
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
@@ -520,7 +520,7 @@ msgstr "Tipus de Comunitat"
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_tag__company_id
 msgid "Company"
-msgstr ""
+msgstr "Companyia"
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
@@ -594,13 +594,13 @@ msgstr "Metadades mapping de CRM Lead"
 #: code:addons/energy_communities_crm/models/crm_lead.py:0
 #, python-format
 msgid "Crm Lead stage {stage_name} doesn't match it's company {company_name}"
-msgstr ""
+msgstr "La etapa {stage_name} del lead no coincideix amb la companyia {company_name}"
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/models/crm_lead.py:0
 #, python-format
 msgid "Crm Lead team {team_name} doesn't match it's company {company_name}"
-msgstr ""
+msgstr "L'equip {team_name} del lead no coincideix amb la companyia {company_name}"
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__ce_child_lead_id
@@ -890,7 +890,7 @@ msgstr "És etapa guanyada?"
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_team__is_default_team
 msgid "Is default team"
-msgstr ""
+msgstr "És l'equip per defecte"
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
@@ -1069,7 +1069,7 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_stage__original_stage_id
 msgid "Original Stage"
-msgstr ""
+msgstr "Etapa original"
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
@@ -1222,7 +1222,7 @@ msgstr "Cognoms"
 #. module: energy_communities_crm
 #: model:ir.model.constraint,message:energy_communities_crm.constraint_crm_tag_name_uniq
 msgid "Tag must be unique per company!"
-msgstr ""
+msgstr "L'etiqueta ha de ser única per companyia"
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_tag__tag_type
@@ -1261,13 +1261,13 @@ msgstr "Origen UTM"
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__user_current_company
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_tag__user_current_company
 msgid "User Current Company"
-msgstr ""
+msgstr "Companyia actual de l'usuari"
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__user_current_role
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_tag__user_current_role
 msgid "User Current Role"
-msgstr ""
+msgstr "Rol actual de l'usuari"
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
