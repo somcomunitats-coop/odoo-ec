@@ -4,7 +4,7 @@ from datetime import datetime
 import requests
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 from .metadata_mapping_conf import (
     _LEAD_METADATA__DATE_FIELDS,
@@ -49,6 +49,32 @@ class CrmLead(models.Model):
         store=False,
     )
     ce_child_lead_id = fields.Many2one(comodel_name="crm.lead", string="Crm lead child")
+
+    @api.constrains("company_id")
+    def validate_lead_conf(self):
+        for record in self:
+            if record.team_id.company_id.id != record.company_id.id:
+                raise ValidationError(
+                    _(
+                        "Crm Lead team {team_name} doesn't match it's company {company_name}"
+                    ).format(
+                        **{
+                            "team_name": record.team_id.name,
+                            "company_name": record.company_id.name,
+                        }
+                    )
+                )
+            if record.stage_id.team_id.id != record.team_id.id:
+                raise ValidationError(
+                    _(
+                        "Crm Lead stage {stage_name} doesn't match it's company {company_name}"
+                    ).format(
+                        **{
+                            "stage_name": record.stage_id.name,
+                            "company_name": record.company_id.name,
+                        }
+                    )
+                )
 
     @api.onchange("company_id")
     def _auto_setup_team_id_domain(self):
