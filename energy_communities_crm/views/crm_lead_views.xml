@@ -143,7 +143,6 @@
           attrs="{'invisible':[('source_id', '!=', %(energy_communities.ce_source_creation_ce_proposal)d)]}"
         />
 				<field name="source_id" />
-				<field name="community_company_id" readonly="1" />
 			</field>
 		</field>
 	</record>

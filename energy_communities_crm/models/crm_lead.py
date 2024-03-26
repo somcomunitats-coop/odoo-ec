@@ -29,12 +29,6 @@ class CrmLead(models.Model):
         string="CE Tags",
         help="CE Classify and analyze categories",
     )
-    community_company_id = fields.Many2one(
-        string="Related Community",
-        comodel_name="res.company",
-        domain="[('coordinator','!=',True)]",
-        help="Community related to this Lead",
-    )
     finished = fields.Boolean(
         related="stage_id.is_won",
         readonly=True,
