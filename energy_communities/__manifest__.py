@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "14.0.7.2.0",
+    "version": "14.0.8.0.1",
     "depends": [
         "account",
         "cooperator_account_banking_mandate",
@@ -20,10 +20,6 @@
         "community_maps",
         "contacts",
         "cooperator",
-        "crm",
-        "crm_metadata",
-        "crm_metadata_rest_api",
-        "crm_rest_api",
         "energy_selfconsumption",
         "l10n_es_aeat",
         "l10n_es_aeat_sii_oca",
@@ -36,6 +32,7 @@
         "queue_job",
         "sale_crm",
         "sale_management",
+        "sales_team",
     ],
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://coopdevs.org",

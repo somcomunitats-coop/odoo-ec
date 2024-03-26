@@ -4,7 +4,7 @@ from datetime import datetime
 import requests
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 from .metadata_mapping_conf import (
     _LEAD_METADATA__DATE_FIELDS,
@@ -15,16 +15,10 @@ from .metadata_mapping_conf import (
     _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD,
 )
 
-_TAG_TYPE_VALUES = [
-    ("regular", _("Regular")),
-    ("energy_service", _("Energy Service")),
-    ("service_plan", _("Service Plan")),
-]
-
 
 class CrmLead(models.Model):
     _name = "crm.lead"
-    _inherit = ["crm.lead", "external.id.mixin"]
+    _inherit = ["crm.lead", "external.id.mixin", "user.currentcompany.mixin"]
 
     lang = fields.Char(string="Language")
     ce_tag_ids = fields.Many2many(
@@ -34,12 +28,6 @@ class CrmLead(models.Model):
         "tag_id",
         string="CE Tags",
         help="CE Classify and analyze categories",
-    )
-    community_company_id = fields.Many2one(
-        string="Related Community",
-        comodel_name="res.company",
-        domain="[('coordinator','!=',True)]",
-        help="Community related to this Lead",
     )
     finished = fields.Boolean(
         related="stage_id.is_won",
@@ -55,6 +43,45 @@ class CrmLead(models.Model):
         store=False,
     )
     ce_child_lead_id = fields.Many2one(comodel_name="crm.lead", string="Crm lead child")
+
+    @api.constrains("company_id")
+    def validate_lead_conf(self):
+        for record in self:
+            if record.team_id.company_id.id != record.company_id.id:
+                raise ValidationError(
+                    _(
+                        "Crm Lead team {team_name} doesn't match it's company {company_name}"
+                    ).format(
+                        **{
+                            "team_name": record.team_id.name,
+                            "company_name": record.company_id.name,
+                        }
+                    )
+                )
+            if record.stage_id.team_id.id != record.team_id.id:
+                raise ValidationError(
+                    _(
+                        "Crm Lead stage {stage_name} doesn't match it's company {company_name}"
+                    ).format(
+                        **{
+                            "stage_name": record.stage_id.name,
+                            "company_name": record.company_id.name,
+                        }
+                    )
+                )
+
+    @api.onchange("company_id")
+    def _auto_setup_team_id_domain(self):
+        for record in self:
+            return {
+                "domain": {"team_id": [("company_id", "=", record.company_id.id)]},
+            }
+
+    @api.depends("company_id")
+    def _compute_team_id(self):
+        for record in self:
+            team = self.env["crm.team"].get_create_default_sale_team(record.company_id)
+            record.team_id = team.id
 
     def _get_default_community_wizard(self):
         self.ensure_one()
@@ -270,17 +297,3 @@ class CrmLead(models.Model):
 
     def get_metadata(self, meta_key):
         return self.metadata_line_ids.filtered(lambda record: record.key == meta_key)
-
-
-class CrmTags(models.Model):
-    _inherit = "crm.tag"
-
-    tag_ext_id = fields.Char("ID Ext tag", compute="compute_ext_id_tag")
-    tag_type = fields.Selection(_TAG_TYPE_VALUES, string="Tag type", default="regular")
-
-    def compute_ext_id_tag(self):
-        for record in self:
-            res = record.get_external_id()
-            record.tag_ext_id = False
-            if res.get(record.id):
-                record.tag_ext_id = res.get(record.id)

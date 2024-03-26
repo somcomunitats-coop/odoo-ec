@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-22 11:18+0000\n"
-"PO-Revision-Date: 2024-03-22 11:18+0000\n"
+"POT-Creation-Date: 2024-03-26 12:51+0000\n"
+"PO-Revision-Date: 2024-03-26 12:51+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -404,7 +404,7 @@ msgstr "ProveÏdor AUTH  taques administratives"
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_admin
 msgid "Administrator"
-msgstr ""
+msgstr "Administrador"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_cm_map__admins_to_notify
@@ -422,6 +422,7 @@ msgid "Allow new members"
 msgstr "Autoritza nous membres"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner__allowed_companies
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__allowed_companies
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__allowed_companies
 msgid "Allowed Companies"
@@ -514,7 +515,7 @@ msgstr "Cancel·lar"
 #: model:ir.model.fields,field_description:energy_communities.field_product_product__mail_template
 #: model:ir.model.fields,field_description:energy_communities.field_product_template__mail_template
 msgid "Certificate email template"
-msgstr "Template d'email del certificat"
+msgstr "Plantilla email de certificat"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__chart_template_id
@@ -720,7 +721,7 @@ msgstr "Aportació al Capital Social"
 #: code:addons/energy_communities/models/operation_request.py:0
 #, python-format
 msgid "Converting just part of the shares is not yet implemented"
-msgstr "Convertir només una part de les aportacions no es possible"
+msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
@@ -869,7 +870,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__display_name
 msgid "Display Name"
-msgstr "Mostrar Nom"
+msgstr "Nom a mostrar"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__display_footer_doc_policy_text
@@ -901,7 +902,7 @@ msgstr "Correu electrònic"
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Email and confirmation email addresses don't match."
-msgstr "Email i la seva confirmació no son iguals."
+msgstr "El email i la seva confirmació no coincideixen"
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
@@ -981,7 +982,7 @@ msgstr "Enllaç al lloc web extern"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_facebook_url
 msgid "Facebook link"
-msgstr ""
+msgstr "Facebook"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__failed_message_ids
@@ -1147,9 +1148,10 @@ msgid ""
 "If it is checked, the Coordinator will receive a copy of each auto-response "
 "email that is generated in any of its CCEE when a new Member Subscription "
 "request is received."
-msgstr "Si està marcat la Coordinadora rebrà una còpia de cada correu d’autoresposta "
-"que es generi en qualsevol de les seves CCEE quan es rebi una nova socilitud "
-"de sòcia a la CE"
+msgstr ""
+"Si està marcat la Coordinadora rebrà una còpia de cada correu d’autoresposta"
+" que es generi en qualsevol de les seves CCEE quan es rebi una nova "
+"socilitud de sòcia a la CE"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_product_product__mail_template
@@ -1296,7 +1298,7 @@ msgstr "Idioma"
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source____last_update
 msgid "Last Modified on"
-msgstr "Última modificació el "
+msgstr "Última modificació el"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_uid
@@ -1360,7 +1362,7 @@ msgstr "Societat Comanditària"
 #: model:auth.oauth.provider,body:energy_communities.keycloak_admin_provider
 #: model:auth.oauth.provider,body:energy_communities.keycloak_login_provider
 msgid "Login with Keycloak"
-msgstr ""
+msgstr "Login amb Keycloak"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__landing_logo_file
@@ -1440,7 +1442,7 @@ msgstr "Nom"
 #: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
 #, python-format
 msgid "New"
-msgstr ""
+msgstr "Nova"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__new_product_share_template
@@ -1694,13 +1696,13 @@ msgstr "Plataforma"
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_platform_manager
 msgid "Platform Manager"
-msgstr "Manager de plataforma"
+msgstr "Manager de la plataforma"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_platform_admin_res_groups
 #: model:res.users.role,name:energy_communities.role_platform_admin
 msgid "Platform admin role"
-msgstr "Rol d'administrador de plataforma"
+msgstr "Role d'administrador de la plataforma"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_partner_form
@@ -1716,7 +1718,7 @@ msgstr "Tria una opció"
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Please upload a scan of your ID card."
-msgstr "Siusplau puja el teu document d'identitat."
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__postal_code
@@ -1749,7 +1751,7 @@ msgstr "Plantilla de producte"
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Provided IBAN is not valid."
-msgstr "L'IBAN no és vàlid."
+msgstr "L'IBAN no és vàlid"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/landing_page.py:0
@@ -1773,7 +1775,7 @@ msgstr "Publicat"
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.print_instance
 msgid "Push user to Keycloak"
-msgstr ""
+msgstr "Publicar usuari a Keycloak"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__realm_name
@@ -1894,7 +1896,7 @@ msgstr ""
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Some mandatory fields have not been filled."
-msgstr "Alguns camps obligatoris no han sigut emplenats."
+msgstr "Alguns camp obligatoris no s'han emplenat"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
@@ -2226,6 +2228,7 @@ msgstr "Usuari"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__user_current_company
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner__user_current_company
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__user_current_company
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__user_current_company
 msgid "User Current Company"
@@ -2234,6 +2237,7 @@ msgstr "Companyia actial de l'usuari"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__user_current_role
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__user_current_role
+#: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__user_current_role
 msgid "User Current Role"
 msgstr "Rol actual de l'usuari"
 
@@ -2272,7 +2276,7 @@ msgstr "Usuaris autoritzats"
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_users_role_line
 msgid "Users associated to a role"
-msgstr "Usuaris relacionats a un rol"
+msgstr "Usuaris relacionats amb el rol"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_res_company__create_user_in_keycloak

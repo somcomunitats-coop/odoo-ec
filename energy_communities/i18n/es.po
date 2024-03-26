@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-22 11:18+0000\n"
-"PO-Revision-Date: 2024-03-22 11:18+0000\n"
+"POT-Creation-Date: 2024-03-26 12:53+0000\n"
+"PO-Revision-Date: 2024-03-26 12:53+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -423,6 +423,7 @@ msgid "Allow new members"
 msgstr "Autoriza nuevos miembros"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner__allowed_companies
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__allowed_companies
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__allowed_companies
 msgid "Allowed Companies"
@@ -431,7 +432,7 @@ msgstr "Compañias permitidas"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__allow_new_members
 msgid "Allows new members"
-msgstr "Permite nuevos miembros"
+msgstr "Usuarios autorizados"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
@@ -515,7 +516,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_product_product__mail_template
 #: model:ir.model.fields,field_description:energy_communities.field_product_template__mail_template
 msgid "Certificate email template"
-msgstr "Plantilla de certicado por email"
+msgstr "Plantilla email de certificado"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__chart_template_id
@@ -902,7 +903,7 @@ msgstr "Correo electrónico"
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Email and confirmation email addresses don't match."
-msgstr "El email y su confirmación no coinciden"
+msgstr "El email y su confirmación no coinciden "
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
@@ -977,12 +978,12 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__external_website_link
 msgid "External website link"
-msgstr "Link externo a web"
+msgstr "Link de la website"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_facebook_url
 msgid "Facebook link"
-msgstr "Link de Facebook"
+msgstr "Facebook"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__failed_message_ids
@@ -1148,15 +1149,16 @@ msgid ""
 "If it is checked, the Coordinator will receive a copy of each auto-response "
 "email that is generated in any of its CCEE when a new Member Subscription "
 "request is received."
-msgstr "Si está marcado la Coordinadora recibirá una copia de cada correo de autorespuesta "
-"que se genere en cualquiera de sus CCEE cuando se reciba una nueva sociedad "
-"de socia en la CE"
+msgstr ""
+"Si está marcado la Coordinadora recibirá una copia de cada correo de "
+"autorespuesta que se genere en cualquiera de sus CCEE cuando se reciba una "
+"nueva sociedad de socia en la CE"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_product_product__mail_template
 #: model:ir.model.fields,help:energy_communities.field_product_template__mail_template
 msgid "If left empty, the default global mail template will be used."
-msgstr "Si se deja sin rellenar se usará la plantilla de correo de sistema."
+msgstr "Si no se rellena se usará la plantilla de email global"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
@@ -1362,7 +1364,7 @@ msgstr "Sociedad Comanditaria"
 #: model:auth.oauth.provider,body:energy_communities.keycloak_admin_provider
 #: model:auth.oauth.provider,body:energy_communities.keycloak_login_provider
 msgid "Login with Keycloak"
-msgstr ""
+msgstr "Login con Keycloak"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__landing_logo_file
@@ -1442,12 +1444,12 @@ msgstr "Nombre"
 #: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
 #, python-format
 msgid "New"
-msgstr "Nuevo"
+msgstr "Nueva"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__new_product_share_template
 msgid "New Product Share Template"
-msgstr ""
+msgstr "Nueva plantilla de producto de share"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__activity_date_deadline
@@ -1469,7 +1471,7 @@ msgstr "Tipo de nueva actividad"
 msgid ""
 "Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats Energètiques\n"
 "        "
-msgstr "Nivel de acceso de los usuarios a la plataforma Odoo de las Comunidades Energéticas\n"
+msgstr "Nivel de acceso de los usuarios a la plataforma Odoo de las Comunidades Energéticas"
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_community_service.py:0
@@ -1633,7 +1635,7 @@ msgstr "Compañía matriz Coordinadora"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__parent_id_filtered_ids
 msgid "Parent Id Filtered"
-msgstr "Id del padre"
+msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
@@ -1705,7 +1707,7 @@ msgstr "Manager de la plataforma"
 #: model:res.groups,name:energy_communities.role_platform_admin_res_groups
 #: model:res.users.role,name:energy_communities.role_platform_admin
 msgid "Platform admin role"
-msgstr "Role de administrador de la plataforma"
+msgstr "Rol de administrador de la plataforma"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_partner_form
@@ -1721,7 +1723,7 @@ msgstr "Escoge una opción"
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Please upload a scan of your ID card."
-msgstr "Por favor sube un scan de tu identificación"
+msgstr "Por favor sube el archivo de tu documento."
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__postal_code
@@ -1778,7 +1780,7 @@ msgstr "Publicado"
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.print_instance
 msgid "Push user to Keycloak"
-msgstr ""
+msgstr "Publicar usuario en Keycloak"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__realm_name
@@ -1899,7 +1901,7 @@ msgstr ""
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Some mandatory fields have not been filled."
-msgstr "Alguns campos obligatorios no han sido rellenados."
+msgstr "Algunos campos obligatorios no han sido rellenados."
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
@@ -2230,6 +2232,7 @@ msgstr "Usuario"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__user_current_company
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner__user_current_company
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__user_current_company
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__user_current_company
 msgid "User Current Company"
@@ -2238,6 +2241,7 @@ msgstr "Companyia actual del usuario"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__user_current_role
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__user_current_role
+#: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__user_current_role
 msgid "User Current Role"
 msgstr "Rol actual del usuario"
 
@@ -2321,7 +2325,7 @@ msgstr "Aportación voluntaria para mostrar en el sitio web"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_landing_page_id
 msgid "WP Landing Page"
-msgstr "Página landing en WP"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__website
