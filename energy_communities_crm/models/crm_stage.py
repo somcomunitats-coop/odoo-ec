@@ -45,7 +45,6 @@ class Stage(models.Model):
         if not existing_stage:
             return system_stage.sudo().copy(
                 {
-                    "name": system_stage.name + " - " + default_sale_team.name,
                     "original_stage_id": system_stage.id,
                     "team_id": default_sale_team.id,
                 }

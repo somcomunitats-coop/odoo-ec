@@ -71,7 +71,6 @@ def post_setup_multicompany_crm(cr, registry):
             for stage in default_stages:
                 stage.sudo().copy(
                     {
-                        "name": stage.name + " - " + sale_team.name,
                         "original_stage_id": stage.id,
                         "team_id": sale_team.id,
                     }
@@ -114,7 +113,6 @@ def post_setup_multicompany_crm(cr, registry):
             if not new_stage:
                 new_stage = lead.stage_id.sudo().copy(
                     {
-                        "name": lead.stage_id.name + " - " + lead_team.name,
                         "original_stage_id": lead.stage_id.id,
                         "team_id": lead_team.id,
                     }
