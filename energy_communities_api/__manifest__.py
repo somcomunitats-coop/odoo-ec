@@ -20,6 +20,5 @@
         "demo/service_demo.xml",
         "demo/provider_demo.xml",
         "demo/service_available_demo.xml",
-        # "demo/energy_selfconsumption_app_demo.xml",
     ],
 }
