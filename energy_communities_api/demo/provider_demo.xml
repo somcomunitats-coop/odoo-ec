@@ -2,12 +2,12 @@
 <odoo>
     <data>
         <record id="partner_provider_api" model="res.partner">
-            <field name="name">Provider partner API test</field>
+            <field name="name">Arkenova API partner</field>
         </record>
         <record id="user_provider_api" model="res.users">
             <field name="partner_id" ref="partner_provider_api" />
-            <field name="name">Provider user API test</field>
-            <field name="login">provider</field>
+            <field name="name">Arkenova API</field>
+            <field name="login">arkenova</field>
         </record>
 
         <record id="monitoring_provider" model="energy_project.provider">
