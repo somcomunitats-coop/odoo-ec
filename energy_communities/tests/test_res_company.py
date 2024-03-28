@@ -7,11 +7,6 @@ from .helpers import CompanySetupMixin, UserSetupMixin
 
 
 class TestResCompany(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
-    def setUp(self) -> None:
-        super().setUp()
-        self.company_model = self.env["res.company"]
-        self.users_model = self.env["res.users"]
-
     def test_hierarchy_level_company_instance(self):
         company_instance = self.env["res.company"].search(
             [("hierarchy_level", "=", "instance")]
