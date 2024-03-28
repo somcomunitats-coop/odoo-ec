@@ -16,9 +16,4 @@
         "security/res_users_role_data.xml",
         "security/ir_rule_data.xml",
     ],
-    "demo": [
-        "demo/service_demo.xml",
-        "demo/provider_demo.xml",
-        "demo/service_available_demo.xml",
-    ],
 }
