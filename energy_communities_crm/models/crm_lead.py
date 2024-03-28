@@ -148,14 +148,19 @@ class CrmLead(models.Model):
                 elif meta_key in _LEAD_METADATA__ENERGY_TAGS_FIELDS:
                     energy_services = []
                     for energy_tag_xml_id in meta_entry.value.split(","):
-                        energy_services.append(
-                            (
-                                4,
-                                self.env.ref(
-                                    "energy_communities." + energy_tag_xml_id
-                                ).id,
+                        try:
+                            energy_tag = self.env.ref(
+                                "energy_communities." + energy_tag_xml_id
                             )
-                        )
+                        except Exception:
+                            energy_tag = False
+                        if energy_tag:
+                            energy_services.append(
+                                (
+                                    4,
+                                    energy_tag.id,
+                                )
+                            )
                     meta_dict[wizard_key] = energy_services
                 # images
                 elif meta_key in _LEAD_METADATA__IMAGE_FIELDS:

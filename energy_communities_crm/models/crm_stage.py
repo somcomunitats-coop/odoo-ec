@@ -5,6 +5,25 @@ class Stage(models.Model):
     _name = "crm.stage"
     _inherit = "crm.stage"
 
+    @api.model
+    def default_get(self, fields):
+        """Hack update :  when going from the pipeline, creating a stage with a sales team in
+        context should create a stage for the current Sales Team only. If no default_stage we'll
+        add to context the default stage for the current user company.
+        https://github.com/odoo/odoo/blob/14.0/addons/crm/models/crm_stage.py#L26
+        """
+        ctx = dict(self.env.context)
+        ctx.update({"crm_team_mono": True})
+        if not ctx.get("search_default_team_id"):
+            ctx.update(
+                {
+                    "default_team_id": self.env[
+                        "crm.team"
+                    ].get_create_default_sale_team(self.env.company)
+                }
+            )
+        return super(Stage, self.with_context(ctx)).default_get(fields)
+
     # is_default_stage = fields.Boolean(string="Is default stage")
     original_stage_id = fields.Many2one("crm.stage")
 
