@@ -51,7 +51,7 @@ class DistributionTableImportWizard(models.TransientModel):
         distribution_table = self.env[
             "energy_selfconsumption.distribution_table"
         ].browse(active_id)
-        self.import_all_lines(parsing_data, distribution_table)
+        self.with_delay().import_all_lines(parsing_data, distribution_table)
         return True
 
     def download_template_button(self):
