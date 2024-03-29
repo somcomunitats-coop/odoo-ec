@@ -92,9 +92,10 @@ class SupplyPointAssignation(models.Model):
 
     @api.constrains("hour")
     def _check_hour(self):
-        if self.hour < 0:
-            raise ValidationError(_("Hours can't be negative."))
-        if self.hour > 8760:
-            raise ValidationError(_("Hours can't be superior to 8760."))
-        if self.hour == 0 and self.distribution_table_id.type == "hourly":
-            raise ValidationError(_("Hours can't be 0 in variable hourly mode."))
+        for record in self:
+            if record.hour < 0:
+                raise ValidationError(_("Hours can't be negative."))
+            if record.hour > 8760:
+                raise ValidationError(_("Hours can't be superior to 8760."))
+            if record.hour == 0 and record.distribution_table_id.type == "hourly":
+                raise ValidationError(_("Hours can't be 0 in variable hourly mode."))
