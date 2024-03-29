@@ -15,14 +15,43 @@ class DistributionTable(models.Model):
     _name = "energy_selfconsumption.distribution_table"
     _description = "Distribution Table"
 
-    @api.depends("supply_point_assignation_ids.coefficient")
+    @api.depends("supply_point_assignation_ids.coefficient", "type")
     def _compute_coefficient_is_valid(self):
         for record in self:
-            record.coefficient_is_valid = not fields.Float.compare(
-                sum(record.supply_point_assignation_ids.mapped("coefficient")),
-                1.00000,
-                precision_rounding=0.00001,
-            )
+            if record.type == "fixed":
+                record.coefficient_is_valid = not fields.Float.compare(
+                    sum(record.supply_point_assignation_ids.mapped("coefficient")),
+                    1.00000,
+                    precision_rounding=0.00001,
+                )
+                continue
+            if record.type == "hourly":
+                all_is_valid = True
+                assignation_grouped = record.supply_point_assignation_ids.read_group(
+                    [("distribution_table_id", "=", record.id)],
+                    ["hour", "coefficient"],
+                    ["hour"],
+                )
+                for hour_group in assignation_grouped:
+                    if (
+                        fields.Float.compare(
+                            hour_group["coefficient"],
+                            1.00000,
+                            precision_rounding=0.00001,
+                        )
+                        < 0
+                    ):
+                        all_is_valid = False
+                        break
+                record.coefficient_is_valid = all_is_valid
+                continue
+
+    def compare_coefficient_to_one(self, coefficient):
+        return fields.Float.compare(
+            coefficient,
+            1.00000,
+            precision_rounding=0.00001,
+        )
 
     name = fields.Char(readonly=True)
     selfconsumption_project_id = fields.Many2one(
