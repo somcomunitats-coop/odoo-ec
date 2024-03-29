@@ -90,21 +90,47 @@ class DistributionTableImportWizard(models.TransientModel):
             raise UserError(_("Error parsing the file"))
 
     def import_all_lines(self, data, distribution_table):
+        type = distribution_table.type
         supply_point_assignation_values_list = []
+        if type == "fixed":
+            supply_point_assignation_values_list = self.import_fixed_csv_file(data)
+        elif type == "hourly":
+            supply_point_assignation_values_list = self.import_hourly_csv_file(data)
+        distribution_table.write(
+            {"supply_point_assignation_ids": supply_point_assignation_values_list}
+        )
 
+    def import_fixed_csv_file(self, data):
+        supply_point_assignation_values_list = []
         for index, line in enumerate(data[1:]):
             value = self.get_supply_point_assignation_values(line)
 
             supply_point_assignation_values_list.append((0, 0, value))
+        return supply_point_assignation_values_list
 
-        distribution_table.write(
-            {"supply_point_assignation_ids": supply_point_assignation_values_list}
-        )
+    def import_hourly_csv_file(self, data):
+        supply_point_assignation_values_list = []
+        for index_line, line in enumerate(data[1:]):
+            hour = line[0]
+            for index_column, column in enumerate(line[1:]):
+                cups = data[0][index_column + 1]
+                value = self.get_supply_point_hourly_assignation_values(
+                    column, hour, cups
+                )
+                supply_point_assignation_values_list.append((0, 0, value))
+        return supply_point_assignation_values_list
 
     def get_supply_point_assignation_values(self, line):
         return {
             "supply_point_id": self.get_supply_point_id(code=line[0]),
             "coefficient": self.get_coefficient(coefficient=line[1]),
+        }
+
+    def get_supply_point_hourly_assignation_values(self, coefficient, hour, cups):
+        return {
+            "hour": self.get_hour(hour=hour),
+            "supply_point_id": self.get_supply_point_id(code=cups),
+            "coefficient": self.get_coefficient(coefficient=coefficient),
         }
 
     def get_supply_point_id(self, code):
@@ -130,3 +156,6 @@ class DistributionTableImportWizard(models.TransientModel):
             )
         except ValueError:
             return 0
+
+    def get_hour(self, hour):
+        return hour
