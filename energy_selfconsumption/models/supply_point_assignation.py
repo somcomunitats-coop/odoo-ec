@@ -48,6 +48,7 @@ class SupplyPointAssignation(models.Model):
         required=True,
         help="The sum of all the coefficients must result in 1",
     )
+    hour = fields.Integer(string="Hour", required=True, default=0)
     owner_id = fields.Many2one("res.partner", related="supply_point_id.owner_id")
     code = fields.Char(related="supply_point_id.code")
     table_coefficient_is_valid = fields.Boolean(
@@ -88,3 +89,12 @@ class SupplyPointAssignation(models.Model):
             self.coefficient = -self.coefficient
         if self.coefficient > 1:
             self.coefficient = 1
+
+    @api.constrains("hour")
+    def _check_hour(self):
+        if self.hour < 0:
+            raise ValidationError(_("Hours can't be negative."))
+        if self.hour > 8760:
+            raise ValidationError(_("Hours can't be superior to 8760."))
+        if self.hour == 0 and self.distribution_table_id.type == "hourly":
+            raise ValidationError(_("Hours can't be 0 in variable hourly mode."))

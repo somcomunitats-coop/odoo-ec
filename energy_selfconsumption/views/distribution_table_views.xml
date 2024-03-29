@@ -2,9 +2,8 @@
 <odoo>
     <data>
         <record id="distribution_table_form_view" model="ir.ui.view">
-            <field
-        name="name"
-      >energy_selfconsumption.distribution_table_form_view.form</field>
+            <field name="name">energy_selfconsumption.distribution_table_form_view.form
+            </field>
             <field name="model">energy_selfconsumption.distribution_table</field>
             <field name="arch" type="xml">
                 <form string="Distribution Table">
@@ -77,6 +76,10 @@
                     invisible="True"
                   />
                                     <field
+                    name="hour"
+                    attrs="{'column_invisible':[['parent.type', 'not in', ['hourly']]] }"
+                  />
+                                    <field
                     name="supply_point_id"
                     options="{'no_create': True, 'search_more': True}"
                     domain="[('id', 'in', supply_point_filtered_ids)]"
@@ -138,5 +141,6 @@
                 </p>
             </field>
         </record>
+
     </data>
 </odoo>
