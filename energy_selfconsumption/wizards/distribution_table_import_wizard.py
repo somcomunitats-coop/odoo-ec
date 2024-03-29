@@ -93,44 +93,52 @@ class DistributionTableImportWizard(models.TransientModel):
         type = distribution_table.type
         supply_point_assignation_values_list = []
         if type == "fixed":
-            supply_point_assignation_values_list = self.import_fixed_csv_file(data)
+            supply_point_assignation_values_list = self.import_fixed_csv_file(
+                data, distribution_table
+            )
         elif type == "hourly":
-            supply_point_assignation_values_list = self.import_hourly_csv_file(data)
+            supply_point_assignation_values_list = self.import_hourly_csv_file(
+                data, distribution_table
+            )
         distribution_table.write(
             {"supply_point_assignation_ids": supply_point_assignation_values_list}
         )
 
-    def import_fixed_csv_file(self, data):
+    def import_fixed_csv_file(self, data, distribution_table):
         supply_point_assignation_values_list = []
         for index, line in enumerate(data[1:]):
-            value = self.get_supply_point_assignation_values(line)
+            value = self.get_supply_point_assignation_values(line, distribution_table)
 
             supply_point_assignation_values_list.append((0, 0, value))
         return supply_point_assignation_values_list
 
-    def import_hourly_csv_file(self, data):
+    def import_hourly_csv_file(self, data, distribution_table):
         supply_point_assignation_values_list = []
         for index_line, line in enumerate(data[1:]):
             hour = line[0]
             for index_column, column in enumerate(line[1:]):
                 cups = data[0][index_column + 1]
                 value = self.get_supply_point_hourly_assignation_values(
-                    column, hour, cups
+                    column, hour, cups, distribution_table
                 )
                 supply_point_assignation_values_list.append((0, 0, value))
         return supply_point_assignation_values_list
 
-    def get_supply_point_assignation_values(self, line):
+    def get_supply_point_assignation_values(self, line, distribution_table):
         return {
             "supply_point_id": self.get_supply_point_id(code=line[0]),
             "coefficient": self.get_coefficient(coefficient=line[1]),
+            "company_id": distribution_table.company_id.id,
         }
 
-    def get_supply_point_hourly_assignation_values(self, coefficient, hour, cups):
+    def get_supply_point_hourly_assignation_values(
+        self, coefficient, hour, cups, distribution_table
+    ):
         return {
             "hour": self.get_hour(hour=hour),
             "supply_point_id": self.get_supply_point_id(code=cups),
             "coefficient": self.get_coefficient(coefficient=coefficient),
+            "company_id": distribution_table.company_id.id,
         }
 
     def get_supply_point_id(self, code):
