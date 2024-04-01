@@ -58,17 +58,28 @@ class DistributionTableImportWizard(models.TransientModel):
         self.import_all_lines(parsing_data, distribution_table)
 
     def download_template_button(self):
-        distribution_table_example_attachment = self.env.ref(
-            "energy_selfconsumption.distribution_table_example_attachment"
-        )
-        download_url = "/web/content/{}/?download=true".format(
-            str(distribution_table_example_attachment.id)
-        )
-        return {
-            "type": "ir.actions.act_url",
-            "url": download_url,
-            "target": "new",
-        }
+        active_id = self.env.context.get("active_id")
+        distribution_table = self.env[
+            "energy_selfconsumption.distribution_table"
+        ].browse(active_id)
+
+        if distribution_table.type == "fixed":
+            distribution_table_example_attachment = self.env.ref(
+                "energy_selfconsumption.distribution_table_example_attachment"
+            )
+            download_url = "/web/content/{}/?download=true".format(
+                str(distribution_table_example_attachment.id)
+            )
+            return {
+                "type": "ir.actions.act_url",
+                "url": download_url,
+                "target": "new",
+            }
+        elif distribution_table.type == "hourly":
+            doc_ids = self.env.context.get("active_ids")
+            return self.env.ref(
+                "energy_selfconsumption.distribution_table_hourly_csv_report"
+            ).report_action(docids=doc_ids)
 
     def _parse_file(self, data_file):
         self.ensure_one()
