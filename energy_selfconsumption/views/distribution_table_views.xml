@@ -47,8 +47,7 @@
                             <group>
                                 <field
                   name="selfconsumption_project_id"
-                  attrs="{'readonly': [('state', 'not in', ['draft'])]}"
-                  options="{'no_create': True}"
+                  readonly="True"
                 />
                             </group>
                             <group>
