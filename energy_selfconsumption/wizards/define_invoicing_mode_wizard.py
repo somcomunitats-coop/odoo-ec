@@ -75,9 +75,6 @@ class ContractGenerationWizard(models.TransientModel):
         }
 
     def save_data_to_selfconsumption(self):
-        if self.invoicing_mode == "energy_delivered_variable":
-            raise UserError(_("This invoicing mode is not yet implemented"))
-
         # Create product
         product_id = self.env["product.product"].create(self._prepare_product_values())
 

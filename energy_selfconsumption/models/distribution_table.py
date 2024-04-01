@@ -53,6 +53,14 @@ class DistributionTable(models.Model):
             precision_rounding=0.00001,
         )
 
+    def _get_default_type(self):
+        return (
+            "hourly"
+            if self.selfconsumption_project_id.invoicing_mode
+            == "energy_delivered_variable"
+            else "fixed"
+        )
+
     name = fields.Char(readonly=True)
     selfconsumption_project_id = fields.Many2one(
         "energy_selfconsumption.selfconsumption", required=True
@@ -61,7 +69,10 @@ class DistributionTable(models.Model):
         related="selfconsumption_project_id.state"
     )
     type = fields.Selection(
-        TYPE_VALUES, default="fixed", required=True, string="Modality"
+        TYPE_VALUES,
+        default=lambda self: self._get_default_type(),
+        required=True,
+        string="Modality",
     )
     state = fields.Selection(STATE_VALUES, default="draft", required=True)
     supply_point_assignation_ids = fields.One2many(

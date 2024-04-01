@@ -112,13 +112,20 @@ class Selfconsumption(models.Model):
 
     def get_distribution_tables(self):
         self.ensure_one()
+        default_type = (
+            "hourly" if self.invoicing_mode == "energy_delivered_variable" else "fixed"
+        )
         return {
             "type": "ir.actions.act_window",
             "name": "Distribution Tables",
             "view_mode": "tree,form",
             "res_model": "energy_selfconsumption.distribution_table",
             "domain": [("selfconsumption_project_id", "=", self.id)],
-            "context": {"create": True, "default_selfconsumption_project_id": self.id},
+            "context": {
+                "create": True,
+                "default_selfconsumption_project_id": self.id,
+                "default_type": default_type,
+            },
         }
 
     def get_inscriptions(self):
