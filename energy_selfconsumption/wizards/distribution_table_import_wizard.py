@@ -45,16 +45,16 @@ class DistributionTableImportWizard(models.TransientModel):
                 raise ValidationError(_("Only csv format files are accepted."))
 
     def import_file_button(self):
-        self.with_delay().parse_csv_file()
-        return True
-
-    def parse_csv_file(self):
-        file_data = base64.b64decode(self.import_file)
-        parsing_data = self.with_context(active_id=self.ids[0])._parse_file(file_data)
         active_id = self.env.context.get("active_id")
         distribution_table = self.env[
             "energy_selfconsumption.distribution_table"
         ].browse(active_id)
+        self.with_delay().parse_csv_file(distribution_table)
+        return True
+
+    def parse_csv_file(self, distribution_table):
+        file_data = base64.b64decode(self.import_file)
+        parsing_data = self.with_context(active_id=self.ids[0])._parse_file(file_data)
         self.import_all_lines(parsing_data, distribution_table)
 
     def download_template_button(self):
