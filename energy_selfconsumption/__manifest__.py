@@ -21,6 +21,7 @@
         "partner_firstname",
         "web_m2x_options",
         "l10n_es",
+        "report_csv",
     ],
     "data": [
         "security/ir.model.access.csv",

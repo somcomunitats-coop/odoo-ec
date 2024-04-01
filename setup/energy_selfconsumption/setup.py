@@ -8,6 +8,7 @@ setuptools.setup(
             "web_m2x_options": "odoo14-addon-web-m2x-options==14.0.1.1.1",
             "contract_queue_job": "odoo14-addon-contract-queue-job==14.0.1.0.1.dev3",
             "contract_mandate": "odoo14-addon-contract-mandate==14.0.1.0.1",
+            "report_csv": "odoo14-addon-report-csv==14.0.1.0.1.dev3",
         }
     }
 )

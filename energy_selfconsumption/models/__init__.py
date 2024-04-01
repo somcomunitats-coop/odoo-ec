@@ -2,6 +2,7 @@ from . import selfconsumption
 from . import supply_point
 from . import partner
 from . import distribution_table
+from . import distribution_table_csv_report
 from . import supply_point_assignation
 from . import project
 from . import contract

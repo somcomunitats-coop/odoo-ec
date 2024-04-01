@@ -138,5 +138,14 @@
             </field>
         </record>
 
+        <report
+      id="distribution_table_hourly_csv_report"
+      model="energy_selfconsumption.distribution_table"
+      string="Print to CSV"
+      report_type="csv"
+      name="energy_selfconsumption.distribution_table.csv"
+      file="distribution_table"
+      attachment_use="False"
+    />
     </data>
 </odoo>
