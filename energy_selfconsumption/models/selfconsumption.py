@@ -197,10 +197,6 @@ class Selfconsumption(models.Model):
                 raise ValidationError(_("Project must have a valid Code."))
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Rated Power."))
-            if not record.invoicing_mode:
-                raise ValidationError(
-                    _("Project must have defined a invoicing mode before activation.")
-                )
             return {
                 "name": _("Generate Contracts"),
                 "type": "ir.actions.act_window",
@@ -241,6 +237,10 @@ class Selfconsumption(models.Model):
 
     def set_inscription(self, selfconsumption_state):
         for record in self:
+            if not record.invoicing_mode:
+                raise ValidationError(
+                    _("Project must have defined a invoicing mode before activation.")
+                )
             record.write({"state": "inscription"})
         if selfconsumption_state == "activation":
             self.distribution_table_state("process", "validated")
