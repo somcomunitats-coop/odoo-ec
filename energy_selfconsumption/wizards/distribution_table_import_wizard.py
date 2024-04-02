@@ -105,7 +105,7 @@ class DistributionTableImportWizard(models.TransientModel):
 
     def import_all_lines(self, data, distribution_table):
         type = distribution_table.type
-        supply_point_assignation_values_list = []
+        supply_point_assignation_values_list = [(5, 0, 0)]
         if type == "fixed":
             supply_point_assignation_values_list = self.import_fixed_csv_file(
                 data, distribution_table
