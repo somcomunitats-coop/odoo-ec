@@ -7,7 +7,7 @@ from odoo.addons.fastapi.dependencies import authenticated_partner_impl
 from ..dependencies import api_key_authentication
 from ..routers.energy_selfconsumption import router
 
-APP_NAME = "energy_selfconsumption"
+APP_NAME = "energy_selfconsumption_api"
 
 
 class EnergySelfConsumptionAPI(models.Model):

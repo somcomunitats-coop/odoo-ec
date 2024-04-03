@@ -1,1 +1,4 @@
-from .energy_selfconsumption import EnergySelfconsumptionService
+from .energy_selfconsumption import (
+    EnergySelfconsumptionService,
+    ProjectNotFoundException,
+)

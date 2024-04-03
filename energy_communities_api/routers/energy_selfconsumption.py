@@ -1,6 +1,7 @@
 import logging
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, HTTPException, Request
+from starlette.status import HTTP_404_NOT_FOUND
 
 from ..dependencies import EnergySelfconsumptionDependency, PagingDependency
 from ..schemas.responses import (
@@ -8,6 +9,7 @@ from ..schemas.responses import (
     ProjectsInfoListResponse,
     SingleProjectInfoResponse,
 )
+from ..services import ProjectNotFoundException
 from ..utils import collection_response, single_response
 
 logger = logging.getLogger("__name__")
@@ -46,6 +48,10 @@ async def get_selfconsumption_project_by_code(
 ) -> SingleProjectInfoResponse:
     projects = energy_selfconsumption_service.selfconsumption_projects(project_code)
     project = projects[0] if projects and len(projects) > 0 else None
+    if not project:
+        raise HTTPException(
+            status_code=HTTP_404_NOT_FOUND, detail=f"Project {project_code} not found"
+        )
     return single_response(request, SingleProjectInfoResponse, project)
 
 
@@ -60,12 +66,16 @@ async def selfconsumption_project_members(
     paging: PagingDependency,
     energy_selfconsumption_service: EnergySelfconsumptionDependency,
 ) -> ProjectMembersResponse:
-    total_projectmembers = energy_selfconsumption_service.total_project_members(
-        project_code
-    )
-    members = energy_selfconsumption_service.selfconsumption_project_members(
-        project_code, limit=paging.limit, offset=paging.offset
-    )
-    return collection_response(
-        request, ProjectMembersResponse, members, total_projectmembers, paging
-    )
+    try:
+        members = energy_selfconsumption_service.selfconsumption_project_members(
+            project_code, limit=paging.limit, offset=paging.offset
+        )
+        total_projectmembers = energy_selfconsumption_service.total_project_members(
+            project_code
+        )
+    except ProjectNotFoundException as e:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=str(e))
+    else:
+        return collection_response(
+            request, ProjectMembersResponse, members, total_projectmembers, paging
+        )

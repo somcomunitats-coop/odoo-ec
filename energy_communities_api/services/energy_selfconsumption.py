@@ -7,6 +7,10 @@ from odoo.addons.base.models.res_users import Users
 from ..schemas import SelfConsumptionProjectInfo, SelfConsumptionProjectMember
 
 
+class ProjectNotFoundException(Exception):
+    pass
+
+
 class EnergySelfconsumptionService:
     def __init__(self, env: Environment, user: Users) -> None:
         self.Selfconsumption = env["energy_selfconsumption.selfconsumption"].with_user(
@@ -59,7 +63,7 @@ class EnergySelfconsumptionService:
     ) -> List[SelfConsumptionProjectMember]:
         project = self._get_selfconsumption_project(project_code)
         if not project:
-            return []
+            raise ProjectNotFoundException(f"Project {project_code} not found")
 
         search_domain = [
             ("selfconsumption_project_id", "=", project.id),
