@@ -30,12 +30,19 @@ class PaginationLimits(BaseModel):
     page: int
 
 
-class PaginationLinks(BaseModel):
+class BaseLinks(BaseModel):
+    """
+    This class represents the base links to navigate by the object
+    """
+
+    self_: str
+
+
+class PaginationLinks(BaseLinks):
     """
     This class represents the links to navigate through a paginated request
     """
 
-    self_: str
     next_page: Optional[str] = None
     previous_page: Optional[str] = None
 
