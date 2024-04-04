@@ -82,6 +82,15 @@ class LandingPage(models.Model):
         string=_("Show external website link also in header"), default=False
     )
     show_newsletter_form = fields.Boolean(string=_("Show newsletter form"))
+    awareness_services = fields.Text(
+        string=_("Services to raise awareness in the creation of CCEE"), translate=True
+    )
+    design_services = fields.Text(
+        string=_("Services for the design and implementation of CCEE"), translate=True
+    )
+    management_services = fields.Text(
+        string=_("CCEE management services"), translate=True
+    )
 
     def _get_image_attachment(self, field_name):
         file_attachment = self.env["ir.attachment"].search(
