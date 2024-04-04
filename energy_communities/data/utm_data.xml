@@ -26,4 +26,10 @@
     <record model="utm.source" id="ce_source_coord_web_other">
         <field name="name">Information about coordinators</field>
     </record>
+    <record model="utm.source" id="ce_source_existing_coord_contact">
+        <field name="name">Contact existing coordinator</field>
+    </record>
+    <record model="utm.source" id="ce_source_existing_coord_info">
+        <field name="name">Information about existing coordinator</field>
+    </record>
 </odoo>
