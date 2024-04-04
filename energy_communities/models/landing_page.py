@@ -81,6 +81,7 @@ class LandingPage(models.Model):
     show_web_link_on_header = fields.Boolean(
         string=_("Show external website link also in header"), default=False
     )
+    show_newsletter_form = fields.Boolean(string=_("Show newsletter form"))
 
     def _get_image_attachment(self, field_name):
         file_attachment = self.env["ir.attachment"].search(
@@ -171,6 +172,7 @@ class LandingPage(models.Model):
                 "number_of_members": self.number_of_members,
                 "external_website_link": self.external_website_link or "",
                 "show_web_link_on_header": self.show_web_link_on_header,
+                "show_newsletter_form": self.show_newsletter_form,
                 "twitter_link": self.twitter_link or "",
                 "instagram_link": self.instagram_link or "",
                 "telegram_link": self.telegram_link or "",
