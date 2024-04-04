@@ -7,12 +7,9 @@
     >
             <field
         name="service_id"
-        ref="energy_selfconsumption_api.service_selfconsumption_monitoring"
+        ref="energy_project.service_selfconsumption_monitoring"
       />
-            <field
-        name="provider_id"
-        ref="energy_selfconsumption_api.monitoring_provider"
-      />
+            <field name="provider_id" ref="energy_project.monitoring_provider" />
         </record>
     </data>
 </odoo>
