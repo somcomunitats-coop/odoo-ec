@@ -91,6 +91,7 @@ class LandingPage(models.Model):
     management_services = fields.Text(
         string=_("CCEE management services"), translate=True
     )
+    company_logo = fields.Image(string=_("Company logo"))
 
     def _get_image_attachment(self, field_name):
         file_attachment = self.env["ir.attachment"].search(
@@ -150,6 +151,12 @@ class LandingPage(models.Model):
         else:
             secondary_image_file = ""
             secondary_image_file_write_date = ""
+        if self.company_logo:
+            company_logo = self._get_image_payload("company_logo")
+            company_logo_write_date = self._get_image_write_date("company_logo")
+        else:
+            company_logo = ""
+            company_logo_write_date = ""
         if self.map_place_id:
             map_reference = self.map_place_id.slug_id
         else:
@@ -190,6 +197,8 @@ class LandingPage(models.Model):
                 "primary_image_file_write_date": primary_image_file_write_date,
                 "secondary_image_file": secondary_image_file,
                 "secondary_image_file_write_date": secondary_image_file_write_date,
+                "company_logo": company_logo,
+                "company_logo_write_date": company_logo_write_date,
                 "short_description": self.short_description or "",
                 "long_description": self.long_description or "",
                 "why_become_cooperator": self.why_become_cooperator,
