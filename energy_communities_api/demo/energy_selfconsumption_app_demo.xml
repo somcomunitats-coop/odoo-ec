@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
-        <record id="api_app" model="fastapi.endpoint">
-            <field
-        name="user_id"
-        ref="energy_communities.res_users_admin_plataforma_demo"
-      />
-        </record>
-
         <record id="apikey_administrador_plataforma" model="auth.api.key">
             <field name="name">API key admin platform</field>
             <field name="key">12345</field>
-            <field
-        name="user_id"
-        ref="energy_communities.res_users_admin_plataforma_demo"
-      />
+            <field name="user_id" ref="energy_project.user_provider_api" />
         </record>
     </data>
 </odoo>
