@@ -24,7 +24,7 @@ class Project(models.Model):
     )
     active = fields.Boolean(default=True)
     service_contract_ids = fields.One2many(
-        "energy_project.service_contract", "project_id"
+        "energy_project.service_contract", "project_id", auto_join=True
     )
 
     # address fields
