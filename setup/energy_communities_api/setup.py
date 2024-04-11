@@ -5,7 +5,7 @@ setuptools.setup(
     odoo_addon={
         "depends_override": {
             "fastapi": "odoo14-addon-fastapi==14.0.0.0.3",
-            "energy_communities": "odoo14-addon-energy-communities==14.0.8.0.1"
+            "energy_communities": "odoo14-addon-energy-communities==14.0.8.1.0"
         },
         "external_dependencies_override": {
             "python": {

@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL & SomIT",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.1.0.1",
+    "version": "14.0.1.0.0",
     "depends": ["fastapi", "energy_communities"],
     "data": [
         "data/fastapi_endpoint_data.xml",
