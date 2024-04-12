@@ -248,12 +248,22 @@ class LandingPage(models.Model):
             auth = Authenticate(baseurl, username, password).authenticate()
             token = "Bearer %s" % auth["token"]
             landing_page_data = self.to_dict()
-            LandingPageResource(token, baseurl, self.wp_landing_page_id).update(
-                landing_page_data
-            )
+            LandingPageResource(
+                token,
+                baseurl,
+                self.company_hierarchy_level_url(),
+                self.wp_landing_page_id,
+            ).update(landing_page_data)
 
     def create_landing_place(self):
         LandingCmPlaceResource(self).create()
 
     def _update_landing_place(self):
         LandingCmPlaceResource(self).update()
+
+    def company_hierarchy_level_url(self):
+        company_hierarchy_level = self.company_id.hierarchy_level
+        if company_hierarchy_level == "coordinator":
+            return "rest-ce-coord"
+        else:
+            return "rest-ce-landing"
