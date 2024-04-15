@@ -25,7 +25,7 @@ class DistributionTable(models.Model):
                     precision_rounding=0.00001,
                 )
                 continue
-            if record.type == "hourly":
+            elif record.type == "hourly":
                 all_is_valid = True
                 assignation_grouped = record.supply_point_assignation_ids.read_group(
                     [("distribution_table_id", "=", record.id)],
@@ -45,6 +45,8 @@ class DistributionTable(models.Model):
                         break
                 record.coefficient_is_valid = all_is_valid
                 continue
+            else:
+                record.coefficient_is_valid = False
 
     def compare_coefficient_to_one(self, coefficient):
         return fields.Float.compare(
@@ -122,6 +124,11 @@ class DistributionTable(models.Model):
     @api.onchange("selfconsumption_project_id")
     def _onchange_selfconsumption_project_id(self):
         self.supply_point_assignation_ids = False
+
+    @api.onchange("type")
+    def _onchange_type(self):
+        self.supply_point_assignation_ids = False
+        self.supply_point_group_ids = False
 
     def button_validate(self):
         for record in self:
