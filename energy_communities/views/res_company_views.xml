@@ -11,9 +11,6 @@
       >
                 <attribute name="invisible">True</attribute>
             </xpath>
-            <group name="coop_grp" position="inside">
-              <field name="send_share_update_email" />
-            </group>
             <group name="coop_grp" position="after">
                 <group name="voluntary_shares" string="Voluntary Shares">
                     <field name="voluntary_share_form_header_text" />
