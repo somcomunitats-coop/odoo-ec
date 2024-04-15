@@ -267,6 +267,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             }
         )
 
+    # TODO: Move this method to energy_communities_cooperator
     def set_cooperator_journal(self):
         """
         This method is only used in the creation from data. Is used to assign the subcription journal in the res.company
@@ -275,7 +276,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         created in the aplication of the account.chart.template see acoount_chart_template.py#L10
         :return:
         """
-        self.new_company_id.cooperator_journal = (
+        self.new_company_id.subscription_journal_id = (
             self.env["account.journal"].search(
                 [("code", "=", "SUBJ"), ("company_id", "=", self.new_company_id.id)]
             )
