@@ -16,7 +16,7 @@ from .res_config_settings import ResConfigSettings
 class LandingPage(models.Model):
     _name = "landing.page"
 
-    _inherit = ["cm.coordinates.mixin"]
+    _inherit = ["cm.coordinates.mixin", "cm.slug.id.mixin"]
 
     name = fields.Char(string="Name", translate=True)
     company_id = fields.Many2one("res.company", string="Company")
@@ -207,6 +207,7 @@ class LandingPage(models.Model):
                 "street": self.street or "",
                 "postal_code": self.postal_code or "",
                 "city": self.city or "",
+                "slug_id": self.slug_id,
             }
         }
 
