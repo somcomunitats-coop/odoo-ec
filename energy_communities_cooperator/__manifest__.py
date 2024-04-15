@@ -1,0 +1,29 @@
+{
+    "name": "energy_communities_cooperator",
+    "summary": """
+        Energy communities cooperative membership management
+    """,
+    "description": """
+        Energy communities cooperative membership management
+    """,
+    "author": "Som Comunitats SCCL",
+    "website": "https://coopdevs.org",
+    # Categories can be used to filter modules in modules listing
+    # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
+    # for the full list
+    "category": "Cooperative management",
+    "version": "14.0.0.0.0",
+    "license": "AGPL-3",
+    # any module necessary for this one to work correctly
+    "depends": ["base", "cooperator"],
+    # always loaded
+    "data": [
+        # 'security/ir.model.access.csv',
+        "views/cooperative_membership_views.xml",
+        "views/account_move_views.xml",
+        "views/res_company_views.xml",
+        "views/res_partner_views.xml",
+    ],
+    # only loaded in demonstration mode
+    "demo": [],
+}

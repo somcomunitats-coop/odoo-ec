@@ -1,0 +1,32 @@
+<odoo>
+  <record id="action_account_move" model="ir.actions.act_window">
+      <field name="name">Invoices</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">account.move</field>
+      <field name="view_mode">tree,form</field>
+      <field name="search_view_id" eval="False" /> <!-- Force empty -->
+      <field name="domain">[("move_type","in",['out_invoice','out_refund'])]</field>
+      <field name="view_id" eval="False" /> <!-- Force empty -->
+  </record>
+  <record id="account_move_tree" model="ir.ui.view">
+      <field name="name">account.move.tree</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="energy_communities.view_invoice_tree" />
+      <field name="arch" type="xml">
+        <field name="name" position="after">
+            <field name="subscription_request" />
+            <field name="move_type" />
+            <field name="release_capital_request" />
+            <field name="product_categ_id" />
+        </field>
+      </field>
+  </record>
+  <menuitem
+    name="Invoices"
+    id="menu_account_move"
+    action="action_account_move"
+    parent="cooperator.menu_cooperator_main_coop"
+    groups="cooperator.cooperator_group_user"
+    sequence="240"
+  />
+</odoo>
