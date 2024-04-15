@@ -5,7 +5,6 @@ from odoo.exceptions import ValidationError
 class SupplyPointAssignation(models.Model):
     _name = "energy_selfconsumption.supply_point_assignation"
     _description = "Supply Point Assignation"
-    _order = ["hour", "code"]
 
     @api.depends("distribution_table_id", "hour")
     def _compute_supply_point_filtered_ids(self):
