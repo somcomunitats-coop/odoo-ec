@@ -53,6 +53,17 @@ class DistributionTable(models.Model):
             precision_rounding=0.00001,
         )
 
+    @api.depends("supply_point_assignation_ids")
+    def _compute_supply_point_group_ids(self):
+        for record in self:
+            id_list = record.supply_point_assignation_ids.read_group(
+                [("distribution_table_id", "=", record.id)],
+                ["supply_point_id.id"],
+                ["supply_point_id"],
+            )
+            values = list(map(lambda x: x["supply_point_id"][0], id_list))
+            record.write({"supply_point_group_ids": [(6, 0, values)]})
+
     def _get_default_type(self):
         return (
             "hourly"
@@ -77,6 +88,11 @@ class DistributionTable(models.Model):
     state = fields.Selection(STATE_VALUES, default="draft", required=True)
     supply_point_assignation_ids = fields.One2many(
         "energy_selfconsumption.supply_point_assignation", "distribution_table_id"
+    )
+    supply_point_group_ids = fields.One2many(
+        "energy_selfconsumption.supply_point",
+        compute=_compute_supply_point_group_ids,
+        readonly=True,
     )
     coefficient_is_valid = fields.Boolean(
         compute=_compute_coefficient_is_valid, readonly=True, store=False
