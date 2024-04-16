@@ -815,6 +815,13 @@ msgid "CE Classify and analyze categories"
 msgstr "Clasifica y analiza categorías de CE"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__management_services
+#, python-format
+msgid "CCEE management services"
+msgstr "CCEE kudeatzeko zerbitzuak"
+
+#. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_leads_ce_contact_action
 msgid "CE Contact"
 msgstr "Contacto de CE"
@@ -1061,6 +1068,13 @@ msgid "Company hierarchy level"
 msgstr "Nivel de jerarquía de la companyia"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__company_logo
+#, python-format
+msgid "Company logo"
+msgstr "Konpainiaren logoa"
+
+#. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_collective_purchases
 msgid "Compres col·lectives"
 msgstr "Compras colectivas"
@@ -1128,6 +1142,11 @@ msgid "Contact CE"
 msgstr "Kontactua CE"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Contact COORD"
+msgstr "Kontactua COORD"
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter_platform_admins
 msgid "Contact SomComunitats"
 msgstr "Kontactua SomComunitats"
@@ -1141,6 +1160,11 @@ msgstr "Koordinatzailea kontratatu nahi dut"
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_contact
 msgid "Contact a existing CE"
 msgstr "Contactar una CE existente"
+
+#. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_existing_coord_contact
+msgid "Contact existing coordinator"
+msgstr "Jarri harremanetan lehendik dagoen koordinatzailearekin"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
@@ -1892,6 +1916,11 @@ msgid "Industrial"
 msgstr "Industriala"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Info COORD"
+msgstr "Info COORD"
+
+#. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_general_info
 msgid "Information Newsletter (general)"
 msgstr "Recibir boletín información general plataforma"
@@ -1905,6 +1934,11 @@ msgstr "Beste batzuk: harreman generikoa Koordinatzaileei dagokienez"
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_info
 msgid "Information about existing CE"
 msgstr "Recibir boletín información sobre una CE"
+
+#. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_existing_coord_info
+msgid "Information about existing coordinator"
+msgstr "Lehendik dagoen koordinatzaileari buruzko informazioa jasotzea"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_future_location_ce_info
@@ -2847,6 +2881,20 @@ msgid "Service Plan"
 msgstr "Plan de servicios"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__design_services
+#, python-format
+msgid "Services for the design and implementation of CCEE"
+msgstr "CCEE diseinatzeko eta abian jartzeko zerbitzuak"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__awareness_services
+#, python-format
+msgid "Services to raise awareness in the creation of CCEE"
+msgstr "CCEE sorreran sentsibilizatzeko zerbitzuak"
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "Share number"
 msgstr "Ekarpenak"
@@ -2868,6 +2916,13 @@ msgstr "Deskribapen laburra"
 #, python-format
 msgid "Show external website link also in header"
 msgstr "Erakutsi kanpoko webgunearen esteka goiburuan ere"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__show_newsletter_form
+#, python-format
+msgid "Show newsletter form"
+msgstr "Erakutsi buletin inprimakia"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__signup_expiration
