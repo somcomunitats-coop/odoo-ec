@@ -101,9 +101,3 @@ class SupplyPointAssignation(models.Model):
                 raise ValidationError(_("Hours can't be superior to 8760."))
             if record.hour == 0 and record.distribution_table_id.type == "hourly":
                 raise ValidationError(_("Hours can't be 0 in variable hourly mode."))
-
-    @api.onchange("hour")
-    def _onchange_hour(self):
-        if self.hour < 0:
-            self.hour = False
-        self.supply_point_id = False
