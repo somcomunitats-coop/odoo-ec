@@ -34,7 +34,11 @@ class DistributionTableCSV(models.AbstractModel):
             coefficients = cups.values()
             sum_coefficients = sum(coefficients)
             for key, value in cups.items():
-                cups[key] = value / sum_coefficients
+                cups[key] = float(format(value / sum_coefficients, ".5f"))
+            sum_coefficients = sum(list(cups.values())[:-1])
+
+            last_key = list_cups[-1]
+            cups[last_key] = round(1 - sum_coefficients, 5)
             # Add the normalized coefficients to the row
             row = {"hour": hour}
             row.update(cups)
