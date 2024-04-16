@@ -247,6 +247,13 @@ msgid "Button configs not found."
 msgstr "Configuración de botones no encontrada"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__management_services
+#, python-format
+msgid "CCEE management services"
+msgstr "CCEE kudeatzeko zerbitzuak"
+
+#. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_creation_ce_proposal
 msgid "CE creation"
 msgstr "CE sorrera"
@@ -396,6 +403,13 @@ msgstr "Creación de companyía realizada con éxito"
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__company_hierarchy_level
 msgid "Company hierarchy level"
 msgstr "Nivel de jerarquía de la companyia"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__company_logo
+#, python-format
+msgid "Company logo"
+msgstr "Konpainiaren logoa"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_collective_purchases
@@ -923,6 +937,11 @@ msgid "Industrial"
 msgstr "Industriala"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Info COORD"
+msgstr "Info COORD"
+
+#. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_general_info
 msgid "Information Newsletter (general)"
 msgstr "Recibir boletín información general plataforma"
@@ -936,6 +955,11 @@ msgstr "Información sobre coordinadora"
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_info
 msgid "Information about existing CE"
 msgstr "Recibir boletín información sobre una CE"
+
+#. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_existing_coord_info
+msgid "Information about existing coordinator"
+msgstr "Lehendik dagoen koordinatzaileari buruzko informazioa jasotzea"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_future_location_ce_info
@@ -1005,6 +1029,13 @@ msgstr ""
 msgid "Landing lng param required for place creation"
 msgstr ""
 "La longitud es una parámetro requerido para la creación de un punto de mapa"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/cm_place.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_cm_place__landing_reference
+#, python-format
+msgid "Landing reference"
+msgstr "Web orriaren erreferentzia"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__default_lang_id
@@ -1582,6 +1613,20 @@ msgid "Send"
 msgstr "Bidali"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__design_services
+#, python-format
+msgid "Services for the design and implementation of CCEE"
+msgstr "CCEE diseinatzeko eta abian jartzeko zerbitzuak"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__awareness_services
+#, python-format
+msgid "Services to raise awareness in the creation of CCEE"
+msgstr "CCEE sorreran sentsibilizatzeko zerbitzuak"
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "Share number"
 msgstr "Ekarpenak"
@@ -1603,6 +1648,13 @@ msgstr "Deskribapen laburra"
 #, python-format
 msgid "Show external website link also in header"
 msgstr "Erakutsi kanpoko webgunearen esteka goiburuan ere"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__show_newsletter_form
+#, python-format
+msgid "Show newsletter form"
+msgstr "Erakutsi buletin inprimakia"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__signup_expiration
@@ -2259,6 +2311,8 @@ msgstr ""
 "elektronikoz bidaliko dizkizugun pausuak jarraituz."
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "€_eu_ES."
 msgstr "€-ko hasierako nahitaezko diru ekarpena kobratzeko."
+
