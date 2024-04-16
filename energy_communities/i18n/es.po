@@ -865,6 +865,13 @@ msgid "CE Classify and analyze categories"
 msgstr "Clasifica y analiza categorías de CE"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__management_services
+#, python-format
+msgid "CCEE management services"
+msgstr "Servicios para la gestión de CCEE"
+
+#. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.ce_crm_leads_ce_contact_action
 msgid "CE Contact"
 msgstr "Contacto de CE"
@@ -1111,6 +1118,13 @@ msgid "Company hierarchy level"
 msgstr "Nivel de jerarquía de la companyia"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__company_logo
+#, python-format
+msgid "Company logo"
+msgstr "Logo de la compañía"
+
+#. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_collective_purchases
 msgid "Compres col·lectives"
 msgstr "Compras colectivas"
@@ -1178,6 +1192,11 @@ msgid "Contact CE"
 msgstr "Contacto CE"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Contact COORD"
+msgstr "Contacto COORD"
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter_platform_admins
 msgid "Contact SomComunitats"
 msgstr "Contacto SomComunitats"
@@ -1191,6 +1210,11 @@ msgstr "Quiero contratar a una coordinadora"
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_contact
 msgid "Contact a existing CE"
 msgstr "Contactar una CE existente"
+
+#. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_existing_coord_contact
+msgid "Contact existing coordinator"
+msgstr "Contactar coordinadora existente"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.community_data_form_fields_template
@@ -1947,6 +1971,11 @@ msgid "Industrial"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Info COORD"
+msgstr "Info COORD"
+
+#. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_general_info
 msgid "Information Newsletter (general)"
 msgstr "Recibir boletín información general plataforma"
@@ -1960,6 +1989,11 @@ msgstr ""
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_info
 msgid "Information about existing CE"
 msgstr "Recibir boletín información sobre una CE"
+
+#. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_existing_coord_info
+msgid "Information about existing coordinator"
+msgstr "Recibir información sobre coordinadora existente"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_future_location_ce_info
@@ -2900,6 +2934,20 @@ msgid "Service Plan"
 msgstr "Plan de servicios"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__design_services
+#, python-format
+msgid "Services for the design and implementation of CCEE"
+msgstr "Servicios para el diseño y puesta en marcha de CCEE"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__awareness_services
+#, python-format
+msgid "Services to raise awareness in the creation of CCEE"
+msgstr "Servicios para sensibilización en la creación de CCEE"
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "Share number"
 msgstr "Aportaciones"
@@ -2921,6 +2969,13 @@ msgstr "Descripción corta"
 #, python-format
 msgid "Show external website link also in header"
 msgstr "Mostrar enlace sitio web externo también en cabecera"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__show_newsletter_form
+#, python-format
+msgid "Show newsletter form"
+msgstr "Mostrar formulario de boletín"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__signup_expiration
