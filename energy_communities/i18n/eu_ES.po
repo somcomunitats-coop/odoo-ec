@@ -201,6 +201,35 @@ msgstr ""
 "            "
 
 #. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_landing_coord_newsletter
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for filling out the form.</p>\n"
+"                    <p>We confirm that you have successfully subscribed to the newsletter.</p>\n"
+"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
+"                    <br />\n"
+"                    <p>We keep in touch for any questions.</p>\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}\">${object.company_id.name</a> team </p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Kaixo,</p>\n"
+"                    <p>Eskerrik asko formularioa betetzeagatik.</p>\n"
+"                    <p>Behar bezala harpidetu zara buletinera.</p>\n"
+"                    <p>Proiektuan berritasunen bat badago, jakinaraziko dizugu.</p>\n"
+"                    <br />\n"
+"                    <p>Behar bezala harpidetu zara Komunitatearen buletinera.</p>\n"
+"                    <p>Zinez,</p>\n"
+"                    <p>Taldea <a href=\"https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}\">${object.company_id.name</a></p>\n"
+"                </div>\n"
+"            "
+
+#. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_ce_news_confirm_id
 msgid ""
 "\n"
@@ -281,6 +310,31 @@ msgstr ""
 "                    <p>Zinez,</p>\n"
 "                    <p>Taldea Somcomunitats.coop</p>\n"
 "                    <p><a href=\"https://omcomunitats.coop/recursos/\">Baliabideak eta ohiko galderak</a></p>\n"
+"                </div>\n"
+"            "
+
+#. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_landing_coord_contact
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thanks for getting in touch.</p>\n"
+"                    <p>We have received your email. We will contact you as soon as possible.</p>\n"
+"                    <br />\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}\">${object.company_id.name</a> team </p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Kaixo,</p>\n"
+"                    <p>Eskerrik asko harremanetan jartzeagatik.</p>\n"
+"                    <p>Zure posta elektronikoa jaso dugu. Ahalik eta azkarren jarriko gara zurekin harremanetan.</p>\n"
+"                    <br />\n"
+"                    <p>Zinez,</p>\n"
+"                    <p>Taldea <a href=\"https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}\">${object.company_id.name</a></p>\n"
 "                </div>\n"
 "            "
 
@@ -3646,6 +3700,16 @@ msgstr "Código postal"
 #, python-format
 msgid "ZIP code not found"
 msgstr "Código postal no encontrado"
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_templ_landing_coord_contact
+msgid "[${object.company_id.name] Contact Form"
+msgstr "[${object.company_id.name] Harremanetarako Formularioa"
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_templ_landing_coord_newsletter
+msgid "[${object.company_id.name] Newsletter Subscription"
+msgstr "[${object.company_id.name] Buletinen harpidetza"
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/crm_lead_service.py:0
