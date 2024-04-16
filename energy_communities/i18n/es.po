@@ -200,6 +200,35 @@ msgstr ""
 "            "
 
 #. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_landing_coord_newsletter
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for filling out the form.</p>\n"
+"                    <p>We confirm that you have successfully subscribed to the newsletter.</p>\n"
+"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
+"                    <br />\n"
+"                    <p>We keep in touch for any questions.</p>\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}\">${object.company_id.name</a> team </p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gracias por rellenar el formulario.</p>\n"
+"                    <p>Confirmamos que te has suscrito correctamente al boletín.</p>\n"
+"                    <p>Te avisaremos en caso de que haya alguna novedad en el proyecto.</p>\n"
+"                    <br />\n"
+"                    <p>Seguimos en contacto para cualquier consulta.</p>\n"
+"                    <p>Atentamente,</p>\n"
+"                    <p>Equipo de <a href=\"https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}\">${object.company_id.name</a></p>\n"
+"                </div>\n"
+"            "
+
+#. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_ce_news_confirm_id
 msgid ""
 "\n"
@@ -285,6 +314,31 @@ msgstr ""
 "                    <p>Atentamente,</p>\n"
 "                    <p>Equipo de Somcomunitats.coop</p>\n"
 "                    <p><a href=\"https://somcomunitats.coop/recursos/\">Recursos i preguntas frequentes</a></p>\n"
+"                </div>\n"
+"            "
+
+#. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_landing_coord_contact
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thanks for getting in touch.</p>\n"
+"                    <p>We have received your email. We will contact you as soon as possible.</p>\n"
+"                    <br />\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}\">${object.company_id.name</a> team </p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gracias por ponerte en contacto.</p>\n"
+"                    <p>Hemos recibido tu correo electrónico. Nos pondremos en contacto contigo lo antes possible.</p>\n"
+"                    <br />\n"
+"                    <p>Atentamente,</p>\n"
+"                    <p>Equipo de <a href=\"https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}\">${object.company_id.name</a></p>\n"
 "                </div>\n"
 "            "
 
@@ -3681,6 +3735,16 @@ msgstr "Código postal"
 #, python-format
 msgid "ZIP code not found"
 msgstr "Código postal no encontrado"
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_templ_landing_coord_contact
+msgid "[${object.company_id.name] Contact Form"
+msgstr "[${object.company_id.name] Formulario de Contacto"
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_templ_landing_coord_newsletter
+msgid "[${object.company_id.name] Newsletter Subscription"
+msgstr "[${object.company_id.name] Suscripción al boletín"
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/crm_lead_service.py:0

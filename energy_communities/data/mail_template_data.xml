@@ -265,7 +265,7 @@
         <record id="email_templ_landing_coord_newsletter" model="mail.template">
             <field
         name="name"
-      >Autoresponder email upon receiving a subscription request for a Coordinator's Newsletter</field>
+      >Auto-reply email upon receiving a subscription request for a Coordinator's Newsletter</field>
             <field name="email_from">${object.company_id.email}</field>
             <field
         name="subject"
@@ -290,10 +290,10 @@
             ]]></field>
         </record>
 
-                <record id="email_templ_landing_coord_newsletter" model="mail.template">
+                <record id="email_templ_landing_coord_contact" model="mail.template">
             <field
         name="name"
-      >Autoresponder email when receiving a request to subscribe to a Coordinator's Newsletter</field>
+      >Auto-reply email when receiving a request for information from a Coordinator</field>
             <field name="email_from">${object.company_id.email}</field>
             <field name="subject">[${object.company_id.name] Contact Form</field>
             <field name="email_to">${object.email_from}</field>

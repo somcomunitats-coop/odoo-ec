@@ -119,6 +119,23 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_landing_coord_newsletter
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for filling out the form.</p>\n"
+"                    <p>We confirm that you have successfully subscribed to the newsletter.</p>\n"
+"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
+"                    <br />\n"
+"                    <p>We keep in touch for any questions.</p>\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}\">${object.company_id.name</a> team </p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+
+#. module: energy_communities
 #: model:mail.template,body_html:energy_communities.email_templ_lead_request_ce_news_confirm_id
 msgid ""
 "\n"
@@ -166,6 +183,21 @@ msgid ""
 "                    <p>Yours faithfully,</p>\n"
 "                    <p>Somcomunitats.coop team </p>\n"
 "                    <p><a href=\"https://somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+
+#. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_landing_coord_newsletter
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thanks for getting in touch.</p>\n"
+"                    <p>We have received your email. We will contact you as soon as possible.</p>\n"
+"                    <br />\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}\">${object.company_id.name</a> team </p>\n"
 "                </div>\n"
 "            "
 msgstr ""
@@ -3268,6 +3300,16 @@ msgstr ""
 #: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "ZIP code not found"
+msgstr ""
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_templ_landing_coord_newsletter
+msgid "[${object.company_id.name] Contact Form"
+msgstr ""
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_templ_landing_coord_newsletter
+msgid "[${object.company_id.name] Newsletter Subscription"
 msgstr ""
 
 #. module: energy_communities
