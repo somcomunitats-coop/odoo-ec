@@ -109,10 +109,6 @@ class DistributionTable(models.Model):
                     ).format(table_state=record.state)
                 )
 
-    @api.onchange("selfconsumption_project_id")
-    def _onchange_selfconsumption_project_id(self):
-        self.supply_point_assignation_ids = False
-
     @api.onchange("type")
     def _onchange_type(self):
         self.supply_point_assignation_ids = False
