@@ -15,12 +15,13 @@
     "version": "14.0.0.0.0",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
-    "depends": ["base", "cooperator"],
+    "depends": ["base", "cooperator", "l10n_es_cooperator"],
     # always loaded
     "data": [
         # 'security/ir.model.access.csv',
-        "views/cooperative_membership_views.xml",
         "views/account_move_views.xml",
+        "views/cooperative_membership_views.xml",
+        "views/operation_request_views.xml",
         "views/res_company_views.xml",
         "views/res_partner_views.xml",
     ],
