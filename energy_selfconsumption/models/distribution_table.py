@@ -79,7 +79,7 @@ class DistributionTable(models.Model):
     supply_point_assignation_ids = fields.One2many(
         "energy_selfconsumption.supply_point_assignation", "distribution_table_id"
     )
-    supply_point_group_ids = fields.One2many(
+    supply_point_group_ids = fields.Many2many(
         "energy_selfconsumption.supply_point",
         compute=_compute_supply_point_group_ids,
         readonly=True,
