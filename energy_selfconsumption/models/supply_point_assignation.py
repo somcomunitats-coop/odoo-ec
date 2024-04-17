@@ -6,11 +6,11 @@ class SupplyPointAssignation(models.Model):
     _name = "energy_selfconsumption.supply_point_assignation"
     _description = "Supply Point Assignation"
 
-    @api.depends("distribution_table_id", "hour")
+    @api.depends("distribution_table_id")
     def _compute_supply_point_filtered_ids(self):
         """
         List of supply point of partners subscribed to the project and not in the list of the distribution table to
-        prevent multiple assignations of same supply point and same hour.
+        prevent multiple assignations of same supply point.
         Used to filter out in the view.
         :return:
         """
@@ -22,12 +22,10 @@ class SupplyPointAssignation(models.Model):
                     (
                         "id",
                         "not in",
-                        record.distribution_table_id.supply_point_assignation_ids.filtered_domain(
-                            [("hour", "=", record.hour)]
-                        ).mapped(
+                        record.distribution_table_id.supply_point_assignation_ids.mapped(
                             "supply_point_id.id"
                         ),
-                    ),
+                    )
                 ]
             )
 
