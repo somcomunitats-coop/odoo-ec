@@ -28,7 +28,9 @@ class DistributionTable(models.Model):
                 continue
             elif record.type == "hourly":
                 all_is_valid = True
-                assignation_grouped = record.supply_point_assignation_ids.read_group(
+                assignation_grouped = self.env[
+                    "energy_selfconsumption.supply_point_assignation"
+                ].read_group(
                     [("distribution_table_id", "=", record.id)],
                     ["hour", "coefficient"],
                     ["hour"],
@@ -61,12 +63,12 @@ class DistributionTable(models.Model):
             record.write({"supply_point_group_ids": [(6, 0, values)]})
 
     def _get_default_type(self):
-        return (
-            "hourly"
-            if self.selfconsumption_project_id.invoicing_mode
+        if (
+            self.selfconsumption_project_id.invoicing_mode
             == "energy_delivered_variable"
-            else "fixed"
-        )
+        ):
+            return "hourly"
+        return "fixed"
 
     name = fields.Char(readonly=True)
     selfconsumption_project_id = fields.Many2one(
