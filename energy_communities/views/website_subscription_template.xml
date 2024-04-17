@@ -38,6 +38,7 @@
             t-esc="company.initial_subscription_share_amount"
           />€ by follow the steps you will receive by email.</p>
             </t>
+            <p><t t-raw="company.cooperator_share_form_header_text" /></p>
             <p
       >Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
@@ -96,6 +97,7 @@
             t-esc="company.initial_subscription_share_amount"
           />€ by follow the steps you will receive by email.</p>
             </t>
+            <p><t t-raw="company.cooperator_share_form_header_text" /></p>
             <p
       >Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>

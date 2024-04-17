@@ -115,6 +115,9 @@ class ResCompany(models.Model):
     voluntary_share_form_header_text = fields.Html(
         string="Voluntary share form header text", translate=True
     )
+    cooperator_share_form_header_text = fields.Html(
+        string="Cooperator share form header text", translate=True
+    )
     notify_to_coord_child_ccee_submissions = fields.Boolean(
         string=_("Notify the Coordinator of new Subscriptions of their CCEE"),
         help=_(
