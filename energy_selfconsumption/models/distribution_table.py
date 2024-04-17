@@ -64,7 +64,7 @@ class DistributionTable(models.Model):
 
     name = fields.Char(readonly=True)
     selfconsumption_project_id = fields.Many2one(
-        "energy_selfconsumption.selfconsumption", required=True
+        "energy_selfconsumption.selfconsumption", required=True, readonly=True
     )
     selfconsumption_project_state = fields.Selection(
         related="selfconsumption_project_id.state"
