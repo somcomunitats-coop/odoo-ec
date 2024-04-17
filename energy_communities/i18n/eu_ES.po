@@ -787,7 +787,7 @@ msgstr "Izan zaitez Gizarte Ekimeneko Elkartearen enpresa bazkide"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "Become Cooperator of"
-msgstr "Izan zaitez gizarte ekimeneko elkarteko pertsona kide"
+msgstr "Izan zaitez"
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0
@@ -2434,9 +2434,8 @@ msgid ""
 "Once you are a member you can enjoy the services available from the community and be part of a movement\n"
 "                of social and energy model transformation."
 msgstr ""
-"Bazkide zarenean, komunitate energetikoak eskaintzen dituen zerbitzuak "
-"erabili ahal izango dituzu, eta, aldi berean, gizartea eta energia eredua "
-"aldatzeko mugimenduaren parte izan."
+"Bazkide zarenean, komunitate energetikoaren zerbitzuak erabili ahal izango dituzu, eta, aldi berean, "
+"gizartea eta energia eredua aldatzeko mugimenduaren parte izan."
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
@@ -3080,7 +3079,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "This form allow you to request be member of the community:"
-msgstr "Hauxe izeneko komunitate energetikoaren bazkide izateko inprimakia:"
+msgstr "Formulario hau"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
@@ -3133,9 +3132,8 @@ msgid ""
 "and authorization to issue a bank receipt to collect the initial mandatory "
 "financial contribution of"
 msgstr ""
-"Para ser socio/a, primero debes rellenar este formulario donde te pedimos "
-"una cuenta bancaria y la autorización para girar un recibo bancario para "
-"cobrar la aportación económica obligatoria inicial de"
+"Bazkide izateko, lehenbizi formulario hau bete behar duzu, eta bertan "
+"bankuko ordainagiri bat igortzeko baimena eskatzen dizugu, "
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
@@ -3696,6 +3694,16 @@ msgstr ""
 " gestión societaria, contable y financiera)."
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
+msgid "member_ccee_eu_ES."
+msgstr "komunitate energetikoaren bazkide izateko balio du."
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
+msgid "member_eu_ES"
+msgstr "kide"
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__ce_status__building
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__ce_status__building
@@ -3857,3 +3865,8 @@ msgid "€ by follow the steps you will receive by email."
 msgstr ""
 "€-ko hasierako diru ekarpena formalizatu, zure eskaera jaso ondoren posta "
 "elektronikoz bidaliko dizkizugun pausuak jarraituz."
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
+msgid "€_eu_ES."
+msgstr "€-ko hasierako nahitaezko diru ekarpena kobratzeko."
