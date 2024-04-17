@@ -62,14 +62,6 @@ class DistributionTable(models.Model):
             values = list(map(lambda x: x["supply_point_id"][0], id_list))
             record.write({"supply_point_group_ids": [(6, 0, values)]})
 
-    def _get_default_type(self):
-        if (
-            self.selfconsumption_project_id.invoicing_mode
-            == "energy_delivered_variable"
-        ):
-            return "hourly"
-        return "fixed"
-
     name = fields.Char(readonly=True)
     selfconsumption_project_id = fields.Many2one(
         "energy_selfconsumption.selfconsumption", required=True
@@ -79,7 +71,7 @@ class DistributionTable(models.Model):
     )
     type = fields.Selection(
         TYPE_VALUES,
-        default=lambda self: self._get_default_type(),
+        default="fixed",
         required=True,
         string="Modality",
     )
