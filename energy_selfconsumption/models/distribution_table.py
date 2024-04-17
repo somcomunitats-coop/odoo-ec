@@ -19,10 +19,11 @@ class DistributionTable(models.Model):
     def _compute_coefficient_is_valid(self):
         for record in self:
             if record.type == "fixed":
-                record.coefficient_is_valid = not fields.Float.compare(
-                    sum(record.supply_point_assignation_ids.mapped("coefficient")),
-                    1.00000,
-                    precision_rounding=0.00001,
+                sum_coefficients = sum(
+                    record.supply_point_assignation_ids.mapped("coefficient")
+                )
+                record.coefficient_is_valid = not self.compare_coefficient_to_one(
+                    sum_coefficients
                 )
                 continue
             elif record.type == "hourly":
@@ -33,14 +34,7 @@ class DistributionTable(models.Model):
                     ["hour"],
                 )
                 for hour_group in assignation_grouped:
-                    if (
-                        fields.Float.compare(
-                            hour_group["coefficient"],
-                            1.00000,
-                            precision_rounding=0.00001,
-                        )
-                        < 0
-                    ):
+                    if self.compare_coefficient_to_one(hour_group["coefficient"]):
                         all_is_valid = False
                         break
                 record.coefficient_is_valid = all_is_valid
