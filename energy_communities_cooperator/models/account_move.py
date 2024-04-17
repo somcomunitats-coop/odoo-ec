@@ -4,14 +4,18 @@ from odoo import _, api, fields, models
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    product_categ_id = fields.Many2one(
-        "product.category", compute="_compute_product_categ_id", store=True
+    membership_id = fields.Many2one(
+        "cooperative.membership", string="Related membership"
     )
 
-    @api.depends("invoice_line_ids")
-    def _compute_product_categ_id(self):
-        for record in self:
-            if len(record.invoice_line_ids) == 1:
-                record.product_categ_id = record.invoice_line_ids[
-                    0
-                ].product_id.categ_id.id
+    def post_process_confirm_paid(self, effective_date):
+        if not self.membership_id:
+            self.set_cooperator_effective(effective_date)
+
+    def set_cooperator_effective(self, effective_date):
+        super().set_cooperator_effective(effective_date)
+        cooperative_membership = self.partner_id.get_cooperative_membership(
+            self.company_id.id
+        )
+        if cooperative_membership:
+            self.write({"membership_id": cooperative_membership.id})
