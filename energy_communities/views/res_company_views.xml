@@ -11,6 +11,9 @@
       >
                 <attribute name="invisible">True</attribute>
             </xpath>
+            <group name="coop_grp" position="inside">
+              <field name="send_share_update_email" />
+            </group>
             <group name="coop_grp" position="after">
                 <group name="voluntary_shares" string="Voluntary Shares">
                     <field name="voluntary_share_form_header_text" />
@@ -55,6 +58,10 @@
                         <field
               name="parent_id"
               domain="[('id', 'in', parent_id_filtered_ids)]"
+            />
+                        <field
+              name="notify_to_coord_child_ccee_submissions"
+              attrs="{'invisible': [('hierarchy_level', '!=', 'coordinator')]}"
             />
                         <field name="legal_form" />
                         <field name="comercial_name" />

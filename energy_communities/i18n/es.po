@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-29 14:39+0000\n"
-"PO-Revision-Date: 2023-12-29 14:39+0000\n"
+"POT-Creation-Date: 2024-03-25 16:52+0000\n"
+"PO-Revision-Date: 2024-03-25 16:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -105,6 +105,68 @@ msgstr ""
 "                    <p>Equipo de Somos Comunidades</p>\n"
 "                    <p><a href=\"https://somcomunitats.coop/recursos/\">Recursos y preguntas frecuentes</a></p>\n"
 "\n"
+"                </div>\n"
+"            "
+
+#. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_lead_ce_source_coord_web_other_id
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for filling out the form to request contact regarding the Coordinators.</p>\n"
+"                    <p>We have successfully received your details.</p>\n"
+"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
+"                    <br />\n"
+"                    <p>We keep in touch for any questions.</p>\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gracias por rellenar el formulario para pedir información en relación a las Coordinadoras.</p>\n"
+"                    <p>Hemos recibido correctamente tus datos</p>\n"
+"                    <p>Durante los próximos días estudiaremos la solicitud y nos pondremos en contacto con usted.</p>\n"
+"                    <br />\n"
+"                    <p>Seguimos en contacto para cualquier consulta.</p>\n"
+"                    <p>Atentamente,</p>\n"
+"                    <p>Equipo de Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Recursos y preguntas frecuentes</a></p>\n"
+"                </div>\n"
+"            "
+
+#. module: energy_communities
+#: model:mail.template,body_html:energy_communities.email_templ_lead_ce_source_coord_web_hiring_id
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thank you for filling out the form to request the hiring of a Coordinator.</p>\n"
+"                    <p>We have successfully received your details</p>\n"
+"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
+"                    <br />\n"
+"                    <p>We keep in touch for any questions.</p>\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gracias por rellenar el formulario para pedir la contratación de una Coordinadora.</p>\n"
+"                    <p>Hemos recibido correctamente tus datos</p>\n"
+"                    <p>Durante los próximos días estudiaremos la solicitud y nos pondremos en contacto con usted.</p>\n"
+"                    <br />\n"
+"                    <p>Seguimos en contacto para cualquier consulta.</p>\n"
+"                    <p>Atentamente,</p>\n"
+"                    <p>Equipo de Somcomunitats.coop</p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/\">Recursos y preguntas frecuentes</a></p>\n"
 "                </div>\n"
 "            "
 
@@ -654,6 +716,11 @@ msgid "Administrator"
 msgstr ""
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_cm_map__admins_to_notify
+msgid "Admins to notify"
+msgstr ""
+
+#. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_aggregate_demand
 msgid "Agregació i flexibilitat de la demanda"
 msgstr "Agregación y flexibilidad de la demanda"
@@ -662,6 +729,12 @@ msgstr "Agregación y flexibilidad de la demanda"
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__allow_new_members
 msgid "Allow new members"
 msgstr "Autoriza nuevos miembros"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__allowed_companies
+#: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__allowed_companies
+msgid "Allowed Companies"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__allow_new_members
@@ -823,6 +896,11 @@ msgid "CRM Lead"
 msgstr "Iniciativa CRM"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__destination_field_key
+msgid "CRM Lead destination field key"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model,name:energy_communities.model_crm_tag
 msgid "CRM Tag"
 msgstr "Etiqueta CRM"
@@ -907,6 +985,7 @@ msgstr "Nombre comercial"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__hierarchy_level__community
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__community
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__company_hierarchy_level__community
 #, python-format
@@ -1008,6 +1087,8 @@ msgstr "Tipo de comunidad"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_company
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner__company_ids_info
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__company_ids_info
 msgid "Companies"
 msgstr "Empreses"
 
@@ -1102,6 +1183,11 @@ msgid "Contact SomComunitats"
 msgstr "Contacto SomComunitats"
 
 #. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_coord_web_hiring
+msgid "Contact a coordinator"
+msgstr "Quiero contratar a una coordinadora"
+
+#. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_contact
 msgid "Contact a existing CE"
 msgstr "Contactar una CE existente"
@@ -1161,6 +1247,7 @@ msgstr "Diario Socias"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__hierarchy_level__coordinator
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__coordinator
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__company_hierarchy_level__coordinator
 #, python-format
@@ -1241,6 +1328,8 @@ msgstr "Crear usuario de KeyCloak/SSO desde la socia"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__create_uid
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping__create_uid
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_uid
 msgid "Created by"
 msgstr "Creado por"
@@ -1248,6 +1337,8 @@ msgstr "Creado por"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__create_date
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping__create_date
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_date
 msgid "Created on"
 msgstr "Creado el"
@@ -1255,6 +1346,30 @@ msgstr "Creado el"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__crm_lead_id
 msgid "Crm Lead"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__crm_lead_metadata_mapping_id
+#: model:ir.model.fields,field_description:energy_communities.field_mailing_mailing__crm_lead_metadata_mapping_id
+#: model:ir.model.fields,field_description:energy_communities.field_utm_source__crm_lead_metadata_mapping_id
+msgid "Crm Lead Metadata Mapping"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead__ce_child_lead_id
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_crm_lead_view_form
+msgid "Crm lead child"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.actions.act_window,name:energy_communities.view_crm_lead_metadata_mapping_window
+#: model:ir.ui.menu,name:energy_communities.view_crm_lead_metadata_mapping_menu
+msgid "CrmLead Metadata mapping"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__current_role
+msgid "Current Role"
 msgstr ""
 
 #. module: energy_communities
@@ -1308,8 +1423,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_cm_coordinates_mixin__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_cm_map__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_line__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_external_id_mixin__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__display_name
@@ -1323,6 +1441,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role_line__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
@@ -1543,11 +1662,6 @@ msgid "External website link"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
-msgid "FREQUENTLY ASKED QUESTIONS"
-msgstr "PREGUNTAS FRECUENTES"
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_facebook_url
 msgid "Facebook link"
 msgstr ""
@@ -1562,6 +1676,11 @@ msgstr "Facebook"
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__failed_message_ids
 msgid "Failed Messages"
 msgstr "Mensages fallidos"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__type
+msgid "Field mapping type"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__first_name
@@ -1624,6 +1743,7 @@ msgstr "Generación renovable comunitaria"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_menu_general_settings
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_crm_lead_metadata_mapping_form
 msgid "General"
 msgstr ""
 
@@ -1643,15 +1763,26 @@ msgid "General partnership"
 msgstr "Sociedad colectiva"
 
 #. module: energy_communities
+#: model:ir.model,name:energy_communities.model_user_currentcompany_mixin
+msgid "Get current selected company from any model"
+msgstr ""
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
 msgid "Hello,"
 msgstr "Hola,"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__hierarchy_level
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__company_hierarchy_level
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__hierarchy_level
 msgid "Hierarchy level"
 msgstr "Nivel jerárquico"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Hire COORD"
+msgstr "Contratar COORD"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.iban_template_es_ccee
@@ -1697,8 +1828,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__id
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__id
 #: model:ir.model.fields,field_description:energy_communities.field_cm_coordinates_mixin__id
+#: model:ir.model.fields,field_description:energy_communities.field_cm_map__id
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__id
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_line__id
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping__id
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__id
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag__id
 #: model:ir.model.fields,field_description:energy_communities.field_external_id_mixin__id
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__id
@@ -1712,6 +1846,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role__id
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role_line__id
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request__id
+#: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__id
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__id
 msgid "ID"
 msgstr "Identificador"
@@ -1756,6 +1891,19 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcado, algunos mensages tienen problemas de entrega"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields,help:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
+#, python-format
+msgid ""
+"If it is checked, the Coordinator will receive a copy of each auto-response "
+"email that is generated in any of its CCEE when a new Member Subscription "
+"request is received."
+msgstr ""
+"Si está marcado la Coordinadora recibirá una copia de cada correo de autorespuesta "
+"que se genere en cualquiera de sus CCEE cuando se reciba una nueva sociedad "
+"de socia en la CE"
+
+#. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_product_product__mail_template
 #: model:ir.model.fields,help:energy_communities.field_product_template__mail_template
 msgid "If left empty, the default global mail template will be used."
@@ -1797,6 +1945,11 @@ msgstr ""
 #: model:utm.source,name:energy_communities.ce_source_general_info
 msgid "Information Newsletter (general)"
 msgstr "Recibir boletín información general plataforma"
+
+#. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_coord_web_other
+msgid "Information about coordinators"
+msgstr ""
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_info
@@ -1935,8 +2088,11 @@ msgstr "Idioma"
 #: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_cm_coordinates_mixin____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_cm_map____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_line____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_crm_tag____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_external_id_mixin____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page____last_update
@@ -1950,6 +2106,7 @@ msgstr "Idioma"
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role_line____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_subscription_request____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source____last_update
 msgid "Last Modified on"
 msgstr "Última modificación el"
@@ -1957,6 +2114,8 @@ msgstr "Última modificación el"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__write_uid
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping__write_uid
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
@@ -1964,6 +2123,8 @@ msgstr "Última actualización por"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_assign_crm_to_coordinator_company_wizard__write_date
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping__write_date
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
@@ -2060,10 +2221,40 @@ msgid "Mandatory Shares"
 msgstr "Aportaciones obligatorias"
 
 #. module: energy_communities
+#: model:ir.model.fields.selection,name:energy_communities.selection__crm_lead_metadata_mapping_field__type__many2one_relation_field
+msgid "Many2one relation field"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Map not found slug_id: {}"
 msgstr "Mapa no encontrado para slug_id: {}"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__mapping_domain
+msgid "Mapping Domain"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__mapping_model_id
+msgid "Mapping Model"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__mapping_model_name
+msgid "Mapping Model Name"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__mapping_model_real
+msgid "Mapping Real Model"
+msgstr ""
+
+#. module: energy_communities
+#: model:res.groups,name:energy_communities.mass_mailing_super_user
+msgid "Mass Mailing Superuser"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_has_error
@@ -2082,6 +2273,11 @@ msgid "Metadata 'ce_name' must be defined for creating a company"
 msgstr ""
 "El campo de metadatos 'ce_name' tiene que estar definido para crear una "
 "companyia"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__metadata_key
+msgid "Metadata key"
+msgstr ""
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_sustainable_mobility
@@ -2105,6 +2301,8 @@ msgstr "Nínguno"
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping__name
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping_field__name
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__name
 #, python-format
 msgid "Name"
@@ -2114,6 +2312,12 @@ msgstr "Nombre"
 #: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline_message_closed
 msgid "Necessary data for the integration of the Community:"
 msgstr "Datos necesarios para la integración de la Comunidad:"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
+#, python-format
+msgid "New"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__new_product_share_template
@@ -2227,6 +2431,13 @@ msgstr ""
 "formularios:"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
+#, python-format
+msgid "Notify the Coordinator of new Subscriptions of their CCEE"
+msgstr "Notificar a la Coordinadora nuevas suscripciones de sus CCEE"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_needaction_counter
 msgid "Number of Actions"
 msgstr "Número de acciones"
@@ -2318,11 +2529,11 @@ msgstr "Solicitud operación"
 #: code:addons/energy_communities/wizards/assign_crm_to_coordinator_company.py:0
 #, python-format
 msgid ""
-"Opportunity assigned to Coordinator %s (ID: %s), "
-"where %s is the id of the original instance-level record."
+"Opportunity assigned to Coordinator %s (ID: %s), where %s is the id of the "
+"original instance-level record."
 msgstr ""
-"Oportunidad asignada a la coordinadora %s (ID: %s), "
-"donde %s es el id del registro original a nivel de Instancia."
+"Oportunidad asignada a la coordinadora %s (ID: %s), donde %s es el id del "
+"registro original a nivel de Instancia."
 
 #. module: energy_communities
 #: code:addons/energy_communities/wizards/assign_crm_to_coordinator_company.py:0
@@ -2331,13 +2542,18 @@ msgid ""
 "Opportunity created from Instance opportunity with ID %s, where %s is the id"
 " of the new record generated at the Coordinator level"
 msgstr ""
-"Oportunidad creada desde la oportunidad de Instancia con ID %s, donde %s es el id"
-" del nuevo registro generado a nivel de Coordinadora."
+"Oportunidad creada desde la oportunidad de Instancia con ID %s, donde %s es "
+"el id del nuevo registro generado a nivel de Coordinadora."
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_community_data.py:0
 #, python-format
 msgid "Other"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Other COORD"
 msgstr ""
 
 #. module: energy_communities
@@ -2564,6 +2780,11 @@ msgid "Realm name"
 msgstr "Nombre REALM"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_crm_lead_metadata_mapping_form
+msgid "Recipients"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__redirect_admin_url
 msgid "Redirect Link after update password"
 msgstr "Enlace de redirección después de haber introducido la contraseña"
@@ -2593,6 +2814,16 @@ msgid "Related Lead not found. The url is not correct. lead_id param invalid."
 msgstr ""
 "Lead relacionado no encontrado. La url no es correcta. El parámetro lead_id "
 "no es válido."
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping__metadata_mapping_field_ids
+msgid "Related mapping fields"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_mapping__utm_source_ids
+msgid "Related sources"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_crm_leads_menu
@@ -3080,8 +3311,26 @@ msgid "Upload a new one to change"
 msgstr "Sube una nueva para cambiar"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__creation_partner
+msgid "Use existing partner linked to new company"
+msgstr ""
+
+#. module: energy_communities
 #: model:res.groups,name:energy_communities.group_user
 msgid "User"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__user_current_company
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__user_current_company
+#: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__user_current_company
+msgid "User Current Company"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner__user_current_role
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__user_current_role
+msgid "User Current Role"
 msgstr ""
 
 #. module: energy_communities
@@ -3140,6 +3389,11 @@ msgstr "NIF"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead_metadata_line__value
 msgid "Value"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields.selection,name:energy_communities.selection__crm_lead_metadata_mapping_field__type__value_field
+msgid "Value field"
 msgstr ""
 
 #. module: energy_communities
@@ -3296,6 +3550,11 @@ msgid "Yes"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.community_data_headline_message_closed
+msgid "You can contact"
+msgstr "Puedes contactar"
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/subscription_request.py:0
 #, python-format
 msgid "You can't create a voluntary subscription share for a new cooperator."
@@ -3383,6 +3642,12 @@ msgstr "[Contacto SomComunitats]"
 #. module: energy_communities
 #: code:addons/energy_communities/services/crm_lead_service.py:0
 #, python-format
+msgid "[Hire Coord]"
+msgstr "[Contratar Coord]"
+
+#. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
 msgid "[Newsletter CE]"
 msgstr "[Boletín CE]"
 
@@ -3391,6 +3656,17 @@ msgstr "[Boletín CE]"
 #, python-format
 msgid "[Newsletter SomComunitats]"
 msgstr "[Boletín SomComunitats]"
+
+#. module: energy_communities
+#: code:addons/energy_communities/services/crm_lead_service.py:0
+#, python-format
+msgid "[Other Coord]"
+msgstr "[Otros Coord]"
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_templ_lead_ce_source_coord_web_hiring_id
+msgid "[Som Comunitats] Application for Recruitment Coordinator"
+msgstr "[Somos Comunidades] Solicitud Contractación Coordinadora"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_template_confirmation_company
@@ -3407,6 +3683,11 @@ msgstr "[Somos Comunidades] Contacto Comunidad Energética"
 msgid "[Som Comunitats] Community Newsletter Subscription Request"
 msgstr ""
 "[Somos Comunidades] Subscripción al boletín de una Comunidad Energética"
+
+#. module: energy_communities
+#: model:mail.template,subject:energy_communities.email_templ_lead_ce_source_coord_web_other_id
+msgid "[Som Comunitats] Contact request in relation to Coordinators"
+msgstr "[Somos Comunidades] Solicitud de contacto en relación a Coordinadoras"
 
 #. module: energy_communities
 #: model:mail.template,subject:energy_communities.email_templ_contact_platform_confirm_id
@@ -3515,6 +3796,11 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
+#: model:ir.model,name:energy_communities.model_cm_map
+msgid "cm.map"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__community_of_property
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__community_of_property
@@ -3526,6 +3812,16 @@ msgstr "Comunidad de bienes"
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_crm_lead_metadata_line
 msgid "crm.lead.metadata.line"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_crm_lead_metadata_mapping
+msgid "crm.lead.metadata.mapping"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_crm_lead_metadata_mapping_field
+msgid "crm.lead.metadata.mapping.field"
 msgstr ""
 
 #. module: energy_communities
