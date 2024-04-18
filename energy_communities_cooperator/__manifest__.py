@@ -24,6 +24,7 @@
         "views/operation_request_views.xml",
         "views/res_company_views.xml",
         "views/res_partner_views.xml",
+        "data/mail_template_update_data.xml",
     ],
     # only loaded in demonstration mode
     "demo": [],
