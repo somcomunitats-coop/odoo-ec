@@ -1,0 +1,95 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* energy_communities_cooperator
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-18 09:27+0000\n"
+"PO-Revision-Date: 2024-04-18 09:27+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__representative_of_member_company
+msgid "Company Legal Representative"
+msgstr "Representante legal de compañía"
+
+#. module: energy_communities_cooperator
+#: model:ir.model,name:energy_communities_cooperator.model_cooperative_membership
+msgid "Cooperative Membership"
+msgstr "Membresia"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move__display_name
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__display_name
+msgid "Display Name"
+msgstr "Nombre Mostrado"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move__id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__id
+msgid "ID"
+msgstr "Identificador"
+
+#. module: energy_communities_cooperator
+#: model:ir.actions.act_window,name:energy_communities_cooperator.action_account_move
+#: model:ir.ui.menu,name:energy_communities_cooperator.menu_account_move
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: energy_communities_cooperator
+#: model:ir.model,name:energy_communities_cooperator.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move____last_update
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__representative
+msgid "Legal Representative"
+msgstr "Representante legal"
+
+#. module: energy_communities_cooperator
+#: model:ir.actions.act_window,name:energy_communities_cooperator.action_cooperative_membership
+#: model:ir.ui.menu,name:energy_communities_cooperator.menu_cooperative_membership
+msgid "Memberships"
+msgstr "Membresias"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__partner_id
+msgid "Partner"
+msgstr "Partner"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_bank_statement_line__membership_id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move__membership_id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_payment__membership_id
+msgid "Related membership"
+msgstr "Membresia relacionada"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__subscription_invoice_ids
+msgid "Subscription invoices"
+msgstr "Registros de pago"
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/models/subscription_request.py:0
+#, python-format
+msgid "You can't create a voluntary subscription share for a new cooperator."
+msgstr ""
+"No puedes crear una aportación voluntaria para un miembro nuevo"

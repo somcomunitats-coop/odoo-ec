@@ -10,7 +10,6 @@ from . import res_partner
 from . import res_partner_bank
 from . import res_users
 from . import res_users_role
-from . import subscription_request
 from . import product
 from . import utm_source
 from . import account_move

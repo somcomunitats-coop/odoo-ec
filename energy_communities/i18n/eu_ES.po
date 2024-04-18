@@ -804,7 +804,6 @@ msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_chart_template__display_name
-#: model:ir.model.fields,field_description:energy_communities.field_account_move__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__display_name
@@ -1038,7 +1037,6 @@ msgstr "Prefiero no compartirlo"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_chart_template__id
-#: model:ir.model.fields,field_description:energy_communities.field_account_move__id
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__id
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__id
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__id
@@ -1189,11 +1187,6 @@ msgid "Is voluntary contribution"
 msgstr "Es aportación voluntaria"
 
 #. module: energy_communities
-#: model:ir.model,name:energy_communities.model_account_move
-msgid "Journal Entry"
-msgstr "Egunkari-sarrera"
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__is_keycloak_provider
 msgid "Keycloak provider"
 msgstr "Proveedor KeyCloak"
@@ -1233,7 +1226,6 @@ msgstr "Hizkuntza"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_chart_template____last_update
-#: model:ir.model.fields,field_description:energy_communities.field_account_move____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider____last_update
@@ -2343,14 +2335,6 @@ msgstr "Wordpress kredentzialak"
 #, python-format
 msgid "Wordpress landing and map place has been successfully updated."
 msgstr "Página landing y punto de mapa actualizados satisfactoriamente"
-
-#. module: energy_communities
-#: code:addons/energy_communities/models/subscription_request.py:0
-#, python-format
-msgid "You can't create a voluntary subscription share for a new cooperator."
-msgstr ""
-"Ezin duzu borondatezko harpidetza-partekaketarik sortu kooperatibatzaile "
-"berri baterako."
 
 #. module: energy_communities
 #: code:addons/energy_communities/controllers/website_subscription_main.py:0
