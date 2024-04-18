@@ -79,18 +79,21 @@ class SubscriptionRequest(models.Model):
         return vals
 
     def _find_partner_from_create_vals(self, vals):
-        partner_model = self.env["res.partner"]
-        partner_id = vals.get("partner_id")
-        if partner_id:
-            return partner_model.browse(partner_id)
-        if vals.get("is_company"):
-            partner = partner_model.get_cooperator_from_crn(
-                vals.get("company_register_number")
-            )
+        if state != "draft":
+            partner_model = self.env["res.partner"]
+            partner_id = vals.get("partner_id")
+            if partner_id:
+                return partner_model.browse(partner_id)
+            if vals.get("is_company"):
+                partner = partner_model.get_cooperator_from_crn(
+                    vals.get("company_register_number")
+                )
+            else:
+                partner = partner_model.get_cooperator_from_vat(vals.get("vat"))
+            if partner:
+                vals["partner_id"] = partner.id
         else:
-            partner = partner_model.get_cooperator_from_vat(vals.get("vat"))
-        if partner:
-            vals["partner_id"] = partner.id
+            partner = False
         return partner
 
     def get_mail_template_notif(self, is_company=False):
