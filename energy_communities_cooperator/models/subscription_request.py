@@ -1,4 +1,5 @@
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class SubscriptionRequest(models.Model):
@@ -46,6 +47,9 @@ class SubscriptionRequest(models.Model):
             vals["company_id"] = int(vals["company_id"])
         if "country_id" in vals:
             vals["country_id"] = int(vals["country_id"])
+        # setup company_register_number on SR based on vat
+        if "vat" in vals.keys():
+            vals["company_register_number"] = vals["vat"]
         subscription_request = super().create(vals)
         if (
             not subscription_request.payment_mode_id.payment_method_id.code
@@ -55,7 +59,7 @@ class SubscriptionRequest(models.Model):
         return subscription_request
 
     def validate_subscription_request(self):
-        if self.is_voluntary and self.type == "new":
+        if self.is_voluntary and not self.partner_id:
             raise ValidationError(
                 _(
                     "You can't create a voluntary subscription share for a new cooperator."
@@ -65,21 +69,26 @@ class SubscriptionRequest(models.Model):
 
     def get_partner_vals(self):
         vals = super().get_partner_vals()
-        vals["company_id"] = self.company_id.id
+        # vals["company_id"] = self.company_id.id
         return vals
 
     def get_partner_company_vals(self):
         vals = super().get_partner_company_vals()
-        vals["company_id"] = self.company_id.id
+        # vals["company_id"] = self.company_id.id
+        # This propagates vat from SR to res.partner
+        vals["vat"] = self.vat
         return vals
 
     def get_representative_vals(self):
         vals = super().get_representative_vals()
-        vals["company_id"] = self.company_id.id
+        # vals["company_id"] = self.company_id.id
         return vals
 
     def _find_partner_from_create_vals(self, vals):
-        if state != "draft":
+        # we don't stablish related partner on SR from cooperator website
+        # TODO: In voluntary we must execute also
+        # if self.state:
+        if vals["source"] not in ["website", "manual"] or self.is_voluntary:
             partner_model = self.env["res.partner"]
             partner_id = vals.get("partner_id")
             if partner_id:
@@ -96,10 +105,53 @@ class SubscriptionRequest(models.Model):
             partner = False
         return partner
 
+    def _get_partner_domain(self):
+        # used for representative
+        if self.is_company:
+            if self.email:
+                return [("email", "=", self.email), ("is_company", "=", False)]
+            else:
+                return None
+        # used for members (normal and company)
+        else:
+            if self.vat:
+                return [("vat", "=", self.vat)]
+            else:
+                return None
+
+    def _find_or_create_partner(self):
+        if is_voluntary:
+            super_model = super()
+        else:
+            super_model = super(SubscriptionRequest, self.sudo())
+        related_partner = super_model._find_or_create_partner()
+        if self.company_id.id not in related_partner.company_ids.mapped("id"):
+            related_partner.write({"company_ids": [(4, self.company_id.id)]})
+        return related_partner
+
+    def _find_or_create_representative(self):
+        super(SubscriptionRequest, self.sudo())._find_or_create_representative()
+
+    def set_membership(self):
+        if self.is_company:
+            partner = self._find_or_create_partner()
+            representative = partner.get_representative()
+            rep_membership = self.env["cooperative.membership"].search(
+                [
+                    ("company_id", "=", self.company_id.id),
+                    ("partner_id", "=", representative.id),
+                    ("representative", "=", True),
+                ]
+            )
+            if not rep_membership:
+                representative.create_cooperative_membership(self.company_id.id)
+        # To be overridden
+        return True
+
     def get_mail_template_notif(self, is_company=False):
         if self.is_voluntary:
             return self.env.ref(
-                "energy_communities.email_template_confirmation_voluntary_share"
+                "energy_communities_cooperator.email_template_confirmation_voluntary_share"
             )
         return super().get_mail_template_notif(is_company)
 
