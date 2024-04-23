@@ -20,17 +20,17 @@
   >
         <xpath expr="//div[@id='wrap']//h1" position="replace">
             <h1 class="mt-4 text-center">
-                Become Cooperator of <t t-esc="company.name" />
+                Become Cooperator of <t t-esc="company.name" /> member_eu_ES
             </h1>
             <br />
             <p>This form allow you to request be member of the community: <t
           t-esc="company.name"
-        />.</p>
+        />member_ccee_eu_ES.</p>
             <t t-if="share_payment_sepa_direct_debit">
                 <p
         >To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <t
             t-esc="company.initial_subscription_share_amount"
-          />€.</p>
+          />€_eu_ES.</p>
             </t>
             <t t-else="">
                 <p
@@ -38,6 +38,7 @@
             t-esc="company.initial_subscription_share_amount"
           />€ by follow the steps you will receive by email.</p>
             </t>
+            <p><t t-raw="company.cooperator_share_form_header_text" /></p>
             <p
       >Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
@@ -78,7 +79,7 @@
   >
         <xpath expr="//div[@id='wrap']//h1" position="replace">
             <h1 class="mt-4 text-center">
-                Become Company Cooperator of <t t-esc="company.name" />
+                Become Company Cooperator of <t t-esc="company.name" /> member_eu_ES
             </h1>
             <br />
             <p>This form allow you to request be member of the community: <t
@@ -96,6 +97,7 @@
             t-esc="company.initial_subscription_share_amount"
           />€ by follow the steps you will receive by email.</p>
             </t>
+            <p><t t-raw="company.cooperator_share_form_header_text" /></p>
             <p
       >Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
@@ -320,7 +322,7 @@
 
     <template id="voluntary_share_text_template" name="voluntary_share_text_template">
         <h1 class="mt-4 text-center">
-            Voluntary Share of <t t-esc="company.name" />
+            Voluntary Share of <t t-esc="company.name" /> vol_share_eu_es
         </h1>
         <br />
         <p>

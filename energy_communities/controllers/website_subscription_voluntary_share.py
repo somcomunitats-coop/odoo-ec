@@ -302,7 +302,9 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             values["zip_code"] = _("Partner not found")
             values["country_id"] = company.default_country_id.id
             values["lang"] = company.default_lang_id.code
-        values["share_product_id"] = company.voluntary_share_id.id
+        values["share_product_id"] = self.get_selected_share(
+            {"share_product_id": company.voluntary_share_id.id}
+        ).id
         subscription_id = sub_req_obj.sudo().create(values)
 
         if partner:
