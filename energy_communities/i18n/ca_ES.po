@@ -515,6 +515,11 @@ msgid "Cooperator Journal"
 msgstr "Diari Sòcies"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__cooperator_share_form_header_text
+msgid "Cooperator share form header text"
+msgstr "Text del formulari de participació obligatòria"
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__hierarchy_level__coordinator
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__coordinator
@@ -2078,6 +2083,11 @@ msgid "Voluntary share to show on website"
 msgstr "Formulari d'aportació voluntària per ensenyar a la web"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
+msgid "vol_share_eu_es"
+msgstr " "
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_landing_page_id
 msgid "WP Landing Page"
 msgstr "Pàgina de destinació WP"
@@ -2224,6 +2234,17 @@ msgid "and"
 msgstr "i"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
+msgid "member_ccee_eu_ES."
+msgstr " "
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
+msgid "member_eu_ES"
+msgstr " "
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__ce_status__building
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__ce_status__building
@@ -2267,3 +2288,8 @@ msgid "€ by follow the steps you will receive by email."
 msgstr ""
 "€ seguint els passos que t'indicarem per correu electrònic un cop rebem la "
 "teva petició."
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
+msgid "€_eu_ES."
+msgstr "€."

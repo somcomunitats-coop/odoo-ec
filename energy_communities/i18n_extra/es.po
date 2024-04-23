@@ -1131,6 +1131,7 @@ msgstr "Moneda de la compañía"
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_partner__company_register_number
 #: model:ir.model.fields,field_description:cooperator.field_res_users__company_register_number
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__company_register_number
 msgid "Company Register Number"
 msgstr "Código de registro de la compañía"
 
@@ -1143,11 +1144,6 @@ msgstr "Correo electrónico de la compañía"
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__company_name
 msgid "Company name"
 msgstr "Nombre de la compañía"
-
-#. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_subscription_request__company_register_number
-msgid "Company register number"
-msgstr "Código de registro de la compañía"
 
 #. module: cooperator
 #: model:ir.actions.act_window,name:cooperator.action_company_representative_form
@@ -1291,14 +1287,10 @@ msgstr "Registro socias"
 #. module: cooperator
 #: model:ir.actions.act_window,name:cooperator.action_partner_cooperator_form
 #: model:ir.ui.menu,name:cooperator.menu_cooperator_cooperator
+#: model:ir.ui.menu,name:cooperator.menu_cooperator_main
 #: model_terms:ir.ui.view,arch_db:cooperator.view_res_partner_filter
 msgid "Cooperators"
 msgstr "Socias"
-
-#. module: cooperator
-#: model:ir.ui.menu,name:cooperator.menu_cooperator_main
-msgid "Cooperators"
-msgstr "Gestión Societaria"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__country_id
@@ -2398,12 +2390,6 @@ msgid "Share Receiver Info"
 msgstr "Info. recptor aportación"
 
 #. module: cooperator
-#: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__share_product
-#: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_tree
-msgid "Share Type"
-msgstr "Tipo aportación"
-
-#. module: cooperator
 #: model:ir.model,name:cooperator.model_share_line
 #: model:ir.model.fields,field_description:cooperator.field_share_line_update_info__share_line
 #: model_terms:ir.ui.view,arch_db:cooperator.share_line_form
@@ -2457,6 +2443,8 @@ msgstr "Transferencia aportación"
 #: model:ir.model.fields,field_description:cooperator.field_share_line__share_product_id
 #: model:ir.model.fields,field_description:cooperator.field_subscription_register__share_product_id
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__share_product_id
+#: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__share_product
+#: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_tree
 #: model:ir.ui.menu,name:cooperator.menu_cooperator_share_product
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperator_certificat_G001_document
 msgid "Share type"
