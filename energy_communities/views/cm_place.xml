@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="view_places_form" model="ir.ui.view">
+      <field name="name">cm.places.form</field>
+      <field name="model">cm.place</field>
+      <field name="inherit_id" ref="community_maps.view_places_form" />
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <field name="map_id" position="after">
+            <field name="landing_reference" />
+        </field>
+      </field>
+    </record>
+</odoo>
