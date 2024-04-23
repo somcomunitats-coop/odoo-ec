@@ -2079,6 +2079,13 @@ msgid "Landing lng param required for place creation"
 msgstr "La longitud és requerida per la creació d'un punt de mapa"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/cm_place.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_cm_place__landing_reference
+#, python-format
+msgid "Landing reference"
+msgstr "Referència a la pàgina web"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__default_lang_id
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__lang
 #: model:ir.model.fields,field_description:energy_communities.field_crm_lead__lang
