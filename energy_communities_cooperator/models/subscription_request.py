@@ -65,6 +65,20 @@ class SubscriptionRequest(models.Model):
                     "You can't create a voluntary subscription share for a new cooperator."
                 )
             )
+        if not self.is_voluntary and self.type == "new" and self.vat:
+            partners = self.env["res.partner"].search([("vat", "ilike", self.vat)])
+            if partners:
+                partner = partners[0]
+                membership = partner._get_member_or_candidate_cooperative_membership(
+                    self.company_id.id
+                )
+                if membership:
+                    raise ValidationError(
+                        _(
+                            "There is an existing account for this"
+                            " vat number on this community. "
+                        )
+                    )
         super().validate_subscription_request()
 
     def get_partner_vals(self):
@@ -85,20 +99,19 @@ class SubscriptionRequest(models.Model):
         return vals
 
     def _find_partner_from_create_vals(self, vals):
-        # we don't stablish related partner on SR from cooperator website
-        # TODO: In voluntary we must execute also
-        # if self.state:
-        if vals["source"] not in ["website", "manual"] or self.is_voluntary:
+        # we don't stablish related partner on SR from cooperator website or creating manually
+        # On voluntary shares partner searched on controller
+        if vals["source"] not in ["website", "manual"]:
             partner_model = self.env["res.partner"]
             partner_id = vals.get("partner_id")
             if partner_id:
                 return partner_model.browse(partner_id)
             if vals.get("is_company"):
-                partner = partner_model.get_cooperator_from_crn(
+                partner = partner_model.sudo().get_cooperator_from_crn(
                     vals.get("company_register_number")
                 )
             else:
-                partner = partner_model.get_cooperator_from_vat(vals.get("vat"))
+                partner = partner_model.sudo().get_cooperator_from_vat(vals.get("vat"))
             if partner:
                 vals["partner_id"] = partner.id
         else:
@@ -120,7 +133,7 @@ class SubscriptionRequest(models.Model):
                 return None
 
     def _find_or_create_partner(self):
-        if is_voluntary:
+        if self.is_voluntary:
             super_model = super()
         else:
             super_model = super(SubscriptionRequest, self.sudo())
