@@ -8,7 +8,7 @@
     id="ce_root_menu"
     name="Energy Communities"
     sequence="10"
-    groups="group_admin"
+    groups="group_platform_manager"
     web_icon="energy_communities,static/description/icon.png"
   />
     <menuitem id="ce_config_menu" name="Configuration" parent="ce_root_menu" />
@@ -27,4 +27,27 @@
     action="action_open_assign_admin_wizard"
     groups="group_admin"
   />
+
+  <!-- Hide menu items unless platform manager -->
+  <record model="ir.ui.menu" id="mail.menu_root_discuss">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
+  <record model="ir.ui.menu" id="community_maps.menu_root">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
+  <record model="ir.ui.menu" id="calendar.mail_menu_calendar">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
+  <record model="ir.ui.menu" id="website.menu_website_configuration">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
+  <record model="ir.ui.menu" id="utm.menu_link_tracker_root">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
+  <record model="ir.ui.menu" id="base.menu_board_root">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
+  <record model="ir.ui.menu" id="base_rest.menu_rest_api_root">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
 </odoo>
