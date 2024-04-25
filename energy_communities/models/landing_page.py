@@ -18,6 +18,9 @@ class LandingPage(models.Model):
 
     _inherit = ["cm.coordinates.mixin", "cm.slug.id.mixin"]
 
+    # overwrite models to be check for slug uniqueness. No other landings with same slug_id
+    _slug_models = ["landing.page"]
+
     name = fields.Char(string="Name", translate=True)
     company_id = fields.Many2one("res.company", string="Company")
     wp_landing_page_id = fields.Integer(string="WP Landing Page")
@@ -92,6 +95,55 @@ class LandingPage(models.Model):
         string=_("CCEE management services"), translate=True
     )
     company_logo = fields.Image(string=_("Company logo"))
+
+    slug_id = fields.Char(string="External slug ID", translate=True)
+
+    @api.constrains("slug_id")
+    def contrain_slug_id(self):
+        for record in self:
+            record.translate_slug_id()
+
+    def _get_translation(self, translation_name, lang):
+        query = [
+            ("name", "=", translation_name),
+            ("res_id", "=", self.id),
+            ("lang", "=", lang),
+        ]
+        return self.env["ir.translation"].search(query)
+
+    def update_translation(self, translation_name, original_value, trans_value, lang):
+        translation = self._get_translation(translation_name, lang)
+        if translation:
+            translation.write(
+                {"src": original_value, "value": trans_value, "state": "translated"}
+            )
+        else:
+            self.env["ir.translation"].create(
+                {
+                    "name": translation_name,
+                    "res_id": self.id,
+                    "lang": lang,
+                    "type": "model",
+                    "src": original_value,
+                    "value": trans_value,
+                    "state": "translated",
+                }
+            )
+        return True
+
+    def translate_slug_id(self):
+        self.update_translation(
+            "landing.page,slug_id",
+            self.slug_id,
+            self.slug_id,
+            "ca_ES",
+        )
+        self.update_translation(
+            "landing.page,slug_id",
+            self.slug_id,
+            self.slug_id,
+            "es_ES",
+        )
 
     def _get_image_attachment(self, field_name):
         file_attachment = self.env["ir.attachment"].search(
