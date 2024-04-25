@@ -439,7 +439,6 @@ class LandingCmPlace:
                 lang,
             )
 
-    # TODO: Make all this translation block more compliant with ir.translation model
     def _get_active_languages(self):
         return self.landing.env["res.lang"].search([("active", "=", 1)]).mapped("code")
 
