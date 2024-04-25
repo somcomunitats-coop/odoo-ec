@@ -12,7 +12,7 @@ class CooperativeMembership(models.Model):
     representative_of_member_company = fields.Boolean(
         string="Company Legal Representative",
         related="partner_id.representative_of_member_company",
-        store=True,
+        store=False,
     )
     subscription_invoice_ids = fields.One2many(
         "account.move",
