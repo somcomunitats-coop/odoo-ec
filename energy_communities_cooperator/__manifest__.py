@@ -15,7 +15,7 @@
     "version": "14.0.0.0.0",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
-    "depends": ["base", "cooperator", "l10n_es_cooperator"],
+    "depends": ["base", "cooperator", "l10n_es_cooperator", "energy_communities"],
     # always loaded
     "data": [
         # 'security/ir.model.access.csv',

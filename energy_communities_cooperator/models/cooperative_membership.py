@@ -4,6 +4,7 @@ from odoo import api, fields, models
 class CooperativeMembership(models.Model):
     _name = "cooperative.membership"
     _inherit = ["cooperative.membership"]
+    # _inherit = ["cooperative.membership","user.currentcompany.mixin"]
 
     active = fields.Boolean(string="Active", default=True)
     representative = fields.Boolean(

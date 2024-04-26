@@ -4,19 +4,42 @@
     <field name="model">res.partner</field>
     <field name="inherit_id" ref="cooperator.view_partner_form" />
     <field name="arch" type="xml">
-      <field name="member" position="after">
-        <field name="cooperator" />
-        <field name="old_member" />
-        <field name="representative_of_member_company" />
+      <field name="coop_candidate" position="attributes">
+        <attribute name="invisible">1</attribute>
       </field>
-      <group name="approvals" position="after">
-        <group>
-          <field name="cooperative_membership_id" />
-          <field name="cooperative_membership_ids" />
-          <field name="subscription_request_ids" />
-          <field name="share_ids" />
-        </group>
-      </group>
+      <field name="company_register_number" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </field>
+      <field name="gender" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </field>
+      <field name="legal_form" position="after">
+        <field name="user_current_role" invisible="1" />
+        <field name="cooperator" readonly="1" />
+        <field
+          name="coop_candidate"
+          readonly="1"
+          attrs="{'invisible': [('cooperator', '=', False)]}"
+        />
+        <field
+          name="old_member"
+          readonly="1"
+          attrs="{'invisible': [('cooperator', '=', False)]}"
+        />
+        <field
+          name="representative"
+          readonly="1"
+          attrs="{'invisible': [('cooperator', '=', False)]}"
+        />
+        <field
+          name="representative_of_member_company"
+          attrs="{'invisible': [('cooperator', '=', False)]}"
+        />
+        <field
+          name="cooperative_membership_id"
+          attrs="{'invisible': ['|',('cooperator', '=', False),('user_current_role', '!=', 'role_platform_admin')]}"
+        />
+      </field>
     </field>
   </record>
 </odoo>
