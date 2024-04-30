@@ -10,11 +10,7 @@
     "website": "https://coopdevs.org",
     "category": "Customizations",
     "version": "14.0.3.2.0",
-    "depends": [
-        "base",
-        "mail",
-        "cooperator",
-    ],
+    "depends": ["base", "mail", "cooperator", "account_banking_mandate"],
     "data": [
         "data/energy_project.reseller.csv",
         "data/energy_project.supplier.csv",

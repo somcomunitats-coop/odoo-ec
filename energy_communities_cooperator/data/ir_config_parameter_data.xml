@@ -1,0 +1,8 @@
+<odoo>
+  <record model="ir.config_parameter" id="amec_exclude_seq_list">
+    <field name="key">account_multicompany_easy_creation.exclude_sequence_list</field>
+    <field
+      name="value"
+    >[False,"aeat.sequence.type","pos.config.simplified_invoice","stock.scrap","register.operation","cooperator.number","subscription.register"]</field>
+  </record>
+</odoo>
