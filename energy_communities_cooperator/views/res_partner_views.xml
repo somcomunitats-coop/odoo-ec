@@ -13,6 +13,18 @@
       <field name="gender" position="attributes">
         <attribute name="invisible">1</attribute>
       </field>
+      <field name="internal_rules_approved" position="attributes">
+        <attribute name="readonly">1</attribute>
+      </field>
+      <field name="data_policy_approved" position="attributes">
+        <attribute name="readonly">1</attribute>
+      </field>
+      <field name="financial_risk_approved" position="attributes">
+        <attribute name="readonly">1</attribute>
+      </field>
+      <field name="generic_rules_approved" position="attributes">
+        <attribute name="readonly">1</attribute>
+      </field>
       <field name="legal_form" position="after">
         <field name="user_current_role" invisible="1" />
         <field name="cooperator" readonly="1" />
