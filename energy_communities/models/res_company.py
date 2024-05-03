@@ -316,27 +316,11 @@ class ResCompany(models.Model):
         return login_provider_id.get_auth_link()
 
     # LANDING
-    def action_create_landing(self):
-        new_landing = self.create_landing()
-        return {
-            "type": "ir.actions.act_window",
-            "view_type": "form",
-            "view_mode": "form",
-            "res_model": "landing.page",
-            "res_id": new_landing.id,
-            "target": "current",
-            "context": context,
-        }
-
     def create_landing(self):
         landing_page = self.env["landing.page"]
         vals = {"company_id": self.id, "name": self.comercial_name, "status": "draft"}
         new_landing = landing_page.create(vals)
-        context = {
-            "__last_update": {},
-            "active_model": "landing.page",
-            "active_id": new_landing.id,
-        }
+        new_landing.setup_slug_id()
         self.write({"landing_page_id": new_landing.id})
         self.action_create_wp_landing()
         return new_landing
