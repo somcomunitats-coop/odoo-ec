@@ -9,7 +9,12 @@ from ..pywordpress_client.resources.authenticate import Authenticate
 from ..pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
 )
-from .res_company import _CE_MEMBER_STATUS_VALUES, _CE_TYPE, _LEGAL_FORM_VALUES
+from .res_company import (
+    _CE_MEMBER_STATUS_VALUES,
+    _CE_TYPE,
+    _HIERARCHY_LEVEL_VALUES,
+    _LEGAL_FORM_VALUES,
+)
 from .res_config_settings import ResConfigSettings
 
 
@@ -97,6 +102,12 @@ class LandingPage(models.Model):
     company_logo = fields.Image(string=_("Company logo"))
 
     slug_id = fields.Char(string="External slug ID", translate=True)
+
+    hierarchy_level = fields.Selection(
+        selection=_HIERARCHY_LEVEL_VALUES,
+        string="Hierarchy level",
+        related="company_id.hierarchy_level",
+    )
 
     @api.constrains("slug_id")
     def contrain_slug_id(self):
@@ -315,8 +326,7 @@ class LandingPage(models.Model):
         LandingCmPlaceResource(self).update()
 
     def company_hierarchy_level_url(self):
-        company_hierarchy_level = self.company_id.hierarchy_level
-        if company_hierarchy_level == "coordinator":
+        if self.hierarchy_level == "coordinator":
             return "rest-ce-coord"
         else:
             return "rest-ce-landing"

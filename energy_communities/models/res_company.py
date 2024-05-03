@@ -336,7 +336,9 @@ class ResCompany(models.Model):
             auth = Authenticate(baseurl, username, password).authenticate()
             token = "Bearer %s" % auth["token"]
             landing_page_data = self.landing_page_id.to_dict()
-            landing_page = LandingPageResource(token, baseurl).create(landing_page_data)
+            landing_page = LandingPageResource(
+                token, baseurl, self.company_hierarchy_level_url()
+            ).create(landing_page_data)
             self.landing_page_id.write({"wp_landing_page_id": landing_page["id"]})
 
     def get_landing_page_form(self):
@@ -348,6 +350,12 @@ class ResCompany(models.Model):
             "res_id": self.landing_page_id.id,
             "target": "current",
         }
+
+    def company_hierarchy_level_url(self):
+        if self.hierarchy_level == "coordinator":
+            return "rest-ce-coord"
+        else:
+            return "rest-ce-landing"
 
     # TODO: Unused functions. Delete if really not needed.
     def check_ce_has_admin(self):
