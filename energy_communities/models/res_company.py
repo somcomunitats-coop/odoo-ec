@@ -317,6 +317,12 @@ class ResCompany(models.Model):
 
     # LANDING
     def create_landing(self):
+        if not self.comercial_name:
+            raise ValidationError(
+                _(
+                    "Company comercial name must be established in order to create a landing"
+                )
+            )
         new_landing = self.action_create_odoo_landing()
         self.action_create_wp_landing()
         return new_landing
@@ -326,6 +332,8 @@ class ResCompany(models.Model):
         vals = {"company_id": self.id, "name": self.comercial_name, "status": "draft"}
         new_landing = landing_page.create(vals)
         new_landing.setup_slug_id()
+        if self.hierarchy_level == "coordinator":
+            new_landing.create_or_update_map_coordinator_filter()
         self.write({"landing_page_id": new_landing.id})
         return new_landing
 

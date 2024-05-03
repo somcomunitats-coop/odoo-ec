@@ -47,3 +47,9 @@ class MapClientConfig:
         "green": "Coorporate green dark button",
         "yellow": "Coorporate yellow button",
     }
+    FILTER_COLOR_CONFIG = {
+        "marker_color": "#8EC23A",
+        "marker_text_color": "#FFFFFF",
+        "marker_bg_color": "#AEE04C",
+        "marker_border_color": "transparent",
+    }

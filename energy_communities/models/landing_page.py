@@ -2,6 +2,7 @@ from datetime import datetime
 
 from odoo import _, api, fields, models
 
+from ..client_map.config import MapClientConfig
 from ..client_map.resources.landing_cmplace import (
     LandingCmPlace as LandingCmPlaceResource,
 )
@@ -286,7 +287,10 @@ class LandingPage(models.Model):
     def action_update_public_data(self):
         for record in self:
             record._update_wordpress()
-            record._update_landing_place()
+            if self.map_place_id:
+                record._update_landing_place()
+            if self.hierarchy_level == "coordinator":
+                self.create_or_update_map_coordinator_filter()
             self.write({"publicdata_lastupdate_datetime": datetime.now()})
             return {
                 "type": "ir.actions.client",
@@ -330,3 +334,41 @@ class LandingPage(models.Model):
             return "rest-ce-coord"
         else:
             return "rest-ce-landing"
+
+    def create_or_update_map_coordinator_filter(self):
+        coordinator_filter_group = self.env.ref(
+            "energy_communities.map_filter_group_coordinator"
+        )
+        related_filter = self.env["cm.filter"].search(
+            [
+                ("landing_id", "=", self.id),
+                ("filter_group_id", "=", coordinator_filter_group.id),
+            ]
+        )
+        if not related_filter:
+            related_filter = self.env["cm.filter"].create(
+                {
+                    "name": self.name,
+                    "icon": "house_user",
+                    "color": "brand",
+                    "marker_color": MapClientConfig.FILTER_COLOR_CONFIG["marker_color"],
+                    "marker_text_color": MapClientConfig.FILTER_COLOR_CONFIG[
+                        "marker_text_color"
+                    ],
+                    "marker_bg_color": MapClientConfig.FILTER_COLOR_CONFIG[
+                        "marker_bg_color"
+                    ],
+                    "marker_border_color": MapClientConfig.FILTER_COLOR_CONFIG[
+                        "marker_border_color"
+                    ],
+                    "landing_id": self.id,
+                    "filter_group_id": coordinator_filter_group.id,
+                }
+            )
+            related_filter.setup_slug_id()
+        else:
+            related_filter.write(
+                {
+                    "name": self.name,
+                }
+            )

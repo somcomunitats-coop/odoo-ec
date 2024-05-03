@@ -148,6 +148,9 @@ class LandingCmPlace:
                     place_community_status_slug
                 )
             )
+        # Related coordinator
+        # if self.landing.hierarchy_level == "community":
+
         # Community active services
         for service in self.landing.community_active_services:
             service_slug = MapClientConfig.MAPPING__LANDING_ACTIVE_SERVICES__MAP_FILTER[
