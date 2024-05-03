@@ -75,6 +75,7 @@
         "views/website_subscription_template.xml",
         "views/account_banking_mandate_views.xml",
         "data/mail_template_update_data.xml",
+        "data/community_maps_data.xml",
         "wizards/multicompany_easy_creation.xml",
         "wizards/assign_admin_wizard.xml",
     ],

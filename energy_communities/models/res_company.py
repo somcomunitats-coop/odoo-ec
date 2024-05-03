@@ -317,12 +317,16 @@ class ResCompany(models.Model):
 
     # LANDING
     def create_landing(self):
+        new_landing = self.action_create_odoo_landing()
+        self.action_create_wp_landing()
+        return new_landing
+
+    def action_create_odoo_landing(self):
         landing_page = self.env["landing.page"]
         vals = {"company_id": self.id, "name": self.comercial_name, "status": "draft"}
         new_landing = landing_page.create(vals)
         new_landing.setup_slug_id()
         self.write({"landing_page_id": new_landing.id})
-        self.action_create_wp_landing()
         return new_landing
 
     def action_create_wp_landing(self, fields=None):

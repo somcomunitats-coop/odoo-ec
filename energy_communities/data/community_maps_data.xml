@@ -1,0 +1,86 @@
+<odoo noupdate="1">
+    <record model="cm.map" id="map_campanya">
+        <field name="name">Campanya</field>
+        <field name="slug_id">campanya</field>
+    </record>
+    <record model="cm.filter.group" id="map_filter_group_community_status">
+        <field name="name">Estat actual de la comunitat</field>
+        <field name="slug_id">estat-actual-de-la-comunitat</field>
+    </record>
+    <record model="cm.filter.group" id="map_filter_group_energy_actions">
+        <field name="name">Accions energètiques</field>
+        <field name="slug_id">accions-energetiques</field>
+    </record>
+    <record model="cm.filter.group" id="map_filter_group_coordinator">
+        <field name="name">Coordinadora</field>
+        <field name="slug_id">coordinadora</field>
+    </record>
+    <record model="cm.filter" id="map_filter_to_activate">
+        <field name="name">Per activar</field>
+        <field name="slug_id">per-activar</field>
+        <field name="filter_group_id" ref="map_filter_group_community_status" />
+    </record>
+    <record model="cm.filter" id="map_filter_open">
+        <field name="name">Oberta</field>
+        <field name="slug_id">oberta</field>
+        <field name="filter_group_id" ref="map_filter_group_community_status" />
+    </record>
+    <record model="cm.filter" id="map_filter_generation">
+        <field name="name">Generació renovable comunitària</field>
+        <field name="slug_id">generacio-renovable-comunitaria</field>
+        <field name="filter_group_id" ref="map_filter_group_energy_actions" />
+    </record>
+    <record model="cm.filter" id="map_filter_mobility">
+        <field name="name">Mobilitat sostenible</field>
+        <field name="slug_id">mobilitat-sostenible</field>
+        <field name="filter_group_id" ref="map_filter_group_energy_actions" />
+    </record>
+    <record model="cm.filter" id="map_filter_efficiency">
+        <field name="name">Eficiencia energètica</field>
+        <field name="slug_id">eficiencia-energetica</field>
+        <field name="filter_group_id" ref="map_filter_group_energy_actions" />
+    </record>
+    <record model="cm.filter" id="map_filter_training">
+        <field name="name">Formació ciutadana</field>
+        <field name="slug_id">formacio-ciutadana</field>
+        <field name="filter_group_id" ref="map_filter_group_energy_actions" />
+    </record>
+    <record model="cm.filter" id="map_filter_thermal_energy">
+        <field name="name">Energia tèrmica i climatització</field>
+        <field name="slug_id">energia-termica-i-climatitzacio</field>
+        <field name="filter_group_id" ref="map_filter_group_energy_actions" />
+    </record>
+    <record model="cm.filter" id="map_filter_collective_purchases">
+        <field name="name">Compres col.lectives</field>
+        <field name="slug_id">compres-col-lectives</field>
+        <field name="filter_group_id" ref="map_filter_group_energy_actions" />
+    </record>
+    <record model="cm.filter" id="map_filter_supply">
+        <field name="name">Subministrament d'energia 100% renovable</field>
+        <field name="slug_id">subministrament-d-energia-100-renovable</field>
+        <field name="filter_group_id" ref="map_filter_group_energy_actions" />
+    </record>
+    <record model="cm.filter" id="map_filter_flexibility">
+        <field name="name">Agregació i flexibilitat de la demanda</field>
+        <field name="slug_id">agregacio-i-flexibilitat-de-la-demanda</field>
+        <field name="filter_group_id" ref="map_filter_group_energy_actions" />
+    </record>
+    <record model="cm.place.category" id="map_place_category_citizen">
+        <field name="name">Ciutadania</field>
+        <field name="slug_id">ciutadania</field>
+    </record>
+    <record model="cm.place.category" id="map_place_category_industrial">
+        <field name="name">Industrial</field>
+        <field name="slug_id">industrial</field>
+    </record>
+    <record model="cm.form.model" id="map_form_model_campanya">
+        <field name="name">Campanya form</field>
+        <field name="slug_id">campanya-form</field>
+    </record>
+    <record model="cm.presenter.model" id="map_presenter_model_to_activate">
+        <field name="name">CE Per Activar</field>
+    </record>
+    <record model="cm.presenter.model" id="map_presenter_model_open">
+        <field name="name">CE Oberta</field>
+    </record>
+</odoo>
