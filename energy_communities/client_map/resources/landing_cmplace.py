@@ -14,6 +14,10 @@ class LandingCmPlace:
     def __init__(self, landing):
         self.landing = landing
         self.wp_landing_data = self._get_wp_landing_data()
+        # self.wp_landing_data = {
+        #     "link": False,
+        #     "translations": False
+        # }
         button_configs = self._get_button_color_configs()
         if button_configs["errors"]:
             raise UserError(error_msg)
@@ -149,8 +153,10 @@ class LandingCmPlace:
                 )
             )
         # Related coordinator
-        # if self.landing.hierarchy_level == "community":
-
+        if self.landing.hierarchy_level == "community":
+            coord_filter = self.landing.get_map_coordinator_filter_in_related_place()
+            if coord_filter:
+                ret_dict["data"]["filter_mids"].append((4, coord_filter.id))
         # Community active services
         for service in self.landing.community_active_services:
             service_slug = MapClientConfig.MAPPING__LANDING_ACTIVE_SERVICES__MAP_FILTER[
@@ -249,7 +255,9 @@ class LandingCmPlace:
                 self._become_cooperator_external_link(place.id).id
             )
         else:
-            new_external_links_ids.append(self._contact_external_link(place).id)
+            contact_external_link = self._contact_external_link(place)
+            if contact_external_link:
+                new_external_links_ids.append(contact_external_link.id)
         new_external_links_ids.append(self._landing_external_link(place).id)
         # remove old external_links if needed
         for existing_external_link in existing_external_links:
@@ -331,25 +339,27 @@ class LandingCmPlace:
         return external_link
 
     def _contact_external_link(self, place):
-        external_link = self._get_or_create_external_link(
-            place.id,
-            MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["ca_ES"],
-            "{landing_link}/#contacte".format(
-                landing_link=self.wp_landing_data["link"]
-            ),
-            "_top",
-            self.button_configs["yellow"].id,
-            0,
-        )
-        # es_ES Translation
-        self._update_translation(
-            "cm.place.external.link,name",
-            external_link.id,
-            MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["ca_ES"],
-            MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["es_ES"],
-            "es_ES",
-        )
-        if self.wp_landing_data["translations"]:
+        external_link = False
+        if self.wp_landing_data["link"]:
+            external_link = self._get_or_create_external_link(
+                place.id,
+                MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["ca_ES"],
+                "{landing_link}/#contacte".format(
+                    landing_link=self.wp_landing_data["link"]
+                ),
+                "_top",
+                self.button_configs["yellow"].id,
+                0,
+            )
+            # es_ES Translation
+            self._update_translation(
+                "cm.place.external.link,name",
+                external_link.id,
+                MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["ca_ES"],
+                MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["es_ES"],
+                "es_ES",
+            )
+        if self.wp_landing_data["translations"] and external_link:
             if "es" in self.wp_landing_data["translations"].keys():
                 self._update_translation(
                     "cm.place.external.link,url",

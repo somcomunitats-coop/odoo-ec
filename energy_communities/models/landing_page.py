@@ -109,6 +109,16 @@ class LandingPage(models.Model):
         string="Hierarchy level",
         related="company_id.hierarchy_level",
     )
+    parent_id = fields.Many2one(
+        "res.company",
+        string="Parent Company",
+        related="company_id.parent_id",
+    )
+    parent_landing_id = fields.Many2one(
+        "landing.page",
+        string="Parent landing page",
+        related="company_id.parent_id.landing_page_id",
+    )
 
     @api.constrains("slug_id")
     def contrain_slug_id(self):
@@ -334,6 +344,19 @@ class LandingPage(models.Model):
             return "rest-ce-coord"
         else:
             return "rest-ce-landing"
+
+    def get_map_coordinator_filter_in_related_place(self):
+        if self.hierarchy_level == "community" and self.parent_landing_id:
+            coordinator_filter_group = self.env.ref(
+                "energy_communities.map_filter_group_coordinator"
+            )
+            return self.env["cm.filter"].search(
+                [
+                    ("landing_id", "=", self.parent_landing_id.id),
+                    ("filter_group_id", "=", coordinator_filter_group.id),
+                ]
+            )
+        return False
 
     def create_or_update_map_coordinator_filter(self):
         coordinator_filter_group = self.env.ref(
