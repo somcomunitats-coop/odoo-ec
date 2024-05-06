@@ -14,6 +14,8 @@ class CmPlace(models.Model):
 
     def _compute_landing_reference(self):
         for rec in self:
-            rec.landing_reference = self.env["landing.page"].search(
-                [("map_place_id", "=", self.id)]
+            rec.landing_reference = (
+                self.env["landing.page"]
+                .sudo()
+                .search([("map_place_id", "=", self.id)], limit=1)
             )
