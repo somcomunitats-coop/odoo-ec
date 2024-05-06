@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="api_category" model="ir.module.category">
+        <field name="name">Energy Communities API</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- new groups -->
+    <record model="res.groups" id="group_api_energy_selfconsumption">
+        <field name="name">Energy Communities API Group</field>
+        <field name="category_id" ref="api_category" />
+    </record>
+</odoo>
