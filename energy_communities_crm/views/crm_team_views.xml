@@ -1,0 +1,25 @@
+<odoo>
+  <record id="crm_team_view_tree_inherit" model="ir.ui.view">
+		<field name="name">crm.team.tree.inherit</field>
+		<field name="model">crm.team</field>
+		<field name="inherit_id" ref="sales_team.crm_team_view_tree" />
+		<field name="arch" type="xml">
+      <xpath expr="//field[@name='company_id']" position="after">
+        <field name="is_default_team" />
+      </xpath>
+    </field>
+  </record>
+  <record id="crm_team_view_form_inherit" model="ir.ui.view">
+		<field name="name">crm.team.form.inherit</field>
+		<field name="model">crm.team</field>
+		<field name="inherit_id" ref="sales_team.crm_team_view_form" />
+		<field name="arch" type="xml">
+      <xpath expr="//field[@name='company_id']" position="attributes">
+        <attribute name="required">1</attribute>
+      </xpath>
+      <xpath expr="//field[@name='company_id']" position="after">
+        <field name="is_default_team" readonly="1" />
+      </xpath>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,48 @@
+<odoo>
+  <!-- Crm lead tags -->
+	<record id="ce_crm_lead_tags_action" model="ir.actions.act_window">
+		<field name="name">Energy Actions</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">crm.tag</field>
+		<field name="view_mode">tree,form</field>
+		<field name="search_view_id" eval="False" /> <!-- Force empty -->
+		<field name="view_id" eval="False" /> <!-- Force empty -->
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">
+                Click to define a new tag.
+            </p>
+		</field>
+	</record>
+
+	<record id="ce_crm_lead_tags_form_view" model="ir.ui.view">
+		<field name="name">crm.lead.tag.form</field>
+		<field name="model">crm.tag</field>
+		<field name="inherit_id" ref="sales_team.sales_team_crm_tag_view_form" />
+		<field name="arch" type="xml">
+			<field name="name" position="after">
+				<field name="tag_ext_id" />
+				<field name="id" />
+			</field>
+		</field>
+	</record>
+
+  <record id="ce_crm_lead_tags_tree_view" model="ir.ui.view">
+		<field name="name">crm.lead.tag.tree</field>
+		<field name="model">crm.tag</field>
+		<field name="inherit_id" ref="sales_team.sales_team_crm_tag_view_tree" />
+		<field name="arch" type="xml">
+			<field name="name" position="after">
+				<field name="tag_ext_id" />
+				<field name="id" />
+        <field name="allowed_companies" invisible="1" />
+        <field
+          name="company_id"
+          groups="base.group_multi_company"
+          domain="[('id','in',allowed_companies)]"
+          readonly="1"
+        />
+			</field>
+		</field>
+	</record>
+
+</odoo>

@@ -1,0 +1,44 @@
+<odoo>
+    <!-- CE Energy Actions -->
+    <record model="crm.tag" id="energy_communities.ce_tag_common_generation">
+        <field name="tag_type">energy_service</field>
+        <field name="company_id">0</field>
+    </record>
+    <record model="crm.tag" id="energy_communities.ce_tag_energy_efficiency">
+        <field name="tag_type">energy_service</field>
+        <field name="company_id">0</field>
+    </record>
+    <record model="crm.tag" id="energy_communities.ce_tag_sustainable_mobility">
+        <field name="tag_type">energy_service</field>
+        <field name="company_id">0</field>
+    </record>
+    <record model="crm.tag" id="energy_communities.ce_tag_citizen_education">
+        <field name="tag_type">energy_service</field>
+        <field name="company_id">0</field>
+    </record>
+    <record model="crm.tag" id="energy_communities.ce_tag_thermal_energy">
+        <field name="tag_type">energy_service</field>
+        <field name="company_id">0</field>
+    </record>
+    <record model="crm.tag" id="energy_communities.ce_tag_collective_purchases">
+        <field name="tag_type">energy_service</field>
+        <field name="company_id">0</field>
+    </record>
+    <record model="crm.tag" id="energy_communities.ce_tag_renewable_energy">
+        <field name="tag_type">energy_service</field>
+        <field name="company_id">0</field>
+    </record>
+    <record model="crm.tag" id="energy_communities.ce_tag_aggregate_demand">
+        <field name="tag_type">energy_service</field>
+        <field name="company_id">0</field>
+    </record>
+    <!-- Service plans -->
+    <record model="crm.tag" id="energy_communities.pack_1">
+        <field name="tag_type">service_plan</field>
+        <field name="company_id">0</field>
+    </record>
+    <record model="crm.tag" id="energy_communities.pack_2">
+        <field name="tag_type">service_plan</field>
+        <field name="company_id">0</field>
+    </record>
+</odoo>
