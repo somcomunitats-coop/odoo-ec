@@ -50,4 +50,10 @@
   <record model="ir.ui.menu" id="base_rest.menu_rest_api_root">
     <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
   </record>
+  <record model="ir.ui.menu" id="purchase.menu_purchase_root">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
+  <record model="ir.ui.menu" id="sale.sale_menu_root">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
 </odoo>
