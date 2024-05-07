@@ -91,6 +91,9 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                 _("Not valid parameter value [odoo_company_id]"), status=500
             )
 
+        if "vat" in kwargs:
+            kwargs["vat"] = kwargs["vat"].upper().strip()
+
         ctx = dict(request.context)
         ctx.update({"target_odoo_company_id": target_odoo_company_id})
         request.context = ctx
@@ -182,7 +185,6 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             kwargs.get("company_id") and int(kwargs.get("company_id")) or None
         )
 
-        user_obj = request.env["res.users"]
         sub_req_obj = request.env["subscription.request"]
 
         redirect = "cooperator_website.becomecooperator"
@@ -203,16 +205,17 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             is_company = True
             redirect = "cooperator_website.becomecompanycooperator"
             email = kwargs.get("company_email")
+
         # Check that required field from model subscription_request exists
         required_fields = sub_req_obj.sudo().get_required_field()
         error = {field for field in required_fields if not values.get(field)}  # noqa
-
         if error:
             values = self.fill_values(values, is_company, logged)
             values["error_msg"] = _("Some mandatory fields have not been filled.")
             values = dict(values, error=error, kwargs=kwargs.items())
             return request.render(redirect, values)
 
+        # email match verification
         if not logged and email:
             confirm_email = kwargs.get("confirm_email")
             if email != confirm_email:
@@ -222,23 +225,30 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                     "Email and confirmation email addresses don't match."
                 )
                 return request.render(redirect, values)
-
-            # There's no issue with the email, so we can remember the confirmation email
         values["confirm_email"] = email
 
+        # existing cooperator
         if "vat" in required_fields:
             vat = kwargs.get("vat")
-            user_count = user_obj.sudo().search_count([("vat", "ilike", vat)])
-            if user_count:
-                values = self.fill_values(values, is_company, logged)
-                values.update(kwargs)
-                values["error_msg"] = _(
-                    "There is an existing account for this"
-                    " vat number on this community. "
-                    "Please contact with the community administrators."
-                )
-                return request.render(redirect, values)
+            if vat:
+                vat = vat.strip().upper()
 
+            partner = request.env["res.partner"].sudo().search([("vat", "ilike", vat)])
+            if partner:
+                membership = partner._get_member_or_candidate_cooperative_membership(
+                    company.id
+                )
+                if membership:
+                    values = self.fill_values(values, is_company, logged)
+                    values.update(kwargs)
+                    values["error_msg"] = _(
+                        "There is an existing account for this"
+                        " vat number on this community. "
+                        "Please contact with the community administrators."
+                    )
+                    return request.render(redirect, values)
+
+        # upload id card image validation
         if company.allow_id_card_upload:
             if not post_file:
                 values = self.fill_values(values, is_company, logged)
@@ -246,6 +256,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                 values["error_msg"] = _("Please upload a scan of your ID card.")
                 return request.render(redirect, values)
 
+        # iban validation
         if "iban" in required_fields:
             iban = kwargs.get("iban")
             if iban.strip():

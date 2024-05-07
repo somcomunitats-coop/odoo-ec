@@ -1,0 +1,14 @@
+<odoo>
+  <record id="account_move_form" model="ir.ui.view">
+      <field name="name">account.move.form.inherit</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_move_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//notebook" position="before">
+          <group>
+            <field name="membership_id" />
+          </group>
+        </xpath>
+      </field>
+  </record>
+</odoo>

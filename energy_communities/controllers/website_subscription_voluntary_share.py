@@ -243,16 +243,24 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
 
         logged = kwargs.get("logged") == "on"
         is_company = kwargs.get("is_company") == "on"
+        values["is_company"] = is_company
+
         response = self.voluntary_share_validation(kwargs, logged, values, post_file)
         if response is not True:
             return response
 
+        values["source"] = "website"
+        values["type"] = "increase"
+        values["company_id"] = kwargs.get("company_id")
         already_coop = False
         values["vat"] = kwargs.get("vat")
+        if values["vat"]:
+            values["vat"] = values["vat"].strip().upper()
         partner = (
-            request.env["res.partner"].sudo().get_cooperator_from_vat(values["vat"])
+            request.env["res.partner"]
+            .sudo()
+            .get_cooperator_from_vat(values["vat"], values["company_id"])
         )
-
         if partner:
             values["partner_id"] = partner.id
             already_coop = partner.member
@@ -260,21 +268,6 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             already_coop = True
 
         values["already_cooperator"] = already_coop
-        values["is_company"] = is_company
-
-        if kwargs.get("data_policy_approved", "off") == "on":
-            values["data_policy_approved"] = True
-
-        if kwargs.get("internal_rules_approved", "off") == "on":
-            values["internal_rules_approved"] = True
-
-        if kwargs.get("financial_risk_approved", "off") == "on":
-            values["financial_risk_approved"] = True
-        if kwargs.get("generic_rules_approved", "off") == "on":
-            values["generic_rules_approved"] = True
-
-        values["source"] = "website"
-        values["company_id"] = kwargs.get("company_id")
         company = (
             request.env["res.company"]
             .sudo()
@@ -302,6 +295,16 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             values["zip_code"] = _("Partner not found")
             values["country_id"] = company.default_country_id.id
             values["lang"] = company.default_lang_id.code
+
+        if kwargs.get("data_policy_approved", "off") == "on":
+            values["data_policy_approved"] = True
+        if kwargs.get("internal_rules_approved", "off") == "on":
+            values["internal_rules_approved"] = True
+        if kwargs.get("financial_risk_approved", "off") == "on":
+            values["financial_risk_approved"] = True
+        if kwargs.get("generic_rules_approved", "off") == "on":
+            values["generic_rules_approved"] = True
+
         values["share_product_id"] = self.get_selected_share(
             {"share_product_id": company.voluntary_share_id.id}
         ).id

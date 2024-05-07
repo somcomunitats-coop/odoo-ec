@@ -1,0 +1,17 @@
+<odoo>
+  <record id="operation_request_form" model="ir.ui.view">
+    <field name="name">operation.request.form.inherit</field>
+    <field name="model">operation.request</field>
+    <field name="inherit_id" ref="cooperator.operation_request_form" />
+    <field name="arch" type="xml">
+      <xpath
+        expr="//field[@name='subscription_request']/form/sheet/group/group/field[@name='email']"
+        position="after"
+      >
+        <field name="vat" />
+        <field name="ordered_parts" />
+        <field name="share_product_id" />
+      </xpath>
+    </field>
+  </record>
+</odoo>

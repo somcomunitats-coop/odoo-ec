@@ -3,7 +3,6 @@ from . import user_current_company_mixin
 from . import cm_map
 from . import external_id_mixin
 from . import auth_oauth_provider
-from . import account_chart_template
 from . import landing_page
 from . import res_company
 from . import res_config_settings
@@ -11,8 +10,6 @@ from . import res_partner
 from . import res_partner_bank
 from . import res_users
 from . import res_users_role
-from . import subscription_request
 from . import product
 from . import utm_source
 from . import account_move
-from . import operation_request

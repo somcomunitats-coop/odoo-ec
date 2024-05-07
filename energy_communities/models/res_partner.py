@@ -89,11 +89,14 @@ class ResPartner(models.Model):
             {"company_ids": False}
         )
 
-    def get_cooperator_from_vat(self, vat):
+    def get_cooperator_from_vat(self, vat, company_id=False):
         if vat:
             vat = vat.strip()
         # email could be falsy or be only made of whitespace.
         if not vat:
             return self.browse()
-        partner = self.search([("vat", "ilike", vat)], limit=1)
+        domain = [("vat", "ilike", vat)]
+        if company_id:
+            domain.append(("company_ids", "in", int(company_id)))
+        partner = self.search(domain, limit=1)
         return partner
