@@ -118,6 +118,7 @@ class CrmLead(models.Model):
                 .id,
                 "create_user": False,
                 "create_landing": True,
+                "create_place": True,
             }
         )
         return creation_dict

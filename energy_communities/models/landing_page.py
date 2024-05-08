@@ -345,14 +345,17 @@ class LandingPage(models.Model):
         else:
             return "rest-ce-landing"
 
-    def get_map_coordinator_filter_in_related_place(self):
-        if self.hierarchy_level == "community" and self.parent_landing_id:
+    def get_map_coordinator_filter_in_related_place(self, coordinator_landing_id=False):
+        if not coordinator_landing_id:
+            if self.parent_landing_id:
+                coordinator_landing_id = self.parent_landing_id.id
+        if self.hierarchy_level == "community" and coordinator_landing_id:
             coordinator_filter_group = self.env.ref(
                 "energy_communities.map_filter_group_coordinator"
             )
             return self.env["cm.filter"].search(
                 [
-                    ("landing_id", "=", self.parent_landing_id.id),
+                    ("landing_id", "=", coordinator_landing_id),
                     ("filter_group_id", "=", coordinator_filter_group.id),
                 ]
             )
@@ -375,6 +378,7 @@ class LandingPage(models.Model):
                     "icon": "house_user",
                     "color": "brand",
                     "marker_color": MapClientConfig.FILTER_COLOR_CONFIG["marker_color"],
+                    "slug_id": self.slug_id,
                     "marker_text_color": MapClientConfig.FILTER_COLOR_CONFIG[
                         "marker_text_color"
                     ],
@@ -388,10 +392,29 @@ class LandingPage(models.Model):
                     "filter_group_id": coordinator_filter_group.id,
                 }
             )
-            related_filter.setup_slug_id()
+            # related_filter.setup_slug_id()
         else:
             related_filter.write(
                 {
                     "name": self.name,
+                    "slug_id": self.slug_id,
                 }
             )
+
+    def apply_coordinator_filter_to_existing_communities(self):
+        existing_communities = self.env["res.company"].search(
+            [
+                ("parent_id", "=", self.company_id.id),
+                ("hierarchy_level", "=", "community"),
+            ]
+        )
+        for community in existing_communities:
+            if community.landing_page_id:
+                if community.landing_page_id.map_place_id:
+                    related_coordinator_filter = community.landing_page_id.get_map_coordinator_filter_in_related_place(
+                        self.id
+                    )
+                    if related_coordinator_filter:
+                        community.landing_page_id.map_place_id.write(
+                            {"filter_mids": [(4, related_coordinator_filter.id)]}
+                        )
