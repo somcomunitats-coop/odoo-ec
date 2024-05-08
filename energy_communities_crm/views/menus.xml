@@ -53,14 +53,4 @@
     parent="crm.menu_crm_config_lead"
     groups="energy_communities.group_platform_manager"
   />
-  <menuitem
-    id="crm_iap_lead.crm_menu_lead_generation"
-    parent="crm.crm_menu_config"
-    groups="energy_communities.group_platform_manager"
-  />
-  <menuitem
-    id="crm_iap_lead.crm_iap_lead_mining_request_menu_action"
-    groups="energy_communities.group_platform_manager"
-    parent="crm_iap_lead.crm_menu_lead_generation"
-  />
 </odoo>
