@@ -32,6 +32,4 @@ class MassMailing(models.Model):
             mailing_domain.append(
                 ("company_id", "=", self.env.user.get_current_company_id())
             )
-        if self.mailing_model_real == "mailing.contact":
-            mailing_domain.append(("partner_id.company_ids", "!=", False))
         return mailing_domain
