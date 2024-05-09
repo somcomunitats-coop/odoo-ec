@@ -162,3 +162,38 @@ class TestArkenovaBackend(TransactionCase):
 
         self.assertEqual(excp_manager.exception.error_code, 400)
         self.assertEqual(excp_manager.exception.message, "Wrong URL format")
+
+    def test__project_daily_metrics_by_member__ok(self):
+        # given a project and an arkenova backend instance
+        project_id = project_code
+        member_id = member_code
+        arkenova = ArkenovaBackend(self.url, self.token)
+
+        # when we ask for the daily metrics between two dates in iso format
+        from_date = str(date(2024, 4, 28))
+        to_date = str(date(2024, 4, 29))
+        daily_metrics = arkenova.project_daily_metrics_by_member(
+            project_id, member_id, from_date, to_date
+        )
+
+        # then we obtain a list of metrics for the date period especified
+        self.assertGreater(len(daily_metrics), 0)
+        self.assertListEqual(
+            daily_metrics,
+            [
+                {
+                    "energy_consumption": "7.484",
+                    "energy_exported": "40.496",
+                    "energy_production": "45.624",
+                    "selfconsumption": "5.128",
+                    "timestamp": "2024-04-28",
+                },
+                {
+                    "energy_consumption": "4.651",
+                    "energy_exported": "19.844",
+                    "energy_production": "21.840",
+                    "selfconsumption": "1.996",
+                    "timestamp": "2024-04-29",
+                },
+            ],
+        )
