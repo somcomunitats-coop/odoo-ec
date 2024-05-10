@@ -27,16 +27,25 @@
           t-esc="company.name"
         />member_ccee_eu_ES.</p>
             <t t-if="share_payment_sepa_direct_debit">
-                <p
-        >To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <t
-            t-esc="company.initial_subscription_share_amount"
-          />€_eu_ES.</p>
+                <t t-foreach="products or []" t-as="product">
+                  <t t-if="product.id == int(share_product_id)">
+                    <p
+            >To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span
+                t-esc="str(product.list_price).replace('.',',')"
+              />€_eu_ES.</p>
+
+                  </t>
+                </t>
             </t>
             <t t-else="">
-                <p
-        >To be a member you must fulfill this form and lateron proceed to pay the initial share of <t
-            t-esc="company.initial_subscription_share_amount"
-          />€ by follow the steps you will receive by email.</p>
+              <t t-foreach="products or []" t-as="product">
+                <t t-if="product.id == int(share_product_id)">
+                  <p
+            >To be a member you must fulfill this form and lateron proceed to pay the initial share of <span
+                t-esc="str(product.list_price).replace('.',',')"
+              />€ by follow the steps you will receive by email.</p>
+                </t>
+              </t>
             </t>
             <p><t t-raw="company.cooperator_share_form_header_text" /></p>
             <p
@@ -86,16 +95,24 @@
           t-esc="company.name"
         />.</p>
             <t t-if="share_payment_sepa_direct_debit">
-                <p
-        >To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <t
-            t-esc="company.initial_subscription_share_amount"
-          />€.</p>
+              <t t-foreach="products or []" t-as="product">
+                <t t-if="product.id == int(share_product_id)">
+                  <p
+            >To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span
+                t-esc="str(product.list_price).replace('.',',')"
+              />€.</p>
+                </t>
+              </t>
             </t>
             <t t-else="">
-                <p
-        >To be a member you must fulfill this form and lateron proceed to pay the initial share of <t
-            t-esc="company.initial_subscription_share_amount"
-          />€ by follow the steps you will receive by email.</p>
+              <t t-foreach="products or []" t-as="product">
+                <t t-if="product.id == int(share_product_id)">
+                  <p
+            >To be a member you must fulfill this form and lateron proceed to pay the initial share of <span
+                t-esc="str(product.list_price).replace('.',',')"
+              />€ by follow the steps you will receive by email.</p>
+                </t>
+              </t>
             </t>
             <p><t t-raw="company.cooperator_share_form_header_text" /></p>
             <p

@@ -252,9 +252,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 "taxes_id": taxes_id,
             }
         )
-        self_new_company.new_company_id.initial_subscription_share_amount = (
-            self.capital_share
-        )
 
     def set_cooperative_account(self):
         self_new_company = self.with_company(self.new_company_id)
