@@ -230,6 +230,8 @@ S_LANDING_PAGE_CREATE = {
             "street": {"type": "string"},
             "postal_code": {"type": "string"},
             "city": {"type": "string"},
+            "slug_id": {"type": "string"},
+            "display_map": {"type": "boolean"},
         },
     }
 }

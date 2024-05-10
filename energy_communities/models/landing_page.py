@@ -281,9 +281,19 @@ class LandingPage(models.Model):
                 "street": self.street or "",
                 "postal_code": self.postal_code or "",
                 "city": self.city or "",
-                "slug_id": self.slug_id,
+                "slug_id": self.slug_id or "",
+                "display_map": self._must_display_map(),
             }
         }
+
+    def _must_display_map(self):
+        if self.hierarchy_level == "coordinator":
+            rel_filter = self.env["cm.filter"].search([("landing_id", "=", self.id)])
+            if rel_filter:
+                return rel_filter.has_related_places(
+                    self.env.ref("energy_communities.map_campanya").id
+                )
+        return False
 
     def action_landing_page_status(self):
         for record in self:
