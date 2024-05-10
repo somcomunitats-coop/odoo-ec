@@ -310,7 +310,10 @@ class LandingPage(models.Model):
             if self.map_place_id:
                 record._update_landing_place()
             if self.hierarchy_level == "coordinator":
-                self.create_or_update_map_coordinator_filter()
+                if self.status == "publish":
+                    self.create_or_update_and_apply_coordinator_filter()
+                else:
+                    self.remove_coordinator_filter_to_existing_communities()
             self.write({"publicdata_lastupdate_datetime": datetime.now()})
             return {
                 "type": "ir.actions.client",
@@ -355,21 +358,25 @@ class LandingPage(models.Model):
         else:
             return "rest-ce-landing"
 
-    def get_map_coordinator_filter_in_related_place(self, coordinator_landing_id=False):
-        if not coordinator_landing_id:
+    def get_map_coordinator_filter_in_related_place(self, coordinator_landing=False):
+        if not coordinator_landing:
             if self.parent_landing_id:
-                coordinator_landing_id = self.parent_landing_id.id
-        if self.hierarchy_level == "community" and coordinator_landing_id:
+                coordinator_landing = self.parent_landing_id
+        if self.hierarchy_level == "community" and coordinator_landing:
             coordinator_filter_group = self.env.ref(
                 "energy_communities.map_filter_group_coordinator"
             )
             return self.env["cm.filter"].search(
                 [
-                    ("landing_id", "=", coordinator_landing_id),
+                    ("landing_id", "=", coordinator_landing.id),
                     ("filter_group_id", "=", coordinator_filter_group.id),
                 ]
             )
         return False
+
+    def create_or_update_and_apply_coordinator_filter(self):
+        self.create_or_update_map_coordinator_filter()
+        self.apply_coordinator_filter_to_existing_communities()
 
     def create_or_update_map_coordinator_filter(self):
         coordinator_filter_group = self.env.ref(
@@ -412,6 +419,12 @@ class LandingPage(models.Model):
             )
 
     def apply_coordinator_filter_to_existing_communities(self):
+        self.setup_coordinator_filter_to_existing_communities("apply")
+
+    def remove_coordinator_filter_to_existing_communities(self):
+        self.setup_coordinator_filter_to_existing_communities("remove")
+
+    def setup_coordinator_filter_to_existing_communities(self, type):
         existing_communities = self.env["res.company"].search(
             [
                 ("parent_id", "=", self.company_id.id),
@@ -422,9 +435,13 @@ class LandingPage(models.Model):
             if community.landing_page_id:
                 if community.landing_page_id.map_place_id:
                     related_coordinator_filter = community.landing_page_id.get_map_coordinator_filter_in_related_place(
-                        self.id
+                        self
                     )
                     if related_coordinator_filter:
+                        if type == "apply":
+                            mode = 4
+                        if type == "remove":
+                            mode = 3
                         community.landing_page_id.map_place_id.write(
-                            {"filter_mids": [(4, related_coordinator_filter.id)]}
+                            {"filter_mids": [(mode, related_coordinator_filter.id)]}
                         )

@@ -154,7 +154,11 @@ class LandingCmPlace:
             )
         # Related coordinator
         if self.landing.hierarchy_level == "community":
-            coord_filter = self.landing.get_map_coordinator_filter_in_related_place()
+            if self.landing.parent_landing_id:
+                if self.landing.parent_landing_id.status == "publish":
+                    coord_filter = (
+                        self.landing.get_map_coordinator_filter_in_related_place()
+                    )
             if coord_filter:
                 ret_dict["data"]["filter_mids"].append((4, coord_filter.id))
         # Community active services

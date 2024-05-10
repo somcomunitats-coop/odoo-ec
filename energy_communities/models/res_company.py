@@ -333,8 +333,7 @@ class ResCompany(models.Model):
         new_landing = landing_page.create(vals)
         new_landing.setup_slug_id()
         if self.hierarchy_level == "coordinator":
-            new_landing.create_or_update_map_coordinator_filter()
-            new_landing.apply_coordinator_filter_to_existing_communities()
+            new_landing.create_or_update_and_apply_coordinator_filter()
         self.write({"landing_page_id": new_landing.id})
         return new_landing
 
