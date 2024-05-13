@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+     Copyright 2022 Som Energia & Coopdevs
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <menuitem
+    id="ce_crm_leads_menu"
+    name="Form submissions"
+    parent="energy_communities.ce_root_menu"
+  />
+        <menuitem
+    id="crm_tags_menu"
+    name="CRM Tags"
+    parent="energy_communities.ce_config_menu"
+    action="ce_crm_lead_tags_action"
+  />
+        <menuitem
+    id="ce_crm_leads_ce_info_menu"
+    name="EC Newsletter"
+    parent="ce_crm_leads_menu"
+    action="ce_crm_leads_ce_newsletter_action"
+    groups="energy_communities.group_admin"
+  />
+        <menuitem
+    id="ce_crm_leads_ce_contact_menu"
+    name="EC Contact"
+    parent="ce_crm_leads_menu"
+    action="ce_crm_leads_ce_contact_action"
+    groups="energy_communities.group_admin"
+  />
+        <menuitem
+    id="ce_crm_leads_general_info_menu"
+    name="General Newsletter"
+    parent="ce_crm_leads_menu"
+    action="ce_crm_leads_general_info_action"
+    groups="energy_communities.group_admin"
+  />
+        <menuitem
+    id="ce_crm_leads_new_ce_request_menu"
+    name="EC Creation"
+    parent="ce_crm_leads_menu"
+    action="ce_crm_leads_new_ce_request_action"
+    groups="energy_communities.group_platform_manager"
+  />
+  <menuitem
+    id="crm.crm_team_menu_config_activity_types"
+    groups="energy_communities.group_platform_manager"
+    parent="crm.crm_menu_config"
+  />
+  <menuitem
+    id="crm.menu_crm_lost_reason"
+    parent="crm.menu_crm_config_lead"
+    groups="energy_communities.group_platform_manager"
+  />
+</odoo>

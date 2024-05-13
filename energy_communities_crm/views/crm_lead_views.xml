@@ -23,27 +23,27 @@
 				<filter
           name="ce_source_existing_ce_info"
           string="Newsletter CE"
-          domain="[('source_id','=', %(ce_source_existing_ce_info)d)]"
+          domain="[('source_id','=', %(energy_communities.ce_source_existing_ce_info)d)]"
         />
 				<filter
           name="ce_source_existing_ce_contact"
           string="Contact CE"
-          domain="[('source_id','=', %(ce_source_existing_ce_contact)d)]"
+          domain="[('source_id','=', %(energy_communities.ce_source_existing_ce_contact)d)]"
         />
 				<filter
           name="ce_source_creation_ce_proposal"
           string="CE creation"
-          domain="[('source_id','=', %(ce_source_creation_ce_proposal)d)]"
+          domain="[('source_id','=', %(energy_communities.ce_source_creation_ce_proposal)d)]"
         />
 				<filter
           name="ce_source_coord_web_hiring"
           string="Hire COORD"
-          domain="[('source_id','=', %(ce_source_coord_web_hiring)d)]"
+          domain="[('source_id','=', %(energy_communities.ce_source_coord_web_hiring)d)]"
         />
 				<filter
           name="ce_source_coord_web_other"
           string="Other COORD"
-          domain="[('source_id','=', %(ce_source_coord_web_other)d)]"
+          domain="[('source_id','=', %(energy_communities.ce_source_coord_web_other)d)]"
         />
 				<filter
           name="no_web_form_origin"
@@ -60,7 +60,7 @@
 		<field name="model">crm.lead</field>
 		<field
       name="inherit_id"
-      ref="energy_communities.ce_view_crm_case_opportunities_filter"
+      ref="energy_communities_crm.ce_view_crm_case_opportunities_filter"
     />
 		<field
       name="groups_id"
@@ -71,12 +71,12 @@
 				<filter
           name="ce_source_general_info"
           string="Newsletter SomComunitats"
-          domain="[('source_id','=', %(ce_source_general_info)d)]"
+          domain="[('source_id','=', %(energy_communities.ce_source_general_info)d)]"
         />
 						<filter
           name="ce_source_general_contact"
           string="Contact SomComunitats"
-          domain="[('source_id','=', %(ce_source_general_contact)d)]"
+          domain="[('source_id','=', %(energy_communities.ce_source_general_contact)d)]"
         />
 		</filter>
 		</field>
@@ -105,87 +105,28 @@
             type="object"
             string="Create community"
             groups="energy_communities.group_platform_manager"
-            attrs="{'invisible':['|',('source_id', '!=', %(ce_source_creation_ce_proposal)d),('probability','>=',100)]}"
+            attrs="{'invisible':['|',('source_id', '!=', %(energy_communities.ce_source_creation_ce_proposal)d),('probability','>=',100)]}"
           />
 				</header>
       </xpath>
-      <field name="company_id" position="after">
+      <xpath expr="//field[@name='company_id']" position="attributes">
+        <attribute
+          name="attrs"
+        >{'readonly':[('user_current_role', '!=', 'role_platform_admin')],'required':1}</attribute>
+      </xpath>
+      <xpath expr="//field[@name='company_id']" position="after">
+        <field name="user_current_role" invisible="1" />
         <field name="external_id" readonly="1" />
-		<field
+        <field
           name="ce_child_lead_id"
           string="Crm lead child"
           readonly="1"
-          attrs="{'invisible':['|',('source_id', '!=', %(ce_source_creation_ce_proposal)d), ('company_hierarchy_level', '!=', 'instance')]}"
+          attrs="{'invisible':['|',('source_id', '!=', %(energy_communities.ce_source_creation_ce_proposal)d), ('company_hierarchy_level', '!=', 'instance')]}"
         />
-      </field>
-		</field>
-	</record>
-
-	<record id="ce_crm_lead_opportunities_form_view" model="ir.ui.view">
-		<field name="name">crm.lead.form.opportunity</field>
-		<field name="model">crm.lead</field>
-		<field name="inherit_id" ref="crm.quick_create_opportunity_form" />
-		<field name="arch" type="xml">
-			<field name="title" position="after">
-				<field
-          name="ce_tag_ids"
-          widget="many2many_tags"
-          options="{'color_field': 'color', 'no_create_edit': True}"
-          attrs="{'invisible':[('source_id', '!=', %(ce_source_creation_ce_proposal)d)]}"
-        />
-				<field name="source_id" />
-				<field name="community_company_id" readonly="1" />
-			</field>
-		</field>
-	</record>
-
-	<record id="ce_quick_create_opportunity_form" model="ir.ui.view">
-		<field name="name">crm.lead.form.quick_create</field>
-		<field name="model">crm.lead</field>
-		<field name="inherit_id" ref="crm.quick_create_opportunity_form" />
-		<field name="arch" type="xml">
-			<field name="partner_id" position="after">
-				<field name="source_id" />
-			</field>
-		</field>
-	</record>
-
-	<!-- Crm lead tags -->
-	<record id="ce_crm_lead_tags_action" model="ir.actions.act_window">
-		<field name="name">Energy Actions</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">crm.tag</field>
-		<field name="view_mode">tree,form</field>
-		<field name="search_view_id" eval="False" /> <!-- Force empty -->
-		<field name="view_id" eval="False" /> <!-- Force empty -->
-		<field name="help" type="html">
-			<p class="oe_view_nocontent_create">
-                Click to define a new tag.
-            </p>
-		</field>
-	</record>
-
-	<record id="ce_crm_lead_tags_form_view" model="ir.ui.view">
-		<field name="name">crm.lead.tag.form</field>
-		<field name="model">crm.tag</field>
-		<field name="inherit_id" ref="sales_team.sales_team_crm_tag_view_form" />
-		<field name="arch" type="xml">
-			<field name="name" position="after">
-				<field name="tag_ext_id" />
-				<field name="id" />
-			</field>
-		</field>
-	</record>
-
-	<record id="ce_crm_lead_tags_tree_view" model="ir.ui.view">
-		<field name="name">crm.lead.tag.tree</field>
-		<field name="model">crm.tag</field>
-		<field name="inherit_id" ref="sales_team.sales_team_crm_tag_view_tree" />
-		<field name="arch" type="xml">
-			<field name="name" position="after">
-				<field name="tag_ext_id" />
-				<field name="id" />
-			</field>
+      </xpath>
+      <xpath expr="//field[@name='team_id']" position="attributes">
+        <attribute name="domain">[("company_id", "=", company_id)]</attribute>
+      </xpath>
 		</field>
 	</record>
 

@@ -1,0 +1,116 @@
+<odoo>
+  <record id="action_cooperative_membership" model="ir.actions.act_window">
+      <field name="name">Memberships</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">cooperative.membership</field>
+      <field name="view_mode">tree,form</field>
+      <field name="search_view_id" eval="False" /> <!-- Force empty -->
+      <field name="view_id" eval="False" /> <!-- Force empty -->
+  </record>
+  <record id="cooperative_membership_tree" model="ir.ui.view">
+      <field name="name">cooperative.membership.tree</field>
+      <field name="model">cooperative.membership</field>
+      <field name="arch" type="xml">
+          <tree>
+              <field name="id" />
+              <field name="cooperator_register_number" />
+              <field name="company_id" />
+              <field name="partner_id" />
+              <field name="cooperator" />
+              <field name="member" />
+              <field name="coop_candidate" />
+              <field name="old_member" />
+              <field name="representative" />
+              <field name="representative_of_member_company" />
+              <field name="share_ids" />
+              <field name="number_of_share" />
+              <field name="total_value" />
+              <field name="cooperator_type" />
+              <field name="effective_date" />
+              <field name="subscription_request_ids" />
+              <field name="subscription_invoice_ids" />
+              <!--<field name="data_policy_approved" />-->
+              <!--<field name="internal_rules_approved" />-->
+              <!--<field name="financial_risk_approved" />-->
+              <!--<field name="generic_rules_approved" />-->
+          </tree>
+      </field>
+  </record>
+  <record id="cooperative_membership_form" model="ir.ui.view">
+      <field name="name">cooperative.membership.form</field>
+      <field name="model">cooperative.membership</field>
+      <field name="arch" type="xml">
+          <form>
+            <group>
+              <field name="company_id" />
+              <field name="partner_id" />
+            </group>
+            <group>
+              <field name="cooperator_register_number" readonly="0" />
+              <field name="number_of_share" />
+              <field name="total_value" />
+              <field name="cooperator_type" />
+              <field name="effective_date" readonly="0" />
+            </group>
+            <group>
+              <field name="cooperator" />
+              <field name="member" readonly="0" />
+              <field name="coop_candidate" readonly="0" />
+              <field name="old_member" />
+              <field name="representative" readonly="0" />
+              <field name="representative_of_member_company" />
+            </group>
+            <group>
+              <field name="share_ids" widget="one2many" readonly="0">
+                <tree>
+                  <field name="share_product_id" />
+                  <field name="share_number" />
+                  <field name="share_unit_price" />
+                  <field name="effective_date" />
+                  <field name="total_amount_line" />
+                </tree>
+                <form>
+                  <group>
+                    <field name="share_product_id" readonly="0" />
+                    <field name="share_number" readonly="0" />
+                    <field name="share_unit_price" readonly="0" />
+                    <field name="effective_date" readonly="0" />
+                    <field name="total_amount_line" readonly="0" />
+                  </group>
+                </form>
+              </field>
+              <field name="subscription_request_ids" widget="one2many">
+                <tree>
+                  <field name="firstname" />
+                  <field name="lastname" />
+                  <field name="company_name" />
+                  <field name="date" />
+                  <field name="type" />
+                  <field name="ordered_parts" />
+                  <field name="subscription_amount" />
+                  <field name="email" />
+                  <field name="partner_id" />
+                  <field name="source" />
+                  <field name="state" />
+                </tree>
+              </field>
+              <field name="subscription_invoice_ids" />
+            </group>
+            <group>
+              <field name="data_policy_approved" />
+              <field name="internal_rules_approved" />
+              <field name="financial_risk_approved" />
+              <field name="generic_rules_approved" />
+            </group>
+          </form>
+      </field>
+  </record>
+  <menuitem
+    name="Memberships"
+    id="menu_cooperative_membership"
+    action="action_cooperative_membership"
+    parent="cooperator.menu_cooperator_main_coop"
+    groups="cooperator.cooperator_group_user"
+    sequence="230"
+  />
+</odoo>

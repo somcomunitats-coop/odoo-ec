@@ -9,7 +9,7 @@
         <xpath expr="." position="inside">
             <script
         type="text/javascript"
-        src="/energy_communities/static/src/js/community-data-website.js"
+        src="/energy_communities_crm/static/src/js/community-data-website.js"
       />
         </xpath>
     </template>
@@ -520,8 +520,8 @@
       class="form-horizontal mt32 oe_subscription_request_form"
       enctype="multipart/form-data"
     >
-        <t t-call="energy_communities.community_data_form_csrf_template" />
-        <t t-call="energy_communities.community_data_form_fields_template" />
+        <t t-call="energy_communities_crm.community_data_form_csrf_template" />
+        <t t-call="energy_communities_crm.community_data_form_fields_template" />
         <div class="text-center">
           <button class="btn btn-primary mt-3 mb-3 text-center">Send</button>
         </div>
@@ -605,30 +605,30 @@
               <div class="col-xs-12 col-sm-10  col-md-8 col-lg-8">
                 <t t-if="global_error">
                   <t
-                  t-call="energy_communities.community_data_error_message_template"
+                  t-call="energy_communities_crm.community_data_error_message_template"
                 />
                 </t>
                 <t t-if="not global_error">
                   <t t-if="closed_form">
                     <t
-                    t-call="energy_communities.community_data_headline_message_closed"
+                    t-call="energy_communities_crm.community_data_headline_message_closed"
                   />
                   </t>
                   <t t-if="not closed_form">
-                    <t t-call="energy_communities.community_data_headline" />
+                    <t t-call="energy_communities_crm.community_data_headline" />
                     <t
-                    t-call="energy_communities.community_data_headline_message_open"
+                    t-call="energy_communities_crm.community_data_headline_message_open"
                   />
                     <t
-                    t-call="energy_communities.community_data_error_message_template"
+                    t-call="energy_communities_crm.community_data_error_message_template"
                   />
                     <t
                     t-if="display_success"
-                    t-call="energy_communities.community_data_form_successful_msg"
+                    t-call="energy_communities_crm.community_data_form_successful_msg"
                   />
                     <t
                     t-if="display_form"
-                    t-call="energy_communities.community_data_form"
+                    t-call="energy_communities_crm.community_data_form"
                   />
                   </t>
                 </t>

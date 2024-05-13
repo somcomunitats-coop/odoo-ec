@@ -1,0 +1,22 @@
+<odoo>
+  <record id="crm_stage_tree_inherit" model="ir.ui.view">
+		<field name="name">crm.stage.tree.inherit</field>
+		<field name="model">crm.stage</field>
+		<field name="inherit_id" ref="crm.crm_stage_tree" />
+		<field name="arch" type="xml">
+      <xpath expr="//field[@name='team_id']" position="after">
+        <field name="original_stage_id" />
+      </xpath>
+    </field>
+  </record>
+  <record id="crm_stage_form_inherit" model="ir.ui.view">
+		<field name="name">crm.stage.form.inherit</field>
+		<field name="model">crm.stage</field>
+		<field name="inherit_id" ref="crm.crm_stage_form" />
+		<field name="arch" type="xml">
+      <xpath expr="//field[@name='team_id']" position="attributes">
+        <attribute name="required">1</attribute>
+      </xpath>
+    </field>
+  </record>
+</odoo>

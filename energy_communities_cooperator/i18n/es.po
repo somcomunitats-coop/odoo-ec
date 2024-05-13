@@ -1,0 +1,367 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* energy_communities_cooperator
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-18 10:44+0000\n"
+"PO-Revision-Date: 2024-04-18 10:44+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_subscription_request__vat
+msgid ""
+"\n"
+"        The Tax Identification Number. Complete it if the contact is subjected to\n"
+"        government taxes. Used in some legal statements.\"\n"
+"        "
+msgstr ""
+"\n"
+"        El NIF/CIF. Completa este campo si el contacto está subjecto a\n"
+"        las tasas estatales. Se usa en algunos informes legales.\"\n"
+"        "
+
+#. module: energy_communities_cooperator
+#: model:mail.template,body_html:energy_communities_cooperator.email_template_confirmation_voluntary_share
+msgid ""
+"\n"
+"    <p>Dear ${object.firstname},</p>\n"
+"    <p>\n"
+"        We confirm that we have correctly received your request to make a voluntary contribution to the capital\n"
+"        social of <b>${object.company_id.name}</b>, with the following data:\n"
+"    </p>\n"
+"    <ul>\n"
+"        <li>Partner VAT: <b>${object.vat}</b></li>\n"
+"        <li>Partner name: <b>${object.firstname} ${object.lastname}</b></li>\n"
+"        <li>Charging account: <b>${object.iban}</b></li>\n"
+"        <li>Subscription amount: <b>${object.subscription_amount}€</b></li>\n"
+"    </ul>\n"
+"    <p>\n"
+"        In the next few days you will receive the bank charge in this account, please verify that all the data\n"
+"        provided is correct and you have the money you want to invest, to avoid any incident in the\n"
+"        draft of the receipt.\n"
+"    </p>\n"
+"    <p>\n"
+"        Once the validity of the payment has been verified, you will receive a new notification confirming the\n"
+"        contribution\n"
+"        made and detailing the particular conditions of your contribution.\n"
+"    </p>\n"
+"    <p>\n"
+"        Thank you for your involvement with the cooperative and inform you that for any doubt or clarification you can\n"
+"        consult\n"
+"        our website:\n"
+"        <a href=\"${object.company_id.website}\"> ${object.company_id.website}</a>\n"
+"        or send us an email to\n"
+"        <a href=\"${object.company_id.email}\">${object.company_id.email}</a>\n"
+"    </p>\n"
+"    <p>\n"
+"        Get the word out by explaining the project to family and friends. The more we are, the further we will go!\n"
+"    </p>\n"
+"    <p>\n"
+"        Thank you very much and good energy!\n"
+"    </p>\n"
+"    <p>\n"
+"        Sincerely,\n"
+"    </p>\n"
+"    <p>\n"
+"        ${object.company_id.name} team\n"
+"    </p>\n"
+"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" style=\"width: 150px;height: 80px;\"/>\n"
+"            "
+msgstr ""
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Apreciado/a ${object.firstname},</p>\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"Te confirmamos que hemos recibido correctamente tu solicitud para realizar una aportación voluntaria al capital social de <b style=\"font-weight:bolder;\">${object.company_id.name}</b>, con los siguientes datos:\n"
+"    </p>\n"
+"    <ul style=\"margin:0px 0 1rem 0;\">\n"
+"        <li>Socio/a NIF: <b style=\"font-weight:bolder;\">${object.vat}</b></li>\n"
+"        <li>Socio/a: <b style=\"font-weight:bolder;\">${object.firstname} ${object.lastname}</b></li>\n"
+"        <li>Cuenta de cargo: <b style=\"font-weight:bolder;\">${object.iban}</b></li>\n"
+"        <li>Importe aportación: <b style=\"font-weight:bolder;\">${object.subscription_amount}€</b></li>\n"
+"    </ul>\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"En los próximos días recibirás el cargo bancario en esta cuenta, por favor verifica que todos los datos facilitados sean correctos y dispones del dinero que quieres invertir, para evitar cualquier incidencia en el giro del recibo.\n"
+"    </p>\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"Una vez verificada la validez del pago realizado recibirás una nueva notificación confirmando la aportación realizada y detallando las condiciones particulares de tu aportación.\n"
+"    </p>\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"Agradecer tu implicación con la cooperativa y informarte que para cualquier duda o aclaración puedes consultar nuestra web&nbsp;\n"
+"        <a href=\"${object.company_id.website}\" style=\"text-decoration:none;background-color:transparent;color:rgb(124, 123, 173);\"> ${object.company_id.website}</a>\n"
+"        &nbsp;o enviarnos un correo electrónico \n"
+"        <a href=\"${object.company_id.email}\" style=\"text-decoration:none;background-color:transparent;color:rgb(124, 123, 173);\">${object.company_id.email}</a>\n"
+"    </p>\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"Haz que corra la voz explicando el proyecto a familiares y amigos/as. Cuantos más seamos, más lejos llegaremos!\n"
+"    </p>\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"¡Muchas gracias y buena energía!\n"
+"    </p>\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"        Atentamente,\n"
+"    </p>\n"
+"</br>\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"        El equipo de ${object.company_id.name}\n"
+"    </p>\n"
+"    % if object.company_id.street:\n"
+"        ${object.company_id.street}\n"
+"    % endif\n"
+"    % if object.company_id.street2:\n"
+"        ${object.company_id.street2}<br/>\n"
+"    % endif\n"
+"    % if object.company_id.city or object.company_id.zip:\n"
+"        ${object.company_id.zip} ${object.company_id.city}<br/>\n"
+"    % endif\n"
+"    % if object.company_id.country_id:\n"
+"        ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
+"    % endif\n"
+"    % if object.company_id.phone:\n"
+"        Teléfono:&nbsp; ${object.company_id.phone}\n"
+"    % endif\n"
+"\n"
+"    % if object.company_id.website:\n"
+"        <div>\n"
+"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
+"        </div>\n"
+"    %endif\n"
+"<div>\n"
+"<img src=\"/logo.png?company=${object.company_id.id}\" width=\"150\">\n"
+"</div>\n"
+"            "
+
+#. module: energy_communities_cooperator
+#: model:mail.template,body_html:energy_communities_cooperator.email_template_confirmation_company
+msgid ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"    <p>Hello,</p>\n"
+"    <p>Thank you for filling out the form and request to join the Community.</p>\n"
+"    <p>In the coming weeks we will contact you to indicate the next steps</p>\n"
+"    <p>Here is a copy of the data we received:</p>\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"        <p> - Request to join: ${object.company_id.name}</p>\n"
+"        <p> - Company Name: ${object.company_name}</p>\n"
+"        <p> - Company Email: ${object.company_email}</p>\n"
+"        <p> - VAT: ${object.vat}</p>\n"
+"        <p> - Address: ${object.address}</p>\n"
+"        <p> - Zip code: ${object.zip_code}</p>\n"
+"        <p> - City: ${object.city}</p>\n"
+"        <p> - Country: ${object.country_id.name}</p>\n"
+"        <p> - Firstname: ${object.firstname}</p>\n"
+"        <p> - Lastname: ${object.lastname}</p>\n"
+"        <p> - Function: ${object.contact_person_function}</p>\n"
+"        <p> - Email: ${object.email}</p>\n"
+"        <p> - Phone: ${(object.phone or '')}</p>\n"
+"        <p> - Gender: ${dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]}</p>\n"
+"        <p> - Birthdate: ${object.birthdate}</p>\n"
+"        <p> - Language: ${dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}</p>\n"
+"        <p> - Initial share amount: ${object.subscription_amount}</p>\n"
+"    % if object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit':\n"
+"        <p> - Bank account: ${object.iban}</p>\n"
+"        <p> - I authorize bank receipts to be sent to this account: ${object.mandate_approved and 'SI' or 'NO'}</p>\n"
+"    % endif\n"
+"    </div>\n"
+"    <br />\n"
+"    <p>We keep in touch for any questions.</p>\n"
+"    <p>Yours faithfully,</p>\n"
+"    <p>Somcomunitats.coop team </p>\n"
+"    <p><a href=\"https://somcomunitats.coop/recursos/\">Resources and FAQs</a></p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"    <p>Hola,</p>\n"
+"    <p>Gracias por rellenar el formulario y solicitar la adhesión a la Comunidad Energética.</p>\n"
+"    <p>En las próximas semanas nos pondremos en contacto contigo para indicarte los siguientes pasos.</p>\n"
+"    <p>Aquí tienes una copia de los datos que hemos recibido:</p>\n"
+"    <div id=\"field_list_div\" style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"        <p> - Comunidad: ${object.company_id.name}</p>\n"
+"        <p> - Nombre empresa: ${object.company_name}</p>\n"
+"        <p> - Correo empresa: ${object.company_email}</p>\n"
+"        <p> - NIF/CIF empresa: ${object.vat}</p>\n"
+"        <p> - Dirección empresa: ${object.address}</p>\n"
+"        <p> - Código postal empresa: ${object.zip_code}</p>\n"
+"        <p> - Ciudad empresa: ${object.city}</p>\n"
+"        <p> - País empresa: ${object.country_id.name}</p>\n"
+"        <p> - Nombre persona representante: ${object.firstname}</p>\n"
+"        <p> - Apellidos persona representante: ${object.lastname}</p>\n"
+"        <p> - Cargo representante: ${object.contact_person_function}</p>\n"
+"        <p> - Correo representante: ${object.email}</p>\n"
+"        <p> - Teléfono representante: ${(object.phone or '')}</p>\n"
+"        <p> - Género representante: ${dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]}</p>\n"
+"        <p> - Fecha nacimiento representante: ${object.birthdate}</p>\n"
+"        <p> - Idioma comunicaciones: ${dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}</p>\n"
+"        <p> - Importe aportación inicial: ${object.subscription_amount}</p>\n"
+"    % if object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit': \n"
+"        <p> - Cuenta bancaria: ${object.iban}</p>\n"
+"        <p> - Autorizo giros bancarios a esta cuenta: ${object.mandate_approved and 'SI' or 'NO'}</p> \n"
+"    % endif\n"
+"    </div>\n"
+"    <br />\n"
+"    <p>Seguimos en contacto para cualquier duda.</p>\n"
+"    <p><a href=\"https://web-prod.somcomunitats.coop/recursos/\">Recursos y FAQs</a></p>\n"
+"    <p>Atentamente,</p>\n"
+"    </br>\n"
+"    <p>${object.company_id.name}.</p>\n"
+"\n"
+"    % if object.company_id.street:\n"
+"        ${object.company_id.street}\n"
+"    % endif\n"
+"    % if object.company_id.street2:\n"
+"        ${object.company_id.street2}<br/>\n"
+"    % endif\n"
+"    % if object.company_id.city or object.company_id.zip:\n"
+"        ${object.company_id.zip} ${object.company_id.city}<br/>\n"
+"    % endif\n"
+"    % if object.company_id.country_id:\n"
+"        ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
+"    % endif\n"
+"    % if object.company_id.phone:\n"
+"        Teléfono:&nbsp; ${object.company_id.phone}\n"
+"    % endif\n"
+"\n"
+"    % if object.company_id.website:\n"
+"        <div>\n"
+"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
+"        </div>\n"
+"    %endif\n"
+"<div>\n"
+"<img src=\"/logo.png?company=${object.company_id.id}\" width=\"150\">\n"
+"<img src=${object.env.company.logo_url}>\n"
+"</div>\n"
+"</div>\n"
+"            "
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__representative_of_member_company
+msgid "Company Legal Representative"
+msgstr "Representante legal de compañía"
+
+#. module: energy_communities_cooperator
+#: model:mail.template,subject:energy_communities_cooperator.email_template_confirmation_voluntary_share
+msgid "Contribute to ${object.company_id.name} Ref. ACSV${object.id}"
+msgstr ""
+"Aportación voluntaria a ${object.company_id.name} Ref. ACSV${object.id}: "
+"Solicitud recibida"
+
+#. module: energy_communities_cooperator
+#: model:ir.model,name:energy_communities_cooperator.model_cooperative_membership
+msgid "Cooperative Membership"
+msgstr "Membresia"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move__display_name
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__display_name
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__display_name
+msgid "Display Name"
+msgstr "Nombre Mostrado"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__gender
+msgid "Gender"
+msgstr "Género"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__subscription_request__gender__not_share
+msgid "I prefer to not share it"
+msgstr "Prefiero no compartirlo"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move__id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__id
+msgid "ID"
+msgstr "Identificador"
+
+#. module: energy_communities_cooperator
+#: model:ir.actions.act_window,name:energy_communities_cooperator.action_account_move
+#: model:ir.ui.menu,name:energy_communities_cooperator.menu_account_move
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__is_voluntary
+msgid "Is voluntary contribution"
+msgstr "Es aportación voluntaria"
+
+#. module: energy_communities_cooperator
+#: model:ir.model,name:energy_communities_cooperator.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move____last_update
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership____last_update
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__representative
+msgid "Legal Representative"
+msgstr "Representante legal"
+
+#. module: energy_communities_cooperator
+#: model:ir.actions.act_window,name:energy_communities_cooperator.action_cooperative_membership
+#: model:ir.ui.menu,name:energy_communities_cooperator.menu_cooperative_membership
+msgid "Memberships"
+msgstr "Membresias"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__subscription_request__gender__not_binary
+msgid "Not binary"
+msgstr "No binario"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__partner_id
+msgid "Partner"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_bank_statement_line__membership_id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move__membership_id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_payment__membership_id
+msgid "Related membership"
+msgstr "Membresia relacionada"
+
+#. module: energy_communities_cooperator
+#: model:ir.model,name:energy_communities_cooperator.model_subscription_request
+msgid "Subscription Request"
+msgstr "Sol·licitud de Suscripción"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__subscription_invoice_ids
+msgid "Subscription invoices"
+msgstr "Registros de pago"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__vat
+msgid "Tax ID"
+msgstr "NIF/CIF"
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/models/subscription_request.py:0
+#, python-format
+msgid "You can't create a voluntary subscription share for a new cooperator."
+msgstr "No puedes crear una aportación voluntaria para un miembro nuevo"
+
+#. module: energy_communities_cooperator
+#: model:mail.template,subject:energy_communities_cooperator.email_template_confirmation_company
+msgid "[Som Comunitats] Application to become Community membership"
+msgstr "[Somos Comunidades] Solicitud adhesión a Comunidad Energética"
+

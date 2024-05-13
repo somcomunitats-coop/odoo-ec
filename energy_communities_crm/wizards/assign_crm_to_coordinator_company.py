@@ -21,11 +21,26 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
 
     def assign_to_coordinator_company(self):
         self.ensure_one()
+        # remove followers
         self.remove_follower()
-        new_crm_lead = self.crm_lead_id.sudo().copy(
-            {"team_id": None, "user_id": None, "stage_id": 1}  # New
+        # make sure default stages and team exists for assigned company
+        default_stages = self.env["crm.stage"].get_create_default_stages(
+            self.assigned_company_id
         )
-        new_crm_lead.write({"company_id": self.assigned_company_id})
+        default_team = self.env["crm.team"].get_create_default_sale_team(
+            self.assigned_company_id
+        )
+        # duplicate opportunity
+        new_crm_lead = self.crm_lead_id.sudo().copy(
+            {
+                "user_id": None,
+                "tag_ids": None,
+                "stage_id": default_stages[0].id,
+                "team_id": default_team.id,
+                "company_id": self.assigned_company_id.id,
+            }
+        )
+        # notifications
         new_crm_msg = _(
             "Opportunity assigned to Coordinator %s (ID: %s), where %s is the id of the original instance-level record."
             % (self.assigned_company_id.name, new_crm_lead.id, self.crm_lead_id.id)
@@ -37,11 +52,13 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
             % (self.crm_lead_id.id, new_crm_lead.id)
         )
         self.crm_lead_id.message_post(body=won_crm_msg)
+        # duplicate metadatas
         crm_lead_metadata = self.env["crm.lead.metadata.line"].search(
             [("crm_lead_id", "=", self.crm_lead_id.id)]
         )
         for metadata in crm_lead_metadata:
             new_crm_lead_metadata = metadata.copy({"crm_lead_id": new_crm_lead.id})
+        # add followers
         self.add_follower()
 
     def remove_follower(self):
@@ -70,6 +87,6 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
             # notify followers
             email_values = {"email_to": followers.mapped("partner_id.email")}
             template = self.env.ref(
-                "energy_communities.email_templ_lead_assigned_to_coordinator_id"
+                "energy_communities_crm.email_templ_lead_assigned_to_coordinator_id"
             ).with_context(email_values)
             self.crm_lead_id.message_post_with_template(template.id)
