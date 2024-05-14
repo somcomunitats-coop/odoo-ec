@@ -5,7 +5,9 @@ from datetime import datetime
 from odoo import _, http
 from odoo.http import request
 
-from ..models.res_company import _LEGAL_FORM_VALUES
+from odoo.addons.energy_communities.models.res_company import (
+    _LEGAL_FORM_VALUES,
+)
 
 _COMMUNITY_DATA__FIELDS = {}
 _COMMUNITY_DATA__GENERAL_FIELDS = {
@@ -168,7 +170,7 @@ class WebsiteCommunityData(http.Controller):
         lead_values = self._get_lead_values(kwargs["lead_id"])
         lead_values.update(kwargs)
         values = self._fill_values(lead_values)
-        return request.render("energy_communities.community_data_page", values)
+        return request.render("energy_communities_crm.community_data_page", values)
 
     @http.route(
         ["/community-data/submit"],
@@ -249,7 +251,7 @@ class WebsiteCommunityData(http.Controller):
     #
     def _get_translation(self, source):
         return request.env["ir.translation"]._get_source(
-            name="addons/energy_communities/controllers/website_community_data.py",
+            name="addons/energy_communities_crm/controllers/website_community_data.py",
             types="code",
             lang=request.env.context["lang"],
             source=source,
@@ -262,7 +264,7 @@ class WebsiteCommunityData(http.Controller):
                 {
                     "id": option["id"],
                     "name": request.env["ir.translation"]._get_source(
-                        name="addons/energy_communities/controllers/website_community_data.py",
+                        name="addons/energy_communities_crm/controllers/website_community_data.py",
                         types="code",
                         lang=request.env.context["lang"],
                         source=option["name"],
@@ -273,7 +275,7 @@ class WebsiteCommunityData(http.Controller):
 
     def _get_community_data_submit_response(self, values):
         values = self._fill_values(values, True, False)
-        return request.render("energy_communities.community_data_page", values)
+        return request.render("energy_communities_crm.community_data_page", values)
 
     def _get_date_string(self, date_val):
         if date_val:
@@ -403,7 +405,7 @@ class WebsiteCommunityData(http.Controller):
         for field_key in _COMMUNITY_DATA__FIELDS.keys():
             # values[field_key + "_label"] = _COMMUNITY_DATA__FIELDS[field_key]
             values[field_key + "_label"] = request.env["ir.translation"]._get_source(
-                name="addons/energy_communities/controllers/website_community_data.py",
+                name="addons/energy_communities_crm/controllers/website_community_data.py",
                 types="code",
                 lang=request.env.context["lang"],
                 source=_COMMUNITY_DATA__FIELDS[field_key],
@@ -527,7 +529,7 @@ class WebsiteCommunityData(http.Controller):
     def _page_render_validation(self, values):
         values = self._lead_id_validation(values)
         if "error_msgs" in values.keys():
-            return request.render("energy_communities.community_data_page", values)
+            return request.render("energy_communities_crm.community_data_page", values)
         return True
 
     def _form_submit_validation(self, values):
@@ -537,7 +539,7 @@ class WebsiteCommunityData(http.Controller):
         # lead_id validation
         values = self._lead_id_validation(values)
         if "error_msgs" in values.keys():
-            return request.render("energy_communities.community_data_page", values)
+            return request.render("energy_communities_crm.community_data_page", values)
 
         # ce_services validation
         if "ce_services" not in values.keys():
@@ -596,7 +598,7 @@ class WebsiteCommunityData(http.Controller):
             values["error"] = error
             values["error_msgs"] = error_msgs
             values = self._fill_values(values, False, True)
-            return request.render("energy_communities.community_data_page", values)
+            return request.render("energy_communities_crm.community_data_page", values)
         return True
 
     #

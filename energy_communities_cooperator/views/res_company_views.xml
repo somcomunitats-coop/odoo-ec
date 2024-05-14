@@ -1,0 +1,15 @@
+<odoo>
+  <record id="view_company_form" model="ir.ui.view">
+    <field name="name">res.company.form.easymy.coop.inherit</field>
+    <field name="model">res.company</field>
+    <field name="inherit_id" ref="cooperator.view_company_form" />
+    <field name="arch" type="xml">
+      <field name="property_cooperator_account" position="after">
+          <field name="subscription_journal_id" />
+      </field>
+      <group name="coop_grp" position="inside">
+        <field name="send_share_update_email" />
+      </group>
+    </field>
+  </record>
+</odoo>

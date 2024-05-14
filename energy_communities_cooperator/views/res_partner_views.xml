@@ -1,0 +1,57 @@
+<odoo>
+  <record id="cooperator_view_partner_form" model="ir.ui.view">
+    <field name="name">view_company_form.inherit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="cooperator.view_partner_form" />
+    <field name="arch" type="xml">
+      <field name="coop_candidate" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </field>
+      <field name="company_register_number" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </field>
+      <field name="gender" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </field>
+      <field name="internal_rules_approved" position="attributes">
+        <attribute name="readonly">1</attribute>
+      </field>
+      <field name="data_policy_approved" position="attributes">
+        <attribute name="readonly">1</attribute>
+      </field>
+      <field name="financial_risk_approved" position="attributes">
+        <attribute name="readonly">1</attribute>
+      </field>
+      <field name="generic_rules_approved" position="attributes">
+        <attribute name="readonly">1</attribute>
+      </field>
+      <field name="legal_form" position="after">
+        <field name="user_current_role" invisible="1" />
+        <field name="cooperator" readonly="1" />
+        <field
+          name="coop_candidate"
+          readonly="1"
+          attrs="{'invisible': [('cooperator', '=', False)]}"
+        />
+        <field
+          name="old_member"
+          readonly="1"
+          attrs="{'invisible': [('cooperator', '=', False)]}"
+        />
+        <field
+          name="representative"
+          readonly="1"
+          attrs="{'invisible': [('cooperator', '=', False)]}"
+        />
+        <field
+          name="representative_of_member_company"
+          attrs="{'invisible': [('cooperator', '=', False)]}"
+        />
+        <field
+          name="cooperative_membership_id"
+          attrs="{'invisible': ['|',('cooperator', '=', False),('user_current_role', '!=', 'role_platform_admin')]}"
+        />
+      </field>
+    </field>
+  </record>
+</odoo>

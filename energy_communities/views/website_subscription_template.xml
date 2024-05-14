@@ -89,7 +89,7 @@
                 <p
         >To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <t
             t-esc="company.initial_subscription_share_amount"
-          />€.</p>
+          />€_eu_ES.</p>
             </t>
             <t t-else="">
                 <p

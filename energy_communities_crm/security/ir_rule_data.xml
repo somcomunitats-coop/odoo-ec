@@ -1,0 +1,38 @@
+<odoo>
+    <record model="ir.rule" id="crm_tag_company_rule">
+        <field name="name">CRM Tag multicompany</field>
+        <field name="model_id" ref="sales_team.model_crm_tag" />
+        <field name="global" eval="True" />
+        <field
+      name="domain_force"
+    >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+      <field name="perm_read" eval="True" />
+      <field name="perm_write" eval="False" />
+      <field name="perm_create" eval="False" />
+      <field name="perm_unlink" eval="False" />
+    </record>
+    <record model="ir.rule" id="crm_tag_platform_admin_rule">
+      <field name="name">crm.tag Platform-admin multi-company</field>
+      <field name="model_id" ref="sales_team.model_crm_tag" />
+      <field name="groups" eval="[(4, ref('base.group_user'))]" />
+      <field
+      name="domain_force"
+    >[('user_current_role', '=', 'role_platform_admin')]</field>
+      <field name="perm_read" eval="False" />
+      <field name="perm_write" eval="True" />
+      <field name="perm_create" eval="True" />
+      <field name="perm_unlink" eval="True" />
+    </record>
+    <record model="ir.rule" id="crm_tag_rule">
+      <field name="name">crm.tag multi-company</field>
+      <field name="model_id" ref="sales_team.model_crm_tag" />
+      <field name="groups" eval="[(4, ref('base.group_user'))]" />
+      <field
+      name="domain_force"
+    >[('user_current_role', '!=', 'role_platform_admin'),('company_id', 'in', company_ids)]</field>
+      <field name="perm_read" eval="False" />
+      <field name="perm_write" eval="True" />
+      <field name="perm_create" eval="True" />
+      <field name="perm_unlink" eval="True" />
+    </record>
+</odoo>
