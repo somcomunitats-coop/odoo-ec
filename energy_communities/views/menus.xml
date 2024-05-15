@@ -56,4 +56,7 @@
   <record model="ir.ui.menu" id="sale.sale_menu_root">
     <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
   </record>
+  <record model="ir.ui.menu" id="event.event_main_menu">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
 </odoo>
