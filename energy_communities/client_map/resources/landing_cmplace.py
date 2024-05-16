@@ -235,7 +235,10 @@ class LandingCmPlace:
             auth = Authenticate(baseurl, username, password).authenticate()
             token = "Bearer %s" % auth["token"]
             landing_page_wp_data = LandingPageResource(
-                token, baseurl, self.landing.wp_landing_page_id
+                token,
+                baseurl,
+                self.landing.company_hierarchy_level_url(),
+                self.landing.wp_landing_page_id,
             ).get()
             return landing_page_wp_data
         return False
