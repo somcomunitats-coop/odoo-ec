@@ -283,6 +283,9 @@ class LandingPage(models.Model):
                 "city": self.city or "",
                 "slug_id": self.slug_id or "",
                 "display_map": self._must_display_map(),
+                "awareness_services": self.awareness_services or "",
+                "design_services": self.design_services or "",
+                "management_services": self.management_services or "",
             }
         }
 

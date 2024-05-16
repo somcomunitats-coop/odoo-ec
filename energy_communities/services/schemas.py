@@ -232,6 +232,9 @@ S_LANDING_PAGE_CREATE = {
             "city": {"type": "string"},
             "slug_id": {"type": "string"},
             "display_map": {"type": "boolean"},
+            "awareness_services": {"type": "string"},
+            "design_services": {"type": "string"},
+            "management_services": {"type": "string"},
         },
     }
 }
