@@ -14,10 +14,6 @@ class LandingCmPlace:
     def __init__(self, landing):
         self.landing = landing
         self.wp_landing_data = self._get_wp_landing_data()
-        # self.wp_landing_data = {
-        #     "link": False,
-        #     "translations": False
-        # }
         button_configs = self._get_button_color_configs()
         if button_configs["errors"]:
             raise UserError(error_msg)
