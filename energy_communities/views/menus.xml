@@ -29,13 +29,7 @@
   />
 
   <!-- Hide menu items unless platform manager -->
-  <record model="ir.ui.menu" id="mail.menu_root_discuss">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
-  </record>
   <record model="ir.ui.menu" id="community_maps.menu_root">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
-  </record>
-  <record model="ir.ui.menu" id="calendar.mail_menu_calendar">
     <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
   </record>
   <record model="ir.ui.menu" id="website.menu_website_configuration">
