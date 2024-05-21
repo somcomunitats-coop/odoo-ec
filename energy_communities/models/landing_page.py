@@ -2,6 +2,7 @@ from datetime import datetime
 
 from odoo import _, api, fields, models
 
+from ..client_map.config import MapClientConfig
 from ..client_map.resources.landing_cmplace import (
     LandingCmPlace as LandingCmPlaceResource,
 )
@@ -9,14 +10,22 @@ from ..pywordpress_client.resources.authenticate import Authenticate
 from ..pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
 )
-from .res_company import _CE_MEMBER_STATUS_VALUES, _CE_TYPE, _LEGAL_FORM_VALUES
+from .res_company import (
+    _CE_MEMBER_STATUS_VALUES,
+    _CE_TYPE,
+    _HIERARCHY_LEVEL_VALUES,
+    _LEGAL_FORM_VALUES,
+)
 from .res_config_settings import ResConfigSettings
 
 
 class LandingPage(models.Model):
     _name = "landing.page"
 
-    _inherit = ["cm.coordinates.mixin"]
+    _inherit = ["cm.coordinates.mixin", "cm.slug.id.mixin"]
+
+    # overwrite models to be check for slug uniqueness. No other landings with same slug_id
+    _slug_models = ["landing.page"]
 
     name = fields.Char(string="Name", translate=True)
     company_id = fields.Many2one("res.company", string="Company")
@@ -81,6 +90,82 @@ class LandingPage(models.Model):
     show_web_link_on_header = fields.Boolean(
         string=_("Show external website link also in header"), default=False
     )
+    show_newsletter_form = fields.Boolean(string=_("Show newsletter form"))
+    awareness_services = fields.Text(
+        string=_("Services to raise awareness in the creation of CCEE"), translate=True
+    )
+    design_services = fields.Text(
+        string=_("Services for the design and implementation of CCEE"), translate=True
+    )
+    management_services = fields.Text(
+        string=_("CCEE management services"), translate=True
+    )
+    company_logo = fields.Image(string=_("Company logo"))
+
+    slug_id = fields.Char(string="External slug ID", translate=True)
+
+    hierarchy_level = fields.Selection(
+        selection=_HIERARCHY_LEVEL_VALUES,
+        string="Hierarchy level",
+        related="company_id.hierarchy_level",
+    )
+    parent_id = fields.Many2one(
+        "res.company",
+        string="Parent Company",
+        related="company_id.parent_id",
+    )
+    parent_landing_id = fields.Many2one(
+        "landing.page",
+        string="Parent landing page",
+        related="company_id.parent_id.landing_page_id",
+    )
+
+    @api.constrains("slug_id")
+    def contrain_slug_id(self):
+        for record in self:
+            record.translate_slug_id()
+
+    def _get_translation(self, translation_name, lang):
+        query = [
+            ("name", "=", translation_name),
+            ("res_id", "=", self.id),
+            ("lang", "=", lang),
+        ]
+        return self.env["ir.translation"].search(query)
+
+    def update_translation(self, translation_name, original_value, trans_value, lang):
+        translation = self._get_translation(translation_name, lang)
+        if translation:
+            translation.write(
+                {"src": original_value, "value": trans_value, "state": "translated"}
+            )
+        else:
+            self.env["ir.translation"].create(
+                {
+                    "name": translation_name,
+                    "res_id": self.id,
+                    "lang": lang,
+                    "type": "model",
+                    "src": original_value,
+                    "value": trans_value,
+                    "state": "translated",
+                }
+            )
+        return True
+
+    def translate_slug_id(self):
+        self.update_translation(
+            "landing.page,slug_id",
+            self.slug_id,
+            self.slug_id,
+            "ca_ES",
+        )
+        self.update_translation(
+            "landing.page,slug_id",
+            self.slug_id,
+            self.slug_id,
+            "es_ES",
+        )
 
     def _get_image_attachment(self, field_name):
         file_attachment = self.env["ir.attachment"].search(
@@ -140,6 +225,12 @@ class LandingPage(models.Model):
         else:
             secondary_image_file = ""
             secondary_image_file_write_date = ""
+        if self.company_logo:
+            company_logo = self._get_image_payload("company_logo")
+            company_logo_write_date = self._get_image_write_date("company_logo")
+        else:
+            company_logo = ""
+            company_logo_write_date = ""
         if self.map_place_id:
             map_reference = self.map_place_id.slug_id
         else:
@@ -171,6 +262,7 @@ class LandingPage(models.Model):
                 "number_of_members": self.number_of_members,
                 "external_website_link": self.external_website_link or "",
                 "show_web_link_on_header": self.show_web_link_on_header,
+                "show_newsletter_form": self.show_newsletter_form,
                 "twitter_link": self.twitter_link or "",
                 "instagram_link": self.instagram_link or "",
                 "telegram_link": self.telegram_link or "",
@@ -179,6 +271,8 @@ class LandingPage(models.Model):
                 "primary_image_file_write_date": primary_image_file_write_date,
                 "secondary_image_file": secondary_image_file,
                 "secondary_image_file_write_date": secondary_image_file_write_date,
+                "company_logo": company_logo,
+                "company_logo_write_date": company_logo_write_date,
                 "short_description": self.short_description or "",
                 "long_description": self.long_description or "",
                 "why_become_cooperator": self.why_become_cooperator,
@@ -187,8 +281,22 @@ class LandingPage(models.Model):
                 "street": self.street or "",
                 "postal_code": self.postal_code or "",
                 "city": self.city or "",
+                "slug_id": self.slug_id or "",
+                "display_map": self._must_display_map(),
+                "awareness_services": self.awareness_services or "",
+                "design_services": self.design_services or "",
+                "management_services": self.management_services or "",
             }
         }
+
+    def _must_display_map(self):
+        if self.hierarchy_level == "coordinator":
+            rel_filter = self.env["cm.filter"].search([("landing_id", "=", self.id)])
+            if rel_filter:
+                return rel_filter.has_related_places(
+                    self.env.ref("energy_communities.map_campanya").id
+                )
+        return False
 
     def action_landing_page_status(self):
         for record in self:
@@ -202,7 +310,13 @@ class LandingPage(models.Model):
     def action_update_public_data(self):
         for record in self:
             record._update_wordpress()
-            record._update_landing_place()
+            if self.map_place_id:
+                record._update_landing_place()
+            if self.hierarchy_level == "coordinator":
+                if self.status == "publish":
+                    self.create_or_update_and_apply_coordinator_filter()
+                else:
+                    self.remove_coordinator_filter_to_existing_communities()
             self.write({"publicdata_lastupdate_datetime": datetime.now()})
             return {
                 "type": "ir.actions.client",
@@ -228,12 +342,109 @@ class LandingPage(models.Model):
             auth = Authenticate(baseurl, username, password).authenticate()
             token = "Bearer %s" % auth["token"]
             landing_page_data = self.to_dict()
-            LandingPageResource(token, baseurl, self.wp_landing_page_id).update(
-                landing_page_data
-            )
+            LandingPageResource(
+                token,
+                baseurl,
+                self.company_hierarchy_level_url(),
+                self.wp_landing_page_id,
+            ).update(landing_page_data)
 
     def create_landing_place(self):
         LandingCmPlaceResource(self).create()
 
     def _update_landing_place(self):
         LandingCmPlaceResource(self).update()
+
+    def company_hierarchy_level_url(self):
+        if self.hierarchy_level == "coordinator":
+            return "rest-ce-coord"
+        else:
+            return "rest-ce-landing"
+
+    def get_map_coordinator_filter_in_related_place(self, coordinator_landing=False):
+        if not coordinator_landing:
+            if self.parent_landing_id:
+                coordinator_landing = self.parent_landing_id
+        if self.hierarchy_level == "community" and coordinator_landing:
+            coordinator_filter_group = self.env.ref(
+                "energy_communities.map_filter_group_coordinator"
+            )
+            return self.env["cm.filter"].search(
+                [
+                    ("landing_id", "=", coordinator_landing.id),
+                    ("filter_group_id", "=", coordinator_filter_group.id),
+                ]
+            )
+        return False
+
+    def create_or_update_and_apply_coordinator_filter(self):
+        self.create_or_update_map_coordinator_filter()
+        self.apply_coordinator_filter_to_existing_communities()
+
+    def create_or_update_map_coordinator_filter(self):
+        coordinator_filter_group = self.env.ref(
+            "energy_communities.map_filter_group_coordinator"
+        )
+        related_filter = self.env["cm.filter"].search(
+            [
+                ("landing_id", "=", self.id),
+                ("filter_group_id", "=", coordinator_filter_group.id),
+            ]
+        )
+        if not related_filter:
+            related_filter = self.env["cm.filter"].create(
+                {
+                    "name": self.name,
+                    "icon": "house_user",
+                    "color": "brand",
+                    "marker_color": MapClientConfig.FILTER_COLOR_CONFIG["marker_color"],
+                    "slug_id": self.slug_id,
+                    "marker_text_color": MapClientConfig.FILTER_COLOR_CONFIG[
+                        "marker_text_color"
+                    ],
+                    "marker_bg_color": MapClientConfig.FILTER_COLOR_CONFIG[
+                        "marker_bg_color"
+                    ],
+                    "marker_border_color": MapClientConfig.FILTER_COLOR_CONFIG[
+                        "marker_border_color"
+                    ],
+                    "landing_id": self.id,
+                    "filter_group_id": coordinator_filter_group.id,
+                }
+            )
+            # related_filter.setup_slug_id()
+        else:
+            related_filter.write(
+                {
+                    "name": self.name,
+                    "slug_id": self.slug_id,
+                }
+            )
+
+    def apply_coordinator_filter_to_existing_communities(self):
+        self.setup_coordinator_filter_to_existing_communities("apply")
+
+    def remove_coordinator_filter_to_existing_communities(self):
+        self.setup_coordinator_filter_to_existing_communities("remove")
+
+    def setup_coordinator_filter_to_existing_communities(self, type):
+        existing_communities = self.env["res.company"].search(
+            [
+                ("parent_id", "=", self.company_id.id),
+                ("hierarchy_level", "=", "community"),
+            ]
+        )
+        for community in existing_communities:
+            if community.landing_page_id:
+                if community.landing_page_id.map_place_id:
+                    related_coordinator_filter = community.landing_page_id.get_map_coordinator_filter_in_related_place(
+                        self
+                    )
+                    if related_coordinator_filter:
+                        if type == "apply":
+                            mode = 4
+                        if type == "remove":
+                            mode = 3
+                        community.landing_page_id.map_place_id.write(
+                            {"filter_mids": [(mode, related_coordinator_filter.id)]}
+                        )

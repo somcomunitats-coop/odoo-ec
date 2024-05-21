@@ -69,9 +69,6 @@ class ResCompany(models.Model):
     )
     foundation_date = fields.Date("Foundation date")
     social_telegram = fields.Char("Telegram Account")
-    initial_subscription_share_amount = fields.Float(
-        "Initial Subscription Share Amount", digits="Product Price"
-    )
     allow_new_members = fields.Boolean(string="Allow new members", default=True)
     create_user_in_keycloak = fields.Boolean(
         "Create user for keycloak",
@@ -319,29 +316,25 @@ class ResCompany(models.Model):
         return login_provider_id.get_auth_link()
 
     # LANDING
-    def action_create_landing(self):
-        new_landing = self.create_landing()
-        return {
-            "type": "ir.actions.act_window",
-            "view_type": "form",
-            "view_mode": "form",
-            "res_model": "landing.page",
-            "res_id": new_landing.id,
-            "target": "current",
-            "context": context,
-        }
-
     def create_landing(self):
+        if not self.comercial_name:
+            raise ValidationError(
+                _(
+                    "Company comercial name must be established in order to create a landing"
+                )
+            )
+        new_landing = self.action_create_odoo_landing()
+        self.action_create_wp_landing()
+        return new_landing
+
+    def action_create_odoo_landing(self):
         landing_page = self.env["landing.page"]
         vals = {"company_id": self.id, "name": self.comercial_name, "status": "draft"}
         new_landing = landing_page.create(vals)
-        context = {
-            "__last_update": {},
-            "active_model": "landing.page",
-            "active_id": new_landing.id,
-        }
+        new_landing.setup_slug_id()
+        if self.hierarchy_level == "coordinator":
+            new_landing.create_or_update_and_apply_coordinator_filter()
         self.write({"landing_page_id": new_landing.id})
-        self.action_create_wp_landing()
         return new_landing
 
     def action_create_wp_landing(self, fields=None):
@@ -355,7 +348,9 @@ class ResCompany(models.Model):
             auth = Authenticate(baseurl, username, password).authenticate()
             token = "Bearer %s" % auth["token"]
             landing_page_data = self.landing_page_id.to_dict()
-            landing_page = LandingPageResource(token, baseurl).create(landing_page_data)
+            landing_page = LandingPageResource(
+                token, baseurl, self.company_hierarchy_level_url()
+            ).create(landing_page_data)
             self.landing_page_id.write({"wp_landing_page_id": landing_page["id"]})
 
     def get_landing_page_form(self):
@@ -367,6 +362,12 @@ class ResCompany(models.Model):
             "res_id": self.landing_page_id.id,
             "target": "current",
         }
+
+    def company_hierarchy_level_url(self):
+        if self.hierarchy_level == "coordinator":
+            return "rest-ce-coord"
+        else:
+            return "rest-ce-landing"
 
     # TODO: Unused functions. Delete if really not needed.
     def check_ce_has_admin(self):
