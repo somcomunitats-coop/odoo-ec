@@ -51,7 +51,7 @@ class SupplyPoint(models.Model):
 
     # Address fields
     street = fields.Char(required=True)
-    street2 = fields.Char(required=True)
+    street2 = fields.Char()
     zip = fields.Char(change_default=True, required=True)
     city = fields.Char(required=True)
     state_id = fields.Many2one(
