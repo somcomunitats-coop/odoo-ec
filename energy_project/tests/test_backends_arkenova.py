@@ -5,7 +5,12 @@ from odoo.tests.common import TransactionCase
 
 from ..backends.arkenova_backend import ArkenovaBackend
 from ..backends.exceptions import RequestError
-from .backends_data import arkenova_data, member_code, project_code
+from .backends_data import (
+    arkenova_data,
+    member_code,
+    project_code,
+    unknown_project_code,
+)
 
 
 class TestArkenovaBackend(TransactionCase):
@@ -15,8 +20,8 @@ class TestArkenovaBackend(TransactionCase):
         self.token = arkenova_data["token"]
 
         self.endpoint_patch = patch.dict(
-            ArkenovaBackend.ENDPOINTS,
-            {"project_metrics": "project/v1/{system_id}"},
+            ArkenovaBackend._endpoints,
+            {"project_daily_metrics": "project/v1/{system_id}"},
             clear=True,
         )
 
@@ -125,24 +130,6 @@ class TestArkenovaBackend(TransactionCase):
         self.assertEqual(excp_manager.exception.error_code, 400)
         self.assertEqual(excp_manager.exception.message, "Invalid date range")
 
-    def test__project_daily_metrics__wrong_or_unknown_project_id(self):
-        # given project id that is wrong or unknown and an arkenova backend instance
-        project_id = project_code
-        arkenova = ArkenovaBackend(self.url, self.token)
-
-        # when we ask for the daily metrics between two correct dates
-        from_date = str(date(2024, 4, 27))
-        to_date = str(date(2024, 4, 29))
-
-        # then an arkenova exception is raised
-        with self.assertRaises(RequestError) as excp_manager:
-            daily_metrics = arkenova.project_daily_metrics(
-                project_id, from_date, to_date
-            )
-
-        self.assertEqual(excp_manager.exception.error_code, 404)
-        self.assertEqual(excp_manager.exception.message, "Unable to find requested CAU")
-
     def test__project_daily_metrics__wrong_endpoint(self):
         # given project id and an arkenova backend instance with an incorrect endpoint
         project_id = project_code
@@ -162,6 +149,42 @@ class TestArkenovaBackend(TransactionCase):
 
         self.assertEqual(excp_manager.exception.error_code, 400)
         self.assertEqual(excp_manager.exception.message, "Wrong URL format")
+
+    def test__project_daily_metrics__wrong_project_id(self):
+        # given project id that has an incorrect format
+        project_id = "ES54678"
+        arkenova = ArkenovaBackend(self.url, self.token)
+
+        # when we ask for the daily metrics between two correct dates
+        from_date = str(date(2024, 4, 27))
+        to_date = str(date(2024, 4, 29))
+
+        # then an arkenova exception is raised
+        with self.assertRaises(RequestError) as excp_manager:
+            daily_metrics = arkenova.project_daily_metrics(
+                project_id, from_date, to_date
+            )
+
+        self.assertEqual(excp_manager.exception.error_code, 400)
+        self.assertEqual(excp_manager.exception.message, "Invalid CAU format")
+
+    def test__project_daily_metrics__unknown_project_id(self):
+        # given project id that is not under akernova systems
+        project_id = unknown_project_code
+
+        arkenova = ArkenovaBackend(self.url, self.token)
+
+        # when we ask for the daily metrics between two correct dates
+        from_date = str(date(2024, 4, 27))
+        to_date = str(date(2024, 4, 29))
+
+        # then an arkenova exception is raised
+        with self.assertRaises(RequestError) as excp_manager:
+            daily_metrics = arkenova.project_daily_metrics(
+                project_id, from_date, to_date
+            )
+        self.assertEqual(excp_manager.exception.error_code, 404)
+        self.assertEqual(excp_manager.exception.message, "Unable to find requested CAU")
 
     def test__project_daily_metrics_by_member__ok(self):
         # given a project and an arkenova backend instance
