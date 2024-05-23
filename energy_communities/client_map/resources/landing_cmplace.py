@@ -150,6 +150,7 @@ class LandingCmPlace:
             )
         # Related coordinator
         if self.landing.hierarchy_level == "community":
+            coord_filter = False
             if self.landing.parent_landing_id:
                 if self.landing.parent_landing_id.status == "publish":
                     coord_filter = (
