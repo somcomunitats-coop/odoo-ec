@@ -26,11 +26,19 @@
             <xpath expr="//sheet" position="before">
                 <header>
                     <field name="landing_page_id" invisible="1" />
+                    <field name="hierarchy_level" invisible="1" />
                     <button
             name="create_landing"
             type="object"
             string="Create landing page"
             attrs="{'invisible': [('landing_page_id','!=',False)]}"
+          />
+                    <button
+            name="action_open_change_coordinator_wizard"
+            type="object"
+            string="Change coordinator"
+            groups="energy_communities.group_platform_manager"
+            attrs="{'invisible':[('hierarchy_level', '!=','community')]}"
           />
                 </header>
             </xpath>

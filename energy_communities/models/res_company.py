@@ -315,6 +315,12 @@ class ResCompany(models.Model):
         login_provider_id = self.env.ref("energy_communities.keycloak_login_provider")
         return login_provider_id.get_auth_link()
 
+    def company_hierarchy_level_url(self):
+        if self.hierarchy_level == "coordinator":
+            return "rest-ce-coord"
+        else:
+            return "rest-ce-landing"
+
     # LANDING
     def create_landing(self):
         if not self.comercial_name:
@@ -363,11 +369,18 @@ class ResCompany(models.Model):
             "target": "current",
         }
 
-    def company_hierarchy_level_url(self):
-        if self.hierarchy_level == "coordinator":
-            return "rest-ce-coord"
-        else:
-            return "rest-ce-landing"
+    # CHANGE COORDINATOR
+    def action_open_change_coordinator_wizard(self):
+        wizard = self.env["change.coordinator.wizard"].create({})
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Change coordinator"),
+            "res_model": "change.coordinator.wizard",
+            "view_type": "form",
+            "view_mode": "form",
+            "target": "new",
+            "res_id": wizard.id,
+        }
 
     # TODO: Unused functions. Delete if really not needed.
     def check_ce_has_admin(self):
