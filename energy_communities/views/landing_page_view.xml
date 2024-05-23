@@ -45,6 +45,8 @@
           <field name="publicdata_lastupdate_datetime" readonly="True" />
           <field name="wp_landing_page_id" readonly="True" />
           <field name="name" />
+          <field name="slug_id" required="True" />
+          <field name="hierarchy_level" />
           <field name="allow_new_members" />
           <field name="number_of_members" />
           <field name="community_type" />
@@ -54,6 +56,7 @@
         <group>
           <field name="external_website_link" />
           <field name="show_web_link_on_header" />
+          <field name="show_newsletter_form" />
           <field name="twitter_link" />
           <field name="instagram_link" />
           <field name="telegram_link" />
@@ -63,6 +66,7 @@
           <field name="secondary_image_file" widget="image" />
         </group>
         <group>
+          <field name="company_logo" />
           <field name="short_description" />
           <field name="long_description" />
           <field name="why_become_cooperator" widget="html" />
@@ -78,6 +82,11 @@
         </group>
         <group>
           <field name="community_active_services" />
+        </group>
+        <group name="Coordinators">
+          <field name="awareness_services" />
+          <field name="design_services" />
+          <field name="management_services" />
         </group>
       </form>
     </field>

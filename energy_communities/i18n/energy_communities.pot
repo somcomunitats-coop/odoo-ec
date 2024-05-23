@@ -219,6 +219,13 @@ msgid "Button configs not found."
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__management_services
+#, python-format
+msgid "CCEE management services"
+msgstr ""
+
+#. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_creation_ce_proposal
 msgid "CE creation"
 msgstr ""
@@ -368,6 +375,13 @@ msgid "Company hierarchy level"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__company_logo
+#, python-format
+msgid "Company logo"
+msgstr ""
+
+#. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_collective_purchases
 msgid "Compres col·lectives"
 msgstr ""
@@ -414,6 +428,11 @@ msgstr ""
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_contact
 msgid "Contact a existing CE"
+msgstr ""
+
+#. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_existing_coord_contact
+msgid "Contact existing coordinator"
 msgstr ""
 
 #. module: energy_communities
@@ -884,6 +903,11 @@ msgid "Industrial"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_view_crm_case_opportunities_filter
+msgid "Info COORD"
+msgstr ""
+
+#. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_general_info
 msgid "Information Newsletter (general)"
 msgstr ""
@@ -896,6 +920,11 @@ msgstr ""
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_existing_ce_info
 msgid "Information about existing CE"
+msgstr ""
+
+#. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_existing_coord_info
+msgid "Information about existing coordinator"
 msgstr ""
 
 #. module: energy_communities
@@ -968,6 +997,13 @@ msgstr ""
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Landing lng param required for place creation"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/cm_place.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_cm_place__landing_reference
+#, python-format
+msgid "Landing reference"
 msgstr ""
 
 #. module: energy_communities
@@ -1532,6 +1568,20 @@ msgid "Send"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__design_services
+#, python-format
+msgid "Services for the design and implementation of CCEE"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__awareness_services
+#, python-format
+msgid "Services to raise awareness in the creation of CCEE"
+msgstr ""
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
 msgid "Share number"
 msgstr ""
@@ -1552,6 +1602,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__show_web_link_on_header
 #, python-format
 msgid "Show external website link also in header"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__show_newsletter_form
+#, python-format
+msgid "Show newsletter form"
 msgstr ""
 
 #. module: energy_communities
@@ -2177,6 +2234,8 @@ msgid "€ by follow the steps you will receive by email."
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
 msgid "€_eu_ES."
 msgstr ""
+

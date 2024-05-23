@@ -45,6 +45,26 @@
           string="Other COORD"
           domain="[('source_id','=', %(energy_communities.ce_source_coord_web_other)d)]"
         />
+						<filter
+          name="ce_source_existing_coord_contact"
+          string="Contact COORD"
+          domain="[('source_id','=', %(energy_communities.ce_source_existing_coord_contact)d)]"
+        />
+						<filter
+          name="ce_source_existing_coord_info"
+          string="Info COORD"
+          domain="[('source_id','=', %(energy_communities.ce_source_existing_coord_info)d)]"
+        />
+						<filter
+          name="ce_source_existing_coord_contact"
+          string="Contact COORD"
+          domain="[('source_id','=', %(energy_communities.ce_source_existing_coord_contact)d)]"
+        />
+						<filter
+          name="ce_source_existing_coord_info"
+          string="Info COORD"
+          domain="[('source_id','=', %(energy_communities.ce_source_existing_coord_info)d)]"
+        />
 				<filter
           name="no_web_form_origin"
           string="No web form origin"

@@ -106,6 +106,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     )
     # landing / public data
     create_landing = fields.Boolean(string="Create Landing", default=False)
+    create_place = fields.Boolean(string="Create Map Place", default=False)
     landing_short_description = fields.Text(string="Short description")
     landing_long_description = fields.Text(string="Long description")
     ce_tag_ids = fields.Many2many("crm.tag", string="Energy Community Services")
@@ -162,6 +163,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "domain": {"parent_id": [("hierarchy_level", "=", "coordinator")]},
                 }
             if record.hierarchy_level == "coordinator":
+                record.create_place = False
                 return {
                     "value": {"parent_id": self.env.ref("base.main_company").id},
                     "domain": {"parent_id": [("hierarchy_level", "=", "instance")]},
@@ -251,9 +253,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 "active": True,
                 "taxes_id": taxes_id,
             }
-        )
-        self_new_company.new_company_id.initial_subscription_share_amount = (
-            self.capital_share
         )
 
     def set_cooperative_account(self):
@@ -393,7 +392,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 "city": self.city,
             }
         )
-        new_landing.create_landing_place()
+        if self.create_place:
+            new_landing.create_landing_place()
 
     def thread_action_accept(self):
         self.configure_community_accounting()

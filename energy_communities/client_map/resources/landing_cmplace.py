@@ -148,6 +148,15 @@ class LandingCmPlace:
                     place_community_status_slug
                 )
             )
+        # Related coordinator
+        if self.landing.hierarchy_level == "community":
+            if self.landing.parent_landing_id:
+                if self.landing.parent_landing_id.status == "publish":
+                    coord_filter = (
+                        self.landing.get_map_coordinator_filter_in_related_place()
+                    )
+            if coord_filter:
+                ret_dict["data"]["filter_mids"].append((4, coord_filter.id))
         # Community active services
         for service in self.landing.community_active_services:
             service_slug = MapClientConfig.MAPPING__LANDING_ACTIVE_SERVICES__MAP_FILTER[
@@ -222,7 +231,10 @@ class LandingCmPlace:
             auth = Authenticate(baseurl, username, password).authenticate()
             token = "Bearer %s" % auth["token"]
             landing_page_wp_data = LandingPageResource(
-                token, baseurl, self.landing.wp_landing_page_id
+                token,
+                baseurl,
+                self.landing.company_hierarchy_level_url(),
+                self.landing.wp_landing_page_id,
             ).get()
             return landing_page_wp_data
         return False
@@ -246,7 +258,9 @@ class LandingCmPlace:
                 self._become_cooperator_external_link(place.id).id
             )
         else:
-            new_external_links_ids.append(self._contact_external_link(place).id)
+            contact_external_link = self._contact_external_link(place)
+            if contact_external_link:
+                new_external_links_ids.append(contact_external_link.id)
         new_external_links_ids.append(self._landing_external_link(place).id)
         # remove old external_links if needed
         for existing_external_link in existing_external_links:
@@ -328,25 +342,27 @@ class LandingCmPlace:
         return external_link
 
     def _contact_external_link(self, place):
-        external_link = self._get_or_create_external_link(
-            place.id,
-            MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["ca_ES"],
-            "{landing_link}/#contacte".format(
-                landing_link=self.wp_landing_data["link"]
-            ),
-            "_top",
-            self.button_configs["yellow"].id,
-            0,
-        )
-        # es_ES Translation
-        self._update_translation(
-            "cm.place.external.link,name",
-            external_link.id,
-            MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["ca_ES"],
-            MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["es_ES"],
-            "es_ES",
-        )
-        if self.wp_landing_data["translations"]:
+        external_link = False
+        if self.wp_landing_data["link"]:
+            external_link = self._get_or_create_external_link(
+                place.id,
+                MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["ca_ES"],
+                "{landing_link}/#contacte".format(
+                    landing_link=self.wp_landing_data["link"]
+                ),
+                "_top",
+                self.button_configs["yellow"].id,
+                0,
+            )
+            # es_ES Translation
+            self._update_translation(
+                "cm.place.external.link,name",
+                external_link.id,
+                MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["ca_ES"],
+                MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["es_ES"],
+                "es_ES",
+            )
+        if self.wp_landing_data["translations"] and external_link:
             if "es" in self.wp_landing_data["translations"].keys():
                 self._update_translation(
                     "cm.place.external.link,url",
@@ -439,7 +455,6 @@ class LandingCmPlace:
                 lang,
             )
 
-    # TODO: Make all this translation block more compliant with ir.translation model
     def _get_active_languages(self):
         return self.landing.env["res.lang"].search([("active", "=", 1)]).mapped("code")
 
