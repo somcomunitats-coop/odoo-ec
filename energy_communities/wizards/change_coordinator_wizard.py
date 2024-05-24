@@ -13,4 +13,9 @@ class ChangeCoordinatorWizard(models.TransientModel):
     change_reason = fields.Text("Change reason")
 
     def execute_change(self):
-        print("DONE!")
+        if "active_ids" in self.env.context.keys():
+            impacted_companies = self.env["res.company"].browse(
+                self.env.context["active_ids"]
+            )
+            for company in impacted_companies:
+                print("Company: {}".format(company.name))

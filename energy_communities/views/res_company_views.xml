@@ -1,5 +1,14 @@
 <?xml version="1.0" ?>
 <odoo>
+    <act_window
+    id="act_window_change_coordinator"
+    name="Change Coordinator"
+    binding_model="res.company"
+    res_model="change.coordinator.wizard"
+    view_mode="form"
+    target="new"
+    groups="energy_communities.group_platform_manager"
+  />
     <record id="view_company_form_ce_inherited" model="ir.ui.view">
         <field name="name">res.company.tree.ce.inherited</field>
         <field name="model">res.company</field>
