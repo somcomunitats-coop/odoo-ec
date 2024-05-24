@@ -10,6 +10,7 @@ class ChangeCoordinatorWizard(models.TransientModel):
     coordinator_destination = fields.Many2one(
         "res.company", string="Destination Coordinator"
     )
+    change_reason = fields.Text("Change reason")
 
     def execute_change(self):
         print("DONE!")
