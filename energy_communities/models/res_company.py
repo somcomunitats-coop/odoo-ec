@@ -1,5 +1,4 @@
 import re
-from datetime import datetime
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
@@ -407,19 +406,20 @@ class ResCompany(models.Model):
         self, incoming_coordinator, outgoing_coordinator, change_reason
     ):
         message = _(
-            "[COORD_CHANGE] On [PROCESS_DATE: {date}] there has been a coordinator change \
+            "There has been a coordinator change \
             from [OLD:{outgoing_id}] {outgoing_name} to [NEW:{incoming_id}] {incoming_name}, \
-            executed by {user_name}. Change reason: {change_reason}"
+            Change reason: {change_reason}"
         ).format(
-            date=datetime.now(),
             outgoing_id=outgoing_coordinator.id,
             outgoing_name=outgoing_coordinator.name,
             incoming_id=incoming_coordinator.id,
             incoming_name=incoming_coordinator.name,
-            user_name=self.env.user.name,
             change_reason=change_reason,
         )
-        self.message_post(body=message)
+        self.message_post(
+            subject="[COORD_CHANGE]",
+            body=message,
+        )
 
     def _adjust_related_map_place_filtering(
         self, outgoing_coordinator, incoming_coordinator
