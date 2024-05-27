@@ -16,7 +16,7 @@ class ChangeCoordinatorWizard(models.TransientModel):
                 self.env.context["active_ids"]
             )
             for company in impacted_companies:
-                company.change_coordinator(
+                company.with_delay().change_coordinator(
                     self.incoming_coordinator, self.change_reason
                 )
             return {
