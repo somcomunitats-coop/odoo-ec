@@ -7,9 +7,7 @@ class ChangeCoordinatorWizard(models.TransientModel):
     _name = "change.coordinator.wizard"
     _description = "Change the coordinator of an existing energy community"
 
-    coordinator_destination = fields.Many2one(
-        "res.company", string="Destination Coordinator"
-    )
+    incoming_coordinator = fields.Many2one("res.company", string="Incoming Coordinator")
     change_reason = fields.Text("Change reason")
 
     def execute_change(self):
@@ -18,4 +16,17 @@ class ChangeCoordinatorWizard(models.TransientModel):
                 self.env.context["active_ids"]
             )
             for company in impacted_companies:
-                print("Company: {}".format(company.name))
+                company.change_coordinator(
+                    self.incoming_coordinator, self.change_reason
+                )
+            return {
+                "type": "ir.actions.client",
+                "tag": "display_notification",
+                "params": {
+                    "type": "success",
+                    "title": _("Coordinator change successful"),
+                    "message": _("This community has been moved to a new coordinator"),
+                    "sticky": False,
+                    "next": {"type": "ir.actions.act_window_close"},
+                },
+            }

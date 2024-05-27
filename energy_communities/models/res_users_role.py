@@ -9,3 +9,5 @@ class ResUsersRole(models.Model):
 
 class ResUsersRoleLine(models.Model):
     _inherit = "res.users.role.line"
+
+    code = fields.Char(related="role_id.code")
