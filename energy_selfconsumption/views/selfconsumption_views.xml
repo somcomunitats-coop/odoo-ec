@@ -57,7 +57,12 @@
               name="set_invoicing_mode"
               attrs="{'invisible':[('invoicing_mode', '!=', False)]}"
             />
-
+                        <button
+              type="object"
+              string="Autogenerate inscriptions,mandataris and supply points"
+              name="set_autogenerate_inscriptions_mandataris_supply_points"
+              attrs="{'invisible':[('state','not in',['inscription'])]}"
+            />
                         <field
               name="state"
               widget="statusbar"

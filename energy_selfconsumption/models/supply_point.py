@@ -34,19 +34,21 @@ class SupplyPoint(models.Model):
         "res.partner",
         string="Owner",
         required=True,
+        index=True,
         help="Partner with the legal obligation of the supply point",
     )
     partner_id = fields.Many2one(
         "res.partner",
         string="Cooperator",
         required=True,
+        index=True,
         help="Cooperator subscribed to the self-consumption project",
     )
     company_id = fields.Many2one(
-        "res.company", default=lambda self: self.env.company, readonly=True
+        "res.company", default=lambda self: self.env.company, readonly=True, index=True
     )
     reseller_id = fields.Many2one(
-        "energy_project.reseller", string="Reseller", domain=[("state", "!=", "Baja")]
+        "energy_project.reseller", string="Reseller", domain=[("state", "!=", "Baja")], index=True
     )
 
     # Address fields
@@ -69,6 +71,7 @@ class SupplyPoint(models.Model):
         "energy_selfconsumption.supply_point_assignation",
         "supply_point_id",
         readonly=True,
+        index=True
     )
     supplier_id = fields.Many2one("energy_project.supplier", string="Supplier")
     cadastral_reference = fields.Char(string="Cadastral reference")

@@ -1,8 +1,93 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
-        <record id="distribution_table_form_view" model="ir.ui.view">
-            <field name="name">energy_selfconsumption.distribution_table_form_view.form
+        <record id="distribution_table_fixed_form_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.distribution_table_fixed_form_view.form
+            </field>
+            <field name="model">energy_selfconsumption.distribution_table</field>
+            <field name="arch" type="xml">
+                <form string="Distribution Table">
+                    <header>
+                        <button
+              type="object"
+              string="Validate"
+              name="button_validate"
+              states="draft"
+              class="btn btn-primary"
+            />
+                        <button
+              type="object"
+              string="Reset to draft"
+              name="button_draft"
+              attrs="{'invisible':['|',('state','not in',['validated']),('selfconsumption_project_state','not in',['inscription'])]}"
+            />
+                        <button
+              type="object"
+              name="action_distribution_table_import_wizard"
+              string="Import table"
+              states="draft"
+            />
+                        <field
+              name="state"
+              widget="statusbar"
+              readonly="True"
+              statusbar_visible="draft,validated,process,active"
+            />
+                        <field name="selfconsumption_project_state" invisible="1" />
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon"
+              text="Archived"
+              bg_color="bg-danger"
+              attrs="{'invisible': [('active', '=', True)]}"
+            />
+                        <field name="active" invisible="True" />
+                        <group>
+                            <group>
+                                <field name="selfconsumption_project_id"
+                  readonly="True"
+                />
+                            </group>
+                            <group>
+                                <field name="type"
+                  attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                />
+                            </group>
+                        </group>
+                        <group>
+                            <field
+                name="supply_point_assignation_ids"
+                widget="one2many"
+                mode="list"
+                context="{'default_distribution_table_id':id}"
+                attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+              >
+                                <tree editable="bottom">
+                                    <field name="supply_point_filtered_ids"
+                    invisible="True"
+                  />
+                                    <field name="table_coefficient_is_valid"
+                    invisible="True"
+                  />
+                                    <field name="supply_point_id"
+                    options="{'no_create': True, 'search_more': True}"
+                    domain="[('id', 'in', supply_point_filtered_ids)]"
+                  />
+                                    <field name="owner_id" />
+                                    <field name="code" />
+                                    <field name="coefficient" sum="True"
+                    decoration-success="table_coefficient_is_valid == True"
+                  />
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="distribution_table_hourly_form_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.distribution_table_hourly_form_view.form
             </field>
             <field name="model">energy_selfconsumption.distribution_table</field>
             <field name="arch" type="xml">
@@ -45,58 +130,21 @@
                         <field name="active" invisible="True" />
                         <group>
                             <group>
-                                <field
-                  name="selfconsumption_project_id"
-                  readonly="True"
+                                <field name="selfconsumption_project_id" readonly="True"
                 />
                             </group>
                             <group>
-                                <field
-                  name="type"
+                                <field name="type"
                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"
                 />
                             </group>
                         </group>
                         <group>
-                            <field
-                name="supply_point_group_ids"
-                attrs="{'invisible': [('type', '!=', 'hourly')]}"
-              >
+                            <field name="supply_point_group_ids">
                                 <tree>
                                     <field name="name" />
                                     <field name="owner_id" />
                                     <field name="code" />
-                                </tree>
-                            </field>
-
-                            <field
-                name="supply_point_assignation_ids"
-                widget="one2many"
-                mode="list"
-                context="{'default_distribution_table_id':id}"
-                attrs="{'readonly': [('state', 'not in', ['draft'])], 'invisible': [('type', '!=', 'fixed')]}"
-              >
-                                <tree editable="bottom">
-                                    <field
-                    name="supply_point_filtered_ids"
-                    invisible="True"
-                  />
-                                    <field
-                    name="table_coefficient_is_valid"
-                    invisible="True"
-                  />
-                                    <field
-                    name="supply_point_id"
-                    options="{'no_create': True, 'search_more': True}"
-                    domain="[('id', 'in', supply_point_filtered_ids)]"
-                  />
-                                    <field name="owner_id" />
-                                    <field name="code" />
-                                    <field
-                    name="coefficient"
-                    sum="True"
-                    decoration-success="table_coefficient_is_valid == True"
-                  />
                                 </tree>
                             </field>
                         </group>
@@ -109,7 +157,7 @@
             <field name="name">energy_selfconsumption.distribution_table.tree</field>
             <field name="model">energy_selfconsumption.distribution_table</field>
             <field name="arch" type="xml">
-                <tree string="Distribution Table">
+                <tree string="Distribution Table" js_class="distribution_table">
                     <field name="name" />
                     <field name="selfconsumption_project_id" />
                     <field name="create_date" />
@@ -157,5 +205,22 @@
       file="distribution_table"
       attachment_use="False"
     />
+        <record
+      id="manager_clean_supply_point_assignation_action"
+      model="ir.actions.server"
+    >
+            <field name="name">Clean supply point assignation</field>
+            <field name="model_id" ref="model_energy_selfconsumption_distribution_table" />
+            <field
+        name="binding_model_id"
+        ref="model_energy_selfconsumption_distribution_table"
+      />
+            <field name="binding_type">action</field>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field
+        name="code"
+      >action = records.action_clean_supply_point_assignation_wizard()</field>
+        </record>
     </data>
 </odoo>

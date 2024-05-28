@@ -6,6 +6,12 @@ from stdnum.exceptions import *
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
+import random
+import logging
+
+_logger = logging.getLogger(__name__)
+
+
 INVOICING_VALUES = [
     ("power_acquired", _("Power Acquired")),
     ("energy_delivered", _("Energy Delivered")),
@@ -369,6 +375,172 @@ class Selfconsumption(models.Model):
             selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
 
         return True
+
+    def set_autogenerate_inscriptions(self):
+        partners_socios = self.env["res.partner"].search([('member','=','True')],
+                                                         limit=500)
+        for partner in partners_socios:
+            mandates = self.env["account.banking.mandate"].search(
+                [
+                    ("partner_id", "=", partner.id),
+                    ("company_id", "=", partner.company_id.id),
+                    ("state", "=", "valid"),
+                ]
+            )
+            if mandates:
+                self.env['energy_project.inscription'].create({
+                    "project_id": self.project_id.id,
+                    "partner_id": partner.id,
+                    "effective_date": datetime.now().strftime("%Y-%m-%d"),
+                    "mandate_id": mandates[0].id,
+                })
+
+        return True
+
+    def generar_iban_espanol(self):
+        # Código de país y dígitos de control iniciales
+        pais = "ES"
+        digitos_control = "00"
+
+        # Generar los 20 dígitos aleatorios
+        digitos_aleatorios = ''.join([str(random.randint(0, 9)) for _ in range(20)])
+
+        # Concatenar todo para formar el IBAN
+        iban = pais + digitos_control + digitos_aleatorios
+
+        # Calcular el dígito de control
+        d_control = str(98 - int(iban[2:]) % 97)
+
+        # Ajustar el dígito de control si es necesario
+        if len(d_control) == 1:
+            d_control = '0' + d_control
+
+        # Reemplazar los dígitos de control iniciales con el dígito de control calculado
+        iban = pais + d_control + digitos_aleatorios
+
+        return iban
+
+    def generar_vat_espanol(self):
+        letras_nif = "TRWAGMYFPDXBNJZSQVHLCKE"
+        numero = str(random.randint(0, 99999999)).zfill(8)
+        letra = letras_nif[int(numero) % 23]
+        return numero + letra
+
+    def generate_cups(self):
+        alphabet = "TRWAGMYFPDXBNJZSQVHLCKE"
+
+        def generate_numeric_part():
+            distributor = "1234"
+            supply_number = str(random.randint(0, 999999999999)).zfill(12)
+            return distributor + supply_number
+
+        def calculate_control_characters(numeric_part):
+            integer_number = int(numeric_part)
+            # Calculate the remainder of dividing the integer by 529
+            # This remainder is used to determine the control characters
+            R0 = integer_number % 529
+            # Divide R0 by 23 and use integer division to get the index of the first control character
+            C = R0 // 23
+            # Use the remainder of dividing R0 by 23 to get the index of the second control character
+            R = R0 % 23
+            return alphabet[C] + alphabet[R]
+
+        numeric_part = generate_numeric_part()
+        control_characters = calculate_control_characters(numeric_part)
+        formatted_cups = f"ES{numeric_part}{control_characters}"
+        return formatted_cups
+
+    def set_autogenerate_inscriptions_mandataris_supply_points(self):
+        for i in range(0, 500):
+            _logger.info(f"\n\n Creando el cliente número {i}")
+            country_id = self.env["res.country"].search([("code", "=", "ES")]
+                                                        )[0].id
+            vat = self.generar_vat_espanol()
+            partner = self.env["res.partner"].create({
+                "name": f"Prueba {vat} {i}",
+                "vat": vat,
+                "country_id": country_id,
+                "state_id": self.env["res.country.state"].search(
+                    [("code", "=", 'MA'), ("country_id", "=", country_id)]
+                )[0].id,
+                "member": True,
+                "street": f"Calle imaginación {i}",
+                "city": "Madrid",
+                "zip": 28221,
+                "type": "contact",
+                "company_id": self.env.company.id,
+                # "company_type": "person",
+            })
+            _logger.info(f"\n\n Cliente creado {partner.name}")
+
+            bank_account = self.env["res.partner.bank"].create(
+                {
+                    "acc_number": self.generar_iban_espanol(),
+                    "partner_id": partner.id,
+                    "company_id": self.env.company.id,
+                }
+            )
+
+            _logger.info(f"\n\n Cuenta del cliente creada {bank_account.acc_number}")
+
+            mandate = self.env["account.banking.mandate"].create(
+                {
+                    "format": "sepa",
+                    "type": "recurrent",
+                    "state": "valid",
+                    "signature_date": datetime.now().strftime("%Y-%m-%d"),
+                    "partner_bank_id": bank_account.id,
+                    "partner_id": partner.id,
+                    "company_id": self.env.company.id,
+                }
+            )
+
+            _logger.info(f"\n\n Mandato del cliente creado {mandate.id}")
+
+            inscription = self.env['energy_project.inscription'].create({
+                "project_id": self.project_id.id,
+                "partner_id": partner.id,
+                "effective_date": datetime.now().strftime("%Y-%m-%d"),
+                "mandate_id": mandate.id,
+            })
+
+            _logger.info(f"\n\n Incripción del cliente creada {inscription.id}")
+
+            _ACCESS_TARIFF_VALUES = [
+                ("6.1TD", "6.1TD"),
+                ("6.2TD", "6.2TD"),
+                ("6.3TD", "6.3TD"),
+                ("6.4TD", "6.4TD"),
+            ]
+
+            contracted_power = round(random.uniform(1, 100), 2)
+
+            if contracted_power <= 15:
+                tariff = "2.0TD"
+            elif contracted_power <= 50:
+                tariff = "3.0TD"
+            else:
+                tariff = random.choice(_ACCESS_TARIFF_VALUES)[0]
+
+            supply_point = self.env["energy_selfconsumption.supply_point"].create(
+                {
+                    "code": self.generate_cups(),
+                    "name": partner.street,
+                    "street": partner.street,
+                    "city": partner.city,
+                    "zip": partner.zip,
+                    "state_id": partner.state_id.id,
+                    "country_id": partner.country_id.id,
+                    "owner_id": partner.id,
+                    "partner_id": partner.id,
+                    "contracted_power": contracted_power,
+                    "tariff": tariff
+                }
+            )
+
+            _logger.info(f"\n\n Supply point del cliente creado {supply_point.id}")
+        return True
+
 
     @api.constrains("code")
     def _check_valid_code(self):

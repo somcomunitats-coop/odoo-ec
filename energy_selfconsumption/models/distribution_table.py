@@ -62,34 +62,38 @@ class DistributionTable(models.Model):
             values = list(map(lambda x: x["supply_point_id"][0], id_list))
             record.write({"supply_point_group_ids": [(6, 0, values)]})
 
-    name = fields.Char(readonly=True)
+    name = fields.Char(readonly=True, index=True)
     selfconsumption_project_id = fields.Many2one(
-        "energy_selfconsumption.selfconsumption", required=True, readonly=True
+        "energy_selfconsumption.selfconsumption", required=True, readonly=True, index=True
     )
     selfconsumption_project_state = fields.Selection(
-        related="selfconsumption_project_id.state"
+        related="selfconsumption_project_id.state",index=True
     )
     type = fields.Selection(
         TYPE_VALUES,
         default="fixed",
         required=True,
         string="Modality",
+        index=True
     )
-    state = fields.Selection(STATE_VALUES, default="draft", required=True)
+    state = fields.Selection(STATE_VALUES, default="draft", required=True, index=True)
     supply_point_assignation_ids = fields.One2many(
-        "energy_selfconsumption.supply_point_assignation", "distribution_table_id"
+        "energy_selfconsumption.supply_point_assignation", "distribution_table_id", lazy="dynamic"
     )
     supply_point_group_ids = fields.Many2many(
         "energy_selfconsumption.supply_point",
+        "energy_selfconsumption_supply_point_group_rel",
         compute=_compute_supply_point_group_ids,
         readonly=True,
+        store=True,
+        lazy="dynamic"
     )
     coefficient_is_valid = fields.Boolean(
-        compute=_compute_coefficient_is_valid, readonly=True, store=False
+        compute=_compute_coefficient_is_valid, readonly=True, store=True, index=True
     )
     active = fields.Boolean(default=True)
     company_id = fields.Many2one(
-        "res.company", default=lambda self: self.env.company, readonly=True
+        "res.company", default=lambda self: self.env.company, readonly=True, index=True
     )
 
     @api.model
@@ -147,3 +151,37 @@ class DistributionTable(models.Model):
             "view_id": False,
             "target": "new",
         }
+
+    def action_clean_supply_point_assignation_wizard(self):
+        return {
+            "name": _("Clean supply point assignation"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "clean.supply.point.assignation.wizzard",
+            "target": "new",
+            'context': {'active_ids': self.env.context.get('active_ids', [])}
+        }
+
+    def action_open_form(self):
+        self.ensure_one()
+        if self.type == 'fixed':
+            return {
+                'type': 'ir.actions.act_window',
+                'name': 'Distribution Table',
+                'view_mode': 'form',
+                'res_model': 'energy_selfconsumption.distribution_table',
+                'res_id': self.id,
+                'views': [(self.env.ref('energy_selfconsumption.distribution_table_fixed_form_view').id, 'form')],
+                'target': 'current',
+            }
+        else:
+            return {
+                'type': 'ir.actions.act_window',
+                'name': 'Distribution Table',
+                'view_mode': 'form',
+                'res_model': 'energy_selfconsumption.distribution_table',
+                'res_id': self.id,
+                'views': [(self.env.ref('energy_selfconsumption.distribution_table_hourly_form_view').id, 'form')],
+                'target': 'current',
+            }
+
