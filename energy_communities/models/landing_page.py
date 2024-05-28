@@ -305,18 +305,18 @@ class LandingPage(models.Model):
 
     def action_create_landing_place(self):
         for record in self:
-            record.create_landing_place()
+            record.sudo().create_landing_place()
 
     def action_update_public_data(self):
         for record in self:
             record._update_wordpress()
             if self.map_place_id:
-                record._update_landing_place()
+                record.sudo()._update_landing_place()
             if self.hierarchy_level == "coordinator":
                 if self.status == "publish":
-                    self.create_or_update_and_apply_coordinator_filter()
+                    self.sudo().create_or_update_and_apply_coordinator_filter()
                 else:
-                    self.remove_coordinator_filter_to_existing_communities()
+                    self.sudo().remove_coordinator_filter_to_existing_communities()
             self.write({"publicdata_lastupdate_datetime": datetime.now()})
             return {
                 "type": "ir.actions.client",
