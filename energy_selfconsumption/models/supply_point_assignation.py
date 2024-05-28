@@ -81,7 +81,6 @@ class SupplyPointAssignation(models.Model):
                     \ncode: {record.code}
                     \ncode: {record.coefficient}
                 """))
-                #raise ValidationError(_("Coefficient can't be negative."))
 
     @api.constrains("supply_point_id")
     def constraint_supply_point_id(self):
