@@ -2,10 +2,13 @@ from functools import lru_cache, reduce
 
 from ..backends.base import Backend
 
-# Functions to manage attributes access and operations
+# Functions for attribute access
 _get_energy_production = lambda point: float(point.get("energy_production", 0))
 _get_energy_selfconsumption = lambda point: float(point.get("selfconsumption", 0))
 _get_energy_exported = lambda point: float(point.get("energy_exported", 0))
+_get_energy_consumption = lambda point: float(point.get("energy_consumption", 0))
+
+# Functions for operations
 _selfconsumption_ratio_pair = lambda accumulator, point: (
     accumulator[0] + _get_energy_selfconsumption(point),
     accumulator[1] + _get_energy_production(point),
@@ -17,6 +20,8 @@ _selfconsumption_surplus_ratio_pair = lambda accumulator, point: (
 
 
 class MonitoringService:
+    SPANISH_CO2_SAVE_RATIO = 162
+
     def __init__(self, backend: Backend):
         self.backend = backend
 
@@ -46,6 +51,14 @@ class MonitoringService:
             _selfconsumption_surplus_ratio_pair, daily_metrics, (0, 0)
         )
         return round(selfconsumed_surplus_energy / generated_energy, 4)
+
+    def co2save_by_member(self, system_id, member_id, date_from, date_to):
+        daily_metrics = self._get_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        self_consumed_energy = sum(map(_get_energy_selfconsumption, daily_metrics))
+        co2_saved = self_consumed_energy * self.SPANISH_CO2_SAVE_RATIO
+        return co2_saved
 
     @lru_cache
     def _get_daily_metrics_by_member(self, system_id, member_id, from_date, to_date):

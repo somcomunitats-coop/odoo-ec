@@ -11,6 +11,7 @@ class TestMonitoringService(TransactionCase):
     def setUp(self):
         self.maxDiff = None
         self.backend = ArkenovaBackend(**arkenova_data)
+        self.monitoring_service = MonitoringService(backend=self.backend)
 
     def test__create_monitoring_service(self):
         # given a backend that provide valid data
@@ -31,10 +32,10 @@ class TestMonitoringService(TransactionCase):
         # a member id
         member_id = member_code
         # and a monitoring service
-        monitoring_service = MonitoringService(backend=self.backend)
+        # self.monitoring_service
 
         # when we ask for the generated_energy for that user
-        generated_energy = monitoring_service.generated_energy_by_member(
+        generated_energy = self.monitoring_service.generated_energy_by_member(
             system_id, member_id, date_from, date_to
         )
 
@@ -50,11 +51,13 @@ class TestMonitoringService(TransactionCase):
         # a member id
         member_id = member_code
         # and a monitoring service
-        monitoring_service = MonitoringService(backend=self.backend)
+        # self.monitoring_service
 
         # when we ask for percentage of energy self-consumed
-        selfconsumed_ratio = monitoring_service.energy_selfconsumed_ratio_by_member(
-            system_id, member_id, date_from, date_to
+        selfconsumed_ratio = (
+            self.monitoring_service.energy_selfconsumed_ratio_by_member(
+                system_id, member_id, date_from, date_to
+            )
         )
 
         # then we obtain the value of the generated energy between that dates
@@ -69,10 +72,10 @@ class TestMonitoringService(TransactionCase):
         # a member id
         member_id = member_code
         # and a monitoring service
-        monitoring_service = MonitoringService(backend=self.backend)
+        # self.monitoring_service
 
         # when we ask for percentage of energy exported to the energy grid
-        surplus_ratio = monitoring_service.energy_surplus_ratio_by_member(
+        surplus_ratio = self.monitoring_service.energy_surplus_ratio_by_member(
             system_id, member_id, date_from, date_to
         )
 
@@ -88,16 +91,37 @@ class TestMonitoringService(TransactionCase):
         # a member id
         member_id = member_code
         # and a monitoring service
-        monitoring_service = MonitoringService(backend=self.backend)
+        # self.monitoring_service
 
         # when we ask for the percentage of energy exported to the energy grid
-        surplus_ratio = monitoring_service.energy_surplus_ratio_by_member(
+        surplus_ratio = self.monitoring_service.energy_surplus_ratio_by_member(
             system_id, member_id, date_from, date_to
         )
         # and we ask for the percentage of energy selfconsumed
-        selfconsumed_ratio = monitoring_service.energy_selfconsumed_ratio_by_member(
-            system_id, member_id, date_from, date_to
+        selfconsumed_ratio = (
+            self.monitoring_service.energy_selfconsumed_ratio_by_member(
+                system_id, member_id, date_from, date_to
+            )
         )
 
         # then the sum must be 1
         self.assertEqual(surplus_ratio + selfconsumed_ratio, 1.0)
+
+    def test__co2save_by_member(self):
+        # given two dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # a valid system id
+        system_id = project_code
+        # a member id
+        member_id = member_code
+        # and a monitoring service
+        # self.monitoring_service
+
+        # when we ask for the CO2 saved by a member
+        co2_saved = self.monitoring_service.co2save_by_member(
+            system_id, member_id, date_from, date_to
+        )
+
+        # then we obtain the number of tones of co2 saved in within that dates
+        self.assertEqual(co2_saved, 15412.194)
