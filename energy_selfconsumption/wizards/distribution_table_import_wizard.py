@@ -49,14 +49,15 @@ class DistributionTableImportWizard(models.TransientModel):
         distribution_table = self.env[
             "energy_selfconsumption.distribution_table"].browse(active_id)
         self.parse_csv_file(distribution_table)
+        #self.with_delay().parse_csv_file(distribution_table)
         return True
 
     def parse_csv_file(self, distribution_table):
         logger.info("\n\n parse_csv_file INICIO")
         file_data = base64.b64decode(self.import_file)
-        df = self._parse_file(file_data)
-        self.check_data_validity(df, distribution_table.type)
-        self.import_all_lines(df, distribution_table)
+        df, not_error = self._parse_file(file_data)
+        if not_error and self.check_data_validity(df, distribution_table.type):
+            self.import_all_lines(df, distribution_table)
         logger.info("\n\n parse_csv_file FIN")
 
     def download_template_button(self):
@@ -90,32 +91,28 @@ class DistributionTableImportWizard(models.TransientModel):
             except UnicodeDecodeError:
                 detected_encoding = chardet.detect(data_file).get("encoding", False)
                 if not detected_encoding:
-                    self.notification("Error",
-                                      _("No valid encoding was found for the attached file"))
-                    # raise UserError(
-                    #     _("No valid encoding was found for the attached file"))
+                    self.notification("Error", _("No valid encoding was found for the attached file"))
+                    return False, False
                 decoded_file = data_file.decode(detected_encoding)
 
             df = pd.read_csv(StringIO(decoded_file), delimiter=self.delimiter,
                              quotechar=self.quotechar)
-            return df
+            return df, True
         except Exception:
             logger.warning("Parser error", exc_info=True)
             self.notification("Error", _("Error parsing the file"))
-            # raise UserError(_("Error parsing the file"))
+            return False, False
 
     def check_data_validity(self, df, table_type):
-        logger.info("\n\n check_data_validity")
         if table_type == "hourly":
             grouped = df.groupby(df.columns[0]).sum()
-            invalid_hours = grouped[round(grouped.sum(axis=1), 5) != 1]
+            invalid_hours = grouped[round(grouped.sum(axis=1), 5) != 1.0]
             if not invalid_hours.empty:
                 invalid_hours_list = invalid_hours.index.tolist()
-                self.notification("Error", _("The sum of coefficients for the following hours is not equal to 1: %s" % ", ".join(
-                        map(str, invalid_hours_list))))
-                # raise ValidationError(
-                #     _("The sum of coefficients for the following hours is not equal to 1: %s" % ", ".join(
-                #         map(str, invalid_hours_list))))
+                self.notification("Error",
+                                  _("The sum of coefficients for the following hours is not equal to 1: %s" % ", ".join(map(str, invalid_hours_list))))
+            return False
+        return True
 
     def import_all_lines(self, df, distribution_table):
         logger.info("\n\n import_all_lines")
@@ -133,8 +130,6 @@ class DistributionTableImportWizard(models.TransientModel):
         logger.info("\n\n prepare_fixed_csv_values")
         values_list = []
         for index, row in df.iterrows():
-            if index == 0:
-                continue  # Skip header row
             value = self.get_supply_point_assignation_values(row, distribution_table)
             values_list.append(value)
         return values_list
@@ -143,8 +138,6 @@ class DistributionTableImportWizard(models.TransientModel):
         logger.info("\n\n prepare_hourly_csv_values")
         values_list = []
         for index, row in df.iterrows():
-            if index == 0:
-                continue  # Skip header row
             hour = row[0]
             for column in df.columns[1:]:
                 cups = column
@@ -171,10 +164,10 @@ class DistributionTableImportWizard(models.TransientModel):
                 value["supply_point_id"],
                 value["coefficient"],
                 value["company_id"],
-                value.get("hour"),
-                1,
+                value.get("hour", 0),
+                self.env.user.id,
                 datetime.now().strftime("%m/%d/%Y %H:%M:%S"),
-                1,
+                self.env.user.id,
                 datetime.now().strftime("%m/%d/%Y %H:%M:%S"),
             )
             for value in values_list
@@ -186,8 +179,7 @@ class DistributionTableImportWizard(models.TransientModel):
             self.env.cr.execute(query)
             self.env.cr.commit()
         except Exception as e:
-            self.notification("Error query", str(e))
-            # raise ValidationError("\n\n Error query :"+str(e))
+            self.notification("Error query", query)
 
         query = f""" INSERT INTO energy_selfconsumption_supply_point_group_rel 
         (energy_selfconsumption_distribution_table_id,
@@ -201,8 +193,7 @@ class DistributionTableImportWizard(models.TransientModel):
             self.env.cr.execute(query)
             self.env.cr.commit()
         except Exception as e:
-            self.notification("Error query", str(e))
-            # raise ValidationError("\n\n Error query :"+str(e))
+            self.notification("Error query", query)
 
     def get_supply_point_assignation_values(self, row, distribution_table):
         return {
@@ -227,11 +218,9 @@ class DistributionTableImportWizard(models.TransientModel):
             [("code", "=", code)], ["id"])
         if not supply_point_id:
             self.notification("Error",
-                     _("There isn't any supply point with this code: {code}").format(
-                    code=code))
-            # raise ValidationError(
-            #     _("There isn't any supply point with this code: {code}").format(
-            #         code=code))
+                              _("There isn't any supply point with this code: {code}").format(
+                                  code=code))
+            return False
         return supply_point_id[0]["id"]
 
     def get_coefficient(self, coefficient):
@@ -252,4 +241,9 @@ class DistributionTableImportWizard(models.TransientModel):
         active_id = self.env.context.get("active_id")
         distribution_table = self.env[
             "energy_selfconsumption.distribution_table"].browse(active_id)
-        distribution_table.notify_followers(subject=subject, body=body)
+        distribution_table.selfconsumption_project_id.message_post(
+            body=body,
+            subject=subject,
+            message_type='notification',
+            subtype_xmlid='mail.mt_comment',
+        )

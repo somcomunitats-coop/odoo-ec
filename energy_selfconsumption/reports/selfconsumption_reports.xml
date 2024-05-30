@@ -211,13 +211,13 @@
                   >
                                         <tr style="height:100px">
                                             <td style="margin-left:50px"><t
-                          t-esc="supply_point.supply_point_id.partner_id.name"
+                          t-esc="supply_point.partner_id.name"
                         /></td>
                                             <td><t
-                          t-esc="supply_point.supply_point_id.partner_id.vat"
+                          t-esc="supply_point.partner_id.vat"
                         /></td>
                                             <td><t
-                          t-esc="supply_point.supply_point_id.code"
+                          t-esc="supply_point.code"
                         /></td>
                                             <td />
                                         </tr>
@@ -339,17 +339,15 @@
                                     <tr>
                                         <td style="width: auto"><t t-esc="index" /></td>
                                         <td><t
-                        t-esc="supply_point.supply_point_id.owner_id.name"
+                        t-esc="supply_point.owner_id.name"
                       /></td>
                                         <td><t
-                        t-esc="supply_point.supply_point_id.owner_id.vat"
+                        t-esc="supply_point.owner_id.vat"
                       /></td>
                                         <td><t
-                        t-esc="supply_point.supply_point_id.code"
+                        t-esc="supply_point.code"
                       /></td>
-                                        <td style="text-align: right"><t
-                        t-esc="*"
-                      /></td>
+                                        <td style="text-align: right">*</td>
                                     </tr>
                                     <t t-set="index" t-value="index+1" />
                                     </t>
@@ -454,10 +452,10 @@
                                 <tr>
                                     <td style="width: auto"><t t-esc="index" /></td>
                                     <td><t
-                      t-esc="supply_point.supply_point_id.owner_id.name"
+                      t-esc="supply_point.owner_id.name"
                     /></td>
                                     <td><t
-                      t-esc="supply_point.supply_point_id.owner_id.vat"
+                      t-esc="supply_point.owner_id.vat"
                     /></td>
                                     <td>
                                         <div style="height: 100px; width: 200px;" />

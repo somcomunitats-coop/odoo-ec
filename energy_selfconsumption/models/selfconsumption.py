@@ -474,7 +474,7 @@ class Selfconsumption(models.Model):
                 "zip": 28221,
                 "type": "contact",
                 "company_id": self.env.company.id,
-                # "company_type": "person",
+                "company_type": "person",
             })
             _logger.info(f"\n\n Cliente creado {partner.name}")
 
