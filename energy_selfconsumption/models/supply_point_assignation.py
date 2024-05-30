@@ -44,7 +44,7 @@ class SupplyPointAssignation(models.Model):
     )
     coefficient = fields.Float(
         string="Distribution coefficient",
-        digits=(1, 5),
+        digits=(7, 6),
         required=True,
         help="The sum of all the coefficients must result in 1",
     )
