@@ -19,14 +19,8 @@
               </group>
             </xpath>
             <xpath expr="//field[@name='is_public']" position="attributes">
-              <attribute
-            name="groups"
-          >energy_communities.mass_mailing_super_user</attribute>
+              <attribute name="invisible">1</attribute>
             </xpath>
-            <!-- TODO: Decide if we implement this or we uninstall website_mass_mailing unused module -->
-            <!--<xpath expr="//page[@name='website_popups']" position="attributes">-->
-            <!--  <attribute name="invisible">1</attribute>-->
-            <!--</xpath>-->
         </field>
     </record>
   </data>
