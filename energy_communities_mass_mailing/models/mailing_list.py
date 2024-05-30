@@ -14,3 +14,10 @@ class MassMailingList(models.Model):
         required=True,
         help="Filter partners to sync in this list",
     )
+
+    def _get_default_sync_domain(self):
+        return [
+            ("is_blacklisted", "=", False),
+            ("email", "!=", False),
+            ("company_ids", "!=", False),
+        ]
