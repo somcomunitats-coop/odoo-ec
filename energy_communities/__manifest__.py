@@ -43,13 +43,6 @@
     Energy Communities customizations.
     """,
     "license": "AGPL-3",
-    "demo": [
-        "demo/res_lang_demo.xml",
-        "demo/res_company_demo.xml",
-        "demo/res_user_demo.xml",
-        "demo/subscription_request_demo.xml",
-        "demo/energy_selfconsumption_demo.xml",
-    ],
     "data": [
         "security/ir_rule_data.xml",
         "security/res_users_role_data.xml",
