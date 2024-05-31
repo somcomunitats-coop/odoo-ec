@@ -179,7 +179,9 @@ class DistributionTableImportWizard(models.TransientModel):
             self.env.cr.execute(query)
             self.env.cr.commit()
         except Exception as e:
-            self.notification("Error query", query)
+            self.env.cr.rollback()
+            logger.error(f"Error executing bulk insert query: {e}")
+            self.notification("Error query", f"Query: {query}\nError: {e}")
 
         query = f""" INSERT INTO energy_selfconsumption_supply_point_group_rel 
         (energy_selfconsumption_distribution_table_id,
@@ -193,7 +195,9 @@ class DistributionTableImportWizard(models.TransientModel):
             self.env.cr.execute(query)
             self.env.cr.commit()
         except Exception as e:
-            self.notification("Error query", query)
+            self.env.cr.rollback()
+            logger.error(f"Error executing bulk insert query: {e}")
+            self.notification("Error query", f"Query: {query}\nError: {e}")
 
     def get_supply_point_assignation_values(self, row, distribution_table):
         return {
@@ -220,7 +224,7 @@ class DistributionTableImportWizard(models.TransientModel):
             self.notification("Error",
                               _("There isn't any supply point with this code: {code}").format(
                                   code=code))
-            return False
+            return 'null'
         return supply_point_id[0]["id"]
 
     def get_coefficient(self, coefficient):
@@ -241,9 +245,12 @@ class DistributionTableImportWizard(models.TransientModel):
         active_id = self.env.context.get("active_id")
         distribution_table = self.env[
             "energy_selfconsumption.distribution_table"].browse(active_id)
-        distribution_table.selfconsumption_project_id.message_post(
-            body=body,
-            subject=subject,
-            message_type='notification',
-            subtype_xmlid='mail.mt_comment',
-        )
+        try:
+            distribution_table.selfconsumption_project_id.message_post(
+                body=body,
+                subject=subject,
+                message_type='notification',
+                subtype_xmlid='mail.mt_comment',
+            )
+        except Exception as e:
+            logger.error(f"Error sending notification: {e}")
