@@ -212,10 +212,10 @@ class LandingPage(models.Model):
                 ("res_model", "=", "res.company"),
                 ("res_field", "=", "logo"),
             ]
-            # company_logo = self._get_image_payload("company_logo",attachment_query)
-            # company_logo_write_date = self._get_image_write_date("company_logo",attachment_query)
-            company_logo = self._get_image_payload("company_logo")
-            company_logo_write_date = self._get_image_write_date("company_logo")
+            company_logo = self._get_image_payload("company_logo", attachment_query)
+            company_logo_write_date = self._get_image_write_date(
+                "company_logo", attachment_query
+            )
 
         else:
             company_logo = ""
