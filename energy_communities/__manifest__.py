@@ -81,6 +81,7 @@
         "data/community_maps_data.xml",
         "wizards/multicompany_easy_creation.xml",
         "wizards/assign_admin_wizard.xml",
+        "wizards/change_coordinator_wizard.xml",
     ],
     "installable": True,
     "application": True,

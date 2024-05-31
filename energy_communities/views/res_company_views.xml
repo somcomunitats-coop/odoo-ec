@@ -1,5 +1,14 @@
 <?xml version="1.0" ?>
 <odoo>
+    <act_window
+    id="act_window_change_coordinator"
+    name="Change Coordinator"
+    binding_model="res.company"
+    res_model="change.coordinator.wizard"
+    view_mode="form"
+    target="new"
+    groups="energy_communities.group_platform_manager"
+  />
     <record id="view_company_form_ce_inherited" model="ir.ui.view">
         <field name="name">res.company.tree.ce.inherited</field>
         <field name="model">res.company</field>
@@ -26,11 +35,19 @@
             <xpath expr="//sheet" position="before">
                 <header>
                     <field name="landing_page_id" invisible="1" />
+                    <field name="hierarchy_level" invisible="1" />
                     <button
             name="create_landing"
             type="object"
             string="Create landing page"
             attrs="{'invisible': [('landing_page_id','!=',False)]}"
+          />
+                    <button
+            name="action_open_change_coordinator_wizard"
+            type="object"
+            string="Change coordinator"
+            groups="energy_communities.group_platform_manager"
+            attrs="{'invisible':[('hierarchy_level', '!=','community')]}"
           />
                 </header>
             </xpath>

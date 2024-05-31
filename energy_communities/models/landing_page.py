@@ -366,20 +366,21 @@ class LandingPage(models.Model):
         else:
             return "rest-ce-landing"
 
-    def get_map_coordinator_filter_in_related_place(self, coordinator_landing=False):
-        if not coordinator_landing:
+    def get_map_coordinator_filter_in_related_place(self, coordinator=False):
+        if not coordinator:
             if self.parent_landing_id:
-                coordinator_landing = self.parent_landing_id
-        if self.hierarchy_level == "community" and coordinator_landing:
-            coordinator_filter_group = self.env.ref(
-                "energy_communities.map_filter_group_coordinator"
-            )
-            return self.env["cm.filter"].search(
-                [
-                    ("landing_id", "=", coordinator_landing.id),
-                    ("filter_group_id", "=", coordinator_filter_group.id),
-                ]
-            )
+                coordinator = self.parent_landing_id
+        if self.hierarchy_level == "community" and coordinator:
+            if coordinator.landing_page_id:
+                coordinator_filter_group = self.env.ref(
+                    "energy_communities.map_filter_group_coordinator"
+                )
+                return self.env["cm.filter"].search(
+                    [
+                        ("landing_id", "=", coordinator.landing_page_id.id),
+                        ("filter_group_id", "=", coordinator_filter_group.id),
+                    ]
+                )
         return False
 
     def create_or_update_and_apply_coordinator_filter(self):
