@@ -21,8 +21,8 @@ class DistributionTable(models.Model):
         for record in self:
             record.coefficient_is_valid = not fields.Float.compare(
                 sum(record.supply_point_assignation_ids.mapped("coefficient")),
-                1.00000,
-                precision_rounding=0.00001,
+                1.000000,
+                precision_rounding=0.000001,
             )
 
     name = fields.Char(readonly=True)
