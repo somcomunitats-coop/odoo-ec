@@ -251,21 +251,23 @@ class ResUsers(models.Model):
             )
 
     def make_ce_user(self, company_id, role_name):
-        role = self.env["res.users.role"].search([("code", "=", role_name)])
+        related_company = self.company_ids.filtered(
+            lambda company: company.id == company_id
+        )
+        if not related_company:
+            self.write({"company_ids": [(4, company_id)]})
         current_role = self.env["res.users.role.line"].search(
             [
                 ("user_id", "=", self.id),
                 ("active", "=", True),
                 ("company_id", "=", company_id),
+                ("code", "=", role_name),
             ]
         )
-
-        if current_role:
-            current_role.write({"role_id": role})
-        else:
+        if not current_role:
+            role = self.env["res.users.role"].search([("code", "=", role_name)])
             self.write(
                 {
-                    "company_ids": [(4, company_id)],
                     "role_line_ids": [
                         (
                             0,
@@ -277,7 +279,7 @@ class ResUsers(models.Model):
                                 "company_id": company_id,
                             },
                         )
-                    ],
+                    ]
                 }
             )
 
@@ -297,6 +299,18 @@ class ResUsers(models.Model):
             self.make_coord_user(company_id, role_name)
         else:
             raise exceptions.UserError(_("Role not found"))
+
+    def get_related_company_role(self, company_id, role_codes=False):
+        if role_codes:
+            current_role_lines = self.role_line_ids.filtered(
+                lambda role_line: role_line.company_id.id == company_id
+                and role_line.role_id.code in role_codes
+            )
+        else:
+            current_role_lines = self.role_line_ids.filtered(
+                lambda role_line: role_line.company_id.id == company_id
+            )
+        return current_role_lines
 
     def create_energy_community_base_user(
         cls, vat, first_name, last_name, lang_code, email

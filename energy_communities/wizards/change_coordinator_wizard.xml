@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+        <record id="view_change_coordinator_wizard_form" model="ir.ui.view">
+            <field name="name">change.coordinator.wizard.form</field>
+            <field name="model">change.coordinator.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Change Coordinator Wizard">
+                    <sheet>
+                        <group>
+                            <field
+                name="incoming_coordinator"
+                domain="[('hierarchy_level','=','coordinator')]"
+                required="1"
+              />
+                            <field name="change_reason" required="1" />
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button
+              name="execute_change"
+              string="Execute"
+              type="object"
+              class="btn-primary"
+            />
+                        <button
+              string="Cancelar"
+              class="btn-secondary"
+              special="cancel"
+            />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

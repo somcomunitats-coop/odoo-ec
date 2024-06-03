@@ -98,6 +98,7 @@ class ResCompany(models.Model):
         string="Energy Community state",
     )
     landing_page_id = fields.Many2one("landing.page", string=_("Landing Page"))
+    landing_page_status = fields.Selection(related="landing_page_id.status")
     wordpress_db_username = fields.Char(string=_("Wordpress DB Admin Username"))
     wordpress_db_password = fields.Char(string=_("Wordpress DB Admin Password"))
     wordpress_base_url = fields.Char(string=_("Wordpress Base URL (JWT auth)"))
@@ -315,6 +316,12 @@ class ResCompany(models.Model):
         login_provider_id = self.env.ref("energy_communities.keycloak_login_provider")
         return login_provider_id.get_auth_link()
 
+    def company_hierarchy_level_url(self):
+        if self.hierarchy_level == "coordinator":
+            return "rest-ce-coord"
+        else:
+            return "rest-ce-landing"
+
     # LANDING
     def create_landing(self):
         if not self.comercial_name:
@@ -333,7 +340,7 @@ class ResCompany(models.Model):
         new_landing = landing_page.create(vals)
         new_landing.setup_slug_id()
         if self.hierarchy_level == "coordinator":
-            new_landing.create_or_update_and_apply_coordinator_filter()
+            new_landing.sudo().create_or_update_and_apply_coordinator_filter()
         self.write({"landing_page_id": new_landing.id})
         return new_landing
 
@@ -363,11 +370,112 @@ class ResCompany(models.Model):
             "target": "current",
         }
 
-    def company_hierarchy_level_url(self):
-        if self.hierarchy_level == "coordinator":
-            return "rest-ce-coord"
-        else:
-            return "rest-ce-landing"
+    # CHANGE COORDINATOR
+    def action_open_change_coordinator_wizard(self):
+        wizard = self.env["change.coordinator.wizard"].create({})
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Change coordinator"),
+            "res_model": "change.coordinator.wizard",
+            "view_type": "form",
+            "view_mode": "form",
+            "target": "new",
+            "res_id": wizard.id,
+        }
+
+    def change_coordinator(self, incoming_coordinator, change_reason):
+        outgoing_coordinator = self.parent_id
+        if incoming_coordinator.id != outgoing_coordinator.id:
+            # Change parent_id
+            self.write({"parent_id": incoming_coordinator.id})
+            # Add coordinator_destination visibility to company's related contact
+            self.partner_id.write({"company_ids": [(4, incoming_coordinator.id)]})
+            # Adjust related community place coordinator-filtering
+            self._adjust_related_map_place_filtering(
+                outgoing_coordinator, incoming_coordinator
+            )
+            # Sanitize related users roles
+            self._sanitize_outgoing_coordinator_users(outgoing_coordinator)
+            self._sanitize_incoming_coordinator_users(incoming_coordinator)
+            # leave message on chatter
+            self._log_change_coordinator(
+                incoming_coordinator, outgoing_coordinator, change_reason
+            )
+
+    def _log_change_coordinator(
+        self, incoming_coordinator, outgoing_coordinator, change_reason
+    ):
+        message = _(
+            "There has been a coordinator change \
+            from [OLD:{outgoing_id}] {outgoing_name} to [NEW:{incoming_id}] {incoming_name}, \
+            Change reason: {change_reason}"
+        ).format(
+            outgoing_id=outgoing_coordinator.id,
+            outgoing_name=outgoing_coordinator.name,
+            incoming_id=incoming_coordinator.id,
+            incoming_name=incoming_coordinator.name,
+            change_reason=change_reason,
+        )
+        self.message_post(
+            subject="[COORD_CHANGE]",
+            body=message,
+        )
+
+    def _adjust_related_map_place_filtering(
+        self, outgoing_coordinator, incoming_coordinator
+    ):
+        community_landing_page = self.landing_page_id
+        if community_landing_page:
+            filter_coord_arr = []
+            outgoing_coord_filter = (
+                community_landing_page.get_map_coordinator_filter_in_related_place(
+                    outgoing_coordinator
+                )
+            )
+            if outgoing_coord_filter:
+                filter_coord_arr.append((3, outgoing_coord_filter.id))
+            incoming_coord_filter = (
+                community_landing_page.get_map_coordinator_filter_in_related_place(
+                    incoming_coordinator
+                )
+            )
+            if (
+                incoming_coord_filter
+                and incoming_coordinator.landing_page_status == "publish"
+            ):
+                filter_coord_arr.append((4, incoming_coord_filter.id))
+            if community_landing_page.map_place_id and filter_coord_arr:
+                community_landing_page.map_place_id.sudo().write(
+                    {"filter_mids": filter_coord_arr}
+                )
+
+    def _sanitize_outgoing_coordinator_users(self, outgoing_coordinator):
+        coord_users = outgoing_coordinator.get_users(
+            ["role_coord_admin", "role_coord_worker"]
+        )
+        if coord_users:
+            for user in coord_users:
+                # remove community manager role for the outgoing coordinator admins/managers
+                outgoing_user_manager_roles = user.get_related_company_role(
+                    self.id, ["role_ce_manager"]
+                )
+                if outgoing_user_manager_roles:
+                    for role in outgoing_user_manager_roles:
+                        role.unlink()
+                # remove access to community for the outgoing coordinator admins/managers if needed
+                outgoing_user_roles = user.get_related_company_role(self.id)
+                if not outgoing_user_roles:
+                    user.write({"company_ids": [(3, self.id)]})
+
+    def _sanitize_incoming_coordinator_users(self, incoming_coordinator):
+        coord_users = incoming_coordinator.get_users(
+            ["role_coord_admin", "role_coord_worker"]
+        )
+        if coord_users:
+            for user in coord_users:
+                # Add community manager role for the incoming coordinator admins/workers
+                # Add access to community for the incoming coordinator admins/workers
+                user.make_ce_user(self.id, "role_ce_manager")
 
     # TODO: Unused functions. Delete if really not needed.
     def check_ce_has_admin(self):
