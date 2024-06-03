@@ -45,6 +45,10 @@ class ResCompany(models.Model):
     _name = "res.company"
     _inherit = ["res.company", "mail.thread", "mail.activity.mixin"]
 
+    def _get_logo(self):
+        return super()._get_logo()
+
+    logo = fields.Image(default=_get_logo, string="Company Logo")
     hierarchy_level = fields.Selection(
         selection=_HIERARCHY_LEVEL_VALUES,
         required=True,

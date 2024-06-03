@@ -100,10 +100,7 @@ class LandingPage(models.Model):
     management_services = fields.Text(
         string=_("CCEE management services"), translate=True
     )
-    company_logo = fields.Image(string=_("Company logo"))
-
-    slug_id = fields.Char(string="External slug ID", translate=True)
-
+    company_logo = fields.Image(string=_("Company logo"), related="company_id.logo")
     hierarchy_level = fields.Selection(
         selection=_HIERARCHY_LEVEL_VALUES,
         string="Hierarchy level",
@@ -167,32 +164,32 @@ class LandingPage(models.Model):
             "es_ES",
         )
 
-    def _get_image_attachment(self, field_name):
-        file_attachment = self.env["ir.attachment"].search(
-            [
+    def _get_image_attachment(self, field_name, query):
+        if not query:
+            query = [
                 ("res_id", "=", self.id),
                 ("res_model", "=", "landing.page"),
                 ("res_field", "=", field_name),
             ]
-        )
+        file_attachment = self.env["ir.attachment"].search(query)
         return file_attachment
 
-    def _get_image_write_date(self, field_name):
+    def _get_image_write_date(self, field_name, query=False):
         file_write_date = ""
-        file_attachment = self._get_image_attachment(field_name)
+        file_attachment = self._get_image_attachment(field_name, query)
         if file_attachment:
             file_write_date = str(file_attachment.write_date)
         return file_write_date
 
-    def _get_image_extension(self, field_name):
+    def _get_image_extension(self, field_name, query):
         file_write_date = ""
-        file_attachment = self._get_image_attachment(field_name)
+        file_attachment = self._get_image_attachment(field_name, query)
         extension = ""
         if file_attachment:
             extension = file_attachment.mimetype.split("/")[1]
         return extension
 
-    def _get_image_payload(self, field_name):
+    def _get_image_payload(self, field_name, query=False):
         base_url = self.env["ir.config_parameter"].get_param("web.base.url")
         return (
             base_url
@@ -205,10 +202,24 @@ class LandingPage(models.Model):
             + "-"
             + field_name
             + "."
-            + self._get_image_extension(field_name)
+            + self._get_image_extension(field_name, query)
         )
 
     def to_dict(self):
+        if self.company_logo:
+            attachment_query = [
+                ("res_id", "=", self.company_id.id),
+                ("res_model", "=", "res.company"),
+                ("res_field", "=", "logo"),
+            ]
+            company_logo = self._get_image_payload("company_logo", attachment_query)
+            company_logo_write_date = self._get_image_write_date(
+                "company_logo", attachment_query
+            )
+
+        else:
+            company_logo = ""
+            company_logo_write_date = ""
         if self.primary_image_file:
             primary_image_file = self._get_image_payload("primary_image_file")
             primary_image_file_write_date = self._get_image_write_date(
@@ -225,12 +236,6 @@ class LandingPage(models.Model):
         else:
             secondary_image_file = ""
             secondary_image_file_write_date = ""
-        if self.company_logo:
-            company_logo = self._get_image_payload("company_logo")
-            company_logo_write_date = self._get_image_write_date("company_logo")
-        else:
-            company_logo = ""
-            company_logo_write_date = ""
         if self.map_place_id:
             map_reference = self.map_place_id.slug_id
         else:
