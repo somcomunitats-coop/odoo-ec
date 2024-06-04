@@ -48,8 +48,8 @@ class DistributionTable(models.Model):
     def compare_coefficient_to_one(self, coefficient):
         return fields.Float.compare(
             coefficient,
-            1.00000,
-            precision_rounding=0.00001,
+            1.000000,
+            precision_rounding=0.000001,
         )
 
     @api.depends("supply_point_assignation_ids")
@@ -65,21 +65,22 @@ class DistributionTable(models.Model):
 
     name = fields.Char(readonly=True, index=True)
     selfconsumption_project_id = fields.Many2one(
-        "energy_selfconsumption.selfconsumption", required=True, readonly=True, index=True
+        "energy_selfconsumption.selfconsumption",
+        required=True,
+        readonly=True,
+        index=True,
     )
     selfconsumption_project_state = fields.Selection(
-        related="selfconsumption_project_id.state",index=True
+        related="selfconsumption_project_id.state", index=True
     )
     type = fields.Selection(
-        TYPE_VALUES,
-        default="fixed",
-        required=True,
-        string="Modality",
-        index=True
+        TYPE_VALUES, default="fixed", required=True, string="Modality", index=True
     )
     state = fields.Selection(STATE_VALUES, default="draft", required=True, index=True)
     supply_point_assignation_ids = fields.One2many(
-        "energy_selfconsumption.supply_point_assignation", "distribution_table_id", lazy="dynamic"
+        "energy_selfconsumption.supply_point_assignation",
+        "distribution_table_id",
+        lazy="dynamic",
     )
     supply_point_group_ids = fields.Many2many(
         "energy_selfconsumption.supply_point",
@@ -87,7 +88,7 @@ class DistributionTable(models.Model):
         compute=_compute_supply_point_group_ids,
         readonly=True,
         store=True,
-        lazy="dynamic"
+        lazy="dynamic",
     )
     coefficient_is_valid = fields.Boolean(
         compute=_compute_coefficient_is_valid, readonly=True, store=True, index=True
@@ -160,29 +161,42 @@ class DistributionTable(models.Model):
             "view_mode": "form",
             "res_model": "clean.supply.point.assignation.wizzard",
             "target": "new",
-            'context': {'active_ids': self.env.context.get('active_ids', [])}
+            "context": {"active_ids": self.env.context.get("active_ids", [])},
         }
 
     def action_open_form(self):
         self.ensure_one()
-        if self.type == 'fixed':
+        if self.type == "fixed":
             return {
-                'type': 'ir.actions.act_window',
-                'name': 'Distribution Table',
-                'view_mode': 'form',
-                'res_model': 'energy_selfconsumption.distribution_table',
-                'res_id': self.id,
-                'views': [(self.env.ref('energy_selfconsumption.distribution_table_fixed_form_view').id, 'form')],
-                'target': 'current',
+                "type": "ir.actions.act_window",
+                "name": "Distribution Table",
+                "view_mode": "form",
+                "res_model": "energy_selfconsumption.distribution_table",
+                "res_id": self.id,
+                "views": [
+                    (
+                        self.env.ref(
+                            "energy_selfconsumption.distribution_table_fixed_form_view"
+                        ).id,
+                        "form",
+                    )
+                ],
+                "target": "current",
             }
         else:
             return {
-                'type': 'ir.actions.act_window',
-                'name': 'Distribution Table',
-                'view_mode': 'form',
-                'res_model': 'energy_selfconsumption.distribution_table',
-                'res_id': self.id,
-                'views': [(self.env.ref('energy_selfconsumption.distribution_table_hourly_form_view').id, 'form')],
-                'target': 'current',
+                "type": "ir.actions.act_window",
+                "name": "Distribution Table",
+                "view_mode": "form",
+                "res_model": "energy_selfconsumption.distribution_table",
+                "res_id": self.id,
+                "views": [
+                    (
+                        self.env.ref(
+                            "energy_selfconsumption.distribution_table_hourly_form_view"
+                        ).id,
+                        "form",
+                    )
+                ],
+                "target": "current",
             }
-

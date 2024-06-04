@@ -40,8 +40,12 @@
             <t t-set="value" t-value="ce_description" />
             <t t-set="key" t-value="ce_description_key" />
             <t t-set="label" t-value="ce_description_label" />
-            <t t-set="rows" t-value="5" />
             <t t-set="required" t-value="True" />
+            <t t-set="rows" t-value="10" />
+            <t t-set="maxlength" t-value="1000" />
+            <t
+            t-set="description"
+          >Use a maximum of 1000 characters to write a summary of your Energy Community</t>
           </t>
         </div>
         <div class="col-md-12" t-if="pack_1 or pack_2">
@@ -49,8 +53,12 @@
             <t t-set="value" t-value="ce_long_description" />
             <t t-set="key" t-value="ce_long_description_key" />
             <t t-set="label" t-value="ce_long_description_label" />
-            <t t-set="rows" t-value="10" />
             <t t-set="required" t-value="True" />
+            <t t-set="rows" t-value="10" />
+            <t t-set="maxlength" t-value="1500" />
+            <t
+            t-set="description"
+          >Use a maximum of 1500 characters to explain your Energy Community</t>
           </t>
         </div>
         <div class="col-md-6" t-if="pack_1 or pack_2">
@@ -143,10 +151,10 @@
             <t t-set="key" t-value="ce_why_become_cooperator_key" />
             <t t-set="label" t-value="ce_why_become_cooperator_label" />
             <t t-set="rows" t-value="5" />
-            <t t-set="maxlength" t-value="100" />
+            <t t-set="maxlength" t-value="500" />
             <t
             t-set="description"
-          >In this section you can briefly explain the advantages of joining the community</t>
+          >In this section you can, with a maximum of 500 characters, explain the advantages of joining the community</t>
           </t>
         </div>
         <div class="col-md-12" t-if="pack_1 or pack_2">
@@ -155,10 +163,10 @@
             <t t-set="key" t-value="ce_become_cooperator_process_key" />
             <t t-set="label" t-value="ce_become_cooperator_process_label" />
             <t t-set="rows" t-value="5" />
-            <t t-set="maxlength" t-value="100" />
+            <t t-set="maxlength" t-value="500" />
             <t
             t-set="description"
-          >Explain the process to become cooperator. Include payment information.</t>
+          >Explain, with a maximum of 500 characters, the process to become cooperator. Include payment information.</t>
           </t>
         </div>
         <div class="col-md-12" t-if="pack_1 or pack_2">

@@ -218,6 +218,8 @@ S_LANDING_PAGE_CREATE = {
                 "type": "list",
                 "schema": {"type": "dict", "schema": S_COMMUNITY_SERVICE},
             },
+            "company_logo": {"type": "string"},
+            "company_logo_write_date": {"type": "string"},
             "primary_image_file": {"type": "string"},
             "primary_image_file_write_date": {"type": "string"},
             "secondary_image_file": {"type": "string"},

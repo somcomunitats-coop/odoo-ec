@@ -100,10 +100,7 @@ class LandingPage(models.Model):
     management_services = fields.Text(
         string=_("CCEE management services"), translate=True
     )
-    company_logo = fields.Image(string=_("Company logo"))
-
-    slug_id = fields.Char(string="External slug ID", translate=True)
-
+    company_logo = fields.Image(string=_("Company logo"), related="company_id.logo")
     hierarchy_level = fields.Selection(
         selection=_HIERARCHY_LEVEL_VALUES,
         string="Hierarchy level",
@@ -167,32 +164,32 @@ class LandingPage(models.Model):
             "es_ES",
         )
 
-    def _get_image_attachment(self, field_name):
-        file_attachment = self.env["ir.attachment"].search(
-            [
+    def _get_image_attachment(self, field_name, query):
+        if not query:
+            query = [
                 ("res_id", "=", self.id),
                 ("res_model", "=", "landing.page"),
                 ("res_field", "=", field_name),
             ]
-        )
+        file_attachment = self.env["ir.attachment"].search(query)
         return file_attachment
 
-    def _get_image_write_date(self, field_name):
+    def _get_image_write_date(self, field_name, query=False):
         file_write_date = ""
-        file_attachment = self._get_image_attachment(field_name)
+        file_attachment = self._get_image_attachment(field_name, query)
         if file_attachment:
             file_write_date = str(file_attachment.write_date)
         return file_write_date
 
-    def _get_image_extension(self, field_name):
+    def _get_image_extension(self, field_name, query):
         file_write_date = ""
-        file_attachment = self._get_image_attachment(field_name)
+        file_attachment = self._get_image_attachment(field_name, query)
         extension = ""
         if file_attachment:
             extension = file_attachment.mimetype.split("/")[1]
         return extension
 
-    def _get_image_payload(self, field_name):
+    def _get_image_payload(self, field_name, query=False):
         base_url = self.env["ir.config_parameter"].get_param("web.base.url")
         return (
             base_url
@@ -205,10 +202,24 @@ class LandingPage(models.Model):
             + "-"
             + field_name
             + "."
-            + self._get_image_extension(field_name)
+            + self._get_image_extension(field_name, query)
         )
 
     def to_dict(self):
+        if self.company_logo:
+            attachment_query = [
+                ("res_id", "=", self.company_id.id),
+                ("res_model", "=", "res.company"),
+                ("res_field", "=", "logo"),
+            ]
+            company_logo = self._get_image_payload("company_logo", attachment_query)
+            company_logo_write_date = self._get_image_write_date(
+                "company_logo", attachment_query
+            )
+
+        else:
+            company_logo = ""
+            company_logo_write_date = ""
         if self.primary_image_file:
             primary_image_file = self._get_image_payload("primary_image_file")
             primary_image_file_write_date = self._get_image_write_date(
@@ -225,12 +236,6 @@ class LandingPage(models.Model):
         else:
             secondary_image_file = ""
             secondary_image_file_write_date = ""
-        if self.company_logo:
-            company_logo = self._get_image_payload("company_logo")
-            company_logo_write_date = self._get_image_write_date("company_logo")
-        else:
-            company_logo = ""
-            company_logo_write_date = ""
         if self.map_place_id:
             map_reference = self.map_place_id.slug_id
         else:
@@ -305,18 +310,18 @@ class LandingPage(models.Model):
 
     def action_create_landing_place(self):
         for record in self:
-            record.create_landing_place()
+            record.sudo().create_landing_place()
 
     def action_update_public_data(self):
         for record in self:
             record._update_wordpress()
             if self.map_place_id:
-                record._update_landing_place()
+                record.sudo()._update_landing_place()
             if self.hierarchy_level == "coordinator":
                 if self.status == "publish":
-                    self.create_or_update_and_apply_coordinator_filter()
+                    self.sudo().create_or_update_and_apply_coordinator_filter()
                 else:
-                    self.remove_coordinator_filter_to_existing_communities()
+                    self.sudo().remove_coordinator_filter_to_existing_communities()
             self.write({"publicdata_lastupdate_datetime": datetime.now()})
             return {
                 "type": "ir.actions.client",
@@ -361,20 +366,21 @@ class LandingPage(models.Model):
         else:
             return "rest-ce-landing"
 
-    def get_map_coordinator_filter_in_related_place(self, coordinator_landing=False):
-        if not coordinator_landing:
+    def get_map_coordinator_filter_in_related_place(self, coordinator=False):
+        if not coordinator:
             if self.parent_landing_id:
-                coordinator_landing = self.parent_landing_id
-        if self.hierarchy_level == "community" and coordinator_landing:
-            coordinator_filter_group = self.env.ref(
-                "energy_communities.map_filter_group_coordinator"
-            )
-            return self.env["cm.filter"].search(
-                [
-                    ("landing_id", "=", coordinator_landing.id),
-                    ("filter_group_id", "=", coordinator_filter_group.id),
-                ]
-            )
+                coordinator = self.parent_landing_id
+        if self.hierarchy_level == "community" and coordinator:
+            if coordinator.landing_page_id:
+                coordinator_filter_group = self.env.ref(
+                    "energy_communities.map_filter_group_coordinator"
+                )
+                return self.env["cm.filter"].search(
+                    [
+                        ("landing_id", "=", coordinator.landing_page_id.id),
+                        ("filter_group_id", "=", coordinator_filter_group.id),
+                    ]
+                )
         return False
 
     def create_or_update_and_apply_coordinator_filter(self):
@@ -438,7 +444,7 @@ class LandingPage(models.Model):
             if community.landing_page_id:
                 if community.landing_page_id.map_place_id:
                     related_coordinator_filter = community.landing_page_id.get_map_coordinator_filter_in_related_place(
-                        self
+                        self.company_id
                     )
                     if related_coordinator_filter:
                         if type == "apply":

@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.4.0.3",
+    "version": "14.0.4.0.4",
     "depends": [
         "base",
         "web",
@@ -34,7 +34,7 @@
         "data/contract_line_qty_formula_data.xml",
         "data/mail_template.xml",
         "data/ir_cron.xml",
-        #"data/service_available_data.xml",
+        # "data/service_available_data.xml",
         "views/template_views.xml",
         "views/contract_views.xml",
         "views/selfconsumption_views.xml",

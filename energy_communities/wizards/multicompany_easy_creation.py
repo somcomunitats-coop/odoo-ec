@@ -393,7 +393,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             }
         )
         if self.create_place:
-            new_landing.create_landing_place()
+            new_landing.sudo().create_landing_place()
 
     def thread_action_accept(self):
         self.configure_community_accounting()

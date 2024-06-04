@@ -41,6 +41,7 @@ class Inscription(models.Model):
     mandate_filtered_ids = fields.One2many(
         "account.banking.mandate", compute="_compute_mandate_filtered_ids"
     )
+    name = fields.Char(string="Name", related="partner_id.name")
 
     @api.depends("partner_id")
     def _compute_mandate_filtered_ids(self):
