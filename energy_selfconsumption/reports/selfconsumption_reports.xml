@@ -379,9 +379,16 @@
                             </t>
                         </tbody>
                     </table>
-                    <p
-          >(Si existen varios productores con instalaciones de generación asociadas al autoconsumo, completar
-                        para cada uno de ellos)</p>
+                    <p>
+                        (Si existen varios productores con instalaciones de generación
+                        asociadas al autoconsumo, completar
+                        para cada uno de ellos)
+                    </p>
+                    <t t-if="o.report_distribution_table.type == 'hourly'">
+                        <p>
+                        *indicados en el fichero de reparto anual (CAU_aaaa(año).txt)
+                        </p>
+                    </t>
                     <table>
                         <tr>
                             <th><b>PRODUCTOR ASOCIADO</b><br />

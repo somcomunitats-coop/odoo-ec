@@ -246,7 +246,7 @@ class DistributionTableImportWizard(models.TransientModel):
         distribution_table = self.env[
             "energy_selfconsumption.distribution_table"].browse(active_id)
         try:
-            distribution_table.selfconsumption_project_id.message_post(
+            distribution_table.message_post(
                 body=body,
                 subject=subject,
                 message_type='notification',

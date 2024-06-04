@@ -14,6 +14,7 @@ TYPE_VALUES = [("fixed", _("Fixed")), ("hourly", _("Variable hourly"))]
 class DistributionTable(models.Model):
     _name = "energy_selfconsumption.distribution_table"
     _description = "Distribution Table"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     @api.depends("supply_point_assignation_ids.coefficient", "type")
     def _compute_coefficient_is_valid(self):
