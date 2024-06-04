@@ -444,7 +444,7 @@ class LandingPage(models.Model):
             if community.landing_page_id:
                 if community.landing_page_id.map_place_id:
                     related_coordinator_filter = community.landing_page_id.get_map_coordinator_filter_in_related_place(
-                        self
+                        self.company_id
                     )
                     if related_coordinator_filter:
                         if type == "apply":
