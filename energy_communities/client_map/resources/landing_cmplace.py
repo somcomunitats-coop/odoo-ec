@@ -16,7 +16,7 @@ class LandingCmPlace:
         self.wp_landing_data = self._get_wp_landing_data()
         button_configs = self._get_button_color_configs()
         if button_configs["errors"]:
-            raise UserError(error_msg)
+            raise UserError(button_configs["errors"])
         else:
             self.button_configs = button_configs["button_color_configs"]
 
@@ -53,7 +53,7 @@ class LandingCmPlace:
                 self._place_extra_data_setup(place)
 
     def _place_extra_data_setup(self, place):
-        place.setup_slug_id()
+        # presenter metadata
         place.build_presenter_metadata_ids()
         # setup description
         self._setup_place_description(place)
@@ -71,6 +71,7 @@ class LandingCmPlace:
             "data": {
                 "company_id": MapClientConfig.MAPPING__INSTANCE_ID,
                 "name": self.landing.name,
+                "slug_id": self.landing.slug_id,
                 "type": "place",
                 "status": MapClientConfig.MAPPING__LANDING_STATUS__MAP_PLACE_STATUS[
                     self.landing.status
@@ -150,6 +151,7 @@ class LandingCmPlace:
             )
         # Related coordinator
         if self.landing.hierarchy_level == "community":
+            coord_filter = False
             if self.landing.parent_landing_id:
                 if self.landing.parent_landing_id.status == "publish":
                     coord_filter = (

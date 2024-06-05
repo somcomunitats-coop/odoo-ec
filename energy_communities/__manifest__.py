@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "14.0.9.1.0",
+    "version": "14.0.9.2.1",
     "depends": [
         "account",
         "cooperator_account_banking_mandate",
@@ -81,6 +81,7 @@
         "data/community_maps_data.xml",
         "wizards/multicompany_easy_creation.xml",
         "wizards/assign_admin_wizard.xml",
+        "wizards/change_coordinator_wizard.xml",
     ],
     "installable": True,
     "application": True,
