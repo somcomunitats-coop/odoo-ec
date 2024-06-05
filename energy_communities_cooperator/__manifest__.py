@@ -30,5 +30,4 @@
     ],
     # only loaded in demonstration mode
     "demo": [],
-    "post_load": "post_load_cooperator_memberships",
 }
