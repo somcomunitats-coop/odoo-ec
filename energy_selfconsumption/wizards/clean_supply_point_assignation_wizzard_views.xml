@@ -6,11 +6,21 @@
         <field name="arch" type="xml">
             <form string="Confirm">
                 <group>
-                    <field name="message" nolabel="1"/>
+                    <field name="message" nolabel="1" />
                 </group>
                 <footer>
-                    <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>
-                    <button string="Cancel" type="object" name="action_cancel" class="btn-secondary"/>
+                    <button
+            string="Confirm"
+            type="object"
+            name="action_confirm"
+            class="btn-primary"
+          />
+                    <button
+            string="Cancel"
+            type="object"
+            name="action_cancel"
+            class="btn-secondary"
+          />
                 </footer>
             </form>
         </field>
