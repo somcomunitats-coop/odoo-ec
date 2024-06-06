@@ -17,6 +17,8 @@
         "contract_variable_quantity",
         "contract_queue_job",
         "contract_mandate",
+        "energy_communities",
+        "energy_communities_cooperator",
         "energy_project",
         "partner_firstname",
         "web_m2x_options",

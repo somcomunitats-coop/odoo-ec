@@ -20,7 +20,6 @@
         "community_maps",
         "contacts",
         "cooperator",
-        "energy_selfconsumption",
         "event",
         "l10n_es_aeat",
         "l10n_es_aeat_sii_oca",
