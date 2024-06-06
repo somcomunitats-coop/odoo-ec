@@ -1,3 +1,5 @@
+import logging
+import random
 from datetime import datetime, timedelta
 
 from stdnum.es import cups, referenciacatastral
@@ -5,9 +7,6 @@ from stdnum.exceptions import *
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-
-import random
-import logging
 
 _logger = logging.getLogger(__name__)
 
@@ -176,6 +175,10 @@ class Selfconsumption(models.Model):
                 [("state", "=", "validated")]
             ):
                 raise ValidationError(_("Must have a valid Distribution Table."))
+            if not record.code:
+                raise ValidationError(_("Project must have a valid Code (CAU)."))
+            if not record.power or record.power <= 0:
+                raise ValidationError(_("Project must have a valid Rated Power."))
             record.write({"state": "activation"})
         self.distribution_table_state("validated", "process")
 
@@ -200,7 +203,9 @@ class Selfconsumption(models.Model):
         """
         for record in self:
             if not record.code:
-                raise ValidationError(_("Project must have a valid Code."))
+                raise ValidationError(_("Project must have a valid Code (CAU)."))
+            if not record.cil:
+                raise ValidationError(_("Project must have a valid Code (CIL)."))
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Rated Power."))
             if not record.invoicing_mode:
@@ -377,8 +382,9 @@ class Selfconsumption(models.Model):
         return True
 
     def set_autogenerate_inscriptions(self):
-        partners_socios = self.env["res.partner"].search([('member','=','True')],
-                                                         limit=500)
+        partners_socios = self.env["res.partner"].search(
+            [("member", "=", "True")], limit=500
+        )
         for partner in partners_socios:
             mandates = self.env["account.banking.mandate"].search(
                 [
@@ -388,12 +394,14 @@ class Selfconsumption(models.Model):
                 ]
             )
             if mandates:
-                self.env['energy_project.inscription'].create({
-                    "project_id": self.project_id.id,
-                    "partner_id": partner.id,
-                    "effective_date": datetime.now().strftime("%Y-%m-%d"),
-                    "mandate_id": mandates[0].id,
-                })
+                self.env["energy_project.inscription"].create(
+                    {
+                        "project_id": self.project_id.id,
+                        "partner_id": partner.id,
+                        "effective_date": datetime.now().strftime("%Y-%m-%d"),
+                        "mandate_id": mandates[0].id,
+                    }
+                )
 
         return True
 
@@ -403,7 +411,7 @@ class Selfconsumption(models.Model):
         digitos_control = "00"
 
         # Generar los 20 dígitos aleatorios
-        digitos_aleatorios = ''.join([str(random.randint(0, 9)) for _ in range(20)])
+        digitos_aleatorios = "".join([str(random.randint(0, 9)) for _ in range(20)])
 
         # Concatenar todo para formar el IBAN
         iban = pais + digitos_control + digitos_aleatorios
@@ -413,7 +421,7 @@ class Selfconsumption(models.Model):
 
         # Ajustar el dígito de control si es necesario
         if len(d_control) == 1:
-            d_control = '0' + d_control
+            d_control = "0" + d_control
 
         # Reemplazar los dígitos de control iniciales con el dígito de control calculado
         iban = pais + d_control + digitos_aleatorios
@@ -453,24 +461,25 @@ class Selfconsumption(models.Model):
     def set_autogenerate_inscriptions_mandataris_supply_points(self):
         for i in range(0, 500):
             _logger.info(f"\n\n Creando el cliente número {i}")
-            country_id = self.env["res.country"].search([("code", "=", "ES")]
-                                                        )[0].id
+            country_id = self.env["res.country"].search([("code", "=", "ES")])[0].id
             vat = self.generar_vat_espanol()
-            partner = self.env["res.partner"].create({
-                "name": f"Prueba {vat} {i}",
-                "vat": vat,
-                "country_id": country_id,
-                "state_id": self.env["res.country.state"].search(
-                    [("code", "=", 'MA'), ("country_id", "=", country_id)]
-                )[0].id,
-                "member": True,
-                "street": f"Calle imaginación {i}",
-                "city": "Madrid",
-                "zip": 28221,
-                "type": "contact",
-                "company_id": self.env.company.id,
-                # "company_type": "person",
-            })
+            partner = self.env["res.partner"].create(
+                {
+                    "name": f"Prueba {vat} {i}",
+                    "vat": vat,
+                    "country_id": country_id,
+                    "state_id": self.env["res.country.state"]
+                    .search([("code", "=", "MA"), ("country_id", "=", country_id)])[0]
+                    .id,
+                    "member": True,
+                    "street": f"Calle imaginación {i}",
+                    "city": "Madrid",
+                    "zip": 28221,
+                    "type": "contact",
+                    "company_id": self.env.company.id,
+                    # "company_type": "person",
+                }
+            )
             _logger.info(f"\n\n Cliente creado {partner.name}")
 
             bank_account = self.env["res.partner.bank"].create(
@@ -497,12 +506,14 @@ class Selfconsumption(models.Model):
 
             _logger.info(f"\n\n Mandato del cliente creado {mandate.id}")
 
-            inscription = self.env['energy_project.inscription'].create({
-                "project_id": self.project_id.id,
-                "partner_id": partner.id,
-                "effective_date": datetime.now().strftime("%Y-%m-%d"),
-                "mandate_id": mandate.id,
-            })
+            inscription = self.env["energy_project.inscription"].create(
+                {
+                    "project_id": self.project_id.id,
+                    "partner_id": partner.id,
+                    "effective_date": datetime.now().strftime("%Y-%m-%d"),
+                    "mandate_id": mandate.id,
+                }
+            )
 
             _logger.info(f"\n\n Incripción del cliente creada {inscription.id}")
 
@@ -534,13 +545,12 @@ class Selfconsumption(models.Model):
                     "owner_id": partner.id,
                     "partner_id": partner.id,
                     "contracted_power": contracted_power,
-                    "tariff": tariff
+                    "tariff": tariff,
                 }
             )
 
             _logger.info(f"\n\n Supply point del cliente creado {supply_point.id}")
         return True
-
 
     @api.constrains("code")
     def _check_valid_code(self):

@@ -13,6 +13,7 @@ TYPE_VALUES = [("fixed", _("Fixed")), ("hourly", _("Variable hourly"))]
 
 class DistributionTable(models.Model):
     _name = "energy_selfconsumption.distribution_table"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Distribution Table"
 
     @api.depends("supply_point_assignation_ids.coefficient", "type")
@@ -63,30 +64,37 @@ class DistributionTable(models.Model):
             record.write({"supply_point_group_ids": [(6, 0, values)]})
 
     name = fields.Char(readonly=True, index=True)
+    change_view = fields.Boolean(string="Change view", default=True)
     selfconsumption_project_id = fields.Many2one(
-        "energy_selfconsumption.selfconsumption", required=True, readonly=True, index=True
+        "energy_selfconsumption.selfconsumption",
+        required=True,
+        readonly=True,
+        index=True,
     )
     selfconsumption_project_state = fields.Selection(
-        related="selfconsumption_project_id.state",index=True
+        related="selfconsumption_project_id.state", index=True
     )
     type = fields.Selection(
-        TYPE_VALUES,
-        default="fixed",
-        required=True,
-        string="Modality",
-        index=True
+        TYPE_VALUES, default="fixed", required=True, string="Modality", index=True
     )
     state = fields.Selection(STATE_VALUES, default="draft", required=True, index=True)
     supply_point_assignation_ids = fields.One2many(
-        "energy_selfconsumption.supply_point_assignation", "distribution_table_id", lazy="dynamic"
+        "energy_selfconsumption.supply_point_assignation",
+        "distribution_table_id",
+        lazy="dynamic",
+        string="Supply Point Assignation"
     )
+
+
+
     supply_point_group_ids = fields.Many2many(
         "energy_selfconsumption.supply_point",
         "energy_selfconsumption_supply_point_group_rel",
         compute=_compute_supply_point_group_ids,
         readonly=True,
         store=True,
-        lazy="dynamic"
+        lazy="dynamic",
+        string="Supply Point Assignation",
     )
     coefficient_is_valid = fields.Boolean(
         compute=_compute_coefficient_is_valid, readonly=True, store=True, index=True
@@ -115,8 +123,21 @@ class DistributionTable(models.Model):
 
     @api.onchange("type")
     def _onchange_type(self):
-        self.supply_point_assignation_ids = False
+        if self.type == "fixed":
+            values = []
+            if self and self.selfconsumption_project_id:
+                for inscription in self.selfconsumption_project_id.inscription_ids:
+                    if inscription.partner_id.supply_ids:
+                        values.append((0, 0, {
+                            "supply_point_id": inscription.partner_id.supply_ids.ids[0],
+                            "coefficient": 0,
+                            "company_id": self.env.company.id,
+                        }))
+            self.supply_point_assignation_ids = values
+        else:
+            self.supply_point_assignation_ids = False
         self.supply_point_group_ids = False
+        self.change_view = not self.change_view
 
     def button_validate(self):
         for record in self:
@@ -159,11 +180,14 @@ class DistributionTable(models.Model):
             "view_mode": "form",
             "res_model": "clean.supply.point.assignation.wizzard",
             "target": "new",
-            'context': {'active_ids': self.env.context.get('active_ids', [])}
+            "context": {"active_ids": self.env.context.get("active_ids", [])},
         }
 
     def action_open_form(self):
         self.ensure_one()
+        self.write({
+            "change_view": False
+        })
         if self.type == 'fixed':
             return {
                 'type': 'ir.actions.act_window',

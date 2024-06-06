@@ -2,92 +2,9 @@
 <odoo>
     <data>
         <record id="distribution_table_fixed_form_view" model="ir.ui.view">
-            <field name="name">energy_selfconsumption.distribution_table_fixed_form_view.form
-            </field>
-            <field name="model">energy_selfconsumption.distribution_table</field>
-            <field name="arch" type="xml">
-                <form string="Distribution Table">
-                    <header>
-                        <button
-              type="object"
-              string="Validate"
-              name="button_validate"
-              states="draft"
-              class="btn btn-primary"
-            />
-                        <button
-              type="object"
-              string="Reset to draft"
-              name="button_draft"
-              attrs="{'invisible':['|',('state','not in',['validated']),('selfconsumption_project_state','not in',['inscription'])]}"
-            />
-                        <button
-              type="object"
-              name="action_distribution_table_import_wizard"
-              string="Import table"
-              states="draft"
-            />
-                        <field
-              name="state"
-              widget="statusbar"
-              readonly="True"
-              statusbar_visible="draft,validated,process,active"
-            />
-                        <field name="selfconsumption_project_state" invisible="1" />
-                    </header>
-                    <sheet>
-                        <widget name="web_ribbon"
-              text="Archived"
-              bg_color="bg-danger"
-              attrs="{'invisible': [('active', '=', True)]}"
-            />
-                        <field name="active" invisible="True" />
-                        <group>
-                            <group>
-                                <field name="selfconsumption_project_id"
-                  readonly="True"
-                />
-                            </group>
-                            <group>
-                                <field name="type"
-                  attrs="{'readonly': [('state', 'not in', ['draft'])]}"
-                />
-                            </group>
-                        </group>
-                        <group>
-                            <field
-                name="supply_point_assignation_ids"
-                widget="one2many"
-                mode="list"
-                context="{'default_distribution_table_id':id}"
-                attrs="{'readonly': [('state', 'not in', ['draft'])]}"
-              >
-                                <tree editable="bottom">
-                                    <field name="supply_point_filtered_ids"
-                    invisible="True"
-                  />
-                                    <field name="table_coefficient_is_valid"
-                    invisible="True"
-                  />
-                                    <field name="supply_point_id"
-                    options="{'no_create': True, 'search_more': True}"
-                    domain="[('id', 'in', supply_point_filtered_ids)]"
-                  />
-                                    <field name="owner_id" />
-                                    <field name="code" />
-                                    <field name="coefficient" sum="True"
-                    decoration-success="table_coefficient_is_valid == True"
-                  />
-                                </tree>
-                            </field>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-
-        <record id="distribution_table_hourly_form_view" model="ir.ui.view">
-            <field name="name">energy_selfconsumption.distribution_table_hourly_form_view.form
+            <field
+        name="name"
+      >energy_selfconsumption.distribution_table_fixed_form_view.form
             </field>
             <field name="model">energy_selfconsumption.distribution_table</field>
             <field name="arch" type="xml">
@@ -127,28 +44,150 @@
               bg_color="bg-danger"
               attrs="{'invisible': [('active', '=', True)]}"
             />
+                        <field name="change_view" invisible="True"/>
                         <field name="active" invisible="True" />
                         <group>
                             <group>
-                                <field name="selfconsumption_project_id" readonly="True"
+                                <field
+                  name="selfconsumption_project_id"
+                  readonly="True"
                 />
                             </group>
                             <group>
-                                <field name="type"
+                                <field
+                  name="type"
                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"
                 />
                             </group>
                         </group>
                         <group>
-                            <field name="supply_point_group_ids">
+                            <field
+                name="supply_point_assignation_ids"
+                widget="one2many"
+                mode="list"
+                context="{'default_distribution_table_id':id}"
+                attrs="{'readonly': [('state', 'not in', ['draft'])],'invisible': [('change_view', '=', True)]}"
+              >
+                                <tree editable="bottom">
+                                    <field
+                    name="supply_point_filtered_ids"
+                    invisible="True"
+                  />
+                                    <field
+                    name="table_coefficient_is_valid"
+                    invisible="True"
+                  />
+                                    <field
+                    name="supply_point_id"
+                    options="{'no_create': True, 'search_more': True}"
+                    domain="[('id', 'in', supply_point_filtered_ids)]"
+                  />
+                                    <field name="owner_id" />
+                                    <field name="code" />
+                                    <field
+                    name="coefficient"
+                    sum="True"
+                    decoration-success="table_coefficient_is_valid == True"
+                  />
+                                </tree>
+                            </field>
+                            <button
+                              type="object"
+                              name="action_open_form"
+                              string="Change view"
+                              attrs="{'invisible': [('change_view', '=', False)]}"
+                            />
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="distribution_table_hourly_form_view" model="ir.ui.view">
+            <field
+        name="name"
+      >energy_selfconsumption.distribution_table_hourly_form_view.form
+            </field>
+            <field name="model">energy_selfconsumption.distribution_table</field>
+            <field name="arch" type="xml">
+                <form string="Distribution Table">
+                    <header>
+                        <button
+              type="object"
+              string="Validate"
+              name="button_validate"
+              states="draft"
+              class="btn btn-primary"
+            />
+                        <button
+              type="object"
+              string="Reset to draft"
+              name="button_draft"
+              attrs="{'invisible':['|',('state','not in',['validated']),('selfconsumption_project_state','not in',['inscription'])]}"
+            />
+                        <button
+              type="object"
+              name="action_distribution_table_import_wizard"
+              string="Import table"
+              states="draft"
+            />
+                        <field
+              name="state"
+              widget="statusbar"
+              readonly="True"
+              statusbar_visible="draft,validated,process,active"
+            />
+                        <field name="selfconsumption_project_state" invisible="1" />
+                    </header>
+                    <sheet>
+                        <widget
+              name="web_ribbon"
+              text="Archived"
+              bg_color="bg-danger"
+              attrs="{'invisible': [('active', '=', True)]}"
+            />
+                        <field name="change_view" invisible="True"/>
+                        <field name="active" invisible="True" />
+                        <group>
+                            <group>
+                                <field
+                  name="selfconsumption_project_id"
+                  readonly="True"
+                />
+                            </group>
+                            <group>
+                                <field
+                  name="type"
+                  attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                />
+                            </group>
+                        </group>
+                        <group>
+                            <field name="supply_point_group_ids" attrs="{'invisible': [('change_view', '=', True)]}">
                                 <tree>
                                     <field name="name" />
                                     <field name="owner_id" />
                                     <field name="code" />
                                 </tree>
                             </field>
+                            <button
+                              type="object"
+                              name="action_open_form"
+                              string="Change view"
+                              attrs="{'invisible': [('change_view', '=', False)]}"
+                            />
                         </group>
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
                 </form>
             </field>
         </record>
@@ -210,7 +249,10 @@
       model="ir.actions.server"
     >
             <field name="name">Clean supply point assignation</field>
-            <field name="model_id" ref="model_energy_selfconsumption_distribution_table" />
+            <field
+        name="model_id"
+        ref="model_energy_selfconsumption_distribution_table"
+      />
             <field
         name="binding_model_id"
         ref="model_energy_selfconsumption_distribution_table"

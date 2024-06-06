@@ -48,7 +48,10 @@ class SupplyPoint(models.Model):
         "res.company", default=lambda self: self.env.company, readonly=True, index=True
     )
     reseller_id = fields.Many2one(
-        "energy_project.reseller", string="Reseller", domain=[("state", "!=", "Baja")], index=True
+        "energy_project.reseller",
+        string="Reseller",
+        domain=[("state", "!=", "Baja")],
+        index=True,
     )
 
     # Address fields
@@ -71,7 +74,7 @@ class SupplyPoint(models.Model):
         "energy_selfconsumption.supply_point_assignation",
         "supply_point_id",
         readonly=True,
-        index=True
+        index=True,
     )
     supplier_id = fields.Many2one("energy_project.supplier", string="Supplier")
     cadastral_reference = fields.Char(string="Cadastral reference")

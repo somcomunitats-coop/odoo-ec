@@ -49,14 +49,14 @@ class SupplyPointAssignation(models.Model):
         string="Distribution coefficient",
         digits=(1, 5),
         required=True,
-        index = True,
+        index=True,
         help="The sum of all the coefficients must result in 1",
     )
     hour = fields.Integer(string="Hour", required=True, default=0, index=True)
-    type = fields.Selection(
-        related="distribution_table_id.type", index=True
+    type = fields.Selection(related="distribution_table_id.type", index=True)
+    owner_id = fields.Many2one(
+        "res.partner", related="supply_point_id.owner_id", index=True
     )
-    owner_id = fields.Many2one("res.partner", related="supply_point_id.owner_id", index=True)
     code = fields.Char(related="supply_point_id.code", index=True)
     table_coefficient_is_valid = fields.Boolean(
         related="distribution_table_id.coefficient_is_valid"
@@ -65,7 +65,7 @@ class SupplyPointAssignation(models.Model):
     supply_point_filtered_ids = fields.One2many(
         "energy_selfconsumption.supply_point",
         compute=_compute_supply_point_filtered_ids,
-        readonly=True
+        readonly=True,
     )
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True, index=True
@@ -75,17 +75,21 @@ class SupplyPointAssignation(models.Model):
     def constraint_coefficient(self):
         for record in self:
             if record.coefficient < 0:
-                raise ValidationError(_(f"""Coefficient can't be negative.
+                raise ValidationError(
+                    _(
+                        f"""Coefficient can't be negative.
                     \nhour: {record.hour}
                     \nowner: {record.owner_id.name}
                     \ncode: {record.code}
                     \ncode: {record.coefficient}
-                """))
+                """
+                    )
+                )
 
     @api.constrains("supply_point_id")
     def constraint_supply_point_id(self):
         for record in self:
-            #import pdb; pdb.set_trace()
+            # import pdb; pdb.set_trace()
             supply_points = record.distribution_table_id.selfconsumption_project_id.inscription_ids.mapped(
                 "partner_id.supply_ids"
             )
