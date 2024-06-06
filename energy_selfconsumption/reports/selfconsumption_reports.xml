@@ -335,6 +335,17 @@
                     <p
           >(Si existen varios productores con instalaciones de generación asociadas al autoconsumo, completar
                         para cada uno de ellos)</p>
+                    <t
+            t-set="today"
+            t-value=" context_timestamp(datetime.datetime.now())"
+          />
+                    <t t-if="o.report_distribution_table.type == 'hourly'">
+                        <p>
+                        *indicados en el fichero de reparto anual (<t
+                t-esc="selfconsumption_project_id.code"
+              />_<t t-esc="today.strftime('%Y')" />.txt)
+                        </p>
+                    </t>
                     <table>
                         <tr>
                             <th><b>PRODUCTOR ASOCIADO</b><br />
@@ -378,10 +389,7 @@
                         acuerdo.
                     </p>
                     <p>
-                        <t
-              t-set="today"
-              t-value=" context_timestamp(datetime.datetime.now())"
-            />
+
                         En <span t-field="o.city" />, a <t
               t-esc="today.strftime('%d/%m/%Y')"
             />
