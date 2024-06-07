@@ -18,7 +18,7 @@
     "depends": [
         "base",
         "cooperator",
-        "cooperator_website",
+        "cooperator_account_payment",
         "l10n_es_cooperator",
         "energy_communities",
     ],
