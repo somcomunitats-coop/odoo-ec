@@ -25,6 +25,9 @@
     # always loaded
     "data": [
         # 'security/ir.model.access.csv',
+        "data/product_data.xml",
+        "data/mail_template_update_data.xml",
+        "data/ir_config_parameter_data.xml",
         "views/account_move_views.xml",
         "views/cooperative_membership_views.xml",
         "views/operation_request_views.xml",
@@ -33,8 +36,6 @@
         "views/res_company_views.xml",
         "views/subscription_request_view.xml",
         "views/website_subscription_template.xml",
-        "data/mail_template_update_data.xml",
-        "data/ir_config_parameter_data.xml",
     ],
     # only loaded in demonstration mode
     "demo": [],
