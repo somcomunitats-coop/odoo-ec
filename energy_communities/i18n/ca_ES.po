@@ -455,11 +455,6 @@ msgid "Cooperator"
 msgstr "Sòcia"
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__property_cooperator_account
-msgid "Cooperator Account"
-msgstr "Compte sòcies"
-
-#. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_coordinator
 msgid "Coordinadora"
 msgstr "Coordinadora"
@@ -545,11 +540,6 @@ msgstr "Crear punt del mapa"
 #: model:ir.ui.menu,name:energy_communities.ce_create_user_wizard
 msgid "Create user"
 msgstr "Crear usuari"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__create_user
-msgid "Create user for cooperator"
-msgstr "Crear usuari d'Odoo desde la sòcia"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__create_user_in_keycloak
@@ -943,11 +933,6 @@ msgid "Information about future CE by location"
 msgstr "Rebre informació sobre futures CCEE en la meva zona"
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__capital_share
-msgid "Initial capital share"
-msgstr "Quota inicial alta sòcia"
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_instagram_url
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__instagram_link
 msgid "Instagram link"
@@ -1188,11 +1173,6 @@ msgstr "Nom"
 #, python-format
 msgid "New"
 msgstr "Nova"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__new_product_share_template
-msgid "New Product Share Template"
-msgstr "Plantilla de nou producte de quota"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__activity_date_deadline
@@ -1446,11 +1426,6 @@ msgstr "Imatge primària"
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
 msgid "Process"
 msgstr "Procés"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__product_share_template
-msgid "Product Share Template"
-msgstr "Plantilla de producte aportació"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_product_template
@@ -1714,15 +1689,6 @@ msgstr ""
 "Hi ha hagut un canvi de Coordinadora             de [OLD:{outgoing_id}] "
 "{outgoing_name} a [NEW:{incoming_id}] {incoming_name},             Motiu "
 "del canvi: {change_reason}"
-
-#. module: energy_communities
-#: model:ir.model.fields,help:energy_communities.field_account_multicompany_easy_creation_wiz__property_cooperator_account
-msgid ""
-"This account will be the default one as the receivable account for the "
-"cooperators"
-msgstr ""
-"Aquest serà el compte per defecte per al cobrament de les aportacions de "
-"les sòcies"
 
 #. module: energy_communities
 #: code:addons/energy_communities/wizards/change_coordinator_wizard.py:0

@@ -36,6 +36,7 @@
         "views/res_company_views.xml",
         "views/subscription_request_view.xml",
         "views/website_subscription_template.xml",
+        "wizards/multicompany_easy_creation.xml",
     ],
     # only loaded in demonstration mode
     "demo": [],

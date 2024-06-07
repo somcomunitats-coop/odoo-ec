@@ -1,5 +1,6 @@
 from . import controllers
 from . import models
+from . import wizards
 
 from odoo import fields, api
 from odoo.addons.cooperator.models import partner
