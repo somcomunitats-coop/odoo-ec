@@ -20,9 +20,6 @@
       >
                 <attribute name="invisible">True</attribute>
             </xpath>
-            <group name="coop_grp" position="inside">
-              <field name="cooperator_share_form_header_text" />
-            </group>
             <group name="coop_grp" position="after">
                 <group name="customize_docs_text" string="Customize documents text">
                     <field name="display_footer_doc_policy_text" />
@@ -80,17 +77,10 @@
                         <field name="legal_form" />
                         <field name="comercial_name" />
                         <field name="ce_status" />
-                        <field name="voluntary_share_id" />
                         <field name="ce_tag_ids" />
                         <field name="admins" />
                     </group>
                 </page>
-            </xpath>
-            <xpath
-        expr="//field[@name='property_cooperator_account']"
-        position="before"
-      >
-                <field name="cooperator_journal" />
             </xpath>
             <xpath expr="//field[@name='unmix_share_type']" position="before">
                 <field name="foundation_date" />

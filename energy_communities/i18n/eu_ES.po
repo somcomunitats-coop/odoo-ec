@@ -18,89 +18,6 @@ msgstr ""
 "X-Generator: Poedit 3.4.2\n"
 
 #. module: energy_communities
-#: model:mail.template,body_html:energy_communities.email_template_conditions_voluntary_share
-msgid ""
-"\n"
-"    <p>Dear ${object.name},</p>\n"
-"    <p>\n"
-"        Last week we charged your account corresponding to your voluntary "
-"contribution to the share capital of the\n"
-"        <b>${object.company_id.name}</b>.\n"
-"    </p>\n"
-"    <p>\n"
-"        We attach the contract with the conditions of your investment and "
-"we remind you that for any doubt or\n"
-"        clarification in relation to the contribution made you can send an "
-"email to\n"
-"        <a href=\"${object.company_id.email}\">${object.company_id.email}</"
-"a> or consult the website\n"
-"        <a href=\"${object.company_id.website}\"> ${object.company_id."
-"website}</a>.\n"
-"    </p>\n"
-"    <p>\n"
-"        We take this opportunity to thank you, once again, for your "
-"involvement with the <b>${object.company_id.name}</b>\n"
-"        objective to promote those actions or projects that contribute to "
-"an energy, economic and social transition\n"
-"        in ${object.company_id.city}.\n"
-"    </p>\n"
-"    <p>\n"
-"        Get the word out by explaining the project to family and friends. "
-"The more we are, the further we will go!\n"
-"    </p>\n"
-"    <p>\n"
-"        Thank you very much and good energy!\n"
-"    </p>\n"
-"    <p>\n"
-"        Sincerely,\n"
-"    </p>\n"
-"    <p>\n"
-"        ${object.company_id.name} team\n"
-"    </p>\n"
-"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" "
-"style=\"width: 150px;height: 80px;\"/>\n"
-"            "
-msgstr ""
-"\n"
-"    <p>${object.firstname} estimatua,</p>\n"
-"    <p>\n"
-"        Jakinarazten dizuegu zuen bankuari igorri diogula \n"
-"        <b>${object.company_id.name}</b> kooperatibaren kapital sozialari "
-"egin diozun borondatezko ekarpenari dagokion kargua.\n"
-"    </p>\n"
-"    <p>\n"
-"        Zure inbertsioaren baldintzak jasotzen dituen kontratua eransten "
-"dizugu eta gogorarazten dizugu egindako ekarpenari buruzko edozein zalantza "
-"argitzeko posta elektroniko bat bidal dezakezula\n"
-"        <a href=\"${object.company_id.email}\">${object.company_id.email}</"
-"a> helbidera edo \n"
-"        <a href=\"${object.company_id.website}\"> ${object.company_id."
-"website}</a>web orria kontsultatu.\n"
-"    </p>\n"
-"    <p>\n"
-"        Bide batez eskerrak eman nahi dizkizugu beste behin ere, "
-"<b>${object.company_id.name}</b>\n"
-"        xedearekin duzun inplikazioagatik,  ${object.company_id.city} "
-"energia, ekonomia eta gizarte trantsizioan laguntzen duten ekintzak edo "
-"proiektuak bultzatzeko.\n"
-"    </p>\n"
-"    <p>\n"
-"Ahoz aho proiektua familiakoei, auzokideei eta lagunei azaldu. Zenbat eta "
-"gehiago izan, urrunago iritsiko gara.\n"
-"    </p>\n"
-"    <p>\n"
-"Eskerrik asko eta energia on!\n"
-"    </p>\n"
-"    <p>\n"
-"        Adeitasunez,\n"
-"    </p>\n"
-"    <p>\n"
-"        ${object.company_id.name} taldea\n"
-"    </p>\n"
-"<img src=\"/logo.png?company=${object.company_id.id}\">\n"
-"            "
-
-#. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser_pwd
 msgid "\"Superuser\" user password"
 msgstr "Contraseña del super-usuario"
@@ -514,14 +431,6 @@ msgid "Compres col·lectives"
 msgstr "Compras colectivas"
 
 #. module: energy_communities
-#: model:mail.template,subject:energy_communities.email_template_conditions_voluntary_share
-msgid ""
-"Conditions Share Capital to ${object.company_id.name} Ref. ACSV${object.id}"
-msgstr ""
-"${object.company_id.name} autofinantzaketan ematea Erref. ACSV${object.id}: "
-"egindako ekarpena"
-
-#. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_config_settings
 msgid "Config Settings"
 msgstr "Konfigurazio ezarpenak"
@@ -594,16 +503,6 @@ msgstr "Socia"
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__property_cooperator_account
 msgid "Cooperator Account"
 msgstr "Cuenta socias"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__cooperator_journal
-msgid "Cooperator Journal"
-msgstr "Diario Socias"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__cooperator_share_form_header_text
-msgid "Cooperator share form header text"
-msgstr "Nahitaez parte hartzeko inprimakiaren testua"
 
 #. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_coordinator
@@ -2036,15 +1935,6 @@ msgid ""
 msgstr "Hau da Gizarte Kapitalaren Borondatezko Ekarpenetarako formularioa"
 
 #. module: energy_communities
-#: model:ir.model.fields,help:energy_communities.field_res_company__cooperator_journal
-msgid ""
-"This journal will be the default one as the receivable journal for the "
-"cooperators"
-msgstr ""
-"Éste será el diario por defecto para el cobro de las aportaciones de las "
-"socias"
-
-#. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
 #, python-format
 msgid "This language code %s is not active in Odoo. Active ones: %s"
@@ -2274,11 +2164,6 @@ msgstr "Aportaciones voluntarias"
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__voluntary_share_form_header_text
 msgid "Voluntary share form header text"
 msgstr "Borondatezko parte hartzeko formularioaren testua"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__voluntary_share_id
-msgid "Voluntary share to show on website"
-msgstr "Aportación voluntaria para mostrar en el sitio web"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_landing_page_id

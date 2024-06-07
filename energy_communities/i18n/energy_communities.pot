@@ -16,42 +16,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: energy_communities
-#: model:mail.template,body_html:energy_communities.email_template_conditions_voluntary_share
-msgid ""
-"\n"
-"    <p>Dear ${object.name},</p>\n"
-"    <p>\n"
-"        Last week we charged your account corresponding to your voluntary contribution to the share capital of the\n"
-"        <b>${object.company_id.name}</b>.\n"
-"    </p>\n"
-"    <p>\n"
-"        We attach the contract with the conditions of your investment and we remind you that for any doubt or\n"
-"        clarification in relation to the contribution made you can send an email to\n"
-"        <a href=\"${object.company_id.email}\">${object.company_id.email}</a> or consult the website\n"
-"        <a href=\"${object.company_id.website}\"> ${object.company_id.website}</a>.\n"
-"    </p>\n"
-"    <p>\n"
-"        We take this opportunity to thank you, once again, for your involvement with the <b>${object.company_id.name}</b>\n"
-"        objective to promote those actions or projects that contribute to an energy, economic and social transition\n"
-"        in ${object.company_id.city}.\n"
-"    </p>\n"
-"    <p>\n"
-"        Get the word out by explaining the project to family and friends. The more we are, the further we will go!\n"
-"    </p>\n"
-"    <p>\n"
-"        Thank you very much and good energy!\n"
-"    </p>\n"
-"    <p>\n"
-"        Sincerely,\n"
-"    </p>\n"
-"    <p>\n"
-"        ${object.company_id.name} team\n"
-"    </p>\n"
-"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" style=\"width: 150px;height: 80px;\"/>\n"
-"            "
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser_pwd
 msgid "\"Superuser\" user password"
 msgstr ""
@@ -456,12 +420,6 @@ msgstr ""
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_collective_purchases
 msgid "Compres col·lectives"
-msgstr ""
-
-#. module: energy_communities
-#: model:mail.template,subject:energy_communities.email_template_conditions_voluntary_share
-msgid ""
-"Conditions Share Capital to ${object.company_id.name} Ref. ACSV${object.id}"
 msgstr ""
 
 #. module: energy_communities
@@ -2168,16 +2126,6 @@ msgstr ""
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "Voluntary Shares"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__voluntary_share_form_header_text
-msgid "Voluntary share form header text"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__voluntary_share_id
-msgid "Voluntary share to show on website"
 msgstr ""
 
 #. module: energy_communities

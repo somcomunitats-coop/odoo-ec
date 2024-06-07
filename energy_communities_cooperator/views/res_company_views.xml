@@ -16,6 +16,14 @@
       <field name="cooperator_waiting_list_mail_template" position="before">
         <field name="send_waiting_list_email" />
       </field>
+      <!--<xpath expr="//notebook" position="inside">-->
+      <!--  <page string="Cooperator voluntary shares">-->
+      <!--    <group>-->
+      <!--      <field name="cooperator_share_form_header_text" />-->
+      <!--      <field name="voluntary_share_id" />-->
+      <!--    </group>-->
+      <!--  </page>-->
+      <!--</xpath>-->
     </field>
   </record>
 </odoo>

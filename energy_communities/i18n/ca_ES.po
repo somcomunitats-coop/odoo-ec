@@ -18,113 +18,6 @@ msgstr ""
 "X-Generator: Poedit 3.4.2\n"
 
 #. module: energy_communities
-#: model:mail.template,body_html:energy_communities.email_template_conditions_voluntary_share
-msgid ""
-"\n"
-"    <p>Dear ${object.name},</p>\n"
-"    <p>\n"
-"        Last week we charged your account corresponding to your voluntary "
-"contribution to the share capital of the\n"
-"        <b>${object.company_id.name}</b>.\n"
-"    </p>\n"
-"    <p>\n"
-"        We attach the contract with the conditions of your investment and "
-"we remind you that for any doubt or\n"
-"        clarification in relation to the contribution made you can send an "
-"email to\n"
-"        <a href=\"${object.company_id.email}\">${object.company_id.email}</"
-"a> or consult the website\n"
-"        <a href=\"${object.company_id.website}\"> ${object.company_id."
-"website}</a>.\n"
-"    </p>\n"
-"    <p>\n"
-"        We take this opportunity to thank you, once again, for your "
-"involvement with the <b>${object.company_id.name}</b>\n"
-"        objective to promote those actions or projects that contribute to "
-"an energy, economic and social transition\n"
-"        in ${object.company_id.city}.\n"
-"    </p>\n"
-"    <p>\n"
-"        Get the word out by explaining the project to family and friends. "
-"The more we are, the further we will go!\n"
-"    </p>\n"
-"    <p>\n"
-"        Thank you very much and good energy!\n"
-"    </p>\n"
-"    <p>\n"
-"        Sincerely,\n"
-"    </p>\n"
-"    <p>\n"
-"        ${object.company_id.name} team\n"
-"    </p>\n"
-"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" "
-"style=\"width: 150px;height: 80px;\"/>\n"
-"            "
-msgstr ""
-"\n"
-"    <p>Apreciat/ada ${object.firstname},</p>\n"
-"    <p>\n"
-"        Et confirmem que ja hem fet el càrrec al teu compte bancari "
-"corresponent a la teva aportació al capital voluntari de \n"
-"        <b>${object.company_id.name}</b>.\n"
-"    </p>\n"
-"    <p>\n"
-"\tRestem a la teva disposició per qualsevol dubte o aclariment en relació a "
-"la aportació realitzada a través del nostre correu electrònic \n"
-"        <a href=\"${object.company_id.email}\">${object.company_id.email}</"
-"a> o la nostra pàgina web \n"
-"        <a href=\"${object.company_id.website}\"> ${object.company_id."
-"website}</a>.\n"
-"    </p>\n"
-"    <p>\n"
-"        Aprofitem per agrair-te, un cop més, la teva implicació amb "
-"l'objectiu de <b>${object.company_id.name}</b>\n"
-"        per impulsar aquelles accions o projecte que contribueixin a una "
-"transició energètica, economia i social a ${object.company_id.city}.\n"
-"    </p>\n"
-"    <p>\n"
-"Fes que corri la veu explicant el nostre projecte a familiars i amics/"
-"amigues. Com més siguem, més lluny arribarem!\n"
-"    </p>\n"
-"    <p>\n"
-"Moltes gràcies i bona energia!\n"
-"    </p>\n"
-"    <p>\n"
-"        Atentament,\n"
-"    </p>\n"
-"</br>\n"
-"    <p>\n"
-"       L'equip de ${object.company_id.name}\n"
-"    </p>\n"
-"    % if object.company_id.street:\n"
-"        ${object.company_id.street}\n"
-"    % endif\n"
-"    % if object.company_id.street2:\n"
-"        ${object.company_id.street2}<br/>\n"
-"    % endif\n"
-"    % if object.company_id.city or object.company_id.zip:\n"
-"        ${object.company_id.zip} ${object.company_id.city}<br/>\n"
-"    % endif\n"
-"    % if object.company_id.country_id:\n"
-"        ${object.company_id.state_id and ('%s, ' % object.company_id."
-"state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
-"    % endif\n"
-"    % if object.company_id.phone:\n"
-"        Teléfono:&nbsp; ${object.company_id.phone}\n"
-"    % endif\n"
-"\n"
-"    % if object.company_id.website:\n"
-"        <div>\n"
-"            Web :&nbsp;<a href=\"${object.company_id.website}\">${object."
-"company_id.website}</a>\n"
-"        </div>\n"
-"    %endif\n"
-"<div>\n"
-"<img src=\"/logo.png?company=${object.company_id.id}\">\n"
-"</div>\n"
-"            "
-
-#. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser_pwd
 msgid "\"Superuser\" user password"
 msgstr "Contrasenya del super-usuari"
@@ -538,14 +431,6 @@ msgid "Compres col·lectives"
 msgstr "Compres col·lectives"
 
 #. module: energy_communities
-#: model:mail.template,subject:energy_communities.email_template_conditions_voluntary_share
-msgid ""
-"Conditions Share Capital to ${object.company_id.name} Ref. ACSV${object.id}"
-msgstr ""
-"Aportació voluntària a ${object.company_id.name} Ref. ACSV${object.id}: "
-"aportació feta"
-
-#. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_config_settings
 msgid "Config Settings"
 msgstr "Configuració"
@@ -618,16 +503,6 @@ msgstr "Sòcia"
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__property_cooperator_account
 msgid "Cooperator Account"
 msgstr "Compte sòcies"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__cooperator_journal
-msgid "Cooperator Journal"
-msgstr "Diari Sòcies"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__cooperator_share_form_header_text
-msgid "Cooperator share form header text"
-msgstr "Text del formulari de participació obligatòria"
 
 #. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_coordinator
@@ -2058,15 +1933,6 @@ msgstr ""
 "Social per part de les sòcies de"
 
 #. module: energy_communities
-#: model:ir.model.fields,help:energy_communities.field_res_company__cooperator_journal
-msgid ""
-"This journal will be the default one as the receivable journal for the "
-"cooperators"
-msgstr ""
-"Aquest diari serà el que s'usarà per defecte per als cobraments de les "
-"altes de sòcies"
-
-#. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
 #, python-format
 msgid "This language code %s is not active in Odoo. Active ones: %s"
@@ -2298,11 +2164,6 @@ msgstr "Aportacions voluntàries"
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__voluntary_share_form_header_text
 msgid "Voluntary share form header text"
 msgstr "Text del formulari de participació voluntària"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__voluntary_share_id
-msgid "Voluntary share to show on website"
-msgstr "Formulari d'aportació voluntària per ensenyar a la web"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_landing_page_id
