@@ -9,7 +9,7 @@
         <xpath expr="." position="inside">
             <script
         type="text/javascript"
-        src="/energy_communities/static/src/js/cooperator.js"
+        src="/energy_communities_cooperator/static/src/js/cooperator.js"
       />
         </xpath>
   </template>
@@ -52,6 +52,7 @@
       >Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
         </xpath>
+        <!-- TODO: This line migth not work on clean db -->
         <xpath expr="//div[@id='wrap']//a[@t-if='not logged']/." position="replace" />
         <xpath expr="//div[@name='confirm_email_container']" position="after">
             <div
@@ -362,7 +363,7 @@
                     <div class="row justify-content-center">
                         <div class="col-xs-12 col-sm-10  col-md-8 col-lg-6">
                             <t
-                t-call="energy_communities.voluntary_share_text_template"
+                t-call="energy_communities_cooperator.voluntary_share_text_template"
               />
                             <form
                 action="/subscription/voluntary_share"
@@ -473,7 +474,7 @@
                                 </div>
 
                                 <t
-                  t-call="energy_communities.voluntary_shares_template"
+                  t-call="energy_communities_cooperator.voluntary_shares_template"
                 />
                                 <t t-call="cooperator_website.rules_template" />
 

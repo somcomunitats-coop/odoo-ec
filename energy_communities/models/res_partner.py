@@ -89,6 +89,7 @@ class ResPartner(models.Model):
             {"company_ids": False}
         )
 
+    # TODO: Rename this method. It has nothing to do with cooperator
     def get_cooperator_from_vat(self, vat, company_id=False):
         if vat:
             vat = vat.strip()

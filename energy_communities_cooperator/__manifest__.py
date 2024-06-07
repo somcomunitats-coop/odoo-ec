@@ -15,7 +15,13 @@
     "version": "14.0.1.0.2",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
-    "depends": ["base", "cooperator", "l10n_es_cooperator", "energy_communities"],
+    "depends": [
+        "base",
+        "cooperator",
+        "cooperator_website",
+        "l10n_es_cooperator",
+        "energy_communities",
+    ],
     # always loaded
     "data": [
         # 'security/ir.model.access.csv',
@@ -26,6 +32,7 @@
         "views/res_partner_views.xml",
         "views/res_company_views.xml",
         "views/subscription_request_view.xml",
+        "views/website_subscription_template.xml",
         "data/mail_template_update_data.xml",
         "data/ir_config_parameter_data.xml",
     ],
