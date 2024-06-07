@@ -22,7 +22,6 @@
         "l10n_es_aeat",
         "l10n_es_aeat_sii_oca",
         "mail_multicompany",
-        "mass_mailing",
         "metadata",
         "partner_multi_company",
         "purchase",
