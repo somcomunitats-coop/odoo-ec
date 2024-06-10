@@ -17,8 +17,10 @@
     # any module necessary for this one to work correctly
     "depends": [
         "base",
+        "account_multicompany_easy_creation",
         "cooperator",
         "cooperator_account_payment",
+        "cooperator_account_banking_mandate",
         "l10n_es_cooperator",
         "energy_communities",
     ],
@@ -26,6 +28,7 @@
     "data": [
         # 'security/ir.model.access.csv',
         "data/product_data.xml",
+        "data/res_users_role_data.xml",
         "data/mail_template_update_data.xml",
         "data/ir_config_parameter_data.xml",
         "views/account_move_views.xml",
@@ -39,6 +42,10 @@
         "wizards/multicompany_easy_creation.xml",
     ],
     # only loaded in demonstration mode
-    "demo": [],
-    "post_load": "post_load_cooperator_memberships",
+    "demo": [
+        "demo/res_company_demo.xml",
+        "demo/res_user_demo.xml",
+        "demo/subscription_request_demo.xml",
+    ],
+    # "post_load": "post_load_cooperator_memberships",
 }

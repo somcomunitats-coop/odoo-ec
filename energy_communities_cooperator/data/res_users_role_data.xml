@@ -1,0 +1,42 @@
+<odoo>
+    <record model="res.users.role" id="energy_communities.role_ce_admin">
+        <field
+      name="implied_ids"
+      eval="[
+               (4, ref('cooperator.cooperator_group_manager')),
+        ]"
+    />
+    </record>
+    <record model="res.users.role" id="energy_communities.role_ce_manager">
+        <field
+      name="implied_ids"
+      eval="[
+               (4, ref('cooperator.cooperator_group_manager')),
+        ]"
+    />
+    </record>
+    <record model="res.users.role" id="energy_communities.role_coord_admin">
+        <field
+      name="implied_ids"
+      eval="[
+               (4, ref('cooperator.cooperator_group_manager')),
+        ]"
+    />
+    </record>
+    <record model="res.users.role" id="energy_communities.role_coord_worker">
+        <field
+      name="implied_ids"
+      eval="[
+               (4, ref('cooperator.cooperator_group_manager')),
+        ]"
+    />
+    </record>
+    <record model="res.users.role" id="energy_communities.role_platform_admin">
+        <field
+      name="implied_ids"
+      eval="[
+               (4, ref('cooperator.cooperator_group_manager')),
+        ]"
+    />
+    </record>
+</odoo>

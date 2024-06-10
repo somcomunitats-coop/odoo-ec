@@ -27,6 +27,7 @@
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
+        "data/res_users_role_data.xml",
         "data/project_type_data.xml",
         "data/ir_sequence_data.xml",
         "data/ir_attactment_data.xml",
@@ -48,5 +49,8 @@
         "reports/selfconsumption_reports.xml",
         "reports/energy_delivered_invoice_template.xml",
         "reports/power_acquired_invoice_template.xml",
+    ],
+    "demo": [
+        "demo/energy_selfconsumption_demo.xml",
     ],
 }

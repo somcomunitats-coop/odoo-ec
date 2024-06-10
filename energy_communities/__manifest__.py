@@ -3,7 +3,6 @@
     "version": "14.0.9.2.1",
     "depends": [
         "account",
-        "cooperator_account_banking_mandate",
         "account_lock_date_update",
         "account_multicompany_easy_creation",
         "account_payment_order",
@@ -26,7 +25,6 @@
         "partner_multi_company",
         "purchase",
         "queue_job",
-        "sale_crm",
         "sale_management",
         "sales_team",
         "website_event",
@@ -41,13 +39,12 @@
     "demo": [
         "demo/res_lang_demo.xml",
         "demo/res_company_demo.xml",
+        "demo/res_partner_demo.xml",
         "demo/res_user_demo.xml",
-        "demo/subscription_request_demo.xml",
-        "demo/energy_selfconsumption_demo.xml",
     ],
     "data": [
+        "data/res_users_role_data.xml",
         "security/ir_rule_data.xml",
-        "security/res_users_role_data.xml",
         "security/ir.model.access.csv",
         "data/product_data.xml",
         "data/auth_oauth_provider_data.xml",

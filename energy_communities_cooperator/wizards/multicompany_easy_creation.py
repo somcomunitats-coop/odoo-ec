@@ -1,16 +1,4 @@
-# import logging
-
 from odoo import _, api, fields, models
-
-# from ..models.res_company import (
-#     _CE_MEMBER_STATUS_VALUES,
-#     _CE_STATUS_VALUES,
-#     _CE_TYPE,
-#     _HIERARCHY_LEVEL_BASE_VALUES,
-#     _LEGAL_FORM_VALUES,
-# )
-
-# _logger = logging.getLogger(__name__)
 
 
 class AccountMulticompanyEasyCreationWiz(models.TransientModel):

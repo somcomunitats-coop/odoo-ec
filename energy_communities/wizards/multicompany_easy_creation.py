@@ -162,16 +162,10 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             )
         )
 
-    def create_default_utm_stage(self):
-        self.env["utm.stage"].sudo().create(
-            {"name": _("New"), "company_id": self.new_company_id.id}
-        )
-
     def action_accept(self):
         self.create_company()
         self.control_company_partner_visibility()
         self.add_company_managers()
-        self.create_default_utm_stage()
         if self.create_landing:
             self.create_public_data()
         if self.crm_lead_id:
