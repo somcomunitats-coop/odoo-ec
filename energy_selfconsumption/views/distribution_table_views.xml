@@ -62,12 +62,13 @@
                         <group>
                             <field
                 name="supply_point_assignation_ids"
-                widget="one2many"
+                widget="distribution_table_one2many"
                 mode="list"
                 context="{'default_distribution_table_id':id}"
                 attrs="{'readonly': [('state', 'not in', ['draft'])]}"
               >
                                 <tree editable="bottom">
+                                    <field name="type" invisible="True" />
                                     <field
                     name="supply_point_filtered_ids"
                     invisible="True"
@@ -92,6 +93,11 @@
                             </field>
                         </group>
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
                 </form>
             </field>
         </record>
@@ -138,5 +144,39 @@
                 </p>
             </field>
         </record>
+
+        <report
+      id="distribution_table_hourly_csv_report"
+      model="energy_selfconsumption.distribution_table"
+      string="Print to CSV"
+      report_type="csv"
+      name="energy_selfconsumption.distribution_table.csv"
+      file="distribution_table"
+      attachment_use="False"
+    />
+
+         <record
+      id="manager_clean_supply_point_assignation_action"
+      model="ir.actions.server"
+    >
+            <field name="name">Clean supply point assignation</field>
+            <field
+        name="model_id"
+        ref="model_energy_selfconsumption_distribution_table"
+      />
+            <field
+        name="binding_model_id"
+        ref="model_energy_selfconsumption_distribution_table"
+      />
+            <field name="binding_type">action</field>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field
+        name="code"
+      >action = records.action_clean_supply_point_assignation_wizard()</field>
+        </record>
+
+
+
     </data>
 </odoo>

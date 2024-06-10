@@ -1,6 +1,7 @@
+import pandas as pd
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-
 
 STATE_VALUES = [
     ("draft", _("Draft")),
@@ -9,23 +10,40 @@ STATE_VALUES = [
     ("active", _("Active")),
 ]
 
-TYPE_VALUES = [("fixed", _("Fixed"))]
+TYPE_VALUES = [("fixed", _("Fixed")), ("hourly", _("Variable hourly"))]
 
 
 class DistributionTable(models.Model):
     _name = "energy_selfconsumption.distribution_table"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Distribution Table"
 
     @api.depends("supply_point_assignation_ids.coefficient")
     def _compute_coefficient_is_valid(self):
         for record in self:
-            record.coefficient_is_valid = not fields.Float.compare(
-                sum(record.supply_point_assignation_ids.mapped("coefficient")),
-                1.000000,
-                precision_rounding=0.000001,
-            )
+            if record.type == "fixed":
+                coefficients = record.supply_point_assignation_ids.mapped("coefficient")
+                # Filtrar valores NaN y no numéricos
+                valid_coefficients = [
+                    c
+                    for c in coefficients
+                    if pd.notnull(c) and isinstance(c, (int, float))
+                ]
+                sum_coefficients = sum(valid_coefficients)
+                record.coefficient_is_valid = not fields.Float.compare(
+                    sum_coefficients,
+                    1.000000,
+                    precision_rounding=0.000001,
+                )
+            else:
+                record.coefficient_is_valid = True
 
-    name = fields.Char(readonly=True)
+    name = fields.Char(
+        readonly=True,
+        default=lambda self: self.env.ref(
+            "energy_selfconsumption.distribution_table_sequence", False
+        ).next_by_id(),
+    )
     selfconsumption_project_id = fields.Many2one(
         "energy_selfconsumption.selfconsumption", required=True
     )
@@ -47,20 +65,76 @@ class DistributionTable(models.Model):
         "res.company", default=lambda self: self.env.company, readonly=True
     )
 
-    @api.model
-    def create(self, vals):
-        vals['name'] = self.env.ref('energy_selfconsumption.distribution_table_sequence', False).next_by_id()
-        return super(DistributionTable, self).create(vals)
+    import_file_coeficient = fields.Binary(string="Import File (*.csv)")
+    fname_coeficient = fields.Char(string="File Name")
 
-    @api.constrains('supply_point_assignation_ids')
+    delimiter = fields.Char(
+        default=",",
+        required=True,
+        string="File Delimiter",
+        help="Delimiter in import CSV file.",
+    )
+    quotechar = fields.Char(
+        default='"',
+        required=True,
+        string="File Quotechar",
+        help="Quotechar in import CSV file.",
+    )
+    encoding = fields.Char(
+        default="utf-8",
+        required=True,
+        string="File Encoding",
+        help="Encoding format in import CSV file.",
+    )
+
+    @api.constrains("supply_point_assignation_ids")
     def _supply_point_constrain(self):
         for record in self:
-            if record.state in ('validated', 'process', 'active'):
-                raise ValidationError(_("The supply point can't be removed because the distribution table state is {table_state}").format(table_state=record.state))
-     
-    @api.onchange('selfconsumption_project_id')
+            if record.state in ("validated", "process", "active"):
+                raise ValidationError(
+                    _(
+                        "The supply point can't be removed because the distribution table state is {table_state}"
+                    ).format(table_state=record.state)
+                )
+
+    @api.onchange("selfconsumption_project_id")
     def _onchange_selfconsumption_project_id(self):
         self.supply_point_assignation_ids = False
+
+    def write(self, vals):
+        if (
+            "type" in vals
+            and "supply_point_assignation_ids" in vals
+            and self.supply_point_assignation_ids
+        ):
+            correcto = True
+            if len(self.supply_point_assignation_ids) == len(
+                vals["supply_point_assignation_ids"]
+            ):
+                for supply_point_assignation_id in vals["supply_point_assignation_ids"]:
+                    if supply_point_assignation_id[0] != 2:
+                        correcto = False
+            else:
+                if vals["supply_point_assignation_ids"] != [[6, 0, []]]:
+                    correcto = False
+            if not correcto:
+                raise ValidationError(
+                    _(
+                        "To change the type you must first delete the associated distribution points."
+                    )
+                )
+        if (
+            "type" in vals
+            and "supply_point_assignation_ids" not in vals
+            and self.supply_point_assignation_ids
+        ):
+            raise ValidationError(
+                _(
+                    "To change the type you must first delete the associated distribution points."
+                )
+            )
+        result = super().write(vals)
+        return result
 
     def button_validate(self):
         for record in self:
@@ -94,4 +168,14 @@ class DistributionTable(models.Model):
             "views": [(False, "form")],
             "view_id": False,
             "target": "new",
+        }
+
+    def action_clean_supply_point_assignation_wizard(self):
+        return {
+            "name": _("Clean supply point assignation"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "clean.supply.point.assignation.wizzard",
+            "target": "new",
+            "context": {"active_ids": self.env.context.get("active_ids", [])},
         }
