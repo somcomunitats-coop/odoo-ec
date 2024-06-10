@@ -11,14 +11,15 @@
             options="{'no_create': True}"
             width="20%"
           />
-                    <field name="is_member" readonly="1" width="20%"/>
+                    <field name="is_member" readonly="1" width="20%" />
                     <field name="effective_date" width="20%" />
                     <field name="mandate_filtered_ids" invisible="True" />
-                    <field name="acc_number" width="20%"/>
+                    <field name="acc_number" width="20%" />
                     <field
             name="mandate_id"
             domain="[('id', 'in', mandate_filtered_ids)]"
-            context="{'default_partner_id': partner_id}" width="20%"
+            context="{'default_partner_id': partner_id}"
+            width="20%"
           />
                 </tree>
             </field>
