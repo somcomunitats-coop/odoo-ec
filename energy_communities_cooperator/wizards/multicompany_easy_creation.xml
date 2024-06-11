@@ -10,7 +10,7 @@
     />
             <field name="priority" eval="8" />
             <field name="arch" type="xml">
-                <xpath expr="//page" position="before">
+                <xpath expr="//notebook" position="inside">
                     <page string="Cooperator">
                         <group string="Cooperator">
                             <field name="property_cooperator_account" />

@@ -111,3 +111,4 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             self.set_cooperative_account()
         self.update_product_category_company_share()
         self.create_capital_share_product_template()
+        # TODO: propagate create_user to be added to new_company cooperator config
