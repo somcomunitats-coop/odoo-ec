@@ -54,4 +54,10 @@
       </field>
     </field>
   </record>
+  <record model="ir.ui.menu" id="cooperator.menu_cooperator_cooperator">
+    <field name="action" ref="action_cooperative_membership_cooperator" />
+  </record>
+  <record model="ir.ui.menu" id="cooperator.menu_cooperator_company_representative">
+    <field name="action" ref="action_cooperative_membership_representative" />
+  </record>
 </odoo>
