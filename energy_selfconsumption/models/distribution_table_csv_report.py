@@ -20,7 +20,9 @@ class DistributionTableCSV(models.AbstractModel):
         )
 
         file_data = StringIO()
-        file = csv.DictWriter(file_data, **self.csv_report_options(list_cups, distribution_table.type))
+        file = csv.DictWriter(
+            file_data, **self.csv_report_options(list_cups, distribution_table.type)
+        )
         self.generate_csv_report(file, data, list_cups, distribution_table)
         file_data.seek(0)
         return file_data.read(), "csv"
@@ -28,35 +30,37 @@ class DistributionTableCSV(models.AbstractModel):
     def generate_csv_report(self, writer, data, list_cups, distribution_table):
         writer.writeheader()
 
-        def normalize_and_adjust(cups):
-            sum_coefficients = sum(cups.values())
-            for key in cups:
-                cups[key] = cups[key] / sum_coefficients
-            # Redondear a 6 decimales y ajustar el último coeficiente
-            rounded_cups = {key: round(cups[key], 6) for key in cups}
-            sum_rounded = sum(rounded_cups.values())
-            last_key = list(rounded_cups.keys())[-1]
-            # Ajustar el último coeficiente
-            rounded_cups[last_key] += round(1 - round(sum_rounded, 6), 6)
-            return rounded_cups
+        def normalize_and_adjust(coefficients):
+            sum_coefficients = sum(coefficients.values())
+            for key in coefficients:
+                coefficients[key] = coefficients[key] / sum_coefficients
+            # Round to 6 decimal places and adjust the last coefficient.
+            rounded_coefficients = {
+                key: round(coefficients[key], 6) for key in coefficients
+            }
+            sum_rounded = sum(rounded_coefficients.values())
+            last_key = list(rounded_coefficients.keys())[-1]
+            # Adjust the last coefficient
+            rounded_coefficients[last_key] += round(1 - round(sum_rounded, 6), 6)
+            return rounded_coefficients
 
         def format_number(number):
             return "{:.6f}".format(number)
 
         if distribution_table.type == "fixed":
-            cups = {code: random.random() for code in list_cups}
-            cups = normalize_and_adjust(cups)
+            coefficients = {code: random.random() for code in list_cups}
+            coefficients = normalize_and_adjust(coefficients)
 
             # Writing the rows
-            for key, value in cups.items():
-                writer.writerow({'CUPS': key, 'Coefficient': format_number(value)})
+            for key, value in coefficients.items():
+                writer.writerow({"CUPS": key, "Coefficient": format_number(value)})
         else:
             for hour in range(1, 8751):
-                cups = {code: random.random() for code in list_cups}
-                cups = normalize_and_adjust(cups)
+                coefficients = {code: random.random() for code in list_cups}
+                coefficients = normalize_and_adjust(coefficients)
 
                 row = {"hour": hour}
-                row.update({k: format_number(v) for k, v in cups.items()})
+                row.update({k: format_number(v) for k, v in coefficients.items()})
                 writer.writerow(row)
 
     def csv_report_options(self, list_cups, report_type):

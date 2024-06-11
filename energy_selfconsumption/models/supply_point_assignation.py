@@ -33,8 +33,6 @@ class SupplyPointAssignation(models.Model):
         "energy_selfconsumption.distribution_table", required=True
     )
 
-    type = fields.Selection(related="distribution_table_id.type")
-
     selfconsumption_project_id = fields.Many2one(
         related="distribution_table_id.selfconsumption_project_id"
     )
@@ -48,6 +46,7 @@ class SupplyPointAssignation(models.Model):
     coefficient = fields.Float(
         string="Distribution coefficient",
         digits=(7, 6),
+        required=True,
         help="The sum of all the coefficients must result in 1",
     )
     owner_id = fields.Many2one("res.partner", related="supply_point_id.owner_id")

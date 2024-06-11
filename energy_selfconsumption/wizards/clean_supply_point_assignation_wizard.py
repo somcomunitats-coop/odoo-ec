@@ -3,8 +3,8 @@ from odoo.exceptions import ValidationError
 
 
 class CleanSupplyPointAssignationWizard(models.TransientModel):
-    _name = "clean.supply.point.assignation.wizzard"
-    _description = "Clean supply point assgination wizzard"
+    _name = "clean.supply.point.assignation.wizard"
+    _description = "Clean supply point assgination wizard"
 
     message = fields.Text(string="Message", readonly=True)
 

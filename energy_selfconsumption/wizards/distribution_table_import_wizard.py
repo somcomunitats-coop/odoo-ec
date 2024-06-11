@@ -62,15 +62,16 @@ class DistributionTableImportWizard(models.TransientModel):
             if self.clean:
                 self.clean_lines(distribution_table)
             self.import_all_lines(df, distribution_table)
-            distribution_table.write(
-                {
-                    "import_file_coeficient": self.import_file,
-                    "fname_coeficient": self.fname,
-                    "delimiter": self.delimiter,
-                    "quotechar": self.quotechar,
-                    "encoding": self.encoding,
-                }
-            )
+            if distribution_table.type == "hourly":
+                distribution_table.write(
+                    {
+                        "hourly_coefficients_imported_file": self.import_file,
+                        "hourly_coefficients_imported_filename": self.fname,
+                        "hourly_coefficients_imported_delimiter": self.delimiter,
+                        "hourly_coefficients_imported_quotechar": self.quotechar,
+                        "hourly_coefficients_imported_encoding": self.encoding,
+                    }
+                )
         logger.info("\n\n parse_csv_file FIN")
 
     def download_template_button(self):

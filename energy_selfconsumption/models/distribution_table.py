@@ -23,13 +23,7 @@ class DistributionTable(models.Model):
         for record in self:
             if record.type == "fixed":
                 coefficients = record.supply_point_assignation_ids.mapped("coefficient")
-                # Filtrar valores NaN y no numéricos
-                valid_coefficients = [
-                    c
-                    for c in coefficients
-                    if pd.notnull(c) and isinstance(c, (int, float))
-                ]
-                sum_coefficients = sum(valid_coefficients)
+                sum_coefficients = sum(coefficients)
                 record.coefficient_is_valid = not fields.Float.compare(
                     sum_coefficients,
                     1.000000,
@@ -65,22 +59,22 @@ class DistributionTable(models.Model):
         "res.company", default=lambda self: self.env.company, readonly=True
     )
 
-    import_file_coeficient = fields.Binary(string="Import File (*.csv)")
-    fname_coeficient = fields.Char(string="File Name")
+    hourly_coefficients_imported_file = fields.Binary(string="Import File (*.csv)")
+    hourly_coefficients_imported_filename = fields.Char(string="File Name")
 
-    delimiter = fields.Char(
+    hourly_coefficients_imported_delimiter = fields.Char(
         default=",",
         required=True,
         string="File Delimiter",
         help="Delimiter in import CSV file.",
     )
-    quotechar = fields.Char(
+    hourly_coefficients_imported_quotechar = fields.Char(
         default='"',
         required=True,
         string="File Quotechar",
         help="Quotechar in import CSV file.",
     )
-    encoding = fields.Char(
+    hourly_coefficients_imported_encoding = fields.Char(
         default="utf-8",
         required=True,
         string="File Encoding",
@@ -97,40 +91,12 @@ class DistributionTable(models.Model):
                     ).format(table_state=record.state)
                 )
 
-    @api.onchange("selfconsumption_project_id")
-    def _onchange_selfconsumption_project_id(self):
-        self.supply_point_assignation_ids = False
-
     def write(self, vals):
-        if (
-            "type" in vals
-            and "supply_point_assignation_ids" in vals
-            and self.supply_point_assignation_ids
-        ):
-            correcto = True
-            if len(self.supply_point_assignation_ids) == len(
-                vals["supply_point_assignation_ids"]
-            ):
-                for supply_point_assignation_id in vals["supply_point_assignation_ids"]:
-                    if supply_point_assignation_id[0] != 2:
-                        correcto = False
-            else:
-                if vals["supply_point_assignation_ids"] != [[6, 0, []]]:
-                    correcto = False
-            if not correcto:
-                raise ValidationError(
-                    _(
-                        "To change the type you must first delete the associated distribution points."
-                    )
-                )
-        if (
-            "type" in vals
-            and "supply_point_assignation_ids" not in vals
-            and self.supply_point_assignation_ids
-        ):
+        if "type" in vals and self.supply_point_assignation_ids:
             raise ValidationError(
                 _(
-                    "To change the type you must first delete the associated distribution points."
+                    """To change the type you must first delete the associated distribution points.
+                    \n\r Hint: you can delete all the associated distribution points at once using an action."""
                 )
             )
         result = super().write(vals)
@@ -175,7 +141,7 @@ class DistributionTable(models.Model):
             "name": _("Clean supply point assignation"),
             "type": "ir.actions.act_window",
             "view_mode": "form",
-            "res_model": "clean.supply.point.assignation.wizzard",
+            "res_model": "clean.supply.point.assignation.wizard",
             "target": "new",
             "context": {"active_ids": self.env.context.get("active_ids", [])},
         }

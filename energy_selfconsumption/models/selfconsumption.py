@@ -285,11 +285,15 @@ class Selfconsumption(models.Model):
                     coefficient_format = f"{assignation.coefficient:.6f}"
                     file_content += f"{assignation.supply_point_id.code};{coefficient_format.replace('.', ',')}\r\n"
         else:
-            file_data = base64.b64decode(tables_to_use.import_file_coeficient)
+            file_data = base64.b64decode(
+                tables_to_use.hourly_coefficients_imported_file
+            )
             self.ensure_one()
             try:
                 try:
-                    decoded_file = file_data.decode(tables_to_use.encoding)
+                    decoded_file = file_data.decode(
+                        tables_to_use.hourly_coefficients_imported_encoding
+                    )
                 except UnicodeDecodeError:
                     detected_encoding = chardet.detect(file_data).get("encoding", False)
                     if not detected_encoding:
@@ -300,8 +304,8 @@ class Selfconsumption(models.Model):
 
                 df = pd.read_csv(
                     StringIO(decoded_file),
-                    delimiter=tables_to_use.delimiter,
-                    quotechar=tables_to_use.quotechar,
+                    delimiter=tables_to_use.hourly_coefficients_imported_delimiter,
+                    quotechar=tables_to_use.hourly_coefficients_imported_quotechar,
                 )
                 try:
                     for index, row in df.iterrows():
