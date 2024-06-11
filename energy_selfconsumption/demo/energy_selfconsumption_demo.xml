@@ -512,7 +512,7 @@
             <field name="country_id" ref="base.es" />
             <field
       name="owner_id"
-      eval="obj(energy_communities_cooperator.ref('subscription_2_community_1_demo')).partner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).partner_id"
       model="subscription.request"
     />
             <field
@@ -915,10 +915,7 @@
       name="distribution_table_id"
       ref="distribution_table_1_selfconsumption_1_demo"
     />
-            <field
-      name="supply_point_id"
-      ref="energy_communities.supply_point_8_selfconsumption_1_demo"
-    />
+            <field name="supply_point_id" ref="supply_point_8_selfconsumption_1_demo" />
             <field name="coefficient">0.071</field>
             <field
       name="company_id"
