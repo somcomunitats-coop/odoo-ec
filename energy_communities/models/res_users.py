@@ -32,9 +32,8 @@ class ResUsers(models.Model):
             self.env.ref("energy_communities.role_coord_worker"),
             self.env.ref("energy_communities.role_ce_admin"),
         ]
-        _forum_auth_roles = [self.env.ref("energy_communities.role_ce_member")]
-        _forum_auth_roles.extend(_odoo_auth_roles)
-        _app_auth_roles = [self.env.ref("energy_communities.role_ce_admin")]
+        _app_auth_roles = [self.env.ref("energy_communities.role_ce_member")]
+        _forum_auth_roles = _odoo_auth_roles + _app_auth_roles
         _tech_spaces = {
             "odoo": _odoo_auth_roles,
             "forum": _forum_auth_roles,
