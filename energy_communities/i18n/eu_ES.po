@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-31 09:56+0000\n"
-"PO-Revision-Date: 2024-05-31 16:00+0200\n"
+"POT-Creation-Date: 2024-06-11 08:25+0000\n"
+"PO-Revision-Date: 2024-06-11 10:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: eu_ES\n"
@@ -450,11 +450,6 @@ msgid "Cooperative"
 msgstr "Kooperatiba"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
-msgid "Cooperator"
-msgstr "Socia"
-
-#. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_coordinator
 msgid "Coordinadora"
 msgstr "Coordinadora"
@@ -598,7 +593,7 @@ msgstr "DNI"
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__display_name
 msgid "Display Name"
-msgstr "Nombre Mostrado"
+msgstr "Bistaratzeko izena"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__display_footer_doc_policy_text
@@ -878,12 +873,6 @@ msgstr ""
 "CCEEren batean sortzen dena EEko bazkide gisa."
 
 #. module: energy_communities
-#: model:ir.model.fields,help:energy_communities.field_product_product__mail_template
-#: model:ir.model.fields,help:energy_communities.field_product_template__mail_template
-msgid "If left empty, the default global mail template will be used."
-msgstr "Si se deja sin rellenar se usará la plantilla de correo de sistema."
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__incoming_coordinator
 msgid "Incoming Coordinator"
 msgstr "Coordinadora entrante"
@@ -956,7 +945,7 @@ msgstr "Administratzaile berria al zara?"
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_account_move
 msgid "Journal Entry"
-msgstr "Egunkari-sarrera"
+msgstr "Aldizkariaren Sarrera"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__is_keycloak_provider
@@ -1026,7 +1015,7 @@ msgstr "Hizkuntza"
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source____last_update
 msgid "Last Modified on"
-msgstr "Última modificación el"
+msgstr "Azken aldaketa egunean"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_uid
@@ -1163,12 +1152,6 @@ msgstr "Nínguno"
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__name
 msgid "Name"
 msgstr "Izena"
-
-#. module: energy_communities
-#: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
-#, python-format
-msgid "New"
-msgstr "Nueva"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__activity_date_deadline
@@ -1310,12 +1293,12 @@ msgstr "Ireki"
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.pack_1
 msgid "Pack 1"
-msgstr "Pack 1"
+msgstr ""
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.pack_2
 msgid "Pack 2"
-msgstr "Pack 2"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__parent_id
@@ -1877,11 +1860,6 @@ msgid "VAT"
 msgstr "IFZ"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
-msgid "Voluntary Shares"
-msgstr "Aportaciones voluntarias"
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_landing_page_id
 msgid "WP Landing Page"
 msgstr "WP Helmuga orria"
@@ -1982,17 +1960,17 @@ msgstr "en construcción"
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_cm_filter
 msgid "cm.filter"
-msgstr "cm.filter"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_cm_map
 msgid "cm.map"
-msgstr "cm.map"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_cm_place
 msgid "cm.place"
-msgstr "cm.place"
+msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
@@ -2006,12 +1984,12 @@ msgstr "comunidad de bienes"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_date_past
 msgid "dd/mm/aaaa"
-msgstr "dd/mm/aaaa"
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_date_past
 msgid "dd/mm/yyyy"
-msgstr "dd/mm/yyyy"
+msgstr ""
 
 #. module: energy_communities
 #: model:cm.map,cookies_link:energy_communities.map_campanya
@@ -2026,7 +2004,7 @@ msgstr "https://somcomunitats.coop/es/politica-de-privacidad/"
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_landing_page
 msgid "landing.page"
-msgstr "landing.page"
+msgstr ""
 
 #. module: energy_communities
 #: model:cm.form.model,json_uischema:energy_communities.map_form_model_campanya
@@ -2875,4 +2853,3 @@ msgstr ""
 "text-center'><p class='font-semibold text-white'>Comparteix i fem créixer "
 "la Comunitat Energètica</p></div>\"\n"
 "}"
-

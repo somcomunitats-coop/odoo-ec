@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-31 09:56+0000\n"
-"PO-Revision-Date: 2024-05-31 09:56+0000\n"
+"POT-Creation-Date: 2024-06-11 08:24+0000\n"
+"PO-Revision-Date: 2024-06-11 08:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -440,16 +440,6 @@ msgid "Cooperative"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
-msgid "Cooperator"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__cooperator_journal
-msgid "Cooperator Journal"
-msgstr ""
-
-#. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_coordinator
 msgid "Coordinadora"
 msgstr ""
@@ -874,12 +864,6 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,help:energy_communities.field_product_product__mail_template
-#: model:ir.model.fields,help:energy_communities.field_product_template__mail_template
-msgid "If left empty, the default global mail template will be used."
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__incoming_coordinator
 msgid "Incoming Coordinator"
 msgstr ""
@@ -1156,12 +1140,6 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__name
 msgid "Name"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
-#, python-format
-msgid "New"
 msgstr ""
 
 #. module: energy_communities
@@ -1673,13 +1651,6 @@ msgid "This community has been moved to a new coordinator"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,help:energy_communities.field_res_company__cooperator_journal
-msgid ""
-"This journal will be the default one as the receivable journal for the "
-"cooperators"
-msgstr ""
-
-#. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
 #, python-format
 msgid "This language code %s is not active in Odoo. Active ones: %s"
@@ -1848,11 +1819,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__vat
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__vat
 msgid "VAT"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
-msgid "Voluntary Shares"
 msgstr ""
 
 #. module: energy_communities
@@ -2386,4 +2352,3 @@ msgid ""
 "\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></div>\"\n"
 "}"
 msgstr ""
-
