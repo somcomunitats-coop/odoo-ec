@@ -41,6 +41,7 @@
         "views/subscription_request_view.xml",
         "views/website_subscription_template.xml",
         "wizards/multicompany_easy_creation.xml",
+        "wizards/voluntary_share_interest_return.xml",
     ],
     # only loaded in demonstration mode
     "demo": [
