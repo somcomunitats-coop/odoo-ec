@@ -26,7 +26,7 @@
     ],
     # always loaded
     "data": [
-        # 'security/ir.model.access.csv',
+        "security/ir.model.access.csv",
         "data/product_data.xml",
         "data/res_users_role_data.xml",
         "data/mail_template_update_data.xml",

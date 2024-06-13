@@ -1,4 +1,5 @@
 from odoo import fields, models
+from odoo.tools.translate import _
 
 
 class ResCompany(models.Model):
@@ -16,3 +17,15 @@ class ResCompany(models.Model):
     voluntary_share_form_header_text = fields.Html(
         string="Voluntary share form header text", translate=True
     )
+
+    def action_open_volutary_share_interest_return_wizard(self):
+        wizard = self.env["voluntary.share.interest.return.wizard"].create({})
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Return voluntary shares interest"),
+            "res_model": "voluntary.share.interest.return.wizard",
+            "view_type": "form",
+            "view_mode": "form",
+            "target": "new",
+            "res_id": wizard.id,
+        }
