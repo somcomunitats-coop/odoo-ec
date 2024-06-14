@@ -26,16 +26,16 @@ class MonitoringService:
         self.backend = backend
 
     def generated_energy_by_member(self, system_id, member_id, date_from, date_to):
-        daily_metrics = self._get_daily_metrics_by_member(
+        daily_metrics = self._get_project_daily_metrics_by_member(
             system_id, member_id, date_from, date_to
         )
         energy = sum(map(_get_energy_production, daily_metrics))
         return energy
 
-    def energy_selfconsumed_ratio_by_member(
+    def selfconsumed_energy_ratio_by_member(
         self, system_id, member_id, date_from, date_to
     ):
-        daily_metrics = self._get_daily_metrics_by_member(
+        daily_metrics = self._get_project_daily_metrics_by_member(
             system_id, member_id, date_from, date_to
         )
         selfconsumed_energy, generated_energy = reduce(
@@ -44,7 +44,7 @@ class MonitoringService:
         return round(selfconsumed_energy / generated_energy, 4)
 
     def energy_surplus_ratio_by_member(self, system_id, member_id, date_from, date_to):
-        daily_metrics = self._get_daily_metrics_by_member(
+        daily_metrics = self._get_project_daily_metrics_by_member(
             system_id, member_id, date_from, date_to
         )
         selfconsumed_surplus_energy, generated_energy = reduce(
@@ -53,7 +53,7 @@ class MonitoringService:
         return round(selfconsumed_surplus_energy / generated_energy, 4)
 
     def co2save_by_member(self, system_id, member_id, date_from, date_to):
-        daily_metrics = self._get_daily_metrics_by_member(
+        daily_metrics = self._get_project_daily_metrics_by_member(
             system_id, member_id, date_from, date_to
         )
         self_consumed_energy = sum(map(_get_energy_selfconsumption, daily_metrics))
@@ -61,7 +61,9 @@ class MonitoringService:
         return co2_saved
 
     @lru_cache
-    def _get_daily_metrics_by_member(self, system_id, member_id, from_date, to_date):
+    def _get_project_daily_metrics_by_member(
+        self, system_id, member_id, from_date, to_date
+    ):
         return self.backend.project_daily_metrics_by_member(
             system_id, member_id, from_date, to_date
         )

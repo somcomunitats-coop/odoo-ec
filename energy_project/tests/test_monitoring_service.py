@@ -42,7 +42,7 @@ class TestMonitoringService(TransactionCase):
         # then we obtain the value of the generated energy between that dates
         self.assertEqual(generated_energy, 1425.198)
 
-    def test__energy_selfconsumed_ratio_by_member(self):
+    def test__selfconsumed_energy_ratio_by_member(self):
         # given two dates
         date_from = date(2024, 4, 1)
         date_to = date(2024, 4, 30)
@@ -55,7 +55,7 @@ class TestMonitoringService(TransactionCase):
 
         # when we ask for percentage of energy self-consumed
         selfconsumed_ratio = (
-            self.monitoring_service.energy_selfconsumed_ratio_by_member(
+            self.monitoring_service.selfconsumed_energy_ratio_by_member(
                 system_id, member_id, date_from, date_to
             )
         )
@@ -99,7 +99,7 @@ class TestMonitoringService(TransactionCase):
         )
         # and we ask for the percentage of energy selfconsumed
         selfconsumed_ratio = (
-            self.monitoring_service.energy_selfconsumed_ratio_by_member(
+            self.monitoring_service.selfconsumed_energy_ratio_by_member(
                 system_id, member_id, date_from, date_to
             )
         )
