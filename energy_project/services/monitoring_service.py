@@ -52,6 +52,15 @@ class MonitoringService:
         energy = sum(map(_get_energy_exported, daily_metrics))
         return round(energy, 4)
 
+    def selfconsumed_energy_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> float:
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        energy = sum(map(_get_energy_selfconsumption, daily_metrics))
+        return round(energy, 4)
+
     def selfconsumed_energy_ratio_by_member(
         self, system_id, member_id, date_from, date_to
     ):
@@ -80,6 +89,11 @@ class MonitoringService:
         co2_saved = self_consumed_energy * self.SPANISH_CO2_SAVE_RATIO
         return co2_saved
 
+    def generated_energy_by_project(self, system_id, date_from, date_to) -> float:
+        daily_metrics = self._get_project_daily_metrics(system_id, date_from, date_to)
+        energy = sum(map(_get_energy_production, daily_metrics))
+        return round(energy, 4)
+
     @lru_cache
     def _get_project_daily_metrics_by_member(
         self, system_id, member_id, from_date, to_date
@@ -87,3 +101,7 @@ class MonitoringService:
         return self.backend.project_daily_metrics_by_member(
             system_id, member_id, from_date, to_date
         )
+
+    @lru_cache
+    def _get_project_daily_metrics(self, system_id, from_date, to_date):
+        return self.backend.project_daily_metrics(system_id, from_date, to_date)
