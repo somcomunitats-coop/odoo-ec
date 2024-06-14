@@ -32,7 +32,7 @@ class MonitoringService:
             system_id, member_id, date_from, date_to
         )
         energy = sum(map(_get_energy_production, daily_metrics))
-        return energy
+        return round(energy, 4)
 
     def consumed_energy_by_member(
         self, system_id, member_id, date_from, date_to
@@ -41,6 +41,15 @@ class MonitoringService:
             system_id, member_id, date_from, date_to
         )
         energy = sum(map(_get_energy_consumption, daily_metrics))
+        return round(energy, 4)
+
+    def exported_energy_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> float:
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        energy = sum(map(_get_energy_exported, daily_metrics))
         return round(energy, 4)
 
     def selfconsumed_energy_ratio_by_member(

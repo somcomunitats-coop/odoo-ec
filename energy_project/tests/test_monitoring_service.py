@@ -144,3 +144,22 @@ class TestMonitoringService(TransactionCase):
 
         # then we obtain the value of the consumed energy between that dates
         self.assertEqual(consumed_energy, 172.123)
+
+    def test__exported_energy_by_member(self):
+        # given two dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # a valid system id
+        system_id = project_code
+        # a member id
+        member_id = member_code
+        # and a monitoring service
+        # self.monitoring_service
+
+        # when we ask for the exported_energy for that user
+        exported_energy = self.monitoring_service.exported_energy_by_member(
+            system_id, member_id, date_from, date_to
+        )
+
+        # then we obtain the value of the exported energy between that dates
+        self.assertEqual(exported_energy, 1330.061)
