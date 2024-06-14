@@ -94,6 +94,16 @@ class MonitoringService:
         energy = sum(map(_get_energy_production, daily_metrics))
         return round(energy, 4)
 
+    def selfconsumed_energy_by_project(self, system_id, date_from, date_to) -> float:
+        daily_metrics = self._get_project_daily_metrics(system_id, date_from, date_to)
+        energy = sum(map(_get_energy_selfconsumption, daily_metrics))
+        return round(energy, 4)
+
+    def exported_energy_by_project(self, system_id, date_from, date_to) -> float:
+        daily_metrics = self._get_project_daily_metrics(system_id, date_from, date_to)
+        energy = sum(map(_get_energy_exported, daily_metrics))
+        return round(energy, 4)
+
     @lru_cache
     def _get_project_daily_metrics_by_member(
         self, system_id, member_id, from_date, to_date

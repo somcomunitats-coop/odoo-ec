@@ -199,3 +199,62 @@ class TestMonitoringService(TransactionCase):
 
         # then we obtain the value of the total generated energy between that dates of that project
         self.assertEqual(generated_energy, 2375.33)
+
+    def test__selfconsumed_energy_by_project(self):
+        # given two dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # a valid system id
+        system_id = project_code
+        # and a monitoring service
+        # self.monitoring_service
+
+        # when we ask for the selfconsumed_energy of a project
+        selfconsumed_energy = self.monitoring_service.selfconsumed_energy_by_project(
+            system_id, date_from, date_to
+        )
+
+        # then we obtain the value of the selfconsumed energy between that dates of that project
+        self.assertEqual(selfconsumed_energy, 162.464)
+
+    def test__exported_energy_by_project(self):
+        # given two dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # a valid system id
+        system_id = project_code
+        # and a monitoring service
+        # self.monitoring_service
+
+        # when we ask for the exported_energy of a project
+        exported_energy = self.monitoring_service.exported_energy_by_project(
+            system_id, date_from, date_to
+        )
+
+        # then we obtain the value of the exported energy between that dates of that project
+        self.assertEqual(exported_energy, 2212.866)
+
+    def test__relation_exported_energy_and_selfconsumed_energy(self):
+        # given two dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # a valid system id
+        system_id = project_code
+        # and a monitoring service
+        # self.monitoring_service
+
+        # when we ask for the exported_energy for that project
+        exported_energy = self.monitoring_service.exported_energy_by_project(
+            system_id, date_from, date_to
+        )
+        # and we ask for the selfconsumed_energy for the same project
+        selfconsumed_energy = self.monitoring_service.selfconsumed_energy_by_project(
+            system_id, date_from, date_to
+        )
+
+        # then the sum of these two values must be the total generated_energy
+        generated_energy = self.monitoring_service.generated_energy_by_project(
+            system_id, date_from, date_to
+        )
+
+        self.assertEqual(exported_energy + selfconsumed_energy, generated_energy)
