@@ -73,7 +73,9 @@ class SupplyPoint(models.Model):
     supplier_id = fields.Many2one("energy_project.supplier", string="Supplier")
     cadastral_reference = fields.Char(string="Cadastral reference")
     contracted_power = fields.Float(
-        string="Maximum contracted power", digits=(10, 6), help="Maximum contracted power in kW"
+        string="Maximum contracted power",
+        digits=(10, 6),
+        help="Maximum contracted power in kW",
     )
     tariff = fields.Selection(_ACCESS_TARIFF_VALUES, "Access tariff")
 
@@ -138,11 +140,15 @@ class SupplyPoint(models.Model):
         for record in self:
             if record.tariff == "2.0TD" and not (0 <= record.contracted_power <= 15):
                 raise ValidationError(
-                    _("For the 2.0TD rate, the maximum contracted power must be between 0 and 15 kW.")
+                    _(
+                        "For the 2.0TD rate, the maximum contracted power must be between 0 and 15 kW."
+                    )
                 )
             elif record.tariff == "3.0TD" and record.contracted_power <= 15:
                 raise ValidationError(
-                    _("For the 3.0TD rate, the maximum contracted power must be greater than 15 kW.")
+                    _(
+                        "For the 3.0TD rate, the maximum contracted power must be greater than 15 kW."
+                    )
                 )
 
             if record.contracted_power > 100:

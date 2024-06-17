@@ -144,8 +144,10 @@
                   name="power"
                   attrs="{'readonly': [('state', 'not in', ['draft', 'activation'])]}"
                 />
-                                <span class="text-warning"
-                                      attrs="{'invisible': [('power', '>', 100)]}"><b>
+                                <span
+                  class="text-warning"
+                  attrs="{'invisible': [('power', '>', 100)]}"
+                ><b>
                                 The contracted power is higher than 100
                 </b></span>
                                 <field
