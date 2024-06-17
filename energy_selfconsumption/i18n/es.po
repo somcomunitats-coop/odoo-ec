@@ -1404,8 +1404,8 @@ msgstr "Plantilla de contrato"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
-msgid "Contracted power"
-msgstr "Potencia contratada:"
+msgid "Maximum contracted power"
+msgstr "Potencia máxima contratada"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_tree_view
@@ -2036,8 +2036,8 @@ msgstr "Energía total generada (kWh)"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
-msgid "Value in kilowatts (kW)"
-msgstr "Valor en kilovatios (kW)"
+msgid "Maximum contracted power in kW"
+msgstr "Potencia máxima contratada en kW"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__website_message_ids
@@ -2366,8 +2366,13 @@ msgstr ""
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid ""
-"The indicated contracted power is very high. Please check that this is "
+"The indicated maximum contracted power is very high. Please check that this is "
 "correct. Remember that we use '.' to express decimals, not ','."
 msgstr ""
-"La potencia contratada indicada es muy elevada. Por favor verifique que esto"
+"La potencia máxima contratada indicada es muy elevada. Por favor verifique que esto"
 " sea correcto. Recuerde que usamos '.' para expresar decimales, no ','."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "The contracted power is higher than 100"
+msgstr "La potencia contratada es superior a 100"

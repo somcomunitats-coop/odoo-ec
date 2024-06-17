@@ -1441,8 +1441,8 @@ msgstr "Kontratu txantiloia"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
-msgid "Contracted power"
-msgstr "Kontratatutako potentzia"
+msgid "Maximum contracted power"
+msgstr "Kontratatutako potentzia maximoa"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_tree_view
@@ -2077,8 +2077,8 @@ msgstr "Sortutako Energia Osoa (kWh)"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
-msgid "Value in kilowatts (kW)"
-msgstr "Kilowatten balioa (kW)"
+msgid "Maximum contracted power in kW"
+msgstr "Kontratatutako potentzia maximoa kW-tan"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__website_message_ids
@@ -2422,8 +2422,13 @@ msgstr ""
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid ""
-"The indicated contracted power is very high. Please check that this is "
+"The indicated maximum contracted power is very high. Please check that this is "
 "correct. Remember that we use '.' to express decimals, not ','."
 msgstr ""
-"Adierazitako kontratatutako potentzia oso handia da. Mesedez, egiaztatu hau "
+"Adierazitako kontratatutako potentzia maximoa oso handia da. Mesedez, egiaztatu hau "
 "zuzena dela. Gogoratu '.' erabiltzen dugula hamartarrak adierazteko, ez ','."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "The contracted power is higher than 100"
+msgstr "Kontratatutako potentzia 100 baino handiagoa da"

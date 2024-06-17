@@ -1462,8 +1462,8 @@ msgstr "Plantilla de contractes"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
-msgid "Contracted power"
-msgstr "Potència contractada"
+msgid "Maximum contracted power"
+msgstr "Potència màxima contractada"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_tree_view
@@ -2100,8 +2100,8 @@ msgstr "Energia total generada (kWh)"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
-msgid "Value in kilowatts (kW)"
-msgstr "Valor en quilowatts (KW)"
+msgid "Maximum contracted power in kW"
+msgstr "Potència màxima contractada en kW"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__website_message_ids
@@ -2425,9 +2425,14 @@ msgstr ""
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid ""
-"The indicated contracted power is very high. Please check that this is "
+"The indicated maximum contracted power is very high. Please check that this is "
 "correct. Remember that we use '.' to express decimals, not ','."
 msgstr ""
-"La potència contractada indicada és molt elevada. Si us plau, comproveu que "
+"La potència màxima contractada indicada és molt elevada. Si us plau, comproveu que "
 "això sigui correcte. Recordeu que fem servir '.' per expressar decimals, no "
 "','."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "The contracted power is higher than 100"
+msgstr "La potència contractada és superior a 100"

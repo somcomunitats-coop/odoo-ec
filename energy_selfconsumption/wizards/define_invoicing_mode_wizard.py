@@ -71,7 +71,7 @@ class ContractGenerationWizard(models.TransientModel):
             "qty_formula_id": formula_contract_id.id,
             "uom_id": product_id.uom_id.id,
             # Values are formatted in contract_generation_wizard
-            "name": """CUPS: {code}\nOwner: {owner_id}\nInvoicing period: #START# - #END#\n""",
+            "name": _("""CUPS: {code}\nOwner: {owner_id}\nInvoicing period: #START# - #END#\n"""),
         }
 
     def save_data_to_selfconsumption(self):
