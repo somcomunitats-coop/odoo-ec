@@ -17,6 +17,9 @@ class ResUsers(models.Model):
     _LOGIN_MATCH_KEY = "id:login"
 
     current_role = fields.Char(computed="_compute_current_role", store=False)
+    last_user_invitation_through_kc = fields.Datetime(
+        string=_("Last user invitation through Keycloak")
+    )
 
     def _compute_current_role(self):
         for record in self:
