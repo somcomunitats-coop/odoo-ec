@@ -11,16 +11,6 @@
             <field name="public" eval="True" />
         </record>
 
-        <record model="ir.attachment" id="distribution_table_example_attachment">
-            <field name="name">import_distribution_table_example.csv</field>
-            <field name="type">binary</field>
-            <field name="datas">
-                Q1VQUyxDb2VmZmljaWVudApFUzAzOTA1NTU0MjgxMTA0MzRHTSwwLjUKRVMwMzkwMTUxMzUwNzc0NTI3WkEsMC4yNQpFUzAzOTA5NzQwOTIwODQ4MTJKQywwLjI1Cg==
-            </field>
-            <field name="company_id" />
-            <field name="public" eval="True" />
-        </record>
-
         <record model="ir.attachment" id="list_state_attachment">
             <field name="name">lista_de_provincias.xlsx</field>
             <field name="type">binary</field>
