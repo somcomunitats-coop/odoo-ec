@@ -21,6 +21,13 @@ class CreateUsersWizard(models.TransientModel):
     )
 
     def execute(self):
+        model = self.env.context.get("active_model")
+        if model == "res.company":
+            self.execute_on_company()
+        elif model == "res.partner":
+            self.execute_on_partner()
+
+    def execute_on_company(self):
         if "active_ids" in self.env.context.keys():
             impacted_companies = self.env["res.company"].browse(
                 self.env.context["active_ids"]
@@ -55,5 +62,8 @@ class CreateUsersWizard(models.TransientModel):
                 "view_type": "form",
                 "view_mode": "form",
                 "target": "new",
-                "res_id": wizard.id,
+                "res_id": self.id,
             }
+
+    def execute_on_partner(self):
+        pass
