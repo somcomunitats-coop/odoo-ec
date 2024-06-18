@@ -2376,3 +2376,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid "The contracted power is higher than 100"
 msgstr "La potencia contratada es superior a 100"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
+#, python-format
+msgid "CUPS: {code}\nOwner: {owner_id}\nInvoicing period: #START# - #END#\n"
+msgstr "CUPS: {code}\Titular: {owner_id}\nPeriodo de facturación: #START# - #END#\n"

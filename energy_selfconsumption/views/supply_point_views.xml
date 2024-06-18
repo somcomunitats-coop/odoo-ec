@@ -35,6 +35,12 @@
                 />
                 <field name="cadastral_reference" />
                 <field name="contracted_power" />
+                                <span
+                  class="text-warning"
+                  attrs="{'invisible': [('contracted_power', '<', 100)]}"
+                ><b>
+                                The contracted power is higher than 100
+                </b></span>
                 <field name="tariff" />
                             </group>
                             <group>
