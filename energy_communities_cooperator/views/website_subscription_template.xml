@@ -52,8 +52,8 @@
       >Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
         </xpath>
-        <!-- TODO: This line migth not work on clean db -->
-        <!--<xpath expr="//div[@id='wrap']//a[@t-if='not logged']/." position="replace" />-->
+    <xpath expr="//div[@name='my_account_link_container'][1]" position="replace" />
+    <xpath expr="//div[@name='my_account_link_container']" position="replace" />
         <xpath expr="//div[@name='confirm_email_container']" position="after">
             <div
         t-if="not logged"
