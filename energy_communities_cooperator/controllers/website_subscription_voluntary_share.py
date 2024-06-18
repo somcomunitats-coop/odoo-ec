@@ -81,7 +81,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
 
         # redirect url to fall back on become cooperator in template redirection
         values["redirect_url"] = request.httprequest.url
-        return request.render("energy_communities.voluntary_share", values)
+        return request.render("energy_communities_cooperator.voluntary_share", values)
 
     def voluntary_share_validation(  # noqa: C901 (method too complex)
         self, kwargs, logged, values, post_file
@@ -91,7 +91,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         user_obj = request.env["res.users"]
         sub_req_obj = request.env["subscription.request"]
 
-        redirect = "energy_communities.voluntary_share"
+        redirect = "energy_communities_cooperator.voluntary_share"
 
         # url to use for "already have an account button" to go to become cooperator
         # rather than subscribe share after a failed validation
