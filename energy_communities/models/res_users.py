@@ -7,6 +7,8 @@ from odoo import _, api, exceptions, fields, models
 
 logger = logging.getLogger(__name__)
 
+_DEFAULT_COOPERATIVE_MEMBERSHIP_USER_ROLE = "role_ce_member"
+
 
 class ResUsers(models.Model):
     _name = "res.users"
