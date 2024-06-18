@@ -18,6 +18,9 @@ class ResUsers(models.Model):
     _KC_CLIENT_AUTH_ACCESS_GROUP_ODOO = "odoo-allow"
 
     current_role = fields.Char(computed="_compute_current_role", store=False)
+    last_user_invitation_through_kc = fields.Datetime(
+        string=_("Last user invitation through Keycloak")
+    )
 
     def get_user_auth_access_to_spaces(self):
         _odoo_auth_roles = [

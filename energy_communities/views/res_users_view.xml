@@ -26,5 +26,15 @@
             </xpath>
         </field>
     </record>
+    <record id="view_res_users_form_inherit_oauth" model="ir.ui.view">
+        <field name="name">res.users.form.inherit.oauth</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="auth_oauth.view_users_form" />
+        <field name="arch" type="xml">
+            <field name="oauth_access_token" position="after">
+                <field name="last_user_invitation_through_kc" />
+            </field>
+        </field>
+    </record>
     </data>
 </odoo>
