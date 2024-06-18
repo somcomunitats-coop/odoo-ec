@@ -333,3 +333,89 @@ class ResUsers(models.Model):
         user.send_reset_password_mail()
 
         return user
+
+    def build_platform_user(
+        self,
+        company_id,
+        partner_id,
+        create_user,
+        create_kc_user,
+        invite_user_through_kc,
+        force_invite,
+        user_vals,
+    ):
+        if not create_user or create_kc_user or invite_user_through_kc:
+            return False
+        if partner_id:
+            user_vals = {
+                "partner_id": partner_id.id,
+                "login": partner_id.vat,
+                "email": partner_id.email,
+                "firstname": partner_id.firstname,
+                "lastname": partner_id.lastname,
+                "lang": partner_id.lang,
+            }
+        else:
+            if (
+                not "login"
+                and "email"
+                and "firstname"
+                and "lastname"
+                and "lang" in user_vals
+            ):
+                raise exceptions.UserError(_("User_vals dict is empty"))
+            if user_vals["login"] is None:
+                raise exceptions.UserError(_("Login is empty"))
+            # if user_vals["email"] is None:
+            #     raise exceptions.UserError(_("Email is empty"))
+            # if user_vals["lang"] is None:
+            #     raise exceptions.UserError(_("Lang is empty"))
+        user = self.env["res.users"].search(["login", "=", user_vals["login"]])
+        if user:
+            if company_id not in user.company_ids:
+                user.company_ids = [(4, company_id.id, 0)]
+        else:
+            company_ids = [(6, 0, [company_id.id])]
+            user = self.env["res.users"].search(
+                [("login", "=", vat), ("active", "=", False)]
+            )
+            if user:
+                user.sudo().write(
+                    {
+                        "active": True,
+                        "company_id": company_id.id,
+                        "company_ids": company_ids,
+                    }
+                )
+            else:
+                user = (
+                    self.sudo().with_context(no_reset_password=True).create(user_vals)
+                )
+                new_user = True
+                user.sudo().write(
+                    {
+                        "company_id": self.company_id.id,
+                        "company_ids": company_ids,
+                    }
+                )
+                user.set_user_roles(company_id, role_id)
+
+        if create_user_in_keycloak or invite_user_throw_keycloak:
+            user.create_users_in_keycloak()
+
+        if (
+            force_invite
+            or (
+                invite_user_throw_keycloak
+                and not user.ast_user_invitation_throw_keycloak
+            )
+        ) and user.oauth_uid:
+            user.send_reset_password_mail()
+
+        if user.oauth_uid and not user.get_user_auth_access_to_spaces()["odoo"]:
+            user.oauth_uid = user.oauth_uid + "_member"
+
+        return user
+
+    def set_user_roles(self, company_id, role_id):
+        pass
