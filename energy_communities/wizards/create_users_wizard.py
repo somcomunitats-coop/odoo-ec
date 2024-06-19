@@ -66,4 +66,45 @@ class CreateUsersWizard(models.TransientModel):
             }
 
     def execute_on_partner(self):
-        pass
+        if "active_ids" in self.env.context.keys():
+            partner = self.env["res.partner"].browse(self.env.context["active_id"])
+            company = self.env["rescompanyp"].search([("partner_id", "=", partner.id)])
+            if len(company) > 1:
+                raise ValidationError(
+                    _(
+                        "This wizard can only be run with ONE company selected."
+                        " Please limit the context of the selected companies to one."
+                    )
+                )
+            else:
+                if company.hierarchy_level == "community":
+                    partners = self.env["cooperative.membership"].search(
+                        [
+                            ("company_id", "=", company.id),
+                            ("cooperator", "=", True),
+                            ("member", "=", True),
+                        ]
+                    )
+                    for p in partners:
+                        p.with_delay().build_platform_user(
+                            company.id,
+                            p.partner_id,
+                            self.create_user,
+                            self.create_kc_user,
+                            self.invite_user_through_kc,
+                            self.force_invite,
+                        )
+                else:
+                    raise ValidationError(
+                        _("There is no company selected with level energy community.")
+                    )
+
+            return {
+                "type": "ir.actions.act_window",
+                "name": _("Wizard to generate users from partner members"),
+                "res_model": "create.users.wizard",
+                "view_type": "form",
+                "view_mode": "form",
+                "target": "new",
+                "res_id": self.id,
+            }
