@@ -1,10 +1,18 @@
+import base64
+import logging
 from datetime import datetime, timedelta
+from io import StringIO
 
+import chardet
+import pandas as pd
 from stdnum.es import cups, referenciacatastral
 from stdnum.exceptions import *
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+
+_logger = logging.getLogger(__name__)
+
 
 INVOICING_VALUES = [
     ("power_acquired", _("Power Acquired")),
@@ -159,6 +167,10 @@ class Selfconsumption(models.Model):
 
     def set_in_activation_state(self):
         for record in self:
+            if not record.code:
+                raise ValidationError(_("Project must have a valid Code."))
+            if not record.power or record.power <= 0:
+                raise ValidationError(_("Project must have a valid Rated Power."))
             if not record.distribution_table_ids.filtered_domain(
                 [("state", "=", "validated")]
             ):
@@ -266,24 +278,46 @@ class Selfconsumption(models.Model):
     def action_manager_partition_coefficient_report(self):
         self.validate_state(self.state)
         tables_to_use = self.report_distribution_table
-        report_data = []
-
-        for table in tables_to_use:
-            for assignation in table.supply_point_assignation_ids:
-                coefficient_format = f"{assignation.coefficient:.6f}"  # we need to make sure it has 7 digits
-                report_data.append(
-                    {
-                        "code": assignation.supply_point_id.code,
-                        "coefficient": coefficient_format,
-                    }
-                )
-
         file_content = ""
-        for i, data in enumerate(report_data):
-            line = f"{data['code']};{data['coefficient'].replace('.', ',')}"
-            if i < len(report_data) - 1:
-                line += "\r\n"
-            file_content += line
+        if tables_to_use.type == "fixed":
+            for table in tables_to_use:
+                for assignation in table.supply_point_assignation_ids:
+                    coefficient_format = f"{assignation.coefficient:.6f}"
+                    file_content += f"{assignation.supply_point_id.code};{coefficient_format.replace('.', ',')}\r\n"
+        else:
+            file_data = base64.b64decode(
+                tables_to_use.hourly_coefficients_imported_file
+            )
+            self.ensure_one()
+            try:
+                try:
+                    decoded_file = file_data.decode(
+                        tables_to_use.hourly_coefficients_imported_encoding
+                    )
+                except UnicodeDecodeError:
+                    detected_encoding = chardet.detect(file_data).get("encoding", False)
+                    if not detected_encoding:
+                        raise ValidationError(
+                            _("No valid encoding was found for the attached file")
+                        )
+                    decoded_file = file_data.decode(detected_encoding)
+
+                df = pd.read_csv(
+                    StringIO(decoded_file),
+                    delimiter=tables_to_use.hourly_coefficients_imported_delimiter,
+                    quotechar=tables_to_use.hourly_coefficients_imported_quotechar,
+                )
+                try:
+                    for index, row in df.iterrows():
+                        hour = int(row["hour"])
+                        hour_str = str(hour).zfill(4)
+                        for column in df.columns[1:]:
+                            coefficient_format = f"{row[column]:.6f}"
+                            file_content += f"{column};{hour_str};{coefficient_format.replace('.', ',')}\r\n"
+                except Exception:
+                    raise ValidationError(_("Error reading file"))
+            except Exception:
+                raise ValidationError(_("Error parsing the file"))
 
         file_content = file_content.encode("utf-8")
 

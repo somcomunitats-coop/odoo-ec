@@ -89,19 +89,22 @@ class Inscription(models.Model):
         return supply_point_assignations
 
     def unlink(self):
-        matching_assignations = self.has_matching_supply_assignations()
-        if len(matching_assignations) > 0:
-            table_states = ", ".join(
-                matching_assignations.distribution_table_id.mapped("state")
+        for record in self:
+            matching_assignations = record.has_matching_supply_assignations()
+            if len(matching_assignations) > 0:
+                table_states = ", ".join(
+                    matching_assignations.distribution_table_id.mapped("state")
+                )
+                raise ValidationError(
+                    _(
+                        "The inscription cannot be deleted. It is related to a distribution table with state: {table_state}"
+                    ).format(table_state=table_states)
+                )
+            supply_point_assignations = (
+                record.get_matching_supply_assignations_to_remove()
             )
-            raise ValidationError(
-                _(
-                    "The inscription cannot be deleted. It is related to a distribution table with state: {table_state}"
-                ).format(table_state=table_states)
-            )
-        supply_point_assignations = self.get_matching_supply_assignations_to_remove()
-        if supply_point_assignations:
-            supply_point_assignations.unlink()
+            if supply_point_assignations:
+                supply_point_assignations.unlink()
         return super().unlink()
 
     @api.constrains("mandate_id", "partner_id")
