@@ -7,7 +7,13 @@
                 <form string="Return voluntary shares interest">
                     <sheet>
                         <group>
+                            <field name="company_id" required="1" />
                             <field name="interest" required="1" />
+                            <field name="credit_account_move_id" required="1" />
+                            <field name="return_line_account_id" required="1" />
+                            <field name="journal_id" required="1" />
+                            <field name="start_date_period" required="1" />
+                            <field name="end_date_period" required="1" />
                         </group>
                     </sheet>
                     <footer>
