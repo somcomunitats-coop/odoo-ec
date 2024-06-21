@@ -41,7 +41,6 @@ class CreateUsersWizard(models.TransientModel):
             )
             for company in impacted_companies:
                 if company.hierarchy_level == "community":
-                    coop = self.env["cooperative.membership"].search([])
                     partners = self.env["cooperative.membership"].search(
                         [
                             ("company_id", "=", company.id),
@@ -50,8 +49,7 @@ class CreateUsersWizard(models.TransientModel):
                         ]
                     )
                     for partner in partners:
-                        # self.env["res.users"].with_delay().build_platform_user(
-                        self.env["res.users"].build_platform_user(
+                        self.env["res.users"].with_delay().build_platform_user(
                             company,
                             partner.partner_id,
                             self.create_user,
