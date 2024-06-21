@@ -1,4 +1,5 @@
 import logging
+import re
 from json import JSONDecodeError
 
 import requests
@@ -417,5 +418,17 @@ class ResUsers(models.Model):
 
         return user
 
-    def set_user_roles(self, company_id, role_id):
+    def set_user_roles(self):
         pass
+
+    def email_validator(email):
+        regex = re.compile(
+            r"([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+"
+        )
+        if re.fullmatch(regex, email):
+            return True
+
+    def lang_validator(lang):
+        regex = re.compile(r"/[a-z]{2}_[A-Z]{2}/gm")
+        if re.fullmatch(regex, lang):
+            return True
