@@ -473,6 +473,7 @@ class ResUsers(models.Model):
 
         return user
 
+    @api.model
     def build_platform_user(
         self,
         company_id,
@@ -483,8 +484,8 @@ class ResUsers(models.Model):
         force_invite,
         user_vals,
     ):
-        if not create_user or create_kc_user or invite_user_through_kc:
-            return False
+        # if not create_user or create_kc_user or invite_user_through_kc:
+        #     return False
         if partner_id:
             user_vals = {
                 "partner_id": partner_id.id,
@@ -495,59 +496,58 @@ class ResUsers(models.Model):
                 "lang": partner_id.lang,
             }
         else:
-            if (
-                not "login"
-                and "email"
-                and "firstname"
-                and "lastname"
-                and "lang" in user_vals
-            ):
+            if user_vals.keys() != {"login", "email", "firstname", "lastname", "lang"}:
                 raise exceptions.UserError(_("User_vals dict is empty"))
             if user_vals["login"] is None:
                 raise exceptions.UserError(_("Login is empty"))
-            # if user_vals["email"] is None:
-            #     raise exceptions.UserError(_("Email is empty"))
-            # if user_vals["lang"] is None:
-            #     raise exceptions.UserError(_("Lang is empty"))
-        user = self.env["res.users"].search(["login", "=", user_vals["login"]])
+            if not self.email_validator(user_vals["email"]):
+                raise exceptions.UserError(_("Email is not valid"))
+            if not self.lang_validator(user_vals["lang"]):
+                raise exceptions.UserError(_("Lang is not valid"))
+        user = self.env["res.users"].search(
+            [
+                ("login", "=", user_vals["login"]),
+                "|",
+                ("active", "=", True),
+                ("active", "=", False),
+            ]
+        )
         if user:
             if company_id not in user.company_ids:
+                # add the company to the user's companies
                 user.company_ids = [(4, company_id.id, 0)]
-        else:
-            company_ids = [(6, 0, [company_id.id])]
-            user = self.env["res.users"].search(
-                [("login", "=", vat), ("active", "=", False)]
-            )
-            if user:
-                user.sudo().write(
-                    {
-                        "active": True,
-                        "company_id": company_id.id,
-                        "company_ids": company_ids,
-                    }
-                )
             else:
-                user = (
-                    self.sudo().with_context(no_reset_password=True).create(user_vals)
-                )
-                new_user = True
-                user.sudo().write(
-                    {
-                        "company_id": self.company_id.id,
-                        "company_ids": company_ids,
-                    }
-                )
-                user.set_user_roles(company_id, role_id)
+                # set the company as the only company of the user
+                company_ids = [(6, 0, [company_id.id])]
+                if not user.active:
+                    user.sudo().write({"active": True})
+                    user_roles = self.env["res.users.role.line"].search(
+                        [("user_id", "=", user.id)]
+                    )
+                    user_roles.unlink()
+            user.sudo().write(
+                {
+                    "company_id": company_id.id,
+                    "company_ids": company_ids,
+                }
+            )
+        else:
+            user = self.sudo().with_context(no_reset_password=True).create(user_vals)
+            company_ids = [(6, 0, [company_id])]
+            user.sudo().write(
+                {
+                    "company_id": company_id.id,
+                    "company_ids": company_ids,
+                }
+            )
+            user.set_user_roles()
 
-        if create_user_in_keycloak or invite_user_throw_keycloak:
+        if create_kc_user or invite_user_through_kc:
             user.create_users_in_keycloak()
 
         if (
             force_invite
-            or (
-                invite_user_throw_keycloak
-                and not user.ast_user_invitation_throw_keycloak
-            )
+            or (invite_user_through_kc and not user.last_user_invitation_through_kc)
         ) and user.oauth_uid:
             user.send_reset_password_mail()
 
