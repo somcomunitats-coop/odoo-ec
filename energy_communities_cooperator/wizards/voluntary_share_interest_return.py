@@ -2,39 +2,70 @@ from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
+_DEFAULT_ANUAL_BULK_INTEREST_RATE = 1
+_DEFAULT_IRPF_CAPITAL_TAX_XMLID = "account_tax_template_p_irpf19"
+_DEFAULT_CREDIT_ACCOUNT_MOVE_XMLID = "account_common_6624"
+_DEFAULT_RETURN_ACCOUNT_MOVE_LINE_XMLID = "account_common_4100"
+
+# NOTE: we'll have to build this xml_ids dynamically prepending on each "l10n_es.{company_id}_"
+
 
 class VoluntaryShareInterestReturn(models.TransientModel):
     _name = "voluntary.share.interest.return.wizard"
     _description = "Calculate and prepare interests to be returned in voluntary shares"
 
+    company_id = fields.Many2one("res.company")
     interest = fields.Float(string="Interest")
+    credit_account_move_id = fields.Many2one(
+        "account.account", string="Account move credit account"
+    )
+    return_line_account_id = fields.Many2one(
+        "account.account", string="Return line account"
+    )
+    journal_id = fields.Many2one("account.journal", string="Journal")
+    start_date_period = fields.Date(string="Period start date")
+    end_date_period = fields.Date(string="Period end date")
 
     def execute_return(self):
-        if "active_ids" in self.env.context.keys():
-            impacted_companies = self.env["res.company"].browse(
-                self.env.context["active_ids"]
-            )
-            for company in impacted_companies:
-                self._consistency_validation(company)
-            return {
-                "type": "ir.actions.client",
-                "tag": "display_notification",
-                "params": {
-                    "type": "success",
-                    "title": _("Interest generation successful"),
-                    "message": _(
-                        "We have calculated and generated the moves to pay voluntary share interest for this company."
-                    ),
-                    "sticky": False,
-                    "next": {"type": "ir.actions.act_window_close"},
-                },
-            }
+        self._consistency_validation()
+        self._generate_related_invoices()
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "type": "success",
+                "title": _("Interest generation successful"),
+                "message": _(
+                    "We have calculated and generated the moves to pay voluntary share interest for this company."
+                ),
+                "sticky": False,
+                "next": {"type": "ir.actions.act_window_close"},
+            },
+        }
 
-    def _consistency_validation(self, company):
-        voluntary_share_product = company.voluntary_share_id
+    def _generate_related_invoices(self):
+        voluntary_share_product = self.company_id.voluntary_share_id
+        memberships = self.env["cooperative.membership"].search(
+            [("company_id", "=", self.company_id.id)]
+        )
+        for membership in memberships:
+            membership_voluntary_shares = membership.share_ids.filtered(
+                lambda share_line: share_line.share_product_id.id
+                == voluntary_share_product.id
+            )
+            if membership_voluntary_shares:
+                invoice = self._create_interest_return_invoice()
+                for membership_voluntary_share in membership_voluntary_shares:
+                    pass
+
+    def _create_interest_return_invoice(self):
+        pass
+
+    def _consistency_validation(self):
+        voluntary_share_product = self.company_id.voluntary_share_id
         # check if all shares comes from an invoice
         memberships = self.env["cooperative.membership"].search(
-            [("company_id", "=", company.id)]
+            [("company_id", "=", self.company_id.id)]
         )
         for membership in memberships:
             total_in_membership = 0
@@ -97,7 +128,12 @@ class VoluntaryShareInterestReturn(models.TransientModel):
         # Check if total in voluntary share invoices match share lines
         company_invoices_partners = (
             self.env["account.move"]
-            .search([("company_id", "=", company.id), ("payment_state", "=", "paid")])
+            .search(
+                [
+                    ("company_id", "=", self.company_id.id),
+                    ("payment_state", "=", "paid"),
+                ]
+            )
             .mapped("partner_id")
         )
         for partner in company_invoices_partners:
@@ -106,7 +142,7 @@ class VoluntaryShareInterestReturn(models.TransientModel):
                 total_in_membership = 0
                 partner_company_invoices = self.env["account.move"].search(
                     [
-                        ("company_id", "=", company.id),
+                        ("company_id", "=", self.company_id.id),
                         ("payment_state", "=", "paid"),
                         ("partner_id", "=", partner.id),
                     ]
@@ -124,7 +160,10 @@ class VoluntaryShareInterestReturn(models.TransientModel):
                             )
                         )
                     else:
-                        if line.move_id.membership_id.company_id != company.id:
+                        if (
+                            line.move_id.membership_id.company_id.id
+                            != self.company_id.id
+                        ):
                             raise ValidationError(
                                 _(
                                     "ERROR on Invoice {}. Related membership not in same company".format(
@@ -134,7 +173,10 @@ class VoluntaryShareInterestReturn(models.TransientModel):
                             )
                     total_in_account_move += line.price_subtotal
                 related_partner_membership = self.env["cooperative.membership"].search(
-                    [("company_id", "=", company.id), ("partner_id", "=", partner.id)]
+                    [
+                        ("company_id", "=", self.company_id.id),
+                        ("partner_id", "=", partner.id),
+                    ]
                 )
                 if not related_partner_membership:
                     raise ValidationError(

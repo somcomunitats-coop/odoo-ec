@@ -17,9 +17,16 @@ class ResCompany(models.Model):
     voluntary_share_form_header_text = fields.Html(
         string="Voluntary share form header text", translate=True
     )
+    voluntary_share_journal_account = fields.Many2one(
+        "account.journal",
+        "Voluntary shares journal",
+        check_company=True,
+    )
 
     def action_open_volutary_share_interest_return_wizard(self):
-        wizard = self.env["voluntary.share.interest.return.wizard"].create({})
+        wizard = self.env["voluntary.share.interest.return.wizard"].create(
+            {"company_id": self.id}
+        )
         return {
             "type": "ir.actions.act_window",
             "name": _("Return voluntary shares interest"),
