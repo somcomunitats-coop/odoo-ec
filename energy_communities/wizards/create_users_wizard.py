@@ -21,6 +21,13 @@ class CreateUsersWizard(models.TransientModel):
     )
 
     def execute(self):
+        if (
+            not self.create_user
+            or self.create_kc_user
+            or self.invite_user_through_kc
+            or self.force_invite
+        ):
+            raise ValidationError(_("Please select an action."))
         model = self.env.context.get("active_model")
         if model == "res.company":
             self.execute_on_company()
@@ -34,6 +41,7 @@ class CreateUsersWizard(models.TransientModel):
             )
             for company in impacted_companies:
                 if company.hierarchy_level == "community":
+                    coop = self.env["cooperative.membership"].search([])
                     partners = self.env["cooperative.membership"].search(
                         [
                             ("company_id", "=", company.id),
@@ -41,14 +49,16 @@ class CreateUsersWizard(models.TransientModel):
                             ("member", "=", True),
                         ]
                     )
-                    for p in partners:
-                        p.with_delay().build_platform_user(
-                            company.id,
-                            p.partner_id,
+                    for partner in partners:
+                        # self.env["res.users"].with_delay().build_platform_user(
+                        self.env["res.users"].build_platform_user(
+                            company,
+                            partner.partner_id,
                             self.create_user,
                             self.create_kc_user,
                             self.invite_user_through_kc,
                             self.force_invite,
+                            user_vals={},
                         )
                 else:
                     raise ValidationError(
@@ -68,11 +78,11 @@ class CreateUsersWizard(models.TransientModel):
     def execute_on_partner(self):
         if "active_ids" in self.env.context.keys():
             partner = self.env["res.partner"].browse(self.env.context["active_id"])
-            company = self.env["rescompanyp"].search([("partner_id", "=", partner.id)])
+            company = self.env["res.company"].search([("partner_id", "=", partner.id)])
             if len(company) > 1:
                 raise ValidationError(
                     _(
-                        "This wizard can only be run with ONE company selected."
+                        "This wizard can only run with ONE company selected."
                         " Please limit the context of the selected companies to one."
                     )
                 )
@@ -85,14 +95,15 @@ class CreateUsersWizard(models.TransientModel):
                             ("member", "=", True),
                         ]
                     )
-                    for p in partners:
-                        p.with_delay().build_platform_user(
+                    for partner in partners:
+                        self.env["res.users"].with_delay().build_platform_user(
                             company.id,
-                            p.partner_id,
+                            partner.partner_id,
                             self.create_user,
                             self.create_kc_user,
                             self.invite_user_through_kc,
                             self.force_invite,
+                            user_vals={},
                         )
                 else:
                     raise ValidationError(
