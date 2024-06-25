@@ -369,12 +369,12 @@ class ResUsers(models.Model):
             ]
         )
         if user:
-            if company_id.id not in user.company_ids:
+            if company_id not in user.company_ids:
                 # add the company to the user's companies
                 user.company_ids = [(4, company_id.id, 0)]
             else:
                 # set the company as the only company of the user
-                company_ids = [(6, 0, [company_id])]
+                company_ids = [(6, 0, [company_id.id])]
                 if not user.active:
                     user.sudo().write(
                         {
@@ -413,7 +413,17 @@ class ResUsers(models.Model):
         return user
 
     def set_user_roles(self, company_id, role_id):
-        pass
+        if company_id.hierarchy_level == "community":
+            if role_id.code == "role_ce_member":
+                if not self.login_date:
+                    user_roles = self.env["res.users.role.line"].create(
+                        {
+                            "user_id": self.id,
+                            "role_id": role_id.id,
+                            "company_id": company_id.id,
+                        }
+                    )
+        return user_roles
 
     def user_vals_validator(self, user_vals):
         if user_vals.keys() != {"login", "email", "firstname", "lastname", "lang"}:
