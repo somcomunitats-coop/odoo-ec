@@ -56,7 +56,7 @@ class CreateUsersWizard(models.TransientModel):
                     )
                     for partner in partners:
                         self.env["res.users"].with_delay().build_platform_user(
-                            company.id,
+                            company,
                             partner.partner_id,
                             role_id,
                             self.create_user,

@@ -507,10 +507,9 @@ class ResUsers(models.Model):
             ]
         )
         if user:
-            company = self.env["res.company"].browse(company_id)
-            if company not in user.company_ids:
+            if company_id.id not in user.company_ids:
                 # add the company to the user's companies
-                user.company_ids = [(4, company_id, 0)]
+                user.company_ids = [(4, company_id.id, 0)]
             else:
                 # set the company as the only company of the user
                 company_ids = [(6, 0, [company_id])]
@@ -518,7 +517,7 @@ class ResUsers(models.Model):
                     user.sudo().write(
                         {
                             "active": True,
-                            "company_id": company_id,
+                            "company_id": company_id.id,
                             "company_ids": company_ids,
                         }
                     )
@@ -528,14 +527,14 @@ class ResUsers(models.Model):
                     user_roles.unlink()
         else:
             user = self.sudo().with_context(no_reset_password=True).create(user_vals)
-            company_ids = [(6, 0, [company_id])]
+            company_ids = [(6, 0, [company_id.id])]
             user.sudo().write(
                 {
-                    "company_id": company_id,
+                    "company_id": company_id.id,
                     "company_ids": company_ids,
                 }
             )
-            user.set_user_roles()
+            user.set_user_roles(company_id, role_id)
 
         if create_kc_user or invite_user_through_kc:
             user.create_users_in_keycloak()
@@ -551,7 +550,7 @@ class ResUsers(models.Model):
 
         return user
 
-    def set_user_roles(self):
+    def set_user_roles(self, company_id, role_id):
         pass
 
     def user_vals_validator(self, user_vals):
