@@ -478,14 +478,15 @@ class ResUsers(models.Model):
         self,
         company_id,
         partner_id,
+        role_id,
         create_user,
         create_kc_user,
         invite_user_through_kc,
         force_invite,
         user_vals,
     ):
-        # if not create_user or create_kc_user or invite_user_through_kc:
-        #     return False
+        if not create_user or create_kc_user or invite_user_through_kc:
+            return False
         if partner_id:
             user_vals = {
                 "partner_id": partner_id.id,
@@ -496,14 +497,7 @@ class ResUsers(models.Model):
                 "lang": partner_id.lang,
             }
         else:
-            if user_vals.keys() != {"login", "email", "firstname", "lastname", "lang"}:
-                raise exceptions.UserError(_("User_vals dict is empty"))
-            if user_vals["login"] is None:
-                raise exceptions.UserError(_("Login is empty"))
-            if not self.email_validator(user_vals["email"]):
-                raise exceptions.UserError(_("Email is not valid"))
-            if not self.lang_validator(user_vals["lang"]):
-                raise exceptions.UserError(_("Lang is not valid"))
+            self.user_vals_validator(user_vals)
         user = self.env["res.users"].search(
             [
                 ("login", "=", user_vals["login"]),
@@ -513,30 +507,31 @@ class ResUsers(models.Model):
             ]
         )
         if user:
-            if company_id not in user.company_ids:
+            company = self.env["res.company"].browse(company_id)
+            if company not in user.company_ids:
                 # add the company to the user's companies
-                user.company_ids = [(4, company_id.id, 0)]
+                user.company_ids = [(4, company_id, 0)]
             else:
                 # set the company as the only company of the user
-                company_ids = [(6, 0, [company_id.id])]
+                company_ids = [(6, 0, [company_id])]
                 if not user.active:
-                    user.sudo().write({"active": True})
+                    user.sudo().write(
+                        {
+                            "active": True,
+                            "company_id": company_id,
+                            "company_ids": company_ids,
+                        }
+                    )
                     user_roles = self.env["res.users.role.line"].search(
                         [("user_id", "=", user.id)]
                     )
                     user_roles.unlink()
-            user.sudo().write(
-                {
-                    "company_id": company_id.id,
-                    "company_ids": company_ids,
-                }
-            )
         else:
             user = self.sudo().with_context(no_reset_password=True).create(user_vals)
             company_ids = [(6, 0, [company_id])]
             user.sudo().write(
                 {
-                    "company_id": company_id.id,
+                    "company_id": company_id,
                     "company_ids": company_ids,
                 }
             )
@@ -558,6 +553,16 @@ class ResUsers(models.Model):
 
     def set_user_roles(self):
         pass
+
+    def user_vals_validator(self, user_vals):
+        if user_vals.keys() != {"login", "email", "firstname", "lastname", "lang"}:
+            raise exceptions.UserError(_("User_vals dict is empty"))
+        if user_vals["login"] is None:
+            raise exceptions.UserError(_("Login is empty"))
+        if not self.email_validator(user_vals["email"]):
+            raise exceptions.UserError(_("Email is not valid"))
+        if not self.lang_validator(user_vals["lang"]):
+            raise exceptions.UserError(_("Lang is not valid"))
 
     def email_validator(email):
         regex = re.compile(
