@@ -5,6 +5,7 @@ class ResUsersRole(models.Model):
     _inherit = "res.users.role"
 
     code = fields.Char(string="Code")
+    priority = fields.Integer(string=_("Priority"))
 
 
 class ResUsersRoleLine(models.Model):
