@@ -11,7 +11,13 @@
                             <field name="interest" required="1" />
                             <field name="credit_account_move_id" required="1" />
                             <field name="return_line_account_id" required="1" />
+                            <field name="tax_id" required="1" />
                             <field name="journal_id" required="1" />
+                            <field
+                name="payment_mode_id"
+                required="1"
+                domain="[('payment_type','=','outbound')]"
+              />
                             <field name="start_date_period" required="1" />
                             <field name="end_date_period" required="1" />
                         </group>
