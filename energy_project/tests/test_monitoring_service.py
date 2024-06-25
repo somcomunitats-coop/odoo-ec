@@ -258,3 +258,64 @@ class TestMonitoringService(TransactionCase):
         )
 
         self.assertEqual(exported_energy + selfconsumed_energy, generated_energy)
+
+    def test__energy_usage_ratio_by_member(self):
+        # given two dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # a valid system id
+        system_id = project_code
+        # a member id
+        member_id = member_code
+        # and a monitoring service
+        # self.monitoring_service
+
+        # when we ask for the percentage of used energy of that member
+        energy_usage_ratio = self.monitoring_service.energy_usage_ratio_by_member(
+            system_id, member_id, date_from, date_to
+        )
+
+        # then we obtain the percentage of the energy exported
+        self.assertEqual(energy_usage_ratio, 0.1208)
+
+    def test__energy_usage_ratio_from_net_by_member(self):
+        # given two dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # a valid system id
+        system_id = project_code
+        # a member id
+        member_id = member_code
+        # and a monitoring service
+        # self.monitoring_service
+
+        # when we ask for the percentage of used energy from the net of that member
+        energy_usage_ratio_from_net = (
+            self.monitoring_service.energy_usage_ratio_from_net_by_member(
+                system_id, member_id, date_from, date_to
+            )
+        )
+
+        # then we obtain the percentage of the energy exported
+        self.assertEqual(energy_usage_ratio_from_net, 0.4473)
+
+    def test__energy_production_ratio_by_member(self):
+        # given two dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # a valid system id
+        system_id = project_code
+        # a member id
+        member_id = member_code
+        # and a monitoring service
+        # self.monitoring_service
+
+        # when we ask for the percentage of the energy production that member
+        energy_production_ratio = (
+            self.monitoring_service.energy_production_ratio_by_member(
+                system_id, member_id, date_from, date_to
+            )
+        )
+
+        # then we obtain the percentage of the energy exported
+        self.assertEqual(energy_production_ratio, 0.5527)

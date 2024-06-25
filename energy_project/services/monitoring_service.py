@@ -17,6 +17,18 @@ _selfconsumption_surplus_ratio_pair = lambda accumulator, point: (
     accumulator[0] + _get_energy_exported(point),
     accumulator[1] + _get_energy_production(point),
 )
+_energy_usage_ratio_pair = lambda accumulator, point: (
+    accumulator[0] + _get_energy_consumption(point),
+    accumulator[1] + _get_energy_production(point),
+)
+_energy_usage_ratio_from_net_pair = lambda accumulator, point: (
+    accumulator[0] + _get_energy_consumption(point),
+    accumulator[1] + _get_energy_selfconsumption(point),
+)
+_energy_production_ratio_pair = lambda accumulator, point: (
+    accumulator[0] + _get_energy_selfconsumption(point),
+    accumulator[1] + _get_energy_consumption(point),
+)
 
 
 class MonitoringService:
@@ -103,6 +115,37 @@ class MonitoringService:
         daily_metrics = self._get_project_daily_metrics(system_id, date_from, date_to)
         energy = sum(map(_get_energy_exported, daily_metrics))
         return round(energy, 4)
+
+    def energy_usage_ratio_by_member(self, system_id, member_id, date_from, date_to):
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        consumed_energy, generated_energy = reduce(
+            _energy_usage_ratio_pair, daily_metrics, (0, 0)
+        )
+        return round(consumed_energy / generated_energy, 4)
+
+    def energy_usage_ratio_from_net_by_member(
+        self, system_id, member_id, date_from, date_to
+    ):
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        consumed_energy, self_consumed_energy = reduce(
+            _energy_usage_ratio_from_net_pair, daily_metrics, (0, 0)
+        )
+        return round((consumed_energy - self_consumed_energy) / consumed_energy, 4)
+
+    def energy_production_ratio_by_member(
+        self, system_id, member_id, date_from, date_to
+    ):
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        self_consumed_energy, consumed_energy = reduce(
+            _energy_production_ratio_pair, daily_metrics, (0, 0)
+        )
+        return round(self_consumed_energy / consumed_energy, 4)
 
     @lru_cache
     def _get_project_daily_metrics_by_member(
