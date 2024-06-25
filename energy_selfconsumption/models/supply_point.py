@@ -150,9 +150,3 @@ class SupplyPoint(models.Model):
                         "For the 3.0TD rate, the maximum contracted power must be greater than 15 kW."
                     )
                 )
-
-            if record.contracted_power > 100:
-                message = _(
-                    "The indicated maximum contracted power is very high. Please check that this is correct. Remember that we use '.' to express decimals, not ','."
-                )
-                record.message_post(body=message, subtype_xmlid="mail.mt_comment")

@@ -35,12 +35,15 @@
                 />
                 <field name="cadastral_reference" />
                 <field name="contracted_power" />
-                                <span
+                                <p
+                  colspan="2"
                   class="text-warning"
-                  attrs="{'invisible': [('contracted_power', '<', 100)]}"
+                  attrs="{'invisible': [('contracted_power', '&lt;', 100)]}"
                 ><b>
-                                The contracted power is higher than 100
-                </b></span>
+                                The indicated maximum contracted power is very high.
+                                Please check that this is correct.
+                                Remember that we use '.' to express decimals, not ','.
+                </b></p>
                 <field name="tariff" />
                             </group>
                             <group>
