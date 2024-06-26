@@ -8,6 +8,10 @@ class AccountMove(models.Model):
     membership_id = fields.Many2one(
         "cooperative.membership", string="Related membership"
     )
+    voluntary_share_interest_return_id = fields.Many2one(
+        "voluntary.share.interest.return",
+        string="Related voluntary share interest return",
+    )
 
     def post_process_confirm_paid(self, effective_date):
         if not self.membership_id:

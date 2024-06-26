@@ -38,6 +38,7 @@
         "views/res_company_views.xml",
         "views/res_partner_views.xml",
         "views/res_company_views.xml",
+        "views/voluntary_share_interest_return_views.xml",
         "views/subscription_request_view.xml",
         "views/website_subscription_template.xml",
         "wizards/multicompany_easy_creation.xml",

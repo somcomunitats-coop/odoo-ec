@@ -8,11 +8,10 @@ _DEFAULT_ANUAL_BULK_INTEREST_RATE = 1
 _DEFAULT_IRPF_CAPITAL_TAX_XMLID = "account_tax_template_p_irpf19"
 _DEFAULT_CREDIT_ACCOUNT_MOVE_XMLID = "account_common_4100"
 _DEFAULT_RETURN_ACCOUNT_MOVE_LINE_XMLID = "account_common_6624"
-
 # NOTE: we'll have to build this xml_ids dynamically prepending on each "l10n_es.{company_id}_"
 
 
-class VoluntaryShareInterestReturn(models.TransientModel):
+class VoluntaryShareInterestReturnWizard(models.TransientModel):
     _name = "voluntary.share.interest.return.wizard"
     _description = "Calculate and prepare interests to be returned in voluntary shares"
 

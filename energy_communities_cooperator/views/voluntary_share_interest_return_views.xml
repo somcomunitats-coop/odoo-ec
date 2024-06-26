@@ -1,0 +1,47 @@
+<odoo>
+    <record
+    id="view_voluntary_share_interest_return_window"
+    model="ir.actions.act_window"
+  >
+      <field name="name">Voluntary share interest return</field>
+      <field name="res_model">voluntary.share.interest.return</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_voluntary_share_interest_return_tree" model="ir.ui.view">
+      <field name="name">voluntary.share.interest.return.tree</field>
+      <field name="model">voluntary.share.interest.return</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_voluntary_share_interest_return_form" model="ir.ui.view">
+      <field name="name">voluntary.share.interest.return.form</field>
+      <field name="model">voluntary.share.interest.return</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <notebook>
+              <page string="General">
+                <group>
+                  <field name="name" />
+                </group>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <menuitem
+    name="Voluntary share interest return"
+    id="view_voluntary_share_interest_return_menu"
+    parent="cooperator.menu_cooperator_main_subscription"
+    action="view_voluntary_share_interest_return_window"
+  />
+</odoo>

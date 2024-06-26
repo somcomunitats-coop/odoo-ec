@@ -6,3 +6,4 @@ from . import partner
 from . import product
 from . import res_company
 from . import subscription_request
+from . import voluntary_share_interest_return
