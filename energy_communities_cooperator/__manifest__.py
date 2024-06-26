@@ -15,20 +15,37 @@
     "version": "14.0.1.0.2",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
-    "depends": ["base", "cooperator", "l10n_es_cooperator", "energy_communities"],
+    "depends": [
+        "base",
+        "account_multicompany_easy_creation",
+        "cooperator",
+        "cooperator_account_payment",
+        "cooperator_account_banking_mandate",
+        "l10n_es_cooperator",
+        "energy_communities",
+    ],
     # always loaded
     "data": [
         # 'security/ir.model.access.csv',
+        "data/product_data.xml",
+        "data/res_users_role_data.xml",
+        "data/mail_template_update_data.xml",
+        "data/ir_config_parameter_data.xml",
         "views/account_move_views.xml",
         "views/cooperative_membership_views.xml",
         "views/operation_request_views.xml",
         "views/res_company_views.xml",
         "views/res_partner_views.xml",
+        "views/res_company_views.xml",
         "views/subscription_request_view.xml",
-        "data/mail_template_update_data.xml",
-        "data/ir_config_parameter_data.xml",
+        "views/website_subscription_template.xml",
+        "wizards/multicompany_easy_creation.xml",
     ],
     # only loaded in demonstration mode
-    "demo": [],
-    "post_load": "post_load_cooperator_memberships",
+    "demo": [
+        "demo/res_company_demo.xml",
+        "demo/res_user_demo.xml",
+        "demo/subscription_request_demo.xml",
+    ],
+    # "post_load": "post_load_cooperator_memberships",
 }

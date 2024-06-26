@@ -1,0 +1,92 @@
+<odoo>
+        <record id="res_partner_user_ce_1_demo" model="res.partner">
+            <field name="name">Usuari Comunitat Energètica 1</field>
+            <field name="is_company" eval="False" />
+            <field name="email">user@coop.coop</field>
+            <field name="street">Carrer Major, 23</field>
+            <field name="city">Barcelona</field>
+            <field name="zip">08001</field>
+            <field name="country_id" ref="base.es" />
+        </record>
+
+        <record id="res_partner_admin_ce_1_demo" model="res.partner">
+            <field name="name">Administrador Comunitat Energètica 1</field>
+            <field name="is_company" eval="False" />
+            <field name="email">admin@coop.coop</field>
+            <field name="street">Carrer Major, 23</field>
+            <field name="city">Barcelona</field>
+            <field name="zip">08001</field>
+            <field name="country_id" ref="base.es" />
+        </record>
+
+        <record id="res_partner_user_ce_2_demo" model="res.partner">
+            <field name="name">Usuari Comunitat Energètica 2</field>
+            <field name="is_company" eval="False" />
+            <field name="email">user2@coop.coop</field>
+            <field name="street">Carrer Major, 23</field>
+            <field name="city">Barcelona</field>
+            <field name="zip">08001</field>
+            <field name="country_id" ref="base.es" />
+        </record>
+
+        <record id="res_partner_admin_ce_2_demo" model="res.partner">
+            <field name="name">Administrador Comunitat Energètica 2</field>
+            <field name="is_company" eval="False" />
+            <field name="email">admin2@coop.coop</field>
+            <field name="street">Carrer Major, 23</field>
+            <field name="city">Barcelona</field>
+            <field name="zip">08001</field>
+            <field name="country_id" ref="base.es" />
+        </record>
+
+        <record id="res_partner_user_ce_3_demo" model="res.partner">
+            <field name="name">Usuari Comunitat Energètica 3</field>
+            <field name="is_company" eval="False" />
+            <field name="email">user3@coop.coop</field>
+            <field name="street">Carrer Major, 23</field>
+            <field name="city">Barcelona</field>
+            <field name="zip">08001</field>
+            <field name="country_id" ref="base.es" />
+        </record>
+
+        <record id="res_partner_admin_ce_3_demo" model="res.partner">
+            <field name="name">Administrador Comunitat Energètica 3</field>
+            <field name="is_company" eval="False" />
+            <field name="email">admin3@coop.coop</field>
+            <field name="street">Carrer Major, 23</field>
+            <field name="city">Barcelona</field>
+            <field name="zip">08001</field>
+            <field name="country_id" ref="base.es" />
+        </record>
+
+        <record id="res_partner_admin_coordinator_1_demo" model="res.partner">
+            <field name="name">Administrador Coordinadora 1</field>
+            <field name="is_company" eval="False" />
+            <field name="email">admin@coordinator.coop</field>
+            <field name="street">Carrer Major, 23</field>
+            <field name="city">Barcelona</field>
+            <field name="zip">08001</field>
+            <field name="country_id" ref="base.es" />
+        </record>
+
+          <record id="res_partner_worker_coordinator_1_demo" model="res.partner">
+            <field name="name">Treballador Coordinadora 1</field>
+            <field name="is_company" eval="False" />
+            <field name="email">worker@coordinator.coop</field>
+            <field name="street">Carrer Major, 23</field>
+            <field name="city">Barcelona</field>
+            <field name="zip">08001</field>
+            <field name="country_id" ref="base.es" />
+        </record>
+
+          <record id="res_partner_admin_plataforma_demo" model="res.partner">
+            <field name="name">Administrador Plataforma</field>
+            <field name="is_company" eval="False" />
+            <field name="email">admin@plataforma.coop</field>
+            <field name="street">Carrer Major, 23</field>
+            <field name="city">Barcelona</field>
+            <field name="zip">08001</field>
+            <field name="country_id" ref="base.es" />
+        </record>
+
+</odoo>
