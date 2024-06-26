@@ -13,16 +13,6 @@
             <field name="priority" eval="8" />
             <field name="arch" type="xml">
                 <xpath expr="//page" position="before">
-                    <page string="Cooperator">
-                        <group string="Cooperator">
-                            <field name="property_cooperator_account" />
-                            <field name="product_share_template" />
-                            <field name="capital_share" />
-                            <field name="create_user" />
-                        </group>
-                    </page>
-                </xpath>
-                <xpath expr="//page" position="before">
                     <page string="Energy Community">
                         <group string="Energy Community">
                             <field name="user_current_company" invisible="1" />

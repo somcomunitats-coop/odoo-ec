@@ -5,7 +5,7 @@
     name="Blacklisted Email Addresses"
     action="mail.mail_blacklist_action"
     parent="mass_mailing.mass_mailing_configuration"
-    groups="energy_communities.mass_mailing_super_user"
+    groups="energy_communities_mass_mailing.mass_mailing_super_user"
   />
 
     <!--<record model="ir.ui.menu" id="mass_mailing.mail_blacklist_mm_menu">-->

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-31 14:23+0000\n"
-"PO-Revision-Date: 2024-05-31 16:29+0200\n"
+"POT-Creation-Date: 2024-06-11 08:46+0000\n"
+"PO-Revision-Date: 2024-06-11 11:03+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: eu_ES\n"
@@ -140,6 +140,89 @@ msgstr ""
 "    </p>\n"
 "    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" "
 "style=\"width: 150px;\"/>\n"
+"            "
+
+#. module: energy_communities_cooperator
+#: model:mail.template,body_html:energy_communities_cooperator.email_template_conditions_voluntary_share
+msgid ""
+"\n"
+"    <p>Dear ${object.name},</p>\n"
+"    <p>\n"
+"        Last week we charged your account corresponding to your voluntary "
+"contribution to the share capital of the\n"
+"        <b>${object.company_id.name}</b>.\n"
+"    </p>\n"
+"    <p>\n"
+"        We attach the contract with the conditions of your investment and "
+"we remind you that for any doubt or\n"
+"        clarification in relation to the contribution made you can send an "
+"email to\n"
+"        <a href=\"${object.company_id.email}\">${object.company_id.email}</"
+"a> or consult the website\n"
+"        <a href=\"${object.company_id.website}\"> ${object.company_id."
+"website}</a>.\n"
+"    </p>\n"
+"    <p>\n"
+"        We take this opportunity to thank you, once again, for your "
+"involvement with the <b>${object.company_id.name}</b>\n"
+"        objective to promote those actions or projects that contribute to "
+"an energy, economic and social transition\n"
+"        in ${object.company_id.city}.\n"
+"    </p>\n"
+"    <p>\n"
+"        Get the word out by explaining the project to family and friends. "
+"The more we are, the further we will go!\n"
+"    </p>\n"
+"    <p>\n"
+"        Thank you very much and good energy!\n"
+"    </p>\n"
+"    <p>\n"
+"        Sincerely,\n"
+"    </p>\n"
+"    <p>\n"
+"        ${object.company_id.name} team\n"
+"    </p>\n"
+"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" "
+"style=\"width: 150px;height: 80px;\"/>\n"
+"            "
+msgstr ""
+"\n"
+"    <p>${object.firstname} estimatua,</p>\n"
+"    <p>\n"
+"        Jakinarazten dizuegu zuen bankuari igorri diogula \n"
+"        <b>${object.company_id.name}</b> kooperatibaren kapital sozialari "
+"egin diozun borondatezko ekarpenari dagokion kargua.\n"
+"    </p>\n"
+"    <p>\n"
+"        Zure inbertsioaren baldintzak jasotzen dituen kontratua eransten "
+"dizugu eta gogorarazten dizugu egindako ekarpenari buruzko edozein zalantza "
+"argitzeko posta elektroniko bat bidal dezakezula\n"
+"        <a href=\"${object.company_id.email}\">${object.company_id.email}</"
+"a> helbidera edo \n"
+"        <a href=\"${object.company_id.website}\"> ${object.company_id."
+"website}</a>web orria kontsultatu.\n"
+"    </p>\n"
+"    <p>\n"
+"        Bide batez eskerrak eman nahi dizkizugu beste behin ere, "
+"<b>${object.company_id.name}</b>\n"
+"        xedearekin duzun inplikazioagatik,  ${object.company_id.city} "
+"energia, ekonomia eta gizarte trantsizioan laguntzen duten ekintzak edo "
+"proiektuak bultzatzeko.\n"
+"    </p>\n"
+"    <p>\n"
+"Ahoz aho proiektua familiakoei, auzokideei eta lagunei azaldu. Zenbat eta "
+"gehiago izan, urrunago iritsiko gara.\n"
+"    </p>\n"
+"    <p>\n"
+"Eskerrik asko eta energia on!\n"
+"    </p>\n"
+"    <p>\n"
+"        Adeitasunez,\n"
+"    </p>\n"
+"    <p>\n"
+"        ${object.company_id.name} taldea\n"
+"    </p>\n"
+"<img src=\"/logo.png?company=${object.company_id.id}\">\n"
 "            "
 
 #. module: energy_communities_cooperator
@@ -280,6 +363,50 @@ msgid "Active"
 msgstr "Activo"
 
 #. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#, python-format
+msgid "Address not found"
+msgstr "Dirección no encontrada"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.iban_template_es_ccee
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_shares_template
+msgid "Bank Account Number"
+msgstr "Banku-kontuaren zenbakia"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecompanycooperator
+msgid "Become Company Cooperator of"
+msgstr "Izan zaitez"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecooperator_ccee
+msgid "Become Cooperator of"
+msgstr "Izan zaitez"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_product__mail_template
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_template__mail_template
+msgid "Certificate email template"
+msgstr "Plantilla de email de certificado"
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#, python-format
+msgid "City not found"
+msgstr "Ciudad no encontrada"
+
+#. module: energy_communities_cooperator
+#: model:ir.model,name:energy_communities_cooperator.model_res_company
+msgid "Companies"
+msgstr "Enpresak"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
+msgid "Company"
+msgstr "Konpainia"
+
+#. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__representative_of_member_company
 msgid "Company Legal Representative"
 msgstr "Representante legal de compañía"
@@ -289,6 +416,19 @@ msgstr "Representante legal de compañía"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_users__company_register_number
 msgid "Company Register Number"
 msgstr "Código de registro de la compañía"
+
+#. module: energy_communities_cooperator
+#: model:mail.template,subject:energy_communities_cooperator.email_template_conditions_voluntary_share
+msgid ""
+"Conditions Share Capital to ${object.company_id.name} Ref. ACSV${object.id}"
+msgstr ""
+"${object.company_id.name} autofinantzaketan ematea Erref. ACSV${object.id}: "
+"egindako ekarpena"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
+msgid "Confirm Email"
+msgstr "Posta elektronikoa berretsi"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_res_partner
@@ -303,23 +443,87 @@ msgstr ""
 "jasotako eskaera"
 
 #. module: energy_communities_cooperator
+#: model:product.template,name:energy_communities_cooperator.share_capital_product_template
+msgid "Contribution to Share Capital"
+msgstr "Aportación al Capital Social"
+
+#. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_cooperative_membership
 msgid "Cooperative Membership"
 msgstr "Membresia"
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.wizard_multicompany_easy_creation_form_inherit
+msgid "Cooperator"
+msgstr "Socio"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__property_cooperator_account
+msgid "Cooperator Account"
+msgstr "Cuenta socias"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__cooperator_share_form_header_text
+msgid "Cooperator share form header text"
+msgstr "Nahitaez parte hartzeko inprimakiaren testua"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_company_form
+msgid "Cooperator voluntary shares"
+msgstr "Aportaciones voluntarias de socios"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__create_user
+msgid "Create user for cooperator"
+msgstr "Crear usuario de Odoo desde la socia"
+
+#. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move__display_name
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__display_name
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__display_name
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_template__display_name
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__display_name
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_partner__display_name
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__display_name
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__display_name
 msgid "Display Name"
-msgstr "Nombre Mostrado"
+msgstr "Bistaratzeko izena"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
+msgid "Email"
+msgstr "Posta elektronikoa"
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#, python-format
+msgid "Email and confirmation email addresses don't match."
+msgstr "El email y su confirmación no coinciden."
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#, python-format
+msgid "Email not found"
+msgstr "Email no encontrado"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__gender
 msgid "Gender"
 msgstr "Género"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share_text_template
+msgid "Hello,"
+msgstr "Kaixo,"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.iban_template_es_ccee
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_shares_template
+msgid "I accept that the entity issues direct debit receipts to this account."
+msgstr ""
+"Onartzen dut entitateak kontu honetara helbideratutako ordainagiriak "
+"jaulkitzea."
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__subscription_request__gender__not_share
@@ -328,12 +532,33 @@ msgstr "Prefiero no compartirlo"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move__id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_template__id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_partner__id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__id
 msgid "ID"
 msgstr "Identificador"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
+msgid ""
+"INDIVIDUAL\n"
+"                PARTNER"
+msgstr "PERTSONA FISIKOAREN BAZKIDE ALTA"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_product__mail_template
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_template__mail_template
+msgid "If left empty, the default global mail template will be used."
+msgstr "Si se deja sin rellenar se usará la plantilla de correo de sistema."
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__capital_share
+msgid "Initial capital share"
+msgstr "Cuota inicial alta sòcia"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__is_voluntary
@@ -343,16 +568,24 @@ msgstr "Es aportación voluntaria"
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_account_move
 msgid "Journal Entry"
-msgstr "Egunkari-sarrera"
+msgstr "Aldizkariaren Sarrera"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
+msgid "LEGAL ENTITY PARTNER"
+msgstr "PERTSONA JURIDIKOAREN BAZKIDE ALTA"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move____last_update
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz____last_update
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership____last_update
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_template____last_update
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company____last_update
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_partner____last_update
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line____last_update
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request____last_update
 msgid "Last Modified on"
-msgstr "Última modificación el"
+msgstr "Azken aldaketa egunean"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__representative
@@ -371,14 +604,90 @@ msgid "Memberships"
 msgstr "Membresias"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__new_product_share_template
+msgid "New Product Share Template"
+msgstr "Plantilla de nuevo producto de quota"
+
+#. module: energy_communities_cooperator
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__subscription_request__gender__not_binary
 msgid "Not binary"
 msgstr "No binario"
 
 #. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#, python-format
+msgid "Not valid parameter value [odoo_company_id]"
+msgstr "El valor para el parámetro [odoo_company_id] no es válido"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
+msgid ""
+"Note: Please, if you are not yet a member, you must process it through\n"
+"            these forms:"
+msgstr ""
+"Oharra: Mesedez, oraindik bazkide ez bazara, formulario hauen bidez "
+"tramitea  egin behar duzu:"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecooperator_ccee
+msgid ""
+"Once you are a member you can enjoy the services available from the "
+"community and be part of a movement\n"
+"                of social and energy model transformation."
+msgstr ""
+"Bazkide zarenean, komunitate energetikoaren zerbitzuak erabili ahal izango "
+"dituzu, eta, aldi berean, gizartea eta energia eredua aldatzeko "
+"mugimenduaren parte izan."
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share_text_template
+msgid ""
+"Once your request is received, you will receive a confirmation email with "
+"the instructions to follow."
+msgstr ""
+"Zure eskaera jasotakoan, berrespen mezu bat jasoko duzu, jarraitu beharreko "
+"jarraibideekin."
+
+#. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__partner_id
 msgid "Partner"
 msgstr "Contacto"
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#, python-format
+msgid "Partner not found"
+msgstr "Socio no encontrado"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
+msgid "Phone"
+msgstr "Telefonoa"
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#, python-format
+msgid "Please upload a scan of your ID card."
+msgstr "Sube la imagen de tu documento de identidad."
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__product_share_template
+msgid "Product Share Template"
+msgstr "Plantilla de producto aportación"
+
+#. module: energy_communities_cooperator
+#: model:ir.model,name:energy_communities_cooperator.model_product_template
+msgid "Product Template"
+msgstr "Produktuaren txantiloia"
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#, python-format
+msgid "Provided IBAN is not valid."
+msgstr "El IBAN proporcionado no es válido."
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_bank_statement_line__membership_id
@@ -388,14 +697,31 @@ msgid "Related membership"
 msgstr "Membresia relacionada"
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
+msgid "Send"
+msgstr "Bidali"
+
+#. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_share_line
 msgid "Share line"
 msgstr "Línea aportación"
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_shares_template
+msgid "Share number"
+msgstr "Ekarpenak"
+
+#. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__share_product_id
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_shares_template
 msgid "Share type"
 msgstr "Tipo aportación"
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#, python-format
+msgid "Some mandatory fields have not been filled."
+msgstr "Algunos campos obligatorios no se han rellenado."
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_subscription_request
@@ -406,6 +732,12 @@ msgstr "Sol·licitud de Suscripción"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__subscription_invoice_ids
 msgid "Subscription invoices"
 msgstr "Registros de pago"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecooperator_ccee
+msgid "Target Odoo Company id"
+msgstr "Compañía Odoo de destino"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__vat
@@ -419,9 +751,109 @@ msgid "There is an existing account for this vat number on this community. "
 msgstr "Existe una cuenta para este número de identidad en la Comunidad. "
 
 #. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#, python-format
+msgid ""
+"There is an existing account for this vat number on this community. Please "
+"contact with the community administrators."
+msgstr ""
+"En esta Comunidad ya existe una cuenta con este mismo NIF/CIF. Contacta con "
+"los administradores de la Comunidad Energética."
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__property_cooperator_account
+msgid ""
+"This account will be the default one as the receivable account for the "
+"cooperators"
+msgstr ""
+"Ésta será la cuenta por defecto para el cobro de las aportaciones de las "
+"socias"
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#, python-format
+msgid "This company doesn't have a voluntary product share selected."
+msgstr ""
+"Esta empresa no tiene una participación de producto voluntaria seleccionada."
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecooperator_ccee
+msgid "This form allow you to request be member of the community:"
+msgstr "Formulario hau:"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share_text_template
+msgid ""
+"This is the form to be able to make Voluntary Contributions to the Social "
+"Capital by the members of"
+msgstr "Hau da Gizarte Kapitalaren Borondatezko Ekarpenetarako formularioa"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecooperator_ccee
+msgid ""
+"To be a member you must fulfill this form and lateron proceed to pay the "
+"initial share of"
+msgstr ""
+"Bazkide izateko, lehenbizi galdera sorta hau bete behar duzu, eta, ondoren, "
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecooperator_ccee
+msgid ""
+"To join, you must first fill out this form where we ask for a bank account "
+"and authorization to issue a bank receipt to collect the initial mandatory "
+"financial contribution of"
+msgstr ""
+"Bazkide izateko, lehenbizi formulario hau bete behar duzu, eta bertan "
+"bankuko ordainagiri bat igortzeko baimena eskatzen dizugu, "
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_shares_template
+msgid "Total"
+msgstr "Guztira"
+
+#. module: energy_communities_cooperator
+#: model:product.template,uom_name:energy_communities_cooperator.share_capital_product_template
+#: model:product.template,uom_name:energy_communities_cooperator.voluntary_share_capital_product_template
+msgid "Units"
+msgstr "Unitate"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
+msgid "VAT"
+msgstr "IFZ"
+
+#. module: energy_communities_cooperator
+#: model:product.template,name:energy_communities_cooperator.voluntary_share_capital_product_template
+msgid "Voluntary Contribution to Share Capital"
+msgstr "Kapital Sozialerako Borondatezko Ekarpena"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share_text_template
+msgid "Voluntary Share of"
+msgstr " "
+
+#. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_subscription_request_filter_inherit
 msgid "Voluntary Shares"
 msgstr "Aportaciones voluntarias"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_form_header_text
+msgid "Voluntary share form header text"
+msgstr "Borondatezko parte hartzeko formularioaren testua"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_id
+msgid "Voluntary share to show on website"
+msgstr "Aportación voluntaria para mostrar en el sitio web"
+
+#. module: energy_communities_cooperator
+#: model:ir.model,name:energy_communities_cooperator.model_account_multicompany_easy_creation_wiz
+msgid "Wizard Account Multi-company Easy Creation"
+msgstr "'account.multicompany.easy.creation.wiz'"
 
 #. module: energy_communities_cooperator
 #: code:addons/energy_communities_cooperator/models/subscription_request.py:0
@@ -432,6 +864,66 @@ msgstr ""
 "berri baterako."
 
 #. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#, python-format
+msgid ""
+"You can't subscribe for an amount that exceeds {amount}{currency_symbol}."
+msgstr ""
+"No puedes registrar una cantidad superior a {amount}{currency_symbol}."
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#, python-format
+msgid "You can't subscribe to two different types of share."
+msgstr "No te puedes registrar a dos tipos diferentes de aportaciones."
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#, python-format
+msgid "You must check the SEPA transference."
+msgstr "Debes aceptar la transferencia SEPA."
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#, python-format
+msgid "ZIP code not found"
+msgstr "Código postal no encontrado"
+
+#. module: energy_communities_cooperator
 #: model:mail.template,subject:energy_communities_cooperator.email_template_confirmation_company
 msgid "[Som Comunitats] Application to become Community membership"
 msgstr "[Somos Comunidades] Erkidegoko kide izateko eskaera"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
+msgid "and"
+msgstr "eta"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecooperator_ccee
+msgid "member_ccee_eu_ES."
+msgstr "komunitate energetikoaren bazkide izateko balio du."
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecooperator_ccee
+msgid "member_eu_ES"
+msgstr "kide"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share_text_template
+msgid "vol_share_eu_es"
+msgstr "-ren borondatezko ekarpena"
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecompanycooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecooperator_ccee
+msgid "€ by follow the steps you will receive by email."
+msgstr ""
+"€-ko hasierako diru ekarpena formalizatu, zure eskaera jaso ondoren posta "
+"elektronikoz bidaliko dizkizugun pausuak jarraituz."
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.becomecooperator_ccee
+msgid "€_eu_ES."
+msgstr "€-ko hasierako nahitaezko diru ekarpena kobratzeko."

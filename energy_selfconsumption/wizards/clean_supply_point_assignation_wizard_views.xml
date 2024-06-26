@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_clean_supply_point_assignation_wizard" model="ir.ui.view">
+        <field name="name">clean.supply.point.assignation.wizard.form</field>
+        <field name="model">clean.supply.point.assignation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Confirm">
+                <group>
+                    <field name="message" nolabel="1" />
+                </group>
+                <footer>
+                    <button
+            string="Confirm"
+            type="object"
+            name="action_confirm"
+            class="btn-primary"
+          />
+                    <button
+            string="Cancel"
+            type="object"
+            name="action_cancel"
+            class="btn-secondary"
+          />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_confirm_wizard" model="ir.actions.act_window">
+        <field name="name">Clean supply point assignation Wizard</field>
+        <field name="res_model">clean.supply.point.assignation.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'active_ids': active_ids}</field>
+    </record>
+</odoo>
