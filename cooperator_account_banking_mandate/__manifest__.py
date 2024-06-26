@@ -9,7 +9,6 @@
     "website": "https://coopdevs.org",
     "depends": [
         "cooperator",
-        "cooperator_account_payment",
         "account_banking_mandate",
         "account_banking_sepa_direct_debit",
     ],
