@@ -130,6 +130,8 @@ class VoluntaryShareInterestReturn(models.TransientModel):
         inv_creation_dict = self._prepare_inv_create_dict(
             membership_id, voluntary_shares_inv_line
         )
+        print("CREATING")
+        print(inv_creation_dict)
         invoice = self.env["account.move"].create(inv_creation_dict)
 
     def _prepare_inv_create_dict(self, membership_id, voluntary_shares_inv_line):
@@ -174,18 +176,30 @@ class VoluntaryShareInterestReturn(models.TransientModel):
             "account_id": self.return_line_account_id.id,
             "quantity": self._get_voluntary_share_days_num(origin_inv_line),
             "price_unit": self._get_voluntary_share_price_unit(origin_inv_line),
+            "voluntary_share_return_start_date_period": self._get_period_start_date(
+                origin_inv_line
+            ),
+            "voluntary_share_return_end_date_period": self.end_date_period,
             "journal_id": self.journal_id.id,
             "company_id": self.company_id.id,
             "tax_ids": [(4, self.tax_id.id)],
         }
 
-    # TODO: verify this formula
-    def _get_voluntary_share_days_num(self, inv_line):
+    def _get_period_start_date(self, inv_line):
         payment_date = inv_line.move_id.payment_date
         if payment_date >= self.start_date_period:
-            return (self.end_date_period - payment_date).days
+            return payment_date
         else:
-            return (self.end_date_period - self.start_date_period).days
+            return self.start_date_period
+
+    # TODO: verify this formula
+    def _get_voluntary_share_days_num(self, inv_line):
+        return (self.end_date_period - self._get_period_start_date(inv_line)).days
+        # payment_date = inv_line.move_id.payment_date
+        # if payment_date >= self.start_date_period:
+        #     return (self.end_date_period - payment_date).days
+        # else:
+        #     return (self.end_date_period - self.start_date_period).days
 
     def _get_voluntary_share_price_unit(self, inv_line):
         return inv_line.price_subtotal * self.interest / 36500
