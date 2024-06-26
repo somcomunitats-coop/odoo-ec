@@ -2,7 +2,8 @@ from odoo import _, api, fields, models
 
 
 class AccountMove(models.Model):
-    _inherit = "account.move"
+    _name = "account.move"
+    _inherit = ["account.move", "user.currentcompany.mixin"]
 
     membership_id = fields.Many2one(
         "cooperative.membership", string="Related membership"

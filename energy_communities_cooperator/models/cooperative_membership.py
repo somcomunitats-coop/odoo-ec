@@ -3,8 +3,7 @@ from odoo import api, fields, models
 
 class CooperativeMembership(models.Model):
     _name = "cooperative.membership"
-    _inherit = ["cooperative.membership"]
-    # _inherit = ["cooperative.membership","user.currentcompany.mixin"]
+    _inherit = ["cooperative.membership", "user.currentcompany.mixin"]
 
     active = fields.Boolean(string="Active", default=True)
     representative = fields.Boolean(
@@ -29,6 +28,9 @@ class CooperativeMembership(models.Model):
         ondelete=None,
         index=False,
     )
+    partner_phone = fields.Char(related="partner_id.phone", store=True)
+    partner_email = fields.Char(related="partner_id.email", store=True)
+    partner_vat = fields.Char(related="partner_id.vat", store=True)
 
     @api.depends("subscription_request_ids")
     def _compute_subscription_invoice_ids(self):

@@ -47,5 +47,4 @@
         "demo/res_user_demo.xml",
         "demo/subscription_request_demo.xml",
     ],
-    # "post_load": "post_load_cooperator_memberships",
 }
