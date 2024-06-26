@@ -1,6 +1,9 @@
 <odoo>
     <data>
-        <record id="view_voluntary_share_interest_return_form" model="ir.ui.view">
+        <record
+      id="view_voluntary_share_interest_return_wizard_form"
+      model="ir.ui.view"
+    >
             <field name="name">voluntary.share.interest.return.wizard.form</field>
             <field name="model">voluntary.share.interest.return.wizard</field>
             <field name="arch" type="xml">
