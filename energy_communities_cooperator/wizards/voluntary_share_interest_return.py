@@ -31,6 +31,8 @@ class VoluntaryShareInterestReturn(models.TransientModel):
     payment_mode_id = fields.Many2one("account.payment.mode", string="Payment mode")
     start_date_period = fields.Date(string="Period start date")
     end_date_period = fields.Date(string="Period end date")
+    invoice_date = fields.Date(string="Invoice date")
+    invoice_date_due = fields.Date(string="Invoice due date")
 
     # TODO: Only way we've found to setup defaults based on company is by getting it from currently selected one.
     def default_get(self, fields):
@@ -49,6 +51,8 @@ class VoluntaryShareInterestReturn(models.TransientModel):
                 or False,
                 "start_date_period": self._default_period_date("start"),
                 "end_date_period": self._default_period_date("end"),
+                "invoice_date": datetime.now(),
+                "invoice_date_due": datetime.now(),
             }
         )
         return res
@@ -137,9 +141,9 @@ class VoluntaryShareInterestReturn(models.TransientModel):
         membership = self.env["cooperative.membership"].browse(membership_id)
         create_dict = {
             "partner_id": membership.partner_id.id,
-            # TODO: Add this dates on the wizard (date, due_date)
-            "invoice_date": self.end_date_period,
-            "date": self.end_date_period,
+            "date": self.invoice_date,
+            "invoice_date": self.invoice_date,
+            "invoice_date_due": self.invoice_date_due,
             "journal_id": self.journal_id.id,
             "payment_mode_id": self.payment_mode_id.id,
             "company_id": self.company_id.id,
