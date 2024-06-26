@@ -16,3 +16,19 @@ class VoluntaryShareInterestReturn(models.Model):
     account_move_ids = fields.One2many(
         "account.move", "voluntary_share_interest_return_id", string="Moves"
     )
+    partners_notified = fields.Boolean(string="Partners notified")
+
+    def action_post_and_send(self):
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "type": "success",
+                "title": _("Invoices posted and sent"),
+                "message": _(
+                    "We have calculated and generated the moves to pay voluntary share interest for this company."
+                ),
+                "sticky": False,
+                "next": {"type": "ir.actions.act_window_close"},
+            },
+        }
