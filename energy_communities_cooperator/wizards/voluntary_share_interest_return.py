@@ -32,6 +32,7 @@ class VoluntaryShareInterestReturn(models.TransientModel):
     start_date_period = fields.Date(string="Period start date")
     end_date_period = fields.Date(string="Period end date")
 
+    # TODO: Only way we've found to setup defaults based on company is by getting it from currently selected one.
     def default_get(self, fields):
         res = super().default_get(fields)
         res.update(
@@ -130,14 +131,13 @@ class VoluntaryShareInterestReturn(models.TransientModel):
         inv_creation_dict = self._prepare_inv_create_dict(
             membership_id, voluntary_shares_inv_line
         )
-        print("CREATING")
-        print(inv_creation_dict)
         invoice = self.env["account.move"].create(inv_creation_dict)
 
     def _prepare_inv_create_dict(self, membership_id, voluntary_shares_inv_line):
         membership = self.env["cooperative.membership"].browse(membership_id)
         create_dict = {
             "partner_id": membership.partner_id.id,
+            # TODO: Add this dates on the wizard (date, due_date)
             "invoice_date": self.end_date_period,
             "date": self.end_date_period,
             "journal_id": self.journal_id.id,
@@ -145,7 +145,7 @@ class VoluntaryShareInterestReturn(models.TransientModel):
             "company_id": self.company_id.id,
             "move_type": "in_invoice",
             "partner_bank_id": self._get_invoice_partner_bank(
-                voluntary_shares_inv_line[0]
+                voluntary_shares_inv_line[-1]
             ),  # TODO: Find a proper way of getting partner bank account
             "invoice_line_ids": [],
         }
@@ -193,6 +193,7 @@ class VoluntaryShareInterestReturn(models.TransientModel):
             return self.start_date_period
 
     # TODO: verify this formula
+    # TODO: Calculate end period based on a possible return.
     def _get_voluntary_share_days_num(self, inv_line):
         return (self.end_date_period - self._get_period_start_date(inv_line)).days
         # payment_date = inv_line.move_id.payment_date
