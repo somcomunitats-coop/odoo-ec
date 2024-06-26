@@ -368,8 +368,8 @@ class LandingPage(models.Model):
 
     def get_map_coordinator_filter_in_related_place(self, coordinator=False):
         if not coordinator:
-            if self.parent_landing_id:
-                coordinator = self.parent_landing_id
+            if self.parent_id:
+                coordinator = self.parent_id
         if self.hierarchy_level == "community" and coordinator:
             if coordinator.landing_page_id:
                 coordinator_filter_group = self.env.ref(
