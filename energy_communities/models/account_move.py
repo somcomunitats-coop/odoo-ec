@@ -18,7 +18,7 @@ class AccountMove(models.Model):
                 dates.append(payment_info.get("date", ""))
             if dates:
                 dates.sort()
-                record.payment_date = dates[-1]
+                record.payment_date = dates[0]
 
     def create_user(self, partner):
         user_obj = self.env["res.users"]
