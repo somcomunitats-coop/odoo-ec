@@ -1,4 +1,5 @@
 from . import account_move
+from . import account_move_line
 from . import share_line
 from . import cooperative_membership
 from . import partner
