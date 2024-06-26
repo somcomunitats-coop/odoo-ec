@@ -25,10 +25,26 @@
                             Template</button>
                         <button
               type="object"
+              class="btn btn-secondary mr-1"
               name="download_list_button"
             >Download State List</button>
+                        <button
+              type="object"
+              class="btn btn-secondary mr-1"
+              string="Autogenerate data (Existent data)"
+              name="set_autogenerate_inscriptions"
+              attrs="{'invisible':[('user_current_role','!=','role_platform_admin')]}"
+            />
+                        <button
+              type="object"
+              class="btn btn-secondary mr-1"
+              string="Autogenerate data (New data)"
+              name="set_autogenerate_inscriptions_mandataris_supply_points"
+              attrs="{'invisible':[('user_current_role','!=','role_platform_admin')]}"
+            />
                         <separator />
                         <group>
+                            <field name="user_current_role" invisible="1" />
                             <field
                 name="import_file"
                 filename="fname"
