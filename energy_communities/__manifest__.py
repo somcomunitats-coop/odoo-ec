@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "14.0.9.2.1",
+    "version": "14.0.9.2.2",
     "depends": [
         "account",
         "account_lock_date_update",

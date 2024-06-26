@@ -323,9 +323,18 @@
                                         <td><t
                         t-esc="supply_point.supply_point_id.code"
                       /></td>
-                                        <td style="text-align: right"><t
-                        t-esc="supply_point.coefficient"
-                      /></td>
+                                        <td style="text-align: right">
+                                            <t
+                        t-if="o.report_distribution_table.type == 'fixed'"
+                      >
+                                                <t t-esc="'{:.6f}'.format(supply_point.coefficient)" />
+                                            </t>
+                                            <t
+                        t-if="o.report_distribution_table.type == 'hourly'"
+                      >
+                                                *
+                                            </t>
+                                        </td>
                                     </tr>
                                     <t t-set="index" t-value="index+1" />
                                 </t>
@@ -335,6 +344,18 @@
                     <p
           >(Si existen varios productores con instalaciones de generación asociadas al autoconsumo, completar
                         para cada uno de ellos)</p>
+                    <t
+            t-set="today"
+            t-value=" context_timestamp(datetime.datetime.now())"
+          />
+                    <t t-if="o.report_distribution_table.type == 'hourly'">
+                        <p>
+                        *indicados en el fichero de reparto anual (<t
+                t-esc="o.code"
+              />_<t t-esc="today.strftime('%Y')" />.txt)
+                        </p>
+                    </t>
+
                     <table>
                         <tr>
                             <th><b>PRODUCTOR ASOCIADO</b><br />
@@ -378,10 +399,6 @@
                         acuerdo.
                     </p>
                     <p>
-                        <t
-              t-set="today"
-              t-value=" context_timestamp(datetime.datetime.now())"
-            />
                         En <span t-field="o.city" />, a <t
               t-esc="today.strftime('%d/%m/%Y')"
             />
