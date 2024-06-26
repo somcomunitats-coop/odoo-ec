@@ -76,19 +76,29 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
 
     def execute_return(self):
         self._consistency_validation()
-        self._generate_related_invoices()
-        return {
-            "type": "ir.actions.client",
-            "tag": "display_notification",
-            "params": {
-                "type": "success",
-                "title": _("Interest generation successful"),
-                "message": _(
-                    "We have calculated and generated the moves to pay voluntary share interest for this company."
+        voluntary_share_interest_return = self.env[
+            "voluntary.share.interest.return"
+        ].create(
+            {
+                "name": "{company_name} voluntary share interest return from {start_date_period} to {end_date_period}".format(
+                    company_name=self.company_id.name,
+                    start_date_period=self.start_date_period,
+                    end_date_period=self.end_date_period,
                 ),
-                "sticky": False,
-                "next": {"type": "ir.actions.act_window_close"},
-            },
+                "start_date_period": self.start_date_period,
+                "end_date_period": self.end_date_period,
+            }
+        )
+        self._generate_related_invoices(voluntary_share_interest_return.id)
+        # TODO: Should we post a message?
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Return voluntary shares interest"),
+            "res_model": "voluntary.share.interest.return",
+            "view_type": "form",
+            "view_mode": "form",
+            "target": "current",
+            "res_id": voluntary_share_interest_return.id,
         }
 
     # UNUSED!!
@@ -122,21 +132,33 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
                         voluntary_shares[membership.id] = [related_invoice_line]
         return voluntary_shares
 
-    def _generate_related_invoices(self):
+    def _generate_related_invoices(self, voluntary_share_interest_return_id):
         voluntary_shares = self._get_voluntary_shares_invoice_line()
         if voluntary_shares:
             for membership_id in voluntary_shares.keys():
                 invoice = self._create_interest_return_invoice(
-                    membership_id, voluntary_shares[membership_id]
+                    membership_id,
+                    voluntary_shares[membership_id],
+                    voluntary_share_interest_return_id,
                 )
 
-    def _create_interest_return_invoice(self, membership_id, voluntary_shares_inv_line):
+    def _create_interest_return_invoice(
+        self,
+        membership_id,
+        voluntary_shares_inv_line,
+        voluntary_share_interest_return_id,
+    ):
         inv_creation_dict = self._prepare_inv_create_dict(
-            membership_id, voluntary_shares_inv_line
+            membership_id, voluntary_shares_inv_line, voluntary_share_interest_return_id
         )
         invoice = self.env["account.move"].create(inv_creation_dict)
 
-    def _prepare_inv_create_dict(self, membership_id, voluntary_shares_inv_line):
+    def _prepare_inv_create_dict(
+        self,
+        membership_id,
+        voluntary_shares_inv_line,
+        voluntary_share_interest_return_id,
+    ):
         membership = self.env["cooperative.membership"].browse(membership_id)
         create_dict = {
             "partner_id": membership.partner_id.id,
@@ -150,6 +172,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
             "partner_bank_id": self._get_invoice_partner_bank(
                 voluntary_shares_inv_line[-1]
             ),  # TODO: Find a proper way of getting partner bank account
+            "voluntary_share_interest_return_id": voluntary_share_interest_return_id,
             "invoice_line_ids": [],
         }
         for voluntary_share_inv_line in voluntary_shares_inv_line:
@@ -199,14 +222,20 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
     # TODO: Calculate end period based on a possible return.
     def _get_voluntary_share_days_num(self, inv_line):
         return (self.end_date_period - self._get_period_start_date(inv_line)).days
-        # payment_date = inv_line.move_id.payment_date
-        # if payment_date >= self.start_date_period:
-        #     return (self.end_date_period - payment_date).days
-        # else:
-        #     return (self.end_date_period - self.start_date_period).days
 
     def _get_voluntary_share_price_unit(self, inv_line):
         return inv_line.price_subtotal * self.interest / 36500
+
+    def _find_related_invoice_line_from_share_line(self, share_line):
+        return self.env["account.move.line"].search(
+            [
+                ("move_id.partner_id", "=", share_line.partner_id.id),
+                ("move_id.company_id", "=", share_line.company_id.id),
+                ("move_id.payment_state", "=", "paid"),
+                ("price_subtotal", "=", share_line.total_amount_line),
+                ("product_id", "=", share_line.share_product_id.id),
+            ]
+        )
 
     def _consistency_validation(self):
         if self.env.company.id != self.company_id.id:
@@ -373,14 +402,3 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
                             related_partner_membership.id
                         )
                     )
-
-    def _find_related_invoice_line_from_share_line(self, share_line):
-        return self.env["account.move.line"].search(
-            [
-                ("move_id.partner_id", "=", share_line.partner_id.id),
-                ("move_id.company_id", "=", share_line.company_id.id),
-                ("move_id.payment_state", "=", "paid"),
-                ("price_subtotal", "=", share_line.total_amount_line),
-                ("product_id", "=", share_line.share_product_id.id),
-            ]
-        )

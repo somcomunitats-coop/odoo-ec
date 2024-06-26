@@ -18,7 +18,8 @@
           <field name="name" />
           <field name="start_date_period" />
           <field name="end_date_period" />
-          <field name="company_id" readonly="1" />
+          <field name="company_id" />
+          <field name="partners_notified" />
         </tree>
       </field>
     </record>
@@ -29,10 +30,18 @@
       <field name="type">form</field>
       <field name="arch" type="xml">
         <form>
+            <header position="inside">
+              <button
+              name="action_post_and_send"
+              type="object"
+              string="Post and send"
+            />
+            </header>
           <sheet>
             <notebook>
               <page string="General">
                 <group>
+                  <field name="partners_notified" />
                   <field name="name" required="1" />
                   <field name="start_date_period" required="1" />
                   <field name="end_date_period" required="1" />
