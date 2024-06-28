@@ -13,6 +13,7 @@ class AccountMove(models.Model):
         string="Related voluntary share interest return",
         ondelete="cascade",
     )
+    voluntary_share_total_contribution = fields.Float(string="Total contribution")
 
     def post_process_confirm_paid(self, effective_date):
         if not self.membership_id:

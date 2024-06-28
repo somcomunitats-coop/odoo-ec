@@ -11,6 +11,10 @@
             name="membership_id"
             attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')]}"
           />
+            <field
+            name="voluntary_share_total_contribution"
+            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')]}"
+          />
           </group>
         </xpath>
       </field>

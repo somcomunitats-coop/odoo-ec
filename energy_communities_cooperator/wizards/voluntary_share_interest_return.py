@@ -175,10 +175,13 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
             "voluntary_share_interest_return_id": voluntary_share_interest_return_id,
             "invoice_line_ids": [],
         }
+        total_contribution = 0
         for voluntary_share_inv_line in voluntary_shares_inv_line:
             create_dict["invoice_line_ids"].append(
                 (0, 0, self._prepare_inv_line_create_dict(voluntary_share_inv_line))
             )
+            total_contribution += voluntary_share_inv_line.price_subtotal
+        create_dict["voluntary_share_total_contribution"] = total_contribution
         return create_dict
 
     def _get_invoice_partner_bank(self, origin_inv_line):
