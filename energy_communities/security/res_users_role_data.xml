@@ -25,115 +25,6 @@
     </record>
 
     <!-- new roles -->
-    <record model="res.users.role" id="role_ce_member">
-        <field name="name">Energy Community Member</field>
-        <field name="code">role_ce_member</field>
-        <field
-      name="implied_ids"
-      eval="[
-                (5, 0, 0),
-                (4, ref('group_user')),
-        ]"
-    />
-    </record>
-
-    <record model="res.users.role" id="role_ce_admin">
-        <field name="name">Energy Community Administrator</field>
-        <field name="code">role_ce_admin</field>
-        <field
-      name="implied_ids"
-      eval="[
-               (5, 0, 0),
-               (4, ref('group_admin')),
-               (4, ref('sale.group_delivery_invoice_address')),
-               (4, ref('account.group_account_invoice')),
-               (4, ref('account.group_account_manager')),
-               (4, ref('account.group_account_user')),
-               (4, ref('base.group_partner_manager')),
-               (4, ref('base.group_multi_company')),
-               (4, ref('base.group_allow_export')),
-               (4, ref('sales_team.group_sale_manager')),
-               (4, ref('purchase.group_purchase_manager')),
-               (4, ref('account.group_account_manager')),
-               (4, ref('account_payment_order.group_account_payment')),
-               (4, ref('l10n_es_aeat.group_account_aeat')),
-        ]"
-    />
-    </record>
-
-    <record model="res.users.role" id="role_ce_manager">
-        <field name="name">Energy Community Manager</field>
-        <field name="code">role_ce_manager</field>
-        <field
-      name="implied_ids"
-      eval="[
-               (5, 0, 0),
-               (4, ref('group_admin')),
-               (4, ref('sale.group_delivery_invoice_address')),
-               (4, ref('account.group_account_invoice')),
-               (4, ref('account.group_account_manager')),
-               (4, ref('account.group_account_user')),
-               (4, ref('base.group_partner_manager')),
-               (4, ref('base.group_multi_company')),
-               (4, ref('base.group_allow_export')),
-               (4, ref('sales_team.group_sale_manager')),
-               (4, ref('purchase.group_purchase_manager')),
-               (4, ref('account.group_account_manager')),
-               (4, ref('account_payment_order.group_account_payment')),
-               (4, ref('l10n_es_aeat.group_account_aeat')),
-        ]"
-    />
-    </record>
-
-    <record model="res.users.role" id="role_coord_admin">
-        <field name="name">Coordinator Admin</field>
-        <field name="code">role_coord_admin</field>
-        <field
-      name="implied_ids"
-      eval="[
-               (5, 0, 0),
-               (4, ref('group_admin')),
-               (4, ref('sale.group_delivery_invoice_address')),
-               (4, ref('account.group_account_invoice')),
-               (4, ref('account.group_account_manager')),
-               (4, ref('account.group_account_user')),
-               (4, ref('base.group_partner_manager')),
-               (4, ref('base.group_multi_company')),
-               (4, ref('base.group_allow_export')),
-               (4, ref('sales_team.group_sale_manager')),
-               (4, ref('purchase.group_purchase_manager')),
-               (4, ref('account.group_account_manager')),
-               (4, ref('account_payment_order.group_account_payment')),
-               (4, ref('l10n_es_aeat.group_account_aeat')),
-               (4, ref('energy_project.group_admin')),
-        ]"
-    />
-    </record>
-
-    <record model="res.users.role" id="role_coord_worker">
-        <field name="name">Coordinator Worker</field>
-        <field name="code">role_coord_worker</field>
-        <field
-      name="implied_ids"
-      eval="[
-               (5, 0, 0),
-               (4, ref('group_user')),
-               (4, ref('sale.group_delivery_invoice_address')),
-               (4, ref('account.group_account_invoice')),
-               (4, ref('account.group_account_manager')),
-               (4, ref('account.group_account_user')),
-               (4, ref('base.group_partner_manager')),
-               (4, ref('base.group_multi_company')),
-               (4, ref('base.group_allow_export')),
-               (4, ref('sales_team.group_sale_manager')),
-               (4, ref('purchase.group_purchase_manager')),
-               (4, ref('account.group_account_manager')),
-               (4, ref('account_payment_order.group_account_payment')),
-               (4, ref('l10n_es_aeat.group_account_aeat')),
-        ]"
-    />
-    </record>
-
     <record model="res.users.role" id="role_platform_admin">
         <field name="name">Platform Admin Role</field>
         <field name="code">role_platform_admin</field>
@@ -161,6 +52,172 @@
                (4, ref('queue_job.group_queue_job_manager')),
                (4, ref('event.group_event_manager')),
                (4, ref('website.group_website_publisher')),
+        ]"
+    />
+    </record>
+    <record model="res.users.role" id="role_coord_admin">
+        <field name="name">Coordinator Admin</field>
+        <field name="code">role_coord_admin</field>
+        <field name="priority">2</field>
+        <field
+      name="available_role_ids"
+      eval="[
+               (4, ref('role_ce_admin')),
+               (4, ref('role_ce_manager')),
+               (4, ref('role_ce_member'))]"
+    />
+        <field
+      name="implied_ids"
+      eval="[
+               (5, 0, 0),
+               (4, ref('group_admin')),
+               (4, ref('sale.group_delivery_invoice_address')),
+               (4, ref('account.group_account_invoice')),
+               (4, ref('account.group_account_manager')),
+               (4, ref('account.group_account_user')),
+               (4, ref('base.group_partner_manager')),
+               (4, ref('base.group_multi_company')),
+               (4, ref('base.group_allow_export')),
+               (4, ref('cooperator.cooperator_group_manager')),
+               (4, ref('sales_team.group_sale_manager')),
+               (4, ref('purchase.group_purchase_manager')),
+               (4, ref('account.group_account_manager')),
+               (4, ref('account_payment_order.group_account_payment')),
+               (4, ref('crm.group_use_lead')),
+               (4, ref('l10n_es_aeat.group_account_aeat')),
+               (4, ref('mass_mailing.group_mass_mailing_user')),
+               (4, ref('mass_mailing.group_mass_mailing_campaign')),
+        ]"
+    />
+    </record>
+
+    <record model="res.users.role" id="role_ce_admin">
+        <field name="name">Energy Community Administrator</field>
+        <field name="code">role_ce_admin</field>
+        <field name="priority">3</field>
+        <field
+      name="implied_ids"
+      eval="[
+               (5, 0, 0),
+               (4, ref('group_admin')),
+               (4, ref('energy_project.group_admin')),
+               (4, ref('sale.group_delivery_invoice_address')),
+               (4, ref('account.group_account_invoice')),
+               (4, ref('account.group_account_manager')),
+               (4, ref('account.group_account_user')),
+               (4, ref('base.group_partner_manager')),
+               (4, ref('base.group_multi_company')),
+               (4, ref('base.group_allow_export')),
+               (4, ref('cooperator.cooperator_group_manager')),
+               (4, ref('sales_team.group_sale_manager')),
+               (4, ref('purchase.group_purchase_manager')),
+               (4, ref('account.group_account_manager')),
+               (4, ref('account_payment_order.group_account_payment')),
+               (4, ref('crm.group_use_lead')),
+               (4, ref('l10n_es_aeat.group_account_aeat')),
+               (4, ref('mass_mailing.group_mass_mailing_user')),
+               (4, ref('mass_mailing.group_mass_mailing_campaign')),
+        ]"
+    />
+        <field
+      name="available_role_ids"
+      eval="[
+               (4, ref('role_ce_admin')),
+               (4, ref('role_ce_manager')),
+               (4, ref('role_ce_member'))]"
+    />
+    </record>
+
+    <record model="res.users.role" id="role_ce_manager">
+        <field name="name">Energy Community Manager</field>
+        <field name="code">role_ce_manager</field>
+        <field name="priority">4</field>
+        <field
+      name="implied_ids"
+      eval="[
+               (5, 0, 0),
+               (4, ref('group_admin')),
+               (4, ref('energy_project.group_admin')),
+               (4, ref('sale.group_delivery_invoice_address')),
+               (4, ref('account.group_account_invoice')),
+               (4, ref('account.group_account_manager')),
+               (4, ref('account.group_account_user')),
+               (4, ref('base.group_partner_manager')),
+               (4, ref('base.group_multi_company')),
+               (4, ref('base.group_allow_export')),
+               (4, ref('cooperator.cooperator_group_manager')),
+               (4, ref('sales_team.group_sale_manager')),
+               (4, ref('purchase.group_purchase_manager')),
+               (4, ref('account.group_account_manager')),
+               (4, ref('account_payment_order.group_account_payment')),
+               (4, ref('crm.group_use_lead')),
+               (4, ref('l10n_es_aeat.group_account_aeat')),
+               (4, ref('mass_mailing.group_mass_mailing_user')),
+               (4, ref('mass_mailing.group_mass_mailing_campaign')),
+        ]"
+    />
+        <field
+      name="available_role_ids"
+      eval="[
+               (4, ref('role_ce_admin')),
+               (4, ref('role_ce_manager')),
+               (4, ref('role_ce_member'))]"
+    />
+    </record>
+
+    <record model="res.users.role" id="role_ce_member">
+        <field name="name">Energy Community Member</field>
+        <field name="code">role_ce_member</field>
+        <field name="priority">5</field>
+        <field
+      name="implied_ids"
+      eval="[
+                (5, 0, 0),
+                (4, ref('group_user')),
+                (4, ref('energy_project.group_user')),
+        ]"
+    />
+        <field
+      name="available_role_ids"
+      eval="[
+               (4, ref('role_ce_admin')),
+               (4, ref('role_ce_manager')),
+               (4, ref('role_ce_member'))]"
+    />
+    </record>
+
+    <record model="res.users.role" id="role_coord_worker">
+        <field name="name">Coordinator Worker</field>
+        <field name="code">role_coord_worker</field>
+        <field
+      name="available_role_ids"
+      eval="[
+               (4, ref('role_ce_admin')),
+               (4, ref('role_ce_manager')),
+               (4, ref('role_ce_member'))]"
+    />
+        <field name="priority">6</field>
+        <field
+      name="implied_ids"
+      eval="[
+               (5, 0, 0),
+               (4, ref('group_user')),
+               (4, ref('sale.group_delivery_invoice_address')),
+               (4, ref('account.group_account_invoice')),
+               (4, ref('account.group_account_manager')),
+               (4, ref('account.group_account_user')),
+               (4, ref('base.group_partner_manager')),
+               (4, ref('base.group_multi_company')),
+               (4, ref('base.group_allow_export')),
+               (4, ref('cooperator.cooperator_group_manager')),
+               (4, ref('sales_team.group_sale_manager')),
+               (4, ref('purchase.group_purchase_manager')),
+               (4, ref('account.group_account_manager')),
+               (4, ref('account_payment_order.group_account_payment')),
+               (4, ref('crm.group_use_lead')),
+               (4, ref('l10n_es_aeat.group_account_aeat')),
+               (4, ref('mass_mailing.group_mass_mailing_user')),
+               (4, ref('mass_mailing.group_mass_mailing_campaign')),
         ]"
     />
     </record>
@@ -302,6 +359,16 @@
                (5, 0, 0),
                (4, ref('base.group_user')),
         ]"
+    />
+    <field
+      name="available_role_ids"
+      eval="[
+               (4, ref('role_platform_admin')),
+               (4, ref('role_coord_admin')),
+               (4, ref('role_coord_worker')),
+               (4, ref('role_ce_admin')),
+               (4, ref('role_ce_manager')),
+               (4, ref('role_ce_member'))]"
     />
     </record>
 
