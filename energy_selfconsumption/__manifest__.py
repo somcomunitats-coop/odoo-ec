@@ -21,11 +21,11 @@
         "energy_communities",
         "energy_communities_cooperator",
         "energy_project",
-        "partner_firstname",
         "web_m2x_options",
         "l10n_es",
         "report_csv",
     ],
+    "external_dependencies": {"python": ["pandas>=2.0.3", "numpy>=1.24.4"]},
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",

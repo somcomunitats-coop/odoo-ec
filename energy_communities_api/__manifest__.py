@@ -10,7 +10,8 @@
     "website": "https://coopdevs.org",
     "category": "Customizations",
     "version": "14.0.1.0.3",
-    "depends": ["fastapi", "energy_communities"],
+    "depends": ["energy_communities"],
+    "external_dependencies": {"python": ["httpx>=0.27.0"]},
     "data": [
         "data/fastapi_endpoint_data.xml",
         "security/res_users_role_data.xml",
