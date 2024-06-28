@@ -30,6 +30,7 @@
         "security/ir_rule_data.xml",
         "data/product_data.xml",
         "data/res_users_role_data.xml",
+        "data/mail_template_data.xml",
         "data/mail_template_update_data.xml",
         "data/ir_config_parameter_data.xml",
         "views/account_move_views.xml",
