@@ -22,6 +22,12 @@ class ResCompany(models.Model):
         "Voluntary shares journal",
         check_company=True,
     )
+    voluntary_share_email_template = fields.Many2one(
+        comodel_name="mail.template",
+        string="Voluntary share return email template",
+        domain=[("model", "=", "account.move")],
+        help="If left empty, the default global mail template will be used.",
+    )
 
     def action_open_volutary_share_interest_return_wizard(self):
         wizard = self.env["voluntary.share.interest.return.wizard"].create(
@@ -36,3 +42,11 @@ class ResCompany(models.Model):
             "target": "new",
             "res_id": wizard.id,
         }
+
+    def get_voluntary_share_return_email_template(self):
+        if self.voluntary_share_email_template:
+            return self.voluntary_share_email_template
+        else:
+            return self.env.ref(
+                "energy_communities_cooperator.email_template_voluntary_share_interest_return"
+            )

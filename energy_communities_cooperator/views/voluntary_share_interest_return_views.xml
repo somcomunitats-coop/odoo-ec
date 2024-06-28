@@ -36,6 +36,7 @@
               type="object"
               string="Post and send"
             />
+            <field name="state" widget="statusbar" statusbar_visible="draft,posted" />
             </header>
           <sheet>
             <notebook>
