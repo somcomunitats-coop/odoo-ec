@@ -11,6 +11,7 @@ class AccountMove(models.Model):
     voluntary_share_interest_return_id = fields.Many2one(
         "voluntary.share.interest.return",
         string="Related voluntary share interest return",
+        ondelete="cascade",
     )
 
     def post_process_confirm_paid(self, effective_date):
