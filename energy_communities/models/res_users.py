@@ -5,6 +5,7 @@ from json import JSONDecodeError
 import requests
 
 from odoo import _, api, exceptions, fields, models
+from odoo.exceptions import ValidationError
 
 logger = logging.getLogger(__name__)
 
@@ -534,7 +535,7 @@ class ResUsers(models.Model):
                     "company_ids": company_ids,
                 }
             )
-            user.set_user_roles(company_id, role_id)
+        user.sudo().set_user_roles(company_id, role_id)
 
         if create_kc_user or invite_user_through_kc:
             user.create_users_in_keycloak()
@@ -551,17 +552,67 @@ class ResUsers(models.Model):
         return user
 
     def set_user_roles(self, company_id, role_id):
-        if company_id.hierarchy_level == "community":
-            if role_id.code == "role_ce_member":
-                if not self.login_date:
-                    user_roles = self.env["res.users.role.line"].create(
-                        {
-                            "user_id": self.id,
-                            "role_id": role_id.id,
-                            "company_id": company_id.id,
-                        }
-                    )
-        return user_roles
+        company_hierarchy_level = ["instance", "community", "coordinator"]
+        user_roles = [
+            "role_platform_admin",
+            "role_coord_admin",
+            "role_coord_worker",
+            "role_ce_admin",
+            "role_ce_manager",
+            "role_ce_member",
+        ]
+        if not self.login_date:
+            self.env["res.users.role.line"].create(
+                {
+                    "user_id": self.id,
+                    "role_id": self.env.ref("energy_communities.role_internal_user").id,
+                }
+            )
+            self.create_user_role_line(company_id, role_id)
+        else:
+            error = ""
+            if (
+                company_id.hierarchy_level in company_hierarchy_level
+                and role_id.code in company_id.available_role_ids.mapped("code")
+            ):
+                for user_role in self.role_line_ids.mapped("role_id"):
+                    if user_role.code in user_roles:
+                        if role_id.code in user_role.available_role_ids.mapped("code"):
+                            if role_id.priority > user_role.priority:
+                                if company_id.id != user_role.company_id.id:
+                                    # Se admite rol superior de distinta compañia
+                                    continue
+                                else:
+                                    # Se admite rol superior de misma compañia
+                                    continue
+                            elif role_id.priority == user_role.priority:
+                                if company_id.id != user_role.company_id.id:
+                                    # Se admite mismo rol para otra compañia
+                                    continue
+                                else:
+                                    error = f"El usuario con NIF {self.vat} ya es {user_role.code} para la compañía {company_id.name}"
+                                    break
+                            elif role_id.priority < user_role.priority:
+                                if company_id.id != user_role.company_id.id:
+                                    # Se admite rol inferior para otra compañia
+                                    continue
+                                else:
+                                    # Se admite rol inferior para misma compañia
+                                    continue
+                        else:
+                            error = f"""No se admite el rol {role_id.code} para alguien que tiene el rol {user_role.code}.
+                                    Este rol solo admite estos roles {', '.join(user_role.available_role_ids.mapped("code"))}"""
+                            break
+            else:
+                error = f"""No se admite el rol {role_id.code} para la compañia {company_id.name} de tipo {company_id.hierarchy_level}.
+                            Este tipo de compañia solo admite esto roles {', '.join(company_id.available_role_ids.mapped("code"))}"""
+            if error == "":
+                self.create_user_role_line(company_id, role_id)
+                print(
+                    f"EL {role_id.code} SE HA CREADO PARA LA COMPANIA {company_id.name} CON HIERARCHY LEVEL {company_id.hierarchy_level}"
+                )
+            else:
+                raise ValidationError(_(error))
 
     def user_vals_validator(self, user_vals):
         if user_vals.keys() != {"login", "email", "firstname", "lastname", "lang"}:
@@ -584,3 +635,12 @@ class ResUsers(models.Model):
         regex = re.compile(r"/[a-z]{2}_[A-Z]{2}/gm")
         if re.fullmatch(regex, lang):
             return True
+
+    def create_user_role_line(self, company_id, role_id):
+        return self.env["res.users.role.line"].create(
+            {
+                "user_id": self.id,
+                "role_id": role_id.id,
+                "company_id": company_id.id,
+            }
+        )
