@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL & SomIT",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.1.0.3",
+    "version": "14.0.1.0.4",
     "depends": ["energy_communities"],
     "external_dependencies": {"python": ["httpx>=0.27.0"]},
     "data": [
