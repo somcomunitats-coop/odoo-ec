@@ -30,20 +30,32 @@ class CreateUsersWizard(models.TransientModel):
             raise ValidationError(_("Please select an action."))
 
         model = self.env.context.get("active_model")
-
         role_id = self.env.ref("energy_communities.role_ce_member")
-
-        if "allowed_company_ids" in self.env.context.keys():
-            impacted_companies = self.env["res.company"].browse(
-                self.env.context["allowed_company_ids"]
-            )
-        if model == "res.partner" and len(impacted_companies) > 1:
-            raise ValidationError(
-                _(
-                    "This wizard can only run with ONE company selected."
-                    " Please limit the context of the selected companies to one."
+        if model == "res.partner":
+            if len(self.env.context["allowed_company_ids"]) > 1:
+                raise ValidationError(
+                    _(
+                        "This wizard can only run with ONE company selected."
+                        " Please limit the context of the selected companies to one."
+                    )
                 )
-            )
+            else:
+                company_id = self.env["res.company"].browse(
+                    self.env.context["allowed_company_ids"]
+                )
+                partner_id = self.env["res.partner"].browse(
+                    self.env.context["active_id"]
+                )
+                self.env["res.users"].build_platform_user(
+                    company_id,
+                    partner_id,
+                    role_id,
+                    self.create_user,
+                    self.create_kc_user,
+                    self.invite_user_through_kc,
+                    self.force_invite,
+                    user_vals={},
+                )
         else:
             for company in impacted_companies:
                 if company.hierarchy_level == "community":
