@@ -71,6 +71,7 @@
                       <field name="invoice_date_due" widget="remaining_days" />
                       <field name="company_id" />
                       <field name="amount_total_signed" string="Total" sum="Total" />
+                      <field name="partner_bank_id" />
                       <field
                         name="state"
                         widget="badge"
