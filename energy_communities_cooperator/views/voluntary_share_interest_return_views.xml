@@ -32,11 +32,22 @@
         <form>
             <header position="inside">
               <button
-              name="action_post_and_send"
+              name="action_post"
               type="object"
-              string="Post and send"
+              string="Post"
+              attrs="{'invisible': [('state', '!=', 'draft')]}"
             />
-            <field name="state" widget="statusbar" statusbar_visible="draft,posted" />
+              <button
+              name="action_send"
+              type="object"
+              string="Notify members"
+              attrs="{'invisible': ['|',('state', 'in', ['draft']),('partners_notified','!=',False)]}"
+            />
+            <field
+              name="state"
+              widget="statusbar"
+              statusbar_visible="draft,posted,sent"
+            />
             </header>
           <sheet>
             <notebook>
