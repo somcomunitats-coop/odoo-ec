@@ -6,10 +6,9 @@ class ResUsersRole(models.Model):
 
     code = fields.Char(string="Code")
     priority = fields.Integer(string="Priority")
-    available_role_ids = fields.One2many(
-        "res.users.role", "available_role_id", string="Available roles"
-    )
-    available_role_id = fields.Many2one("res.users.role", string="Available role")
+    available_role_ids = fields.Many2many('res.users.role', 'res_users_role_rel',
+                                          'rol_id', 'available_role_id',
+                                          string='Available roles')
 
 
 class ResUsersRoleLine(models.Model):
