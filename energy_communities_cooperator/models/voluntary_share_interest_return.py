@@ -46,9 +46,7 @@ class VoluntaryShareInterestReturn(models.Model):
     def action_send(self):
         for move in self.account_move_ids:
             if not self.partners_notified:
-                self.company_id.get_voluntary_share_return_email_template().send_mail(
-                    force_send=False, res_id=move.id
-                )
+                self.with_delay()._send_voluntary_share_interest_return_email(move)
         self.write({"state": "sent", "partners_notified": True})
         self.message_post(
             subject=_("Invoices successfully sent"),
@@ -69,3 +67,8 @@ class VoluntaryShareInterestReturn(models.Model):
                 "next": {"type": "ir.actions.act_window_close"},
             },
         }
+
+    def _send_voluntary_share_interest_return_email(self, move):
+        self.company_id.get_voluntary_share_return_email_template().send_mail(
+            force_send=False, res_id=move.id
+        )
