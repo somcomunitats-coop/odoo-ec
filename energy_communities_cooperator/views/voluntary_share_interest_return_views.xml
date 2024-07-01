@@ -41,12 +41,18 @@
               name="action_send"
               type="object"
               string="Notify members"
-              attrs="{'invisible': ['|',('state', 'in', ['draft']),('partners_notified','!=',False)]}"
+              attrs="{'invisible': ['|',('state', '=', 'draft'),('partners_notified','!=',False)]}"
+            />
+              <button
+              name="action_complete"
+              type="object"
+              string="Create payment order"
+              attrs="{'invisible': [('state', '!=', 'posted')]}"
             />
             <field
               name="state"
               widget="statusbar"
-              statusbar_visible="draft,posted,sent"
+              statusbar_visible="draft,posted,completed"
             />
             </header>
           <sheet>
@@ -58,6 +64,10 @@
                   <field name="start_date_period" required="1" />
                   <field name="end_date_period" required="1" />
                   <field name="company_id" readonly="1" />
+                  <field
+                    name="payment_order_id"
+                    attrs="{'invisible': [('state', '!=', 'completed')]}"
+                  />
                   <field name="account_move_ids" widget="one2many">
                     <tree open="1" create="0" edit="0" delete="0">
                       <field
