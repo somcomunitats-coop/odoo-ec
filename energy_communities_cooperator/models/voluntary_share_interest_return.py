@@ -18,37 +18,54 @@ class VoluntaryShareInterestReturn(models.Model):
     )
     partners_notified = fields.Boolean(string="Partners notified")
     state = fields.Selection(
-        [("draft", "Draft"), ("posted", "Posted")], default="draft"
+        [("draft", _("Draft")), ("posted", _("Posted")), ("sent", _("Sent"))],
+        default="draft",
     )
 
-    def action_post_and_send(self):
+    def action_post(self):
         for move in self.account_move_ids:
-            if self.state != "posted":
+            if move.state == "draft":
                 move.action_post()
-            if not self.partners_notified:
-                self.company_id.get_voluntary_share_return_email_template().send_mail(
-                    force_send=False, res_id=move.id
-                )
-        self._update_status_indicators()
+        self.write({"state": "posted"})
+        self.message_post(
+            subject=_("Invoices successfully posted"),
+            body=_("All voluntary share invoices has been successfully posted"),
+        )
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
                 "type": "success",
-                "title": _("Invoices posted and sent"),
-                "message": _(
-                    "We have calculated and generated the moves to pay voluntary share interest for this company."
-                ),
+                "title": _("Invoices posted"),
+                "message": _("Invoices successfully posted"),
                 "sticky": False,
                 "next": {"type": "ir.actions.act_window_close"},
             },
         }
 
-    def _update_status_indicators(self):
-        write_dict = {}
-        if self.state != "posted":
-            write_dict["state"] = "posted"
-        if not self.partners_notified:
-            write_dict["partners_notified"] = True
-        if bool(write_dict):
-            self.write(write_dict)
+    def action_send(self):
+        for move in self.account_move_ids:
+            if not self.partners_notified:
+                self.company_id.get_voluntary_share_return_email_template().send_mail(
+                    force_send=False, res_id=move.id
+                )
+        self.write({"state": "sent", "partners_notified": True})
+        self.message_post(
+            subject=_("Invoices successfully sent"),
+            body=_(
+                "We have sent the voluntary share interest return document to related members via email."
+            ),
+        )
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "type": "success",
+                "title": _("Invoices sent"),
+                "message": _(
+                    "We have sent the voluntary share interest return document to related members via email."
+                ),
+                "sticky": False,
+                "next": {"type": "ir.actions.act_window_close"},
+            },
+        }
