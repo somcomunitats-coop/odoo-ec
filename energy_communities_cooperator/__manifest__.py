@@ -42,6 +42,8 @@
         "views/voluntary_share_interest_return_views.xml",
         "views/subscription_request_view.xml",
         "views/website_subscription_template.xml",
+        "report/reports.xml",
+        "report/voluntary_share_interest_return_report.xml",
         "wizards/multicompany_easy_creation.xml",
         "wizards/voluntary_share_interest_return.xml",
     ],
