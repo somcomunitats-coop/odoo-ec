@@ -7,3 +7,5 @@ class AccountMoveLine(models.Model):
 
     voluntary_share_return_start_date_period = fields.Date(string="Period start date")
     voluntary_share_return_end_date_period = fields.Date(string="Period end date")
+    voluntary_share_contribution = fields.Float(string="Contribution")
+    voluntary_share_interest = fields.Float(string="Interest")

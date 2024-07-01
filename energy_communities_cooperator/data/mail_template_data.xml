@@ -41,6 +41,13 @@
                     </div>
                 ]]>
             </field>
+            <field
+        name="report_template"
+        ref="action_voluntary_share_interest_return_invoices"
+      />
+            <field
+        name="report_name"
+      >${(object.name or "voluntary_share_interest_return").replace("/", "_")}${object.state == "draft" and "_draft" or ""}</field>
         </record>
     </data>
 </odoo>

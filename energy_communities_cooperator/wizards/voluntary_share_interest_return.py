@@ -180,7 +180,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
             create_dict["invoice_line_ids"].append(
                 (0, 0, self._prepare_inv_line_create_dict(voluntary_share_inv_line))
             )
-            total_contribution += voluntary_share_inv_line.price_subtotal
+            total_contribution += voluntary_share_inv_line.voluntary_share_contribution
         create_dict["voluntary_share_total_contribution"] = total_contribution
         return create_dict
 
@@ -209,6 +209,8 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
                 origin_inv_line
             ),
             "voluntary_share_return_end_date_period": self.end_date_period,
+            "voluntary_share_contribution": origin_inv_line.price_subtotal,
+            "voluntary_share_interest": self.interest,
             "journal_id": self.journal_id.id,
             "company_id": self.company_id.id,
             "tax_ids": [(4, self.tax_id.id)],
