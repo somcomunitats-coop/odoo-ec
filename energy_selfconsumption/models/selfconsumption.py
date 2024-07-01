@@ -17,10 +17,7 @@ _logger = logging.getLogger(__name__)
 INVOICING_VALUES = [
     ("power_acquired", _("Power Acquired")),
     ("energy_delivered", _("Energy Delivered")),
-    (
-        "energy_delivered_variable",
-        _("Energy Delivered Variable Hourly Coefficient"),
-    ),
+    ("energy_custom", _("Energy Delivered Custom")),
 ]
 
 
