@@ -1,0 +1,77 @@
+<?xml version="1.0" ?>
+<odoo>
+    <!-- new roles -->
+    <record model="res.users.role" id="role_platform_admin">
+        <field name="priority">1</field>
+    </record>
+
+    <record model="res.users.role" id="role_coord_admin">
+        <field name="priority">2</field>
+        <field
+      name="available_role_ids"
+      eval="[
+               (5, 0, 0),
+               (4, ref('role_ce_admin')),
+               (4, ref('role_ce_manager')),
+               (4, ref('role_ce_member'))]"/>
+    </record>
+
+    <record model="res.users.role" id="role_ce_admin">
+        <field name="priority">3</field>
+        <field name="available_role_ids" eval="[
+               (5, 0, 0),
+               (4, ref('role_ce_admin')),
+               (4, ref('role_ce_manager')),
+               (4, ref('role_ce_member'))]"
+        />
+    </record>
+
+    <record model="res.users.role" id="role_ce_manager">
+        <field name="priority">4</field>
+        <field
+      name="available_role_ids"
+      eval="[
+               (5, 0, 0),
+               (4, ref('role_ce_admin')),
+               (4, ref('role_ce_manager')),
+               (4, ref('role_ce_member'))]"/>
+    </record>
+
+    <record model="res.users.role" id="role_ce_member">
+        <field name="priority">5</field>
+        <field
+      name="available_role_ids"
+      eval="[
+               (5, 0, 0),
+               (4, ref('role_ce_admin')),
+               (4, ref('role_ce_manager')),
+               (4, ref('role_ce_member'))]"/>
+    </record>
+
+    <record model="res.users.role" id="role_coord_worker">
+        <field
+      name="available_role_ids"
+      eval="[
+               (5, 0, 0),
+               (4, ref('role_ce_admin')),
+               (4, ref('role_ce_manager')),
+               (4, ref('role_ce_member'))]"/>
+        <field name="priority">6</field>
+    </record>
+
+    <record model="res.users.role" id="role_internal_user">
+        <field name="priority">7</field>
+        <field
+          name="available_role_ids"
+          eval="[
+                   (5, 0, 0),
+                   (4, ref('role_platform_admin')),
+                   (4, ref('role_coord_admin')),
+                   (4, ref('role_coord_worker')),
+                   (4, ref('role_ce_admin')),
+                   (4, ref('role_ce_manager')),
+                   (4, ref('role_ce_member'))]"/>
+    </record>
+
+
+</odoo>
