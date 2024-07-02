@@ -28,6 +28,8 @@
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
+        "report/reports.xml",
+        "report/voluntary_share_interest_return_report.xml",
         "data/product_data.xml",
         "data/res_users_role_data.xml",
         "data/mail_template_data.xml",
@@ -43,8 +45,6 @@
         "views/voluntary_share_interest_return_views.xml",
         "views/subscription_request_view.xml",
         "views/website_subscription_template.xml",
-        "report/reports.xml",
-        "report/voluntary_share_interest_return_report.xml",
         "wizards/multicompany_easy_creation.xml",
         "wizards/voluntary_share_interest_return.xml",
     ],
