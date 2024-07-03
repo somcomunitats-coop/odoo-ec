@@ -28,7 +28,9 @@
     <record model="res.users.role" id="role_platform_admin">
         <field name="name">Platform Admin Role</field>
         <field name="code">role_platform_admin</field>
-        <field name="implied_ids" eval="[
+        <field
+      name="implied_ids"
+      eval="[
                (5, 0, 0),
                (4, ref('group_platform_manager')),
                (4, ref('group_admin')),
@@ -50,7 +52,8 @@
                (4, ref('queue_job.group_queue_job_manager')),
                (4, ref('event.group_event_manager')),
                (4, ref('website.group_website_publisher')),
-        ]"/>
+        ]"
+    />
     </record>
 
     <record model="res.users.role" id="role_coord_admin">
@@ -77,7 +80,8 @@
                (4, ref('l10n_es_aeat.group_account_aeat')),
                (4, ref('mass_mailing.group_mass_mailing_user')),
                (4, ref('mass_mailing.group_mass_mailing_campaign')),
-        ]"/>
+        ]"
+    />
     </record>
 
     <record model="res.users.role" id="role_ce_admin">
@@ -105,7 +109,8 @@
                (4, ref('l10n_es_aeat.group_account_aeat')),
                (4, ref('mass_mailing.group_mass_mailing_user')),
                (4, ref('mass_mailing.group_mass_mailing_campaign')),
-        ]"/>
+        ]"
+    />
 
     </record>
 
@@ -134,7 +139,8 @@
                (4, ref('l10n_es_aeat.group_account_aeat')),
                (4, ref('mass_mailing.group_mass_mailing_user')),
                (4, ref('mass_mailing.group_mass_mailing_campaign')),
-        ]"/>
+        ]"
+    />
     </record>
 
     <record model="res.users.role" id="role_ce_member">
@@ -146,7 +152,8 @@
                 (5, 0, 0),
                 (4, ref('group_user')),
                 (4, ref('energy_project.group_user')),
-        ]"/>
+        ]"
+    />
     </record>
 
     <record model="res.users.role" id="role_coord_worker">
@@ -173,7 +180,8 @@
                (4, ref('l10n_es_aeat.group_account_aeat')),
                (4, ref('mass_mailing.group_mass_mailing_user')),
                (4, ref('mass_mailing.group_mass_mailing_campaign')),
-        ]"/>
+        ]"
+    />
     </record>
 
     <record model="res.users.role" id="role_internal_user">
@@ -184,7 +192,8 @@
       eval="[
                (5, 0, 0),
                (4, ref('base.group_user')),
-        ]"/>
+        ]"
+    />
     </record>
 
 

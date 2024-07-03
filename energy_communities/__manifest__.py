@@ -44,10 +44,8 @@
         "demo/res_user_demo.xml",
     ],
     "data": [
-        "data/res_users_role_data.xml",
         "security/ir_rule_data.xml",
         "security/res_users_role_data.xml",
-        "security/res_users_role_available_data.xml",
         "data/product_data.xml",
         "data/auth_oauth_provider_data.xml",
         "data/ir_cron.xml",
