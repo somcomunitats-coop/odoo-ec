@@ -554,7 +554,7 @@ msgstr "<strong>Import a abonar</strong>"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__credit_account_move_id
 msgid "Account move credit account"
-msgstr "Account move credit account"
+msgstr "Compte de crèdit del moviment"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__message_needaction
@@ -647,10 +647,10 @@ msgstr "Codi de registre de la companyia"
 
 #. module: energy_communities_cooperator
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
-#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__voluntary_share_interest_return__state__completed
+#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__voluntary_share_interest_return__state__payment
 #, python-format
-msgid "Completed"
-msgstr "Completat"
+msgid "Payment generated"
+msgstr "Pagament generat"
 
 #. module: energy_communities_cooperator
 #: model:mail.template,subject:energy_communities_cooperator.email_template_conditions_voluntary_share

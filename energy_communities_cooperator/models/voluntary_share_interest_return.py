@@ -18,12 +18,23 @@ class VoluntaryShareInterestReturn(models.Model):
     )
     partners_notified = fields.Boolean(string="Partners notified")
     state = fields.Selection(
-        [("draft", _("Draft")), ("posted", _("Posted")), ("completed", _("Completed"))],
+        [
+            ("draft", _("Draft")),
+            ("posted", _("Posted")),
+            ("payment", _("Payment generated")),
+        ],
         default="draft",
     )
     payment_order_id = fields.Many2one(
         "account.payment.order", string=_("Payment order")
     )
+    payment_mode_id = fields.Many2one("account.payment.mode", string="Payment mode")
+    payment_order_ok = fields.Boolean(compute="_compute_payment_order_ok", store=False)
+
+    def _compute_payment_order_ok(self):
+        for record in self:
+            if record.payment_mode_id:
+                record.payment_order_ok = record.payment_mode_id.payment_order_ok
 
     def action_post(self):
         for move in self.account_move_ids:
@@ -47,8 +58,8 @@ class VoluntaryShareInterestReturn(models.Model):
             ),
         )
 
-    def action_complete(self):
-        w_dict = {"state": "completed"}
+    def action_generate_payment(self):
+        w_dict = {"state": "payment"}
         self.account_move_ids.create_account_payment_line()
         payment_order = self.env["account.payment.order"].search(
             [("state", "=", "draft"), ("company_id", "=", self.company_id.id)],

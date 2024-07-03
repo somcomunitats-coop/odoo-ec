@@ -87,6 +87,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
                 ),
                 "start_date_period": self.start_date_period,
                 "end_date_period": self.end_date_period,
+                "payment_mode_id": self.payment_mode_id.id,
             }
         )
         self._generate_related_invoices(voluntary_share_interest_return.id)
@@ -180,7 +181,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
             create_dict["invoice_line_ids"].append(
                 (0, 0, self._prepare_inv_line_create_dict(voluntary_share_inv_line))
             )
-            total_contribution += voluntary_share_inv_line.voluntary_share_contribution
+            total_contribution += voluntary_share_inv_line.price_subtotal
         create_dict["voluntary_share_total_contribution"] = total_contribution
         return create_dict
 
