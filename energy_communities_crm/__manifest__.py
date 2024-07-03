@@ -12,7 +12,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Sales/CRM",
-    "version": "14.0.1.1.2",
+    "version": "14.0.1.1.3",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
@@ -22,12 +22,15 @@
         "crm_metadata_rest_api",
         "crm_rest_api",
         "sales_team",
+        "sale_crm",
         "energy_communities",
     ],
     # always loaded
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
+        "data/res_users_role_data.xml",
+        "data/crm_lead_tag.xml",
         "data/mail_template_data.xml",
         "views/crm_lead_metadata_mapping_views.xml",
         "views/crm_lead_views.xml",

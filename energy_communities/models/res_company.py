@@ -62,15 +62,6 @@ class ResCompany(models.Model):
         store=False,
     )
     ce_tag_ids = fields.Many2many("crm.tag", string="Energy Community Services")
-    cooperator_journal = fields.Many2one(
-        "account.journal",
-        string="Cooperator Journal",
-        domain="[('type','=','sale'),('active','=',True)]",
-        help="This journal will be"
-        " the default one as the"
-        " receivable journal for the"
-        " cooperators",
-    )
     foundation_date = fields.Date("Foundation date")
     social_telegram = fields.Char("Telegram Account")
     allow_new_members = fields.Boolean(string="Allow new members", default=True)
@@ -78,11 +69,6 @@ class ResCompany(models.Model):
         "Create user for keycloak",
         help="Users created by cooperator are pushed automatically to keycloak",
         default=False,
-    )
-    voluntary_share_id = fields.Many2one(
-        comodel_name="product.template",
-        domain=[("is_share", "=", True)],
-        string="Voluntary share to show on website",
     )
     wordpress_base_url = fields.Char(string=_("Wordpress Base URL (JWT auth)"))
     admins = fields.One2many(
@@ -106,19 +92,9 @@ class ResCompany(models.Model):
     wordpress_db_username = fields.Char(string=_("Wordpress DB Admin Username"))
     wordpress_db_password = fields.Char(string=_("Wordpress DB Admin Password"))
     wordpress_base_url = fields.Char(string=_("Wordpress Base URL (JWT auth)"))
-    footer_doc_policy_text = fields.Html(
-        string="Footer doc policy text", translate=True
-    )
     display_footer_doc_policy_text = fields.Boolean("Display footer doc policy text")
     footer_doc_policy_text = fields.Html(
         string="Footer doc policy text", translate=True
-    )
-    display_footer_doc_policy_text = fields.Boolean("Display footer doc policy text")
-    voluntary_share_form_header_text = fields.Html(
-        string="Voluntary share form header text", translate=True
-    )
-    cooperator_share_form_header_text = fields.Html(
-        string="Cooperator share form header text", translate=True
     )
     notify_to_coord_child_ccee_submissions = fields.Boolean(
         string=_("Notify the Coordinator of new Subscriptions of their CCEE"),

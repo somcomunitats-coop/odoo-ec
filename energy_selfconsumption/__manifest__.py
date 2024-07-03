@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.5.0.0",
+    "version": "14.0.5.0.1",
     "depends": [
         "base",
         "web",
@@ -18,15 +18,18 @@
         "contract_variable_quantity",
         "contract_queue_job",
         "contract_mandate",
+        "energy_communities",
+        "energy_communities_cooperator",
         "energy_project",
-        "partner_firstname",
         "web_m2x_options",
         "l10n_es",
         "report_csv",
     ],
+    "external_dependencies": {"python": ["pandas>=2.0.3", "numpy>=1.24.4"]},
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
+        "data/res_users_role_data.xml",
         "data/project_type_data.xml",
         "data/ir_sequence_data.xml",
         "data/custom_paper_format_views.xml",
@@ -50,5 +53,8 @@
         "reports/selfconsumption_reports.xml",
         "reports/energy_delivered_invoice_template.xml",
         "reports/power_acquired_invoice_template.xml",
+    ],
+    "demo": [
+        "demo/energy_selfconsumption_demo.xml",
     ],
 }
