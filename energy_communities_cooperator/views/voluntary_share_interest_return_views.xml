@@ -20,6 +20,7 @@
           <field name="end_date_period" />
           <field name="company_id" />
           <field name="partners_notified" />
+          <field name="state" />
         </tree>
       </field>
     </record>
@@ -30,6 +31,7 @@
       <field name="type">form</field>
       <field name="arch" type="xml">
         <form>
+            <field name="payment_order_ok" invisible="1" />
             <header position="inside">
               <button
               name="action_post"
@@ -44,15 +46,22 @@
               attrs="{'invisible': ['|',('state', '=', 'draft'),('partners_notified','!=',False)]}"
             />
               <button
-              name="action_complete"
+              name="action_generate_payment"
               type="object"
               string="Create payment order"
-              attrs="{'invisible': [('state', '!=', 'posted')]}"
+              attrs="{'invisible': ['|',('state', '!=', 'posted'),('payment_order_ok','=',False)]}"
             />
             <field
               name="state"
               widget="statusbar"
-              statusbar_visible="draft,posted,completed"
+              statusbar_visible="draft,posted,payment"
+              attrs="{'invisible': [('payment_order_ok','=',False)]}"
+            />
+            <field
+              name="state"
+              widget="statusbar"
+              statusbar_visible="draft,posted"
+              attrs="{'invisible': [('payment_order_ok','=',True)]}"
             />
             </header>
           <sheet>
@@ -66,7 +75,7 @@
                   <field name="company_id" readonly="1" />
                   <field
                     name="payment_order_id"
-                    attrs="{'invisible': [('state', '!=', 'completed')]}"
+                    attrs="{'invisible': [('state', '!=', 'payment')]}"
                   />
                   <field name="account_move_ids" widget="one2many">
                     <tree open="1" create="0" edit="0" delete="0">
