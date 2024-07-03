@@ -13,9 +13,10 @@
                             <field name="create_user" />
                             <field name="create_kc_user" />
                             <field name="invite_user_through_kc" />
-                            <field name="force_invite" />
-                            <p
-              >Note: The action will affect x energy communities and x partners in total.</p>
+                            <field
+                name="force_invite"
+                attrs="{'invisible': [('invite_user_through_kc', '=', False)]}"
+              />
                         </group>
                     </sheet>
                     <footer>
