@@ -579,50 +579,47 @@ class ResUsers(models.Model):
                     if user_role.code in user_roles:
                         if role_id.code in user_role.available_role_ids.mapped("code"):
                             if role_id.priority > user_role.priority:
-                                if company_id.id != user_role.company_id.id:
-                                    # Se admite rol superior de distinta compañia
+                                if company_id.id != self.company_id.id:
+                                    # Admits superior role of another company
                                     continue
                                 else:
-                                    # Se admite rol superior de misma compañia
+                                    # Admits superior role of the same company
                                     continue
                             elif role_id.priority == user_role.priority:
-                                if company_id.id != user_role.company_id.id:
-                                    # Se admite mismo rol para otra compañia
+                                if company_id.id != self.company_id.id:
+                                    # Admits same role of another company
                                     continue
                                 else:
-                                    error = f"El usuario con NIF {self.vat} ya es {user_role.code} para la compañía {company_id.name}"
+                                    error = f"User with vat {self.vat} is already {user_role.code} for the company {company_id.name}"
                                     break
                             elif role_id.priority < user_role.priority:
-                                if company_id.id != user_role.company_id.id:
-                                    # Se admite rol inferior para otra compañia
+                                if company_id.id != self.company_id.id:
+                                    # Admits inferior role for another company
                                     continue
                                 else:
-                                    # Se admite rol inferior para misma compañia
+                                    # Admits inferior role for the same company
                                     continue
                         else:
-                            error = f"""No se admite el rol {role_id.code} para alguien que tiene el rol {user_role.code}.
-                                    Este rol solo admite estos roles {', '.join(user_role.available_role_ids.mapped("code"))}"""
+                            error = f"""Role {role_id.code} is not available for user with {user_role.code} role.
+                                    This role only allows {', '.join(user_role.available_role_ids.mapped("code"))}"""
                             break
             else:
-                error = f"""No se admite el rol {role_id.code} para la compañia {company_id.name} de tipo {company_id.hierarchy_level}.
-                            Este tipo de compañia solo admite esto roles {', '.join(company_id.available_role_ids.mapped("code"))}"""
+                error = f"""Role {role_id.code} is not available for company {company_id.name} of type {company_id.hierarchy_level}.
+                            This type of company allows roles {', '.join(company_id.available_role_ids.mapped("code"))}"""
             if error == "":
                 self.create_user_role_line(company_id, role_id)
-                print(
-                    f"EL {role_id.code} SE HA CREADO PARA LA COMPANIA {company_id.name} CON HIERARCHY LEVEL {company_id.hierarchy_level}"
-                )
             else:
                 raise ValidationError(_(error))
 
     def user_vals_validator(self, user_vals):
         if user_vals.keys() != {"login", "email", "firstname", "lastname", "lang"}:
-            raise exceptions.UserError(_("User_vals dict is empty"))
+            raise ValidationError(_("User_vals dict is empty"))
         if user_vals["login"] is None:
-            raise exceptions.UserError(_("Login is empty"))
+            raise ValidationError(_("Login is empty"))
         if not self.email_validator(user_vals["email"]):
-            raise exceptions.UserError(_("Email is not valid"))
+            raise ValidationError(_("Email is not valid"))
         if not self.lang_validator(user_vals["lang"]):
-            raise exceptions.UserError(_("Lang is not valid"))
+            raise ValidationError(_("Lang is not valid"))
 
     def email_validator(email):
         regex = re.compile(
