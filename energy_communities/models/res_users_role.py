@@ -18,7 +18,16 @@ class ResUsersRole(models.Model):
     )
 
     def _compute_priority_and_available_roles(self):
-        available_roles = ["role_ce_admin", "role_ce_manager", "role_ce_member"]
+        available_roles = [
+            (4, self.env.ref("energy_communities.role_ce_manager").id),
+            (4, self.env.ref("energy_communities.role_ce_admin").id),
+            (4, self.env.ref("energy_communities.role_ce_member").id),
+        ]
+        internal_user_extra_roles = [
+            (4, self.env.ref("energy_communities.role_platform_admin").id),
+            (4, self.env.ref("energy_communities.role_coord_admin").id),
+            (4, self.env.ref("energy_communities.role_coord_worker").id),
+        ]
         for record in self:
             if record.code == "role_platform_admin":
                 record.priority = 1
@@ -40,11 +49,7 @@ class ResUsersRole(models.Model):
                 record.available_role_ids = available_roles
             elif record.code == "role_internal_user":
                 record.priority = 7
-                record.available_role_ids = available_roles + [
-                    "role_platform_admin",
-                    "role_coord_admin",
-                    "role_coord_worker",
-                ]
+                record.available_role_ids = available_roles + internal_user_extra_roles
 
 
 class ResUsersRoleLine(models.Model):
