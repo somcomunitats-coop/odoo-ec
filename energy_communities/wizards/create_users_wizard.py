@@ -57,6 +57,9 @@ class CreateUsersWizard(models.TransientModel):
                     user_vals={},
                 )
         else:
+            impacted_companies = self.env["res.company"].browse(
+                self.env.context["active_ids"]
+            )
             for company in impacted_companies:
                 if company.hierarchy_level == "community":
                     partners = self.env["cooperative.membership"].search(
