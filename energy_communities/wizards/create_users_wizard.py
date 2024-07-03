@@ -7,17 +7,15 @@ class CreateUsersWizard(models.TransientModel):
     _name = "create.users.wizard"
     _description = "Create users Wizard"
 
-    create_user = fields.Boolean(
-        string=_("Create Odoo user (in case it doesn't exist)")
-    )
+    create_user = fields.Boolean(string="Create Odoo user (in case it doesn't exist)")
     create_kc_user = fields.Boolean(
-        string=_("Create Keycloak user (in case it doesn't exist)")
+        string="Create Keycloak user (in case it doesn't exist)"
     )
     invite_user_through_kc = fields.Boolean(
-        string=_("Send invitation email to confirm email and reset password")
+        string="Send invitation email to confirm email and reset password"
     )
     force_invite = fields.Boolean(
-        string=_("Force send invitation email in case it wasn't sent")
+        string="Force send invitation email in case it wasn't sent"
     )
 
     def execute(self):
