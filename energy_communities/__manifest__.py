@@ -44,6 +44,7 @@
         "demo/res_user_demo.xml",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
         "security/res_users_role_data.xml",
         "data/product_data.xml",
