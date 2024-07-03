@@ -39,7 +39,6 @@ class CooperativeMembership(models.Model):
             for subs in record.subscription_request_ids:
                 for invoice in subs.capital_release_request:
                     invs.append((4, invoice.id))
-            print(invs)
             if invs:
                 record.subscription_invoice_ids = invs
             else:
