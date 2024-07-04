@@ -414,15 +414,6 @@ class ResUsers(models.Model):
         return user
 
     def set_user_roles(self, company_id, role_id):
-        company_hierarchy_level = ["instance", "community", "coordinator"]
-        user_roles = [
-            "role_platform_admin",
-            "role_coord_admin",
-            "role_coord_worker",
-            "role_ce_admin",
-            "role_ce_manager",
-            "role_ce_member",
-        ]
         if not self.login_date:
             self.env["res.users.role.line"].create(
                 {
@@ -432,8 +423,19 @@ class ResUsers(models.Model):
             )
             return self.create_user_role_line(company_id, role_id)
 
-        error = ""
+        self.check_role_can_be_assingned(company_id, role_id)
+        return self.create_user_role_line(company_id, role_id)
 
+    def check_role_can_be_assingned(self, company_id, role_id):
+        user_roles = [
+            "role_platform_admin",
+            "role_coord_admin",
+            "role_coord_worker",
+            "role_ce_admin",
+            "role_ce_manager",
+            "role_ce_member",
+        ]
+        company_hierarchy_level = ["instance", "community", "coordinator"]
         role_is_available_for_company = all(
             [
                 company_id.hierarchy_level in company_hierarchy_level,
@@ -462,7 +464,7 @@ class ResUsers(models.Model):
                     error = _(
                         "User with vat {} is already {} for the company {}"
                     ).format(self.login, user_role.code, company_id.name)
-                    break
+                    raise ValidationError(error)
                 if role_is_not_available_for_user:
                     error = _(
                         "Role {} is not available for user with {} role. This role only allows {}"
@@ -471,20 +473,18 @@ class ResUsers(models.Model):
                         user_role.code,
                         ", ".join(user_role.available_role_ids.mapped("code")),
                     )
-                    break
-        else:
-            error = _(
-                "Role {} is not available for company {} of type {}. This type of company allows roles {}"
-            ).format(
-                role_id.code,
-                company_id.name,
-                company_id.hierarchy_level,
-                ", ".join(company_id.available_role_ids.mapped("code")),
-            )
-        if not error:
-            self.create_user_role_line(company_id, role_id)
-        else:
-            raise ValidationError(error)
+                    raise ValidationError(error)
+            return True
+
+        error = _(
+            "Role {} is not available for company {} of type {}. This type of company allows roles {}"
+        ).format(
+            role_id.code,
+            company_id.name,
+            company_id.hierarchy_level,
+            ", ".join(company_id.available_role_ids.mapped("code")),
+        )
+        raise ValidationError(error)
 
     def user_vals_validator(self, user_vals):
         if user_vals.keys() != {"login", "email", "firstname", "lastname", "lang"}:
