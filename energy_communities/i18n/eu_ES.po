@@ -1501,17 +1501,17 @@ msgstr "Rol"
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid ""
-"Role %s is not available for company %s of type %s. This type of company "
-"allows roles %s"
-msgstr "El rol %s no se puede elegir para la compañía %s de tipo %s. Este tipo de compañías "
-"permiten los roles %s"
+"Role {} is not available for company {} of type {}. This type of company "
+"allows roles {}"
+msgstr "El rol {} no se puede elegir para la compañía {} de tipo {}. Este tipo de compañías "
+"permiten los roles {}"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid ""
-"Role %s is not available for user with %s role. This role only allows %s"
-msgstr "El rol %s no se puede elegir para usuarios con el rol %s. Solo se pueden elegir los roles %s"
+"Role {} is not available for user with {} role. This role only allows {}"
+msgstr "El rol {} no se puede elegir para usuarios con el rol {}. Solo se pueden elegir los roles {}"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
@@ -1905,8 +1905,8 @@ msgstr "Rol de usuario"
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
-msgid "User with vat %s is already %s for the company %s"
-msgstr "El usuario con vat %s ya es %s para la compañía %s"
+msgid "User with vat {} is already {} for the company {}"
+msgstr "El usuario con vat {} ya es {} para la compañía {}"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_users

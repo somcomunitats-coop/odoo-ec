@@ -1199,7 +1199,7 @@ msgstr ""
 #, python-format
 msgid "No Odoo Company found for odoo_company_id %s"
 msgstr ""
-"No s'ha trobat cap companya al Odoo pel paràmetre: odoo_company_id= %s"
+"No s'ha trobat cap empresa al Odoo pel paràmetre: odoo_company_id= %s"
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
@@ -1486,17 +1486,17 @@ msgstr "Rol"
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid ""
-"Role %s is not available for company %s of type %s. This type of company "
-"allows roles %s"
-msgstr "El rol %s no es pot triar per a la companya %s de tipus %s. Aquest tipus de companyas "
-"permeten els rols %s"
+"Role {} is not available for company {} of type {}. This type of company "
+"allows roles {}"
+msgstr "El rol {} no es pot triar per a la empresa {} de tipus {}. Aquest tipus de empresas "
+"permeten els rols {}"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid ""
-"Role %s is not available for user with %s role. This role only allows %s"
-msgstr "El rol %s no es pot triar per a usuaris amb el rol %s. Només es poden triar els rols %s"
+"Role {} is not available for user with {} role. This role only allows {}"
+msgstr "El rol {} no es pot triar per a usuaris amb el rol {}. Només es poden triar els rols {}"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
@@ -1890,8 +1890,8 @@ msgstr "Rol d'usuari"
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
-msgid "User with vat %s is already %s for the company %s"
-msgstr "El usuari amb vat %s ja es %s per a la companya %s"
+msgid "User with vat {} is already {} for the company {}"
+msgstr "El usuari amb vat {} ja es {} per a la empresa {}"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_users

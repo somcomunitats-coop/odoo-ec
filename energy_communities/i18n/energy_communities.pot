@@ -1479,15 +1479,15 @@ msgstr ""
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid ""
-"Role %s is not available for company %s of type %s. This type of company "
-"allows roles %s"
+"Role {} is not available for company {} of type {}. This type of company "
+"allows roles {}"
 msgstr ""
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid ""
-"Role %s is not available for user with %s role. This role only allows %s"
+"Role {} is not available for user with {} role. This role only allows {}"
 msgstr ""
 
 #. module: energy_communities
@@ -1866,8 +1866,8 @@ msgstr ""
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
-msgid "User with vat %s is already %s for the company %s"
-msgstr ""
+msgid "User with vat {} is already {} for the company {}"
+msgstr "El usuari amb vat {} ja es {} per a la empresa {}"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_users
