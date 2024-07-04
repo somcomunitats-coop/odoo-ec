@@ -14,16 +14,23 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     selfconsumption_invoicing_mode = fields.Selection(
-        [("none"), ("power_acquired"), ("energy_delivered")],
+        [
+            ("none", "Empty"),
+            ("power_acquired", "Power acquired"),
+            ("energy_delivered", "Energy delivered"),
+        ],
         compute="_compute_selfconsumption_invoicing_mode",
         store=False,
     )
 
     def _compute_selfconsumption_invoicing_mode(self):
         for record in self:
-            if record.record.invoice_line_ids.selfconsumption_id:
-                record.selfconsumption_invoicing_mode = (
-                    record.invoice_line_ids.selfconsumption_id.invoicing_mode
-                )
+            if record.invoice_line_ids:
+                if record.invoice_line_ids[0].selfconsumption_id:
+                    record.selfconsumption_invoicing_mode = record.invoice_line_ids[
+                        0
+                    ].selfconsumption_id.invoicing_mode
+                else:
+                    record.selfconsumption_invoicing_mode = "none"
             else:
                 record.selfconsumption_invoicing_mode = "none"

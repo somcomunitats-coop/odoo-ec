@@ -327,7 +327,9 @@
                                             <t
                         t-if="o.report_distribution_table.type == 'fixed'"
                       >
-                                                <t t-esc="'{:.6f}'.format(supply_point.coefficient)" />
+                                                <t
+                          t-esc="'{:.6f}'.format(supply_point.coefficient)"
+                        />
                                             </t>
                                             <t
                         t-if="o.report_distribution_table.type == 'hourly'"

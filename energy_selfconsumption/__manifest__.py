@@ -52,8 +52,7 @@
         "wizards/invoicing_wizard_views.xml",
         "wizards/clean_supply_point_assignation_wizard_views.xml",
         "reports/selfconsumption_reports.xml",
-        # "reports/energy_delivered_invoice_template.xml",
-        "reports/power_acquired_invoice_template.xml",
+        "reports/invoice_template.xml",
     ],
     "demo": [
         "demo/energy_selfconsumption_demo.xml",
