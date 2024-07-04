@@ -1,18 +1,17 @@
 from typing import Any, List
 
-from fastapi import Depends, Request
-from typing_extensions import Annotated
+from odoo.http import HTTPRequest
 
-from .schemas import (
-    PaginationLimits,
-    PaginationLinks,
-    ProjectsInfoListResponse,
-    SingleProjectInfoResponse,
-)
+from .schemas import PaginationLimits, PaginationLinks
+
+DEFAULT_PAGE_SIZE = 20
 
 
 def get_pagination_links(
-    request: Request, actual_count: int, total_results: int, paging: PaginationLimits
+    request: HTTPRequest,
+    actual_count: int,
+    total_results: int,
+    paging: PaginationLimits,
 ) -> PaginationLinks:
     page = paging.page
     page_size = paging.limit
@@ -33,12 +32,12 @@ def get_pagination_links(
     )
 
 
-def get_links(request: Request) -> PaginationLinks:
+def get_links(request: HTTPRequest) -> PaginationLinks:
     return PaginationLinks(self_=request.url._url)
 
 
 def single_response(
-    request: Request,
+    request: HTTPRequest,
     response_class: Any,
     object_: Any,
 ) -> Any:
@@ -46,7 +45,7 @@ def single_response(
 
 
 def collection_response(
-    request: Request,
+    request: HTTPRequest,
     response_class: Any,
     collection: List[Any],
     total_results: int,

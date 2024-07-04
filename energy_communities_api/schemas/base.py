@@ -2,6 +2,8 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+from ..utils import DEFAULT_PAGE_SIZE
+
 
 class BaseResponse(BaseModel):
     """
@@ -17,6 +19,11 @@ class BaseListResponse(BaseResponse):
     total_results: int
     count: int
     page: Optional[int]
+
+
+class Paging(BaseModel):
+    page: int = 1
+    page_size: int = (DEFAULT_PAGE_SIZE,)
 
 
 class PaginationLimits(BaseModel):

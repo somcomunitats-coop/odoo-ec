@@ -11,7 +11,7 @@ class ProjectNotFoundException(Exception):
     pass
 
 
-class EnergySelfconsumptionService:
+class EnergySelfconsumptionProjectsComponent:
     def __init__(self, env: Environment, user: Users) -> None:
         self.Selfconsumption = env["energy_selfconsumption.selfconsumption"].with_user(
             user
