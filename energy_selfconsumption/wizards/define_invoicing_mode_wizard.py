@@ -67,8 +67,8 @@ class ContractGenerationWizard(models.TransientModel):
             "product_id": product_id.id,
             "automatic_price": True,
             "company_id": self.env.company.id,
-            "qty_type": "variable",
-            "qty_formula_id": formula_contract_id.id,
+            "qty_type": "fijo" if self.invoicing_mode == "energy_custom" else "variable",
+            "qty_formula_id": False if self.invoicing_mode == "energy_custom" else formula_contract_id.id,
             "uom_id": product_id.uom_id.id,
             # Values are formatted in contract_generation_wizard
             "name": _(
