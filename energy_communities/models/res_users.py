@@ -460,29 +460,26 @@ class ResUsers(models.Model):
 
                 if user_has_role_in_company:
                     error = _(
-                        "User with vat %s is already %s for the company %s"
-                        % (self.login, user_role.code, company_id.name)
-                    )
+                        "User with vat {} is already {} for the company {}"
+                    ).format(self.login, user_role.code, company_id.name)
                     break
                 if role_is_not_available_for_user:
                     error = _(
-                        "Role %s is not available for user with %s role. This role only allows %s"
-                        % (
-                            role_id.code,
-                            user_role.code,
-                            ", ".join(user_role.available_role_ids.mapped("code")),
-                        )
+                        "Role {} is not available for user with {} role. This role only allows {}"
+                    ).format(
+                        role_id.code,
+                        user_role.code,
+                        ", ".join(user_role.available_role_ids.mapped("code")),
                     )
                     break
         else:
             error = _(
-                "Role %s is not available for company %s of type %s. This type of company allows roles %s"
-                % (
-                    role_id.code,
-                    company_id.name,
-                    company_id.hierarchy_level,
-                    ", ".join(company_id.available_role_ids.mapped("code")),
-                )
+                "Role {} is not available for company {} of type {}. This type of company allows roles {}"
+            ).format(
+                role_id.code,
+                company_id.name,
+                company_id.hierarchy_level,
+                ", ".join(company_id.available_role_ids.mapped("code")),
             )
         if not error:
             self.create_user_role_line(company_id, role_id)
