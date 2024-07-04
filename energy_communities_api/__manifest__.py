@@ -10,10 +10,18 @@
     "website": "https://coopdevs.org",
     "category": "Customizations",
     "version": "14.0.1.0.4",
-    "depends": ["energy_communities"],
-    "external_dependencies": {"python": ["httpx>=0.27.0"]},
+    "depends": [
+        "base_rest",
+        "base_rest_pydantic",
+        "component",
+        "energy_communities",
+    ],
+    "external_dependencies": {
+        "python": [
+            "pydantic<2",
+        ]
+    },
     "data": [
-        "data/fastapi_endpoint_data.xml",
         "security/res_users_role_data.xml",
         "security/ir_rule_data.xml",
     ],

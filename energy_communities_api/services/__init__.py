@@ -1,4 +1,1 @@
-from .energy_selfconsumption import (
-    EnergySelfconsumptionService,
-    ProjectNotFoundException,
-)
+from .energy_selfconsumption_project import EnergySelfconsumptionProjectsComponent
