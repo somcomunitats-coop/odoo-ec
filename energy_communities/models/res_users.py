@@ -430,66 +430,64 @@ class ResUsers(models.Model):
                     "role_id": self.env.ref("energy_communities.role_internal_user").id,
                 }
             )
+            return self.create_user_role_line(company_id, role_id)
+
+        error = ""
+
+        role_is_available_for_company = all(
+            [
+                company_id.hierarchy_level in company_hierarchy_level,
+                role_id.code in company_id.available_role_ids.mapped("code"),
+            ]
+        )
+        if role_is_available_for_company:
+            for user_role in self.role_line_ids.mapped("role_id"):
+                user_has_role_in_company = all(
+                    [
+                        user_role.code in user_roles,
+                        role_id.code in user_role.available_role_ids.mapped("code"),
+                        role_id.priority == user_role.priority,
+                        company_id.id == self.company_id.id,
+                    ]
+                )
+
+                role_is_not_available_for_user = all(
+                    [
+                        user_role.code in user_roles,
+                        role_id.code not in user_role.available_role_ids.mapped("code"),
+                    ]
+                )
+
+                if user_has_role_in_company:
+                    error = _(
+                        "User with vat %s is already %s for the company %s"
+                        % (self.login, user_role.code, company_id.name)
+                    )
+                    break
+                if role_is_not_available_for_user:
+                    error = _(
+                        "Role %s is not available for user with %s role. This role only allows %s"
+                        % (
+                            role_id.code,
+                            user_role.code,
+                            ", ".join(user_role.available_role_ids.mapped("code")),
+                        )
+                    )
+                    break
+        else:
+            error = _(
+                "Role %s is not available for company %s of type %s. This type of company allows roles %s"
+                % (
+                    role_id.code,
+                    company_id.name,
+                    company_id.hierarchy_level,
+                    ", ".join(company_id.available_role_ids.mapped("code")),
+                )
+            )
+        if not error:
             self.create_user_role_line(company_id, role_id)
         else:
-            error = ""
-            if (
-                company_id.hierarchy_level in company_hierarchy_level
-                and role_id.code in company_id.available_role_ids.mapped("code")
-            ):
-                for user_role in self.role_line_ids.mapped("role_id"):
-                    if user_role.code in user_roles:
-                        if role_id.code in user_role.available_role_ids.mapped("code"):
-                            if role_id.priority > user_role.priority:
-                                if company_id.id != self.company_id.id:
-                                    # Admits superior role of another company
-                                    continue
-                                else:
-                                    # Admits superior role of the same company
-                                    continue
-                            elif role_id.priority == user_role.priority:
-                                if company_id.id != self.company_id.id:
-                                    # Admits same role of another company
-                                    continue
-                                else:
-                                    error = _(
-                                        "User with vat %s is already %s for the company %s"
-                                        % (self.login, user_role.code, company_id.name)
-                                    )
-                                    break
-                            elif role_id.priority < user_role.priority:
-                                if company_id.id != self.company_id.id:
-                                    # Admits inferior role for another company
-                                    continue
-                                else:
-                                    # Admits inferior role for the same company
-                                    continue
-                        else:
-                            error = _(
-                                "Role %s is not available for user with %s role. This role only allows %s"
-                                % (
-                                    role_id.code,
-                                    user_role.code,
-                                    ", ".join(
-                                        user_role.available_role_ids.mapped("code")
-                                    ),
-                                )
-                            )
-                            break
-            else:
-                error = _(
-                    "Role %s is not available for company %s of type %s. This type of company allows roles %s"
-                    % (
-                        role_id.code,
-                        company_id.name,
-                        company_id.hierarchy_level,
-                        ", ".join(company_id.available_role_ids.mapped("code")),
-                    )
-                )
-            if error == "":
-                self.create_user_role_line(company_id, role_id)
-            else:
-                raise ValidationError(error)
+            raise ValidationError(error)
 
     def user_vals_validator(self, user_vals):
         if user_vals.keys() != {"login", "email", "firstname", "lastname", "lang"}:
