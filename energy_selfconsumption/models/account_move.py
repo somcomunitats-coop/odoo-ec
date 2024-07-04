@@ -13,15 +13,17 @@ class AccountMoveLine(models.Model):
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    def _get_name_invoice_report(self):
-        self.ensure_one()
-        if (
-            self.invoice_line_ids.selfconsumption_id.invoicing_mode
-            == "energy_delivered"
-        ):
-            return "energy_selfconsumption.energy_delivered_invoice_template"
-        elif (
-            self.invoice_line_ids.selfconsumption_id.invoicing_mode == "power_acquired"
-        ):
-            return "energy_selfconsumption.power_acquired_invoice_template"
-        return super()._get_name_invoice_report()
+    selfconsumption_invoicing_mode = fields.Selection(
+        [("none"), ("power_acquired"), ("energy_delivered")],
+        compute="_compute_selfconsumption_invoicing_mode",
+        store=False,
+    )
+
+    def _compute_selfconsumption_invoicing_mode(self):
+        for record in self:
+            if record.record.invoice_line_ids.selfconsumption_id:
+                record.selfconsumption_invoicing_mode = (
+                    record.invoice_line_ids.selfconsumption_id.invoicing_mode
+                )
+            else:
+                record.selfconsumption_invoicing_mode = "none"
