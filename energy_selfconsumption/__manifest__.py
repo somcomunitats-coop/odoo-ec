@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.5.0.0",
+    "version": "14.0.5.0.1",
     "depends": [
         "base",
         "web",
@@ -21,11 +21,11 @@
         "energy_communities",
         "energy_communities_cooperator",
         "energy_project",
-        "partner_firstname",
         "web_m2x_options",
         "l10n_es",
         "report_csv",
     ],
+    "external_dependencies": {"python": ["pandas>=2.0.3", "numpy>=1.24.4"]},
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",

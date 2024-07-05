@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "14.0.9.2.2",
+    "version": "14.0.9.2.3",
     "depends": [
         "account",
         "account_lock_date_update",
@@ -8,7 +8,6 @@
         "account_payment_order",
         "account_reconciliation_widget",
         "auth_api_key",
-        "auth_oauth",
         "auth_oidc",
         "auth_signup",
         "base_rest",
@@ -22,6 +21,7 @@
         "l10n_es_aeat_sii_oca",
         "mail_multicompany",
         "metadata",
+        "partner_firstname",
         "partner_multi_company",
         "purchase",
         "queue_job",
