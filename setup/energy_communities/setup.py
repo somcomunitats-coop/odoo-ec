@@ -4,6 +4,7 @@ setuptools.setup(
     setup_requires=['setuptools-odoo'],
     odoo_addon={
         "depends_override": {
+            "account_banking_mandate": "odoo14-addon-account-banking-mandate>=14.0.1.2.0",
             "account_lock_date_update": "odoo14-addon-account-lock-date-update==14.0.2.0.1.dev10",
             "account_multicompany_easy_creation": "odoo14-addon-account-multicompany-easy-creation==14.0.1.0.1.dev2",
             "account_payment_order": "odoo14-addon-account-payment-order==14.0.1.11.0",

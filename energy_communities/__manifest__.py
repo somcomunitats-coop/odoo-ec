@@ -3,6 +3,7 @@
     "version": "14.0.9.2.3",
     "depends": [
         "account",
+        "account_banking_mandate",
         "account_lock_date_update",
         "account_multicompany_easy_creation",
         "account_payment_order",

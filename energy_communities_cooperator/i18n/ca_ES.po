@@ -559,6 +559,16 @@ msgid "Gender"
 msgstr "Gènere"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__res_partner__gender__not_share
+msgid "I prefer to not share it"
+msgstr "Prefereixo no compartir-ho"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__res_partner__gender__not_binary
+msgid "Not binary"
+msgstr "No binari"
+
+#. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share_text_template
 msgid "Hello,"
 msgstr "Hola,"
