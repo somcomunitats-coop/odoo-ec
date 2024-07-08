@@ -43,5 +43,21 @@
                 </form>
             </field>
         </record>
+    <record
+      model="ir.actions.act_window"
+      id="voluntary_share_interest_return_wizard_action"
+    >
+        <field name="name">Create voluntary share interest return</field>
+        <field name="res_model">voluntary.share.interest.return.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem
+      id="voluntary_share_interest_return_wizard_menu"
+      name="Create voluntary share interest return"
+      action="voluntary_share_interest_return_wizard_action"
+      parent="cooperator.menu_cooperator_config"
+      sequence="440"
+    />
     </data>
 </odoo>

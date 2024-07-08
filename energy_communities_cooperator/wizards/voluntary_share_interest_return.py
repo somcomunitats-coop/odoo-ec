@@ -52,6 +52,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
                 "end_date_period": self._default_period_date("end"),
                 "invoice_date": datetime.now(),
                 "invoice_date_due": datetime.now(),
+                "company_id": self.env.company.id,
             }
         )
         return res
