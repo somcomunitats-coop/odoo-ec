@@ -508,9 +508,19 @@ msgid "Email not found"
 msgstr "Email no encontrado"
 
 #. module: energy_communities_cooperator
-#: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__gender
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_partner__gender
 msgid "Gender"
-msgstr "Género"
+msgstr "Generoa"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__res_partner__gender__not_share
+msgid "I prefer to not share it"
+msgstr "Prefiero no compartirlo"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__res_partner__gender__not_binary
+msgid "Not binary"
+msgstr "No binario"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share_text_template
@@ -524,11 +534,6 @@ msgid "I accept that the entity issues direct debit receipts to this account."
 msgstr ""
 "Onartzen dut entitateak kontu honetara helbideratutako ordainagiriak "
 "jaulkitzea."
-
-#. module: energy_communities_cooperator
-#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__subscription_request__gender__not_share
-msgid "I prefer to not share it"
-msgstr "Prefiero no compartirlo"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move__id
@@ -607,11 +612,6 @@ msgstr "Membresias"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__new_product_share_template
 msgid "New Product Share Template"
 msgstr "Plantilla de nuevo producto de quota"
-
-#. module: energy_communities_cooperator
-#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__subscription_request__gender__not_binary
-msgid "Not binary"
-msgstr "No binario"
 
 #. module: energy_communities_cooperator
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
