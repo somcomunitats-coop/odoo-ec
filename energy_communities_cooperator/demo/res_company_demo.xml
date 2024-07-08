@@ -1,4 +1,13 @@
 <odoo>
+
+    <record id="base.main_company" model="res.company">
+        <field name="coop_email_contact">somcomunitats@coop.coop</field>
+    </record>
+
+    <record id="energy_communities.coordinator_company" model="res.company">
+        <field name="coop_email_contact">oecoop@coop.coop</field>
+    </record>
+
     <record
     id="energy_communities.energy_community_company_1_wizard"
     model="account.multicompany.easy.creation.wiz"
