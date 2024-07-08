@@ -201,8 +201,10 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
 
     def _prepare_inv_line_create_dict(self, origin_inv_line):
         return {
-            "name": "Interest return #{inv_id}-{inv_line_id}".format(
-                inv_id=origin_inv_line.move_id.id, inv_line_id=origin_inv_line.id
+            "name": "contribution ref: [{inv_name}] #{inv_id} / contribution line ref: #{inv_line_id}".format(
+                inv_id=origin_inv_line.move_id.id,
+                inv_line_id=origin_inv_line.id,
+                inv_name=origin_inv_line.move_id.name,
             ),
             "account_id": self.return_line_account_id.id,
             "quantity": self._get_voluntary_share_days_num(origin_inv_line),

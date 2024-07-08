@@ -31,6 +31,7 @@ class VoluntaryShareInterestReturn(models.Model):
     payment_mode_id = fields.Many2one("account.payment.mode", string="Payment mode")
     payment_order_ok = fields.Boolean(compute="_compute_payment_order_ok", store=False)
 
+    @api.depends("payment_mode_id")
     def _compute_payment_order_ok(self):
         for record in self:
             if record.payment_mode_id:
