@@ -31,6 +31,7 @@
         "data/res_users_role_data.xml",
         "data/mail_template_update_data.xml",
         "data/ir_config_parameter_data.xml",
+        "views/menus.xml",
         "views/account_move_views.xml",
         "views/cooperative_membership_views.xml",
         "views/operation_request_views.xml",
