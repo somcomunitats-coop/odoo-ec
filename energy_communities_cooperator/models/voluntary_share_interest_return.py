@@ -36,6 +36,8 @@ class VoluntaryShareInterestReturn(models.Model):
         for record in self:
             if record.payment_mode_id:
                 record.payment_order_ok = record.payment_mode_id.payment_order_ok
+            else:
+                record.payment_order_ok = False
 
     def action_post(self):
         for move in self.account_move_ids:
