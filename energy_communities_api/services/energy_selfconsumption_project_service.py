@@ -13,13 +13,14 @@ from ..components import (
     ProjectNotFoundException,
 )
 from ..schemas import (
+    DEFAULT_PAGE_SIZE,
     PaginationLimits,
     Paging,
     ProjectMembersResponse,
     ProjectsInfoListResponse,
     SingleProjectInfoResponse,
 )
-from ..utils import DEFAULT_PAGE_SIZE, collection_response, single_response
+from ..utils import collection_response, single_response
 
 logger = logging.getLogger("__name__")
 
@@ -27,8 +28,8 @@ logger = logging.getLogger("__name__")
 class EnergyProjectApiService(Component):
     _inherit = "base.rest.service"
     _name = "energy_project.service"
-    _usage = "energyselfconsumption_api"
     _collection = "energyselfconsumption.api.services"
+    _usage = "energy_selfconsumption"
     _description = """
     Energy selfconsumption API Services
     This service implements the necessary endpoints for energy providers to
@@ -59,7 +60,7 @@ class EnergyProjectApiService(Component):
         )
 
     @restapi.method(
-        [(["/projects/<str:project_code>"], "GET")],
+        [(["/projects/<string:project_code>"], "GET")],
         output_param=PydanticModel(SingleProjectInfoResponse),
     )
     def get_selfconsumption_project_by_code(
@@ -75,13 +76,20 @@ class EnergyProjectApiService(Component):
         return single_response(request, SingleProjectInfoResponse, project)
 
     @restapi.method(
-        "/projects/<str:project_code>/members",
+        [
+            (
+                [
+                    "/projects/<string:project_code>/members",
+                ],
+                "GET",
+            )
+        ],
         inpunt_param=PydanticModel(Paging),
         output_param=PydanticModel(ProjectMembersResponse),
     )
     def selfconsumption_project_members(
-        project_code: str,
         selfconsumption_paging_param,
+        _project_code: str,
     ) -> ProjectMembersResponse:
         page = selfconsumption_paging_param.page or 1
         page_size = selfconsumption_paging_param.size_page or DEFAULT_PAGE_SIZE
@@ -94,10 +102,10 @@ class EnergyProjectApiService(Component):
         )
         try:
             members = energy_selfconsumption_service.selfconsumption_project_members(
-                project_code, limit=paging.limit, offset=paging.offset
+                _project_code, limit=paging.limit, offset=paging.offset
             )
             total_projectmembers = energy_selfconsumption_service.total_project_members(
-                project_code
+                _project_code
             )
         except ProjectNotFoundException as e:
             raise NotFound(str(e))

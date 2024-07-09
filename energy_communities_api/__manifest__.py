@@ -15,6 +15,7 @@
         "base_rest_pydantic",
         "component",
         "energy_communities",
+        "energy_project",
     ],
     "external_dependencies": {
         "python": [
