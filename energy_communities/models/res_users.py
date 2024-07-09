@@ -348,7 +348,7 @@ class ResUsers(models.Model):
         force_invite,
         user_vals,
     ):
-        if not create_user or create_kc_user or invite_user_through_kc:
+        if not create_user or not create_kc_user or not invite_user_through_kc:
             return False
         if partner_id:
             user_vals = {
