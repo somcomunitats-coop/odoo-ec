@@ -26,7 +26,9 @@
         "l10n_es",
         "report_csv",
     ],
-    "external_dependencies": {"python": ["pandas>=2.0.3", "numpy>=1.24.4"]},
+    "external_dependencies": {
+        "python": ["pandas>=2.0.3", "numpy>=1.24.4", "openupgradelib>=3.6.1"]
+    },
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
