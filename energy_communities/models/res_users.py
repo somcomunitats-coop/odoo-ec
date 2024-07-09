@@ -400,7 +400,7 @@ class ResUsers(models.Model):
         user.sudo().set_user_roles(company_id, role_id)
 
         if create_kc_user or invite_user_through_kc:
-            user.create_users_in_keycloak()
+            user.create_users_on_keycloak()
 
         if (
             force_invite
