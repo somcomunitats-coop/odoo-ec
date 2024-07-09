@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-01 13:52+0000\n"
-"PO-Revision-Date: 2024-07-01 17:41+0200\n"
+"POT-Creation-Date: 2024-07-09 09:20+0000\n"
+"PO-Revision-Date: 2024-07-09 11:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ca_ES\n"
@@ -614,7 +614,7 @@ msgstr "Cancel·lar"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_product__mail_template
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_template__mail_template
 msgid "Certificate email template"
-msgstr "Email de certificat"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
@@ -644,13 +644,6 @@ msgstr "Representant legal de companyia"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_users__company_register_number
 msgid "Company Register Number"
 msgstr "Codi de registre de la companyia"
-
-#. module: energy_communities_cooperator
-#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
-#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__voluntary_share_interest_return__state__payment
-#, python-format
-msgid "Payment generated"
-msgstr "Pagament generat"
 
 #. module: energy_communities_cooperator
 #: model:mail.template,subject:energy_communities_cooperator.email_template_conditions_voluntary_share
@@ -732,6 +725,12 @@ msgstr "Crear ordre de pagament"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__create_user
 msgid "Create user for cooperator"
 msgstr "Crear usuari d'Odoo desde la sòcia"
+
+#. module: energy_communities_cooperator
+#: model:ir.actions.act_window,name:energy_communities_cooperator.voluntary_share_interest_return_wizard_action
+#: model:ir.ui.menu,name:energy_communities_cooperator.voluntary_share_interest_return_wizard_menu
+msgid "Create voluntary share interest return"
+msgstr "Crear retorn d'interessos d'aportacions voluntàries"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__create_uid
@@ -836,7 +835,7 @@ msgstr "Correu electrònic"
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Email and confirmation email addresses don't match."
-msgstr "L'email i la seva confirmació no coincideixen."
+msgstr "El email i la seva confirmació no coincideixen."
 
 #. module: energy_communities_cooperator
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
@@ -870,24 +869,16 @@ msgid "Followers (Partners)"
 msgstr "Seguidors (Contactes)"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_partner__gender
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_users__gender
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__gender
 msgid "Gender"
 msgstr "Gènere"
 
 #. module: energy_communities_cooperator
-#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__res_partner__gender__not_share
-msgid "I prefer to not share it"
-msgstr "Prefereixo no compartir-ho"
-
-#. module: energy_communities_cooperator
-#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__res_partner__gender__not_binary
-msgid "Not binary"
-msgstr "No binari"
-
-#. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
 msgid "General"
-msgstr "General"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share_text_template
@@ -903,6 +894,7 @@ msgstr ""
 "altra, autoritza la domiciliació dels rebuts."
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__res_partner__gender__not_share
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__subscription_request__gender__not_share
 msgid "I prefer to not share it"
 msgstr "Prefereixo no compartir-ho"
@@ -920,7 +912,7 @@ msgstr "Prefereixo no compartir-ho"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
@@ -1085,6 +1077,7 @@ msgid "New Product Share Template"
 msgstr "Plantilla de nou producte de quota"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__res_partner__gender__not_binary
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__subscription_request__gender__not_binary
 msgid "Not binary"
 msgstr "No binari"
@@ -1183,6 +1176,19 @@ msgid "Partners notified"
 msgstr "Contactes notificats"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__payment_order_ok
+msgid "Payment Order Ok"
+msgstr "Ordre de pagament OK"
+
+#. module: energy_communities_cooperator
+#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
+#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__voluntary_share_interest_return__state__payment
+#, python-format
+msgid "Payment generated"
+msgstr "Pagament generat"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__payment_mode_id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__payment_mode_id
 msgid "Payment mode"
 msgstr "Mode de pagament"
@@ -1224,7 +1230,7 @@ msgstr "Telèfon"
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Please upload a scan of your ID card."
-msgstr "Siusplau puja una imatge del teu document d'indentitat."
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
@@ -1253,7 +1259,7 @@ msgstr "Plantilla de producte"
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Provided IBAN is not valid."
-msgstr "El IBAN proporcionat no és vàlid"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_bank_statement_line__membership_id
@@ -1312,7 +1318,7 @@ msgstr "Tipus aportació"
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Some mandatory fields have not been filled."
-msgstr "Alguns camps requerits no han siguts emplenats"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__state
@@ -1427,7 +1433,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_shares_template
 msgid "Total"
-msgstr "Total"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_bank_statement_line__voluntary_share_total_contribution
@@ -1571,14 +1577,12 @@ msgstr ""
 msgid ""
 "You can't subscribe for an amount that exceeds {amount}{currency_symbol}."
 msgstr ""
-"No pots registrar una aportació per un valor que sobrepassi {amount}"
-"{currency_symbol}."
 
 #. module: energy_communities_cooperator
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid "You can't subscribe to two different types of share."
-msgstr "No et pots regiostrar a dos tipus differents d'aportacions."
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
