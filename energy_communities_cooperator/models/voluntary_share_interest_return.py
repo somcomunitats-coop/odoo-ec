@@ -43,6 +43,7 @@ class VoluntaryShareInterestReturn(models.Model):
         for move in self.account_move_ids:
             if move.state == "draft":
                 move.action_post()
+                move.write({"ref": move.name})
         self.write({"state": "posted"})
         return self._display_notifications(
             _("Invoices successfully posted"),
