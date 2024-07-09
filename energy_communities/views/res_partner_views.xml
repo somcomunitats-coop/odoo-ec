@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
+        <act_window
+      id="act_window_create_users_partner"
+      name="Build platform users from partner members"
+      binding_model="res.partner"
+      res_model="create.users.wizard"
+      view_mode="form"
+      target="new"
+      groups="energy_communities.group_platform_manager"
+    />
         <record id="view_res_partner_filter" model="ir.ui.view">
           <field name="name">view_res_partner_filter</field>
           <field name="model">res.partner</field>
@@ -26,7 +35,6 @@
             </xpath>
           </field>
         </record>
-
 
         <record id="view_partner_form" model="ir.ui.view">
             <field name="name">view_partner_form</field>
