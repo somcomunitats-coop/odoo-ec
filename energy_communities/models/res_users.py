@@ -486,7 +486,7 @@ class ResUsers(models.Model):
         force_invite,
         user_vals,
     ):
-        if not create_user or not create_kc_user or not invite_user_through_kc:
+        if not create_user and not create_kc_user and not invite_user_through_kc:
             return False
         if partner_id:
             user_vals = {
@@ -647,10 +647,18 @@ class ResUsers(models.Model):
             return True
 
     def create_user_role_line(self, company_id, role_id):
-        return self.env["res.users.role.line"].create(
-            {
-                "user_id": self.id,
-                "role_id": role_id.id,
-                "company_id": company_id.id,
-            }
+        user_roles = self.env["res.users.role.line"].search(
+            [
+                ("user_id", "=", self.id),
+                ("role_id", "=", role_id.id),
+                ("company_id", "=", company_id.id),
+            ]
         )
+        if not user_roles:
+            return self.env["res.users.role.line"].create(
+                {
+                    "user_id": self.id,
+                    "role_id": role_id.id,
+                    "company_id": company_id.id,
+                }
+            )
