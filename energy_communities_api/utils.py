@@ -1,15 +1,12 @@
 from typing import Any, List
 
-from odoo.http import HTTPRequest
+from odoo.http import HttpRequest
 
 from .schemas import PaginationLimits, PaginationLinks
 
-DEFAULT_PAGE_SIZE = 20
-
 
 def get_pagination_links(
-    request: HTTPRequest,
-    actual_count: int,
+    request: HttpRequest,
     total_results: int,
     paging: PaginationLimits,
 ) -> PaginationLinks:
@@ -32,12 +29,12 @@ def get_pagination_links(
     )
 
 
-def get_links(request: HTTPRequest) -> PaginationLinks:
+def get_links(request: HttpRequest) -> PaginationLinks:
     return PaginationLinks(self_=request.url._url)
 
 
 def single_response(
-    request: HTTPRequest,
+    request: HttpRequest,
     response_class: Any,
     object_: Any,
 ) -> Any:
@@ -45,7 +42,7 @@ def single_response(
 
 
 def collection_response(
-    request: HTTPRequest,
+    request: HttpRequest,
     response_class: Any,
     collection: List[Any],
     total_results: int,

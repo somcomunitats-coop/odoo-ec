@@ -1,1 +1,1 @@
-from .energy_selfconsumption_project import EnergySelfconsumptionProjectsComponent
+from . import energy_selfconsumption_project_service

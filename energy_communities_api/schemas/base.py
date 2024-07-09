@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from ..utils import DEFAULT_PAGE_SIZE
+DEFAULT_PAGE_SIZE = 20
 
 
 class BaseResponse(BaseModel):

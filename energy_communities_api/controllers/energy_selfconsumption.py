@@ -2,6 +2,6 @@ from odoo.addons.base_rest.controllers import main
 
 
 class EnergySelfconsumptionMainController(main.RestController):
-    _root_path = "/api/energy_selfconsumption"
+    _root_path = "/api/"
     _collection_name = "energyselfconsumption.api.services"
     _default_auth = "api_key"
