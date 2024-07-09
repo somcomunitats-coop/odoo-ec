@@ -1,5 +1,21 @@
 <odoo>
-  <record id="view_company_form" model="ir.ui.view">
+  <record id="view_energy_communities_company_form" model="ir.ui.view">
+    <field name="name">res.company.form.energy_communities.inherit</field>
+    <field name="model">res.company</field>
+    <field name="inherit_id" ref="energy_communities.view_company_form_ce_inherited" />
+    <field name="arch" type="xml">
+      <header position="inside">
+          <button
+          name="action_open_volutary_share_interest_return_wizard"
+          type="object"
+          string="Voluntary share interest return"
+          groups="energy_communities.group_platform_manager"
+          attrs="{'invisible':[('hierarchy_level', '!=','community')]}"
+        />
+      </header>
+    </field>
+  </record>
+  <record id="view_cooperator_company_form" model="ir.ui.view">
     <field name="name">res.company.form.easymy.coop.inherit</field>
     <field name="model">res.company</field>
     <field name="inherit_id" ref="cooperator.view_company_form" />
@@ -24,6 +40,8 @@
           <group>
             <field name="voluntary_share_form_header_text" />
             <field name="voluntary_share_id" />
+            <field name="voluntary_share_journal_account" />
+            <field name="voluntary_share_email_template" />
           </group>
         </page>
       </xpath>
