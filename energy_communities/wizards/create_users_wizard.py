@@ -21,9 +21,8 @@ class CreateUsersWizard(models.TransientModel):
     def execute(self):
         if (
             not self.create_user
-            or self.create_kc_user
-            or self.invite_user_through_kc
-            or self.force_invite
+            and not self.create_kc_user
+            and not self.invite_user_through_kc
         ):
             raise ValidationError(_("Please select an action."))
 
