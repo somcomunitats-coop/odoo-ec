@@ -7,4 +7,7 @@ from .responses import (
     ProjectsInfoListResponse,
     SingleProjectInfoResponse,
     ProjectMembersResponse,
+    MemberInfoResponse,
 )
+
+from .member import MemberInfoInfo

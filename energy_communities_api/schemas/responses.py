@@ -9,6 +9,7 @@ from .base import (
     Error,
     PaginationLinks,
 )
+from .member import MemberInfo
 from .selfconsumption_project import (
     SelfConsumptionProjectInfo,
     SelfConsumptionProjectMember,
@@ -49,3 +50,12 @@ class ProjectMembersResponse(BaseListResponse):
 
     data: List[SelfConsumptionProjectMember]
     links: PaginationLinks = Field(alias="_links")
+
+
+class MemberInfoResponse(BaseResponse):
+    """
+    When a single project is requested, this model will be returned
+    """
+
+    data: MemberInfo
+    links: BaseLinks = Field(alias="_links")
