@@ -3,7 +3,10 @@ from werkzeug.exceptions import Unauthorized
 from odoo.http import request
 
 from odoo.addons.base_rest import restapi
-from odoo.addons.base_rest_pydantic.restapi import PydanticModel
+from odoo.addons.base_rest_pydantic.restapi import (
+    PydanticModel,
+    PydanticModelList,
+)
 from odoo.addons.component.core import Component
 
 from ..schemas import MemberInfo, MemberInfoResponse
@@ -21,7 +24,7 @@ class MemberApiService(Component):
 
     @restapi.method(
         [(["/"], "GET")],
-        output_param=PydanticModel(MemberInfoResponse),
+        # output_param=PydanticModelList(MemberInfoResponse),
     )
     def me(self):
         if not getattr(request, "jwt_partner_id", None):
@@ -29,5 +32,4 @@ class MemberApiService(Component):
 
         member = request.env["res.partner"].browse(request.jwt_partner_id)
         member_info = MemberInfo.from_orm(member)
-
-        return single_response(MemberInfoResponse, member_info)
+        return single_response(request, MemberInfoResponse, member_info)

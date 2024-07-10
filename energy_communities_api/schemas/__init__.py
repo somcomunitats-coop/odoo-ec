@@ -1,4 +1,10 @@
-from .base import PaginationLimits, PaginationLinks, Paging, DEFAULT_PAGE_SIZE
+from .base import (
+    PaginationLimits,
+    PaginationLinks,
+    Paging,
+    DEFAULT_PAGE_SIZE,
+    BaseLinks,
+)
 from .selfconsumption_project import (
     SelfConsumptionProjectInfo,
     SelfConsumptionProjectMember,

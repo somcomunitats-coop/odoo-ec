@@ -12,8 +12,9 @@
     "version": "14.0.1.0.4",
     "depends": [
         "auth_jwt",
-        "base_rest",
+        "base_rest_auth_jwt",
         "base_rest_pydantic",
+        "base_rest",
         "component",
         "energy_communities",
         "energy_project",
