@@ -10,4 +10,4 @@ from .responses import (
     MemberInfoResponse,
 )
 
-from .member import MemberInfoInfo
+from .member import MemberInfo
