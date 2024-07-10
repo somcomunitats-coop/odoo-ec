@@ -2,7 +2,7 @@ from typing import Any, List
 
 from odoo.http import HttpRequest
 
-from .schemas import PaginationLimits, PaginationLinks
+from .schemas import BaseLinks, PaginationLimits, PaginationLinks
 
 
 def get_pagination_links(
@@ -23,14 +23,14 @@ def get_pagination_links(
         else None
     )
     return PaginationLinks(
-        self_=request.url._url,
+        self_=request.url,
         next_page=next_url,
         previous_page=previous_url,
     )
 
 
-def get_links(request: HttpRequest) -> PaginationLinks:
-    return PaginationLinks(self_=request.url._url)
+def get_links(request: HttpRequest) -> BaseLinks:
+    return BaseLinks(self_=request.httprequest.url)
 
 
 def single_response(
@@ -38,7 +38,8 @@ def single_response(
     response_class: Any,
     object_: Any,
 ) -> Any:
-    return response_class(data=object_, _links=get_links(request))
+    links = get_links(request)
+    return response_class(data=object_, _links=links).dict()
 
 
 def collection_response(
