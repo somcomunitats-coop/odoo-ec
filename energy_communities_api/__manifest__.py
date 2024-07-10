@@ -16,12 +16,9 @@
         "component",
         "energy_communities",
         "energy_project",
+        "pydantic",
     ],
-    "external_dependencies": {
-        "python": [
-            "pydantic<2",
-        ]
-    },
+    "external_dependencies": {"python": ["pydantic<2", "extendable-pydantic==0.0.6"]},
     "data": [
         "security/res_users_role_data.xml",
         "security/ir_rule_data.xml",

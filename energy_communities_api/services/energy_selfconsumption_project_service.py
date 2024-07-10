@@ -29,7 +29,7 @@ class EnergyProjectApiService(Component):
     _inherit = "base.rest.service"
     _name = "energy_project.service"
     _collection = "energyselfconsumption.api.services"
-    _usage = "energy_selfconsumption"
+    _usage = "projects"
     _description = """
     Energy selfconsumption API Services
     This service implements the necessary endpoints for energy providers to
@@ -37,7 +37,7 @@ class EnergyProjectApiService(Component):
     """
 
     @restapi.method(
-        [(["/projects"], "GET")],
+        [(["/"], "GET")],
         inpunt_param=PydanticModel(Paging),
         output_param=PydanticModel(ProjectsInfoListResponse),
     )
@@ -60,7 +60,7 @@ class EnergyProjectApiService(Component):
         )
 
     @restapi.method(
-        [(["/projects/<string:project_code>"], "GET")],
+        [(["/<string:project_code>"], "GET")],
         output_param=PydanticModel(SingleProjectInfoResponse),
     )
     def get_selfconsumption_project_by_code(
@@ -79,7 +79,7 @@ class EnergyProjectApiService(Component):
         [
             (
                 [
-                    "/projects/<string:project_code>/members",
+                    "/<string:project_code>/members",
                 ],
                 "GET",
             )

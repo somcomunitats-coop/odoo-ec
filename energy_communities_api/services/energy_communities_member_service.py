@@ -14,7 +14,7 @@ class MemberApiService(Component):
     _inherit = "base.rest.service"
     _name = "member.api.service"
     _collection = "energy_communities_member.api.services"
-    _usage = "member"
+    _usage = "me"
     _description = """
         CE Member roles requests
     """

@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from odoo.addons.pydantic import utils
 
 
-class NaiveOrmModel(BaseModel, metaclass=ExtendableModelMeta):
+class NaiveOrmModel(BaseModel):
     class Config:
         orm_mode = True
         getter_dict = utils.GenericOdooGetter
