@@ -11,6 +11,7 @@
     "category": "Customizations",
     "version": "14.0.1.0.4",
     "depends": [
+        "auth_jwt",
         "base_rest",
         "base_rest_pydantic",
         "component",
