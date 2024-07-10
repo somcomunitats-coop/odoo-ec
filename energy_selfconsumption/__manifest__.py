@@ -14,6 +14,7 @@
         "base",
         "web",
         "mail",
+        "account",
         "contract",
         "contract_variable_quantity",
         "contract_queue_job",
@@ -25,7 +26,9 @@
         "l10n_es",
         "report_csv",
     ],
-    "external_dependencies": {"python": ["pandas>=2.0.3", "numpy>=1.24.4"]},
+    "external_dependencies": {
+        "python": ["pandas>=2.0.3", "numpy>=1.24.4", "openupgradelib>=3.6.1"]
+    },
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
@@ -51,8 +54,7 @@
         "wizards/invoicing_wizard_views.xml",
         "wizards/clean_supply_point_assignation_wizard_views.xml",
         "reports/selfconsumption_reports.xml",
-        "reports/energy_delivered_invoice_template.xml",
-        "reports/power_acquired_invoice_template.xml",
+        "reports/invoice_template.xml",
     ],
     "demo": [
         "demo/energy_selfconsumption_demo.xml",
