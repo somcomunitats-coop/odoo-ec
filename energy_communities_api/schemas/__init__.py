@@ -16,4 +16,4 @@ from .responses import (
     MemberInfoResponse,
 )
 
-from .member import MemberInfo
+from .member import MemberInfo, MemberCommunities

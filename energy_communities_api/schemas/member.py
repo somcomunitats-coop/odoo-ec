@@ -1,5 +1,4 @@
-from extendable_pydantic import ExtendableModelMeta
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from odoo.addons.pydantic import utils
 
@@ -13,3 +12,9 @@ class NaiveOrmModel(BaseModel):
 class MemberInfo(NaiveOrmModel):
     email: str
     name: str
+
+
+class MemberCommunities(BaseModel):
+    id_: int = Field(alias="id")
+    name: str
+    image: bytes

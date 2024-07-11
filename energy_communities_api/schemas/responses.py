@@ -59,3 +59,12 @@ class MemberInfoResponse(BaseResponse):
 
     data: MemberInfo
     links: BaseLinks = Field(alias="_links")
+
+
+class MemberCommunitiesResponse(BaseResponse):
+    """
+    When a single project is requested, this model will be returned
+    """
+
+    data: MemberCommunities
+    links: BaseLinks = Field(alias="_links")
