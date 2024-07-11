@@ -7,25 +7,22 @@ class CreateUsersWizard(models.TransientModel):
     _name = "create.users.wizard"
     _description = "Create users Wizard"
 
-    create_user = fields.Boolean(string="Create Odoo user (in case it doesn't exist)")
-    create_kc_user = fields.Boolean(
-        string="Create Keycloak user (in case it doesn't exist)"
-    )
-    invite_user_through_kc = fields.Boolean(
-        string="Send invitation email to confirm email and reset password"
+    action = fields.Selection(
+        [
+            ("create_user", _("1) Create Odoo user (in case it doesn't exist)")),
+            ("create_kc_user", _("2) Create Keycloak user (in case it doesn't exist)")),
+            (
+                "invite_user_through_kc",
+                _("3) Send invitation email to confirm email and reset password"),
+            ),
+        ],
+        default="create_user",
     )
     force_invite = fields.Boolean(
         string="Force send invitation email in case it wasn't sent"
     )
 
     def execute(self):
-        if (
-            not self.create_user
-            and not self.create_kc_user
-            and not self.invite_user_through_kc
-        ):
-            raise ValidationError(_("Please select an action."))
-
         model = self.env.context.get("active_model")
         role_id = self.env.ref("energy_communities.role_ce_member")
         if model == "res.partner":
@@ -47,9 +44,7 @@ class CreateUsersWizard(models.TransientModel):
                     company_id,
                     partner_id,
                     role_id,
-                    self.create_user,
-                    self.create_kc_user,
-                    self.invite_user_through_kc,
+                    self.action,
                     self.force_invite,
                     user_vals={},
                 )
@@ -71,9 +66,7 @@ class CreateUsersWizard(models.TransientModel):
                             company,
                             partner.partner_id,
                             role_id,
-                            self.create_user,
-                            self.create_kc_user,
-                            self.invite_user_through_kc,
+                            self.action,
                             self.force_invite,
                             user_vals={},
                         )
