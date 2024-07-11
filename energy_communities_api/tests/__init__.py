@@ -1,1 +1,1 @@
-from . import test_selfconsumption_project_info
+from . import test_member_api_service
