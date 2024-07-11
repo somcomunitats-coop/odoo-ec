@@ -30,6 +30,8 @@ class TestMemberApiService(HttpCase, RegistryMixin):
     def test__me_endpoint__ok(self):
         # given http_client
         # self.url_open
+        # and a valid token
+        # self.token
 
         # when we call for the personal data in api
         response = self.url_open(
@@ -44,4 +46,26 @@ class TestMemberApiService(HttpCase, RegistryMixin):
                 "data": client_data_response,
                 "links": {"self_": "http://127.0.0.1:8069/api/energy-communities/me"},
             },
+        )
+
+    def test__me_communities_endpoint__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+
+        # when we call for the energy_communties that i belong
+        response = self.url_open(
+            "/api/energy-communities/me/communities",
+            headers={"Authorization": self.token},
+        )
+
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and we get the correct information
+        communities = response.json()
+        self.assertGreaderEqual(len(communities.get("data", 0), 1))
+        self.assertEqual(
+            communities.get("links", {}).get("self", ""),
+            "http://127.0.0.1:8069/api/energy-communities/me/communities",
         )
