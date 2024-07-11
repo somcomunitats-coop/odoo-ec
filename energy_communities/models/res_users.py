@@ -342,14 +342,10 @@ class ResUsers(models.Model):
         company_id,
         partner_id,
         role_id,
-        create_user,
-        create_kc_user,
-        invite_user_through_kc,
+        action,
         force_invite,
         user_vals,
     ):
-        if not create_user and not create_kc_user and not invite_user_through_kc:
-            return False
         if partner_id:
             user_vals = {
                 "partner_id": partner_id.id,
@@ -399,12 +395,15 @@ class ResUsers(models.Model):
             )
         user.sudo().set_user_roles(company_id, role_id)
 
-        if create_kc_user or invite_user_through_kc:
+        if action in ("create_kc_user", "invite_user_through_kc"):
             user.create_users_on_keycloak()
 
         if (
             force_invite
-            or (invite_user_through_kc and not user.last_user_invitation_through_kc)
+            or (
+                action == "invite_user_through_kc"
+                and not user.last_user_invitation_through_kc
+            )
         ) and user.oauth_uid:
             user.send_reset_password_mail()
 
