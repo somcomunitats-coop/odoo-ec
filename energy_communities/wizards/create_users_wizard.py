@@ -19,7 +19,7 @@ class CreateUsersWizard(models.TransientModel):
         default="create_user",
     )
     force_invite = fields.Boolean(
-        string="Force send invitation email in case it wasn't sent"
+        string="Force send invitation email in case it has been already sent"
     )
 
     def execute(self):
