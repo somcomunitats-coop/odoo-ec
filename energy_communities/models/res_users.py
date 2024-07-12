@@ -415,15 +415,6 @@ class ResUsers(models.Model):
         return user
 
     def set_user_roles(self, company_id, role_id):
-        if not self.login_date:
-            self.env["res.users.role.line"].create(
-                {
-                    "user_id": self.id,
-                    "role_id": self.env.ref("energy_communities.role_internal_user").id,
-                }
-            )
-            return self.create_user_role_line(company_id, role_id)
-
         self.check_role_can_be_assingned(company_id, role_id)
         return self.create_user_role_line(company_id, role_id)
 
@@ -510,6 +501,21 @@ class ResUsers(models.Model):
             return True
 
     def create_user_role_line(self, company_id, role_id):
+        if not self.login_date:
+            internal_user = self.env.ref("energy_communities.role_internal_user").id
+            internal_user_role = self.env["res.users.role.line"].search(
+                [
+                    ("user_id", "=", self.id),
+                    ("role_id", "=", internal_user),
+                ]
+            )
+            if not internal_user_role:
+                self.env["res.users.role.line"].create(
+                    {
+                        "user_id": self.id,
+                        "role_id": internal_user,
+                    }
+                )
         user_roles = self.env["res.users.role.line"].search(
             [
                 ("user_id", "=", self.id),
@@ -518,7 +524,7 @@ class ResUsers(models.Model):
             ]
         )
         if not user_roles:
-            return self.env["res.users.role.line"].create(
+            self.env["res.users.role.line"].create(
                 {
                     "user_id": self.id,
                     "role_id": role_id.id,
