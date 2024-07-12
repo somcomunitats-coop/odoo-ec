@@ -9,12 +9,7 @@ from odoo.addons.base_rest_pydantic.restapi import (
 )
 from odoo.addons.component.core import Component
 
-from ..schemas import (
-    MemberCommunities,
-    MemberCommunitiesResponse,
-    MemberInfo,
-    MemberInfoResponse,
-)
+from ..schemas import MemberCommunitiesResponse, MemberInfo, MemberInfoResponse
 from ..utils import single_response
 
 
@@ -40,10 +35,10 @@ class MemberApiService(Component):
         return single_response(request, MemberInfoResponse, member_info)
 
     @restapi.method(
-        [(["/"], "GET")],
-        # output_param=PydanticModelList(MemberInfoResponse),
+        [(["/communities"], "GET")],
+        # output_param=PydanticModelList(MemberComunitiesResponse),
     )
-    def me(self):
+    def communities(self):
         if not getattr(request, "jwt_partner_id", None):
             raise Unauthorized()
 
