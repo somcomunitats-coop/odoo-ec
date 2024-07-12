@@ -27,21 +27,17 @@ class MemberApiService(Component):
         # output_param=PydanticModelList(MemberInfoResponse),
     )
     def me(self):
-        if not getattr(request, "jwt_partner_id", None):
-            raise Unauthorized()
-
-        member = request.env["res.partner"].browse(request.jwt_partner_id)
-        member_info = MemberInfo.from_orm(member)
-        return single_response(request, MemberInfoResponse, member_info)
+        return single_response(
+            request, MemberInfoResponse, MemberInfo.from_orm(self.env.user.partner_id)
+        )
 
     @restapi.method(
         [(["/communities"], "GET")],
         # output_param=PydanticModelList(MemberComunitiesResponse),
     )
     def communities(self):
-        if not getattr(request, "jwt_partner_id", None):
-            raise Unauthorized()
-
-        member = request.env["res.partner"].browse(request.jwt_partner_id)
-        member_communities = self._get_member_communities(member)
-        return single_response(request, MemberCommunitiesResponse, member_communities)
+        return single_response(
+            request,
+            MemberCommunitiesResponse,
+            self._get_member_communities(self.env.user.partner_id),
+        )

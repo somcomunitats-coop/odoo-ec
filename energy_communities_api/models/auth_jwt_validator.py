@@ -29,18 +29,22 @@ class AuthJwtValidator(models.Model):
             if record.user_id_strategy == JWT_DYNAMIC:
                 record.partner_id_strategy = RELATED_USER
 
+    def _get_jwt_user(self, payload):
+        username = payload.get("preferred_username", "").upper()
+        user = self.env["res.users"].sudo().search([("login", "=", username)])
+        if not user:
+            raise Unauthorized(f"User with vat {username} not found")
+        return user
+
     def _get_uid(self, payload):
         uid = super()._get_uid(payload)
         if self.user_id_strategy == JWT_DYNAMIC:
-            username = payload.get("preferred_username", "").upper()
-            user = self.env["res.user"].search([("login", "=", username)])
-            if not user:
-                raise Unauthorized(f"User with vat {username} not found")
+            user = self._get_jwt_user(payload)
             return user.id
         return uid
 
     def _get_partner_id(self, payload):
         pid = super()._get_partner_id(payload)
         if self.partner_id_strategy == RELATED_USER:
-            return self._get_uid(payload).parner_id.id
+            return self._get_jwt_user(payload).partner_id.id
         return pid
