@@ -28,6 +28,8 @@ class AuthJwtValidator(models.Model):
         for record in self:
             if record.user_id_strategy == JWT_DYNAMIC:
                 record.partner_id_strategy = RELATED_USER
+            else:
+                record.partner_id_strategy = "email"
 
     def _get_jwt_user(self, payload):
         username = payload.get("preferred_username", "").upper()
