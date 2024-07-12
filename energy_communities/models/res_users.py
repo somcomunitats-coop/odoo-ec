@@ -1,5 +1,6 @@
 import logging
 import re
+from datetime import datetime
 from json import JSONDecodeError
 
 import requests
@@ -360,6 +361,7 @@ class ResUsers(models.Model):
             response = requests.put(
                 endpoint, headers=headers, data='["UPDATE_PASSWORD", "VERIFY_EMAIL"]'
             )
+            self.write({"last_user_invitation_through_kc": datetime.now()})
         else:
             raise exceptions.UserError(_("Reset password url is not set."))
         if response.status_code != 204:
