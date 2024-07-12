@@ -14,7 +14,7 @@ class MemberInfo(NaiveOrmModel):
     name: str
 
 
-class MemberCommunities(BaseModel):
+class MemberCommunity(BaseModel):
     id_: int = Field(alias="id")
     name: str
     image: bytes

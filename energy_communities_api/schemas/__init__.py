@@ -14,6 +14,7 @@ from .responses import (
     SingleProjectInfoResponse,
     ProjectMembersResponse,
     MemberInfoResponse,
+    MemberCommunitiesResponse,
 )
 
-from .member import MemberInfo, MemberCommunities
+from .member import MemberInfo, MemberCommunity
