@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-09 09:57+0000\n"
-"PO-Revision-Date: 2024-07-09 12:46+0200\n"
+"POT-Creation-Date: 2024-07-15 13:14+0000\n"
+"PO-Revision-Date: 2024-07-15 15:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -113,7 +113,9 @@ msgstr ""
 "        </p>\n"
 "        <p>\n"
 "            Para cualquier duda o incidencia contacta con el equipo de soporte; soporte@somcomunitats.coop.\n"
-"        </p>"
+"        </p>\n"
+"            \n"
+"        "
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
@@ -172,12 +174,12 @@ msgstr "'%s - Acuerdo de poder compartido' % object.name"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid "(Completar para cada consumidor asociado)"
-msgstr "(Completar para cada consumidor asociado)"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid "(Completar para cada productor asociado)"
-msgstr "(Completar para cada productor asociado)"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
@@ -185,28 +187,26 @@ msgid ""
 "(Si existen varios productores con instalaciones de generación asociadas al autoconsumo, completar\n"
 "                        para cada uno de ellos)"
 msgstr ""
-"(Si existen varios productores con instalaciones de generación asociadas al autoconsumo, completar\n"
-"                        para cada uno de ellos)"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "(Vía pública y nº)"
-msgstr "(Vía pública y nº)"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid "*indicados en el fichero de reparto anual ("
-msgstr "*indicados en el fichero de reparto anual ("
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "- Acuerdo de Reparto firmado por los participantes del autoconsumo colectivo"
-msgstr "- Acuerdo de Reparto firmado por los participantes del autoconsumo colectivo"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "- Acuerdo de reparto modificado"
-msgstr "- Acuerdo de reparto modificado"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -214,8 +214,6 @@ msgid ""
 "- Certificado de Instalación Eléctrica /documento técnico requerido en cada\n"
 "                                        CCAA"
 msgstr ""
-"- Certificado de Instalación Eléctrica /documento técnico requerido en cada\n"
-"                                        CCAA"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -223,18 +221,16 @@ msgid ""
 "- Fichero TXT donde figuren los coeficientes de reparto fijos o variables según\n"
 "                                        establece la Orden TED 1247/2021"
 msgstr ""
-"- Fichero TXT donde figuren los coeficientes de reparto fijos o variables según\n"
-"                                        establece la Orden TED 1247/2021"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "- Nuevo fichero TXT de coeficientes de reparto"
-msgstr "- Nuevo fichero TXT de coeficientes de reparto"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid ".txt)"
-msgstr ".txt)"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
@@ -294,7 +290,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "<b>ANEXO I: CONSUMIDORES ASOCIADOS QUE OTORGAN PODER DE REPRESENTACIÓN (1)</b>"
-msgstr "<b>ANEXO I: CONSUMIDORES ASOCIADOS QUE OTORGAN PODER DE REPRESENTACIÓN (1)</b>"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
@@ -322,8 +318,6 @@ msgid ""
 "<b>CONSUMIDOR ASOCIADO</b><br/>\n"
 "                                    (titular del suministro)"
 msgstr ""
-"<b>CONSUMIDOR ASOCIADO</b><br/>\n"
-"                                    (titular del suministro)"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
@@ -382,8 +376,7 @@ msgid ""
 "                                    <span groups=\"account.group_show_line_subtotals_tax_included\">Total Price</span>"
 msgstr ""
 "<span groups=\"account.group_show_line_subtotals_tax_excluded\">Cantidad</span>\n"
-"                                    <span groups=\"account.group_show_line_subtotals_tax_included\">Precio Total</"
-"span>"
+"                                    <span groups=\"account.group_show_line_subtotals_tax_included\">Precio Total</span>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
@@ -453,7 +446,7 @@ msgstr "<span>Precio unidad</span>"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
 msgid "<strong class=\"mr16\">Subtotal</strong>"
-msgstr "<strong class=\"mr16\">Subtotal</strong>"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -482,8 +475,7 @@ msgid ""
 "titular\n"
 "                                sobre CUPS existentes se subrogarán al acuerdo de reparto existente, con lo que no "
 "hará\n"
-"                                falta modificar ni fichero txt ni acuerdo de reparto, salvo que se modifiquen "
-"también\n"
+"                                falta modificar ni fichero txt ni acuerdo de reparto, salvo que se modifiquen también\n"
 "                                los coeficientes de reparto."
 msgstr ""
 
@@ -599,8 +591,8 @@ msgid ""
 "Are you sure you want to change the project status to the previous step?                                  If so, the "
 "distribution table will return to the 'validated' state."
 msgstr ""
-"¿Está seguro de que desea cambiar el estado del proyecto al paso anterior?                                  Si es "
-"así, la tabla de distribución volverá al estado \"validado\"."
+"¿Está seguro de que desea cambiar el estado del proyecto al paso anterior?                                  Si es así, "
+"la tabla de distribución volverá al estado \"validado\"."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/clean_supply_point_assignation_wizard.py:0
@@ -650,8 +642,6 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
-#: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
 #, python-format
 msgid ""
 "CUPS: {code}\n"
@@ -782,10 +772,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid ""
 "Con la firma del presente acuerdo, los consumidores <b> nos acogemos voluntariamente al\n"
-"                        mecanismo de compensación simplificada </b> entre los déficits del consumo de cada "
-"consumidor\n"
-"                        y la totalidad de los excedentes de la instalación de autoconsumo, tal como establece el "
-"Real\n"
+"                        mecanismo de compensación simplificada </b> entre los déficits del consumo de cada consumidor\n"
+"                        y la totalidad de los excedentes de la instalación de autoconsumo, tal como establece el Real\n"
 "                        Decreto 244/2019, de 5 de abril."
 msgstr ""
 
@@ -826,7 +814,7 @@ msgstr "Generación de contratos"
 #. module: energy_selfconsumption
 #: model:ir.model,name:energy_selfconsumption.model_contract_line
 msgid "Contract Line"
-msgstr "línea de contrato"
+msgstr "Línea de contrato"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__contract_template_id
@@ -1314,25 +1302,15 @@ msgstr "Icono de fuente impresionante, p. fa-tasks"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
-#: code:addons/energy_selfconsumption/models/supply_point.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
-msgid ""
-"For the 2.0TD rate, the maximum contracted power must be between 0 and 15 "
-"kW."
-msgstr ""
-"Para la tarifa 2.0TD, la potencia máxima contratada debe estar comprendida entre 0 y 15 "
-"kW."
+msgid "For the 2.0TD rate, the maximum contracted power must be between 0 and 15 kW."
+msgstr "Para la tarifa 2.0TD, la potencia máxima contratada debe estar comprendida entre 0 y 15 kW."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
-#: code:addons/energy_selfconsumption/models/supply_point.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
-msgid ""
-"For the 3.0TD rate, the maximum contracted power must be greater than 15 kW."
-msgstr ""
-"Para la tarifa 3.0TD, la potencia máxima contratada debe ser superior a 15 kW."
+msgid "For the 3.0TD rate, the maximum contracted power must be greater than 15 kW."
+msgstr "Para la tarifa 3.0TD, la potencia máxima contratada debe ser superior a 15 kW."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
@@ -1928,8 +1906,7 @@ msgstr "Próximo Período de Comienzo"
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "No valid encoding was found for the attached file"
-msgstr ""
-"No se ha encontrado ninguna codificación válida para el archivo adjunto"
+msgstr "No se ha encontrado ninguna codificación válida para el archivo adjunto"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__message_needaction_counter
@@ -2413,25 +2390,13 @@ msgstr "Puntos de Suministro"
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "The CUPS field is required. Please make sure you provide a valid CUPS"
-msgstr ""
-"El campo CUPS es obligatorio. Por favor, asegúrese de proporcionar un CUPS "
-"válido"
+msgstr "El campo CUPS es obligatorio. Por favor, asegúrese de proporcionar un CUPS válido"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "The IBAN field cannot be empty."
 msgstr "El campo de IBAN es requerido."
-
-#. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/models/supply_point.py:0
-#, python-format
-msgid ""
-"The indicated contracted power is very high. Please check that this is correct. Remember that we use '.' to express "
-"decimals, not ','."
-msgstr ""
-"La potencia contratada indicada es muy elevada. Por favor verifique que esto sea correcto. Recuerde que usamos '.' "
-"para expresar decimales, no ','."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
@@ -2596,11 +2561,6 @@ msgstr "Validado"
 #, python-format
 msgid "Variable hourly"
 msgstr "Variable por horas"
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__hourly
-msgid "Variable por hora"
-msgstr ""
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__website_message_ids
