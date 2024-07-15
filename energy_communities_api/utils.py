@@ -55,5 +55,5 @@ def collection_response(
         count=actual_count,
         page=paging.page,
         data=collection,
-        _links=get_pagination_links(request, actual_count, total_results, paging),
-    )
+        # _links=get_pagination_links(request, actual_count, paging),
+    ).dict()

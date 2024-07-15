@@ -15,6 +15,6 @@ class MemberInfo(NaiveOrmModel):
 
 
 class MemberCommunity(BaseModel):
-    id_: int = Field(alias="id")
+    # id_: int = Field(alias="id")
     name: str
-    image: bytes
+    # image: bytes

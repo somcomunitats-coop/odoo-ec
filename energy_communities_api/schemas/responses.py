@@ -67,4 +67,4 @@ class MemberCommunitiesResponse(BaseResponse):
     """
 
     data: List[MemberCommunity]
-    links: BaseLinks = Field(alias="_links")
+    # links: BaseLinks = Field(alias="_links")
