@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-09 09:56+0000\n"
-"PO-Revision-Date: 2024-07-09 09:56+0000\n"
+"POT-Creation-Date: 2024-07-15 13:13+0000\n"
+"PO-Revision-Date: 2024-07-15 13:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -203,6 +203,16 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_4td
 msgid "6.4TD"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+msgid ""
+"<b>\n"
+"                                The indicated maximum contracted power is very high.\n"
+"                                Please check that this is correct.\n"
+"                                Remember that we use '.' to express decimals, not ','.\n"
+"                </b>"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -559,6 +569,15 @@ msgid "CUPS"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
+#, python-format
+msgid ""
+"CUPS: {code}\n"
+"Owner: {owner_id}\n"
+"Invoicing period: #START# - #END#\n"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__cadastral_reference
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__cadastral_reference
 msgid "Cadastral reference"
@@ -722,11 +741,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__contract_template_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_product_product__contract_template_id
 msgid "Contract Template"
-msgstr ""
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
-msgid "Contracted power"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -1198,6 +1212,21 @@ msgstr ""
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_type_icon
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#, python-format
+msgid ""
+"For the 2.0TD rate, the maximum contracted power must be between 0 and 15 "
+"kW."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#, python-format
+msgid ""
+"For the 3.0TD rate, the maximum contracted power must be greater than 15 kW."
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -1683,6 +1712,16 @@ msgstr ""
 #: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
 #, python-format
 msgid "Mandate not found for {partner}"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
+msgid "Maximum contracted power"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
+msgid "Maximum contracted power in kW"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -2295,14 +2334,6 @@ msgid "The IBAN field cannot be empty."
 msgstr ""
 
 #. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/models/supply_point.py:0
-#, python-format
-msgid ""
-"The indicated contracted power is very high. Please check that this is "
-"correct. Remember that we use '.' to express decimals, not ','."
-msgstr ""
-
-#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
 #, python-format
 msgid "The partner of the supply point is not subscribed to the project"
@@ -2458,11 +2489,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__validated
 #, python-format
 msgid "Validated"
-msgstr ""
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
-msgid "Value in kilowatts (kW)"
 msgstr ""
 
 #. module: energy_selfconsumption
