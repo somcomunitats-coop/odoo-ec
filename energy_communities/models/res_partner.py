@@ -13,12 +13,6 @@ class ResPartner(models.Model):
     _name = "res.partner"
     _inherit = ["res.partner", "user.currentcompany.mixin"]
 
-    gender = fields.Selection(
-        selection_add=[
-            ("not_binary", "Not binary"),
-            ("not_share", "I prefer to not share it"),
-        ]
-    )
     signup_token = fields.Char(
         groups="base.group_erp_manager,energy_communities.group_admin"
     )
@@ -89,6 +83,7 @@ class ResPartner(models.Model):
             {"company_ids": False}
         )
 
+    # TODO: Rename this method. It has nothing to do with cooperator
     def get_cooperator_from_vat(self, vat, company_id=False):
         if vat:
             vat = vat.strip()

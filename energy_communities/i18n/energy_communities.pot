@@ -6,50 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-31 09:56+0000\n"
-"PO-Revision-Date: 2024-05-31 09:56+0000\n"
+"POT-Creation-Date: 2024-06-11 08:24+0000\n"
+"PO-Revision-Date: 2024-06-11 08:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: energy_communities
-#: model:mail.template,body_html:energy_communities.email_template_conditions_voluntary_share
-msgid ""
-"\n"
-"    <p>Dear ${object.name},</p>\n"
-"    <p>\n"
-"        Last week we charged your account corresponding to your voluntary contribution to the share capital of the\n"
-"        <b>${object.company_id.name}</b>.\n"
-"    </p>\n"
-"    <p>\n"
-"        We attach the contract with the conditions of your investment and we remind you that for any doubt or\n"
-"        clarification in relation to the contribution made you can send an email to\n"
-"        <a href=\"${object.company_id.email}\">${object.company_id.email}</a> or consult the website\n"
-"        <a href=\"${object.company_id.website}\"> ${object.company_id.website}</a>.\n"
-"    </p>\n"
-"    <p>\n"
-"        We take this opportunity to thank you, once again, for your involvement with the <b>${object.company_id.name}</b>\n"
-"        objective to promote those actions or projects that contribute to an energy, economic and social transition\n"
-"        in ${object.company_id.city}.\n"
-"    </p>\n"
-"    <p>\n"
-"        Get the word out by explaining the project to family and friends. The more we are, the further we will go!\n"
-"    </p>\n"
-"    <p>\n"
-"        Thank you very much and good energy!\n"
-"    </p>\n"
-"    <p>\n"
-"        Sincerely,\n"
-"    </p>\n"
-"    <p>\n"
-"        ${object.company_id.name} team\n"
-"    </p>\n"
-"    <img src=\"/web/image/res.company/${object.company_id.id}/logo\" style=\"width: 150px;height: 80px;\"/>\n"
-"            "
-msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser_pwd
@@ -120,12 +84,6 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__street
 msgid "Address"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "Address not found"
 msgstr ""
 
 #. module: energy_communities
@@ -202,24 +160,8 @@ msgid "Authorization token not found"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.iban_template_es_ccee
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
-msgid "Bank Account Number"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_partner_bank
 msgid "Bank Accounts"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
-msgid "Become Company Cooperator of"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
-msgid "Become Cooperator of"
 msgstr ""
 
 #. module: energy_communities
@@ -260,12 +202,6 @@ msgstr ""
 #. module: energy_communities
 #: model:cm.map,searchbar_placeholder:energy_communities.map_campanya
 msgid "Cerca adreça o municipi"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_product_product__mail_template
-#: model:ir.model.fields,field_description:energy_communities.field_product_template__mail_template
-msgid "Certificate email template"
 msgstr ""
 
 #. module: energy_communities
@@ -312,12 +248,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__city
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__city
 msgid "City"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "City not found"
 msgstr ""
 
 #. module: energy_communities
@@ -413,7 +343,6 @@ msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__company_id
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "Company"
 msgstr ""
 
@@ -459,12 +388,6 @@ msgid "Compres col·lectives"
 msgstr ""
 
 #. module: energy_communities
-#: model:mail.template,subject:energy_communities.email_template_conditions_voluntary_share
-msgid ""
-"Conditions Share Capital to ${object.company_id.name} Ref. ACSV${object.id}"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_config_settings
 msgid "Config Settings"
 msgstr ""
@@ -472,11 +395,6 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_config_menu
 msgid "Configuration"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
-msgid "Confirm Email"
 msgstr ""
 
 #. module: energy_communities
@@ -513,37 +431,12 @@ msgid "Contact to the Platform"
 msgstr ""
 
 #. module: energy_communities
-#: model:product.template,name:energy_communities.share_capital_product_template
-msgid "Contribution to Share Capital"
-msgstr ""
-
-#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__cooperative
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__cooperative
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__cooperative
 #, python-format
 msgid "Cooperative"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
-msgid "Cooperator"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__property_cooperator_account
-msgid "Cooperator Account"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__cooperator_journal
-msgid "Cooperator Journal"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__cooperator_share_form_header_text
-msgid "Cooperator share form header text"
 msgstr ""
 
 #. module: energy_communities
@@ -636,11 +529,6 @@ msgid "Create user"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__create_user
-msgid "Create user for cooperator"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__create_user_in_keycloak
 msgid "Create user for keycloak"
 msgstr ""
@@ -721,21 +609,7 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__email
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__email
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "Email"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "Email and confirmation email addresses don't match."
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "Email not found"
 msgstr ""
 
 #. module: energy_communities
@@ -886,12 +760,6 @@ msgid "Foundation date"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_partner__gender
-#: model:ir.model.fields,field_description:energy_communities.field_res_users__gender
-msgid "Gender"
-msgstr ""
-
-#. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_common_generation
 msgid "Generació renovable comunitaria"
 msgstr ""
@@ -916,26 +784,10 @@ msgid "Get current selected company from any model"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
-msgid "Hello,"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__hierarchy_level
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__hierarchy_level
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__hierarchy_level
 msgid "Hierarchy level"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.iban_template_es_ccee
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
-msgid "I accept that the entity issues direct debit receipts to this account."
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__gender__not_share
-msgid "I prefer to not share it"
 msgstr ""
 
 #. module: energy_communities
@@ -970,13 +822,6 @@ msgid "ID Ext Source"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
-msgid ""
-"INDIVIDUAL\n"
-"                PARTNER"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__activity_exception_icon
 msgid "Icon"
 msgstr ""
@@ -1005,12 +850,6 @@ msgid ""
 "If it is checked, the Coordinator will receive a copy of each auto-response "
 "email that is generated in any of its CCEE when a new Member Subscription "
 "request is received."
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,help:energy_communities.field_product_product__mail_template
-#: model:ir.model.fields,help:energy_communities.field_product_template__mail_template
-msgid "If left empty, the default global mail template will be used."
 msgstr ""
 
 #. module: energy_communities
@@ -1062,11 +901,6 @@ msgid "Information about future CE by location"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__capital_share
-msgid "Initial capital share"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_instagram_url
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__instagram_link
 msgid "Instagram link"
@@ -1096,11 +930,6 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__is_keycloak_provider
 msgid "Keycloak provider"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
-msgid "LEGAL ENTITY PARTNER"
 msgstr ""
 
 #. module: energy_communities
@@ -1262,11 +1091,6 @@ msgid "Map not found slug_id: {}"
 msgstr ""
 
 #. module: energy_communities
-#: model:res.groups,name:energy_communities.mass_mailing_super_user
-msgid "Mass Mailing Superuser"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_has_error
 msgid "Message Delivery error"
 msgstr ""
@@ -1305,17 +1129,6 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__name
 msgid "Name"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
-#, python-format
-msgid "New"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__new_product_share_template
-msgid "New Product Share Template"
 msgstr ""
 
 #. module: energy_communities
@@ -1375,28 +1188,6 @@ msgid "Non profit association"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__gender__not_binary
-msgid "Not binary"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "Not valid parameter value [odoo_company_id]"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
-msgid ""
-"Note: Please, if you are not yet a member, you must process it through\n"
-"            these forms:"
-msgstr ""
-
-#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
 #, python-format
@@ -1442,21 +1233,6 @@ msgstr ""
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_open
 msgid "Oberta"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
-msgid ""
-"Once you are a member you can enjoy the services available from the community and be part of a movement\n"
-"                of social and energy model transformation."
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
-msgid ""
-"Once your request is received, you will receive a confirmation email with "
-"the instructions to follow."
 msgstr ""
 
 #. module: energy_communities
@@ -1518,23 +1294,12 @@ msgid "Parent landing page"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "Partner not found"
-msgstr ""
-
-#. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_to_activate
 msgid "Per activar"
 msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__phone
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "Phone"
 msgstr ""
 
@@ -1593,12 +1358,6 @@ msgid "Please choose an option"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#, python-format
-msgid "Please upload a scan of your ID card."
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__postal_code
 msgid "Postal code"
 msgstr ""
@@ -1615,20 +1374,8 @@ msgid "Process"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__product_share_template
-msgid "Product Share Template"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model,name:energy_communities.model_product_template
 msgid "Product Template"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "Provided IBAN is not valid."
 msgstr ""
 
 #. module: energy_communities
@@ -1709,11 +1456,6 @@ msgid "Secondary Image"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
-msgid "Send"
-msgstr ""
-
-#. module: energy_communities
 #: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__design_services
 #, python-format
@@ -1725,16 +1467,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__awareness_services
 #, python-format
 msgid "Services to raise awareness in the creation of CCEE"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
-msgid "Share number"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
-msgid "Share type"
 msgstr ""
 
 #. module: energy_communities
@@ -1781,12 +1513,6 @@ msgstr ""
 msgid ""
 "Since you are not a coordinator admin you are not allowed to assign "
 "coordinator admins."
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#, python-format
-msgid "Some mandatory fields have not been filled."
 msgstr ""
 
 #. module: energy_communities
@@ -1867,12 +1593,6 @@ msgid "Superuser password"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
-msgid "Target Odoo Company id"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__social_telegram
 msgid "Telegram Account"
 msgstr ""
@@ -1909,50 +1629,9 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#, python-format
-msgid ""
-"There is an existing account for this vat number on this community. Please "
-"contact with the community administrators."
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,help:energy_communities.field_account_multicompany_easy_creation_wiz__property_cooperator_account
-msgid ""
-"This account will be the default one as the receivable account for the "
-"cooperators"
-msgstr ""
-
-#. module: energy_communities
 #: code:addons/energy_communities/wizards/change_coordinator_wizard.py:0
 #, python-format
 msgid "This community has been moved to a new coordinator"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "This company doesn't have a voluntary product share selected."
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
-msgid "This form allow you to request be member of the community:"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
-msgid ""
-"This is the form to be able to make Voluntary Contributions to the Social "
-"Capital by the members of"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,help:energy_communities.field_res_company__cooperator_journal
-msgid ""
-"This journal will be the default one as the receivable journal for the "
-"cooperators"
 msgstr ""
 
 #. module: energy_communities
@@ -1965,28 +1644,6 @@ msgstr ""
 #: model:cm.map,categories_filter_title:energy_communities.map_campanya
 #: model:cm.map,proposal_form_subtitle_step_category:energy_communities.map_campanya
 msgid "Tipus de comunitat"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
-msgid ""
-"To be a member you must fulfill this form and lateron proceed to pay the "
-"initial share of"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
-msgid ""
-"To join, you must first fill out this form where we ask for a bank account "
-"and authorization to issue a bank receipt to collect the initial mandatory "
-"financial contribution of"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_shares_template
-msgid "Total"
 msgstr ""
 
 #. module: energy_communities
@@ -2041,12 +1698,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__undefined
 #, python-format
 msgid "Under definition"
-msgstr ""
-
-#. module: energy_communities
-#: model:product.template,uom_name:energy_communities.share_capital_product_template
-#: model:product.template,uom_name:energy_communities.voluntary_share_capital_product_template
-msgid "Units"
 msgstr ""
 
 #. module: energy_communities
@@ -2151,33 +1802,7 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__vat
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__vat
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
 msgid "VAT"
-msgstr ""
-
-#. module: energy_communities
-#: model:product.template,name:energy_communities.voluntary_share_capital_product_template
-msgid "Voluntary Contribution to Share Capital"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
-msgid "Voluntary Share of"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
-msgid "Voluntary Shares"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__voluntary_share_form_header_text
-msgid "Voluntary share form header text"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__voluntary_share_id
-msgid "Voluntary share to show on website"
 msgstr ""
 
 #. module: energy_communities
@@ -2251,28 +1876,9 @@ msgid "Wordpress landing and map place has been successfully updated."
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#, python-format
-msgid ""
-"You can't subscribe for an amount that exceeds {amount}{currency_symbol}."
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_main.py:0
-#, python-format
-msgid "You can't subscribe to two different types of share."
-msgstr ""
-
-#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid "You cannot create a instance company with a parent company."
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "You must check the SEPA transference."
 msgstr ""
 
 #. module: energy_communities
@@ -2281,22 +1887,11 @@ msgid "ZIP code"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "ZIP code not found"
-msgstr ""
-
-#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__ce_status__active
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__ce_status__active
 #, python-format
 msgid "active"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share
-msgid "and"
 msgstr ""
 
 #. module: energy_communities
@@ -2354,22 +1949,6 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_landing_page
 msgid "landing.page"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
-msgid "member_ccee_eu_ES."
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
-msgid "member_eu_ES"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.voluntary_share_text_template
-msgid "vol_share_eu_es"
 msgstr ""
 
 #. module: energy_communities
@@ -2756,15 +2335,4 @@ msgid ""
 "\"po2_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</div>\",\n"
 "\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></div>\"\n"
 "}"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecompanycooperator
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
-msgid "€ by follow the steps you will receive by email."
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.becomecooperator_ccee
-msgid "€_eu_ES."
 msgstr ""

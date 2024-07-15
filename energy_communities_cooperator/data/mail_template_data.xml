@@ -1,0 +1,53 @@
+<odoo>
+    <data>
+
+        <record
+      id="email_template_voluntary_share_interest_return"
+      model="mail.template"
+    >
+            <field name="name">Voluntary shares interest return email</field>
+            <field name="email_from">${object.company_id.email}</field>
+            <field
+        name="subject"
+      >[${object.company_id.comercial_name}] Voluntary share interest return</field>
+            <field name="email_to">${object.partner_id.name}</field>
+            <field name="model_id" ref="model_account_move" />
+            <field name="auto_delete" eval="False" />
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html">
+                <![CDATA[
+                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                        <p>Hello ${object.partner_id.firstname},</p><br/>
+                        <p>We have generated the yearly interest return of your voluntary shares contribution.</p>
+                        % if object.partner_bank_id:
+                        <p>Soon you'll receive a transfer on your IBAN account finished on: ${object.partner_bank_id.acc_number[-4:]}.
+                        % else:
+                          <p>Soon you'll receive a transfer on your IBAN account.
+                        % endif
+                        <p>The summary of the transaction:</p>
+                        <p></p>
+                        <p><ul>
+                          <li><strong>Period:</strong> from ${object.voluntary_share_interest_return_id.start_date_period.strftime('%d/%m/%Y')} to ${object.voluntary_share_interest_return_id.end_date_period.strftime('%d/%m/%Y')}</li>
+        <li><strong>Total contribution:</strong> ${str("%.2f" | format(object.voluntary_share_total_contribution)).replace('.',',')}€</li>
+                          <li><strong>Total interest:</strong> ${str("%.2f" | format(object.amount_untaxed)).replace('.',',')}€</li>
+                          <li><strong>Taxes:</strong> ${str("%.2f" | format(object.amount_tax)).replace('.',',')}€</li>
+                          <li><strong>Total to receive:</strong> ${str("%.2f" | format(object.amount_total)).replace('.',',')}€</li>
+                        </ul></p>
+                        <p>Don't hesitate to contact us at <a href="${object.company_id.email}">${object.company_id.email}</a> for any question you might have using the code: ${object.name}</p>
+                        <p>Thanks for your contribution helping generate our green energy.<p>
+                        <p>Best regards,</p>
+                        <p></p>
+                        <p>${object.company_id.comercial_name}</p>
+                    </div>
+                ]]>
+            </field>
+            <field
+        name="report_template"
+        ref="action_voluntary_share_interest_return_invoices"
+      />
+            <field
+        name="report_name"
+      >${(object.name or "voluntary_share_interest_return").replace("/", "_")}${object.state == "draft" and "_draft" or ""}</field>
+        </record>
+    </data>
+</odoo>

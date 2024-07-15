@@ -1,9 +1,54 @@
 <odoo>
+  <record id="cooperator.view_partner_tree" model="ir.ui.view">
+          <field name="mode">primary</field>
+      </record>
+
+      <record
+    id="cooperator.action_partner_cooperator_form"
+    model="ir.actions.act_window"
+  >
+          <field name="view_id" ref="cooperator.view_partner_tree" />
+      </record>
+
+      <record
+    id="cooperator.action_partner_cooperator_candidate_form"
+    model="ir.actions.act_window"
+  >
+          <field name="view_id" ref="cooperator.view_partner_tree" />
+      </record>
+
+      <record
+    id="cooperator.action_company_representative_form"
+    model="ir.actions.act_window"
+  >
+          <field name="view_id" ref="cooperator.view_partner_tree" />
+      </record>
+
+  <record id="view_partner_tree" model="ir.ui.view">
+            <field name="name">view_partner_tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="cooperator.view_partner_tree" />
+            <field name="arch" type="xml">
+                <xpath
+        expr="/tree/field[@name='cooperator_register_number']"
+        position='attributes'
+      >
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
   <record id="cooperator_view_partner_form" model="ir.ui.view">
     <field name="name">view_company_form.inherit</field>
     <field name="model">res.partner</field>
     <field name="inherit_id" ref="cooperator.view_partner_form" />
     <field name="arch" type="xml">
+      <xpath
+        expr="//page[@name='share']//field[@name='share_ids']/tree"
+        position="attributes"
+      >
+                    <attribute name="delete">0</attribute>
+                </xpath>
       <field name="coop_candidate" position="attributes">
         <attribute name="invisible">1</attribute>
       </field>
@@ -53,5 +98,11 @@
         />
       </field>
     </field>
+  </record>
+  <record model="ir.ui.menu" id="cooperator.menu_cooperator_cooperator">
+    <field name="action" ref="action_cooperative_membership_cooperator" />
+  </record>
+  <record model="ir.ui.menu" id="cooperator.menu_cooperator_company_representative">
+    <field name="action" ref="action_cooperative_membership_representative" />
   </record>
 </odoo>

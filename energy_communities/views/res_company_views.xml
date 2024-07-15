@@ -20,18 +20,6 @@
       >
                 <attribute name="invisible">True</attribute>
             </xpath>
-            <group name="coop_grp" position="inside">
-              <field name="cooperator_share_form_header_text" />
-            </group>
-            <group name="coop_grp" position="after">
-                <group name="customize_docs_text" string="Customize documents text">
-                    <field name="display_footer_doc_policy_text" />
-                    <field name="footer_doc_policy_text" />
-                </group>
-                <group name="voluntary_shares" string="Voluntary Shares">
-                    <field name="voluntary_share_form_header_text" />
-                </group>
-            </group>
             <xpath expr="//sheet" position="before">
                 <header>
                     <field name="landing_page_id" invisible="1" />
@@ -80,27 +68,22 @@
                         <field name="legal_form" />
                         <field name="comercial_name" />
                         <field name="ce_status" />
-                        <field name="voluntary_share_id" />
                         <field name="ce_tag_ids" />
                         <field name="admins" />
                     </group>
+                    <group name="customize_docs_text" string="Customize documents text">
+                      <field name="display_footer_doc_policy_text" />
+                      <field name="footer_doc_policy_text" />
+                    </group>
+                    <group>
+                      <field name="foundation_date" />
+                      <field name="allow_new_members" />
+                      <field name="create_user_in_keycloak" />
+                    </group>
                 </page>
-            </xpath>
-            <xpath
-        expr="//field[@name='property_cooperator_account']"
-        position="before"
-      >
-                <field name="cooperator_journal" />
-            </xpath>
-            <xpath expr="//field[@name='unmix_share_type']" position="before">
-                <field name="foundation_date" />
-                <field name="allow_new_members" />
             </xpath>
             <xpath expr="//field[@name='social_instagram']" position="after">
                 <field name="social_telegram" />
-            </xpath>
-            <xpath expr="//field[@name='create_user']" position="after">
-                <field name="create_user_in_keycloak" />
             </xpath>
             <xpath expr="//form" position="inside">
                 <div class="oe_chatter">

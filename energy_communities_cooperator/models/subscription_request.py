@@ -9,7 +9,7 @@ class SubscriptionRequest(models.Model):
     @api.depends("share_product_id", "share_product_id.categ_id")
     def _compute_is_voluntary(self):
         product_category_voluntary_share = self.env.ref(
-            "energy_communities.product_category_company_voluntary_share",
+            "energy_communities_cooperator.product_category_company_voluntary_share",
             raise_if_not_found=False,
         )
         for record in self:

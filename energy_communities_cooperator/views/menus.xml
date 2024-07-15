@@ -1,0 +1,8 @@
+<odoo>
+<record model="ir.ui.menu" id="cooperator.menu_cooperator_templates">
+    <field
+      name="groups_id"
+      eval="[(6,0,[ref('energy_communities.group_platform_manager')])]"
+    />
+  </record>
+</odoo>

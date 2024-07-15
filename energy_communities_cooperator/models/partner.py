@@ -5,6 +5,12 @@ class ResPartner(models.Model):
     _name = "res.partner"
     _inherit = "res.partner"
 
+    gender = fields.Selection(
+        selection_add=[
+            ("not_binary", "Not binary"),
+            ("not_share", "I prefer to not share it"),
+        ]
+    )
     company_register_number = fields.Char(
         string="Company Register Number",
         compute="_compute_company_register_number",

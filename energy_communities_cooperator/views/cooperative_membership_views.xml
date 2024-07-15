@@ -1,4 +1,46 @@
 <odoo>
+  <record id="action_cooperative_membership_cooperator" model="ir.actions.act_window">
+      <field name="name">Cooperators</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">cooperative.membership</field>
+      <field name="view_mode">tree</field>
+      <field name="search_view_id" eval="False" /> <!-- Force empty -->
+      <field name="view_id" eval="False" /> <!-- Force empty -->
+      <field name="domain">[('member','=',True)]</field>
+  </record>
+  <record
+    id="action_cooperative_membership_representative"
+    model="ir.actions.act_window"
+  >
+      <field name="name">Representatives</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">cooperative.membership</field>
+      <field name="view_mode">tree</field>
+      <field name="search_view_id" eval="False" /> <!-- Force empty -->
+      <field name="view_id" eval="False" /> <!-- Force empty -->
+      <field name="domain">[('representative','=',True)]</field>
+  </record>
+  <record
+    id="action_cooperative_membership_coop_candidate"
+    model="ir.actions.act_window"
+  >
+      <field name="name">Cooperator candidates</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">cooperative.membership</field>
+      <field name="view_mode">tree</field>
+      <field name="search_view_id" eval="False" /> <!-- Force empty -->
+      <field name="view_id" eval="False" /> <!-- Force empty -->
+      <field name="domain">[('coop_candidate','=',True)]</field>
+  </record>
+  <record id="action_cooperative_membership_old_member" model="ir.actions.act_window">
+      <field name="name">Old Cooperators</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">cooperative.membership</field>
+      <field name="view_mode">tree</field>
+      <field name="search_view_id" eval="False" /> <!-- Force empty -->
+      <field name="view_id" eval="False" /> <!-- Force empty -->
+      <field name="domain">[('old_member','=',True)]</field>
+  </record>
   <record id="action_cooperative_membership" model="ir.actions.act_window">
       <field name="name">Memberships</field>
       <field name="type">ir.actions.act_window</field>
@@ -7,32 +49,97 @@
       <field name="search_view_id" eval="False" /> <!-- Force empty -->
       <field name="view_id" eval="False" /> <!-- Force empty -->
   </record>
+  <record id="cooperative_membership_search" model="ir.ui.view">
+      <field name="name">cooperative.membership.search</field>
+      <field name="model">cooperative.membership</field>
+      <field name="type">search</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="partner_id" />
+          <field name="partner_email" />
+          <field name="partner_vat" />
+        </search>
+      </field>
+  </record>
+  <record id="member_cooperative_membership_tree" model="ir.ui.view">
+      <field name="name">cooperative.membership.tree</field>
+      <field name="model">cooperative.membership</field>
+      <field name="arch" type="xml">
+        <tree create="false" delete="false">
+          <field name="cooperator_register_number" />
+          <field name="partner_id" widget="many2one" />
+          <field name="partner_email" />
+          <field name="partner_phone" />
+          <field name="partner_vat" />
+          <field name="number_of_share" />
+          <field name="total_value" />
+          <field name="effective_date" />
+          <field name="company_id" />
+        </tree>
+      </field>
+  </record>
+  <record id="representative_cooperative_membership_tree" model="ir.ui.view">
+      <field name="name">cooperative.membership.tree</field>
+      <field name="model">cooperative.membership</field>
+      <field name="arch" type="xml">
+        <tree create="false" delete="false">
+              <field name="partner_id" widget="many2one" />
+              <field name="partner_email" />
+              <field name="partner_phone" />
+              <field name="partner_vat" />
+              <field name="representative_of_member_company" />
+              <field name="company_id" />
+        </tree>
+      </field>
+  </record>
+  <record id="coop_candidate_cooperative_membership_tree" model="ir.ui.view">
+      <field name="name">cooperative.membership.tree</field>
+      <field name="model">cooperative.membership</field>
+      <field name="arch" type="xml">
+          <tree create="false" delete="false">
+              <field name="partner_id" widget="many2one" />
+              <field name="partner_email" />
+              <field name="partner_phone" />
+              <field name="partner_vat" />
+              <field name="company_id" />
+          </tree>
+      </field>
+  </record>
+  <record id="old_coop_cooperative_membership_tree" model="ir.ui.view">
+      <field name="name">cooperative.membership.tree</field>
+      <field name="model">cooperative.membership</field>
+      <field name="arch" type="xml">
+        <tree create="false" delete="false">
+          <field name="cooperator_register_number" />
+          <field name="partner_id" widget="many2one" />
+          <field name="partner_email" />
+          <field name="partner_phone" />
+          <field name="partner_vat" />
+          <field name="effective_date" />
+          <field name="company_id" />
+        </tree>
+      </field>
+  </record>
   <record id="cooperative_membership_tree" model="ir.ui.view">
       <field name="name">cooperative.membership.tree</field>
       <field name="model">cooperative.membership</field>
       <field name="arch" type="xml">
           <tree>
-              <field name="id" />
               <field name="cooperator_register_number" />
-              <field name="company_id" />
               <field name="partner_id" />
+              <field name="partner_email" />
+              <field name="partner_phone" />
+              <field name="partner_vat" />
               <field name="cooperator" />
               <field name="member" />
               <field name="coop_candidate" />
               <field name="old_member" />
               <field name="representative" />
               <field name="representative_of_member_company" />
-              <field name="share_ids" />
               <field name="number_of_share" />
               <field name="total_value" />
-              <field name="cooperator_type" />
               <field name="effective_date" />
-              <field name="subscription_request_ids" />
-              <field name="subscription_invoice_ids" />
-              <!--<field name="data_policy_approved" />-->
-              <!--<field name="internal_rules_approved" />-->
-              <!--<field name="financial_risk_approved" />-->
-              <!--<field name="generic_rules_approved" />-->
+              <field name="company_id" />
           </tree>
       </field>
   </record>
@@ -44,6 +151,9 @@
             <group>
               <field name="company_id" />
               <field name="partner_id" />
+              <field name="partner_email" />
+              <field name="partner_phone" />
+              <field name="partner_vat" />
             </group>
             <group>
               <field name="cooperator_register_number" readonly="0" />
@@ -105,12 +215,70 @@
           </form>
       </field>
   </record>
+  <record
+    model="ir.actions.act_window.view"
+    id="action_cooperative_membership_cooperator_tree"
+  >
+    <field name="sequence" eval="1" />
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="member_cooperative_membership_tree" />
+    <field name="act_window_id" ref="action_cooperative_membership_cooperator" />
+  </record>
+  <record
+    model="ir.actions.act_window.view"
+    id="action_cooperative_membership_representative_tree"
+  >
+    <field name="sequence" eval="1" />
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="representative_cooperative_membership_tree" />
+    <field name="act_window_id" ref="action_cooperative_membership_representative" />
+  </record>
+  <record
+    model="ir.actions.act_window.view"
+    id="action_cooperative_membership_coop_candidate_tree"
+  >
+    <field name="sequence" eval="1" />
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="coop_candidate_cooperative_membership_tree" />
+    <field name="act_window_id" ref="action_cooperative_membership_coop_candidate" />
+  </record>
+  <record
+    model="ir.actions.act_window.view"
+    id="action_cooperative_membership_old_member_tree"
+  >
+    <field name="sequence" eval="1" />
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="old_coop_cooperative_membership_tree" />
+    <field name="act_window_id" ref="action_cooperative_membership_old_member" />
+  </record>
+  <record model="ir.actions.act_window.view" id="action_cooperative_membership_tree">
+    <field name="sequence" eval="1" />
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="cooperative_membership_tree" />
+    <field name="act_window_id" ref="action_cooperative_membership" />
+  </record>
+  <menuitem
+    name="Cooperator candidates"
+    id="menu_cooperative_membership_coop_candidate"
+    action="action_cooperative_membership_coop_candidate"
+    parent="cooperator.menu_cooperator_main_coop"
+    groups="cooperator.cooperator_group_user"
+    sequence="230"
+  />
+  <menuitem
+    name="Old cooperators"
+    id="menu_cooperative_membership_old_member"
+    action="action_cooperative_membership_old_member"
+    parent="cooperator.menu_cooperator_main_coop"
+    groups="cooperator.cooperator_group_user"
+    sequence="240"
+  />
   <menuitem
     name="Memberships"
     id="menu_cooperative_membership"
     action="action_cooperative_membership"
     parent="cooperator.menu_cooperator_main_coop"
-    groups="cooperator.cooperator_group_user"
-    sequence="230"
+    groups="energy_communities.group_platform_manager"
+    sequence="250"
   />
 </odoo>

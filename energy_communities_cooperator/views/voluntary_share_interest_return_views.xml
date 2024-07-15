@@ -1,0 +1,135 @@
+<odoo>
+  <data>
+    <record
+      id="view_voluntary_share_interest_return_window"
+      model="ir.actions.act_window"
+    >
+      <field name="name">Voluntary share interest return</field>
+      <field name="res_model">voluntary.share.interest.return</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_voluntary_share_interest_return_tree" model="ir.ui.view">
+      <field name="name">voluntary.share.interest.return.tree</field>
+      <field name="model">voluntary.share.interest.return</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" />
+          <field name="start_date_period" />
+          <field name="end_date_period" />
+          <field name="company_id" />
+          <field name="partners_notified" />
+          <field name="state" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_voluntary_share_interest_return_form" model="ir.ui.view">
+      <field name="name">voluntary.share.interest.return.form</field>
+      <field name="model">voluntary.share.interest.return</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form>
+            <field name="payment_order_ok" invisible="1" />
+            <header position="inside">
+              <button
+              name="action_post"
+              type="object"
+              string="Post"
+              attrs="{'invisible': [('state', '!=', 'draft')]}"
+            />
+              <button
+              name="action_send"
+              type="object"
+              string="Notify members"
+              attrs="{'invisible': ['|',('state', '=', 'draft'),('partners_notified','!=',False)]}"
+            />
+              <button
+              name="action_generate_payment"
+              type="object"
+              string="Create payment order"
+              attrs="{'invisible': ['|',('state', '!=', 'posted'),('payment_order_ok','=',False)]}"
+            />
+            <field
+              name="state"
+              widget="statusbar"
+              statusbar_visible="draft,posted,payment"
+              attrs="{'invisible': [('payment_order_ok','=',False)]}"
+            />
+            <field
+              name="state"
+              widget="statusbar"
+              statusbar_visible="draft,posted"
+              attrs="{'invisible': [('payment_order_ok','=',True)]}"
+            />
+            </header>
+          <sheet>
+            <notebook>
+              <page string="General">
+                <group>
+                  <field name="partners_notified" />
+                  <field name="name" required="1" />
+                  <field name="start_date_period" required="1" />
+                  <field name="end_date_period" required="1" />
+                  <field name="company_id" readonly="1" />
+                  <field
+                    name="payment_order_id"
+                    attrs="{'invisible': [('state', '!=', 'payment')]}"
+                  />
+                  <field name="account_move_ids" widget="one2many">
+                    <tree open="1" create="0" edit="0" delete="0">
+                      <field
+                        name="name"
+                        decoration-bf="1"
+                        on_change="1"
+                        modifiers="{}"
+                      />
+                      <field name="invoice_partner_display_name" string="Vendor" />
+                      <field name="date" />
+                      <field name="invoice_date_due" widget="remaining_days" />
+                      <field name="company_id" />
+                      <field name="amount_total_signed" string="Total" sum="Total" />
+                      <field name="partner_bank_id" />
+                      <field
+                        name="state"
+                        widget="badge"
+                        decoration-success="state == 'posted'"
+                        decoration-info="state == 'draft'"
+                        optional="show"
+                        on_change="1"
+                        modifiers="{'readonly':true,'required':true}"
+                      />
+                      <field
+                        name="payment_state"
+                        widget="badge"
+                        decoration-danger="payment_state == 'not_paid'"
+                        decoration-warning="payment_state in ('partial', 'in_payment')"
+                        decoration-success="payment_state in ('paid', 'reversed')"
+                        attrs="{'invisible': [('payment_state', 'in', ('invoicing_legacy'))]}"
+                        optional="hide"
+                        modifiers="{'invisible':[['payment_state','in','invoicing_legacy']],'readonly':true}"
+                      />
+                    </tree>
+                  </field>
+                </group>
+              </page>
+            </notebook>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" />
+                <field name="message_ids" widget="mail_thread" />
+            </div>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <menuitem
+      name="Voluntary share interest return"
+      id="view_voluntary_share_interest_return_menu"
+      parent="cooperator.menu_cooperator_main_subscription"
+      action="view_voluntary_share_interest_return_window"
+      sequence="170"
+    />
+  </data>
+</odoo>
