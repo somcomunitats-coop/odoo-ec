@@ -3,9 +3,8 @@ from werkzeug.exceptions import Unauthorized
 from odoo.http import request
 
 from odoo.addons.base_rest import restapi
-from odoo.addons.base_rest_pydantic.restapi import (
+from odoo.addons.base_rest_pydantic.restapi import (  # PydanticModelList,
     PydanticModel,
-    PydanticModelList,
 )
 from odoo.addons.component.core import Component
 
@@ -42,7 +41,7 @@ class MemberApiService(Component):
     @restapi.method(
         [(["/communities"], "GET")],
         input_param=PydanticModel(PagingParam),
-        # output_param=PydanticModelList(MemberComunitiesResponse),
+        output_param=PydanticModel(MemberCommunitiesResponse),
     )
     def communities(self, paging_param):
         paging = PaginationLimits(
@@ -54,7 +53,6 @@ class MemberApiService(Component):
             request,
             MemberCommunitiesResponse,
             self._get_member_communities(),
-            100,
             paging,
         )
         return ret
@@ -66,5 +64,7 @@ class MemberApiService(Component):
         )
         for membership in memberships:
             membership_company = membership.company_id
-            ret.append(MemberCommunity(name=membership_company.name).dict())
+            ret.append(
+                MemberCommunity(id=membership_company.id, name=membership_company.name)
+            )
         return ret

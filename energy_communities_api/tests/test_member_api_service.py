@@ -44,7 +44,11 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             response.json(),
             {
                 "data": client_data_response,
-                "links": {"self_": "http://127.0.0.1:8069/api/energy-communities/me"},
+                "links": {
+                    "self_": "http://127.0.0.1:8069/api/energy-communities/me",
+                    "next_page": None,
+                    "previous_page": None,
+                },
             },
         )
 
@@ -59,13 +63,12 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             "/api/energy-communities/me/communities",
             headers={"Authorization": self.token},
         )
-
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
         # and we get the correct information
         communities = response.json()
         self.assertGreaterEqual(len(communities.get("data", 0)), 1)
         self.assertEqual(
-            communities.get("links", {}).get("self", ""),
+            communities.get("links", {}).get("self_", ""),
             "http://127.0.0.1:8069/api/energy-communities/me/communities",
         )

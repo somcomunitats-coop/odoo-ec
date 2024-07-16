@@ -58,7 +58,7 @@ class MemberInfoResponse(BaseResponse):
     """
 
     data: MemberInfo
-    links: BaseLinks
+    links: PaginationLinks
 
 
 class MemberCommunitiesResponse(BaseResponse):
@@ -67,4 +67,4 @@ class MemberCommunitiesResponse(BaseResponse):
     """
 
     data: List[MemberCommunity]
-    # links: BaseLinks = Field(alias="_links")
+    links: PaginationLinks
