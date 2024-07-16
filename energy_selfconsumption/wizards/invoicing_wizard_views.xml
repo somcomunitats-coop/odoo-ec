@@ -12,6 +12,7 @@
                         <group>
                             <field name="next_period_date_start" />
                             <field name="next_period_date_end" />
+                            <field name="invoicing_mode" invisible="1" />
                         </group>
                         <group>
                             <field name="power" />
@@ -24,6 +25,16 @@
                                     <field name="next_period_date_end" />
                                 </tree>
                             </field>
+                        </group>
+                        <group attrs="{'invisible': [('invoicing_mode', '!=', 'energy_custom')]}">
+                            <field name="import_file"
+                                filename="fname"
+                                widget="binary"
+                            />
+                            <field name="fname" invisible="1" />
+                            <field name="delimiter" />
+                            <field name="quotechar" />
+                            <field name="encoding" />
                         </group>
                     </sheet>
                     <footer>
