@@ -1,5 +1,6 @@
 from typing import Optional
 
+from extendable_pydantic import ExtendableModelMeta
 from pydantic import BaseModel
 
 DEFAULT_PAGE_SIZE = 20
@@ -21,9 +22,9 @@ class BaseListResponse(BaseResponse):
     page: Optional[int]
 
 
-class Paging(BaseModel):
+class PagingParam(BaseModel, metaclass=ExtendableModelMeta):
     page: int = 1
-    page_size: int = (DEFAULT_PAGE_SIZE,)
+    page_size: int = DEFAULT_PAGE_SIZE
 
 
 class PaginationLimits(BaseModel):

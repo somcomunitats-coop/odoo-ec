@@ -1,5 +1,3 @@
-import unittest
-
 import requests
 
 from odoo.tests import HttpCase, tagged
@@ -50,7 +48,6 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             },
         )
 
-    @unittest.skip("not ready until authorization is finetunned")
     def test__me_communities_endpoint__ok(self):
         # given http_client
         # self.url_open
@@ -67,7 +64,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         self.assertEqual(response.status_code, 200)
         # and we get the correct information
         communities = response.json()
-        self.assertGreaderEqual(len(communities.get("data", 0), 1))
+        self.assertGreaterEqual(len(communities.get("data", 0)), 1)
         self.assertEqual(
             communities.get("links", {}).get("self", ""),
             "http://127.0.0.1:8069/api/energy-communities/me/communities",
