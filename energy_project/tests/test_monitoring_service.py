@@ -4,7 +4,8 @@ from odoo.tests.common import TransactionCase
 
 from ..backends import ArkenovaBackend
 from ..services import MonitoringService
-from .backends_data import arkenova_data, member_code, project_code
+
+# from .backends_data import arkenova_data, member_code, project_code
 
 
 class TestMonitoringService(TransactionCase):
