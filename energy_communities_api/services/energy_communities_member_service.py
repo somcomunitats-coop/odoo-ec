@@ -32,13 +32,12 @@ class MemberApiService(Component):
 
     @restapi.method(
         [(["/"], "GET")],
-        # output_param=PydanticModelList(MemberInfoResponse),
+        output_param=PydanticModel(MemberInfoResponse),
     )
     def me(self):
-        ret = single_response(
+        return single_response(
             request, MemberInfoResponse, MemberInfo.from_orm(self.env.user.partner_id)
         )
-        return ret
 
     @restapi.method(
         [(["/communities"], "GET")],

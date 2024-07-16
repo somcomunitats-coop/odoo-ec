@@ -29,7 +29,7 @@ def get_pagination_links(
     )
 
 
-def get_links(request: HttpRequest) -> BaseLinks:
+def get_base_links(request: HttpRequest) -> BaseLinks:
     return BaseLinks(self_=request.httprequest.url)
 
 
@@ -38,8 +38,8 @@ def single_response(
     response_class: Any,
     object_: Any,
 ) -> Any:
-    links = get_links(request)
-    return response_class(data=object_, _links=links).dict()
+    links = get_base_links(request)
+    return response_class(data=object_, links=links)
 
 
 def collection_response(
