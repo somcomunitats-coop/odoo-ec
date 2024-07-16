@@ -17,4 +17,4 @@ class MemberInfo(NaiveOrmModel):
 class MemberCommunity(BaseModel):
     id: int
     name: str
-    # image: bytes
+    image: str

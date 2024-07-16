@@ -65,6 +65,10 @@ class MemberApiService(Component):
         for membership in memberships:
             membership_company = membership.company_id
             ret.append(
-                MemberCommunity(id=membership_company.id, name=membership_company.name)
+                MemberCommunity(
+                    id=membership_company.id,
+                    name=membership_company.name,
+                    image=membership_company.logo_web,
+                )
             )
         return ret
