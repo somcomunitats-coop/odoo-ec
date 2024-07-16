@@ -44,19 +44,16 @@ class InvoicingWizard(models.TransientModel):
     fname = fields.Char(string="File Name")
     delimiter = fields.Char(
         default=",",
-        required=True,
         string="File Delimiter",
         help="Delimiter in import CSV file.",
     )
     quotechar = fields.Char(
         default='"',
-        required=True,
         string="File Quotechar",
         help="Quotechar in import CSV file.",
     )
     encoding = fields.Char(
         default="utf-8",
-        required=True,
         string="File Encoding",
         help="Encoding format in import CSV file.",
     )
@@ -183,49 +180,55 @@ Next period end: {next_period_date_end}"""
         template_name += _("Energy Delivered Custom: {energy_delivered} kWh")
         df = self.parse_csv_file()
         if df is not None:
+            find_record = False
             for index, row in df.iterrows():
                 cau = row.get("CAU")
-                logger.info(f"Buscando CAU {cau}")
                 if contract.project_id.selfconsumption_id.code == cau:
                     dates = row.get(
                         "Periode facturat (dd/mm/aaaa-dd/mm/aaaaa)", "-"
                     ).split("-")
-                    logger.info(f"Buscando periodo {dates}")
-                    logger.info(f"contract.next_period_date_start {contract.next_period_date_start.strftime('%d/%m/%Y')}")
-                    logger.info(f"contract.next_period_date_end {contract.next_period_date_end.strftime('%d/%m/%Y')}")
                     if (
                         len(dates) == 2
                         and contract.next_period_date_start.strftime('%d/%m/%Y') == dates[0]
                         and contract.next_period_date_end.strftime('%d/%m/%Y') == dates[1]
                     ):
                         cups = row.get("CUPS")
-                        kwh = row.get("Energia a facturar (kWh)")
-                        logger.info(f"Buscando cups {cups}")
-                        logger.info(f"Buscando cups {contract.supply_point_assignation_id.supply_point_id.code}")
+                        kwh = round(float(row.get("Energia a facturar (kWh)").replace(",",".")), 3)
+                        if kwh <= 0:
+                            raise ValidationError(
+                                _("You must enter a valid total energy generated (kWh).")
+                            )
                         if contract.supply_point_assignation_id.supply_point_id.code == cups:
+                            find_record = True
                             self._update_contract_lines(contract, cups, kwh, template_name)
                             res.append(
                                 contract.with_context(
-                                    {"energy_delivered": self.power}
+                                    {"energy_delivered": kwh}
                                 )._recurring_create_invoice()
                             )
+            if not find_record:
+                raise ValidationError(_(f"""
+                    CUPS {contract.supply_point_assignation_id.supply_point_id.code} 
+                    not found for period 
+                    {contract.next_period_date_start.strftime('%d/%m/%Y')} - 
+                    {contract.next_period_date_end.strftime('%d/%m/%Y')} and 
+                    CAU {contract.project_id.selfconsumption_id.code}
+                """))
 
     def _update_contract_lines(self, contract, cups, kwh, template_name):
         for line in contract.contract_line_ids:
-                logger.info(f"energy_delivered {kwh}")
                 line.write(
                     {
                         "name": template_name.format(
-                            energy_delivered=kwh,
+                            energy_delivered=str(kwh),
                             code=cups,
                             owner_id=contract.supply_point_assignation_id.supply_point_id.owner_id.display_name,
                         ),
-                        "quantity": float(kwh.replace(",","."))
+                        "quantity": kwh
                     }
                 )
 
     def _parse_file(self, data_file):
-        logger.info("\n\n _parse_file")
         self.ensure_one()
         try:
             try:
@@ -251,10 +254,8 @@ Next period end: {next_period_date_end}"""
             return False, False
 
     def parse_csv_file(self):
-        logger.info("\n\n parse_csv_file INICIO")
         file_data = base64.b64decode(self.import_file)
         df, not_error = self._parse_file(file_data)
         if not_error:
-            logger.info("\n\n parse_csv_file FIN")
             return df
         return False

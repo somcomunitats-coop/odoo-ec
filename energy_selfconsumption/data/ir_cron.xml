@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
+        <record id="send_energy_delivered_custom_invoicing_reminder_to_admin" model="ir.cron">
+            <field
+        name="name"
+      >Send Energy Delivered Custom Invoicing Reminder to Admin User</field>
+            <field
+        name="model_id"
+        ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"
+      />
+            <field name="code">model.send_energy_delivery_custom_invoicing_reminder()</field>
+            <field name="user_id" ref="base.user_root" />
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False" />
+        </record>
+
         <record id="send_energy_delivered_invoicing_reminder_to_admin" model="ir.cron">
             <field
         name="name"
@@ -16,9 +32,7 @@
             <field name="numbercall">-1</field>
             <field name="doall" eval="False" />
         </record>
-    </data>
 
-    <data>
         <record id="send_power_acquired_invoicing_reminder_to_admin" model="ir.cron">
             <field
         name="name"

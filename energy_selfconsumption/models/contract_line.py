@@ -10,6 +10,7 @@ class ContractLine(models.Model):
         compute="_compute_days_invoiced",
         store=True,
     )
+    # quantity = fields.Float(default=1.0, required=True, digits=(10, 3))
 
     # This validation is raised when writing date_start on the contract and recurring_next_date is yet not computed
     # Fixed by just checking when the recurrence is at line level (line_recurrence)

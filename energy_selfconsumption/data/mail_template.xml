@@ -40,6 +40,45 @@
     </record>
 
     <record
+    id="selfconsumption_energy_delivered_custom_invoicing_reminder"
+    model="mail.template"
+  >
+        <field name="name">Selfconsumption Energy Delivered Custom Invoicing Reminder</field>
+        <field name="email_from">info@somcomunitats.coop</field>
+        <field
+      name="subject"
+    >Selfconsumption - Energy Delivered Custom Invoicing Reminder</field>
+        <field
+      name="model_id"
+      ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"
+    />
+        <field name="body_html">
+            <![CDATA[
+        <p>Hi,</p>
+        <p>
+            Remember that the collective self-consumption project
+            <b>${ object.name }</b>
+            of the energy community
+            <b>${ object.project_id.company_id.name }</b>
+            must invoice on the day <b>${ ctx['next_invoicing'] }</b>.
+        </p>
+        <p>
+            It is necessary, therefore, that you enter into Odoo the energy generated in kWh during the period
+            <b>${ ctx['first_date'] }</b>
+            - <b>${ ctx['last_date'] }</b>.
+        </p>
+        <p>
+            To do so, go to the project file, enter the contracts view, select the contracts that must be invoiced and
+            press the Invoice button.</br>
+        </p>
+        <p>
+            For any questions or incidents, contact the support team; support@somcomunitats.coop.
+        </p>
+            ]]>
+        </field>
+    </record>
+
+    <record
     id="selfconsumption_power_acquired_invoicing_reminder"
     model="mail.template"
   >
