@@ -182,38 +182,45 @@ Next period end: {next_period_date_end}"""
     def _process_energy_custom(self, contract, template_name, res):
         template_name += _("Energy Delivered Custom: {energy_delivered} kWh")
         df = self.parse_csv_file()
-
         if df is not None:
             for index, row in df.iterrows():
                 cau = row.get("CAU")
+                logger.info(f"Buscando CAU {cau}")
                 if contract.project_id.selfconsumption_id.code == cau:
                     dates = row.get(
-                        "Periode facturat (dd/mm/aaaa-dd/mm/aaaaa)", ""
+                        "Periode facturat (dd/mm/aaaa-dd/mm/aaaaa)", "-"
                     ).split("-")
+                    logger.info(f"Buscando periodo {dates}")
+                    logger.info(f"contract.next_period_date_start {contract.next_period_date_start.strftime('%d/%m/%Y')}")
+                    logger.info(f"contract.next_period_date_end {contract.next_period_date_end.strftime('%d/%m/%Y')}")
                     if (
                         len(dates) == 2
-                        and contract.next_period_date_start == dates[0]
-                        and contract.next_period_date_end == dates[1]
+                        and contract.next_period_date_start.strftime('%d/%m/%Y') == dates[0]
+                        and contract.next_period_date_end.strftime('%d/%m/%Y') == dates[1]
                     ):
                         cups = row.get("CUPS")
                         kwh = row.get("Energia a facturar (kWh)")
-                        self._update_contract_lines(contract, cups, kwh, template_name)
-            res.append(
-                contract.with_context(
-                    {"energy_delivered": self.power}
-                )._recurring_create_invoice()
-            )
+                        logger.info(f"Buscando cups {cups}")
+                        logger.info(f"Buscando cups {contract.supply_point_assignation_id.supply_point_id.code}")
+                        if contract.supply_point_assignation_id.supply_point_id.code == cups:
+                            self._update_contract_lines(contract, cups, kwh, template_name)
+                            res.append(
+                                contract.with_context(
+                                    {"energy_delivered": self.power}
+                                )._recurring_create_invoice()
+                            )
 
     def _update_contract_lines(self, contract, cups, kwh, template_name):
         for line in contract.contract_line_ids:
-            if line.supply_point_assignation_id.supply_point_id.code == cups:
+                logger.info(f"energy_delivered {kwh}")
                 line.write(
                     {
                         "name": template_name.format(
                             energy_delivered=kwh,
                             code=cups,
                             owner_id=contract.supply_point_assignation_id.supply_point_id.owner_id.display_name,
-                        )
+                        ),
+                        "quantity": float(kwh.replace(",","."))
                     }
                 )
 
