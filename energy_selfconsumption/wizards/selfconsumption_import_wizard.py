@@ -386,13 +386,15 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "state_id": self.env["res.country.state"]
                     .search([("code", "=", "MA"), ("country_id", "=", country_id)])[0]
                     .id,
-                    "member": True,
+                    # "member": True,
                     "street": f"Calle imaginación {i}",
                     "city": "Madrid",
                     "zip": 28221,
                     "type": "contact",
                     "company_id": self.env.company.id,
-                    # "company_type": "person",
+                    # "cooperator": False,
+                    "company_type": "person",
+                    "cooperative_membership_id": self.env.company.partner_id.id,
                 }
             )
             logger.info(f"\n\n Cliente creado {partner.name}")

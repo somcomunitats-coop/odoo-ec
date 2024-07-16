@@ -25,11 +25,11 @@
                 <xpath expr="/search" position="inside">
                     <group expand="1" string="Group By">
                         <filter
-                          string="Next Period Date Start"
-                          name="filter_next_period_date_start"
-                          domain="[]"
-                          context="{'group_by':'next_period_date_start'}"
-                        />
+              string="Next Period Date Start"
+              name="filter_next_period_date_start"
+              domain="[]"
+              context="{'group_by':'next_period_date_start'}"
+            />
                     </group>
                 </xpath>
             </field>

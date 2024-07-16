@@ -1,13 +1,17 @@
-from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+import base64
+import logging
+from io import StringIO
+
 import chardet
 import pandas as pd
-import base64
-from io import StringIO
-import logging
+
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
+
 from ..models.selfconsumption import INVOICING_VALUES
 
 logger = logging.getLogger(__name__)
+
 
 class InvoicingWizard(models.TransientModel):
     _name = "energy_selfconsumption.invoicing.wizard"
@@ -25,8 +29,16 @@ class InvoicingWizard(models.TransientModel):
         readonly=True,
     )
 
-    invoicing_mode = fields.Selection(INVOICING_VALUES, string="Invoicing Mode",
-                                      default=lambda self: self._get_invoicing_mode)
+    def _get_invoicing_mode(self):
+        for contract in self.env["contract.contract"].search(
+            [("id", "in", self.env.context["active_ids"])]
+        ):
+            return contract.project_id.selfconsumption_id.invoicing_mode
+        return None
+
+    invoicing_mode = fields.Selection(
+        INVOICING_VALUES, string="Invoicing Mode", default=_get_invoicing_mode
+    )
 
     import_file = fields.Binary(string="Import File (*.csv)")
     fname = fields.Char(string="File Name")
@@ -48,9 +60,6 @@ class InvoicingWizard(models.TransientModel):
         string="File Encoding",
         help="Encoding format in import CSV file.",
     )
-
-    def _get_invoicing_mode(self):
-        return self[0].contract_ids[0].project_id.selfconsumption_id.invoicing_mode
 
     @api.constrains("import_file")
     def _constrains_import_file(self):
@@ -155,15 +164,20 @@ Next period end: {next_period_date_end}"""
 
     def _process_energy_delivered(self, contract, template_name, res):
         template_name += _("Energy Delivered: {energy_delivered} kWh")
-        contract.contract_line_ids.write({
-            "name": template_name.format(
-                energy_delivered=self.power,
-                code=contract.supply_point_assignation_id.supply_point_id.code,
-                owner_id=contract.supply_point_assignation_id.supply_point_id.owner_id.display_name,
-            )
-        })
-        res.append(self.with_context(
-            {"energy_delivered": self.power}).contract._recurring_create_invoice())
+        contract.contract_line_ids.write(
+            {
+                "name": template_name.format(
+                    energy_delivered=self.power,
+                    code=contract.supply_point_assignation_id.supply_point_id.code,
+                    owner_id=contract.supply_point_assignation_id.supply_point_id.owner_id.display_name,
+                )
+            }
+        )
+        res.append(
+            contract.with_context(
+                {"energy_delivered": self.power}
+            )._recurring_create_invoice()
+        )
 
     def _process_energy_custom(self, contract, template_name, res):
         template_name += _("Energy Delivered Custom: {energy_delivered} kWh")
@@ -173,26 +187,35 @@ Next period end: {next_period_date_end}"""
             for index, row in df.iterrows():
                 cau = row.get("CAU")
                 if contract.project_id.selfconsumption_id.code == cau:
-                    dates = row.get("Periode facturat (dd/mm/aaaa-dd/mm/aaaaa)",
-                                    "").split("-")
-                    if len(dates) == 2 and contract.next_period_date_start == dates[
-                        0] and contract.next_period_date_end == dates[1]:
+                    dates = row.get(
+                        "Periode facturat (dd/mm/aaaa-dd/mm/aaaaa)", ""
+                    ).split("-")
+                    if (
+                        len(dates) == 2
+                        and contract.next_period_date_start == dates[0]
+                        and contract.next_period_date_end == dates[1]
+                    ):
                         cups = row.get("CUPS")
                         kwh = row.get("Energia a facturar (kWh)")
                         self._update_contract_lines(contract, cups, kwh, template_name)
-            res.append(self.with_context(
-                {"energy_delivered": self.power}).contract._recurring_create_invoice())
+            res.append(
+                contract.with_context(
+                    {"energy_delivered": self.power}
+                )._recurring_create_invoice()
+            )
 
     def _update_contract_lines(self, contract, cups, kwh, template_name):
         for line in contract.contract_line_ids:
             if line.supply_point_assignation_id.supply_point_id.code == cups:
-                line.write({
-                    "name": template_name.format(
-                        energy_delivered=kwh,
-                        code=cups,
-                        owner_id=contract.supply_point_assignation_id.supply_point_id.owner_id.display_name,
-                    )
-                })
+                line.write(
+                    {
+                        "name": template_name.format(
+                            energy_delivered=kwh,
+                            code=cups,
+                            owner_id=contract.supply_point_assignation_id.supply_point_id.owner_id.display_name,
+                        )
+                    }
+                )
 
     def _parse_file(self, data_file):
         logger.info("\n\n _parse_file")
@@ -219,6 +242,7 @@ Next period end: {next_period_date_end}"""
             logger.warning("Parser error", exc_info=True)
             self.notification("Error", _("Error parsing the file"))
             return False, False
+
     def parse_csv_file(self):
         logger.info("\n\n parse_csv_file INICIO")
         file_data = base64.b64decode(self.import_file)
@@ -227,5 +251,3 @@ Next period end: {next_period_date_end}"""
             logger.info("\n\n parse_csv_file FIN")
             return df
         return False
-
-
