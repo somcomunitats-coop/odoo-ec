@@ -58,7 +58,7 @@ class MemberInfoResponse(BaseResponse):
     """
 
     data: MemberInfo
-    links: BaseLinks = Field(alias="_links")
+    links: BaseLinks
 
 
 class MemberCommunitiesResponse(BaseResponse):
