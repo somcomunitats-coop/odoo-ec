@@ -16,8 +16,8 @@ from ..schemas import (
     MemberInfo,
     MemberInfoResponse,
     PaginationLimits,
-    Paging,
 )
+from ..schemas.base import PagingParam
 from ..utils import collection_response, single_response
 
 
@@ -41,17 +41,14 @@ class MemberApiService(Component):
 
     @restapi.method(
         [(["/communities"], "GET")],
-        # inpunt_param=PydanticModel(Paging),
+        input_param=PydanticModel(PagingParam),
         # output_param=PydanticModelList(MemberComunitiesResponse),
     )
-    def communities(self, paging_params=None):
-        page = 1
-        page_size = DEFAULT_PAGE_SIZE
-        if paging_params:
-            page = paging_params.page or 1
-            page_size = paging_params.size_page or DEFAULT_PAGE_SIZE
+    def communities(self, paging_param):
         paging = PaginationLimits(
-            limit=page_size, offset=(page - 1) * page_size, page=page
+            limit=paging_param.page_size,
+            offset=(paging_param.page - 1) * paging_param.page_size,
+            page=paging_param.page,
         )
         ret = collection_response(
             request,

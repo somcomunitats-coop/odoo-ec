@@ -1,7 +1,7 @@
 from .base import (
     PaginationLimits,
     PaginationLinks,
-    Paging,
+    PagingParam,
     DEFAULT_PAGE_SIZE,
     BaseLinks,
 )

@@ -15,7 +15,7 @@ from ..components import (
 from ..schemas import (
     DEFAULT_PAGE_SIZE,
     PaginationLimits,
-    Paging,
+    PagingParam,
     ProjectMembersResponse,
     ProjectsInfoListResponse,
     SingleProjectInfoResponse,
@@ -38,7 +38,7 @@ class EnergyProjectApiService(Component):
 
     @restapi.method(
         [(["/"], "GET")],
-        inpunt_param=PydanticModel(Paging),
+        inpunt_param=PydanticModel(PagingParam),
         output_param=PydanticModel(ProjectsInfoListResponse),
     )
     def get_selfconsumption_projects(self, selfconsumption_paging_param):
@@ -84,7 +84,7 @@ class EnergyProjectApiService(Component):
                 "GET",
             )
         ],
-        inpunt_param=PydanticModel(Paging),
+        inpunt_param=PydanticModel(PagingParam),
         output_param=PydanticModel(ProjectMembersResponse),
     )
     def selfconsumption_project_members(
