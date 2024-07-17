@@ -44,18 +44,16 @@ class MemberApiService(Component):
         output_param=PydanticModel(MemberCommunitiesResponse),
     )
     def communities(self, paging_param):
-        paging = PaginationLimits(
-            limit=paging_param.page_size,
-            offset=(paging_param.page - 1) * paging_param.page_size,
-            page=paging_param.page,
-        )
-        ret = collection_response(
+        return collection_response(
             request,
             MemberCommunitiesResponse,
             self._get_member_communities(),
-            paging,
+            PaginationLimits(
+                limit=paging_param.page_size,
+                offset=(paging_param.page - 1) * paging_param.page_size,
+                page=paging_param.page,
+            ),
         )
-        return ret
 
     def _get_member_communities(self):
         ret = []
@@ -63,12 +61,5 @@ class MemberApiService(Component):
             [("partner_id", "=", self.env.user.partner_id.id)]
         )
         for membership in memberships:
-            membership_company = membership.company_id
-            ret.append(
-                MemberCommunity(
-                    id=membership_company.id,
-                    name=membership_company.name,
-                    image=membership_company.logo_web,
-                )
-            )
+            ret.append(MemberCommunity.from_orm(membership.company_id))
         return ret
