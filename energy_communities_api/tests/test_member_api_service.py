@@ -1,9 +1,13 @@
+from unittest.mock import patch
+
 import requests
 
 from odoo.tests import HttpCase, tagged
 
 from odoo.addons.base_rest.tests.common import RegistryMixin
 
+from ..schemas import MemberCommunity
+from ..services.energy_communities_member_service import MemberApiService
 from .data import client_data, client_data_response, server_auth_url
 
 
@@ -52,15 +56,24 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             },
         )
 
-    def test__me_communities_endpoint__ok(self):
+    @patch(
+        "odoo.addons.energy_communities_api.services.energy_communities_member_service.MemberApiService._get_member_communities"
+    )
+    def test__me_communities_endpoint__ok(self, patcher):
         # given http_client
         # self.url_open
         # and a valid personal token
         # self.token
+        def member_communities():
+            return [
+                MemberCommunity(id=value, name=f"test{value}", image="")
+                for value in range(0, 10)
+            ]
 
+        patcher.return_value = member_communities()
         # when we call for the energy_communties that i belong
         response = self.url_open(
-            "/api/energy-communities/me/communities",
+            "/api/energy-communities/me/communities?page=2&page_size=2",
             headers={"Authorization": self.token},
         )
         # then we obtain a 200 response code
@@ -68,7 +81,11 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and we get the correct information
         communities = response.json()
         self.assertGreaterEqual(len(communities.get("data", 0)), 1)
-        self.assertEqual(
-            communities.get("links", {}).get("self_", ""),
-            "http://127.0.0.1:8069/api/energy-communities/me/communities",
+        self.assertDictEqual(
+            communities.get("links", {}),
+            {
+                "self_": "http://127.0.0.1:8069/api/energy-communities/me/communities?page=2&page_size=2",
+                "next_page": "http://127.0.0.1:8069/api/energy-communities/me/communities?page=3&page_size=2",
+                "previous_page": "http://127.0.0.1:8069/api/energy-communities/me/communities?page=1&page_size=2",
+            },
         )

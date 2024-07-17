@@ -1,8 +1,9 @@
 from typing import Any, List
+from urllib import parse
 
 from odoo.http import HttpRequest
 
-from .schemas import BaseLinks, PaginationLimits, PaginationLinks
+from .schemas import PaginationLimits, PaginationLinks
 
 
 def get_pagination_links(
@@ -12,19 +13,21 @@ def get_pagination_links(
 ) -> PaginationLinks:
     page = paging.page
     page_size = paging.limit
-    # TODO: WIP Calculate urls
-    next_url = None
-    previous_url = None
-    # next_url = (
-    #     request.url.replace_query_params(page=page + 1, page_size=page_size)._url
-    #     if paging.offset + page_size < total_results
-    #     else None
-    # )
-    # previous_url = (
-    #     request.url.replace_query_params(page=page - 1, page_size=page_size)._url
-    #     if page > 1
-    #     else None
-    # )
+    url_parsed = parse.urlparse(request.httprequest.url)
+    next_url = (
+        url_parsed._replace(
+            query=parse.urlencode({"page": page + 1, "page_size": page_size})
+        ).geturl()
+        if paging.offset + page_size < total_results
+        else None
+    )
+    previous_url = (
+        url_parsed._replace(
+            query=parse.urlencode({"page": page - 1, "page_size": page_size})
+        ).geturl()
+        if page > 1
+        else None
+    )
     return PaginationLinks(
         self_=request.httprequest.url,
         next_page=next_url,

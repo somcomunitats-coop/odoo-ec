@@ -44,10 +44,11 @@ class MemberApiService(Component):
         output_param=PydanticModel(MemberCommunitiesResponse),
     )
     def communities(self, paging_param):
+        communities = self._get_member_communities()
         return collection_response(
             request,
             MemberCommunitiesResponse,
-            self._get_member_communities(),
+            communities,
             PaginationLimits(
                 limit=paging_param.page_size,
                 offset=(paging_param.page - 1) * paging_param.page_size,
