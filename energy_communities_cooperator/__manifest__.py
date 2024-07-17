@@ -12,7 +12,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Cooperative management",
-    "version": "14.0.1.1.0",
+    "version": "14.0.1.2.0",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
@@ -26,20 +26,27 @@
     ],
     # always loaded
     "data": [
-        # 'security/ir.model.access.csv',
+        "security/ir.model.access.csv",
+        "security/ir_rule_data.xml",
+        "report/reports.xml",
+        "report/voluntary_share_interest_return_report.xml",
         "data/product_data.xml",
         "data/res_users_role_data.xml",
+        "data/mail_template_data.xml",
         "data/mail_template_update_data.xml",
         "data/ir_config_parameter_data.xml",
+        "views/menus.xml",
         "views/account_move_views.xml",
         "views/cooperative_membership_views.xml",
         "views/operation_request_views.xml",
         "views/res_company_views.xml",
         "views/res_partner_views.xml",
         "views/res_company_views.xml",
+        "views/voluntary_share_interest_return_views.xml",
         "views/subscription_request_view.xml",
         "views/website_subscription_template.xml",
         "wizards/multicompany_easy_creation.xml",
+        "wizards/voluntary_share_interest_return.xml",
     ],
     # only loaded in demonstration mode
     "demo": [

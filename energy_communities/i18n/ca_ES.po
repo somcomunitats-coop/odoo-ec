@@ -761,12 +761,6 @@ msgid "Foundation date"
 msgstr "Data creació"
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_partner__gender
-#: model:ir.model.fields,field_description:energy_communities.field_res_users__gender
-msgid "Gender"
-msgstr "Gènere"
-
-#. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_common_generation
 msgid "Generació renovable comunitaria"
 msgstr ""
@@ -796,11 +790,6 @@ msgstr "Obté la compnyia actual desde qualsevol model"
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__hierarchy_level
 msgid "Hierarchy level"
 msgstr "Nivell jeràrquic"
-
-#. module: energy_communities
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__gender__not_share
-msgid "I prefer to not share it"
-msgstr "Prefereixo no compartir-ho"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_move__id
@@ -1203,11 +1192,6 @@ msgstr ""
 #, python-format
 msgid "Non profit association"
 msgstr "Associació sense ànim de lucre"
-
-#. module: energy_communities
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__gender__not_binary
-msgid "Not binary"
-msgstr "No binari"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0

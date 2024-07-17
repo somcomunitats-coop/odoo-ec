@@ -1,8 +1,9 @@
 {
     "name": "Energy Community",
-    "version": "14.0.9.2.3",
+    "version": "14.0.9.2.4",
     "depends": [
         "account",
+        "account_banking_mandate",
         "account_lock_date_update",
         "account_multicompany_easy_creation",
         "account_payment_order",
