@@ -37,34 +37,45 @@ class CreateUsersWizard(models.TransientModel):
                 company_id = self.env["res.company"].browse(
                     self.env.context["allowed_company_ids"]
                 )
-                partner_id = self.env["res.partner"].browse(
-                    self.env.context["active_id"]
+                impacted_partners = self.env["res.partner"].browse(
+                    self.env.context["active_ids"]
                 )
-                self.env["res.users"].build_platform_user(
-                    company_id,
-                    partner_id,
-                    role_id,
-                    self.action,
-                    self.force_invite,
-                    user_vals={},
-                )
+                for partner in impacted_partners:
+                    cooperator = self.env["cooperative.membership"].search(
+                        [
+                            ("partner_id", "=", partner.id),
+                            ("company_id", "=", company_id.id),
+                            ("cooperator", "=", True),
+                            ("member", "=", True),
+                        ]
+                    )
+                    if cooperator:
+                        self.env["res.users"].build_platform_user(
+                            company_id,
+                            partner.id,
+                            role_id,
+                            self.action,
+                            self.force_invite,
+                            user_vals={},
+                        )
         else:
             impacted_companies = self.env["res.company"].browse(
                 self.env.context["active_ids"]
             )
             for company in impacted_companies:
                 if company.hierarchy_level == "community":
-                    partners = self.env["cooperative.membership"].search(
+                    cooperators = self.env["cooperative.membership"].search(
                         [
                             ("company_id", "=", company.id),
                             ("cooperator", "=", True),
                             ("member", "=", True),
                         ]
                     )
-                    for partner in partners:
-                        self.env["res.users"].with_delay().build_platform_user(
+                    for cooperator in cooperators:
+                        # self.env["res.users"].with_delay().build_platform_user(
+                        self.env["res.users"].sudo().build_platform_user(
                             company,
-                            partner.partner_id,
+                            cooperator.partner_id,
                             role_id,
                             self.action,
                             self.force_invite,
