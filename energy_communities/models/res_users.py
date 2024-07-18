@@ -388,11 +388,10 @@ class ResUsers(models.Model):
                     user_roles.unlink()
         else:
             user = self.sudo().with_context(no_reset_password=True).create(user_vals)
-            company_ids = [(6, 0, [company_id.id])]
             user.sudo().write(
                 {
                     "company_id": company_id.id,
-                    "company_ids": company_ids,
+                    "company_ids": partner_id.company_ids,
                 }
             )
         user.sudo().set_user_roles(company_id, role_id)
