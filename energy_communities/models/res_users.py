@@ -108,41 +108,74 @@ class ResUsers(models.Model):
         self._validate_response(resp)
         return resp.json()
 
+    def _get_kc_groups(self, token, provider_id, **params):
+        """Retrieve user groups from Keycloak.
+
+        :param token: a valida auth token from Keycloak
+        :param **params: extra search params for user groups endpoint
+        """
+        # GET /{realm}/groups
+        groups_endpoint = provider_id.admin_user_endpoint.replace("users", "groups")
+        logger.info("Calling %s" % groups_endpoint)
+        headers = {
+            "Authorization": "Bearer %s" % token,
+        }
+        resp = requests.get(groups_endpoint, headers=headers, params=params)
+        self._validate_response(resp)
+        return resp.json()
+
     def _get_kc_user_groups(self, token, provider_id, odoo_user, **params):
         """Retrieve user groups from Keycloak.
 
         :param token: a valida auth token from Keycloak
-        :param **params: extra search params for users endpoint
+        :param **params: extra search params for user groups endpoint
         """
-        odoo_key = self._LOGIN_MATCH_KEY.split(":")[0]
-        keycloak_user = self._get_kc_users(
-            token, provider_id, search=odoo_user.mapped(odoo_key)[0]
-        )
         # GET /{realm}/users/{id}/groups
-        logger.info("Calling %s" % provider_id.user_groups_endpoint)
+        user_groups_endpoint = (
+            provider_id.admin_user_endpoint + "/" + odoo_user.oauth_uid + "/groups"
+        )
+        logger.info("Calling %s" % user_groups_endpoint)
         headers = {
             "Authorization": "Bearer %s" % token,
         }
-        user_groups_endpoint = admin_user_endpoint + "/" + keycloak_user + "/" + groups
-        resp = requests.get(
-            provider_id.user_groups_endpoint, headers=headers, params=params
-        )
+        resp = requests.get(user_groups_endpoint, headers=headers, params=params)
         self._validate_response(resp)
         return resp.json()
 
-    def _assign_kc_user_groups():
-        if (
-            user.get_user_auth_access_to_spaces()["odoo"]
-            and not self._get_kc_user_groups()
-        ):
-            # assign group
-            pass
-        elif (
-            not user.get_user_auth_access_to_spaces()["odoo"]
-            and self._get_kc_user_groups()
-        ):
-            # remove group
-            pass
+    def _assign_kc_user_groups(self):
+        """Assing group to users on Keycloak.
+
+        1. get a token
+        2. check if _KC_CLIENT_AUTH_ACCESS_GROUP_ODOO is in KC groups
+        3. assign or remove user group allow-odoo
+        """
+        provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
+        provider_id.validate_admin_provider()
+        token = self._get_admin_token(provider_id)
+        keycloak_groups = self._get_kc_groups(token, provider_id)
+        group_name = [group["name"] for group in keycloak_groups]
+        if not self._KC_CLIENT_AUTH_ACCESS_GROUP_ODOO in group_name:
+            raise exceptions.UserError(_("User group allow-odoo doesn't exist."))
+        else:
+            for user in self:
+                keycloak_user_groups = self._get_kc_user_groups(
+                    token, provider_id, user
+                )
+                user_group_name = [group["name"] for group in keycloak_user_groups]
+                if user.oauth_uid:
+                    if (
+                        user.get_user_auth_access_to_spaces()["odoo"]
+                        and not self._KC_CLIENT_AUTH_ACCESS_GROUP_ODOO
+                        in user_group_name
+                    ):
+                        pass
+                    # assign
+                    elif (
+                        not user.get_user_auth_access_to_spaces()["odoo"]
+                        and self._KC_CLIENT_AUTH_ACCESS_GROUP_ODOO in user_group_name
+                    ):
+                        # remove
+                        pass
 
     def _validate_response(self, resp, no_json=False):
         # When Keycloak detects a clash on non-unique values, like emails,
