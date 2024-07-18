@@ -18,6 +18,7 @@ class ResUsers(models.Model):
     _inherit = ["res.users", "user.currentcompany.mixin"]
 
     _LOGIN_MATCH_KEY = "id:login"
+    _KC_CLIENT_AUTH_ACCESS_GROUP_ODOO = "odoo-allow"
 
     current_role = fields.Char(computed="_compute_current_role", store=False)
     last_user_invitation_through_kc = fields.Datetime(
@@ -106,6 +107,42 @@ class ResUsers(models.Model):
         )
         self._validate_response(resp)
         return resp.json()
+
+    def _get_kc_user_groups(self, token, provider_id, odoo_user, **params):
+        """Retrieve user groups from Keycloak.
+
+        :param token: a valida auth token from Keycloak
+        :param **params: extra search params for users endpoint
+        """
+        odoo_key = self._LOGIN_MATCH_KEY.split(":")[0]
+        keycloak_user = self._get_kc_users(
+            token, provider_id, search=odoo_user.mapped(odoo_key)[0]
+        )
+        # GET /{realm}/users/{id}/groups
+        logger.info("Calling %s" % provider_id.user_groups_endpoint)
+        headers = {
+            "Authorization": "Bearer %s" % token,
+        }
+        user_groups_endpoint = admin_user_endpoint + "/" + keycloak_user + "/" + groups
+        resp = requests.get(
+            provider_id.user_groups_endpoint, headers=headers, params=params
+        )
+        self._validate_response(resp)
+        return resp.json()
+
+    def _assign_kc_user_groups():
+        if (
+            user.get_user_auth_access_to_spaces()["odoo"]
+            and not self._get_kc_user_groups()
+        ):
+            # assign group
+            pass
+        elif (
+            not user.get_user_auth_access_to_spaces()["odoo"]
+            and self._get_kc_user_groups()
+        ):
+            # remove group
+            pass
 
     def _validate_response(self, resp, no_json=False):
         # When Keycloak detects a clash on non-unique values, like emails,
