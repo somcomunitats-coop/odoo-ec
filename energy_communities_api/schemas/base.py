@@ -56,7 +56,7 @@ class PaginationLinks(BaseLinks):
 
 class Error(BaseModel):
     """
-    Representation of an error in energy_selfconsumption_api
+    Representation of an error
     """
 
     code: str
