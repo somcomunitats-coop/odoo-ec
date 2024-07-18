@@ -398,6 +398,7 @@ class ResUsers(models.Model):
 
         if action in ("create_kc_user", "invite_user_through_kc"):
             user.create_users_on_keycloak()
+            user._assign_kc_user_groups()
 
         if (
             force_invite
@@ -407,9 +408,6 @@ class ResUsers(models.Model):
             )
         ) and user.oauth_uid:
             user.send_reset_password_mail()
-
-        if user.oauth_uid and not user.get_user_auth_access_to_spaces()["odoo"]:
-            user.oauth_uid = user.oauth_uid + "_member"
 
         return user
 
