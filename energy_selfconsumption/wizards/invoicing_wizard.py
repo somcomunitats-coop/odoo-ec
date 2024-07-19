@@ -69,13 +69,23 @@ class InvoicingWizard(models.TransientModel):
     @api.depends("contract_ids")
     def _compute_next_period_date_start_and_end(self):
         for record in self:
-            if len(record.contract_ids) > 0:
-                record.next_period_date_start = record.contract_ids[
-                    0
-                ].next_period_date_start
-                record.next_period_date_end = record.contract_ids[
-                    0
-                ].next_period_date_end
+            if (
+                len(record.contract_ids) > 0
+                and len(record.contract_ids[0].contract_line_ids[0]) > 0
+            ):
+                main_line = record.contract_ids[0].get_main_line()
+                record.next_period_date_start = (
+                    main_line.next_period_date_start
+                    if main_line
+                    else record.contract_ids[0]
+                    .contract_line_ids[0]
+                    .next_period_date_start
+                )
+                record.next_period_date_end = (
+                    main_line.next_period_date_end
+                    if main_line
+                    else record.contract_ids[0].next_period_date_end
+                )
 
     @api.constrains("contract_ids")
     def constraint_contract_ids(self):
@@ -143,10 +153,11 @@ Next period end: {next_period_date_end}"""
         for record in self:
             if not record.power or record.power <= 0:
                 raise ValidationError(
-                    _("You must enter a valid total energy generated (kWh).")
+                    _("The energy generated must be greater than 0 (kWh).")
                 )
 
     def generate_invoices(self):
+        df, exit_df = self.parse_csv_file()
         res = []
         for contract in self.contract_ids:
             invoicing_mode = contract.project_id.selfconsumption_id.invoicing_mode
@@ -155,8 +166,9 @@ Next period end: {next_period_date_end}"""
             if invoicing_mode == "energy_delivered":
                 self._process_energy_delivered(contract, template_name, res)
             elif invoicing_mode == "energy_custom":
-                self._process_energy_custom(contract, template_name, res)
-
+                if not exit_df:
+                    raise ValidationError(_("CSV file could not be loaded"))
+                self._process_energy_custom(df, contract, template_name, res)
         return res
 
     def _process_energy_delivered(self, contract, template_name, res):
@@ -176,57 +188,73 @@ Next period end: {next_period_date_end}"""
             )._recurring_create_invoice()
         )
 
-    def _process_energy_custom(self, contract, template_name, res):
+    def _process_energy_custom(self, df, contract, template_name, res):
         template_name += _("Energy Delivered Custom: {energy_delivered} kWh")
-        df = self.parse_csv_file()
-        if df is not None:
-            find_record = False
-            for index, row in df.iterrows():
-                cau = row.get("CAU")
-                if contract.project_id.selfconsumption_id.code == cau:
-                    dates = row.get(
-                        "Periode facturat (dd/mm/aaaa-dd/mm/aaaaa)", "-"
-                    ).split("-")
-                    if (
-                        len(dates) == 2
-                        and contract.next_period_date_start.strftime('%d/%m/%Y') == dates[0]
-                        and contract.next_period_date_end.strftime('%d/%m/%Y') == dates[1]
-                    ):
-                        cups = row.get("CUPS")
-                        kwh = round(float(row.get("Energia a facturar (kWh)").replace(",",".")), 3)
-                        if kwh <= 0:
-                            raise ValidationError(
-                                _("You must enter a valid total energy generated (kWh).")
-                            )
-                        if contract.supply_point_assignation_id.supply_point_id.code == cups:
-                            find_record = True
-                            self._update_contract_lines(contract, cups, kwh, template_name)
-                            res.append(
-                                contract.with_context(
-                                    {"energy_delivered": kwh}
-                                )._recurring_create_invoice()
-                            )
-            if not find_record:
-                raise ValidationError(_(f"""
-                    CUPS {contract.supply_point_assignation_id.supply_point_id.code} 
-                    not found for period 
-                    {contract.next_period_date_start.strftime('%d/%m/%Y')} - 
-                    {contract.next_period_date_end.strftime('%d/%m/%Y')} and 
-                    CAU {contract.project_id.selfconsumption_id.code}
-                """))
+        main_line = contract.get_main_line()
+        if len(contract.contract_line_ids) == 0:
+            raise ValidationError(_("The contract has no lines"))
+        next_period_date_start = (
+            main_line.next_period_date_start
+            if main_line
+            else contract.contract_line_ids[0].next_period_date_start
+        )
+        next_period_date_end = (
+            main_line.next_period_date_end
+            if main_line
+            else contract.contract_line_ids[0].next_period_date_end
+        )
+        row = df[
+            (df["CUPS"] == contract.supply_point_assignation_id.supply_point_id.code)
+            & (df["CAU"] == contract.project_id.selfconsumption_id.code)
+            & (
+                df["Periode facturat start (dd/mm/aaaa)"]
+                == next_period_date_start.strftime("%d/%m/%Y")
+            )
+            & (
+                df["Periode facturat end (dd/mm/aaaa)"]
+                == next_period_date_end.strftime("%d/%m/%Y")
+            )
+        ]
+        if row.empty:
+            raise ValidationError(
+                _(
+                    f"""
+                        CUPS {contract.supply_point_assignation_id.supply_point_id.code}
+                        not found for period
+                        {next_period_date_start.strftime('%d/%m/%Y')} -
+                        {next_period_date_end.strftime('%d/%m/%Y')} and
+                        CAU {contract.project_id.selfconsumption_id.code}
+                    """
+                )
+            )
+        else:
+            cups = row.get("CUPS")[0]
+            kwh = round(
+                float(row.get("Energia a facturar (kWh)")[0].replace(",", ".")), 2
+            )
+            if kwh <= 0:
+                raise ValidationError(
+                    _("The energy generated must be greater than 0 (kWh).")
+                )
+            self._update_contract_lines(contract, cups, kwh, template_name)
+            res.append(
+                contract.with_context(
+                    {"energy_delivered": kwh}
+                )._recurring_create_invoice()
+            )
 
     def _update_contract_lines(self, contract, cups, kwh, template_name):
         for line in contract.contract_line_ids:
-                line.write(
-                    {
-                        "name": template_name.format(
-                            energy_delivered=str(kwh),
-                            code=cups,
-                            owner_id=contract.supply_point_assignation_id.supply_point_id.owner_id.display_name,
-                        ),
-                        "quantity": kwh
-                    }
-                )
+            line.write(
+                {
+                    "name": template_name.format(
+                        energy_delivered=str(kwh),
+                        code=cups,
+                        owner_id=contract.supply_point_assignation_id.supply_point_id.owner_id.display_name,
+                    ),
+                    "quantity": kwh,
+                }
+            )
 
     def _parse_file(self, data_file):
         self.ensure_one()
@@ -236,8 +264,9 @@ Next period end: {next_period_date_end}"""
             except UnicodeDecodeError:
                 detected_encoding = chardet.detect(data_file).get("encoding", False)
                 if not detected_encoding:
-                    self.notification(
-                        "Error", _("No valid encoding was found for the attached file")
+                    logger.warning(
+                        "No valid encoding was found for the attached file",
+                        exc_info=True,
                     )
                     return False, False
                 decoded_file = data_file.decode(detected_encoding)
@@ -250,12 +279,8 @@ Next period end: {next_period_date_end}"""
             return df, True
         except Exception:
             logger.warning("Parser error", exc_info=True)
-            self.notification("Error", _("Error parsing the file"))
             return False, False
 
     def parse_csv_file(self):
         file_data = base64.b64decode(self.import_file)
-        df, not_error = self._parse_file(file_data)
-        if not_error:
-            return df
-        return False
+        return self._parse_file(file_data)

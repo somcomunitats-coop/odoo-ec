@@ -15,7 +15,10 @@
                             <field name="invoicing_mode" readonly="1" invisible="1" />
                         </group>
                         <group>
-                            <field name="power" attrs="{'invisible': [('invoicing_mode', '!=', 'energy_delivered')], 'required': [('invoicing_mode', '=', 'energy_delivered')]}"/>
+                            <field
+                name="power"
+                attrs="{'invisible': [('invoicing_mode', '!=', 'energy_delivered')], 'required': [('invoicing_mode', '=', 'energy_delivered')]}"
+              />
                             <field name="contract_ids">
                                 <tree>
                                     <field name="partner_id" />
@@ -34,10 +37,23 @@
                 filename="fname"
                 widget="binary"
               />
-                            <field name="fname" invisible="1" attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"/>
-                            <field name="delimiter" attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"/>
-                            <field name="quotechar" attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"/>
-                            <field name="encoding" attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"/>
+                            <field
+                name="fname"
+                invisible="1"
+                attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
+              />
+                            <field
+                name="delimiter"
+                attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
+              />
+                            <field
+                name="quotechar"
+                attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
+              />
+                            <field
+                name="encoding"
+                attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
+              />
                         </group>
                     </sheet>
                     <footer>

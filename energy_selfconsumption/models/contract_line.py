@@ -10,11 +10,26 @@ class ContractLine(models.Model):
         compute="_compute_days_invoiced",
         store=True,
     )
-    # quantity = fields.Float(default=1.0, required=True, digits=(10, 3))
 
+    # quantity = fields.Float(default=1.0, required=True, digits=(10, 3))
+    main_line = fields.Boolean("Main line", default=False)
     # This validation is raised when writing date_start on the contract and recurring_next_date is yet not computed
     # Fixed by just checking when the recurrence is at line level (line_recurrence)
     # TODO create a PR to OCA fixing this
+
+    @api.constrains("main_line")
+    def _check_only_one_main_line(self):
+        for line in self:
+            contract_lines = line.contract_id.contract_line_ids
+            contador = 0
+            for l in contract_lines:
+                if l.main_line:
+                    contador += 1
+            if len(contador) > 1:
+                raise ValidationError(
+                    _("There can only be one main line in the contract.")
+                )
+
     @api.constrains("recurring_next_date", "date_start")
     def _check_recurring_next_date_start_date(self):
         for line in self:

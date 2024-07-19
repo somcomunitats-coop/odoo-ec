@@ -43,7 +43,9 @@
     id="selfconsumption_energy_delivered_custom_invoicing_reminder"
     model="mail.template"
   >
-        <field name="name">Selfconsumption Energy Delivered Custom Invoicing Reminder</field>
+        <field
+      name="name"
+    >Selfconsumption Energy Delivered Custom Invoicing Reminder</field>
         <field name="email_from">info@somcomunitats.coop</field>
         <field
       name="subject"

@@ -113,7 +113,7 @@ class TestContractGenerationWizard(TransactionCase):
         related_contract = self.env["contract.contract"].search(
             [("project_id", "=", self.selfconsumption.project_id.id)]
         )
-        contract_line = related_contract[0].contract_line_ids[0]
+        contract_line = related_contract[0].get_main_line()
         days_timedelta = (
             contract_line.next_period_date_end - contract_line.next_period_date_start
         )

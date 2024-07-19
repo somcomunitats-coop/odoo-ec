@@ -1,5 +1,4 @@
 from odoo import _, fields, models
-from odoo.exceptions import UserError
 
 from ..models.selfconsumption import INVOICING_VALUES
 
