@@ -7,7 +7,6 @@ from odoo.tests import HttpCase, tagged
 from odoo.addons.base_rest.tests.common import RegistryMixin
 
 from ..schemas import MemberCommunity
-from ..services.energy_communities_member_service import MemberApiService
 from .data import client_data, client_data_response, server_auth_url
 
 

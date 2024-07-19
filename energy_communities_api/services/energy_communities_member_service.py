@@ -1,5 +1,3 @@
-from werkzeug.exceptions import Unauthorized
-
 from odoo.http import request
 
 from odoo.addons.base_rest import restapi
