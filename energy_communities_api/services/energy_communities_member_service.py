@@ -1,3 +1,4 @@
+from odoo import models
 from odoo.http import request
 
 from odoo.addons.base_rest import restapi
@@ -32,8 +33,21 @@ class MemberApiService(Component):
         output_param=PydanticModel(MemberInfoResponse),
     )
     def me(self):
+        # 1.- Pure component way
+        # coll = self.env['res.partner.collection'].browse(self.env.user.partner_id.id)
+        # with coll.work_on('res.partner') as member_info_worker:
+        #     member_info_worker.component(usage="member.info").get_member_info()
+        # 2.- Service inheritance way
+        # return single_response(
+        #     request, MemberInfoResponse, self._get_member_info()
+        # )
+        # 3.- AbstractModel way
         return single_response(
-            request, MemberInfoResponse, MemberInfo.from_orm(self.env.user.partner_id)
+            request,
+            MemberInfoResponse,
+            self.env["member.info.backend.abstract"].get_member_info(
+                self.env.user.partner_id
+            ),
         )
 
     @restapi.method(
@@ -53,10 +67,36 @@ class MemberApiService(Component):
             ),
         )
 
+
+class MemberInfoBackend(Component):
+    _inherit = "member.api.service"
+
+    def _get_member_info(self):
+        return MemberInfo.from_orm(self.env.user.partner_id)
+
     def _get_member_communities(self):
         ret = []
         memberships = self.env["cooperative.membership"].search(
             [("partner_id", "=", self.env.user.partner_id.id)]
+        )
+        for membership in memberships:
+            ret.append(MemberCommunity.from_orm(membership.company_id))
+        return ret
+
+
+class MemberInfoBackendAbstract(models.AbstractModel):
+    _name = "member.info.backend.abstract"
+
+    # def __init__(self, record):
+    #     self.record = record
+
+    def get_member_info(self, record):
+        return MemberInfo.from_orm(record)
+
+    def _get_member_communities(self):
+        ret = []
+        memberships = self.env["cooperative.membership"].search(
+            [("partner_id", "=", self.record.id)]
         )
         for membership in memberships:
             ret.append(MemberCommunity.from_orm(membership.company_id))

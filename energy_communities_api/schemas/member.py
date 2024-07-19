@@ -11,7 +11,7 @@ class NaiveOrmModel(BaseModel):
         getter_dict = utils.GenericOdooGetter
 
 
-class MemberInfo(BaseModel):
+class MemberInfo(NaiveOrmModel):
     class Config:
         title: "Member Info"
 
@@ -30,11 +30,12 @@ class MemberInfo(BaseModel):
         title="Language",
         description="Language of the member",
     )
-    member_number: str = Field(
-        ...,
-        title="Member Number",
-        description="Member number assigned to this member",
-    )
+    # member_number: Optional[str] = Field(
+    #     ...,
+    #     title="Member Number",
+    #     description="Member number assigned to this member",
+    #     alias="logo",
+    # )
 
 
 class MemberCommunity(NaiveOrmModel):
