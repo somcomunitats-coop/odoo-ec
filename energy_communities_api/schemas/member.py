@@ -1,14 +1,8 @@
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
-from odoo.addons.pydantic import utils
-
-
-class NaiveOrmModel(BaseModel):
-    class Config:
-        orm_mode = True
-        getter_dict = utils.GenericOdooGetter
+from .base import BaseResponse, NaiveOrmModel, PaginationLinks
 
 
 class MemberInfo(NaiveOrmModel):
@@ -38,9 +32,18 @@ class MemberInfo(NaiveOrmModel):
     # )
 
 
-class MemberCommunity(NaiveOrmModel):
+class MemberInfoResponse(BaseResponse):
+    """
+    When a single project is requested, this model will be returned
+    """
+
+    data: MemberInfo
+    links: PaginationLinks
+
+
+class CommunityInfo(NaiveOrmModel):
     class Config:
-        tittle: "Member Community info"
+        tittle: "Community info"
         # used for being able to use alias on a List of this type
         allow_population_by_field_name = True
 

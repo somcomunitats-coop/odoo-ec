@@ -1,20 +1,18 @@
-from .base import (
-    PaginationLimits,
-    PaginationLinks,
-    PagingParam,
-    DEFAULT_PAGE_SIZE,
-    BaseLinks,
-)
-from .selfconsumption_project import (
-    SelfConsumptionProjectInfo,
-    SelfConsumptionProjectMember,
-)
-from .responses import (
-    ProjectsInfoListResponse,
-    SingleProjectInfoResponse,
-    ProjectMembersResponse,
+from .base import PagingParam, PaginationLimits, PaginationLinks
+from .member import (
+    MemberInfo,
     MemberInfoResponse,
-    MemberCommunitiesResponse,
 )
+from .community import CommunityInfo, CommunityInfoListResponse
 
-from .member import MemberInfo, MemberCommunity
+# from .selfconsumption_project import (
+#     SelfConsumptionProjectInfo,
+#     SelfConsumptionProjectMember,
+# )
+# from .responses import (
+#     ProjectsInfoListResponse,
+#     SingleProjectInfoResponse,
+#     ProjectMembersResponse,
+#     MemberInfoResponse,
+#     MemberCommunitiesInfoResponse,
+# )

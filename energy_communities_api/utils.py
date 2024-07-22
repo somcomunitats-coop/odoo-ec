@@ -1,12 +1,15 @@
-from typing import Any, List
+from typing import Any, List, Union
 from urllib import parse
 
+from odoo.api import Environment
 from odoo.http import HttpRequest
+
+from odoo.addons.component.core import Component
 
 from .schemas import PaginationLimits, PaginationLinks
 
 
-def get_pagination_links(
+def _get_pagination_links(
     request: HttpRequest,
     total_results: int,
     paging: PaginationLimits,
@@ -50,14 +53,28 @@ def single_response(
     )
 
 
-def collection_response(
+def list_response(
     request: HttpRequest,
     response_class: Any,
     collection: List[Any],
     paging: PaginationLimits,
 ) -> Any:
-    actual_count = len(collection)
     return response_class(
         data=collection,
-        links=get_pagination_links(request, actual_count, paging),
+        links=_get_pagination_links(request, len(collection), paging),
+        data_length=len(collection),
     )
+
+
+def api_info(
+    env: Environment,
+    info_schema: Any,
+    record_name: str,
+    record_ids: Union[List[int], int],
+) -> Component:
+    backend = env["api.info.backend"].browse(1)
+    with backend.work_on(
+        record_name, rec_ids=record_ids, info_schema=info_schema
+    ) as recordset_worker:
+        component = recordset_worker.component(usage="api.info")
+        return component

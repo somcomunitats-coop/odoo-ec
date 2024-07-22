@@ -1,8 +1,16 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+
+from odoo.addons.pydantic import utils
 
 DEFAULT_PAGE_SIZE = 20
+
+
+class NaiveOrmModel(BaseModel):
+    class Config:
+        orm_mode = True
+        getter_dict = utils.GenericOdooGetter
 
 
 class BaseResponse(BaseModel):
@@ -16,9 +24,8 @@ class BaseListResponse(BaseResponse):
     Base class for responses that return a collection of elements
     """
 
-    total_results: int
-    count: int
-    page: Optional[int]
+    data_length: int
+    total_papes: Optional[int]
 
 
 class PagingParam(BaseModel):

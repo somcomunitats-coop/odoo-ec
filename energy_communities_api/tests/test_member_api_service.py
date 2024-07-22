@@ -6,7 +6,7 @@ from odoo.tests import HttpCase, tagged
 
 from odoo.addons.base_rest.tests.common import RegistryMixin
 
-from ..schemas import MemberCommunity
+from ..schemas import CommunityInfo
 from .data import client_data, client_data_response, server_auth_url
 
 
@@ -56,7 +56,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         )
 
     @patch(
-        "odoo.addons.energy_communities_api.services.energy_communities_member_service.MemberApiService._get_member_communities"
+        "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.get_communities"
     )
     def test__me_communities_endpoint__ok(self, patcher):
         # given http_client
@@ -65,7 +65,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # self.token
         def member_communities():
             return [
-                MemberCommunity(id=value, name=f"test{value}", image="")
+                CommunityInfo(id=value, name=f"test{value}", image="")
                 for value in range(0, 10)
             ]
 
@@ -88,3 +88,4 @@ class TestMemberApiService(HttpCase, RegistryMixin):
                 "previous_page": "http://127.0.0.1:8069/api/energy-communities/me/communities?page=1&page_size=2",
             },
         )
+        self.assertEqual(communities.get("data_length"), 10)
