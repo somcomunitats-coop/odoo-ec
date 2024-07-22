@@ -46,6 +46,15 @@
             <field name="code">action = records.invoicing_wizard_action()</field>
         </record>
 
+        <report
+      id="contract_contract_csv_report"
+      model="contract.contract"
+      string="Template contracts"
+      report_type="csv"
+      name="contract_contract.csv"
+      file="contract_contract"
+      attachment_use="False"
+    />
 
     </data>
 </odoo>

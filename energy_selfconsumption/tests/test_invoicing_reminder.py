@@ -1,12 +1,49 @@
 from datetime import date, datetime, timedelta
 
-from odoo.tests import TransactionCase
+from odoo.tests import TransactionCase, tagged
 
 
+@tagged("energy_selfconsumption")
 class TestInvoicingReminder(TransactionCase):
     def setUp(self):
         super().setUp()
-        self.partner = self.env["res.partner"].create({"name": "test partner"})
+        self.selfconsumption_import_wizard = self.env[
+            "energy_selfconsumption.selfconsumption_import.wizard"
+        ].create({})
+        self.company = self.env["res.company"].search([], limit=1)[0]
+        self.partner = self.env["res.partner"].create(
+            {
+                "name": f"Test Partner",
+                "vat": self.selfconsumption_import_wizard.generar_vat_espanol(),
+                "country_id": self.env.ref("base.es").id,
+                "state_id": self.env.ref("base.state_es_b").id,
+                "street": f"Carrer de Sants, 79",
+                "city": "Barcelona",
+                "zip": "08014",
+                "type": "contact",
+                "company_id": self.company.id,
+                "company_type": "person",
+                "cooperative_membership_id": self.company.partner_id.id,
+            }
+        )
+        self.bank_account = self.env["res.partner.bank"].create(
+            {
+                "acc_number": self.selfconsumption_import_wizard.generar_iban_espanol(),
+                "partner_id": self.partner.id,
+                "company_id": self.company.id,
+            }
+        )
+        self.mandate = self.env["account.banking.mandate"].create(
+            {
+                "format": "sepa",
+                "type": "recurrent",
+                "state": "valid",
+                "signature_date": datetime.now().strftime("%Y-%m-%d"),
+                "partner_bank_id": self.bank_account.id,
+                "partner_id": self.partner.id,
+                "company_id": self.company.id,
+            }
+        )
         self.selfconsumption = self.env[
             "energy_selfconsumption.selfconsumption"
         ].create(
@@ -15,8 +52,8 @@ class TestInvoicingReminder(TransactionCase):
                 "type": self.env.ref(
                     "energy_selfconsumption.selfconsumption_project_type"
                 ).id,
-                "code": "ES0397277816188340VL",
-                "cil": "001ES0397277816188340VL",
+                "code": "ES0021119448300637FDA009",
+                "cil": "ES0021119448300637FD009",
                 "state": "activation",
                 "power": 100,
                 "street": "Carrer de Sants, 79",
@@ -32,11 +69,12 @@ class TestInvoicingReminder(TransactionCase):
                 "project_id": self.selfconsumption.project_id.id,
                 "partner_id": self.partner.id,
                 "effective_date": datetime.today(),
+                "mandate_id": self.mandate.id,
             }
         )
         self.supply_point = self.env["energy_selfconsumption.supply_point"].create(
             {
-                "code": "ES0029542181297829TM",
+                "code": self.selfconsumption_import_wizard.generate_cups(),
                 "street": "C. de Sta. Catalina",
                 "street2": "55º B",
                 "zip": "08014",

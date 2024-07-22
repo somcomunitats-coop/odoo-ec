@@ -32,6 +32,13 @@
                         <group
               attrs="{'invisible': [('invoicing_mode', '!=', 'energy_custom')]}"
             >
+                            <button
+                type="object"
+                class="btn btn-primary"
+                name="download_template_button"
+              >Download
+                            Template</button>
+                        <separator />
                             <field
                 name="import_file"
                 filename="fname"

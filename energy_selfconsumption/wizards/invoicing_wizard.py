@@ -282,5 +282,15 @@ Next period end: {next_period_date_end}"""
             return False, False
 
     def parse_csv_file(self):
-        file_data = base64.b64decode(self.import_file)
-        return self._parse_file(file_data)
+        if self.import_file:
+            file_data = base64.b64decode(self.import_file)
+            return self._parse_file(file_data)
+        return False, False
+
+    def download_template_button(self):
+        self.ensure_one()
+        logger.info("\n\n download_template_button")
+        doc_ids = self.contract_ids.ids
+        return self.env.ref(
+            "energy_selfconsumption.contract_contract_csv_report"
+        ).report_action(docids=doc_ids)

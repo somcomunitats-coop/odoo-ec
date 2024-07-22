@@ -25,7 +25,7 @@ class ContractLine(models.Model):
             for l in contract_lines:
                 if l.main_line:
                     contador += 1
-            if len(contador) > 1:
+            if contador > 1:
                 raise ValidationError(
                     _("There can only be one main line in the contract.")
                 )
