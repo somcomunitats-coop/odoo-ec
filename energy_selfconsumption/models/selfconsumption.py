@@ -549,6 +549,14 @@ class Selfconsumption(models.Model):
                     )
                     raise ValidationError(error_message)
 
+    def unlink(self):
+        for record in self:
+            record.distribution_table_ids.supply_point_assignation_ids.unlink()
+            record.distribution_table_ids.unlink()
+            record.inscription_ids.unlink()
+            record.project_id.unlink()
+        return super().unlink()
+
 
 class CoefficientReport(models.TransientModel):
     _name = "energy_selfconsumption.coefficient_report"
