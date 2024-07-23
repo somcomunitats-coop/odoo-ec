@@ -56,7 +56,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         )
 
     @patch(
-        "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.get_communities"
+        "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.get_member_communities"
     )
     def test__me_communities_endpoint__ok(self, patcher):
         # given http_client

@@ -1,6 +1,6 @@
 from odoo import models
 
-from odoo.addons.component.core import AbstractComponent, Component
+from odoo.addons.component.core import AbstractComponent
 
 
 class ApiInfoBackend(models.Model):
@@ -8,33 +8,24 @@ class ApiInfoBackend(models.Model):
     _inherit = "collection.base"
 
 
-class RecordsetComponent(AbstractComponent):
-    _name = "recordset.component"
+class ApiInfo(AbstractComponent):
+    _name = "api.info"
     _collection = "api.info.backend"
 
     def __init__(self, *args):
         super().__init__(*args)
-        self.recordset = self.model.browse(self.work.rec_ids)
+        self.schema_class = self.work.schema_class
 
+    def get(self, recordset):
+        if len(recordset) > 1:
+            return self._info_list(recordset)
+        return self._info(recordset[0])
 
-class ApiInfo(Component):
-    _name = "api.info"
-    _usage = "api.info"
-    _inherit = "recordset.component"
+    def _info(self, record):
+        return self.schema_class.from_orm(record)
 
-    def __init__(self, *args):
-        super().__init__(*args)
-        self.info_schema = self.work.info_schema
-
-    def get(self):
-        if len(self.recordset) > 1:
-            return self._info_list()
-        return self._info()
-
-    def _info(self):
-        return self.info_schema.from_orm(self.recordset[0])
-
-    def _info_list(self):
-        return list(
-            map(lambda record: self.info_schema.from_orm(record), self.recordset)
-        )
+    def _info_list(self, recordset):
+        return list(map(lambda record: self.schema_class.from_orm(record), recordset))
+        # return [
+        #     self.schema_class.from_orm(record) for record in recordset
+        # ]

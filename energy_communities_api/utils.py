@@ -1,10 +1,11 @@
+from contextlib import contextmanager
 from typing import Any, List, Union
 from urllib import parse
 
 from odoo.api import Environment
 from odoo.http import HttpRequest
 
-from odoo.addons.component.core import Component
+from odoo.addons.component.core import Component, WorkContext
 
 from .schemas import PaginationLimits, PaginationLinks
 
@@ -66,15 +67,18 @@ def list_response(
     )
 
 
+@contextmanager
 def api_info(
     env: Environment,
-    info_schema: Any,
-    record_name: str,
+    model_name: str,
+    schema_class: Any,
     record_ids: Union[List[int], int],
 ) -> Component:
     backend = env["api.info.backend"].browse(1)
-    with backend.work_on(
-        record_name, rec_ids=record_ids, info_schema=info_schema
-    ) as recordset_worker:
-        component = recordset_worker.component(usage="api.info")
-        return component
+    work = WorkContext(
+        model_name, collection=backend, rec_ids=record_ids, schema_class=schema_class
+    )
+    yield work.component(usage="api.info")
+    # with backend.work_on as recordset_worker:
+    #     component = recordset_worker.component(usage="api.info")
+    #     yield component
