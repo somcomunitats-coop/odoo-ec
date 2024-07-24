@@ -497,6 +497,7 @@ class ResUsers(models.Model):
             }
         else:
             self.user_vals_validator(user_vals)
+
         user = self.env["res.users"].search(
             [
                 ("login", "=", user_vals["login"]),
@@ -505,6 +506,7 @@ class ResUsers(models.Model):
                 ("active", "=", False),
             ]
         )
+
         if user:
             if company_id not in user.company_ids:
                 # add the company to the user's companies
@@ -525,13 +527,10 @@ class ResUsers(models.Model):
                     )
                     user_roles.unlink()
         else:
+            user_vals["company_id"] = company_id.id
+            user_vals["company_ids"] = partner_id.company_ids
             user = self.sudo().with_context(no_reset_password=True).create(user_vals)
-            user.sudo().write(
-                {
-                    "company_id": company_id.id,
-                    "company_ids": partner_id.company_ids,
-                }
-            )
+
         user.sudo().set_user_roles(company_id, role_id)
 
         if action in ("create_kc_user", "invite_user_through_kc"):
