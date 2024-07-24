@@ -1,7 +1,5 @@
 from unittest.mock import patch
 
-from odoo.tests.common import tagged
-
 from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import TransactionComponentCase
 
@@ -9,7 +7,6 @@ from ..components.partner_api_info import PartnerApiInfo
 from ..schemas import CommunityInfo, MemberInfo
 
 
-@tagged("-at_install", "post_install")
 class TestMemberApiInfo(TransactionComponentCase):
     def setUp(self):
         super().setUp()

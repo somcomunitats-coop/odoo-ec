@@ -25,7 +25,4 @@ class ApiInfo(AbstractComponent):
         return self.schema_class.from_orm(record)
 
     def _info_list(self, recordset):
-        return list(map(lambda record: self.schema_class.from_orm(record), recordset))
-        # return [
-        #     self.schema_class.from_orm(record) for record in recordset
-        # ]
+        return [self.schema_class.from_orm(record) for record in recordset]

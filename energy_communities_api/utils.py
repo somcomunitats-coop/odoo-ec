@@ -1,5 +1,5 @@
 from contextlib import contextmanager
-from typing import Any, List, Union
+from typing import Any, List
 from urllib import parse
 
 from odoo.api import Environment
@@ -72,13 +72,7 @@ def api_info(
     env: Environment,
     model_name: str,
     schema_class: Any,
-    record_ids: Union[List[int], int],
 ) -> Component:
     backend = env["api.info.backend"].browse(1)
-    work = WorkContext(
-        model_name, collection=backend, rec_ids=record_ids, schema_class=schema_class
-    )
+    work = WorkContext(model_name, collection=backend, schema_class=schema_class)
     yield work.component(usage="api.info")
-    # with backend.work_on as recordset_worker:
-    #     component = recordset_worker.component(usage="api.info")
-    #     yield component

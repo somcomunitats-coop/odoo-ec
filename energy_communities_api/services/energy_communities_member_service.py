@@ -5,6 +5,7 @@ from odoo.addons.base_rest_pydantic.restapi import PydanticModel
 from odoo.addons.component.core import Component
 
 from ..schemas import (
+    CommunityInfo,
     CommunityInfoListResponse,
     MemberInfo,
     MemberInfoResponse,
@@ -22,22 +23,19 @@ class MemberApiService(Component):
     _description = """
         CE Member roles requests
     """
+    _model_on = "res.partner"
 
     def __init__(self, *args):
         super().__init__(*args)
-        self.api_info = api_info(
-            self.env,
-            MemberInfo,
-            "res.partner",
-            self.env.user.partner_id.id,
-        )
 
     @restapi.method(
         [(["/"], "GET")],
         output_param=PydanticModel(MemberInfoResponse),
     )
     def me(self):
-        return single_response(request, MemberInfoResponse, self.api_info.get())
+        with api_info(self.env, self._model_on, MemberInfo) as component:
+            member_info = component.get_member_info(self.env.user.partner_id)
+        return single_response(request, MemberInfoResponse, member_info)
 
     @restapi.method(
         [(["/communities"], "GET")],
@@ -45,10 +43,14 @@ class MemberApiService(Component):
         output_param=PydanticModel(CommunityInfoListResponse),
     )
     def communities(self, paging_param):
+        with api_info(self.env, self._model_on, CommunityInfo) as component:
+            member_communities = component.get_member_communities(
+                self.env.user.partner_id
+            )
         return list_response(
             request,
             CommunityInfoListResponse,
-            self.api_info.get_communities(),
+            member_communities,
             PaginationLimits(
                 limit=paging_param.page_size,
                 offset=(paging_param.page - 1) * paging_param.page_size,
