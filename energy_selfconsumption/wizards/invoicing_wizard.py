@@ -228,9 +228,10 @@ Next period end: {next_period_date_end}"""
                 )
             )
         else:
-            cups = row.get("CUPS")[0]
+            indice = row.get("CUPS").index[0]
+            cups = row.get("CUPS")[indice]
             kwh = round(
-                float(row.get("Energia a facturar (kWh)")[0].replace(",", ".")), 2
+                float(row.get("Energia a facturar (kWh)")[indice].replace(",", ".")), 2
             )
             if kwh <= 0:
                 raise ValidationError(
