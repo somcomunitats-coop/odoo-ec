@@ -189,6 +189,9 @@ Next period end: {next_period_date_end}"""
         )
 
     def _process_energy_custom(self, df, contract, template_name, res):
+        if len(self.contract_ids) != df.shape[0]:
+            raise ValidationError(_("The number of contracts selected does not match "
+                                    "the number of contracts loaded by the csv."))
         template_name += _("Energy Delivered Custom: {energy_delivered} kWh")
         main_line = contract.get_main_line()
         if len(contract.contract_line_ids) == 0:
