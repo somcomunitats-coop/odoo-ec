@@ -29,7 +29,12 @@ class TestMemberApiInfo(TransactionComponentCase):
         # then we have the information related whit that partner
         self.assertDictEqual(
             member_info.dict(),
-            {"email": "virginie@demo.net", "lang": "en_US", "name": "Virginie Leloup"},
+            {
+                "email": "virginie@demo.net",
+                "lang": "en_US",
+                "name": "Virginie Leloup",
+                "member_number": "0",
+            },
         )
         self.assertIsInstance(member_info, MemberInfo)
 

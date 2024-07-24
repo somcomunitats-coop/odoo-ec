@@ -24,12 +24,11 @@ class MemberInfo(NaiveOrmModel):
         title="Language",
         description="Language of the member",
     )
-    # member_number: Optional[str] = Field(
-    #     ...,
-    #     title="Member Number",
-    #     description="Member number assigned to this member",
-    #     alias="logo",
-    # )
+    member_number: Optional[str] = Field(
+        ...,
+        title="Member Number",
+        description="Member number assigned to this member",
+    )
 
 
 class MemberInfoResponse(BaseResponse):

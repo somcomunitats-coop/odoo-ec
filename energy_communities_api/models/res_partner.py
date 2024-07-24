@@ -1,12 +1,15 @@
-from odoo import models
+from odoo import api, fields, models
 
 
 class ResPartner(models.Model):
     _name = "res.partner"
     _inherit = ["res.partner", "user.currentcompany.mixin"]
 
-    def api_member_info(self):
-        self.ensure_one()
-        with self.env["member_info.service"].work_on(self._name) as work:
-            member_info = work.component(usage="member_info.api").get_member_info(self)
-        return member_info
+    member_number = fields.Char(compute="_compute_member_number")
+
+    @api.depends("cooperative_membership_id")
+    def _compute_member_number(self):
+        for record in self:
+            record.member_number = (
+                record.cooperative_membership_id.cooperator_register_number
+            )
