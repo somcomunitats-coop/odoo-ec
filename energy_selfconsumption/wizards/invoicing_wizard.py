@@ -31,7 +31,7 @@ class InvoicingWizard(models.TransientModel):
 
     def _get_invoicing_mode(self):
         for contract in self.env["contract.contract"].search(
-            [("id", "in", self.env.context["active_ids"])]
+            [("id", "in", self.env.context.get("active_ids",[]))]
         ):
             return contract.project_id.selfconsumption_id.invoicing_mode
         return None
