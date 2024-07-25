@@ -50,7 +50,7 @@ class CreateUsersWizard(models.TransientModel):
                         ]
                     )
                     if cooperator:
-                        self.env["res.users"].build_platform_user(
+                        self.env["res.users"].with_delay().build_platform_user(
                             company_id,
                             partner,
                             role_id,
