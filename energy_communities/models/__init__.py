@@ -4,6 +4,7 @@ from . import cm_filter
 from . import cm_map
 from . import cm_place
 from . import external_id_mixin
+from . import ir_http
 from . import auth_oauth_provider
 from . import landing_page
 from . import res_company
