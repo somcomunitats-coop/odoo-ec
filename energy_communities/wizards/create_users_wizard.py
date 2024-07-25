@@ -50,14 +50,24 @@ class CreateUsersWizard(models.TransientModel):
                         ]
                     )
                     if cooperator:
-                        self.env["res.users"].with_delay().build_platform_user(
-                            company_id,
-                            partner,
-                            role_id,
-                            self.action,
-                            self.force_invite,
-                            user_vals={},
-                        )
+                        if len(impacted_partners) == 1:
+                            self.env["res.users"].build_platform_user(
+                                company_id,
+                                partner,
+                                role_id,
+                                self.action,
+                                self.force_invite,
+                                user_vals={},
+                            )
+                        else:
+                            self.env["res.users"].with_delay().build_platform_user(
+                                company_id,
+                                partner,
+                                role_id,
+                                self.action,
+                                self.force_invite,
+                                user_vals={},
+                            )
         else:
             impacted_companies = self.env["res.company"].browse(
                 self.env.context["active_ids"]
