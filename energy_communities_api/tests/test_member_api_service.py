@@ -1,3 +1,5 @@
+import random
+import string
 from unittest.mock import patch
 
 import requests
@@ -30,6 +32,11 @@ class TestMemberApiService(HttpCase, RegistryMixin):
 
         return f"Bearer {self._token}"
 
+    @property
+    def bad_token(self):
+        token = "".join(random.choices(string.ascii_letters, k=30))
+        return f"Bearer {token}"
+
     def test__me_endpoint__ok(self):
         # given http_client
         # self.url_open
@@ -39,6 +46,32 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # when we call for the personal data in api
         response = self.url_open(
             "/api/energy-communities/me", headers={"Authorization": self.token}
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and we get the correct information
+        self.assertDictEqual(
+            response.json(),
+            {
+                "data": client_data_response,
+                "links": {
+                    "self_": "http://127.0.0.1:8069/api/energy-communities/me",
+                    "next_page": None,
+                    "previous_page": None,
+                },
+            },
+        )
+
+    def test__me_endpoint__unauthorized(self):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+
+        # when we call for the personal data in api with a bad token
+        response = self.url_open(
+            "/api/energy-communities/me",
+            headers={"Authorization": self.bad_token, "Content-Type": "app/json"},
         )
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
