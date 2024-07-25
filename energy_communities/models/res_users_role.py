@@ -22,6 +22,7 @@ class ResUsersRole(models.Model):
             (4, self.env.ref("energy_communities.role_ce_manager").id),
             (4, self.env.ref("energy_communities.role_ce_admin").id),
             (4, self.env.ref("energy_communities.role_ce_member").id),
+            (4, self.env.ref("energy_communities.role_platform_admin").id),
         ]
         internal_user_extra_roles = [
             (4, self.env.ref("energy_communities.role_platform_admin").id),
