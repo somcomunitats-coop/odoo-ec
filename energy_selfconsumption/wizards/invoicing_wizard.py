@@ -19,16 +19,19 @@ class InvoicingWizard(models.TransientModel):
     power = fields.Float(string="Total Energy Generated (kWh)")
     contract_ids = fields.Many2many("contract.contract", readonly=True)
     next_period_date_start = fields.Date(
-        string="Next Period Start",
+        string="Start",
         compute="_compute_next_period_date_start_and_end",
         readonly=True,
     )
     next_period_date_end = fields.Date(
-        string="Next Period End",
+        string="End",
         compute="_compute_next_period_date_start_and_end",
         readonly=True,
     )
-
+    num_contracts = fields.Integer(string="Selected contracts",
+                                    default=lambda self: len(
+                                        self.env.context.get("active_ids",[])
+                                    ))
     def _get_invoicing_mode(self):
         for contract in self.env["contract.contract"].search(
             [("id", "in", self.env.context.get("active_ids",[]))]

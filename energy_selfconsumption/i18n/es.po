@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-19 07:44+0000\n"
-"PO-Revision-Date: 2024-07-19 07:44+0000\n"
+"POT-Creation-Date: 2024-07-25 11:08+0000\n"
+"PO-Revision-Date: 2024-07-25 11:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: energy_selfconsumption
-#: model:mail.template,body_html:energy_selfconsumption.selfconsumption_energy_delivered_custom_invoicing_reminder
 #: model:mail.template,body_html:energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder
 msgid ""
 "\n"
@@ -65,6 +64,79 @@ msgstr ""
 "        </p>\n"
 "        <p>\n"
 "            Para cualquier duda o incidencia contacta con el equipo de soporte; soporte@somcomunitats.coop.\n"
+"        </p>\n"
+"            \n"
+"        "
+
+#. module: energy_selfconsumption
+#: model:mail.template,body_html:energy_selfconsumption.selfconsumption_energy_delivered_custom_invoicing_reminder
+msgid ""
+"\n"
+"            \n"
+"        <p>Hi,</p>\n"
+"        <p>\n"
+"            Remember that the collective self-consumption project\n"
+"            <b>${ object.name }</b>\n"
+"            of the energy community\n"
+"            <b>${ object.project_id.company_id.name }</b>\n"
+"            must invoice on the day <b>${ ctx['next_invoicing'] }</b>.\n"
+"        </p>\n"
+"        <p>\n"
+"            It is necessary, therefore, that you upload to the Som Comunitats platform\n"
+"            the energy delivered from each CUPS for this period. Instructions to\n"
+"            generate invoices:.\n"
+"        </p>\n"
+"        <p>\n"
+"            1. Go to the project file, go to the contracts view and select the\n"
+"            contracts to be invoiced.\n"
+"        </p>\n"
+"        <p>\n"
+"            2. In the Action button, select the \"Generate invoices\" option.\n"
+"        </p>\n"
+"        <p>\n"
+"            3. In the wizard, load the CSV file with the energy delivered in kWh during\n"
+"            the period ${ ctx['first_date'] } - ${ ctx['last_date'] } for each CUPS and\n"
+"            press the \"Generate\" button.\n"
+"        </p>\n"
+"        <p>\n"
+"            4. Finally, you must validate and send the generated invoices. If you have\n"
+"            any doubts or issues, please contact our support team:\n"
+"            soporte@somcomunitats.coop\n"
+"        </p>\n"
+"            \n"
+"        "
+msgstr ""
+"\n"
+"            \n"
+"        <p>Hi,</p>\n"
+"        <p>\n"
+"            Remember that the collective self-consumption project\n"
+"            <b>${ object.name }</b>\n"
+" of the energy community\n"
+"            <b>${ object.project_id.company_id.name }</b>\n"
+" must invoice on the day <b>${ ctx['next_invoicing'] }</b>.\n"
+"        </p>\n"
+"        <p>\n"
+"            It is necessary, therefore, that you upload to the Som Comunitats platform\n"
+" the energy delivered from each CUPS for this period. Instructions to\n"
+" generate invoices:.\n"
+"        </p>\n"
+"        <p>\n"
+" 1. Go to the project file, go to the contracts view and select the\n"
+" contracts to be invoiced.\n"
+"        </p>\n"
+"        <p>\n"
+" 2. In the Action button, select the \"Generate invoices\" option.\n"
+"        </p>\n"
+"        <p><strong>Generar facturas</strong>
+" 3. En el asistente, cargue el fichero CSV con la energía suministrada en kWh durante\n"
+" el periodo ${ ctx['primera_fecha'] } - ${ ctx['last_date'] } para cada CUPS y \n"
+"pulsar el botón \"Generar\".\n"
+"        </p> <p>
+"        <p>
+" 4. Por último, debe validar y enviar las facturas generadas. Si tiene\n"
+" cualquier duda o incidencia, ponte en contacto con nuestro equipo de soporte:\n"
+" soporte@somcomunitats.coop\n"
 "        </p>\n"
 "            \n"
 "        "
@@ -483,6 +555,7 @@ msgstr ""
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_selfconsumption_unique_code
 #, python-format
 msgid "A project with this CAU already exists."
 msgstr "Ya existe un proyecto con esta CAU."
@@ -491,6 +564,7 @@ msgstr "Ya existe un proyecto con esta CAU."
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
+#: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_supply_point_unique_code_company_id
 #, python-format
 msgid "A supply point with this code already exists."
 msgstr "Ya existe un punto de suministro con este código."
@@ -536,6 +610,7 @@ msgstr "Accion necesaria"
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__active
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__active
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__active
 #, python-format
 msgid "Active"
 msgstr "Activo"
@@ -567,11 +642,6 @@ msgstr "Estado de actividad"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_type_icon
 msgid "Activity Type Icon"
 msgstr "Icono de tipo de actividad"
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__active
-msgid "Activo"
-msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -632,11 +702,6 @@ msgstr "Autogenerar datos (Datos existentes)"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
 msgid "Autogenerate data (New data)"
 msgstr "Autogenerar datos (Datos nuevos)"
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__draft
-msgid "Borrador"
-msgstr ""
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__code
@@ -1047,6 +1112,7 @@ msgstr "Delimitador en archivo CSV de importación."
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_product_product__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_report_contract_contract_csv__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_report_energy_selfconsumption_distribution_table_csv__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__display_name
 msgid "Display Name"
@@ -1080,11 +1146,14 @@ msgstr "Coeficiente de distribución"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_import_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
 msgid ""
 "Download\n"
 "                            Template"
-msgstr "Descargar plantilla"
+msgstr ""
+"Descargar\n"
+"                            plantilla"
 
 #. module: energy_selfconsumption
 #: model:ir.actions.server,name:energy_selfconsumption.manager_partition_coefficient_report_action
@@ -1110,6 +1179,7 @@ msgstr "Descargar lista de estados"
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__draft
 #, python-format
 msgid "Draft"
 msgstr "Borrador"
@@ -1155,11 +1225,6 @@ msgid ""
 msgstr ""
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__process
-msgid "En proceso"
-msgstr ""
-
-#. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_encoding
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__encoding
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__encoding
@@ -1172,9 +1237,17 @@ msgid "Enconding format in import CSV file."
 msgstr "Formato de codificación en el archivo CSV de importación."
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_end
+msgid "End"
+msgstr "Final"
+
+#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__energy_delivered
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__energy_delivered
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_delivered
 #, python-format
 msgid "Energy Delivered"
 msgstr "Energía Entregada"
@@ -1188,7 +1261,7 @@ msgstr "Energía Entregada"
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_custom
 #, python-format
 msgid "Energy Delivered Custom"
-msgstr "Energía entregada personalizada"
+msgstr "Energía entregda personalizada"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
@@ -1196,7 +1269,17 @@ msgstr "Energía entregada personalizada"
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid "Energy Delivered Custom: {energy_delivered} kWh"
-msgstr "Energía entregada personalizada: {energy_delivered} kWh"
+msgstr "Energía entregda personalizada: {energy_delivered} kWh"
+
+#. module: energy_selfconsumption
+#: model:contract.line.qty.formula,name:energy_selfconsumption.energy_delivered_formula
+msgid "Energy Delivered Formula"
+msgstr "Fórmula de Energía Entregada"
+
+#. module: energy_selfconsumption
+#: model:contract.line.qty.formula,name:energy_selfconsumption.energy_delivered_variable_formula
+msgid "Energy Delivered Variable Formula"
+msgstr "Fórmula Variable de Energía Entregada"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
@@ -1230,13 +1313,6 @@ msgstr "Energía entregada"
 #: model:ir.model,name:energy_selfconsumption.model_energy_project_project
 msgid "Energy project"
 msgstr "Proyecto energético"
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__energy_delivered
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__energy_delivered
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_delivered
-msgid "Energía Entregada"
-msgstr ""
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
@@ -1293,11 +1369,6 @@ msgid "Fecha:"
 msgstr ""
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__fixed
-msgid "Fijo"
-msgstr ""
-
-#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_delimiter
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__delimiter
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__delimiter
@@ -1344,6 +1415,7 @@ msgstr ""
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__fixed
 #, python-format
 msgid "Fixed"
 msgstr "Fijo"
@@ -1418,6 +1490,13 @@ msgid "Generate Partition Coefficient Report"
 msgstr "Generar informe de Coeficientes de Partición"
 
 #. module: energy_selfconsumption
+#: model:ir.actions.act_window,name:energy_selfconsumption.invoicing_wizard_act_window
+#: model:ir.actions.server,name:energy_selfconsumption.contract_invoicing_wizard_action
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
+msgid "Generate invoices"
+msgstr "Generar factura"
+
+#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_search_view
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_search_view
 msgid "Group By"
@@ -1449,6 +1528,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_product_product__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_report_contract_contract_csv__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_report_energy_selfconsumption_distribution_table_csv__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__id
 msgid "ID"
@@ -1551,6 +1631,7 @@ msgstr "Importar tabla"
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__process
 #, python-format
 msgid "In process"
 msgstr "En proceso"
@@ -1779,16 +1860,6 @@ msgid "Invalid VAT: {error}"
 msgstr "IVA no válido: {error}"
 
 #. module: energy_selfconsumption
-#: model:ir.actions.act_window,name:energy_selfconsumption.invoicing_wizard_act_window
-msgid "Invoice Energy Delivered"
-msgstr "Factura Energía Entregada"
-
-#. module: energy_selfconsumption
-#: model:ir.actions.server,name:energy_selfconsumption.contract_invoicing_wizard_action
-msgid "Invoice Energy Recurrency"
-msgstr "Recurrencia de Factura Energética"
-
-#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_interval
 msgid "Invoice Every"
 msgstr "Facturar cada"
@@ -1797,11 +1868,6 @@ msgstr "Facturar cada"
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_interval
 msgid "Invoice every (Days/Week/Month/Year)"
 msgstr "Factura cada (Días / Semana / Mes / Año)"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
-msgid "Invoicing Energy Delivered"
-msgstr "Facturación de Energía Entregada"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode
@@ -1862,6 +1928,7 @@ msgstr "Última fecha facturada"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_product_product____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_report_contract_contract_csv____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_report_energy_selfconsumption_distribution_table_csv____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner____last_update
 msgid "Last Modified on"
@@ -1953,7 +2020,7 @@ msgstr "Archivo adjunto principal"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_line__main_line
 msgid "Main line"
-msgstr "Línea principal"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model:ir.ui.menu,name:energy_selfconsumption.management_category_menu
@@ -2076,7 +2143,6 @@ msgstr "Próximo Período Fecha de Comienzo"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_line__next_period_date_end
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_recurrency_mixin__next_period_date_end
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__next_period_date_end
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_end
 msgid "Next Period End"
 msgstr "Próximo Período de Finalización"
 
@@ -2085,7 +2151,6 @@ msgstr "Próximo Período de Finalización"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_line__next_period_date_start
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_recurrency_mixin__next_period_date_start
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__next_period_date_start
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
 msgid "Next Period Start"
 msgstr "Próximo Período de Comienzo"
 
@@ -2209,16 +2274,22 @@ msgid "Payment mode"
 msgstr "Forma de pago"
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__power_acquired
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__power_acquired
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__power_acquired
-msgid "Potencia adquirida"
-msgstr "Potencia adquirida"
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
+msgid "Periodo de facturación"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.actions.report,name:energy_selfconsumption.distribution_table_hourly_csv_report
+msgid "Plantilla tabla de reparto"
+msgstr "Plantilla tabla de reparto"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__power_acquired
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__power_acquired
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__power_acquired
 #, python-format
 msgid "Power Acquired"
 msgstr "Potencia adquirida"
@@ -2242,11 +2313,6 @@ msgstr "Potencia adquirida"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__price
 msgid "Price"
 msgstr "Precio"
-
-#. module: energy_selfconsumption
-#: model:ir.actions.report,name:energy_selfconsumption.distribution_table_hourly_csv_report
-msgid "Print to CSV"
-msgstr "Imprimir en PDF"
 
 #. module: energy_selfconsumption
 #: model:ir.model,name:energy_selfconsumption.model_product_product
@@ -2311,6 +2377,11 @@ msgid "Rated Power (kWn)"
 msgstr "Potencia nominal (kWn)"
 
 #. module: energy_selfconsumption
+#: model:mail.template,subject:energy_selfconsumption.selfconsumption_energy_delivered_custom_invoicing_reminder
+msgid "Recordatorio de facturación autoconsumo ${ object.name }"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type
 msgid "Recurrence"
 msgstr "Recurrencia"
@@ -2373,6 +2444,11 @@ msgid "Select the associated Energy Supplier"
 msgstr "Seleccione el Proveedor de Energía asociado"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__num_contracts
+msgid "Selected contracts"
+msgstr "Contratos seleccionados"
+
+#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_tree_view
 msgid "Self-Consumption Projects"
 msgstr "Proyectos de Autoconsumo"
@@ -2428,11 +2504,6 @@ msgstr "El proyecto de autoconsumo ya tiene una tabla validada"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__selfconsumption_id
 msgid "Selfconsumption"
 msgstr "Autoconsumo"
-
-#. module: energy_selfconsumption
-#: model:mail.template,subject:energy_selfconsumption.selfconsumption_energy_delivered_custom_invoicing_reminder
-msgid "Selfconsumption - Energy Delivered Custom Invoicing Reminder"
-msgstr "Autoconsumo - Energía suministrada Recordatorio de facturación personalizado"
 
 #. module: energy_selfconsumption
 #: model:mail.template,subject:energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder
@@ -2517,6 +2588,11 @@ msgid ""
 msgstr ""
 "Especifique si la factura debe generarse al principio (prepago) o al final "
 "(pospago) del período."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
+msgid "Start"
+msgstr "Inicio"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__start_date
@@ -2645,12 +2721,19 @@ msgid "Supply Points"
 msgstr "Puntos de Suministro"
 
 #. module: energy_selfconsumption
+#: model:ir.actions.report,name:energy_selfconsumption.contract_contract_csv_report
+msgid "Template contracts"
+msgstr "Plantilla contrato"
+
+#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "The CUPS field is required. Please make sure you provide a valid CUPS"
-msgstr "El campo CUPS es obligatorio. Por favor, asegúrese de proporcionar un CUPS válido"
+msgstr ""
+"El campo CUPS es obligatorio. Por favor, asegúrese de proporcionar un CUPS "
+"válido"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
@@ -2677,6 +2760,18 @@ msgid "The energy generated must be greater than 0 (kWh)."
 msgstr "La energía generada debe ser superior a 0 (kWh)."
 
 #. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid ""
+"The number of contracts selected does not match the number of contracts "
+"loaded by the csv."
+msgstr ""
+"El número de contratos seleccionados no coincide con el número de contratos "
+"cargado por el csv."
+
+#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
 #: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point_assignation.py:0
@@ -2693,7 +2788,8 @@ msgid ""
 "The report can be downloaded when the project is in activation or active "
 "status."
 msgstr ""
-"El informe se puede descargar cuando el proyecto está en estado activación o activo."
+"El informe se puede descargar cuando el proyecto está en estado activación o"
+" activo."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__coefficient
@@ -2859,11 +2955,6 @@ msgid "User Current Role"
 msgstr "Rol actual del usuario"
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__validated
-msgid "Validado"
-msgstr ""
-
-#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_form_view
 msgid "Validate"
 msgstr "Validar"
@@ -2872,6 +2963,7 @@ msgstr "Validar"
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__validated
 #, python-format
 msgid "Validated"
 msgstr "Validado"
@@ -2880,14 +2972,10 @@ msgstr "Validado"
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__hourly
 #, python-format
 msgid "Variable hourly"
 msgstr "Variable por horas"
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__hourly
-msgid "Variable por horas"
-msgstr ""
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__website_message_ids
@@ -2902,16 +2990,6 @@ msgstr "Mensajes del Sitio Web"
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__website_message_ids
 msgid "Website communication history"
 msgstr "Historial de comunicaciones del sitio web"
-
-#. module: energy_selfconsumption
-#: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_selfconsumption_unique_code
-msgid "Ya existe un proyecto con esta CAU."
-msgstr ""
-
-#. module: energy_selfconsumption
-#: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_supply_point_unique_code_company_id
-msgid "Ya existe un punto de suministro con este código."
-msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_import_wizard_form_view
@@ -3003,6 +3081,11 @@ msgid "kWn Price per day (€/kWn/day)"
 msgstr "kWn Precio por día (€/kWn/día)"
 
 #. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_report_contract_contract_csv
+msgid "report.contract_contract.csv"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model,name:energy_selfconsumption.model_report_energy_selfconsumption_distribution_table_csv
 msgid "report.energy_selfconsumption.distribution_table.csv"
 msgstr ""
@@ -3011,3 +3094,38 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "y teléfono(s) de contacto"
 msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type__daily
+msgid "Day(s)"
+msgstr "Día(s)"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type__monthly
+msgid "Month(s)"
+msgstr "Mes(es)"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type__monthlylastday
+msgid "Month(s) last day"
+msgstr "Mes(es) último día"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type__quarterly
+msgid "Quarter(s)"
+msgstr "Trimestre/s"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type__semesterly
+msgid "Semester(s)"
+msgstr "Semestre/s"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type__weekly
+msgid "Week(s)"
+msgstr "Semana(s)"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type__yearly
+msgid "Year(s)"
+msgstr "Año(s)"

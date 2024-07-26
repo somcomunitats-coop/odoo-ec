@@ -1,4 +1,4 @@
-from odoo import _, fields, models
+from odoo import _, fields, models, api
 
 from ..models.selfconsumption import INVOICING_VALUES
 
@@ -18,16 +18,16 @@ class ContractGenerationWizard(models.TransientModel):
 
     price = fields.Float(required=True)
 
-    recurring_interval = fields.Integer(
-        required=True,
-    )
-    recurring_rule_type = fields.Selection(
-        default="monthlylastday",
-        required=True,
-    )
     selfconsumption_id = fields.Many2one(
         "energy_selfconsumption.selfconsumption", readonly=True
     )
+
+    @api.onchange("invoicing_mode")
+    def _onchange_invoicing_mode(self):
+        if self.invoicing_mode == "energy_custom":
+            self.recurring_rule_type = "monthly"
+        else:
+            self.recurring_rule_type = "monthlylastday"
 
     def _prepare_product_values(self):
         account_income_xml_id = "l10n_es.%i_account_common_7050" % self.env.company.id
@@ -37,6 +37,8 @@ class ContractGenerationWizard(models.TransientModel):
         )
         account_tax_id = self.env.ref(account_tax_xml_id)
         uom_kw_id = self.env.ref("energy_project.kw_uom")
+        if self.invoicing_mode == "energy_custom":
+            uom_kw_id = self.env.ref("energy_project.kwh_uom")
         return {
             "name": self.selfconsumption_id.name,
             "type": "service",
@@ -72,6 +74,9 @@ class ContractGenerationWizard(models.TransientModel):
             "qty_formula_id": False
             if self.invoicing_mode == "energy_custom"
             else formula_contract_id.id,
+            "quantity": 0
+            if self.invoicing_mode == "energy_custom"
+            else 1,
             "uom_id": product_id.uom_id.id,
             "name": _(
                 """CUPS: {code}\nOwner: {owner_id}\nInvoicing period: #START# - #END#\n"""

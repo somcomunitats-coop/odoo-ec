@@ -49,7 +49,7 @@
         <field name="email_from">info@somcomunitats.coop</field>
         <field
       name="subject"
-    >Selfconsumption - Energy Delivered Custom Invoicing Reminder</field>
+    >Recordatorio de facturación autoconsumo ${ object.name }</field>
         <field
       name="model_id"
       ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"
@@ -65,16 +65,26 @@
             must invoice on the day <b>${ ctx['next_invoicing'] }</b>.
         </p>
         <p>
-            It is necessary, therefore, that you enter into Odoo the energy generated in kWh during the period
-            <b>${ ctx['first_date'] }</b>
-            - <b>${ ctx['last_date'] }</b>.
+            It is necessary, therefore, that you upload to the Som Comunitats platform
+            the energy delivered from each CUPS for this period. Instructions to
+            generate invoices:.
         </p>
         <p>
-            To do so, go to the project file, enter the contracts view, select the contracts that must be invoiced and
-            press the Invoice button.</br>
+            1. Go to the project file, go to the contracts view and select the
+            contracts to be invoiced.
         </p>
         <p>
-            For any questions or incidents, contact the support team; support@somcomunitats.coop.
+            2. In the Action button, select the "Generate invoices" option.
+        </p>
+        <p>
+            3. In the wizard, load the CSV file with the energy delivered in kWh during
+            the period ${ ctx['first_date'] } - ${ ctx['last_date'] } for each CUPS and
+            press the "Generate" button.
+        </p>
+        <p>
+            4. Finally, you must validate and send the generated invoices. If you have
+            any doubts or issues, please contact our support team:
+            soporte@somcomunitats.coop
         </p>
             ]]>
         </field>
