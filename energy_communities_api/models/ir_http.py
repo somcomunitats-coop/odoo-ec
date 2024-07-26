@@ -13,4 +13,4 @@ class IrHttpJwt(models.AbstractModel):
         try:
             super()._authenticate(endpoint)
         except (HTTPException, Unauthorized) as e:
-            return wrapJsonException(e, str(e))
+            raise wrapJsonException(e, str(e))

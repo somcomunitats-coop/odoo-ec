@@ -74,17 +74,17 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             headers={"Authorization": self.bad_token, "Content-Type": "app/json"},
         )
         # then we obtain a 200 response code
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 401)
         # and we get the correct information
         self.assertDictEqual(
             response.json(),
             {
-                "data": client_data_response,
-                "links": {
-                    "self_": "http://127.0.0.1:8069/api/energy-communities/me",
-                    "next_page": None,
-                    "previous_page": None,
-                },
+                "code": 401,
+                "description": "<p>The server could not verify that you are authorized to "
+                "access the URL requested. You either supplied the wrong "
+                "credentials (e.g. a bad password), or your browser doesn't "
+                "understand how to supply the credentials required.</p>",
+                "name": "Unauthorized",
             },
         )
 
