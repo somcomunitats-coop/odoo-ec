@@ -181,3 +181,35 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             },
         )
         self.assertEqual(communities.get("data_length"), 10)
+
+    @patch(
+        "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.get_member_communities"
+    )
+    def test__me_communities_endpoint__bad_request(self, patcher):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        def member_communities():
+            return [
+                CommunityInfo(id=value, name=f"test{value}", image="")
+                for value in range(0, 10)
+            ]
+
+        patcher.return_value = member_communities()
+        # when we call for the energy_communties with bad parameters
+        response = self.url_open(
+            "/api/energy-communities/me/communities?page=fgdhjkl&page_size=2",
+            headers={"Authorization": self.token},
+        )
+        # then we obtain a 400 response code
+        self.assertEqual(response.status_code, 400)
+        # and we get a bad request response
+        self.assertDictEqual(
+            response.json(),
+            {
+                "code": 400,
+                "name": "Bad Request",
+                "description": "<p>BadRequest [<br>{<br>&quot;loc&quot;: [<br>&quot;page&quot;<br>],<br>&quot;msg&quot;: &quot;value is not a valid integer&quot;,<br>&quot;type&quot;: &quot;type_error.integer&quot;<br>}<br>]</p>",
+            },
+        )
