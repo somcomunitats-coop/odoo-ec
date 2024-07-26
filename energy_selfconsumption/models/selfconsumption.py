@@ -366,17 +366,15 @@ class Selfconsumption(models.Model):
         return True
 
     def send_energy_delivery_custom_invoicing_reminder(self):
-        today = fields.date.today()
-        date_validation = today + timedelta(days=1)
 
         projects = self.env["contract.contract"].read_group(
             [
                 (
                     "project_id.selfconsumption_id.invoicing_mode",
                     "=",
-                    "energy_delivered",
+                    "energy_custom",
                 ),
-                ("recurring_next_date", "=", date_validation),
+                ("recurring_next_date", "=", fields.date.today()),
             ],
             ["project_id"],
             ["project_id"],
