@@ -4,6 +4,7 @@ from unittest.mock import patch
 
 import requests
 
+from odoo.exceptions import AccessError
 from odoo.tests import HttpCase, tagged
 
 from odoo.addons.base_rest.tests.common import RegistryMixin
@@ -73,7 +74,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             "/api/energy-communities/me",
             headers={"Authorization": self.bad_token, "Content-Type": "app/json"},
         )
-        # then we obtain a 200 response code
+        # then we obtain a 401 response code
         self.assertEqual(response.status_code, 401)
         # and we get the correct information
         self.assertDictEqual(
@@ -85,6 +86,64 @@ class TestMemberApiService(HttpCase, RegistryMixin):
                 "credentials (e.g. a bad password), or your browser doesn't "
                 "understand how to supply the credentials required.</p>",
                 "name": "Unauthorized",
+            },
+        )
+
+    @patch(
+        "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.get_member_info"
+    )
+    def test__me_endpoint__forbidden_error(self, patcher):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        def raise_exception():
+            return AccessError("What are you tring to do?? ⛔")
+
+        patcher.side_effect = raise_exception()
+
+        # when we call for the personal data in api with a bad token
+        response = self.url_open(
+            "/api/energy-communities/me",
+            headers={"Authorization": self.token, "Content-Type": "app/json"},
+        )
+        # then we obtain a 403 response code
+        self.assertEqual(response.status_code, 403)
+        # and we get the correct information
+        self.assertDictEqual(
+            response.json(),
+            {
+                "code": 403,
+                "name": "Forbidden",
+            },
+        )
+
+    @patch(
+        "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.get_member_info"
+    )
+    def test__me_endpoint__unexpected_error(self, patcher):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        def raise_exception():
+            return Exception("AAAAAAAHHHHHHH! 🔪")
+
+        patcher.side_effect = raise_exception()
+
+        # when we call for the personal data in api with a bad token
+        response = self.url_open(
+            "/api/energy-communities/me",
+            headers={"Authorization": self.token, "Content-Type": "app/json"},
+        )
+        # then we obtain a 500 response code
+        self.assertEqual(response.status_code, 500)
+        # and we get the correct information
+        self.assertDictEqual(
+            response.json(),
+            {
+                "code": 500,
+                "name": "Internal Server Error",
             },
         )
 
