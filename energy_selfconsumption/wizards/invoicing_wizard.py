@@ -63,7 +63,6 @@ class InvoicingWizard(models.TransientModel):
 
     @api.constrains("import_file")
     def _constrains_import_file(self):
-        logger.info("\n\n _constrains_import_file")
         if self.fname:
             format = str(self.fname.split(".")[-1])
             if format != "csv":

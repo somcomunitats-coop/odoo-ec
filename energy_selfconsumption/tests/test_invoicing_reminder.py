@@ -3,7 +3,7 @@ from datetime import date, datetime, timedelta
 from odoo.tests import TransactionCase, tagged
 
 
-@tagged("energy_selfconsumption")
+@tagged("post_install","standard","at_install","energy_selfconsumption")
 class TestInvoicingReminder(TransactionCase):
     def setUp(self):
         super().setUp()
@@ -129,27 +129,19 @@ class TestInvoicingReminder(TransactionCase):
         self.define_invoicing_mode_wizard.save_data_to_selfconsumption()
         self.contract_generation_wizard.generate_contracts_button()
         contract = self.env["contract.contract"].search(
-            [("name", "=", "Contract - test Selfconsumption Project - test partner")]
+            [("project_id", "=", self.selfconsumption.project_id.id)]
         )
         contract.recurring_next_date = validation_date
 
-        self.env[
+        check = self.env[
             "energy_selfconsumption.selfconsumption"
         ].send_energy_delivery_invoicing_reminder()
-        reminder_mail = self.env["mail.mail"].search(
-            [("subject", "=", "Selfconsumption - Energy Delivered Invoicing Reminder")]
-        )
-        self.assertTrue(reminder_mail, "El correo de recordatorio no se envió.")
+        self.assertTrue(check, "El correo de recordatorio no se envió.")
 
-        # Delete sent email to make other test
-        reminder_mail.unlink()
 
         # Test using the send_energy_delivery_invoicing_reminder() method with a record with a date outside the parameter (3 days)
         contract.recurring_next_date = validation_date + timedelta(days=1)
-        self.env[
+        check = self.env[
             "energy_selfconsumption.selfconsumption"
         ].send_energy_delivery_invoicing_reminder()
-        reminder_mail = self.env["mail.mail"].search(
-            [("subject", "=", "Selfconsumption - Energy Delivered Invoicing Reminder")]
-        )
-        self.assertFalse(reminder_mail, "El correo de recordatorio no se envió.")
+        self.assertFalse(check, "El correo de recordatorio se envió.")

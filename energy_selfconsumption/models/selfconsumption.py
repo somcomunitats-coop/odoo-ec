@@ -346,6 +346,8 @@ class Selfconsumption(models.Model):
             ["project_id"],
             ["project_id"],
         )
+        if len(projects) == 0:
+            return False
         template = self.env.ref(
             "energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder",
             True,
@@ -379,6 +381,8 @@ class Selfconsumption(models.Model):
             ["project_id"],
             ["project_id"],
         )
+        if len(projects) == 0:
+            return False
         template = self.env.ref(
             "energy_selfconsumption.selfconsumption_energy_delivered_custom_invoicing_reminder",
             True,
@@ -412,6 +416,8 @@ class Selfconsumption(models.Model):
             ["project_id"],
             ["project_id"],
         )
+        if len(projects) == 0:
+            return False
         template = self.env.ref(
             "energy_selfconsumption.selfconsumption_power_acquired_invoicing_reminder",
             True,

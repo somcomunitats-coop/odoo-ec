@@ -4,14 +4,14 @@ from datetime import datetime
 from odoo.tests.common import TransactionCase, tagged
 
 
-@tagged("energy_selfconsumption")
+@tagged("post_install","-at_install","energy_selfconsumption")
 class TestContractGenerationWizard(TransactionCase):
     def setUp(self):
         super().setUp()
         self.selfconsumption_import_wizard = self.env[
             "energy_selfconsumption.selfconsumption_import.wizard"
         ].create({})
-        self.company = self.env["res.company"].search([], limit=1)[0]
+        self.company = self.env["res.company"].search([("name","=","Som Comunitats")])[0]
         self.partner = self.env["res.partner"].create(
             {
                 "name": f"Test Partner",
@@ -62,6 +62,7 @@ class TestContractGenerationWizard(TransactionCase):
                 "city": "Barcelona",
                 "state_id": self.env.ref("base.state_es_b").id,
                 "country_id": self.env.ref("base.es").id,
+                "company_id": self.company.id,
             }
         )
         self.inscription = self.env["energy_project.inscription"].create(
@@ -70,6 +71,7 @@ class TestContractGenerationWizard(TransactionCase):
                 "partner_id": self.partner.id,
                 "effective_date": datetime.today(),
                 "mandate_id": self.mandate.id,
+                "company_id": self.company.id,
             }
         )
         self.supply_point = self.env["energy_selfconsumption.supply_point"].create(
@@ -83,6 +85,7 @@ class TestContractGenerationWizard(TransactionCase):
                 "country_id": self.env.ref("base.es").id,
                 "owner_id": self.partner.id,
                 "partner_id": self.partner.id,
+                "company_id": self.company.id,
             }
         )
         self.distribution_table = self.env[
@@ -93,6 +96,7 @@ class TestContractGenerationWizard(TransactionCase):
                 "selfconsumption_project_id": self.selfconsumption.id,
                 "type": "fixed",
                 "state": "process",
+                "company_id": self.company.id,
             }
         )
         self.supply_point_assignation = self.env[
@@ -102,6 +106,7 @@ class TestContractGenerationWizard(TransactionCase):
                 "distribution_table_id": self.distribution_table.id,
                 "supply_point_id": self.supply_point.id,
                 "coefficient": 1,
+                "company_id": self.company.id,
             }
         )
         self.define_invoicing_mode_power_acquired_wizard = self.env[
@@ -229,18 +234,13 @@ class TestContractGenerationWizard(TransactionCase):
         csv_content = "CUPS,Energia a facturar (kWh),CAU,Periode facturat start (dd/mm/aaaa),Periode facturat end (dd/mm/aaaa)\n"
         for contract in related_contract:
             main_line = contract.get_main_line()
-            next_period_date_start = (
-                main_line.next_period_date_start
-                if main_line
-                else contract.contract_line_ids[0].next_period_date_start
-            )
+            next_period_date_start = (main_line.next_period_date_start if main_line else contract.contract_line_ids[0].next_period_date_start)
             next_period_date_end = (
                 main_line.next_period_date_end
                 if main_line
                 else contract.contract_line_ids[0].next_period_date_end
             )
-            csv_content += f"{contract.supply_point_assignation_id.supply_point_id.code},0,019,{contract.project_id.selfconsumption_id.code},{next_period_date_start.strftime('%d/%m/%Y')},{next_period_date_end.strftime('%d/%m/%Y')}\n"
-
+            csv_content += f"{contract.supply_point_assignation_id.supply_point_id.code},\"0,019\",{contract.project_id.selfconsumption_id.code},{next_period_date_start.strftime('%d/%m/%Y')},{next_period_date_end.strftime('%d/%m/%Y')}"
         # Codificar el contenido en base64
         csv_content_base64 = base64.b64encode(csv_content.encode("utf-8")).decode(
             "utf-8"
@@ -257,6 +257,7 @@ class TestContractGenerationWizard(TransactionCase):
                 }
             )
         )
-
         wizard_id.generate_invoices()
         invoice = related_contract._get_related_invoices()
+        self.assertEqual(invoice.invoice_line_ids[0].quantity, 0.02)
+        self.assertEqual(invoice.invoice_line_ids[0].price_unit, 0.1)
