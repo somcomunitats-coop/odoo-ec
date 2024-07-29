@@ -575,6 +575,23 @@ class Selfconsumption(models.Model):
                     )
                     raise ValidationError(error_message)
 
+    def unlink(self):
+        for record in self:
+            # TODO:
+            # An extra control is needed when deleting a supply_point_assignation_ids
+            # depending on the state of the distribution_table_ids model.
+            # record.distribution_table_ids.supply_point_assignation_ids.unlink()
+            # Extra control is needed when deleting a distribution_table_ids
+            # depending on the status
+            # record.distribution_table_ids.unlink()
+            # An extra control is needed when deleting an inscription_ids depending
+            # on whether the supply_point_assignation_ids model of
+            # distribution_table_ids is present. And depending on whether it is an open
+            # enrollment for the public.
+            # record.inscription_ids.unlink()
+            record.project_id.unlink()
+        return super().unlink()
+
 
 class CoefficientReport(models.TransientModel):
     _name = "energy_selfconsumption.coefficient_report"
