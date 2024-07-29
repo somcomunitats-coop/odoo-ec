@@ -102,6 +102,11 @@ class ResCompany(models.Model):
             "If it is checked, the Coordinator will receive a copy of each auto-response email that is generated in any of its CCEE when a new Member Subscription request is received."
         ),
     )
+    available_role_ids = fields.One2many(
+        "res.users.role",
+        string="Available roles",
+        compute="_compute_parent_id_filtered_ids",
+    )
 
     # COMPUTED FIELDS
     @api.depends("hierarchy_level")
@@ -109,14 +114,26 @@ class ResCompany(models.Model):
         for rec in self:
             if rec.hierarchy_level == "instance":
                 rec.parent_id_filtered_ids = False
+                rec.available_role_ids = [
+                    (4, self.env.ref("energy_communities.role_platform_admin").id)
+                ]
             elif rec.hierarchy_level == "coordinator":
                 rec.parent_id_filtered_ids = self.search(
                     [("hierarchy_level", "=", "instance")]
                 )
+                rec.available_role_ids = [
+                    (4, self.env.ref("energy_communities.role_coord_admin").id),
+                    (4, self.env.ref("energy_communities.role_coord_worker").id),
+                ]
             elif rec.hierarchy_level == "community":
                 rec.parent_id_filtered_ids = self.search(
                     [("hierarchy_level", "=", "coordinator")]
                 )
+                rec.available_role_ids = [
+                    (4, self.env.ref("energy_communities.role_ce_manager").id),
+                    (4, self.env.ref("energy_communities.role_ce_admin").id),
+                    (4, self.env.ref("energy_communities.role_ce_member").id),
+                ]
 
     def _compute_admins(self):
         for rec in self:

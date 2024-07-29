@@ -177,6 +177,12 @@ msgid "Become cooperator process"
 msgstr "Bihurtu kooperatzaile prozesua"
 
 #. module: energy_communities
+#: model:ir.actions.act_window,name:energy_communities.act_window_create_users_company
+#: model:ir.actions.act_window,name:energy_communities.act_window_create_users_partner
+msgid "Build platform users from partner members"
+msgstr "Generar usuarias de plataforma para las socias"
+
+#. module: energy_communities
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Button configs not found."
@@ -202,6 +208,7 @@ msgstr "Iniciativa CRM"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_change_coordinator_wizard_form
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_create_users_wizard_form
 msgid "Cancelar"
 msgstr "Cancelar"
 
@@ -522,6 +529,13 @@ msgid "Create User"
 msgstr "Crear usuario"
 
 #. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__create_kc_user
+#, python-format
+msgid "2) Create Keycloak user (in case it doesn't exist)"
+msgstr "2) Crear usuaria en Keycloak (en caso de que aún no existe)"
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "Create landing page"
 msgstr "Crear página de Landing"
@@ -530,6 +544,13 @@ msgstr "Crear página de Landing"
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
 msgid "Create map place"
 msgstr "Crear punto de mapa"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__create_user
+#, python-format
+msgid "1) Create Odoo user (in case it doesn't exist)"
+msgstr "1) Crear usuaria al Odoo (en caso de que aún no existe)"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_create_user_wizard
@@ -685,6 +706,7 @@ msgstr "Estado actual de la comunidad"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_change_coordinator_wizard_form
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_create_users_wizard_form
 msgid "Execute"
 msgstr "Ejecutar"
 
@@ -742,6 +764,13 @@ msgstr "Seguidores (Partners)"
 #: model:ir.model.fields,help:energy_communities.field_res_company__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Iconos de Font awesome p.ej. fa-tasks"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__force_invite
+#, python-format
+msgid "Force send invitation email in case it has been already sent"
+msgstr "Forzar envio de invitación en caso de que ya se ha hecho anteriormente"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__footer_doc_policy_text
@@ -1024,6 +1053,13 @@ msgstr "Azken eguneratzea egunean"
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__last_name
 msgid "Last name"
 msgstr "Abizenak"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__last_user_invitation_through_kc
+#, python-format
+msgid "Last user invitation through Keycloak"
+msgstr "Última invitación de usuario a través de Keycloak"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__publicdata_lastupdate_datetime
@@ -1458,6 +1494,22 @@ msgstr "Rol"
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
+msgid ""
+"Role {} is not available for company {} of type {}. This type of company "
+"allows roles {}"
+msgstr "El rol {} no se puede elegir para la compañía {} de tipo {}. Este tipo de compañías "
+"permiten los roles {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid ""
+"Role {} is not available for user with {} role. This role only allows {}"
+msgstr "El rol {} no se puede elegir para usuarios con el rol {}. Solo se pueden elegir los roles {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
 msgid "Role not found"
 msgstr "Rol no encontrado"
 
@@ -1476,6 +1528,21 @@ msgstr "Ejecutar o no una acción posterior en un cron job"
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__secondary_image_file
 msgid "Secondary Image"
 msgstr "Bigarren mailako irudia"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_create_users_wizard_form
+msgid ""
+"Select the stages to be covered by each partner (the selection of a stage "
+"implies the execution of the precedents):"
+msgstr "Selecciona las etapes a cubrir para cada persona socia (la selección de una etapa "
+"implica la execución de los precedentes):"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__invite_user_through_kc
+#, python-format
+msgid "3) Send invitation email to confirm email and reset password"
+msgstr "3) Enviar correo de invitación para confirmar email y resetear contraseña"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/landing_page.py:0
@@ -1659,6 +1726,12 @@ msgstr ""
 "del cambio: {change_reason}"
 
 #. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#, python-format
+msgid "There is no company selected with level energy community."
+msgstr "No hay ninguna compañía seleccionada que represente una Comunidad Energetica (Nivel de jerarquía=Comunitat)"
+
+#. module: energy_communities
 #: code:addons/energy_communities/wizards/change_coordinator_wizard.py:0
 #, python-format
 msgid "This community has been moved to a new coordinator"
@@ -1669,6 +1742,15 @@ msgstr "La Comunidad se ha movido a una nueva Coordinadora"
 #, python-format
 msgid "This language code %s is not active in Odoo. Active ones: %s"
 msgstr "Este código de idioma %s no está activo en Odoo. Los activos son: %s"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#, python-format
+msgid ""
+"This wizard can only run with ONE company selected. Please limit the context"
+" of the selected companies to one."
+msgstr "Este assistente se puede executar teniendo seleccionada solo UNA UNICA companñía activa para el usuari que executa "
+" el assistente. Por favor limita el contexto de las compañías seleccionadas a una única"
 
 #. module: energy_communities
 #: model:cm.map,categories_filter_title:energy_communities.map_campanya
@@ -1813,6 +1895,12 @@ msgstr "Usuario no encontrado"
 #: model:ir.model,name:energy_communities.model_res_users_role
 msgid "User role"
 msgstr "Rol de usuario"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "User with vat {} is already {} for the company {}"
+msgstr "El usuario con vat {} ya es {} para la compañía {}"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_users
