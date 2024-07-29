@@ -17,7 +17,7 @@
                                 <field
                   name="price"
                   string="kWh Price (€/kWh)"
-                  attrs="{'invisible': [('invoicing_mode', 'not in', ['energy_delivered', 'energy_delivered_variable'])]}"
+                  attrs="{'invisible': [('invoicing_mode', 'not in', ['energy_delivered', 'energy_custom'])]}"
                 />
                                 <field
                   name="price"
@@ -26,8 +26,8 @@
                 />
                             </group>
                             <group col="2">
-                                <field name="recurring_interval" />
-                                <field name="recurring_rule_type" />
+                                <field name="recurring_interval" required="True"/>
+                                <field name="recurring_rule_type" required="True"/>
                             </group>
                         </group>
                     </sheet>

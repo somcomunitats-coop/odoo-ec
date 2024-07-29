@@ -26,12 +26,6 @@
                     <group expand="1" string="Group By">
                         <filter
               string="Next Period Date Start"
-              name="filter_next_period_date_start"
-              domain="[]"
-              context="{'group_by':'next_period_date_start'}"
-            />
-                        <filter
-              string="Next Period Date End"
               name="filter_next_period_date_end"
               domain="[]"
               context="{'group_by':'next_period_date_end'}"
@@ -42,7 +36,7 @@
         </record>
 
         <record id="contract_invoicing_wizard_action" model="ir.actions.server">
-            <field name="name">Invoice Energy Recurrency</field>
+            <field name="name">Generate invoices</field>
             <field name="model_id" ref="model_contract_contract" />
             <field name="binding_model_id" ref="contract.model_contract_contract" />
             <field name="binding_type">action</field>
@@ -52,6 +46,15 @@
             <field name="code">action = records.invoicing_wizard_action()</field>
         </record>
 
+        <report
+      id="contract_contract_csv_report"
+      model="contract.contract"
+      string="Customized delivered energy template"
+      report_type="csv"
+      name="contract_contract.csv"
+      file="contract_contract"
+      attachment_use="False"
+    />
 
     </data>
 </odoo>
