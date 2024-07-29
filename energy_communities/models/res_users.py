@@ -13,6 +13,7 @@ class ResUsers(models.Model):
     _inherit = ["res.users", "user.currentcompany.mixin"]
 
     _LOGIN_MATCH_KEY = "id:login"
+    _KC_CLIENT_AUTH_ACCESS_GROUP_ODOO = "odoo-allow"
 
     current_role = fields.Char(computed="_compute_current_role", store=False)
 
@@ -124,6 +125,117 @@ class ResUsers(models.Model):
         )
         self._validate_response(resp)
         return resp.json()
+
+    def _get_kc_groups(self, token, provider_id, **params):
+        """Retrieve user groups from Keycloak.
+
+        :param token: a valida auth token from Keycloak
+        :param **params: extra search params for user groups endpoint
+        """
+        # GET /{realm}/groups
+        groups_endpoint = provider_id.admin_user_endpoint.replace("users", "groups")
+        logger.info("Calling GET %s" % groups_endpoint)
+        headers = {
+            "Authorization": "Bearer %s" % token,
+        }
+        resp = requests.get(groups_endpoint, headers=headers, params=params)
+        self._validate_response(resp)
+        return resp.json()
+
+    def _get_kc_user_groups(self, token, provider_id, odoo_user, **params):
+        """Retrieve user groups from Keycloak.
+
+        :param token: a valida auth token from Keycloak
+        :param **params: extra search params for user groups endpoint
+        """
+        # GET /{realm}/users/{id}/groups
+        user_groups_endpoint = (
+            provider_id.admin_user_endpoint + "/" + odoo_user.oauth_uid + "/groups"
+        )
+        logger.info("Calling GET %s" % user_groups_endpoint)
+        headers = {
+            "Authorization": "Bearer %s" % token,
+        }
+        resp = requests.get(user_groups_endpoint, headers=headers, params=params)
+        self._validate_response(resp)
+        return resp.json()
+
+    def _add_kc_user_groups(self, token, provider_id, odoo_user, kc_group_id):
+        """Put user groups from Keycloak."""
+        # PUT /{realm}/users/{id}/groups/{groupId}
+        user_groups_endpoint = (
+            provider_id.admin_user_endpoint
+            + "/"
+            + odoo_user.oauth_uid
+            + "/groups/"
+            + kc_group_id
+        )
+        logger.info("Calling PUT %s" % user_groups_endpoint)
+        headers = {
+            "Authorization": "Bearer %s" % token,
+        }
+        resp = requests.put(user_groups_endpoint, headers=headers)
+        self._validate_response(resp, no_json=True)
+        # yes, Keycloak sends back NOTHING on create
+        # so we are forced to do another call to get its data :(
+        return self._get_kc_user_groups(token, provider_id, odoo_user)
+
+    def _remove_kc_user_groups(self, token, provider_id, odoo_user, kc_group_id):
+        """Delete user groups from Keycloak."""
+        # DELETE /{realm}/users/{id}/groups/{groupId}
+        user_groups_endpoint = (
+            provider_id.admin_user_endpoint
+            + "/"
+            + odoo_user.oauth_uid
+            + "/groups/"
+            + kc_group_id
+        )
+        logger.info("Calling DELETE %s" % user_groups_endpoint)
+        headers = {
+            "Authorization": "Bearer %s" % token,
+        }
+        resp = requests.delete(user_groups_endpoint, headers=headers)
+        self._validate_response(resp, no_json=True)
+        # yes, Keycloak sends back NOTHING on create
+        # so we are forced to do another call to get its data :(
+        return self._get_kc_user_groups(token, provider_id, odoo_user)
+
+    def _assign_kc_user_groups(self):
+        """Assing group to users on Keycloak.
+
+        1. get a token
+        2. check if _KC_CLIENT_AUTH_ACCESS_GROUP_ODOO is in KC groups
+        3. assign or remove user group allow-odoo
+        """
+        provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
+        provider_id.validate_admin_provider()
+        token = self._get_admin_token(provider_id)
+        keycloak_groups = self._get_kc_groups(token, provider_id)
+        group_name = [group["name"] for group in keycloak_groups]
+        if not self._KC_CLIENT_AUTH_ACCESS_GROUP_ODOO in group_name:
+            raise exceptions.UserError(_("User group odoo-allow doesn't exist."))
+        else:
+            group_id = "".join([group["id"] for group in keycloak_groups])
+            for user in self:
+                keycloak_user_groups = self._get_kc_user_groups(
+                    token, provider_id, user
+                )
+                user_group_name = "".join(
+                    group["name"] for group in keycloak_user_groups
+                )
+                if user.oauth_uid:
+                    if (
+                        user.get_user_auth_access_to_spaces()["odoo"]
+                        and self._KC_CLIENT_AUTH_ACCESS_GROUP_ODOO != user_group_name
+                    ):
+                        # assign group odoo-allow
+                        self._add_kc_user_groups(token, provider_id, user, group_id)
+                    elif (
+                        not user.get_user_auth_access_to_spaces()["odoo"]
+                        and self._KC_CLIENT_AUTH_ACCESS_GROUP_ODOO == user_group_name
+                    ):
+                        # remove group odoo-allow
+                        self._remove_kc_user_groups(token, provider_id, user, group_id)
 
     def _validate_response(self, resp, no_json=False):
         # When Keycloak detects a clash on non-unique values, like emails,
