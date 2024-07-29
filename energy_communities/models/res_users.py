@@ -16,6 +16,32 @@ class ResUsers(models.Model):
 
     current_role = fields.Char(computed="_compute_current_role", store=False)
 
+    def get_user_auth_access_to_spaces(self):
+        _odoo_auth_roles = [
+            self.env.ref("energy_communities.role_platform_admin"),
+            self.env.ref("energy_communities.role_coord_admin"),
+            self.env.ref("energy_communities.role_coord_worker"),
+            self.env.ref("energy_communities.role_ce_admin"),
+        ]
+        _app_auth_roles = [self.env.ref("energy_communities.role_ce_member")]
+        _forum_auth_roles = _odoo_auth_roles + _app_auth_roles
+        _tech_spaces = {
+            "odoo": _odoo_auth_roles,
+            "forum": _forum_auth_roles,
+            "app": _app_auth_roles,
+        }
+        user_access = {}
+        for record in self:
+            user_roles = self.env["res.users.role.line"].search(
+                [("user_id", "=", record.id)]
+            )
+            for space, roles in _tech_spaces.items():
+                user_access[space] = False
+                for role in user_roles:
+                    if role.role_id in roles:
+                        user_access[space] = True
+        return user_access
+
     def _compute_current_role(self):
         for record in self:
             record.current_role = record.get_current_role()
