@@ -386,18 +386,15 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "state_id": self.env["res.country.state"]
                     .search([("code", "=", "MA"), ("country_id", "=", country_id)])[0]
                     .id,
-                    # "member": True,
                     "street": f"Calle imaginación {i}",
                     "city": "Madrid",
                     "zip": 28221,
                     "type": "contact",
                     "company_id": self.env.company.id,
-                    # "cooperator": False,
                     "company_type": "person",
                     "cooperative_membership_id": self.env.company.partner_id.id,
                 }
             )
-            logger.info(f"\n\n Cliente creado {partner.name}")
 
             bank_account = self.env["res.partner.bank"].create(
                 {
@@ -406,8 +403,6 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "company_id": self.env.company.id,
                 }
             )
-
-            logger.info(f"\n\n Cuenta del cliente creada {bank_account.acc_number}")
 
             mandate = self.env["account.banking.mandate"].create(
                 {
@@ -421,8 +416,6 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 }
             )
 
-            logger.info(f"\n\n Mandato del cliente creado {mandate.id}")
-
             inscription = self.env["energy_project.inscription"].create(
                 {
                     "project_id": active_id,
@@ -431,8 +424,6 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "mandate_id": mandate.id,
                 }
             )
-
-            logger.info(f"\n\n Incripción del cliente creada {inscription.id}")
 
             _ACCESS_TARIFF_VALUES = [
                 ("6.1TD", "6.1TD"),
@@ -450,7 +441,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
             else:
                 tariff = random.choice(_ACCESS_TARIFF_VALUES)[0]
 
-            supply_point = self.env["energy_selfconsumption.supply_point"].create(
+            self.env["energy_selfconsumption.supply_point"].create(
                 {
                     "code": self.generate_cups(),
                     "name": partner.street,
@@ -465,8 +456,6 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "tariff": tariff,
                 }
             )
-
-            logger.info(f"\n\n Supply point del cliente creado {supply_point.id}")
         return True
 
     def set_autogenerate_inscriptions(self):

@@ -112,8 +112,7 @@ class ContractGenerationWizard(models.TransientModel):
                 contract_line_id.write(
                     {
                         "name": contract_line_id.name.format(**data),
-                        "main_line": True,
-                        "date_start": datetime.date.today()
+                        "main_line": True
                     }
                 )
         # Update selfconsumption and distribution_table state

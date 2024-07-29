@@ -2342,12 +2342,12 @@ msgstr "Ordaintzeko modua"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
-msgid "Periodo de facturación"
+msgid "Billing period"
 msgstr "Fakturazio epea"
 
 #. module: energy_selfconsumption
 #: model:ir.actions.report,name:energy_selfconsumption.distribution_table_hourly_csv_report
-msgid "Plantilla tabla de reparto"
+msgid "Distribution table template"
 msgstr "Banaketa taula txantiloia"
 
 #. module: energy_selfconsumption
@@ -2443,8 +2443,8 @@ msgstr "Potentzia nominala (kWn)"
 
 #. module: energy_selfconsumption
 #: model:mail.template,subject:energy_selfconsumption.selfconsumption_energy_delivered_custom_invoicing_reminder
-msgid "Recordatorio de facturación autoconsumo ${ object.name }"
-msgstr ""
+msgid "Self-consumption billing reminder ${ object.name }"
+msgstr "Autokontsumoaren fakturazio abisua ${ object.name }"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type
@@ -3156,38 +3156,3 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "y teléfono(s) de contacto"
 msgstr "eta harremanetarako telefono-zenbakia(k)"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.define_invoicing_mode_wizard_form_view
-msgid "Day(s)"
-msgstr "Eguna(s)"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.define_invoicing_mode_wizard_form_view
-msgid "Month(s)"
-msgstr "Hilabetea(es)"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.define_invoicing_mode_wizard_form_view
-msgid "Month(s) last day"
-msgstr "Hilabetea(es) azken eguna"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.define_invoicing_mode_wizard_form_view
-msgid "Quarter(s)"
-msgstr "Hiruhilekoa/s"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.define_invoicing_mode_wizard_form_view
-msgid "Semester(s)"
-msgstr "Semestre/s"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.define_invoicing_mode_wizard_form_view
-msgid "Week(s)"
-msgstr "Seihilekoa(s)"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.define_invoicing_mode_wizard_form_view
-msgid "Year(s)"
-msgstr "Urtea(s)"

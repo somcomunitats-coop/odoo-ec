@@ -167,7 +167,10 @@ class TestContractGenerationWizard(TransactionCase):
         related_contract = self.env["contract.contract"].search(
             [("project_id", "=", self.selfconsumption.project_id.id)]
         )
+
         contract_line = related_contract[0].get_main_line()
+        # This variable must be queried for the tests to work.
+        a = contract_line.date_start
         days_timedelta = (
             contract_line.next_period_date_end - contract_line.next_period_date_start
         )
@@ -194,6 +197,8 @@ class TestContractGenerationWizard(TransactionCase):
         related_contract = self.env["contract.contract"].search(
             [("project_id", "=", self.selfconsumption.project_id.id)]
         )
+        # This variable must be queried for the tests to work.
+        a = related_contract[0].date_start
 
         wizard_id = (
             self.env["energy_selfconsumption.invoicing.wizard"]
@@ -234,6 +239,8 @@ class TestContractGenerationWizard(TransactionCase):
         csv_content = "CUPS,Energia a facturar (kWh),CAU,Periode facturat start (dd/mm/aaaa),Periode facturat end (dd/mm/aaaa)\n"
         for contract in related_contract:
             main_line = contract.get_main_line()
+            # This variable must be queried for the tests to work.
+            a = main_line.date_start
             next_period_date_start = (main_line.next_period_date_start if main_line else contract.contract_line_ids[0].next_period_date_start)
             next_period_date_end = (
                 main_line.next_period_date_end

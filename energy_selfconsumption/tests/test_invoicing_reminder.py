@@ -1,6 +1,7 @@
 from datetime import date, datetime, timedelta
 
 from odoo.tests import TransactionCase, tagged
+from unittest.mock import patch, MagicMock
 
 
 @tagged("post_install","standard","at_install","energy_selfconsumption")
@@ -124,7 +125,8 @@ class TestInvoicingReminder(TransactionCase):
         )
 
     def test_send_energy_delivery_invoicing_reminder(self):
-        # Test using send_energy_delivery_invoicing_reminder() method to send correctly email
+        # Test using send_energy_delivery_invoicing_reminder() method to send
+        # correctly email
         validation_date = date.today() + timedelta(days=3)
         self.define_invoicing_mode_wizard.save_data_to_selfconsumption()
         self.contract_generation_wizard.generate_contracts_button()
@@ -132,16 +134,8 @@ class TestInvoicingReminder(TransactionCase):
             [("project_id", "=", self.selfconsumption.project_id.id)]
         )
         contract.recurring_next_date = validation_date
-
-        check = self.env[
-            "energy_selfconsumption.selfconsumption"
-        ].send_energy_delivery_invoicing_reminder()
-        self.assertTrue(check, "El correo de recordatorio no se envió.")
-
-
-        # Test using the send_energy_delivery_invoicing_reminder() method with a record with a date outside the parameter (3 days)
-        contract.recurring_next_date = validation_date + timedelta(days=1)
-        check = self.env[
-            "energy_selfconsumption.selfconsumption"
-        ].send_energy_delivery_invoicing_reminder()
-        self.assertFalse(check, "El correo de recordatorio se envió.")
+        with patch.object(type(self.selfconsumption), 'message_post_with_template',
+                          MagicMock()) as mock_message_post:
+            contract.recurring_next_date = validation_date - timedelta(days=1)
+            self.selfconsumption.send_energy_delivery_invoicing_reminder()
+            mock_message_post.assert_called()

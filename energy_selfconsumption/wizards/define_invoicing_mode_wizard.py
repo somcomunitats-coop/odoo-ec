@@ -68,20 +68,32 @@ class ContractGenerationWizard(models.TransientModel):
             "product_id": product_id.id,
             "automatic_price": True,
             "company_id": self.env.company.id,
-            "qty_type": "fixed"
-            if self.invoicing_mode == "energy_custom"
-            else "variable",
-            "qty_formula_id": False
-            if self.invoicing_mode == "energy_custom"
-            else formula_contract_id.id,
-            "quantity": 0
-            if self.invoicing_mode == "energy_custom"
-            else 1,
+            "qty_type": self._get_qty_type(),
+            "qty_formula_id": self._get_qty_formula_id(formula_contract_id),
+            "quantity": self._get_quantity(),
             "uom_id": product_id.uom_id.id,
             "name": _(
                 """CUPS: {code}\nOwner: {owner_id}\nInvoicing period: #START# - #END#\n"""
             ),
         }
+
+    def _get_qty_type(self):
+        if self.invoicing_mode == "energy_custom":
+            return "fixed"
+        else:
+            return "variable"
+
+    def _get_qty_formula_id(self, formula_contract_id):
+        if self.invoicing_mode == "energy_custom":
+            return False
+        else:
+            return formula_contract_id.id
+
+    def _get_quantity(self):
+        if self.invoicing_mode == "energy_custom":
+            return 0
+        else:
+            return 1
 
     def save_data_to_selfconsumption(self):
         # Create product

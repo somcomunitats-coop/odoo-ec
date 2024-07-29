@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <form string="Generate invoices">
                     <sheet>
-                        <group string="Periodo de facturación">
+                        <group string="Billing period">
                             <field name="next_period_date_start" />
                             <field name="next_period_date_end" />
                             <field name="invoicing_mode" readonly="1" invisible="1" />
