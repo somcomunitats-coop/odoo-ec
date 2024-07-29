@@ -141,9 +141,8 @@ Please make sure that you are invoicing the correct self-consumption project.
                     _(
                         """
 Select only contracts with the same period of invoicing.
-Make sure that all the selected contracts have the same next period start and end.
-Next period start: {next_period_date_start}
-Next period end: {next_period_date_end}"""
+Make sure that all the selected contracts have the same invoicing period, from {next_period_date_start} to {next_period_date_end}.
+"""
                     ).format(
                         next_period_date_start=contract_list[0].next_period_date_start,
                         next_period_date_end=contract_list[0].next_period_date_end,
@@ -223,13 +222,15 @@ Next period end: {next_period_date_end}"""
         if row.empty:
             raise ValidationError(
                 _(
-                    f"""
-                        CUPS {contract.supply_point_assignation_id.supply_point_id.code}
-                        not found for period
-                        {next_period_date_start.strftime('%d/%m/%Y')} -
-                        {next_period_date_end.strftime('%d/%m/%Y')} and
-                        CAU {contract.project_id.selfconsumption_id.code}
                     """
+Project (CAU) {cau} :
+For CUPS {cups} no data found for period 
+{next_period_date_start} - {next_period_date_end}"""
+                ).format(
+                    cau=contract.project_id.selfconsumption_id.code,
+                    cups=contract.supply_point_assignation_id.supply_point_id.code,
+                    next_period_date_start=next_period_date_start.strftime('%d/%m/%Y'),
+                    next_period_date_end=next_period_date_end.strftime('%d/%m/%Y'),
                 )
             )
         else:

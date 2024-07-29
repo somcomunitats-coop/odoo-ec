@@ -184,14 +184,25 @@ msgstr ""
 msgid ""
 "\n"
 "Select only contracts with the same period of invoicing.\n"
-"Make sure that all the selected contracts have the same next period start and end.\n"
-"Next period start: {next_period_date_start}\n"
-"Next period end: {next_period_date_end}"
+"Make sure that all the selected contracts have the same invoicing period, from {next_period_date_start} to {next_period_date_end}.\n"
 msgstr ""
 "Hautatu fakturazio epe bereko kontratuak soilik.\n"
-"Ziurtatu hautatutako kontratu guztiek hurrengo epearen hasiera eta amaiera berdina dutela.\n"
-"Hurrengo epearen hasiera: {next_period_date_start}\n"
-"Hurrengo epearen amaiera: {next_period_date_end}"
+"Ziurtatu hautatutako kontratu guztiek fakturazio-epe berdina dutela, {next_period_start_date}tik {next_period_end_date} arte.\n"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid ""
+"\n"
+"Project (CAU) {cau} :\n"
+"For CUPS {cups} no data found for period \n"
+"{next_period_date_start} - {next_period_date_end}"
+msgstr ""
+"Proiektua (CAU) {cau} :\n"
+"CUPS {cups} ez da aurkitu aldirako daturik \n"
+"{next_period_date_start} - {next_period_date_end}"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
@@ -2789,8 +2800,8 @@ msgstr "Hornikuntza Puntuak"
 
 #. module: energy_selfconsumption
 #: model:ir.actions.report,name:energy_selfconsumption.contract_contract_csv_report
-msgid "Template contracts"
-msgstr "Kontratu ereduak"
+msgid "Customized delivered energy template"
+msgstr "Emandako energia pertsonalizatuaren txantiloia"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0

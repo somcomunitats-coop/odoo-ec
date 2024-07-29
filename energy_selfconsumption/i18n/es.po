@@ -186,14 +186,26 @@ msgstr ""
 msgid ""
 "\n"
 "Select only contracts with the same period of invoicing.\n"
-"Make sure that all the selected contracts have the same next period start and end.\n"
-"Next period start: {next_period_date_start}\n"
-"Next period end: {next_period_date_end}"
+"Make sure that all the selected contracts have the same invoicing period, from {next_period_date_start} to {next_period_date_end}.\n"
 msgstr ""
 "Seleccione solo contratos con el mismo periodo de facturación.\n"
-"Asegúrese de que todos los contratos seleccionados tengan el mismo inicio y fin del próximo período.\n"
-"Inicio del próximo periodo: {next_period_date_start}\n"
-"Fin del próximo periodo: {next_period_date_end}"
+"Asegúrese de que todos los contratos seleccionados tienen el mismo periodo de facturación, de {próximo_periodo_fecha_inicio} a {próximo_periodo_fecha_final}.\n"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid ""
+"\n"
+"Project (CAU) {cau} :\n"
+"For CUPS {cups} no data found for period \n"
+"{next_period_date_start} - {next_period_date_end}"
+msgstr ""
+"\n"
+"Proyecto (CAU) {cau} :\n"
+"Para el CUPS {cups} no se han encontrado datos para el periodo\n"
+"{next_period_date_start} - {next_period_date_end}"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
@@ -1261,7 +1273,7 @@ msgstr "Energía Entregada"
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_custom
 #, python-format
 msgid "Energy Delivered Custom"
-msgstr "Energía entregda personalizada"
+msgstr "Energía entregada personalizada"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
@@ -1269,7 +1281,7 @@ msgstr "Energía entregda personalizada"
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid "Energy Delivered Custom: {energy_delivered} kWh"
-msgstr "Energía entregda personalizada: {energy_delivered} kWh"
+msgstr "Energía entregada personalizada: {energy_delivered} kWh"
 
 #. module: energy_selfconsumption
 #: model:contract.line.qty.formula,name:energy_selfconsumption.energy_delivered_formula
@@ -2722,8 +2734,8 @@ msgstr "Puntos de Suministro"
 
 #. module: energy_selfconsumption
 #: model:ir.actions.report,name:energy_selfconsumption.contract_contract_csv_report
-msgid "Template contracts"
-msgstr "Plantilla contrato"
+msgid "Customized delivered energy template"
+msgstr "Platilla de energía entregada personalizada"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0

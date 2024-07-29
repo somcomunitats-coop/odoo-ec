@@ -351,6 +351,7 @@ class Selfconsumption(models.Model):
             True,
         )
         for project in projects:
+            # project["project_id"][0] - project.project_id.id
             selfconsumption_id = self.browse(project["project_id"][0])
             contract = selfconsumption_id.contract_ids[0]
             first_date = contract.next_period_date_start
@@ -381,6 +382,7 @@ class Selfconsumption(models.Model):
             True,
         )
         for project in projects:
+            # project["project_id"][0] - project.project_id.id
             selfconsumption_id = self.browse(project["project_id"][0])
             contract = selfconsumption_id.contract_ids[0]
             first_date = contract.next_period_date_start
@@ -412,6 +414,7 @@ class Selfconsumption(models.Model):
             True,
         )
         for project in projects:
+            # project["project_id"][0] - project.project_id.id
             selfconsumption_id = self.browse(project["project_id"][0])
             contract = selfconsumption_id.contract_ids[0]
             next_invoicing = contract.recurring_next_date
