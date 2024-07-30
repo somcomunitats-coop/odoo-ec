@@ -23,7 +23,7 @@ class MemberApiService(Component):
     _description = """
         CE Member roles requests
     """
-    _model_on = "res.partner"
+    _work_on_model = "res.partner"
 
     def __init__(self, *args):
         super().__init__(*args)
@@ -33,7 +33,7 @@ class MemberApiService(Component):
         output_param=PydanticModel(MemberInfoResponse),
     )
     def me(self):
-        with api_info(self.env, self._model_on, MemberInfo) as component:
+        with api_info(self.env, self._work_on_model, MemberInfo) as component:
             member_info = component.get_member_info(self.env.user.partner_id)
         return single_response(request, MemberInfoResponse, member_info)
 
@@ -43,7 +43,7 @@ class MemberApiService(Component):
         output_param=PydanticModel(CommunityInfoListResponse),
     )
     def communities(self, paging_param):
-        with api_info(self.env, self._model_on, CommunityInfo) as component:
+        with api_info(self.env, self._work_on_model, CommunityInfo) as component:
             member_communities = component.get_member_communities(
                 self.env.user.partner_id
             )
