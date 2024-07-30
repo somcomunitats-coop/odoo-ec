@@ -222,7 +222,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
                 "previous_page": "http://127.0.0.1:8069/api/energy-communities/me/communities?page=1&page_size=2",
             },
         )
-        self.assertEqual(communities.get("data_length"), 10)
+        self.assertEqual(communities["total_results"], 10)
 
     @patch(
         "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo._get_communities"
@@ -246,8 +246,9 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             response.json(),
             {
                 "data": [],
-                "data_length": 0,
-                "total_pages": None,
+                "total_results": 0,
+                "count": 0,
+                "page": 1,
                 "links": {
                     "next_page": None,
                     "previous_page": None,

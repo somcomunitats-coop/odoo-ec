@@ -24,8 +24,9 @@ class BaseListResponse(BaseResponse):
     Base class for responses that return a collection of elements
     """
 
-    data_length: int
-    total_pages: Optional[int]
+    total_results: int
+    count: int
+    page: int
 
 
 class PagingParam(BaseModel):

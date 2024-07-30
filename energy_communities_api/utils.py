@@ -60,10 +60,14 @@ def list_response(
     collection: List[Any],
     paging: PaginationLimits,
 ) -> Any:
+    over_size = paging.offset + paging.limit < len(collection)
+    actual_count = paging.limit if over_size else len(collection)
     return response_class(
         data=collection,
         links=_get_pagination_links(request, len(collection), paging),
-        data_length=len(collection),
+        page=paging.page,
+        total_results=len(collection),
+        count=actual_count,
     )
 
 
