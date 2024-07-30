@@ -42,27 +42,3 @@ class MemberInfoResponse(BaseResponse):
         description="Data returned for when asking for member info",
     )
     links: PaginationLinks
-
-
-class CommunityInfo(NaiveOrmModel):
-    class Config:
-        tittle: "Community info"
-        # used for being able to use alias on a List of this type
-        allow_population_by_field_name = True
-
-    id: int = Field(
-        ...,
-        title="Id",
-        description="Id of the energy community",
-    )
-    name: str = Field(
-        ...,
-        title="Name",
-        description="Name of the energy community",
-    )
-    image: Optional[str] = Field(
-        ...,
-        alias="logo",
-        title="Image",
-        description="Image of the energy community",
-    )

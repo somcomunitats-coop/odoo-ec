@@ -25,7 +25,7 @@ class BaseListResponse(BaseResponse):
     """
 
     data_length: int
-    total_papes: Optional[int]
+    total_pages: Optional[int]
 
 
 class PagingParam(BaseModel):

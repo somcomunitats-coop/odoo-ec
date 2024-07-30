@@ -13,12 +13,12 @@ class PartnerApiInfo(Component):
         return self.get(partner)
 
     def get_member_communities(self, partner):
-        communities_ids = self._get_communities(partner)
-        return self.get(communities_ids)
+        communities = self._get_communities(partner)
+        return self.get(communities)
 
     def _get_communities(self, partner):
         return (
             self.env["cooperative.membership"]
             .search([("partner_id", "=", partner.id)])
-            .mapped(lambda record: record.company_id.id)
+            .mapped(lambda record: record.company_id)
         )
