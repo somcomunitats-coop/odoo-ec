@@ -51,7 +51,7 @@ class TestMemberApiInfo(TransactionComponentCase):
         member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
         # given a api info component
         work = WorkContext(
-            "res.partner", collection=self.backend, schema_class=MemberInfo
+            "res.partner", collection=self.backend, schema_class=CommunityInfo
         )
         api_info_component = work.component(usage="api.info")
         self.assertIsInstance(api_info_component, PartnerApiInfo)

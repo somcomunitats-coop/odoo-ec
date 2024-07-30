@@ -13,7 +13,6 @@ class PartnerApiInfo(Component):
         return self.get(partner)
 
     def get_member_communities(self, partner):
-        self.schema_class = CommunityInfo
         communities_ids = self._get_communities(partner)
         return self.get(communities_ids)
 
