@@ -50,7 +50,7 @@ class MemberApiService(Component):
         return list_response(
             request,
             CommunityInfoListResponse,
-            member_communities or [],
+            member_communities,
             PaginationLimits(
                 limit=paging_param.page_size,
                 offset=(paging_param.page - 1) * paging_param.page_size,

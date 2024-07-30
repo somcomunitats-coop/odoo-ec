@@ -1,7 +1,5 @@
 from odoo.addons.component.core import Component
 
-from ..schemas import CommunityInfo
-
 
 class PartnerApiInfo(Component):
     _name = "partner.api.info"
@@ -14,7 +12,9 @@ class PartnerApiInfo(Component):
 
     def get_member_communities(self, partner):
         communities = self._get_communities(partner)
-        return self.get(communities)
+        if communities:
+            return self.get(communities)
+        return []
 
     def _get_communities(self, partner):
         return (
