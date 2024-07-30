@@ -175,6 +175,20 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             },
         )
 
+    def test__me_communities_endpoint_real__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+
+        # when we call for the energy_communties that i belong
+        response = self.url_open(
+            "/api/energy-communities/me/communities?page=2&page_size=2",
+            headers={"Authorization": self.token},
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+
     @patch(
         "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.get_member_communities"
     )
