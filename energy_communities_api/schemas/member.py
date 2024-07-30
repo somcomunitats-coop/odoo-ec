@@ -36,7 +36,11 @@ class MemberInfoResponse(BaseResponse):
     When a single project is requested, this model will be returned
     """
 
-    data: MemberInfo
+    data: Optional[MemberInfo] = Field(
+        ...,
+        title="Response Data",
+        description="Data returned for when asking for member info",
+    )
     links: PaginationLinks
 
 

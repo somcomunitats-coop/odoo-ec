@@ -147,6 +147,34 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             },
         )
 
+    @patch("odoo.addons.energy_communities_api.components.base.ApiInfo.get")
+    def test__me_endpoint__partner_undefined(self, patcher):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        patcher.return_value = None
+
+        # when we call for the personal for an user without partner
+        response = self.url_open(
+            "/api/energy-communities/me",
+            headers={"Authorization": self.token, "Content-Type": "app/json"},
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and we get and empty body information
+        self.assertDictEqual(
+            response.json(),
+            {
+                "data": None,
+                "links": {
+                    "next_page": None,
+                    "previous_page": None,
+                    "self_": "http://127.0.0.1:8069/api/energy-communities/me",
+                },
+            },
+        )
+
     @patch(
         "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.get_member_communities"
     )

@@ -19,7 +19,9 @@ class ApiInfo(AbstractComponent):
     def get(self, recordset):
         if len(recordset) > 1:
             return self._info_list(recordset)
-        return self._info(recordset[0])
+        if recordset:
+            return self._info(recordset[0])
+        return None
 
     def _info(self, record):
         return self.schema_class.from_orm(record)
