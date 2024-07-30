@@ -10,7 +10,7 @@ setuptools.setup(
             "contract_variable_quantity": "odoo14-addon-contract-variable-quantity==14.0.1.0.1.dev5",
             "energy_communities": "odoo14-addon-energy-communities>=14.0.9.0.0",
             "energy_communities_cooperator": "odoo14-addon-energy-communities-cooperator>=14.0.1.0.2",
-            "energy_project": "odoo14-addon-energy-project==14.0.3.4.1",
+            "energy_project": "odoo14-addon-energy-project==14.0.3.4.2",
             "web_m2x_options": "odoo14-addon-web-m2x-options==14.0.1.1.1",
             "report_csv": "odoo14-addon-report-csv==14.0.1.0.1.dev5",
         },

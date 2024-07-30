@@ -15,7 +15,7 @@ setuptools.setup(
             "base_technical_features":"odoo14-addon-base-technical-features==14.0.1.1.2.dev1",
             "base_user_role":"odoo14-addon-base-user-role==14.0.2.5.1",
             "base_user_role_company": "odoo14-addon-base-user-role-company==14.0.2.0.2",
-            "community_maps": "odoo14-addon-community-maps==14.0.0.2.6",
+            "community_maps": "odoo14-addon-community-maps==14.0.0.2.7",
             "l10n_es_aeat_sii_oca": "odoo14-addon-l10n-es-aeat-sii-oca==14.0.2.8.1",
             "mail_multicompany": "odoo14-addon-mail-multicompany==14.0.0.1.1.dev2",
             "metadata": "odoo14-addon-metadata==14.0.0.0.1",
