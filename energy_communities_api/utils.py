@@ -75,8 +75,14 @@ def list_response(
 def api_info(
     env: Environment,
     model_name: str,
+    community_id: int,
     schema_class: Any,
 ) -> Component:
     backend = env["api.info.backend"].browse(1)
-    work = WorkContext(model_name, collection=backend, schema_class=schema_class)
+    work = WorkContext(
+        model_name,
+        community_id=community_id,
+        collection=backend,
+        schema_class=schema_class,
+    )
     yield work.component(usage="api.info")

@@ -1,3 +1,5 @@
+from odoo import _
+from odoo.exceptions import ValidationError
 from odoo.http import request
 
 from odoo.addons.base_rest import restapi
@@ -33,7 +35,11 @@ class MemberApiService(Component):
         output_param=PydanticModel(MemberInfoResponse),
     )
     def me(self):
-        with api_info(self.env, self._work_on_model, MemberInfo) as component:
+        self._validate_headers()
+        community_id = request.httprequest.headers.get("CommunityId")
+        with api_info(
+            self.env, self._work_on_model, community_id, MemberInfo
+        ) as component:
             member_info = component.get_member_info(self.env.user.partner_id)
         return single_response(request, MemberInfoResponse, member_info)
 
@@ -57,3 +63,14 @@ class MemberApiService(Component):
                 page=paging_param.page,
             ),
         )
+
+    def _validate_headers(self):
+        community_id = request.httprequest.headers.get("CommunityId")
+        if not community_id:
+            msg = _("CommunityId header is missing")
+            raise ValidationError(msg)
+        try:
+            int(community_id)
+        except Exception:
+            msg = _(f"CommunityId header has an incorrect value: {community_id}")
+            raise ValidationError(msg)

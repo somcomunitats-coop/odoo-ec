@@ -23,6 +23,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
     def setUp(self):
         super().setUp()
         self.maxDiff = None
+        self.community_id = "1"
 
     @property
     def token(self):
@@ -44,22 +45,46 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and a valid token
         # self.token
 
-        # when we call for the personal data in api
+        # when we call for the personal data
         response = self.url_open(
-            "/api/energy-communities/me", headers={"Authorization": self.token}
+            "/api/energy-communities/me",
+            headers={"Authorization": self.token, "CommunityId": self.community_id},
         )
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
-        # and we get the correct information
+        # and an error response notifying this situation
         self.assertDictEqual(
             response.json(),
             {
                 "data": client_data_response,
                 "links": {
-                    "self_": "http://127.0.0.1:8069/api/energy-communities/me",
                     "next_page": None,
                     "previous_page": None,
+                    "self_": "http://127.0.0.1:8069/api/energy-communities/me",
                 },
+            },
+        )
+
+    def test__me_endpoint__without_community_header(self):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+
+        # when we call for the personal data in api without
+        # the CommunityId header
+        response = self.url_open(
+            "/api/energy-communities/me", headers={"Authorization": self.token}
+        )
+        # then we obtain a 400 response code
+        self.assertEqual(response.status_code, 400)
+        # and an error response notifying this situation
+        self.assertDictEqual(
+            response.json(),
+            {
+                "code": 400,
+                "description": "<p>CommunityId header is missing</p>",
+                "name": "Bad Request",
             },
         )
 
