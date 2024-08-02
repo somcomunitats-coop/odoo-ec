@@ -23,7 +23,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
     def setUp(self):
         super().setUp()
         self.maxDiff = None
-        self.community_id = "1"
+        self.community_id = "138"
 
     @property
     def token(self):

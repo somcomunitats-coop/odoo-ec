@@ -666,23 +666,23 @@ class ResUsers(models.Model):
                 }
             )
 
-    def _get_enabled_roles(self):
-        res = super()._get_enabled_roles()
-        if self.role_line_ids:
-            active_roles = self.env["res.users.role.line"]
-            for role_line in res:
-                same_company_roles = self.env["res.users.role.line"].search(
-                    [
-                        ("user_id", "=", role_line.user_id.id),
-                        ("company_id", "=", role_line.company_id.id),
-                    ]
-                )
-                if len(same_company_roles) > 1:
-                    # priority 7 is the lowest, internal user has it
-                    priority = 7
-                    for role in same_company_roles:
-                        if role.role_id.priority < priority:
-                            priority = role.role_id.priority
-                            active_roles = role
-            return active_roles
-        return res
+    # def _get_enabled_roles(self):
+    #     res = super()._get_enabled_roles()
+    #     if self.role_line_ids:
+    #         active_roles = self.env["res.users.role.line"]
+    #         for role_line in res:
+    #             same_company_roles = self.env["res.users.role.line"].search(
+    #                 [
+    #                     ("user_id", "=", role_line.user_id.id),
+    #                     ("company_id", "=", role_line.company_id.id),
+    #                 ]
+    #             )
+    #             if len(same_company_roles) > 1:
+    #                 # priority 7 is the lowest, internal user has it
+    #                 priority = 7
+    #                 for role in same_company_roles:
+    #                     if role.role_id.priority < priority:
+    #                         priority = role.role_id.priority
+    #                         active_roles = role
+    #         return active_roles
+    #     return res

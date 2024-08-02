@@ -78,7 +78,9 @@ def api_info(
     community_id: int,
     schema_class: Any,
 ) -> Component:
-    backend = env["api.info.backend"].browse(1)
+    company = env["res.company"].browse(int(community_id))
+    backend = env["api.info.backend"].with_company(company).browse(1)
+    # backend = env["api.info.backend"].browse(1)
     work = WorkContext(
         model_name,
         community_id=community_id,
