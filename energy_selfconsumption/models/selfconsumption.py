@@ -17,10 +17,7 @@ _logger = logging.getLogger(__name__)
 INVOICING_VALUES = [
     ("power_acquired", _("Power Acquired")),
     ("energy_delivered", _("Energy Delivered")),
-    (
-        "energy_delivered_variable",
-        _("Energy Delivered Variable Hourly Coefficient"),
-    ),
+    ("energy_custom", _("Energy Delivered Custom")),
 ]
 
 
@@ -354,6 +351,7 @@ class Selfconsumption(models.Model):
             True,
         )
         for project in projects:
+            # project["project_id"][0] - project.project_id.id
             selfconsumption_id = self.browse(project["project_id"][0])
             contract = selfconsumption_id.contract_ids[0]
             first_date = contract.next_period_date_start
@@ -366,7 +364,36 @@ class Selfconsumption(models.Model):
             }
             selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
 
-        return True
+    def send_energy_delivery_custom_invoicing_reminder(self):
+        projects = self.env["contract.contract"].read_group(
+            [
+                (
+                    "project_id.selfconsumption_id.invoicing_mode",
+                    "=",
+                    "energy_custom",
+                ),
+                ("recurring_next_date", "=", fields.date.today()),
+            ],
+            ["project_id"],
+            ["project_id"],
+        )
+        template = self.env.ref(
+            "energy_selfconsumption.selfconsumption_energy_delivered_custom_invoicing_reminder",
+            True,
+        )
+        for project in projects:
+            # project["project_id"][0] - project.project_id.id
+            selfconsumption_id = self.browse(project["project_id"][0])
+            contract = selfconsumption_id.contract_ids[0]
+            first_date = contract.next_period_date_start
+            last_date = contract.next_period_date_end
+            next_invoicing = contract.recurring_next_date
+            ctx = {
+                "next_invoicing": next_invoicing.strftime("%d-%m-%Y"),
+                "first_date": first_date.strftime("%d-%m-%Y"),
+                "last_date": last_date.strftime("%d-%m-%Y"),
+            }
+            selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
 
     def send_power_acquired_invoicing_reminder(self):
         today = fields.date.today()
@@ -387,6 +414,7 @@ class Selfconsumption(models.Model):
             True,
         )
         for project in projects:
+            # project["project_id"][0] - project.project_id.id
             selfconsumption_id = self.browse(project["project_id"][0])
             contract = selfconsumption_id.contract_ids[0]
             next_invoicing = contract.recurring_next_date
@@ -394,8 +422,6 @@ class Selfconsumption(models.Model):
                 "next_invoicing": next_invoicing.strftime("%d-%m-%Y"),
             }
             selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
-
-        return True
 
     @api.constrains("code")
     def _check_valid_code(self):
@@ -548,6 +574,23 @@ class Selfconsumption(models.Model):
                         error=e
                     )
                     raise ValidationError(error_message)
+
+    def unlink(self):
+        for record in self:
+            # TODO:
+            # An extra control is needed when deleting a supply_point_assignation_ids
+            # depending on the state of the distribution_table_ids model.
+            # record.distribution_table_ids.supply_point_assignation_ids.unlink()
+            # Extra control is needed when deleting a distribution_table_ids
+            # depending on the status
+            # record.distribution_table_ids.unlink()
+            # An extra control is needed when deleting an inscription_ids depending
+            # on whether the supply_point_assignation_ids model of
+            # distribution_table_ids is present. And depending on whether it is an open
+            # enrollment for the public.
+            # record.inscription_ids.unlink()
+            record.project_id.unlink()
+        return super().unlink()
 
 
 class CoefficientReport(models.TransientModel):

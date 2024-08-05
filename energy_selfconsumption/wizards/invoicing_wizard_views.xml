@@ -7,34 +7,69 @@
             </field>
             <field name="model">energy_selfconsumption.invoicing.wizard</field>
             <field name="arch" type="xml">
-                <form string="Invoicing Energy Delivered">
+                <form string="Generate invoices">
                     <sheet>
-                        <group>
+                        <group string="Billing period">
                             <field name="next_period_date_start" />
                             <field name="next_period_date_end" />
+                            <field name="invoicing_mode" readonly="1" invisible="1" />
                         </group>
                         <group>
-                            <field name="power" />
-                            <field name="contract_ids">
-                                <tree>
-                                    <field name="partner_id" />
-                                    <field name="supply_point_name" />
-                                    <field name="code" />
-                                    <field name="next_period_date_start" />
-                                    <field name="next_period_date_end" />
-                                </tree>
-                            </field>
+
+                            <field
+                name="power"
+                attrs="{'invisible': [('invoicing_mode', '!=', 'energy_delivered')], 'required': [('invoicing_mode', '=', 'energy_delivered')]}"
+              />
+                            <field name="num_contracts" readonly="1"/>
+                        </group>
+                        <group cols="4"
+              attrs="{'invisible': [('invoicing_mode', '!=', 'energy_custom')]}"
+            >
+                            <group>
+                                <field
+                name="import_file"
+                filename="fname"
+                widget="binary"
+              />
+
+                            <field
+                name="fname"
+                invisible="1"
+                attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
+              />
+                            <field
+                name="delimiter"
+                attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
+              />
+                            <field
+                name="quotechar"
+                attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
+              />
+                            <field
+                name="encoding"
+                attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
+              />
+                            </group>
+                            <group>
+                                <button
+                type="object"
+                class="btn btn-secondary mr-1"
+                name="download_template_button"
+              >Download
+                            Template</button>
+                            </group>
                         </group>
                     </sheet>
                     <footer>
-                        <button type="object" name="generate_invoices">Generate</button>
+                        <button type="object" class="btn btn-primary mr-1"
+                                name="generate_invoices">Generate</button>
                     </footer>
                 </form>
             </field>
         </record>
 
         <record id="invoicing_wizard_act_window" model="ir.actions.act_window">
-            <field name="name">Invoice Energy Delivered</field>
+            <field name="name">Generate invoices</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">energy_selfconsumption.invoicing.wizard</field>
             <field name="groups_id" eval="[(4,ref('energy_project.group_admin'))]" />

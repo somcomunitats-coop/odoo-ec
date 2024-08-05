@@ -1,11 +1,16 @@
 import logging
+import re
+from datetime import datetime
 from json import JSONDecodeError
 
 import requests
 
 from odoo import _, api, exceptions, fields, models
+from odoo.exceptions import ValidationError
 
 logger = logging.getLogger(__name__)
+
+_DEFAULT_COOPERATIVE_MEMBERSHIP_USER_ROLE = "role_ce_member"
 
 
 class ResUsers(models.Model):
@@ -13,8 +18,38 @@ class ResUsers(models.Model):
     _inherit = ["res.users", "user.currentcompany.mixin"]
 
     _LOGIN_MATCH_KEY = "id:login"
+    _KC_CLIENT_AUTH_ACCESS_GROUP_ODOO = "odoo-allow"
 
     current_role = fields.Char(computed="_compute_current_role", store=False)
+    last_user_invitation_through_kc = fields.Datetime(
+        string=_("Last user invitation through Keycloak")
+    )
+
+    def get_user_auth_access_to_spaces(self):
+        _odoo_auth_roles = [
+            self.env.ref("energy_communities.role_platform_admin"),
+            self.env.ref("energy_communities.role_coord_admin"),
+            self.env.ref("energy_communities.role_coord_worker"),
+            self.env.ref("energy_communities.role_ce_admin"),
+        ]
+        _app_auth_roles = [self.env.ref("energy_communities.role_ce_member")]
+        _forum_auth_roles = _odoo_auth_roles + _app_auth_roles
+        _tech_spaces = {
+            "odoo": _odoo_auth_roles,
+            "forum": _forum_auth_roles,
+            "app": _app_auth_roles,
+        }
+        user_access = {}
+        for record in self:
+            user_roles = self.env["res.users.role.line"].search(
+                [("user_id", "=", record.id)]
+            )
+            for space, roles in _tech_spaces.items():
+                user_access[space] = False
+                for role in user_roles:
+                    if role.role_id in roles:
+                        user_access[space] = True
+        return user_access
 
     def _compute_current_role(self):
         for record in self:
@@ -98,6 +133,117 @@ class ResUsers(models.Model):
         )
         self._validate_response(resp)
         return resp.json()
+
+    def _get_kc_groups(self, token, provider_id, **params):
+        """Retrieve user groups from Keycloak.
+
+        :param token: a valida auth token from Keycloak
+        :param **params: extra search params for user groups endpoint
+        """
+        # GET /{realm}/groups
+        groups_endpoint = provider_id.admin_user_endpoint.replace("users", "groups")
+        logger.info("Calling GET %s" % groups_endpoint)
+        headers = {
+            "Authorization": "Bearer %s" % token,
+        }
+        resp = requests.get(groups_endpoint, headers=headers, params=params)
+        self._validate_response(resp)
+        return resp.json()
+
+    def _get_kc_user_groups(self, token, provider_id, odoo_user, **params):
+        """Retrieve user groups from Keycloak.
+
+        :param token: a valida auth token from Keycloak
+        :param **params: extra search params for user groups endpoint
+        """
+        # GET /{realm}/users/{id}/groups
+        user_groups_endpoint = (
+            provider_id.admin_user_endpoint + "/" + odoo_user.oauth_uid + "/groups"
+        )
+        logger.info("Calling GET %s" % user_groups_endpoint)
+        headers = {
+            "Authorization": "Bearer %s" % token,
+        }
+        resp = requests.get(user_groups_endpoint, headers=headers, params=params)
+        self._validate_response(resp)
+        return resp.json()
+
+    def _add_kc_user_groups(self, token, provider_id, odoo_user, kc_group_id):
+        """Put user groups from Keycloak."""
+        # PUT /{realm}/users/{id}/groups/{groupId}
+        user_groups_endpoint = (
+            provider_id.admin_user_endpoint
+            + "/"
+            + odoo_user.oauth_uid
+            + "/groups/"
+            + kc_group_id
+        )
+        logger.info("Calling PUT %s" % user_groups_endpoint)
+        headers = {
+            "Authorization": "Bearer %s" % token,
+        }
+        resp = requests.put(user_groups_endpoint, headers=headers)
+        self._validate_response(resp, no_json=True)
+        # yes, Keycloak sends back NOTHING on create
+        # so we are forced to do another call to get its data :(
+        return self._get_kc_user_groups(token, provider_id, odoo_user)
+
+    def _remove_kc_user_groups(self, token, provider_id, odoo_user, kc_group_id):
+        """Delete user groups from Keycloak."""
+        # DELETE /{realm}/users/{id}/groups/{groupId}
+        user_groups_endpoint = (
+            provider_id.admin_user_endpoint
+            + "/"
+            + odoo_user.oauth_uid
+            + "/groups/"
+            + kc_group_id
+        )
+        logger.info("Calling DELETE %s" % user_groups_endpoint)
+        headers = {
+            "Authorization": "Bearer %s" % token,
+        }
+        resp = requests.delete(user_groups_endpoint, headers=headers)
+        self._validate_response(resp, no_json=True)
+        # yes, Keycloak sends back NOTHING on create
+        # so we are forced to do another call to get its data :(
+        return self._get_kc_user_groups(token, provider_id, odoo_user)
+
+    def _assign_kc_user_groups(self):
+        """Assing group to users on Keycloak.
+
+        1. get a token
+        2. check if _KC_CLIENT_AUTH_ACCESS_GROUP_ODOO is in KC groups
+        3. assign or remove user group allow-odoo
+        """
+        provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
+        provider_id.validate_admin_provider()
+        token = self._get_admin_token(provider_id)
+        keycloak_groups = self._get_kc_groups(token, provider_id)
+        group_name = [group["name"] for group in keycloak_groups]
+        if not self._KC_CLIENT_AUTH_ACCESS_GROUP_ODOO in group_name:
+            raise exceptions.UserError(_("User group odoo-allow doesn't exist."))
+        else:
+            group_id = "".join([group["id"] for group in keycloak_groups])
+            for user in self:
+                keycloak_user_groups = self._get_kc_user_groups(
+                    token, provider_id, user
+                )
+                user_group_name = "".join(
+                    group["name"] for group in keycloak_user_groups
+                )
+                if user.oauth_uid:
+                    if (
+                        user.get_user_auth_access_to_spaces()["odoo"]
+                        and self._KC_CLIENT_AUTH_ACCESS_GROUP_ODOO != user_group_name
+                    ):
+                        # assign group odoo-allow
+                        self._add_kc_user_groups(token, provider_id, user, group_id)
+                    elif (
+                        not user.get_user_auth_access_to_spaces()["odoo"]
+                        and self._KC_CLIENT_AUTH_ACCESS_GROUP_ODOO == user_group_name
+                    ):
+                        # remove group odoo-allow
+                        self._remove_kc_user_groups(token, provider_id, user, group_id)
 
     def _validate_response(self, resp, no_json=False):
         # When Keycloak detects a clash on non-unique values, like emails,
@@ -215,6 +361,7 @@ class ResUsers(models.Model):
             response = requests.put(
                 endpoint, headers=headers, data='["UPDATE_PASSWORD", "VERIFY_EMAIL"]'
             )
+            self.write({"last_user_invitation_through_kc": datetime.now()})
         else:
             raise exceptions.UserError(_("Reset password url is not set."))
         if response.status_code != 204:
@@ -328,3 +475,193 @@ class ResUsers(models.Model):
         user.send_reset_password_mail()
 
         return user
+
+    @api.model
+    def build_platform_user(
+        self,
+        company_id,
+        partner_id,
+        role_id,
+        action,
+        force_invite,
+        user_vals,
+    ):
+        if partner_id:
+            user_vals = {
+                "partner_id": partner_id.id,
+                "login": partner_id.vat,
+                "email": partner_id.email,
+                "firstname": partner_id.firstname,
+                "lastname": partner_id.lastname,
+                "lang": partner_id.lang,
+            }
+        else:
+            self.user_vals_validator(user_vals)
+
+        user = self.env["res.users"].search(
+            [
+                ("login", "=", user_vals["login"]),
+                "|",
+                ("active", "=", True),
+                ("active", "=", False),
+            ]
+        )
+
+        if user:
+            if company_id not in user.company_ids:
+                # add the company to the user's companies
+                user.company_ids = [(4, company_id.id, 0)]
+            else:
+                # set the company as the only company of the user
+                company_ids = [(6, 0, [company_id.id])]
+                if not user.active:
+                    user.sudo().write(
+                        {
+                            "active": True,
+                            "company_id": company_id.id,
+                            "company_ids": company_ids,
+                        }
+                    )
+                    user_roles = self.env["res.users.role.line"].search(
+                        [("user_id", "=", user.id)]
+                    )
+                    user_roles.unlink()
+        else:
+            user_vals["company_id"] = company_id.id
+            user_vals["company_ids"] = partner_id.company_ids
+            user = self.sudo().with_context(no_reset_password=True).create(user_vals)
+
+        user.sudo().set_user_roles(company_id, role_id)
+
+        if action in ("create_kc_user", "invite_user_through_kc"):
+            user.create_users_on_keycloak()
+            user._assign_kc_user_groups()
+
+        if (
+            force_invite
+            or (
+                action == "invite_user_through_kc"
+                and not user.last_user_invitation_through_kc
+            )
+        ) and user.oauth_uid:
+            user.send_reset_password_mail()
+
+        return user
+
+    def set_user_roles(self, company_id, role_id):
+        self.check_role_can_be_assingned(company_id, role_id)
+        return self.create_user_role_line(company_id, role_id)
+
+    def check_role_can_be_assingned(self, company_id, role_id):
+        user_roles = [
+            "role_platform_admin",
+            "role_coord_admin",
+            "role_coord_worker",
+            "role_ce_admin",
+            "role_ce_manager",
+            "role_ce_member",
+        ]
+        company_hierarchy_level = ["instance", "community", "coordinator"]
+        role_is_available_for_company = all(
+            [
+                company_id.hierarchy_level in company_hierarchy_level,
+                role_id.code in company_id.available_role_ids.mapped("code"),
+            ]
+        )
+        if role_is_available_for_company:
+            for user_role in self.role_line_ids.mapped("role_id"):
+                user_has_role_in_company = all(
+                    [
+                        user_role.code in user_roles,
+                        role_id.code in user_role.available_role_ids.mapped("code"),
+                        role_id.priority == user_role.priority,
+                        company_id.id == self.company_id.id,
+                    ]
+                )
+
+                role_is_not_available_for_user = all(
+                    [
+                        user_role.code in user_roles,
+                        role_id.code not in user_role.available_role_ids.mapped("code"),
+                    ]
+                )
+
+                if user_has_role_in_company:
+                    error = _(
+                        "User with vat {} is already {} for the company {}"
+                    ).format(self.login, user_role.code, company_id.name)
+                    raise ValidationError(error)
+                if role_is_not_available_for_user:
+                    error = _(
+                        "Role {} is not available for user with {} role. This role only allows {}"
+                    ).format(
+                        role_id.code,
+                        user_role.code,
+                        ", ".join(user_role.available_role_ids.mapped("code")),
+                    )
+                    raise ValidationError(error)
+            return True
+
+        error = _(
+            "Role {} is not available for company {} of type {}. This type of company allows roles {}"
+        ).format(
+            role_id.code,
+            company_id.name,
+            company_id.hierarchy_level,
+            ", ".join(company_id.available_role_ids.mapped("code")),
+        )
+        raise ValidationError(error)
+
+    def user_vals_validator(self, user_vals):
+        if user_vals.keys() != {"login", "email", "firstname", "lastname", "lang"}:
+            raise ValidationError(_("User_vals dict is empty"))
+        if user_vals["login"] is None:
+            raise ValidationError(_("Login is empty"))
+        if not self.email_validator(user_vals["email"]):
+            raise ValidationError(_("Email is not valid"))
+        if not self.lang_validator(user_vals["lang"]):
+            raise ValidationError(_("Lang is not valid"))
+
+    def email_validator(email):
+        regex = re.compile(
+            r"([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+"
+        )
+        if re.fullmatch(regex, email):
+            return True
+
+    def lang_validator(lang):
+        regex = re.compile(r"/[a-z]{2}_[A-Z]{2}/gm")
+        if re.fullmatch(regex, lang):
+            return True
+
+    def create_user_role_line(self, company_id, role_id):
+        if not self.login_date:
+            internal_user = self.env.ref("energy_communities.role_internal_user").id
+            internal_user_role = self.env["res.users.role.line"].search(
+                [
+                    ("user_id", "=", self.id),
+                    ("role_id", "=", internal_user),
+                ]
+            )
+            if not internal_user_role:
+                self.env["res.users.role.line"].create(
+                    {
+                        "user_id": self.id,
+                        "role_id": internal_user,
+                    }
+                )
+        user_roles = self.env["res.users.role.line"].search(
+            [
+                ("user_id", "=", self.id),
+                ("role_id", "=", role_id.id),
+                ("company_id", "=", company_id.id),
+            ]
+        )
+        if not user_roles:
+            self.env["res.users.role.line"].create(
+                {
+                    "user_id": self.id,
+                    "role_id": role_id.id,
+                    "company_id": company_id.id,
+                }
+            )

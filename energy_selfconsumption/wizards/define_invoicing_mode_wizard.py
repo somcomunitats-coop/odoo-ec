@@ -1,5 +1,4 @@
-from odoo import _, fields, models
-from odoo.exceptions import UserError
+from odoo import _, fields, models, api
 
 from ..models.selfconsumption import INVOICING_VALUES
 
@@ -19,16 +18,16 @@ class ContractGenerationWizard(models.TransientModel):
 
     price = fields.Float(required=True)
 
-    recurring_interval = fields.Integer(
-        required=True,
-    )
-    recurring_rule_type = fields.Selection(
-        default="monthlylastday",
-        required=True,
-    )
     selfconsumption_id = fields.Many2one(
         "energy_selfconsumption.selfconsumption", readonly=True
     )
+
+    @api.onchange("invoicing_mode")
+    def _onchange_invoicing_mode(self):
+        if self.invoicing_mode == "energy_custom":
+            self.recurring_rule_type = "monthly"
+        else:
+            self.recurring_rule_type = "monthlylastday"
 
     def _prepare_product_values(self):
         account_income_xml_id = "l10n_es.%i_account_common_7050" % self.env.company.id
@@ -38,6 +37,8 @@ class ContractGenerationWizard(models.TransientModel):
         )
         account_tax_id = self.env.ref(account_tax_xml_id)
         uom_kw_id = self.env.ref("energy_project.kw_uom")
+        if self.invoicing_mode == "energy_custom":
+            uom_kw_id = self.env.ref("energy_project.kwh_uom")
         return {
             "name": self.selfconsumption_id.name,
             "type": "service",
@@ -67,23 +68,37 @@ class ContractGenerationWizard(models.TransientModel):
             "product_id": product_id.id,
             "automatic_price": True,
             "company_id": self.env.company.id,
-            "qty_type": "variable",
-            "qty_formula_id": formula_contract_id.id,
+            "qty_type": self._get_qty_type(),
+            "qty_formula_id": self._get_qty_formula_id(formula_contract_id),
+            "quantity": self._get_quantity(),
             "uom_id": product_id.uom_id.id,
-            # Values are formatted in contract_generation_wizard
             "name": _(
                 """CUPS: {code}\nOwner: {owner_id}\nInvoicing period: #START# - #END#\n"""
             ),
         }
 
-    def save_data_to_selfconsumption(self):
-        if self.invoicing_mode == "energy_delivered_variable":
-            raise UserError(_("This invoicing mode is not yet implemented"))
+    def _get_qty_type(self):
+        if self.invoicing_mode == "energy_custom":
+            return "fixed"
+        else:
+            return "variable"
 
+    def _get_qty_formula_id(self, formula_contract_id):
+        if self.invoicing_mode == "energy_custom":
+            return False
+        else:
+            return formula_contract_id.id
+
+    def _get_quantity(self):
+        if self.invoicing_mode == "energy_custom":
+            return 0
+        else:
+            return 1
+
+    def save_data_to_selfconsumption(self):
         # Create product
         product_id = self.env["product.product"].create(self._prepare_product_values())
 
-        # TODO:Update formula energy_delivered_variable.
         formula_contract_id = None
         if self.invoicing_mode == "power_acquired":
             formula_contract_id = self.env.ref(
@@ -93,10 +108,8 @@ class ContractGenerationWizard(models.TransientModel):
             formula_contract_id = self.env.ref(
                 "energy_selfconsumption.energy_delivered_formula"
             )
-        elif self.invoicing_mode == "energy_delivered_variable":
-            formula_contract_id = self.env.ref(
-                "energy_selfconsumption.energy_delivered_variable_formula"
-            )
+        elif self.invoicing_mode == "energy_custom":
+            formula_contract_id = False
 
         # Search accounting journal
         journal_id = self.env["account.journal"].search(
