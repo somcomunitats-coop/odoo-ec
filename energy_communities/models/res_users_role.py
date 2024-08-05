@@ -36,16 +36,16 @@ class ResUsersRole(models.Model):
             elif record.code == "role_coord_admin":
                 record.priority = 2
                 record.available_role_ids = available_roles
-            elif record.code == "role_ce_admin":
+            elif record.code == "role_coord_worker":
                 record.priority = 3
                 record.available_role_ids = available_roles
             elif record.code == "role_ce_manager":
                 record.priority = 4
                 record.available_role_ids = available_roles
-            elif record.code == "role_ce_member":
+            elif record.code == "role_ce_admin":
                 record.priority = 5
                 record.available_role_ids = available_roles
-            elif record.code == "role_coord_worker":
+            elif record.code == "role_ce_member":
                 record.priority = 6
                 record.available_role_ids = available_roles
             elif record.code == "role_internal_user":

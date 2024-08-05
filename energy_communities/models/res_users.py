@@ -666,23 +666,34 @@ class ResUsers(models.Model):
                 }
             )
 
-    # def _get_enabled_roles(self):
-    #     res = super()._get_enabled_roles()
-    #     if self.role_line_ids:
-    #         active_roles = self.env["res.users.role.line"]
-    #         for role_line in res:
-    #             same_company_roles = self.env["res.users.role.line"].search(
-    #                 [
-    #                     ("user_id", "=", role_line.user_id.id),
-    #                     ("company_id", "=", role_line.company_id.id),
-    #                 ]
-    #             )
-    #             if len(same_company_roles) > 1:
-    #                 # priority 7 is the lowest, internal user has it
-    #                 priority = 7
-    #                 for role in same_company_roles:
-    #                     if role.role_id.priority < priority:
-    #                         priority = role.role_id.priority
-    #                         active_roles = role
-    #         return active_roles
-    #     return res
+    def _get_enabled_roles(self):
+        active_roles = self.env["res.users.role.line"]
+        if self.env.context.get("allowed_company_ids"):
+            company_ids = self.env.context.get("allowed_company_ids")
+        else:
+            company_ids = self.company_id.ids
+        company_id = company_ids[0]
+        company_role_lines = active_roles.search(
+            [
+                ("user_id", "=", self.id),
+                ("company_id", "=", company_id),
+            ]
+        )
+        if company_role_lines:
+            return self._max_priority_role_line(company_role_lines)
+        global_role_lines = active_roles.search(
+            [
+                ("user_id", "=", self.id),
+                ("company_id", "=", None),
+            ]
+        )
+        if global_role_lines:
+            return self._max_priority_role_line(global_role_lines)
+        return active_roles
+
+    def _max_priority_role_line(self, role_lines):
+        selected_role_line = role_lines[0]
+        for role_line in role_lines[1:]:
+            if role_line.role_id.priority < selected_role_line.role_id.priority:
+                selected_role_line = role_line
+        return selected_role_line
