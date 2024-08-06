@@ -15,8 +15,6 @@ class ApiInfo(AbstractComponent):
     def __init__(self, *args):
         super().__init__(*args)
         self.schema_class = self.work.schema_class
-        if self.work.community_id:
-            ...  # activate company that has self.community_id as id
 
     def get(self, recordset):
         if len(recordset) > 1:

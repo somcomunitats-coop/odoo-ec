@@ -145,7 +145,11 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # when we call for the personal data in api with a bad token
         response = self.url_open(
             "/api/energy-communities/me",
-            headers={"Authorization": self.token, "Content-Type": "app/json"},
+            headers={
+                "Authorization": self.token,
+                "Content-Type": "app/json",
+                "CommunityId": self.community_id,
+            },
         )
         # then we obtain a 403 response code
         self.assertEqual(response.status_code, 403)
@@ -174,7 +178,11 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # when we call for the personal data in api with a bad token
         response = self.url_open(
             "/api/energy-communities/me",
-            headers={"Authorization": self.token, "Content-Type": "app/json"},
+            headers={
+                "Authorization": self.token,
+                "Content-Type": "app/json",
+                "CommunityId": self.community_id,
+            },
         )
         # then we obtain a 500 response code
         self.assertEqual(response.status_code, 500)
@@ -198,7 +206,11 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # when we call for the personal for an user without partner
         response = self.url_open(
             "/api/energy-communities/me",
-            headers={"Authorization": self.token, "Content-Type": "app/json"},
+            headers={
+                "Authorization": self.token,
+                "Content-Type": "app/json",
+                "CommunityId": self.community_id,
+            },
         )
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
@@ -224,15 +236,22 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # when we call for the energy_communties that i belong
         response = self.url_open(
             "/api/energy-communities/me/communities?page=2&page_size=2",
-            headers={"Authorization": self.token},
+            headers={
+                "Authorization": self.token,
+            },
         )
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
 
     @patch(
+        "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.total_member_communities"
+    )
+    @patch(
         "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.get_member_communities"
     )
-    def test__me_communities_endpoint__ok(self, patcher):
+    def test__me_communities_endpoint__ok(
+        self, patch_member_communites, patch_total_member_communities
+    ):
         # given http_client
         # self.url_open
         # and a valid personal token
@@ -243,11 +262,13 @@ class TestMemberApiService(HttpCase, RegistryMixin):
                 for value in range(0, 10)
             ]
 
-        patcher.return_value = member_communities()
+        patch_member_communites.return_value = member_communities()
+        patch_total_member_communities.return_value = len(member_communities())
         # when we call for the energy_communties that i belong
         response = self.url_open(
             "/api/energy-communities/me/communities?page=2&page_size=2",
             headers={"Authorization": self.token},
+            timeout=self.timeout,
         )
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)

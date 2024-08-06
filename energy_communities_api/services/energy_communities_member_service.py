@@ -7,6 +7,7 @@ from odoo.addons.base_rest_pydantic.restapi import PydanticModel
 from odoo.addons.component.core import Component
 
 from ..schemas import (
+    DEFAULT_PAGE_SIZE,
     CommunityInfo,
     CommunityInfoListResponse,
     MemberInfo,
@@ -38,7 +39,10 @@ class MemberApiService(Component):
         self._validate_headers()
         community_id = request.httprequest.headers.get("CommunityId")
         with api_info(
-            self.env, self._work_on_model, community_id, MemberInfo
+            self.env,
+            self._work_on_model,
+            MemberInfo,
+            community_id,
         ) as component:
             member_info = component.get_member_info(component.env.user.partner_id)
         return single_response(request, MemberInfoResponse, member_info)
@@ -49,19 +53,26 @@ class MemberApiService(Component):
         output_param=PydanticModel(CommunityInfoListResponse),
     )
     def communities(self, paging_param):
-        with api_info(self.env, self._work_on_model, CommunityInfo) as component:
+        page = paging_param.page or 1
+        page_size = paging_param.page_size or DEFAULT_PAGE_SIZE
+        paging = PaginationLimits(
+            limit=page_size, offset=(page - 1) * page_size, page=page
+        )
+        with api_info(
+            self.env, self._work_on_model, CommunityInfo, paging=paging
+        ) as component:
+            total_member_comunities = component.total_member_communities(
+                self.env.user.partner_id
+            )
             member_communities = component.get_member_communities(
-                component.env.user.partner_id
+                self.env.user.partner_id,
             )
         return list_response(
             request,
             CommunityInfoListResponse,
             member_communities,
-            PaginationLimits(
-                limit=paging_param.page_size,
-                offset=(paging_param.page - 1) * paging_param.page_size,
-                page=paging_param.page,
-            ),
+            total_member_comunities,
+            paging,
         )
 
     def _validate_headers(self):

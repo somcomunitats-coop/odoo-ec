@@ -58,6 +58,7 @@ def list_response(
     request: HttpRequest,
     response_class: Any,
     collection: List[Any],
+    total_results,
     paging: PaginationLimits,
 ) -> Any:
     over_size = paging.offset + paging.limit < len(collection)
@@ -66,7 +67,7 @@ def list_response(
         data=collection,
         links=_get_pagination_links(request, len(collection), paging),
         page=paging.page,
-        total_results=len(collection),
+        total_results=total_results,
         count=actual_count,
     )
 
@@ -75,15 +76,21 @@ def list_response(
 def api_info(
     env: Environment,
     model_name: str,
-    community_id: int,
     schema_class: Any,
+    community_id: int = None,
+    paging: PaginationLimits = None,
 ) -> Component:
-    company = env["res.company"].browse(int(community_id))
-    backend = env["api.info.backend"].with_company(company).browse(1)
+    if community_id:
+        company = env["res.company"].browse(int(community_id))
+        backend = env["api.info.backend"].with_company(company).browse(1)
+    else:
+        backend = env["api.info.backend"].browse(1)
+
     work = WorkContext(
         model_name,
         community_id=community_id,
         collection=backend,
         schema_class=schema_class,
+        paging=paging,
     )
     yield work.component(usage="api.info")
