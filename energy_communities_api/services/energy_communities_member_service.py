@@ -40,7 +40,7 @@ class MemberApiService(Component):
         with api_info(
             self.env, self._work_on_model, community_id, MemberInfo
         ) as component:
-            member_info = component.get_member_info(self.env.user.partner_id)
+            member_info = component.get_member_info(component.env.user.partner_id)
         return single_response(request, MemberInfoResponse, member_info)
 
     @restapi.method(
@@ -51,7 +51,7 @@ class MemberApiService(Component):
     def communities(self, paging_param):
         with api_info(self.env, self._work_on_model, CommunityInfo) as component:
             member_communities = component.get_member_communities(
-                self.env.user.partner_id
+                component.env.user.partner_id
             )
         return list_response(
             request,

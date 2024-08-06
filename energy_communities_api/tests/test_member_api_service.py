@@ -23,7 +23,8 @@ class TestMemberApiService(HttpCase, RegistryMixin):
     def setUp(self):
         super().setUp()
         self.maxDiff = None
-        self.community_id = "138"
+        self.community_id = "3"
+        self.timeout = 600
 
     @property
     def token(self):
@@ -44,11 +45,16 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # self.url_open
         # and a valid token
         # self.token
+        # a member belonging to two energy communities
 
-        # when we call for the personal data
+        community_1_id = self.community_id
+        community_2_id = "138"
+
+        # when we call for the personal data fo
         response = self.url_open(
             "/api/energy-communities/me",
-            headers={"Authorization": self.token, "CommunityId": self.community_id},
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+            timeout=self.timeout,
         )
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
@@ -63,6 +69,15 @@ class TestMemberApiService(HttpCase, RegistryMixin):
                     "self_": "http://127.0.0.1:8069/api/energy-communities/me",
                 },
             },
+        )
+        response = self.url_open(
+            "/api/energy-communities/me",
+            headers={"Authorization": self.token, "CommunityId": community_2_id},
+            timeout=self.timeout,
+        )
+        self.assertEqual(
+            response.json()["data"]["member_number"],
+            client_data_response["member_number"],
         )
 
     def test__me_endpoint__without_community_header(self):
