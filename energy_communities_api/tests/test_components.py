@@ -4,7 +4,7 @@ from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import TransactionComponentCase
 
 from ..components.partner_api_info import PartnerApiInfo
-from ..schemas import CommunityInfo, MemberInfo
+from ..schemas import CommunityInfo, MemberInfo, PaginationLimits
 
 
 class TestMemberApiInfo(TransactionComponentCase):
@@ -68,14 +68,9 @@ class TestMemberApiInfo(TransactionComponentCase):
             ],
         )
 
-    @patch(
-        "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo._get_communities"
-    )
-    def test__get_member_communities_paging_params(self, patcher):
+    def test__get_member_communities_paging_params(self):  # , patcher):
         def fake_energy_communities():
             return [self.env["res.company"].browse(id_) for id_ in range(1, 3)]
-
-        patcher.return_value = fake_energy_communities()
 
         # given a energy community member
         member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
@@ -99,5 +94,5 @@ class TestMemberApiInfo(TransactionComponentCase):
         # then we have 1 communities
         self.assertEqual(
             len(member_communities),
-            2,
+            1,
         )
