@@ -6,16 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-15 13:14+0000\n"
-"PO-Revision-Date: 2024-07-15 15:21+0200\n"
+"POT-Creation-Date: 2024-07-25 11:09+0000\n"
+"PO-Revision-Date: 2024-07-25 11:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: ca_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: energy_selfconsumption
 #: model:mail.template,body_html:energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder
@@ -36,8 +34,7 @@ msgid ""
 "            - <b>${ ctx['last_date'] }</b>.\n"
 "        </p>\n"
 "        <p>\n"
-"            To do so, go to the project file, enter the contracts view, select the contracts that must be invoiced "
-"and\n"
+"            To do so, go to the project file, enter the contracts view, select the contracts that must be invoiced and\n"
 "            press the Invoice button.</br>\n"
 "        </p>\n"
 "        <p>\n"
@@ -63,13 +60,82 @@ msgstr ""
 "            - <b> $ {ctx['last_date']} </b>.\n"
 "        </p>\n"
 "        <p>\n"
-"            Per fer -ho, aneu al fitxer del projecte, introduïu la vista de contractes, seleccioneu els contractes "
-"que s’han de facturar i\n"
+"            Per fer -ho, aneu al fitxer del projecte, introduïu la vista de contractes, seleccioneu els contractes que s’han de facturar i\n"
 "            Premeu el botó de factura. </br>\n"
 "        </p>\n"
 "        <p>\n"
-"            Per a qualsevol pregunta o incidència, poseu -vos en contacte amb l’equip d’assistència;"
-"support@somcomunitatts.coop.\n"
+"            Per a qualsevol pregunta o incidència, poseu -vos en contacte amb l’equip d’assistència;support@somcomunitatts.coop.\n"
+"        </p>"
+
+#. module: energy_selfconsumption
+#: model:mail.template,body_html:energy_selfconsumption.selfconsumption_energy_delivered_custom_invoicing_reminder
+msgid ""
+"\n"
+"            \n"
+"        <p>Hi,</p>\n"
+"        <p>\n"
+"            Remember that the collective self-consumption project\n"
+"            <b>${ object.name }</b>\n"
+"            of the energy community\n"
+"            <b>${ object.project_id.company_id.name }</b>\n"
+"            must invoice on the day <b>${ ctx['next_invoicing'] }</b>.\n"
+"        </p>\n"
+"        <p>\n"
+"            It is necessary, therefore, that you upload to the Som Comunitats platform\n"
+"            the energy delivered from each CUPS for this period. Instructions to\n"
+"            generate invoices:.\n"
+"        </p>\n"
+"        <p>\n"
+"            1. Go to the project file, go to the contracts view and select the\n"
+"            contracts to be invoiced.\n"
+"        </p>\n"
+"        <p>\n"
+"            2. In the Action button, select the \"Generate invoices\" option.\n"
+"        </p>\n"
+"        <p>\n"
+"            3. In the wizard, load the CSV file with the energy delivered in kWh during\n"
+"            the period ${ ctx['first_date'] } - ${ ctx['last_date'] } for each CUPS and\n"
+"            press the \"Generate\" button.\n"
+"        </p>\n"
+"        <p>\n"
+"            4. Finally, you must validate and send the generated invoices. If you have\n"
+"            any doubts or issues, please contact our support team:\n"
+"            soporte@somcomunitats.coop\n"
+"        </p>\n"
+"            \n"
+"        "
+msgstr ""
+"\n"
+"            \n"
+"        <p>Hola,</p>\n"
+"        <p>\n"
+"            Recordeu que el projecte d'autoconsum col·lectiu\n"
+"            <b>${ object.name }</b>\n"
+"            de la comunitat energètica\n"
+"            <b>${ object.project_id.company_id.name }</b>\n"
+"            ha de facturar el dia <b>${ ctx['next_invoicing'] }</b>.\n"
+"        </p>\n"
+"        <p>\n"
+"            Cal, per tant, que pugueu a la plataforma Som Comunitats\n"
+"            l'energia lliurada de cada CUPS durant aquest període. Instruccions per\n"
+"            generar factures:.\n"
+"        </p>\n"
+"        <p>\n"
+"            1. Aneu al fitxer del projecte, aneu a la vista de contractes i seleccioneu\n"
+"            contractes a facturar.\n"
+"        </p>\n"
+"        <p>\n"
+"            2. Ekintza botoian, hautatu \"Sortu fakturak\" aukera.\n"
+"        </p>\n"
+"        <p>\n"
+"            3. A l'assistent, carregueu el fitxer CSV amb l'energia subministrada en kWh durant\n"
+"            el període ${ ctx['first_date'] } - ${ ctx['last_date'] } per a cada CUPS i\n"
+"            premeu el botó \"Genera\".\n"
+"        </p>\n"
+"        <p>\n"
+"            4. Finalment, cal validar i enviar les factures generades. Si vostè té\n"
+"            qualsevol dubte o problema, poseu-vos en contacte amb el nostre equip d'assistència:\n"
+"            soporte@somcomunitats.coop\n"
 "        </p>\n"
 "            \n"
 "        "
@@ -85,12 +151,10 @@ msgid ""
 "            <b>${ object.name }</b>\n"
 "            of the energy community\n"
 "            <b>${ object.project_id.company_id.name }</b>\n"
-"            has started the invoicing process on <b>${ ctx['next_invoicing'] }</b> according to the established "
-"recurrence.\n"
+"            has started the invoicing process on <b>${ ctx['next_invoicing'] }</b> according to the established recurrence.\n"
 "        </p>\n"
 "        <p>\n"
-"            Invoices are created in “draft” and it is therefore necessary that they be validated and sent as soon as "
-"possible.\n"
+"            Invoices are created in “draft” and it is therefore necessary that they be validated and sent as soon as possible.\n"
 "        </p>\n"
 "        <p>\n"
 "            For any questions or incidents, contact the support team; support@somcomunitats.coop.\n"
@@ -98,46 +162,54 @@ msgid ""
 "            \n"
 "        "
 msgstr ""
-"\n"
-"            \n"
 "<p>Hola,</p>\n"
 "        <p>\n"
 "            El projecte d'autoconsum col·lectiu\n"
 "            <b>${ object.name }</b>\n"
 "            de la comunitat energètica\n"
 "            <b>${ object.project_id.company_id.name }</b>\n"
-"            ha iniciat el procés de facturació el <b>${ ctx['next_invoicing'] }</b> segons la periodicitat "
-"establerta.\n"
+"            ha iniciat el procés de facturació el <b>${ ctx['next_invoicing'] }</b> segons la periodicitat establerta.\n"
 "        </p>\n"
 "        <p>\n"
-"            Les factures es creen en “esborrany” i, per tant, és necessari que siguin validades i enviades el més "
-"aviat possible.\n"
+"            Les factures es creen en “esborrany” i, per tant, és necessari que siguin validades i enviades el més aviat possible.\n"
 "        </p>\n"
 "        <p>\n"
-"            Per a qualsevol pregunta o incidència, poseu-vos en contacte amb l'equip d'assistència; "
-"support@somcomunitats.coop.\n"
-"        </p>\n"
-"            \n"
-"        "
+"            Per a qualsevol pregunta o incidència, poseu-vos en contacte amb l'equip d'assistència; support@somcomunitats.coop.\n"
+"        </p>"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid ""
 "\n"
 "Select only contracts with the same period of invoicing.\n"
-"Make sure that all the selected contracts have the same next period start and end.\n"
-"Next period start: {next_period_date_start}\n"
-"Next period end: {next_period_date_end}"
+"Make sure that all the selected contracts have the same invoicing period, from {next_period_date_start} to {next_period_date_end}.\n"
 msgstr ""
 "\n"
 "Seleccioneu només contractes amb el mateix període de facturació.\n"
-"Assegureu -vos que tots els contractes seleccionats tinguin el mateix període següent i finalitzeu.\n"
-"Inici del període següent: {next_period_date_start}\n"
-"Final del període següent: {next_period_date_end}"
+"Assegureu-vos que tots els contractes seleccionats tenen el mateix període de facturació, de {prop_periode_data_inici} a {prop_periodo_data_final}.\n"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid ""
+"\n"
+"Project (CAU) {cau} :\n"
+"For CUPS {cups} no data found for period \n"
+"{next_period_date_start} - {next_period_date_end}"
+msgstr ""
+"Projecte (CAU) {cau} :\n"
+"Per a CUPS {cups} no s'han trobat dades per al període \n"
+"{next_period_date_start} - {next_period_date_end}"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid ""
 "\n"
@@ -152,6 +224,8 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid ""
 "\n"
@@ -159,10 +233,9 @@ msgid ""
 "\n"
 "Please make sure that you are invoicing for only the same self-consumption project {project_name}.\n"
 msgstr ""
-"\n"
 "Alguns dels contractes seleccionats no són del mateix projecte d'autoconsum.\n"
 "\n"
-"Assegureu-vos que només esteu facturant el mateix projecte d'autoconsum {project_name}.\n"
+"Assegureu-vos que només esteu facturant el mateix projecte d'autoconsum {project_name}."
 
 #. module: energy_selfconsumption
 #: model:ir.actions.report,print_report_name:energy_selfconsumption.selfconsumption_manager_authorization_report
@@ -205,8 +278,10 @@ msgstr "*indicats al fitxer de repartiment anual ("
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
-msgid "- Acuerdo de Reparto firmado por los participantes del autoconsumo colectivo"
-msgstr "- Acord de lliurament signat per participants en autoconsumpció col·lectius"
+msgid ""
+"- Acuerdo de Reparto firmado por los participantes del autoconsumo colectivo"
+msgstr ""
+"- Acord de lliurament signat per participants en autoconsumpció col·lectius"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -298,13 +373,21 @@ msgstr "<b> (CAU): </b>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
-msgid "<b>ANEXO I: CONSUMIDORES ASOCIADOS QUE OTORGAN PODER DE REPRESENTACIÓN (1)</b>"
-msgstr "<b> Annex i: Consumidors associats que concedeixen el poder de representació (1) </b>"
+msgid ""
+"<b>ANEXO I: CONSUMIDORES ASOCIADOS QUE OTORGAN PODER DE REPRESENTACIÓN "
+"(1)</b>"
+msgstr ""
+"<b> Annex i: Consumidors associats que concedeixen el poder de representació"
+" (1) </b>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
-msgid "<b>Attention!</b> You are activating a project and thus activating its recurring billing."
-msgstr "<b> Atenció! </b> Esteu activant un projecte i, per tant, activeu la seva facturació recurrent."
+msgid ""
+"<b>Attention!</b> You are activating a project and thus activating its "
+"recurring billing."
+msgstr ""
+"<b> Atenció! </b> Esteu activant un projecte i, per tant, activeu la seva "
+"facturació recurrent."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
@@ -366,6 +449,8 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "<li>Line {line}: {error}</li>\n"
 msgstr "<li>Línia {line}: {error}</li>\n"
@@ -463,17 +548,19 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
-msgid "<sup>2</sup>Razón Social, nombre y apellidos del Gestor del Autoconsumo Colectivo."
-msgstr "<sup>2</sup> Nom corporatiu, nom i cognom del Gestor d'autoconsum col·lectiu."
+msgid ""
+"<sup>2</sup>Razón Social, nombre y apellidos del Gestor del Autoconsumo "
+"Colectivo."
+msgstr ""
+"<sup>2</sup> Nom corporatiu, nom i cognom del Gestor d'autoconsum "
+"col·lectiu."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid ""
 "<sup>3</sup>Tras aportar correctamente la documentación, según establece la normativa, la\n"
-"                                comercializadora de cada consumidor asociado al autoconsumo colectivo gestionará con "
-"la\n"
-"                                distribuidora la modificación del contrato de ATR de cada consumidor, quedando "
-"activada\n"
+"                                comercializadora de cada consumidor asociado al autoconsumo colectivo gestionará con la\n"
+"                                distribuidora la modificación del contrato de ATR de cada consumidor, quedando activada\n"
 "                                la modalidad de autoconsumo en el contrato de suministro del cliente."
 msgstr ""
 "<sup> 3 </sup> després de proporcionar correctament la documentació, tal i com va establir el Reglament, la\n"
@@ -485,29 +572,25 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid ""
 "<sup>4</sup>Las modificaciones en los coeficientes de reparto pueden obedecer a: (1)\n"
-"                                modificaciones sin alteración en los consumidores asociados al colectivo, (2) bajas y/"
-"o\n"
+"                                modificaciones sin alteración en los consumidores asociados al colectivo, (2) bajas y/o\n"
 "                                altas de nuevos consumidores asociados.<br/>\n"
-"                                <sup>5</sup>Se entenderá por nuevas altas solo a los nuevos CUPS; los cambios de "
-"titular\n"
-"                                sobre CUPS existentes se subrogarán al acuerdo de reparto existente, con lo que no "
-"hará\n"
-"                                falta modificar ni fichero txt ni acuerdo de reparto, salvo que se modifiquen "
-"también\n"
+"                                <sup>5</sup>Se entenderá por nuevas altas solo a los nuevos CUPS; los cambios de titular\n"
+"                                sobre CUPS existentes se subrogarán al acuerdo de reparto existente, con lo que no hará\n"
+"                                falta modificar ni fichero txt ni acuerdo de reparto, salvo que se modifiquen también\n"
 "                                los coeficientes de reparto."
 msgstr ""
 "<sup>4</sup> Les modificacions en els coeficients de distribució poden obeir a: (1)\n"
-"                                modificacions sense alteració dels consumidors associats al col·lectiu, (2) baixes i/"
-"o\n"
+"                                modificacions sense alteració dels consumidors associats al col·lectiu, (2) baixes i/o\n"
 "                                altes de nous consumidors associats. <br/>\n"
 "                                <sup>5</sup> S’entendrà com a nou altes als nous CUPS; canvis de títol\n"
 "                                sobre CUPS existents estaran subrogades a l’acord de distribució existent, que farà\n"
-"                                falta modifica ni el fitxer txt ni un acord de distribució, tret que també es "
-"modifiquin\n"
+"                                falta modifica ni el fitxer txt ni un acord de distribució, tret que també es modifiquin\n"
 "                                els coeficients de repartiment."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_selfconsumption_unique_code
 #, python-format
 msgid "A project with this CAU already exists."
@@ -515,6 +598,8 @@ msgstr "Ja existeix un projecte amb aquesta CAU."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
 #: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_supply_point_unique_code_company_id
 #, python-format
 msgid "A supply point with this code already exists."
@@ -547,9 +632,11 @@ msgstr "Tarifa d'accés"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
 #, python-format
 msgid "Accounting Journal not found."
-msgstr "No s'ha trobat cap diari de comptabilitat configurat."
+msgstr "No s'ha trobat cap diari de comptabilitat configurat"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__message_needaction
@@ -560,6 +647,8 @@ msgstr "Acció necessària"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__active
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__active
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__active
@@ -617,19 +706,22 @@ msgstr "Avança a Actiu"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid "Advance to In Inscription"
-msgstr "Avançar a \"En inscripció\""
+msgstr "Avançar en Inscripció"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid ""
-"Are you sure you want to change the project status to the previous step?                                  If so, the "
-"distribution table will return to the 'validated' state."
+"Are you sure you want to change the project status to the previous step?"
+"                                  If so, the distribution table will return "
+"to the 'validated' state."
 msgstr ""
-"Esteu segur que voleu canviar l'estat del projecte al pas anterior?\t\t\t\t Si és així, la taula de distribució "
-"tornarà a l'estat \"validat\"."
+"Esteu segur que voleu canviar l'estat del projecte al pas anterior?\t\t\t\t "
+"Si és així, la taula de distribució tornarà a l'estat \"validat\"."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/clean_supply_point_assignation_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/clean_supply_point_assignation_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/clean_supply_point_assignation_wizard.py:0
 #, python-format
 msgid "Are you sure you want to delete all assigned distribution points?"
 msgstr "Estas segur que vols eliminar els punts de distribució?"
@@ -668,6 +760,14 @@ msgid "COEFICIENTE (α)"
 msgstr "Coeficient (α)"
 
 #. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid "CSV file could not be loaded"
+msgstr "No s'ha pogut carregar el fitxer CSV"
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__code
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__code
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -676,6 +776,8 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
 #, python-format
 msgid ""
 "CUPS: {code}\n"
@@ -714,19 +816,21 @@ msgstr "Dades netes"
 #. module: energy_selfconsumption
 #: model:ir.model,name:energy_selfconsumption.model_clean_supply_point_assignation_wizard
 msgid "Clean supply point assgination wizard"
-msgstr ""
+msgstr "Assistent per a l'assignació de punts de subministrament nets"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.actions.server,name:energy_selfconsumption.manager_clean_supply_point_assignation_action
 #, python-format
 msgid "Clean supply point assignation"
-msgstr ""
+msgstr "Esborrar assignació de punts de subministrament"
 
 #. module: energy_selfconsumption
 #: model:ir.actions.act_window,name:energy_selfconsumption.action_confirm_wizard
 msgid "Clean supply point assignation Wizard"
-msgstr ""
+msgstr "Assistent per a l'assignació de punts de subministrament nets"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.actions.act_window,help:energy_selfconsumption.action_partner_cooperator_form
@@ -742,12 +846,16 @@ msgstr "El coeficient és vàlid"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
+#: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point_assignation.py:0
 #, python-format
 msgid "Coefficient can't be negative."
 msgstr "El coeficient no pot ser negatiu."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #, python-format
 msgid "Coefficient distribution must sum to 1."
 msgstr "El coeficient de distribució ha de sumar 1."
@@ -764,8 +872,7 @@ msgstr "Companyia"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid ""
 "Comunicación de cualquier modificación<sup>4</sup> que se produzca en los coeficientes de reparto–siempre\n"
-"                                        realizada por acuerdo entre todos los consumidores asociados-, en los "
-"términos\n"
+"                                        realizada por acuerdo entre todos los consumidores asociados-, en los términos\n"
 "                                        que vienen definidos en\n"
 "                                        la Orden TED 1247/2021. Para ello, deberá aportar:"
 msgstr ""
@@ -785,8 +892,12 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
-msgid "Con CIF/NIF<span style=\"margin-left:180px\">y domicilio en (Municipio)</span>"
-msgstr "Amb CIF/NIF <span style = \"margin-left: 180px\"> i adreça a (municipi) </span>"
+msgid ""
+"Con CIF/NIF<span style=\"margin-left:180px\">y domicilio en "
+"(Municipio)</span>"
+msgstr ""
+"Amb CIF/NIF <span style = \"margin-left: 180px\"> i adreça a (municipi) "
+"</span>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -807,16 +918,13 @@ msgstr "Amb excedents i acollit a una compensació simplificada a la factura"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid ""
 "Con la firma del presente acuerdo, los consumidores <b> nos acogemos voluntariamente al\n"
-"                        mecanismo de compensación simplificada </b> entre los déficits del consumo de cada "
-"consumidor\n"
-"                        y la totalidad de los excedentes de la instalación de autoconsumo, tal como establece el "
-"Real\n"
+"                        mecanismo de compensación simplificada </b> entre los déficits del consumo de cada consumidor\n"
+"                        y la totalidad de los excedentes de la instalación de autoconsumo, tal como establece el Real\n"
 "                        Decreto 244/2019, de 5 de abril."
 msgstr ""
 "Amb la signatura d’aquest Acord, els <b> consumidors s'acullen voluntàriament al\n"
 "                        mecanisme de compensació simplificat </b> entre els dèficits de consum de cada consumidor\n"
-"                        i la totalitat dels excedents de la instal·lació de l’autoconsum, tal com s’estableix el "
-"Rela\n"
+"                        i la totalitat dels excedents de la instal·lació de l’autoconsum, tal com s’estableix el Rela\n"
 "                        Decret 244/2019, del 5 d'abril."
 
 #. module: energy_selfconsumption
@@ -844,6 +952,8 @@ msgstr "Contracte"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
 #, python-format
 msgid "Contract - %s - %s"
 msgstr "Contracte - %s - %s"
@@ -893,15 +1003,19 @@ msgstr "Socis"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Could not create inscription for {vat}. {error}"
 msgstr "No s'ha pogut crear la inscripció per a {vat}. {error}"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Could not create mandate for {vat}. {error}"
-msgstr "No hem pgut crear un mandat per {vat}. {error}"
+msgstr "No s'ha pogut crear l'ordre per a {vat}. {error}"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__country_id
@@ -913,6 +1027,8 @@ msgstr "País"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Country code was not found: {country}"
 msgstr "No s'ha trobat el codi de país: {country}"
@@ -958,18 +1074,15 @@ msgstr ""
 msgid ""
 "Dar de baja a los consumidores que incumplan los compromisos establecidos entre\n"
 "                                        los consumidores\n"
-"                                        asociados al autoconsumo colectivo y dar de alta<sup>5</sup> a los "
-"consumidores que se incorporen al autoconsumo\n"
+"                                        asociados al autoconsumo colectivo y dar de alta<sup>5</sup> a los consumidores que se incorporen al autoconsumo\n"
 "                                        colectivo, adaptando en cualquier caso sus contratos de suministro con su\n"
 "                                        comercializadora actual y\n"
 "                                        reflejándolo en el Anexo I de este documento."
 msgstr ""
 "Donar de baixa als consumidors que incompleixin els compromisos establerts entre\n"
 "                                         els consumidors\n"
-"                                         associats a l'autoconsum col·lectiu i donar d'alta <sup>5</sup> els "
-"consumidors que s'incorporin a l'autoconsum\n"
-"                                         col·lectiu, adaptant en qualsevol cas els seus contractes de subministrament "
-"amb el seu\n"
+"                                         associats a l'autoconsum col·lectiu i donar d'alta <sup>5</sup> els consumidors que s'incorporin a l'autoconsum\n"
+"                                         col·lectiu, adaptant en qualsevol cas els seus contractes de subministrament amb el seu\n"
 "                                         comercialitzadora actual i\n"
 "                                         reflectint-ho a l'Annex I d'aquest document."
 
@@ -1005,6 +1118,8 @@ msgstr "Dies facturats"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 #, python-format
 msgid "Define Invoicing Mode"
@@ -1031,6 +1146,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_delimiter
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__delimiter
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__delimiter
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__delimiter
 msgid "Delimiter in import CSV file."
 msgstr "Delimitador al fitxer CSV d'importació."
@@ -1054,10 +1170,11 @@ msgstr "Delimitador al fitxer CSV d'importació."
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_product_product__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_report_contract_contract_csv__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_report_energy_selfconsumption_distribution_table_csv__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__display_name
 msgid "Display Name"
-msgstr "Nom de visualització"
+msgstr "Mostrar Nom"
 
 #. module: energy_selfconsumption
 #: model:ir.actions.act_window,name:energy_selfconsumption.distribution_table_act_window
@@ -1087,6 +1204,7 @@ msgstr "Coeficient de distribució"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_import_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
 msgid ""
 "Download\n"
@@ -1098,17 +1216,17 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model:ir.actions.server,name:energy_selfconsumption.manager_partition_coefficient_report_action
 msgid "Download Partition Coefficient"
-msgstr "Descarregar coeficient de repartició"
+msgstr "Descarregar el coeficient de partició"
 
 #. module: energy_selfconsumption
 #: model:ir.actions.server,name:energy_selfconsumption.power_sharing_agreement_report_action
 msgid "Download Power Sharing Agreement"
-msgstr "Descarregar acord de compartició d'energia"
+msgstr "Descarregar l'Acord de repartiment de poders"
 
 #. module: energy_selfconsumption
 #: model:ir.actions.server,name:energy_selfconsumption.manager_authorization_report_action
 msgid "Download Self-consumption Manager Authorization"
-msgstr "Descarregar autorització de Manager d'auto producció"
+msgstr "Descarregar Autorització del Gestor d'Autoconsum"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
@@ -1117,6 +1235,8 @@ msgstr "Descarrega la llista de províncies"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__draft
 #, python-format
 msgid "Draft"
@@ -1129,20 +1249,15 @@ msgid ""
 "                                        autorización de cada\n"
 "                                        uno de los consumidores asociados, y les ha informado de que sus datos se\n"
 "                                        comunicarán, a su\n"
-"                                        correspondiente comercializadora, para tratarlos de conformidad con lo "
-"previsto\n"
+"                                        correspondiente comercializadora, para tratarlos de conformidad con lo previsto\n"
 "                                        en el Real Decreto\n"
-"                                        244/2019, de 5 de abril, por el que se regulan las condiciones "
-"administrativas,\n"
+"                                        244/2019, de 5 de abril, por el que se regulan las condiciones administrativas,\n"
 "                                        técnicas y económicas del\n"
-"                                        autoconsumo de energía eléctrica y con lo previsto en la Orden TED 1247/2017. "
-"En\n"
+"                                        autoconsumo de energía eléctrica y con lo previsto en la Orden TED 1247/2017. En\n"
 "                                        todo caso, el GESTOR\n"
-"                                        DE AUTOCONSUMO COLECTIVO también ha informado a los consumidores de cómo y "
-"dónde\n"
+"                                        DE AUTOCONSUMO COLECTIVO también ha informado a los consumidores de cómo y dónde\n"
 "                                        pueden\n"
-"                                        obtener más información sobre el tratamiento de sus datos llevado a cabo por "
-"su\n"
+"                                        obtener más información sobre el tratamiento de sus datos llevado a cabo por su\n"
 "                                        comercializadora actual\n"
 "                                        incluida la forma en que pueden ejercer sus derechos en la web de su\n"
 "                                        comercializadora actual."
@@ -1151,18 +1266,15 @@ msgstr ""
 "                                         autorització de cada\n"
 "                                         un dels consumidors associats, i els ha informat que les seves dades es\n"
 "                                         comunicaran, a la seva\n"
-"                                         corresponent comercialitzadora, per tractar-los de conformitat amb allò "
-"previst\n"
+"                                         corresponent comercialitzadora, per tractar-los de conformitat amb allò previst\n"
 "                                         al Reial decret\n"
 "                                         244/2019, de 5 d'abril, pel qual es regulen les condicions administratives,\n"
 "                                         tècniques i econàmiques del\n"
-"                                         autoconsum d'energia elèctrica i amb allò previst a l'Ordre TED 1247/2017. "
-"A\n"
+"                                         autoconsum d'energia elèctrica i amb allò previst a l'Ordre TED 1247/2017. A\n"
 "                                         tot cas, el GESTOR\n"
 "                                         D'AUTOCONSUM COL·LECTIU també ha informat els consumidors de com i on\n"
 "                                         poden\n"
-"                                         obtenir més informació sobre el tractament de les seves dades dut a terme "
-"per la seva\n"
+"                                         obtenir més informació sobre el tractament de les seves dades dut a terme per la seva\n"
 "                                         comercialitzadora actual\n"
 "                                         inclosa la manera com poden exercir els seus drets a la web del seu\n"
 "                                         comercialitzadora actual."
@@ -1193,6 +1305,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_encoding
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__encoding
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__encoding
 msgid "Encoding format in import CSV file."
 msgstr "Format de encoding al importar arxiu CSV."
 
@@ -1202,17 +1315,44 @@ msgid "Enconding format in import CSV file."
 msgstr "Format de codificació al fitxer CSV d'importació."
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_end
+msgid "End"
+msgstr "Final"
+
+#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__energy_delivered
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__energy_delivered
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_delivered
 #, python-format
 msgid "Energy Delivered"
 msgstr "Energia entregada"
 
 #. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__energy_custom
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__energy_custom
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_custom
+#, python-format
+msgid "Energy Delivered Custom"
+msgstr "Energia entregada personalitzada"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid "Energy Delivered Custom: {energy_delivered} kWh"
+msgstr "Energia entregada personalitzada: {energy_delivered} kWh"
+
+#. module: energy_selfconsumption
 #: model:contract.line.qty.formula,name:energy_selfconsumption.energy_delivered_formula
 msgid "Energy Delivered Formula"
-msgstr "Fórmula energia entregada"
+msgstr "Fórmula entregada "
 
 #. module: energy_selfconsumption
 #: model:contract.line.qty.formula,name:energy_selfconsumption.energy_delivered_variable_formula
@@ -1220,15 +1360,9 @@ msgid "Energy Delivered Variable Formula"
 msgstr "Fórmula variable d'energia entregada"
 
 #. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__energy_delivered_variable
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_delivered_variable
-#, python-format
-msgid "Energy Delivered Variable Hourly Coefficient"
-msgstr "Energia entregada coeficient d'horari variable"
-
-#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid "Energy Delivered: {energy_delivered} kWh"
 msgstr "Energia entregada: {energy_delivered} kWh"
@@ -1260,14 +1394,22 @@ msgstr "Projecte energètic"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Error parsing the file"
 msgstr "S'ha produït un error en analitzar el fitxer"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Error reading file"
 msgstr "Error de l'ectura d'arxiu"
@@ -1277,15 +1419,13 @@ msgstr "Error de l'ectura d'arxiu"
 msgid ""
 "Esta manifestación es fiel y auténtica, y en virtud de ésta, el GESTOR DEL\n"
 "                                        AUTOCONSUMO COLECTIVO\n"
-"                                        asume todas las responsabilidades legales derivadas de toda falsedad u "
-"omisión,\n"
+"                                        asume todas las responsabilidades legales derivadas de toda falsedad u omisión,\n"
 "                                        con indemnidad para\n"
 "                                        las comercializadoras actuales de cada uno de los consumidores asociados."
 msgstr ""
 "Aquesta manifestació és fidel i autèntica, i en virtut d'aquesta, el GESTOR DEL\n"
 "                                         AUTOCONSUM COL·LECTIU\n"
-"                                         assumeix totes les responsabilitats legals derivades de tota falsedat o "
-"omissió,\n"
+"                                         assumeix totes les responsabilitats legals derivades de tota falsedat o omissió,\n"
 "                                         amb indemnitat per\n"
 "                                         les comercialitzadores actuals de cadascun dels consumidors associats."
 
@@ -1314,6 +1454,7 @@ msgstr "Data:"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_delimiter
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__delimiter
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__delimiter
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__delimiter
 msgid "File Delimiter"
 msgstr "Delimitador de l'arxiu"
@@ -1321,6 +1462,7 @@ msgstr "Delimitador de l'arxiu"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_encoding
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__encoding
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__encoding
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__encoding
 msgid "File Encoding"
 msgstr "Codificació de l'arxiu"
@@ -1329,6 +1471,7 @@ msgstr "Codificació de l'arxiu"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__file_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_filename
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__fname
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__fname
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__fname
 msgid "File Name"
 msgstr "Nom de l'arxiu"
@@ -1336,6 +1479,7 @@ msgstr "Nom de l'arxiu"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_quotechar
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__quotechar
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__quotechar
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__quotechar
 msgid "File Quotechar"
 msgstr "Arxiu cita char"
@@ -1352,6 +1496,8 @@ msgstr "Signatura electrònica del Gestor de l'Autoconsum Col·lectiu:"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__fixed
 #, python-format
 msgid "Fixed"
@@ -1387,15 +1533,26 @@ msgstr "Icona de lletra impressionant, p. ex. fa-tasks"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
-msgid "For the 2.0TD rate, the maximum contracted power must be between 0 and 15 kW."
-msgstr "Per a la tarifa 2.0TD, la potència màxima contractada ha d'estar entre 0 i 15 kW."
+msgid ""
+"For the 2.0TD rate, the maximum contracted power must be between 0 and 15 "
+"kW."
+msgstr ""
+"Per a la tarifa 2.0TD, la potència màxima contractada ha d'estar entre 0 i "
+"15 kW."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
-msgid "For the 3.0TD rate, the maximum contracted power must be greater than 15 kW."
-msgstr "Per a la tarifa 3.0TD, la potència màxima contractada ha de ser superior a 15 kW."
+msgid ""
+"For the 3.0TD rate, the maximum contracted power must be greater than 15 kW."
+msgstr ""
+"Per a la tarifa 3.0TD, la potència màxima contractada ha de ser superior a "
+"15 kW."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
@@ -1404,6 +1561,8 @@ msgstr "Generar"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Generate Contracts"
 msgstr "Generar contractes"
@@ -1414,6 +1573,13 @@ msgid "Generate Partition Coefficient Report"
 msgstr "Generar informe de coeficients de partició"
 
 #. module: energy_selfconsumption
+#: model:ir.actions.act_window,name:energy_selfconsumption.invoicing_wizard_act_window
+#: model:ir.actions.server,name:energy_selfconsumption.contract_invoicing_wizard_action
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
+msgid "Generate invoices"
+msgstr "Generar factures"
+
+#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_search_view
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_search_view
 msgid "Group By"
@@ -1421,8 +1587,12 @@ msgstr "Agrupar per"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
-msgid "Hasta la fecha: ________/_________/20_______ y prorrogable anualmente, <b>PARA:</b>"
-msgstr "Fins a la data: ________/_________/20_______ i prorrogable anualment, <b>PER A: </b>"
+msgid ""
+"Hasta la fecha: ________/_________/20_______ y prorrogable anualmente, "
+"<b>PARA:</b>"
+msgstr ""
+"Fins a la data: ________/_________/20_______ i prorrogable anualment, <b>PER"
+" A: </b>"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_account_move__id
@@ -1443,6 +1613,7 @@ msgstr "Fins a la data: ________/_________/20_______ i prorrogable anualment, <b
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_product_product__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_report_contract_contract_csv__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_report_energy_selfconsumption_distribution_table_csv__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__id
 msgid "ID"
@@ -1487,6 +1658,8 @@ msgstr "Importar"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.actions.act_window,name:energy_selfconsumption.distribution_table_import_wizard_action
 #, python-format
 msgid "Import Distribution Table"
@@ -1494,6 +1667,8 @@ msgstr "Importar Taula de Repartiment"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Import Errors"
 msgstr "Errors d'importació"
@@ -1501,12 +1676,15 @@ msgstr "Errors d'importació"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_file
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__import_file
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__import_file
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__import_file
 msgid "Import File (*.csv)"
 msgstr "Importa arxiu (*.csv)"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Import Inscriptions and Supply Points"
 msgstr "Importa inscripcions i punts de subministrament"
@@ -1518,6 +1696,8 @@ msgstr "Importa dades"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Import errors found: <ul>{list}</ul>"
 msgstr "S'han trobat errors d'importació: <ul>{list}</ul>"
@@ -1534,6 +1714,8 @@ msgstr "Importar Taula"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__process
 #, python-format
 msgid "In process"
@@ -1541,8 +1723,11 @@ msgstr "En procés"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
-msgid "In the state list file, you can check which code is assigned for your state."
-msgstr "Al fitxer de llista de províncies, podeu comprovar quin codi està assignat a la vostra província."
+msgid ""
+"In the state list file, you can check which code is assigned for your state."
+msgstr ""
+"Al fitxer de llista de províncies, podeu comprovar quin codi està assignat a"
+" la vostra província."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__inscription_ids
@@ -1566,134 +1751,198 @@ msgstr "Inscrit sota la <b>modalitat d'autoconsum</b> (escollir una opció):"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CAU: Last 3 digits are not numbers"
 msgstr "CAU no vàlid: els 3 últims dígits no són números"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CAU: The CUPS does not start with 'ES'."
 msgstr "CAU no vàlid: el CUPS no comença amb \"ES\"."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CAU: The CUPS has an incorrect format."
 msgstr "CAU no vàlid: el CUPS té un format incorrecte."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CAU: The character after CUPS is not A"
 msgstr "CAU no vàlid: el caràcter després de CUPS no és A"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CAU: The checksum of the CUPS is incorrect."
 msgstr "CAU no vàlid: la suma de comprovació del CUPS és incorrecta."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
-msgid "Invalid CAU: The first characters related to CUPS are incorrect. The length is incorrect."
-msgstr "CAU no vàlid: els primers caràcters relacionats amb CUPS són incorrectes. La longitud és incorrecta."
+msgid ""
+"Invalid CAU: The first characters related to CUPS are incorrect. The length "
+"is incorrect."
+msgstr ""
+"CAU no vàlid: els primers caràcters relacionats amb CUPS són incorrectes. La"
+" longitud és incorrecta."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CAU: The length is not correct"
 msgstr "CAU no vàlid: la longitud no és correcta"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CIL: Last 3 digits are not numbers"
 msgstr "CIL no vàlid: els 3 últims dígits no són números"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CIL: The CUPS does not start with 'ES'."
 msgstr "CIL no vàlid: el CUPS no comença amb \"ES\"."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CIL: The CUPS has an incorrect format."
 msgstr "CIL no vàlid: el CUPS té un format incorrecte."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CIL: The checksum of the CUPS is incorrect."
 msgstr "CIL no vàlid: la suma de comprovació del CUPS és incorrecta."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
-msgid "Invalid CIL: The first characters related to CUPS are incorrect. The length is incorrect."
-msgstr "CIL no vàlid: els primers caràcters relacionats amb CUPS són incorrectes. La longitud és incorrecta."
+msgid ""
+"Invalid CIL: The first characters related to CUPS are incorrect. The length "
+"is incorrect."
+msgstr ""
+"CIL no vàlid: els primers caràcters relacionats amb CUPS són incorrectes. La"
+" longitud és incorrecta."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CIL: The length is not correct"
 msgstr "CIL no vàlid: la longitud no és correcta"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "Invalid CUPS: The checksum is incorrect."
 msgstr "CUPS no vàlid: la suma de comprovació és incorrecta."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "Invalid CUPS: The length is incorrect."
 msgstr "CUPS no vàlid: la longitud és incorrecta."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "Invalid CUPS: does not start with 'ES'."
 msgstr "CUPS no vàlid: no comença amb \"ES\"."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "Invalid CUPS: has an incorrect format."
 msgstr "CUPS no vàlid: té un format incorrecte."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "Invalid Cadastral Reference: {error}"
 msgstr "Referència cadastral no vàlida: {error}"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Invalid IBAN: {error}"
-msgstr ""
+msgstr "IBAN incorrecte: {error}"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "Invalid VAT: {error}"
 msgstr "IVA no vàlid: {error}"
-
-#. module: energy_selfconsumption
-#: model:ir.actions.act_window,name:energy_selfconsumption.invoicing_wizard_act_window
-msgid "Invoice Energy Delivered"
-msgstr "Energia de factura lliurada"
-
-#. module: energy_selfconsumption
-#: model:ir.actions.server,name:energy_selfconsumption.contract_invoicing_wizard_action
-msgid "Invoice Energy Recurrency"
-msgstr "Recurrència de Factura Energètica"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_interval
@@ -1706,12 +1955,8 @@ msgid "Invoice every (Days/Week/Month/Year)"
 msgstr "Factura cada (dies/setmana/mes/any)"
 
 #. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
-msgid "Invoicing Energy Delivered"
-msgstr "Facturació Energia Entregada"
-
-#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__invoicing_mode
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__invoicing_mode
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid "Invoicing Mode"
@@ -1768,10 +2013,11 @@ msgstr "Última data facturada"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_product_product____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_report_contract_contract_csv____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_report_energy_selfconsumption_distribution_table_csv____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner____last_update
 msgid "Last Modified on"
-msgstr "Última modificació el"
+msgstr "Última modificació el "
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__last_period_date_end
@@ -1815,8 +2061,12 @@ msgstr "Última actualització el"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
-msgid "Les rogamos reciban esta comunicación y procedan a realizar los trámites necesarios."
-msgstr "Us preguem que rebeu aquesta comunicacio i procediu a realitzar els tràmits necessaris."
+msgid ""
+"Les rogamos reciban esta comunicación y procedan a realizar los trámites "
+"necesarios."
+msgstr ""
+"Us preguem que rebeu aquesta comunicacio i procediu a realitzar els tràmits "
+"necessaris."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
@@ -1830,8 +2080,12 @@ msgstr "Els <b> PRODUCTORS </b> associats:"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
-msgid "Los consumidores asociados firmantes en el Anexo I otorgan poder de representación a:"
-msgstr "Els consumidors associats signants a l'Annex I atorguen poder de representació a:"
+msgid ""
+"Los consumidores asociados firmantes en el Anexo I otorgan poder de "
+"representación a:"
+msgstr ""
+"Els consumidors associats signants a l'Annex I atorguen poder de "
+"representació a:"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -1855,15 +2109,22 @@ msgid "Main Attachment"
 msgstr "Adjunt principal"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_line__main_line
+msgid "Main line"
+msgstr "Línia principal"
+
+#. module: energy_selfconsumption
 #: model:ir.ui.menu,name:energy_selfconsumption.management_category_menu
 msgid "Management"
 msgstr "Gestió"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
 #, python-format
 msgid "Mandate not found for {partner}"
-msgstr "Mandat no trobat {partner}"
+msgstr "Mandat no trobat per {partner}"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
@@ -1873,7 +2134,7 @@ msgstr "Potència màxima contractada"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
 msgid "Maximum contracted power in kW"
-msgstr "Potència màxima contractada en kW"
+msgstr "Potència màxima contractada a kW"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__message
@@ -1901,6 +2162,8 @@ msgstr "Modalitat"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Must have a valid Distribution Table."
 msgstr "Ha de tenir una taula de repartiment  validada."
@@ -1934,6 +2197,8 @@ msgstr "Nom"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "New Supply Point"
 msgstr "Nou punt de subministrament"
@@ -1961,11 +2226,6 @@ msgstr "Següent tipus d'activitat"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_search_view
-msgid "Next Period Date End"
-msgstr "Final del període següent"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_search_view
 msgid "Next Period Date Start"
 msgstr "Inici del període següent"
 
@@ -1974,7 +2234,6 @@ msgstr "Inici del període següent"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_line__next_period_date_end
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_recurrency_mixin__next_period_date_end
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__next_period_date_end
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_end
 msgid "Next Period End"
 msgstr "Final del període següent"
 
@@ -1983,14 +2242,19 @@ msgstr "Final del període següent"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_line__next_period_date_start
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_recurrency_mixin__next_period_date_start
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__next_period_date_start
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
 msgid "Next Period Start"
 msgstr "Inici del període següent"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "No valid encoding was found for the attached file"
 msgstr "No s'ha trobat cap codificació vàlida per al fitxer adjunt"
@@ -2005,10 +2269,12 @@ msgstr "Nombre d'accions"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_invoicing_offset
 msgid ""
-"Number of days to offset the invoice from the period end date (in post-paid mode) or start date (in pre-paid mode)."
+"Number of days to offset the invoice from the period end date (in post-paid "
+"mode) or start date (in pre-paid mode)."
 msgstr ""
-"Nombre de dies per compensar la factura des de la data de finalització del període (en mode de postpagament) o la "
-"data d'inici (en mode de prepagament)."
+"Nombre de dies per compensar la factura des de la data de finalització del "
+"període (en mode de postpagament) o la data d'inici (en mode de "
+"prepagament)."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__message_has_error_counter
@@ -2040,7 +2306,14 @@ msgstr "Nombre de missatges no llegits"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Only csv format files are accepted."
 msgstr "Només s'accepten fitxers en format csv."
@@ -2060,6 +2333,8 @@ msgstr "Propietari del subministrament"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Owner could not be created: {error}"
 msgstr "No s'ha pogut crear el titular: {error}"
@@ -2072,6 +2347,8 @@ msgstr "Titulars"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Partner with VAT:<b>{vat}</b> was not found."
 msgstr "No s'ha trobat el soci amb DNI:<b>{vat}</b>."
@@ -2085,11 +2362,24 @@ msgstr "Persona titular del punt de subministrament"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__payment_mode
 msgid "Payment mode"
-msgstr "Mode de pagament"
+msgstr "Forma de pagament"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
+msgid "Billing period"
+msgstr "Període de facturació"
+
+#. module: energy_selfconsumption
+#: model:ir.actions.report,name:energy_selfconsumption.distribution_table_hourly_csv_report
+msgid "Distribution table template"
+msgstr "Plantilla tabla de reparto"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__power_acquired
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__power_acquired
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__power_acquired
 #, python-format
 msgid "Power Acquired"
@@ -2116,11 +2406,6 @@ msgid "Price"
 msgstr "Preu"
 
 #. module: energy_selfconsumption
-#: model:ir.actions.report,name:energy_selfconsumption.distribution_table_hourly_csv_report
-msgid "Print to CSV"
-msgstr "Imprimir a CSV"
-
-#. module: energy_selfconsumption
 #: model:ir.model,name:energy_selfconsumption.model_product_product
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__product_id
 msgid "Product"
@@ -2139,25 +2424,39 @@ msgstr "Projecte"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Project must have a valid Code."
 msgstr "El projecte ha de tenir un CUP vàlid."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Project must have a valid Rated Power."
 msgstr "El projecte ha de tenir una potència nominal vàlida."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Project must have defined a invoicing mode before activation."
-msgstr "El projecte ha d’haver definit un mode de facturació abans de l’activació."
+msgstr ""
+"El projecte ha d’haver definit un mode de facturació abans de l’activació."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_quotechar
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__quotechar
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__quotechar
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__quotechar
 msgid "Quotechar in import CSV file."
 msgstr "Caràcter de citació al arxiu CSV d'importació."
@@ -2166,6 +2465,11 @@ msgstr "Caràcter de citació al arxiu CSV d'importació."
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__power
 msgid "Rated Power (kWn)"
 msgstr "Potència nominal (kWn)"
+
+#. module: energy_selfconsumption
+#: model:mail.template,subject:energy_selfconsumption.selfconsumption_energy_delivered_custom_invoicing_reminder
+msgid "Self-consumption billing reminder ${ object.name }"
+msgstr "Recordatori de facturació autoconsum ${ object.name }"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type
@@ -2230,6 +2534,11 @@ msgid "Select the associated Energy Supplier"
 msgstr "Seleccioneu el proveïdor d'energia associat"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__num_contracts
+msgid "Selected contracts"
+msgstr "Contractes seleccionats"
+
+#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_tree_view
 msgid "Self-Consumption Projects"
 msgstr "Projectes d'autoconsum"
@@ -2263,12 +2572,16 @@ msgstr "Projectes d'autoconsum"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #, python-format
 msgid "Self-consumption project already has a table in process"
 msgstr "El projecte d'autoconsum ja té una taula en tràmit"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #, python-format
 msgid "Self-consumption project already has a validated table"
 msgstr "El projecte d'autoconsum ja té una taula validada"
@@ -2311,23 +2624,33 @@ msgid "Selfconsumption project"
 msgstr "Projecte d’autoconsum"
 
 #. module: energy_selfconsumption
+#: model:ir.actions.server,name:energy_selfconsumption.send_energy_delivered_custom_invoicing_reminder_to_admin_ir_actions_server
+#: model:ir.cron,cron_name:energy_selfconsumption.send_energy_delivered_custom_invoicing_reminder_to_admin
+#: model:ir.cron,name:energy_selfconsumption.send_energy_delivered_custom_invoicing_reminder_to_admin
+msgid "Send Energy Delivered Custom Invoicing Reminder to Admin User"
+msgstr "Envieu un recordatori de facturació personalitzada d'energia lliurada a l'usuari administrador"
+
+#. module: energy_selfconsumption
 #: model:ir.actions.server,name:energy_selfconsumption.send_energy_delivered_invoicing_reminder_to_admin_ir_actions_server
 #: model:ir.cron,cron_name:energy_selfconsumption.send_energy_delivered_invoicing_reminder_to_admin
 #: model:ir.cron,name:energy_selfconsumption.send_energy_delivered_invoicing_reminder_to_admin
 msgid "Send Energy Delivered Invoicing Reminder to Admin User"
-msgstr "Envieu un recordatori de facturació de Energia lliurada a l'usuari d'administració"
+msgstr ""
+"Envieu un recordatori de facturació de Energia lliurada a l'usuari "
+"d'administració"
 
 #. module: energy_selfconsumption
 #: model:ir.actions.server,name:energy_selfconsumption.send_power_acquired_invoicing_reminder_to_admin_ir_actions_server
 #: model:ir.cron,cron_name:energy_selfconsumption.send_power_acquired_invoicing_reminder_to_admin
 #: model:ir.cron,name:energy_selfconsumption.send_power_acquired_invoicing_reminder_to_admin
 msgid "Send Power Acquired Invoicing Reminder to Admin User"
-msgstr "Envieu un recordatori de facturació adquirida a l'usuari administrador"
+msgstr ""
+"Envieu un recordatori de facturació adquirida a l'usuari administrador"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__service_contract_ids
 msgid "Service Contract"
-msgstr "Contracte de servei"
+msgstr "Contracte de serveis"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
@@ -2350,8 +2673,17 @@ msgstr "Especifiqueu l’interval per a la generació automàtica de factures."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_invoicing_type
-msgid "Specify if the invoice must be generated at the beginning (pre-paid) or end (post-paid) of the period."
-msgstr "Especifiqueu si la factura s’ha de generar al principi (pre-pagada) o final (post-pagat) del període."
+msgid ""
+"Specify if the invoice must be generated at the beginning (pre-paid) or end "
+"(post-paid) of the period."
+msgstr ""
+"Especifiqueu si la factura s’ha de generar al principi (pre-pagada) o final "
+"(post-pagat) del període."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
+msgid "Start"
+msgstr "Començar"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__start_date
@@ -2360,6 +2692,8 @@ msgstr "Data d'inici"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
 #, python-format
 msgid "Start date can't be more that three months old"
 msgstr "La data d’inici no pot ser anterior als tres mesos"
@@ -2383,6 +2717,8 @@ msgstr "Província"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "State code was not found: {state}"
 msgstr "No s'ha trobat el codi de la província: {state}"
@@ -2476,28 +2812,74 @@ msgid "Supply Points"
 msgstr "Punts de subministrament"
 
 #. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#, python-format
-msgid "The CUPS field is required. Please make sure you provide a valid CUPS"
-msgstr "El camp CUPS és requerit. Assegura't de definir un valor correcte"
+#: model:ir.actions.report,name:energy_selfconsumption.contract_contract_csv_report
+msgid "Customized delivered energy template"
+msgstr "Plata d'energia lliurada personalitzada"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "The CUPS field is required. Please make sure you provide a valid CUPS"
+msgstr ""
+"El camp CUPS és obligatori. Si us plau, assegureu-vos de proporcionar un "
+"CUPS vàlid"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "The IBAN field cannot be empty."
-msgstr "El camp IBAN és requerit."
+msgstr "El camp IBAN no pot ser buit."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid "The contract has no lines"
+msgstr "El contracte no té línies"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid "The energy generated must be greater than 0 (kWh)."
+msgstr "L'energia generada ha de ser superior a 0 (kWh)."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid ""
+"The number of contracts selected does not match the number of contracts "
+"loaded by the csv."
+msgstr ""
+"El nombre de contractes seleccionats no coincideix amb el nombre de contractes"
+"carregat pel csv."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
+#: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point_assignation.py:0
 #, python-format
 msgid "The partner of the supply point is not subscribed to the project"
 msgstr "El soci del punt de subministrament no està subscrit al projecte"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
-msgid "The report can be downloaded when the project is in activation or active status."
-msgstr "L'informe es pot descarregar quan el projecte estigui activat o actiu estat."
+msgid ""
+"The report can be downloaded when the project is in activation or active "
+"status."
+msgstr ""
+"L'informe es pot baixar quan el projecte està en estat activació o actiu."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__coefficient
@@ -2506,30 +2888,57 @@ msgstr "La suma de tots els coeficients ha de resultar 1"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #, python-format
-msgid "The sum of coefficients for the following hours is not equal to 1: %s, "
+msgid ""
+"The sum of coefficients for the following hours is not equal to 1: %s, "
 msgstr "La suma de coeficients per les hores següents no és igual a 1: %s, "
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #, python-format
 msgid "The sum of coefficients is not equal to 1: %s"
 msgstr "La suma de coeficients no és igual a 1: %s"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #, python-format
-msgid "The supply point can't be removed because the distribution table state is {table_state}"
-msgstr "El punt de subministrament no es pot eliminar perquè l'estat de la taula de distribució és {table_state}"
+msgid ""
+"The supply point can't be removed because the distribution table state is "
+"{table_state}"
+msgstr ""
+"El punt de subministrament no es pot eliminar perquè l'estat de la taula de "
+"distribució és {table_state}"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
-msgid "The supply point partner {supply_partner} and the partner {vat} in the inscription are different."
-msgstr "El soci del punt de subministrament {supply_partner} i el soci {vat} de la inscripció són diferents."
+msgid ""
+"The supply point partner {supply_partner} and the partner {vat} in the "
+"inscription are different."
+msgstr ""
+"El soci del punt de subministrament {supply_partner} i el soci {vat} de la "
+"inscripció són diferents."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/contract_line.py:0
+#: code:addons/energy_selfconsumption/models/contract_line.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/contract_line.py:0
+#, python-format
+msgid "There can only be one main line in the contract."
+msgstr "Només hi pot haver una línia principal al contracte."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
 #, python-format
 msgid "There is no distribution table in proces of activation."
 msgstr "No hi ha cap taula de distribució en procés d’activació."
@@ -2537,7 +2946,8 @@ msgstr "No hi ha cap taula de distribució en procés d’activació."
 #. module: energy_selfconsumption
 #: model_terms:ir.actions.act_window,help:energy_selfconsumption.distribution_table_act_window
 msgid "There is no examples click here to add new Distribution Table."
-msgstr "No hi ha exemples, feu clic aquí per afegir una nova taula de distribució."
+msgstr ""
+"No hi ha exemples, feu clic aquí per afegir una nova taula de distribució."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.actions.act_window,help:energy_selfconsumption.selfconsumption_form_view_act_window
@@ -2547,19 +2957,16 @@ msgstr "No hi ha exemples feu clic aquí per afegir nou Projecte d'autoconsum."
 #. module: energy_selfconsumption
 #: model_terms:ir.actions.act_window,help:energy_selfconsumption.supply_point_form_act_window
 msgid "There is no examples click here to add new Supply Points."
-msgstr "No hi ha exemples, feu clic aquí per afegir nous punts de subministrament."
+msgstr ""
+"No hi ha exemples, feu clic aquí per afegir nous punts de subministrament."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #, python-format
 msgid "There isn't any supply point with this code: {code}"
 msgstr "No hi ha cap punt de subministrament amb aquest CUPS: {code}"
-
-#. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
-#, python-format
-msgid "This invoicing mode is not yet implemented"
-msgstr "Aquest mode de facturació encara no està implementat"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -2580,15 +2987,19 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #, python-format
 msgid ""
 "To change the type you must first delete the associated distribution points.\n"
 "                    \n"
-"\r Hint: you can delete all the associated distribution points at once using an action."
+"\r"
+" Hint: you can delete all the associated distribution points at once using an action."
 msgstr ""
 "Per canviar el tipus primer has d'eliminar els punts de distribució associats.\n"
 "                    \n"
-"\r Consell: pots eliminar-los tots de cop fent servir una acció."
+"\r"
+" Consell: pots eliminar-los tots de cop fent servir una acció."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__power
@@ -2638,6 +3049,8 @@ msgstr "Validar"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__validated
 #, python-format
 msgid "Validated"
@@ -2645,6 +3058,8 @@ msgstr "Validat"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__hourly
 #, python-format
 msgid "Variable hourly"
@@ -2684,22 +3099,27 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/clean_supply_point_assignation_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/clean_supply_point_assignation_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/clean_supply_point_assignation_wizard.py:0
 #, python-format
-msgid "You can only delete assigned distribution points from a distribution table if it is in draft status"
+msgid ""
+"You can only delete assigned distribution points from a distribution table "
+"if it is in draft status"
 msgstr ""
-"Només pots eliminar punts de distribució assignats d'una taula de distribució si aquesta es troba en estat d'esborrany"
+"Només pots eliminar punts de distribució assignats d'una taula de "
+"distribució si aquesta es troba en estat d'esborrany"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/contract_line.py:0
+#: code:addons/energy_selfconsumption/models/contract_line.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/contract_line.py:0
 #, python-format
-msgid "You can't have a date of next invoice anterior to the start of the contract line '%s'"
-msgstr "No podeu tenir una data de la següent factura anterior fins a l'inici de la línia de contracte '%s'"
-
-#. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
-#, python-format
-msgid "You must enter a valid total energy generated (kWh)."
-msgstr "Heu d'introduir una energia total generada (KWH) vàlida."
+msgid ""
+"You can't have a date of next invoice anterior to the start of the contract "
+"line '%s'"
+msgstr ""
+"No podeu tenir una data de la següent factura anterior fins a l'inici de la "
+"línia de contracte '%s'"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -2747,6 +3167,11 @@ msgstr "Preu KWh (€/kWh)"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.define_invoicing_mode_wizard_form_view
 msgid "kWn Price per day (€/kWn/day)"
 msgstr "Preu kWn per dia (€/kWn/dia)"
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_report_contract_contract_csv
+msgid "report.contract_contract.csv"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model:ir.model,name:energy_selfconsumption.model_report_energy_selfconsumption_distribution_table_csv

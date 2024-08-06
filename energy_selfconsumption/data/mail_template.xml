@@ -40,6 +40,57 @@
     </record>
 
     <record
+    id="selfconsumption_energy_delivered_custom_invoicing_reminder"
+    model="mail.template"
+  >
+        <field
+      name="name"
+    >Selfconsumption Energy Delivered Custom Invoicing Reminder</field>
+        <field name="email_from">info@somcomunitats.coop</field>
+        <field
+      name="subject"
+    >Self-consumption billing reminder ${ object.name }</field>
+        <field
+      name="model_id"
+      ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"
+    />
+        <field name="body_html">
+            <![CDATA[
+        <p>Hi,</p>
+        <p>
+            Remember that the collective self-consumption project
+            <b>${ object.name }</b>
+            of the energy community
+            <b>${ object.project_id.company_id.name }</b>
+            must invoice on the day <b>${ ctx['next_invoicing'] }</b>.
+        </p>
+        <p>
+            It is necessary, therefore, that you upload to the Som Comunitats platform
+            the energy delivered from each CUPS for this period. Instructions to
+            generate invoices:.
+        </p>
+        <p>
+            1. Go to the project file, go to the contracts view and select the
+            contracts to be invoiced.
+        </p>
+        <p>
+            2. In the Action button, select the "Generate invoices" option.
+        </p>
+        <p>
+            3. In the wizard, load the CSV file with the energy delivered in kWh during
+            the period ${ ctx['first_date'] } - ${ ctx['last_date'] } for each CUPS and
+            press the "Generate" button.
+        </p>
+        <p>
+            4. Finally, you must validate and send the generated invoices. If you have
+            any doubts or issues, please contact our support team:
+            soporte@somcomunitats.coop
+        </p>
+            ]]>
+        </field>
+    </record>
+
+    <record
     id="selfconsumption_power_acquired_invoicing_reminder"
     model="mail.template"
   >

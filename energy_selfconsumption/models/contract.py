@@ -29,6 +29,11 @@ class Contract(models.Model):
         readonly=True,
     )
 
+    def get_main_line(self):
+        self.ensure_one()
+        main_line_record = self.contract_line_ids.filtered(lambda line: line.main_line)
+        return main_line_record
+
     def invoicing_wizard_action(self):
         """
         We create the wizard first, so it triggers the constraint of the contract_ids
