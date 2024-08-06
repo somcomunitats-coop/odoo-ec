@@ -38,18 +38,20 @@ class EnergyProjectApiService(Component):
 
     @restapi.method(
         [(["/"], "GET")],
-        inpunt_param=PydanticModel(PagingParam),
+        input_param=PydanticModel(PagingParam),
         output_param=PydanticModel(ProjectInfoListResponse),
     )
-    def get_selfconsumption_projects(self, selfconsumption_paging_param):
-        page = selfconsumption_paging_param.page or 1
-        page_size = selfconsumption_paging_param.size_page or DEFAULT_PAGE_SIZE
+    def get_selfconsumption_projects(self, paging_param):
+        paging = None
+        if paging_param:
+            page = paging_param.page or 1
+            page_size = paging_param.page_size or DEFAULT_PAGE_SIZE
+            paging = PaginationLimits(
+                limit=page_size, offset=(page - 1) * page_size, page=page
+            )
 
         energy_selfconsumption_service = EnergySelfconsumptionProjectsComponent(
             env=request.env, user=request.uid
-        )
-        paging = PaginationLimits(
-            limit=page_size, offset=(page - 1) * page_size, page=page
         )
         total_projects = energy_selfconsumption_service.total_selfconsumption_projects
         projects = energy_selfconsumption_service.selfconsumption_projects(

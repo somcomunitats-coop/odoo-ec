@@ -36,7 +36,7 @@ class ProjectInfoResponse(BaseResponse):
     """
 
     data: SelfConsumptionProjectInfo
-    links: PaginationLinks = Field(alias="_links")
+    links: PaginationLinks
 
 
 class ProjectInfoListResponse(BaseListResponse):
@@ -45,7 +45,7 @@ class ProjectInfoListResponse(BaseListResponse):
     """
 
     data: List[SelfConsumptionProjectInfo]
-    links: PaginationLinks = Field(alias="_links")
+    links: PaginationLinks
 
 
 class ProjectMembersResponse(BaseListResponse):
@@ -54,4 +54,4 @@ class ProjectMembersResponse(BaseListResponse):
     """
 
     data: List[SelfConsumptionProjectMember]
-    links: PaginationLinks = Field(alias="_links")
+    links: PaginationLinks
