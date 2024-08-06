@@ -53,11 +53,13 @@ class MemberApiService(Component):
         output_param=PydanticModel(CommunityInfoListResponse),
     )
     def communities(self, paging_param):
-        page = paging_param.page or 1
-        page_size = paging_param.page_size or DEFAULT_PAGE_SIZE
-        paging = PaginationLimits(
-            limit=page_size, offset=(page - 1) * page_size, page=page
-        )
+        paging = None
+        if paging_param:
+            page = paging_param.page or 1
+            page_size = paging_param.page_size or DEFAULT_PAGE_SIZE
+            paging = PaginationLimits(
+                limit=page_size, offset=(page - 1) * page_size, page=page
+            )
         with api_info(
             self.env, self._work_on_model, CommunityInfo, paging=paging
         ) as component:
