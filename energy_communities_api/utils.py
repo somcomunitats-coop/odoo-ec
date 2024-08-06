@@ -80,8 +80,6 @@ def api_info(
 ) -> Component:
     company = env["res.company"].browse(int(community_id))
     backend = env["api.info.backend"].with_company(company).browse(1)
-    # backend = env["api.info.backend"].with_company(company).with_context(active_company_ids=[company.id]).browse(1)
-    # backend = env["api.info.backend"].browse(1)
     work = WorkContext(
         model_name,
         community_id=community_id,

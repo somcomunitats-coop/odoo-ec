@@ -43,3 +43,10 @@ class UserCurrentCompanyMixin(models.AbstractModel):
         if roles:
             return roles[0]
         return False
+
+    def _max_priority_role_line(self, role_lines):
+        selected_role_line = role_lines[0]
+        for role_line in role_lines[1:]:
+            if role_line.role_id.priority < selected_role_line.role_id.priority:
+                selected_role_line = role_line
+        return selected_role_line

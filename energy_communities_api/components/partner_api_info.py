@@ -8,8 +8,6 @@ class PartnerApiInfo(Component):
     _apply_on = "res.partner"
 
     def get_member_info(self, partner):
-        roles = self.env.user._get_enabled_roles()
-        __import__("ipdb").set_trace()
         return self.get(partner)
 
     def get_member_communities(self, partner):
