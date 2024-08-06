@@ -24,7 +24,7 @@ class PartnerApiInfo(Component):
     ) -> CommunityInfo:
         communities = self._get_communities(partner)
         if communities:
-            return self.get(communities)
+            return self.get_list(communities)
         return []
 
     def _get_communities(self, partner: Partner):

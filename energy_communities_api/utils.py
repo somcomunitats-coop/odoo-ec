@@ -65,7 +65,7 @@ def list_response(
     actual_count = paging.limit if over_size else len(collection)
     return response_class(
         data=collection,
-        links=_get_pagination_links(request, len(collection), paging),
+        links=_get_pagination_links(request, total_results, paging),
         page=paging.page,
         total_results=total_results,
         count=actual_count,

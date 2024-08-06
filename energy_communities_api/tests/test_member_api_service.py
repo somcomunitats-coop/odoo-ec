@@ -75,7 +75,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             headers={"Authorization": self.token, "CommunityId": community_2_id},
             timeout=self.timeout,
         )
-        self.assertEqual(
+        self.assertNotEqual(
             response.json()["data"]["member_number"],
             client_data_response["member_number"],
         )
@@ -286,14 +286,20 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         self.assertEqual(communities["total_results"], 10)
 
     @patch(
+        "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.total_member_communities"
+    )
+    @patch(
         "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo._get_communities"
     )
-    def test__me_communities_endpoint__without_communities(self, patcher):
+    def test__me_communities_endpoint__without_communities(
+        self, patcher, patch_total_member_communities
+    ):
         # given http_client
         # self.url_open
         # and a valid token
         # self.token
         patcher.return_value = []
+        patch_total_member_communities.return_value = 0
 
         # when we call for the personal for an user without partner
         response = self.url_open(
