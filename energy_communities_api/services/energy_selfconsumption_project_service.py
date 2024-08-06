@@ -26,7 +26,7 @@ logger = logging.getLogger("__name__")
 
 
 class EnergyProjectApiService(Component):
-    _inherit = "base.rest.service"
+    _inherit = ["base.rest.service", "paginated.api.service"]
     _name = "energy_project.service"
     _collection = "energyselfconsumption.api.services"
     _usage = "projects"
@@ -42,13 +42,7 @@ class EnergyProjectApiService(Component):
         output_param=PydanticModel(ProjectInfoListResponse),
     )
     def get_selfconsumption_projects(self, paging_param):
-        paging = None
-        if paging_param:
-            page = paging_param.page or 1
-            page_size = paging_param.page_size or DEFAULT_PAGE_SIZE
-            paging = PaginationLimits(
-                limit=page_size, offset=(page - 1) * page_size, page=page
-            )
+        paging = self._get_pagination_limits(paging_param)
 
         energy_selfconsumption_service = EnergySelfconsumptionProjectsComponent(
             env=request.env, user=request.uid

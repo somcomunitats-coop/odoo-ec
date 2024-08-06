@@ -29,6 +29,7 @@ class BaseListResponse(BaseResponse):
     page: int
 
 
+# TODO: PagingParam could be none to return all elements
 class PagingParam(BaseModel):
     page: int = 1
     page_size: int = DEFAULT_PAGE_SIZE
