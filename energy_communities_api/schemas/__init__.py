@@ -4,3 +4,10 @@ from .member import (
     MemberInfoResponse,
 )
 from .community import CommunityInfo, CommunityInfoListResponse
+from .selfconsumption_project import (
+    SelfConsumptionProjectInfo,
+    SelfConsumptionProjectMember,
+    ProjectInfoResponse,
+    ProjectInfoListResponse,
+    ProjectMembersResponse,
+)

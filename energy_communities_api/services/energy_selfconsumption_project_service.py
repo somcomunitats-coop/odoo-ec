@@ -16,11 +16,11 @@ from ..schemas import (
     DEFAULT_PAGE_SIZE,
     PaginationLimits,
     PagingParam,
+    ProjectInfoListResponse,
+    ProjectInfoResponse,
     ProjectMembersResponse,
-    ProjectsInfoListResponse,
-    SingleProjectInfoResponse,
 )
-from ..utils import collection_response, single_response
+from ..utils import list_response, single_response
 
 logger = logging.getLogger("__name__")
 
@@ -39,7 +39,7 @@ class EnergyProjectApiService(Component):
     @restapi.method(
         [(["/"], "GET")],
         inpunt_param=PydanticModel(PagingParam),
-        output_param=PydanticModel(ProjectsInfoListResponse),
+        output_param=PydanticModel(ProjectInfoListResponse),
     )
     def get_selfconsumption_projects(self, selfconsumption_paging_param):
         page = selfconsumption_paging_param.page or 1
@@ -55,17 +55,17 @@ class EnergyProjectApiService(Component):
         projects = energy_selfconsumption_service.selfconsumption_projects(
             limit=paging.limit, offset=paging.offset
         )
-        return collection_response(
-            request, ProjectsInfoListResponse, projects, total_projects, paging
+        return list_response(
+            request, ProjectInfoListResponse, projects, total_projects, paging
         )
 
     @restapi.method(
         [(["/<string:project_code>"], "GET")],
-        output_param=PydanticModel(SingleProjectInfoResponse),
+        output_param=PydanticModel(ProjectInfoResponse),
     )
     def get_selfconsumption_project_by_code(
         project_code: str,
-    ) -> SingleProjectInfoResponse:
+    ) -> ProjectInfoResponse:
         energy_selfconsumption_service = EnergySelfconsumptionProjectsComponent(
             env=request.env, user=request.uid
         )
@@ -73,7 +73,7 @@ class EnergyProjectApiService(Component):
         project = projects[0] if projects and len(projects) > 0 else None
         if not project:
             raise NotFound(f"Project {project_code} not found")
-        return single_response(request, SingleProjectInfoResponse, project)
+        return single_response(request, ProjectInfoResponse, project)
 
     @restapi.method(
         [
@@ -110,6 +110,6 @@ class EnergyProjectApiService(Component):
         except ProjectNotFoundException as e:
             raise NotFound(str(e))
         else:
-            return collection_response(
+            return list_response(
                 request, ProjectMembersResponse, members, total_projectmembers, paging
             )
