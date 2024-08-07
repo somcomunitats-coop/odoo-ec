@@ -19,7 +19,7 @@ from ..utils import api_info, list_response, single_response
 
 
 class MemberApiService(Component):
-    _inherit = ["base.rest.service", "paginated.api.service"]
+    _inherit = ["base.rest.service", "api.service.utils"]
     _name = "member.api.service"
     _collection = "energy_communities_member.api.services"
     _usage = "me"
@@ -70,14 +70,3 @@ class MemberApiService(Component):
             total_member_comunities,
             paging,
         )
-
-    def _validate_headers(self):
-        community_id = request.httprequest.headers.get("CommunityId")
-        if not community_id:
-            msg = _("CommunityId header is missing")
-            raise ValidationError(msg)
-        try:
-            int(community_id)
-        except Exception:
-            msg = _(f"CommunityId header has an incorrect value: {community_id}")
-            raise ValidationError(msg)

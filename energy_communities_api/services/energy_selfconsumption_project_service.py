@@ -26,7 +26,7 @@ logger = logging.getLogger("__name__")
 
 
 class EnergyProjectApiService(Component):
-    _inherit = ["base.rest.service", "paginated.api.service"]
+    _inherit = ["base.rest.service", "api.service.utils"]
     _name = "energy_project.service"
     _collection = "energyselfconsumption.api.services"
     _usage = "projects"
