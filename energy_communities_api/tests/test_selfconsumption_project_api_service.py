@@ -1,3 +1,5 @@
+from functools import partial
+
 import requests
 
 from odoo.exceptions import AccessError
@@ -19,15 +21,11 @@ class TestSelfConsumptionApiService(HttpCase, RegistryMixin):
         super().setUp()
         self.community_id = "3"
         self.timeout = 600
+        self.client = partial(self.url_open, timeout=self.timeout)
 
     @property
     def token(self):
-        if not hasattr(self, "_token"):
-            data = client_data
-            response = requests.post(server_auth_url, data=data)
-            self._token = response.json().get("access_token")
-
-        return f"Bearer {self._token}"
+        return self.env.ref("energy_communities_api.apikey_provider").key
 
     def test__get_selfconsumption_projects__paginated__ok(self) -> None:
         # given http_client
@@ -36,10 +34,9 @@ class TestSelfConsumptionApiService(HttpCase, RegistryMixin):
         # self.token
 
         # when we call for the list of projects with pagination
-        response = self.url_open(
+        response = self.client(
             "/api/energy-selfconsumption/projects?page=1&page_size=20",
-            headers={"Authorization": self.token},
-            timeout=self.timeout,
+            headers={"API-KEY": self.token},
         )
         self.assertEqual(response.status_code, 200)
 

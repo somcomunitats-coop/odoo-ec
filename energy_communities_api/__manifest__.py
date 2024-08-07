@@ -17,7 +17,7 @@
         "base_rest",
         "component",
         "energy_communities",
-        "energy_project",
+        "energy_selfconsumption",
         "pydantic",
     ],
     "external_dependencies": {"python": ["pydantic<2", "extendable-pydantic==0.0.6"]},
@@ -25,5 +25,8 @@
         "security/res_users_role_data.xml",
         "security/ir_rule_data.xml",
         "views/auth_jwt_validator_views.xml",
+    ],
+    "demo": [
+        "demo/energy_selfconsumption_app_demo.xml",
     ],
 }

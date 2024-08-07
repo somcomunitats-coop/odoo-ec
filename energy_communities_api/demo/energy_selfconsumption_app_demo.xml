@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
-        <record id="apikey_administrador_plataforma" model="auth.api.key">
-            <field name="name">API key admin platform</field>
+
+        <record id="energy_project.user_provider_api" model="res.users">
+            <field
+        name="role_line_ids"
+        eval="[
+                         (5, 0, 0),
+                         (4, ref('role_api_provider')),
+                         ]"
+      />
+        </record>
+
+        <record id="apikey_provider" model="auth.api.key">
+            <field name="name">API key provider</field>
             <field name="key">12345</field>
             <field name="user_id" ref="energy_project.user_provider_api" />
         </record>
