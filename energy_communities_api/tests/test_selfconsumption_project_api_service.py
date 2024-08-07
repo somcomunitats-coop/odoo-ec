@@ -47,10 +47,9 @@ class TestSelfConsumptionApiService(HttpCase, RegistryMixin):
         # self.token
 
         # when we call for the list of projects without pagination
-        response = self.url_open(
+        response = self.client(
             "/api/energy-selfconsumption/projects",
-            headers={"Authorization": self.token},
-            timeout=self.timeout,
+            headers={"API-KEY": self.token},
         )
         __import__("ipdb").set_trace()
         # then we obtain a 200 response code
