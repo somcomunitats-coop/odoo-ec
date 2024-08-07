@@ -13,8 +13,14 @@ from .schemas import PaginationLimits, PaginationLinks
 def _get_pagination_links(
     request: HttpRequest,
     total_results: int,
-    paging: PaginationLimits,
+    paging: PaginationLimits = None,
 ) -> PaginationLinks:
+    if not paging:
+        return PaginationLinks(
+            self_=request.httprequest.url,
+            next_page=None,
+            previous_page=None,
+        )
     page = paging.page
     page_size = paging.limit
     url_parsed = parse.urlparse(request.httprequest.url)
@@ -59,14 +65,18 @@ def list_response(
     response_class: Any,
     collection: List[Any],
     total_results,
-    paging: PaginationLimits,
+    paging: PaginationLimits = None,
 ) -> Any:
-    over_size = paging.offset + paging.limit < len(collection)
-    actual_count = paging.limit if over_size else len(collection)
+    actual_count = len(collection)
+    page = 1
+    if paging:
+        over_size = paging.limit < len(collection)
+        actual_count = paging.limit if over_size else len(collection)
+        page = paging.page
     return response_class(
         data=collection,
         links=_get_pagination_links(request, total_results, paging),
-        page=paging.page,
+        page=page,
         total_results=total_results,
         count=actual_count,
     )

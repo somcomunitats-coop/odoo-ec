@@ -1,5 +1,3 @@
-import logging
-
 from werkzeug.exceptions import NotFound
 
 from odoo.http import request
@@ -22,8 +20,6 @@ from ..schemas import (
 )
 from ..utils import list_response, single_response
 
-logger = logging.getLogger("__name__")
-
 
 class EnergyProjectApiService(Component):
     _inherit = ["base.rest.service", "api.service.utils"]
@@ -43,7 +39,6 @@ class EnergyProjectApiService(Component):
     )
     def get_selfconsumption_projects(self, paging_param):
         paging = self._get_pagination_limits(paging_param)
-
         energy_selfconsumption_service = EnergySelfconsumptionProjectsComponent(
             env=request.env, user=request.uid
         )

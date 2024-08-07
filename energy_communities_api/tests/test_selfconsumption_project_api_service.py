@@ -37,9 +37,9 @@ class TestSelfConsumptionApiService(HttpCase, RegistryMixin):
 
         # when we call for the list of projects with pagination or without
         # paged_response = self.url_open(
-        #     "/api/energy-selfconsumption/projects?page=1&page_size=20",
-        #     headers={"Authorization": self.token},
-        #     timeout=self.timeout,
+        # "/api/energy-selfconsumption/projects?page=1&page_size=20",
+        # headers={"Authorization": self.token},
+        # timeout=self.timeout,
         # )
         response = self.url_open(
             "/api/energy-selfconsumption/projects",

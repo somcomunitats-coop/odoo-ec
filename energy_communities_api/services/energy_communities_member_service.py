@@ -1,5 +1,3 @@
-from odoo import _
-from odoo.exceptions import ValidationError
 from odoo.http import request
 
 from odoo.addons.base_rest import restapi
