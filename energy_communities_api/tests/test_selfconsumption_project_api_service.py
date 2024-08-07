@@ -29,25 +29,34 @@ class TestSelfConsumptionApiService(HttpCase, RegistryMixin):
 
         return f"Bearer {self._token}"
 
+    def test__get_selfconsumption_projects__paginated__ok(self) -> None:
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+
+        # when we call for the list of projects with pagination
+        response = self.url_open(
+            "/api/energy-selfconsumption/projects?page=1&page_size=20",
+            headers={"Authorization": self.token},
+            timeout=self.timeout,
+        )
+        self.assertEqual(response.status_code, 200)
+
     def test__get_selfconsumption_projects__ok(self) -> None:
         # given http_client
         # self.url_open
         # and a valid token
         # self.token
 
-        # when we call for the list of projects with pagination or without
-        # paged_response = self.url_open(
-        # "/api/energy-selfconsumption/projects?page=1&page_size=20",
-        # headers={"Authorization": self.token},
-        # timeout=self.timeout,
-        # )
+        # when we call for the list of projects without pagination
         response = self.url_open(
             "/api/energy-selfconsumption/projects",
             headers={"Authorization": self.token},
             timeout=self.timeout,
         )
+        __import__("ipdb").set_trace()
         # then we obtain a 200 response code
-        # self.assertEqual(paged_response.status_code, 200)
         self.assertEqual(response.status_code, 200)
 
     def test__get_selfconsumption_projects_by_cau__ok(self) -> None:

@@ -6,10 +6,7 @@ from odoo.addons.base_rest import restapi
 from odoo.addons.base_rest_pydantic.restapi import PydanticModel
 from odoo.addons.component.core import Component
 
-from ..components import (
-    EnergySelfconsumptionProjectsComponent,
-    ProjectNotFoundException,
-)
+from ..components import ProjectNotFoundException
 from ..schemas import (
     DEFAULT_PAGE_SIZE,
     PaginationLimits,
@@ -17,8 +14,9 @@ from ..schemas import (
     ProjectInfoListResponse,
     ProjectInfoResponse,
     ProjectMembersResponse,
+    SelfConsumptionProjectInfo,
 )
-from ..utils import list_response, single_response
+from ..utils import api_info, list_response, single_response
 
 
 class EnergyProjectApiService(Component):
@@ -32,6 +30,8 @@ class EnergyProjectApiService(Component):
     get information about the projects that they manage.
     """
 
+    _work_on_model = "energy_selfconsumption.selfconsumption"
+
     @restapi.method(
         [(["/"], "GET")],
         input_param=PydanticModel(PagingParam),
@@ -39,13 +39,11 @@ class EnergyProjectApiService(Component):
     )
     def get_selfconsumption_projects(self, paging_param):
         paging = self._get_pagination_limits(paging_param)
-        energy_selfconsumption_service = EnergySelfconsumptionProjectsComponent(
-            env=request.env, user=request.uid
-        )
-        total_projects = energy_selfconsumption_service.total_selfconsumption_projects
-        projects = energy_selfconsumption_service.selfconsumption_projects(
-            limit=paging.limit, offset=paging.offset
-        )
+        with api_info(
+            self.env, self._work_on_model, SelfConsumptionProjectInfo, paging=paging
+        ) as component:
+            total_projects = component.total_selfconsumption_projects
+            projects = component.selfconsumption_projects()
         return list_response(
             request, ProjectInfoListResponse, projects, total_projects, paging
         )
