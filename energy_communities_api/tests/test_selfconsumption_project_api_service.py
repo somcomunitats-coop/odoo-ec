@@ -55,10 +55,15 @@ class TestSelfConsumptionApiService(HttpCase, RegistryMixin):
         self.assertEqual(response.status_code, 200)
 
     def test__get_selfconsumption_projects_by_cau__ok(self) -> None:
-        pass
-        # with self._create_test_client() as test_client:
-        #     respose: Response = test_client.get(
-        #         "projects/001ES0397277816188340VL", headers={"api-token": "12345"}
-        #     )
+        # given http_client
+        # self.client
+        # and a valid token
+        # self.token
 
-        # self.assertEqual(respose.status_code, status.HTTP_200_OK)
+        # when we call for a specific project
+        response = self.client(
+            "/api/energy-selfconsumption/projects/ES1234123456789012JY1FA000",
+            headers={"API-KEY": self.token},
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)

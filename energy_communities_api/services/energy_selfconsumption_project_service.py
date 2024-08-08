@@ -53,12 +53,13 @@ class EnergyProjectApiService(Component):
         output_param=PydanticModel(ProjectInfoResponse),
     )
     def get_selfconsumption_project_by_code(
-        project_code: str,
+        self, project_code: str
     ) -> ProjectInfoResponse:
-        energy_selfconsumption_service = EnergySelfconsumptionProjectsComponent(
-            env=request.env, user=request.uid
-        )
-        projects = energy_selfconsumption_service.selfconsumption_projects(project_code)
+        with api_info(
+            self.env, self._work_on_model, SelfConsumptionProjectInfo
+        ) as component:
+            projects = component.selfconsumption_projects(project_code)
+
         project = projects[0] if projects and len(projects) > 0 else None
         if not project:
             raise NotFound(f"Project {project_code} not found")
