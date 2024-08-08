@@ -3,7 +3,17 @@
     <record model="ir.rule" id="energy_project_company_rule">
         <field name="name">Energy Project multi-company</field>
         <field name="model_id" ref="energy_project.model_energy_project_project" />
-        <field name="global" eval="True" />
+        <field
+      name="groups"
+      eval="[
+          (4, ref('energy_communities.role_ce_admin_res_groups')),
+          (4,ref('energy_communities.role_ce_manager_res_groups')),
+          (4,ref('energy_communities.role_ce_member_res_groups')),
+          (4,ref('energy_communities.role_coord_admin_res_groups')),
+          (4,ref('energy_communities.role_coord_worker_res_groups')),
+          (4,ref('energy_communities.group_platform_manager')),
+        ]"
+    />
         <field
       name="domain_force"
     >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
