@@ -10,12 +10,42 @@ from .base import (
 )
 
 
-class SelfConsumptionProjectInfo(BaseModel):
-    project_code: str
-    project_name: str
-    energy_community_id: int
-    energy_community_name: str
-    power: float
+class SelfConsumptionProjectInfo(NaiveOrmModel):
+    class Config:
+        title: "Community info"
+        # used for being able to use alias on a List of this type
+        allow_population_by_field_name = True
+        getter_dict = utils.GenericOdooGetter
+
+    project_code: str = Field(
+        ...,
+        alias="code",
+        title="Project code",
+        description="CAU code of the project",
+    )
+    project_name: str = Field(
+        ...,
+        alias="name",
+        title="Project name",
+        description="Name of the project",
+    )
+    energy_community_id: int = Field(
+        ...,
+        alias="company_id.id",
+        title="Community Id",
+        description="Id of the related community",
+    )
+    energy_community_name: str = Field(
+        ...,
+        alias="company_id.name",
+        title="Community Name",
+        description="Name of the related community",
+    )
+    power: float = Field(
+        ...,
+        title="Project power",
+        description="Project power",
+    )
 
 
 class SelfConsumptionProjectMember(BaseModel):

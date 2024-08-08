@@ -7,7 +7,7 @@ from .base import BaseListResponse, NaiveOrmModel, PaginationLinks
 
 class CommunityInfo(NaiveOrmModel):
     class Config:
-        tittle: "Community info"
+        title: "Community info"
         # used for being able to use alias on a List of this type
         allow_population_by_field_name = True
 
