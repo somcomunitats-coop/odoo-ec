@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -14,7 +14,7 @@ from .base import (
 
 class SelfConsumptionProjectInfo(NaiveOrmModel):
     class Config:
-        title: "Community info"
+        title: "Selfconumption project info"
         # used for being able to use alias on a List of this type
         allow_population_by_field_name = True
 
@@ -49,16 +49,66 @@ class SelfConsumptionProjectInfo(NaiveOrmModel):
     )
 
 
-class SelfConsumptionProjectMember(BaseModel):
-    supply_point_code: str
-    supply_point_address: str
-    supply_point_postalcode: str
-    supply_point_town: str
-    supply_point_state: str
-    distribution_coefficient: float
-    owner_name: str
-    owner_surnames: str
-    owner_vat: str
+class SelfConsumptionProjectMember(NaiveOrmModel):
+    class Config:
+        title: "Selfconsumption project members info"
+        # used for being able to use alias on a List of this type
+        allow_population_by_field_name = True
+
+    supply_point_code: str = Field(
+        ...,
+        title="Supply Point Code",
+        description="Supply Point code of the member",
+    )
+
+    supply_point_address: str = Field(
+        ...,
+        title="Supply Point Address",
+        description="Supply Point address of the member",
+    )
+
+    supply_point_postalcode: str = Field(
+        ...,
+        title="Supply Point postalcode",
+        description="Supply Point postalcode of the member",
+    )
+
+    supply_point_town: str = Field(
+        ...,
+        title="Supply Point Town",
+        description="Supply Point town of the member",
+    )
+
+    supply_point_state: str = Field(
+        ...,
+        title="Supply Point State",
+        description="Supply Point state of the member",
+    )
+
+    distribution_coefficient: float = Field(
+        ...,
+        alias="coefficient",
+        title="Distribution coefficient",
+        description="percentage of energy for the member",
+    )
+
+    owner_name: str = Field(
+        ...,
+        title="Member name",
+        description="Name of the member",
+    )
+
+    owner_surnames: Optional[str] = Field(
+        ...,
+        title="Member surnames",
+        description="Surnames of the member",
+    )
+
+    owner_vat: Optional[str] = Field(
+        ...,
+        title="Member VAT",
+        description="VAT number of the member",
+    )
 
 
 class ProjectInfoResponse(BaseResponse):

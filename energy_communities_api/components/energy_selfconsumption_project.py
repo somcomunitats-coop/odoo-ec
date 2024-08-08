@@ -67,7 +67,7 @@ class EnergySelfconsumptionApiInfo(Component):
             ("selfconsumption_project_id", "=", project.id),
         ]
         if self.work.paging:
-            search_results = self.env[
+            project_members = self.env[
                 "energy_selfconsumption.supply_point_assignation"
             ].search(
                 search_domain,
@@ -75,20 +75,9 @@ class EnergySelfconsumptionApiInfo(Component):
                 offset=self.work.paging.offset,
             )
         else:
-            search_results = self.env[
+            project_members = self.env[
                 "energy_selfconsumption.supply_point_assignation"
             ].search(search_domain)
-        return [
-            SelfConsumptionProjectMember(
-                supply_point_code=assignation.supply_point_id.code,
-                supply_point_address=assignation.supply_point_id.street,
-                supply_point_postalcode=assignation.supply_point_id.zip,
-                supply_point_town=assignation.supply_point_id.city,
-                supply_point_state=assignation.supply_point_id.state_id.name,
-                distribution_coefficient=assignation.coefficient,
-                owner_name=assignation.owner_id.firstname,
-                owner_surnames=assignation.owner_id.lastname,
-                owner_vat=assignation.owner_id.vat or "",
-            )
-            for assignation in search_results
-        ]
+        if project_members:
+            return self.get_list(project_members)
+        return []

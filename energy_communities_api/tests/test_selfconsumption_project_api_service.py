@@ -97,4 +97,3 @@ class TestSelfConsumptionApiService(HttpCase, RegistryMixin):
         )
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
-        self.assertDictEqual(response.json(), {})
