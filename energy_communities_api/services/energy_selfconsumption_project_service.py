@@ -13,8 +13,8 @@ from ..schemas import (
     PagingParam,
     ProjectInfoListResponse,
     ProjectInfoResponse,
-    ProjectMembersResponse,
     SelfConsumptionProjectInfo,
+    SelfConsumptionProjectMemberListResponse,
 )
 from ..utils import api_info, list_response, single_response
 
@@ -74,12 +74,12 @@ class EnergyProjectApiService(Component):
             )
         ],
         inpunt_param=PydanticModel(PagingParam),
-        output_param=PydanticModel(ProjectMembersResponse),
+        output_param=PydanticModel(SelfConsumptionProjectMemberListResponse),
     )
     def selfconsumption_project_members(
         selfconsumption_paging_param,
         _project_code: str,
-    ) -> ProjectMembersResponse:
+    ) -> SelfConsumptionProjectMemberListResponse:
         page = selfconsumption_paging_param.page or 1
         page_size = selfconsumption_paging_param.size_page or DEFAULT_PAGE_SIZE
 
@@ -100,5 +100,9 @@ class EnergyProjectApiService(Component):
             raise NotFound(str(e))
         else:
             return list_response(
-                request, ProjectMembersResponse, members, total_projectmembers, paging
+                request,
+                SelfConsumptionProjectMemberListResponse,
+                members,
+                total_projectmembers,
+                paging,
             )

@@ -9,5 +9,5 @@ from .selfconsumption_project import (
     SelfConsumptionProjectMember,
     ProjectInfoResponse,
     ProjectInfoListResponse,
-    ProjectMembersResponse,
+    SelfConsumptionProjectMemberListResponse,
 )

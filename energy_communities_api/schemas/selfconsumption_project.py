@@ -48,7 +48,7 @@ class ProjectInfoListResponse(BaseListResponse):
     links: PaginationLinks
 
 
-class ProjectMembersResponse(BaseListResponse):
+class SelfConsumptionProjectMemberListResponse(BaseListResponse):
     """
     Model response when a members of a project are requested
     """
