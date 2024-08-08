@@ -67,3 +67,18 @@ class TestSelfConsumptionApiService(HttpCase, RegistryMixin):
         )
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
+
+    def test__get_selfconsumption_projects_by_cau__project_not_found(self) -> None:
+        # given http_client
+        # self.client
+        # and a valid token
+        # self.token
+
+        # when we call for a specific project
+        response = self.client(
+            "/api/energy-selfconsumption/projects/ES12341234567890A000",
+            headers={"API-KEY": self.token},
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 404)
+        self.assertDictEqual(response.json(), {"code": 404, "name": "Not Found"})

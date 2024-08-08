@@ -1,5 +1,4 @@
-from werkzeug.exceptions import NotFound
-
+from odoo.exceptions import MissingError
 from odoo.http import request
 
 from odoo.addons.base_rest import restapi
@@ -62,7 +61,8 @@ class EnergyProjectApiService(Component):
 
         project = projects[0] if projects and len(projects) > 0 else None
         if not project:
-            raise NotFound(f"Project {project_code} not found")
+            error = MissingError(f"Project {project_code} not found")
+            raise error
         return single_response(request, ProjectInfoResponse, project)
 
     @restapi.method(
