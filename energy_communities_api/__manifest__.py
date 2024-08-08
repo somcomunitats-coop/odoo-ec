@@ -24,6 +24,7 @@
     "data": [
         "security/res_users_role_data.xml",
         "security/ir_rule_data.xml",
+        "security/ir.model.access.csv",
         "views/auth_jwt_validator_views.xml",
     ],
     "demo": [

@@ -19,6 +19,7 @@ class TestSelfConsumptionApiService(HttpCase, RegistryMixin):
 
     def setUp(self):
         super().setUp()
+        self.maxDiff = None
         self.community_id = "3"
         self.timeout = 600
         self.client = partial(self.url_open, timeout=self.timeout)
@@ -82,3 +83,18 @@ class TestSelfConsumptionApiService(HttpCase, RegistryMixin):
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 404)
         self.assertDictEqual(response.json(), {"code": 404, "name": "Not Found"})
+
+    def test__get_selfconsumption_project_members__ok(self) -> None:
+        # given http_client
+        # self.client
+        # and a valid token
+        # self.token
+
+        # when we call for the members of a project
+        response = self.client(
+            "/api/energy-selfconsumption/projects/ES1234123456789012JY1FA000/members",
+            headers={"API-KEY": self.token},
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        self.assertDictEqual(response.json(), {})

@@ -13,6 +13,7 @@ from ..schemas import (
     ProjectInfoListResponse,
     ProjectInfoResponse,
     SelfConsumptionProjectInfo,
+    SelfConsumptionProjectMember,
     SelfConsumptionProjectMemberListResponse,
 )
 from ..utils import api_info, list_response, single_response
@@ -61,8 +62,7 @@ class EnergyProjectApiService(Component):
 
         project = projects[0] if projects and len(projects) > 0 else None
         if not project:
-            error = MissingError(f"Project {project_code} not found")
-            raise error
+            raise MissingError(f"Project {project_code} not found")
         return single_response(request, ProjectInfoResponse, project)
 
     @restapi.method(
@@ -74,36 +74,28 @@ class EnergyProjectApiService(Component):
                 "GET",
             )
         ],
-        inpunt_param=PydanticModel(PagingParam),
+        input_param=PydanticModel(PagingParam),
         output_param=PydanticModel(SelfConsumptionProjectMemberListResponse),
     )
     def selfconsumption_project_members(
-        selfconsumption_paging_param,
-        _project_code: str,
+        self,
+        project_code: str,
+        paging_param: PagingParam,
     ) -> SelfConsumptionProjectMemberListResponse:
-        page = selfconsumption_paging_param.page or 1
-        page_size = selfconsumption_paging_param.size_page or DEFAULT_PAGE_SIZE
-
-        energy_selfconsumption_service = EnergySelfconsumptionProjectsComponent(
-            env=request.env, user=request.uid
-        )
-        paging = PaginationLimits(
-            limit=page_size, offset=(page - 1) * page_size, page=page
-        )
-        try:
-            members = energy_selfconsumption_service.selfconsumption_project_members(
-                _project_code, limit=paging.limit, offset=paging.offset
-            )
-            total_projectmembers = energy_selfconsumption_service.total_project_members(
-                _project_code
-            )
-        except ProjectNotFoundException as e:
-            raise NotFound(str(e))
-        else:
-            return list_response(
-                request,
-                SelfConsumptionProjectMemberListResponse,
-                members,
-                total_projectmembers,
-                paging,
-            )
+        paging = self._get_pagination_limits(paging_param)
+        with api_info(
+            self.env, self._work_on_model, SelfConsumptionProjectMember, paging=paging
+        ) as component:
+            try:
+                members = component.selfconsumption_project_members(project_code)
+                total_projectmembers = component.total_project_members(project_code)
+            except ProjectNotFoundException as e:
+                raise MissingError(str(e))
+            else:
+                return list_response(
+                    request,
+                    SelfConsumptionProjectMemberListResponse,
+                    members,
+                    total_projectmembers,
+                    paging,
+                )

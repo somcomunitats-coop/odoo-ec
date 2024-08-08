@@ -41,7 +41,7 @@ class UserCurrentCompanyMixin(models.AbstractModel):
     def get_current_role(self):
         roles = self.env.user._get_enabled_roles()
         if roles:
-            return roles[0]
+            return roles[0].role_id.code
         return False
 
     def _max_priority_role_line(self, role_lines):
