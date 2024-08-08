@@ -32,23 +32,16 @@ class EnergySelfconsumptionApiInfo(Component):
     ) -> List[SelfConsumptionProjectInfo]:
         search_domain = bool(project_code) and [("code", "=", project_code)] or []
         if self.work.paging:
-            search_results = self.env_model.search(
+            projects = self.env_model.search(
                 search_domain,
                 limit=self.work.paging.limit,
                 offset=self.work.paging.offset,
             )
         else:
-            search_results = self.env_model.search(search_domain)
-        return [
-            SelfConsumptionProjectInfo(
-                project_code=project.code,
-                project_name=project.name,
-                energy_community_id=project.project_id.id,
-                energy_community_name=project.company_id.name,
-                power=project.power,
-            )
-            for project in search_results
-        ]
+            projects = self.env_model.search(search_domain)
+        if projects:
+            return self.get_list(projects)
+        return []
 
     def _get_selfconsumption_project(self, project_code: str):
         project = self.env_model.search([("code", "=", project_code)])

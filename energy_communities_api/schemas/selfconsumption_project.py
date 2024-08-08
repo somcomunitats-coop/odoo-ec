@@ -2,6 +2,8 @@ from typing import List
 
 from pydantic import BaseModel, Field
 
+from odoo.addons.pydantic import utils
+
 from .base import (
     BaseListResponse,
     BaseResponse,
@@ -15,7 +17,6 @@ class SelfConsumptionProjectInfo(NaiveOrmModel):
         title: "Community info"
         # used for being able to use alias on a List of this type
         allow_population_by_field_name = True
-        getter_dict = utils.GenericOdooGetter
 
     project_code: str = Field(
         ...,
@@ -31,13 +32,13 @@ class SelfConsumptionProjectInfo(NaiveOrmModel):
     )
     energy_community_id: int = Field(
         ...,
-        alias="company_id.id",
+        alias="company_id",
         title="Community Id",
         description="Id of the related community",
     )
     energy_community_name: str = Field(
         ...,
-        alias="company_id.name",
+        alias="company_name",
         title="Community Name",
         description="Name of the related community",
     )

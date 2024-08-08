@@ -51,7 +51,6 @@ class TestSelfConsumptionApiService(HttpCase, RegistryMixin):
             "/api/energy-selfconsumption/projects",
             headers={"API-KEY": self.token},
         )
-        __import__("ipdb").set_trace()
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
 
