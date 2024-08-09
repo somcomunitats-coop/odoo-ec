@@ -10,7 +10,11 @@ from odoo.tests import HttpCase, tagged
 from odoo.addons.base_rest.tests.common import RegistryMixin
 
 from ..schemas import CommunityInfo
-from .data import client_data, client_data_response, server_auth_url
+
+try:
+    from .data import client_data, client_data_response, server_auth_url
+except:
+    pass
 
 
 @tagged("-at_install", "post_install")
