@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-11 09:04+0000\n"
-"PO-Revision-Date: 2024-06-11 11:06+0200\n"
+"POT-Creation-Date: 2024-08-09 08:27+0000\n"
+"PO-Revision-Date: 2024-08-09 10:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -1267,7 +1267,7 @@ msgstr "Etapa original"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Other"
-msgstr "Otros"
+msgstr ""
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.ce_view_crm_case_opportunities_filter
@@ -1420,6 +1420,11 @@ msgstr "La etiqueta debe ser única por compañía!"
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_tag__tag_type
 msgid "Tag type"
 msgstr "Tipo de etiqueta"
+
+#. module: energy_communities_crm
+#: model_terms:ir.ui.view,arch_db:energy_communities_crm.ce_view_crm_case_opportunities_filter
+msgid "Tariffs contact"
+msgstr "Contacto por tarifas"
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0

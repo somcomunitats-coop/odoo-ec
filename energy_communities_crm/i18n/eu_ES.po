@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-11 09:03+0000\n"
-"PO-Revision-Date: 2024-06-11 11:07+0200\n"
+"POT-Creation-Date: 2024-08-09 08:26+0000\n"
+"PO-Revision-Date: 2024-08-09 10:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: eu_ES\n"
@@ -838,7 +838,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_team__display_name
 #: model:ir.model.fields,field_description:energy_communities_crm.field_utm_source__display_name
 msgid "Display Name"
-msgstr "Nombre mostrado"
+msgstr "Bistaratzeko izena"
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
@@ -1113,7 +1113,7 @@ msgstr "Hizkuntza"
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_team____last_update
 #: model:ir.model.fields,field_description:energy_communities_crm.field_utm_source____last_update
 msgid "Last Modified on"
-msgstr "Última modificación el"
+msgstr "Azken aldaketa egunean"
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_assign_crm_to_coordinator_company_wizard__write_uid
@@ -1264,7 +1264,7 @@ msgstr "Etapa original"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Other"
-msgstr "Otros"
+msgstr ""
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.ce_view_crm_case_opportunities_filter
@@ -1417,6 +1417,11 @@ msgstr "La etiqueta debe ser única por compañía!"
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_tag__tag_type
 msgid "Tag type"
 msgstr "Tipo de etiqueta"
+
+#. module: energy_communities_crm
+#: model_terms:ir.ui.view,arch_db:energy_communities_crm.ce_view_crm_case_opportunities_filter
+msgid "Tariffs contact"
+msgstr "Contacto por tarifas"
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0

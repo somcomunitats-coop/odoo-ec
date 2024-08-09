@@ -55,6 +55,11 @@
           string="Info COORD"
           domain="[('source_id','=', %(energy_communities.ce_source_existing_coord_info)d)]"
         />
+        <filter
+          name="ce_source_tariffs_page_contact"
+          string="Tariffs contact"
+          domain="[('source_id','=', %(energy_communities.ce_source_tariffs_page_contact)d)]"
+        />
 				<filter
           name="no_web_form_origin"
           string="No web form origin"
