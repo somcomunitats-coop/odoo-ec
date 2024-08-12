@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+  <template
+    id="assets_frontend_website_data"
+    inherit_id="web.assets_frontend"
+    name="data_website_script"
+  >
+        <xpath expr="." position="inside">
+            <script
+        type="text/javascript"
+        src="/energy_communities/static/src/js/data-website.js"
+      />
+        </xpath>
+    </template>
+
+    <template
+    id="data_form_fields_template"
+    name="data_form_fields_template"
+  >
+      <br />
+    </template>
+
+    <template
+    id="data_close_message_template"
+    name="data_close_message_template"
+  >
+        <button type="button" class="close" data-dismiss="alert">
+          &amp;times;
+        </button>
+    </template>
+
+    <template
+    id="data_error_message_template"
+    name="data_error_message_template"
+  >
+      <t t-foreach="error_msgs or []" t-as="error_msg">
+        <br />
+        <div class="alert alert-danger">
+          <t t-raw="error_msg" />
+        </div>
+      </t>
+    </template>
+
+    <template
+    id="data_form_successful_msg"
+    name="data_form_successful_msg"
+  >
+      <div class="alert alert-success">
+        <p>
+          Your data has been successfully registered.
+        </p>
+        <a type="button" t-attf-href="#{page_url}" class="btn btn-light">
+          Submit more data
+        </a>
+      </div>
+    </template>
+
+    <template
+    id="data_form_csrf_template"
+    name="data_form_csrf_template"
+  >
+      <div name="csrf_token_container">
+        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+      </div>
+    </template>
+
+    <template id="data_form" name="data_form">
+      <form
+      t-attf-action="#{form_submit_url}"
+      method="post"
+      class="form-horizontal mt32 oe_subscription_request_form"
+      enctype="multipart/form-data"
+    >
+        <t t-call="energy_communities.data_form_csrf_template" />
+        <t t-call="energy_communities.data_form_fields_template" />
+        <div class="text-center">
+          <button class="btn btn-primary mt-3 mb-3 text-center">Send</button>
+        </div>
+      </form>
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template id="data_headline" name="data_headline">
+      <br />
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template
+    id="data_headline_message_open"
+    name="data_headline_message_open"
+  >
+      <br />
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template
+    id="data_headline_message_open"
+    name="data_headline_message_open"
+  >
+    <br />
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template
+    id="data_headline_message_closed"
+    name="data_headline_message_closed"
+  >
+      <br />
+    </template>
+
+    <template id="data_page" name="data_page">
+      <t t-call="website.layout">
+        <div id="wrap" class="o_portal_wrap">
+          <div class="container oe_data">
+            <div class="row justify-content-center">
+              <div class="col-xs-12 col-sm-10  col-md-8 col-lg-8">
+                <t t-if="global_error">
+                  <t
+                  t-call="energy_communities.data_error_message_template"
+                />
+                </t>
+                <t t-if="not global_error">
+                  <t t-if="closed_form">
+                    <t
+                    t-call="energy_communities.data_headline_message_closed"
+                  />
+                  </t>
+                  <t t-if="not closed_form">
+                    <t t-call="energy_communities.data_headline" />
+                    <t
+                    t-call="energy_communities.data_headline_message_open"
+                  />
+                    <t
+                    t-call="energy_communities.data_error_message_template"
+                  />
+                    <t
+                    t-if="display_success"
+                    t-call="energy_communities.data_form_successful_msg"
+                  />
+                    <t
+                    t-if="display_form"
+                    t-call="energy_communities.data_form"
+                  />
+                  </t>
+                </t>
+              </div>
+            </div>
+          </div>
+        </div>
+      </t>
+    </template>
+</odoo>
