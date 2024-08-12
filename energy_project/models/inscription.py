@@ -42,6 +42,7 @@ class Inscription(models.Model):
         "account.banking.mandate", compute="_compute_mandate_filtered_ids"
     )
     name = fields.Char(string="Name", related="partner_id.name")
+    privacy_policy = fields.Boolean(String="Privacy policy")
 
     @api.depends("partner_id")
     def _compute_mandate_filtered_ids(self):
