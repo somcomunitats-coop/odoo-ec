@@ -175,6 +175,31 @@ class Selfconsumption(models.Model):
             record.write({"state": "activation"})
         self.distribution_table_state("validated", "process")
 
+    @api.model
+    def create(self, values):
+        res = super().create(values)
+        self.env["energy_project.participation"].create({
+            "name": "0,5 kW",
+            "quantity": 0.5,
+            "project_id": res.project_id.id,
+        })
+        self.env["energy_project.participation"].create({
+            "name": "1,0 kW",
+            "quantity": 1.0,
+            "project_id": res.project_id.id,
+        })
+        self.env["energy_project.participation"].create({
+            "name": "1,5 kW",
+            "quantity": 1.5,
+            "project_id": res.project_id.id,
+        })
+        self.env["energy_project.participation"].create({
+            "name": "2,0 kW",
+            "quantity": 2.0,
+            "project_id": res.project_id.id,
+        })
+        return res
+
     def activate(self):
         """
         Activates the energy self-consumption project, performing various validations.

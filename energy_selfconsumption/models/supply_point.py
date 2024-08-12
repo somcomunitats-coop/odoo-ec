@@ -28,6 +28,11 @@ class SupplyPoint(models.Model):
         ("6.4TD", "6.4TD"),
     ]
 
+    _USED_IN_SELFCONSUMPTION_VALUES = [
+        ("yes", _("Yes")),
+        ("no", _("No")),
+    ]
+
     name = fields.Char(compute="_compute_supply_point_name", store=True)
     code = fields.Char(string="CUPS")
     owner_id = fields.Many2one(
@@ -77,7 +82,9 @@ class SupplyPoint(models.Model):
         digits=(10, 6),
         help="Maximum contracted power in kW",
     )
-    tariff = fields.Selection(_ACCESS_TARIFF_VALUES, "Access tariff")
+    tariff = fields.Selection(_ACCESS_TARIFF_VALUES, string="Access tariff")
+
+    used_in_selfconsumption = fields.Selection(_USED_IN_SELFCONSUMPTION_VALUES, string="Used in selfconsumption")
 
     @api.onchange("partner_id")
     def _onchange_partner_id(self):
