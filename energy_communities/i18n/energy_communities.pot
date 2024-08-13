@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-11 08:24+0000\n"
-"PO-Revision-Date: 2024-06-11 08:24+0000\n"
+"POT-Creation-Date: 2024-08-09 08:23+0000\n"
+"PO-Revision-Date: 2024-08-09 08:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,27 @@ msgstr ""
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_date_past
 msgid "#{date_placeholder}"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__create_user
+#, python-format
+msgid "1) Create Odoo user (in case it doesn't exist)"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__create_kc_user
+#, python-format
+msgid "2) Create Keycloak user (in case it doesn't exist)"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__invite_user_through_kc
+#, python-format
+msgid "3) Send invitation email to confirm email and reset password"
 msgstr ""
 
 #. module: energy_communities
@@ -49,6 +70,11 @@ msgstr ""
 #: model:ir.model.constraint,message:energy_communities.constraint_account_multicompany_bank_wiz_unique_number
 #: model:ir.model.constraint,message:energy_communities.constraint_res_partner_bank_unique_number
 msgid "Account Number must be unique"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__action
+msgid "Action"
 msgstr ""
 
 #. module: energy_communities
@@ -157,6 +183,12 @@ msgstr ""
 #: code:addons/energy_communities/services/ce_member_service.py:0
 #, python-format
 msgid "Authorization token not found"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__available_role_ids
+#: model:ir.model.fields,field_description:energy_communities.field_res_users_role__available_role_ids
+msgid "Available roles"
 msgstr ""
 
 #. module: energy_communities
@@ -521,13 +553,6 @@ msgid "Create User"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/create_users_wizard.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__create_kc_user
-#, python-format
-msgid "2) Create Keycloak user (in case it doesn't exist)"
-msgstr ""
-
-#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "Create landing page"
 msgstr ""
@@ -535,13 +560,6 @@ msgstr ""
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
 msgid "Create map place"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/wizards/create_users_wizard.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__create_user
-#, python-format
-msgid "1) Create Odoo user (in case it doesn't exist)"
 msgstr ""
 
 #. module: energy_communities
@@ -555,8 +573,14 @@ msgid "Create user for keycloak"
 msgstr ""
 
 #. module: energy_communities
+#: model:ir.model,name:energy_communities.model_create_users_wizard
+msgid "Create users Wizard"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__create_uid
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_uid
 msgid "Created by"
 msgstr ""
@@ -564,6 +588,7 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__create_date
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_date
 msgid "Created on"
 msgstr ""
@@ -593,6 +618,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_cm_filter__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_cm_map__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_external_id_mixin__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_product_template__display_name
@@ -631,6 +657,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__email
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__email
 msgid "Email"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "Email is not valid"
 msgstr ""
 
 #. module: energy_communities
@@ -760,15 +792,13 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/create_users_wizard.py:0
-#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__force_invite
-#, python-format
-msgid "Force send invitation email in case it has been already sent"
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__footer_doc_policy_text
+msgid "Footer doc policy text"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__footer_doc_policy_text
-msgid "Footer doc policy text"
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__force_invite
+msgid "Force send invitation email in case it has been already sent"
 msgstr ""
 
 #. module: energy_communities
@@ -829,6 +859,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_cm_filter__id
 #: model:ir.model.fields,field_description:energy_communities.field_cm_map__id
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place__id
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__id
 #: model:ir.model.fields,field_description:energy_communities.field_external_id_mixin__id
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__id
 #: model:ir.model.fields,field_description:energy_communities.field_product_template__id
@@ -994,6 +1025,12 @@ msgid "Landing reference"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "Lang is not valid"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__default_lang_id
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__lang
 msgid "Language"
@@ -1009,6 +1046,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_cm_filter____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_cm_map____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_external_id_mixin____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_product_template____last_update
@@ -1027,6 +1065,7 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__write_uid
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_uid
 msgid "Last Updated by"
 msgstr ""
@@ -1034,6 +1073,7 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__write_date
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_date
 msgid "Last Updated on"
 msgstr ""
@@ -1089,6 +1129,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__limited_partnership
 #, python-format
 msgid "Limited partnership"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "Login is empty"
 msgstr ""
 
 #. module: energy_communities
@@ -1330,6 +1376,13 @@ msgid "Parent landing page"
 msgstr ""
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_bank_statement_line__payment_date
+#: model:ir.model.fields,field_description:energy_communities.field_account_move__payment_date
+#: model:ir.model.fields,field_description:energy_communities.field_account_payment__payment_date
+msgid "Payment Date"
+msgstr ""
+
+#. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_to_activate
 msgid "Per activar"
 msgstr ""
@@ -1405,8 +1458,19 @@ msgid "Primary Image"
 msgstr ""
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_users_role__priority
+msgid "Priority"
+msgstr ""
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
 msgid "Process"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#, python-format
+msgid "Process has been started."
 msgstr ""
 
 #. module: energy_communities
@@ -1472,6 +1536,12 @@ msgstr ""
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
+msgid "Role not found"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
 msgid ""
 "Role {} is not available for company {} of type {}. This type of company "
 "allows roles {}"
@@ -1485,9 +1555,8 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_users.py:0
-#, python-format
-msgid "Role not found"
+#: model:ir.model.constraint,message:energy_communities.constraint_res_users_role_line_user_role_uniq
+msgid "Roles can be assigned to a user only once at a time"
 msgstr ""
 
 #. module: energy_communities
@@ -1511,13 +1580,6 @@ msgstr ""
 msgid ""
 "Select the stages to be covered by each partner (the selection of a stage "
 "implies the execution of the precedents):"
-msgstr ""
-
-#. module: energy_communities
-#: code:addons/energy_communities/wizards/create_users_wizard.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__invite_user_through_kc
-#, python-format
-msgid "3) Send invitation email to confirm email and reset password"
 msgstr ""
 
 #. module: energy_communities
@@ -1655,6 +1717,11 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__superuser_pwd
 msgid "Superuser password"
+msgstr ""
+
+#. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_tariffs_page_contact
+msgid "Tariffs page contact"
 msgstr ""
 
 #. module: energy_communities
@@ -1847,6 +1914,12 @@ msgid "User admin URL"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "User group odoo-allow doesn't exist."
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #, python-format
 msgid "User not found"
@@ -1861,7 +1934,13 @@ msgstr ""
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid "User with vat {} is already {} for the company {}"
-msgstr "El usuari amb vat {} ja es {} per a la empresa {}"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "User_vals dict is empty"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_users

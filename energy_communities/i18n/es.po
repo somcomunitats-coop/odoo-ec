@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-11 08:25+0000\n"
-"PO-Revision-Date: 2024-06-11 10:36+0200\n"
+"POT-Creation-Date: 2024-08-09 08:24+0000\n"
+"PO-Revision-Date: 2024-08-09 10:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -26,6 +26,28 @@ msgstr "Contraseña del super-usuario"
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_date_past
 msgid "#{date_placeholder}"
 msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__create_user
+#, python-format
+msgid "1) Create Odoo user (in case it doesn't exist)"
+msgstr "1) Crear usuaria en Odoo (en caso de que aún no existe)"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__create_kc_user
+#, python-format
+msgid "2) Create Keycloak user (in case it doesn't exist)"
+msgstr "2) Crear usuaria en Keycloak (en caso de que aún no existe)"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__invite_user_through_kc
+#, python-format
+msgid "3) Send invitation email to confirm email and reset password"
+msgstr ""
+"3) Enviar correo de invitación para confirmar email y resetear contraseña"
 
 #. module: energy_communities
 #: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_campanya
@@ -57,6 +79,11 @@ msgstr "Acciones energéticas"
 #: model:ir.model.constraint,message:energy_communities.constraint_res_partner_bank_unique_number
 msgid "Account Number must be unique"
 msgstr "El número de cuenta debe ser único"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__action
+msgid "Action"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_needaction
@@ -101,7 +128,7 @@ msgstr "Proveedor AUTH  tareas administrativas"
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_admin
 msgid "Administrator"
-msgstr "Administrador"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_cm_map__admins_to_notify
@@ -164,6 +191,12 @@ msgstr "Número de adjuntos"
 #, python-format
 msgid "Authorization token not found"
 msgstr "Token de autorización no encontrado"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__available_role_ids
+#: model:ir.model.fields,field_description:energy_communities.field_res_users_role__available_role_ids
+msgid "Available roles"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_partner_bank
@@ -425,7 +458,7 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_partner
 msgid "Contact"
-msgstr "Contacto"
+msgstr "Contacte"
 
 #. module: energy_communities
 #: model:utm.source,name:energy_communities.ce_source_coord_web_hiring
@@ -529,13 +562,6 @@ msgid "Create User"
 msgstr "Crear usuario"
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/create_users_wizard.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__create_kc_user
-#, python-format
-msgid "2) Create Keycloak user (in case it doesn't exist)"
-msgstr "2) Crear usuaria en Keycloak (en caso de que aún no existe)"
-
-#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "Create landing page"
 msgstr "Crear página de Landing"
@@ -544,13 +570,6 @@ msgstr "Crear página de Landing"
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
 msgid "Create map place"
 msgstr "Crear punto de mapa"
-
-#. module: energy_communities
-#: code:addons/energy_communities/wizards/create_users_wizard.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__create_user
-#, python-format
-msgid "1) Create Odoo user (in case it doesn't exist)"
-msgstr "1) Crear usuaria en Odoo (en caso de que aún no existe)"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_create_user_wizard
@@ -563,8 +582,14 @@ msgid "Create user for keycloak"
 msgstr "Crear usuario de KeyCloak/SSO desde la socia"
 
 #. module: energy_communities
+#: model:ir.model,name:energy_communities.model_create_users_wizard
+msgid "Create users Wizard"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__create_uid
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_uid
 msgid "Created by"
 msgstr "Creado por"
@@ -572,6 +597,7 @@ msgstr "Creado por"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__create_date
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_date
 msgid "Created on"
 msgstr "Creado el"
@@ -601,6 +627,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_cm_filter__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_cm_map__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_external_id_mixin__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_product_template__display_name
@@ -614,7 +641,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__display_name
 msgid "Display Name"
-msgstr "Nombre mostrado"
+msgstr "Nombre Mostrado"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__display_footer_doc_policy_text
@@ -640,6 +667,12 @@ msgstr "Eficiencia energética"
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__email
 msgid "Email"
 msgstr "Correo electrónico"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "Email is not valid"
+msgstr ""
 
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_thermal_energy
@@ -766,16 +799,15 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Iconos de Font awesome p.ej. fa-tasks"
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/create_users_wizard.py:0
-#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__force_invite
-#, python-format
-msgid "Force send invitation email in case it has been already sent"
-msgstr "Forzar envio de invitación en caso de que ya se ha hecho anteriormente"
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__footer_doc_policy_text
 msgid "Footer doc policy text"
 msgstr "Texto legal a pie de documentos"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__force_invite
+msgid "Force send invitation email in case it has been already sent"
+msgstr ""
+"Forzar envio de invitación en caso de que ya se ha hecho anteriormente"
 
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_training
@@ -835,6 +867,7 @@ msgstr "Nivel jerárquico"
 #: model:ir.model.fields,field_description:energy_communities.field_cm_filter__id
 #: model:ir.model.fields,field_description:energy_communities.field_cm_map__id
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place__id
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__id
 #: model:ir.model.fields,field_description:energy_communities.field_external_id_mixin__id
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__id
 #: model:ir.model.fields,field_description:energy_communities.field_product_template__id
@@ -963,7 +996,7 @@ msgstr "Es una administradora nueva?"
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_account_move
 msgid "Journal Entry"
-msgstr "Asiento de diario"
+msgstr "Asiento contable"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__is_keycloak_provider
@@ -1005,6 +1038,12 @@ msgid "Landing reference"
 msgstr "Referencia a la página web"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "Lang is not valid"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__default_lang_id
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__lang
 msgid "Language"
@@ -1020,6 +1059,7 @@ msgstr "Idioma"
 #: model:ir.model.fields,field_description:energy_communities.field_cm_filter____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_cm_map____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_external_id_mixin____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_product_template____last_update
@@ -1038,6 +1078,7 @@ msgstr "Última modificación el"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__write_uid
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
@@ -1045,6 +1086,7 @@ msgstr "Última actualización por"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__write_date
+#: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
@@ -1103,10 +1145,16 @@ msgid "Limited partnership"
 msgstr "Sociedad Comanditaria"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "Login is empty"
+msgstr ""
+
+#. module: energy_communities
 #: model:auth.oauth.provider,body:energy_communities.keycloak_admin_provider
 #: model:auth.oauth.provider,body:energy_communities.keycloak_login_provider
 msgid "Login with Keycloak"
-msgstr "Login con Keycloak"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__landing_logo_file
@@ -1166,7 +1214,7 @@ msgstr "Mi página Landing"
 #. module: energy_communities
 #: model:cm.map,external_link_cta_txt:energy_communities.map_campanya
 msgid "Més informació"
-msgstr "Mas información"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__company_hierarchy_level__none
@@ -1200,9 +1248,6 @@ msgid ""
 "Energètiques\n"
 "        "
 msgstr ""
-"Nivel de acceso de los usuarios a la plataforma Odoo de las comunidades "
-"Energéticas\n"
-"        "
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_community_service.py:0
@@ -1353,6 +1398,13 @@ msgid "Parent landing page"
 msgstr "Página Landing pariente"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_bank_statement_line__payment_date
+#: model:ir.model.fields,field_description:energy_communities.field_account_move__payment_date
+#: model:ir.model.fields,field_description:energy_communities.field_account_payment__payment_date
+msgid "Payment Date"
+msgstr ""
+
+#. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_to_activate
 msgid "Per activar"
 msgstr "Para activar"
@@ -1397,13 +1449,13 @@ msgstr "Plataforma"
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_platform_manager
 msgid "Platform Manager"
-msgstr "Manager de Plataforma"
+msgstr ""
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_platform_admin_res_groups
 #: model:res.users.role,name:energy_communities.role_platform_admin
 msgid "Platform admin role"
-msgstr "Rol de administrador de plataforma"
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_partner_form
@@ -1427,9 +1479,20 @@ msgid "Primary Image"
 msgstr "Imagen principal"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_users_role__priority
+msgid "Priority"
+msgstr ""
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
 msgid "Process"
 msgstr "Proceso"
+
+#. module: energy_communities
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#, python-format
+msgid "Process has been started."
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_product_template
@@ -1458,7 +1521,7 @@ msgstr "Publicado"
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.print_instance
 msgid "Push user to Keycloak"
-msgstr "Subir usuario a Keycloak"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__realm_name
@@ -1494,24 +1557,32 @@ msgstr "Rol"
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
+msgid "Role not found"
+msgstr "Rol no encontrado"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
 msgid ""
 "Role {} is not available for company {} of type {}. This type of company "
 "allows roles {}"
-msgstr "El rol {} no se puede elegir para la compañía {} de tipo {}. Este tipo de compañías "
-"permiten los roles {}"
+msgstr ""
+"El rol {} no se puede elegir para la compañía {} de tipo {}. Este tipo de "
+"compañías permiten los roles {}"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid ""
 "Role {} is not available for user with {} role. This role only allows {}"
-msgstr "El rol {} no se puede elegir para usuarios con el rol {}. Solo se pueden elegir los roles {}"
+msgstr ""
+"El rol {} no se puede elegir para usuarios con el rol {}. Solo se pueden "
+"elegir los roles {}"
 
 #. module: energy_communities
-#: code:addons/energy_communities/models/res_users.py:0
-#, python-format
-msgid "Role not found"
-msgstr "Rol no encontrado"
+#: model:ir.model.constraint,message:energy_communities.constraint_res_users_role_line_user_role_uniq
+msgid "Roles can be assigned to a user only once at a time"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__root_endpoint
@@ -1534,15 +1605,9 @@ msgstr "Imagen secundaria"
 msgid ""
 "Select the stages to be covered by each partner (the selection of a stage "
 "implies the execution of the precedents):"
-msgstr "Selecciona las etapes a cubrir para cada persona socia (la selección de una etapa "
-"implica la execución de los precedentes):"
-
-#. module: energy_communities
-#: code:addons/energy_communities/wizards/create_users_wizard.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__invite_user_through_kc
-#, python-format
-msgid "3) Send invitation email to confirm email and reset password"
-msgstr "3) Enviar correo de invitación para confirmar email y resetear contraseña"
+msgstr ""
+"Selecciona las etapes a cubrir para cada persona socia (la selección de una "
+"etapa implica la execución de los precedentes):"
 
 #. module: energy_communities
 #: code:addons/energy_communities/models/landing_page.py:0
@@ -1688,6 +1753,11 @@ msgid "Superuser password"
 msgstr "Contraseña super usuario"
 
 #. module: energy_communities
+#: model:utm.source,name:energy_communities.ce_source_tariffs_page_contact
+msgid "Tariffs page contact"
+msgstr "Contacto desde página de tarifas"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__social_telegram
 msgid "Telegram Account"
 msgstr "Cuenta Telegram"
@@ -1729,7 +1799,9 @@ msgstr ""
 #: code:addons/energy_communities/wizards/create_users_wizard.py:0
 #, python-format
 msgid "There is no company selected with level energy community."
-msgstr "No hay ninguna compañía seleccionada que represente una Comunidad Energetica (Nivel de jerarquía=Comunitat)"
+msgstr ""
+"No hay ninguna compañía seleccionada que represente una Comunidad "
+"Energetica (Nivel de jerarquía=Comunitat)"
 
 #. module: energy_communities
 #: code:addons/energy_communities/wizards/change_coordinator_wizard.py:0
@@ -1747,10 +1819,12 @@ msgstr "Este código de idioma %s no está activo en Odoo. Los activos son: %s"
 #: code:addons/energy_communities/wizards/create_users_wizard.py:0
 #, python-format
 msgid ""
-"This wizard can only run with ONE company selected. Please limit the context"
-" of the selected companies to one."
-msgstr "Este assistente se puede executar teniendo seleccionada solo UNA UNICA companñía activa para el usuari que executa "
-" el assistente. Por favor limita el contexto de las compañías seleccionadas a una única"
+"This wizard can only run with ONE company selected. Please limit the "
+"context of the selected companies to one."
+msgstr ""
+"Este assistente se puede executar teniendo seleccionada solo UNA UNICA "
+"companñía activa para el usuari que executa  el assistente. Por favor "
+"limita el contexto de las compañías seleccionadas a una única"
 
 #. module: energy_communities
 #: model:cm.map,categories_filter_title:energy_communities.map_campanya
@@ -1858,7 +1932,7 @@ msgstr "Utilizar usuario existene para lincarlo a la compañia"
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_user
 msgid "User"
-msgstr "Usuario"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__user_current_company
@@ -1886,6 +1960,12 @@ msgid "User admin URL"
 msgstr "URL usuario admin"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "User group odoo-allow doesn't exist."
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #, python-format
 msgid "User not found"
@@ -1901,6 +1981,12 @@ msgstr "Rol de usuario"
 #, python-format
 msgid "User with vat {} is already {} for the company {}"
 msgstr "El usuario con vat {} ya es {} para la compañía {}"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "User_vals dict is empty"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_users
@@ -2718,74 +2804,6 @@ msgid ""
 "  ]\n"
 "}"
 msgstr ""
-"{\n"
-"  \"type\":\"VerticalLayout\",\n"
-"  \"elements\": [\n"
-"    {\n"
-"      \"type\": \"HorizontalLayout\",\n"
-"      \"elements\": [\n"
-"        {\n"
-"          \"type\": \"Container\",\n"
-"          \"scope\": \"#/properties/po2_filter_state\",\n"
-"          \"backgroundColor\": \"#8ec23a\",\n"
-"          \"textColor\": \"#fff\"\n"
-"        },\n"
-"        {\n"
-"          \"type\": \"Container\",\n"
-"          \"scope\": \"#/properties/po2_category\",\n"
-"          \"backgroundColor\": \"#e8f3ec\",\n"
-"          \"textColor\": \"#153f2d\"\n"
-"        }\n"
-"      ]\n"
-"    },\n"
-"    {\n"
-"      \"type\": \"Display\",\n"
-"      \"scope\": \"#/properties/po2_title\"\n"
-"    },\n"
-"    {\n"
-"      \"type\": \"Display\",\n"
-"      \"scope\": \"#/properties/po2_description\"\n"
-"    },\n"
-"    {\n"
-"      \"type\": \"EnergyActions\",\n"
-"      \"scope\": \"#/properties/po2_filter_energy_actions\",\n"
-"      \"backgroundColor\": \"#51ab50\",\n"
-"      \"textColor\": \"#fff\"\n"
-"    },\n"
-"    {\n"
-"      \"type\": \"Group\",\n"
-"      \"border\": true,\n"
-"      \"borderColor\": \"#c5e2d0\",\n"
-"      \"backgroundColor\": \"#FFFFFF\",\n"
-"      \"textColor\": \"#000000\",\n"
-"      \"elements\": [\n"
-"        {\n"
-"          \"type\": \"InteractionButtons\"\n"
-"        }\n"
-"      ]\n"
-"    },\n"
-"    {\n"
-"      \"type\": \"Group\",\n"
-"      \"center\": true,\n"
-"      \"border\": true,\n"
-"      \"borderColor\": \"transparent\",\n"
-"      \"backgroundColor\": \"#153f2d\",\n"
-"      \"textColor\": \"#FFFFFF\",\n"
-"      \"showInResult\": true,\n"
-"      \"elements\": [\n"
-"        {\n"
-"          \"type\": \"Display\",\n"
-"          \"scope\": \"#/properties/po2_social_headline\"\n"
-"        },\n"
-"        {\n"
-"          \"type\": \"InteractionSocial\",\n"
-"          \"IconColor\": \"#153f2d\",\n"
-"          \"IconBackgroundColor\": \"#fff\"\n"
-"        }\n"
-"      ]\n"
-"    }\n"
-"  ]\n"
-"}"
 
 #. module: energy_communities
 #: model:cm.presenter.model,json_dataschema:energy_communities.map_presenter_model_to_activate
