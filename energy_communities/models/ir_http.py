@@ -14,7 +14,14 @@ class IrHttp(models.AbstractModel):
         result = super().session_info()
         if self.env.user.role_line_ids:
             cookie_cids = request.httprequest.cookies.get("cids")
-            cid = cookie_cids and int(cookie_cids.split(",")[0]) or self.env.company.id
+            try:
+                cid = (
+                    cookie_cids
+                    and int(cookie_cids.split(",")[0])
+                    or self.env.company.id
+                )
+            except Exception:
+                cid = self.env.company.id
             self.env.user.with_context(
                 allowed_company_ids=[cid]
             ).set_groups_from_roles()
