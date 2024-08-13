@@ -10,7 +10,7 @@
                 <form string="Return voluntary shares interest">
                     <sheet>
                         <group>
-                            <field name="company_id" required="1" />
+                            <field name="company_id" required="1" invisible="1" />
                             <field name="interest" required="1" />
                             <field name="credit_account_move_id" required="1" />
                             <field name="return_line_account_id" required="1" />
