@@ -675,7 +675,8 @@ class ResUsers(models.Model):
             ]
         )
         common_global_role_lines = global_role_lines.filtered(
-            application_scope=self.env["res.users.role"].COMMON_LAYER
+            lambda r: r.role_id.application_scope
+            == self.env["res.users.role"].COMMON_LAYER
         )
 
         company_ids = self.env.context.get("allowed_company_ids") or self.company_id.ids
