@@ -688,4 +688,4 @@ class ResUsers(models.Model):
         )
         active_roles = active_roles | global_role_lines | company_role_lines
 
-        return self._max_priority_role_line(active_roles) & common_global_role_lines
+        return self._max_priority_role_line(active_roles) | common_global_role_lines
