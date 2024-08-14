@@ -1,8 +1,16 @@
-from odoo import fields, models
+from odoo import _, fields, models
 
 
 class ResUsersRole(models.Model):
     _inherit = "res.users.role"
+
+    SPECIFIC_LAYER = "specific_functional_layer"
+    COMMON_LAYER = "common_functional_layer"
+
+    APPLICATION_SCOPE_CHOICES = [
+        (SPECIFIC_LAYER, _("Specific layer")),
+        (COMMON_LAYER, _("Common layer")),
+    ]
 
     code = fields.Char(string="Code")
     priority = fields.Integer(
@@ -14,6 +22,12 @@ class ResUsersRole(models.Model):
         "role_id",
         "available_role_id",
         string="Available roles",
+        compute="_compute_priority_and_available_roles",
+    )
+
+    application_scope = fields.Selection(
+        selection=APPLICATION_SCOPE_CHOICES,
+        string=_("Application scope"),
         compute="_compute_priority_and_available_roles",
     )
 
@@ -33,24 +47,31 @@ class ResUsersRole(models.Model):
             if record.code == "role_platform_admin":
                 record.priority = 1
                 record.available_role_ids = []
+                record.application_scope = self.SPECIFIC_LAYER
             elif record.code == "role_coord_admin":
                 record.priority = 2
                 record.available_role_ids = available_roles
+                record.application_scope = self.SPECIFIC_LAYER
             elif record.code == "role_coord_worker":
                 record.priority = 3
                 record.available_role_ids = available_roles
+                record.application_scope = self.SPECIFIC_LAYER
             elif record.code == "role_ce_manager":
                 record.priority = 4
                 record.available_role_ids = available_roles
+                record.application_scope = self.SPECIFIC_LAYER
             elif record.code == "role_ce_admin":
                 record.priority = 5
                 record.available_role_ids = available_roles
+                record.application_scope = self.SPECIFIC_LAYER
             elif record.code == "role_ce_member":
                 record.priority = 6
                 record.available_role_ids = available_roles
+                record.application_scope = self.SPECIFIC_LAYER
             elif record.code == "role_internal_user":
                 record.priority = 7
                 record.available_role_ids = available_roles + internal_user_extra_roles
+                record.application_scope = self.COMMON_LAYER
 
 
 class ResUsersRoleLine(models.Model):

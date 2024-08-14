@@ -674,6 +674,9 @@ class ResUsers(models.Model):
                 ("company_id", "=", None),
             ]
         )
+        common_global_role_lines = global_role_lines.filtered(
+            application_scope=self.env["res.users.role"].COMMON_LAYER
+        )
 
         company_ids = self.env.context.get("allowed_company_ids") or self.company_id.ids
         company_role_lines = active_roles.search(
@@ -683,4 +686,5 @@ class ResUsers(models.Model):
             ]
         )
         active_roles = active_roles | global_role_lines | company_role_lines
-        return self._max_priority_role_line(active_roles)
+
+        return self._max_priority_role_line(active_roles) & common_global_role_lines
