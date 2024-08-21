@@ -5,9 +5,24 @@
         <field name="sequence">10</field>
     </record>
 
-    <!-- new groups -->
-    <record model="res.groups" id="group_api_energy_selfconsumption">
-        <field name="name">Energy Communities API Group</field>
+    <!-- Group for API users (providers) -->
+    <record model="res.groups" id="group_api_providers">
+        <field name="name">Energy Communities API Providers Group</field>
         <field name="category_id" ref="api_category" />
     </record>
+
+    <record model="res.users.role" id="role_api_provider">
+        <field name="name">Api Provider Role</field>
+        <field name="code">role_api_provider</field>
+        <field
+      name="implied_ids"
+      eval="[
+            (5, 0, 0),
+            (4, ref('group_api_providers')),
+            (4, ref('energy_project.group_user')),
+            (4, ref('base.group_multi_company')),
+        ]"
+    />
+    </record>
+
 </odoo>

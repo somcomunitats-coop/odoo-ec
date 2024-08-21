@@ -39,19 +39,14 @@ class UserCurrentCompanyMixin(models.AbstractModel):
         return self.env.user
 
     def get_current_role(self):
-        current_company_id = self.get_current_company_id()
-        current_user = self.get_current_user()
-        current_role_lines = current_user.role_line_ids.filtered(
-            lambda role_line: role_line.company_id.id == current_company_id
-        )
-        if current_role_lines:
-            return current_role_lines[
-                0
-            ].role_id.code  # avoid misconfiguration, only one role per company TODO: constrain company_id on role to avoid this misconfigurations
-        else:
-            admin_role_lines = current_user.role_line_ids.filtered(
-                lambda role_line: role_line.role_id.code == "role_platform_admin"
-            )
-            if admin_role_lines:
-                return "role_platform_admin"
+        roles = self.env.user._get_enabled_roles()
+        if roles:
+            return roles[0].role_id.code
         return False
+
+    def _max_priority_role_line(self, role_lines):
+        selected_role_line = role_lines[0]
+        for role_line in role_lines[1:]:
+            if role_line.role_id.priority < selected_role_line.role_id.priority:
+                selected_role_line = role_line
+        return selected_role_line

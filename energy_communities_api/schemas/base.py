@@ -1,6 +1,16 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+
+from odoo.addons.pydantic import utils
+
+DEFAULT_PAGE_SIZE = 20
+
+
+class NaiveOrmModel(BaseModel):
+    class Config:
+        orm_mode = True
+        getter_dict = utils.GenericOdooGetter
 
 
 class BaseResponse(BaseModel):
@@ -16,7 +26,13 @@ class BaseListResponse(BaseResponse):
 
     total_results: int
     count: int
+    page: int
+
+
+# TODO: PagingParam could be none to return all elements
+class PagingParam(BaseModel):
     page: Optional[int]
+    page_size: Optional[int]
 
 
 class PaginationLimits(BaseModel):
@@ -49,7 +65,7 @@ class PaginationLinks(BaseLinks):
 
 class Error(BaseModel):
     """
-    Representation of an error in energy_selfconsumption_api
+    Representation of an error
     """
 
     code: str

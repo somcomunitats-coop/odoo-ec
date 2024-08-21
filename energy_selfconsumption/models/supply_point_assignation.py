@@ -64,6 +64,20 @@ class SupplyPointAssignation(models.Model):
         "res.company", default=lambda self: self.env.company, readonly=True
     )
 
+    supply_point_code = fields.Char(related="supply_point_id.code", store=False)
+    supply_point_address = fields.Char(related="supply_point_id.street", store=False)
+    supply_point_postalcode = fields.Char(related="supply_point_id.zip", store=False)
+    supply_point_town = fields.Char(related="supply_point_id.city", store=False)
+
+    supply_point_state = fields.Char(
+        related="supply_point_id.state_id.name", store=False
+    )
+    owner_name = fields.Char(related="owner_id.firstname", store=False)
+
+    owner_surnames = fields.Char(related="owner_id.lastname", store=False)
+
+    owner_vat = fields.Char(related="owner_id.vat", store=False)
+
     @api.constrains("coefficient")
     def constraint_coefficient(self):
         for record in self:

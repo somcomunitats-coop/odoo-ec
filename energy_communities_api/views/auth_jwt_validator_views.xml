@@ -1,0 +1,14 @@
+<odoo>
+    <record id="view_auth_jwt_validator_form" model="ir.ui.view">
+      <field name="name">auth.jwt.validator.form.inherit</field>
+      <field name="model">auth.jwt.validator</field>
+      <field name="inherit_id" ref="auth_jwt.view_auth_jwt_validator_form" />
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='partner_id_strategy']" position="attributes">
+        <attribute
+          name="attrs"
+        >{'readonly':[('user_id_strategy', '==', 'jwt-dynamic')]}</attribute>
+      </xpath>
+      </field>
+    </record>
+</odoo>
