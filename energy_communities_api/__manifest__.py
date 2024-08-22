@@ -30,4 +30,6 @@
     "demo": [
         "demo/energy_selfconsumption_app_demo.xml",
     ],
+    "installable": True,
+    "application": True,
 }
