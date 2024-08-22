@@ -665,3 +665,27 @@ class ResUsers(models.Model):
                     "company_id": company_id.id,
                 }
             )
+
+    def _get_enabled_roles(self):
+        active_roles = self.env["res.users.role.line"]
+        global_role_lines = active_roles.search(
+            [
+                ("user_id", "=", self.id),
+                ("company_id", "=", None),
+            ]
+        )
+        common_global_role_lines = global_role_lines.filtered(
+            lambda r: r.role_id.application_scope
+            == self.env["res.users.role"].COMMON_LAYER
+        )
+
+        company_ids = self.env.context.get("allowed_company_ids") or self.company_id.ids
+        company_role_lines = active_roles.search(
+            [
+                ("user_id", "=", self.id),
+                ("company_id", "=", company_ids[0]),
+            ]
+        )
+        active_roles = active_roles | global_role_lines | company_role_lines
+
+        return self._max_priority_role_line(active_roles) | common_global_role_lines

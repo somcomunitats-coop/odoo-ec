@@ -6,12 +6,15 @@ from odoo.tests.common import TransactionCase
 from ..backends.arkenova_backend import ArkenovaBackend
 from ..backends.exceptions import RequestError
 
-# from .backends_data import (
-#     arkenova_data,
-#     member_code,
-#     project_code,
-#     unknown_project_code,
-# )
+try:
+    from .backends_data import (
+        arkenova_data,
+        member_code,
+        project_code,
+        unknown_project_code,
+    )
+except:
+    pass
 
 
 class TestArkenovaBackend(TransactionCase):
