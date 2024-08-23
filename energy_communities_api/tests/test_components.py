@@ -102,7 +102,8 @@ class TestMemberApiInfo(TransactionComponentCase):
 
     def test__get_member_community_services_metrics(self):
         # given a energy community member
-        member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", "*****")])
         # a range of dates
         date_from = date(2024, 4, 1)
         date_to = date(2024, 4, 30)

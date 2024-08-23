@@ -47,6 +47,7 @@ class PartnerApiInfo(Component):
         self, partner: Partner, date_from: date, date_to: date
     ) -> List[CommunityServiceMetricsInfo]:
         metrics = []
+
         projects = (
             self.env["energy_project.inscription"]
             .search(
@@ -54,48 +55,53 @@ class PartnerApiInfo(Component):
             )
             .mapped(lambda inscription: inscription.project_id)
         )
-
         for project in projects:
-            monitoring_service = project.monitoring_service
-            service_parameters = {
-                "member_id": project.filter(),
-                "system_id": project.code,
-                "date_from": date_from,
-                "date_to": date_to,
-            }
-            metrics_info = CommunityServiceMetricsInfo(
-                id=project.monitoring_service.id,
-                shares=partner.member_shares(project),
-                share_energy_production=MetricInfo(
-                    value=monitoring_service.generated_energy_by_member(
-                        **service_parameters
+            monitoring_service = project.monitoring_service()
+            if monitoring_service:
+                member_contract = project.contract_ids.filtered(
+                    lambda contract: contract.partner_id == partner
+                )
+                service_parameters = {
+                    "system_id": project.selfconsumption_id.code,
+                    "member_id": member_contract.code,
+                    "date_from": date_from,
+                    "date_to": date_to,
+                }
+                metrics_info = CommunityServiceMetricsInfo(
+                    id=project.monitoring_service.id,
+                    shares=partner.member_shares(project),
+                    share_energy_production=MetricInfo(
+                        value=monitoring_service.generated_energy_by_member(
+                            **service_parameters
+                        ),
+                        unit=UnitEnum.kwn,
                     ),
-                    unit=UnitEnum.kwn,
-                ),
-                selfconsumption_consumption_ratio=MetricInfo(
-                    value=monitoring_service.selfconsumed_energy_ratio_by_member(
-                        **service_parameters
+                    selfconsumption_consumption_ratio=MetricInfo(
+                        value=monitoring_service.selfconsumed_energy_ratio_by_member(
+                            **service_parameters
+                        ),
+                        unit=UnitEnum.percentage,
                     ),
-                    unit=UnitEnum.percentage,
-                ),
-                selfconsumption_surplus_ratio=MetricInfo(
-                    value=monitoring_service.energy_surplus_ratio_by_member(
-                        **service_parameters
+                    selfconsumption_surplus_ratio=MetricInfo(
+                        value=monitoring_service.energy_surplus_ratio_by_member(
+                            **service_parameters
+                        ),
+                        unit=UnitEnum.percentage,
                     ),
-                    unit=UnitEnum.percentage,
-                ),
-                consumption_selfconsumption_ratio=MetricInfo(
-                    value=monitoring_service.energy_usage_ratio_by_memeber(
-                        **service_parameters
+                    consumption_selfconsumption_ratio=MetricInfo(
+                        value=monitoring_service.energy_usage_ratio_by_memeber(
+                            **service_parameters
+                        ),
+                        unit=UnitEnum.percentage,
                     ),
-                    unit=UnitEnum.percentage,
-                ),
-                environment_saves=MetricInfo(
-                    value=monitoring_service.co2save_by_member(**service_parameters),
-                    unit=UnitEnum.grco2,
-                ),
-            )
-            metrics += [metrics_info]
+                    environment_saves=MetricInfo(
+                        value=monitoring_service.co2save_by_member(
+                            **service_parameters
+                        ),
+                        unit=UnitEnum.grco2,
+                    ),
+                )
+                metrics += [metrics_info]
         return metrics
 
     def _get_communities(self, partner: Partner):

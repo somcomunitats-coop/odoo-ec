@@ -1,5 +1,7 @@
 from odoo import _, fields, models
 
+from ..services.monitoring_service import MonitoringService
+
 STATE_VALUES = [
     ("draft", _("Draft")),
     ("inscription", _("In Inscription")),
@@ -51,3 +53,11 @@ class Project(models.Model):
         required=True,
         default=lambda self: self.env.ref("base.es"),
     )
+
+    def monitoring_service(self):
+        self.ensure_one()
+        service_name = self.env.ref("monitoring_service").name
+        monitoring_contract = self.service_contract_ids.filtered(
+            lambda service_contract: service_contract.service_id.name == service_name
+        )
+        return MonitoringService(monitoring_contract.provider_id.backend())
