@@ -3,12 +3,12 @@ from odoo import fields, models
 class Inscription(models.Model):
     _name = "energy_selfconsumption.inscription_selfconsumption"
     _inherits = {
-        "energy_selfconsumption.inscription": "inscription_id",
+        "energy_project.inscription": "inscription_id",
     }
     _description = "Inscriptions for a self-consumption"
 
     inscription_id = fields.Many2one(
-        "energy_selfconsumption.inscription", required=True, ondelete="cascade"
+        "energy_project.inscription", required=True, ondelete="cascade"
     )
     annual_electricity_use = fields.Float(string="Annual electricity use")
     participation = fields.Many2one(

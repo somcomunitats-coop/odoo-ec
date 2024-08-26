@@ -114,6 +114,9 @@ class Selfconsumption(models.Model):
         help="Select the associated Energy Supplier",
     )
     cadastral_reference = fields.Char(string="Cadastral reference")
+    conf_used_in_selfconsumption = fields.Boolean("Show used in selfconsumption")
+    conf_vulnerability_situation = fields.Boolean("Show vulnerability situation")
+    conf_bank_details = fields.Boolean("Show bank details")
 
     def get_distribution_tables(self):
         self.ensure_one()

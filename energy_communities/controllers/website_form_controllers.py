@@ -1,3 +1,5 @@
+from logging import exception
+
 from odoo import _, http
 from odoo.http import request
 
@@ -6,49 +8,75 @@ class WebsiteFormController(http.Controller):
     # Controlador principal para obtener los datos de renderizado del formulario
     # y visualizar el formulario
     def display_data_page(self, values, render_page, column_search):
-        response = self._page_render_validation(values, render_page, column_search)
-        if response is not True:
-            return response
-        # prefill values
-        model_values = self._get_values(values, column_search)
-        model_values.update(values)
-        final_values = self._fill_values(model_values)
-        return final_values
-
-    def data_submit(self, column_search, **kwargs):
-        # model_id validation
-        response = self._page_render_validation(kwargs,
-                                                self.get_data_page_url(kwargs),
-                                                "id")
-        if response is not True:
-            return response
-
-        model = (
-            request.env[kwargs["model_name"]]
-            .sudo()
-            .search([(column_search, "=", kwargs["model_id"])])
-        )
-
-        # data structures contruction
-        values, form_values = self.get_data_custom_submit()
-
-        # avoid form resubmission by accessing /submit url
-        if form_values:
-            # validation
-            response = self._form_submit_validation(values)
+        try:
+            response = self._page_render_validation(values, render_page, column_search)
             if response is not True:
                 return response
-            # metadata processing
-            self._process_lead_metadata(model, values)
-            # success
-            return self.get_form_submit_url(values)
-        else:
-            return request.redirect(self.get_data_page_url(values))
+            # prefill values
+            model_values = self._get_values(values, column_search)
+            model_values.update(values)
+            final_values = self._fill_values(model_values)
+        except Exception as e:
+            final_values = {
+                "error_msgs": [
+                    _(
+                        "{error}"
+                    ).format(error=e)
+                ],
+                "global_error": True,
+            }
+        return request.render(render_page, final_values)
 
-    def get_data_custom_submit(self):
-        values = {}
-        form_values = {}
-        return values, form_values
+    def data_submit(self, column_search, kwargs):
+        try:
+            # model_id validation
+            response = self._page_render_validation(kwargs,
+                                                    self.get_data_page_url(kwargs),
+                                                    "id")
+            if response is not True:
+                return response
+
+            model = (
+                request.env[kwargs["model_name"]]
+                .sudo()
+                .search([(column_search, "=", kwargs["model_id"])])
+            )
+
+            # data structures contruction
+            values = self.get_data_custom_submit(kwargs)
+            # avoid form resubmission by accessing /submit url
+            if values:
+                # validation
+                response = self.form_submit_validation(values)
+                if "error_msgs" in response.keys():
+                    values.update(response)
+                    return request.render(self.get_form_submit(values), values)
+                # metadata processing
+                self.process_metadata(model, values)
+                # success
+                return self._get_data_submit_response(values)
+            else:
+                return request.redirect(self.get_data_page_url(values))
+        except Exception as e:
+            final_values = {
+                "error_msgs": [
+                    _(
+                        "{error}"
+                    ).format(error=e)
+                ],
+                "global_error": True,
+            }
+            return request.render(self.get_form_submit(final_values), final_values)
+
+    def _get_data_submit_response(self, values):
+        values = self._fill_values(values, True, False)
+        return request.render(self.get_form_submit(values), values)
+
+    def process_metadata(self, model, values):
+        pass
+
+    def get_data_custom_submit(self, kwargs):
+        return kwargs
 
     def _page_render_validation(self, values, render_page, column_search):
         values = self._data_validation(values, column_search)
@@ -123,7 +151,6 @@ class WebsiteFormController(http.Controller):
         model_values = {"closed": False}
         if models:
             model = models[0]
-            data_main_fields = self.get_data_main_fields()
             model_values = self.get_extra_data_main_fields(model, model_values)
         return model_values
 
@@ -135,14 +162,14 @@ class WebsiteFormController(http.Controller):
     def get_data_main_fields(self):
         return {}
 
-    def _fill_values(self, values, display_success=False, display_form=True, data_fields={}):
+    def _fill_values(self, values, display_success=False, display_form=True):
         # urls
-        values["page_url"] = self.get_community_data_page_url(values)
-        values["form_submit_url"] = self.get_community_form_submit_url(values)
+        values["page_url"] = self.get_data_page_url(values)
+        values["form_submit_url"] = self.get_form_submit_url(values)
         # form labels
         # form keys
-        for field_key in data_fields.keys():
-            values[field_key + "_label"] = self.get_translate_field_label(data_fields,
+        for field_key in self.get_data_main_fields().keys():
+            values[field_key + "_label"] = self.get_translate_field_label(self.get_data_main_fields(),
                                                                           values,
                                                                           field_key)
             values[field_key + "_key"] = field_key
@@ -159,10 +186,21 @@ class WebsiteFormController(http.Controller):
             values["closed_form"] = values["closed"]
         return values
 
+    def _get_langs(self):
+        return (
+            request.env["res.lang"]
+            .sudo()
+            .search([("active", "=", 1)])
+            .mapped(lambda r: {"id": r.code, "name": r.name})
+        )
+
     def get_data_page_url(self, values):
         return ""
 
     def get_form_submit_url(self, values):
+        return ""
+
+    def get_form_submit(self, values):
         return ""
 
     def get_translate_field_label(self, data_fields, values, field_key):
@@ -171,6 +209,5 @@ class WebsiteFormController(http.Controller):
     def get_fill_values_custom(self, values):
         return values
 
-
-
-
+    def form_submit_validation(self, values):
+        return True

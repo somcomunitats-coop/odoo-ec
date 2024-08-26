@@ -5,7 +5,7 @@ _GENDER_VALUES = [
     ("female", _("Female")),
 ]
 
-_USED_IN_SELFCONSUMPTION_VALUES = [
+_VULNERABILITY_SITUATION_VALUES = [
     ("yes", _("Yes")),
     ("no", _("No")),
 ]
@@ -29,7 +29,7 @@ class ResPartner(models.Model):
 
     gender = fields.Selection(_GENDER_VALUES, string="Gender")
 
-    vulnerability_situation = fields.Selection(_USED_IN_SELFCONSUMPTION_VALUES,
+    vulnerability_situation = fields.Selection(_VULNERABILITY_SITUATION_VALUES,
                                                string="Vulnerability situation")
 
     def get_supply_points(self):

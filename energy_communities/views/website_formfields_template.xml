@@ -46,6 +46,21 @@
       />
       </div>
     </template>
+    <template id="form_field_hidden" name="form_field_text">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-att-data-showif="showif"
+    >
+        <input
+        t-attf-class="form-control form-control-sm#{trigger and ' data-trigger' or ''}"
+        t-attf-id="#{key}"
+        type="hidden"
+        t-attf-name="#{key}"
+        t-attf-value="#{value or ''}"
+      />
+      </div>
+    </template>
     <template id="form_field_number" name="form_field_number">
       <div
       t-attf-name="#{key}_container"

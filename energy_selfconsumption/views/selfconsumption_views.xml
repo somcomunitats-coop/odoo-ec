@@ -230,6 +230,14 @@
                                     <field name="service_contract_ids" />
                                 </group>
                             </page>
+                            <page string="Inscription form configuration" name="form_configuration">
+                                <group>
+                                    <field name="conf_used_in_selfconsumption" />
+                                    <field name="conf_vulnerability_situation" />
+                                    <field name="conf_bank_details" />
+                                </group>
+                            </page>
+
 
                         </notebook>
 
