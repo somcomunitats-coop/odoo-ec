@@ -68,8 +68,12 @@ class PartnerApiInfo(Component):
                     "date_to": date_to,
                 }
                 metrics_info = CommunityServiceMetricsInfo(
-                    id=project.monitoring_service.id,
-                    shares=partner.member_shares(project),
+                    id=monitoring_service.service_id,
+                    type="fotovoltaic",
+                    shares=MetricInfo(
+                        value=member_contract.supply_point_assignation_id.coefficient,
+                        unit=UnitEnum.percentage,
+                    ),
                     share_energy_production=MetricInfo(
                         value=monitoring_service.generated_energy_by_member(
                             **service_parameters
@@ -89,7 +93,7 @@ class PartnerApiInfo(Component):
                         unit=UnitEnum.percentage,
                     ),
                     consumption_selfconsumption_ratio=MetricInfo(
-                        value=monitoring_service.energy_usage_ratio_by_memeber(
+                        value=monitoring_service.energy_usage_ratio_by_member(
                             **service_parameters
                         ),
                         unit=UnitEnum.percentage,
@@ -102,6 +106,7 @@ class PartnerApiInfo(Component):
                     ),
                 )
                 metrics += [metrics_info]
+
         return metrics
 
     def _get_communities(self, partner: Partner):

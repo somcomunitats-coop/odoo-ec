@@ -15,6 +15,7 @@
         "data/energy_project.reseller.csv",
         "data/energy_project.supplier.csv",
         "data/uom_data.xml",
+        "data/service_data.xml",
         "security/res_groups.xml",
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",

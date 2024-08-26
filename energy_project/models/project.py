@@ -56,8 +56,12 @@ class Project(models.Model):
 
     def monitoring_service(self):
         self.ensure_one()
-        service_name = self.env.ref("monitoring_service").name
+        service_name = self.env.ref("energy_project.monitoring_service").name
         monitoring_contract = self.service_contract_ids.filtered(
-            lambda service_contract: service_contract.service_id.name == service_name
+            lambda service_contract: service_contract.active == True
+            and service_contract.service_id.name == service_name
         )
-        return MonitoringService(monitoring_contract.provider_id.backend())
+        if monitoring_contract:
+            return MonitoringService(
+                monitoring_contract.provider_id.backend(), monitoring_contract
+            )

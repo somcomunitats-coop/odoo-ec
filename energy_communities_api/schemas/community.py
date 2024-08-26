@@ -63,30 +63,30 @@ class CommunityServiceMetricsInfo(BaseModel):
         description="Type of this service, ex: fotovoltaic",
     )
 
-    shares: UnitEnum = Field(
+    shares: MetricInfo = Field(
         ..., title="Shares", description="Shares that have a person for this service"
     )
-    share_energy_production: UnitEnum = Field(
+    share_energy_production: MetricInfo = Field(
         ...,
         title="Share energy production",
         description="Shares of energy generated for a person",
     )
-    selfconsumption_consmption_ratio: UnitEnum = Field(
+    selfconsumption_consumption_ratio: MetricInfo = Field(
         ...,
         title="Selfconsumption consumption ratio",
         description="Ratio of energy consumend",
     )
-    selfconsumption_surplus_ratio: UnitEnum = Field(
+    selfconsumption_surplus_ratio: MetricInfo = Field(
         ...,
         title="Selfconsumption surplus ratio",
         description="Ratio of selfconsumption energy dumped to the net",
     )
-    consumption_selfconsumption_ratio: UnitEnum = Field(
+    consumption_selfconsumption_ratio: MetricInfo = Field(
         ...,
         title="Consupmtion selfconsumption ratio",
         description="Ratio of selfconsumption energy consumed",
     )
-    environment_saves: UnitEnum = Field(
+    environment_saves: MetricInfo = Field(
         ...,
         title="Environment shaves",
         description="Amount of CO2 saved thanks to selfconsumption",
