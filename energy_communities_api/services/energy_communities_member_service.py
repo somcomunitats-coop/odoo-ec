@@ -8,11 +8,11 @@ from ..schemas import (
     DEFAULT_PAGE_SIZE,
     CommunityInfo,
     CommunityInfoListResponse,
+    CommunityServiceMetricsInfoListResponse,
     MemberInfo,
     MemberInfoResponse,
-    PaginationLimits,
 )
-from ..schemas.base import PagingParam
+from ..schemas.base import PagingParam, QueryParams
 from ..utils import api_info, list_response, single_response
 
 
@@ -66,5 +66,32 @@ class MemberApiService(Component):
             CommunityInfoListResponse,
             member_communities,
             total_member_comunities,
+            paging,
+        )
+
+    @restapi.method(
+        [(["/community_services/metrics"], "GET")],
+        input_param=PydanticModel(QueryParams),
+        output_param=PydanticModel(CommunityServiceMetricsInfoListResponse),
+    )
+    def community_service_metrics_info(self, query_params):
+        paging = self._get_pagination_limits(query_params)
+        date_from, date_to = self._get_dates_range(query_params)
+        with api_info(
+            self.env, self._work_on_model, CommunityInfo, paging=paging
+        ) as component:
+            total_member_services = component.total_member_community_services(
+                self.env.user.partner_id
+            )
+            member_community_service_metrics = (
+                component.get_member_community_services_metrics(
+                    self.env.user.partner_id, date_from, date_to
+                )
+            )
+        return list_response(
+            request,
+            CommunityInfoListResponse,
+            member_community_service_metrics,
+            total_member_services,
             paging,
         )

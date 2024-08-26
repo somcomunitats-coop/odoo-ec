@@ -93,6 +93,15 @@ class CommunityServiceMetricsInfo(BaseModel):
     )
 
 
+class CommunityServiceMetricsInfoListResponse(BaseListResponse):
+    """
+    Return all community services metrics in which a member is involved.
+    """
+
+    data: List[CommunityServiceMetricsInfo]
+    links: PaginationLinks
+
+
 class CommunityInfoListResponse(BaseListResponse):
     """
     When a single project is requested, this model will be returned

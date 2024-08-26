@@ -1,3 +1,5 @@
+from datetime import date
+
 from odoo import _
 from odoo.exceptions import ValidationError
 from odoo.http import request
@@ -9,14 +11,22 @@ from ..schemas import DEFAULT_PAGE_SIZE, PaginationLimits
 
 class ApiServiceUtils(AbstractComponent):
     _name = "api.service.utils"
+    START_OF_THE_ALL_TIMES = date(2024, 1, 1)
 
-    def _get_pagination_limits(self, paging_param):
-        if paging_param.page or paging_param.page_size:
-            page = paging_param.page or 1
-            page_size = paging_param.page_size or DEFAULT_PAGE_SIZE
+    def _get_pagination_limits(self, query_params):
+        if query_params.page or query_params.page_size:
+            page = query_params.page or 1
+            page_size = query_params.page_size or DEFAULT_PAGE_SIZE
             return PaginationLimits(
                 limit=page_size, offset=(page - 1) * page_size, page=page
             )
+        return None
+
+    def _get_dates_range(self, query_params):
+        if query_params.from_date or query_params.to_date:
+            from_date = query_params.from_date or self.START_OF_THE_ALL_TIMES
+            to_date = query_params.to_date or date.today()
+            return from_date, to_date
         return None
 
     def _validate_headers(self):

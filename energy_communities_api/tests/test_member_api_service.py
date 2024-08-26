@@ -359,3 +359,20 @@ class TestMemberApiService(HttpCase, RegistryMixin):
                 "description": "<p>BadRequest [<br>{<br>&quot;loc&quot;: [<br>&quot;page&quot;<br>],<br>&quot;msg&quot;: &quot;value is not a valid integer&quot;,<br>&quot;type&quot;: &quot;type_error.integer&quot;<br>}<br>]</p>",
             },
         )
+
+    def test__me_community_service_metrics__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # when we call for the energy_communties that i belong
+        response = self.url_open(
+            "/api/energy-communities/me/community_services/metrics?from_date=2024-04-01&to_date=2024-04-30",
+            headers={
+                "Authorization": self.token,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and body:
+        self.assertDictEqual(response.json(), {})
