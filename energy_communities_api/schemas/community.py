@@ -48,6 +48,7 @@ class MetricInfo(BaseModel):
 class CommunityServiceMetricsInfo(BaseModel):
     class Config:
         title: "Community service metrics information"
+        allow_population_by_field_name = True
 
     id_: int = Field(
         ...,

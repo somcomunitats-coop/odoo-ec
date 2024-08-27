@@ -140,6 +140,7 @@
       eval="[
                 (5, 0, 0),
                 (4, ref('group_user')),
+                (4, ref('account.group_account_invoice')),
         ]"
     />
     </record>

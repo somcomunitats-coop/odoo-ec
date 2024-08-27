@@ -23,17 +23,14 @@ class Project(models.Model):
     company_name = fields.Char(
         string="Name of the company", related="company_id.name", store=False
     )
-
     inscription_ids = fields.One2many(
         "energy_project.inscription",
         "project_id",
     )
-
     active = fields.Boolean(default=True)
     service_contract_ids = fields.One2many(
         "energy_project.service_contract", "project_id", auto_join=True
     )
-
     # address fields
     street = fields.Char(required=True)
     street2 = fields.Char()

@@ -2,6 +2,9 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_energy_project_project_user,energy_project.project.user,model_energy_project_project,group_user,1,0,0,0
 access_energy_project_project_type_user,energy_project.project_type.user,model_energy_project_project_type,group_user,1,0,0,0
 access_energy_project_inscription_user,energy_project.inscription.user,model_energy_project_inscription,group_user,1,0,0,0
+access_energy_project_service_user,energy_project.service.user,model_energy_project_service,group_user,1,0,0,0
+access_energy_project_service_contract_user,energy_project.service_contract.user,model_energy_project_service_contract,group_user,1,0,0,0
+access_energy_project_provider_user,energy_project.provider.user,model_energy_project_provider,group_user,1,0,0,0
 access_energy_project_project_admin,energy_project.project.admin,model_energy_project_project,group_admin,1,1,1,1
 access_energy_project_project_type_admin,energy_project.project_type.admin,model_energy_project_project_type,group_admin,1,1,1,1
 access_energy_project_inscription_admin,energy_project.inscription.admin,model_energy_project_inscription,group_admin,1,1,1,1

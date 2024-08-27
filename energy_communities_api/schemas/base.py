@@ -42,20 +42,20 @@ class QueryParams(BaseModel):
     """
 
     page: Optional[int] = Field(
-        ..., title="Page", description="Page for pagination request"
+        None, title="Page", description="Page for pagination request"
     )
     page_size: Optional[int] = Field(
-        ...,
+        None,
         title="Page size",
         description="Max numbers of elemets for a page",
     )
     from_date: Optional[date] = Field(
-        ...,
+        None,
         title="From date",
         description="starting date for a date range, this date is included in the range",
     )
     to_date: Optional[date] = Field(
-        ...,
+        None,
         title="To date",
         description="ending date for a date range, this date is included in the range",
     )

@@ -90,7 +90,7 @@ class MemberApiService(Component):
             )
         return list_response(
             request,
-            CommunityInfoListResponse,
+            CommunityServiceMetricsInfoListResponse,
             member_community_service_metrics,
             total_member_services,
             paging,

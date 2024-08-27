@@ -11,7 +11,7 @@ from ..schemas import DEFAULT_PAGE_SIZE, PaginationLimits
 
 class ApiServiceUtils(AbstractComponent):
     _name = "api.service.utils"
-    START_OF_THE_ALL_TIMES = date(2024, 1, 1)
+    THE_START_OF_ALL_TIMES = date(2024, 1, 1)
 
     def _get_pagination_limits(self, query_params):
         if query_params.page or query_params.page_size:
@@ -24,7 +24,7 @@ class ApiServiceUtils(AbstractComponent):
 
     def _get_dates_range(self, query_params):
         if query_params.from_date or query_params.to_date:
-            from_date = query_params.from_date or self.START_OF_THE_ALL_TIMES
+            from_date = query_params.from_date or self.THE_START_OF_ALL_TIMES
             to_date = query_params.to_date or date.today()
             return from_date, to_date
         return None

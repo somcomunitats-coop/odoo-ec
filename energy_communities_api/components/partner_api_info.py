@@ -27,6 +27,11 @@ class PartnerApiInfo(Component):
         ("old_member", "=", True),
     ]
 
+    _communities_services_domain = lambda _, partner: [
+        ("partner_id", "=", partner.id),
+        ("project_id.state", "=", "active"),
+    ]
+
     def get_member_info(self, partner: Partner) -> MemberInfo:
         return self.get(partner)
 
@@ -43,16 +48,18 @@ class PartnerApiInfo(Component):
             return self.get_list(communities)
         return []
 
+    def total_member_community_services(self, partner: Partner) -> int:
+        domain = self._communities_services_domain(partner)
+        return self.env["energy_project.inscription"].search_count(domain)
+
     def get_member_community_services_metrics(
         self, partner: Partner, date_from: date, date_to: date
     ) -> List[CommunityServiceMetricsInfo]:
         metrics = []
-
+        domain = self._communities_services_domain(partner)
         projects = (
             self.env["energy_project.inscription"]
-            .search(
-                [("partner_id", "=", partner.id), ("project_id.state", "=", "active")]
-            )
+            .search(domain)
             .mapped(lambda inscription: inscription.project_id)
         )
         for project in projects:

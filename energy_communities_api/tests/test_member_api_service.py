@@ -1,5 +1,6 @@
 import random
 import string
+from functools import partial
 from unittest.mock import patch
 
 import requests
@@ -29,6 +30,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         self.maxDiff = None
         self.community_id = "3"
         self.timeout = 600
+        self.client = partial(self.url_open, timeout=self.timeout)
 
     @property
     def token(self):
@@ -55,10 +57,9 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         community_2_id = "138"
 
         # when we call for the personal data fo
-        response = self.url_open(
+        response = self.client(
             "/api/energy-communities/me",
             headers={"Authorization": self.token, "CommunityId": community_1_id},
-            timeout=self.timeout,
         )
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
@@ -74,10 +75,9 @@ class TestMemberApiService(HttpCase, RegistryMixin):
                 },
             },
         )
-        response = self.url_open(
+        response = self.client(
             "/api/energy-communities/me",
             headers={"Authorization": self.token, "CommunityId": community_2_id},
-            timeout=self.timeout,
         )
         self.assertNotEqual(
             response.json()["data"]["member_number"],
@@ -92,7 +92,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
 
         # when we call for the personal data in api without
         # the CommunityId header
-        response = self.url_open(
+        response = self.client(
             "/api/energy-communities/me", headers={"Authorization": self.token}
         )
         # then we obtain a 400 response code
@@ -114,7 +114,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # self.token
 
         # when we call for the personal data in api with a bad token
-        response = self.url_open(
+        response = self.client(
             "/api/energy-communities/me",
             headers={"Authorization": self.bad_token, "Content-Type": "app/json"},
         )
@@ -147,7 +147,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         patcher.side_effect = raise_exception()
 
         # when we call for the personal data in api with a bad token
-        response = self.url_open(
+        response = self.client(
             "/api/energy-communities/me",
             headers={
                 "Authorization": self.token,
@@ -180,7 +180,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         patcher.side_effect = raise_exception()
 
         # when we call for the personal data in api with a bad token
-        response = self.url_open(
+        response = self.client(
             "/api/energy-communities/me",
             headers={
                 "Authorization": self.token,
@@ -208,7 +208,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         patcher.return_value = None
 
         # when we call for the personal for an user without partner
-        response = self.url_open(
+        response = self.client(
             "/api/energy-communities/me",
             headers={
                 "Authorization": self.token,
@@ -238,7 +238,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # self.token
 
         # when we call for the energy_communties that i belong
-        response = self.url_open(
+        response = self.client(
             "/api/energy-communities/me/communities?page=2&page_size=2",
             headers={
                 "Authorization": self.token,
@@ -269,7 +269,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         patch_member_communites.return_value = member_communities()
         patch_total_member_communities.return_value = len(member_communities())
         # when we call for the energy_communties that i belong
-        response = self.url_open(
+        response = self.client(
             "/api/energy-communities/me/communities?page=2&page_size=2",
             headers={"Authorization": self.token},
             timeout=self.timeout,
@@ -306,7 +306,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         patch_total_member_communities.return_value = 0
 
         # when we call for the personal for an user without partner
-        response = self.url_open(
+        response = self.client(
             "/api/energy-communities/me/communities",
             headers={"Authorization": self.token, "Content-Type": "app/json"},
         )
@@ -344,7 +344,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
 
         patcher.return_value = member_communities()
         # when we call for the energy_communties with bad parameters
-        response = self.url_open(
+        response = self.client(
             "/api/energy-communities/me/communities?page=fgdhjkl&page_size=2",
             headers={"Authorization": self.token},
         )
@@ -366,7 +366,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and a valid personal token
         # self.token
         # when we call for the energy_communties that i belong
-        response = self.url_open(
+        response = self.client(
             "/api/energy-communities/me/community_services/metrics?from_date=2024-04-01&to_date=2024-04-30",
             headers={
                 "Authorization": self.token,
@@ -374,5 +374,6 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         )
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
-        # and body:
-        self.assertDictEqual(response.json(), {})
+        # and the metrics
+        response = response.json()
+        self.assertGreaterEqual(response["count"], 1)
