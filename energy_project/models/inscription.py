@@ -35,7 +35,7 @@ class Inscription(models.Model):
         string=_("Typology"), compute="_compute_is_member", readonly=True
     )
     mandate_id = fields.Many2one(
-        "account.banking.mandate", string="Bank Mandate", required=True
+        "account.banking.mandate", string="Bank Mandate"
     )
     acc_number = fields.Char(related="mandate_id.partner_bank_id.acc_number")
     mandate_filtered_ids = fields.One2many(

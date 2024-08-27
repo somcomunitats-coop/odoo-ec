@@ -53,20 +53,11 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         return "energy_project.project"
 
     def data_validation_custom(self, model, values):
-        if model.state != "inscription":
+        if model.conf_state == "inactive":
             return {
                 "error_msgs": [
                     _(
-                        "You cannot display the form if the project is not in inscription status."
-                    )
-                ],
-                "global_error": True,
-            }
-        if not model.conf_policy_privacy_import_file:
-            return {
-                "error_msgs": [
-                    _(
-                        "You need to add the privacy policy file to display the form."
+                        "You cannot display the form if the project is not in active status."
                     )
                 ],
                 "global_error": True,
@@ -305,15 +296,51 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             "inscriptionselfconsumption_participation_options"
         ] = participation_options
 
+        langs = request.env["res.lang"].sudo().search([])
+        lang_options= []
+        for lang in langs:
+            lang_options.append({
+                "id": lang.iso_code,
+                "name": lang.name,
+            })
+        values["supplypoint_owner_id_lang_options"] = lang_options
+
+        values["supplypoint_cups_title"] = _(
+            "CUPS is the Unified Code of the Point of Supply. "
+            "You can find it on electricity bills."
+        )
+        values["supplypoint_cadastral_reference_title"] = _(
+            "Information necessary for the formalization of the distribution agreement."
+            "You can find it at cadastro.es"
+        )
+        values["project_conf_used_in_selfconsumption_title"] = _(
+            "There is already an individual photovoltaic self-consumption or "
+            "collective at this supply point?"
+        )
+        values["project_conf_vulnerability_situation_title"] = _(
+            "You have a recognized situation of vulnerability due to energy poverty or "
+            "other type of social support need?"
+        )
+        values["inscriptionselfconsumption_annual_electricity_use_title"] = _(
+            "You can find the annual electricity use on the electricity bill"
+            "(Total annual consumption). Put it in kWh/year"
+        )
+        values["inscriptionselfconsumption_participation_title"] = _(
+            "How much power of the collective PV installation you would like to "
+            "purchase."
+        )
+
         return values
 
     def process_metadata(self, model, values):
         partner = request.env["res.partner"].sudo().search([
             ("vat", "=", values["inscription_partner_id_vat"])]
         )
+        mandate = False
         if model.conf_bank_details:
             bank_accounts = request.env["res.partner.bank"].sudo().search(
-                [("acc_number","=",values["inscription_acc_number"])]
+                [("acc_number","=",values["inscription_acc_number"]),
+                 ("partner_id","=",partner.id)]
             )
             if not bank_accounts:
                 bank_account = request.env["res.partner.bank"].sudo().create(
@@ -325,30 +352,17 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 )
             else:
                 bank_account = bank_accounts[0]
-            mandates = request.env["account.banking.mandate"].sudo().search(
-                [("partner_bank_id", "=", bank_account.id)]
+            mandate = request.env["account.banking.mandate"].sudo().create(
+                {
+                    "format": "sepa",
+                    "type": "recurrent",
+                    "state": "valid",
+                    "signature_date": datetime.now().strftime("%Y-%m-%d"),
+                    "partner_bank_id": bank_account.id,
+                    "partner_id": partner.id,
+                    "company_id": model.company_id.id,
+                }
             )
-            if mandates:
-                mandate = mandates[0]
-            else:
-                mandate = request.env["account.banking.mandate"].sudo().create(
-                    {
-                        "format": "sepa",
-                        "type": "recurrent",
-                        "state": "valid",
-                        "signature_date": datetime.now().strftime("%Y-%m-%d"),
-                        "partner_bank_id": bank_account.id,
-                        "partner_id": partner.id,
-                        "company_id": model.company_id.id,
-                    }
-                )
-        else:
-            mandates = request.env["account.banking.mandate"].sudo().search([
-                ("partner_id", "=", partner.id)]
-            )
-            mandate = False
-            if mandates:
-                mandate = mandates[0].id
         participation = request.env["energy_project.participation"].sudo().search([
             ("quantity", "=", float(values["inscriptionselfconsumption_participation"]))]
         )
@@ -357,12 +371,13 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 "project_id": model.id,
                 "partner_id": partner.id,
                 "effective_date": datetime.now().strftime("%Y-%m-%d"),
-                "mandate_id": mandate.id,
+                "mandate_id": mandate.id if mandate else mandate,
                 "participation" : participation[0].id,
                 "annual_electricity_use": values[
                     "inscriptionselfconsumption_annual_electricity_use"
                 ],
                 "accept": True,
+                "member": True,
             }
         )
         if values["supplypoint_owner_id_same"] == "yes":
@@ -374,10 +389,6 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             if model.conf_vulnerability_situation:
                 vulnerability_situation = values["supplypoint_owner_id_vulnerability_situation"]
             lang = request.env["res.lang"].sudo().search([
-                '|',
-                '|',
-                ("name", "=", values["supplypoint_owner_id_lang"]),
-                ("code", "=", values["supplypoint_owner_id_lang"]),
                 ("iso_code", "=", values["supplypoint_owner_id_lang"])
             ])
             birthdate_obj = datetime.strptime(values["supplypoint_owner_id_birthdate_date"], "%d/%m/%Y")
@@ -412,6 +423,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             state_id = owner.state_id.id
             country_id = owner.country_id.id
 
+        # Todo: que hacemos con esto???
         if float(values["supplypoint_contracted_power"]) <= 15:
             tariff = "2.0TD"
         elif float(values["supplypoint_contracted_power"]) <= 50:

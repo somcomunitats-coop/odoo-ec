@@ -19,3 +19,4 @@ class Inscription(models.Model):
                                    " to this bank account as part of participation in "
                                    "this shared self-consumption project of my energy "
                                    "community")
+    member = fields.Boolean(String="is a member?")

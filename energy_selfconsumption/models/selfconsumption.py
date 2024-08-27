@@ -21,6 +21,11 @@ INVOICING_VALUES = [
     ("energy_custom", _("Energy Delivered Custom")),
 ]
 
+CONF_STATE_VALUES = [
+    ("active", _("Active")),
+    ("inactive", _("Inactive")),
+]
+
 
 class Selfconsumption(models.Model):
     _name = "energy_selfconsumption.selfconsumption"
@@ -115,6 +120,8 @@ class Selfconsumption(models.Model):
         help="Select the associated Energy Supplier",
     )
     cadastral_reference = fields.Char(string="Cadastral reference")
+    conf_state = fields.Selection(CONF_STATE_VALUES, strinf="Form status",
+                                  default="inactive", required=True)
     conf_participation_ids = fields.One2many(
         "energy_project.participation",
         "project_id",
@@ -134,6 +141,18 @@ participating in this facility and also information that facilitates the necessa
 subsequent management.
 If you have any questions, you can contact $mail CE
                                           """)
+
+    def change_form_state(self):
+        if self.conf_state == "inactive":
+            if not self.conf_policy_privacy_import_file:
+                raise ValidationError(_("You need to add the privacy policy file to display the form."))
+            self.write({
+                "conf_state": "active",
+            })
+        else:
+            self.write({
+                "conf_state": "inactive",
+            })
 
     def get_distribution_tables(self):
         self.ensure_one()

@@ -232,20 +232,32 @@
                             </page>
                             <page string="Inscription form configuration"
                                   name="form_configuration">
+                                <field
+                                  name="conf_state"
+                                  widget="statusbar"
+                                  readonly="True"
+                                  statusbar_visible="inactive,active"
+                                  nolabel="True"
+                                />
+                                <button style="margin-left: 145px;"
+                                    class="btn btn btn-primary"
+                                    type="object"
+                                    name="change_form_state"
+                                >Change form state</button>
                                 <group name="policy_privacy_file" string="Policy privacy">
                                     <field
                                         name="conf_policy_privacy_import_file"
                                         filename="conf_policy_privacy_fname"
                                         widget="binary"
-                                        attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                        attrs="{'readonly': [('conf_state', '==', 'active')]}"
                                       />
                                     <field name="conf_policy_privacy_fname"
                                            invisible="1" />
                                 </group>
                                 <group name="conf_show" string="Configuration">
-                                    <field name="conf_used_in_selfconsumption" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
-                                    <field name="conf_vulnerability_situation" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
-                                    <field name="conf_bank_details" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                    <field name="conf_used_in_selfconsumption" attrs="{'readonly': [('conf_state', '==', 'active')]}"/>
+                                    <field name="conf_vulnerability_situation" attrs="{'readonly': [('conf_state', '==', 'active')]}"/>
+                                    <field name="conf_bank_details" attrs="{'readonly': [('conf_state', '==', 'active')]}"/>
                                 </group>
                                 <group name="conf_participation" string="Participation">
                                     <field
@@ -253,16 +265,20 @@
                                         widget="one2many"
                                         mode="list"
                                         context="{'default_project_id':id}"
-                                        attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                        attrs="{'readonly': [('conf_state', '==', 'active')]}"
                                       >
-                                        <tree editable="bottom">
+                                        <tree>
                                             <field name="name" />
                                             <field name="quantity" />
                                         </tree>
+                                        <form>
+                                            <field name="name" />
+                                            <field name="quantity" />
+                                        </form>
                                     </field>
                                 </group>
                                 <group name="conf_header_description" string="Description form">
-                                    <field name="conf_header_description" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                    <field name="conf_header_description" attrs="{'readonly': [('conf_state', '==', 'active')]}"/>
                                 </group>
                             </page>
 
