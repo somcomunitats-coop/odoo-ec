@@ -75,10 +75,16 @@ class MemberApiService(Component):
         output_param=PydanticModel(CommunityServiceMetricsInfoListResponse),
     )
     def community_service_metrics_info(self, query_params):
+        self._validate_headers()
+        community_id = request.httprequest.headers.get("CommunityId")
         paging = self._get_pagination_limits(query_params)
         date_from, date_to = self._get_dates_range(query_params)
         with api_info(
-            self.env, self._work_on_model, CommunityInfo, paging=paging
+            self.env,
+            self._work_on_model,
+            CommunityInfo,
+            paging=paging,
+            community_id=community_id,
         ) as component:
             total_member_services = component.total_member_community_services(
                 self.env.user.partner_id
