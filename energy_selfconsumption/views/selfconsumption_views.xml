@@ -230,11 +230,39 @@
                                     <field name="service_contract_ids" />
                                 </group>
                             </page>
-                            <page string="Inscription form configuration" name="form_configuration">
-                                <group>
-                                    <field name="conf_used_in_selfconsumption" />
-                                    <field name="conf_vulnerability_situation" />
-                                    <field name="conf_bank_details" />
+                            <page string="Inscription form configuration"
+                                  name="form_configuration">
+                                <group name="policy_privacy_file" string="Policy privacy">
+                                    <field
+                                        name="conf_policy_privacy_import_file"
+                                        filename="conf_policy_privacy_fname"
+                                        widget="binary"
+                                        attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                      />
+                                    <field name="conf_policy_privacy_fname"
+                                           invisible="1" />
+                                </group>
+                                <group name="conf_show" string="Configuration">
+                                    <field name="conf_used_in_selfconsumption" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                    <field name="conf_vulnerability_situation" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                    <field name="conf_bank_details" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                </group>
+                                <group name="conf_participation" string="Participation">
+                                    <field
+                                        name="conf_participation_ids"
+                                        widget="one2many"
+                                        mode="list"
+                                        context="{'default_project_id':id}"
+                                        attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                      >
+                                        <tree editable="bottom">
+                                            <field name="name" />
+                                            <field name="quantity" />
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group name="conf_header_description" string="Description form">
+                                    <field name="conf_header_description" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
                                 </group>
                             </page>
 

@@ -2,6 +2,7 @@ from odoo import _, http
 from odoo.http import request
 from datetime import datetime
 import re
+import base64
 
 from odoo.addons.energy_communities.controllers.website_form_controllers import WebsiteFormController
 
@@ -29,11 +30,48 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         values["model_name"] = "energy_selfconsumption.selfconsumption"
         return self.data_submit("id", kwargs)
 
+    @http.route('/inscription-data/privacy_policy_file/<int:record_id>', type='http',
+                auth='public', csrf=False)
+    def download_privacy_policy_file(self, record_id, **kwargs):
+        record = request.env['energy_selfconsumption.selfconsumption'].sudo().browse(record_id)
+        if not record or not record.conf_policy_privacy_import_file:
+            return request.not_found()
+
+        file_content = base64.b64decode(record.conf_policy_privacy_import_file)
+        file_name = record.conf_policy_privacy_fname
+
+        return request.make_response(
+            file_content,
+            headers=[
+                ('Content-Type', 'application/pdf'),
+                ('Content-Disposition', 'attachment; filename=%s;' % file_name),
+                ('Content-Length', len(file_content)),
+            ]
+        )
+
     def get_model_name(self):
         return "energy_project.project"
 
-    def data_validation_custom(self, values):
-        return super().data_validation_custom(values)
+    def data_validation_custom(self, model, values):
+        if model.state != "inscription":
+            return {
+                "error_msgs": [
+                    _(
+                        "You cannot display the form if the project is not in inscription status."
+                    )
+                ],
+                "global_error": True,
+            }
+        if not model.conf_policy_privacy_import_file:
+            return {
+                "error_msgs": [
+                    _(
+                        "You need to add the privacy policy file to display the form."
+                    )
+                ],
+                "global_error": True,
+            }
+        return super().data_validation_custom(model, values)
 
     def form_submit_validation(self, values):
         partner = request.env["res.partner"].sudo().search([
@@ -44,6 +82,21 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 "error_msgs": [
                     _(
                         "Partner is not exist."
+                    )
+                ],
+                "global_error": True,
+            }
+        inscription = request.env["energy_selfconsumption.inscription_selfconsumption"].sudo().search(
+            [
+                ("project_id", "=", int(values["model_id"])),
+                ("partner_id", "=", partner.id)
+            ]
+        )
+        if inscription:
+            return {
+                "error_msgs": [
+                    _(
+                        "You are already enrolled in this self-consumption project."
                     )
                 ],
                 "global_error": True,
@@ -66,16 +119,6 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 ],
                 "global_error": True,
             }
-        date_pattern = re.compile(r"^\d{2}/\d{2}/\d{4}$")
-        if not date_pattern.match(values["supplypoint_owner_id_birthdate_date"]):
-            return {
-                "error_msgs": [
-                    _(
-                        "Error format date."
-                    )
-                ],
-                "global_error": True,
-            }
         participation = request.env["energy_project.participation"].sudo().search([
             (
             "quantity", "=", float(values["inscriptionselfconsumption_participation"]))]
@@ -90,6 +133,16 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 "global_error": True,
             }
         if values["supplypoint_owner_id_same"] == "no":
+            date_pattern = re.compile(r"^\d{2}/\d{2}/\d{4}$")
+            if not date_pattern.match(values["supplypoint_owner_id_birthdate_date"]):
+                return {
+                    "error_msgs": [
+                        _(
+                            "Error format date."
+                        )
+                    ],
+                    "global_error": True,
+                }
             lang = request.env["res.lang"].sudo().search([
                 '|',
                 '|',
@@ -149,9 +202,17 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         model_values["project_name"] = model.name
         model_values["model_id"] = model.id
         model_values["project_model_key"] = "model_id"
+        model_values["project_header_description"] = model.conf_header_description
         model_values["project_conf_used_in_selfconsumption"] = model.conf_used_in_selfconsumption
         model_values["project_conf_vulnerability_situation"] = model.conf_vulnerability_situation
         model_values["project_conf_bank_details"] = model.conf_bank_details
+        model_values["project_conf_policy_privacy_import_file_url"] = "{base_url}/inscription-data/privacy_policy_file/{record_id}".format(
+            base_url=request.env["ir.config_parameter"]
+            .sudo()
+            .get_param("web.base.url"),
+            record_id=model.id,
+        )
+        model_values["project_conf_policy_privacy_fname"] = model.conf_policy_privacy_fname
         return model_values
 
     def get_data_custom_submit(self, kwargs):
@@ -307,7 +368,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         if values["supplypoint_owner_id_same"] == "yes":
             owner_id = partner.id
             state_id = partner.state_id.id
-            country_id = partner.country.id
+            country_id = partner.country_id.id
         else:
             vulnerability_situation = "no"
             if model.conf_vulnerability_situation:

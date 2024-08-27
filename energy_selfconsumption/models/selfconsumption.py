@@ -2,6 +2,7 @@ import base64
 import logging
 from datetime import datetime, timedelta
 from io import StringIO
+from tokenize import String
 
 import chardet
 import pandas as pd
@@ -114,9 +115,25 @@ class Selfconsumption(models.Model):
         help="Select the associated Energy Supplier",
     )
     cadastral_reference = fields.Char(string="Cadastral reference")
+    conf_participation_ids = fields.One2many(
+        "energy_project.participation",
+        "project_id",
+        string = "Participation",
+    )
     conf_used_in_selfconsumption = fields.Boolean("Show used in selfconsumption")
     conf_vulnerability_situation = fields.Boolean("Show vulnerability situation")
     conf_bank_details = fields.Boolean("Show bank details")
+    conf_policy_privacy_import_file = fields.Binary(string="Import File (*.pdf)")
+    conf_policy_privacy_fname = fields.Char(string="File Name")
+    conf_header_description = fields.Text(string="Header description",translate=True,
+                                          default="""
+This is the form to request to participate in the shared self-consumption project that 
+your Energy Community has started registrations for.
+It is necessary to fill in all the mandatory data to collect your interest in 
+participating in this facility and also information that facilitates the necessary 
+subsequent management.
+If you have any questions, you can contact $mail CE
+                                          """)
 
     def get_distribution_tables(self):
         self.ensure_one()

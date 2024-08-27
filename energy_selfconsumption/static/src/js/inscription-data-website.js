@@ -15,11 +15,29 @@ odoo.define("energy_selfconsumption.oe_inscription_data", ["energy_communities.o
           $("#supplypoint_owner_id_same").on("change", function (e) {
             if ( $(e.target).val() == "yes" ){
                 $(".owner_data").addClass("d-none");
+                $('#supplypoint_owner_id_name').prop('required', false);
+                $('#supplypoint_owner_id_lastname').prop('required', false);
+                $('#supplypoint_owner_id_gender').prop('required', false);
+                $('#supplypoint_owner_id_birthdate_date').prop('required', false);
+                $('#supplypoint_owner_id_phone').prop('required', false);
+                $('#supplypoint_owner_id_lang').prop('required', false);
+                $('#supplypoint_owner_id_vat').prop('required', false);
+                $('#supplypoint_owner_id_email').prop('required', false);
+                $('#supplypoint_owner_id_email_confirm').prop('required', false);
             }else{
                 $(".owner_data").removeClass("d-none");
+                $('#supplypoint_owner_id_name').prop('required', true);
+                $('#supplypoint_owner_id_lastname').prop('required', true);
+                $('#supplypoint_owner_id_gender').prop('required', true);
+                $('#supplypoint_owner_id_birthdate_date').prop('required', true);
+                $('#supplypoint_owner_id_phone').prop('required', true);
+                $('#supplypoint_owner_id_lang').prop('required', true);
+                $('#supplypoint_owner_id_vat').prop('required', true);
+                $('#supplypoint_owner_id_email').prop('required', true);
+                $('#supplypoint_owner_id_email_confirm').prop('required', true);
             }
           });
-
+          $("#supplypoint_owner_id_same").trigger("change");
           $(".data-trigger").trigger("change");
         });
       },

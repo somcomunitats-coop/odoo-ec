@@ -220,13 +220,18 @@
           </t>
         </div>
         <div class="col-md-12">
-          <p
-        >DATA PROTECTION INFORMATION. Purposes: to respond to your requests. Rights: you can withdraw your consent at any time, as well as access, rectify and delete your data and other rights at <a
-            href="mailto:somenergia@delegado-datos.com"
-          >somenergia@delegado-datos.com</a>. Additional information: <a
-            href="https://somcomunitats.coop/politica-de-privacitat/"
-            target="_blank"
-          >Privacy policy</a>.</p>
+          <p>Privacy Policy.</p>
+          <p>I accept the processing of my personal data.</p>
+          <p>We will use your data to inform and manage registration as a member as well
+              as to carry out statistical studies. For more information on treatment and
+              your rights, consult the privacy policy by downloading it by clicking the
+              following icon:
+              <a
+                 t-attf-href="#{project_conf_policy_privacy_import_file_url}"
+                 target="_blank">
+                    Privacy policy
+              </a>.
+          </p>
         </div>
       </div>
       <h2>
@@ -251,11 +256,12 @@
             </t>
         </div>
         <div class="col-md-12">
-            The usual recommendation for an annual electrical use of is 0.5kW of PV power per 1500 kWh of electrical consumption.
-
-            1000 - 1500 kWh a maximum of 0.5 kW of participation is recommended
-            1500 - 3000 kWh between 0.5 and 1 kW
-            3000 - 5000 kWh between 1.5 - 2 kW
+            <p>The usual recommendation for an annual electrical use of is 0.5kW of PV
+            power per 1500 kWh of electrical consumption.</p>
+            <br/>
+            <p>1000 - 1500 kWh a maximum of 0.5 kW of participation is recommended</p>
+            <p>1500 - 3000 kWh between 0.5 and 1 kW</p>
+            <p>3000 - 5000 kWh between 1.5 - 2 kW</p>
         </div>
       </div>
       <h2 t-if="project_conf_bank_details">
@@ -341,27 +347,7 @@
 
     <!-- TODO: Make this description dynamic and db translatable -->
     <template id="inscription_data_headline" name="inscription_data_headline">
-      <t t-if="pack_2">
-        <h2
-        class="mt-4 text-center"
-      >Data collection form required for the integration of <strong><t
-            t-esc="ce_name"
-          /></strong> to the <strong>public spaces</strong> of our <a
-          href="https://somcomunitats.coop"
-          target="_blank"
-        >web</a> and to our <strong
-        >administrative management space</strong> (Odoo program for corporate, accounting and financial management)</h2>
-      </t>
-      <t t-else="pack_1">
-        <h2
-        class="mt-4 text-center"
-      >Data collection form required for the integration of <strong><t
-            t-esc="ce_name"
-          /></strong> to the <strong>public spaces</strong> of our <a
-          href="https://somcomunitats.coop"
-          target="_blank"
-        >web</a></h2>
-      </t>
+
     </template>
 
     <!-- TODO: Make this description dynamic and db translatable -->
@@ -377,14 +363,7 @@
     id="inscription_data_headline_message_open"
     name="inscription_data_headline_message_open"
   >
-      <br />
-      <div class="alert alert-warning" t-if="not display_success">
-        <p><strong
-        >Alert!</strong> The content you enter in this form is what we will show directly on your page within Som Comunitats.</p>
-        <p
-      >Please check the grammatical and spelling quality of the texts and translations before submitting.</p>
-        <p><strong>Thank you so much!</strong></p>
-      </div>
+
     </template>
 
     <!-- TODO: Make this description dynamic and db translatable -->

@@ -5,68 +5,47 @@ from odoo.http import request
 
 class WebsiteFormController(http.Controller):
 
-    # Controlador principal para obtener los datos de renderizado del formulario
-    # y visualizar el formulario
+    # Main controller for show web
     def display_data_page(self, values, render_page, column_search):
-        try:
-            response = self._page_render_validation(values, render_page, column_search)
-            if response is not True:
-                return response
-            # prefill values
-            model_values = self._get_values(values, column_search)
-            model_values.update(values)
-            final_values = self._fill_values(model_values)
-        except Exception as e:
-            final_values = {
-                "error_msgs": [
-                    _(
-                        "{error}"
-                    ).format(error=e)
-                ],
-                "global_error": True,
-            }
+        response = self._page_render_validation(values, render_page, column_search)
+        if response is not True:
+            return response
+        # prefill values
+        model_values = self._get_values(values, column_search)
+        model_values.update(values)
+        final_values = self._fill_values(model_values)
         return request.render(render_page, final_values)
 
+    # Main controller for send data
     def data_submit(self, column_search, kwargs):
-        try:
-            # model_id validation
-            response = self._page_render_validation(kwargs,
-                                                    self.get_data_page_url(kwargs),
-                                                    "id")
-            if response is not True:
-                return response
+        # model_id validation
+        response = self._page_render_validation(kwargs,
+                                                self.get_data_page_url(kwargs),
+                                                "id")
+        if response is not True:
+            return response
 
-            model = (
-                request.env[kwargs["model_name"]]
-                .sudo()
-                .search([(column_search, "=", kwargs["model_id"])])
-            )
+        model = (
+            request.env[kwargs["model_name"]]
+            .sudo()
+            .search([(column_search, "=", kwargs["model_id"])])
+        )
 
-            # data structures contruction
-            values = self.get_data_custom_submit(kwargs)
-            # avoid form resubmission by accessing /submit url
-            if values:
-                # validation
-                response = self.form_submit_validation(values)
-                if "error_msgs" in response.keys():
-                    values.update(response)
-                    return request.render(self.get_form_submit(values), values)
-                # metadata processing
-                self.process_metadata(model, values)
-                # success
-                return self._get_data_submit_response(values)
-            else:
-                return request.redirect(self.get_data_page_url(values))
-        except Exception as e:
-            final_values = {
-                "error_msgs": [
-                    _(
-                        "{error}"
-                    ).format(error=e)
-                ],
-                "global_error": True,
-            }
-            return request.render(self.get_form_submit(final_values), final_values)
+        # data structures contruction
+        values = self.get_data_custom_submit(kwargs)
+        # avoid form resubmission by accessing /submit url
+        if values:
+            # validation
+            response = self.form_submit_validation(values)
+            if "error_msgs" in response.keys():
+                values.update(response)
+                return request.render(self.get_form_submit(values), values)
+            # metadata processing
+            self.process_metadata(model, values)
+            # success
+            return self._get_data_submit_response(values)
+        else:
+            return request.redirect(self.get_data_page_url(values))
 
     def _get_data_submit_response(self, values):
         values = self._fill_values(values, True, False)
@@ -136,13 +115,13 @@ class WebsiteFormController(http.Controller):
                 ],
                 "global_error": True,
             }
-        values = self.data_validation_custom(values)
+        values = self.data_validation_custom(model, values)
         return values
 
     def get_model_name(self):
         return False
     # Inherit the custom data validation
-    def data_validation_custom(self, values):
+    def data_validation_custom(self, model, values):
         return values
 
     def _get_values(self, values, column_search):
