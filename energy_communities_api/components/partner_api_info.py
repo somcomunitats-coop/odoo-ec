@@ -6,6 +6,7 @@ from odoo.addons.component.core import Component
 
 from ..schemas import (
     CommunityInfo,
+    CommunityServiceInfo,
     CommunityServiceMetricsInfo,
     MemberInfo,
     MetricInfo,
@@ -27,9 +28,13 @@ class PartnerApiInfo(Component):
         ("old_member", "=", True),
     ]
 
-    _communities_services_domain = lambda _, partner: [
+    _active_communities_services_domain = lambda _, partner: [
         ("partner_id", "=", partner.id),
         ("project_id.state", "=", "active"),
+    ]
+
+    _communities_services_domain = lambda _, partner: [
+        ("partner_id", "=", partner.id),
     ]
 
     def get_member_info(self, partner: Partner) -> MemberInfo:
@@ -48,15 +53,34 @@ class PartnerApiInfo(Component):
             return self.get_list(communities)
         return []
 
+    def total_member_active_community_services(self, partner: Partner) -> int:
+        domain = self._active_communities_services_domain(partner)
+        return self.env["energy_project.inscription"].search_count(domain)
+
     def total_member_community_services(self, partner: Partner) -> int:
         domain = self._communities_services_domain(partner)
         return self.env["energy_project.inscription"].search_count(domain)
+
+    def get_member_community_services(
+        self, partner: Partner
+    ) -> List[CommunityServiceInfo]:
+        domain = self._communities_services_domain(partner)
+        registered_services = self.env["energy_project.inscription"].search(domain)
+        return [
+            CommunityServiceInfo(
+                id=service.project_id.id,
+                type="fotovoltaic",
+                name=service.project_id.name,
+                status=service.project_id.state,
+            )
+            for service in registered_services
+        ]
 
     def get_member_community_services_metrics(
         self, partner: Partner, date_from: date, date_to: date
     ) -> List[CommunityServiceMetricsInfo]:
         metrics = []
-        domain = self._communities_services_domain(partner)
+        domain = self._active_communities_services_domain(partner)
         projects = (
             self.env["energy_project.inscription"]
             .search(domain)
@@ -75,7 +99,7 @@ class PartnerApiInfo(Component):
                     "date_to": date_to,
                 }
                 metrics_info = CommunityServiceMetricsInfo(
-                    id=monitoring_service.service_id,
+                    id=project.id,
                     type="fotovoltaic",
                     shares=MetricInfo(
                         value=member_contract.supply_point_assignation_id.coefficient,

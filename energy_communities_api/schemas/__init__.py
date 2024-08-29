@@ -14,6 +14,8 @@ from .community import (
     MetricInfo,
     UnitEnum,
     CommunityInfoListResponse,
+    CommunityServiceInfo,
+    CommunityServiceInfoListResponse,
     CommunityServiceMetricsInfo,
     CommunityServiceMetricsInfoListResponse,
 )

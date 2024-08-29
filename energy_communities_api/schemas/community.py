@@ -30,6 +30,38 @@ class CommunityInfo(NaiveOrmModel):
     )
 
 
+class CommunityServiceInfo(BaseModel):
+    class Config:
+        title: "Community service metrics information"
+        allow_population_by_field_name = True
+
+    id_: int = Field(
+        ...,
+        alias="id",
+        title="Id",
+        description="Id of the community service",
+    )
+
+    type_: str = Field(
+        ...,
+        alias="type",
+        title="Type",
+        description="Type of this service, ex: fotovoltaic",
+    )
+
+    name: str = Field(
+        ...,
+        title="Name",
+        description="Name this service, ex: Coverta Pavellò",
+    )
+
+    status: str = Field(
+        ...,
+        title="Status",
+        description="Status of the service, ex: in_progres",
+    )
+
+
 class UnitEnum(str, Enum):
     kwh = "kWh"
     kwn = "kWn"
@@ -92,6 +124,15 @@ class CommunityServiceMetricsInfo(BaseModel):
         title="Environment shaves",
         description="Amount of CO2 saved thanks to selfconsumption",
     )
+
+
+class CommunityServiceInfoListResponse(BaseListResponse):
+    """
+    Return all community services metrics in which a member is involved.
+    """
+
+    data: List[CommunityServiceInfo]
+    links: PaginationLinks
 
 
 class CommunityServiceMetricsInfoListResponse(BaseListResponse):

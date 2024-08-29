@@ -365,11 +365,35 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # self.url_open
         # and a valid personal token
         # self.token
+        # a community id
+        communty_id = "55"
         # when we call for the energy_communties that i belong
         response = self.client(
             "/api/energy-communities/me/community_services/metrics?from_date=2024-04-01&to_date=2024-04-30",
             headers={
                 "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the metrics
+        response = response.json()
+        self.assertGreaterEqual(response["count"], 1)
+
+    def test__me_community_services__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # when we call for the energy_communties that i belong
+        response = self.client(
+            "/api/energy-communities/me/community_services",
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
             },
         )
         # then we obtain a 200 response code

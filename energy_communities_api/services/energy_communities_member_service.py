@@ -8,6 +8,7 @@ from ..schemas import (
     DEFAULT_PAGE_SIZE,
     CommunityInfo,
     CommunityInfoListResponse,
+    CommunityServiceInfoListResponse,
     CommunityServiceMetricsInfoListResponse,
     MemberInfo,
     MemberInfoResponse,
@@ -70,6 +71,36 @@ class MemberApiService(Component):
         )
 
     @restapi.method(
+        [(["/community_services"], "GET")],
+        input_param=PydanticModel(PagingParam),
+        output_param=PydanticModel(CommunityServiceInfoListResponse),
+    )
+    def community_services_info(self, query_params):
+        self._validate_headers()
+        community_id = request.httprequest.headers.get("CommunityId")
+        paging = self._get_pagination_limits(query_params)
+        with api_info(
+            self.env,
+            self._work_on_model,
+            CommunityInfo,
+            paging=paging,
+            community_id=community_id,
+        ) as component:
+            total_member_services = component.total_member_community_services(
+                self.env.user.partner_id
+            )
+            member_community_services = component.get_member_community_services(
+                self.env.user.partner_id
+            )
+        return list_response(
+            request,
+            CommunityServiceInfoListResponse,
+            member_community_services,
+            total_member_services,
+            paging,
+        )
+
+    @restapi.method(
         [(["/community_services/metrics"], "GET")],
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(CommunityServiceMetricsInfoListResponse),
@@ -86,7 +117,7 @@ class MemberApiService(Component):
             paging=paging,
             community_id=community_id,
         ) as component:
-            total_member_services = component.total_member_community_services(
+            total_member_services = component.total_member_active_community_services(
                 self.env.user.partner_id
             )
             member_community_service_metrics = (
