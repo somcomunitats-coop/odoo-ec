@@ -10,7 +10,7 @@ from odoo.tests import HttpCase, tagged
 
 from odoo.addons.base_rest.tests.common import RegistryMixin
 
-from ..schemas import CommunityInfo
+from ..schemas import CommunityInfo, CommunityServiceMetricsInfo, UnitEnum
 
 try:
     from .data import client_data, client_data_response, server_auth_url
@@ -381,6 +381,62 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         response = response.json()
         self.assertGreaterEqual(response["count"], 1)
 
+    @patch(
+        "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.total_member_active_community_services"
+    )
+    @patch(
+        "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.get_member_community_services_metrics"
+    )
+    def test__me_community_service_metrics__with_paging(self, patcher, patcher_count):
+        def community_service_metrics():
+            return [
+                CommunityServiceMetricsInfo(
+                    id=value,
+                    name=f"test{value}",
+                    type="fotovoltaic",
+                    shares=dict(value=4, unit=UnitEnum.percentage),
+                    share_energy_production=dict(value=0.9, unit=UnitEnum.kwn),
+                    selfconsumption_consumption_ratio=dict(
+                        value=0.3, unit=UnitEnum.percentage
+                    ),
+                    selfconsumption_surplus_ratio=dict(
+                        value=0.3, unit=UnitEnum.percentage
+                    ),
+                    consumption_selfconsumption_ratio=dict(
+                        value=0.3, unit=UnitEnum.percentage
+                    ),
+                    environment_saves=dict(value=4, unit=UnitEnum.grco2),
+                )
+                for value in range(0, 10)
+            ]
+
+        patcher.return_value = community_service_metrics()
+        patcher_count.return_value = len(community_service_metrics())
+
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # when we call for the energy_communties that i belong
+        url = (
+            "/api/energy-communities/me/community_services/metrics"
+            "?from_date=2024-04-01&to_date=2024-04-30&page_size=1&page=1"
+        )
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the metrics
+        result = response.json()
+        self.assertEqual(result["links"]["self_"], response.request.url)
+
     def test__me_community_services__ok(self):
         # given http_client
         # self.url_open
@@ -399,5 +455,5 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
         # and the metrics
-        response = response.json()
-        self.assertGreaterEqual(response["count"], 1)
+        result = response.json()
+        self.assertGreaterEqual(result["count"], 1)
