@@ -27,7 +27,9 @@ class ApiServiceUtils(AbstractComponent):
             from_date = query_params.from_date or self.THE_START_OF_ALL_TIMES
             to_date = query_params.to_date or date.today()
             return from_date, to_date
-        return None
+        from_date = self.THE_START_OF_ALL_TIMES
+        to_date = date.today()
+        return from_date, to_date
 
     def _validate_headers(self):
         community_id = request.httprequest.headers.get("CommunityId")

@@ -14,7 +14,7 @@ from ..schemas import CommunityInfo, CommunityServiceMetricsInfo, UnitEnum
 
 try:
     from .data import client_data, client_data_response, server_auth_url
-except:
+except ImportError:
     pass
 
 
@@ -419,7 +419,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # self.token
         # a community id
         communty_id = "55"
-        # when we call for the energy_communties that i belong
+        # when we call for the metrics of the communty services that i belong
         url = (
             "/api/energy-communities/me/community_services/metrics"
             "?from_date=2024-04-01&to_date=2024-04-30&page_size=1&page=1"
