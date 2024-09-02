@@ -29,7 +29,7 @@
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
-        "data/res_users_role_data.xml",
+        "security/res_users_role_data.xml",
         "data/crm_lead_tag.xml",
         "data/mail_template_data.xml",
         "views/crm_lead_metadata_mapping_views.xml",

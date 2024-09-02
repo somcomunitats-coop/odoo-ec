@@ -31,7 +31,7 @@
         "report/reports.xml",
         "report/voluntary_share_interest_return_report.xml",
         "data/product_data.xml",
-        "data/res_users_role_data.xml",
+        "security/res_users_role_data.xml",
         "data/mail_template_data.xml",
         "data/mail_template_update_data.xml",
         "data/ir_config_parameter_data.xml",

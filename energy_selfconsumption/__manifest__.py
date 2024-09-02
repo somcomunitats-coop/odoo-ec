@@ -32,7 +32,7 @@
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
-        "data/res_users_role_data.xml",
+        "security/res_users_role_data.xml",
         "data/project_type_data.xml",
         "data/ir_sequence_data.xml",
         "data/custom_paper_format_views.xml",
