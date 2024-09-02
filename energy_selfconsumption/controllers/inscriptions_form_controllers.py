@@ -270,6 +270,18 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 "id": "female",
                 "name": _("Female")
             },
+            {
+                "id": "other",
+                "name": _("Other")
+            },
+            {
+                "id": "not_binary",
+                "name": _("Not binary")
+            },
+            {
+                "id": "not_share",
+                "name": _("I prefer to not share it")
+            },
         ]
 
         values["supplypoint_owner_id_vulnerability_situation_options"] = [
@@ -423,7 +435,6 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             state_id = owner.state_id.id
             country_id = owner.country_id.id
 
-        # Todo: que hacemos con esto???
         if float(values["supplypoint_contracted_power"]) <= 15:
             tariff = "2.0TD"
         elif float(values["supplypoint_contracted_power"]) <= 50:

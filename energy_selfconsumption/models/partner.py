@@ -1,10 +1,5 @@
 from odoo import fields, models, _
 
-_GENDER_VALUES = [
-    ("male", _("Male")),
-    ("female", _("Female")),
-]
-
 _VULNERABILITY_SITUATION_VALUES = [
     ("yes", _("Yes")),
     ("no", _("No")),
@@ -26,8 +21,6 @@ class ResPartner(models.Model):
         "energy_selfconsumption.supply_point", "owner_id", readonly=True
     )
     supply_point_count = fields.Integer(compute=_compute_supply_point_count)
-
-    gender = fields.Selection(_GENDER_VALUES, string="Gender")
 
     vulnerability_situation = fields.Selection(_VULNERABILITY_SITUATION_VALUES,
                                                string="Vulnerability situation")
