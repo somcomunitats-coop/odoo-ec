@@ -1,7 +1,7 @@
 import base64
 import logging
 import random
-from csv import reader
+from csv import DictReader
 from datetime import datetime
 from io import StringIO
 
@@ -115,23 +115,24 @@ class SelfconsumptionImportWizard(models.TransientModel):
 
     def get_line_dict(self, line):
         return {
-            "partner_vat": line[0] if line and len(line) > 0 else False,
-            "effective_date": line[1] if line and len(line) > 1 else False,
-            "code": line[2] if line and len(line) > 2 else False,
-            "contracted_power": line[3] if line and len(line) > 3 else False,
-            "tariff": line[4] if line and len(line) > 4 else False,
-            "street": line[5] if line and len(line) > 5 else False,
-            "street2": line[6] if line and len(line) > 6 else False,
-            "city": line[7] if line and len(line) > 7 else False,
-            "state": line[8] if line and len(line) > 8 else False,
-            "postal_code": line[9] if line and len(line) > 9 else False,
-            "country": line[10] if line and len(line) > 10 else False,
-            "cadastral_reference": line and line[11] if len(line) > 11 else False,
-            "owner_vat": line[12] if line and len(line) > 12 else False,
-            "owner_firstname": line[13] if line and len(line) > 13 else False,
-            "owner_lastname": line[14] if line and len(line) > 14 else False,
-            "iban": line[15] if line and len(line) > 15 else False,
-            "mandate_auth_date": line[16] if line and len(line) > 16 else False,
+            "partner_vat": line.get("DNI Socio", False),
+            "effective_date": line.get("Fecha efectiva", False),
+            "code": line.get("CUPS", False),
+            "contracted_power": line.get("Potència màxima contractada", False),
+            "tariff": line.get("Tarifa de acceso", False),
+            "street": line.get("Calle 1", False),
+            "street2": line.get("Calle 2", False),
+            "city": line.get("Ciudad", False),
+            "state": line.get("Código de la provincia", False),
+            "postal_code": line.get("Código postal", False),
+            "country": line.get("Código ISO del país", False),
+            "cadastral_reference": line.get("Referencia Catastral", False),
+            "owner_vat": line.get("DNI Titular", False),
+            "owner_firstname": line.get("Nombre Titular", False),
+            "owner_lastname": line.get("Apellidos Titular", False),
+            "iban": line.get("IBAN", False),
+            "mandate_auth_date": line.get(
+                "Fecha autorización cargo bancario del mandato", False),
         }
 
     def _parse_file(self, data_file):
@@ -150,7 +151,8 @@ class SelfconsumptionImportWizard(models.TransientModel):
                         _("No valid encoding was found for the attached file")
                     )
                 decoded_file = data_file.decode(detected_encoding)
-            csv = reader(StringIO(decoded_file), **csv_options)
+            csv_file = StringIO(decoded_file)
+            csv = DictReader(csv_file, **csv_options)
             return list(csv)
         except BaseException:
             logger.warning("Parser error", exc_info=True)
