@@ -66,7 +66,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
         parsing_data = self.with_context(active_id=self.ids[0])._parse_file(file_data)
         active_id = self.env.context.get("active_id")
         project = self.env["energy_selfconsumption.selfconsumption"].browse(active_id)
-        for index, line in enumerate(parsing_data[1:], start=2):
+        for index, line in enumerate(parsing_data):
             import_dict = self.get_line_dict(line)
             result = self.import_line(import_dict, project)
             if not result[0]:
@@ -114,25 +114,30 @@ class SelfconsumptionImportWizard(models.TransientModel):
         }
 
     def get_line_dict(self, line):
+        header = list(line.keys())
+        if len(header) != 17:
+            raise ValidationError(
+                _(
+                    "The file should contain 17 columns and not {header} columns."
+                ).format(header=len(header)))
         return {
-            "partner_vat": line.get("DNI Socio", False),
-            "effective_date": line.get("Fecha efectiva", False),
-            "code": line.get("CUPS", False),
-            "contracted_power": line.get("Potència màxima contractada", False),
-            "tariff": line.get("Tarifa de acceso", False),
-            "street": line.get("Calle 1", False),
-            "street2": line.get("Calle 2", False),
-            "city": line.get("Ciudad", False),
-            "state": line.get("Código de la provincia", False),
-            "postal_code": line.get("Código postal", False),
-            "country": line.get("Código ISO del país", False),
-            "cadastral_reference": line.get("Referencia Catastral", False),
-            "owner_vat": line.get("DNI Titular", False),
-            "owner_firstname": line.get("Nombre Titular", False),
-            "owner_lastname": line.get("Apellidos Titular", False),
-            "iban": line.get("IBAN", False),
-            "mandate_auth_date": line.get(
-                "Fecha autorización cargo bancario del mandato", False),
+            "partner_vat": line.get(header[0], False),
+            "effective_date": line.get(header[1], False),
+            "code": line.get(header[2], False),
+            "contracted_power": line.get(header[3], False),
+            "tariff": line.get(header[4], False),
+            "street": line.get(header[5], False),
+            "street2": line.get(header[6], False),
+            "city": line.get(header[7], False),
+            "state": line.get(header[8], False),
+            "postal_code": line.get(header[9], False),
+            "country": line.get(header[10], False),
+            "cadastral_reference": line.get(header[11], False),
+            "owner_vat": line.get(header[12], False),
+            "owner_firstname": line.get(header[13], False),
+            "owner_lastname": line.get(header[14], False),
+            "iban": line.get(header[15], False),
+            "mandate_auth_date": line.get(header[16], False),
         }
 
     def _parse_file(self, data_file):
