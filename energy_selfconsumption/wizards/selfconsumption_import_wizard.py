@@ -118,8 +118,8 @@ class SelfconsumptionImportWizard(models.TransientModel):
         if len(header) != 17:
             raise ValidationError(
                 _(
-                    "The file should contain 17 columns and not {header} columns."
-                ).format(header=len(header)))
+                    "The file should contain 17 columns and not {header_length} columns."
+                ).format(header_length=len(header)))
         return {
             "partner_vat": line.get(header[0], False),
             "effective_date": line.get(header[1], False),
