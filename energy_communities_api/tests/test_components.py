@@ -4,11 +4,12 @@ from unittest.mock import patch
 from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import TransactionComponentCase
 
-from ..components.partner_api_info import PartnerApiInfo
+from ..components import PartnerApiInfo, ProjectApiInfo
 from ..schemas import (
     CommunityInfo,
     CommunityServiceInfo,
     CommunityServiceMetricsInfo,
+    EnergyPoint,
     MemberInfo,
     PaginationLimits,
 )
@@ -156,5 +157,50 @@ class TestMemberApiInfo(TransactionComponentCase):
         # then we obtain all services in which that member has an inscription
         self.assertGreaterEqual(
             len(member_community_services),
+            1,
+        )
+
+
+class TestProjectApiInfo(TransactionComponentCase):
+    def setUp(self):
+        super().setUp()
+        self.maxDiff = None
+        self.backend = self.env["api.info.backend"].browse(1)
+
+    def test__get_project_daily_production(self):
+        # given a energy community member
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
+        # a project
+        domain = lambda partner: [
+            ("partner_id", "=", partner.id),
+            ("project_id.state", "=", "active"),
+        ]
+        project = (
+            self.env["energy_project.inscription"]
+            .search(domain(member))
+            .mapped(lambda inscription: inscription.project_id)
+        )[0]
+        # a range of dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # given a api info component
+        work = WorkContext(
+            "energy_project.project",
+            collection=self.backend,
+            schema_class=EnergyPoint,
+        )
+        component = work.component(usage="api.info")
+        self.assertIsInstance(component, ProjectApiInfo)
+
+        # when we ask for the daily energy production of a project in which the member is involv
+        # between two dates
+        daily_production = component.get_project_daily_production(
+            project, member, date_from, date_to
+        )
+
+        # then we obtain the daily production of the member between that dates
+        self.assertGreaterEqual(
+            len(daily_production),
             1,
         )

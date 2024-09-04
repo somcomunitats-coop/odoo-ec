@@ -11,7 +11,6 @@ EnergyPoint = namedtuple("EnergyPoint", ["date", "value"])
 
 EnergyCurve = List[EnergyPoint]
 
-
 # Functions for attribute access
 _get_energy_production = lambda point: float(point.get("energy_production", 0))
 _get_energy_selfconsumption = lambda point: float(point.get("selfconsumption", 0))

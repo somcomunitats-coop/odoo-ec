@@ -19,6 +19,8 @@ from .community import (
     CommunityServiceMetricsInfo,
     CommunityServiceMetricsInfoListResponse,
 )
+from .energy_project import EnergyPoint
+
 from .selfconsumption_project import (
     SelfConsumptionProjectInfo,
     SelfConsumptionProjectMember,
