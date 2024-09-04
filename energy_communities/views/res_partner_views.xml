@@ -59,6 +59,9 @@
             attrs="{'invisible': [('company_hierarchy_level', '!=', 'community')]}"
           >Community company</h4>
                 </xpath>
+                <xpath expr="//field[@name='child_ids']" position="after">
+                  <field name="user_ids" />
+                </xpath>
             </field>
         </record>
 

@@ -11,6 +11,7 @@ from odoo.exceptions import ValidationError
 logger = logging.getLogger(__name__)
 
 _DEFAULT_COOPERATIVE_MEMBERSHIP_USER_ROLE = "role_ce_member"
+_COUNTRY_CODE_SPAIN = "ES"
 
 
 class ResUsers(models.Model):
@@ -24,6 +25,36 @@ class ResUsers(models.Model):
     last_user_invitation_through_kc = fields.Datetime(
         string=_("Last user invitation through Keycloak")
     )
+
+    @api.constrains("login")
+    def _constrains_user_login(self):
+        for record in self:
+            if record.partner_id:
+                record._setup_existing_related_partner()
+                record._propagate_vat_to_related_partner()
+
+    def _setup_existing_related_partner(self):
+        existing_partners = self.env["res.partner"].search(
+            [("vat", "=", self.login), ("id", "!=", self.partner_id.id)]
+        )
+        if existing_partners:
+            # TODO: Do we want a validation error when more than one partner found?
+            existing_partner = existing_partners[0]
+            if existing_partner.user_ids:
+                raise ValidationError(
+                    _(
+                        "The user you're trying to create already exists. Please check for a partner with vat {}"
+                    ).format(self.login)
+                )
+            else:
+                self.write({"partner_id": existing_partner.id})
+
+    def _propagate_vat_to_related_partner(self):
+        es_country = self.env["res.country"].search(
+            [("code", "=", _COUNTRY_CODE_SPAIN)]
+        )
+        # TODO: This write call already validates vat (review check_vat method from base_vat core module). Is it enough?
+        record.partner_id.write({"vat": self.login, "country_id": es_country.id})
 
     def get_user_auth_access_to_spaces(self):
         _odoo_auth_roles = [
