@@ -3,7 +3,7 @@ from datetime import date
 from odoo.tests.common import TransactionCase
 
 from ..backends import ArkenovaBackend
-from ..services import MonitoringService
+from ..services import EnergyPoint, MonitoringService
 
 try:
     from .backends_data import arkenova_data, member_code, project_code
@@ -323,3 +323,27 @@ class TestMonitoringService(TransactionCase):
 
         # then we obtain the percentage of the energy exported
         self.assertEqual(energy_production_ratio, 0.5527)
+
+    def test__daily_generated_energy_by_member(self):
+        # given two dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # a valid system id
+        system_id = project_code
+        # a member id
+        member_id = member_code
+        # and a monitoring service
+        # self.monitoring_service
+
+        # when we ask for the daily generated energy by a member
+        daily_generated_energy = (
+            self.monitoring_service.daily_generated_energy_by_member(
+                system_id, member_id, date_from, date_to
+            )
+        )
+
+        # then we obtain a list of EneryPoints
+        self.assertIsInstance(daily_generated_energy, list)
+        self.assertGreaterEqual(len(daily_generated_energy), 1)
+        for point in daily_generated_energy:
+            self.assertIsInstance(point, EnergyPoint)

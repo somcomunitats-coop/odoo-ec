@@ -1,1 +1,1 @@
-from .monitoring_service import MonitoringService
+from .monitoring_service import MonitoringService, EnergyPoint

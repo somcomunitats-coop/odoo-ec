@@ -1,14 +1,29 @@
+from collections import namedtuple
+from datetime import date
 from functools import lru_cache, reduce
+from typing import List
 
 from ..backends.base import Backend
+
+# Type definitions
+
+EnergyPoint = namedtuple("EnergyPoint", ["date", "value"])
+
+EnergyCurve = List[EnergyPoint]
+
 
 # Functions for attribute access
 _get_energy_production = lambda point: float(point.get("energy_production", 0))
 _get_energy_selfconsumption = lambda point: float(point.get("selfconsumption", 0))
 _get_energy_exported = lambda point: float(point.get("energy_exported", 0))
 _get_energy_consumption = lambda point: float(point.get("energy_consumption", 0))
+_get_timestamp = lambda point: date.fromisoformat(point.get("timestamp", ""))
 
 # Functions for operations
+_get_energy_production_point = lambda point: {
+    "date": _get_timestamp(point),
+    "value": _get_energy_production(point),
+}
 _selfconsumption_ratio_pair = lambda accumulator, point: (
     accumulator[0] + _get_energy_selfconsumption(point),
     accumulator[1] + _get_energy_production(point),
@@ -34,9 +49,8 @@ _energy_production_ratio_pair = lambda accumulator, point: (
 class MonitoringService:
     SPANISH_CO2_SAVE_RATIO = 162
 
-    def __init__(self, backend: Backend, service_contract):
+    def __init__(self, backend: Backend):
         self.backend = backend
-        self.service_conctract = service_contract
 
     @property
     def service_id(self):
@@ -50,6 +64,17 @@ class MonitoringService:
         )
         energy = sum(map(_get_energy_production, daily_metrics))
         return round(energy, 4)
+
+    def daily_generated_energy_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> EnergyCurve:
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        return [
+            EnergyPoint(**_get_energy_production_point(point))
+            for point in daily_metrics
+        ]
 
     def consumed_energy_by_member(
         self, system_id, member_id, date_from, date_to
