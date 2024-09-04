@@ -89,6 +89,12 @@ class CommunityServiceMetricsInfo(BaseModel):
         description="Id of the community service",
     )
 
+    name: str = Field(
+        ...,
+        title="Name",
+        description="Name this service, ex: Coverta Pavellò",
+    )
+
     type_: str = Field(
         ...,
         alias="type",
@@ -99,26 +105,31 @@ class CommunityServiceMetricsInfo(BaseModel):
     shares: MetricInfo = Field(
         ..., title="Shares", description="Shares that have a person for this service"
     )
+
     share_energy_production: MetricInfo = Field(
         ...,
         title="Share energy production",
         description="Shares of energy generated for a person",
     )
+
     selfconsumption_consumption_ratio: MetricInfo = Field(
         ...,
         title="Selfconsumption consumption ratio",
         description="Ratio of energy consumend",
     )
+
     selfconsumption_surplus_ratio: MetricInfo = Field(
         ...,
         title="Selfconsumption surplus ratio",
         description="Ratio of selfconsumption energy dumped to the net",
     )
+
     consumption_selfconsumption_ratio: MetricInfo = Field(
         ...,
         title="Consupmtion selfconsumption ratio",
         description="Ratio of selfconsumption energy consumed",
     )
+
     environment_saves: MetricInfo = Field(
         ...,
         title="Environment shaves",

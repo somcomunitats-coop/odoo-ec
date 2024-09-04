@@ -33,10 +33,6 @@ class PartnerApiInfo(Component):
         ("project_id.state", "=", "active"),
     ]
 
-    _communities_services_domain = lambda _, partner: [
-        ("partner_id", "=", partner.id),
-    ]
-
     def get_member_info(self, partner: Partner) -> MemberInfo:
         return self.get(partner)
 
@@ -44,10 +40,7 @@ class PartnerApiInfo(Component):
         domain = self._communities_domain(partner)
         return self.env["cooperative.membership"].search_count(domain)
 
-    def get_member_communities(
-        self,
-        partner: Partner,
-    ) -> CommunityInfo:
+    def get_member_communities(self, partner: Partner) -> CommunityInfo:
         communities = self._get_communities(partner)
         if communities:
             return self.get_list(communities)
@@ -57,14 +50,10 @@ class PartnerApiInfo(Component):
         domain = self._active_communities_services_domain(partner)
         return self.env["energy_project.inscription"].search_count(domain)
 
-    def total_member_community_services(self, partner: Partner) -> int:
-        domain = self._communities_services_domain(partner)
-        return self.env["energy_project.inscription"].search_count(domain)
-
     def get_member_community_services(
         self, partner: Partner
     ) -> List[CommunityServiceInfo]:
-        domain = self._communities_services_domain(partner)
+        domain = self._active_communities_services_domain(partner)
         registered_services = self.env["energy_project.inscription"].search(domain)
         return [
             CommunityServiceInfo(
@@ -100,6 +89,7 @@ class PartnerApiInfo(Component):
                 }
                 metrics_info = CommunityServiceMetricsInfo(
                     id=project.id,
+                    name=project.name,
                     type="fotovoltaic",
                     shares=MetricInfo(
                         value=member_contract.supply_point_assignation_id.coefficient,

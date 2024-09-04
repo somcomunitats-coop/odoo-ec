@@ -86,7 +86,7 @@ class MemberApiService(Component):
             paging=paging,
             community_id=community_id,
         ) as component:
-            total_member_services = component.total_member_community_services(
+            total_member_services = component.total_member_active_community_services(
                 self.env.user.partner_id
             )
             member_community_services = component.get_member_community_services(
