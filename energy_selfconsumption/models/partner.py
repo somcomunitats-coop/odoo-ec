@@ -1,9 +1,10 @@
-from odoo import fields, models, _
+from odoo import _, fields, models
 
 _VULNERABILITY_SITUATION_VALUES = [
     ("yes", _("Yes")),
     ("no", _("No")),
 ]
+
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
@@ -22,8 +23,9 @@ class ResPartner(models.Model):
     )
     supply_point_count = fields.Integer(compute=_compute_supply_point_count)
 
-    vulnerability_situation = fields.Selection(_VULNERABILITY_SITUATION_VALUES,
-                                               string="Vulnerability situation")
+    vulnerability_situation = fields.Selection(
+        _VULNERABILITY_SITUATION_VALUES, string="Vulnerability situation"
+    )
 
     type = fields.Selection(
         selection_add=[
@@ -35,7 +37,8 @@ class ResPartner(models.Model):
         for partner in self:
             self.ensure_one()
             child_with_type = partner.child_ids.filtered(
-                lambda p: p.type == 'owner_self-consumption')
+                lambda p: p.type == "owner_self-consumption"
+            )
 
             if child_with_type:
                 return child_with_type[0]

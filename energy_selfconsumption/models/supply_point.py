@@ -84,7 +84,9 @@ class SupplyPoint(models.Model):
     )
     tariff = fields.Selection(_ACCESS_TARIFF_VALUES, string="Access tariff")
 
-    used_in_selfconsumption = fields.Selection(_USED_IN_SELFCONSUMPTION_VALUES, string="Used in selfconsumption")
+    used_in_selfconsumption = fields.Selection(
+        _USED_IN_SELFCONSUMPTION_VALUES, string="Used in selfconsumption"
+    )
 
     @api.onchange("partner_id")
     def _onchange_partner_id(self):

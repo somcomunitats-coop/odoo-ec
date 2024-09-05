@@ -2,7 +2,6 @@ import base64
 import logging
 from datetime import datetime, timedelta
 from io import StringIO
-from tokenize import String
 
 import chardet
 import pandas as pd
@@ -120,42 +119,46 @@ class Selfconsumption(models.Model):
         help="Select the associated Energy Supplier",
     )
     cadastral_reference = fields.Char(string="Cadastral reference")
-    conf_state = fields.Selection(CONF_STATE_VALUES, string="Form status",
-                                  default="inactive", required=True)
+    conf_state = fields.Selection(
+        CONF_STATE_VALUES, string="Form status", default="inactive", required=True
+    )
     conf_participation_ids = fields.One2many(
         "energy_project.participation",
         "project_id",
-        string = "Participation",
+        string="Participation",
     )
     conf_used_in_selfconsumption = fields.Boolean("Show used in selfconsumption")
     conf_vulnerability_situation = fields.Boolean("Show vulnerability situation")
     conf_bank_details = fields.Boolean("Show bank details")
-    conf_url_form = fields.Char(
-        string = "URL"
-    )
+    conf_url_form = fields.Char(string="URL")
 
     @api.onchange("conf_state")
     def _onchange_conf_state(self):
         if self.conf_state == "active":
-            self.conf_url_form = "{base_url}/inscription-data?model_id={model_id}".format(
+            self.conf_url_form = (
+                "{base_url}/inscription-data?model_id={model_id}".format(
                     base_url=self.env["ir.config_parameter"]
                     .sudo()
                     .get_param("web.base.url"),
                     model_id=self._origin.id,
                 )
+            )
             if not self.company_id.data_policy_approval_text:
                 raise ValidationError(
-                    _("You need to add the privacy policy file to display the form."
-                      "To modify the privacy policy go to company settings."))
+                    _(
+                        "You need to add the privacy policy file to display the form."
+                        "To modify the privacy policy go to company settings."
+                    )
+                )
         else:
             self.conf_url_form = ""
 
     def action_redirect_to_page_form_inscription(self):
         self.ensure_one()  # Asegura que solo haya un registro seleccionado
         return {
-            'type': 'ir.actions.act_url',
-            'url': self.conf_url_form,
-            'target': 'new',
+            "type": "ir.actions.act_url",
+            "url": self.conf_url_form,
+            "target": "new",
         }
 
     def get_distribution_tables(self):
@@ -221,26 +224,34 @@ class Selfconsumption(models.Model):
     @api.model
     def create(self, values):
         res = super().create(values)
-        self.env["energy_project.participation"].create({
-            "name": "0,5 kW",
-            "quantity": 0.5,
-            "project_id": res.project_id.id,
-        })
-        self.env["energy_project.participation"].create({
-            "name": "1,0 kW",
-            "quantity": 1.0,
-            "project_id": res.project_id.id,
-        })
-        self.env["energy_project.participation"].create({
-            "name": "1,5 kW",
-            "quantity": 1.5,
-            "project_id": res.project_id.id,
-        })
-        self.env["energy_project.participation"].create({
-            "name": "2,0 kW",
-            "quantity": 2.0,
-            "project_id": res.project_id.id,
-        })
+        self.env["energy_project.participation"].create(
+            {
+                "name": "0,5 kW",
+                "quantity": 0.5,
+                "project_id": res.project_id.id,
+            }
+        )
+        self.env["energy_project.participation"].create(
+            {
+                "name": "1,0 kW",
+                "quantity": 1.0,
+                "project_id": res.project_id.id,
+            }
+        )
+        self.env["energy_project.participation"].create(
+            {
+                "name": "1,5 kW",
+                "quantity": 1.5,
+                "project_id": res.project_id.id,
+            }
+        )
+        self.env["energy_project.participation"].create(
+            {
+                "name": "2,0 kW",
+                "quantity": 2.0,
+                "project_id": res.project_id.id,
+            }
+        )
         return res
 
     def activate(self):

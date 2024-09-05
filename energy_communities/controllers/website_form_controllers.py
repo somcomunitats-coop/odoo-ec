@@ -1,10 +1,8 @@
-from logging import exception
-
 from odoo import _, http
 from odoo.http import request
 
-class WebsiteFormController(http.Controller):
 
+class WebsiteFormController(http.Controller):
     # Main controller for show web
     def display_data_page(self, values, render_page, column_search):
         response = self._page_render_validation(values, render_page, column_search)
@@ -19,9 +17,9 @@ class WebsiteFormController(http.Controller):
     # Main controller for send data
     def data_submit(self, column_search, kwargs):
         # model_id validation
-        response = self._page_render_validation(kwargs,
-                                                self.get_data_page_url(kwargs),
-                                                "id")
+        response = self._page_render_validation(
+            kwargs, self.get_data_page_url(kwargs), "id"
+        )
         if response is not True:
             return response
 
@@ -120,13 +118,17 @@ class WebsiteFormController(http.Controller):
 
     def get_model_name(self):
         return False
+
     # Inherit the custom data validation
     def data_validation_custom(self, model, values):
         return values
 
     def _get_values(self, values, column_search):
-        models = request.env[values["model_name"]].sudo().search(
-            [(column_search, "=", values['model_id'])])
+        models = (
+            request.env[values["model_name"]]
+            .sudo()
+            .search([(column_search, "=", values["model_id"])])
+        )
         model_values = {"closed": False}
         if models:
             model = models[0]
@@ -148,9 +150,9 @@ class WebsiteFormController(http.Controller):
         # form labels
         # form keys
         for field_key in self.get_data_main_fields().keys():
-            values[field_key + "_label"] = self.get_translate_field_label(self.get_data_main_fields(),
-                                                                          values,
-                                                                          field_key)
+            values[field_key + "_label"] = self.get_translate_field_label(
+                self.get_data_main_fields(), values, field_key
+            )
             values[field_key + "_key"] = field_key
         # language selection
         values["lang_options"] = self._get_langs()

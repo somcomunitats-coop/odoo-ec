@@ -1,5 +1,6 @@
 from odoo import fields, models
 
+
 class Participation(models.Model):
     _name = "energy_project.participation"
     _description = "Participation inscription"

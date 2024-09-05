@@ -1,4 +1,4 @@
-from odoo import _, fields, models, api
+from odoo import _, api, fields, models
 
 from ..models.selfconsumption import INVOICING_VALUES
 

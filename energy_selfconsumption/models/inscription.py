@@ -1,5 +1,6 @@
 from odoo import fields, models
 
+
 class Inscription(models.Model):
     _name = "energy_selfconsumption.inscription_selfconsumption"
     _inherits = {
@@ -12,11 +13,12 @@ class Inscription(models.Model):
     )
     annual_electricity_use = fields.Float(string="Annual electricity use")
     participation = fields.Many2one(
-        comodel_name="energy_project.participation",
-        string="Participation"
+        comodel_name="energy_project.participation", string="Participation"
     )
-    accept = fields.Boolean(String="I accept and authorize being able to issue payments"
-                                   " to this bank account as part of participation in "
-                                   "this shared self-consumption project of my energy "
-                                   "community")
+    accept = fields.Boolean(
+        String="I accept and authorize being able to issue payments"
+        " to this bank account as part of participation in "
+        "this shared self-consumption project of my energy "
+        "community"
+    )
     member = fields.Boolean(String="Member/Non-Member")

@@ -23,7 +23,9 @@
     name="inscription_data_form_fields_template"
   >
       <h1>
-          Enrollment in the shared self-consumption project of the Energy Community: <t t-esc="company_name" /> of the EC
+          Enrollment in the shared self-consumption project of the Energy Community: <t
+        t-esc="company_name"
+      /> of the EC
       </h1>
       <h2>
         Installation: <t t-esc="project_name" /> of the project
@@ -210,9 +212,18 @@
         <div class="col-md-12">
             <t t-call="energy_communities.form_field_selection">
               <t t-set="value" t-value="supplypoint_owner_id_vulnerability_situation" />
-              <t t-set="key" t-value="supplypoint_owner_id_vulnerability_situation_key" />
-              <t t-set="label" t-value="supplypoint_owner_id_vulnerability_situation_label" />
-              <t t-set="options" t-value="supplypoint_owner_id_vulnerability_situation_options" />
+              <t
+            t-set="key"
+            t-value="supplypoint_owner_id_vulnerability_situation_key"
+          />
+              <t
+            t-set="label"
+            t-value="supplypoint_owner_id_vulnerability_situation_label"
+          />
+              <t
+            t-set="options"
+            t-value="supplypoint_owner_id_vulnerability_situation_options"
+          />
               <t t-set="required" t-value="project_conf_vulnerability_situation" />
               <t t-set="help" t-value="True" />
               <t t-set="title" t-value="project_conf_vulnerability_situation_title" />
@@ -228,13 +239,24 @@
             <t t-set="required" t-value="project_conf_policy_privacy_display" />
           </t>
         </div>
-        <div id="project_conf_policy_privacy_text_click" class="col-md-12"
-             title="Show privacy policy"
-             style="margin-bottom: 20px;">
-          <span style="margin-right: 5px;">Show privacy policy</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-               fill="currentColor" class="bi bi-arrow-down-square"
-               viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm8.5 2.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+        <div
+        id="project_conf_policy_privacy_text_click"
+        class="col-md-12"
+        title="Show privacy policy"
+        style="margin-bottom: 20px;"
+      >
+          <span style="margin-right: 5px;">Show privacy policy</span><svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-arrow-down-square"
+          viewBox="0 0 16 16"
+        >
+            <path
+            fill-rule="evenodd"
+            d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm8.5 2.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"
+          />
           </svg>
         </div>
         <div id="project_conf_policy_privacy_text" class="col-md-12">
@@ -248,29 +270,50 @@
       <div class="row">
         <div class="col-md-12">
             <t t-call="energy_communities.form_field_number">
-              <t t-set="value" t-value="inscriptionselfconsumption_annual_electricity_use" />
-              <t t-set="key" t-value="inscriptionselfconsumption_annual_electricity_use_key" />
-              <t t-set="label" t-value="inscriptionselfconsumption_annual_electricity_use_label" />
+              <t
+            t-set="value"
+            t-value="inscriptionselfconsumption_annual_electricity_use"
+          />
+              <t
+            t-set="key"
+            t-value="inscriptionselfconsumption_annual_electricity_use_key"
+          />
+              <t
+            t-set="label"
+            t-value="inscriptionselfconsumption_annual_electricity_use_label"
+          />
               <t t-set="required" t-value="True" />
               <t t-set="help" t-value="True" />
-              <t t-set="title" t-value="inscriptionselfconsumption_annual_electricity_use_title" />
+              <t
+            t-set="title"
+            t-value="inscriptionselfconsumption_annual_electricity_use_title"
+          />
             </t>
         </div>
         <div class="col-md-12">
             <t t-call="energy_communities.form_field_selection">
               <t t-set="value" t-value="inscriptionselfconsumption_participation" />
               <t t-set="key" t-value="inscriptionselfconsumption_participation_key" />
-              <t t-set="label" t-value="inscriptionselfconsumption_participation_label" />
-              <t t-set="options" t-value="inscriptionselfconsumption_participation_options" />
+              <t
+            t-set="label"
+            t-value="inscriptionselfconsumption_participation_label"
+          />
+              <t
+            t-set="options"
+            t-value="inscriptionselfconsumption_participation_options"
+          />
               <t t-set="required" t-value="True" />
               <t t-set="help" t-value="True" />
-              <t t-set="title" t-value="inscriptionselfconsumption_participation_title" />
+              <t
+            t-set="title"
+            t-value="inscriptionselfconsumption_participation_title"
+          />
             </t>
         </div>
         <div class="col-md-12">
             <p>The usual recommendation for an annual electrical use of is 0.5kW of PV
             power per 1500 kWh of electrical consumption.</p>
-            <br/>
+            <br />
             <p>1000 - 1500 kWh a maximum of 0.5 kW of participation is recommended</p>
             <p>1500 - 3000 kWh between 0.5 and 1 kW</p>
             <p>3000 - 5000 kWh between 1.5 - 2 kW</p>
@@ -441,4 +484,3 @@
       </t>
     </template>
 </odoo>
-

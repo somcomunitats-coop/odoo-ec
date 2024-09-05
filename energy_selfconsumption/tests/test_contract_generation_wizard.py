@@ -4,14 +4,16 @@ from datetime import datetime
 from odoo.tests.common import TransactionCase, tagged
 
 
-@tagged("post_install","-at_install","energy_selfconsumption")
+@tagged("post_install", "-at_install", "energy_selfconsumption")
 class TestContractGenerationWizard(TransactionCase):
     def setUp(self):
         super().setUp()
         self.selfconsumption_import_wizard = self.env[
             "energy_selfconsumption.selfconsumption_import.wizard"
         ].create({})
-        self.company = self.env["res.company"].search([("name","=","Som Comunitats")])[0]
+        self.company = self.env["res.company"].search(
+            [("name", "=", "Som Comunitats")]
+        )[0]
         self.partner = self.env["res.partner"].create(
             {
                 "name": f"Test Partner",
@@ -241,7 +243,11 @@ class TestContractGenerationWizard(TransactionCase):
             main_line = contract.get_main_line()
             # This variable must be queried for the tests to work.
             a = main_line.date_start
-            next_period_date_start = (main_line.next_period_date_start if main_line else contract.contract_line_ids[0].next_period_date_start)
+            next_period_date_start = (
+                main_line.next_period_date_start
+                if main_line
+                else contract.contract_line_ids[0].next_period_date_start
+            )
             next_period_date_end = (
                 main_line.next_period_date_end
                 if main_line

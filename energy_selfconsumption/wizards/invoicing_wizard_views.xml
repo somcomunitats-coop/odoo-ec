@@ -20,49 +20,53 @@
                 name="power"
                 attrs="{'invisible': [('invoicing_mode', '!=', 'energy_delivered')], 'required': [('invoicing_mode', '=', 'energy_delivered')]}"
               />
-                            <field name="num_contracts" readonly="1"/>
+                            <field name="num_contracts" readonly="1" />
                         </group>
-                        <group cols="4"
+                        <group
+              cols="4"
               attrs="{'invisible': [('invoicing_mode', '!=', 'energy_custom')]}"
             >
                             <group>
                                 <field
-                name="import_file"
-                filename="fname"
-                widget="binary"
-              />
+                  name="import_file"
+                  filename="fname"
+                  widget="binary"
+                />
 
                             <field
-                name="fname"
-                invisible="1"
-                attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
-              />
+                  name="fname"
+                  invisible="1"
+                  attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
+                />
                             <field
-                name="delimiter"
-                attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
-              />
+                  name="delimiter"
+                  attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
+                />
                             <field
-                name="quotechar"
-                attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
-              />
+                  name="quotechar"
+                  attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
+                />
                             <field
-                name="encoding"
-                attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
-              />
+                  name="encoding"
+                  attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
+                />
                             </group>
                             <group>
                                 <button
-                type="object"
-                class="btn btn-secondary mr-1"
-                name="download_template_button"
-              >Download
+                  type="object"
+                  class="btn btn-secondary mr-1"
+                  name="download_template_button"
+                >Download
                             Template</button>
                             </group>
                         </group>
                     </sheet>
                     <footer>
-                        <button type="object" class="btn btn-primary mr-1"
-                                name="generate_invoices">Generate</button>
+                        <button
+              type="object"
+              class="btn btn-primary mr-1"
+              name="generate_invoices"
+            >Generate</button>
                     </footer>
                 </form>
             </field>

@@ -182,12 +182,16 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 vat=line_dict["partner_vat"]
             )
 
-        cooperator = self.env["cooperative.membership"].sudo().search(
-            {
-                "company_id": partner.company_id.id,
-                "partner_id": partner.id,
-                "cooperator": True,
-            }
+        cooperator = (
+            self.env["cooperative.membership"]
+            .sudo()
+            .search(
+                {
+                    "company_id": partner.company_id.id,
+                    "partner_id": partner.id,
+                    "cooperator": True,
+                }
+            )
         )
         if not cooperator:
             return False, _("Partner with VAT:<b>{vat}</b> not is cooperator.").format(

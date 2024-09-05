@@ -110,10 +110,7 @@ class ContractGenerationWizard(models.TransientModel):
                     data["coefficient"] = supply_point_assignation.coefficient
 
                 contract_line_id.write(
-                    {
-                        "name": contract_line_id.name.format(**data),
-                        "main_line": True
-                    }
+                    {"name": contract_line_id.name.format(**data), "main_line": True}
                 )
         # Update selfconsumption and distribution_table state
         self.selfconsumption_id.write({"state": "active"})
