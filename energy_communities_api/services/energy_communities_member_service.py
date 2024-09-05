@@ -1,3 +1,4 @@
+from odoo.exceptions import MissingError
 from odoo.http import request
 
 from odoo.addons.base_rest import restapi
@@ -10,8 +11,10 @@ from ..schemas import (
     CommunityInfoListResponse,
     CommunityServiceInfoListResponse,
     CommunityServiceMetricsInfoListResponse,
+    EnergyPoint,
     MemberInfo,
     MemberInfoResponse,
+    ProjectProductionInfoListResponse,
 )
 from ..schemas.base import PagingParam, QueryParams
 from ..utils import api_info, list_response, single_response
@@ -130,5 +133,40 @@ class MemberApiService(Component):
             CommunityServiceMetricsInfoListResponse,
             member_community_service_metrics,
             total_member_services,
+            paging,
+        )
+
+    @restapi.method(
+        [(["/community_services/<int:service_id>/production"], "GET")],
+        input_param=PydanticModel(QueryParams),
+        output_param=PydanticModel(ProjectProductionInfoListResponse),
+    )
+    def community_service_production_info(
+        self, service_id: int, query_params: QueryParams
+    ):
+        self._validate_headers()
+        community_id = request.httprequest.headers.get("CommunityId")
+        paging = self._get_pagination_limits(query_params)
+        date_from, date_to = self._get_dates_range(query_params)
+        with api_info(
+            self.env,
+            "energy_project.project",
+            EnergyPoint,
+            paging=paging,
+            community_id=community_id,
+        ) as component:
+            project = component.get_project_from_service(service_id)
+            if not project:
+                raise MissingError(
+                    f"Service with id {service_id} has not a project associated"
+                )
+            daily_production = component.get_project_daily_production(
+                project, self.env.user.partner_id, date_from, date_to
+            )
+        return list_response(
+            request,
+            ProjectProductionInfoListResponse,
+            daily_production,
+            len(daily_production),
             paging,
         )

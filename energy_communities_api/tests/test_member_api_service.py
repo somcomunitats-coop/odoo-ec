@@ -457,3 +457,27 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and the metrics
         result = response.json()
         self.assertGreaterEqual(result["count"], 1)
+
+    def test__me_community_services_production_by_installation__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # a community service id
+        community_service_id = 32
+        # when we call for the production of that isntallation of a community service
+        url = f"/api/energy-communities/me/community_services/{community_service_id}/production?from_date=2024-04-01&to_date=2024-04-30"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the production
+        response = response.json()
+        self.assertGreaterEqual(response["count"], 1)

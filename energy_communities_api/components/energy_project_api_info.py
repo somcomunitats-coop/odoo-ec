@@ -27,3 +27,6 @@ class ProjectApiInfo(Component):
             )
             return [EnergyPoint(**point._asdict()) for point in daily_production]
         return []
+
+    def get_project_from_service(self, service_id):
+        return self.env[self._apply_on].browse(service_id)
