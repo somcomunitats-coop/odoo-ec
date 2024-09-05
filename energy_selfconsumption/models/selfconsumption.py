@@ -120,7 +120,10 @@ class Selfconsumption(models.Model):
     )
     cadastral_reference = fields.Char(string="Cadastral reference")
     conf_state = fields.Selection(
-        CONF_STATE_VALUES, string="Form status", default="inactive", required=True
+        CONF_STATE_VALUES,
+        string="Activate Registration Form",
+        default="inactive",
+        required=True,
     )
     conf_participation_ids = fields.One2many(
         "energy_project.participation",

@@ -40,7 +40,9 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             return {
                 "error_msgs": [
                     _(
-                        "You cannot display the form if the project is not in active status."
+                        "The form is not open. For more information write to your Energy Community {email}".format(
+                            email=model.company_id.email
+                        )
                     )
                 ],
                 "global_error": True,
@@ -536,11 +538,12 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                     "used_in_selfconsumption": used_in_selfconsumption,
                 }
             )
-        # self.send_email(model, partner)
+        self.send_email(model, partner)
 
     def send_email(self, model, partner):
         email_values = {"email_to": partner.email}
         template = self.env.ref(
-            "energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder"
+            "energy_selfconsumption.selfconsumption_insciption_form"
         ).with_context(email_values)
-        model.message_post_with_template(template.id)
+        ctx = {"partner_name": partner.name}
+        model.with_context(ctx).message_post_with_template(template.id)
