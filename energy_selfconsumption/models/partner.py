@@ -25,6 +25,23 @@ class ResPartner(models.Model):
     vulnerability_situation = fields.Selection(_VULNERABILITY_SITUATION_VALUES,
                                                string="Vulnerability situation")
 
+    type = fields.Selection(
+        selection_add=[
+            ("owner_self-consumption", "Owner self-consumption"),
+        ]
+    )
+
+    def get_partner_with_type(self):
+        for partner in self:
+            self.ensure_one()
+            child_with_type = partner.child_ids.filtered(
+                lambda p: p.type == 'owner_self-consumption')
+
+            if child_with_type:
+                return child_with_type[0]
+            else:
+                return partner
+
     def get_supply_points(self):
         self.ensure_one()
         return {

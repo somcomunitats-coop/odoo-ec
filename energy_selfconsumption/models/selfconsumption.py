@@ -120,7 +120,7 @@ class Selfconsumption(models.Model):
         help="Select the associated Energy Supplier",
     )
     cadastral_reference = fields.Char(string="Cadastral reference")
-    conf_state = fields.Selection(CONF_STATE_VALUES, strinf="Form status",
+    conf_state = fields.Selection(CONF_STATE_VALUES, string="Form status",
                                   default="inactive", required=True)
     conf_participation_ids = fields.One2many(
         "energy_project.participation",
@@ -130,29 +130,33 @@ class Selfconsumption(models.Model):
     conf_used_in_selfconsumption = fields.Boolean("Show used in selfconsumption")
     conf_vulnerability_situation = fields.Boolean("Show vulnerability situation")
     conf_bank_details = fields.Boolean("Show bank details")
-    conf_policy_privacy_import_file = fields.Binary(string="Import File (*.pdf)")
-    conf_policy_privacy_fname = fields.Char(string="File Name")
-    conf_header_description = fields.Text(string="Header description",translate=True,
-                                          default="""
-This is the form to request to participate in the shared self-consumption project that 
-your Energy Community has started registrations for.
-It is necessary to fill in all the mandatory data to collect your interest in 
-participating in this facility and also information that facilitates the necessary 
-subsequent management.
-If you have any questions, you can contact $mail CE
-                                          """)
+    conf_url_form = fields.Char(
+        string = "URL"
+    )
 
-    def change_form_state(self):
-        if self.conf_state == "inactive":
-            if not self.conf_policy_privacy_import_file:
-                raise ValidationError(_("You need to add the privacy policy file to display the form."))
-            self.write({
-                "conf_state": "active",
-            })
+    @api.onchange("conf_state")
+    def _onchange_conf_state(self):
+        if self.conf_state == "active":
+            self.conf_url_form = "{base_url}/inscription-data?model_id={model_id}".format(
+                    base_url=self.env["ir.config_parameter"]
+                    .sudo()
+                    .get_param("web.base.url"),
+                    model_id=self._origin.id,
+                )
+            if not self.company_id.data_policy_approval_text:
+                raise ValidationError(
+                    _("You need to add the privacy policy file to display the form."
+                      "To modify the privacy policy go to company settings."))
         else:
-            self.write({
-                "conf_state": "inactive",
-            })
+            self.conf_url_form = ""
+
+    def action_redirect_to_page_form_inscription(self):
+        self.ensure_one()  # Asegura que solo haya un registro seleccionado
+        return {
+            'type': 'ir.actions.act_url',
+            'url': self.conf_url_form,
+            'target': 'new',
+        }
 
     def get_distribution_tables(self):
         self.ensure_one()
@@ -171,7 +175,7 @@ If you have any questions, you can contact $mail CE
             "type": "ir.actions.act_window",
             "name": "Inscriptions",
             "view_mode": "tree,form",
-            "res_model": "energy_project.inscription",
+            "res_model": "energy_selfconsumption.inscription_selfconsumption",
             "domain": [("project_id", "=", self.id)],
             "context": {"create": True, "default_project_id": self.id},
         }

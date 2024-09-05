@@ -181,6 +181,18 @@ class SelfconsumptionImportWizard(models.TransientModel):
             return False, _("Partner with VAT:<b>{vat}</b> was not found.").format(
                 vat=line_dict["partner_vat"]
             )
+
+        cooperator = self.env["cooperative.membership"].sudo().search(
+            {
+                "company_id": partner.company_id.id,
+                "partner_id": partner.id,
+                "cooperator": True,
+            }
+        )
+        if not cooperator:
+            return False, _("Partner with VAT:<b>{vat}</b> not is cooperator.").format(
+                vat=line_dict["partner_vat"]
+            )
         if not line_dict["iban"]:
             return False, _("The IBAN field cannot be empty.")
 
@@ -291,7 +303,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                         error=e
                     )
         else:
-            owner = partner
+            owner = partner.get_partner_with_type()
         country = self.env["res.country"].search([("code", "=", line_dict["country"])])
         if not country:
             return False, _("Country code was not found: {country}").format(

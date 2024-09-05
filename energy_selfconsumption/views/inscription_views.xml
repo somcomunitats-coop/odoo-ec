@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="inscription_view_tree" model="ir.ui.view">
+            <field name="name">Inscription List</field>
+            <field name="model">energy_selfconsumption.inscription_selfconsumption</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field
+            name="partner_id"
+            options="{'no_create': True}"
+            width="14%"
+          />
+                    <field name="is_member" readonly="1" width="14%" />
+                    <field name="effective_date" width="14%" />
+                    <field name="mandate_filtered_ids" invisible="True" />
+                    <field name="acc_number" width="16%" />
+                    <field
+            name="mandate_id"
+            domain="[('id', 'in', mandate_filtered_ids)]"
+            context="{'default_partner_id': partner_id}"
+            width="14%"
+          />
+                    <field name="member" readonly="1" width="14%" />
+                    <field name="participation" width="14%" />
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

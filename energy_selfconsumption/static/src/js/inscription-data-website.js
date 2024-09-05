@@ -37,6 +37,14 @@ odoo.define("energy_selfconsumption.oe_inscription_data", ["energy_communities.o
                 $('#supplypoint_owner_id_email_confirm').prop('required', true);
             }
           });
+          $("#project_conf_policy_privacy_text_click").on("click", function (e) {
+            if ( $("#project_conf_policy_privacy_text").hasClass("d-none") ){
+                $("#project_conf_policy_privacy_text").removeClass("d-none");
+            }else{
+                $("#project_conf_policy_privacy_text").addClass("d-none");
+            }
+          });
+          $("#project_conf_policy_privacy_text_click").trigger("click");
           $("#supplypoint_owner_id_same").trigger("change");
           $(".data-trigger").trigger("change");
         });

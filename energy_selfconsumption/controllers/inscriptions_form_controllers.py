@@ -30,25 +30,6 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         values["model_name"] = "energy_selfconsumption.selfconsumption"
         return self.data_submit("id", kwargs)
 
-    @http.route('/inscription-data/privacy_policy_file/<int:record_id>', type='http',
-                auth='public', csrf=False)
-    def download_privacy_policy_file(self, record_id, **kwargs):
-        record = request.env['energy_selfconsumption.selfconsumption'].sudo().browse(record_id)
-        if not record or not record.conf_policy_privacy_import_file:
-            return request.not_found()
-
-        file_content = base64.b64decode(record.conf_policy_privacy_import_file)
-        file_name = record.conf_policy_privacy_fname
-
-        return request.make_response(
-            file_content,
-            headers=[
-                ('Content-Type', 'application/pdf'),
-                ('Content-Disposition', 'attachment; filename=%s;' % file_name),
-                ('Content-Length', len(file_content)),
-            ]
-        )
-
     def get_model_name(self):
         return "energy_project.project"
 
@@ -73,6 +54,23 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 "error_msgs": [
                     _(
                         "Partner is not exist."
+                    )
+                ],
+                "global_error": True,
+            }
+        partner = partner.get_partner_with_type()
+        cooperator = request.env["cooperative.membership"].sudo().search(
+            [
+                ("company_id", '=', partner.company_id.id),
+                ("partner_id", '=', partner.id),
+                ("cooperator", '=', True),
+            ]
+        )
+        if not cooperator:
+            return {
+                "error_msgs": [
+                    _(
+                        "Partner is not cooperator."
                     )
                 ],
                 "global_error": True,
@@ -179,8 +177,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             "supplypoint_owner_id_email": _("E-mail"),
             "supplypoint_owner_id_email_confirm": _("Confirm E-mail"),
             "supplypoint_owner_id_vulnerability_situation": _("Are you in a vulnerable situation?"),
-            "project_privacy_policy_file": _("Privacy policy"),
-            "project_privacy_policy_name": _("Privacy policy file name"),
+            "project_conf_policy_privacy_text": _("Privacy policy file text"),
             "inscription_project_privacy": _("I accept privacy policy"),
             "inscriptionselfconsumption_annual_electricity_use": _("Annual electricity use?"),
             "inscriptionselfconsumption_participation": _("What participation would you like?"),
@@ -194,16 +191,16 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         model_values["model_id"] = model.id
         model_values["project_model_key"] = "model_id"
         model_values["project_header_description"] = model.conf_header_description
-        model_values["project_conf_used_in_selfconsumption"] = model.conf_used_in_selfconsumption
-        model_values["project_conf_vulnerability_situation"] = model.conf_vulnerability_situation
+        model_values[
+            "project_conf_used_in_selfconsumption"
+        ] = model.conf_used_in_selfconsumption
+        model_values[
+            "project_conf_vulnerability_situation"
+        ] = model.conf_vulnerability_situation
         model_values["project_conf_bank_details"] = model.conf_bank_details
-        model_values["project_conf_policy_privacy_import_file_url"] = "{base_url}/inscription-data/privacy_policy_file/{record_id}".format(
-            base_url=request.env["ir.config_parameter"]
-            .sudo()
-            .get_param("web.base.url"),
-            record_id=model.id,
-        )
-        model_values["project_conf_policy_privacy_fname"] = model.conf_policy_privacy_fname
+        model_values[
+            "project_conf_policy_privacy_text"
+        ] = model.company_id.data_policy_approval_text
         return model_values
 
     def get_data_custom_submit(self, kwargs):
@@ -341,13 +338,13 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             "How much power of the collective PV installation you would like to "
             "purchase."
         )
-
         return values
 
     def process_metadata(self, model, values):
         partner = request.env["res.partner"].sudo().search([
             ("vat", "=", values["inscription_partner_id_vat"])]
         )
+        partner = partner.get_partner_with_type()
         mandate = False
         if model.conf_bank_details:
             bank_accounts = request.env["res.partner.bank"].sudo().search(
@@ -364,8 +361,12 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 )
             else:
                 bank_account = bank_accounts[0]
-            mandate = request.env["account.banking.mandate"].sudo().create(
+            mandate = request.env["account.banking.mandate"].with_company(
+                model.company_id
+            ).sudo().create(
                 {
+                    "recurrent_sequence_type": "first",
+                    "scheme": "CORE",
                     "format": "sepa",
                     "type": "recurrent",
                     "state": "valid",
@@ -423,7 +424,6 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                         "type": "contact",
                         "company_id": model.company_id.id,
                         "company_type": "person",
-                        "cooperative_membership_id": model.company_id.partner_id.id,
                         "country_id": model.company_id.partner_id.country_id.id,
                         "state_id": model.company_id.partner_id.state_id.id,
                         "street": values["supplypoint_street"],
@@ -431,13 +431,39 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                         "zip": values["supplypoint_zip"],
                     }
                 )
-            owner_id = owner.id
-            state_id = owner.state_id.id
-            country_id = owner.country_id.id
+                owner_id = owner.id
+                state_id = owner.state_id.id
+                country_id = owner.country_id.id
+            else:
+                new_owner = request.env["res.partner"].sudo().create(
+                    {
+                        "name": values["supplypoint_owner_id_name"],
+                        "lastname": values["supplypoint_owner_id_lastname"],
+                        "gender": values["supplypoint_owner_id_gender"],
+                        "vulnerability_situation": vulnerability_situation,
+                        "birthdate_date": formatted_birthdate,
+                        "phone": values["supplypoint_owner_id_phone"],
+                        "lang": lang[0].code,
+                        "email": values["supplypoint_owner_id_email"],
+                        "vat": values["supplypoint_owner_id_vat"],
+                        "type": "owner_self-consumption",
+                        "company_id": model.company_id.id,
+                        "company_type": "person",
+                        "parent_id": owner.id,
+                        "country_id": model.company_id.partner_id.country_id.id,
+                        "state_id": model.company_id.partner_id.state_id.id,
+                        "street": values["supplypoint_street"],
+                        "city": values["supplypoint_city"],
+                        "zip": values["supplypoint_zip"],
+                    }
+                )
+                owner_id = new_owner.id
+                state_id = new_owner.state_id.id
+                country_id = new_owner.country_id.id
 
         if float(values["supplypoint_contracted_power"]) <= 15:
             tariff = "2.0TD"
-        elif float(values["supplypoint_contracted_power"]) <= 50:
+        elif float(values["supplypoint_contracted_power"]) <= 300:
             tariff = "3.0TD"
         else:
             tariff = "6.1TD"
@@ -466,3 +492,11 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                     "used_in_selfconsumption": used_in_selfconsumption,
                 }
             )
+        # self.send_email(model, partner)
+
+    def send_email(self, model, partner):
+        email_values = {"email_to": partner.email}
+        template = self.env.ref(
+            "energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder"
+        ).with_context(email_values)
+        model.message_post_with_template(template.id)

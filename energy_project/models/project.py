@@ -51,3 +51,16 @@ class Project(models.Model):
         required=True,
         default=lambda self: self.env.ref("base.es"),
     )
+
+    def get_default_header_description(self):
+        return _("This is the form to request to participate in the shared "
+    "self-consumption project that your Energy Community has started registrations for."
+    "\nIt is necessary to fill in all the mandatory data to collect your interest in "
+    "participating in this facility and also information that facilitates the necessary"
+    " subsequent management.\n"
+    "If you have any questions, you can contact {company_email}.".format(
+            company_email=self.env.company.partner_id.email))
+
+    conf_header_description = fields.Text(
+        string="Header description on website form",
+        default=lambda self: self.get_default_header_description())
