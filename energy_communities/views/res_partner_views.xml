@@ -60,7 +60,10 @@
           >Community company</h4>
                 </xpath>
                 <xpath expr="//field[@name='child_ids']" position="after">
-                  <field name="user_ids" />
+                  <field
+            name="user_ids"
+            groups="energy_communities.group_platform_manager"
+          />
                 </xpath>
             </field>
         </record>
