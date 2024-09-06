@@ -1,4 +1,7 @@
+from datetime import datetime
+
 from odoo import api, fields, models
+from odoo.tools.translate import _
 
 
 class CooperativeMembership(models.Model):
@@ -43,3 +46,22 @@ class CooperativeMembership(models.Model):
                 record.subscription_invoice_ids = invs
             else:
                 record.subscription_invoice_ids = False
+
+    def action_create_share_line_wizard(self):
+        self.ensure_one()
+        share_line_form_view = self.env.ref(
+            "energy_communities_cooperator.share_line_form", False
+        )
+        return {
+            "name": _("Create a share line"),
+            "type": "ir.actions.act_window",
+            "view_type": "form",
+            "view_mode": "form",
+            "res_model": "share.line",
+            "view_id": share_line_form_view.id,
+            "target": "new",
+            "context": {
+                "default_partner_id": self.partner_id.id,
+                "default_effective_date": datetime.now(),
+            },
+        }

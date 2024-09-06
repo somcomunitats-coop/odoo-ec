@@ -148,6 +148,15 @@
       <field name="model">cooperative.membership</field>
       <field name="arch" type="xml">
           <form>
+            <field name="id" invisible="1" />
+            <header>
+              <button
+            name="action_create_share_line_wizard"
+            type="object"
+            string="Create share line"
+            attrs="{'invisible': [('id', '=', False)]}"
+          />
+            </header>
             <group>
               <field name="company_id" />
               <field name="partner_id" />
@@ -170,9 +179,9 @@
               <field name="representative" readonly="0" />
               <field name="representative_of_member_company" />
             </group>
-            <group>
+            <group attrs="{'invisible': [('id', '=', False)]}">
               <field name="share_ids" widget="one2many" readonly="0">
-                <tree>
+                <tree create="false" delete="false">
                   <field name="share_product_id" />
                   <field name="share_number" />
                   <field name="share_unit_price" />
@@ -181,11 +190,11 @@
                 </tree>
                 <form>
                   <group>
-                    <field name="share_product_id" readonly="0" />
+                    <field name="effective_date" readonly="0" required="1" />
+                    <field name="share_product_id" domain="[('is_share','=',True)]" />
                     <field name="share_number" readonly="0" />
-                    <field name="share_unit_price" readonly="0" />
-                    <field name="effective_date" readonly="0" />
-                    <field name="total_amount_line" readonly="0" />
+                    <field name="share_unit_price" />
+                    <field name="total_amount_line" />
                   </group>
                 </form>
               </field>

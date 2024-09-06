@@ -37,6 +37,7 @@
         "data/ir_config_parameter_data.xml",
         "views/menus.xml",
         "views/account_move_views.xml",
+        "views/share_line_views.xml",
         "views/cooperative_membership_views.xml",
         "views/operation_request_views.xml",
         "views/res_company_views.xml",
