@@ -1,9 +1,15 @@
+from datetime import date
 from enum import Enum
 from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
-from .base import BaseListResponse, NaiveOrmModel, PaginationLinks
+from .base import (
+    BaseListResponse,
+    BaseResponse,
+    NaiveOrmModel,
+    PaginationLinks,
+)
 
 
 class CommunityInfo(NaiveOrmModel):
@@ -59,6 +65,24 @@ class CommunityServiceInfo(BaseModel):
         ...,
         title="Status",
         description="Status of the service, ex: in_progres",
+    )
+
+    shares: float = Field(
+        ...,
+        title="Shares",
+        description="Percentage of shares of a member in a community service",
+    )
+
+    inscription_date: date = Field(
+        ...,
+        title="Inscription Date",
+        description="When a member was inscribed in the community service",
+    )
+
+    inscriptions: int = Field(
+        ...,
+        title="Total inscriptions",
+        description="Total inscriptions of a community service",
     )
 
 
@@ -135,6 +159,15 @@ class CommunityServiceMetricsInfo(BaseModel):
         title="Environment shaves",
         description="Amount of CO2 saved thanks to selfconsumption",
     )
+
+
+class CommunityServiceInfoResponse(BaseResponse):
+    """
+    Return all community services metrics in which a member is involved.
+    """
+
+    data: CommunityServiceInfo
+    links: PaginationLinks
 
 
 class CommunityServiceInfoListResponse(BaseListResponse):

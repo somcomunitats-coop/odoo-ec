@@ -10,7 +10,12 @@ from odoo.tests import HttpCase, tagged
 
 from odoo.addons.base_rest.tests.common import RegistryMixin
 
-from ..schemas import CommunityInfo, CommunityServiceMetricsInfo, UnitEnum
+from ..schemas import (
+    CommunityInfo,
+    CommunityServiceInfo,
+    CommunityServiceMetricsInfo,
+    UnitEnum,
+)
 
 try:
     from .data import client_data, client_data_response, server_auth_url
@@ -446,7 +451,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         communty_id = "55"
         # when we call for the energy_communties that i belong
         response = self.client(
-            "/api/energy-communities/me/community_services",
+            "/api/energy-communities/me/community_services/",
             headers={
                 "Authorization": self.token,
                 "CommunityId": communty_id,
@@ -457,6 +462,31 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and the metrics
         result = response.json()
         self.assertGreaterEqual(result["count"], 1)
+
+    def test__me_community_service_detail__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # a community service id
+        community_service_id = 32
+        # when we call for the energy_communties that i belong
+        response = self.client(
+            f"/api/energy-communities/me/community_services/{community_service_id}",
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the metrics
+        content = response.json()
+        self.assertIsInstance(
+            CommunityServiceInfo(**content["data"]), CommunityServiceInfo
+        )
 
     def test__me_community_services_production__ok(self):
         # given http_client

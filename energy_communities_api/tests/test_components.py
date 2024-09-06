@@ -160,6 +160,30 @@ class TestMemberApiInfo(TransactionComponentCase):
             1,
         )
 
+    def test__get_member_community_service_detail(self):
+        # given a energy community member
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
+        # given an id of a community service
+        service_id = 32
+        # given a api info component
+        work = WorkContext(
+            "res.partner",
+            collection=self.backend,
+            schema_class=CommunityServiceInfo,
+            community_id=member.company_id,
+        )
+        api_info_component = work.component(usage="api.info")
+        self.assertIsInstance(api_info_component, PartnerApiInfo)
+
+        # when we ask for the services that this member is involved
+        community_service = api_info_component.get_member_community_service_detail(
+            member, service_id
+        )
+
+        # then we obtain the corresponding community service
+        self.assertIsInstance(community_service, CommunityServiceInfo)
+
 
 class TestProjectApiInfo(TransactionComponentCase):
     def setUp(self):

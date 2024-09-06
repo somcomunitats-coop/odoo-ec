@@ -10,6 +10,7 @@ from ..schemas import (
     CommunityInfo,
     CommunityInfoListResponse,
     CommunityServiceInfoListResponse,
+    CommunityServiceInfoResponse,
     CommunityServiceMetricsInfoListResponse,
     EnergyPoint,
     MemberInfo,
@@ -102,6 +103,26 @@ class MemberApiService(Component):
             total_member_services,
             paging,
         )
+
+    @restapi.method(
+        [(["/community_services/<int:service_id>"], "GET")],
+        output_param=PydanticModel(CommunityServiceInfoResponse),
+    )
+    def communtiy_service_detail_info(self, service_id):
+        self._validate_headers()
+        community_id = request.httprequest.headers.get("CommunityId")
+        with api_info(
+            self.env,
+            self._work_on_model,
+            CommunityInfo,
+            community_id=community_id,
+        ) as component:
+            service = component.get_member_community_service_detail(
+                self.env.user.partner_id, service_id
+            )
+            if not service:
+                raise MissingError(f"Community service with id {service_id} not found")
+            return single_response(request, CommunityServiceInfoResponse, service)
 
     @restapi.method(
         [(["/community_services/metrics"], "GET")],

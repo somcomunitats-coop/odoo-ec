@@ -33,6 +33,11 @@ class PartnerApiInfo(Component):
         ("project_id.state", "=", "active"),
     ]
 
+    _active_community_services_domain = lambda _, service_id: [
+        ("id", "=", service_id),
+        ("state", "=", "active"),
+    ]
+
     def get_member_info(self, partner: Partner) -> MemberInfo:
         return self.get(partner)
 
@@ -64,6 +69,25 @@ class PartnerApiInfo(Component):
             )
             for service in registered_services
         ]
+
+    def get_member_community_service_detail(
+        self, partner: Partner, service_id: int
+    ) -> CommunityServiceInfo:
+        domain = self._active_community_services_domain(service_id)
+        project = self.env["energy_project.project"].search(domain)
+        if project:
+            member_contract = project.contract_ids.filtered(
+                lambda contract: contract.partner_id == partner
+            )
+            return CommunityServiceInfo(
+                id=project.id,
+                type="fotovoltaic",
+                name=project.name,
+                status=project.state,
+                shares=member_contract.supply_point_assignation_id.coefficient,
+                inscription_date=member_contract.date_start,
+                inscriptions=len(project.inscription_ids),
+            )
 
     def get_member_community_services_metrics(
         self, partner: Partner, date_from: date, date_to: date
