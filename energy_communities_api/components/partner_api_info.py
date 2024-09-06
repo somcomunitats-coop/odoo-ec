@@ -58,17 +58,24 @@ class PartnerApiInfo(Component):
     def get_member_community_services(
         self, partner: Partner
     ) -> List[CommunityServiceInfo]:
+        community_services = []
         domain = self._active_communities_services_domain(partner)
         registered_services = self.env["energy_project.inscription"].search(domain)
-        return [
-            CommunityServiceInfo(
+        for service in registered_services:
+            member_contract = service.project_id.contract_ids.filtered(
+                lambda contract: contract.partner_id == partner
+            )
+            service_info = CommunityServiceInfo(
                 id=service.project_id.id,
                 type="fotovoltaic",
                 name=service.project_id.name,
                 status=service.project_id.state,
+                shares=member_contract.supply_point_assignation_id.coefficient,
+                inscription_date=member_contract.date_start,
+                inscriptions=len(service.project_id.inscription_ids),
             )
-            for service in registered_services
-        ]
+            community_services += [service_info]
+        return community_services
 
     def get_member_community_service_detail(
         self, partner: Partner, service_id: int
