@@ -29,4 +29,6 @@ class ProjectApiInfo(Component):
         return []
 
     def get_project_from_service(self, service_id):
-        return self.env[self._apply_on].browse(service_id)
+        project = self.env[self._apply_on].browse(service_id)
+        if project.exists():
+            return project
