@@ -33,6 +33,13 @@ class SubscriptionRequest(models.Model):
         store=True,
     )
 
+    @api.onchange("partner_id")
+    def onchange_partner(self):
+        self.ensure_one()
+        super().onchange_partner()
+        if self.partner_id.vat:
+            self.vat = self.partner_id.vat
+
     def get_required_field(self):
         required_fields = super().get_required_field()
         if "iban" in required_fields:
