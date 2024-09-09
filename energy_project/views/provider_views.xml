@@ -15,8 +15,12 @@
                             </h1>
                         </div>
                         <group>
-                            <field name="service_available_ids" />
                             <field name="user_id" />
+                            <field name="uri" />
+                            <field name="token" />
+                        </group>
+                        <group>
+                            <field name="service_available_ids" />
                         </group>
                     </sheet>
                 </form>
@@ -30,6 +34,8 @@
                 <tree string="Energy Providers">
                     <field name="name" />
                     <field name="user_id" />
+                    <field name="uri" />
+                    <field name="token" />
                 </tree>
             </field>
         </record>

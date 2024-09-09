@@ -1,8 +1,5 @@
 from typing import List
 
-from odoo.api import Environment
-
-from odoo.addons.base.models.res_users import Users
 from odoo.addons.component.core import Component
 
 from ..schemas import SelfConsumptionProjectInfo, SelfConsumptionProjectMember

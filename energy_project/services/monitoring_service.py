@@ -34,8 +34,13 @@ _energy_production_ratio_pair = lambda accumulator, point: (
 class MonitoringService:
     SPANISH_CO2_SAVE_RATIO = 162
 
-    def __init__(self, backend: Backend):
+    def __init__(self, backend: Backend, service_contract):
         self.backend = backend
+        self.service_conctract = service_contract
+
+    @property
+    def service_id(self):
+        return self.service_conctract.id
 
     def generated_energy_by_member(
         self, system_id, member_id, date_from, date_to
