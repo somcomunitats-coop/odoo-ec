@@ -34,8 +34,10 @@ class ResUsers(models.Model):
                 record._propagate_vat_to_related_partner()
 
     def _setup_existing_related_partner(self):
-        existing_partners = self.env["res.partner"].search(
-            [("vat", "=", self.login), ("id", "!=", self.partner_id.id)]
+        existing_partners = (
+            self.env["res.partner"]
+            .sudo()
+            .search([("vat", "=", self.login), ("id", "!=", self.partner_id.id)])
         )
         if existing_partners:
             # TODO: Do we want a validation error when more than one partner found?
@@ -47,14 +49,21 @@ class ResUsers(models.Model):
                     ).format(self.login)
                 )
             else:
-                self.write({"partner_id": existing_partner.id})
+                self.sudo().write({"partner_id": existing_partner.id})
 
     def _propagate_vat_to_related_partner(self):
-        es_country = self.env["res.country"].search(
-            [("code", "=", _COUNTRY_CODE_SPAIN)]
+        self.write(
+            {"company_ids": self.sudo().partner_id.company_ids | self.company_ids}
         )
+        # target_company_ids = self.sudo().partner_id.company_ids | self.company_ids
         # TODO: This write call already validates vat (review check_vat method from base_vat core module). Is it enough?
-        record.partner_id.write({"vat": self.login, "country_id": es_country.id})
+        self.partner_id.sudo().write(
+            {
+                "company_ids": self.company_ids,
+                "vat": self.login,
+                "country_id": self.env.ref("base.es").id,
+            }
+        )
 
     def get_user_auth_access_to_spaces(self):
         _odoo_auth_roles = [
