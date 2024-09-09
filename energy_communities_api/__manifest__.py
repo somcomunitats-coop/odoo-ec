@@ -4,12 +4,12 @@
         API/REST endpoints for energy communities
     """,
     "description": """
-        This addon enables an API/REST communication with energy communities platform based in Fastapi framework
+        This addon enables an API/REST communication with energy communities platform
     """,
     "author": "Coopdevs Treball SCCL & Som Energia SCCL & SomIT",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.1.0.4",
+    "version": "14.0.2.0.1",
     "depends": [
         "auth_jwt",
         "base_rest_auth_jwt",
@@ -30,4 +30,6 @@
     "demo": [
         "demo/energy_selfconsumption_app_demo.xml",
     ],
+    "installable": True,
+    "application": True,
 }
