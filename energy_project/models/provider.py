@@ -22,9 +22,9 @@ class Provider(models.Model):
     )
 
     uri = fields.Char(
-        string=_("Uri"),
+        string=_("URI"),
         help=_(
-            "If a provider has an API, uri of that api. Ex: https://api.provider.com"
+            "If a provider has an API, URI of that API. Ex: https://api.provider.com"
         ),
     )
 
