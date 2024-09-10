@@ -197,6 +197,22 @@ msgstr ""
 "        </p>"
 
 #. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#, python-format
+msgid ""
+"\n"
+"CAU: {cau}\n"
+"Total installed nominal power (kW): {power}\n"
+"Partition coefficient: {coefficient}"
+msgstr ""
+"\n"
+"CAU: {cau}\n"
+"Instalatutako potentzia nominala guztira (kW): {power}\n"
+"Zatiketa koefizientea: {coefficient}"
+
+#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/invoicing_wizard.py:0

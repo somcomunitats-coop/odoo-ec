@@ -17,9 +17,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         website=True,
     )
     def display_inscription_data_page(self, **kwargs):
-        values = kwargs
-        values["model_name"] = "energy_selfconsumption.selfconsumption"
-        return self.display_data_page(values, self.get_form_submit(values), "id")
+        return self.display_data_page(kwargs, self.get_form_submit(kwargs), "id")
 
     @http.route(
         ["/inscription-data/submit"],
@@ -28,13 +26,12 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         website=True,
     )
     def inscription_data_submit(self, **kwargs):
-        values = kwargs
-        values["model_name"] = "energy_selfconsumption.selfconsumption"
         return self.data_submit("id", kwargs)
 
     def get_model_name(self):
-        return "energy_project.project"
+        return "energy_selfconsumption.selfconsumption"
 
+    # Validation on view of from
     def data_validation_custom(self, model, values):
         if model.conf_state == "inactive":
             return {
@@ -49,6 +46,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             }
         return super().data_validation_custom(model, values)
 
+    # Validation on submit form
     def form_submit_validation(self, values):
         partner = (
             request.env["res.partner"]
@@ -152,6 +150,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 }
         return values
 
+    # All fields of form
     def get_data_main_fields(self):
         return {
             "company_name": _("Company Name"),
@@ -243,6 +242,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             source=self.get_data_main_fields()[field_key],
         )
 
+    # Filling in extra values
     def get_fill_values_custom(self, values):
         values["supplypoint_used_in_selfconsumption_options"] = [
             {
@@ -339,6 +339,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         )
         return values
 
+    # Algorithm of the form
     def process_metadata(self, model, values):
         partner = (
             request.env["res.partner"]

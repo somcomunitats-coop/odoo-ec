@@ -68,7 +68,6 @@
         "views/res_users_role_view.xml",
         "views/menus.xml",
         "views/website_formfields_template.xml",
-        "views/website_data_template.xml",
         "views/account_banking_mandate_views.xml",
         "data/community_maps_data.xml",
         "wizards/multicompany_easy_creation.xml",
