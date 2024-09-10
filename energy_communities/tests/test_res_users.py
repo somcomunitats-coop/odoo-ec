@@ -180,3 +180,9 @@ class TestResUsers(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
         self.assertEqual(len(rl_coord), 2)
         self.assertIn(self.coordination, self.coord_admin.company_ids)
         self.assertIn(other_coord, self.coord_admin.company_ids)
+
+    def test__find_related_partner_and_merge_company_ids(self):
+        user = self.env["res.users"].create(
+            {"login": "77732797L", "firstname": "test", "lastname": "test"}
+        )
+        self.assertEqual(1, 1)

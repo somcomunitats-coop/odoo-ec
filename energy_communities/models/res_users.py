@@ -26,14 +26,42 @@ class ResUsers(models.Model):
         string=_("Last user invitation through Keycloak")
     )
 
+    # def write(self,vals):
+    #     for record in self:
+    #         if record.partner_id:
+    #             partner = record._find_existing_related_partner()
+    #             # record._propagate_vat_to_related_partner()
+    #             if partner:
+    #                 print("EXEC 1")
+    #                 __import__('ipdb').set_trace()
+    #                 record.sudo().write(
+    #                     {"company_ids": partner.company_ids | record.company_ids}
+    #                 )
+    #                 print("EXEC 2")
+    #                 record.sudo().write({"partner_id": partner.id})
+    #                 print("EXEC 3")
+    #     __import__('ipdb').set_trace()
+    #     res = super().write(vals)
+    #     return res
+
     @api.constrains("login")
     def _constrains_user_login(self):
         for record in self:
             if record.partner_id:
-                record._setup_existing_related_partner()
-                record._propagate_vat_to_related_partner()
+                partner = record._find_existing_related_partner()
+                # record._propagate_vat_to_related_partner()
+                if partner:
+                    # print("EXEC 1")
+                    # __import__('ipdb').set_trace()
+                    # record.sudo().write(
+                    # {"company_ids": partner.company_ids | record.company_ids}
+                    # )
+                    # print("EXEC 2")
+                    record.sudo().write({"partner_id": partner.id})
+                    __import__("ipdb").set_trace()
+                    # print("EXEC 3")
 
-    def _setup_existing_related_partner(self):
+    def _find_existing_related_partner(self):
         existing_partners = (
             self.env["res.partner"]
             .sudo()
@@ -49,7 +77,9 @@ class ResUsers(models.Model):
                     ).format(self.login)
                 )
             else:
-                self.sudo().write({"partner_id": existing_partner.id})
+                return existing_partner
+                # self.sudo().write({"partner_id": existing_partner.id})
+        return False
 
     def _propagate_vat_to_related_partner(self):
         self.write(
@@ -57,13 +87,14 @@ class ResUsers(models.Model):
         )
         # target_company_ids = self.sudo().partner_id.company_ids | self.company_ids
         # TODO: This write call already validates vat (review check_vat method from base_vat core module). Is it enough?
-        self.partner_id.sudo().write(
-            {
-                "company_ids": self.company_ids,
-                "vat": self.login,
-                "country_id": self.env.ref("base.es").id,
-            }
-        )
+        # self.partner_id.write(
+        #     {
+        #         "vat": self.login,
+        #         "country_id": self.env.ref("base.es").id,
+        #         "company_ids": [(5,0,0),(4,1),(4,102)]
+        #     }
+        # )
+        # self.partner_id.company_ids = self.company_ids
 
     def get_user_auth_access_to_spaces(self):
         _odoo_auth_roles = [

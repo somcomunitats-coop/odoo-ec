@@ -35,11 +35,9 @@ class ResPartner(models.Model):
         compute="_compute_company_ids_info",
         store=False,
     )
-
-    @api.depends("company_ids")
-    def _compute_company_ids_info(self):
-        for record in self:
-            record.company_ids_info = record.company_ids
+    # company_ids = fields.Many2many(
+    #     default=None
+    # )
 
     def compute_company_hierarchy_level(self):
         for record in self:
@@ -49,25 +47,34 @@ class ResPartner(models.Model):
             if rel_company:
                 record.company_hierarchy_level = rel_company.hierarchy_level
 
-    @api.model
-    def create(self, vals):
-        new_partner = super().create(vals)
-        current_user = self.env.user
-        if (
-            not new_partner.company_ids
-            and
-            # TODO: is really necessary user not being root or admin?
-            current_user
-            not in (
-                self.env.ref("base.user_root"),
-                self.env.ref("base.user_admin"),
-            )
-        ):
-            new_partner.write(
-                {"company_ids": [(4, current_user.get_current_company_id())]}
-            )
+    @api.depends("company_ids")
+    def _compute_company_ids_info(self):
+        for record in self:
+            record.company_ids_info = record.company_ids
 
-        return new_partner
+    def write(self, vals):
+        __import__("ipdb").set_trace()
+        res = super().write(vals)
+        return res
+
+    # @api.model
+    # def create(self, vals):
+    #     new_partner = super().create(vals)
+    #     current_user = self.env.user
+    #     if (
+    #         not new_partner.company_ids
+    #         and
+    #         # TODO: is really necessary user not being root or admin?
+    #         current_user
+    #         not in (
+    #             self.env.ref("base.user_root"),
+    #             self.env.ref("base.user_admin"),
+    #         )
+    #     ):
+    #         new_partner.write(
+    #             {"company_ids": [(4, current_user.get_current_company_id())]}
+    #         )
+    #     return new_partner
 
     def cron_update_company_ids_from_user(self):
         partner_with_users = self.search(
