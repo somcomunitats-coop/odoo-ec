@@ -25,6 +25,47 @@ class ResUsers(models.Model):
         string=_("Last user invitation through Keycloak")
     )
 
+    @api.model
+    def create(self, vals):
+        user = super().create(vals)
+        if "login" in vals.keys():
+            partner = self._find_existing_related_partner(vals)
+            if partner:
+                target_company_ids = partner.company_ids | user.company_ids
+                partner.write({"company_ids": target_company_ids})
+                user.write(
+                    {"partner_id": partner.id, "company_ids": target_company_ids}
+                )
+        return user
+
+    @api.constrains("login")
+    def constrains_user_login(self):
+        for record in self:
+            if record.partner_id:
+                record.partner_id.write(
+                    {
+                        "vat": self.login,
+                        "country_id": self.env.ref("base.es").id,
+                    }
+                )
+
+    @api.constrains("partner_id")
+    def constrains_user_partner_id(self):
+        for record in self:
+            if len(record.partner_id.user_ids) > 1:
+                raise ValidationError(
+                    _(
+                        "You cannot link more than one user to a partner. Please check partner {}"
+                    ).format(record.partner_id.id)
+                )
+
+    def _find_existing_related_partner(self, vals):
+        query = [("vat", "=", vals["login"]), ("id", "!=", self.partner_id.id)]
+        existing_partners = self.env["res.partner"].sudo().search(query, order="id asc")
+        if existing_partners:
+            return existing_partners[0]
+        return False
+
     def get_user_auth_access_to_spaces(self):
         _odoo_auth_roles = [
             self.env.ref("energy_communities.role_platform_admin"),
