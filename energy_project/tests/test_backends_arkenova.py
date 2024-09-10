@@ -76,6 +76,20 @@ class TestArkenovaBackend(TransactionCase):
             ],
         )
 
+    def test__project_daily_metrics__without_data(self):
+        # given a project and an arkenova backend instance
+        project_id = project_code
+        arkenova = ArkenovaBackend(self.url, self.token)
+
+        # when we ask for the daily metrics between two dates without data
+        from_date = str(date(2020, 1, 1))
+        to_date = str(date(2021, 1, 1))
+        daily_metrics = arkenova.project_daily_metrics(project_id, from_date, to_date)
+
+        # then we obtain an empty list of metrics
+        self.assertEqual(len(daily_metrics), 0)
+        self.assertListEqual(daily_metrics, [])
+
     def test__project_daily_metrics__wrong_from_date(self):
         # given a project and an arkenova backend instance
         project_id = project_code

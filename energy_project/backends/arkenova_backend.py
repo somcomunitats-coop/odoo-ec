@@ -28,7 +28,6 @@ class ArkenovaBackend(Backend):
 
     def __init__(self, url, token):
         self.base_url = url
-
         self._headers = {self.AUTH_HEADER: token}
 
     def project_daily_metrics(self, system_id, from_date, to_date) -> list:
