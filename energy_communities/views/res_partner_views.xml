@@ -59,6 +59,13 @@
             attrs="{'invisible': [('company_hierarchy_level', '!=', 'community')]}"
           >Community company</h4>
                 </xpath>
+                <xpath expr="//field[@name='child_ids']" position="after">
+                  <field
+            name="user_ids"
+            groups="energy_communities.group_platform_manager"
+          />
+                </xpath>
+
             </field>
         </record>
 
@@ -74,13 +81,17 @@
           expr="//page[@name='sales_purchases']//field[@name='company_ids']"
           position="replace"
         >
-                <field name="company_id" />
+                <field name="has_rel_user" invisible="1" />
+          <field
+            name="company_id"
+            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')],'readonly': [('has_rel_user','=',True)]}"
+          />
                   <field
             name="company_ids"
             groups="base.group_multi_company"
             widget="many2many_tags"
             options="{'no_create': True}"
-            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')]}"
+            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')],'readonly': [('has_rel_user','=',True)]}"
           />
                     <field
             name="company_ids_info"
