@@ -18,6 +18,7 @@ from .community import (
     CommunityServiceInfoResponse,
     CommunityServiceInfoListResponse,
     CommunityServiceMetricsInfo,
+    CommunityServiceMetricsInfoResponse,
     CommunityServiceMetricsInfoListResponse,
 )
 from .energy_project import EnergyPoint, ProjectProductionInfoListResponse

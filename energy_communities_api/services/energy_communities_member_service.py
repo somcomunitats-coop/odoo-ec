@@ -11,7 +11,9 @@ from ..schemas import (
     CommunityInfoListResponse,
     CommunityServiceInfoListResponse,
     CommunityServiceInfoResponse,
+    CommunityServiceMetricsInfo,
     CommunityServiceMetricsInfoListResponse,
+    CommunityServiceMetricsInfoResponse,
     EnergyPoint,
     MemberInfo,
     MemberInfoResponse,
@@ -155,6 +157,39 @@ class MemberApiService(Component):
             member_community_service_metrics,
             total_member_services,
             paging,
+        )
+
+    @restapi.method(
+        [(["/community_services/<int:service_id>/metrics"], "GET")],
+        input_param=PydanticModel(QueryParams),
+        output_param=PydanticModel(CommunityServiceMetricsInfoResponse),
+    )
+    def community_service_metrics_details_info(
+        self, service_id: int, query_params: QueryParams
+    ):
+        self._validate_headers()
+        community_id = request.httprequest.headers.get("CommunityId")
+        date_from, date_to = self._get_dates_range(query_params)
+        with api_info(
+            self.env,
+            self._work_on_model,
+            CommunityServiceMetricsInfo,
+            community_id=community_id,
+        ) as component:
+            project = component.work.component(
+                "api.info", "energy_project.project"
+            ).get_project_from_service(service_id)
+            if not project:
+                raise MissingError(
+                    f"Service with id {service_id} has not a project associated"
+                )
+            service_metrics = (
+                component.get_member_community_services_metrics_by_service(
+                    self.env.user.partner_id, service_id, date_from, date_to
+                )
+            )
+        return single_response(
+            request, CommunityServiceMetricsInfoResponse, service_metrics
         )
 
     @restapi.method(

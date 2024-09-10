@@ -442,6 +442,31 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         result = response.json()
         self.assertEqual(result["links"]["self_"], response.request.url)
 
+    def test__me_community_service_metrics__one_service_ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # a community service id
+        service_id = 32
+        # when we call for the metrics of that community service
+        url = f"/api/energy-communities/me/community_services/{service_id}/metrics?from_date=2024-04-01&to_date=2024-04-30"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the metrics
+        content = response.json()
+        community_service_info = CommunityServiceMetricsInfo(**content["data"])
+        self.assertIsInstance(community_service_info, CommunityServiceMetricsInfo)
+
     def test__me_community_services__ok(self):
         # given http_client
         # self.url_open

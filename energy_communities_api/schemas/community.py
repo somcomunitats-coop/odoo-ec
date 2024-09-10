@@ -163,7 +163,7 @@ class CommunityServiceMetricsInfo(BaseModel):
 
 class CommunityServiceInfoResponse(BaseResponse):
     """
-    Return all community services metrics in which a member is involved.
+    Response for a community service basic information in which a member is involved.
     """
 
     data: CommunityServiceInfo
@@ -172,10 +172,19 @@ class CommunityServiceInfoResponse(BaseResponse):
 
 class CommunityServiceInfoListResponse(BaseListResponse):
     """
-    Return all community services metrics in which a member is involved.
+    Return all community services in which a member is involved.
     """
 
     data: List[CommunityServiceInfo]
+    links: PaginationLinks
+
+
+class CommunityServiceMetricsInfoResponse(BaseResponse):
+    """
+    Return a community service metric information in which a member is involved.
+    """
+
+    data: CommunityServiceMetricsInfo
     links: PaginationLinks
 
 
