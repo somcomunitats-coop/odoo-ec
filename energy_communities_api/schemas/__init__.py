@@ -21,8 +21,11 @@ from .community import (
     CommunityServiceMetricsInfoResponse,
     CommunityServiceMetricsInfoListResponse,
 )
-from .energy_project import EnergyPoint, ProjectProductionInfoListResponse
-
+from .energy_project import (
+    EnergyPoint,
+    ProjectProductionInfoListResponse,
+    ProjectSelfconsumptionInfoListResponse,
+)
 from .selfconsumption_project import (
     SelfConsumptionProjectInfo,
     SelfConsumptionProjectMember,

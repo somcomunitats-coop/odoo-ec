@@ -35,7 +35,15 @@ class ProjectEnergyInfoListResponse(BaseListResponse):
 
 class ProjectProductionInfoListResponse(ProjectEnergyInfoListResponse):
     """
-    Body response for prodcution requests
+    Body response for production requests
+    """
+
+    ...
+
+
+class ProjectSelfconsumptionInfoListResponse(ProjectEnergyInfoListResponse):
+    """
+    Body response for selfconsumption requests
     """
 
     ...

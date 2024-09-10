@@ -23,6 +23,10 @@ _get_energy_production_point = lambda point: {
     "date": _get_timestamp(point),
     "value": _get_energy_production(point),
 }
+_get_energy_selfconsumed_point = lambda point: {
+    "date": _get_timestamp(point),
+    "value": _get_energy_selfconsumption(point),
+}
 _selfconsumption_ratio_pair = lambda accumulator, point: (
     accumulator[0] + _get_energy_selfconsumption(point),
     accumulator[1] + _get_energy_production(point),
@@ -72,6 +76,17 @@ class MonitoringService:
         )
         return [
             EnergyPoint(**_get_energy_production_point(point))
+            for point in daily_metrics
+        ]
+
+    def daily_selfconsumed_energy_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> EnergyCurve:
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        return [
+            EnergyPoint(**_get_energy_selfconsumed_point(point))
             for point in daily_metrics
         ]
 

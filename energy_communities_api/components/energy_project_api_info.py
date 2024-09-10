@@ -32,3 +32,20 @@ class ProjectApiInfo(Component):
         project = self.env[self._apply_on].browse(service_id)
         if project.exists():
             return project
+
+    def get_project_daily_selfconsumption(
+        self, project, partner, date_from, date_to
+    ) -> List[EnergyPoint]:
+        monitoring_service = project.monitoring_service()
+        if monitoring_service:
+            member_contract = project.contract_ids.filtered(
+                lambda contract: contract.partner_id == partner
+            )
+            daily_production = monitoring_service.daily_selfconsumed_energy_by_member(
+                system_id=project.selfconsumption_id.code,
+                member_id=member_contract.code,
+                date_from=date_from,
+                date_to=date_to,
+            )
+            return [EnergyPoint(**point._asdict()) for point in daily_production]
+        return []
