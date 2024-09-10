@@ -350,8 +350,7 @@
       t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
       t-att-data-showif="showif"
     >
-          <t t-set="date_placeholder" t-if="lang=='ca_ES'">dd/mm/aaaa</t>
-          <t t-set="date_placeholder" t-if="lang=='es_ES'">dd/mm/aaaa</t>
+          <t t-set="date_placeholder">dd/mm/aaaa</t>
           <t t-set="date_placeholder" t-if="lang=='en_US'">dd/mm/yyyy</t>
           <t t-call="energy_communities.form_field_part_label">
             <t t-set="field_key" t-value="key" />
