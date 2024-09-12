@@ -124,7 +124,8 @@ class SelfconsumptionImportWizard(models.TransientModel):
             "partner_vat": line.get(header[0], False),
             "effective_date": line.get(header[1], False),
             "code": line.get(header[2], False),
-            "contracted_power": line.get(header[3], False),
+            "contracted_power": line.get(float(
+                str(header[3]).replace(',', '.')), False),
             "tariff": line.get(header[4], False),
             "street": line.get(header[5], False),
             "street2": line.get(header[6], False),
