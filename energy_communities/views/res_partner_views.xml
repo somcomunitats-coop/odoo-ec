@@ -99,6 +99,7 @@
             widget="many2many_tags"
             attrs="{'invisible': [('user_current_role', '=', 'role_platform_admin')]}"
           />
+          <!--<t t-if="has_rel_user"><p style="padding: 10px; background-color: #ccc; border: 1px solid #aaa;"><strong>Hint: In order to edit company related params you have to visit the related contact's user.</strong></p></t>-->
                 </xpath>
             </field>
         </record>
