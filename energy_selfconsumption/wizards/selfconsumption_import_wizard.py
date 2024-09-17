@@ -1,7 +1,7 @@
 import base64
 import logging
 import random
-from csv import reader
+from csv import DictReader
 from datetime import datetime
 from io import StringIO
 
@@ -66,7 +66,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
         parsing_data = self.with_context(active_id=self.ids[0])._parse_file(file_data)
         active_id = self.env.context.get("active_id")
         project = self.env["energy_selfconsumption.selfconsumption"].browse(active_id)
-        for index, line in enumerate(parsing_data[1:], start=2):
+        for index, line in enumerate(parsing_data):
             import_dict = self.get_line_dict(line)
             result = self.import_line(import_dict, project)
             if not result[0]:
@@ -114,24 +114,30 @@ class SelfconsumptionImportWizard(models.TransientModel):
         }
 
     def get_line_dict(self, line):
+        header = list(line.keys())
+        if len(header) != 17:
+            raise ValidationError(
+                _(
+                    "The file should contain 17 columns and not {header_length} columns."
+                ).format(header_length=len(header)))
         return {
-            "partner_vat": line[0] or False,
-            "effective_date": line[1] or False,
-            "code": line[2] or False,
-            "contracted_power": line[3] or False,
-            "tariff": line[4] or False,
-            "street": line[5] or False,
-            "street2": line[6] or False,
-            "city": line[7] or False,
-            "state": line[8] or False,
-            "postal_code": line[9] or False,
-            "country": line[10] or False,
-            "cadastral_reference": line[11] or False,
-            "owner_vat": line[12] or False,
-            "owner_firstname": line[13] or False,
-            "owner_lastname": line[14] or False,
-            "iban": line[15] or False,
-            "mandate_auth_date": line[16] or False,
+            "partner_vat": line.get(header[0], False),
+            "effective_date": line.get(header[1], False),
+            "code": line.get(header[2], False),
+            "contracted_power": line.get(header[3], False),
+            "tariff": line.get(header[4], False),
+            "street": line.get(header[5], False),
+            "street2": line.get(header[6], False),
+            "city": line.get(header[7], False),
+            "state": line.get(header[8], False),
+            "postal_code": line.get(header[9], False),
+            "country": line.get(header[10], False),
+            "cadastral_reference": line.get(header[11], False),
+            "owner_vat": line.get(header[12], False),
+            "owner_firstname": line.get(header[13], False),
+            "owner_lastname": line.get(header[14], False),
+            "iban": line.get(header[15], False),
+            "mandate_auth_date": line.get(header[16], False),
         }
 
     def _parse_file(self, data_file):
@@ -150,7 +156,8 @@ class SelfconsumptionImportWizard(models.TransientModel):
                         _("No valid encoding was found for the attached file")
                     )
                 decoded_file = data_file.decode(detected_encoding)
-            csv = reader(StringIO(decoded_file), **csv_options)
+            csv_file = StringIO(decoded_file)
+            csv = DictReader(csv_file, **csv_options)
             return list(csv)
         except BaseException:
             logger.warning("Parser error", exc_info=True)

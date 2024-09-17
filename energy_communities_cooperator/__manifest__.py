@@ -12,7 +12,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Cooperative management",
-    "version": "14.0.1.2.1",
+    "version": "14.0.1.2.2",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
@@ -31,12 +31,13 @@
         "report/reports.xml",
         "report/voluntary_share_interest_return_report.xml",
         "data/product_data.xml",
-        "data/res_users_role_data.xml",
+        "security/res_users_role_data.xml",
         "data/mail_template_data.xml",
         "data/mail_template_update_data.xml",
         "data/ir_config_parameter_data.xml",
         "views/menus.xml",
         "views/account_move_views.xml",
+        "views/share_line_views.xml",
         "views/cooperative_membership_views.xml",
         "views/operation_request_views.xml",
         "views/res_company_views.xml",

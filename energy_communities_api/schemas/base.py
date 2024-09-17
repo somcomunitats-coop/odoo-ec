@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Optional
 
 from pydantic import BaseModel, Field
@@ -33,6 +34,31 @@ class BaseListResponse(BaseResponse):
 class PagingParam(BaseModel):
     page: Optional[int]
     page_size: Optional[int]
+
+
+class QueryParams(BaseModel):
+    """
+    Definition of all query params that can our api have
+    """
+
+    page: Optional[int] = Field(
+        None, title="Page", description="Page for pagination request"
+    )
+    page_size: Optional[int] = Field(
+        None,
+        title="Page size",
+        description="Max numbers of elemets for a page",
+    )
+    from_date: Optional[date] = Field(
+        None,
+        title="From date",
+        description="starting date for a date range, this date is included in the range",
+    )
+    to_date: Optional[date] = Field(
+        None,
+        title="To date",
+        description="ending date for a date range, this date is included in the range",
+    )
 
 
 class PaginationLimits(BaseModel):

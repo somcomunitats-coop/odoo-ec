@@ -10,6 +10,22 @@ from odoo.addons.component.core import Component, WorkContext
 from .schemas import PaginationLimits, PaginationLinks
 
 
+def _next_url(url_parsed, paging, total_results):
+    params = dict(parse.parse_qsl(url_parsed.query))
+    if paging.offset + paging.limit < total_results:
+        params["page_size"] = paging.limit
+        params["page"] = int(params["page"]) + 1
+        return url_parsed._replace(query=parse.urlencode(params)).geturl()
+
+
+def _previous_url(url_parsed, paging):
+    params = dict(parse.parse_qsl(url_parsed.query))
+    if paging.page > 1:
+        params["page"] = int(params["page"]) - 1
+        params["page_size"] = paging.limit
+        return url_parsed._replace(query=parse.urlencode(params)).geturl()
+
+
 def _get_pagination_links(
     request: HttpRequest,
     total_results: int,
@@ -21,23 +37,10 @@ def _get_pagination_links(
             next_page=None,
             previous_page=None,
         )
-    page = paging.page
-    page_size = paging.limit
+
     url_parsed = parse.urlparse(request.httprequest.url)
-    next_url = (
-        url_parsed._replace(
-            query=parse.urlencode({"page": page + 1, "page_size": page_size})
-        ).geturl()
-        if paging.offset + page_size < total_results
-        else None
-    )
-    previous_url = (
-        url_parsed._replace(
-            query=parse.urlencode({"page": page - 1, "page_size": page_size})
-        ).geturl()
-        if page > 1
-        else None
-    )
+    next_url = _next_url(url_parsed, paging, total_results)
+    previous_url = _previous_url(url_parsed, paging)
     return PaginationLinks(
         self_=request.httprequest.url,
         next_page=next_url,

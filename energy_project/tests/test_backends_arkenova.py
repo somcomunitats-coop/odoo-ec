@@ -13,7 +13,7 @@ try:
         project_code,
         unknown_project_code,
     )
-except:
+except ImportError:
     pass
 
 
