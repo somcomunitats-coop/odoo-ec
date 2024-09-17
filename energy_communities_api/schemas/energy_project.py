@@ -47,3 +47,19 @@ class ProjectSelfconsumptionInfoListResponse(ProjectEnergyInfoListResponse):
     """
 
     ...
+
+
+class ProjectEnergyExportedInfoListResponse(ProjectEnergyInfoListResponse):
+    """
+    Body response for energy exported requests
+    """
+
+    ...
+
+
+class ProjectEnergyConsumedInfoListResponse(ProjectEnergyInfoListResponse):
+    """
+    Body response for energy consumed requests
+    """
+
+    ...

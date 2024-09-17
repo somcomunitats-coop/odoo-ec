@@ -27,6 +27,14 @@ _get_energy_selfconsumed_point = lambda point: {
     "date": _get_timestamp(point),
     "value": _get_energy_selfconsumption(point),
 }
+_get_energy_exported_point = lambda point: {
+    "date": _get_timestamp(point),
+    "value": _get_energy_exported(point),
+}
+_get_energy_consumed_point = lambda point: {
+    "date": _get_timestamp(point),
+    "value": _get_energy_consumption(point),
+}
 _selfconsumption_ratio_pair = lambda accumulator, point: (
     accumulator[0] + _get_energy_selfconsumption(point),
     accumulator[1] + _get_energy_production(point),
@@ -55,19 +63,6 @@ class MonitoringService:
     def __init__(self, backend: Backend):
         self.backend = backend
 
-    @property
-    def service_id(self):
-        return self.service_conctract.id
-
-    def generated_energy_by_member(
-        self, system_id, member_id, date_from, date_to
-    ) -> float:
-        daily_metrics = self._get_project_daily_metrics_by_member(
-            system_id, member_id, date_from, date_to
-        )
-        energy = sum(map(_get_energy_production, daily_metrics))
-        return round(energy, 4)
-
     def daily_generated_energy_by_member(
         self, system_id, member_id, date_from, date_to
     ) -> EnergyCurve:
@@ -90,13 +85,42 @@ class MonitoringService:
             for point in daily_metrics
         ]
 
-    def consumed_energy_by_member(
+    def daily_exported_energy_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> EnergyCurve:
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        return [
+            EnergyPoint(**_get_energy_exported_point(point)) for point in daily_metrics
+        ]
+
+    def daily_consumed_energy_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> EnergyCurve:
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        return [
+            EnergyPoint(**_get_energy_consumed_point(point)) for point in daily_metrics
+        ]
+
+    def generated_energy_by_member(
         self, system_id, member_id, date_from, date_to
     ) -> float:
         daily_metrics = self._get_project_daily_metrics_by_member(
             system_id, member_id, date_from, date_to
         )
-        energy = sum(map(_get_energy_consumption, daily_metrics))
+        energy = sum(map(_get_energy_production, daily_metrics))
+        return round(energy, 4)
+
+    def selfconsumed_energy_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> float:
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        energy = sum(map(_get_energy_selfconsumption, daily_metrics))
         return round(energy, 4)
 
     def exported_energy_by_member(
@@ -108,13 +132,13 @@ class MonitoringService:
         energy = sum(map(_get_energy_exported, daily_metrics))
         return round(energy, 4)
 
-    def selfconsumed_energy_by_member(
+    def consumed_energy_by_member(
         self, system_id, member_id, date_from, date_to
     ) -> float:
         daily_metrics = self._get_project_daily_metrics_by_member(
             system_id, member_id, date_from, date_to
         )
-        energy = sum(map(_get_energy_selfconsumption, daily_metrics))
+        energy = sum(map(_get_energy_consumption, daily_metrics))
         return round(energy, 4)
 
     def selfconsumed_energy_ratio_by_member(

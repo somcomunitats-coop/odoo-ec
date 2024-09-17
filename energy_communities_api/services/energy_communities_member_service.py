@@ -17,6 +17,8 @@ from ..schemas import (
     EnergyPoint,
     MemberInfo,
     MemberInfoResponse,
+    ProjectEnergyConsumedInfoListResponse,
+    ProjectEnergyExportedInfoListResponse,
     ProjectProductionInfoListResponse,
     ProjectSelfconsumptionInfoListResponse,
 )
@@ -258,6 +260,76 @@ class MemberApiService(Component):
         return list_response(
             request,
             ProjectProductionInfoListResponse,
+            daily_selfconsumption,
+            len(daily_selfconsumption),
+            paging,
+        )
+
+    @restapi.method(
+        [(["/community_services/<int:service_id>/energy_exported"], "GET")],
+        input_param=PydanticModel(QueryParams),
+        output_param=PydanticModel(ProjectEnergyExportedInfoListResponse),
+    )
+    def community_service_energy_exported_info(
+        self, service_id: int, query_params: QueryParams
+    ):
+        self._validate_headers()
+        community_id = request.httprequest.headers.get("CommunityId")
+        paging = self._get_pagination_limits(query_params)
+        date_from, date_to = self._get_dates_range(query_params)
+        with api_info(
+            self.env,
+            "energy_project.project",
+            EnergyPoint,
+            paging=paging,
+            community_id=community_id,
+        ) as component:
+            project = component.get_project_from_service(service_id)
+            if not project:
+                raise MissingError(
+                    f"Service with id {service_id} has not a project associated"
+                )
+            daily_selfconsumption = component.get_project_daily_exported_energy(
+                project, self.env.user.partner_id, date_from, date_to
+            )
+        return list_response(
+            request,
+            ProjectEnergyExportedInfoListResponse,
+            daily_selfconsumption,
+            len(daily_selfconsumption),
+            paging,
+        )
+
+    @restapi.method(
+        [(["/community_services/<int:service_id>/energy_consumed"], "GET")],
+        input_param=PydanticModel(QueryParams),
+        output_param=PydanticModel(ProjectEnergyConsumedInfoListResponse),
+    )
+    def community_service_energy_consumed_info(
+        self, service_id: int, query_params: QueryParams
+    ):
+        self._validate_headers()
+        community_id = request.httprequest.headers.get("CommunityId")
+        paging = self._get_pagination_limits(query_params)
+        date_from, date_to = self._get_dates_range(query_params)
+        with api_info(
+            self.env,
+            "energy_project.project",
+            EnergyPoint,
+            paging=paging,
+            community_id=community_id,
+        ) as component:
+            project = component.get_project_from_service(service_id)
+            if not project:
+                raise MissingError(
+                    f"Service with id {service_id} has not a project associated"
+                )
+            daily_selfconsumption = component.get_project_daily_consumed_energy(
+                project, self.env.user.partner_id, date_from, date_to
+            )
+        return list_response(
+            request,
+            ProjectEnergyConsumedInfoListResponse,
             daily_selfconsumption,
             len(daily_selfconsumption),
             paging,

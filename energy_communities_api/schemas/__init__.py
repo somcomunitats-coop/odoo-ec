@@ -25,6 +25,8 @@ from .energy_project import (
     EnergyPoint,
     ProjectProductionInfoListResponse,
     ProjectSelfconsumptionInfoListResponse,
+    ProjectEnergyConsumedInfoListResponse,
+    ProjectEnergyExportedInfoListResponse,
 )
 from .selfconsumption_project import (
     SelfConsumptionProjectInfo,

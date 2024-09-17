@@ -49,3 +49,37 @@ class ProjectApiInfo(Component):
             )
             return [EnergyPoint(**point._asdict()) for point in daily_production]
         return []
+
+    def get_project_daily_exported_energy(
+        self, project, partner, date_from, date_to
+    ) -> List[EnergyPoint]:
+        monitoring_service = project.monitoring_service()
+        if monitoring_service:
+            member_contract = project.contract_ids.filtered(
+                lambda contract: contract.partner_id == partner
+            )
+            daily_exported_energy = monitoring_service.daily_exported_energy_by_member(
+                system_id=project.selfconsumption_id.code,
+                member_id=member_contract.code,
+                date_from=date_from,
+                date_to=date_to,
+            )
+            return [EnergyPoint(**point._asdict()) for point in daily_exported_energy]
+        return []
+
+    def get_project_daily_consumed_energy(
+        self, project, partner, date_from, date_to
+    ) -> List[EnergyPoint]:
+        monitoring_service = project.monitoring_service()
+        if monitoring_service:
+            member_contract = project.contract_ids.filtered(
+                lambda contract: contract.partner_id == partner
+            )
+            daily_consumed_energy = monitoring_service.daily_consumed_energy_by_member(
+                system_id=project.selfconsumption_id.code,
+                member_id=member_contract.code,
+                date_from=date_from,
+                date_to=date_to,
+            )
+            return [EnergyPoint(**point._asdict()) for point in daily_consumed_energy]
+        return []

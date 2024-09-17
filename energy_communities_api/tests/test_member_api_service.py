@@ -584,3 +584,51 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and the selfconsumed energy
         response = response.json()
         self.assertGreaterEqual(response["count"], 1)
+
+    def test__me_community_services_exported_energy__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # a community service id
+        community_service_id = 32
+        # when we call for the energy exported of that member for installation
+        url = f"/api/energy-communities/me/community_services/{community_service_id}/energy_exported?from_date=2024-04-01&to_date=2024-04-30"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the selfconsumed energy
+        response = response.json()
+        self.assertGreaterEqual(response["count"], 1)
+
+    def test__me_community_services_consumed_energy__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # a community service id
+        community_service_id = 32
+        # when we call for the energy comsuption of that member for installation
+        url = f"/api/energy-communities/me/community_services/{community_service_id}/energy_consumed?from_date=2024-04-01&to_date=2024-04-30"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the selfconsumed energy
+        response = response.json()
+        self.assertGreaterEqual(response["count"], 1)
