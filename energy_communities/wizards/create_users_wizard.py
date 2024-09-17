@@ -2,6 +2,8 @@ from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
+from ..utils import user_creator
+
 
 class CreateUsersWizard(models.TransientModel):
     _name = "create.users.wizard"
@@ -23,6 +25,10 @@ class CreateUsersWizard(models.TransientModel):
     )
 
     def execute(self):
+        with user_creator(self.env) as component:
+            user = component.create_user()
+
+    def execute_back(self):
         model = self.env.context.get("active_model")
         role_id = self.env.ref("energy_communities.role_ce_member")
         if model == "res.partner":
