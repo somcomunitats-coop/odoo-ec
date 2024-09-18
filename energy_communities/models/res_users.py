@@ -729,3 +729,17 @@ class ResUsers(models.Model):
         )
         active_roles = active_roles | global_role_lines | company_role_lines
         return self._max_priority_role_line(active_roles) | common_global_role_lines
+
+    def action_open_form_view(self):
+        self.ensure_one()
+        form_view = self.env.ref("base.view_users_form")
+        return {
+            "name": _("Users"),
+            "res_model": "res.users",
+            "res_id": self.id,
+            "views": [
+                (form_view.id, "form"),
+            ],
+            "type": "ir.actions.act_window",
+            "target": "self",
+        }
