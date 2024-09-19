@@ -126,11 +126,15 @@ class PartnerApiInfo(Component):
                         value=member_contract.supply_point_assignation_id.coefficient,
                         unit=UnitEnum.percentage,
                     ),
+                    energy_shares=MetricInfo(
+                        value=member_contract.supply_point_assignation_id.energy_shares,
+                        unit=UnitEnum.kwn,
+                    ),
                     share_energy_production=MetricInfo(
                         value=monitoring_service.generated_energy_by_member(
                             **service_parameters
                         ),
-                        unit=UnitEnum.kwn,
+                        unit=UnitEnum.kwh,
                     ),
                     selfconsumption_consumption_ratio=MetricInfo(
                         value=monitoring_service.selfconsumed_energy_ratio_by_member(
@@ -186,11 +190,15 @@ class PartnerApiInfo(Component):
                         value=member_contract.supply_point_assignation_id.coefficient,
                         unit=UnitEnum.percentage,
                     ),
+                    energy_shares=MetricInfo(
+                        value=member_contract.supply_point_assignation_id.energy_shares,
+                        unit=UnitEnum.kwn,
+                    ),
                     share_energy_production=MetricInfo(
                         value=monitoring_service.generated_energy_by_member(
                             **service_parameters
                         ),
-                        unit=UnitEnum.kwn,
+                        unit=UnitEnum.kwh,
                     ),
                     selfconsumption_consumption_ratio=MetricInfo(
                         value=monitoring_service.selfconsumed_energy_ratio_by_member(

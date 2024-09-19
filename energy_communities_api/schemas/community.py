@@ -87,7 +87,9 @@ class CommunityServiceInfo(BaseModel):
 
 
 class UnitEnum(str, Enum):
+    wh = "Wh"
     kwh = "kWh"
+    kwp = "kWp"
     kwn = "kWn"
     grco2 = "grCO2"
     percentage = "percentage"
@@ -127,7 +129,13 @@ class CommunityServiceMetricsInfo(BaseModel):
     )
 
     shares: MetricInfo = Field(
-        ..., title="Shares", description="Shares that have a person for this service"
+        ..., title="Shares", description="Shares that have a person for this project"
+    )
+
+    energy_shares: MetricInfo = Field(
+        ...,
+        title="Energy Shares",
+        description="Energy shares (distribution coefficient in kWh) that have a person for this project",
     )
 
     share_energy_production: MetricInfo = Field(
