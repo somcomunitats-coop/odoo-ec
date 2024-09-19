@@ -17,40 +17,33 @@ class CRMLeadService(Component):
     """
 
     def create(self, **params):
-        create_dict = super().create(params)
-        crm_lead = json.loads(create_dict.response[0].decode("utf-8"))
-
-        # get utm source from payload
+        crm_lead_create_respose = super().create(params)
         target_source_xml_id = self._get_metadata_value(params, "source_xml_id")
-
         if target_source_xml_id:
-            crm_lead_id = crm_lead.get("id", False)
-            # setup lead name and description
-            self._set_name(crm_lead_id, params)
-            self._set_description(crm_lead_id, params)
-            # setup utm source on crm lead
-            utm_source = self._setup_lead_utm_source(crm_lead_id, target_source_xml_id)
-            # map lead fields based on configuration
-            self._map_metadata_crm_fields(crm_lead_id, utm_source, params)
+            crm_lead_dict = json.loads(
+                crm_lead_create_respose.response[0].decode("utf-8")
+            )
+            crm_lead = self.env["crm.lead"].browse(crm_lead_dict.get("id", False))
+            # update some fields based on the selected source
+            utm_source = self.env.ref("energy_communities." + target_source_xml_id)
+            lead_update_dict = {
+                "name": self._get_crm_lead_name(crm_lead.id, params),
+                "description": self._get_crm_lead_description(params),
+                "source_id": utm_source.id,
+                "team_id": self._get_crm_lead_team_id(utm_source),
+            }
+            lead_update_dict.update(self._map_metadata_crm_fields(utm_source, params))
+            crm_lead.write(lead_update_dict)
             # email autoresponder
             self._lead_creation_email_autoresponder(
-                crm_lead_id, target_source_xml_id, params
+                crm_lead.id, target_source_xml_id, params
             )
+        return crm_lead_create_respose
 
-        return crm_lead
-
-    def _setup_lead_utm_source(self, lead_id, source_xml_id):
-        lead = self.env["crm.lead"].browse(lead_id)
-        if lead:
-            utm_source = self.env.ref("energy_communities." + source_xml_id)
-            lead.write({"source_id": utm_source.id})
-            return utm_source
-        return False
-
-    def _map_metadata_crm_fields(self, crm_lead_id, utm_source, params):
+    def _map_metadata_crm_fields(self, utm_source, params):
+        crm_update_dict = {}
         rel_mapping = utm_source.crm_lead_metadata_mapping_id
         if rel_mapping:
-            crm_update_dict = {}
             for mapping_field in rel_mapping.metadata_mapping_field_ids:
                 if mapping_field.type == "value_field":
                     crm_update_dict[
@@ -85,10 +78,70 @@ class CRMLeadService(Component):
                         crm_update_dict[mapping_field.destination_field_key] = res_ids[
                             0
                         ].id
-            if crm_update_dict:
-                self.env["crm.lead"].browse(crm_lead_id).write(crm_update_dict)
-                return True
-        return False
+        return crm_update_dict
+
+    def _get_metadata_value(self, params, key):
+        metadata = params["metadata"]
+        value = ""
+        for data in metadata:
+            if data["key"] == key:
+                value = data["value"]
+        return value
+
+    def _get_crm_lead_name(self, lead_id, params):
+        source_xml_id = self._get_metadata_value(params, "source_xml_id")
+        email = params["email_from"]
+        prefix = ""
+        if source_xml_id == "ce_source_existing_ce_contact":
+            prefix = _("[Contact CE]")
+        elif source_xml_id == "ce_source_existing_ce_info":
+            prefix = _("[Newsletter CE]")
+        elif source_xml_id == "ce_source_general_contact":
+            prefix = _("[Contact SomComunitats]")
+        elif source_xml_id == "ce_source_general_info":
+            prefix = _("[Newsletter SomComunitats]")
+        elif source_xml_id == "ce_source_coord_web_hiring":
+            prefix = _("[Hire Coord]")
+        elif source_xml_id == "ce_source_coord_web_other":
+            prefix = _("[Other Coord]")
+        elif source_xml_id == "ce_source_tariffs_page_contact":
+            prefix = _("[Tariffs contact]")
+        if source_xml_id == "ce_source_creation_ce_proposal":
+            prefix = _("[Subscription CE]")
+            ce_name = self._get_metadata_value(params, "ce_name")
+            name = "{prefix} {lead_id} {ce_name}".format(
+                prefix=prefix, lead_id=lead_id, ce_name=ce_name
+            )
+        else:
+            name = "{prefix} {lead_id} {email}".format(
+                prefix=prefix, lead_id=lead_id, email=email
+            )
+        return name
+
+    def _get_crm_lead_description(self, params):
+        source_xml_id = self._get_metadata_value(params, "source_xml_id")
+        description = ""
+        if source_xml_id == "ce_source_creation_ce_proposal":
+            ce_description = self._get_metadata_value(params, "ce_description")
+            comments = self._get_metadata_value(params, "comments")
+            description = "{ce_description} {comments}".format(
+                ce_description=ce_description, comments=comments
+            )
+        if (
+            source_xml_id == "ce_source_existing_ce_contact"
+            or source_xml_id == "ce_source_general_contact"
+        ):
+            contact_motive = self._get_metadata_value(params, "contact_motive")
+            message = self._get_metadata_value(params, "message")
+            description = "{contact_motive}: {message}".format(
+                contact_motive=contact_motive, message=message
+            )
+        return description
+
+    def _get_crm_lead_team_id(self, utm_source):
+        if utm_source.crm_team_id:
+            return utm_source.crm_team_id.id
+        return self.env["crm.team"]._get_default_team_id(user_id=self.env.user.id).id
 
     def _lead_creation_email_autoresponder(
         self, crm_lead_id, target_source_xml_id, params
@@ -112,66 +165,6 @@ class CRMLeadService(Component):
             template.send_mail(force_send=False, res_id=crm_lead_id)
             return True
         return False
-
-    def _get_metadata_value(self, params, key):
-        metadata = params["metadata"]
-        value = ""
-        for data in metadata:
-            if data["key"] == key:
-                value = data["value"]
-        return value
-
-    def _set_name(self, lead_id, params):
-        source_xml_id = self._get_metadata_value(params, "source_xml_id")
-        lead = self.env["crm.lead"].browse(lead_id)
-        email = params["email_from"]
-        prefix = ""
-        if source_xml_id == "ce_source_existing_ce_contact":
-            prefix = _("[Contact CE]")
-        elif source_xml_id == "ce_source_existing_ce_info":
-            prefix = _("[Newsletter CE]")
-        elif source_xml_id == "ce_source_general_contact":
-            prefix = _("[Contact SomComunitats]")
-        elif source_xml_id == "ce_source_general_info":
-            prefix = _("[Newsletter SomComunitats]")
-        elif source_xml_id == "ce_source_coord_web_hiring":
-            prefix = _("[Hire Coord]")
-        elif source_xml_id == "ce_source_coord_web_other":
-            prefix = _("[Other Coord]")
-        if source_xml_id == "ce_source_creation_ce_proposal":
-            prefix = _("[Subscription CE]")
-            ce_name = self._get_metadata_value(params, "ce_name")
-            name = "{prefix} {lead_id} {ce_name}".format(
-                prefix=prefix, lead_id=lead_id, ce_name=ce_name
-            )
-        else:
-            name = "{prefix} {lead_id} {email}".format(
-                prefix=prefix, lead_id=lead_id, email=email
-            )
-        if lead:
-            lead.write({"name": name})
-
-    def _set_description(self, lead_id, params):
-        source_xml_id = self._get_metadata_value(params, "source_xml_id")
-        lead = self.env["crm.lead"].browse(lead_id)
-        description = ""
-        if source_xml_id == "ce_source_creation_ce_proposal":
-            ce_description = self._get_metadata_value(params, "ce_description")
-            comments = self._get_metadata_value(params, "comments")
-            description = "{ce_description} {comments}".format(
-                ce_description=ce_description, comments=comments
-            )
-        if (
-            source_xml_id == "ce_source_existing_ce_contact"
-            or source_xml_id == "ce_source_general_contact"
-        ):
-            contact_motive = self._get_metadata_value(params, "contact_motive")
-            message = self._get_metadata_value(params, "message")
-            description = "{contact_motive}: {message}".format(
-                contact_motive=contact_motive, message=message
-            )
-        if lead:
-            lead.write({"description": description})
 
     def _get_autoresponder_email_template(self, source_xml_id):
         template_external_id = None
