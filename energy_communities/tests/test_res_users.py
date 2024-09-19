@@ -44,7 +44,7 @@ class TestResUsers(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
         "odoo.addons.energy_communities.models.res_users.ResUsers.create_users_on_keycloak"
     )
     @patch(
-        "odoo.addons.energy_communities.models.res_users.ResUsers.send_reset_password_mail"
+        "odoo.addons.energy_communities.models.res_users.ResUsers._send_kc_reset_password_mail"
     )
     def test__create_energy_community_base_user__base_case(
         self, reset_password_mocked, create_kc_user_mocked
@@ -57,7 +57,7 @@ class TestResUsers(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
             email=faker.email(),
         )
 
-        # then send_reset_password_mail function was called once time
+        # then _send_kc_reset_password_mail function was called once time
         reset_password_mocked.assert_called_once()
         # then create_users_on_keycloak function was called once time
         create_kc_user_mocked.assert_called_once()
