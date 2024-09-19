@@ -40,54 +40,6 @@ class CRMLeadService(Component):
             )
         return crm_lead_create_respose
 
-    def _map_metadata_crm_fields(self, utm_source, params):
-        crm_update_dict = {}
-        rel_mapping = utm_source.crm_lead_metadata_mapping_id
-        if rel_mapping:
-            for mapping_field in rel_mapping.metadata_mapping_field_ids:
-                if mapping_field.type == "value_field":
-                    crm_update_dict[
-                        mapping_field.destination_field_key
-                    ] = self._get_metadata_value(params, mapping_field.metadata_key)
-                if mapping_field.type == "many2one_relation_field":
-                    mapping_domain_initial = mapping_field.parse_mapping_domain()
-                    mapping_domain = []
-                    for domain_item in mapping_domain_initial:
-                        if type(domain_item) is list:
-                            # if the condition is a dict then construct a new domain based on the metadata value
-                            try:
-                                domain_item_value = ast.literal_eval(domain_item[2])
-                                mapping_domain.append(
-                                    [
-                                        domain_item[0],
-                                        domain_item[1],
-                                        self._get_metadata_value(
-                                            params, domain_item_value["metadata"]
-                                        ),
-                                    ]
-                                )
-                            # normal domain
-                            except:
-                                mapping_domain.append(domain_item)
-                        else:
-                            mapping_domain.append(domain_item)
-                    res_ids = self.env[mapping_field.mapping_model_real].search(
-                        mapping_domain
-                    )
-                    if res_ids:
-                        crm_update_dict[mapping_field.destination_field_key] = res_ids[
-                            0
-                        ].id
-        return crm_update_dict
-
-    def _get_metadata_value(self, params, key):
-        metadata = params["metadata"]
-        value = ""
-        for data in metadata:
-            if data["key"] == key:
-                value = data["value"]
-        return value
-
     def _get_crm_lead_name(self, lead_id, params):
         source_xml_id = self._get_metadata_value(params, "source_xml_id")
         email = params["email_from"]
@@ -143,22 +95,75 @@ class CRMLeadService(Component):
             return utm_source.crm_team_id.id
         return self.env["crm.team"]._get_default_team_id(user_id=self.env.user.id).id
 
+    def _map_metadata_crm_fields(self, utm_source, params):
+        crm_update_dict = {}
+        rel_mapping = utm_source.crm_lead_metadata_mapping_id
+        if rel_mapping:
+            for mapping_field in rel_mapping.metadata_mapping_field_ids:
+                if mapping_field.type == "value_field":
+                    crm_update_dict[
+                        mapping_field.destination_field_key
+                    ] = self._get_metadata_value(params, mapping_field.metadata_key)
+                if mapping_field.type == "many2one_relation_field":
+                    mapping_domain_initial = mapping_field.parse_mapping_domain()
+                    mapping_domain = []
+                    for domain_item in mapping_domain_initial:
+                        if type(domain_item) is list:
+                            # if the condition is a dict then construct a new domain based on the metadata value
+                            try:
+                                domain_item_value = ast.literal_eval(domain_item[2])
+                                mapping_domain.append(
+                                    [
+                                        domain_item[0],
+                                        domain_item[1],
+                                        self._get_metadata_value(
+                                            params, domain_item_value["metadata"]
+                                        ),
+                                    ]
+                                )
+                            # normal domain
+                            except:
+                                mapping_domain.append(domain_item)
+                        else:
+                            mapping_domain.append(domain_item)
+                    res_ids = self.env[mapping_field.mapping_model_real].search(
+                        mapping_domain
+                    )
+                    if res_ids:
+                        crm_update_dict[mapping_field.destination_field_key] = res_ids[
+                            0
+                        ].id
+        return crm_update_dict
+
+    def _get_metadata_value(self, params, key):
+        metadata_dict = self._convert_params_metadata_to_dict(params)
+        return metadata_dict.get(key, False)
+
+    def _convert_params_metadata_to_dict(self, params):
+        metadata_dict = {}
+        for metadata_item in params["metadata"]:
+            metadata_dict[metadata_item["key"]] = metadata_item["value"]
+        return metadata_dict
+
     def _lead_creation_email_autoresponder(
         self, crm_lead_id, target_source_xml_id, params
     ):
-        # get user lang from payload
-        lang = self._get_metadata_value(params, "current_lang")
+        # add followers
+        self.env["crm.lead"].browse(crm_lead_id).add_follower()
         # select autoresponder notification id based on utm source
         template_external_id = self._get_autoresponder_email_template(
             target_source_xml_id
         )
-        # add followers
-        self.env["crm.lead"].browse(crm_lead_id).add_follower()
-        # send auto responder email and notify admins
-        email_values = {"email_to": params["email_from"]}
-        if lang:
-            email_values["lang"] = lang
         if template_external_id:
+            # setup context data to be used on template
+            email_values = {
+                "metadata": self._convert_params_metadata_to_dict(params),
+                "email_to": params["email_from"],
+            }
+            # get user lang from payload
+            lang = self._get_metadata_value(params, "current_lang")
+            if lang:
+                email_values["lang"] = lang
             template = self.env.ref(
                 "energy_communities_crm.{}".format(template_external_id)
             ).with_context(email_values)

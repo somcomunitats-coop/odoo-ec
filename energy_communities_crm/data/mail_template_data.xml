@@ -74,6 +74,25 @@
                     <p>Thank you for contact.</p>
                     <p>We have received your email and we have we have forwarded it to the Community so that they can contact you as soon as possible.</p>
                     <br />
+                    <p>Received data on your contact request:</p>
+                    <ul>
+                      % if ctx.metadata.name:
+                      <li><strong>Name:</strong> ${ctx.metadata.name}</li>
+                      % endif
+                      % if ctx.metadata.email_from:
+                      <li><strong>Email:</strong> ${ctx.metadata.email_from}</li>
+                      % endif
+                      % if ctx.metadata.phone:
+                      <li><strong>Phone:</strong> ${ctx.metadata.phone}</li>
+                      % endif
+                      % if ctx.metadata.town:
+                      <li><strong>City:</strong> ${ctx.metadata.town}</li>
+                      % endif
+                      % if ctx.metadata.message:
+                      <li><strong>Message:</strong> ${ctx.metadata.message}</li>
+                      % endif
+                    </ul>
+                    <br />
                     <p>Yours faithfully,</p>
                     <p>Somcomunitats.coop team </p>
                     <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
