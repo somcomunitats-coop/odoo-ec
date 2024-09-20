@@ -28,7 +28,8 @@ class TestMemberApiInfo(TransactionComponentCase):
 
     def test__get_member_info(self):
         # given a energy community member
-        member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
         # given a api info component
         work = WorkContext(
             "res.partner", collection=self.backend, schema_class=MemberInfo
@@ -61,7 +62,8 @@ class TestMemberApiInfo(TransactionComponentCase):
         patcher.return_value = fake_energy_communities()
 
         # given a energy community member
-        member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
         # given a api info component
         work = WorkContext(
             "res.partner", collection=self.backend, schema_class=CommunityInfo
@@ -83,7 +85,8 @@ class TestMemberApiInfo(TransactionComponentCase):
 
     def test__get_member_communities_paging_params(self):  # , patcher):
         # given a energy community member
-        member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
         # given a paging object for 1 element and an api info component
         page = 1
         page_size = 1

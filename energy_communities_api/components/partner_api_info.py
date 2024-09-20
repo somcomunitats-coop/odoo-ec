@@ -107,62 +107,12 @@ class PartnerApiInfo(Component):
             .mapped(lambda inscription: inscription.project_id)
         )
         for project in projects:
-            monitoring_service = project.monitoring_service()
-            if monitoring_service:
-                member_contract = project.contract_ids.filtered(
-                    lambda contract: contract.partner_id == partner
-                )
-                service_parameters = {
-                    "system_id": project.selfconsumption_id.code,
-                    "member_id": member_contract.code,
-                    "date_from": date_from,
-                    "date_to": date_to,
-                }
-                metrics_info = CommunityServiceMetricsInfo(
-                    id=project.id,
-                    name=project.name,
-                    type="fotovoltaic",
-                    shares=MetricInfo(
-                        value=member_contract.supply_point_assignation_id.coefficient,
-                        unit=UnitEnum.percentage,
-                    ),
-                    energy_shares=MetricInfo(
-                        value=member_contract.supply_point_assignation_id.energy_shares,
-                        unit=UnitEnum.kwn,
-                    ),
-                    share_energy_production=MetricInfo(
-                        value=monitoring_service.generated_energy_by_member(
-                            **service_parameters
-                        ),
-                        unit=UnitEnum.kwh,
-                    ),
-                    selfconsumption_consumption_ratio=MetricInfo(
-                        value=monitoring_service.selfconsumed_energy_ratio_by_member(
-                            **service_parameters
-                        ),
-                        unit=UnitEnum.percentage,
-                    ),
-                    selfconsumption_surplus_ratio=MetricInfo(
-                        value=monitoring_service.energy_surplus_ratio_by_member(
-                            **service_parameters
-                        ),
-                        unit=UnitEnum.percentage,
-                    ),
-                    consumption_selfconsumption_ratio=MetricInfo(
-                        value=monitoring_service.energy_usage_ratio_by_member(
-                            **service_parameters
-                        ),
-                        unit=UnitEnum.percentage,
-                    ),
-                    environment_saves=MetricInfo(
-                        value=monitoring_service.co2save_by_member(
-                            **service_parameters
-                        ),
-                        unit=UnitEnum.grco2,
-                    ),
-                )
+            metrics_component = self.component(usage="metrics.info")
+            metrics_info = metrics_component.get_project_metrics(
+                project, partner, date_from, date_to
+            )
+            if metrics_info:
                 metrics += [metrics_info]
-
         return metrics
 
     def get_member_community_services_metrics_by_service(
@@ -171,61 +121,11 @@ class PartnerApiInfo(Component):
         domain = self._active_community_services_domain(service_id)
         project = self.env["energy_project.project"].search(domain)
         if project:
-            monitoring_service = project.monitoring_service()
-            if monitoring_service:
-                member_contract = project.contract_ids.filtered(
-                    lambda contract: contract.partner_id == partner
-                )
-                service_parameters = {
-                    "system_id": project.selfconsumption_id.code,
-                    "member_id": member_contract.code,
-                    "date_from": date_from,
-                    "date_to": date_to,
-                }
-                metrics_info = CommunityServiceMetricsInfo(
-                    id=project.id,
-                    name=project.name,
-                    type="fotovoltaic",
-                    shares=MetricInfo(
-                        value=member_contract.supply_point_assignation_id.coefficient,
-                        unit=UnitEnum.percentage,
-                    ),
-                    energy_shares=MetricInfo(
-                        value=member_contract.supply_point_assignation_id.energy_shares,
-                        unit=UnitEnum.kwn,
-                    ),
-                    share_energy_production=MetricInfo(
-                        value=monitoring_service.generated_energy_by_member(
-                            **service_parameters
-                        ),
-                        unit=UnitEnum.kwh,
-                    ),
-                    selfconsumption_consumption_ratio=MetricInfo(
-                        value=monitoring_service.selfconsumed_energy_ratio_by_member(
-                            **service_parameters
-                        ),
-                        unit=UnitEnum.percentage,
-                    ),
-                    selfconsumption_surplus_ratio=MetricInfo(
-                        value=monitoring_service.energy_surplus_ratio_by_member(
-                            **service_parameters
-                        ),
-                        unit=UnitEnum.percentage,
-                    ),
-                    consumption_selfconsumption_ratio=MetricInfo(
-                        value=monitoring_service.energy_usage_ratio_by_member(
-                            **service_parameters
-                        ),
-                        unit=UnitEnum.percentage,
-                    ),
-                    environment_saves=MetricInfo(
-                        value=monitoring_service.co2save_by_member(
-                            **service_parameters
-                        ),
-                        unit=UnitEnum.grco2,
-                    ),
-                )
-                return metrics_info
+            metrics_component = self.component(usage="metrics.info")
+            metrics_info = metrics_component.get_project_metrics(
+                project, partner, date_from, date_to
+            )
+            return metrics_info
 
     def _get_communities(self, partner: Partner):
         domain = self._communities_domain(partner)

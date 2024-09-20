@@ -32,7 +32,8 @@ class MemberApiService(Component):
     _collection = "energy_communities_member.api.services"
     _usage = "me"
     _description = """
-        CE Member roles requests
+        Set of endpoints that return all information about profile, communities, metrics, services from a energy community
+        member perspective
     """
     _work_on_model = "res.partner"
 
@@ -44,6 +45,9 @@ class MemberApiService(Component):
         output_param=PydanticModel(MemberInfoResponse),
     )
     def me(self):
+        """
+        Basic personal information
+        """
         self._validate_headers()
         community_id = request.httprequest.headers.get("CommunityId")
         with api_info(
