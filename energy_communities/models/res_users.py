@@ -45,6 +45,12 @@ class ResUsers(models.Model):
                 )
         return user
 
+    @api.constrains("lang")
+    def constrains_user_lang(self):
+        for record in self:
+            if record.lang:
+                record._update_kc_user_lang()
+
     @api.constrains("login")
     def constrains_user_login(self):
         for record in self:
@@ -727,6 +733,31 @@ class ResUsers(models.Model):
                 _(
                     "Something went wrong. Mail can not be sended. More details: {}"
                 ).format(response.json())
+            )
+
+    def _update_kc_user_lang(self):
+        provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
+        provider_id.validate_admin_provider()
+        headers = {"Authorization": "Bearer %s" % self._get_admin_token(provider_id)}
+        headers["Content-Type"] = "application/json"
+        if provider_id.admin_user_endpoint:
+            if self.oauth_uid:
+                endpoint = provider_id.admin_user_endpoint + "/" + self.oauth_uid
+                data = {
+                    "attributes": {
+                        "lang": [self.lang],
+                    },
+                }
+                response = requests.put(endpoint, headers=headers, json=data)
+                if response.status_code != 204:
+                    raise exceptions.UserError(
+                        _("Something went wrong. More details: {}").format(
+                            response.json()
+                        )
+                    )
+        else:
+            raise exceptions.UserError(
+                _("Keycloack provider admin user endpoint not defined")
             )
 
     def _validate_response(self, resp, no_json=False):
