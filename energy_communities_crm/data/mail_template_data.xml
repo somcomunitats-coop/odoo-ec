@@ -333,5 +333,38 @@
             ]]></field>
         </record>
 
+        <record
+      id="email_templ_lead_ce_source_tariffs_page_contact"
+      model="mail.template"
+    >
+            <field
+        name="name"
+      >Auto-reply email when receiving a request for information from Tariffs page</field>
+            <field
+        name="email_from"
+      >${object.team_id.alias_id.alias_name}@${object.team_id.alias_id.alias_domain}</field>
+            <field
+        name="subject"
+      >[${object.company_id.name}] Tariffs information</field>
+            <field name="email_to">${object.email_from}</field>
+            <field name="model_id" ref="model_crm_lead" />
+            <field name="auto_delete" eval="False" />
+            <field name="lang">${object.company_id.partner_id.lang}</field>
+            <field
+        name="body_html"
+      ><![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Hello,</p>
+                    <p>Thanks for getting in touch.</p>
+                    <p>We have received your email related to Som Comunitats tariffs.</p>
+                    <p>We will contact you as soon as possible.</p>
+                    <br />
+                    <p>Yours faithfully,</p>
+                    <p>Somcomunitats.coop team </p>
+                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
+                </div>
+            ]]></field>
+        </record>
+
     </data>
 </odoo>
