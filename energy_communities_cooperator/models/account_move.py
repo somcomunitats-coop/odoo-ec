@@ -1,4 +1,6 @@
-from odoo import _, api, fields, models
+from odoo import fields, models
+
+from odoo.addons.energy_communities.utils import user_creator
 
 
 class AccountMove(models.Model):
@@ -55,3 +57,23 @@ class AccountMove(models.Model):
         else:
             mail_template = "cooperator.email_template_certificat"
         return self.env.ref(mail_template)
+
+    def create_user(self, partner):
+        user_obj = self.env["res.users"]
+        vat = partner.vat
+
+        user = user_obj.search([("login", "=", vat)])
+        if not user:
+            user = user_obj.search([("login", "=", vat), ("active", "=", False)])
+            if user:
+                user.sudo().write({"active": True})
+
+        role_id = self.env.ref("energy_communities.role_ce_member")
+        action = "create_user"
+        if partner.company_id.create_user_in_keycloak:
+            action = "create_kc_user"
+        with user_creator(self.env) as component:
+            component.create_users_from_cooperator_partners(
+                partners=partner, role_id=role_id, action=action, force_invite=False
+            )
+        return user

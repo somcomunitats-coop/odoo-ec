@@ -60,10 +60,29 @@
           >Community company</h4>
                 </xpath>
                 <xpath expr="//field[@name='child_ids']" position="after">
-                  <field
-            name="user_ids"
+                  <label
+            for="user_ids"
+            string="Related users"
             groups="energy_communities.group_platform_manager"
           />
+                  <field
+            name="user_ids"
+            widget="one2many"
+            groups="energy_communities.group_platform_manager"
+          >
+            <tree open="1" create="0" edit="0">
+              <button
+                name="action_open_form_view"
+                type="object"
+                string="View"
+                class="oe_highlight"
+              />
+              <field name="name" />
+              <field name="login" />
+              <field name="lang" />
+              <field name="login_date" />
+            </tree>
+                   </field>
                 </xpath>
 
             </field>
