@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-09 08:26+0000\n"
-"PO-Revision-Date: 2024-08-09 10:30+0200\n"
+"POT-Creation-Date: 2024-09-23 13:37+0000\n"
+"PO-Revision-Date: 2024-09-23 15:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: eu_ES\n"
@@ -73,6 +73,28 @@ msgid ""
 "forwarded it to the Community so that they can contact you as soon as "
 "possible.</p>\n"
 "                    <br />\n"
+"                    <p>Received data on your contact request:</p>\n"
+"                    <ul>\n"
+"                      % if ctx.metadata.name:\n"
+"                      <li><strong>Name:</strong> ${ctx.metadata.name}</li>\n"
+"                      % endif\n"
+"                      % if ctx.metadata.email_from:\n"
+"                      <li><strong>Email:</strong> ${ctx.metadata.email_from}"
+"</li>\n"
+"                      % endif\n"
+"                      % if ctx.metadata.phone:\n"
+"                      <li><strong>Phone:</strong> ${ctx.metadata.phone}</"
+"li>\n"
+"                      % endif\n"
+"                      % if ctx.metadata.town:\n"
+"                      <li><strong>City:</strong> ${ctx.metadata.town}</li>\n"
+"                      % endif\n"
+"                      % if ctx.metadata.message:\n"
+"                      <li><strong>Message:</strong> ${ctx.metadata.message}"
+"</li>\n"
+"                      % endif\n"
+"                    </ul>\n"
+"                    <br />\n"
 "                    <p>Yours faithfully,</p>\n"
 "                    <p>Somcomunitats.coop team </p>\n"
 "                    <p><a href=\"https://somcomunitats.coop/recursos/"
@@ -84,17 +106,40 @@ msgstr ""
 "                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, "
 "Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-"
 "color: #FFF; \">\n"
-"                    <p>Kaixo,</p>\n"
-"                    <p>Eskerrik asko harremanetan jartzeagatik.</p>\n"
-"                    <p>Zure e-posta jaso dugu eta Komunitateari birbidali "
-"diogu, ahalik eta azkarren zurekin harremanetan jartzeko.</p>\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gracias por ponerte en contacto.</p>\n"
+"                    <p>Hemos recibido tu correo electrónico y le hemos "
+"hecho llegar a la Comunidad Energética para que se pongan en contacto "
+"contigo lo antes posible.</p>\n"
 "                    <br />\n"
-"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara."
-"</p>\n"
-"                    <p>Zinez,</p>\n"
-"                    <p>Taldea Somcomunitats.coop</p>\n"
+"                    <p>Datos recibidos en tu solicitud de contacto:</p>\n"
+"                    <ul>\n"
+"                      % if ctx.metadata.name:\n"
+"                      <li><strong>Nombre:</strong> ${ctx.metadata.name}</"
+"li>\n"
+"                      % endif\n"
+"                      % if ctx.metadata.email_from:\n"
+"                      <li><strong>Correo:</strong> ${ctx.metadata."
+"email_from}</li>\n"
+"                      % endif\n"
+"                      % if ctx.metadata.phone:\n"
+"                      <li><strong>Teléfono:</strong> ${ctx.metadata.phone}</"
+"li>\n"
+"                      % endif\n"
+"                      % if ctx.metadata.town:\n"
+"                      <li><strong>Municipio:</strong> ${ctx.metadata.town}</"
+"li>\n"
+"                      % endif\n"
+"                      % if ctx.metadata.message:\n"
+"                      <li><strong>Mensaje:</strong> ${ctx.metadata.message}"
+"</li>\n"
+"                      % endif\n"
+"                    </ul>\n"
+"                    <br />\n"
+"                    <p>Atentamente,</p>\n"
+"                    <p>Equipo de Somos Comunidades</p>\n"
 "                    <p><a href=\"https://somcomunitats.coop/recursos/"
-"\">Baliabideak eta ohiko galderak</a></p>\n"
+"\">Recursos y preguntas frecuentes</a></p>\n"
 "                </div>\n"
 "            "
 
@@ -426,6 +471,43 @@ msgstr ""
 "                    <p>Taldea Somcomunitats.coop</p>\n"
 "                    <p><a href=\"https://omcomunitats.coop/recursos/"
 "\">Baliabideak eta ohiko galderak</a></p>\n"
+"                </div>\n"
+"            "
+
+#. module: energy_communities_crm
+#: model:mail.template,body_html:energy_communities_crm.email_templ_lead_ce_source_tariffs_page_contact
+msgid ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, "
+"Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-"
+"color: #FFF; \">\n"
+"                    <p>Hello,</p>\n"
+"                    <p>Thanks for getting in touch.</p>\n"
+"                    <p>We have received your email related to Som "
+"Comunitats tariffs.</p>\n"
+"                    <p>We will contact you as soon as possible.</p>\n"
+"                    <br />\n"
+"                    <p>Yours faithfully,</p>\n"
+"                    <p>Somcomunitats.coop team </p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/"
+"\">Resources and FAQs</a></p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"\n"
+"                <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, "
+"Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-"
+"color: #FFF; \">\n"
+"                    <p>Hola,</p>\n"
+"                    <p>Gracias por ponerte en contacto.</p>\n"
+"                    <p>Hemos recibido tu correo electrónico en relación a "
+"información sobre la página de tarifas.</p>\n"
+"                    <p>Intentaremos darte respuesta lo antes posible.</p>\n"
+"                    <br />\n"
+"                    <p>Atentamente,</p>\n"
+"                    <p>Equipo de Somcomunitats.coop </p>\n"
+"                    <p><a href=\"https://somcomunitats.coop/recursos/"
+"\">Recursos y FAQs</a></p>\n"
 "                </div>\n"
 "            "
 
@@ -838,7 +920,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_team__display_name
 #: model:ir.model.fields,field_description:energy_communities_crm.field_utm_source__display_name
 msgid "Display Name"
-msgstr "Bistaratzeko izena"
+msgstr "Nombre Mostrado"
 
 #. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
@@ -1113,7 +1195,7 @@ msgstr "Hizkuntza"
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_team____last_update
 #: model:ir.model.fields,field_description:energy_communities_crm.field_utm_source____last_update
 msgid "Last Modified on"
-msgstr "Azken aldaketa egunean"
+msgstr "Última modificación el"
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_assign_crm_to_coordinator_company_wizard__write_uid
@@ -1374,6 +1456,12 @@ msgid "Sales Team"
 msgstr "Salmenta taldea"
 
 #. module: energy_communities_crm
+#: model:ir.model.fields,field_description:energy_communities_crm.field_mailing_mailing__crm_team_id
+#: model:ir.model.fields,field_description:energy_communities_crm.field_utm_source__crm_team_id
+msgid "Sales team for this source"
+msgstr "Equipo de ventas para este origen"
+
+#. module: energy_communities_crm
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Secondary Image"
@@ -1576,6 +1664,11 @@ msgid "[${object.company_id.name] Newsletter Subscription"
 msgstr "[${object.company_id.name] Registro en la Newsletter"
 
 #. module: energy_communities_crm
+#: model:mail.template,subject:energy_communities_crm.email_templ_lead_ce_source_tariffs_page_contact
+msgid "[${object.company_id.name}] Tariffs information"
+msgstr "[${object.company_id.name}] Información sobre tarifas"
+
+#. module: energy_communities_crm
 #: code:addons/energy_communities_crm/services/crm_lead_service.py:0
 #, python-format
 msgid "[Contact CE]"
@@ -1666,6 +1759,12 @@ msgstr ""
 #, python-format
 msgid "[Subscription CE]"
 msgstr "[Harpidetza CE]"
+
+#. module: energy_communities_crm
+#: code:addons/energy_communities_crm/services/crm_lead_service.py:0
+#, python-format
+msgid "[Tariffs contact]"
+msgstr "[Contacto sobre tarifas]"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_headline
