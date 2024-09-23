@@ -210,27 +210,7 @@
                         </group>
 
                         <notebook colspan="4">
-                            <page
-                string="Invoicing Mode"
-                name="invoicing_mode"
-                autofocus="autofocus"
-                attrs="{'invisible':[('invoicing_mode', '==', False)]}"
-              >
-                                <group>
-                                    <field name="invoicing_mode" readonly="True" />
-                                    <field name="product_id" readonly="True" />
-                                    <field
-                    name="contract_template_id"
-                    readonly="True"
-                  />
-                                </group>
-                            </page>
-                              <page string="External Services" name="energy_services">
-                                <group>
-                                    <field name="service_contract_ids" />
-                                </group>
-                            </page>
-                            <page
+                                                        <page
                 string="Inscription form configuration"
                 name="form_configuration"
               >
@@ -292,8 +272,26 @@
                   />
                                 </group>
                             </page>
-
-
+                            <page
+                string="Invoicing Mode"
+                name="invoicing_mode"
+                autofocus="autofocus"
+                attrs="{'invisible':[('invoicing_mode', '==', False)]}"
+              >
+                                <group>
+                                    <field name="invoicing_mode" readonly="True" />
+                                    <field name="product_id" readonly="True" />
+                                    <field
+                    name="contract_template_id"
+                    readonly="True"
+                  />
+                                </group>
+                            </page>
+                              <page string="External Services" name="energy_services">
+                                <group>
+                                    <field name="service_contract_ids" />
+                                </group>
+                            </page>
                         </notebook>
 
                     </sheet>

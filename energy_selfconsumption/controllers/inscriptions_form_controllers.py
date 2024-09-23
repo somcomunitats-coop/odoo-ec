@@ -397,6 +397,11 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             .search(
                 [
                     (
+                        "project_id",
+                        "=",
+                        model.id,
+                    ),
+                    (
                         "quantity",
                         "=",
                         float(values["inscriptionselfconsumption_participation"]),
@@ -416,6 +421,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 ],
                 "accept": True,
                 "member": True,
+                "code": values["supplypoint_cups"]
             }
         )
         if values["supplypoint_owner_id_same"] == "yes":

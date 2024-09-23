@@ -13,18 +13,19 @@
             options="{'no_create': True}"
             width="14%"
           />
-                    <field name="is_member" readonly="1" width="14%" />
-                    <field name="effective_date" width="14%" />
+                    <field name="code" width="22%" />
+                    <field name="is_member" readonly="1" width="10%" />
+                    <field name="effective_date" width="6%" />
                     <field name="mandate_filtered_ids" invisible="True" />
-                    <field name="acc_number" width="16%" />
+                    <field name="acc_number" width="22%" />
                     <field
             name="mandate_id"
             domain="[('id', 'in', mandate_filtered_ids)]"
             context="{'default_partner_id': partner_id}"
             width="14%"
           />
-                    <field name="member" readonly="1" width="14%" />
-                    <field name="participation" width="14%" />
+                    <field name="member" readonly="1" width="6%" />
+                    <field name="participation_quantity" sum="True" width="6%" />
                 </tree>
             </field>
         </record>

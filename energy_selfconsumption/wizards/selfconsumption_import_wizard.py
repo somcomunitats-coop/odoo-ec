@@ -254,12 +254,36 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 else:
                     effective_date = fields.date.today()
 
-                self.env["energy_project.inscription"].create(
+                participation = (
+                    self.env["energy_project.participation"]
+                    .sudo()
+                    .search(
+                        [
+                            (
+                                "project_id",
+                                "=",
+                                project.id,
+                            )
+                        ]
+                    )
+                )
+
+                if not participation:
+                    return False, _("Dont exit participation for this project.")
+
+                self.env[
+                    "energy_selfconsumption.inscription_selfconsumption"
+                ].create(
                     {
                         "project_id": project.id,
                         "partner_id": partner.id,
                         "effective_date": effective_date,
                         "mandate_id": mandate.id,
+                        "code": line_dict["code"],
+                        "participation": participation[0].id,
+                        "annual_electricity_use": 1.0,
+                        "accept": True,
+                        "member": True,
                     }
                 )
             except Exception as e:
@@ -439,12 +463,36 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 }
             )
 
-            inscription = self.env["energy_project.inscription"].create(
+            participation = (
+                self.env["energy_project.participation"]
+                .sudo()
+                .search(
+                    [
+                        (
+                            "project_id",
+                            "=",
+                            active_id,
+                        )
+                    ]
+                )
+            )
+
+            if not participation:
+                raise ValidationError(_("Dont exit participation for this project."))
+
+            inscription = self.env[
+                "energy_selfconsumption.inscription_selfconsumption"
+            ].create(
                 {
                     "project_id": active_id,
                     "partner_id": partner.id,
                     "effective_date": datetime.now().strftime("%Y-%m-%d"),
                     "mandate_id": mandate.id,
+                    "code": self.generate_cups(),
+                    "participation": participation[0].id,
+                    "annual_electricity_use": 1.0,
+                    "accept": True,
+                    "member": True,
                 }
             )
 
@@ -466,7 +514,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
 
             self.env["energy_selfconsumption.supply_point"].create(
                 {
-                    "code": self.generate_cups(),
+                    "code": inscription.code,
                     "name": partner.street,
                     "street": partner.street,
                     "city": partner.city,
@@ -497,14 +545,33 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 ]
             )
             if mandates:
-                self.env["energy_project.inscription"].create(
-                    {
-                        "project_id": active_id,
-                        "partner_id": partner.id,
-                        "effective_date": datetime.now().strftime("%Y-%m-%d"),
-                        "mandate_id": mandates[0].id,
-                    }
+                participation = (
+                    self.env["energy_project.participation"]
+                    .sudo()
+                    .search(
+                        [
+                            (
+                                "project_id",
+                                "=",
+                                active_id,
+                            )
+                        ]
+                    )
                 )
-                count += 1
+                if participation:
+                    self.env["energy_selfconsumption.inscription_selfconsumption"].create(
+                        {
+                            "project_id": active_id,
+                            "partner_id": partner.id,
+                            "effective_date": datetime.now().strftime("%Y-%m-%d"),
+                            "mandate_id": mandates[0].id,
+                            "code": self.generate_cups(),
+                            "participation": participation[0].id,
+                            "annual_electricity_use": 1.0,
+                            "accept": True,
+                            "member": True,
+                        }
+                    )
+                    count += 1
 
         return True
