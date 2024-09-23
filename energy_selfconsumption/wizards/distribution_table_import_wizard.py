@@ -201,18 +201,22 @@ class DistributionTableImportWizard(models.TransientModel):
         query = f"""INSERT INTO energy_selfconsumption_supply_point_assignation
         ({', '.join(columns)})
         VALUES {', '.join(['%s'] * len(data))}"""
-        logger.error(f"\n\n SQL: \n {query}")
-        try:
-            self.env.cr.execute(query, data)
-            self.env.cr.commit()
-        except Exception as e:
-            self.env.cr.rollback()
-            error = True
-            logger.error(f"Error executing bulk insert query: {e}")
-            self.notification("Error query", f"Query: {query}\nError: {e}")
+        if 'null' in str(data):
+            logger.error("Error query:" + query)
+        else:
+            try:
+                self.env.cr.execute(query, data)
+                self.env.cr.commit()
+            except Exception as e:
+                self.env.cr.rollback()
+                error = True
+                logger.error(f"Error executing bulk insert query: {e}")
+                self.notification("Error query",
+                                  f"Query: {query}\nError: {e}")
 
-        if not error:
-            self.notification("Import", "Import completed successfully")
+            if not error:
+                self.notification("Import",
+                                  "Import completed successfully")
 
     def get_supply_point_assignation_values(self, row, cups, distribution_table):
         if cups:
