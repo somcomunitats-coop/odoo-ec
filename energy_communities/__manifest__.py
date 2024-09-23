@@ -60,6 +60,7 @@
         "views/res_partner_views.xml",
         "views/ce_views.xml",
         "views/cm_place.xml",
+        "views/energy_action_views.xml",
         "views/utm_views.xml",
         "views/auth_oauth_views.xml",
         "views/view_users_form.xml",
