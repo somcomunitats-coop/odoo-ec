@@ -1,0 +1,34 @@
+<odoo>
+  <!-- Crm lead tags -->
+	<record id="energy_action_views" model="ir.actions.act_window">
+		<field name="name">Energy Actions</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">energy.action</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<record id="energy_action_form_view" model="ir.ui.view">
+		<field name="name">energy.action.form</field>
+		<field name="model">energy.action</field>
+		<field name="arch" type="xml">
+      <form string="Energy Action">
+        <sheet>
+            <group>
+                <field name="name" />
+            </group>
+        </sheet>
+      </form>
+		</field>
+	</record>
+
+  <record id="energy_action_tree_view" model="ir.ui.view">
+		<field name="name">energy.action.tree</field>
+		<field name="model">energy.action</field>
+		<field name="arch" type="xml">
+      <tree>
+        <field name="name" />
+      </tree>
+		</field>
+	</record>
+
+</odoo>
