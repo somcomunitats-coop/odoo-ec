@@ -191,4 +191,7 @@ class CRMLeadService(Component):
             template_external_id = "email_templ_lead_ce_source_coord_web_hiring_id"
         elif source_xml_id == "ce_source_coord_web_other":
             template_external_id = "email_templ_lead_ce_source_coord_web_other_id"
+        elif source_xml_id == "ce_source_tariffs_page_contact":
+            template_external_id = "email_templ_lead_ce_source_tariffs_page_contact"
+
         return template_external_id
