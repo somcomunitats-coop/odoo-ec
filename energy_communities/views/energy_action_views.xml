@@ -7,26 +7,27 @@
 		<field name="view_mode">tree,form</field>
 	</record>
 
-	<record id="energy_action_form_view" model="ir.ui.view">
-		<field name="name">energy.action.form</field>
-		<field name="model">energy.action</field>
-		<field name="arch" type="xml">
-      <form string="Energy Action">
-        <sheet>
-            <group>
-                <field name="name" />
-            </group>
-        </sheet>
-      </form>
-		</field>
-	</record>
+	<!--<record id="energy_action_form_view" model="ir.ui.view">-->
+		<!--<field name="name">energy.action.form</field>-->
+		<!--<field name="model">energy.action</field>-->
+		<!--<field name="arch" type="xml">-->
+      <!--<form string="Energy Action">-->
+        <!--<sheet>-->
+            <!--<group>-->
+                <!--<field name="name" />-->
+            <!--</group>-->
+        <!--</sheet>-->
+      <!--</form>-->
+		<!--</field>-->
+	<!--</record>-->
 
   <record id="energy_action_tree_view" model="ir.ui.view">
 		<field name="name">energy.action.tree</field>
 		<field name="model">energy.action</field>
 		<field name="arch" type="xml">
-      <tree create="false">
-        <field name="name" />
+      <tree create="false" edit="true" delete="false" editable="bottom">
+        <field name="name" readonly="1" />
+        <field name="xml_id" readonly="1" />
       </tree>
 		</field>
 	</record>
