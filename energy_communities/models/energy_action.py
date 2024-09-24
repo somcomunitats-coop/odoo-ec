@@ -6,6 +6,13 @@ class EnergyAction(models.Model):
 
     name = fields.Char(string="Name", translate=True)
     xml_id = fields.Char(compute="_compute_xml_id", string="External ID")
+    company_mids = fields.Many2many(
+        "res.company",
+        "res_company_energy_action_rel",
+        "energy_action_id",
+        "company_id",
+        string="Related companies",
+    )
 
     def _compute_xml_id(self):
         res = self.get_external_id()
