@@ -52,6 +52,7 @@
         "data/ir_cron.xml",
         "data/utm_data.xml",
         "data/crm_lead_tag.xml",
+        "data/energy_action.xml",
         "report/report_templates.xml",
         "views/account_move_views.xml",
         "views/landing_page_view.xml",
