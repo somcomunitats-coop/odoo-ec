@@ -82,7 +82,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     create_place = fields.Boolean(string="Create Map Place", default=False)
     landing_short_description = fields.Text(string="Short description")
     landing_long_description = fields.Text(string="Long description")
-    ce_tag_ids = fields.Many2many("crm.tag", string="Energy Community Services")
+    energy_action_mids = fields.Many2many("energy.action", string="Energy Actions")
     ce_number_of_members = fields.Integer(string="Number of members")
     ce_member_status = fields.Selection(
         selection=_CE_MEMBER_STATUS_VALUES,
@@ -228,7 +228,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "social_instagram": self.ce_instagram_url,
                     "social_facebook": self.ce_facebook_url,
                     "logo": self.landing_logo_file,
-                    "ce_tag_ids": self.ce_tag_ids,
+                    "energy_action_mids": self.energy_action_mids,
                 }
             )
         )

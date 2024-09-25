@@ -10,7 +10,7 @@ _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD = {
     "email_from": "email",
     "contact_phone": "phone",
     "current_lang": "default_lang_id",
-    "ce_services": "ce_tag_ids",
+    "ce_services": "energy_action_mids",
     "ce_number_of_members": "ce_number_of_members",
     "ce_status": "ce_member_status",
     "ce_why_become_cooperator": "landing_why_become_cooperator",

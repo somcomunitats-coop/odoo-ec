@@ -59,7 +59,7 @@
                             <field name="landing_primary_image_file" widget="image" />
                             <field name="landing_secondary_image_file" widget="image" />
                             <field name="landing_logo_file" widget="image" />
-                            <field name="ce_tag_ids" />
+                            <field name="energy_action_mids" widget="many2many_tags" />
                             <field name="website" />
                             <field name="ce_twitter_url" />
                             <field name="ce_telegram_url" />
