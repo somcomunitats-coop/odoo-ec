@@ -24,6 +24,6 @@ class Tag(models.Model):
     def compute_ext_id_tag(self):
         for record in self:
             res = record.get_external_id()
-            record.tag_ext_id = False
+            record.tag_ext_id = ""
             if res.get(record.id):
                 record.tag_ext_id = res.get(record.id)

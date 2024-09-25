@@ -21,14 +21,6 @@ class CrmLead(models.Model):
     _inherit = ["crm.lead", "external.id.mixin", "user.currentcompany.mixin"]
 
     lang = fields.Char(string="Language")
-    ce_tag_ids = fields.Many2many(
-        "crm.tag",
-        "crm_lead_ce_tag_rel",
-        "lead_id",
-        "tag_id",
-        string="CE Tags",
-        help="CE Classify and analyze categories",
-    )
     finished = fields.Boolean(
         related="stage_id.is_won",
         readonly=True,
