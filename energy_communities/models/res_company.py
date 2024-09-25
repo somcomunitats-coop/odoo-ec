@@ -297,6 +297,20 @@ class ResCompany(models.Model):
             res.append({"id": tag.id, "name": tag.name, "ext_id": tag.tag_ext_id})
         return res
 
+    def get_energy_actions_dict_list(self):
+        """Return a list of dicts with the key data of each energy action"""
+        self.ensure_one()
+        res = []
+        for energy_action in self.energy_action_mids:
+            res.append(
+                {
+                    "id": energy_action.id,
+                    "name": energy_action.name,
+                    "ext_id": energy_action.xml_id,
+                }
+            )
+        return res
+
     def get_lower_hierarchy_level(self):
         if self.hierarchy_level == "instance":
             return "coordinator"

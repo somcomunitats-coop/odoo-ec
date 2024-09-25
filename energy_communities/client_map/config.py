@@ -1,15 +1,15 @@
 class MapClientConfig:
     # mapping between landings params and place params
     MAPPING__INSTANCE_ID = 1
-    MAPPING__LANDING_ACTIVE_SERVICES__MAP_FILTER = {
-        "energy_communities.ce_tag_common_generation": "generacio-renovable-comunitaria",
-        "energy_communities.ce_tag_energy_efficiency": "eficiencia-energetica",
-        "energy_communities.ce_tag_sustainable_mobility": "mobilitat-sostenible",
-        "energy_communities.ce_tag_citizen_education": "formacio-ciutadana",
-        "energy_communities.ce_tag_thermal_energy": "energia-termica-i-climatitzacio",
-        "energy_communities.ce_tag_collective_purchases": "compres-col-lectives",
-        "energy_communities.ce_tag_renewable_energy": "subministrament-d-energia-100-renovable",
-        "energy_communities.ce_tag_aggregate_demand": "agregacio-i-flexibilitat-de-la-demanda",
+    MAPPING__LANDING_ENERGY_ACTIONS__MAP_FILTER = {
+        "energy_communities.energy_action_common_generation": "generacio-renovable-comunitaria",
+        "energy_communities.energy_action_energy_efficiency": "eficiencia-energetica",
+        "energy_communities.energy_action_sustainable_mobility": "mobilitat-sostenible",
+        "energy_communities.energy_action_citizen_education": "formacio-ciutadana",
+        "energy_communities.energy_action_thermal_energy": "energia-termica-i-climatitzacio",
+        "energy_communities.energy_action_collective_purchases": "compres-col-lectives",
+        "energy_communities.energy_action_renewable_energy": "subministrament-d-energia-100-renovable",
+        "energy_communities.energy_action_aggregate_demand": "agregacio-i-flexibilitat-de-la-demanda",
     }
     MAPPING__MAP = "campanya"
     MAPPING__LANDING_COMMUNITY_STATUS__MAP_FILTER = {"open": "oberta"}
