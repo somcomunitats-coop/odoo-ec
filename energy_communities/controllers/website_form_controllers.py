@@ -39,7 +39,10 @@ class WebsiteFormController(http.Controller):
                 values.update(response)
                 return request.render(self.get_form_submit(values), values)
             # metadata processing
-            self.process_metadata(model, values)
+            response = self.process_metadata(model, values)
+            if "error_msgs" in response.keys():
+                values.update(response)
+                return request.render(self.get_form_submit(values), values)
             # success
             return self._get_data_submit_response(values)
         else:

@@ -2,6 +2,7 @@ from . import account_move
 from . import contract
 from . import contract_csv_report
 from . import contract_line
+from . import create_inscription
 from . import distribution_table
 from . import distribution_table_csv_report
 from . import participation

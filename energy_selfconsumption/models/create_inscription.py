@@ -2,7 +2,7 @@ from odoo import models, _, api
 from stdnum.es import iban
 from datetime import datetime
 
-class CreateInscription(models.AbtractModel):
+class CreateInscription(models.AbstractModel):
     _name = "energy_selfconsumption.create_inscription_selfconsumption"
     _description = "Service to create inscriptions for a self-consumption"
 
@@ -34,11 +34,11 @@ class CreateInscription(models.AbtractModel):
             self.env["cooperative.membership"]
             .sudo()
             .search(
-                {
-                    "company_id": project.company_id.id,
-                    "partner_id": partner.id,
-                    "cooperator": True,
-                }
+                [
+                    ("company_id", '=', project.company_id.id),
+                    ("partner_id", '=', partner.id),
+                    ("cooperator", '=', True),
+                ]
             )
         )
 
@@ -75,7 +75,7 @@ class CreateInscription(models.AbtractModel):
             )
 
             if not bank_account:
-                bank_account = self.env["res.partner.bank"].create(
+                bank_account = self.env["res.partner.bank"].sudo().create(
                     {
                         "acc_number": values["inscription_acc_number"],
                         "partner_id": partner.id,
@@ -149,10 +149,15 @@ class CreateInscription(models.AbtractModel):
 
         effective_date = datetime.now().strftime(values["date_format"])
 
-        if values["effective_date"]:
+        if "effective_date" in values:
             effective_date = datetime.strptime(
                 values["effective_date"], values["date_format"]
             ).date()
+        annual_electricity_use = False
+        if "inscriptionselfconsumption_annual_electricity_use" in values:
+            annual_electricity_use = values[
+                "inscriptionselfconsumption_annual_electricity_use"
+            ]
 
         self.env["energy_selfconsumption.inscription_selfconsumption"].sudo().create(
             {
@@ -161,9 +166,7 @@ class CreateInscription(models.AbtractModel):
                 "effective_date": effective_date,
                 "mandate_id": mandate.id if mandate else mandate,
                 "participation": participation.id,
-                "annual_electricity_use": values[
-                    "inscriptionselfconsumption_annual_electricity_use"
-                ],
+                "annual_electricity_use": annual_electricity_use,
                 "accept": True,
                 "member": True,
                 "code": values["supplypoint_cups"]
@@ -177,7 +180,7 @@ class CreateInscription(models.AbtractModel):
         if not supplypoint_owner_id_same:
             country = project.company_id.partner_id.country_id
             if "country" in values:
-                country = self.env["res.country"].search(
+                country = self.env["res.country"].sudo().search(
                     [("code", "=", values["country"])])
                 if not country:
                     return False, _("Country code was not found: {country}").format(
@@ -185,7 +188,7 @@ class CreateInscription(models.AbtractModel):
                     )
             state = project.company_id.partner_id.state_id
             if "state" in values:
-                state = self.env["res.country.state"].search(
+                state = self.env["res.country.state"].sudo().search(
                     [("code", "=", values["state"]), ("country_id", "=", country.id)]
                 )
                 if not state:
@@ -223,6 +226,18 @@ class CreateInscription(models.AbtractModel):
                     ]
                 )
             )
+            gender = False
+            if "supplypoint_owner_id_gender" in values:
+                gender = values["supplypoint_owner_id_gender"]
+
+            phone = False
+            if "supplypoint_owner_id_phone" in values:
+                phone = values["supplypoint_owner_id_phone"]
+
+            email = False
+            if "supplypoint_owner_id_email" in values:
+                email = values["supplypoint_owner_id_email"] 
+
             if not owner:
                 owner = (
                     self.env["res.partner"]
@@ -231,12 +246,12 @@ class CreateInscription(models.AbtractModel):
                         {
                             "name": values["supplypoint_owner_id_name"],
                             "lastname": values["supplypoint_owner_id_lastname"],
-                            "gender": values["supplypoint_owner_id_gender"],
+                            "gender": gender,
                             "vulnerability_situation": vulnerability_situation,
                             "birthdate_date": formatted_birthdate,
-                            "phone": values["supplypoint_owner_id_phone"],
+                            "phone": phone,
                             "lang": lang.code if lang else lang,
-                            "email": values["supplypoint_owner_id_email"],
+                            "email": email,
                             "vat": values["supplypoint_owner_id_vat"],
                             "type": "contact",
                             "company_id": project.company_id.id,
@@ -257,12 +272,12 @@ class CreateInscription(models.AbtractModel):
                         {
                             "name": values["supplypoint_owner_id_name"],
                             "lastname": values["supplypoint_owner_id_lastname"],
-                            "gender": values["supplypoint_owner_id_gender"],
+                            "gender": gender,
                             "vulnerability_situation": vulnerability_situation,
                             "birthdate_date": formatted_birthdate,
-                            "phone": values["supplypoint_owner_id_phone"],
+                            "phone": phone,
                             "lang": lang.code if lang else lang,
-                            "email": values["supplypoint_owner_id_email"],
+                            "email": email,
                             "vat": values["supplypoint_owner_id_vat"],
                             "type": "owner_self-consumption",
                             "company_id": project.company_id.id,
@@ -277,19 +292,22 @@ class CreateInscription(models.AbtractModel):
                     )
                 )
 
-        if float(values["supplypoint_contracted_power"]) <= 15:
-            tariff = "2.0TD"
-        elif float(values["supplypoint_contracted_power"]) <= 300:
-            tariff = "3.0TD"
-        else:
-            tariff = "6.1TD"
+        tariff = "6.1TD"
+        if "supplypoint_contracted_power" in values:
+            if float(values["supplypoint_contracted_power"]) <= 15:
+                tariff = "2.0TD"
+            elif float(values["supplypoint_contracted_power"]) <= 300:
+                tariff = "3.0TD"
+            else:
+                tariff = "6.1TD"
 
         if "tariff" in values:
-            tariff = values["values"]
+            tariff = values["tariff"]
 
         used_in_selfconsumption = "no"
         if conf_used_in_selfconsumption:
-            used_in_selfconsumption = values["supplypoint_used_in_selfconsumption"]
+            if "supplypoint_used_in_selfconsumption" in values:
+                used_in_selfconsumption = values["supplypoint_used_in_selfconsumption"]
 
         supply_point = (
             self.env["energy_selfconsumption.supply_point"]
@@ -297,23 +315,30 @@ class CreateInscription(models.AbtractModel):
             .search([("code", "=", values["supplypoint_cups"])])
         )
         if not supply_point:
-            self.env["energy_selfconsumption.supply_point"].sudo().create(
-                {
-                    "code": values["supplypoint_cups"],
-                    "name": values["inscription_partner_id_vat"],
-                    "street": values["supplypoint_street"],
-                    "city": values["supplypoint_city"],
-                    "zip": values["supplypoint_zip"],
-                    "state_id": state.id,
-                    "country_id": country.id,
-                    "owner_id": owner.id,
-                    "partner_id": partner.id,
-                    "contracted_power": float(values["supplypoint_contracted_power"]),
-                    "cadastral_reference": values["supplypoint_cadastral_reference"],
-                    "tariff": tariff,
-                    "used_in_selfconsumption": used_in_selfconsumption,
-                }
-            )
+            street2 = False
+            if "street2" in values:
+                street2 = values["street2"] 
+            try:
+                self.env["energy_selfconsumption.supply_point"].sudo().create(
+                    {
+                        "code": values["supplypoint_cups"],
+                        "name": values["inscription_partner_id_vat"],
+                        "street": values["supplypoint_street"],
+                        "street2": street2,
+                        "city": values["supplypoint_city"],
+                        "zip": values["supplypoint_zip"],
+                        "state_id": state.id,
+                        "country_id": country.id,
+                        "owner_id": owner.id,
+                        "partner_id": partner.id,
+                        "contracted_power": float(values["supplypoint_contracted_power"]),
+                        "cadastral_reference": values["supplypoint_cadastral_reference"],
+                        "tariff": tariff,
+                        "used_in_selfconsumption": used_in_selfconsumption,
+                    }
+                )
+            except Exception as e:
+                return False, _(e)
         else:
             return False, _("The supply point {code} is exist".format(
                 code=supply_point.code
