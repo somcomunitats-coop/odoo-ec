@@ -119,12 +119,3 @@ class ContractGenerationWizard(models.TransientModel):
         self.selfconsumption_id.write({"state": "active"})
         self.selfconsumption_id.distribution_table_state("process", "active")
         return True
-
-    @api.constrains("start_date")
-    def constraint_date_start(self):
-        three_months_ago = fields.Date.today() - datetime.timedelta(days=90)
-        for record in self:
-            if record.start_date < three_months_ago:
-                raise ValidationError(
-                    _("Start date can't be more that three months old")
-                )
