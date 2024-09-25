@@ -62,8 +62,8 @@ class LandingPage(models.Model):
     street = fields.Char(string="Street")
     postal_code = fields.Char(string="Postal code")
     city = fields.Char(string="City")
-    community_active_services = fields.Many2many(
-        string="Community active services", related="company_id.ce_tag_ids"
+    energy_action_mids = fields.Many2many(
+        string="Community energy actions", related="company_id.energy_action_mids"
     )
     community_type = fields.Selection(
         selection=_CE_TYPE,
@@ -272,6 +272,7 @@ class LandingPage(models.Model):
                 "instagram_link": self.instagram_link or "",
                 "telegram_link": self.telegram_link or "",
                 "community_active_services": self.company_id.get_active_services(),
+                "energy_actions": self.company_id.get_energy_actions_dict_list(),
                 "primary_image_file": primary_image_file,
                 "primary_image_file_write_date": primary_image_file_write_date,
                 "secondary_image_file": secondary_image_file,

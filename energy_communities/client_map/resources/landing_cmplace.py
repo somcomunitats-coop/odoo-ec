@@ -159,10 +159,11 @@ class LandingCmPlace:
                     )
             if coord_filter:
                 ret_dict["data"]["filter_mids"].append((4, coord_filter.id))
-        # Community active services
-        for service in self.landing.community_active_services:
-            service_slug = MapClientConfig.MAPPING__LANDING_ACTIVE_SERVICES__MAP_FILTER[
-                service.tag_ext_id
+
+        # Energy actions (Community active services)
+        for eaction in self.landing.energy_action_mids:
+            service_slug = MapClientConfig.MAPPING__LANDING_ENERGY_ACTIONS__MAP_FILTER[
+                eaction.xml_id
             ]
             place_service = filters.filtered(lambda r: r.slug_id == service_slug)
             if place_service:
@@ -171,6 +172,7 @@ class LandingCmPlace:
                 ret_dict["errors"].append(
                     _("Place status filter not found slug_id: {}").format(service_slug)
                 )
+
         # Presenter
         presenter_name = (
             MapClientConfig.MAPPING__LANDING_COMMUNITY_STATUS__MAP_PRESENTER[

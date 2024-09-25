@@ -83,7 +83,7 @@
           <field name="city" />
         </group>
         <group>
-          <field name="community_active_services" />
+          <field name="energy_action_mids" widget="many2many_tags" />
         </group>
         <group name="Coordinators">
           <field name="awareness_services" />
