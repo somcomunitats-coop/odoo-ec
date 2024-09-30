@@ -35,11 +35,20 @@ class ResPartner(models.Model):
         compute="_compute_company_ids_info",
         store=False,
     )
+    has_rel_user = fields.Boolean(compute="_compute_has_rel_user", store=False)
 
     @api.depends("company_ids")
     def _compute_company_ids_info(self):
         for record in self:
             record.company_ids_info = record.company_ids
+
+    @api.depends("user_ids")
+    def _compute_has_rel_user(self):
+        for record in self:
+            if record.user_ids:
+                record.has_rel_user = True
+            else:
+                record.has_rel_user = False
 
     def compute_company_hierarchy_level(self):
         for record in self:
