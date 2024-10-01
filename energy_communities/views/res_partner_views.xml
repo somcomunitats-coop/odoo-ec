@@ -59,6 +59,32 @@
             attrs="{'invisible': [('company_hierarchy_level', '!=', 'community')]}"
           >Community company</h4>
                 </xpath>
+                <xpath expr="//field[@name='child_ids']" position="after">
+                  <label
+            for="user_ids"
+            string="Related users"
+            groups="energy_communities.group_platform_manager"
+          />
+                  <field
+            name="user_ids"
+            widget="one2many"
+            groups="energy_communities.group_platform_manager"
+          >
+            <tree open="1" create="0" edit="0">
+              <button
+                name="action_open_form_view"
+                type="object"
+                string="View"
+                class="oe_highlight"
+              />
+              <field name="name" />
+              <field name="login" />
+              <field name="lang" />
+              <field name="login_date" />
+            </tree>
+                   </field>
+                </xpath>
+
             </field>
         </record>
 
@@ -74,13 +100,17 @@
           expr="//page[@name='sales_purchases']//field[@name='company_ids']"
           position="replace"
         >
-                <field name="company_id" />
+                <field name="has_rel_user" invisible="1" />
+          <field
+            name="company_id"
+            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')],'readonly': [('has_rel_user','=',True)]}"
+          />
                   <field
             name="company_ids"
             groups="base.group_multi_company"
             widget="many2many_tags"
             options="{'no_create': True}"
-            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')]}"
+            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')],'readonly': [('has_rel_user','=',True)]}"
           />
                     <field
             name="company_ids_info"
@@ -88,6 +118,11 @@
             widget="many2many_tags"
             attrs="{'invisible': [('user_current_role', '=', 'role_platform_admin')]}"
           />
+          <p
+            attrs="{'invisible': ['|',('user_current_role', '!=', 'role_platform_admin'),('has_rel_user','=',False)]}"
+            style="padding: 10px; background-color: #ccc; border: 1px solid #aaa;"
+          ><strong
+            >Hint: In order to edit company related params you have to visit the related contact's user.</strong></p>
                 </xpath>
             </field>
         </record>

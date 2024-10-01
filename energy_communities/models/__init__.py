@@ -6,7 +6,6 @@ from . import cm_place
 from . import energy_action
 from . import community_energy_action
 from . import external_id_mixin
-from . import ir_http
 from . import auth_oauth_provider
 from . import landing_page
 from . import res_company
