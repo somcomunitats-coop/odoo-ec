@@ -1,5 +1,4 @@
 from odoo import fields, models, _, api
-from stdnum.es import cups
 from odoo.exceptions import ValidationError
 
 class Inscription(models.Model):
@@ -33,23 +32,18 @@ class Inscription(models.Model):
         "community"
     )
     member = fields.Boolean(String="Member/Non-Member")
-    code = fields.Char(string="CUPS", required=True)
-
-    @api.constrains("code")
-    def _check_valid_code(self):
-        for record in self:
-            if record.code:
-                try:
-                    cups.validate(record.code)
-                except InvalidLength:
-                    error_message = _("Invalid CUPS: The length is incorrect.")
-                    raise ValidationError(error_message)
-                except InvalidComponent:
-                    error_message = _("Invalid CUPS: does not start with 'ES'.")
-                    raise ValidationError(error_message)
-                except InvalidFormat:
-                    error_message = _("Invalid CUPS: has an incorrect format.")
-                    raise ValidationError(error_message)
-                except InvalidChecksum:
-                    error_message = _("Invalid CUPS: The checksum is incorrect.")
-                    raise ValidationError(error_message)
+    supply_point_id = fields.Many2one(
+        "energy_selfconsumption.supply_point", required=True
+    )
+    code = fields.Char(string="CUPS", related="supply_point_id.code")
+                
+    def create_participant_table(self):
+        ctx = self.env.context.copy()
+        action = self.env.ref("energy_selfconsumption.create_distribution_table_wizard_action").read()[0]
+        action["context"] = ctx
+        return action
+    
+    def unlink(self):
+        for inscription in self:
+            inscription.inscription_id.unlink()
+        return super(Inscription, self).unlink()

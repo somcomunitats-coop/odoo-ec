@@ -174,206 +174,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
             conf_used_in_selfconsumption=project.conf_used_in_selfconsumption
         )
 
-        # if not line_dict["code"]:
-        #     return False, _(
-        #         "The CUPS field is required. Please make sure you provide a valid CUPS"
-        #     )
-        # partner = self.env["res.partner"].search(
-        #     [
-        #         "|",
-        #         ("vat", "=", line_dict["partner_vat"]),
-        #         ("vat", "=ilike", line_dict["partner_vat"]),
-        #     ],
-        #     limit=1,
-        # )
-        #
-        # if not partner:
-        #     return False, _("Partner with VAT:<b>{vat}</b> was not found.").format(
-        #         vat=line_dict["partner_vat"]
-        #     )
-        #
-        # cooperator = (
-        #     self.env["cooperative.membership"]
-        #     .sudo()
-        #     .search(
-        #         {
-        #             "company_id": partner.company_id.id,
-        #             "partner_id": partner.id,
-        #             "cooperator": True,
-        #         }
-        #     )
-        # )
-        # if not cooperator:
-        #     return False, _("Partner with VAT:<b>{vat}</b> not is cooperator.").format(
-        #         vat=line_dict["partner_vat"]
-        #     )
-        # if not line_dict["iban"]:
-        #     return False, _("The IBAN field cannot be empty.")
-        #
-        # try:
-        #     iban.validate(line_dict["iban"])
-        # except Exception as e:
-        #     error_message = _("Invalid IBAN: {error}").format(error=e)
-        #     raise ValidationError(error_message)
-        #
-        # bank_account = self.env["res.partner.bank"].search(
-        #     [
-        #         ("acc_number", "=", line_dict["iban"]),
-        #         ("partner_id", "=", partner.id),
-        #         ("company_id", "=", self.env.company.id),
-        #     ],
-        #     limit=1,
-        # )
-        #
-        # if not bank_account:
-        #     bank_account = self.env["res.partner.bank"].create(
-        #         {
-        #             "acc_number": line_dict["iban"],
-        #             "partner_id": partner.id,
-        #             "company_id": self.env.company.id,
-        #         }
-        #     )
-        # try:
-        #     mandate_auth_date = datetime.strptime(
-        #         line_dict["mandate_auth_date"], self.date_format
-        #     ).date()
-        #     mandate = self.env["account.banking.mandate"].create(
-        #         {
-        #             "format": "sepa",
-        #             "type": "recurrent",
-        #             "state": "valid",
-        #             "signature_date": mandate_auth_date,
-        #             "partner_bank_id": bank_account.id,
-        #             "partner_id": partner.id,
-        #             "company_id": self.env.company.id,
-        #         }
-        #     )
-        # except Exception as e:
-        #     return False, _("Could not create mandate for {vat}. {error}").format(
-        #         vat=line_dict["partner_vat"], error=e
-        #     )
-        #
-        # if not project.inscription_ids.filtered_domain(
-        #     [("partner_id", "=", partner.id)]
-        # ):
-        #     try:
-        #         if line_dict["effective_date"]:
-        #             effective_date = datetime.strptime(
-        #                 line_dict["effective_date"], self.date_format
-        #             ).date()
-        #         else:
-        #             effective_date = fields.date.today()
-        #
-        #         participation = (
-        #             self.env["energy_project.participation"]
-        #             .sudo()
-        #             .search(
-        #                 [
-        #                     (
-        #                         "project_id",
-        #                         "=",
-        #                         project.id,
-        #                     )
-        #                 ]
-        #             )
-        #         )
-        #
-        #         if not participation:
-        #             return False, _("Dont exit participation for this project.")
-        #
-        #         self.env[
-        #             "energy_selfconsumption.inscription_selfconsumption"
-        #         ].create(
-        #             {
-        #                 "project_id": project.id,
-        #                 "partner_id": partner.id,
-        #                 "effective_date": effective_date,
-        #                 "mandate_id": mandate.id,
-        #                 "code": line_dict["code"],
-        #                 "participation": participation[0].id,
-        #                 "annual_electricity_use": 1.0,
-        #                 "accept": True,
-        #                 "member": True,
-        #             }
-        #         )
-        #     except Exception as e:
-        #         return False, _(
-        #             "Could not create inscription for {vat}. {error}"
-        #         ).format(vat=line_dict["partner_vat"], error=e)
-        #
-        # supply_point = self.env["energy_selfconsumption.supply_point"].search(
-        #     [("code", "=", line_dict["code"])]
-        # )
-        #
-        # if supply_point and supply_point.partner_id != partner:
-        #     return False, _(
-        #         "The supply point partner {supply_partner} and the partner {vat} in the inscription are different."
-        #     ).format(supply_partner=supply_point.partner_id.vat, vat=partner.vat)
-        #
-        # if not supply_point:
-        #     result = self.create_supply_point(line_dict, partner)
-        #     if not result[0]:
-        #         return result
-        # return True, False
-
-    # def create_supply_point(self, line_dict, partner):
-    #     if line_dict["owner_vat"]:
-    #         owner = self.env["res.partner"].search(
-    #             [
-    #                 "|",
-    #                 ("vat", "=", line_dict["owner_vat"]),
-    #                 ("vat", "=ilike", line_dict["owner_vat"]),
-    #             ],
-    #             limit=1,
-    #         )
-    #         if not owner:
-    #             try:
-    #                 owner = self.env["res.partner"].create(
-    #                     {
-    #                         "vat": line_dict["owner_vat"],
-    #                         "firstname": line_dict["owner_firstname"],
-    #                         "lastname": line_dict["owner_lastname"],
-    #                         "company_type": "person",
-    #                     }
-    #                 )
-    #             except Exception as e:
-    #                 return False, _("Owner could not be created: {error}").format(
-    #                     error=e
-    #                 )
-    #     else:
-    #         owner = partner.get_partner_with_type()
-    #     country = self.env["res.country"].search([("code", "=", line_dict["country"])])
-    #     if not country:
-    #         return False, _("Country code was not found: {country}").format(
-    #             country=line_dict["country"]
-    #         )
-    #     state = self.env["res.country.state"].search(
-    #         [("code", "=", line_dict["state"]), ("country_id", "=", country.id)]
-    #     )
-    #     if not state:
-    #         return False, _("State code was not found: {state}").format(
-    #             state=line_dict["state"]
-    #         )
-    #
-    #     return self.env["energy_selfconsumption.supply_point"].create(
-    #         {
-    #             "code": line_dict["code"],
-    #             "name": line_dict["street"],
-    #             "street": line_dict["street"],
-    #             "street2": line_dict["street2"],
-    #             "city": line_dict["city"],
-    #             "zip": line_dict["postal_code"],
-    #             "state_id": state.id,
-    #             "country_id": country.id,
-    #             "owner_id": owner.id,
-    #             "partner_id": partner.id,
-    #             "contracted_power": line_dict["contracted_power"],
-    #             "tariff": line_dict["tariff"],
-    #             "cadastral_reference": line_dict["cadastral_reference"],
-    #         }
-    #     )
-
-        ###### This code is only for prubes
+    ###### This code is only for prubes
 
     def generar_iban_espanol(self):
         # Código de país y dígitos de control iniciales
@@ -490,22 +291,6 @@ class SelfconsumptionImportWizard(models.TransientModel):
             if not participation:
                 raise ValidationError(_("Dont exit participation for this project."))
 
-            inscription = self.env[
-                "energy_selfconsumption.inscription_selfconsumption"
-            ].create(
-                {
-                    "project_id": active_id,
-                    "partner_id": partner.id,
-                    "effective_date": datetime.now().strftime("%Y-%m-%d"),
-                    "mandate_id": mandate.id,
-                    "code": self.generate_cups(),
-                    "participation": participation[0].id,
-                    "annual_electricity_use": 1.0,
-                    "accept": True,
-                    "member": True,
-                }
-            )
-
             _ACCESS_TARIFF_VALUES = [
                 ("6.1TD", "6.1TD"),
                 ("6.2TD", "6.2TD"),
@@ -522,9 +307,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
             else:
                 tariff = random.choice(_ACCESS_TARIFF_VALUES)[0]
 
-            self.env["energy_selfconsumption.supply_point"].create(
+            supply_point = self.env["energy_selfconsumption.supply_point"].create(
                 {
-                    "code": inscription.code,
+                    "code": self.generate_cups(),
                     "name": partner.street,
                     "street": partner.street,
                     "city": partner.city,
@@ -535,6 +320,22 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "partner_id": partner.id,
                     "contracted_power": contracted_power,
                     "tariff": tariff,
+                }
+            )
+
+            self.env[
+                "energy_selfconsumption.inscription_selfconsumption"
+            ].create(
+                {
+                    "project_id": active_id,
+                    "partner_id": partner.id,
+                    "effective_date": datetime.now().strftime("%Y-%m-%d"),
+                    "mandate_id": mandate.id,
+                    "supply_point_id": supply_point.id,
+                    "participation": participation[0].id,
+                    "annual_electricity_use": 1.0,
+                    "accept": True,
+                    "member": True,
                 }
             )
         return True

@@ -55,6 +55,7 @@
         "wizards/define_invoicing_mode_wizard_view.xml",
         "wizards/invoicing_wizard_views.xml",
         "wizards/clean_supply_point_assignation_wizard_views.xml",
+        "wizards/create_distribution_table_wizard_views.xml",
         "reports/selfconsumption_reports.xml",
         "reports/invoice_template.xml",
     ],

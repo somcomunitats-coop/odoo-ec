@@ -102,7 +102,7 @@ class Selfconsumption(models.Model):
     )
     distribution_table_count = fields.Integer(compute=_compute_distribution_table_count)
     inscription_ids = fields.One2many(
-        "energy_project.inscription", "project_id", readonly=True
+        "energy_selfconsumption.inscription_selfconsumption", "project_id", readonly=True
     )
     inscription_count = fields.Integer(compute=_compute_inscription_count)
     contracts_count = fields.Integer(compute=_compute_contract_count)

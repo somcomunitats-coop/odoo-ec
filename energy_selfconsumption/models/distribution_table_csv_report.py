@@ -15,7 +15,7 @@ class DistributionTableCSV(models.AbstractModel):
         distribution_table = objs[0]
         list_cups = (
             distribution_table.selfconsumption_project_id.inscription_ids.mapped(
-                "partner_id.supply_ids.code"
+                "code"
             )
         )
 
