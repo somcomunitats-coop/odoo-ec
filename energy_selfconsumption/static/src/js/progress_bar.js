@@ -5,21 +5,21 @@ odoo.define("energy_selfconsumption.ProgressBarWidget", function (require) {
   var fieldRegistry = require("web.field_registry");
 
   var ProgressBarWidget = AbstractField.extend({
-    supportedFieldTypes: ["float"], // Puedes usar 'integer' o 'float' según el tipo de dato
+    supportedFieldTypes: ["float"], // You can use 'integer' or 'float' according to the data type
 
     init: function (parent, state, params) {
       this._super.apply(this, arguments);
-      // Obtener los valores del campo
-      this.max_quantity = this.record.data[this.attrs.options.max_quantity] || 100; // Cantidad máxima
-      this.current_quantity = this.value || 0; // Cantidad obtenida
+      // Get field values
+      this.max_quantity = this.record.data[this.attrs.options.max_quantity] || 100; // Maximum quantity
+      this.current_quantity = this.value || 0; // Amount obtained
       this.percentage = Math.min(
         (this.current_quantity / this.max_quantity) * 100,
         100
-      ); // Porcentaje
+      ); // Percentage
     },
 
     _render: function () {
-      // Generar las barras de progreso
+      // Generate progress bars
       this.$el.html(`
                 <div class="o_progress_bar">
                     <div class="progress-bar-container" style="position: relative; height: 25px; background-color: #f5f5f5; border-radius: 4px; border: 1px solid #ccc;">
@@ -37,6 +37,8 @@ odoo.define("energy_selfconsumption.ProgressBarWidget", function (require) {
     },
   });
 
-  // Registrar el widget en el registro de campos
+  // Register the widget in the field record
   fieldRegistry.add("progress_bar_widget", ProgressBarWidget);
+
+  return ProgressBarWidget;
 });

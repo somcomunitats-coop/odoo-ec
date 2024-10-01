@@ -27,7 +27,7 @@ class CreateInscription(models.AbstractModel):
         used_in_selfconsumption,
         create_bank,
     ):
-        """Crea el punto de suministro si no existe ya."""
+        """Create the supply point if it does not already exist."""
         supply_point = (
             self.env["energy_selfconsumption.supply_point"]
             .sudo()
@@ -96,7 +96,7 @@ class CreateInscription(models.AbstractModel):
         conf_vulnerability_situation=False,
         conf_used_in_selfconsumption=False,
     ):
-        """Crea una inscripción para auto-consumo en un proyecto específico."""
+        """Create an entry for self-consumption on a specific project."""
         partner = self._get_partner(values["inscription_partner_id_vat"])
         if not partner:
             return True, _("Partner with VAT:<b>{vat}</b> was not found.").format(
@@ -146,7 +146,7 @@ class CreateInscription(models.AbstractModel):
         )
 
     def _get_partner(self, vat):
-        """Busca un partner basado en el VAT proporcionado."""
+        """Search for a partner based on the VAT provided."""
         return (
             self.env["res.partner"]
             .sudo()
@@ -161,7 +161,7 @@ class CreateInscription(models.AbstractModel):
         )
 
     def _is_cooperator(self, partner, project):
-        """Verifica si el partner es un cooperativista."""
+        """Verify if the partner is a cooperative member."""
         return bool(
             self.env["cooperative.membership"]
             .sudo()
@@ -175,7 +175,7 @@ class CreateInscription(models.AbstractModel):
         )
 
     def _create_bank_mandate(self, values, partner, project):
-        """Crea un mandato bancario."""
+        """Creates a bank mandate."""
         iban_number = values.get("inscription_acc_number")
         if not iban_number:
             raise ValueError(_("The IBAN field cannot be empty."))
@@ -231,7 +231,7 @@ class CreateInscription(models.AbstractModel):
         )
 
     def _get_mandate_auth_date(self, values):
-        """Obtiene la fecha de autorización del mandato."""
+        """Obtains the date of authorization of the mandate."""
         date_format = values.get("date_format", "%Y-%m-%d")
         mandate_auth_date = values.get(
             "mandate_auth_date", datetime.now().strftime(date_format)
@@ -239,13 +239,13 @@ class CreateInscription(models.AbstractModel):
         return datetime.strptime(mandate_auth_date, date_format).date()
 
     def _is_partner_already_registered(self, project, partner):
-        """Verifica si el partner ya está inscrito en el proyecto."""
+        """Check if the partner is already enrolled in the project."""
         return project.inscription_ids.filtered_domain(
             [("partner_id", "=", partner.id)]
         )
 
     def _get_participation(self, values, project):
-        """Busca la participación en el proyecto."""
+        """Seeks participation in the project."""
         domain = [("project_id", "=", project.id)]
         if "inscriptionselfconsumption_participation" in values:
             domain.append(
@@ -258,7 +258,7 @@ class CreateInscription(models.AbstractModel):
         return self.env["energy_project.participation"].sudo().search(domain, limit=1)
 
     def _get_effective_date(self, values):
-        """Obtiene la fecha efectiva."""
+        """Gets the effective date."""
         date_format = values.get("date_format", "%Y-%m-%d")
         effective_date = values.get(
             "effective_date", datetime.now().strftime(date_format)
@@ -276,7 +276,7 @@ class CreateInscription(models.AbstractModel):
         annual_electricity_use,
         supply_point,
     ):
-        """Crea el registro de inscripción."""
+        """Creates the registration record."""
         self.env["energy_selfconsumption.inscription_selfconsumption"].sudo().create(
             {
                 "project_id": project.id,
@@ -299,7 +299,7 @@ class CreateInscription(models.AbstractModel):
         supplypoint_owner_id_same,
         conf_vulnerability_situation,
     ):
-        """Obtiene o crea el propietario del suministro."""
+        """Obtains or creates the owner of the supply."""
         if supplypoint_owner_id_same:
             return partner
 
@@ -330,7 +330,7 @@ class CreateInscription(models.AbstractModel):
         return self._update_owner_address(project, owner, values, country, state)
 
     def _get_country(self, values, project):
-        """Obtiene el país basado en el proyecto o en los valores."""
+        """Obtains the country based on the project or values."""
         return (
             self.env["res.country"]
             .sudo()
@@ -348,7 +348,7 @@ class CreateInscription(models.AbstractModel):
         )
 
     def _get_state(self, values, country):
-        """Obtiene el estado basado en los valores y el país."""
+        """Gets the state based on values and country."""
         return (
             self.env["res.country.state"]
             .sudo()
@@ -358,7 +358,7 @@ class CreateInscription(models.AbstractModel):
         )
 
     def _get_language(self, values):
-        """Obtiene el idioma basado en los valores."""
+        """Gets the language based on values."""
         lang_code = values.get("supplypoint_owner_id_lang")
         return (
             self.env["res.lang"].sudo().search([("iso_code", "=", lang_code)])
@@ -367,7 +367,7 @@ class CreateInscription(models.AbstractModel):
         )
 
     def _get_formatted_birthdate(self, values):
-        """Obtiene la fecha de nacimiento formateada."""
+        """Gets the formatted date of birth."""
         if "supplypoint_owner_id_birthdate_date" in values:
             birthdate_obj = datetime.strptime(
                 values["supplypoint_owner_id_birthdate_date"], "%d/%m/%Y"
@@ -376,7 +376,7 @@ class CreateInscription(models.AbstractModel):
         return None
 
     def _get_existing_contact_owner(self, values):
-        """Busca un propietario existente basado en el VAT."""
+        """Search for an existing VAT-based owner."""
         return (
             self.env["res.partner"]
             .sudo()
@@ -389,7 +389,7 @@ class CreateInscription(models.AbstractModel):
         )
 
     def _get_existing_owner_self_consumption_owner(self, values):
-        """Busca un propietario existente basado en el VAT."""
+        """Search for an existing VAT-based owner."""
         return (
             self.env["res.partner"]
             .sudo()
@@ -411,7 +411,7 @@ class CreateInscription(models.AbstractModel):
         vulnerability_situation,
         formatted_birthdate,
     ):
-        """Crea un nuevo propietario."""
+        """Creates a new owner."""
         return (
             self.env["res.partner"]
             .sudo()
@@ -439,7 +439,7 @@ class CreateInscription(models.AbstractModel):
         )
 
     def _update_owner_address(self, project, owner, values, country, state):
-        """Actualiza la dirección de un propietario existente."""
+        """Update the address of an existing owner."""
         exists = self._get_existing_owner_self_consumption_owner(values)
         if exists:
             exists.sudo().write(

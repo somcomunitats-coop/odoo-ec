@@ -181,24 +181,24 @@ class SelfconsumptionImportWizard(models.TransientModel):
     ###### This code is only for prubes
 
     def generar_iban_espanol(self):
-        # Código de país y dígitos de control iniciales
+        # Country code and initial check digits
         pais = "ES"
         digitos_control = "00"
 
-        # Generar los 20 dígitos aleatorios
+        # Generate the 20 random digits
         digitos_aleatorios = "".join([str(random.randint(0, 9)) for _ in range(20)])
 
-        # Concatenar todo para formar el IBAN
+        # Concatenate all to form the IBAN
         iban = pais + digitos_control + digitos_aleatorios
 
-        # Calcular el dígito de control
+        # Calculate the check digit
         d_control = str(98 - int(iban[2:]) % 97)
 
-        # Ajustar el dígito de control si es necesario
+        # Adjust the check digit if necessary.
         if len(d_control) == 1:
             d_control = "0" + d_control
 
-        # Reemplazar los dígitos de control iniciales con el dígito de control calculado
+        # Replace the initial check digits with the calculated check digit.
         iban = pais + d_control + digitos_aleatorios
 
         return iban
