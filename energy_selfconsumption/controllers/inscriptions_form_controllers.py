@@ -1,4 +1,5 @@
 import re
+
 from odoo import _, http
 from odoo.http import request
 
@@ -342,7 +343,11 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         if model.conf_bank_details:
             if values["inscriptionselfconsumption_accept"] != "on":
                 return {
-                    "error_msgs": [_("Have to accept and authorize being able to issue payments to this bank account as part of participation in this shared self-consumption project of my energy community.")],
+                    "error_msgs": [
+                        _(
+                            "Have to accept and authorize being able to issue payments to this bank account as part of participation in this shared self-consumption project of my energy community."
+                        )
+                    ],
                     "global_error": True,
                 }
         supplypoint_owner_id_same = False
@@ -352,15 +357,17 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         if model.conf_vulnerability_situation:
             if values["supplypoint_owner_id_vulnerability_situation"] == "yes":
                 vulnerability_situation = True
-        error, message = request.env[
-            "energy_selfconsumption.create_inscription_selfconsumption"
-        ].sudo().create_inscription(
-            values,
-            model,
-            create_bank=model.conf_bank_details,
-            supplypoint_owner_id_same=supplypoint_owner_id_same,
-            conf_vulnerability_situation=vulnerability_situation,
-            conf_used_in_selfconsumption=model.conf_used_in_selfconsumption
+        error, message = (
+            request.env["energy_selfconsumption.create_inscription_selfconsumption"]
+            .sudo()
+            .create_inscription(
+                values,
+                model,
+                create_bank=model.conf_bank_details,
+                supplypoint_owner_id_same=supplypoint_owner_id_same,
+                conf_vulnerability_situation=vulnerability_situation,
+                conf_used_in_selfconsumption=model.conf_used_in_selfconsumption,
+            )
         )
         if error:
             return {

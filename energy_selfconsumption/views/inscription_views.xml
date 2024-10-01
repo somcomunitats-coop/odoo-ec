@@ -33,8 +33,14 @@
 
         <record model="ir.actions.server" id="inscription_to_participant_action">
             <field name="name">Create participant table</field>
-            <field name="model_id" ref="model_energy_selfconsumption_inscription_selfconsumption" />
-            <field name="binding_model_id" ref="model_energy_selfconsumption_inscription_selfconsumption" />
+            <field
+        name="model_id"
+        ref="model_energy_selfconsumption_inscription_selfconsumption"
+      />
+            <field
+        name="binding_model_id"
+        ref="model_energy_selfconsumption_inscription_selfconsumption"
+      />
             <field name="binding_type">action</field>
             <field name="binding_view_types">list,form</field>
             <field name="state">code</field>

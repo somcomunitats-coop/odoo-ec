@@ -1,5 +1,6 @@
-from odoo import fields, models, _, api
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+
 
 class Inscription(models.Model):
     _name = "energy_selfconsumption.inscription_selfconsumption"
@@ -23,8 +24,9 @@ class Inscription(models.Model):
     participation = fields.Many2one(
         comodel_name="energy_project.participation", string="Participation"
     )
-    participation_quantity = fields.Float(string="Participation",
-                                          related="participation.quantity")
+    participation_quantity = fields.Float(
+        string="Participation", related="participation.quantity"
+    )
     accept = fields.Boolean(
         String="I accept and authorize being able to issue payments"
         " to this bank account as part of participation in "
@@ -36,14 +38,16 @@ class Inscription(models.Model):
         "energy_selfconsumption.supply_point", required=True
     )
     code = fields.Char(string="CUPS", related="supply_point_id.code")
-                
+
     def create_participant_table(self):
         ctx = self.env.context.copy()
-        action = self.env.ref("energy_selfconsumption.create_distribution_table_wizard_action").read()[0]
+        action = self.env.ref(
+            "energy_selfconsumption.create_distribution_table_wizard_action"
+        ).read()[0]
         action["context"] = ctx
         return action
-    
+
     def unlink(self):
         for inscription in self:
             inscription.inscription_id.unlink()
-        return super(Inscription, self).unlink()
+        return super().unlink()

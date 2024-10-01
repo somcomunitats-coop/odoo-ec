@@ -14,9 +14,7 @@ class DistributionTableCSV(models.AbstractModel):
 
         distribution_table = objs[0]
         list_cups = (
-            distribution_table.selfconsumption_project_id.inscription_ids.mapped(
-                "code"
-            )
+            distribution_table.selfconsumption_project_id.inscription_ids.mapped("code")
         )
 
         file_data = StringIO()

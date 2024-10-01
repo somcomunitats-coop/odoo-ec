@@ -13,11 +13,16 @@
                 <form>
                     <sheet>
                         <group>
-                            <field name="max_distributed_power" invisible="1"/>
-                            <field name="percentage_of_distributed_power" widget="progressbar" />
-                            <field name="distributed_power" 
-                                   widget="progress_bar_widget" 
-                                   options="{'max_quantity': 'max_distributed_power'}"/>
+                            <field name="max_distributed_power" invisible="1" />
+                            <field
+                name="percentage_of_distributed_power"
+                widget="progressbar"
+              />
+                            <field
+                name="distributed_power"
+                widget="progress_bar_widget"
+                options="{'max_quantity': 'max_distributed_power'}"
+              />
                         </group>
                         <group>
                             <field name="type" />
@@ -28,7 +33,10 @@
                         </group>
                     </sheet>
                     <footer>
-                        <button type="object" name="create_distribution_table">Create distribution table</button>
+                        <button
+              type="object"
+              name="create_distribution_table"
+            >Create distribution table</button>
                     </footer>
                 </form>
             </field>

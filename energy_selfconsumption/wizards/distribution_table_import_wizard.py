@@ -1,6 +1,5 @@
 import base64
 import logging
-from datetime import datetime
 from io import StringIO
 
 import chardet
@@ -153,7 +152,9 @@ class DistributionTableImportWizard(models.TransientModel):
 
         self.env[
             "energy_selfconsumption.create_distribution_table"
-        ].create_energy_selfconsumption_supply_point_assignation_sql(values_list, distribution_table)
+        ].create_energy_selfconsumption_supply_point_assignation_sql(
+            values_list, distribution_table
+        )
 
     def prepare_fixed_csv_values(self, df, distribution_table):
         logger.info("\n\n prepare_fixed_csv_values")
@@ -198,9 +199,7 @@ class DistributionTableImportWizard(models.TransientModel):
             [("code", "=", code)], ["id"]
         )
         if not supply_point_id:
-            self.env[
-                    "energy_selfconsumption.create_distribution_table"
-            ].notification(
+            self.env["energy_selfconsumption.create_distribution_table"].notification(
                 distribution_table,
                 "Error",
                 _("There isn't any supply point with this code: {code}").format(

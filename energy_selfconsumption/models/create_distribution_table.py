@@ -1,7 +1,9 @@
-from odoo import models, _, api
 import logging
-from stdnum.es import iban
 from datetime import datetime
+
+from stdnum.es import iban
+
+from odoo import _, api, models
 
 logger = logging.getLogger(__name__)
 
@@ -10,7 +12,9 @@ class CreateDistributionTable(models.AbstractModel):
     _name = "energy_selfconsumption.create_distribution_table"
     _description = "Service to create distribution table for a self-consumption"
 
-    def create_energy_selfconsumption_supply_point_assignation_sql(self, values_list, distribution_table):
+    def create_energy_selfconsumption_supply_point_assignation_sql(
+        self, values_list, distribution_table
+    ):
         if not values_list:
             return
 
@@ -50,10 +54,16 @@ class CreateDistributionTable(models.AbstractModel):
             error = True
             logger.error(f"\n\n SQL: \n {query}")
             logger.error(f"Error executing bulk insert query: {e}")
-            self.notification(distribution_table, "Error query", f"Query: {query}\nError: {e}")
+            self.notification(
+                distribution_table, "Error query", f"Query: {query}\nError: {e}"
+            )
 
         if not error:
-            self.notification(distribution_table, "Distribution table", "Distribution table create successfully")
+            self.notification(
+                distribution_table,
+                "Distribution table",
+                "Distribution table create successfully",
+            )
 
     def notification(self, distribution_table, subject, body):
         try:
@@ -65,4 +75,3 @@ class CreateDistributionTable(models.AbstractModel):
             )
         except Exception as e:
             logger.error(f"Error sending notification: {e}")
-    

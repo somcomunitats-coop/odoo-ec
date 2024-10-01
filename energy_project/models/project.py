@@ -34,7 +34,7 @@ class Project(models.Model):
         "energy_project.service_contract",
         "project_id",
         auto_join=True,
-        string="Service Contract"
+        string="Service Contract",
     )
 
     # address fields
@@ -85,4 +85,3 @@ class Project(models.Model):
             return MonitoringService(
                 monitoring_contract.provider_id.backend(), monitoring_contract
             )
-

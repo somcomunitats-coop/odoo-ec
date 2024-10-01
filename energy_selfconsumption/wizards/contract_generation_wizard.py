@@ -105,7 +105,9 @@ class ContractGenerationWizard(models.TransientModel):
                 if self.selfconsumption_id.invoicing_mode == "energy_delivered":
                     contract_line_id.name += """\nCAU: {cau}\n"""
                 elif self.selfconsumption_id.invoicing_mode == "power_acquired":
-                    contract_line_id.name += _("""\nCAU: {cau}\nTotal installed nominal power (kW): {power}\nPartition coefficient: {coefficient}""")
+                    contract_line_id.name += _(
+                        """\nCAU: {cau}\nTotal installed nominal power (kW): {power}\nPartition coefficient: {coefficient}"""
+                    )
                     data["power"] = self.selfconsumption_id.power
                     data["coefficient"] = supply_point_assignation.coefficient
 

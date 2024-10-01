@@ -1,10 +1,11 @@
 import base64
 import logging
 import random
-import chardet
 from csv import DictReader
 from datetime import datetime
 from io import StringIO
+
+import chardet
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
@@ -117,7 +118,8 @@ class SelfconsumptionImportWizard(models.TransientModel):
             raise ValidationError(
                 _(
                     "The file should contain 17 columns and not {header_length} columns."
-                ).format(header_length=len(header)))
+                ).format(header_length=len(header))
+            )
         return {
             "inscription_partner_id_vat": line.get(header[0], False),
             "effective_date": line.get(header[1], False),
@@ -163,15 +165,17 @@ class SelfconsumptionImportWizard(models.TransientModel):
             raise UserError(_("Error parsing the file"))
 
     def import_line(self, line_dict, project):
-        return self.env[
-            "energy_selfconsumption.create_inscription_selfconsumption"
-        ].sudo().create_inscription(
-            line_dict,
-            project,
-            create_bank=project.conf_bank_details,
-            supplypoint_owner_id_same=False,
-            conf_vulnerability_situation=False,
-            conf_used_in_selfconsumption=project.conf_used_in_selfconsumption
+        return (
+            self.env["energy_selfconsumption.create_inscription_selfconsumption"]
+            .sudo()
+            .create_inscription(
+                line_dict,
+                project,
+                create_bank=project.conf_bank_details,
+                supplypoint_owner_id_same=False,
+                conf_vulnerability_situation=False,
+                conf_used_in_selfconsumption=project.conf_used_in_selfconsumption,
+            )
         )
 
     ###### This code is only for prubes
@@ -323,9 +327,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 }
             )
 
-            self.env[
-                "energy_selfconsumption.inscription_selfconsumption"
-            ].create(
+            self.env["energy_selfconsumption.inscription_selfconsumption"].create(
                 {
                     "project_id": active_id,
                     "partner_id": partner.id,
@@ -370,7 +372,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     )
                 )
                 if participation:
-                    self.env["energy_selfconsumption.inscription_selfconsumption"].create(
+                    self.env[
+                        "energy_selfconsumption.inscription_selfconsumption"
+                    ].create(
                         {
                             "project_id": active_id,
                             "partner_id": partner.id,
