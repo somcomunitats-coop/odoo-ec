@@ -79,6 +79,12 @@
                         <field name="ce_status" />
                         <field name="ce_tag_ids" />
                         <field name="energy_action_mids" widget="many2many_tags" />
+                        <field name="community_energy_action_ids" widget="one2many">
+                          <tree editable="top">
+                              <field name="energy_action_id" />
+                              <field name="public_status" />
+                          </tree>
+                        </field>
                         <field name="admins" />
                     </group>
                     <group name="customize_docs_text" string="Customize documents text">

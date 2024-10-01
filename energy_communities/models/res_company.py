@@ -114,6 +114,9 @@ class ResCompany(models.Model):
         "energy_action_id",
         string="Energy Actions",
     )
+    community_energy_action_ids = fields.One2many(
+        "community.energy.action", "company_id", string="Community energy actions"
+    )
 
     # COMPUTED FIELDS
     @api.depends("hierarchy_level")
