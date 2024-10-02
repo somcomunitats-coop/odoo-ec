@@ -59,7 +59,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         )
         if not partner:
             return {
-                "error_msgs": [_("Partner is not exist.")],
+                "error_msgs": [_("Partner does not exist.")],
                 "global_error": True,
             }
         partner = partner.get_partner_with_type()
@@ -119,7 +119,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         )
         if not participation:
             return {
-                "error_msgs": [_("Participation no exit.")],
+                "error_msgs": [_("Participation does not exist.")],
                 "global_error": True,
             }
         if values["supplypoint_owner_id_same"] == "no":
