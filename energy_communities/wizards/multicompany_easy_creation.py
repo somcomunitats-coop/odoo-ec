@@ -199,6 +199,10 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         vat = False
         if self.vat:
             vat = self.vat.replace(" ", "").upper()
+        energy_action_ids = []
+        for energy_action in self.energy_action_mids:
+            energy_action_ids.append((0, 0, {"energy_action_id": energy_action.id}))
+
         self.new_company_id = (
             self.env["res.company"]
             .sudo()
@@ -228,7 +232,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "social_instagram": self.ce_instagram_url,
                     "social_facebook": self.ce_facebook_url,
                     "logo": self.landing_logo_file,
-                    "energy_action_mids": self.energy_action_mids,
+                    "energy_action_ids": energy_action_ids,
                 }
             )
         )
