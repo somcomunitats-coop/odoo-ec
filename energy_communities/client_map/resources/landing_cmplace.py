@@ -161,17 +161,20 @@ class LandingCmPlace:
                 ret_dict["data"]["filter_mids"].append((4, coord_filter.id))
 
         # Energy actions (Community active services)
-        for eaction in self.landing.energy_action_mids:
+        for eaction in self.landing.community_energy_action_ids:
             service_slug = MapClientConfig.MAPPING__LANDING_ENERGY_ACTIONS__MAP_FILTER[
-                eaction.xml_id
+                eaction.energy_action_id.xml_id
             ]
-            place_service = filters.filtered(lambda r: r.slug_id == service_slug)
-            if place_service:
-                ret_dict["data"]["filter_mids"].append((4, place_service.id))
-            else:
-                ret_dict["errors"].append(
-                    _("Place status filter not found slug_id: {}").format(service_slug)
-                )
+            if eaction.public_status == "published":
+                place_service = filters.filtered(lambda r: r.slug_id == service_slug)
+                if place_service:
+                    ret_dict["data"]["filter_mids"].append((4, place_service.id))
+                else:
+                    ret_dict["errors"].append(
+                        _("Place status filter not found slug_id: {}").format(
+                            service_slug
+                        )
+                    )
 
         # Presenter
         presenter_name = (

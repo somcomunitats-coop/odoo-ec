@@ -62,9 +62,6 @@ class LandingPage(models.Model):
     street = fields.Char(string="Street")
     postal_code = fields.Char(string="Postal code")
     city = fields.Char(string="City")
-    # energy_action_mids = fields.Many2many(
-    #     string="Community energy actions", related="company_id.energy_action_mids"
-    # )
     community_energy_action_ids = fields.One2many(
         "community.energy.action", related="company_id.community_energy_action_ids"
     )
