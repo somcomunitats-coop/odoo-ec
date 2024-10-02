@@ -304,14 +304,15 @@ class ResCompany(models.Model):
         """Return a list of dicts with the key data of each energy action"""
         self.ensure_one()
         res = []
-        for energy_action in self.energy_action_mids:
-            res.append(
-                {
-                    "id": energy_action.id,
-                    "name": energy_action.name,
-                    "ext_id": energy_action.xml_id,
-                }
-            )
+        for energy_action in self.community_energy_action_ids:
+            if energy_action.public_status == "published":
+                res.append(
+                    {
+                        "id": energy_action.energy_action_id.id,
+                        "name": energy_action.energy_action_id.name,
+                        "ext_id": energy_action.energy_action_id.xml_id,
+                    }
+                )
         return res
 
     def get_lower_hierarchy_level(self):
