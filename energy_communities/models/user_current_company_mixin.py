@@ -29,6 +29,8 @@ class UserCurrentCompanyMixin(models.AbstractModel):
 
     @api.depends("company_id")
     def _compute_user_current_role(self):
+        # TODO: We don't understand why on this computed method context's active_company_ids is not defined.
+        # We only get allowed_company_ids
         for record in self:
             record.user_current_role = record.get_current_role()
 

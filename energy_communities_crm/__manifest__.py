@@ -12,7 +12,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Sales/CRM",
-    "version": "14.0.1.1.5",
+    "version": "14.0.1.2.0",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
@@ -38,8 +38,9 @@
         "views/crm_tag_views.xml",
         "views/crm_team_views.xml",
         "views/energy_communities_crm_lead_views.xml",
-        "views/menus.xml",
+        "views/utm_views.xml",
         "views/website_community_data_template.xml",
+        "views/menus.xml",
         "wizards/assign_crm_to_coordinator_company.xml",
     ],
     "post_init_hook": "post_setup_multicompany_crm",

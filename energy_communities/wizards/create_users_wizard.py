@@ -1,12 +1,14 @@
-from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import fields, models
 from odoo.tools.translate import _
+
+from ..utils import user_creator
 
 
 class CreateUsersWizard(models.TransientModel):
     _name = "create.users.wizard"
     _description = "Create users Wizard"
 
+    # TODO: refactor selection to get options from global res.users variable
     action = fields.Selection(
         [
             ("create_user", _("1) Create Odoo user (in case it doesn't exist)")),
@@ -24,88 +26,25 @@ class CreateUsersWizard(models.TransientModel):
 
     def execute(self):
         model = self.env.context.get("active_model")
+        impacted_records = self.env[model].browse(self.env.context["active_ids"])
         role_id = self.env.ref("energy_communities.role_ce_member")
-        if model == "res.partner":
-            if len(self.env.context["allowed_company_ids"]) > 1:
-                raise ValidationError(
-                    _(
-                        "This wizard can only run with ONE company selected."
-                        " Please limit the context of the selected companies to one."
-                    )
+        with user_creator(self.env) as component:
+            model = self.env.context.get("active_model")
+            if model == "res.partner":
+                component.create_users_from_cooperator_partners(
+                    impacted_records, role_id, self.action, self.force_invite
                 )
-            else:
-                company_id = self.env["res.company"].browse(
-                    self.env.context["allowed_company_ids"]
+            if model == "res.company":
+                component.create_users_from_communities_cooperator_partners(
+                    impacted_records, role_id, self.action, self.force_invite
                 )
-                impacted_partners = self.env["res.partner"].browse(
-                    self.env.context["active_ids"]
-                )
-                for partner in impacted_partners:
-                    cooperator = self.env["cooperative.membership"].search(
-                        [
-                            ("partner_id", "=", partner.id),
-                            ("company_id", "=", company_id.id),
-                            ("cooperator", "=", True),
-                            ("member", "=", True),
-                        ]
-                    )
-                    if cooperator:
-                        if len(impacted_partners) == 1:
-                            self.env["res.users"].build_platform_user(
-                                company_id,
-                                partner,
-                                role_id,
-                                self.action,
-                                self.force_invite,
-                                user_vals={},
-                            )
-                        else:
-                            self.env["res.users"].with_delay().build_platform_user(
-                                company_id,
-                                partner,
-                                role_id,
-                                self.action,
-                                self.force_invite,
-                                user_vals={},
-                            )
-        else:
-            impacted_companies = self.env["res.company"].browse(
-                self.env.context["active_ids"]
-            )
-            for company in impacted_companies:
-                if company.hierarchy_level == "community":
-                    cooperators = (
-                        self.env["cooperative.membership"]
-                        .sudo()
-                        .search(
-                            [
-                                ("company_id", "=", company.id),
-                                ("cooperator", "=", True),
-                                ("member", "=", True),
-                            ]
-                        )
-                    )
-                    for cooperator in cooperators:
-                        self.env["res.users"].with_delay().build_platform_user(
-                            company,
-                            cooperator.partner_id,
-                            role_id,
-                            self.action,
-                            self.force_invite,
-                            user_vals={},
-                        )
-                else:
-                    raise ValidationError(
-                        _("There is no company selected with level energy community.")
-                    )
-
-            return {
-                "type": "ir.actions.client",
-                "tag": "display_notification",
-                "params": {
-                    "type": "success",
-                    "message": _("Process has been started."),
-                    "sticky": False,
-                    "next": {"type": "ir.actions.act_window_close"},
-                },
-            }
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "type": "success",
+                "message": _("Process has been started."),
+                "sticky": False,
+                "next": {"type": "ir.actions.act_window_close"},
+            },
+        }
