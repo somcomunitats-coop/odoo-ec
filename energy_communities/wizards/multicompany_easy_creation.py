@@ -232,7 +232,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "social_instagram": self.ce_instagram_url,
                     "social_facebook": self.ce_facebook_url,
                     "logo": self.landing_logo_file,
-                    "energy_action_ids": energy_action_ids,
+                    "community_energy_action_ids": energy_action_ids,
                 }
             )
         )

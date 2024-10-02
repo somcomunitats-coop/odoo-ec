@@ -29,12 +29,20 @@ def migrate(cr, version):
     # setup energy actions on companies
     companies = env["res.company"].search([])
     for company in companies:
-        energy_actions = [(5, 0, 0)]
+        community_energy_action_ids = [(5, 0, 0)]
         for ce_tag in company.ce_tag_ids:
             xml_id = _get_energy_action_xml_id(ce_tag)
             if xml_id:
                 energy_action = env.ref(xml_id)
                 if energy_action:
-                    energy_actions.append((4, energy_action.id))
-        company.write({"energy_action_mids": energy_actions})
+                    community_energy_action_ids.append(
+                        (
+                            0,
+                            0,
+                            {
+                                "energy_action_id": energy_action.id,
+                            },
+                        )
+                    )
+        company.write({"community_energy_action_ids": community_energy_action_ids})
     logger.info("Migration applied to {} companies".format(len(companies)))

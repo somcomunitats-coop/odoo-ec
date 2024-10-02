@@ -107,13 +107,6 @@ class ResCompany(models.Model):
         string="Available roles",
         compute="_compute_parent_id_filtered_ids",
     )
-    energy_action_mids = fields.Many2many(
-        "energy.action",
-        "res_company_energy_action_rel",
-        "company_id",
-        "energy_action_id",
-        string="Energy Actions",
-    )
     community_energy_action_ids = fields.One2many(
         "community.energy.action", "company_id", string="Community energy actions"
     )
