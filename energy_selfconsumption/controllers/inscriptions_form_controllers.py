@@ -158,13 +158,13 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             "project_conf_vulnerability_situation": False,
             "project_conf_bank_details": False,
             "project_header_description": _("Header description on website form"),
-            "inscription_partner_id_vat": _("CIF/NIF of the partner"),
+            "inscription_partner_id_vat": _("VAT of the partner"),
             "supplypoint_cups": _("CUPS"),
             "supplypoint_street": _("Address"),
             "supplypoint_city": _("City"),
             "supplypoint_zip": _("Zip"),
             "supplypoint_contracted_power": _("Maximum contracted power"),
-            "supplypoint_cadastral_reference": _("Cadastral reference del inmueble"),
+            "supplypoint_cadastral_reference": _("Cadastral reference of the property"),
             "supplypoint_used_in_selfconsumption": _(
                 "Do you currently have self-consumption?"
             ),
@@ -350,23 +350,13 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                     ],
                     "global_error": True,
                 }
-        supplypoint_owner_id_same = False
-        if values["supplypoint_owner_id_same"] == "yes":
-            supplypoint_owner_id_same = True
-        vulnerability_situation = False
-        if model.conf_vulnerability_situation:
-            if values["supplypoint_owner_id_vulnerability_situation"] == "yes":
-                vulnerability_situation = True
+            
         error, message = (
             request.env["energy_selfconsumption.create_inscription_selfconsumption"]
             .sudo()
             .create_inscription(
                 values,
-                model,
-                create_bank=model.conf_bank_details,
-                supplypoint_owner_id_same=supplypoint_owner_id_same,
-                conf_vulnerability_situation=vulnerability_situation,
-                conf_used_in_selfconsumption=model.conf_used_in_selfconsumption,
+                model
             )
         )
         if error:

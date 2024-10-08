@@ -3,7 +3,7 @@ from datetime import datetime
 
 from stdnum.es import iban
 
-from odoo import _, api, models
+from odoo import _, models
 
 logger = logging.getLogger(__name__)
 

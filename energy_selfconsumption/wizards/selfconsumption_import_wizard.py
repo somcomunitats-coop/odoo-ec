@@ -120,6 +120,13 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "The file should contain 17 columns and not {header_length} columns."
                 ).format(header_length=len(header))
             )
+        supplypoint_owner_id_same = "yes"
+        if not line.get(header[12], False):
+            supplypoint_owner_id_same = "no"
+        if not line.get(header[13], False):
+            supplypoint_owner_id_same = "no"
+        if not line.get(header[14], False):
+            supplypoint_owner_id_same = "no"
         return {
             "inscription_partner_id_vat": line.get(header[0], False),
             "effective_date": line.get(header[1], False),
@@ -139,6 +146,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
             "inscription_acc_number": line.get(header[15], False),
             "mandate_auth_date": line.get(header[16], False),
             "date_format": self.date_format,
+            "supplypoint_owner_id_same": supplypoint_owner_id_same
         }
 
     def _parse_file(self, data_file):
@@ -171,10 +179,6 @@ class SelfconsumptionImportWizard(models.TransientModel):
             .create_inscription(
                 line_dict,
                 project,
-                create_bank=project.conf_bank_details,
-                supplypoint_owner_id_same=False,
-                conf_vulnerability_situation=False,
-                conf_used_in_selfconsumption=project.conf_used_in_selfconsumption,
             )
         )
 

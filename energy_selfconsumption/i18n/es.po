@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-05 07:59+0000\n"
-"PO-Revision-Date: 2024-09-05 07:59+0000\n"
+"POT-Creation-Date: 2024-10-08 10:52+0000\n"
+"PO-Revision-Date: 2024-10-08 10:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -645,7 +645,6 @@ msgstr ""
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
-#: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_selfconsumption_unique_code
 #, python-format
 msgid "A project with this CAU already exists."
 msgstr "Ya existe un proyecto con esta CAU."
@@ -654,7 +653,6 @@ msgstr "Ya existe un proyecto con esta CAU."
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
-#: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_supply_point_unique_code_company_id
 #, python-format
 msgid "A supply point with this code already exists."
 msgstr "Ya existe un punto de suministro con este código."
@@ -714,8 +712,6 @@ msgstr "Activar formulario de inscripción"
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__active
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__active
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__active
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__conf_state__active
 #, python-format
 msgid "Active"
 msgstr "Activo"
@@ -749,6 +745,12 @@ msgid "Activity Type Icon"
 msgstr "Icono de tipo de actividad"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__active
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__conf_state__active
+msgid "Activo"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid ""
 "Actuar por cuenta ajena en calidad de GESTOR DEL AUTOCONSUMO COLECTIVO identificado con\n"
@@ -774,7 +776,8 @@ msgstr "Tipo de dirección"
 msgid ""
 "Administrative divisions of a country. E.g. Fed. State, Departement, Canton"
 msgstr ""
-"Divisiones administrativas de un país. Por ejemplo, Fed. Estado, Departamento, Cantón"
+"Divisiones administrativas de un país. Por ejemplo, Fed. Estado, "
+"Departamento, Cantón"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -874,6 +877,11 @@ msgid "Birthdate"
 msgstr "Fecha de nacimiento"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__draft
+msgid "Borrador"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__code
 msgid "CAU"
 msgstr ""
@@ -891,7 +899,7 @@ msgstr ""
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
-msgid "CIF/NIF of the partner"
+msgid "VAT of the partner"
 msgstr "CIF/NIF del socio"
 
 #. module: energy_selfconsumption
@@ -903,7 +911,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
 msgid "COEFICIENTE (α)"
-msgstr "COEFICIENTE (α)"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
@@ -917,6 +925,7 @@ msgstr "No se ha podido cargar el archivo CSV"
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__code
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__code
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__code
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__supply_point_code
@@ -962,7 +971,7 @@ msgstr "Referencia catastral"
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
-msgid "Cadastral reference del inmueble"
+msgid "Cadastral reference of the property"
 msgstr "Referencia catastral de la propiedad"
 
 #. module: energy_selfconsumption
@@ -1192,22 +1201,6 @@ msgid "Cooperators"
 msgstr "Cooperadores"
 
 #. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#, python-format
-msgid "Could not create inscription for {vat}. {error}"
-msgstr "No se ha podido crear la inscripción para {vat}. {error}"
-
-#. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#, python-format
-msgid "Could not create mandate for {vat}. {error}"
-msgstr "No se ha podido crear el mandato para {vat}. {error}"
-
-#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__country_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__country_id
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -1216,18 +1209,22 @@ msgid "Country"
 msgstr "País"
 
 #. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#, python-format
-msgid "Country code was not found: {country}"
-msgstr "No se ha encontrado el código de país: {country}"
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.create_distribution_table_wizard_form_view
+msgid "Create distribution table"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.actions.act_window,name:energy_selfconsumption.create_distribution_table_wizard_action
+#: model:ir.actions.server,name:energy_selfconsumption.inscription_to_participant_action
+msgid "Create participant table"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_project_participation__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__create_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__create_uid
@@ -1245,6 +1242,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_project_participation__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__create_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__create_date
@@ -1366,6 +1364,9 @@ msgstr "Descripción del formulario"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_project_project__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_inscription_selfconsumption__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__display_name
@@ -1381,6 +1382,16 @@ msgstr "Descripción del formulario"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_res_partner__display_name
 msgid "Display Name"
 msgstr "Nombre Mostrado"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__distribute_excess
+msgid "Distribute excess"
+msgstr "Distribuir el exceso"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__distributed_power
+msgid "Distributed power"
+msgstr "Energía distribuida"
 
 #. module: energy_selfconsumption
 #: model:ir.actions.act_window,name:energy_selfconsumption.distribution_table_act_window
@@ -1422,6 +1433,14 @@ msgid "Do you currently have self-consumption?"
 msgstr "¿Tiene actualmente autoconsumo?"
 
 #. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Dont exit participation for this project."
+msgstr "No salga de la participación en este proyecto."
+
+#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_import_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.invoicing_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
@@ -1456,7 +1475,6 @@ msgstr "Descargar lista de estados"
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__draft
 #, python-format
 msgid "Draft"
 msgstr "Borrador"
@@ -1467,7 +1485,7 @@ msgstr "Borrador"
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "E-mail"
-msgstr "E-mail"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__effective_date
@@ -1515,6 +1533,11 @@ msgid ""
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__process
+msgid "En proceso"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_encoding
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__encoding
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__encoding
@@ -1535,9 +1558,6 @@ msgstr "Final"
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__energy_delivered
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__energy_delivered
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_delivered
 #, python-format
 msgid "Energy Delivered"
 msgstr "Energía Entregada"
@@ -1546,9 +1566,6 @@ msgstr "Energía Entregada"
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__energy_custom
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__energy_custom
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_custom
 #, python-format
 msgid "Energy Delivered Custom"
 msgstr "Energía entregada personalizada"
@@ -1614,11 +1631,26 @@ msgid "Energy project"
 msgstr "Proyecto energético"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__energy_delivered
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__energy_delivered
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_delivered
+msgid "Energía Entregada"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__energy_custom
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__energy_custom
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_custom
+msgid "Energía entregada personalizada"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_form_fields_template
 msgid ""
 "Enrollment in the shared self-consumption project of the Energy Community:"
 msgstr ""
-"Inscripción en el proyecto de autoconsumo compartido de la Comunidad de la Energía:"
+"Inscripción en el proyecto de autoconsumo compartido de la Comunidad de la "
+"Energía:"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
@@ -1691,6 +1723,12 @@ msgid "Female"
 msgstr "Mujer"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_create_distribution_table_wizard__type__fixed
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__fixed
+msgid "Fijo"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_delimiter
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__delimiter
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__delimiter
@@ -1741,8 +1779,10 @@ msgstr "Nombre"
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__fixed
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #, python-format
 msgid "Fixed"
 msgstr "Fijo"
@@ -1849,6 +1889,20 @@ msgstr ""
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
+msgid ""
+"Have to accept and authorize being able to issue payments to this bank "
+"account as part of participation in this shared self-consumption project of "
+"my energy community."
+msgstr ""
+"Tienen que aceptar y autorizar poder emitir pagos a esta cuenta bancaria "
+"cuenta como parte de la participación en este proyecto de autoconsumo compartido de "
+"mi comunidad energética."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
 msgid "Have to accept politic privacy."
 msgstr "Tienes que aceptar la política de privacidad."
 
@@ -1881,8 +1935,8 @@ msgid ""
 "part of participation in this shared self-consumption project of my energy "
 "community"
 msgstr ""
-"Acepto y autorizo poder emitir pagos a esta cuenta bancaria como "
-"parte de la participación en este proyecto de autoconsumo compartido de mi energía "
+"Acepto y autorizo poder emitir pagos a esta cuenta bancaria como parte de la"
+" participación en este proyecto de autoconsumo compartido de mi energía "
 "comunidad"
 
 #. module: energy_selfconsumption
@@ -1920,6 +1974,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_project_project__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_inscription_selfconsumption__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__id
@@ -2033,7 +2090,6 @@ msgstr "Importar tabla"
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__process
 #, python-format
 msgid "In process"
 msgstr "En proceso"
@@ -2050,10 +2106,14 @@ msgstr ""
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__conf_state__inactive
 #, python-format
 msgid "Inactive"
 msgstr "Inactivo"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__conf_state__inactive
+msgid "Inactivo"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
@@ -2064,8 +2124,8 @@ msgid ""
 "Information necessary for the formalization of the distribution "
 "agreement.You can find it at cadastro.es"
 msgstr ""
-"Información necesaria para la formalización de la distribución "
-"Puede encontrarlo en cadastro.es"
+"Información necesaria para la formalización de la distribución Puede "
+"encontrarlo en cadastro.es"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__inscription_id
@@ -2283,12 +2343,12 @@ msgid "Invalid Cadastral Reference: {error}"
 msgstr "Referencia catastral no válida: {error}"
 
 #. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
 msgid "Invalid IBAN: {error}"
-msgstr "IBAN incorrecto: {error}"
+msgstr "IBAN no válido: {error}"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
@@ -2296,7 +2356,7 @@ msgstr "IBAN incorrecto: {error}"
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "Invalid VAT: {error}"
-msgstr "IVA no válido: {error}"
+msgstr "NIF/CIF no válido: {error}"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_res_partner__type
@@ -2393,6 +2453,9 @@ msgstr "Última fecha facturada"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_project_project____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_inscription_selfconsumption____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard____last_update
@@ -2424,6 +2487,7 @@ msgstr "Inicio del último período"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_project_participation__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__write_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__write_uid
@@ -2441,6 +2505,7 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_project_participation__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_coefficient_report__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__write_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__write_date
@@ -2472,6 +2537,19 @@ msgid ""
 "Les rogamos reciban esta comunicación y procedan a realizar los trámites "
 "necesarios."
 msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_create_distribution_table_wizard__type_distribute_excess__linear
+msgid "Lineal"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#, python-format
+msgid "Linear"
+msgstr "Lineal"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
@@ -2541,6 +2619,11 @@ msgid "Mandate not found for {partner}"
 msgstr "Mandato no encontrado para {partner}"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__max_distributed_power
+msgid "Max distributed power"
+msgstr "Potencia máxima distribuida"
+
+#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
@@ -2579,6 +2662,7 @@ msgid "Messages"
 msgstr "Mensajes"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__type
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__type
 msgid "Modality"
 msgstr "Modalidad"
@@ -2694,16 +2778,28 @@ msgstr "Próximo Período de Comienzo"
 #: code:addons/energy_selfconsumption/models/partner.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/partner.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_create_distribution_table_wizard__distribute_excess__no
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__used_in_selfconsumption__no
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__res_partner__vulnerability_situation__no
 #, python-format
 msgid "No"
 msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "No participation found for this project."
+msgstr "No se ha encontrado participación para este proyecto."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
@@ -2813,12 +2909,12 @@ msgid "Owner Supply"
 msgstr "Suministro del propietario"
 
 #. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
-msgid "Owner could not be created: {error}"
-msgstr "No se ha podido crear el propietario: {error}"
+msgid "Owner could not be created or found."
+msgstr "No se ha podido crear o encontrar al propietario."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__res_partner__type__owner_self-consumption
@@ -2833,23 +2929,24 @@ msgstr "Titulares"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__participation
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__participation_quantity
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_participation_ids
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid "Participation"
 msgstr "Participación"
 
 #. module: energy_selfconsumption
-#: model:ir.model,name:energy_selfconsumption.model_energy_project_participation
-msgid "Participation inscription"
-msgstr "Inscripción de participación"
-
-#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
-msgid "Participation no exit."
-msgstr "Participación sin salida."
+msgid "Participation does not exist."
+msgstr "La participación no existe."
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_project_participation
+msgid "Participation inscription"
+msgstr "Inscripción de participación"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__partner_id
@@ -2861,32 +2958,49 @@ msgstr "Socio"
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
-msgid "Partner is not cooperator."
-msgstr "Socio no es cooperador."
+msgid "Partner does not exist."
+msgstr "El socio no existe."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/inscription.py:0
+#: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_inscription_selfconsumption_unique_project_id_partner_id_code
+#, python-format
+msgid "Partner is already signed up in this project with that cups."
+msgstr "El socio ya está inscrito en este proyecto con esas copas."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
-msgid "Partner is not exist."
-msgstr "El socio no existe."
+msgid "Partner is not cooperator."
+msgstr "Socio no es cooperador."
 
 #. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
-msgid "Partner with VAT:<b>{vat}</b> not is cooperator."
-msgstr "Colaborador con IVA:<b>{vat}</b> no es colaborador."
+msgid "Partner with VAT {vat} is already registered in project {code}"
+msgstr "Socio con CIF/NIF {vat} ya está registrado en el proyecto {code}"
 
 #. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "Partner with VAT:<b>{vat}</b> is not a cooperator."
+msgstr "Colaborador con CIF/NIF:<b>{vat}</b> no es un colaborador."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
 msgid "Partner with VAT:<b>{vat}</b> was not found."
-msgstr "No se ha encontrado al socio con VAT:<b>{vat}</b>."
+msgstr "No se ha encontrado socio con CIF/NIF:<b>{vat}</b>."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__owner_id
@@ -2900,6 +3014,11 @@ msgid "Payment mode"
 msgstr "Forma de pago"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__percentage_of_distributed_power
+msgid "Percentage of distributed power"
+msgstr "Porcentaje de energía distribuida"
+
+#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
@@ -2908,12 +3027,16 @@ msgid "Phone"
 msgstr "Teléfono"
 
 #. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
-#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__power_acquired
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__power_acquired
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__power_acquired
+msgid "Potencia adquirida"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Power Acquired"
 msgstr "Potencia adquirida"
@@ -3000,6 +3123,15 @@ msgid "Project must have defined a invoicing mode before activation."
 msgstr ""
 "El proyecto debe haber definido un modo de facturación antes de la "
 "activación."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_create_distribution_table_wizard__type_distribute_excess__proportional
+#, python-format
+msgid "Proportional"
+msgstr "Proporcional"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_project_participation__quantity
@@ -3224,6 +3356,16 @@ msgid "Service Contract"
 msgstr "Contrato de servicios"
 
 #. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_create_distribution_table
+msgid "Service to create distribution table for a self-consumption"
+msgstr "Servicio de creación de tabla de distribución para un autoconsumo"
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_create_inscription_selfconsumption
+msgid "Service to create inscriptions for a self-consumption"
+msgstr "Servicio de creación de inscripciones para un autoconsumo"
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_bank_details
 msgid "Show bank details"
 msgstr "Mostrar datos bancarios"
@@ -3310,14 +3452,6 @@ msgid "State Name"
 msgstr "Nombre del Estado"
 
 #. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#, python-format
-msgid "State code was not found: {state}"
-msgstr "No se ha encontrado el código de estado: {state}"
-
-#. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table__activity_state
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_state
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_state
@@ -3374,6 +3508,7 @@ msgid "Supply"
 msgstr "Suministro"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__supply_point_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__supply_point_id
 msgid "Supply Point"
 msgstr "Punto de suministro"
@@ -3412,24 +3547,21 @@ msgid "Supply Points"
 msgstr "Puntos de Suministro"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_create_distribution_table_wizard__distribute_excess__yes
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__used_in_selfconsumption__yes
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__res_partner__vulnerability_situation__yes
+msgid "Sí"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__owner_vat
 msgid "Tax ID"
 msgstr "Impuesto ID"
 
 #. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#, python-format
-msgid "The CUPS field is required. Please make sure you provide a valid CUPS"
-msgstr ""
-"El campo CUPS es obligatorio. Por favor, asegúrese de proporcionar un CUPS "
-"válido"
-
-#. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
 msgid "The IBAN field cannot be empty."
 msgstr "El campo IBAN no puede estar vacío."
@@ -3471,6 +3603,14 @@ msgid "The energy generated must be greater than 0 (kWh)."
 msgstr "La energía generada debe ser superior a 0 (kWh)."
 
 #. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "The file should contain 17 columns and not {header_length} columns."
+msgstr "El fichero debe contener 17 columnas y no {header_length} columnas."
+
+#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
@@ -3479,8 +3619,8 @@ msgid ""
 "The form is not open. For more information write to your Energy Community "
 "{email}"
 msgstr ""
-"El formulario no está abierto. Para más información, escriba a su Comunidad de la Energía "
-"{email}"
+"El formulario no está abierto. Para más información, escriba a su Comunidad "
+"de la Energía {email}"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
@@ -3501,6 +3641,14 @@ msgstr ""
 #, python-format
 msgid "The partner of the supply point is not subscribed to the project"
 msgstr "El socio del punto de suministro no está suscrito al proyecto"
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#, python-format
+msgid "The project has to have a power greater than 0."
+msgstr "El proyecto debe tener una potencia superior a 0."
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
@@ -3550,18 +3698,6 @@ msgstr ""
 "distribución es {table_state}"
 
 #. module: energy_selfconsumption
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
-#, python-format
-msgid ""
-"The supply point partner {supply_partner} and the partner {vat} in the "
-"inscription are different."
-msgstr ""
-"El socio del punto de suministro {supply_partner} y el socio {vat} en la "
-"inscripción son diferentes."
-
-#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_form_fields_template
 msgid ""
 "The usual recommendation for an annual electrical use of is 0.5kW of PV\n"
@@ -3579,8 +3715,8 @@ msgid ""
 "There is already an individual photovoltaic self-consumption or collective "
 "at this supply point?"
 msgstr ""
-"¿Ya existe un autoconsumo fotovoltaico individual o colectivo "
-"en este punto de suministro?"
+"¿Ya existe un autoconsumo fotovoltaico individual o colectivo en este punto "
+"de suministro?"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
@@ -3615,6 +3751,11 @@ msgstr ""
 #, python-format
 msgid "There isn't any supply point with this code: {code}"
 msgstr "No hay ningún punto de suministro con este código: {code}"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__is_member
+msgid "Tipología"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -3656,6 +3797,7 @@ msgstr "Energía total generada (kWh)"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_view_tree
 msgid "True"
 msgstr "Verdadero"
 
@@ -3665,16 +3807,16 @@ msgid "Type"
 msgstr "Tipo"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__type_distribute_excess
+msgid "Type distribute excess"
+msgstr "Tipo distribuir exceso"
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table__activity_exception_decoration
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_exception_decoration
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_exception_decoration
 msgid "Type of the exception activity on record."
 msgstr "Tipo de actividad de excepción registrada."
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__is_member
-msgid "Typology"
-msgstr "Tipología"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_url_form
@@ -3706,6 +3848,11 @@ msgid "User Current Role"
 msgstr "Rol actual del usuario"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__validated
+msgid "Validado"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_form_view
 msgid "Validate"
 msgstr "Validar"
@@ -3714,7 +3861,6 @@ msgstr "Validar"
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__validated
 #, python-format
 msgid "Validated"
 msgstr "Validado"
@@ -3723,10 +3869,14 @@ msgstr "Validado"
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/distribution_table.py:0
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__hourly
 #, python-format
 msgid "Variable hourly"
 msgstr "Variable por horas"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__hourly
+msgid "Variable por horas"
+msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -3762,6 +3912,16 @@ msgid "What participation would you like?"
 msgstr "¿Qué participación le gustaría?"
 
 #. module: energy_selfconsumption
+#: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_selfconsumption_unique_code
+msgid "Ya existe un proyecto con esta CAU."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_supply_point_unique_code_company_id
+msgid "Ya existe un punto de suministro con este código."
+msgstr ""
+
+#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
@@ -3772,13 +3932,14 @@ msgstr "¿Qué participación le gustaría?"
 #: code:addons/energy_selfconsumption/models/partner.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/partner.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/supply_point.py:0
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__used_in_selfconsumption__yes
-#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__res_partner__vulnerability_situation__yes
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #, python-format
 msgid "Yes"
 msgstr "Sí"
@@ -3823,8 +3984,8 @@ msgid ""
 "You can find the annual electricity use on the electricity bill(Total annual"
 " consumption). Put it in kWh/year"
 msgstr ""
-"Puede encontrar el consumo anual de electricidad en la factura de la luz(Consumo anual "
-" total). Póngalo en kWh/año"
+"Puede encontrar el consumo anual de electricidad en la factura de la "
+"luz(Consumo anual  total). Póngalo en kWh/año"
 
 #. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/wizards/clean_supply_point_assignation_wizard.py:0
@@ -3863,6 +4024,22 @@ msgstr ""
 "necesita otro tipo de apoyo social?"
 
 #. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "You have successfully registered."
+msgstr "Se ha registrado correctamente."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#, python-format
+msgid "You have to select at least one entry."
+msgstr "Debe seleccionar al menos una entrada."
+
+#. module: energy_selfconsumption
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/models/selfconsumption.py:0
@@ -3871,13 +4048,30 @@ msgid ""
 "You need to add the privacy policy file to display the form.To modify the "
 "privacy policy go to company settings."
 msgstr ""
-"Es necesario añadir el archivo de política de privacidad para mostrar el formulario.Para modificar el archivo "
-"política de privacidad ir a configuración de la empresa."
+"Es necesario añadir el archivo de política de privacidad para mostrar el "
+"formulario.Para modificar el archivo política de privacidad ir a "
+"configuración de la empresa."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_form_successful_msg
 msgid "Your data has been successfully registered."
 msgstr "Sus datos se han registrado correctamente."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#, python-format
+msgid "Your distribution percentage cannot be 0."
+msgstr "Su porcentaje de distribución no puede ser 0."
+
+#. module: energy_selfconsumption
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/setup/energy_selfconsumption/odoo/addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#, python-format
+msgid "Your distribution percentage cannot exceed 100%."
+msgstr "Su porcentaje de distribución no puede superar el 100%."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -3899,6 +4093,11 @@ msgstr "Código Postal"
 #. module: energy_selfconsumption
 #: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_contract_generation_wizard
 msgid "energy_selfconsumption.contract_generation.wizard"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_create_distribution_table_wizard
+msgid "energy_selfconsumption.create_distribution_table.wizard"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -3965,8 +4164,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_headline_message_closed
 msgid ""
 "to the technology platform Som Comunitats has been successfully submitted."
-msgstr ""
-"a la plataforma tecnológica Som Comunitats."
+msgstr "a la plataforma tecnológica Som Comunitats."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template

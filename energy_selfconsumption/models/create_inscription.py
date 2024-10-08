@@ -2,7 +2,7 @@ from datetime import datetime
 
 from stdnum.es import iban
 
-from odoo import _, api, models
+from odoo import _, models
 
 
 class CreateInscription(models.AbstractModel):
@@ -24,8 +24,6 @@ class CreateInscription(models.AbstractModel):
         partner,
         owner,
         tariff,
-        used_in_selfconsumption,
-        create_bank,
     ):
         """Create the supply point if it does not already exist."""
         supply_point = (
@@ -33,32 +31,27 @@ class CreateInscription(models.AbstractModel):
             .sudo()
             .search([("code", "=", values["supplypoint_cups"])])
         )
-        # if supply_point:
-        #    return False, _("The supply point {code} already exists").format(code=supply_point.code)
+        
         if not supply_point:
             try:
-                supply_point = (
-                    self.env["energy_selfconsumption.supply_point"]
-                    .sudo()
-                    .create(
-                        {
-                            "supply_point_id": supply_point.id,
-                            "name": values["supplypoint_owner_id_name"],
-                            "owner_id": owner.id,
-                            "contracted_power": float(
-                                values.get("supplypoint_contracted_power", 0)
-                            ),
-                            "tariff": tariff,
-                            "used_in_selfconsumption": used_in_selfconsumption,
-                            "project_id": project.id,
-                            "company_id": project.company_id.id,
-                            "active": True,
-                            "street": values["supplypoint_street"],
-                            "city": values["supplypoint_city"],
-                            "zip": values["supplypoint_zip"],
-                        }
-                    )
-                )
+                vals = {
+                    "supply_point_id": supply_point.id,
+                    "name": values["supplypoint_owner_id_name"],
+                    "owner_id": owner.id,
+                    "contracted_power": float(
+                        values.get("supplypoint_contracted_power", 0)
+                    ),
+                    "tariff": tariff,
+                    "project_id": project.id,
+                    "company_id": project.company_id.id,
+                    "active": True,
+                    "street": values["supplypoint_street"],
+                    "city": values["supplypoint_city"],
+                    "zip": values["supplypoint_zip"],
+                }
+                if project.conf_used_in_selfconsumption:
+                    vals["used_in_selfconsumption"] = values.get("supplypoint_used_in_selfconsumption", None)
+                supply_point = self.env["energy_selfconsumption.supply_point"].sudo().create(vals)
 
             except Exception as e:
                 return True, _(str(e))
@@ -66,16 +59,17 @@ class CreateInscription(models.AbstractModel):
         participation = self._get_participation(values, project)
         if not participation:
             return True, _("No participation found for this project.")
-        mandate = (
-            self._create_bank_mandate(values, partner, project) if create_bank else None
-        )
+        error, mandate = self._create_bank_mandate(values, partner, project)
+        if error:
+            msg_error = mandate
+            return True, msg_error
+
         effective_date = self._get_effective_date(values)
         annual_electricity_use = values.get(
             "inscriptionselfconsumption_annual_electricity_use", False
         )
 
         self._create_inscription_record(
-            values,
             project,
             partner,
             effective_date,
@@ -91,10 +85,6 @@ class CreateInscription(models.AbstractModel):
         self,
         values,
         project,
-        create_bank=True,
-        supplypoint_owner_id_same=True,
-        conf_vulnerability_situation=False,
-        conf_used_in_selfconsumption=False,
     ):
         """Create an entry for self-consumption on a specific project."""
         partner = self._get_partner(values["inscription_partner_id_vat"])
@@ -119,8 +109,6 @@ class CreateInscription(models.AbstractModel):
             values,
             project,
             partner,
-            supplypoint_owner_id_same,
-            conf_vulnerability_situation,
         )
         if not owner:
             return True, _("Owner could not be created or found.")
@@ -128,21 +116,12 @@ class CreateInscription(models.AbstractModel):
         contracted_power = float(values.get("supplypoint_contracted_power", 0))
         tariff = self._determine_tariff(contracted_power, values)
 
-        used_in_selfconsumption = (
-            "yes"
-            if conf_used_in_selfconsumption
-            and values.get("supplypoint_used_in_selfconsumption") == "yes"
-            else "no"
-        )
-
         return self._create_supply_point(
             values,
             project,
             partner,
             owner,
             tariff,
-            used_in_selfconsumption,
-            create_bank,
         )
 
     def _get_partner(self, vat):
@@ -175,15 +154,17 @@ class CreateInscription(models.AbstractModel):
         )
 
     def _create_bank_mandate(self, values, partner, project):
+        if not project.conf_bank_details:
+            return False, None
         """Creates a bank mandate."""
-        iban_number = values.get("inscription_acc_number")
+        iban_number = values.get("inscription_acc_number", False)
         if not iban_number:
-            raise ValueError(_("The IBAN field cannot be empty."))
+            return True, _("The IBAN field cannot be empty.")
 
         try:
             iban.validate(iban_number)
         except Exception as e:
-            raise ValueError(_("Invalid IBAN: {error}").format(error=e))
+            return True, _("Invalid IBAN: {error}").format(error=e)
 
         bank_account = (
             self.env["res.partner.bank"]
@@ -211,7 +192,7 @@ class CreateInscription(models.AbstractModel):
             )
 
         mandate_auth_date = self._get_mandate_auth_date(values)
-        return (
+        return False, (
             self.env["account.banking.mandate"]
             .with_company(project.company_id)
             .sudo()
@@ -267,7 +248,6 @@ class CreateInscription(models.AbstractModel):
 
     def _create_inscription_record(
         self,
-        values,
         project,
         partner,
         effective_date,
@@ -276,6 +256,7 @@ class CreateInscription(models.AbstractModel):
         annual_electricity_use,
         supply_point,
     ):
+        partner = partner.sudo().get_partner_with_type()
         """Creates the registration record."""
         self.env["energy_selfconsumption.inscription_selfconsumption"].sudo().create(
             {
@@ -296,23 +277,18 @@ class CreateInscription(models.AbstractModel):
         values,
         project,
         partner,
-        supplypoint_owner_id_same,
-        conf_vulnerability_situation,
     ):
         """Obtains or creates the owner of the supply."""
-        if supplypoint_owner_id_same:
+        if values.get("supplypoint_owner_id_same", "no") == "yes":
+            if project.conf_vulnerability_situation:
+                partner.sudo().write({
+                    "vulnerability_situation": values.get("supplypoint_owner_id_vulnerability_situation", None)
+                })
             return partner
 
         country = self._get_country(values, project)
         state = self._get_state(values, country)
-
-        vulnerability_situation = (
-            values.get("supplypoint_owner_id_vulnerability_situation", "no")
-            if conf_vulnerability_situation
-            else "no"
-        )
         lang = self._get_language(values)
-
         formatted_birthdate = self._get_formatted_birthdate(values)
         owner = self._get_existing_contact_owner(values)
 
@@ -323,7 +299,6 @@ class CreateInscription(models.AbstractModel):
                 country,
                 state,
                 lang,
-                vulnerability_situation,
                 formatted_birthdate,
             )
 
@@ -408,95 +383,84 @@ class CreateInscription(models.AbstractModel):
         country,
         state,
         lang,
-        vulnerability_situation,
         formatted_birthdate,
     ):
         """Creates a new owner."""
-        return (
-            self.env["res.partner"]
-            .sudo()
-            .create(
-                {
-                    "name": values["supplypoint_owner_id_name"],
-                    "lastname": values["supplypoint_owner_id_lastname"],
-                    "gender": values.get("supplypoint_owner_id_gender"),
-                    "vulnerability_situation": vulnerability_situation,
-                    "birthdate_date": formatted_birthdate,
-                    "phone": values.get("supplypoint_owner_id_phone"),
-                    "lang": lang.code if lang else lang,
-                    "email": values.get("supplypoint_owner_id_email"),
-                    "vat": values["supplypoint_owner_id_vat"],
-                    "type": "contact",
-                    "company_id": project.company_id.id,
-                    "company_type": "person",
-                    "country_id": country.id,
-                    "state_id": state.id,
-                    "street": values["supplypoint_street"],
-                    "city": values["supplypoint_city"],
-                    "zip": values["supplypoint_zip"],
-                }
-            )
-        )
+        vals = {
+            "name": values["supplypoint_owner_id_name"],
+            "lastname": values["supplypoint_owner_id_lastname"],
+            "gender": values.get("supplypoint_owner_id_gender"),
+            "birthdate_date": formatted_birthdate,
+            "phone": values.get("supplypoint_owner_id_phone"),
+            "lang": lang.code if lang else lang,
+            "email": values.get("supplypoint_owner_id_email"),
+            "vat": values["supplypoint_owner_id_vat"],
+            "type": "contact",
+            "company_id": project.company_id.id,
+            "company_type": "person",
+            "country_id": country.id,
+            "state_id": state.id,
+            "street": values["supplypoint_street"],
+            "city": values["supplypoint_city"],
+            "zip": values["supplypoint_zip"],
+        }
+        if project.conf_vulnerability_situation:
+            vals["vulnerability_situation"] = values.get("supplypoint_owner_id_vulnerability_situation", None)
+        return self.env["res.partner"].sudo().create(vals)
+
 
     def _update_owner_address(self, project, owner, values, country, state):
         """Update the address of an existing owner."""
         exists = self._get_existing_owner_self_consumption_owner(values)
         if exists:
-            exists.sudo().write(
-                {
-                    "name": values["supplypoint_owner_id_name"],
-                    "lastname": values["supplypoint_owner_id_lastname"],
-                    "gender": values.get("supplypoint_owner_id_gender"),
-                    "vulnerability_situation": values.get(
-                        "supplypoint_owner_id_vulnerability_situation", "no"
-                    ),
-                    "birthdate_date": self._get_formatted_birthdate(values),
-                    "phone": values.get("supplypoint_owner_id_phone"),
-                    "lang": self._get_language(values).code
-                    if self._get_language(values)
-                    else None,
-                    "email": values.get("supplypoint_owner_id_email"),
-                    "vat": values["supplypoint_owner_id_vat"],
-                    "type": "owner_self-consumption",
-                    "company_id": project.company_id.id,
-                    "company_type": "person",
-                    "parent_id": owner.id,
-                    "country_id": country.id,
-                    "state_id": state.id,
-                    "street": values["supplypoint_street"],
-                    "city": values["supplypoint_city"],
-                    "zip": values["supplypoint_zip"],
-                }
-            )
+            vals = {
+                "name": values["supplypoint_owner_id_name"],
+                "lastname": values["supplypoint_owner_id_lastname"],
+                "gender": values.get("supplypoint_owner_id_gender"),
+                "birthdate_date": self._get_formatted_birthdate(values),
+                "phone": values.get("supplypoint_owner_id_phone"),
+                "lang": self._get_language(values).code
+                if self._get_language(values)
+                else None,
+                "email": values.get("supplypoint_owner_id_email"),
+                "vat": values["supplypoint_owner_id_vat"],
+                "type": "owner_self-consumption",
+                "company_id": project.company_id.id,
+                "company_type": "person",
+                "parent_id": owner.id,
+                "country_id": country.id,
+                "state_id": state.id,
+                "street": values["supplypoint_street"],
+                "city": values["supplypoint_city"],
+                "zip": values["supplypoint_zip"],
+            }
+            if project.conf_vulnerability_situation:
+                vals["vulnerability_situation"] = values.get("supplypoint_owner_id_vulnerability_situation", None)
+            exists.sudo().write(vals)
             return exists
+        
+        vals = {
+            "name": values["supplypoint_owner_id_name"],
+            "lastname": values["supplypoint_owner_id_lastname"],
+            "gender": values.get("supplypoint_owner_id_gender"),
+            "birthdate_date": self._get_formatted_birthdate(values),
+            "phone": values.get("supplypoint_owner_id_phone"),
+            "lang": self._get_language(values).code
+            if self._get_language(values)
+            else None,
+            "email": values.get("supplypoint_owner_id_email"),
+            "vat": values["supplypoint_owner_id_vat"],
+            "type": "owner_self-consumption",
+            "company_id": project.company_id.id,
+            "company_type": "person",
+            "parent_id": owner.id,
+            "country_id": country.id,
+            "state_id": state.id,
+            "street": values["supplypoint_street"],
+            "city": values["supplypoint_city"],
+            "zip": values["supplypoint_zip"],
+        }
+        if project.conf_vulnerability_situation:
+            vals["vulnerability_situation"] = values.get("supplypoint_owner_id_vulnerability_situation", None)
+        return self.env["res.partner"].sudo().create(vals)
 
-        return (
-            self.env["res.partner"]
-            .sudo()
-            .create(
-                {
-                    "name": values["supplypoint_owner_id_name"],
-                    "lastname": values["supplypoint_owner_id_lastname"],
-                    "gender": values.get("supplypoint_owner_id_gender"),
-                    "vulnerability_situation": values.get(
-                        "supplypoint_owner_id_vulnerability_situation", "no"
-                    ),
-                    "birthdate_date": self._get_formatted_birthdate(values),
-                    "phone": values.get("supplypoint_owner_id_phone"),
-                    "lang": self._get_language(values).code
-                    if self._get_language(values)
-                    else None,
-                    "email": values.get("supplypoint_owner_id_email"),
-                    "vat": values["supplypoint_owner_id_vat"],
-                    "type": "owner_self-consumption",
-                    "company_id": project.company_id.id,
-                    "company_type": "person",
-                    "parent_id": owner.id,
-                    "country_id": country.id,
-                    "state_id": state.id,
-                    "street": values["supplypoint_street"],
-                    "city": values["supplypoint_city"],
-                    "zip": values["supplypoint_zip"],
-                }
-            )
-        )
