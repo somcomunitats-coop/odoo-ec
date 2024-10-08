@@ -200,8 +200,17 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         if self.vat:
             vat = self.vat.replace(" ", "").upper()
         energy_action_ids = []
+        ce_tag_mids = []
         for energy_action in self.energy_action_mids:
             energy_action_ids.append((0, 0, {"energy_action_id": energy_action.id}))
+            ce_tag_mids.append(
+                (
+                    4,
+                    self.env.ref(
+                        energy_action.xml_id.replace("energy_action", "ce_tag")
+                    ).id,
+                )
+            )
 
         self.new_company_id = (
             self.env["res.company"]
@@ -232,6 +241,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "social_instagram": self.ce_instagram_url,
                     "social_facebook": self.ce_facebook_url,
                     "logo": self.landing_logo_file,
+                    # TODO: remove deprecated ce_tag_ids
+                    "ce_tag_ids": ce_tag_mids,
                     "community_energy_action_ids": energy_action_ids,
                 }
             )
