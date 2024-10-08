@@ -350,14 +350,11 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                     ],
                     "global_error": True,
                 }
-            
+
         error, message = (
             request.env["energy_selfconsumption.create_inscription_selfconsumption"]
             .sudo()
-            .create_inscription(
-                values,
-                model
-            )
+            .create_inscription(values, model)
         )
         if error:
             return {

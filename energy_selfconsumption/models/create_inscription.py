@@ -31,7 +31,7 @@ class CreateInscription(models.AbstractModel):
             .sudo()
             .search([("code", "=", values["supplypoint_cups"])])
         )
-        
+
         if not supply_point:
             try:
                 vals = {
@@ -50,8 +50,12 @@ class CreateInscription(models.AbstractModel):
                     "zip": values["supplypoint_zip"],
                 }
                 if project.conf_used_in_selfconsumption:
-                    vals["used_in_selfconsumption"] = values.get("supplypoint_used_in_selfconsumption", None)
-                supply_point = self.env["energy_selfconsumption.supply_point"].sudo().create(vals)
+                    vals["used_in_selfconsumption"] = values.get(
+                        "supplypoint_used_in_selfconsumption", None
+                    )
+                supply_point = (
+                    self.env["energy_selfconsumption.supply_point"].sudo().create(vals)
+                )
 
             except Exception as e:
                 return True, _(str(e))
@@ -281,9 +285,13 @@ class CreateInscription(models.AbstractModel):
         """Obtains or creates the owner of the supply."""
         if values.get("supplypoint_owner_id_same", "no") == "yes":
             if project.conf_vulnerability_situation:
-                partner.sudo().write({
-                    "vulnerability_situation": values.get("supplypoint_owner_id_vulnerability_situation", None)
-                })
+                partner.sudo().write(
+                    {
+                        "vulnerability_situation": values.get(
+                            "supplypoint_owner_id_vulnerability_situation", None
+                        )
+                    }
+                )
             return partner
 
         country = self._get_country(values, project)
@@ -405,9 +413,10 @@ class CreateInscription(models.AbstractModel):
             "zip": values["supplypoint_zip"],
         }
         if project.conf_vulnerability_situation:
-            vals["vulnerability_situation"] = values.get("supplypoint_owner_id_vulnerability_situation", None)
+            vals["vulnerability_situation"] = values.get(
+                "supplypoint_owner_id_vulnerability_situation", None
+            )
         return self.env["res.partner"].sudo().create(vals)
-
 
     def _update_owner_address(self, project, owner, values, country, state):
         """Update the address of an existing owner."""
@@ -435,10 +444,12 @@ class CreateInscription(models.AbstractModel):
                 "zip": values["supplypoint_zip"],
             }
             if project.conf_vulnerability_situation:
-                vals["vulnerability_situation"] = values.get("supplypoint_owner_id_vulnerability_situation", None)
+                vals["vulnerability_situation"] = values.get(
+                    "supplypoint_owner_id_vulnerability_situation", None
+                )
             exists.sudo().write(vals)
             return exists
-        
+
         vals = {
             "name": values["supplypoint_owner_id_name"],
             "lastname": values["supplypoint_owner_id_lastname"],
@@ -461,6 +472,7 @@ class CreateInscription(models.AbstractModel):
             "zip": values["supplypoint_zip"],
         }
         if project.conf_vulnerability_situation:
-            vals["vulnerability_situation"] = values.get("supplypoint_owner_id_vulnerability_situation", None)
+            vals["vulnerability_situation"] = values.get(
+                "supplypoint_owner_id_vulnerability_situation", None
+            )
         return self.env["res.partner"].sudo().create(vals)
-

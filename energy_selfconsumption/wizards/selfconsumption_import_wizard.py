@@ -146,7 +146,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
             "inscription_acc_number": line.get(header[15], False),
             "mandate_auth_date": line.get(header[16], False),
             "date_format": self.date_format,
-            "supplypoint_owner_id_same": supplypoint_owner_id_same
+            "supplypoint_owner_id_same": supplypoint_owner_id_same,
         }
 
     def _parse_file(self, data_file):
