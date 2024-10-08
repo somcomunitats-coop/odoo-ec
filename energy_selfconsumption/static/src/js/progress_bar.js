@@ -11,6 +11,7 @@ odoo.define("energy_selfconsumption.ProgressBarWidget", function (require) {
       this._super.apply(this, arguments);
       // Get field values
       this.max_quantity = this.record.data[this.attrs.options.max_quantity] || 100; // Maximum quantity
+      this.extra_label = this.attrs.options.extra_label || ""; // Extra label
       this.current_quantity = this.value || 0; // Amount obtained
       this.percentage = Math.min(
         (this.current_quantity / this.max_quantity) * 100,
@@ -31,7 +32,7 @@ odoo.define("energy_selfconsumption.ProgressBarWidget", function (require) {
                     <span>${this.percentage.toFixed(2)}%</span>
                     <span style="display: block;float: right;">${this.current_quantity.toFixed(
                       2
-                    )} / ${this.max_quantity.toFixed(2)}</span>
+                    )} / ${this.max_quantity.toFixed(2)} ${this.extra_label}</span>
                 </div>
             `);
     },

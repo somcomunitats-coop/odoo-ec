@@ -34,20 +34,22 @@ class CreateInscription(models.AbstractModel):
 
         if not supply_point:
             try:
+                country = self._get_country(values, project)
                 vals = {
-                    "supply_point_id": supply_point.id,
-                    "name": values["supplypoint_owner_id_name"],
+                    "code": values["supplypoint_cups"],
                     "owner_id": owner.id,
                     "contracted_power": float(
                         values.get("supplypoint_contracted_power", 0)
                     ),
                     "tariff": tariff,
-                    "project_id": project.id,
+                    "partner_id": partner.id,
                     "company_id": project.company_id.id,
-                    "active": True,
                     "street": values["supplypoint_street"],
                     "city": values["supplypoint_city"],
+                    "country_id": country.id,
+                    "state_id": self._get_state(values, project, country).id,
                     "zip": values["supplypoint_zip"],
+                    "cadastral_reference": values["supplypoint_cadastral_reference"],
                 }
                 if project.conf_used_in_selfconsumption:
                     vals["used_in_selfconsumption"] = values.get(
@@ -295,7 +297,7 @@ class CreateInscription(models.AbstractModel):
             return partner
 
         country = self._get_country(values, project)
-        state = self._get_state(values, country)
+        state = self._get_state(values, project, country)
         lang = self._get_language(values)
         formatted_birthdate = self._get_formatted_birthdate(values)
         owner = self._get_existing_contact_owner(values)
@@ -314,24 +316,18 @@ class CreateInscription(models.AbstractModel):
 
     def _get_country(self, values, project):
         """Obtains the country based on the project or values."""
+        if not values.get("country", False):
+            return project.company_id.partner_id.country_id
         return (
             self.env["res.country"]
             .sudo()
-            .search(
-                [
-                    (
-                        "code",
-                        "=",
-                        values.get(
-                            "country", project.company_id.partner_id.country_id.code
-                        ),
-                    )
-                ]
-            )
+            .search([("code", "=", values.get("country"))])
         )
 
-    def _get_state(self, values, country):
+    def _get_state(self, values, project, country):
         """Gets the state based on values and country."""
+        if not values.get("state", False):
+            return project.company_id.partner_id.state_id
         return (
             self.env["res.country.state"]
             .sudo()

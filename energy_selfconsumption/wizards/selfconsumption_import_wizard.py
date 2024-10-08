@@ -120,13 +120,13 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "The file should contain 17 columns and not {header_length} columns."
                 ).format(header_length=len(header))
             )
-        supplypoint_owner_id_same = "yes"
+        supplypoint_owner_id_same = "no"
         if not line.get(header[12], False):
-            supplypoint_owner_id_same = "no"
+            supplypoint_owner_id_same = "yes"
         if not line.get(header[13], False):
-            supplypoint_owner_id_same = "no"
+            supplypoint_owner_id_same = "yes"
         if not line.get(header[14], False):
-            supplypoint_owner_id_same = "no"
+            supplypoint_owner_id_same = "yes"
         return {
             "inscription_partner_id_vat": line.get(header[0], False),
             "effective_date": line.get(header[1], False),
