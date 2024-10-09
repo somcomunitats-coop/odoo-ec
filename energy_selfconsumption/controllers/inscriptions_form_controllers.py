@@ -47,11 +47,12 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
 
     # Validation on submit form
     def form_submit_validation(self, values):
-        if values["inscription_project_privacy"] != "on":
-            return {
-                "error_msgs": [_("Have to accept politic privacy.")],
-                "global_error": True,
-            }
+        if values.get("supplypoint_owner_id_same", "yes") == "no":
+            if values.get("inscription_project_privacy","off") != "on":
+                return {
+                    "error_msgs": [_("Have to accept politic privacy.")],
+                    "global_error": True,
+                }
         partner = (
             request.env["res.partner"]
             .sudo()
