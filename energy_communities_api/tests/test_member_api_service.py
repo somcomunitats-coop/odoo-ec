@@ -400,16 +400,13 @@ class TestMemberApiService(HttpCase, RegistryMixin):
                     name=f"test{value}",
                     type="fotovoltaic",
                     shares=dict(value=4, unit=UnitEnum.percentage),
-                    share_energy_production=dict(value=0.9, unit=UnitEnum.kwn),
-                    selfconsumption_consumption_ratio=dict(
-                        value=0.3, unit=UnitEnum.percentage
-                    ),
-                    selfconsumption_surplus_ratio=dict(
-                        value=0.3, unit=UnitEnum.percentage
-                    ),
-                    consumption_selfconsumption_ratio=dict(
-                        value=0.3, unit=UnitEnum.percentage
-                    ),
+                    energy_shares=dict(value=4, unit=UnitEnum.kwn),
+                    energy_production=dict(value=0.9, unit=UnitEnum.kwn),
+                    energy_consumption=dict(value=4.6, unit=UnitEnum.kwn),
+                    selfproduction_ratio=dict(value=0.3, unit=UnitEnum.percentage),
+                    surplus_ratio=dict(value=0.7, unit=UnitEnum.percentage),
+                    gridconsumption_ratio=dict(value=0.3, unit=UnitEnum.percentage),
+                    selfconsumption_ratio=dict(value=0.7, unit=UnitEnum.percentage),
                     environment_saves=dict(value=4, unit=UnitEnum.grco2),
                 )
                 for value in range(0, 10)

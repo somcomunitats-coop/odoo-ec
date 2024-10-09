@@ -42,26 +42,38 @@ class ProjectMetricsApiInfo(Component):
                 value=member_contract.supply_point_assignation_id.energy_shares,
                 unit=UnitEnum.kwn,
             ),
-            share_energy_production=MetricInfo(
-                value=monitoring_service.generated_energy_by_member(
+            energy_production=MetricInfo(
+                value=monitoring_service.energy_production_by_member(
                     **service_parameters
                 ),
                 unit=UnitEnum.kwh,
             ),
-            selfconsumption_consumption_ratio=MetricInfo(
-                value=monitoring_service.selfconsumed_energy_ratio_by_member(
+            energy_consumption=MetricInfo(
+                value=monitoring_service.energy_consumption_by_member(
+                    **service_parameters
+                ),
+                unit=UnitEnum.kwh,
+            ),
+            selfproduction_ratio=MetricInfo(
+                value=monitoring_service.energy_selfconsumption_ratio_by_member(
                     **service_parameters
                 ),
                 unit=UnitEnum.percentage,
             ),
-            selfconsumption_surplus_ratio=MetricInfo(
+            surplus_ratio=MetricInfo(
                 value=monitoring_service.energy_surplus_ratio_by_member(
                     **service_parameters
                 ),
                 unit=UnitEnum.percentage,
             ),
-            consumption_selfconsumption_ratio=MetricInfo(
-                value=monitoring_service.energy_usage_ratio_by_member(
+            gridconsumption_ratio=MetricInfo(
+                value=monitoring_service.energy_usage_ratio_from_grid_by_member(
+                    **service_parameters
+                ),
+                unit=UnitEnum.percentage,
+            ),
+            selfconsumption_ratio=MetricInfo(
+                value=monitoring_service.energy_usage_ratio_from_selfconsumption_by_member(
                     **service_parameters
                 ),
                 unit=UnitEnum.percentage,
@@ -88,7 +100,7 @@ class ProjectApiInfo(Component):
             member_contract = project.contract_ids.filtered(
                 lambda contract: contract.partner_id == partner
             )
-            daily_production = monitoring_service.daily_generated_energy_by_member(
+            daily_production = monitoring_service.daily_production_by_member(
                 system_id=project.selfconsumption_id.code,
                 member_id=member_contract.code,
                 date_from=date_from,
@@ -110,13 +122,13 @@ class ProjectApiInfo(Component):
             member_contract = project.contract_ids.filtered(
                 lambda contract: contract.partner_id == partner
             )
-            daily_production = monitoring_service.daily_selfconsumed_energy_by_member(
+            daily_selfconsumption = monitoring_service.daily_selfconsumption_by_member(
                 system_id=project.selfconsumption_id.code,
                 member_id=member_contract.code,
                 date_from=date_from,
                 date_to=date_to,
             )
-            return [EnergyPoint(**point._asdict()) for point in daily_production]
+            return [EnergyPoint(**point._asdict()) for point in daily_selfconsumption]
         return []
 
     def get_project_daily_exported_energy(
@@ -127,7 +139,7 @@ class ProjectApiInfo(Component):
             member_contract = project.contract_ids.filtered(
                 lambda contract: contract.partner_id == partner
             )
-            daily_exported_energy = monitoring_service.daily_exported_energy_by_member(
+            daily_exported_energy = monitoring_service.daily_gridinjection_by_member(
                 system_id=project.selfconsumption_id.code,
                 member_id=member_contract.code,
                 date_from=date_from,
@@ -144,7 +156,7 @@ class ProjectApiInfo(Component):
             member_contract = project.contract_ids.filtered(
                 lambda contract: contract.partner_id == partner
             )
-            daily_consumed_energy = monitoring_service.daily_consumed_energy_by_member(
+            daily_consumed_energy = monitoring_service.daily_consumption_by_member(
                 system_id=project.selfconsumption_id.code,
                 member_id=member_contract.code,
                 date_from=date_from,

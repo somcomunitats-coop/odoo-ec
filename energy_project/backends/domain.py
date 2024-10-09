@@ -45,7 +45,7 @@ class EnergyPoint(
         return MeasurePoint(date=self.date, value=self.production)
 
     @property
-    def selfconsumtion_measure(self) -> MeasurePoint:
+    def selfconsumption_measure(self) -> MeasurePoint:
         return MeasurePoint(date=self.date, value=self.selfconsumption)
 
     @property

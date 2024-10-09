@@ -138,27 +138,39 @@ class CommunityServiceMetricsInfo(BaseModel):
         description="Energy shares (distribution coefficient in kWh) that have a person for this project",
     )
 
-    share_energy_production: MetricInfo = Field(
+    energy_consumption: MetricInfo = Field(
         ...,
-        title="Share energy production",
-        description="Shares of energy generated for a person",
+        title="Eenergy consumption",
+        description="Energy consumed for a person",
     )
 
-    selfconsumption_consumption_ratio: MetricInfo = Field(
+    energy_production: MetricInfo = Field(
         ...,
-        title="Selfconsumption consumption ratio",
-        description="Ratio of energy consumend",
+        title="Eenergy production",
+        description="Energy generated for a person",
     )
 
-    selfconsumption_surplus_ratio: MetricInfo = Field(
+    selfproduction_ratio: MetricInfo = Field(
         ...,
-        title="Selfconsumption surplus ratio",
-        description="Ratio of selfconsumption energy dumped to the net",
+        title="Selfproduction ratio",
+        description="Ratio of selfproduced energy",
     )
 
-    consumption_selfconsumption_ratio: MetricInfo = Field(
+    surplus_ratio: MetricInfo = Field(
         ...,
-        title="Consupmtion selfconsumption ratio",
+        title="Surplus ratio",
+        description="Ratio of energy exported to de grid",
+    )
+
+    gridconsumption_ratio: MetricInfo = Field(
+        ...,
+        title="Gridconsumption ratio",
+        description="Ratio of grid energy consumed",
+    )
+
+    selfconsumption_ratio: MetricInfo = Field(
+        ...,
+        title="Selfconsumption ratio",
         description="Ratio of selfconsumption energy consumed",
     )
 
