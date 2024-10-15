@@ -9,8 +9,6 @@ from ..schemas import (
     CommunityServiceInfo,
     CommunityServiceMetricsInfo,
     MemberInfo,
-    MetricInfo,
-    UnitEnum,
 )
 
 
