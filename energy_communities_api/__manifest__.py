@@ -20,7 +20,13 @@
         "energy_selfconsumption",
         "pydantic",
     ],
-    "external_dependencies": {"python": ["pydantic<2", "extendable-pydantic==0.0.6"]},
+    "external_dependencies": {
+        "python": [
+            "pydantic<2",
+            "extendable-pydantic==0.0.6",
+            "email_validator==2.2.0",
+        ]
+    },
     "data": [
         "security/res_users_role_data.xml",
         "security/ir_rule_data.xml",

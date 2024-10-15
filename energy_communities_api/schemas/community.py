@@ -2,7 +2,7 @@ from datetime import date
 from enum import Enum
 from typing import List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import AnyHttpUrl, BaseModel, EmailStr, Field
 
 from .base import (
     BaseListResponse,
@@ -14,7 +14,7 @@ from .base import (
 
 class CommunityInfo(NaiveOrmModel):
     class Config:
-        title: "Community info"
+        title = "Community info"
         # used for being able to use alias on a List of this type
         allow_population_by_field_name = True
 
@@ -38,7 +38,7 @@ class CommunityInfo(NaiveOrmModel):
 
 class CommunityServiceInfo(BaseModel):
     class Config:
-        title: "Community service metrics information"
+        title = "Community service metrics information"
         allow_population_by_field_name = True
 
     id_: int = Field(
@@ -181,12 +181,99 @@ class CommunityServiceMetricsInfo(BaseModel):
     )
 
 
+class EnergyAction(BaseModel):
+    class Config:
+        title = "Energy Action information"
+
+    name: str = Field(
+        ...,
+        title="name",
+        description="Name of the energy action",
+    )
+
+
+class SocialInfo(BaseModel):
+    class Config:
+        title = "Social links"
+
+    email: EmailStr = Field(..., title="Email", description="Contact email")
+    web: AnyHttpUrl = Field(..., title="Web", description="Url of the website")
+    twitter: Optional[AnyHttpUrl] = Field(
+        None, title="X", description="Url of X profile"
+    )
+    instagram: Optional[AnyHttpUrl] = Field(
+        None, title="Instagram", description="Url of instagram profile"
+    )
+    telegram: Optional[AnyHttpUrl] = Field(
+        None, title="Telegram", description="Url of telegram group"
+    )
+    facebook: Optional[AnyHttpUrl] = Field(
+        None, title="Facebook", description="Url or invitation link of whatsapp group"
+    )
+
+
+class EnergyCommunityInfo(BaseModel):
+    class Config:
+        title = "Energy Community information"
+        allow_population_by_field_name = True
+
+    id: int = Field(
+        ...,
+        title="Id",
+        description="Id of the energy community",
+    )
+    name: str = Field(
+        ...,
+        title="Name",
+        description="Name of the energy community",
+    )
+    coordinator: str = Field(
+        None, title="Coordinator", description="Coordinator for this energy community"
+    )
+    members: int = Field(
+        ...,
+        title="Members",
+        description="Total of members of this community",
+    )
+    services: List[EnergyAction] = Field(
+        ...,
+        title="Services",
+        description="List of services that offer this energy community",
+    )
+    image: Optional[str] = Field(
+        ...,
+        alias="logo",
+        title="Image",
+        description="Image of the energy community",
+    )
+    landing_photo: Optional[str] = Field(
+        ...,
+        alias="logo",
+        title="Image",
+        description="Image of the energy community",
+    )
+    social: SocialInfo = Field(
+        ...,
+        title="social",
+        description="Set of social and contact links",
+    )
+
+
 class CommunityServiceInfoResponse(BaseResponse):
     """
     Response for a community service basic information in which a member is involved.
     """
 
     data: CommunityServiceInfo
+    links: PaginationLinks
+
+
+class EnergyCommunityInfoResponse(BaseResponse):
+    """
+    Response with the basis information about a energy community.
+    """
+
+    data: EnergyCommunityInfo
     links: PaginationLinks
 
 
