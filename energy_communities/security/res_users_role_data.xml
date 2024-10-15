@@ -35,7 +35,7 @@
                (4, ref('group_platform_manager')),
                (4, ref('group_admin')),
                (4, ref('base.group_erp_manager')),
-               (4, ref('sale.group_delivery_invoice_address')),
+               (4, ref('account.group_delivery_invoice_address')),
                (4, ref('account.group_account_invoice')),
                (4, ref('account.group_account_manager')),
                (4, ref('account.group_account_user')),
@@ -64,7 +64,7 @@
       eval="[
                (5, 0, 0),
                (4, ref('group_admin')),
-               (4, ref('sale.group_delivery_invoice_address')),
+               (4, ref('account.group_delivery_invoice_address')),
                (4, ref('account.group_account_invoice')),
                (4, ref('account.group_account_manager')),
                (4, ref('account.group_account_user')),
@@ -88,7 +88,7 @@
       eval="[
                (5, 0, 0),
                (4, ref('group_admin')),
-               (4, ref('sale.group_delivery_invoice_address')),
+               (4, ref('account.group_delivery_invoice_address')),
                (4, ref('account.group_account_invoice')),
                (4, ref('account.group_account_manager')),
                (4, ref('account.group_account_user')),
@@ -113,7 +113,7 @@
       eval="[
                (5, 0, 0),
                (4, ref('group_admin')),
-               (4, ref('sale.group_delivery_invoice_address')),
+               (4, ref('account.group_delivery_invoice_address')),
                (4, ref('account.group_account_invoice')),
                (4, ref('account.group_account_manager')),
                (4, ref('account.group_account_user')),
@@ -150,7 +150,7 @@
       eval="[
                (5, 0, 0),
                (4, ref('group_user')),
-               (4, ref('sale.group_delivery_invoice_address')),
+               (4, ref('account.group_delivery_invoice_address')),
                (4, ref('account.group_account_invoice')),
                (4, ref('account.group_account_manager')),
                (4, ref('account.group_account_user')),
