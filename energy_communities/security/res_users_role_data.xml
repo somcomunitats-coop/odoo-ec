@@ -51,7 +51,7 @@
                (4, ref('queue_job.group_queue_job_manager')),
                (4, ref('event.group_event_manager')),
                (4, ref('website.group_multi_website')),
-               (4, ref('website.group_website_publisher')),
+               (4, ref('website.group_website_restricted_editor')),
         ]"
     />
     </record>
