@@ -82,7 +82,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     create_place = fields.Boolean(string="Create Map Place", default=False)
     landing_short_description = fields.Text(string="Short description")
     landing_long_description = fields.Text(string="Long description")
-    ce_tag_ids = fields.Many2many("crm.tag", string="Energy Community Services")
+    energy_action_mids = fields.Many2many("energy.action", string="Energy Actions")
     ce_number_of_members = fields.Integer(string="Number of members")
     ce_member_status = fields.Selection(
         selection=_CE_MEMBER_STATUS_VALUES,
@@ -199,6 +199,19 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         vat = False
         if self.vat:
             vat = self.vat.replace(" ", "").upper()
+        energy_action_ids = []
+        ce_tag_mids = []
+        for energy_action in self.energy_action_mids:
+            energy_action_ids.append((0, 0, {"energy_action_id": energy_action.id}))
+            ce_tag_mids.append(
+                (
+                    4,
+                    self.env.ref(
+                        energy_action.xml_id.replace("energy_action", "ce_tag")
+                    ).id,
+                )
+            )
+
         self.new_company_id = (
             self.env["res.company"]
             .sudo()
@@ -228,7 +241,9 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "social_instagram": self.ce_instagram_url,
                     "social_facebook": self.ce_facebook_url,
                     "logo": self.landing_logo_file,
-                    "ce_tag_ids": self.ce_tag_ids,
+                    # TODO: remove deprecated ce_tag_ids
+                    "ce_tag_ids": ce_tag_mids,
+                    "community_energy_action_ids": energy_action_ids,
                 }
             )
         )

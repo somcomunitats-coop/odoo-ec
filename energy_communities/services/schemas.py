@@ -158,6 +158,12 @@ S_COMMUNITY_SERVICE = {
     "ext_id": {"type": "string"},
 }
 
+S_ENERGY_ACTION = {
+    "id": {"type": "integer"},
+    "name": {"type": "string"},
+    "ext_id": {"type": "string"},
+}
+
 S_COMMUNITY_RETURN_GET = {
     "community": {
         "type": "dict",
@@ -217,6 +223,10 @@ S_LANDING_PAGE_CREATE = {
             "community_active_services": {
                 "type": "list",
                 "schema": {"type": "dict", "schema": S_COMMUNITY_SERVICE},
+            },
+            "energy_actions": {
+                "type": "list",
+                "schema": {"type": "dict", "schema": S_ENERGY_ACTION},
             },
             "company_logo": {"type": "string"},
             "company_logo_write_date": {"type": "string"},
