@@ -8,9 +8,10 @@ _logger = logging.getLogger(__name__)
 
 
 class LandingService(Component):
-    _inherit = "base.rest.private_abstract_service"
     _name = "ce.landing.service"
     _usage = "landing"
+    _default_auth = "api_key"
+    _collection_name = "energy_communities_publicdata.api.services"
     _description = """
         CE WP landing page requests
     """
