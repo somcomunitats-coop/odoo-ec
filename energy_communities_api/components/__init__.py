@@ -8,3 +8,5 @@ from .energy_selfconsumption_project import (
 from .energy_project_api_info import ProjectApiInfo
 
 from .partner_api_info import PartnerApiInfo
+
+from . import opendata_api_info

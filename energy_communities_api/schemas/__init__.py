@@ -35,3 +35,5 @@ from .selfconsumption_project import (
     ProjectInfoListResponse,
     SelfConsumptionProjectMemberListResponse,
 )
+
+from .network_info import NetworkInfo, NetworkInfoResponse
