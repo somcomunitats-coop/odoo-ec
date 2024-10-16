@@ -1,10 +1,10 @@
 from datetime import date, datetime, timedelta
+from unittest.mock import MagicMock, patch
 
 from odoo.tests import TransactionCase, tagged
-from unittest.mock import patch, MagicMock
 
 
-@tagged("post_install","standard","at_install","energy_selfconsumption")
+@tagged("post_install", "standard", "at_install", "energy_selfconsumption")
 class TestInvoicingReminder(TransactionCase):
     def setUp(self):
         super().setUp()
@@ -134,8 +134,9 @@ class TestInvoicingReminder(TransactionCase):
             [("project_id", "=", self.selfconsumption.project_id.id)]
         )
         contract.recurring_next_date = validation_date
-        with patch.object(type(self.selfconsumption), 'message_post_with_template',
-                          MagicMock()) as mock_message_post:
+        with patch.object(
+            type(self.selfconsumption), "message_post_with_template", MagicMock()
+        ) as mock_message_post:
             contract.recurring_next_date = validation_date - timedelta(days=1)
             self.selfconsumption.send_energy_delivery_invoicing_reminder()
             mock_message_post.assert_called()

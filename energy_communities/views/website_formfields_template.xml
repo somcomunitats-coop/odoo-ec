@@ -9,7 +9,25 @@
     <template id="form_field_part_label" name="form_field_part_label">
       <label t-att="{'for': field_key}"><t t-esc="field_label" /><span
         t-if="field_required"
-      > *</span></label>
+      > *</span>
+      <span t-if="field_help" t-att="{'title': field_title}">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-question-circle"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+          />
+          <path
+            d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286m1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"
+          />
+        </svg>
+      </span>
+      </label>
     </template>
     <template id="form_headline" name="form_headline">
       <div
@@ -30,6 +48,8 @@
         <t t-set="field_key" t-value="key" />
         <t t-set="field_label" t-value="label" />
         <t t-set="field_required" t-value="required" />
+        <t t-set="field_help" t-value="help" />
+        <t t-set="field_title" t-value="title" />
       </t>
       <t t-call="energy_communities.form_field_part_description">
         <t t-set="field_description" t-value="description" />
@@ -46,6 +66,21 @@
       />
       </div>
     </template>
+    <template id="form_field_hidden" name="form_field_text">
+      <div
+      t-attf-name="#{key}_container"
+      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-att-data-showif="showif"
+    >
+        <input
+        t-attf-class="form-control form-control-sm#{trigger and ' data-trigger' or ''}"
+        t-attf-id="#{key}"
+        type="hidden"
+        t-attf-name="#{key}"
+        t-attf-value="#{value or ''}"
+      />
+      </div>
+    </template>
     <template id="form_field_number" name="form_field_number">
       <div
       t-attf-name="#{key}_container"
@@ -56,6 +91,8 @@
           <t t-set="field_key" t-value="key" />
           <t t-set="field_label" t-value="label" />
           <t t-set="field_required" t-value="required" />
+          <t t-set="field_help" t-value="help" />
+          <t t-set="field_title" t-value="title" />
         </t>
         <t t-call="energy_communities.form_field_part_description">
           <t t-set="field_description" t-value="description" />
@@ -83,6 +120,8 @@
           <t t-set="field_key" t-value="key" />
           <t t-set="field_label" t-value="label" />
           <t t-set="field_required" t-value="required" />
+          <t t-set="field_help" t-value="help" />
+          <t t-set="field_title" t-value="title" />
         </t>
         <t t-call="energy_communities.form_field_part_description">
           <t t-set="field_description" t-value="description" />
@@ -110,6 +149,8 @@
           <t t-set="field_key" t-value="key" />
           <t t-set="field_label" t-value="label" />
           <t t-set="field_required" t-value="required" />
+          <t t-set="field_help" t-value="help" />
+          <t t-set="field_title" t-value="title" />
         </t>
         <t t-call="energy_communities.form_field_part_description">
           <t t-set="field_description" t-value="description" />
@@ -136,6 +177,8 @@
           <t t-set="field_key" t-value="key" />
           <t t-set="field_label" t-value="label" />
           <t t-set="field_required" t-value="required" />
+          <t t-set="field_help" t-value="help" />
+          <t t-set="field_title" t-value="title" />
         </t>
         <t t-call="energy_communities.form_field_part_description">
           <t t-set="field_description" t-value="description" />
@@ -176,6 +219,8 @@
           <t t-set="field_key" t-value="key" />
           <t t-set="field_label" t-value="label" />
           <t t-set="field_required" t-value="required" />
+          <t t-set="field_help" t-value="help" />
+          <t t-set="field_title" t-value="title" />
         </t>
         <t t-call="energy_communities.form_field_part_description">
           <t t-set="field_description" t-value="description" />
@@ -216,6 +261,8 @@
             <t t-set="field_key" t-value="key" />
             <t t-set="field_label" t-value="label" />
             <t t-set="field_required" t-value="required" />
+            <t t-set="field_help" t-value="help" />
+            <t t-set="field_title" t-value="title" />
           </t>
         </div>
         <t t-call="energy_communities.form_field_part_description">
@@ -237,6 +284,8 @@
           <t t-set="field_key" t-value="key" />
           <t t-set="field_label" t-value="label" />
           <t t-set="field_required" t-value="required" />
+          <t t-set="field_help" t-value="help" />
+          <t t-set="field_title" t-value="title" />
         </t>
         <t t-call="energy_communities.form_field_part_description">
           <t t-set="field_description" t-value="description" />
@@ -269,6 +318,8 @@
             <t t-set="field_key" t-value="key" />
             <t t-set="field_label" t-value="label" />
             <t t-set="field_required" t-value="required" />
+            <t t-set="field_help" t-value="help" />
+            <t t-set="field_title" t-value="title" />
           </t>
           <t t-call="energy_communities.form_field_part_description">
             <t t-set="field_description" t-value="description" />
@@ -299,13 +350,14 @@
       t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
       t-att-data-showif="showif"
     >
-          <t t-set="date_placeholder" t-if="lang=='ca_ES'">dd/mm/aaaa</t>
-          <t t-set="date_placeholder" t-if="lang=='es_ES'">dd/mm/aaaa</t>
+          <t t-set="date_placeholder">dd/mm/aaaa</t>
           <t t-set="date_placeholder" t-if="lang=='en_US'">dd/mm/yyyy</t>
           <t t-call="energy_communities.form_field_part_label">
             <t t-set="field_key" t-value="key" />
             <t t-set="field_label" t-value="label" />
             <t t-set="field_required" t-value="required" />
+            <t t-set="field_help" t-value="help" />
+            <t t-set="field_title" t-value="title" />
           </t>
           <input
         t-attf-class="form-control form-control-sm o_website_form_date_past#{trigger and ' data-trigger'}"

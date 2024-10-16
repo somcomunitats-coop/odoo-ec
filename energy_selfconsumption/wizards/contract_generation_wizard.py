@@ -1,5 +1,3 @@
-import datetime
-
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -105,15 +103,14 @@ class ContractGenerationWizard(models.TransientModel):
                 if self.selfconsumption_id.invoicing_mode == "energy_delivered":
                     contract_line_id.name += """\nCAU: {cau}\n"""
                 elif self.selfconsumption_id.invoicing_mode == "power_acquired":
-                    contract_line_id.name += """\nCAU: {cau}\nTotal installed nominal power (kW): {power}\nPartition coefficient: {coefficient}"""
+                    contract_line_id.name += _(
+                        """\nCAU: {cau}\nTotal installed nominal power (kW): {power}\nPartition coefficient: {coefficient}"""
+                    )
                     data["power"] = self.selfconsumption_id.power
                     data["coefficient"] = supply_point_assignation.coefficient
 
                 contract_line_id.write(
-                    {
-                        "name": contract_line_id.name.format(**data),
-                        "main_line": True
-                    }
+                    {"name": contract_line_id.name.format(**data), "main_line": True}
                 )
         # Update selfconsumption and distribution_table state
         self.selfconsumption_id.write({"state": "active"})

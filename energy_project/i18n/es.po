@@ -272,6 +272,11 @@ msgid "Fecha baja"
 msgstr "Fecha de baja"
 
 #. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__conf_header_description
+msgid "Header description on website form"
+msgstr "Descripción de la cabecera en el formulario del sitio web"
+
+#. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__id
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__id
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__id
@@ -481,7 +486,7 @@ msgstr "Servicio disponible"
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__service_contract_ids
 msgid "Service Contract"
-msgstr "Service Contract"
+msgstr "Contratos de servicios"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__state

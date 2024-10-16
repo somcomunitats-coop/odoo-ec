@@ -28,13 +28,14 @@ class InvoicingWizard(models.TransientModel):
         compute="_compute_next_period_date_start_and_end",
         readonly=True,
     )
-    num_contracts = fields.Integer(string="Selected contracts",
-                                    default=lambda self: len(
-                                        self.env.context.get("active_ids",[])
-                                    ))
+    num_contracts = fields.Integer(
+        string="Selected contracts",
+        default=lambda self: len(self.env.context.get("active_ids", [])),
+    )
+
     def _get_invoicing_mode(self):
         for contract in self.env["contract.contract"].search(
-            [("id", "in", self.env.context.get("active_ids",[]))]
+            [("id", "in", self.env.context.get("active_ids", []))]
         ):
             return contract.project_id.selfconsumption_id.invoicing_mode
         return None
@@ -191,8 +192,12 @@ Make sure that all the selected contracts have the same invoicing period, from {
 
     def _process_energy_custom(self, df, contract, template_name, res):
         if len(self.contract_ids) != df.shape[0]:
-            raise ValidationError(_("The number of contracts selected does not match "
-                                    "the number of contracts loaded by the csv."))
+            raise ValidationError(
+                _(
+                    "The number of contracts selected does not match "
+                    "the number of contracts loaded by the csv."
+                )
+            )
         template_name += _("Energy Delivered Custom: {energy_delivered} kWh")
         main_line = contract.get_main_line()
         if len(contract.contract_line_ids) == 0:
@@ -224,13 +229,13 @@ Make sure that all the selected contracts have the same invoicing period, from {
                 _(
                     """
 Project (CAU) {cau} :
-For CUPS {cups} no data found for period 
+For CUPS {cups} no data found for period
 {next_period_date_start} - {next_period_date_end}"""
                 ).format(
                     cau=contract.project_id.selfconsumption_id.code,
                     cups=contract.supply_point_assignation_id.supply_point_id.code,
-                    next_period_date_start=next_period_date_start.strftime('%d/%m/%Y'),
-                    next_period_date_end=next_period_date_end.strftime('%d/%m/%Y'),
+                    next_period_date_start=next_period_date_start.strftime("%d/%m/%Y"),
+                    next_period_date_end=next_period_date_end.strftime("%d/%m/%Y"),
                 )
             )
         else:
