@@ -1,9 +1,15 @@
+from datetime import date
 from enum import Enum
 from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
-from .base import BaseListResponse, NaiveOrmModel, PaginationLinks
+from .base import (
+    BaseListResponse,
+    BaseResponse,
+    NaiveOrmModel,
+    PaginationLinks,
+)
 
 
 class CommunityInfo(NaiveOrmModel):
@@ -61,9 +67,29 @@ class CommunityServiceInfo(BaseModel):
         description="Status of the service, ex: in_progres",
     )
 
+    shares: float = Field(
+        ...,
+        title="Shares",
+        description="Percentage of shares of a member in a community service",
+    )
+
+    inscription_date: date = Field(
+        ...,
+        title="Inscription Date",
+        description="When a member was inscribed in the community service",
+    )
+
+    inscriptions: int = Field(
+        ...,
+        title="Total inscriptions",
+        description="Total inscriptions of a community service",
+    )
+
 
 class UnitEnum(str, Enum):
+    wh = "Wh"
     kwh = "kWh"
+    kwp = "kWp"
     kwn = "kWn"
     grco2 = "grCO2"
     percentage = "percentage"
@@ -103,30 +129,48 @@ class CommunityServiceMetricsInfo(BaseModel):
     )
 
     shares: MetricInfo = Field(
-        ..., title="Shares", description="Shares that have a person for this service"
+        ..., title="Shares", description="Shares that have a person for this project"
     )
 
-    share_energy_production: MetricInfo = Field(
+    energy_shares: MetricInfo = Field(
         ...,
-        title="Share energy production",
-        description="Shares of energy generated for a person",
+        title="Energy Shares",
+        description="Energy shares (distribution coefficient in kWh) that have a person for this project",
     )
 
-    selfconsumption_consumption_ratio: MetricInfo = Field(
+    energy_consumption: MetricInfo = Field(
         ...,
-        title="Selfconsumption consumption ratio",
-        description="Ratio of energy consumend",
+        title="Eenergy consumption",
+        description="Energy consumed for a person",
     )
 
-    selfconsumption_surplus_ratio: MetricInfo = Field(
+    energy_production: MetricInfo = Field(
         ...,
-        title="Selfconsumption surplus ratio",
-        description="Ratio of selfconsumption energy dumped to the net",
+        title="Eenergy production",
+        description="Energy generated for a person",
     )
 
-    consumption_selfconsumption_ratio: MetricInfo = Field(
+    selfproduction_ratio: MetricInfo = Field(
         ...,
-        title="Consupmtion selfconsumption ratio",
+        title="Selfproduction ratio",
+        description="Ratio of selfproduced energy",
+    )
+
+    surplus_ratio: MetricInfo = Field(
+        ...,
+        title="Surplus ratio",
+        description="Ratio of energy exported to de grid",
+    )
+
+    gridconsumption_ratio: MetricInfo = Field(
+        ...,
+        title="Gridconsumption ratio",
+        description="Ratio of grid energy consumed",
+    )
+
+    selfconsumption_ratio: MetricInfo = Field(
+        ...,
+        title="Selfconsumption ratio",
         description="Ratio of selfconsumption energy consumed",
     )
 
@@ -137,12 +181,30 @@ class CommunityServiceMetricsInfo(BaseModel):
     )
 
 
+class CommunityServiceInfoResponse(BaseResponse):
+    """
+    Response for a community service basic information in which a member is involved.
+    """
+
+    data: CommunityServiceInfo
+    links: PaginationLinks
+
+
 class CommunityServiceInfoListResponse(BaseListResponse):
     """
-    Return all community services metrics in which a member is involved.
+    Return all community services in which a member is involved.
     """
 
     data: List[CommunityServiceInfo]
+    links: PaginationLinks
+
+
+class CommunityServiceMetricsInfoResponse(BaseResponse):
+    """
+    Return a community service metric information in which a member is involved.
+    """
+
+    data: CommunityServiceMetricsInfo
     links: PaginationLinks
 
 

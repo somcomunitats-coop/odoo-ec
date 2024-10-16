@@ -4,11 +4,12 @@ from unittest.mock import patch
 from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import TransactionComponentCase
 
-from ..components.partner_api_info import PartnerApiInfo
+from ..components import PartnerApiInfo, ProjectApiInfo
 from ..schemas import (
     CommunityInfo,
     CommunityServiceInfo,
     CommunityServiceMetricsInfo,
+    EnergyPoint,
     MemberInfo,
     PaginationLimits,
 )
@@ -27,7 +28,8 @@ class TestMemberApiInfo(TransactionComponentCase):
 
     def test__get_member_info(self):
         # given a energy community member
-        member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
         # given a api info component
         work = WorkContext(
             "res.partner", collection=self.backend, schema_class=MemberInfo
@@ -60,7 +62,8 @@ class TestMemberApiInfo(TransactionComponentCase):
         patcher.return_value = fake_energy_communities()
 
         # given a energy community member
-        member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
         # given a api info component
         work = WorkContext(
             "res.partner", collection=self.backend, schema_class=CommunityInfo
@@ -82,7 +85,8 @@ class TestMemberApiInfo(TransactionComponentCase):
 
     def test__get_member_communities_paging_params(self):  # , patcher):
         # given a energy community member
-        member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
         # given a paging object for 1 element and an api info component
         page = 1
         page_size = 1
@@ -156,5 +160,161 @@ class TestMemberApiInfo(TransactionComponentCase):
         # then we obtain all services in which that member has an inscription
         self.assertGreaterEqual(
             len(member_community_services),
+            1,
+        )
+
+    def test__get_member_community_service_detail(self):
+        # given a energy community member
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
+        # given an id of a community service
+        service_id = 32
+        # given a api info component
+        work = WorkContext(
+            "res.partner",
+            collection=self.backend,
+            schema_class=CommunityServiceInfo,
+            community_id=member.company_id,
+        )
+        api_info_component = work.component(usage="api.info")
+        self.assertIsInstance(api_info_component, PartnerApiInfo)
+
+        # when we ask for the services that this member is involved
+        community_service = api_info_component.get_member_community_service_detail(
+            member, service_id
+        )
+
+        # then we obtain the corresponding community service
+        self.assertIsInstance(community_service, CommunityServiceInfo)
+
+
+class TestProjectApiInfo(TransactionComponentCase):
+    def setUp(self):
+        super().setUp()
+        self.maxDiff = None
+        self.backend = self.env["api.info.backend"].browse(1)
+        self.active_project_domain = lambda partner: [
+            ("partner_id", "=", partner.id),
+            ("project_id.state", "=", "active"),
+        ]
+        self.project_work_context = WorkContext(
+            "energy_project.project",
+            collection=self.backend,
+            schema_class=EnergyPoint,
+        )
+
+    def test__get_project_daily_production(self):
+        # given a energy community member
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
+        # a project
+        project = (
+            self.env["energy_project.inscription"]
+            .search(self.active_project_domain(member))
+            .mapped(lambda inscription: inscription.project_id)
+        )[0]
+        # a range of dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # given a api info component
+        component = self.project_work_context.component(usage="api.info")
+        self.assertIsInstance(component, ProjectApiInfo)
+
+        # when we ask for the daily energy production of a project in which the member is involv
+        # between two dates
+        daily_production = component.get_project_daily_production(
+            project, member, date_from, date_to
+        )
+
+        # then we obtain the daily production of the member between that dates
+        self.assertGreaterEqual(
+            len(daily_production),
+            1,
+        )
+
+    def test__get_project_daily_selfconsumption(self):
+        # given a energy community member
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
+        # a project
+        project = (
+            self.env["energy_project.inscription"]
+            .search(self.active_project_domain(member))
+            .mapped(lambda inscription: inscription.project_id)
+        )[0]
+        # a range of dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # given a api info component
+        component = self.project_work_context.component(usage="api.info")
+        self.assertIsInstance(component, ProjectApiInfo)
+
+        # when we ask for the daily energy selfconumption of the member in that project
+        # between two dates
+        daily_selfconsumption = component.get_project_daily_selfconsumption(
+            project, member, date_from, date_to
+        )
+
+        # then we obtain the daily production of the member between that dates
+        self.assertGreaterEqual(
+            len(daily_selfconsumption),
+            1,
+        )
+
+    def test__get_project_daily_exported_energy(self):
+        # given a energy community member
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
+        # a project
+        project = (
+            self.env["energy_project.inscription"]
+            .search(self.active_project_domain(member))
+            .mapped(lambda inscription: inscription.project_id)
+        )[0]
+        # a range of dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # given a api info component
+        component = self.project_work_context.component(usage="api.info")
+        self.assertIsInstance(component, ProjectApiInfo)
+
+        # when we ask for the daily exported energy of the member in that project
+        # between two dates
+        exported_energy = component.get_project_daily_exported_energy(
+            project, member, date_from, date_to
+        )
+
+        # then we obtain the daily production of the member between that dates
+        self.assertGreaterEqual(
+            len(exported_energy),
+            1,
+        )
+
+    def test__get_project_daily_consumed_energy(self):
+        # given a energy community member
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
+        # a project
+        project = (
+            self.env["energy_project.inscription"]
+            .search(self.active_project_domain(member))
+            .mapped(lambda inscription: inscription.project_id)
+        )[0]
+        # a range of dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+        # given a api info component
+        component = self.project_work_context.component(usage="api.info")
+        self.assertIsInstance(component, ProjectApiInfo)
+
+        # when we ask for the daily consumed energy of the member in that project
+        # between two dates
+        exported_energy = component.get_project_daily_consumed_energy(
+            project, member, date_from, date_to
+        )
+
+        # then we obtain the daily production of the member between that dates
+        self.assertGreaterEqual(
+            len(exported_energy),
             1,
         )

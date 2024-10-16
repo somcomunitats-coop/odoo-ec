@@ -1,165 +1,257 @@
 from functools import lru_cache, reduce
 
 from ..backends.base import Backend
-
-# Functions for attribute access
-_get_energy_production = lambda point: float(point.get("energy_production", 0))
-_get_energy_selfconsumption = lambda point: float(point.get("selfconsumption", 0))
-_get_energy_exported = lambda point: float(point.get("energy_exported", 0))
-_get_energy_consumption = lambda point: float(point.get("energy_consumption", 0))
+from ..backends.domain import EnergyCurve, MeasureCurve
 
 # Functions for operations
-_selfconsumption_ratio_pair = lambda accumulator, point: (
-    accumulator[0] + _get_energy_selfconsumption(point),
-    accumulator[1] + _get_energy_production(point),
-)
-_selfconsumption_surplus_ratio_pair = lambda accumulator, point: (
-    accumulator[0] + _get_energy_exported(point),
-    accumulator[1] + _get_energy_production(point),
-)
-_energy_usage_ratio_pair = lambda accumulator, point: (
-    accumulator[0] + _get_energy_consumption(point),
-    accumulator[1] + _get_energy_production(point),
-)
-_energy_usage_ratio_from_net_pair = lambda accumulator, point: (
-    accumulator[0] + _get_energy_consumption(point),
-    accumulator[1] + _get_energy_selfconsumption(point),
-)
-_energy_production_ratio_pair = lambda accumulator, point: (
-    accumulator[0] + _get_energy_selfconsumption(point),
-    accumulator[1] + _get_energy_consumption(point),
-)
 
 
 class MonitoringService:
     SPANISH_CO2_SAVE_RATIO = 162
 
-    def __init__(self, backend: Backend, service_contract):
+    def __init__(self, backend: Backend):
         self.backend = backend
-        self.service_conctract = service_contract
 
-    @property
-    def service_id(self):
-        return self.service_conctract.id
+    def daily_consumption_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> EnergyCurve:
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        return [point.consumption_measure for point in daily_metrics]
 
-    def generated_energy_by_member(
+    def daily_selfconsumption_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> EnergyCurve:
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        return [point.selfconsumption_measure for point in daily_metrics]
+
+    def daily_gridconsumption_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> EnergyCurve:
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        return [point.gridconsumption_measure for point in daily_metrics]
+
+    def daily_gridinjection_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> EnergyCurve:
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        return [point.gridinjection_measure for point in daily_metrics]
+
+    def daily_production_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> MeasureCurve:
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        return [point.production_measure for point in daily_metrics]
+
+    def energy_consumption_by_member(
         self, system_id, member_id, date_from, date_to
     ) -> float:
+        accumulate_consumption = (
+            lambda accumulator, point: accumulator + point.consumption
+        )
         daily_metrics = self._get_project_daily_metrics_by_member(
             system_id, member_id, date_from, date_to
         )
-        energy = sum(map(_get_energy_production, daily_metrics))
-        return round(energy, 4)
+        if daily_metrics:
+            energy = reduce(accumulate_consumption, daily_metrics, 0.0)
+            return round(energy, 4)
+        return 0.0
 
-    def consumed_energy_by_member(
+    def energy_selfconsumption_by_member(
         self, system_id, member_id, date_from, date_to
     ) -> float:
+        accumulate_selfconsumption = (
+            lambda accumulator, point: accumulator + point.selfconsumption
+        )
         daily_metrics = self._get_project_daily_metrics_by_member(
             system_id, member_id, date_from, date_to
         )
-        energy = sum(map(_get_energy_consumption, daily_metrics))
-        return round(energy, 4)
+        if daily_metrics:
+            energy = reduce(accumulate_selfconsumption, daily_metrics, 0.0)
+            return round(energy, 4)
+        return 0.0
 
-    def exported_energy_by_member(
+    def energy_gridconsumption_by_member(
         self, system_id, member_id, date_from, date_to
     ) -> float:
+        accumulate_gridconsumption = (
+            lambda accumulator, point: accumulator + point.gridconsumption
+        )
         daily_metrics = self._get_project_daily_metrics_by_member(
             system_id, member_id, date_from, date_to
         )
-        energy = sum(map(_get_energy_exported, daily_metrics))
-        return round(energy, 4)
+        if daily_metrics:
+            energy = reduce(accumulate_gridconsumption, daily_metrics, 0.0)
+            return round(energy, 4)
+        return 0.0
 
-    def selfconsumed_energy_by_member(
+    def energy_gridinjection_by_member(
         self, system_id, member_id, date_from, date_to
     ) -> float:
+        accumulate_gridinjection = (
+            lambda accumulator, point: accumulator + point.gridinjection
+        )
         daily_metrics = self._get_project_daily_metrics_by_member(
             system_id, member_id, date_from, date_to
         )
-        energy = sum(map(_get_energy_selfconsumption, daily_metrics))
-        return round(energy, 4)
+        if daily_metrics:
+            energy = reduce(accumulate_gridinjection, daily_metrics, 0.0)
+            return round(energy, 4)
+        return 0.0
 
-    def selfconsumed_energy_ratio_by_member(
+    def energy_production_by_member(
         self, system_id, member_id, date_from, date_to
-    ):
+    ) -> float:
+        accumulate_production = (
+            lambda accumulator, point: accumulator + point.production
+        )
         daily_metrics = self._get_project_daily_metrics_by_member(
             system_id, member_id, date_from, date_to
         )
-        selfconsumed_energy, generated_energy = reduce(
-            _selfconsumption_ratio_pair, daily_metrics, (0, 0)
-        )
-        return round(selfconsumed_energy / generated_energy, 4)
+        if daily_metrics:
+            energy = reduce(accumulate_production, daily_metrics, 0.0)
+            return round(energy, 4)
+        return 0.0
 
-    def energy_surplus_ratio_by_member(self, system_id, member_id, date_from, date_to):
+    def energy_selfconsumption_ratio_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> float:
+        selfconsumption_ratio_accu = lambda accumulator, point: (
+            accumulator[0] + point.selfconsumption,
+            accumulator[1] + point.production,
+        )
         daily_metrics = self._get_project_daily_metrics_by_member(
             system_id, member_id, date_from, date_to
         )
-        selfconsumed_surplus_energy, generated_energy = reduce(
-            _selfconsumption_surplus_ratio_pair, daily_metrics, (0, 0)
-        )
-        return round(selfconsumed_surplus_energy / generated_energy, 4)
+        if daily_metrics:
+            selfconsumed_energy, generated_energy = reduce(
+                selfconsumption_ratio_accu, daily_metrics, (0, 0)
+            )
+            return round(selfconsumed_energy / generated_energy, 4)
+        return 0.0
 
-    def co2save_by_member(self, system_id, member_id, date_from, date_to):
+    def energy_surplus_ratio_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> float:
+        surplus_ratio_accu = lambda accumulator, point: (
+            accumulator[0] + point.gridinjection,
+            accumulator[1] + point.production,
+        )
         daily_metrics = self._get_project_daily_metrics_by_member(
             system_id, member_id, date_from, date_to
         )
-        self_consumed_energy = sum(map(_get_energy_selfconsumption, daily_metrics))
-        co2_saved = self_consumed_energy * self.SPANISH_CO2_SAVE_RATIO
+        if daily_metrics:
+            energy_gridinjection, energy_production = reduce(
+                surplus_ratio_accu, daily_metrics, (0, 0)
+            )
+            return round(energy_gridinjection / energy_production, 4)
+        return 0.0
+
+    def energy_usage_ratio_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> float:
+        energy_usage_accu = lambda accumulator, point: (
+            accumulator[0] + point.production,
+            accumulator[1] + point.consumption,
+        )
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        if daily_metrics:
+            energy_production, energy_consumption = reduce(
+                energy_usage_accu, daily_metrics, (0, 0)
+            )
+            return round(energy_production / energy_consumption, 4)
+        return 0.0
+
+    def energy_usage_ratio_from_grid_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> float:
+        energy_usage_ratio_from_grid_accu = lambda accumulator, point: (
+            accumulator[0] + point.gridconsumption,
+            accumulator[1] + point.consumption,
+        )
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        if daily_metrics:
+            energy_gridconsumption, energy_consumption = reduce(
+                energy_usage_ratio_from_grid_accu, daily_metrics, (0, 0)
+            )
+            return round(energy_gridconsumption / energy_consumption, 4)
+        return 0.0
+
+    def energy_usage_ratio_from_selfconsumption_by_member(
+        self, system_id, member_id, date_from, date_to
+    ) -> float:
+        energy_production_ratio_accu = lambda accumulator, point: (
+            accumulator[0] + point.selfconsumption,
+            accumulator[1] + point.consumption,
+        )
+        daily_metrics = self._get_project_daily_metrics_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        if daily_metrics:
+            energy_selfconsumption, energy_consumption = reduce(
+                energy_production_ratio_accu, daily_metrics, (0, 0)
+            )
+            return round(energy_selfconsumption / energy_consumption, 4)
+        return 0.0
+
+    def co2save_by_member(self, system_id, member_id, date_from, date_to) -> float:
+        energy_selfconsumption = self.energy_selfconsumption_by_member(
+            system_id, member_id, date_from, date_to
+        )
+        co2_saved = energy_selfconsumption * self.SPANISH_CO2_SAVE_RATIO
         return co2_saved
 
-    def generated_energy_by_project(self, system_id, date_from, date_to) -> float:
+    def energy_production_by_project(self, system_id, date_from, date_to) -> float:
+        accumulate_production = (
+            lambda accumulator, point: accumulator + point.production
+        )
         daily_metrics = self._get_project_daily_metrics(system_id, date_from, date_to)
-        energy = sum(map(_get_energy_production, daily_metrics))
-        return round(energy, 4)
+        if daily_metrics:
+            energy = reduce(accumulate_production, daily_metrics, 0.0)
+            return round(energy, 4)
+        return 0.0
 
-    def selfconsumed_energy_by_project(self, system_id, date_from, date_to) -> float:
+    def energy_selfconsumption_by_project(self, system_id, date_from, date_to) -> float:
+        accumulate_selfconsumption = (
+            lambda accumulator, point: accumulator + point.selfconsumption
+        )
         daily_metrics = self._get_project_daily_metrics(system_id, date_from, date_to)
-        energy = sum(map(_get_energy_selfconsumption, daily_metrics))
-        return round(energy, 4)
+        if daily_metrics:
+            energy = reduce(accumulate_selfconsumption, daily_metrics, 0.0)
+            return round(energy, 4)
+        return 0.0
 
-    def exported_energy_by_project(self, system_id, date_from, date_to) -> float:
+    def energy_gridinjection_by_project(self, system_id, date_from, date_to) -> float:
+        accumulate_gridinjection = (
+            lambda accumulator, point: accumulator + point.gridinjection
+        )
         daily_metrics = self._get_project_daily_metrics(system_id, date_from, date_to)
-        energy = sum(map(_get_energy_exported, daily_metrics))
-        return round(energy, 4)
-
-    def energy_usage_ratio_by_member(self, system_id, member_id, date_from, date_to):
-        daily_metrics = self._get_project_daily_metrics_by_member(
-            system_id, member_id, date_from, date_to
-        )
-        consumed_energy, generated_energy = reduce(
-            _energy_usage_ratio_pair, daily_metrics, (0, 0)
-        )
-        return round(consumed_energy / generated_energy, 4)
-
-    def energy_usage_ratio_from_net_by_member(
-        self, system_id, member_id, date_from, date_to
-    ):
-        daily_metrics = self._get_project_daily_metrics_by_member(
-            system_id, member_id, date_from, date_to
-        )
-        consumed_energy, self_consumed_energy = reduce(
-            _energy_usage_ratio_from_net_pair, daily_metrics, (0, 0)
-        )
-        return round((consumed_energy - self_consumed_energy) / consumed_energy, 4)
-
-    def energy_production_ratio_by_member(
-        self, system_id, member_id, date_from, date_to
-    ):
-        daily_metrics = self._get_project_daily_metrics_by_member(
-            system_id, member_id, date_from, date_to
-        )
-        self_consumed_energy, consumed_energy = reduce(
-            _energy_production_ratio_pair, daily_metrics, (0, 0)
-        )
-        return round(self_consumed_energy / consumed_energy, 4)
+        if daily_metrics:
+            energy = reduce(accumulate_gridinjection, daily_metrics, 0.0)
+            return round(energy, 4)
+        return 0.0
 
     @lru_cache
     def _get_project_daily_metrics_by_member(
         self, system_id, member_id, from_date, to_date
-    ):
+    ) -> EnergyCurve:
         return self.backend.project_daily_metrics_by_member(
             system_id, member_id, from_date, to_date
         )
 
     @lru_cache
-    def _get_project_daily_metrics(self, system_id, from_date, to_date):
+    def _get_project_daily_metrics(self, system_id, from_date, to_date) -> EnergyCurve:
         return self.backend.project_daily_metrics(system_id, from_date, to_date)

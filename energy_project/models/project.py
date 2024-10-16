@@ -59,6 +59,4 @@ class Project(models.Model):
             and service_contract.service_id.name == service_name
         )
         if monitoring_contract:
-            return MonitoringService(
-                monitoring_contract.provider_id.backend(), monitoring_contract
-            )
+            return MonitoringService(monitoring_contract.provider_id.backend())
