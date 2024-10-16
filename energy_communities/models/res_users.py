@@ -48,7 +48,7 @@ class ResUsers(models.Model):
     @api.constrains("lang")
     def constrains_user_lang(self):
         for record in self:
-            if record.lang:
+            if record.lang and record.oauth_uid:
                 record._update_kc_user_lang()
 
     @api.constrains("login")
