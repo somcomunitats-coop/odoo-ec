@@ -827,3 +827,4 @@ class ResUsers(models.Model):
             "type": "ir.actions.act_window",
             "target": "self",
         }
+
