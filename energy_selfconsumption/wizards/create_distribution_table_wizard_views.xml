@@ -15,10 +15,6 @@
                         <group>
                             <field name="max_distributed_power" invisible="1" />
                             <field
-                name="percentage_of_distributed_power"
-                widget="progressbar"
-              />
-                            <field
                 name="distributed_power"
                 widget="progress_bar_widget"
                 options="{'max_quantity': 'max_distributed_power', 'extra_label': 'kWn'}"

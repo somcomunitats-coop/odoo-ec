@@ -24,15 +24,14 @@ odoo.define("energy_selfconsumption.ProgressBarWidget", function (require) {
       this.$el.html(`
                 <div class="o_progress_bar">
                     <div class="progress-bar-container" style="position: relative; height: 25px; background-color: #f5f5f5; border-radius: 4px; border: 1px solid #ccc;">
-                        <div class="progress-bar-green" style="width: ${
-                          this.percentage
-                        }%; height: 100%; background-color: green;"></div>
-                        <div class="progress-bar-red" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: red; opacity: 0.3;"></div>
+                        <div class="progress-bar-green" style="width: ${this.percentage
+        }%; height: 100%; background-color: #7C7BAD;"></div>
+                        <div class="progress-bar-red" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: #adb5bd; opacity: 0.3;"></div>
                     </div>
                     <span>${this.percentage.toFixed(2)}%</span>
                     <span style="display: block;float: right;">${this.current_quantity.toFixed(
-                      2
-                    )} / ${this.max_quantity.toFixed(2)} ${this.extra_label}</span>
+          2
+        )} / ${this.max_quantity.toFixed(2)} ${this.extra_label}</span>
                 </div>
             `);
     },

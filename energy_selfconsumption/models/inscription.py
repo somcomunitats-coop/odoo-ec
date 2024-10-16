@@ -17,6 +17,16 @@ class Inscription(models.Model):
         )
     }
 
+    _USED_IN_SELFCONSUMPTION_VALUES = [
+        ("yes", _("Yes")),
+        ("no", _("No")),
+    ]
+
+    _VULNERABILITY_SITUATION_VALUES = [
+        ("yes", _("Yes")),
+        ("no", _("No")),
+    ]
+
     inscription_id = fields.Many2one(
         "energy_project.inscription", required=True, ondelete="cascade"
     )
@@ -38,6 +48,12 @@ class Inscription(models.Model):
         "energy_selfconsumption.supply_point", required=True
     )
     code = fields.Char(string="CUPS", related="supply_point_id.code")
+    used_in_selfconsumption = fields.Selection(
+        _USED_IN_SELFCONSUMPTION_VALUES, string="Used in selfconsumption", related="supply_point_id.used_in_selfconsumption"
+    )
+    vulnerability_situation = fields.Selection(
+        _VULNERABILITY_SITUATION_VALUES, string="Vulnerability situation", related="partner_id.vulnerability_situation"
+    )
 
     def create_participant_table(self):
         ctx = self.env.context.copy()
