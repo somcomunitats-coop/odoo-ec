@@ -49,10 +49,14 @@ class Inscription(models.Model):
     )
     code = fields.Char(string="CUPS", related="supply_point_id.code")
     used_in_selfconsumption = fields.Selection(
-        _USED_IN_SELFCONSUMPTION_VALUES, string="Used in selfconsumption", related="supply_point_id.used_in_selfconsumption"
+        _USED_IN_SELFCONSUMPTION_VALUES,
+        string="Used in selfconsumption",
+        related="supply_point_id.used_in_selfconsumption",
     )
     vulnerability_situation = fields.Selection(
-        _VULNERABILITY_SITUATION_VALUES, string="Vulnerability situation", related="partner_id.vulnerability_situation"
+        _VULNERABILITY_SITUATION_VALUES,
+        string="Vulnerability situation",
+        related="partner_id.vulnerability_situation",
     )
 
     def create_participant_table(self):
