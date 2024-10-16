@@ -100,13 +100,13 @@
             <xpath expr="//field[@name='social_instagram']" position="after">
                 <field name="social_telegram" />
             </xpath>
-            <xpath expr="//form" position="inside">
+            <!-- <xpath expr="//form" position="inside">
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers" />
                     <field name="activity_ids" widget="mail_activity" />
                     <field name="message_ids" widget="mail_thread" />
                 </div>
-            </xpath>
+            </xpath> -->
         </field>
     </record>
     <record id="view_company_tree" model="ir.ui.view">
