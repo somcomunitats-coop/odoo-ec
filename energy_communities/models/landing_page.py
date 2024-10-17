@@ -21,6 +21,7 @@ from .res_config_settings import ResConfigSettings
 
 class LandingPage(models.Model):
     _name = "landing.page"
+    _description = "Landing page"
 
     _inherit = ["cm.coordinates.mixin", "cm.slug.id.mixin"]
 
@@ -102,7 +103,6 @@ class LandingPage(models.Model):
     )
     company_logo = fields.Image(string=_("Company logo"), related="company_id.logo")
     hierarchy_level = fields.Selection(
-        selection=_HIERARCHY_LEVEL_VALUES,
         string="Hierarchy level",
         related="company_id.hierarchy_level",
     )

@@ -21,7 +21,7 @@ class ResUsers(models.Model):
     _KC_CLIENT_AUTH_ACCESS_GROUP_ODOO = "odoo-allow"
 
     # TODO: Delete this field because it's included on the current_company_mixin
-    current_role = fields.Char(computed="_compute_current_role", store=False)
+    current_role = fields.Char(compute="_compute_current_role", store=False)
 
     last_user_invitation_through_kc = fields.Datetime(
         string=_("Last user invitation through Keycloak")
@@ -32,7 +32,7 @@ class ResUsers(models.Model):
         for record in self:
             record.current_role = record.get_current_role()
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals):
         user = super().create(vals)
         if "login" in vals.keys():

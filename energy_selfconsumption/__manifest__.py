@@ -10,6 +10,7 @@
     "website": "https://coopdevs.org",
     "category": "Customizations",
     "version": "14.0.5.2.5",
+    "license": "AGPL-3",
     "depends": [
         "base",
         "web",

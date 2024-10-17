@@ -58,7 +58,7 @@ class ResPartner(models.Model):
             if rel_company:
                 record.company_hierarchy_level = rel_company.hierarchy_level
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals):
         new_partner = super().create(vals)
         current_user = self.env.user

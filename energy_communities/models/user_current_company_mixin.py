@@ -10,6 +10,7 @@ class UserCurrentCompanyMixin(models.AbstractModel):
     )
 
     allowed_companies = fields.Many2many(
+        comodel_name="res.company",
         compute="_compute_allowed_companies",
         readonly=True,
         store=False,

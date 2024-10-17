@@ -10,6 +10,7 @@
     "website": "https://coopdevs.org",
     "category": "Customizations",
     "version": "14.0.3.5.0",
+    "license": "AGPL-3",
     "depends": ["base", "mail", "cooperator", "account_banking_mandate"],
     "data": [
         "data/energy_project.reseller.csv",
