@@ -5,6 +5,7 @@ from odoo.exceptions import ValidationError
 class SubscriptionRequest(models.Model):
     _name = "subscription.request"
     _inherit = "subscription.request"
+    _description = "Subscription request"
 
     @api.depends("share_product_id", "share_product_id.categ_id")
     def _compute_is_voluntary(self):

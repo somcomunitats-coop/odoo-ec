@@ -6,6 +6,7 @@ from odoo.tools.translate import _
 class VoluntaryShareInterestReturn(models.Model):
     _name = "voluntary.share.interest.return"
     _inherit = ["mail.thread"]
+    _description = "Voluntary share interest return"
 
     name = fields.Char(string="Name")
     start_date_period = fields.Date(string="Period start date")
