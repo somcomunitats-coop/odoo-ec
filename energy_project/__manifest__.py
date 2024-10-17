@@ -27,10 +27,11 @@
         "views/service_available_views.xml",
         "views/service_contract_views.xml",
         "views/res_config_settings_views.xml",
+        "demo/provider_demo.xml",
     ],
     "demo": [
-        "demo/service_demo.xml",
+        # "demo/service_demo.xml",
         "demo/provider_demo.xml",
-        "demo/service_available_demo.xml",
+        # "demo/service_available_demo.xml",
     ],
 }
