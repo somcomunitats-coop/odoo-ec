@@ -55,9 +55,9 @@
         # "demo/res_user_demo.xml",
         # "demo/subscription_request_demo.xml",
     ],
-    'assets': {
-        'web.assets_common': [
-            'energy_communities_cooperator/static/src/js/cooperator.js',
+    "assets": {
+        "web.assets_common": [
+            "energy_communities_cooperator/static/src/js/cooperator.js",
         ]
-    }
+    },
 }

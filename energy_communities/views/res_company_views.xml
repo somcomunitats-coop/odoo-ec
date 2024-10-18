@@ -2,19 +2,25 @@
 <odoo>
     <record id="act_window_change_coordinator" model="ir.actions.act_window">
         <field name="name">Change Coordinator</field>
-        <field name="binding_model_id" ref="base.model_res_company"/>
+        <field name="binding_model_id" ref="base.model_res_company" />
         <field name="res_model">change.coordinator.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="groups_id" eval="[(4,ref('energy_communities.group_platform_manager'))]"/>
+        <field
+      name="groups_id"
+      eval="[(4,ref('energy_communities.group_platform_manager'))]"
+    />
     </record>
     <record id="act_window_create_users_company" model="ir.actions.act_window">
         <field name="name">Build platform users from partner members</field>
-        <field name="binding_model_id" ref="base.model_res_company"/>
+        <field name="binding_model_id" ref="base.model_res_company" />
         <field name="res_model">create.users.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="groups_id" eval="[(4,ref('energy_communities.group_platform_manager'))]"/>
+        <field
+      name="groups_id"
+      eval="[(4,ref('energy_communities.group_platform_manager'))]"
+    />
     </record>
     <record id="view_company_form_ce_inherited" model="ir.ui.view">
         <field name="name">res.company.tree.ce.inherited</field>

@@ -3,11 +3,14 @@
     <data>
         <record id="act_window_create_users_partner" model="ir.actions.act_window">
           <field name="name">Build platform users from partner members</field>
-          <field name="binding_model_id" ref="base.model_res_partner"/>
+          <field name="binding_model_id" ref="base.model_res_partner" />
           <field name="res_model">create.users.wizard</field>
           <field name="view_mode">form</field>
           <field name="target">new</field>
-          <field name="groups_id" eval="[(4,ref('energy_communities.group_platform_manager'))]"/>
+          <field
+        name="groups_id"
+        eval="[(4,ref('energy_communities.group_platform_manager'))]"
+      />
         </record>
         <record id="view_res_partner_filter" model="ir.ui.view">
           <field name="name">view_res_partner_filter</field>
