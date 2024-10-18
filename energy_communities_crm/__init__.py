@@ -87,40 +87,41 @@ def post_setup_multicompany_crm(cr, registry):
     # setup stages/sale_teams for leads
     existing_leads = env["crm.lead"].sudo().search([])
     for lead in existing_leads:
-        default_team = env["crm.team"].get_create_default_sale_team(lead.company_id)
-        # we want to setup team_id on all leads except the ones belonging to the existing  ones custom created
-        custom_existing_sale_team_ids = existing_sale_teams.mapped("id")
-        custom_existing_sale_team_ids.remove(instance_crm_team.id)
-        l_w_dict = {}
-        if lead.team_id.id not in custom_existing_sale_team_ids:
-            lead_team = default_team
-            l_w_dict["team_id"] = default_team.id
-        else:
-            lead_team = lead.team_id
-            # lead.write({"team_id": default_team.id})
-        # the lead belongs to a stage that doesn't correspond. Look for the related one.
-        if lead.stage_id.team_id.id != lead_team.id:
-            new_stage = (
-                env["crm.stage"]
-                .sudo()
-                .search(
-                    [
-                        ("team_id", "=", lead_team.id),
-                        ("original_stage_id", "=", lead.stage_id.id),
-                    ]
-                )
-            )
-            if not new_stage:
-                new_stage = lead.stage_id.sudo().copy(
-                    {
-                        "original_stage_id": lead.stage_id.id,
-                        "team_id": lead_team.id,
-                    }
-                )
+        if lead.company_id:
+            default_team = env["crm.team"].get_create_default_sale_team(lead.company_id)
+            # we want to setup team_id on all leads except the ones belonging to the existing  ones custom created
+            custom_existing_sale_team_ids = existing_sale_teams.mapped("id")
+            custom_existing_sale_team_ids.remove(instance_crm_team.id)
+            l_w_dict = {}
+            if lead.team_id.id not in custom_existing_sale_team_ids:
+                lead_team = default_team
+                l_w_dict["team_id"] = default_team.id
             else:
-                new_stage = new_stage[0]
-            l_w_dict["stage_id"] = new_stage.id
-        if l_w_dict:
-            lead.write(l_w_dict)
+                lead_team = lead.team_id
+                # lead.write({"team_id": default_team.id})
+            # the lead belongs to a stage that doesn't correspond. Look for the related one.
+            if lead.stage_id.team_id.id != lead_team.id:
+                new_stage = (
+                    env["crm.stage"]
+                    .sudo()
+                    .search(
+                        [
+                            ("team_id", "=", lead_team.id),
+                            ("original_stage_id", "=", lead.stage_id.id),
+                        ]
+                    )
+                )
+                if not new_stage:
+                    new_stage = lead.stage_id.sudo().copy(
+                        {
+                            "original_stage_id": lead.stage_id.id,
+                            "team_id": lead_team.id,
+                        }
+                    )
+                else:
+                    new_stage = new_stage[0]
+                l_w_dict["stage_id"] = new_stage.id
+            if l_w_dict:
+                lead.write(l_w_dict)
 
     logger.info("Migration applied to tags, teams and leads on crm")
