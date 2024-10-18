@@ -169,23 +169,21 @@ class SubscriptionRequest(models.Model):
         # To be overridden
         return True
 
-    def get_mail_template_notif(self, is_company=False):
-        if self.is_voluntary:
-            return self.env.ref(
-                "energy_communities_cooperator.email_template_confirmation_voluntary_share"
-            )
-        return super().get_mail_template_notif(is_company)
-
+    # TODO: This method has been overwritten from cooperator. Find a better solution for this
     def _send_confirmation_mail(self):
-        if self.company_id.send_confirmation_email:
-            if self.is_voluntary and not self.partner_id:
-                return False
-            mail_template_notif = self.get_mail_template_notif(
-                is_company=self.is_company
+        if self.company_id.send_confirmation_email and not self.is_operation:
+            mail_template_notif = (
+                self.company_id.get_cooperator_confirmation_mail_template()
             )
+            if self.is_voluntary:
+                mail_template_notif = self.env.ref(
+                    "energy_communities_cooperator.email_template_confirmation_voluntary_share"
+                )
             # sudo is needed to change state of invoice linked to a request
             #  sent through the api
-            mail_template_notif.sudo().send_mail(self.id)
+            mail_template_notif.sudo().send_mail(
+                self.id, email_layout_xmlid="mail.mail_notification_layout"
+            )
 
     def validate_subscription_request_with_company(self):
         """
@@ -196,8 +194,9 @@ class SubscriptionRequest(models.Model):
         self = self.with_company(self.company_id)
         return self.validate_subscription_request()
 
-    def _prepare_invoice_line(self, product, partner, qty):
-        res = super()._prepare_invoice_line(product, partner, qty)
+    # TODO: Is it necessary to specify tax_ids? Make some tests!
+    def _prepare_invoice_line(self, move_id, product, partner, qty):
+        res = super()._prepare_invoice_line(move_id, product, partner, qty)
         res["tax_ids"] = product.taxes_id
 
         return res
