@@ -1,4 +1,5 @@
 <odoo>
+
         <record id="subscription_1_community_1_demo" model="subscription.request">
             <field name="firstname">Ignacio</field>
             <field name="lastname">Mora Herrera</field>
@@ -37,15 +38,6 @@
     eval="[ref('subscription_1_community_1_demo')]"
   />
 
-        <!--The method action_invoice_paid does not create the payment, but it sets the cooperator logic that we need in this demo
-        #TODO see how we can pay invoices from data-->
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_1_community_1_demo')).capital_release_request.ids"
-    />
-        </function>
-
         <record id="subscription_2_community_1_demo" model="subscription.request">
             <field name="firstname">Jessica</field>
             <field name="lastname">Tirado Ruvalcaba</field>
@@ -82,13 +74,6 @@
     model="subscription.request"
     eval="[ref('subscription_2_community_1_demo')]"
   />
-
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_2_community_1_demo')).capital_release_request.ids"
-    />
-        </function>
 
         <record id="subscription_3_community_1_demo" model="subscription.request">
             <field name="firstname">Ester</field>
@@ -127,13 +112,6 @@
     eval="[ref('subscription_3_community_1_demo')]"
   />
 
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_3_community_1_demo')).capital_release_request.ids"
-    />
-        </function>
-
         <record id="subscription_4_community_1_demo" model="subscription.request">
             <field name="firstname">Marc</field>
             <field name="lastname">Ortiz Espinosa</field>
@@ -170,13 +148,6 @@
     model="subscription.request"
     eval="[ref('subscription_4_community_1_demo')]"
   />
-
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_4_community_1_demo')).capital_release_request.ids"
-    />
-        </function>
 
         <record id="subscription_5_community_1_demo" model="subscription.request">
             <field name="firstname">Laura</field>
@@ -215,13 +186,6 @@
     eval="[ref('subscription_5_community_1_demo')]"
   />
 
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_5_community_1_demo')).capital_release_request.ids"
-    />
-        </function>
-
         <record id="subscription_6_community_1_demo" model="subscription.request">
             <field name="firstname">Rufino</field>
             <field name="lastname">Menchaca Vázquez</field>
@@ -258,13 +222,6 @@
     model="subscription.request"
     eval="[ref('subscription_6_community_1_demo')]"
   />
-
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_6_community_1_demo')).capital_release_request.ids"
-    />
-        </function>
 
         <record id="subscription_7_community_1_demo" model="subscription.request">
             <field name="firstname">Nataly</field>
@@ -303,13 +260,6 @@
     eval="[ref('subscription_7_community_1_demo')]"
   />
 
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_7_community_1_demo')).capital_release_request.ids"
-    />
-        </function>
-
         <record id="subscription_8_community_1_demo" model="subscription.request">
             <field name="firstname">Ana</field>
             <field name="lastname">Romo Padilla</field>
@@ -346,13 +296,6 @@
     model="subscription.request"
     eval="[ref('subscription_8_community_1_demo')]"
   />
-
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_8_community_1_demo')).capital_release_request.ids"
-    />
-        </function>
 
         <record id="subscription_9_community_1_demo" model="subscription.request">
             <field name="firstname">John</field>
@@ -391,13 +334,6 @@
     eval="[ref('subscription_9_community_1_demo')]"
   />
 
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_9_community_1_demo')).capital_release_request.ids"
-    />
-        </function>
-
         <record id="subscription_10_community_1_demo" model="subscription.request">
             <field name="firstname">Ampelio</field>
             <field name="lastname">Guillén Terán</field>
@@ -434,13 +370,6 @@
     model="subscription.request"
     eval="[ref('subscription_10_community_1_demo')]"
   />
-
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_10_community_1_demo')).capital_release_request.ids"
-    />
-        </function>
 
         <record id="subscription_1_community_2_demo" model="subscription.request">
             <field name="firstname">Josep</field>
@@ -480,13 +409,6 @@
     eval="[ref('subscription_1_community_2_demo')]"
   />
 
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_1_community_2_demo')).capital_release_request.ids"
-    />
-        </function>
-
         <record id="subscription_2_community_2_demo" model="subscription.request">
             <field name="firstname">Benjamí</field>
             <field name="lastname">Tórrez Loera</field>
@@ -524,13 +446,6 @@
     model="subscription.request"
     eval="[ref('subscription_2_community_2_demo')]"
   />
-
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_2_community_2_demo')).capital_release_request.ids"
-    />
-        </function>
 
         <record id="subscription_3_community_2_demo" model="subscription.request">
             <field name="firstname">Marta</field>
@@ -570,13 +485,6 @@
     eval="[ref('subscription_3_community_2_demo')]"
   />
 
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_3_community_2_demo')).capital_release_request.ids"
-    />
-        </function>
-
         <record id="subscription_4_community_2_demo" model="subscription.request">
             <field name="firstname">Sandra</field>
             <field name="lastname">Mercado Cano</field>
@@ -614,13 +522,6 @@
     model="subscription.request"
     eval="[ref('subscription_4_community_2_demo')]"
   />
-
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_4_community_2_demo')).capital_release_request.ids"
-    />
-        </function>
 
         <record id="subscription_5_community_2_demo" model="subscription.request">
             <field name="firstname">Manel</field>
@@ -660,13 +561,6 @@
     eval="[ref('subscription_5_community_2_demo')]"
   />
 
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_5_community_2_demo')).capital_release_request.ids"
-    />
-        </function>
-
         <record id="subscription_6_community_2_demo" model="subscription.request">
             <field name="firstname">Elsy</field>
             <field name="lastname">Macías Rojas</field>
@@ -704,13 +598,6 @@
     model="subscription.request"
     eval="[ref('subscription_6_community_2_demo')]"
   />
-
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_6_community_2_demo')).capital_release_request.ids"
-    />
-        </function>
 
         <record id="subscription_7_community_2_demo" model="subscription.request">
             <field name="firstname">Noelino</field>
@@ -750,13 +637,6 @@
     eval="[ref('subscription_7_community_2_demo')]"
   />
 
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_7_community_2_demo')).capital_release_request.ids"
-    />
-        </function>
-
         <record id="subscription_8_community_2_demo" model="subscription.request">
             <field name="firstname">Heraldo</field>
             <field name="lastname">Mondragón Márquez</field>
@@ -794,13 +674,6 @@
     model="subscription.request"
     eval="[ref('subscription_8_community_2_demo')]"
   />
-
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_8_community_2_demo')).capital_release_request.ids"
-    />
-        </function>
 
         <record id="subscription_9_community_2_demo" model="subscription.request">
             <field name="firstname">Antia</field>
@@ -840,13 +713,6 @@
     eval="[ref('subscription_9_community_2_demo')]"
   />
 
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_9_community_2_demo')).capital_release_request.ids"
-    />
-        </function>
-
         <record id="subscription_10_community_2_demo" model="subscription.request">
             <field name="firstname">Etelvina</field>
             <field name="lastname">Zapata Tejada</field>
@@ -885,10 +751,4 @@
     eval="[ref('subscription_10_community_2_demo')]"
   />
 
-        <function name="action_invoice_paid" model="account.move">
-            <value
-      model="subscription.request"
-      eval="obj(ref('subscription_10_community_2_demo')).capital_release_request.ids"
-    />
-        </function>
 </odoo>
