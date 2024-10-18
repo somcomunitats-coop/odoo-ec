@@ -97,4 +97,20 @@
         ]"
     />
   </record>
+
+  <record id="base.user_admin" model="res.users">
+    <field
+      name="company_id"
+      model="res.company"
+      eval="obj(ref('base.main_company')).id"
+    />
+      <field
+      name="company_ids"
+      model="res.company"
+      eval="[
+            (4, obj(ref('base.main_company')).id),
+            (4, obj(ref('energy_communities.coordinator_company')).id),
+        ]"
+    />
+  </record>
 </odoo>

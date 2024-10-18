@@ -267,11 +267,36 @@
                     }),
                 ]"
     />
+    </record>
+
+    <record id="base.user_admin" model="res.users">
+
+            <field
+      name="company_ids"
+      model="account.multicompany.easy.creation.wiz"
+      eval="[
+            (4, obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id.id),
+            (4, obj(ref('energy_communities.energy_community_company_2_wizard')).new_company_id.id),
+            (4, obj(ref('energy_communities.energy_community_company_3_wizard')).new_company_id.id),
+            ]"
+    />
+            <field
+      name="role_line_ids"
+      model="account.multicompany.easy.creation.wiz"
+      eval="[
+                   (0, 0, {
+                    'role_id': ref('energy_communities.role_internal_user')
+                    }),
+                   (0, 0, {
+                    'role_id': ref('energy_communities.role_platform_admin'),
+                    }),
+                ]"
+    />
         </record>
 
-        <function
-    name="cron_update_company_ids_from_user"
-    model="res.partner"
-    eval="[[]]"
-  />
+  <!--      <function-->
+  <!--  name="cron_update_company_ids_from_user"-->
+  <!--  model="res.partner"-->
+  <!--  eval="[[]]"-->
+  <!--/>-->
 </odoo>

@@ -35,14 +35,15 @@ class ResUsers(models.Model):
     @api.model_create_multi
     def create(self, vals):
         user = super().create(vals)
-        if "login" in vals.keys():
-            partner = self._find_existing_related_partner(vals)
-            if partner:
-                target_company_ids = partner.company_ids | user.company_ids
-                partner.write({"company_ids": target_company_ids})
-                user.write(
-                    {"partner_id": partner.id, "company_ids": target_company_ids}
-                )
+        for val in vals:
+            if "login" in val.keys():
+                partner = self._find_existing_related_partner(val)
+                if partner:
+                    target_company_ids = partner.company_ids | user.company_ids
+                    partner.write({"company_ids": target_company_ids})
+                    user.write(
+                        {"partner_id": partner.id, "company_ids": target_company_ids}
+                    )
         return user
 
     @api.constrains("lang")
@@ -827,4 +828,3 @@ class ResUsers(models.Model):
             "type": "ir.actions.act_window",
             "target": "self",
         }
-

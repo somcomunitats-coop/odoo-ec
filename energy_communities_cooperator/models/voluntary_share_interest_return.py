@@ -52,9 +52,9 @@ class VoluntaryShareInterestReturn(models.Model):
         )
 
     def action_send(self):
-        #for move in self.account_move_ids:
-        #    if not self.partners_notified:
-        #        self.with_delay()._send_voluntary_share_interest_return_email(move)
+        for move in self.account_move_ids:
+            if not self.partners_notified:
+                self.with_delay()._send_voluntary_share_interest_return_email(move)
         self.write({"partners_notified": True})
         return self._display_notifications(
             _("Invoices successfully sent"),

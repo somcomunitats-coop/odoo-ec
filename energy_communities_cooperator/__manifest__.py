@@ -51,8 +51,8 @@
     ],
     # only loaded in demonstration mode
     "demo": [
-        "demo/res_company_demo.xml",
-        "demo/res_user_demo.xml",
+        # "demo/res_company_demo.xml",
+        # "demo/res_user_demo.xml",
         "demo/subscription_request_demo.xml",
     ],
 }
