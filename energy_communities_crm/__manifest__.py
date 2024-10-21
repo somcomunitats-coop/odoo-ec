@@ -33,7 +33,7 @@
         "data/crm_lead_tag.xml",
         "data/mail_template_data.xml",
         "views/crm_lead_metadata_mapping_views.xml",
-        # "views/crm_lead_views.xml",
+        "views/crm_lead_views.xml",
         "views/crm_stage_views.xml",
         "views/crm_tag_views.xml",
         "views/crm_team_views.xml",

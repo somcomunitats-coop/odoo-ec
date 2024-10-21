@@ -46,29 +46,6 @@
           domain="[('source_id','=', %(energy_communities.ce_source_tariffs_page_contact)d)]"
         />
         <filter
-          name="no_web_form_origin"
-          string="No web form origin"
-          domain="[('source_id','=', False)]"
-        />
-        <separator />
-      </filter>
-    </field>
-  </record>
-
-  <record id="ce_view_crm_case_opportunities_filter_platform_admins" model="ir.ui.view">
-    <field name="name">ce.view.crm.opportunities.leads.filter.platform.admins</field>
-    <field name="model">crm.lead</field>
-    <field
-      name="inherit_id"
-      ref="energy_communities_crm.ce_view_crm_case_opportunities_filter"
-    />
-    <field
-      name="groups_id"
-      eval="[(ref('energy_communities.role_platform_admin_res_groups'))]"
-    />
-    <field name="arch" type="xml">
-      <filter name="ce_source_existing_ce_info" position="before">
-        <filter
           name="ce_source_general_info"
           string="Newsletter SomComunitats"
           domain="[('source_id','=', %(energy_communities.ce_source_general_info)d)]"
@@ -78,7 +55,13 @@
           string="Contact SomComunitats"
           domain="[('source_id','=', %(energy_communities.ce_source_general_contact)d)]"
         />
-    </filter>
+        <filter
+          name="no_web_form_origin"
+          string="No web form origin"
+          domain="[('source_id','=', False)]"
+        />
+        <separator />
+      </filter>
     </field>
   </record>
 
