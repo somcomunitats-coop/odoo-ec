@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.3.5.0",
+    "version": "16.0.0.0.1",
     "license": "AGPL-3",
     "depends": ["base", "mail", "cooperator", "account_banking_mandate"],
     "data": [
