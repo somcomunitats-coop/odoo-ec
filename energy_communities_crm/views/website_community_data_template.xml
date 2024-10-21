@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-  <template
-    id="assets_frontend_community_data"
-    inherit_id="web.assets_frontend"
-    name="community_data_website_script"
-  >
-        <xpath expr="." position="inside">
-            <script
-        type="text/javascript"
-        src="/energy_communities_crm/static/src/js/community-data-website.js"
-      />
-        </xpath>
-    </template>
-
     <template
     id="community_data_form_fields_template"
     name="community_data_form_fields_template"

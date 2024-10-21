@@ -92,21 +92,26 @@
           />
         </header>
       </xpath>
-      <xpath expr="//field[@name='company_id']" position="attributes">
+      <field name="company_id" position="attributes">
         <attribute
           name="attrs"
         >{'readonly':[('user_current_role', '!=', 'role_platform_admin')],'required':1}</attribute>
+      </field>
+      <xpath expr="//group[@name='lead_partner']" position="after">
+        <group colspan="4">
+          <field name="user_current_role" invisible="1" />
+          <field name="external_id" readonly="1" />
+        </group>
       </xpath>
-      <xpath expr="//field[@name='company_id']" position="after">
-        <field name="user_current_role" invisible="1" />
-        <field name="external_id" readonly="1" />
+      <field name="lead_properties" position="after">
         <field
           name="ce_child_lead_id"
           string="Crm lead child"
           readonly="1"
           attrs="{'invisible':['|',('source_id', '!=', %(energy_communities.ce_source_creation_ce_proposal)d), ('company_hierarchy_level', '!=', 'instance')]}"
         />
-      </xpath>
+      </field>
+
       <xpath expr="//field[@name='team_id']" position="attributes">
         <attribute name="domain">[("company_id", "=", company_id)]</attribute>
       </xpath>

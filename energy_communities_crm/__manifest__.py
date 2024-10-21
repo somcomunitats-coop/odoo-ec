@@ -39,7 +39,7 @@
         "views/crm_team_views.xml",
         "views/energy_communities_crm_lead_views.xml",
         "views/utm_views.xml",
-        # "views/website_community_data_template.xml",
+        "views/website_community_data_template.xml",
         "views/menus.xml",
         "wizards/assign_crm_to_coordinator_company.xml",
     ],
@@ -48,4 +48,9 @@
     "demo": [
         "demo/crm_team_demo.xml",
     ],
+    "assets": {
+        "web.assets_common": [
+            "energy_communities_crm/static/src/js/community-data-website.js",
+        ]
+    },
 }
