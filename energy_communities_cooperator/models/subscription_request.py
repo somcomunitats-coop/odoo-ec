@@ -47,17 +47,19 @@ class SubscriptionRequest(models.Model):
             required_fields.remove("iban")
         return required_fields
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals):
         # Somewhere the company_id is assigned as string
         # Can't find where, this is a workaround
-        if "company_id" in vals:
-            vals["company_id"] = int(vals["company_id"])
-        if "country_id" in vals:
-            vals["country_id"] = int(vals["country_id"])
-        # setup company_register_number on SR based on vat
-        if "vat" in vals.keys():
-            vals["company_register_number"] = vals["vat"]
+        for val in vals:
+            if "company_id" in val:
+                val["company_id"] = int(val["company_id"])
+            if "country_id" in val:
+                val["country_id"] = int(val["country_id"])
+            # setup company_register_number on SR based on vat
+            if "vat" in val.keys():
+                val["company_register_number"] = val["vat"]
+
         subscription_request = super().create(vals)
         if (
             not subscription_request.payment_mode_id.payment_method_id.code
