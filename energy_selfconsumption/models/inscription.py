@@ -9,13 +9,13 @@ class Inscription(models.Model):
     }
     _description = "Inscriptions for a self-consumption"
 
-    _sql_constraints = {
-        (
-            "unique_project_id_partner_id_code",
-            "unique (project_id, partner_id, code)",
-            _("Partner is already signed up in this project with that cups."),
-        )
-    }
+    # _sql_constraints = {
+    #     (
+    #         "unique_project_id_partner_id_code",
+    #         "unique (project_id, partner_id, code)",
+    #         _("Partner is already signed up in this project with that cups."),
+    #     )
+    # }
 
     _USED_IN_SELFCONSUMPTION_VALUES = [
         ("yes", _("Yes")),
