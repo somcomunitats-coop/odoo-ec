@@ -13,7 +13,7 @@
     "license": "AGPL-3",
     "depends": [
         "auth_jwt",
-        #"base_rest_auth_jwt",
+        # "base_rest_auth_jwt",
         "base_rest_pydantic",
         "base_rest",
         "component",
@@ -23,7 +23,7 @@
     ],
     "external_dependencies": {
         "python": [
-            "pydantic<2",
+            "pydantic==2.9.2",
             "extendable-pydantic==0.0.6",
             "email_validator==2.2.0",
         ]
