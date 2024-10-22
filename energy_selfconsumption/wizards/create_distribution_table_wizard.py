@@ -20,6 +20,7 @@ TYPE_DISTRIBUTE_EXCESS_VALUES = [
 
 class CreateDistributionTableWizard(models.TransientModel):
     _name = "energy_selfconsumption.create_distribution_table.wizard"
+    _description = "Service to generate distribution table"
 
     percentage_of_distributed_power = fields.Float(
         string="Percentage of distributed power", readonly=True

@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 
 class SelfconsumptionImportWizard(models.TransientModel):
     _name = "energy_selfconsumption.selfconsumption_import.wizard"
+    _description = "Service to import project selfconsumption"
 
     import_file = fields.Binary(string="Import File (*.csv)")
     fname = fields.Char(string="File Name")

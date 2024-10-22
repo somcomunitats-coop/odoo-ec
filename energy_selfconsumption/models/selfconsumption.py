@@ -226,7 +226,7 @@ class Selfconsumption(models.Model):
             record.write({"state": "activation"})
         self.distribution_table_state("validated", "process")
 
-    @api.model
+    @api.model_create_multi
     def create(self, values):
         res = super().create(values)
         self.env["energy_project.participation"].create(

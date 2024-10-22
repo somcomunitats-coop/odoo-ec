@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 from odoo.tests import TransactionCase, tagged
 
 
-@tagged("post_install", "standard", "at_install", "energy_selfconsumption")
+@tagged("post_install", "standard", "-at_install", "energy_selfconsumption")
 class TestInvoicingReminder(TransactionCase):
     def setUp(self):
         super().setUp()

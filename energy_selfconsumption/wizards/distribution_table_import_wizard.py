@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 class DistributionTableImportWizard(models.TransientModel):
     _name = "energy_selfconsumption.distribution_table_import.wizard"
+    _description = "Service to import distribution table"
 
     import_file = fields.Binary(string="Import File (*.csv)")
     fname = fields.Char(string="File Name")

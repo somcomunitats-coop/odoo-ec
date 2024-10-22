@@ -234,7 +234,7 @@
             </t>
         </template>
 
-        <report
+        <!-- <report
       id="selfconsumption_manager_authorization_report"
       string="Self-consumption Manager Report"
       name="energy_selfconsumption.selfconsumption_manager_authorization_template"
@@ -243,7 +243,16 @@
       report_type="qweb-pdf"
       paperformat="custom_paperformat_id"
       print_report_name="'%s - Authorization' % object.name"
-    />
+    /> -->
+        <record id="selfconsumption_manager_authorization_report" model="ir.actions.report">
+            <field name="name">Self-consumption Manager Report</field>
+            <field name="model">energy_selfconsumption.selfconsumption</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">'%s - Authorization' % object.name</field>
+            <field name="report_file">Manager Authorization</field>
+            <field name="binding_model_id" ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"/>
+            <field name="binding_type">report</field>
+        </record>
 
         <template id="power_sharing_agreement_template">
             <t t-call="web.html_container">
@@ -456,7 +465,7 @@
             </t>
         </template>
 
-        <report
+        <!-- <report
       id="power_sharing_agreement_report"
       string="Power Sharing Agreement Report"
       name="energy_selfconsumption.power_sharing_agreement_template"
@@ -465,7 +474,17 @@
       report_type="qweb-pdf"
       paperformat="custom_paperformat_id"
       print_report_name="'%s - Power Sharing Agreement' % object.name"
-    />
+    /> -->
+        <record id="power_sharing_agreement_report" model="ir.actions.report">
+            <field name="name">Power Sharing Agreement Report</field>
+            <field name="model">energy_selfconsumption.selfconsumption</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">'%s - Power Sharing Agreement' % object.name</field>
+            <field name="report_file">Power Sharing Agreement</field>
+            <!-- <field name="paperformat">custom_paperformat_id</field> -->
+            <field name="binding_model_id" ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"/>
+            <field name="binding_type">report</field>
+        </record>
 
     </data>
 </odoo>

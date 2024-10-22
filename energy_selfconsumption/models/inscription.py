@@ -9,23 +9,17 @@ class Inscription(models.Model):
     }
     _description = "Inscriptions for a self-consumption"
 
-    # _sql_constraints = {
-    #     (
-    #         "unique_project_id_partner_id_code",
-    #         "unique (project_id, partner_id, code)",
-    #         _("Partner is already signed up in this project with that cups."),
-    #     )
-    # }
-
-    _USED_IN_SELFCONSUMPTION_VALUES = [
-        ("yes", _("Yes")),
-        ("no", _("No")),
-    ]
-
-    _VULNERABILITY_SITUATION_VALUES = [
-        ("yes", _("Yes")),
-        ("no", _("No")),
-    ]
+    @api.constrains('project_id', 'partner_id', 'code')
+    def _constraint_unique(self):
+        for record in self:
+                exist = self.search([
+                     ('id','!=',record.id),
+                     ('project_id','=',record.project_id),
+                     ('partner_id','=',record.partner_id),
+                     ('code','=',record.code),
+                     ])
+                if exist:
+                    raise ValidationError(_("Partner is already signed up in this project with that cups."))
 
     inscription_id = fields.Many2one(
         "energy_project.inscription", required=True, ondelete="cascade"
@@ -38,23 +32,21 @@ class Inscription(models.Model):
         string="Participation", related="participation.quantity"
     )
     accept = fields.Boolean(
-        String="I accept and authorize being able to issue payments"
+        string="I accept and authorize being able to issue payments"
         " to this bank account as part of participation in "
         "this shared self-consumption project of my energy "
         "community"
     )
-    member = fields.Boolean(String="Member/Non-Member")
+    member = fields.Boolean(string="Member/Non-Member")
     supply_point_id = fields.Many2one(
         "energy_selfconsumption.supply_point", required=True
     )
     code = fields.Char(string="CUPS", related="supply_point_id.code")
     used_in_selfconsumption = fields.Selection(
-        _USED_IN_SELFCONSUMPTION_VALUES,
         string="Used in selfconsumption",
         related="supply_point_id.used_in_selfconsumption",
     )
     vulnerability_situation = fields.Selection(
-        _VULNERABILITY_SITUATION_VALUES,
         string="Vulnerability situation",
         related="partner_id.vulnerability_situation",
     )

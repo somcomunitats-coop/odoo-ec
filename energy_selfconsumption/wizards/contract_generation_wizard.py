@@ -4,6 +4,7 @@ from odoo.exceptions import ValidationError
 
 class ContractGenerationWizard(models.TransientModel):
     _name = "energy_selfconsumption.contract_generation.wizard"
+    _description = "Service to generate contract"
 
     selfconsumption_id = fields.Many2one(
         "energy_selfconsumption.selfconsumption", readonly=True

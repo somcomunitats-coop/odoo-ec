@@ -29,7 +29,7 @@
     />
         </record>
 
-        <record
+        <!-- <record
     id="selfconsumption_2_community_1_demo"
     model="energy_selfconsumption.selfconsumption"
   >
@@ -959,5 +959,5 @@
       eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
       model="energy_selfconsumption.distribution_table"
     />
-        </record>
+        </record> -->
 </odoo>
