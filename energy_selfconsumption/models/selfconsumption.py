@@ -325,11 +325,13 @@ class Selfconsumption(models.Model):
             "target": "new",
         }
 
-    def set_inscription(self, selfconsumption_state):
+    def set_inscription(self):
         for record in self:
             record.write({"state": "inscription"})
-        if selfconsumption_state == "activation":
-            self.distribution_table_state("process", "validated")
+
+    def set_inscription_activation(self):
+        self.set_inscription()
+        self.distribution_table_state("process", "validated")
 
     def set_draft(self):
         for record in self:

@@ -12,7 +12,6 @@
               type="object"
               string="Advance to In Inscription"
               name="set_inscription"
-              args="['draft']"
               attrs="{'invisible':[('state','not in',['draft'])]}"
               class="btn btn-primary"
             />
@@ -33,8 +32,7 @@
                         <button
               type="object"
               string="Return to In Inscription"
-              name="set_inscription"
-              args="['activation']"
+              name="set_inscription_activation"
               attrs="{'invisible':[('state','not in',['activation'])]}"
               confirm="Are you sure you want to change the project status to the previous step?
                                  If so, the distribution table will return to the 'validated' state."
