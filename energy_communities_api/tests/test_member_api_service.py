@@ -10,7 +10,12 @@ from odoo.tests import HttpCase, tagged
 
 from odoo.addons.base_rest.tests.common import RegistryMixin
 
-from ..schemas import CommunityInfo, CommunityServiceMetricsInfo, UnitEnum
+from ..schemas import (
+    CommunityInfo,
+    CommunityServiceInfo,
+    CommunityServiceMetricsInfo,
+    UnitEnum,
+)
 
 try:
     from .data import client_data, client_data_response, server_auth_url
@@ -395,16 +400,13 @@ class TestMemberApiService(HttpCase, RegistryMixin):
                     name=f"test{value}",
                     type="fotovoltaic",
                     shares=dict(value=4, unit=UnitEnum.percentage),
-                    share_energy_production=dict(value=0.9, unit=UnitEnum.kwn),
-                    selfconsumption_consumption_ratio=dict(
-                        value=0.3, unit=UnitEnum.percentage
-                    ),
-                    selfconsumption_surplus_ratio=dict(
-                        value=0.3, unit=UnitEnum.percentage
-                    ),
-                    consumption_selfconsumption_ratio=dict(
-                        value=0.3, unit=UnitEnum.percentage
-                    ),
+                    energy_shares=dict(value=4, unit=UnitEnum.kwn),
+                    energy_production=dict(value=0.9, unit=UnitEnum.kwn),
+                    energy_consumption=dict(value=4.6, unit=UnitEnum.kwn),
+                    selfproduction_ratio=dict(value=0.3, unit=UnitEnum.percentage),
+                    surplus_ratio=dict(value=0.7, unit=UnitEnum.percentage),
+                    gridconsumption_ratio=dict(value=0.3, unit=UnitEnum.percentage),
+                    selfconsumption_ratio=dict(value=0.7, unit=UnitEnum.percentage),
                     environment_saves=dict(value=4, unit=UnitEnum.grco2),
                 )
                 for value in range(0, 10)
@@ -437,6 +439,31 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         result = response.json()
         self.assertEqual(result["links"]["self_"], response.request.url)
 
+    def test__me_community_service_metrics__one_service_ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # a community service id
+        service_id = 32
+        # when we call for the metrics of that community service
+        url = f"/api/energy-communities/me/community_services/{service_id}/metrics?from_date=2024-04-01&to_date=2024-04-30"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the metrics
+        content = response.json()
+        community_service_info = CommunityServiceMetricsInfo(**content["data"])
+        self.assertIsInstance(community_service_info, CommunityServiceMetricsInfo)
+
     def test__me_community_services__ok(self):
         # given http_client
         # self.url_open
@@ -446,7 +473,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         communty_id = "55"
         # when we call for the energy_communties that i belong
         response = self.client(
-            "/api/energy-communities/me/community_services",
+            "/api/energy-communities/me/community_services/",
             headers={
                 "Authorization": self.token,
                 "CommunityId": communty_id,
@@ -457,3 +484,148 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and the metrics
         result = response.json()
         self.assertGreaterEqual(result["count"], 1)
+
+    def test__me_community_service_detail__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # a community service id
+        community_service_id = 32
+        # when we call for the energy_communties that i belong
+        response = self.client(
+            f"/api/energy-communities/me/community_services/{community_service_id}",
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the metrics
+        content = response.json()
+        self.assertIsInstance(
+            CommunityServiceInfo(**content["data"]), CommunityServiceInfo
+        )
+
+    def test__me_community_services_production__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # a community service id
+        community_service_id = 32
+        # when we call for the production of that isntallation of a community service
+        url = f"/api/energy-communities/me/community_services/{community_service_id}/production?from_date=2024-04-01&to_date=2024-04-30"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the production
+        response = response.json()
+        self.assertGreaterEqual(response["count"], 1)
+
+    def test__me_community_services_production__service_not_found(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # a community service id
+        community_service_id = 456
+        # when we call for the production of that isntallation of a community service
+        url = f"/api/energy-communities/me/community_services/{community_service_id}/production?from_date=2024-04-01&to_date=2024-04-30"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 404)
+        # and the production
+        content = response.json()
+        self.assertDictEqual(content, {"code": 404, "name": "Not Found"})
+
+    def test__me_community_services_selfconsumption__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # a community service id
+        community_service_id = 32
+        # when we call for the member selfconsumption of that installation
+        url = f"/api/energy-communities/me/community_services/{community_service_id}/selfconsumption?from_date=2024-04-01&to_date=2024-04-30"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the selfconsumed energy
+        response = response.json()
+        self.assertGreaterEqual(response["count"], 1)
+
+    def test__me_community_services_exported_energy__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # a community service id
+        community_service_id = 32
+        # when we call for the energy exported of that member for installation
+        url = f"/api/energy-communities/me/community_services/{community_service_id}/energy_exported?from_date=2024-04-01&to_date=2024-04-30"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the selfconsumed energy
+        response = response.json()
+        self.assertGreaterEqual(response["count"], 1)
+
+    def test__me_community_services_consumed_energy__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = "55"
+        # a community service id
+        community_service_id = 32
+        # when we call for the energy comsuption of that member for installation
+        url = f"/api/energy-communities/me/community_services/{community_service_id}/energy_consumed?from_date=2024-04-01&to_date=2024-04-30"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the selfconsumed energy
+        response = response.json()
+        self.assertGreaterEqual(response["count"], 1)

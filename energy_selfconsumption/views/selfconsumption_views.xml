@@ -210,6 +210,68 @@
                         </group>
 
                         <notebook colspan="4">
+                                                        <page
+                string="Inscription form configuration"
+                name="form_configuration"
+              >
+                                <label for="conf_state" />
+                                <field name="conf_state" widget="radio" />
+                                <button
+                  style="margin-left: 145px;"
+                  class="btn btn btn-primary"
+                  type="object"
+                  name="action_redirect_to_page_form_inscription"
+                  attrs="{'invisible': [('conf_state', '!=', 'active')]}"
+                >View form inscription</button>
+                                <field
+                  style="margin-left: 50px;"
+                  name="conf_url_form"
+                  readonly="1"
+                  force_save="1"
+                  attrs="{'invisible': [('conf_state', '!=', 'active')]}"
+                />
+                                <group name="conf_show" string="Configuration">
+                                    <field
+                    name="conf_used_in_selfconsumption"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  />
+                                    <field
+                    name="conf_vulnerability_situation"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  />
+                                    <field
+                    name="conf_bank_details"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  />
+                                </group>
+                                <group name="conf_participation" string="Participation">
+                                    <field
+                    name="conf_participation_ids"
+                    widget="one2many"
+                    mode="list"
+                    context="{'default_project_id':id}"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  >
+                                        <tree>
+                                            <field name="name" />
+                                            <field name="quantity" />
+                                        </tree>
+                                        <form>
+                                            <field name="name" />
+                                            <field name="quantity" />
+                                        </form>
+                                    </field>
+                                </group>
+                                <group
+                  name="conf_header_description"
+                  string="Description form"
+                >
+                                    <field
+                    name="conf_header_description"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  />
+                                </group>
+                            </page>
                             <page
                 string="Invoicing Mode"
                 name="invoicing_mode"
@@ -230,7 +292,6 @@
                                     <field name="service_contract_ids" />
                                 </group>
                             </page>
-
                         </notebook>
 
                     </sheet>

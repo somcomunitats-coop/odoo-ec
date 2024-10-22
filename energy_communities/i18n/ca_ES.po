@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-09 08:24+0000\n"
-"PO-Revision-Date: 2024-08-09 10:32+0200\n"
+"POT-Creation-Date: 2024-10-02 15:10+0000\n"
+"PO-Revision-Date: 2024-10-02 17:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ca_ES\n"
@@ -58,6 +58,15 @@ msgid ""
 "contactarem amb tu i amb les persones que també han mostrat interès i us "
 "oferirem suport per activar-la. Som-hi!</div>"
 msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.res_partner_view_form
+msgid ""
+"<strong>Hint: In order to edit company related params you have to visit the "
+"related contact's user.</strong>"
+msgstr ""
+"<strong>Consell: Per modificar els camps relacionats amb les companyies "
+"s'ha d'editar el seu usuari relacionat.</strong>"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser
@@ -138,6 +147,7 @@ msgstr ""
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_flexibility
 #: model:crm.tag,name:energy_communities.ce_tag_aggregate_demand
+#: model:energy.action,name:energy_communities.energy_action_aggregate_demand
 msgid "Agregació i flexibilitat de la demanda"
 msgstr ""
 
@@ -163,6 +173,13 @@ msgstr "Autoritza nous membres"
 #, python-format
 msgid "An instance company already exists"
 msgstr "Ja existeix una empresa amb el rol de Instància"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users_role.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_res_users_role__application_scope
+#, python-format
+msgid "Application scope"
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
@@ -191,7 +208,7 @@ msgstr "Token d'autorització no trobat"
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__available_role_ids
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role__available_role_ids
 msgid "Available roles"
-msgstr ""
+msgstr "Roles disponibles"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_partner_bank
@@ -321,6 +338,13 @@ msgid "Comercial name"
 msgstr "Nom comercial"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_users_role.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_users_role__application_scope__common_functional_layer
+#, python-format
+msgid "Common layer"
+msgstr ""
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__hierarchy_level__community
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__hierarchy_level__community
@@ -328,11 +352,6 @@ msgstr "Nom comercial"
 #, python-format
 msgid "Community"
 msgstr "Comunitat"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_landing_page__community_active_services
-msgid "Community active services"
-msgstr "Serveis actius a la Comunitat"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__admins
@@ -361,6 +380,12 @@ msgid "Community creation process has been started."
 msgstr "El procés de creació de companyia ha començat."
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__community_energy_action_ids
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__community_energy_action_ids
+msgid "Community energy actions"
+msgstr "Accions energètiques de la comunitat"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__community_secondary_type
 msgid "Community secondary type"
 msgstr "Tipus secundari Comunitat"
@@ -385,6 +410,7 @@ msgid "Companies"
 msgstr "Empreses"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__company_id
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__company_id
 msgid "Company"
 msgstr "Companyia"
@@ -427,6 +453,7 @@ msgstr ""
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_collective_purchases
+#: model:energy.action,name:energy_communities.energy_action_collective_purchases
 msgid "Compres col·lectives"
 msgstr ""
 
@@ -584,16 +611,22 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__create_uid
+#: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__create_uid
+#: model:ir.model.fields,field_description:energy_communities.field_energy_action__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_uid
+#: model:ir.model.fields,field_description:energy_communities.field_utils_backend__create_uid
 msgid "Created by"
 msgstr "Creat per"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__create_date
+#: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__create_date
+#: model:ir.model.fields,field_description:energy_communities.field_energy_action__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_date
+#: model:ir.model.fields,field_description:energy_communities.field_utils_backend__create_date
 msgid "Created on"
 msgstr "Creat el"
 
@@ -622,7 +655,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_cm_filter__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_cm_map__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_energy_action__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_external_id_mixin__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_product_template__display_name
@@ -634,6 +669,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role_line__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_utils_backend__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__display_name
 msgid "Display Name"
 msgstr "Mostrar Nom"
@@ -654,6 +690,7 @@ msgstr "Esborany"
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_efficiency
 #: model:crm.tag,name:energy_communities.ce_tag_energy_efficiency
+#: model:energy.action,name:energy_communities.energy_action_energy_efficiency
 msgid "Eficiencia energètica"
 msgstr "Eficiència Energètica"
 
@@ -672,8 +709,20 @@ msgstr ""
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_thermal_energy
 #: model:crm.tag,name:energy_communities.ce_tag_thermal_energy
+#: model:energy.action,name:energy_communities.energy_action_thermal_energy
 msgid "Energia tèrmica i climatització"
 msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__energy_action_id
+msgid "Energy Action"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.actions.act_window,name:energy_communities.energy_action_views
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__energy_action_mids
+msgid "Energy Actions"
+msgstr "Accions energètiques"
 
 #. module: energy_communities
 #: model:ir.module.category,name:energy_communities.energy_communities_category
@@ -711,7 +760,6 @@ msgid "Energy Community Member"
 msgstr "Membre de la Comunitat Energètica"
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_tag_ids
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__ce_tag_ids
 msgid "Energy Community Services"
 msgstr "Serveis Comunitat Energètica"
@@ -721,6 +769,11 @@ msgstr "Serveis Comunitat Energètica"
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__ce_status
 msgid "Energy Community state"
 msgstr "Estat de la Comunitat Energètica"
+
+#. module: energy_communities
+#: model:ir.ui.menu,name:energy_communities.energy_actions_menu
+msgid "Energy actions"
+msgstr "Accions energètiques"
 
 #. module: energy_communities
 #: model:cm.form.model,button_label:energy_communities.map_form_model_campanya
@@ -739,6 +792,7 @@ msgid "Execute"
 msgstr "Executar"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_energy_action__xml_id
 #: model:ir.model.fields,field_description:energy_communities.field_external_id_mixin__external_id
 msgid "External ID"
 msgstr "ID extern"
@@ -806,6 +860,7 @@ msgstr "Forçar enviament invitació en cas que ja s'hagi fet anteriorment"
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_training
 #: model:crm.tag,name:energy_communities.ce_tag_citizen_education
+#: model:energy.action,name:energy_communities.energy_action_citizen_education
 msgid "Formació ciutadana"
 msgstr ""
 
@@ -822,6 +877,7 @@ msgstr "Data creació"
 
 #. module: energy_communities
 #: model:crm.tag,name:energy_communities.ce_tag_common_generation
+#: model:energy.action,name:energy_communities.energy_action_common_generation
 msgid "Generació renovable comunitaria"
 msgstr ""
 
@@ -845,6 +901,17 @@ msgid "Get current selected company from any model"
 msgstr "Obté la compnyia actual desde qualsevol model"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner__has_rel_user
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__has_rel_user
+msgid "Has Rel User"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields.selection,name:energy_communities.selection__community_energy_action__public_status__hidden
+msgid "Hidden"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__hierarchy_level
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__hierarchy_level
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__hierarchy_level
@@ -861,7 +928,9 @@ msgstr "Nivell jeràrquic"
 #: model:ir.model.fields,field_description:energy_communities.field_cm_filter__id
 #: model:ir.model.fields,field_description:energy_communities.field_cm_map__id
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place__id
+#: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__id
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__id
+#: model:ir.model.fields,field_description:energy_communities.field_energy_action__id
 #: model:ir.model.fields,field_description:energy_communities.field_external_id_mixin__id
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__id
 #: model:ir.model.fields,field_description:energy_communities.field_product_template__id
@@ -873,6 +942,7 @@ msgstr "Nivell jeràrquic"
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role__id
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role_line__id
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__id
+#: model:ir.model.fields,field_description:energy_communities.field_utils_backend__id
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__id
 msgid "ID"
 msgstr ""
@@ -993,6 +1063,12 @@ msgid "Journal Entry"
 msgstr "Assentament comptable"
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid "Keycloack provider admin user endpoint not defined"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__is_keycloak_provider
 msgid "Keycloak provider"
 msgstr "Proveïdor KeyCloak"
@@ -1051,7 +1127,9 @@ msgstr "Idioma"
 #: model:ir.model.fields,field_description:energy_communities.field_cm_filter____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_cm_map____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_community_energy_action____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_energy_action____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_external_id_mixin____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_product_template____last_update
@@ -1063,6 +1141,7 @@ msgstr "Idioma"
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role_line____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_utils_backend____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source____last_update
 msgid "Last Modified on"
 msgstr "Última modificació el"
@@ -1070,16 +1149,22 @@ msgstr "Última modificació el"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__write_uid
+#: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__write_uid
+#: model:ir.model.fields,field_description:energy_communities.field_energy_action__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_uid
+#: model:ir.model.fields,field_description:energy_communities.field_utils_backend__write_uid
 msgid "Last Updated by"
 msgstr "Última actualització per"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__write_date
+#: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__write_date
+#: model:ir.model.fields,field_description:energy_communities.field_energy_action__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_date
+#: model:ir.model.fields,field_description:energy_communities.field_utils_backend__write_date
 msgid "Last Updated on"
 msgstr "Última actualització el"
 
@@ -1190,6 +1275,7 @@ msgstr "Missatges"
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_mobility
 #: model:crm.tag,name:energy_communities.ce_tag_sustainable_mobility
+#: model:energy.action,name:energy_communities.energy_action_sustainable_mobility
 msgid "Mobilitat sostenible"
 msgstr ""
 
@@ -1214,6 +1300,7 @@ msgid "NONE"
 msgstr "Cap"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_energy_action__name
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__name
 msgid "Name"
 msgstr "Nom"
@@ -1245,8 +1332,7 @@ msgstr ""
 #: code:addons/energy_communities/services/ce_community_service.py:0
 #, python-format
 msgid "No Odoo Company found for odoo_company_id %s"
-msgstr ""
-"No s'ha trobat cap companya al Odoo pel paràmetre: odoo_company_id= %s"
+msgstr "No s'ha trobat cap empresa al Odoo pel paràmetre: odoo_company_id= %s"
 
 #. module: energy_communities
 #: code:addons/energy_communities/services/ce_member_profile_service.py:0
@@ -1434,14 +1520,14 @@ msgid "Platform"
 msgstr "Plataforma"
 
 #. module: energy_communities
-#: model:res.groups,name:energy_communities.group_platform_manager
-msgid "Platform Manager"
+#: model:res.groups,name:energy_communities.role_platform_admin_res_groups
+#: model:res.users.role,name:energy_communities.role_platform_admin
+msgid "Platform Admin Role"
 msgstr ""
 
 #. module: energy_communities
-#: model:res.groups,name:energy_communities.role_platform_admin_res_groups
-#: model:res.users.role,name:energy_communities.role_platform_admin
-msgid "Platform admin role"
+#: model:res.groups,name:energy_communities.group_platform_manager
+msgid "Platform Manager"
 msgstr ""
 
 #. module: energy_communities
@@ -1468,7 +1554,7 @@ msgstr "Imatge primària"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role__priority
 msgid "Priority"
-msgstr ""
+msgstr "Prioritat"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
@@ -1479,7 +1565,7 @@ msgstr "Procés"
 #: code:addons/energy_communities/wizards/create_users_wizard.py:0
 #, python-format
 msgid "Process has been started."
-msgstr ""
+msgstr "El procés ha començat"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_product_template
@@ -1493,6 +1579,11 @@ msgid "Public data update successful"
 msgstr "Actualització de dades públiques efectuat amb èxit"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__public_status
+msgid "Public status"
+msgstr "Estat públic"
+
+#. module: energy_communities
 #: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__status__publish
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
@@ -1501,6 +1592,7 @@ msgid "Publish"
 msgstr "Publicar"
 
 #. module: energy_communities
+#: model:ir.model.fields.selection,name:energy_communities.selection__community_energy_action__public_status__published
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
 msgid "Published"
 msgstr "Publicat"
@@ -1519,6 +1611,16 @@ msgstr "Nom REALM"
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__redirect_admin_url
 msgid "Redirect Link after update password"
 msgstr "Enllaç de redirecció un cop actualitzada la contrasenya"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_energy_action__company_mids
+msgid "Related companies"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_partner_form
+msgid "Related users"
+msgstr "Usuaris relacionats"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__reset_password_endpoint
@@ -1667,6 +1769,12 @@ msgstr "Alguna cosa ha fallat. El correu no es pot enviar. Més detalls: {}"
 #. module: energy_communities
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
+msgid "Something went wrong. More details: {}"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
 msgid "Something went wrong. Please check logs."
 msgstr "Quelcom ha anat malament. Si us plau revisa els LOGS."
 
@@ -1679,6 +1787,13 @@ msgstr "Tipus d'origens"
 #: model:ir.actions.act_window,name:energy_communities.ce_utm_sources_action
 msgid "Sources"
 msgstr "Origens"
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/res_users_role.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_users_role__application_scope__specific_functional_layer
+#, python-format
+msgid "Specific layer"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__state_id
@@ -1721,6 +1836,7 @@ msgstr "Carrer"
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_supply
 #: model:crm.tag,name:energy_communities.ce_tag_renewable_energy
+#: model:energy.action,name:energy_communities.energy_action_renewable_energy
 msgid "Subministrament d'energia 100% renovable"
 msgstr ""
 
@@ -1783,12 +1899,10 @@ msgstr ""
 "del canvi: {change_reason}"
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#: code:addons/energy_communities/components/user_creator.py:0
 #, python-format
-msgid "There is no company selected with level energy community."
+msgid "There is at least one selected no community companies"
 msgstr ""
-"No hi ha cap companyia seleccionada que representi una Comunitat Energètica "
-"(Nivell jeràrquic=Comunitat)"
 
 #. module: energy_communities
 #: code:addons/energy_communities/wizards/change_coordinator_wizard.py:0
@@ -1803,15 +1917,12 @@ msgid "This language code %s is not active in Odoo. Active ones: %s"
 msgstr "Aquest codi d'idioma %s no està actiu a l'Odoo. Els actius són: %s"
 
 #. module: energy_communities
-#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#: code:addons/energy_communities/components/user_creator.py:0
 #, python-format
 msgid ""
 "This wizard can only run with ONE company selected. Please limit the "
 "context of the selected companies to one."
 msgstr ""
-"Aquest assistent només es pot executar tenint seleccionada UNA UNICA "
-"companyia activa pel usuari que executa  l'assistent. Si us plau limita el "
-"contexte de les companyies seleccionades a una única."
 
 #. module: energy_communities
 #: model:cm.map,categories_filter_title:energy_communities.map_campanya
@@ -1976,8 +2087,10 @@ msgid "User_vals dict is empty"
 msgstr ""
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
 #: model:ir.model,name:energy_communities.model_res_users
 #: model:ir.ui.menu,name:energy_communities.ce_users_menu
+#, python-format
 msgid "Users"
 msgstr "Usuaris"
 
@@ -2003,6 +2116,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__vat
 msgid "VAT"
 msgstr "NIF"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_partner_form
+msgid "View"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_landing_page_id
@@ -2082,6 +2200,13 @@ msgstr ""
 "principal assignada."
 
 #. module: energy_communities
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid ""
+"You cannot link more than one user to a partner. Please check partner {}"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__zip_code
 msgid "ZIP code"
 msgstr "Codi postal"
@@ -2127,6 +2252,11 @@ msgid "community of property"
 msgstr "comunitat de bens"
 
 #. module: energy_communities
+#: model:ir.model,name:energy_communities.model_community_energy_action
+msgid "community.energy.action"
+msgstr ""
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_date_past
 msgid "dd/mm/aaaa"
 msgstr ""
@@ -2135,6 +2265,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_date_past
 msgid "dd/mm/yyyy"
 msgstr "dd/mm/aaaa"
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_energy_action
+msgid "energy.action"
+msgstr ""
 
 #. module: energy_communities
 #: model:cm.map,cookies_link:energy_communities.map_campanya
@@ -2149,6 +2284,11 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_landing_page
 msgid "landing.page"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_utils_backend
+msgid "utils.backend"
 msgstr ""
 
 #. module: energy_communities

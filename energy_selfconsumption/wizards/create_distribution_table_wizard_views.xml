@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="create_distribution_table_wizard_form_view" model="ir.ui.view">
+            <field
+        name="name"
+      >energy_selfconsumption.create_distribution_table.wizard.form</field>
+            <field
+        name="model"
+      >energy_selfconsumption.create_distribution_table.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="max_distributed_power" invisible="1" />
+                            <field
+                name="distributed_power"
+                widget="progress_bar_widget"
+                options="{'max_quantity': 'max_distributed_power', 'extra_label': 'kWn'}"
+              />
+                        </group>
+                        <group>
+                            <field name="type" />
+                            <field name="distribute_excess" />
+                        </group>
+                        <group attrs="{'invisible':[('distribute_excess','=','no')]}">
+                            <field name="type_distribute_excess" />
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button
+              type="object"
+              name="create_distribution_table"
+            >Create distribution table</button>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record
+      id="create_distribution_table_wizard_action"
+      model="ir.actions.act_window"
+    >
+            <field name="name">Create participant table</field>
+            <field
+        name="res_model"
+      >energy_selfconsumption.create_distribution_table.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

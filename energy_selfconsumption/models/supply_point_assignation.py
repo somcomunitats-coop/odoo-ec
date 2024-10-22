@@ -29,6 +29,13 @@ class SupplyPointAssignation(models.Model):
                 ]
             )
 
+    @api.depends("selfconsumption_project_id.power")
+    def _compute_energy_shares(self):
+        for record in self:
+            record.energy_shares = (
+                record.selfconsumption_project_id.power * record.coefficient
+            )
+
     distribution_table_id = fields.Many2one(
         "energy_selfconsumption.distribution_table", required=True
     )
@@ -49,6 +56,14 @@ class SupplyPointAssignation(models.Model):
         required=True,
         help="The sum of all the coefficients must result in 1",
     )
+
+    energy_shares = fields.Float(
+        string="Distribution coefficient in kWh",
+        help="Distribution coneffcient in kWh. The sum of all have to result in total project power",
+        compute="_compute_energy_shares",
+        readonly=True,
+    )
+
     owner_id = fields.Many2one("res.partner", related="supply_point_id.owner_id")
     code = fields.Char(related="supply_point_id.code")
     table_coefficient_is_valid = fields.Boolean(

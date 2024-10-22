@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+  <template
+    id="assets_frontend_inscription_data"
+    inherit_id="web.assets_frontend"
+    name="inscription_data_website_script"
+  >
+        <xpath expr="." position="inside">
+            <script
+        type="text/javascript"
+        src="/energy_communities/static/src/js/data-website.js"
+      />
+            <script
+        type="text/javascript"
+        src="/energy_selfconsumption/static/src/js/inscription-data-website.js"
+      />
+        </xpath>
+    </template>
+
+    <template
+    id="inscription_data_form_fields_template"
+    name="inscription_data_form_fields_template"
+  >
+      <h1>
+          Enrollment in the shared self-consumption project of the Energy Community: <t
+        t-esc="company_name"
+      /> of the EC
+      </h1>
+      <h2>
+        Installation: <t t-esc="project_name" /> of the project
+      </h2>
+      <div class="row">
+        <div class="col-md-12">
+            <t t-esc="project_header_description" />
+        </div>
+      </div>
+      <t t-call="energy_communities.form_field_hidden">
+          <t t-set="value" t-value="model_id" />
+          <t t-set="key" t-value="project_model_key" />
+      </t>
+      <div class="row">
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_text">
+              <t t-set="value" t-value="inscription_partner_id_vat" />
+              <t t-set="key" t-value="inscription_partner_id_vat_key" />
+              <t t-set="label" t-value="inscription_partner_id_vat_label" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+      </div>
+      <h2>
+          SUPPLY POINT DATA
+      </h2>
+      <div class="row">
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_text">
+              <t t-set="value" t-value="supplypoint_cups" />
+              <t t-set="key" t-value="supplypoint_cups_key" />
+              <t t-set="label" t-value="supplypoint_cups_label" />
+              <t t-set="required" t-value="True" />
+              <t t-set="help" t-value="True" />
+              <t t-set="title" t-value="supplypoint_cups_title" />
+            </t>
+        </div>
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_text">
+              <t t-set="value" t-value="supplypoint_street" />
+              <t t-set="key" t-value="supplypoint_street_key" />
+              <t t-set="label" t-value="supplypoint_street_label" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+        <div class="col-md-6">
+            <t t-call="energy_communities.form_field_text">
+              <t t-set="value" t-value="supplypoint_city" />
+              <t t-set="key" t-value="supplypoint_city_key" />
+              <t t-set="label" t-value="supplypoint_city_label" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+        <div class="col-md-6">
+            <t t-call="energy_communities.form_field_text">
+              <t t-set="value" t-value="supplypoint_zip" />
+              <t t-set="key" t-value="supplypoint_zip_key" />
+              <t t-set="label" t-value="supplypoint_zip_label" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_text">
+              <t t-set="value" t-value="supplypoint_contracted_power" />
+              <t t-set="key" t-value="supplypoint_contracted_power_key" />
+              <t t-set="label" t-value="supplypoint_contracted_power_label" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_text">
+              <t t-set="value" t-value="supplypoint_cadastral_reference" />
+              <t t-set="key" t-value="supplypoint_cadastral_reference_key" />
+              <t t-set="label" t-value="supplypoint_cadastral_reference_label" />
+              <t t-set="required" t-value="True" />
+              <t t-set="help" t-value="True" />
+              <t t-set="title" t-value="supplypoint_cadastral_reference_title" />
+            </t>
+        </div>
+
+        <div class="col-md-12" t-if="project_conf_used_in_selfconsumption">
+          <t t-call="energy_communities.form_field_selection">
+            <t t-set="value" t-value="supplypoint_used_in_selfconsumption" />
+            <t t-set="key" t-value="supplypoint_used_in_selfconsumption_key" />
+            <t t-set="label" t-value="supplypoint_used_in_selfconsumption_label" />
+            <t t-set="options" t-value="supplypoint_used_in_selfconsumption_options" />
+            <t t-set="required" t-value="project_conf_used_in_selfconsumption" />
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="project_conf_used_in_selfconsumption_title" />
+          </t>
+        </div>
+      </div>
+      <h2>
+          DATA OF THE CONTRACT HOLDER
+      </h2>
+      <div class="row">
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_selection">
+              <t t-set="value" t-value="supplypoint_owner_id_same" />
+              <t t-set="key" t-value="supplypoint_owner_id_same_key" />
+              <t t-set="label" t-value="supplypoint_owner_id_same_label" />
+              <t t-set="options" t-value="supplypoint_owner_id_same_options" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+      </div>
+      <div class="row owner_data">
+        <div class="col-md-6">
+            <t t-call="energy_communities.form_field_text">
+              <t t-set="value" t-value="supplypoint_owner_id_name" />
+              <t t-set="key" t-value="supplypoint_owner_id_name_key" />
+              <t t-set="label" t-value="supplypoint_owner_id_name_label" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+        <div class="col-md-6">
+            <t t-call="energy_communities.form_field_text">
+              <t t-set="value" t-value="supplypoint_owner_id_lastname" />
+              <t t-set="key" t-value="supplypoint_owner_id_lastname_key" />
+              <t t-set="label" t-value="supplypoint_owner_id_lastname_label" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+        <div class="col-md-6">
+            <t t-call="energy_communities.form_field_selection">
+              <t t-set="value" t-value="supplypoint_owner_id_gender" />
+              <t t-set="key" t-value="supplypoint_owner_id_gender_key" />
+              <t t-set="label" t-value="supplypoint_owner_id_gender_label" />
+              <t t-set="options" t-value="supplypoint_owner_id_gender_options" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+        <div class="col-md-6">
+            <t t-call="energy_communities.form_field_date_past">
+              <t t-set="value" t-value="supplypoint_owner_id_birthdate_date" />
+              <t t-set="key" t-value="supplypoint_owner_id_birthdate_date_key" />
+              <t t-set="label" t-value="supplypoint_owner_id_birthdate_date_label" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_text">
+              <t t-set="value" t-value="supplypoint_owner_id_phone" />
+              <t t-set="key" t-value="supplypoint_owner_id_phone_key" />
+              <t t-set="label" t-value="supplypoint_owner_id_phone_label" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_selection">
+              <t t-set="value" t-value="supplypoint_owner_id_lang" />
+              <t t-set="key" t-value="supplypoint_owner_id_lang_key" />
+              <t t-set="label" t-value="supplypoint_owner_id_lang_label" />
+              <t t-set="options" t-value="supplypoint_owner_id_lang_options" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_text">
+              <t t-set="value" t-value="supplypoint_owner_id_vat" />
+              <t t-set="key" t-value="supplypoint_owner_id_vat_key" />
+              <t t-set="label" t-value="supplypoint_owner_id_vat_label" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_email">
+              <t t-set="value" t-value="supplypoint_owner_id_email" />
+              <t t-set="key" t-value="supplypoint_owner_id_email_key" />
+              <t t-set="label" t-value="supplypoint_owner_id_email_label" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_email">
+              <t t-set="value" t-value="supplypoint_owner_id_email_confirm" />
+              <t t-set="key" t-value="supplypoint_owner_id_email_confirm_key" />
+              <t t-set="label" t-value="supplypoint_owner_id_email_confirm_label" />
+              <t t-set="required" t-value="True" />
+            </t>
+        </div>
+      </div>
+      <div class="row" t-if="project_conf_vulnerability_situation">
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_selection">
+              <t t-set="value" t-value="supplypoint_owner_id_vulnerability_situation" />
+              <t
+            t-set="key"
+            t-value="supplypoint_owner_id_vulnerability_situation_key"
+          />
+              <t
+            t-set="label"
+            t-value="supplypoint_owner_id_vulnerability_situation_label"
+          />
+              <t
+            t-set="options"
+            t-value="supplypoint_owner_id_vulnerability_situation_options"
+          />
+              <t t-set="required" t-value="project_conf_vulnerability_situation" />
+              <t t-set="help" t-value="True" />
+              <t t-set="title" t-value="project_conf_vulnerability_situation_title" />
+            </t>
+        </div>
+      </div>
+      <div class="row owner_data">
+        <div class="col-md-12">
+          <t t-call="energy_communities.form_field_checkbox">
+            <t t-set="value" t-value="inscription_project_privacy" />
+            <t t-set="key" t-value="inscription_project_privacy_key" />
+            <t t-set="label" t-value="inscription_project_privacy_label" />
+            <t t-set="required" t-value="project_conf_policy_privacy_display" />
+          </t>
+        </div>
+        <div
+        id="project_conf_policy_privacy_text_click"
+        class="col-md-12"
+        title="Show privacy policy"
+        style="margin-bottom: 20px;"
+      >
+          <span style="margin-right: 5px;">Show privacy policy</span><svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-arrow-down-square"
+          viewBox="0 0 16 16"
+        >
+            <path
+            fill-rule="evenodd"
+            d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm8.5 2.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"
+          />
+          </svg>
+        </div>
+        <div id="project_conf_policy_privacy_text" class="col-md-12">
+            <t t-raw="project_conf_policy_privacy_text" />
+        </div>
+
+      </div>
+      <h2>
+          OTHER NECESSARY DATA
+      </h2>
+      <div class="row">
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_number">
+              <t
+            t-set="value"
+            t-value="inscriptionselfconsumption_annual_electricity_use"
+          />
+              <t
+            t-set="key"
+            t-value="inscriptionselfconsumption_annual_electricity_use_key"
+          />
+              <t
+            t-set="label"
+            t-value="inscriptionselfconsumption_annual_electricity_use_label"
+          />
+              <t t-set="required" t-value="True" />
+              <t t-set="help" t-value="True" />
+              <t
+            t-set="title"
+            t-value="inscriptionselfconsumption_annual_electricity_use_title"
+          />
+            </t>
+        </div>
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_selection">
+              <t t-set="value" t-value="inscriptionselfconsumption_participation" />
+              <t t-set="key" t-value="inscriptionselfconsumption_participation_key" />
+              <t
+            t-set="label"
+            t-value="inscriptionselfconsumption_participation_label"
+          />
+              <t
+            t-set="options"
+            t-value="inscriptionselfconsumption_participation_options"
+          />
+              <t t-set="required" t-value="True" />
+              <t t-set="help" t-value="True" />
+              <t
+            t-set="title"
+            t-value="inscriptionselfconsumption_participation_title"
+          />
+            </t>
+        </div>
+        <div class="col-md-12">
+            <p>The usual recommendation for an annual electrical use of is 0.5kW of PV
+            power per 1500 kWh of electrical consumption.</p>
+            <br />
+            <p>1000 - 1500 kWh a maximum of 0.5 kW of participation is recommended</p>
+            <p>1500 - 3000 kWh between 0.5 and 1 kW</p>
+            <p>3000 - 5000 kWh between 1.5 - 2 kW</p>
+        </div>
+      </div>
+      <h2 t-if="project_conf_bank_details">
+        BANK DETAILS
+      </h2>
+      <div class="row" t-if="project_conf_bank_details">
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_text">
+              <t t-set="value" t-value="inscription_acc_number" />
+              <t t-set="key" t-value="inscription_acc_number_key" />
+              <t t-set="label" t-value="inscription_acc_number_label" />
+              <t t-set="required" t-value="project_conf_bank_details" />
+            </t>
+        </div>
+        <div class="col-md-12">
+            <t t-call="energy_communities.form_field_checkbox">
+              <t t-set="value" t-value="inscriptionselfconsumption_accept" />
+              <t t-set="key" t-value="inscriptionselfconsumption_accept_key" />
+              <t t-set="label" t-value="inscriptionselfconsumption_accept_label" />
+              <t t-set="required" t-value="project_conf_bank_details" />
+            </t>
+        </div>
+      </div>
+    </template>
+    <template
+    id="inscription_data_close_message_template"
+    name="inscription_data_close_message_template"
+  >
+        <button type="button" class="close" data-dismiss="alert">
+          &amp;times;
+        </button>
+    </template>
+
+    <template
+    id="inscription_data_error_message_template"
+    name="inscription_data_error_message_template"
+  >
+      <t t-foreach="error_msgs or []" t-as="error_msg">
+        <br />
+        <div class="alert alert-danger">
+          <t t-raw="error_msg" />
+        </div>
+      </t>
+    </template>
+
+    <template
+    id="inscription_data_form_successful_msg"
+    name="inscription_data_form_successful_msg"
+  >
+      <div class="alert alert-success">
+        <p>
+          Your data has been successfully registered.
+        </p>
+        <a type="button" t-attf-href="#{page_url}" class="btn btn-light">
+          Submit more data
+        </a>
+      </div>
+    </template>
+
+    <template
+    id="inscription_data_form_csrf_template"
+    name="inscription_data_form_csrf_template"
+  >
+      <div name="csrf_token_container">
+        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+      </div>
+    </template>
+
+    <template id="inscription_data_form" name="inscription_data_form">
+      <form
+      t-attf-action="#{form_submit_url}"
+      method="post"
+      class="form-horizontal mt32 oe_subscription_request_form"
+      enctype="multipart/form-data"
+    >
+        <t t-call="energy_selfconsumption.inscription_data_form_csrf_template" />
+        <t t-call="energy_selfconsumption.inscription_data_form_fields_template" />
+        <div class="text-center">
+          <button class="btn btn-primary mt-3 mb-3 text-center">Send</button>
+        </div>
+      </form>
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template id="inscription_data_headline" name="inscription_data_headline">
+
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template
+    id="inscription_data_headline_message_open"
+    name="inscription_data_headline_message_open"
+  >
+      <br />
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template
+    id="inscription_data_headline_message_open"
+    name="inscription_data_headline_message_open"
+  >
+
+    </template>
+
+    <!-- TODO: Make this description dynamic and db translatable -->
+    <template
+    id="inscription_data_headline_message_closed"
+    name="inscription_data_headline_message_closed"
+  >
+      <br />
+      <div class="alert alert-warning" t-if="not display_success">
+        <t t-if="not error_msgs">
+          <p>Necessary data for the integration of the Community: <strong><t
+              t-esc="ce_name"
+            /></strong> to the technology platform Som Comunitats has been successfully submitted.</p>
+        </t>
+        <t t-if="error_msgs">
+          <p><strong>Closed form</strong></p>
+        </t>
+        <p>You can contact <a
+          href="mailto:suport@somcomunitats.coop"
+        >suport@somcomunitats.coop</a> for further assistance.</p>
+      </div>
+    </template>
+
+    <template id="inscription_data_page" name="inscription_data_page">
+      <t t-call="website.layout">
+        <div id="wrap" class="o_portal_wrap">
+          <div class="container oe_website_data">
+            <div class="row justify-content-center">
+              <div class="col-xs-12 col-sm-10  col-md-8 col-lg-8">
+                <t t-if="global_error">
+                  <t
+                  t-call="energy_selfconsumption.inscription_data_error_message_template"
+                />
+                </t>
+                <t t-if="not global_error">
+                  <t t-if="closed_form">
+                    <t
+                    t-call="energy_selfconsumption.inscription_data_headline_message_closed"
+                  />
+                  </t>
+                  <t t-if="not closed_form">
+                    <t t-call="energy_selfconsumption.inscription_data_headline" />
+                    <t
+                    t-call="energy_selfconsumption.inscription_data_headline_message_open"
+                  />
+                    <t
+                    t-call="energy_selfconsumption.inscription_data_error_message_template"
+                  />
+                    <t
+                    t-if="display_success"
+                    t-call="energy_selfconsumption.inscription_data_form_successful_msg"
+                  />
+                    <t
+                    t-if="display_form"
+                    t-call="energy_selfconsumption.inscription_data_form"
+                  />
+                  </t>
+                </t>
+              </div>
+            </div>
+          </div>
+        </div>
+      </t>
+    </template>
+</odoo>

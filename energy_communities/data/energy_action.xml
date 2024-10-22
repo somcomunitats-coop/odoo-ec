@@ -1,0 +1,27 @@
+<odoo>
+    <!-- CE Energy Actions -->
+    <record model="energy.action" id="energy_action_common_generation">
+        <field name="name">Generació renovable comunitaria</field>
+    </record>
+    <record model="energy.action" id="energy_action_energy_efficiency">
+        <field name="name">Eficiencia energètica</field>
+    </record>
+    <record model="energy.action" id="energy_action_sustainable_mobility">
+        <field name="name">Mobilitat sostenible</field>
+    </record>
+    <record model="energy.action" id="energy_action_citizen_education">
+        <field name="name">Formació ciutadana</field>
+    </record>
+    <record model="energy.action" id="energy_action_thermal_energy">
+        <field name="name">Energia tèrmica i climatització</field>
+    </record>
+    <record model="energy.action" id="energy_action_collective_purchases">
+        <field name="name">Compres col·lectives</field>
+    </record>
+    <record model="energy.action" id="energy_action_renewable_energy">
+        <field name="name">Subministrament d'energia 100% renovable</field>
+    </record>
+    <record model="energy.action" id="energy_action_aggregate_demand">
+        <field name="name">Agregació i flexibilitat de la demanda</field>
+    </record>
+</odoo>

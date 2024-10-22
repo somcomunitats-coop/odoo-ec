@@ -107,6 +107,9 @@ class ResCompany(models.Model):
         string="Available roles",
         compute="_compute_parent_id_filtered_ids",
     )
+    community_energy_action_ids = fields.One2many(
+        "community.energy.action", "company_id", string="Community energy actions"
+    )
 
     # COMPUTED FIELDS
     @api.depends("hierarchy_level")
@@ -288,6 +291,21 @@ class ResCompany(models.Model):
         res = []
         for tag in self.ce_tag_ids:
             res.append({"id": tag.id, "name": tag.name, "ext_id": tag.tag_ext_id})
+        return res
+
+    def get_energy_actions_dict_list(self):
+        """Return a list of dicts with the key data of each energy action"""
+        self.ensure_one()
+        res = []
+        for energy_action in self.community_energy_action_ids:
+            if energy_action.public_status == "published":
+                res.append(
+                    {
+                        "id": energy_action.energy_action_id.id,
+                        "name": energy_action.energy_action_id.name,
+                        "ext_id": energy_action.energy_action_id.xml_id,
+                    }
+                )
         return res
 
     def get_lower_hierarchy_level(self):

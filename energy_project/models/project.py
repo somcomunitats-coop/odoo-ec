@@ -23,14 +23,20 @@ class Project(models.Model):
     company_name = fields.Char(
         string="Name of the company", related="company_id.name", store=False
     )
+
     inscription_ids = fields.One2many(
         "energy_project.inscription",
         "project_id",
     )
+
     active = fields.Boolean(default=True)
     service_contract_ids = fields.One2many(
-        "energy_project.service_contract", "project_id", auto_join=True
+        "energy_project.service_contract",
+        "project_id",
+        auto_join=True,
+        string="Service Contract",
     )
+
     # address fields
     street = fields.Char(required=True)
     street2 = fields.Char()
@@ -51,6 +57,23 @@ class Project(models.Model):
         default=lambda self: self.env.ref("base.es"),
     )
 
+    def get_default_header_description(self):
+        return _(
+            "This is the form to request to participate in the shared "
+            "self-consumption project that your Energy Community has started registrations for."
+            "\nIt is necessary to fill in all the mandatory data to collect your interest in "
+            "participating in this facility and also information that facilitates the necessary"
+            " subsequent management.\n"
+            "If you have any questions, you can contact {company_email}.".format(
+                company_email=self.env.company.partner_id.email
+            )
+        )
+
+    conf_header_description = fields.Text(
+        string="Header description on website form",
+        default=lambda self: self.get_default_header_description(),
+    )
+
     def monitoring_service(self):
         self.ensure_one()
         service_name = self.env.ref("energy_project.monitoring_service").name
@@ -59,6 +82,4 @@ class Project(models.Model):
             and service_contract.service_id.name == service_name
         )
         if monitoring_contract:
-            return MonitoringService(
-                monitoring_contract.provider_id.backend(), monitoring_contract
-            )
+            return MonitoringService(monitoring_contract.provider_id.backend())

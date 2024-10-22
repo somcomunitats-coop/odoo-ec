@@ -6,14 +6,6 @@ class Inscription(models.Model):
     _name = "energy_project.inscription"
     _description = "Inscriptions for a project"
 
-    _sql_constraints = {
-        (
-            "unique_project_id_partner_id",
-            "unique (project_id, partner_id)",
-            _("Partner is already signed up in this project."),
-        )
-    }
-
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
     )
@@ -34,14 +26,13 @@ class Inscription(models.Model):
     is_member = fields.Char(
         string=_("Typology"), compute="_compute_is_member", readonly=True
     )
-    mandate_id = fields.Many2one(
-        "account.banking.mandate", string="Bank Mandate", required=True
-    )
+    mandate_id = fields.Many2one("account.banking.mandate", string="Bank Mandate")
     acc_number = fields.Char(related="mandate_id.partner_bank_id.acc_number")
     mandate_filtered_ids = fields.One2many(
         "account.banking.mandate", compute="_compute_mandate_filtered_ids"
     )
     name = fields.Char(string="Name", related="partner_id.name")
+    privacy_policy = fields.Boolean(String="Privacy policy")
 
     @api.depends("partner_id")
     def _compute_mandate_filtered_ids(self):

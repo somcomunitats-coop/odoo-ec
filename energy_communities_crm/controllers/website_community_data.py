@@ -193,7 +193,7 @@ class WebsiteCommunityData(http.Controller):
             .search([("external_id", "=", kwargs["lead_id"])])
         )
 
-        energy_services = self._get_energy_service_tag_ids()
+        energy_services = self._get_energy_action_tag_ids()
         form_energy_services = []
 
         # data structures contruction
@@ -307,17 +307,25 @@ class WebsiteCommunityData(http.Controller):
             .mapped(lambda r: {"id": r.code, "name": r.name})
         )
 
-    def _get_energy_service_tags(self):
+    def _get_energy_actions(self):
         return (
-            request.env["crm.tag"]
+            request.env["energy.action"]
             .sudo()
-            .search([("tag_type", "=", "energy_service")])
+            .search([])
             .mapped(
                 lambda r: {
-                    "id": r.tag_ext_id.replace("energy_communities.", ""),
+                    "id": r.xml_id.replace("energy_communities.", ""),
                     "name": r.name,
                 }
             )
+        )
+
+    def _get_energy_action_tag_ids(self):
+        return (
+            request.env["energy.action"]
+            .sudo()
+            .search([])
+            .mapped(lambda r: r.xml_id.replace("energy_communities.", ""))
         )
 
     def _is_lead_pack(self, lead_id, pack_tag_ext_id):
@@ -328,14 +336,6 @@ class WebsiteCommunityData(http.Controller):
                 lambda tag: tag.tag_ext_id == "energy_communities." + pack_tag_ext_id
             )
             return bool(pack_tag)
-
-    def _get_energy_service_tag_ids(self):
-        return (
-            request.env["crm.tag"]
-            .sudo()
-            .search([("tag_type", "=", "energy_service")])
-            .mapped(lambda r: r.tag_ext_id.replace("energy_communities.", ""))
-        )
 
     def _get_legal_forms(self):
         legal_forms = []
@@ -426,7 +426,7 @@ class WebsiteCommunityData(http.Controller):
         # energy_services selection
         if "ce_services" not in values.keys() or values["ce_services"] == "":
             values["ce_services"] = []
-        values["energy_service_options"] = self._get_energy_service_tags()
+        values["energy_service_options"] = self._get_energy_actions()
         # yes_no selection
         values["yes_no_options"] = self._get_localized_options(_YES_NO_OPTIONS)
         # community_status selection

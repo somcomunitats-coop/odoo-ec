@@ -1,6 +1,5 @@
 import base64
 import logging
-from datetime import datetime
 from io import StringIO
 
 import chardet
@@ -58,7 +57,7 @@ class DistributionTableImportWizard(models.TransientModel):
         logger.info("\n\n parse_csv_file INICIO")
         file_data = base64.b64decode(self.import_file)
         df, not_error = self._parse_file(file_data)
-        if not_error and self.check_data_validity(df, distribution_table.type):
+        if not_error and self.check_data_validity(df, distribution_table):
             if self.clean:
                 self.clean_lines(distribution_table)
             self.import_all_lines(df, distribution_table)
@@ -107,13 +106,16 @@ class DistributionTableImportWizard(models.TransientModel):
             self.notification("Error", _("Error parsing the file"))
             return False, False
 
-    def check_data_validity(self, df, table_type):
-        if table_type == "hourly":
+    def check_data_validity(self, df, distribution_table):
+        if distribution_table.type == "hourly":
             grouped = df.groupby(df.columns[0]).sum()
             invalid_hours = grouped[round(grouped.sum(axis=1), 6) != 1.0]
             if not invalid_hours.empty:
                 invalid_hours_list = invalid_hours.index.tolist()
-                self.notification(
+                self.env[
+                    "energy_selfconsumption.create_distribution_table"
+                ].notification(
+                    distribution_table,
                     "Error",
                     _(
                         "The sum of coefficients for the following hours is not equal to 1: %s"
@@ -121,10 +123,13 @@ class DistributionTableImportWizard(models.TransientModel):
                     ),
                 )
                 return False
-        elif table_type == "fixed":
+        elif distribution_table.type == "fixed":
             sum_coefficients = round(df["Coefficient"].sum(), 6)
             if sum_coefficients != 1.0:
-                self.notification(
+                self.env[
+                    "energy_selfconsumption.create_distribution_table"
+                ].notification(
+                    distribution_table,
                     "Error",
                     _(
                         "The sum of coefficients is not equal to 1: %s"
@@ -144,7 +149,12 @@ class DistributionTableImportWizard(models.TransientModel):
             values_list = self.prepare_fixed_csv_values(df, distribution_table)
         elif distribution_table.type == "hourly":
             values_list = self.prepare_hourly_csv_values(df, distribution_table)
-        self.bulk_insert_sql(values_list)
+
+        self.env[
+            "energy_selfconsumption.create_distribution_table"
+        ].create_energy_selfconsumption_supply_point_assignation_sql(
+            values_list, distribution_table
+        )
 
     def prepare_fixed_csv_values(self, df, distribution_table):
         logger.info("\n\n prepare_fixed_csv_values")
@@ -169,57 +179,12 @@ class DistributionTableImportWizard(models.TransientModel):
             break
         return values_list
 
-    def bulk_insert_sql(self, values_list):
-        if not values_list:
-            return
-
-        error = False
-
-        columns = [
-            "distribution_table_id",
-            "supply_point_id",
-            "coefficient",
-            "company_id",
-            "create_uid",
-            "create_date",
-            "write_uid",
-            "write_date",
-        ]
-        data = [
-            (
-                self.env.context.get("active_id"),
-                value["supply_point_id"],
-                float(value["coefficient"]),
-                value["company_id"],
-                self.env.user.id,
-                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                self.env.user.id,
-                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            )
-            for value in values_list
-        ]
-        query = f"""INSERT INTO energy_selfconsumption_supply_point_assignation
-        ({', '.join(columns)})
-        VALUES {', '.join(['%s'] * len(data))}"""
-        logger.error(f"\n\n SQL: \n {query}")
-        try:
-            self.env.cr.execute(query, data)
-            self.env.cr.commit()
-        except Exception as e:
-            self.env.cr.rollback()
-            error = True
-            logger.error(f"Error executing bulk insert query: {e}")
-            self.notification("Error query", f"Query: {query}\nError: {e}")
-
-        if not error:
-            self.notification("Import", "Import completed successfully")
-
     def get_supply_point_assignation_values(self, row, cups, distribution_table):
         if cups:
-            supply_point_id = self.get_supply_point_id(code=cups)
+            supply_point_id = self.get_supply_point_id(cups, distribution_table)
             coefficient = 0
         else:
-            supply_point_id = self.get_supply_point_id(code=row["CUPS"])
+            supply_point_id = self.get_supply_point_id(row["CUPS"], distribution_table)
             coefficient = row["Coefficient"]
 
         return {
@@ -229,12 +194,13 @@ class DistributionTableImportWizard(models.TransientModel):
             "company_id": distribution_table.company_id.id,
         }
 
-    def get_supply_point_id(self, code):
+    def get_supply_point_id(self, code, distribution_table):
         supply_point_id = self.env["energy_selfconsumption.supply_point"].search_read(
             [("code", "=", code)], ["id"]
         )
         if not supply_point_id:
-            self.notification(
+            self.env["energy_selfconsumption.create_distribution_table"].notification(
+                distribution_table,
                 "Error",
                 _("There isn't any supply point with this code: {code}").format(
                     code=code
@@ -254,18 +220,3 @@ class DistributionTableImportWizard(models.TransientModel):
             )
         except ValueError:
             return 0
-
-    def notification(self, subject, body):
-        active_id = self.env.context.get("active_id")
-        distribution_table = self.env[
-            "energy_selfconsumption.distribution_table"
-        ].browse(active_id)
-        try:
-            distribution_table.message_post(
-                body=body,
-                subject=subject,
-                message_type="notification",
-                subtype_xmlid="mail.mt_comment",
-            )
-        except Exception as e:
-            logger.error(f"Error sending notification: {e}")

@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL & SomIT",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.2.0.2",
+    "version": "14.0.2.1.1",
     "depends": [
         "auth_jwt",
         "base_rest_auth_jwt",
@@ -20,7 +20,13 @@
         "energy_selfconsumption",
         "pydantic",
     ],
-    "external_dependencies": {"python": ["pydantic<2", "extendable-pydantic==0.0.6"]},
+    "external_dependencies": {
+        "python": [
+            "pydantic<2",
+            "extendable-pydantic==0.0.6",
+            "email_validator==2.2.0",
+        ]
+    },
     "data": [
         "security/res_users_role_data.xml",
         "security/ir_rule_data.xml",

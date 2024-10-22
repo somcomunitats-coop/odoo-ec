@@ -28,6 +28,14 @@
     groups="group_admin"
   />
 
+        <menuitem
+    id="energy_actions_menu"
+    name="Energy actions"
+    parent="ce_config_menu"
+    action="energy_action_views"
+    groups="group_platform_manager"
+  />
+
   <!-- Hide menu items unless platform manager -->
   <record model="ir.ui.menu" id="community_maps.menu_root">
     <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />

@@ -11,10 +11,24 @@ BackendResponse = namedtuple("BackendResponse", "content, headers, status")
 
 class Backend:
     # Name of the authorization header
-    AUTH_HEADER = "Authorization"
+    AUTH_HEADER: str = "Authorization"
+
+    # Provider api version if is versioned
+    _api_version: str = ""
+
+    # map betwen backend functions and provider endponts
+    # _endpoints = {
+    #    "project_daily_metrics": "/provider/endpoint/{project_id}",
+    # }
+    _endpoints: dict = {}
 
     # Default query params for all calls
-    _default_query_params = []
+    _default_query_params: list = []
+    # query params for specific calls
+    _params: dict = {}
+
+    # Map between provider and energy_project attributes
+    _field_map = {}
 
     def _request(self, url, **kwargs) -> BackendResponse:
         """
@@ -57,3 +71,15 @@ class Backend:
         params = self._params.get(calling_function, []) + self._default_query_params
 
         return {param: value for param, value in kwargs.items() if param in params}
+
+    def _get_raw_points(self, content: list) -> list:
+        raw_points = [
+            {
+                self._field_map[attr]: value
+                for attr, value in point.items()
+                if attr in self._field_map
+            }
+            for point in content
+        ]
+
+        return raw_points
