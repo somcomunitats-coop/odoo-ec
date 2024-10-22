@@ -184,11 +184,15 @@ class CommunityServiceMetricsInfo(BaseModel):
 class EnergyAction(BaseModel):
     class Config:
         title = "Energy Action information"
+        allow_population_by_field_name = True
 
     name: str = Field(
         ...,
         title="name",
         description="Name of the energy action",
+    )
+    type_: str = Field(
+        ..., alias="ext_id", title="Type", description="Type of the energy action"
     )
 
 
