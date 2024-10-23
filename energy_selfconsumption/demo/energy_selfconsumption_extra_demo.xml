@@ -1,0 +1,203 @@
+<odoo>
+         <delete model="energy_selfconsumption.supply_point_assignation" search="[('supply_point_id','=',ref('supply_point_1_selfconsumption_1_demo'))]"/>
+         <delete model="energy_selfconsumption.supply_point_assignation" search="[('supply_point_id','=',ref('supply_point_2_selfconsumption_1_demo'))]"/>
+         <delete model="energy_selfconsumption.supply_point_assignation" search="[('supply_point_id','=',ref('supply_point_3_selfconsumption_1_demo'))]"/>
+         <delete model="energy_selfconsumption.supply_point_assignation" search="[('supply_point_id','=',ref('supply_point_4_selfconsumption_1_demo'))]"/>
+         <delete model="energy_selfconsumption.supply_point_assignation" search="[('supply_point_id','=',ref('supply_point_5_selfconsumption_1_demo'))]"/>
+         <delete model="energy_selfconsumption.supply_point_assignation" search="[('supply_point_id','=',ref('supply_point_6_selfconsumption_1_demo'))]"/>
+         <delete model="energy_selfconsumption.supply_point_assignation" search="[('supply_point_id','=',ref('supply_point_7_selfconsumption_1_demo'))]"/>
+         <delete model="energy_selfconsumption.supply_point_assignation" search="[('supply_point_id','=',ref('supply_point_8_selfconsumption_1_demo'))]"/>
+         <delete model="energy_selfconsumption.supply_point_assignation" search="[('supply_point_id','=',ref('supply_point_9_selfconsumption_1_demo'))]"/>
+         <delete model="energy_selfconsumption.supply_point_assignation" search="[('supply_point_id','=',ref('supply_point_10_selfconsumption_1_demo'))]"/>
+        <record
+    id="distribution_table_1_selfconsumption_1_demo"
+    model="energy_selfconsumption.distribution_table"
+  >
+            <field name="name">DT001</field>
+            <field
+      name="selfconsumption_project_id"
+      ref="selfconsumption_1_community_1_demo"
+    />
+            <field name="type">fixed</field>
+            <field name="state">draft</field>
+            <field
+      name="company_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
+      model="subscription.request"
+    />
+        </record>
+  
+        <record
+    id="supply_point_assignation_1_distribution_table_1_demo"
+    model="energy_selfconsumption.supply_point_assignation"
+  >
+            <field
+      name="distribution_table_id"
+      ref="distribution_table_1_selfconsumption_1_demo"
+    />
+            <field name="supply_point_id" ref="supply_point_1_selfconsumption_1_demo" />
+            <field name="coefficient">0.1321</field>
+            <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+        </record>
+        
+        <record
+    id="supply_point_assignation_2_distribution_table_1_demo"
+    model="energy_selfconsumption.supply_point_assignation"
+  >
+            <field
+      name="distribution_table_id"
+      ref="distribution_table_1_selfconsumption_1_demo"
+    />
+            <field name="supply_point_id" ref="supply_point_2_selfconsumption_1_demo" />
+            <field name="coefficient">0.112</field>
+            <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+        </record>
+
+        <record
+    id="supply_point_assignation_3_distribution_table_1_demo"
+    model="energy_selfconsumption.supply_point_assignation"
+  >
+            <field
+      name="distribution_table_id"
+      ref="distribution_table_1_selfconsumption_1_demo"
+    />
+            <field name="supply_point_id" ref="supply_point_3_selfconsumption_1_demo" />
+            <field name="coefficient">0.101</field>
+            <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+        </record>
+
+        <record
+    id="supply_point_assignation_4_distribution_table_1_demo"
+    model="energy_selfconsumption.supply_point_assignation"
+  >
+            <field
+      name="distribution_table_id"
+      ref="distribution_table_1_selfconsumption_1_demo"
+    />
+            <field name="supply_point_id" ref="supply_point_4_selfconsumption_1_demo" />
+            <field name="coefficient">0.098</field>
+            <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+        </record>
+
+        <record
+    id="supply_point_assignation_5_distribution_table_1_demo"
+    model="energy_selfconsumption.supply_point_assignation"
+  >
+            <field
+      name="distribution_table_id"
+      ref="distribution_table_1_selfconsumption_1_demo"
+    />
+            <field name="supply_point_id" ref="supply_point_5_selfconsumption_1_demo" />
+            <field name="coefficient">0.103</field>
+            <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+        </record>
+
+        <record
+    id="supply_point_assignation_6_distribution_table_1_demo"
+    model="energy_selfconsumption.supply_point_assignation"
+  >
+            <field
+      name="distribution_table_id"
+      ref="distribution_table_1_selfconsumption_1_demo"
+    />
+            <field name="supply_point_id" ref="supply_point_6_selfconsumption_1_demo" />
+            <field name="coefficient">0.1241</field>
+            <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+        </record>
+
+        <record
+    id="supply_point_assignation_7_distribution_table_1_demo"
+    model="energy_selfconsumption.supply_point_assignation"
+  >
+            <field
+      name="distribution_table_id"
+      ref="distribution_table_1_selfconsumption_1_demo"
+    />
+            <field name="supply_point_id" ref="supply_point_7_selfconsumption_1_demo" />
+            <field name="coefficient">0.092</field>
+            <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+        </record>
+
+        <record
+    id="supply_point_assignation_8_distribution_table_1_demo"
+    model="energy_selfconsumption.supply_point_assignation"
+  >
+            <field
+      name="distribution_table_id"
+      ref="distribution_table_1_selfconsumption_1_demo"
+    />
+            <field name="supply_point_id" ref="supply_point_8_selfconsumption_1_demo" />
+            <field name="coefficient">0.071</field>
+            <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+        </record>
+
+        <record
+    id="supply_point_assignation_9_distribution_table_1_demo"
+    model="energy_selfconsumption.supply_point_assignation"
+  >
+            <field
+      name="distribution_table_id"
+      ref="distribution_table_1_selfconsumption_1_demo"
+    />
+            <field name="supply_point_id" ref="supply_point_9_selfconsumption_1_demo" />
+            <field name="coefficient">0.087</field>
+            <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+        </record>
+
+        <record
+    id="supply_point_assignation_10_distribution_table_1_demo"
+    model="energy_selfconsumption.supply_point_assignation"
+  >
+            <field
+      name="distribution_table_id"
+      ref="distribution_table_1_selfconsumption_1_demo"
+    />
+            <field
+      name="supply_point_id"
+      ref="supply_point_10_selfconsumption_1_demo"
+    />
+            <field name="coefficient">0.0798</field>
+            <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+    </record>
+
+</odoo>
