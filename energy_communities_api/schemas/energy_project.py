@@ -1,17 +1,13 @@
 from datetime import date
 from typing import List
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 from .base import BaseListResponse, PaginationLinks
 
 
 class EnergyPoint(BaseModel):
-    class Config:
-        title: "Energy Point"
-        # used for being able to use alias on a List of this type
-        allow_population_by_field_name = True
-
+    model_config = ConfigDict(title="Energy Point", populate_by_name=True)
     """
     Schema for representing a energy value (production, selfconsumption...)
     """

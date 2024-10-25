@@ -2,7 +2,7 @@ from datetime import date
 from enum import Enum
 from typing import List, Optional
 
-from pydantic import AnyHttpUrl, BaseModel, EmailStr, Field
+from pydantic import AnyHttpUrl, BaseModel, EmailStr, Field, ConfigDict
 
 from .base import (
     BaseListResponse,
@@ -13,11 +13,10 @@ from .base import (
 
 
 class CommunityInfo(NaiveOrmModel):
-    class Config:
-        title = "Community info"
-        # used for being able to use alias on a List of this type
-        allow_population_by_field_name = True
-
+    model_config = ConfigDict(title="Community info", populate_by_name=True)
+    """
+    Schema for representing community data (name, image...)
+    """
     id: int = Field(
         ...,
         title="Id",
@@ -36,11 +35,11 @@ class CommunityInfo(NaiveOrmModel):
     )
 
 
-class CommunityServiceInfo(BaseModel):
-    class Config:
-        title = "Community service metrics information"
-        allow_population_by_field_name = True
-
+class CommunityServiceInfo(BaseModel, populate_by_name=True):
+    model_config = ConfigDict(title="Community Service Info")
+    """
+    Community service metrics information
+    """
     id_: int = Field(
         ...,
         alias="id",
@@ -96,18 +95,21 @@ class UnitEnum(str, Enum):
 
 
 class MetricInfo(BaseModel):
-    class Config:
-        title: "Metric info representation"
-
+    model_config = ConfigDict(title="Metric Info")
+    """
+    Metric info representation
+    """
     value: float = Field(title="Value", description="Value of the metric")
     unit: str = Field(title="unit", description="unit for this metric, kWh, grCO2...")
 
 
 class CommunityServiceMetricsInfo(BaseModel):
-    class Config:
-        title: "Community service metrics information"
-        allow_population_by_field_name = True
-
+    model_config = ConfigDict(
+        title="Community Service Metrics Info", populate_by_name=True
+    )
+    """
+    Community service metrics information
+    """
     id_: int = Field(
         ...,
         alias="id",
@@ -182,10 +184,10 @@ class CommunityServiceMetricsInfo(BaseModel):
 
 
 class EnergyAction(BaseModel):
-    class Config:
-        title = "Energy Action information"
-        allow_population_by_field_name = True
-
+    model_config = ConfigDict(title="Energy Action", populate_by_name=True)
+    """
+    Energy Action information
+    """
     name: str = Field(
         ...,
         title="name",
@@ -197,9 +199,10 @@ class EnergyAction(BaseModel):
 
 
 class SocialInfo(BaseModel):
-    class Config:
-        title = "Social links"
-
+    model_config = ConfigDict(title="Social Info")
+    """
+    Social links representation
+    """
     email: EmailStr = Field(..., title="Email", description="Contact email")
     web: AnyHttpUrl = Field(..., title="Web", description="Url of the website")
     twitter: Optional[AnyHttpUrl] = Field(
@@ -217,10 +220,10 @@ class SocialInfo(BaseModel):
 
 
 class EnergyCommunityInfo(BaseModel):
-    class Config:
-        title = "Energy Community information"
-        allow_population_by_field_name = True
-
+    model_config = ConfigDict(title="Energy Community Info", populate_by_name=True)
+    """
+    Energy Community information
+    """
     id: int = Field(
         ...,
         title="Id",

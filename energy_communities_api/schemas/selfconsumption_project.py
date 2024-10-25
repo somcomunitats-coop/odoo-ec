@@ -1,8 +1,6 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, Field
-
-from odoo.addons.pydantic import utils
+from pydantic import Field, ConfigDict
 
 from .base import (
     BaseListResponse,
@@ -13,11 +11,12 @@ from .base import (
 
 
 class SelfConsumptionProjectInfo(NaiveOrmModel):
-    class Config:
-        title: "Selfconumption project info"
-        # used for being able to use alias on a List of this type
-        allow_population_by_field_name = True
-
+    model_config = ConfigDict(
+        title="SelfConsumption Project Info", populate_by_name=True
+    )
+    """
+    Selfconumption project info data
+    """
     project_code: str = Field(
         ...,
         alias="code",
@@ -50,11 +49,12 @@ class SelfConsumptionProjectInfo(NaiveOrmModel):
 
 
 class SelfConsumptionProjectMember(NaiveOrmModel):
-    class Config:
-        title: "Selfconsumption project members info"
-        # used for being able to use alias on a List of this type
-        allow_population_by_field_name = True
-
+    model_config = ConfigDict(
+        title="SelfConsumption Project Member", populate_by_name=True
+    )
+    """
+    Selfconsumption project members info
+    """
     supply_point_code: str = Field(
         ...,
         title="Supply Point Code",

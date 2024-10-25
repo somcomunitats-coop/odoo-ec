@@ -1,17 +1,16 @@
 from datetime import date
 from typing import Optional
 
-from pydantic import BaseModel, Field
-
-from odoo.addons.pydantic import utils
+from pydantic import BaseModel, Field, ConfigDict
 
 DEFAULT_PAGE_SIZE = 20
 
 
 class NaiveOrmModel(BaseModel):
-    class Config:
-        orm_mode = True
-        getter_dict = utils.GenericOdooGetter
+    model_config = ConfigDict(from_attributes=True)
+    """
+    Base Orm class. In charge of mapping Pydantic models with odoo models
+    """
 
 
 class BaseResponse(BaseModel):

@@ -3,7 +3,7 @@ from typing import Any, List
 from urllib import parse
 
 from odoo.api import Environment
-from odoo.http import HttpRequest
+from odoo.http import HTTPRequest
 
 from odoo.addons.component.core import Component, WorkContext
 
@@ -27,7 +27,7 @@ def _previous_url(url_parsed, paging):
 
 
 def _get_pagination_links(
-    request: HttpRequest,
+    request: HTTPRequest,
     total_results: int,
     paging: PaginationLimits = None,
 ) -> PaginationLinks:
@@ -49,7 +49,7 @@ def _get_pagination_links(
 
 
 def single_response(
-    request: HttpRequest,
+    request: HTTPRequest,
     response_class: Any,
     object_: Any,
 ) -> Any:
@@ -64,7 +64,7 @@ def single_response(
 
 
 def list_response(
-    request: HttpRequest,
+    request: HTTPRequest,
     response_class: Any,
     collection: List[Any],
     total_results,
