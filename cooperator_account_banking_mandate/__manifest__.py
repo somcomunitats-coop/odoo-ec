@@ -1,6 +1,6 @@
 {
     "name": "Cooperator Account Banking Mandate",
-    "version": "14.0.1.1.2",
+    "version": "15.0.0.0.1",
     "license": "AGPL-3",
     "summary": """
         This module adds mandate selection to cooperator subscription request.""",
@@ -13,7 +13,7 @@
         "account_banking_sepa_direct_debit",
     ],
     "data": [
-        "views/subscription_request_views.xml",
+        #"views/subscription_request_views.xml",
     ],
     "installable": True,
 }

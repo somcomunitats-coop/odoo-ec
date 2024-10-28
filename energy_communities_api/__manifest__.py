@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL & SomIT",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.2.1.1",
+    "version": "15.0.0.0.1",
     "depends": [
         "auth_jwt",
         "base_rest_auth_jwt",
@@ -31,7 +31,7 @@
         "security/res_users_role_data.xml",
         "security/ir_rule_data.xml",
         "security/ir.model.access.csv",
-        "views/auth_jwt_validator_views.xml",
+        #"views/auth_jwt_validator_views.xml",
     ],
     "demo": [
         "demo/energy_selfconsumption_app_demo.xml",

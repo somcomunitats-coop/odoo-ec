@@ -1,6 +1,6 @@
 {
     "name": "Cooperator Account Payment",
-    "version": "14.0.1.1.0",
+    "version": "15.0.0.0.1",
     "license": "AGPL-3",
     "summary": """
         This module adds support for payment mode to cooperator.""",
@@ -9,8 +9,8 @@
     "website": "https://coopdevs.org",
     "depends": ["cooperator", "account_payment_partner"],
     "data": [
-        "views/product_template_views.xml",
-        "views/subscription_request_views.xml",
+        #"views/product_template_views.xml",
+        #"views/subscription_request_views.xml",
     ],
     "installable": True,
 }
