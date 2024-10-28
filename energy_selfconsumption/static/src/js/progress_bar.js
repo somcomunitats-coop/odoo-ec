@@ -2,115 +2,61 @@
 
 import { Component, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
-import { useField } from "@web/views/fields/use_field";
 
 class ProgressBarWidget extends Component {
   setup() {
-    // Use 'useField' hook to access the current field's value and record
-    this.field = useField();
+    // Obtener valores desde this.props
+    const { record } = this.props;
 
-    // Get options from attrs (similar to the original code)
-    this.max_quantity = this.props.record.data[this.props.attrs.options.max_quantity] || 100; // Maximum quantity
-    this.extra_label = this.props.attrs.options.extra_label || ""; // Extra label
+    // Configurar el estado inicial usando hooks de OWL
+    this.state = useState({
+      max_quantity: record.data["max_distributed_power"] || 100,
+      extra_label: "kW",
+      current_quantity: record.data["distributed_power"] || 0,
+    });
 
-    // Current value
-    this.current_quantity = this.field.value || 0;
-
-    // Calculate percentage
-    this.percentage = Math.min(
-      (this.current_quantity / this.max_quantity) * 100,
+    // Calcular el porcentaje basado en los valores actuales
+    this.state.percentage = Math.min(
+      (this.state.current_quantity / this.state.max_quantity) * 100,
       100
     );
   }
 
   get progressStyle() {
-    return {
-      width: `${this.percentage}%`,
-      height: "100%",
-      backgroundColor: "#7C7BAD"
-    };
+    return `
+      width: ${this.state.percentage}%;
+      height: 100%;
+      background-color: #7C7BAD;
+    `;
   }
 
   get containerStyle() {
-    return {
-      position: "relative",
-      height: "25px",
-      backgroundColor: "#f5f5f5",
-      borderRadius: "4px",
-      border: "1px solid #ccc"
-    };
+    return `
+      position: relative;
+      height: 25px;
+      background-color: #f5f5f5;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    `;
   }
 
   get overlayStyle() {
-    return {
-      position: "absolute",
-      left: "0",
-      top: "0",
-      width: "100%",
-      height: "100%",
-      backgroundColor: "#adb5bd",
-      opacity: "0.3"
-    };
+    return `
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #adb5bd;
+      opacity: 0.3;
+    `;
   }
 }
 
-ProgressBarWidget.template = "energy_selfconsumption.ProgressBarWidgetTemplate";
+ProgressBarWidget.template = "ProgressBarWidgetTemplate";
+//ProgressBarWidget.props = ["options"];
 
 // Register the widget in the field registry
 registry.category("fields").add("progress_bar_widget", ProgressBarWidget);
 
 export default ProgressBarWidget;
-
-
-
-
-
-
-
-
-
-
-odoo.define("energy_selfconsumption.ProgressBarWidget", function (require) {
-  "use strict";
-
-  var AbstractField = require("web.AbstractField");
-  var fieldRegistry = require("web.field_registry");
-
-  var ProgressBarWidget = AbstractField.extend({
-    supportedFieldTypes: ["float"], // You can use 'integer' or 'float' according to the data type
-
-    init: function (parent, state, params) {
-      this._super.apply(this, arguments);
-      // Get field values
-      this.max_quantity = this.record.data[this.attrs.options.max_quantity] || 100; // Maximum quantity
-      this.extra_label = this.attrs.options.extra_label || ""; // Extra label
-      this.current_quantity = this.value || 0; // Amount obtained
-      this.percentage = Math.min(
-        (this.current_quantity / this.max_quantity) * 100,
-        100
-      ); // Percentage
-    },
-
-    _render: function () {
-      // Generate progress bars
-      this.$el.html(`
-                <div class="o_progress_bar">
-                    <div class="progress-bar-container" style="position: relative; height: 25px; background-color: #f5f5f5; border-radius: 4px; border: 1px solid #ccc;">
-                        <div class="progress-bar-green" style="width: ${this.percentage
-        }%; height: 100%; background-color: #7C7BAD;"></div>
-                        <div class="progress-bar-red" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: #adb5bd; opacity: 0.3;"></div>
-                    </div>
-                    <span>${this.percentage.toFixed(2)}%</span>
-                    <span style="display: block;float: right;">${this.current_quantity.toFixed(
-          2
-        )} / ${this.max_quantity.toFixed(2)} ${this.extra_label}</span>
-                </div>
-            `);
-    },
-  });
-
-  // Register the widget in the field record
-  fieldRegistry.add("progress_bar_widget", ProgressBarWidget);
-
-  return ProgressBarWidget;
-});

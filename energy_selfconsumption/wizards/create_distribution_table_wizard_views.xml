@@ -19,6 +19,12 @@
                 widget="progress_bar_widget"
                 options="{'max_quantity': 'max_distributed_power', 'extra_label': 'kWn'}"
               />
+                        <!-- <field name="distributed_power" widget="progress_bar_widget">
+                            <options>
+                                <option name="max_quantity" expr="max_distributed_power"/>
+                                <option name="extra_label">kW</option>
+                            </options>
+                        </field> -->
                         </group>
                         <group>
                             <field name="type" />
