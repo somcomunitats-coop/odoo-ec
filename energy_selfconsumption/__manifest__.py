@@ -41,7 +41,6 @@
         "data/mail_template.xml",
         "data/ir_attachment_data.xml",
         "data/ir_cron.xml",
-        # "views/template_views.xml",
         "views/contract_views.xml",
         "views/selfconsumption_views.xml",
         "views/supply_point_views.xml",
@@ -67,8 +66,8 @@
         "web.assets_common": [
             "energy_selfconsumption/static/src/js/inscription-data-website.js",
             "energy_selfconsumption/static/src/js/list_renderer.js",
+            "energy_selfconsumption/static/src/views/progress_bar_template.xml",
             "energy_selfconsumption/static/src/js/progress_bar.js",
-            "energy_selfconsumption/views/progress_bar_template.xml",
         ]
     },
 }
