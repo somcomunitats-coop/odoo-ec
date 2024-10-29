@@ -64,7 +64,6 @@
     ],
     "assets": {
         "web.assets_common": [
-            "energy_selfconsumption/static/src/js/inscription-data-website.js",
             "energy_selfconsumption/static/src/js/list_renderer.js",
             "energy_selfconsumption/static/src/views/progress_bar_template.xml",
             "energy_selfconsumption/static/src/js/progress_bar.js",

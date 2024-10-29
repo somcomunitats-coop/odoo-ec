@@ -5,6 +5,18 @@
     id="inscription_data_form_fields_template"
     name="inscription_data_form_fields_template"
   >
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css' rel='stylesheet'></link>
+      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+      
+      <script
+        type="text/javascript"
+        src="/energy_communities/static/src/js/data-website.js"
+      />
+      <script
+        type="text/javascript"
+        src="/energy_selfconsumption/static/src/js/inscription-data-website.js"
+      />
       <h1>
           Enrollment in the shared self-consumption project of the Energy Community: <t
         t-esc="company_name"
