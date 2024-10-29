@@ -157,9 +157,14 @@
             <field name="name">Customized delivered energy template</field>
             <field name="model">energy_selfconsumption.distribution_table</field>
             <field name="report_type">csv</field>
-            <field name="report_name">energy_selfconsumption.distribution_table.csv</field>
+            <field
+        name="report_name"
+      >energy_selfconsumption.distribution_table.csv</field>
             <field name="report_file">distribution_table</field>
-            <field name="binding_model_id" ref="energy_selfconsumption.model_energy_selfconsumption_distribution_table"/>
+            <field
+        name="binding_model_id"
+        ref="energy_selfconsumption.model_energy_selfconsumption_distribution_table"
+      />
             <field name="binding_type">report</field>
         </record>
 

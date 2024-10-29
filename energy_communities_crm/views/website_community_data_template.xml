@@ -582,6 +582,21 @@
 
     <template id="community_data_page" name="community_data_page">
       <t t-call="website.layout">
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      />
+        <link
+        href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+        rel='stylesheet'
+      />
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+      />
+
+        <script
+        type="text/javascript"
+        src="/energy_communities_crm/static/src/js/community-data-website.js"
+      />
         <div id="wrap" class="o_portal_wrap">
           <div class="container oe_community_data">
             <div class="row justify-content-center">

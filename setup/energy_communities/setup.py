@@ -16,7 +16,6 @@ setuptools.setup(
             "base_user_role": "odoo-addon-base-user-role==16.0.1.4.1.1",
             "base_user_role_company": "odoo-addon-base-user-role-company==16.0.1.2.0",
             "community_maps": "odoo-addon-community-maps==16.0.1.0.0",
-            # TODO: Related aeat installation problems
             "l10n_es_aeat_sii_oca": "odoo-addon-l10n-es-aeat-sii-oca==16.0.2.0.1",
             "mail_multicompany": "odoo-addon-mail-multicompany==16.0.2.0.0.2",
             "metadata": "odoo-addon-metadata==16.0.1.0.0",

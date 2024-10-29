@@ -6,6 +6,7 @@ from odoo.http import request
 from odoo.addons.energy_communities.controllers.website_form_controllers import (
     WebsiteFormController,
 )
+from odoo.addons.energy_communities.utils import get_translation
 
 
 class WebsiteInscriptionsFormController(WebsiteFormController):
@@ -234,13 +235,12 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             base_url=request.env["ir.config_parameter"].sudo().get_param("web.base.url")
         )
 
-    def get_translate_field_label(self, data_fields, values, field_key):
-        return request.env["ir.translation"]._get_source(
-            name="addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py",
-            types="code",
-            lang=request.env.context["lang"],
-            source=self.get_data_main_fields()[field_key],
-        )
+    def get_translate_field_label(self, source):
+        mods = "energy_communities_crm"
+        lang = "en"
+        if "lang" in request.env.context:
+            lang = request.env.context["lang"][:-3]
+        return get_translation(self.get_data_main_fields()[source], lang, mods)
 
     # Filling in extra values
     def get_fill_values_custom(self, values):

@@ -48,9 +48,4 @@
     "demo": [
         "demo/crm_team_demo.xml",
     ],
-    "assets": {
-        "web.assets_common": [
-            "energy_communities_crm/static/src/js/community-data-website.js",
-        ]
-    },
 }
