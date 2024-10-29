@@ -1,12 +1,12 @@
 /** @odoo-module **/
 
-import { Component, useState } from "@odoo/owl";
-import { registry } from "@web/core/registry";
+import {Component, useState} from "@odoo/owl";
+import {registry} from "@web/core/registry";
 
 class ProgressBarWidget extends Component {
   setup() {
     // Obtener valores desde this.props
-    const { record } = this.props;
+    const {record} = this.props;
 
     // Configurar el estado inicial usando hooks de OWL
     this.state = useState({

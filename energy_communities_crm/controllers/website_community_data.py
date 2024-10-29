@@ -4,12 +4,12 @@ from datetime import datetime
 
 from odoo import _, http
 from odoo.http import request
-from odoo.addons.web.controllers.webclient import WebClient
-from odoo.addons.energy_communities.utils import get_translation
 
 from odoo.addons.energy_communities.models.res_company import (
     _LEGAL_FORM_VALUES,
 )
+from odoo.addons.energy_communities.utils import get_translation
+from odoo.addons.web.controllers.webclient import WebClient
 
 _COMMUNITY_DATA__FIELDS = {}
 _COMMUNITY_DATA__GENERAL_FIELDS = {
@@ -405,7 +405,9 @@ class WebsiteCommunityData(http.Controller):
         # form keys
         for field_key in _COMMUNITY_DATA__FIELDS.keys():
             # values[field_key + "_label"] = _COMMUNITY_DATA__FIELDS[field_key]
-            values[field_key + "_label"] = self._get_translation(_COMMUNITY_DATA__FIELDS[field_key])
+            values[field_key + "_label"] = self._get_translation(
+                _COMMUNITY_DATA__FIELDS[field_key]
+            )
             # values[field_key + "_label"] = request.env["ir.translation"]._get_source(
             #     name="addons/energy_communities_crm/controllers/website_community_data.py",
             #     types="code",

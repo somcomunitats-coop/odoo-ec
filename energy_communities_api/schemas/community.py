@@ -2,7 +2,7 @@ from datetime import date
 from enum import Enum
 from typing import List, Optional
 
-from pydantic import AnyHttpUrl, BaseModel, EmailStr, Field, ConfigDict
+from pydantic import AnyHttpUrl, BaseModel, ConfigDict, EmailStr, Field
 
 from .base import (
     BaseListResponse,

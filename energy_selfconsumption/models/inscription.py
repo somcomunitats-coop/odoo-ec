@@ -9,17 +9,21 @@ class Inscription(models.Model):
     }
     _description = "Inscriptions for a self-consumption"
 
-    @api.constrains('project_id', 'partner_id', 'code')
+    @api.constrains("project_id", "partner_id", "code")
     def _constraint_unique(self):
         for record in self:
-                exist = self.search([
-                     ('id','!=',record.id),
-                     ('project_id','=',record.project_id),
-                     ('partner_id','=',record.partner_id),
-                     ('code','=',record.code),
-                     ])
-                if exist:
-                    raise ValidationError(_("Partner is already signed up in this project with that cups."))
+            exist = self.search(
+                [
+                    ("id", "!=", record.id),
+                    ("project_id", "=", record.project_id),
+                    ("partner_id", "=", record.partner_id),
+                    ("code", "=", record.code),
+                ]
+            )
+            if exist:
+                raise ValidationError(
+                    _("Partner is already signed up in this project with that cups.")
+                )
 
     inscription_id = fields.Many2one(
         "energy_project.inscription", required=True, ondelete="cascade"

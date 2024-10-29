@@ -1,11 +1,7 @@
-
 var oe_inscription_website_data = {
   start: function () {
     $(".oe_website_data").each(function () {
-      oe_website_data.OnDatePicker(
-        ".o_website_form_date",
-        ".o_website_form_date_past"
-      );
+      oe_website_data.OnDatePicker(".o_website_form_date", ".o_website_form_date_past");
 
       oe_website_data.onGroupDisable(".form-group-disabled");
 
@@ -51,5 +47,3 @@ var oe_inscription_website_data = {
 $(document).ready(function () {
   oe_inscription_website_data.start();
 });
-
-

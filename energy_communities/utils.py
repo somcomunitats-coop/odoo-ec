@@ -1,9 +1,9 @@
 from contextlib import contextmanager
 
 from odoo.api import Environment
+from odoo.tools.translate import code_translations
 
 from odoo.addons.component.core import Component, WorkContext
-from odoo.tools.translate import code_translations
 
 
 @contextmanager
@@ -21,6 +21,7 @@ def user_creator(
         collection=backend,
     )
     yield work.component(usage="user.create")
+
 
 def get_translation(source, lang, mods):
     translation = code_translations.get_web_translations(mods, lang)
