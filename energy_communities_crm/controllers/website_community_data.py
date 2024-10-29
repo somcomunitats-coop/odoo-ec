@@ -4,6 +4,8 @@ from datetime import datetime
 
 from odoo import _, http
 from odoo.http import request
+from odoo.addons.web.controllers.webclient import WebClient
+from odoo.addons.energy_communities.utils import get_translation
 
 from odoo.addons.energy_communities.models.res_company import (
     _LEGAL_FORM_VALUES,
@@ -249,13 +251,10 @@ class WebsiteCommunityData(http.Controller):
     #
     # GETTERS
     #
-    def _get_translation(self, source):
-        return request.env["ir.translation"]._get_source(
-            name="addons/energy_communities_crm/controllers/website_community_data.py",
-            types="code",
-            lang=request.env.context["lang"],
-            source=source,
-        )
+    def _get_translation(self, source, lang="en", mods="energy_communities_crm"):
+        if "lang" in request.env.context:
+            lang = request.env.context["lang"][:-3]
+        return get_translation(source, lang, mods)
 
     def _get_localized_options(self, original_options):
         localized_options = []
@@ -263,12 +262,13 @@ class WebsiteCommunityData(http.Controller):
             localized_options.append(
                 {
                     "id": option["id"],
-                    "name": request.env["ir.translation"]._get_source(
-                        name="addons/energy_communities_crm/controllers/website_community_data.py",
-                        types="code",
-                        lang=request.env.context["lang"],
-                        source=option["name"],
-                    ),
+                    "name": self._get_translation(option["name"]),
+                    # "name": request.env["ir.translation"]._get_source(
+                    #     name="addons/energy_communities_crm/controllers/website_community_data.py",
+                    #     types="code",
+                    #     lang=request.env.context["lang"],
+                    #     source=option["name"],
+                    # ),
                 }
             )
         return localized_options
@@ -343,12 +343,13 @@ class WebsiteCommunityData(http.Controller):
             legal_forms.append(
                 {
                     "id": legal_form_id,
-                    "name": request.env["ir.translation"]._get_source(
-                        name="addons/energy_communities/models/res_company.py",
-                        types="code",
-                        lang=request.env.context["lang"],
-                        source=legal_form_name,
-                    ),
+                    "name": self._get_translation(legal_form_name),
+                    # "name": request.env["ir.translation"]._get_source(
+                    #     name="addons/energy_communities/models/res_company.py",
+                    #     types="code",
+                    #     lang=request.env.context["lang"],
+                    #     source=legal_form_name,
+                    # ),
                 }
             )
         return legal_forms
@@ -404,12 +405,13 @@ class WebsiteCommunityData(http.Controller):
         # form keys
         for field_key in _COMMUNITY_DATA__FIELDS.keys():
             # values[field_key + "_label"] = _COMMUNITY_DATA__FIELDS[field_key]
-            values[field_key + "_label"] = request.env["ir.translation"]._get_source(
-                name="addons/energy_communities_crm/controllers/website_community_data.py",
-                types="code",
-                lang=request.env.context["lang"],
-                source=_COMMUNITY_DATA__FIELDS[field_key],
-            )
+            values[field_key + "_label"] = self._get_translation(_COMMUNITY_DATA__FIELDS[field_key])
+            # values[field_key + "_label"] = request.env["ir.translation"]._get_source(
+            #     name="addons/energy_communities_crm/controllers/website_community_data.py",
+            #     types="code",
+            #     lang=request.env.context["lang"],
+            #     source=_COMMUNITY_DATA__FIELDS[field_key],
+            # )
             values[field_key + "_key"] = field_key
         # language selection
         values["lang_options"] = self._get_langs()

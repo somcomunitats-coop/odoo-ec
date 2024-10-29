@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-  <!-- <template
-    id="assets_frontend_inscription_data"
-    inherit_id="web.assets_frontend"
-    name="inscription_data_website_script"
-  >
-        <xpath expr="." position="inside">
-            <script
-        type="text/javascript"
-        src="/energy_communities/static/src/js/data-website.js"
-      />
-            <script
-        type="text/javascript"
-        src="/energy_selfconsumption/static/src/js/inscription-data-website.js"
-      />
-        </xpath>
-    </template> -->
-
     <template
     id="inscription_data_form_fields_template"
     name="inscription_data_form_fields_template"
