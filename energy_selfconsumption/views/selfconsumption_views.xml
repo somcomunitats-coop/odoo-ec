@@ -257,8 +257,10 @@
                                             <field name="quantity" />
                                         </tree>
                                         <form>
-                                            <field name="name" />
-                                            <field name="quantity" />
+                                            <group>
+                                              <field name="name" />
+                                              <field name="quantity" />
+                                            </group>
                                         </form>
                                     </field>
                                 </group>
