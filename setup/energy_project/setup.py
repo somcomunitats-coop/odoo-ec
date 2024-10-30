@@ -1,11 +1,12 @@
 import setuptools
 
 setuptools.setup(
-    setup_requires=['setuptools-odoo'],
+    setup_requires=["setuptools-odoo"],
     odoo_addon={
-       "depends_override": {
-            "cooperator": "odoo14-addon-cooperator>=14.0.2.1.1",
-            "account_banking_mandate": "odoo14-addon-account-banking-mandate>=14.0.1.2.0",
-       }
+        "depends_override": {
+            # TODO: Missing v15 versions
+            # "cooperator": "odoo14-addon-cooperator>=14.0.2.1.1",
+            "account_banking_mandate": "odoo-addon-account-banking-mandate>=15.0.2.1.4",
+        }
     },
 )
