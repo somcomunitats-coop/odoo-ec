@@ -4,7 +4,6 @@ setuptools.setup(
     setup_requires=["setuptools-odoo"],
     odoo_addon={
         "depends_override": {
-            # TODO: modules missing on v15
             # "contract_queue_job": "odoo14-addon-contract-queue-job==14.0.1.0.1.dev3",
             # "contract_mandate": "odoo14-addon-contract-mandate==14.0.1.0.1",
             # "energy_communities": "odoo14-addon-energy-communities>=14.0.9.4.0",

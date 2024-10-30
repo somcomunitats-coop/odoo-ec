@@ -4,7 +4,6 @@ setuptools.setup(
     setup_requires=["setuptools-odoo"],
     odoo_addon={
         "depends_override": {
-            # TODO: no 15.0 version!
             # "auth_jwt": "odoo14-addon-auth-jwt==14.0.2.1.2",
             # "base_rest_auth_jwt": "odoo14-addon-base-rest-auth-jwt==14.0.1.1.0",
             # "energy_communities": "odoo14-addon-energy-communities>=14.0.9.4.0",
