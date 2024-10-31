@@ -22,15 +22,15 @@
     ],
     "external_dependencies": {
         "python": [
-            "pydantic<2",
+            "pydantic==1.10.18",
             "extendable-pydantic==0.0.6",
             "email_validator==2.2.0",
         ]
     },
     "data": [
-        "security/res_users_role_data.xml",
-        "security/ir_rule_data.xml",
-        "security/ir.model.access.csv",
+        #"security/res_users_role_data.xml",
+        #"security/ir_rule_data.xml",
+        #"security/ir.model.access.csv",
         # "views/auth_jwt_validator_views.xml",
     ],
     "demo": [
