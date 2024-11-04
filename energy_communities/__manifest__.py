@@ -20,7 +20,7 @@
         "contacts",
         "event",
         "l10n_es_aeat",
-        # "l10n_es_aeat_sii_oca",
+        "l10n_es_aeat_sii_oca",
         "mail_multicompany",
         "metadata",
         "partner_firstname",
