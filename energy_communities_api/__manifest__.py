@@ -12,7 +12,7 @@
     "version": "14.0.2.1.1",
     "depends": [
         "auth_jwt",
-        "base_rest_auth_jwt",
+        #"base_rest_auth_jwt",
         "base_rest_pydantic",
         "base_rest",
         "component",
