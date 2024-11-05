@@ -8,7 +8,7 @@
           eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_confirmation')]"
         />
             </function>
-            <value eval="{'noupdate': False}" />
+            <value eval="{'noupdate': False}}" />
         </function>
 
         <record id="cooperator.email_template_confirmation" model="mail.template">
@@ -17,24 +17,24 @@
       >Confirmation Email for CE Subscription Request Receipt</field>
             <field
         name="email_from"
-      >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
+      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
       <field
         name="email_cc"
-      >${((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and
+      >{{((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and
       object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or
-      object.company_id.parent_id.email)) or '')|safe}</field>
+      object.company_id.parent_id.email)) or '')}}</field>
             <field
         name="subject"
       >[Som Comunitats] Application to become Community membership</field>
-            <field name="email_to">${object.email}</field>
+            <field name="email_to">{{object.email}}</field>
             <field
         name="reply_to"
-      >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
+      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_subscription_request" />
             <field name="auto_delete" eval="False" />
             <field
         name="lang"
-      >${(object.lang or object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+      >{{(object.lang or object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}}</field>
             <field name="is_cooperator_template" eval="True" />
             <field
         name="body_html"
@@ -46,23 +46,23 @@
     <p>In the coming weeks we will contact you to indicate the next steps</p>
     <p>Here is a copy of the data we received:</p>
     <div id="field_list_div" style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; ">
-        <p> - Request to join: ${object.company_id.name}</p>
-        <p> - Firstname: ${object.firstname}</p>
-        <p> - Lastname: ${object.lastname}</p>
-        <p> - VAT: ${object.vat}</p>
-        <p> - Address: ${object.address}</p>
-        <p> - Zip code: ${object.zip_code}</p>
-        <p> - City: ${object.city}</p>
-        <p> - Country: ${object.country_id.name}</p>
-        <p> - Email: ${object.email}</p>
-        <p> - Phone: ${(object.phone or '')}</p>
-        <p> - Gender: ${dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]}</p>
-        <p> - Birthdate: ${object.birthdate}</p>
-        <p> - Language: ${dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}</p>
-        <p> - Initial share amount: ${object.subscription_amount}</p>
+        <p> - Request to join: {{object.company_id.name}}</p>
+        <p> - Firstname: {{object.firstname}}</p>
+        <p> - Lastname: {{object.lastname}}</p>
+        <p> - VAT: {{object.vat}}</p>
+        <p> - Address: {{object.address}}</p>
+        <p> - Zip code: {{object.zip_code}}</p>
+        <p> - City: {{object.city}}</p>
+        <p> - Country: {{object.country_id.name}}</p>
+        <p> - Email: {{object.email}}</p>
+        <p> - Phone: {{(object.phone or '')}}</p>
+        <p> - Gender: {{dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]}}</p>
+        <p> - Birthdate: {{object.birthdate}}</p>
+        <p> - Language: {{dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}}</p>
+        <p> - Initial share amount: {{object.subscription_amount}}</p>
     % if object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit':
-        <p> - Bank account: ${object.iban}</p>
-        <p> - I authorize bank receipts to be sent to this account: ${object.mandate_approved and 'SI' or 'NO'}</p>
+        <p> - Bank account: {{object.iban}}</p>
+        <p> - I authorize bank receipts to be sent to this account: {{object.mandate_approved and 'SI' or 'NO'}}</p>
     % endif
     </div>
     <br />
@@ -80,7 +80,7 @@
           eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_confirmation')]"
         />
             </function>
-            <value eval="{'noupdate': True}" />
+            <value eval="{'noupdate': True}}" />
         </function>
 
         <record id="email_template_confirmation_company" model="mail.template">
@@ -89,24 +89,24 @@
       >Confirmation Email for CE Subscription Request Receipt</field>
             <field
         name="email_from"
-      >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
+      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field
         name="email_cc"
-      >${((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and
+      >{{((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and
       object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or
-      object.company_id.parent_id.email)) or '')|safe}</field>
+      object.company_id.parent_id.email)) or '')}}</field>
             <field
         name="subject"
       >[Som Comunitats] Application to become Community membership</field>
-            <field name="email_to">${object.email}</field>
+            <field name="email_to">{{object.email}}</field>
             <field
         name="reply_to"
-      >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
+      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_subscription_request" />
             <field name="auto_delete" eval="False" />
             <field
         name="lang"
-      >${(object.lang or object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+      >{{(object.lang or object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}}</field>
             <field name="is_cooperator_template" eval="True" />
             <field
         name="body_html"
@@ -118,26 +118,26 @@
     <p>In the coming weeks we will contact you to indicate the next steps</p>
     <p>Here is a copy of the data we received:</p>
     <div id="field_list_div" style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34); background-color: #FFF; ">
-        <p> - Request to join: ${object.company_id.name}</p>
-        <p> - Company Name: ${object.company_name}</p>
-        <p> - Company Email: ${object.company_email}</p>
-        <p> - VAT: ${object.vat}</p>
-        <p> - Address: ${object.address}</p>
-        <p> - Zip code: ${object.zip_code}</p>
-        <p> - City: ${object.city}</p>
-        <p> - Country: ${object.country_id.name}</p>
-        <p> - Firstname: ${object.firstname}</p>
-        <p> - Lastname: ${object.lastname}</p>
-        <p> - Function: ${object.contact_person_function}</p>
-        <p> - Email: ${object.email}</p>
-        <p> - Phone: ${(object.phone or '')}</p>
-        <p> - Gender: ${dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]}</p>
-        <p> - Birthdate: ${object.birthdate}</p>
-        <p> - Language: ${dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}</p>
-        <p> - Initial share amount: ${object.subscription_amount}</p>
+        <p> - Request to join: {{object.company_id.name}}</p>
+        <p> - Company Name: {{object.company_name}}</p>
+        <p> - Company Email: {{object.company_email}}</p>
+        <p> - VAT: {{object.vat}}</p>
+        <p> - Address: {{object.address}}</p>
+        <p> - Zip code: {{object.zip_code}}</p>
+        <p> - City: {{object.city}}</p>
+        <p> - Country: {{object.country_id.name}}</p>
+        <p> - Firstname: {{object.firstname}}</p>
+        <p> - Lastname: {{object.lastname}}</p>
+        <p> - Function: {{object.contact_person_function}}</p>
+        <p> - Email: {{object.email}}</p>
+        <p> - Phone: {{(object.phone or '')}}</p>
+        <p> - Gender: {{dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]}}</p>
+        <p> - Birthdate: {{object.birthdate}}</p>
+        <p> - Language: {{dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]}}</p>
+        <p> - Initial share amount: {{object.subscription_amount}}</p>
     % if object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit':
-        <p> - Bank account: ${object.iban}</p>
-        <p> - I authorize bank receipts to be sent to this account: ${object.mandate_approved and 'SI' or 'NO'}</p>
+        <p> - Bank account: {{object.iban}}</p>
+        <p> - I authorize bank receipts to be sent to this account: {{object.mandate_approved and 'SI' or 'NO'}}</p>
     % endif
     </div>
     <br />
@@ -153,38 +153,38 @@
             <field name="name">Confirmation Email for CE Voluntary Share Receipt</field>
             <field
         name="email_from"
-      >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
+      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field
         name="subject"
-      >Contribute to ${object.company_id.name} Ref. ACSV${object.id}</field>
-            <field name="email_to">${object.email}</field>
+      >Contribute to {{object.company_id.name}} Ref. ACSV{{object.id}}</field>
+            <field name="email_to">{{object.email}}</field>
             <field
         name="email_cc"
-      >${((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and
+      >{{((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and
       object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or
-      object.company_id.parent_id.email)) or '')|safe}</field>
+      object.company_id.parent_id.email)) or '')}}</field>
             <field
         name="reply_to"
-      >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
+      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_subscription_request" />
             <field name="auto_delete" eval="False" />
             <field
         name="lang"
-      >${(object.lang or object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+      >{{(object.lang or object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}}</field>
             <field name="is_cooperator_template" eval="True" />
             <field
         name="body_html"
       ><![CDATA[
-    <p>Dear ${object.firstname},</p>
+    <p>Dear {{object.firstname}},</p>
     <p>
         We confirm that we have correctly received your request to make a voluntary contribution to the capital
-        social of <b>${object.company_id.name}</b>, with the following data:
+        social of <b>{{object.company_id.name}}</b>, with the following data:
     </p>
     <ul>
-        <li>Partner VAT: <b>${object.vat}</b></li>
-        <li>Partner name: <b>${object.firstname} ${object.lastname}</b></li>
-        <li>Charging account: <b>${object.iban}</b></li>
-        <li>Subscription amount: <b>${object.subscription_amount}€</b></li>
+        <li>Partner VAT: <b>{{object.vat}}</b></li>
+        <li>Partner name: <b>{{object.firstname}} {{object.lastname}}</b></li>
+        <li>Charging account: <b>{{object.iban}}</b></li>
+        <li>Subscription amount: <b>{{object.subscription_amount}}€</b></li>
     </ul>
     <p>
         In the next few days you will receive the bank charge in this account, please verify that all the data
@@ -200,9 +200,9 @@
         Thank you for your involvement with the cooperative and inform you that for any doubt or clarification you can
         consult
         our website:
-        <a href="${object.company_id.website}"> ${object.company_id.website}</a>
+        <a href="{{object.company_id.website}}"> {{object.company_id.website}}</a>
         or send us an email to
-        <a href="${object.company_id.email}">${object.company_id.email}</a>
+        <a href="{{object.company_id.email}}">{{object.company_id.email}}</a>
     </p>
     <p>
         Get the word out by explaining the project to family and friends. The more we are, the further we will go!
@@ -214,9 +214,9 @@
         Sincerely,
     </p>
     <p>
-        ${object.company_id.name} team
+        {{object.company_id.name}} team
     </p>
-    <img src="/web/image/res.company/${object.company_id.id}/logo" style="width: 150px;height: 80px;"/>
+    <img src="/web/image/res.company/{{object.company_id.id}}/logo" style="width: 150px;height: 80px;"/>
             ]]></field>
         </record>
 
@@ -227,21 +227,21 @@
           eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_release_capital')]"
         />
             </function>
-            <value eval="{'noupdate': False}" />
+            <value eval="{'noupdate': False}}" />
         </function>
 
         <record id="cooperator.email_template_release_capital" model="mail.template">
             <field name="name">Request email to Release Capital for CE</field>
             <field
         name="email_from"
-      >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
+      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field
         name="subject"
-      >[Som Comunitats] Request to become member of Energy Community ${object.company_id.name}</field>
-            <field name="partner_to">${object.partner_id.id}</field>
+      >[Som Comunitats] Request to become member of Energy Community {{object.company_id.name}}</field>
+            <field name="partner_to">{{object.partner_id.id}}</field>
             <field
         name="reply_to"
-      >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
+      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="account.model_account_move" />
             <field name="auto_delete" eval="False" />
             <field name="report_template" />
@@ -249,64 +249,64 @@
             <field name="report_template" ref="action_cooperator_invoices" />
             <field
                 name="report_name"
-            >${(object.name or "capital_release_request").replace("/", "_")}${object.state == "draft" and "_draft" or ""}</field>
+            >{{(object.name or "capital_release_request").replace("/", "_")}}{{object.state == "draft" and "_draft" or ""}}</field>
              -->
-            <field name="lang">${object.partner_id.lang}</field>
+            <field name="lang">{{object.partner_id.lang}}</field>
             <field name="is_cooperator_template" eval="True" />
             <field
         name="body_html"
       ><![CDATA[
 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
 
-    <p>Hello ${object.subscription_request.firstname},</p>
+    <p>Hello {{object.subscription_request.firstname}},</p>
     </br>
     % if object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit':
-    <p>Your request to become member of Energy Community ${object.company_id.name} is already underway!</p>
+    <p>Your request to become member of Energy Community {{object.company_id.name}} is already underway!</p>
     </br>
-    <p>We will shortly issue a bank receipt to your bank account (${object.subscription_request.iban}) for the collection of the initial mandatory contribution (${object.amount_total}€)</p>
+    <p>We will shortly issue a bank receipt to your bank account ({{object.subscription_request.iban}}) for the collection of the initial mandatory contribution ({{object.amount_total}}€)</p>
     </br>
-    <p>Once we have been able to process this payment, you will receive a final welcome email where we will provide you with your membership number that will link you to the Energy Community ${object.company_id.name}</p>
+    <p>Once we have been able to process this payment, you will receive a final welcome email where we will provide you with your membership number that will link you to the Energy Community {{object.company_id.name}}</p>
     </br>
     % endif
     % if object.payment_mode_id.payment_method_id.code != 'sepa_direct_debit':
-    <p>Your request to become member of Energy Community ${object.company_id.name} is already underway! In order to complete it you must make a bank deposit of the amount indicated below:</p>
+    <p>Your request to become member of Energy Community {{object.company_id.name}} is already underway! In order to complete it you must make a bank deposit of the amount indicated below:</p>
     </br>
-    <p>- Initial registration fee amount: ${object.amount_total} € </p>
-    <p>- Banck account number: ${(object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number) or 'ESXX XXXX XXXX XX XXXXXXXXXX'}</p>
-    <p>- Receiver: ${object.company_id.name}</p>
+    <p>- Initial registration fee amount: {{object.amount_total}} € </p>
+    <p>- Banck account number: {{(object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number) or 'ESXX XXXX XXXX XX XXXXXXXXXX'}}</p>
+    <p>- Receiver: {{object.company_id.name}}</p>
     <p>- Concept: Your first and last names</p>
     </br>
-    <p>Once the payment is made, please send us the document proof of it by email to ${(object.company_id.coop_email_contact or object.company_id.email)|safe} </p>
+    <p>Once the payment is made, please send us the document proof of it by email to {{(object.company_id.coop_email_contact or object.company_id.email_formatted)}} </p>
     </br>
     % endif
     <p>Many thanks and see you soon!</p>
     </br>
-    <p>${object.company_id.name}.</p>
+    <p>{{object.company_id.name}}.</p>
 
     % if object.company_id.street:
-        ${object.company_id.street}
+        {{object.company_id.street}}
     % endif
     % if object.company_id.street2:
-        ${object.company_id.street2}<br/>
+        {{object.company_id.street2}}<br/>
     % endif
     % if object.company_id.city or object.company_id.zip:
-        ${object.company_id.zip} ${object.company_id.city}<br/>
+        {{object.company_id.zip}} {{object.company_id.city}}<br/>
     % endif
     % if object.company_id.country_id:
-        ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>
+        {{object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''}} {{object.company_id.country_id.name or ''}}<br/>
     % endif
     % if object.company_id.phone:
-        Phone:&nbsp; ${object.company_id.phone}
+        Phone:&nbsp; {{object.company_id.phone}}
     % endif
 
     % if object.company_id.website:
         <div>
-            Web :&nbsp;<a href="${object.company_id.website}">${object.company_id.website}</a>
+            Web :&nbsp;<a href="{{object.company_id.website}}">{{object.company_id.website}}</a>
         </div>
     %endif
 
     <div>
-        <img src=${object.company_id.logo_url}>
+        <img src={{object.company_id.logo_url}}>
     </div>
 </div>
             ]]></field>
@@ -318,7 +318,7 @@
           eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_release_capital')]"
         />
             </function>
-            <value eval="{'noupdate': True}" />
+            <value eval="{'noupdate': True}}" />
         </function>
 
 
@@ -330,7 +330,7 @@
           eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_certificat')]"
         />
             </function>
-            <value eval="{'noupdate': False}" />
+            <value eval="{'noupdate': False}}" />
         </function>
 
         <record id="cooperator.email_template_certificate" model="mail.template">
@@ -339,14 +339,14 @@
       >Confirmation email for CE initial payment Received</field>
             <field
         name="email_from"
-      >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
+      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field
         name="subject"
-      >Wellcome to the Energy Community ${object.env.company.name}!</field>
-            <field name="partner_to">${object.id}</field>
+      >Wellcome to the Energy Community {{object.env.company.name}}!</field>
+            <field name="partner_to">{{object.id}}</field>
             <field
         name="reply_to"
-      >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
+      >{{(object.company_id.coop_email_contact or object.company_id.email)}}</field>
             <field name="model_id" ref="model_res_partner" />
             <field name="auto_delete" eval="False" />
             <field name="report_template" />
@@ -354,52 +354,52 @@
             <field name="report_template" ref="action_cooperator_report_certificat" />
             <field
                 name="report_name"
-            >Certificate ${(object.cooperator_register_number or '')}</field>
+            >Certificate {{(object.cooperator_register_number or '')}}</field>
             -->
-            <field name="lang">${object.lang}</field>
+            <field name="lang">{{object.lang}}</field>
             <field name="is_cooperator_template" eval="True" />
             <field
         name="body_html"
       ><![CDATA[
 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
 
-    <p>Hello ${object.subscription_request_ids[0].firstname},</p>
+    <p>Hello {{object.subscription_request_ids[0].firstname}},</p>
     </br>
-    <p>We welcome you to the Energy Community ${object.env.company.name}!</p>
+    <p>We welcome you to the Energy Community {{object.env.company.name}}!</p>
     <p>You have succesfully finished the incoming process so you are now a member of our community!</p>
     </br>
-    <p>Here you have your community member number: <strong>${(object.cooperator_register_number or 'XXX')}</strong></p>
+    <p>Here you have your community member number: <strong>{{(object.cooperator_register_number or 'XXX')}}</strong></p>
     </br>
     <p>Do not hesitate to ask us if you have any question by repliying to this email.</p>
     <br/>
     <p>Many thanks and see you soon!</p>
     </br>
-    <p>${object.env.company.name}.</p>
+    <p>{{object.env.company.name}}.</p>
 
     % if object.env.company.street:
-        ${object.env.company.street}
+        {{object.env.company.street}}
     % endif
     % if object.env.company.street2:
-        ${object.env.company.street2}<br/>
+        {{object.env.company.street2}}<br/>
     % endif
     % if object.env.company.city or object.env.company.zip:
-        ${object.env.company.zip} ${object.env.company.city}<br/>
+        {{object.env.company.zip}} {{object.env.company.city}}<br/>
     % endif
     % if object.env.company.country_id:
-        ${object.env.company.state_id and ('%s, ' % object.env.company.state_id.name) or ''} ${object.env.company.country_id.name or ''}<br/>
+        {{object.env.company.state_id and ('%s, ' % object.env.company.state_id.name) or ''}} {{object.env.company.country_id.name or ''}}<br/>
     % endif
     % if object.env.company.phone:
-        Phone:&nbsp; ${object.env.company.phone}
+        Phone:&nbsp; {{object.env.company.phone}}
     % endif
 
     % if object.env.company.website:
         <div>
-            Web :&nbsp;<a href="${object.env.company.website}">${object.env.company.website}</a>
+            Web :&nbsp;<a href="{{object.env.company.website}}">{{object.env.company.website}}</a>
         </div>
     %endif
 
     <div>
-        <img src=${object.env.company.logo_url}>
+        <img src={{object.env.company.logo_url}}>
     </div>
 </div>
             ]]></field>
@@ -411,46 +411,46 @@
           eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_certificat')]"
         />
             </function>
-            <value eval="{'noupdate': True}" />
+            <value eval="{'noupdate': True}}" />
         </function>
 
         <record id="email_template_conditions_voluntary_share" model="mail.template">
             <field name="name">Conditions Email for CE Voluntary Share Receipt</field>
             <field
         name="email_from"
-      >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
+      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field
         name="subject"
-      >Conditions Share Capital to ${object.company_id.name} Ref. ACSV${object.id}</field>
-            <field name="email_to">${object.email}</field>
+      >Conditions Share Capital to {{object.company_id.name}} Ref. ACSV{{object.id}}</field>
+            <field name="email_to">{{object.email}}</field>
             <field name="email_cc" />
             <field
         name="reply_to"
-      >${(object.company_id.coop_email_contact or object.company_id.email)|safe}</field>
+      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_res_partner" />
             <field name="auto_delete" eval="False" />
             <field
         name="lang"
-      >${(object.lang or object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}</field>
+      >{{(object.lang or object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}}</field>
             <field name="is_cooperator_template" eval="True" />
             <field
         name="body_html"
       ><![CDATA[
-    <p>Dear ${object.name},</p>
+    <p>Dear {{object.name}},</p>
     <p>
         Last week we charged your account corresponding to your voluntary contribution to the share capital of the
-        <b>${object.company_id.name}</b>.
+        <b>{{object.company_id.name}}</b>.
     </p>
     <p>
         We attach the contract with the conditions of your investment and we remind you that for any doubt or
         clarification in relation to the contribution made you can send an email to
-        <a href="${object.company_id.email}">${object.company_id.email}</a> or consult the website
-        <a href="${object.company_id.website}"> ${object.company_id.website}</a>.
+        <a href="{{object.company_id.email}}">{{object.company_id.email}}</a> or consult the website
+        <a href="{{object.company_id.website}}"> {{object.company_id.website}}</a>.
     </p>
     <p>
-        We take this opportunity to thank you, once again, for your involvement with the <b>${object.company_id.name}</b>
+        We take this opportunity to thank you, once again, for your involvement with the <b>{{object.company_id.name}}</b>
         objective to promote those actions or projects that contribute to an energy, economic and social transition
-        in ${object.company_id.city}.
+        in {{object.company_id.city}}.
     </p>
     <p>
         Get the word out by explaining the project to family and friends. The more we are, the further we will go!
@@ -462,9 +462,9 @@
         Sincerely,
     </p>
     <p>
-        ${object.company_id.name} team
+        {{object.company_id.name}} team
     </p>
-    <img src="/web/image/res.company/${object.company_id.id}/logo" style="width: 150px;height: 80px;"/>
+    <img src="/web/image/res.company/{{object.company_id.id}}/logo" style="width: 150px;height: 80px;"/>
             ]]></field>
         </record>
 
