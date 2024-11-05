@@ -8,7 +8,7 @@ setuptools.setup(
             "account_lock_date_update": "odoo14-addon-account-lock-date-update==14.0.2.0.1.dev10",
             "account_multicompany_easy_creation": "odoo14-addon-account-multicompany-easy-creation==14.0.1.0.1.dev2",
             "account_payment_order": "odoo14-addon-account-payment-order==14.0.1.11.0",
-            "account_reconciliation_widget": "odoo14-addon-account-reconciliation-widget==14.0.2.0.2",
+            #"account_reconciliation_widget": "odoo14-addon-account-reconciliation-widget==14.0.2.0.2",
             "auth_api_key": "odoo14-addon-auth-api-key==14.0.2.2.1",
             "auth_oidc": "odoo14-addon-auth-oidc==14.0.1.0.3.dev1",
             "base_rest": "odoo14-addon-base-rest==14.0.4.8.1",
