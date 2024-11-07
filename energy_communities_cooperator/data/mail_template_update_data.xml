@@ -15,8 +15,8 @@
             <field name="name">Confirmation Email for CE Subscription Request Receipt</field>
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="email_cc">{{((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or object.company_id.parent_id.email_formatted)) or '')}}</field>
-            <field name="subject">[Som Comunitats] Application to become Community membership</field>
-            <field name="email_to">{{object.email}}</field>
+            <field name="subject">[Som Comunitats] Application to become Community membership of {{object.company_id.name}}</field>
+            <field name="email_to">{{ object.email }}{{ object.is_company and (", " + object.company_email) }}</field>
             <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_subscription_request" />
             <field name="auto_delete" eval="False" />
@@ -41,10 +41,10 @@
         - Representative firstname: <t t-out="object.firstname"/><br/>
         - Representative lastname: <t t-out="object.lastname"/><br/>
         - Representative function: <t t-out="object.contact_person_function"/><br/>
-        - Representative Email: <t t-out="object.email"/><br/>
-        - Representative Phone: <t t-out="object.phone or ''"/><br/>
-        - Representative Gender: <t t-out="dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]"/><br/>
-        - Representative Birthdate: <t t-out="object.birthdate"/><br/>
+        - Representative email: <t t-out="object.email"/><br/>
+        - Representative phone: <t t-out="object.phone or ''"/><br/>
+        - Representative gender: <t t-out="dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]"/><br/>
+        - Representative birthdate: <t t-out="object.birthdate"/><br/>
     </t>
     <t t-else="">
         - VAT: <t t-out="object.vat"/><br/>
@@ -67,7 +67,7 @@
     </t>
     <br/>
     We keep in touch for any questions.<br/>
-    <a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a>
+    <a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a><br/><br/>
     Yours faithfully,<br/><br/>
     <u><t t-out="object.company_id.name"/></u><br/>
     <t t-if="object.company_id.street">
@@ -89,7 +89,7 @@
         Web: <a t-if="object.company_id.website" t-att-href="object.company_id.website"><t t-out="object.company_id.website"/></a><br/>
     </t>
     <div>
-        <img t-if="object.company_id.logo_url" t-att-src="object.company_id.logo_url"/><br/>
+        <img t-if="object.company_id.logo_url" t-att-src="('/web/image/res.company/%s/logo' % object.company_id.id)" style="width: 150px;"/>
     </div>
     </p>
 </div>
