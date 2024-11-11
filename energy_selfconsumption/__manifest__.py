@@ -17,6 +17,8 @@
         "mail",
         "account",
         "contract",
+        "contract_queue_job",
+        "contract_mandate",
         "contract_variable_quantity",
         "energy_communities",
         "energy_communities_cooperator",
