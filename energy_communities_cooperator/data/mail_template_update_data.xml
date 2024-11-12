@@ -5,7 +5,9 @@
         <!-- proceed to set all cooperator email_templates noupdate = False
         By this way no change on source nor translation made by UI will be persistent
         because any module update with i18n-overwrite will restore the original
-        (xml model data and translations) email template definition -->
+        (xml model data and translations) email template definition. For any reason (?)
+        we need to execute again this call AFTER each template record override in order
+        to ensure that the noupdate change persist-->
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
@@ -149,6 +151,14 @@
 </div>
         </field>
         </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_confirmation')]"/>
+            </function>
+            <value eval="{'noupdate': False}" />
+        </function>
+
         <record id="email_template_confirmation_voluntary_share" model="mail.template">
             <field name="name">Confirmation Email for CE Voluntary Share Receipt</field>
             <field
