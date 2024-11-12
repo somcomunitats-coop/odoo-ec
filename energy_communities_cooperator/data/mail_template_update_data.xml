@@ -245,63 +245,52 @@
              -->
             <field name="lang">{{object.partner_id.lang}}</field>
             <field name="is_cooperator_template" eval="True" />
-            <field
-        name="body_html"
-      ><![CDATA[
-<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
-
-    <p>Hello {{object.subscription_request.firstname}},</p>
-    </br>
-    % if object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit':
-    <p>Your request to become member of Energy Community {{object.company_id.name}} is already underway!</p>
-    </br>
-    <p>We will shortly issue a bank receipt to your bank account ({{object.subscription_request.iban}}) for the collection of the initial mandatory contribution ({{object.amount_total}}€)</p>
-    </br>
-    <p>Once we have been able to process this payment, you will receive a final welcome email where we will provide you with your membership number that will link you to the Energy Community {{object.company_id.name}}</p>
-    </br>
-    % endif
-    % if object.payment_mode_id.payment_method_id.code != 'sepa_direct_debit':
-    <p>Your request to become member of Energy Community {{object.company_id.name}} is already underway! In order to complete it you must make a bank deposit of the amount indicated below:</p>
-    </br>
-    <p>- Initial registration fee amount: {{object.amount_total}} € </p>
-    <p>- Banck account number: {{(object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number) or 'ESXX XXXX XXXX XX XXXXXXXXXX'}}</p>
-    <p>- Receiver: {{object.company_id.name}}</p>
-    <p>- Concept: Your first and last names</p>
-    </br>
-    <p>Once the payment is made, please send us the document proof of it by email to {{(object.company_id.coop_email_contact or object.company_id.email_formatted)}} </p>
-    </br>
-    % endif
-    <p>Many thanks and see you soon!</p>
-    </br>
-    <p>{{object.company_id.name}}.</p>
-
-    % if object.company_id.street:
-        {{object.company_id.street}}
-    % endif
-    % if object.company_id.street2:
-        {{object.company_id.street2}}<br/>
-    % endif
-    % if object.company_id.city or object.company_id.zip:
-        {{object.company_id.zip}} {{object.company_id.city}}<br/>
-    % endif
-    % if object.company_id.country_id:
-        {{object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''}} {{object.company_id.country_id.name or ''}}<br/>
-    % endif
-    % if object.company_id.phone:
-        Phone:&nbsp; {{object.company_id.phone}}
-    % endif
-
-    % if object.company_id.website:
-        <div>
-            Web :&nbsp;<a href="{{object.company_id.website}}">{{object.company_id.website}}</a>
-        </div>
-    %endif
-
+            <field name="body_html"  type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+    Hello <t t-out="object.subscription_request.firstname" />,<br/><br/>
+    <t t-if="object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit'">
+    Your request to become member of Energy Community <t t-out="object.company_id.name"/> is already underway!<br/><br/>
+    We will shortly issue a bank receipt to your bank account (<t t-out="object.subscription_request.iban"/>) for the collection of the initial mandatory contribution (<t t-out="object.amount_total"/> €).<br/>
+    Once we have been able to process this payment, you will receive a final welcome email where we will provide you with your membership number that will link you to the Energy Community <t t-out="object.company_id.name"/>.<br/><br/>
+    </t>
+    <t t-else="">
+    Your request to become member of Energy Community <t t-out="object.company_id.name"/> is already underway!<br/>
+    In order to complete it you must make a bank deposit of the amount indicated below:<br/><br/>
+        - Initial registration fee amount: <t t-out="object.amount_total"/> €<br/>
+        - Banck account number: <t t-out="( object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'"/><br/>
+        - Receiver: <t t-out="object.company_id.name"/><br/>
+        - Concept: Your first and last names<br/><br/>
+    Once the payment is made, please send us the document proof of it by email to <t t-out="( object.company_id.coop_email_contact or object.company_id.email_formatted )"/><br/><br/>
+    </t>
+    We keep in touch for any questions.<br/>
+    <a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a><br/><br/>
+    Yours faithfully,<br/><br/>
+    <u><t t-out="object.company_id.name"/></u><br/>
+    <t t-if="object.company_id.street">
+        <t t-out="object.company_id.street"/><br/>
+    </t>
+    <t t-if="object.company_id.street2">
+        <t t-out="object.company_id.street2"/><br/>
+    </t>
+    <t t-if="object.company_id.city or object.company_id.zip">
+        <t t-out="('%s %s'%((object.company_id.zip or ''),(object.company_id.city or '')))"/><br/>
+    </t>
+    <t t-if="object.company_id.country_id">
+        <t t-out="('%s %s'%((object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''),(object.company_id.country_id.name or '')))"/><br/>
+    </t>
+    <t t-if="object.company_id.phone">
+        Phone: <t t-out="object.company_id.phone"/><br/>
+    </t>
+    <t t-if="object.company_id.website">
+        Web: <a t-if="object.company_id.website" t-att-href="object.company_id.website"><t t-out="object.company_id.website"/></a><br/>
+    </t>
     <div>
-        <img src={{object.company_id.logo_url}}>
+        <img t-if="object.company_id.logo_url" t-att-src="('/web/image/res.company/%s/logo' % object.company_id.id)" style="width: 150px;"/>
     </div>
+    </p>
 </div>
-            ]]></field>
+</field>
         </record>
 
         <function name="write" model="ir.model.data">
