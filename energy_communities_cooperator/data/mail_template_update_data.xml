@@ -295,13 +295,10 @@
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_release_capital')]"
-        />
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_release_capital')]"/>
             </function>
-            <value eval="{'noupdate': True}" />
+            <value eval="{'noupdate': False}" />
         </function>
-
 
         <!-- proceed to override the email_template_certificate -->
         <record id="cooperator.email_template_certificate" model="mail.template">
@@ -375,15 +372,6 @@
 </div>
             ]]></field>
         </record>
-
-        <function name="write" model="ir.model.data">
-            <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_certificat')]"
-        />
-            </function>
-            <value eval="{'noupdate': True}" />
-        </function>
 
         <record id="email_template_conditions_voluntary_share" model="mail.template">
             <field name="name">Conditions Email for CE Voluntary Share Receipt</field>
