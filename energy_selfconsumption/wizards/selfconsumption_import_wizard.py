@@ -69,7 +69,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
         for index, line in enumerate(parsing_data):
             import_dict = self.get_line_dict(line)
             result = self.import_line(import_dict, project)
-            if not result[0]:
+            if result[0]:
                 error_string_list = "".join(
                     [
                         error_string_list,
@@ -132,7 +132,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
             "inscription_partner_id_vat": line.get(header[0], False),
             "effective_date": line.get(header[1], False),
             "supplypoint_cups": line.get(header[2], False),
-            "supplypoint_contracted_power": line.get(header[3], False),
+            "supplypoint_contracted_power": float(str(
+                line.get(header[3], 0.0)
+            ).replace(",",".")),
             "tariff": line.get(header[4], False),
             "supplypoint_street": line.get(header[5], False),
             "street2": line.get(header[6], False),
