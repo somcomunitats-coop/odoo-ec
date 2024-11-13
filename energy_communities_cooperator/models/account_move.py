@@ -59,12 +59,9 @@ class AccountMove(models.Model):
         mail_template_obj = super().get_mail_template_certificate()
 
         if self.subscription_request.is_voluntary:
-            mail_template = "energy_communities_cooperator.email_template_conditions_voluntary_share"
-        elif self.partner_id.member:
-            mail_template = "cooperator.email_template_certificat_increase"
-        else:
-            mail_template = "cooperator.email_template_certificat"
-        return self.env.ref(mail_template)
+            mail_template_obj = self.env.ref("energy_communities_cooperator.email_template_conditions_voluntary_share")
+
+        return mail_template_obj
 
     def create_user(self, partner):
         user_obj = self.env["res.users"]
