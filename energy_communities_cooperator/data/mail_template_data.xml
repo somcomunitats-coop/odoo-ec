@@ -79,6 +79,61 @@
 </field>
         </record>
 
+       <record id="email_template_conditions_voluntary_share" model="mail.template">
+            <field name="name">Conditions Email for CE Voluntary Share Receipt</field>
+            <field
+        name="email_from"
+      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field
+        name="subject"
+      >Conditions Share Capital to {{object.company_id.name}} Ref. ACSV{{object.id}}</field>
+            <field name="email_to">{{object.email}}</field>
+            <field name="email_cc" />
+            <field
+        name="reply_to"
+      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="model_id" ref="model_res_partner" />
+            <field name="auto_delete" eval="False" />
+            <field
+        name="lang"
+      >{{(object.lang or object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}}</field>
+            <field name="is_cooperator_template" eval="True" />
+            <field
+        name="body_html"
+      ><![CDATA[
+    <p>Dear {{object.name}},</p>
+    <p>
+        Last week we charged your account corresponding to your voluntary contribution to the share capital of the
+        <b>{{object.company_id.name}}</b>.
+    </p>
+    <p>
+        We attach the contract with the conditions of your investment and we remind you that for any doubt or
+        clarification in relation to the contribution made you can send an email to
+        <a href="{{object.company_id.email}}">{{object.company_id.email}}</a> or consult the website
+        <a href="{{object.company_id.website}}"> {{object.company_id.website}}</a>.
+    </p>
+    <p>
+        We take this opportunity to thank you, once again, for your involvement with the <b>{{object.company_id.name}}</b>
+        objective to promote those actions or projects that contribute to an energy, economic and social transition
+        in {{object.company_id.city}}.
+    </p>
+    <p>
+        Get the word out by explaining the project to family and friends. The more we are, the further we will go!
+    </p>
+    <p>
+        Thank you very much and good energy!
+    </p>
+    <p>
+        Sincerely,
+    </p>
+    <p>
+        {{object.company_id.name}} team
+    </p>
+    <img src="/web/image/res.company/{{object.company_id.id}}/logo" style="width: 150px;height: 80px;"/>
+            ]]></field>
+        </record>
+
+
     <record
       id="email_template_voluntary_share_interest_return"
       model="mail.template"
