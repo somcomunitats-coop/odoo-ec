@@ -253,7 +253,7 @@ class WebsiteCommunityData(http.Controller):
     #
     def _get_translation(self, source, lang="en", mods="energy_communities_crm"):
         if "lang" in request.env.context:
-            lang = request.env.context["lang"][:-3]
+            lang = request.env.context["lang"]
         return get_translation(source, lang, mods)
 
     def _get_localized_options(self, original_options):
