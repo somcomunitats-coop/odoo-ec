@@ -24,7 +24,7 @@ class AccountMove(models.Model):
     def set_cooperator_effective(self, effective_date):
         super().set_cooperator_effective(effective_date)
         cooperative_membership = self.partner_id.get_cooperative_membership(
-            self.company_id.id
+            self.company_id
         )
         if cooperative_membership:
             self.write({"membership_id": cooperative_membership.id})
@@ -50,13 +50,18 @@ class AccountMove(models.Model):
         return starting_sequence
 
     def get_mail_template_certificate(self):
+
+        # we call/inherit the standard coopetaror function here because
+        # it will take care of use/select the per-company customized templates (if exist)
+        # or the global 'cooperator' one. It applies to those 2 'certificate' templates:
+        # "cooperator.email_template_share_increase" in case self.partner_id.member
+        # "cooperator.email_template_certificate" in else case
+        mail_template_obj = super().get_mail_template_certificate()
+
         if self.subscription_request.is_voluntary:
-            mail_template = "energy_communities_cooperator.email_template_conditions_voluntary_share"
-        elif self.partner_id.member:
-            mail_template = "cooperator.email_template_certificat_increase"
-        else:
-            mail_template = "cooperator.email_template_certificat"
-        return self.env.ref(mail_template)
+            mail_template_obj = self.env.ref("energy_communities_cooperator.email_template_conditions_voluntary_share")
+
+        return mail_template_obj
 
     def create_user(self, partner):
         user_obj = self.env["res.users"]
