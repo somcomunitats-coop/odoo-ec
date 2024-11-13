@@ -650,7 +650,7 @@ class WebsiteCommunityData(http.Controller):
                     "name": value.filename,
                     "res_model": "crm.lead",
                     "res_id": lead.id,
-                    "datas": base64.encodestring(value.read()),
+                    "datas": base64.encodebytes(value.read()),
                     "public": True,
                 }
             )
