@@ -244,6 +244,9 @@
             <field
         name="name"
       >Confirmation email for CE initial payment Received</field>
+        <field
+            name="description"
+        >Sent to cooperators with their cooperator certificate in attachment</field>
             <field
         name="email_from"
       >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
@@ -256,115 +259,56 @@
       >{{(object.company_id.coop_email_contact or object.company_id.email)}}</field>
             <field name="model_id" ref="model_res_partner" />
             <field name="auto_delete" eval="False" />
-            <field name="report_template" />
-            <!--
-            <field name="report_template" ref="action_cooperator_report_certificate" />
-            <field
-                name="report_name"
-            >Certificate {{(object.cooperator_register_number or '')}}</field>
-            -->
+            <field name="report_template" ref="cooperator.action_cooperator_report_certificate" />
+            <field name="report_name" >Certificate {{ (object.cooperator_register_number or '') }}</field>
             <field name="lang">{{object.lang}}</field>
             <field name="is_cooperator_template" eval="True" />
-            <field
-        name="body_html"
-      ><![CDATA[
-<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
-
-    <p>Hello {{object.subscription_request_ids[0].firstname}},</p>
-    </br>
-    <p>We welcome you to the Energy Community {{object.env.company.name}}!</p>
-    <p>You have succesfully finished the incoming process so you are now a member of our community!</p>
-    </br>
-    <p>Here you have your community member number: <strong>{{(object.cooperator_register_number or 'XXX')}}</strong></p>
-    </br>
-    <p>Do not hesitate to ask us if you have any question by repliying to this email.</p>
-    <br/>
-    <p>Many thanks and see you soon!</p>
-    </br>
-    <p>{{object.env.company.name}}.</p>
-
-    % if object.env.company.street:
-        {{object.env.company.street}}
-    % endif
-    % if object.env.company.street2:
-        {{object.env.company.street2}}<br/>
-    % endif
-    % if object.env.company.city or object.env.company.zip:
-        {{object.env.company.zip}} {{object.env.company.city}}<br/>
-    % endif
-    % if object.env.company.country_id:
-        {{object.env.company.state_id and ('%s, ' % object.env.company.state_id.name) or ''}} {{object.env.company.country_id.name or ''}}<br/>
-    % endif
-    % if object.env.company.phone:
-        Phone:&nbsp; {{object.env.company.phone}}
-    % endif
-
-    % if object.env.company.website:
-        <div>
-            Web :&nbsp;<a href="{{object.env.company.website}}">{{object.env.company.website}}</a>
-        </div>
-    %endif
-
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+    Hello
+    <t t-if="object.is_company" t-out="object.get_representative().firstname" />
+    <t t-else="" t-out="object.firstname" />,<br/><br/>
+    We welcome you to the Energy Community <t t-out="object.env.company.name"/>!<br/>
+    You have succesfully finished the incoming process so you are now a member of our community!<br/><br/>
+    Here you have your community member number: <strong><t t-out="(object.cooperator_register_number or 'XXX')"/></strong><br/><br/>
+    Please find in attachment your <t t-out="object.env.company.name"/> cooperator certificate.<br/><br/>
+    We keep in touch for any questions.<br/>
+        <a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a><br/><br/>
+    Yours faithfully,<br/><br/>
+    <u><t t-out="object.company_id.name"/></u><br/>
+    <t t-if="object.company_id.street">
+        <t t-out="object.company_id.street"/><br/>
+    </t>
+    <t t-if="object.company_id.street2">
+        <t t-out="object.company_id.street2"/><br/>
+    </t>
+    <t t-if="object.company_id.city or object.company_id.zip">
+        <t t-out="('%s %s'%((object.company_id.zip or ''),(object.company_id.city or '')))"/><br/>
+    </t>
+    <t t-if="object.company_id.country_id">
+        <t t-out="('%s %s'%((object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''),(object.company_id.country_id.name or '')))"/><br/>
+    </t>
+    <t t-if="object.company_id.phone">
+        Phone: <t t-out="object.company_id.phone"/><br/>
+    </t>
+    <t t-if="object.company_id.website">
+        Web: <a t-if="object.company_id.website" t-att-href="object.company_id.website"><t t-out="object.company_id.website"/></a><br/>
+    </t>
     <div>
-        <img src={{object.env.company.logo_url}}>
+        <img t-if="object.company_id.logo_url" t-att-src="('/web/image/res.company/%s/logo' % object.company_id.id)" style="width: 150px;"/>
     </div>
+    </p>
 </div>
-            ]]></field>
+</field>
         </record>
 
-        <record id="email_template_conditions_voluntary_share" model="mail.template">
-            <field name="name">Conditions Email for CE Voluntary Share Receipt</field>
-            <field
-        name="email_from"
-      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field
-        name="subject"
-      >Conditions Share Capital to {{object.company_id.name}} Ref. ACSV{{object.id}}</field>
-            <field name="email_to">{{object.email}}</field>
-            <field name="email_cc" />
-            <field
-        name="reply_to"
-      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field name="model_id" ref="model_res_partner" />
-            <field name="auto_delete" eval="False" />
-            <field
-        name="lang"
-      >{{(object.lang or object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}}</field>
-            <field name="is_cooperator_template" eval="True" />
-            <field
-        name="body_html"
-      ><![CDATA[
-    <p>Dear {{object.name}},</p>
-    <p>
-        Last week we charged your account corresponding to your voluntary contribution to the share capital of the
-        <b>{{object.company_id.name}}</b>.
-    </p>
-    <p>
-        We attach the contract with the conditions of your investment and we remind you that for any doubt or
-        clarification in relation to the contribution made you can send an email to
-        <a href="{{object.company_id.email}}">{{object.company_id.email}}</a> or consult the website
-        <a href="{{object.company_id.website}}"> {{object.company_id.website}}</a>.
-    </p>
-    <p>
-        We take this opportunity to thank you, once again, for your involvement with the <b>{{object.company_id.name}}</b>
-        objective to promote those actions or projects that contribute to an energy, economic and social transition
-        in {{object.company_id.city}}.
-    </p>
-    <p>
-        Get the word out by explaining the project to family and friends. The more we are, the further we will go!
-    </p>
-    <p>
-        Thank you very much and good energy!
-    </p>
-    <p>
-        Sincerely,
-    </p>
-    <p>
-        {{object.company_id.name}} team
-    </p>
-    <img src="/web/image/res.company/{{object.company_id.id}}/logo" style="width: 150px;height: 80px;"/>
-            ]]></field>
-        </record>
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_certificate')]"/>
+            </function>
+            <value eval="{'noupdate': False}" />
+        </function>
 
   </data>
 </odoo>
