@@ -24,7 +24,7 @@ class AccountMove(models.Model):
     def set_cooperator_effective(self, effective_date):
         super().set_cooperator_effective(effective_date)
         cooperative_membership = self.partner_id.get_cooperative_membership(
-            self.company_id.id
+            self.company_id
         )
         if cooperative_membership:
             self.write({"membership_id": cooperative_membership.id})
@@ -55,7 +55,7 @@ class AccountMove(models.Model):
         elif self.partner_id.member:
             mail_template = "cooperator.email_template_certificat_increase"
         else:
-            mail_template = "cooperator.email_template_certificat"
+            mail_template = "cooperator.email_template_certificate"
         return self.env.ref(mail_template)
 
     def create_user(self, partner):
