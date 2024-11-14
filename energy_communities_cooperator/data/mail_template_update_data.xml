@@ -99,7 +99,9 @@
         - Representative function: <t t-out="object.contact_person_function"/><br/>
         - Representative email: <t t-out="object.email"/><br/>
         - Representative phone: <t t-out="object.phone or ''"/><br/>
+        <t t-if="object.gender">
         - Representative gender: <t t-out="dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]"/><br/>
+        </t>
         - Representative birthdate: <t t-out="object.birthdate"/><br/>
     </t>
     <t t-else="">
@@ -108,7 +110,9 @@
         - Lastname: <t t-out="object.lastname"/><br/>
         - Email: <t t-out="object.email"/><br/>
         - Phone: <t t-out="object.phone or ''"/><br/>
+        <t t-if="object.gender">
         - Gender: <t t-out="dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]"/><br/>
+        </t>
         - Birthdate: <t t-out="object.birthdate"/><br/>
     </t>
         - Address: <t t-out="object.address"/><br/>
