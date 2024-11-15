@@ -55,6 +55,7 @@
         "data/crm_lead_tag.xml",
         "data/energy_action.xml",
         "report/report_templates.xml",
+        "views/mail_template_views.xml",
         "views/account_move_views.xml",
         "views/landing_page_view.xml",
         "views/res_company_views.xml",
