@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <template id="energy_communities.mail_notification_layout" 
+        name="Energy Communities: adapt Mail template Layout to Energy Communities Platform customizations"
+        inherit_id="mail.mail_notification_layout">
+            
+            <!-- take out the name of the company after logo. We only want to have the logo -->
+            <xpath expr="//tbody/tr/td/img" position="attributes">
+                <attribute name="t-att-alt">''</attribute>
+            </xpath>
+            
+            <!-- use company_name and assign same font size on footer than body -->
+            <xpath expr="//body/div/div[4]/b"  position="attributes">
+                <attribute name="t-out">company.comercial_name or company.name</attribute>
+            </xpath>            
+            
+            <!-- erase footer grey line -->
+            <xpath expr="//body/div/div[4]/hr"  position="replace"/>
+            
+            <!-- move footer grey line -->
+            <xpath expr="//body/div/div[4]/p"  position="after">
+                <div>
+                    <img t-if="company.logo_url" t-att-src="('/web/image/res.company/%s/logo' % company.id)" style="width: 120px;"/>
+                </div>
+                <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 4px 0px;"/>
+            </xpath>
+            
+            <!-- change the powered by message -->
+            <xpath expr="//body/div/p/a"  position="replace">
+                <a target="_blank" href="https://somcomunitats.coop" style="color: #875A7B;">Som Comunitats</a>
+            </xpath>
+            
+            <!-- erase header 2nd grey line -->
+            <xpath expr="//tbody/tr[4]/td/hr" position="replace"/>
+            
+            <!-- take out the double jump-line -->
+            <xpath expr="//tbody//tbody/tr/td[5]" position="replace"/>
+            
+            <!-- erase header 1st grey line -->
+            <xpath expr="//tbody/tr[2]" position="replace"/> 
+
+
+        </template>
+
+        <!-- proceed to force the inheritance template ir_ui_view.mode = 'extension' because by default it becomes 'internal'
+        TODO: I+D in order if it is possible to do it by another way to tho that because
+        we tried to apply it: https://www.cybrosys.com/blog/an-overview-of-template-inheritance-in-odoo-16
+        bit in is not working on this concrete mail.mail_notification_layout template because it is implemented in 'data' folder 
+        instead of mail/src/components/... folder (as web_assets templates are)-->
+        <function name="write" model="ir.ui.view">
+            <function name="search" model="ir.ui.view">
+                <value eval="[('key', '=', 'energy_communities.mail_notification_layout')]"/>
+            </function>
+            <value eval="{'mode':'extension'}" />
+        </function>
+
+</odoo>

@@ -51,6 +51,7 @@
         "data/product_data.xml",
         "data/auth_oauth_provider_data.xml",
         "data/ir_cron.xml",
+        "data/mail_templates_email_layouts.xml",
         "data/utm_data.xml",
         "data/crm_lead_tag.xml",
         "data/energy_action.xml",
