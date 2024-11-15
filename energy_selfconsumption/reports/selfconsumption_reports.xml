@@ -251,7 +251,7 @@
             <field name="name">Self-consumption Manager Report</field>
             <field name="model">energy_selfconsumption.selfconsumption</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">'%s - Authorization' % object.name</field>
+            <field name="report_name">energy_selfconsumption.selfconsumption_manager_authorization_template</field>
             <field name="report_file">Manager Authorization</field>
             <field
         name="binding_model_id"
@@ -486,8 +486,7 @@
             <field name="model">energy_selfconsumption.selfconsumption</field>
             <field name="report_type">qweb-pdf</field>
             <field
-        name="report_name"
-      >'%s - Power Sharing Agreement' % object.name</field>
+        name="report_name">energy_selfconsumption.power_sharing_agreement_template</field>
             <field name="report_file">Power Sharing Agreement</field>
             <!-- <field name="paperformat">custom_paperformat_id</field> -->
             <field
