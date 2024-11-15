@@ -184,7 +184,7 @@ class SubscriptionRequest(models.Model):
             # sudo is needed to change state of invoice linked to a request
             #  sent through the api
             mail_template_notif.sudo().send_mail(
-                self.id
+                self.id, email_layout_xmlid="mail.mail_notification_layout"
             )
 
     def validate_subscription_request_with_company(self):
