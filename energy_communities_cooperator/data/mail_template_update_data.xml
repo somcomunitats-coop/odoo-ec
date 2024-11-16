@@ -127,7 +127,7 @@
     </t>
     <br/>
     We keep in touch for any questions.<br/>
-    Yours faithfully,<br/><br/>
+    Yours faithfully,<br/>
     </p>
 </div>
         </field>
@@ -184,7 +184,7 @@
     Once the payment is made, please send us the document proof of it by email to <t t-out="( object.company_id.coop_email_contact or object.company_id.email_formatted )"/><br/><br/>
     </t>
     We keep in touch for any questions.<br/>
-    Yours faithfully,<br/><br/>
+    Yours faithfully,<br/>
     </p>
 </div>
 </field>
@@ -232,7 +232,7 @@
     Here you have your community member number: <strong><t t-out="(object.cooperator_register_number or 'XXX')"/></strong><br/><br/>
     Please find in attachment your <t t-out="object.env.company.comercial_name or object.env.company.name"/> cooperator certificate.<br/><br/>
     We keep in touch for any questions.<br/>
-    Yours faithfully,<br/><br/>
+    Yours faithfully,<br/>
     </p>
 </div>
 </field>
@@ -252,7 +252,7 @@
         <field name="model_id" ref="model_res_partner" />
         <field
             name="email_from"
-        >{{ object.env.company.coop_email_contact or object.user_id.email_formatted or user.email_formatted }}</field>
+        >{{ object.company_id.coop_email_contact or object.company_id.email_formatted }}</field>
         <field name="partner_to">{{ object.id }}</field>
         <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email)}}</field>
         <field name="subject">Payment Received Confirmation</field>
@@ -262,7 +262,7 @@
         <field name="report_template" ref="cooperator.action_cooperator_report_certificate" />
         <field name="report_name">Certificate {{ (object.cooperator_register_number or '') }}</field>
         <field name="lang">{{ object.lang }}</field>
-        <field name="auto_delete" eval="True" />
+        <field name="auto_delete" eval="False" />
         <field name="is_cooperator_template" eval="True" />
         <field name="body_html" type="html">
 <div style="margin: 0px; padding: 0px;">
@@ -273,7 +273,7 @@
         We confirm the reception of your payment for the new share(s) you have taken.<br /><br />
         Please find in attachment your <t t-out="object.env.company.comercial_name or object.env.company.name"/> cooperator certificate.<br /><br />
     We keep in touch for any questions.<br/>
-    Yours faithfully,<br/><br/>
+    Yours faithfully,<br/>
      </p>
 </div>
         </field>
