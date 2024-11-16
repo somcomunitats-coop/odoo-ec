@@ -299,6 +299,16 @@ msgid "Certificate increase email template"
 msgstr "Plantilla de correu electrònic per certificat increment capital social"
 
 #. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+msgid "<span>Certificate generated on</span>"
+msgstr "<span>Certificat generat el</span>"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+msgid "For the board of"
+msgstr "Emès pel Consell Rector o la Junta Directiva de"
+
+#. module: cooperator
 #: model:mail.template,report_name:cooperator.email_template_certificate
 #: model:mail.template,report_name:cooperator.email_template_share_increase
 #: model:mail.template,report_name:cooperator.email_template_share_transfer
