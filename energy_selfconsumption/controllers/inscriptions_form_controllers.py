@@ -376,4 +376,4 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             "energy_selfconsumption.selfconsumption_insciption_form"
         ).with_context(email_values)
         ctx = {"partner_name": partner.name}
-        model.with_context(ctx).message_post_with_template(template.id)
+        model.with_context(ctx).message_post_with_template(template.id, email_layout_xmlid="mail.mail_notification_layout")
