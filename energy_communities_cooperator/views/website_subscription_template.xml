@@ -379,7 +379,7 @@
                                 </div>
                                 <div name="voluntary_share_form_header_text_container">
                                     <p><t
-                      t-raw="company.voluntary_share_form_header_text"
+                      t-out="company.voluntary_share_form_header_text"
                     /></p>
                                 </div>
                 <div name="become_cooperator_terms">
