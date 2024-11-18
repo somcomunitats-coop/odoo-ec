@@ -448,9 +448,7 @@ class Selfconsumption(models.Model):
                 "first_date": first_date.strftime("%d-%m-%Y"),
                 "last_date": last_date.strftime("%d-%m-%Y"),
             }
-            selfconsumption_id.with_context(ctx).message_post_with_template(
-                template.id, email_layout_xmlid="mail.mail_notification_layout"
-            )
+            selfconsumption_id.with_context(ctx).message_post_with_template(template.id, email_layout_xmlid="mail.mail_notification_layout")
 
     def send_energy_delivery_custom_invoicing_reminder(self):
         projects = self.env["contract.contract"].read_group(
@@ -481,9 +479,7 @@ class Selfconsumption(models.Model):
                 "first_date": first_date.strftime("%d-%m-%Y"),
                 "last_date": last_date.strftime("%d-%m-%Y"),
             }
-            selfconsumption_id.with_context(ctx).message_post_with_template(
-                template.id, email_layout_xmlid="mail.mail_notification_layout"
-            )
+            selfconsumption_id.with_context(ctx).message_post_with_template(template.id, email_layout_xmlid="mail.mail_notification_layout")
 
     def send_power_acquired_invoicing_reminder(self):
         today = fields.date.today()
@@ -511,9 +507,7 @@ class Selfconsumption(models.Model):
             ctx = {
                 "next_invoicing": next_invoicing.strftime("%d-%m-%Y"),
             }
-            selfconsumption_id.with_context(ctx).message_post_with_template(
-                template.id, email_layout_xmlid="mail.mail_notification_layout"
-            )
+            selfconsumption_id.with_context(ctx).message_post_with_template(template.id, email_layout_xmlid="mail.mail_notification_layout")
 
     @api.constrains("code")
     def _check_valid_code(self):

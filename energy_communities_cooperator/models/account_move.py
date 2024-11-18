@@ -50,6 +50,7 @@ class AccountMove(models.Model):
         return starting_sequence
 
     def get_mail_template_certificate(self):
+
         # we call/inherit the standard coopetaror function here because
         # it will take care of use/select the per-company customized templates (if exist)
         # or the global 'cooperator' one. It applies to those 2 'certificate' templates:
@@ -58,9 +59,7 @@ class AccountMove(models.Model):
         mail_template_obj = super().get_mail_template_certificate()
 
         if self.subscription_request.is_voluntary:
-            mail_template_obj = self.env.ref(
-                "energy_communities_cooperator.email_template_conditions_voluntary_share"
-            )
+            mail_template_obj = self.env.ref("energy_communities_cooperator.email_template_conditions_voluntary_share")
 
         return mail_template_obj
 

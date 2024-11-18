@@ -46,7 +46,7 @@ class CreateDistributionTable(models.AbstractModel):
         query = f"""INSERT INTO energy_selfconsumption_supply_point_assignation
         ({', '.join(columns)})
         VALUES {', '.join(['%s'] * len(data))}"""
-        if "null" in str(data):
+        if 'null' in str(data):
             logger.error("Error query:" + query)
         else:
             try:

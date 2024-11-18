@@ -10,8 +10,7 @@
       >Contribute to {{object.company_id.name}} Ref. ACSV{{object.id}}</field>
             <field name="email_to">{{object.email}}</field>
             <field
-        name="email_cc"
-      >{{((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or object.company_id.parent_id.email_formatted)) or '')}}</field>
+        name="email_cc">{{((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or object.company_id.parent_id.email_formatted)) or '')}}</field>
             <field
         name="reply_to"
       >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
@@ -24,74 +23,56 @@
             <field name="body_html" type="html">
 <div style="margin: 0px; padding: 0px;">
     <p style="margin: 0px; padding: 0px; font-size: 13px;">
-    Dear <t t-out="object.firstname" />,<br /><br />
-    We confirm that we have correctly received your request to make a voluntary contribution to the capital social of <b
-            ><t t-out="object.company_id.name" /></b>, with the following data:<br /><br
-            />
+    Dear <t t-out="object.firstname"/>,<br/><br/>
+    We confirm that we have correctly received your request to make a voluntary contribution to the capital social of <b><t t-out="object.company_id.name"/></b>, with the following data:<br/><br/>
     <ul>
-        <li>Partner VAT: <b><t t-out="object.vat" /></b></li>
-        <li>Partner name: <b><t t-out="object.firstname" /> <t
-                    t-out="object.lastname"
-                  /></b></li>
-        <li>Charging account: <b><t t-out="object.iban" /></b></li>
-        <li>Subscription amount: <b><t t-out="object.subscription_amount" /> €</b></li>
+        <li>Partner VAT: <b><t t-out="object.vat"/></b></li>
+        <li>Partner name: <b><t t-out="object.firstname"/> <t t-out="object.lastname"/></b></li>
+        <li>Charging account: <b><t t-out="object.iban"/></b></li>
+        <li>Subscription amount: <b><t t-out="object.subscription_amount"/> €</b></li>
     </ul>
-    <br />
+    <br/>
     In the next few days you will receive the bank charge in this account, please verify that all the data
     provided is correct and you have the money you want to invest, to avoid any incident in the
     draft of the receipt.
-    <br /><br />
+    <br/><br/>
     Once the validity of the payment has been verified, you will receive a new notification confirming the
     contribution made and detailing the particular conditions of your contribution.
-    <br /><br />
+    <br/><br/>
     Thank you for your involvement with the cooperative and inform you that for any doubt or clarification you can
     <t t-if="object.company_id.website">
-     consult our website: <a
-                t-if="object.company_id.website"
-                t-att-href="object.company_id.website"
-              ><t t-out="object.company_id.website" /></a>
+     consult our website: <a t-if="object.company_id.website" t-att-href="object.company_id.website"><t t-out="object.company_id.website"/></a>
     or
-    </t> send us an email to <t t-out="object.company_id.email" />.
-    <br /><br />
+    </t> send us an email to <t t-out="object.company_id.email"/>.
+    <br/><br/>
     Get the word out by explaining the project to family and friends. The more we are, the further we will go!
-    <br />
+    <br/>
     Thank you very much and good energy!
-    <br /><br />
-    We keep in touch for any questions.<br />
-    <a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a><br /><br />
-    Yours faithfully,<br /><br />
-    <u><t t-out="object.company_id.name" /></u><br />
+    <br/><br/>
+    We keep in touch for any questions.<br/>
+    <a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a><br/><br/>
+    Yours faithfully,<br/><br/>
+    <u><t t-out="object.company_id.name"/></u><br/>
     <t t-if="object.company_id.street">
-        <t t-out="object.company_id.street" /><br />
+        <t t-out="object.company_id.street"/><br/>
     </t>
     <t t-if="object.company_id.street2">
-        <t t-out="object.company_id.street2" /><br />
+        <t t-out="object.company_id.street2"/><br/>
     </t>
     <t t-if="object.company_id.city or object.company_id.zip">
-        <t
-                t-out="('%s %s'%((object.company_id.zip or ''),(object.company_id.city or '')))"
-              /><br />
+        <t t-out="('%s %s'%((object.company_id.zip or ''),(object.company_id.city or '')))"/><br/>
     </t>
     <t t-if="object.company_id.country_id">
-        <t
-                t-out="('%s %s'%((object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''),(object.company_id.country_id.name or '')))"
-              /><br />
+        <t t-out="('%s %s'%((object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''),(object.company_id.country_id.name or '')))"/><br/>
     </t>
     <t t-if="object.company_id.phone">
-        Phone: <t t-out="object.company_id.phone" /><br />
+        Phone: <t t-out="object.company_id.phone"/><br/>
     </t>
     <t t-if="object.company_id.website">
-        Web: <a
-                t-if="object.company_id.website"
-                t-att-href="object.company_id.website"
-              ><t t-out="object.company_id.website" /></a><br />
+        Web: <a t-if="object.company_id.website" t-att-href="object.company_id.website"><t t-out="object.company_id.website"/></a><br/>
     </t>
     <div>
-        <img
-                t-if="object.company_id.logo_url"
-                t-att-src="('/web/image/res.company/%s/logo' % object.company_id.id)"
-                style="width: 150px;"
-              />
+        <img t-if="object.company_id.logo_url" t-att-src="('/web/image/res.company/%s/logo' % object.company_id.id)" style="width: 150px;"/>
     </div>
 </p>
 </div>
@@ -153,7 +134,10 @@
         </record>
 
 
-    <record id="email_template_voluntary_share_interest_return" model="mail.template">
+    <record
+      id="email_template_voluntary_share_interest_return"
+      model="mail.template"
+    >
             <field name="name">Voluntary shares interest return email</field>
             <field name="email_from">${object.company_id.email}</field>
             <field

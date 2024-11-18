@@ -11,167 +11,123 @@
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_waiting_list')]"
-        />
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_waiting_list')]"/>
             </function>
             <value eval="{'noupdate': False}" />
         </function>
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_confirmation')]"
-        />
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_confirmation')]"/>
             </function>
             <value eval="{'noupdate': False}" />
         </function>
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_release_capital')]"
-        />
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_release_capital')]"/>
             </function>
             <value eval="{'noupdate': False}" />
         </function>
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_certificate')]"
-        />
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_certificate')]"/>
             </function>
             <value eval="{'noupdate': False}" />
         </function>
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_share_increase')]"
-        />
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_share_increase')]"/>
             </function>
             <value eval="{'noupdate': False}" />
         </function>
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_share_transfer')]"
-        />
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_share_transfer')]"/>
             </function>
             <value eval="{'noupdate': False}" />
         </function>
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_share_update')]"
-        />
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_share_update')]"/>
             </function>
             <value eval="{'noupdate': False}" />
         </function>
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_share_update_no_shares')]"
-        />
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_share_update_no_shares')]"/>
             </function>
             <value eval="{'noupdate': False}" />
         </function>
 
     <!-- proceed to override the email_template_confirmation -->
         <record id="cooperator.email_template_confirmation" model="mail.template">
-            <field
-        name="name"
-      >Confirmation Email for CE Subscription Request Receipt</field>
-            <field
-        name="description"
-      >Sent to cooperators to confirm their subscription request</field>
-            <field
-        name="email_from"
-      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field
-        name="email_cc"
-      >{{((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or object.company_id.parent_id.email_formatted)) or '')}}</field>
+            <field name="name">Confirmation Email for CE Subscription Request Receipt</field>
+            <field name="description">Sent to cooperators to confirm their subscription request</field>
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="email_cc">{{((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or object.company_id.parent_id.email_formatted)) or '')}}</field>
             <field name="subject">Application to become Community membership</field>
-            <field
-        name="email_to"
-      >{{ object.email }}{{ object.is_company and (", " + object.company_email) }}</field>
-            <field
-        name="reply_to"
-      >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="email_to">{{ object.email }}{{ object.is_company and (", " + object.company_email) }}</field>
+            <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_subscription_request" />
             <field name="auto_delete" eval="False" />
-            <field
-        name="lang"
-      >{{(object.lang or object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}}</field>
+            <field name="lang">{{(object.lang or object.company_id.default_lang_id.code or object.company_id.partner_id.lang)}}</field>
             <field name="is_cooperator_template" eval="True" />
             <field name="body_html" type="html">
 <div style="margin: 0px; padding: 0px;">
     <p style="margin: 0px; padding: 0px; font-size: 13px;">
     Hello <t t-out="object.firstname" />,
-    <br /><br />
-    Thank you for filling out the form and request to join<t
-              t-out="object.company_id.comercial_name or object.company_id.name"
-            /><t t-if="object.is_company"> on behalf of <t
-                t-out="object.company_name"
-              /></t>.
-    <br />
+    <br/><br/>
+    Thank you for filling out the form and request to join<t t-out="object.company_id.comercial_name or object.company_id.name"/><t t-if="object.is_company"> on behalf of <t t-out="object.company_name"/></t>.
+    <br/>
     In the coming weeks we will contact you to indicate the next steps.
-    <br /><br />
+    <br/><br/>
     Here is a copy of the data we received:
-    <br /><br />
-        - Request to join: <t t-out="object.company_id.name" /><br />
+    <br/><br/>
+        - Request to join: <t t-out="object.company_id.name"/><br/>
     <t t-if="object.is_company">
-        - Company Name: <t t-out="object.company_name" /><br />
-        - Company VAT: <t t-out="object.vat" /><br />
-        - Company Email: <t t-out="object.company_email" /><br />
-        - Representative firstname: <t t-out="object.firstname" /><br />
-        - Representative lastname: <t t-out="object.lastname" /><br />
-        - Representative function: <t t-out="object.contact_person_function" /><br />
-        - Representative email: <t t-out="object.email" /><br />
-        - Representative phone: <t t-out="object.phone or ''" /><br />
+        - Company Name: <t t-out="object.company_name"/><br/>
+        - Company VAT: <t t-out="object.vat"/><br/>
+        - Company Email: <t t-out="object.company_email"/><br/>
+        - Representative firstname: <t t-out="object.firstname"/><br/>
+        - Representative lastname: <t t-out="object.lastname"/><br/>
+        - Representative function: <t t-out="object.contact_person_function"/><br/>
+        - Representative email: <t t-out="object.email"/><br/>
+        - Representative phone: <t t-out="object.phone or ''"/><br/>
         <t t-if="object.gender">
-        - Representative gender: <t
-                  t-out="dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]"
-                /><br />
+        - Representative gender: <t t-out="dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]"/><br/>
         </t>
-        - Representative birthdate: <t t-out="object.birthdate" /><br />
+        - Representative birthdate: <t t-out="object.birthdate"/><br/>
     </t>
     <t t-else="">
-        - VAT: <t t-out="object.vat" /><br />
-        - Firstname: <t t-out="object.firstname" /><br />
-        - Lastname: <t t-out="object.lastname" /><br />
-        - Email: <t t-out="object.email" /><br />
-        - Phone: <t t-out="object.phone or ''" /><br />
+        - VAT: <t t-out="object.vat"/><br/>
+        - Firstname: <t t-out="object.firstname"/><br/>
+        - Lastname: <t t-out="object.lastname"/><br/>
+        - Email: <t t-out="object.email"/><br/>
+        - Phone: <t t-out="object.phone or ''"/><br/>
         <t t-if="object.gender">
-        - Gender: <t
-                  t-out="dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]"
-                /><br />
+        - Gender: <t t-out="dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]"/><br/>
         </t>
-        - Birthdate: <t t-out="object.birthdate" /><br />
+        - Birthdate: <t t-out="object.birthdate"/><br/>
     </t>
-        - Address: <t t-out="object.address" /><br />
-        - Zip code: <t t-out="object.zip_code" /><br />
-        - City: <t t-out="object.city" /><br />
-        - Country: <t t-out="object.country_id.name" /><br />
-        - Language: <t
-              t-out="dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]"
-            /><br />
-        - Initial share amount: <t t-out="object.subscription_amount" /><br />
-    <t
-              t-if="object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit' and object.iban"
-            >
-        - Bank account finished on: <t t-out="object.iban[-4:]" /><br />
-        - I authorize bank receipts to be sent to this account: <t
-                t-out="object.mandate_approved and 'YES' or 'NOT'"
-              /><br />
+        - Address: <t t-out="object.address"/><br/>
+        - Zip code: <t t-out="object.zip_code"/><br/>
+        - City: <t t-out="object.city"/><br/>
+        - Country: <t t-out="object.country_id.name"/><br/>
+        - Language: <t t-out="dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]"/><br/>
+        - Initial share amount: <t t-out="object.subscription_amount"/><br/>
+    <t t-if="object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit' and object.iban">
+        - Bank account finished on: <t t-out="object.iban[-4:]"/><br/>
+        - I authorize bank receipts to be sent to this account: <t t-out="object.mandate_approved and 'YES' or 'NOT'"/><br/>
     </t>
-    <br />
-    We keep in touch for any questions.<br />
-    Yours faithfully,<br />
+    <br/>
+    We keep in touch for any questions.<br/>
+    Yours faithfully,<br/>
     </p>
 </div>
         </field>
@@ -179,9 +135,7 @@
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_confirmation')]"
-        />
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_confirmation')]"/>
             </function>
             <value eval="{'noupdate': False}" />
         </function>
@@ -189,9 +143,7 @@
     <!-- proceed to override the email_template_release_capital -->
         <record id="cooperator.email_template_release_capital" model="mail.template">
             <field name="name">Request email to Release Capital for CE</field>
-            <field
-        name="description"
-      >Sent to cooperators with their capital release request in attachment</field>
+            <field name="description">Sent to cooperators with their capital release request in attachment</field>
             <field
         name="email_from"
       >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
@@ -213,41 +165,26 @@
              -->
             <field name="lang">{{object.partner_id.lang}}</field>
             <field name="is_cooperator_template" eval="True" />
-            <field name="body_html" type="html">
+            <field name="body_html"  type="html">
 <div style="margin: 0px; padding: 0px;">
     <p style="margin: 0px; padding: 0px; font-size: 13px;">
-    Hello <t t-out="object.subscription_request.firstname" />,<br /><br />
+    Hello <t t-out="object.subscription_request.firstname" />,<br/><br/>
     <t t-if="object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit'">
-    Your request to become member of <t
-                t-out="object.company_id.comercial_name or object.company_id.name"
-              /> is already underway!<br /><br />
-    We will shortly issue a bank receipt to your bank account finished on <t
-                t-out="object.subscription_request.iban[-4:]"
-              /> for the collection of the initial mandatory contribution (<t
-                t-out="object.amount_total"
-              /> €).<br />
-    Once we have been able to process this payment, you will receive a final welcome email where we will provide you with your membership number that will link you to <t
-                t-out="object.company_id.comercial_name or object.company_id.name"
-              />.<br /><br />
+    Your request to become member of <t t-out="object.company_id.comercial_name or object.company_id.name"/> is already underway!<br/><br/>
+    We will shortly issue a bank receipt to your bank account finished on <t t-out="object.subscription_request.iban[-4:]"/> for the collection of the initial mandatory contribution (<t t-out="object.amount_total"/> €).<br/>
+    Once we have been able to process this payment, you will receive a final welcome email where we will provide you with your membership number that will link you to <t t-out="object.company_id.comercial_name or object.company_id.name"/>.<br/><br/>
     </t>
     <t t-else="">
-    Your request to become member of <t
-                t-out="object.company_id.comercial_name or object.company_id.name"
-              /> is already underway!<br />
-    In order to complete it you must make a bank deposit of the amount indicated below:<br
-              /><br />
-        - Initial registration fee amount: <t t-out="object.amount_total" /> €<br />
-        - Banck account number: <t
-                t-out="( object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'"
-              /><br />
-        - Receiver: <t t-out="object.company_id.name" /><br />
-        - Concept: Your first and last names<br /><br />
-    Once the payment is made, please send us the document proof of it by email to <t
-                t-out="( object.company_id.coop_email_contact or object.company_id.email_formatted )"
-              /><br /><br />
+    Your request to become member of <t t-out="object.company_id.comercial_name or object.company_id.name"/> is already underway!<br/>
+    In order to complete it you must make a bank deposit of the amount indicated below:<br/><br/>
+        - Initial registration fee amount: <t t-out="object.amount_total"/> €<br/>
+        - Banck account number: <t t-out="( object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'"/><br/>
+        - Receiver: <t t-out="object.company_id.name"/><br/>
+        - Concept: Your first and last names<br/><br/>
+    Once the payment is made, please send us the document proof of it by email to <t t-out="( object.company_id.coop_email_contact or object.company_id.email_formatted )"/><br/><br/>
     </t>
-    We keep in touch for any questions.<br />
-    Yours faithfully,<br />
+    We keep in touch for any questions.<br/>
+    Yours faithfully,<br/>
     </p>
 </div>
 </field>
@@ -255,9 +192,7 @@
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_release_capital')]"
-        />
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_release_capital')]"/>
             </function>
             <value eval="{'noupdate': False}" />
         </function>
@@ -268,8 +203,8 @@
         name="name"
       >Confirmation email for CE initial payment Received</field>
         <field
-        name="description"
-      >Sent to cooperators with their cooperator certificate in attachment</field>
+            name="description"
+        >Sent to cooperators with their cooperator certificate in attachment</field>
             <field
         name="email_from"
       >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
@@ -282,13 +217,8 @@
       >{{(object.company_id.coop_email_contact or object.company_id.email)}}</field>
             <field name="model_id" ref="model_res_partner" />
             <field name="auto_delete" eval="False" />
-            <field
-        name="report_template"
-        ref="cooperator.action_cooperator_report_certificate"
-      />
-            <field
-        name="report_name"
-      >Certificate {{ (object.cooperator_register_number or '') }}</field>
+            <field name="report_template" ref="cooperator.action_cooperator_report_certificate" />
+            <field name="report_name" >Certificate {{ (object.cooperator_register_number or '') }}</field>
             <field name="lang">{{object.lang}}</field>
             <field name="is_cooperator_template" eval="True" />
             <field name="body_html" type="html">
@@ -296,20 +226,13 @@
     <p style="margin: 0px; padding: 0px; font-size: 13px;">
     Hello
     <t t-if="object.is_company" t-out="object.get_representative().firstname" />
-    <t t-else="" t-out="object.firstname" />,<br /><br />
-    We welcome you to <t
-              t-out="object.env.company.comercial_name or object.env.company.name"
-            />!<br />
-    You have succesfully finished the incoming process so you are now a member of our community!<br
-            /><br />
-    Here you have your community member number: <strong><t
-                t-out="(object.cooperator_register_number or 'XXX')"
-              /></strong><br /><br />
-    Please find in attachment your <t
-              t-out="object.env.company.comercial_name or object.env.company.name"
-            /> cooperator certificate.<br /><br />
-    We keep in touch for any questions.<br />
-    Yours faithfully,<br />
+    <t t-else="" t-out="object.firstname" />,<br/><br/>
+    We welcome you to <t t-out="object.env.company.comercial_name or object.env.company.name"/>!<br/>
+    You have succesfully finished the incoming process so you are now a member of our community!<br/><br/>
+    Here you have your community member number: <strong><t t-out="(object.cooperator_register_number or 'XXX')"/></strong><br/><br/>
+    Please find in attachment your <t t-out="object.env.company.comercial_name or object.env.company.name"/> cooperator certificate.<br/><br/>
+    We keep in touch for any questions.<br/>
+    Yours faithfully,<br/>
     </p>
 </div>
 </field>
@@ -317,36 +240,27 @@
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_certificate')]"
-        />
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_certificate')]"/>
             </function>
             <value eval="{'noupdate': False}" />
         </function>
 
    <record id="cooperator.email_template_share_increase" model="mail.template">
         <field
-        name="name"
-      >Share Increase: Payment Received Confirmation: Cooperator Certificate</field>
+            name="name"
+        >Share Increase: Payment Received Confirmation: Cooperator Certificate</field>
         <field name="model_id" ref="model_res_partner" />
         <field
-        name="email_from"
-      >{{ object.company_id.coop_email_contact or object.company_id.email_formatted }}</field>
+            name="email_from"
+        >{{ object.company_id.coop_email_contact or object.company_id.email_formatted }}</field>
         <field name="partner_to">{{ object.id }}</field>
-        <field
-        name="reply_to"
-      >{{(object.company_id.coop_email_contact or object.company_id.email)}}</field>
+        <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email)}}</field>
         <field name="subject">Payment Received Confirmation</field>
         <field
-        name="description"
-      >Sent to cooperators in case of share increase with their cooperator certificate in attachment</field>
-        <field
-        name="report_template"
-        ref="cooperator.action_cooperator_report_certificate"
-      />
-        <field
-        name="report_name"
-      >Certificate {{ (object.cooperator_register_number or '') }}</field>
+            name="description"
+        >Sent to cooperators in case of share increase with their cooperator certificate in attachment</field>
+        <field name="report_template" ref="cooperator.action_cooperator_report_certificate" />
+        <field name="report_name">Certificate {{ (object.cooperator_register_number or '') }}</field>
         <field name="lang">{{ object.lang }}</field>
         <field name="auto_delete" eval="False" />
         <field name="is_cooperator_template" eval="True" />
@@ -356,13 +270,10 @@
         Hello
         <t t-if="object.is_company" t-out="object.get_representative().firstname" />
         <t t-else="" t-out="object.firstname" />,<br /><br />
-        We confirm the reception of your payment for the new share(s) you have taken.<br
-            /><br />
-        Please find in attachment your <t
-              t-out="object.env.company.comercial_name or object.env.company.name"
-            /> cooperator certificate.<br /><br />
-    We keep in touch for any questions.<br />
-    Yours faithfully,<br />
+        We confirm the reception of your payment for the new share(s) you have taken.<br /><br />
+        Please find in attachment your <t t-out="object.env.company.comercial_name or object.env.company.name"/> cooperator certificate.<br /><br />
+    We keep in touch for any questions.<br/>
+    Yours faithfully,<br/>
      </p>
 </div>
         </field>
@@ -370,9 +281,7 @@
 
         <function name="write" model="ir.model.data">
             <function name="search" model="ir.model.data">
-                <value
-          eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_share_increase')]"
-        />
+                <value eval="[('module', '=', 'cooperator'),('name', '=', 'email_template_share_increase')]"/>
             </function>
             <value eval="{'noupdate': False}" />
         </function>

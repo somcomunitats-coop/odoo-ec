@@ -65,6 +65,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                 _("Not valid parameter value [odoo_company_id]"), status=500
             )
 
+
         ctx = request.context.copy()
         ctx.update({"target_odoo_company_id": target_odoo_company_id})
         request.env.context = ctx
