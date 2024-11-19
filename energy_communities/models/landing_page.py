@@ -125,23 +125,27 @@ class LandingPage(models.Model):
             record.translate_slug_id()
 
     def update_translation(self, translation_name, original_value, trans_value, lang):
-        translation = self._get_translation(translation_name, lang)
-        if translation:
-            translation.write(
-                {"src": original_value, "value": trans_value, "state": "translated"}
-            )
-        else:
-            self.env["ir.translation"].create(
-                {
-                    "name": translation_name,
-                    "res_id": self.id,
-                    "lang": lang,
-                    "type": "model",
-                    "src": original_value,
-                    "value": trans_value,
-                    "state": "translated",
-                }
-            )
+        translation = get_translation(
+            source=original_value, lang=lang, mods="energy_communities"
+        )
+        print("UPDATE TRANSLATION ON LANDING")
+        # __import__("ipdb").set_trace()
+        # if translation:
+        #     translation.write(
+        #         {"src": original_value, "value": trans_value, "state": "translated"}
+        #     )
+        # else:
+        #     self.env["ir.translation"].create(
+        #         {
+        #             "name": translation_name,
+        #             "res_id": self.id,
+        #             "lang": lang,
+        #             "type": "model",
+        #             "src": original_value,
+        #             "value": trans_value,
+        #             "state": "translated",
+        #         }
+        #     )
         return True
 
     def translate_slug_id(self):

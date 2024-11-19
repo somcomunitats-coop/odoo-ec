@@ -426,28 +426,36 @@ class LandingCmPlace:
     def _apply_place_metadatas_translations(self, place):
         for lang_code in self._get_active_languages():
             # place description: applied from landing short_description already translated
-            landing_short_description_trans = self._get_translation(
-                "landing.page,short_description",
-                self.landing.id,
-                lang_code,
-                translated=True,
+            # landing_short_description_trans = self._get_translation(
+            #     "landing.page,short_description",
+            #     self.landing.id,
+            #     lang_code,
+            #     translated=True,
+            # )
+            landing_short_description_trans = get_translation(
+                source=self.landing.short_description,
+                lang=lang_code,
+                mods="energy_communities",
             )
             if landing_short_description_trans:
-                self._apply_place_metadata_translation(
-                    place.id,
-                    MapClientConfig.MAPPING__OPEN_PLACE_DESCRIPTION_META_KEY,
-                    landing_short_description_trans.src,
-                    landing_short_description_trans.value,
-                    lang_code,
-                )
+                pass
+                # TODO: re-enable this
+                # self._apply_place_metadata_translation(
+                #     place.id,
+                #     MapClientConfig.MAPPING__OPEN_PLACE_DESCRIPTION_META_KEY,
+                #     landing_short_description_trans.src,
+                #     landing_short_description_trans.value,
+                #     lang_code,
+                # )
+        # TODO: re-enable this
         # place social headline: es_ES
-        self._apply_place_metadata_translation(
-            place.id,
-            MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_META_KEY,
-            MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_ORIGINAL,
-            MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_TRANSLATION["es_ES"],
-            "es_ES",
-        )
+        # self._apply_place_metadata_translation(
+        #     place.id,
+        #     MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_META_KEY,
+        #     MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_ORIGINAL,
+        #     MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_TRANSLATION["es_ES"],
+        #     "es_ES",
+        # )
 
     def _apply_place_metadata_translation(
         self, place_id, meta_key, original_value, trans_value, lang
@@ -467,33 +475,38 @@ class LandingCmPlace:
     def _get_active_languages(self):
         return self.landing.env["res.lang"].search([("active", "=", 1)]).mapped("code")
 
-    def _get_translation(self, translation_name, res_id, lang, translated=False):
-        query = [
-            ("name", "=", translation_name),
-            ("res_id", "=", res_id),
-            ("lang", "=", lang),
-        ]
-        if translated:
-            query.append(("state", "=", "translated"))
-        return self.landing.env["ir.translation"].search(query)
+    # def _get_translation(self, translation_name, res_id, lang, translated=False):
+    #     query = [
+    #         ("name", "=", translation_name),
+    #         ("res_id", "=", res_id),
+    #         ("lang", "=", lang),
+    #     ]
+    #     if translated:
+    #         query.append(("state", "=", "translated"))
+    #     return self.landing.env["ir.translation"].search(query)
 
     def _update_translation(
         self, translation_name, res_id, original_value, trans_value, lang
     ):
-        translation = self._get_translation(translation_name, res_id, lang)
-        if translation:
-            translation.write(
-                {"src": original_value, "value": trans_value, "state": "translated"}
-            )
-        else:
-            self.landing.env["ir.translation"].create(
-                {
-                    "name": translation_name,
-                    "res_id": res_id,
-                    "lang": lang,
-                    "type": "model",
-                    "src": original_value,
-                    "value": trans_value,
-                    "state": "translated",
-                }
-            )
+        translation = get_translation(
+            source=original_value, lang=lang, mods="energy_communities"
+        )
+        print("UPDATE TRANSLATION ON CMPLACE")
+        # __import__("ipdb").set_trace()
+        # translation = self._get_translation(translation_name, res_id, lang)
+        # if translation:
+        #     translation.write(
+        #         {"src": original_value, "value": trans_value, "state": "translated"}
+        #     )
+        # else:
+        #     self.landing.env["ir.translation"].create(
+        #         {
+        #             "name": translation_name,
+        #             "res_id": res_id,
+        #             "lang": lang,
+        #             "type": "model",
+        #             "src": original_value,
+        #             "value": trans_value,
+        #             "state": "translated",
+        #         }
+        #     )
