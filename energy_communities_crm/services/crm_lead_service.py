@@ -6,6 +6,8 @@ from odoo import _
 
 from odoo.addons.component.core import Component
 
+# from odoo.addons.base_rest import restapi
+
 _logger = logging.getLogger(__name__)
 
 
@@ -15,7 +17,13 @@ class CRMLeadService(Component):
     _description = """
         CRMLead requests
     """
+    _collection = "crm.api.services"
+    _usage = "crm-lead"
 
+    # TODO: Implement new API!
+    # @restapi.method(
+    #     [(["/"], "POST")],
+    # )
     def create(self, **params):
         crm_lead_create_respose = super().create(params)
         target_source_xml_id = self._get_metadata_value(params, "source_xml_id")
