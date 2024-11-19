@@ -1,150 +1,127 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record
-    id="selfconsumption_energy_delivered_invoicing_reminder"
-    model="mail.template"
-  >
-        <field name="name">Selfconsumption Energy Delivered Invoicing Reminder</field>
-        <field name="email_from">info@somcomunitats.coop</field>
-        <field
-      name="subject"
-    >Selfconsumption - Energy Delivered Invoicing Reminder</field>
-        <field
-      name="model_id"
-      ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"
-    />
-        <field name="body_html">
-            <![CDATA[
-        <p>Hi,</p>
-        <p>
-            Remember that the collective self-consumption project
-            <b>${ object.name }</b>
-            of the energy community
-            <b>${ object.project_id.company_id.name }</b>
-            must invoice on the day <b>${ ctx['next_invoicing'] }</b>.
-        </p>
-        <p>
-            It is necessary, therefore, that you enter into Odoo the energy generated in kWh during the period
-            <b>${ ctx['first_date'] }</b>
-            - <b>${ ctx['last_date'] }</b>.
-        </p>
-        <p>
-            To do so, go to the project file, enter the contracts view, select the contracts that must be invoiced and
-            press the Invoice button.</br>
-        </p>
-        <p>
-            For any questions or incidents, contact the support team; support@somcomunitats.coop.
-        </p>
-            ]]>
-        </field>
-    </record>
+    <data>
+        <record id="selfconsumption_energy_delivered_invoicing_reminder" model="mail.template">
+            <field name="name">Selfconsumption Energy Delivered Invoicing Reminder</field>
+            <field name="description">Email reminder for self-consumption billing of supplied energy</field>
+            <field name="email_from">info@somcomunitats.coop</field>
+            <field name="subject">Selfconsumption - Energy Delivered Invoicing Reminder</field>
+            <field name="model_id" ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"/>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Hi,</p>
+                    <p>
+                        Remember that the collective self-consumption project
+                        <b><t t-out="object.name"/></b>
+                        of the energy community
+                        <b><t t-out="object.project_id.company_id.comercial_name or object.project_id.company_id.name"/></b>
+                        must invoice on the day <b><t t-out="ctx.get('next_invoicing')"/></b>.
+                    </p>
+                    <p>
+                        It is necessary, therefore, that you enter into Odoo the energy generated in kWh during the period
+                        <b><t t-out="ctx.get('first_date')"/></b>
+                        - <b><t t-out="ctx.get('last_date')"/></b>.
+                    </p>
+                    <p>
+                        To do so, go to the project file, enter the contracts view, select the contracts that must be invoiced and
+                        press the Invoice button.
+                    </p>
+                    <p>
+                        For any questions or incidents, contact the support team; support@somcomunitats.coop.
+                    </p>
+                </div>
+            </field>
+        </record>
 
-    <record
-    id="selfconsumption_energy_delivered_custom_invoicing_reminder"
-    model="mail.template"
-  >
-        <field
-      name="name"
-    >Selfconsumption Energy Delivered Custom Invoicing Reminder</field>
-        <field name="email_from">info@somcomunitats.coop</field>
-        <field name="subject">Self-consumption billing reminder ${ object.name }</field>
-        <field
-      name="model_id"
-      ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"
-    />
-        <field name="body_html">
-            <![CDATA[
-        <p>Hi,</p>
-        <p>
-            Remember that the collective self-consumption project
-            <b>${ object.name }</b>
-            of the energy community
-            <b>${ object.project_id.company_id.name }</b>
-            must invoice on the day <b>${ ctx['next_invoicing'] }</b>.
-        </p>
-        <p>
-            It is necessary, therefore, that you upload to the Som Comunitats platform
-            the energy delivered from each CUPS for this period. Instructions to
-            generate invoices:.
-        </p>
-        <p>
-            1. Go to the project file, go to the contracts view and select the
-            contracts to be invoiced.
-        </p>
-        <p>
-            2. In the Action button, select the "Generate invoices" option.
-        </p>
-        <p>
-            3. In the wizard, load the CSV file with the energy delivered in kWh during
-            the period ${ ctx['first_date'] } - ${ ctx['last_date'] } for each CUPS and
-            press the "Generate" button.
-        </p>
-        <p>
-            4. Finally, you must validate and send the generated invoices. If you have
-            any doubts or issues, please contact our support team:
-            soporte@somcomunitats.coop
-        </p>
-            ]]>
-        </field>
-    </record>
+        <record id="selfconsumption_energy_delivered_custom_invoicing_reminder" model="mail.template">
+            <field name="name">Selfconsumption Energy Delivered Custom Invoicing Reminder</field>
+            <field name="description">E-mail reminder of personalized billing of self-consumption of energy supplied</field>
+            <field name="email_from">info@somcomunitats.coop</field>
+            <field name="subject">Self-consumption billing reminder {{object.name}}</field>
+            <field name="model_id" ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"/>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Hi,</p>
+                    <p>
+                        Remember that the collective self-consumption project
+                        <b><t t-out="object.name"/></b>
+                        of the energy community
+                        <b><t t-out="object.project_id.company_id.comercial_name or object.project_id.company_id.name"/></b>
+                        must invoice on the day <b><t t-out="ctx.get('next_invoicing')"/></b>.
+                    </p>
+                    <p>
+                        It is necessary, therefore, that you upload to the Som Comunitats platform
+                        the energy delivered from each CUPS for this period. Instructions to
+                        generate invoices:.
+                    </p>
+                    <p>
+                        1. Go to the project file, go to the contracts view and select the
+                        contracts to be invoiced.
+                    </p>
+                    <p>
+                        2. In the Action button, select the "Generate invoices" option.
+                    </p>
+                    <p>
+                        3. In the wizard, load the CSV file with the energy delivered in kWh during
+                        the period <t t-out="ctx.get('first_date')"/> - <t t-out="ctx.get('last_date')"/> for each CUPS and
+                        press the "Generate" button.
+                    </p>
+                    <p>
+                        4. Finally, you must validate and send the generated invoices. If you have
+                        any doubts or issues, please contact our support team:
+                        soporte@somcomunitats.coop
+                    </p>
+                </div>
+            </field>
+        </record>
 
-    <record
-    id="selfconsumption_power_acquired_invoicing_reminder"
-    model="mail.template"
-  >
-        <field name="name">Selfconsumption Power Acquired Invoicing Reminder</field>
-        <field name="email_from">info@somcomunitats.coop</field>
-        <field
-      name="subject"
-    >Selfconsumption - Power Acquired Invoicing Reminder</field>
-        <field
-      name="model_id"
-      ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"
-    />
-        <field name="body_html">
-            <![CDATA[
-        <p>Hi,</p>
-        <p>
-            The collective self-consumption project
-            <b>${ object.name }</b>
-            of the energy community
-            <b>${ object.project_id.company_id.name }</b>
-            has started the invoicing process on <b>${ ctx['next_invoicing'] }</b> according to the established recurrence.
-        </p>
-        <p>
-            Invoices are created in “draft” and it is therefore necessary that they be validated and sent as soon as possible.
-        </p>
-        <p>
-            For any questions or incidents, contact the support team; support@somcomunitats.coop.
-        </p>
-            ]]>
-        </field>
-    </record>
+        <record id="selfconsumption_power_acquired_invoicing_reminder" model="mail.template">
+            <field name="name">Selfconsumption Power Acquired Invoicing Reminder</field>
+            <field name="description">E-mail billing reminder of self-consumption of energy purchased</field>
+            <field name="email_from">info@somcomunitats.coop</field>
+            <field name="subject">Selfconsumption - Power Acquired Invoicing Reminder</field>
+            <field name="model_id" ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"/>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Hi,</p>
+                    <p>
+                        The collective self-consumption project
+                        <b><t t-out="object.name"/></b>
+                        of the energy community
+                        <b><t t-out="object.project_id.company_id.comercial_name or object.project_id.company_id.name"/></b>
+                        has started the invoicing process on <b><t t-out="ctx.get('next_invoicing')"/></b> according to the established recurrence.
+                    </p>
+                    <p>
+                        Invoices are created in “draft” and it is therefore necessary that they be validated and sent as soon as possible.
+                    </p>
+                    <p>
+                        For any questions or incidents, contact the support team; support@somcomunitats.coop.
+                    </p>
+                </div>
+            </field>
+        </record>
 
-    <record id="selfconsumption_insciption_form" model="mail.template">
-        <field
-      name="name"
-    >Registration in self-consumption project of the Energy Community</field>
-        <field name="email_from">info@somcomunitats.coop</field>
-        <field name="subject">Registration in ${ object.name }</field>
-        <field
-      name="model_id"
-      ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"
-    />
-        <field name="body_html">
-            <![CDATA[
-        <p>Hello ${ ctx['partner_name'] }.</p>
-        <p>
-            Thank you very much for your interest in participating in the shared self-consumption project of the Energy Community ${ object.name }.
-            We have successfully received your registration request and we will keep you informed of the next steps to be taken.
-        </p>
-        <p>
-            If you have any questions, please do not hesitate to contact us.
-        </p>
-        <p>
-            ${ object.name }
-        </p>
-            ]]>
-        </field>
-    </record>
+        <record id="selfconsumption_insciption_form" model="mail.template">
+            <field name="name">Registration in self-consumption project of the Energy Community</field>
+            <field name="description">E-mail of inscription in the self-consumption project of the Energy Community</field>
+            <field name="email_from">info@somcomunitats.coop</field>
+            <field name="subject">Registration in {{ object.name }}</field>
+            <field name="model_id" ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"/>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Hello <t t-out="ctx.get('partner_name')"/>.</p>
+                    <p>
+                        Thank you very much for your interest in participating in the shared self-consumption project of the Energy Community <t t-out="object.name"/>.
+                        We have successfully received your registration request and we will keep you informed of the next steps to be taken.
+                    </p>
+                    <p>
+                        If you have any questions, please do not hesitate to contact us.
+                    </p>
+                    <p>
+                        <t t-out="object.name"/>
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
 </odoo>
