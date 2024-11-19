@@ -2,6 +2,8 @@ from datetime import datetime
 
 from odoo import _, api, fields, models
 
+from odoo.addons.energy_communities.utils import get_translation
+
 from ..client_map.config import MapClientConfig
 from ..client_map.resources.landing_cmplace import (
     LandingCmPlace as LandingCmPlaceResource,
@@ -122,14 +124,6 @@ class LandingPage(models.Model):
         for record in self:
             record.translate_slug_id()
 
-    def _get_translation(self, translation_name, lang):
-        query = [
-            ("name", "=", translation_name),
-            ("res_id", "=", self.id),
-            ("lang", "=", lang),
-        ]
-        return self.env["ir.translation"].search(query)
-
     def update_translation(self, translation_name, original_value, trans_value, lang):
         translation = self._get_translation(translation_name, lang)
         if translation:
@@ -171,7 +165,7 @@ class LandingPage(models.Model):
                 ("res_model", "=", "landing.page"),
                 ("res_field", "=", field_name),
             ]
-        file_attachment = self.env["ir.attachment"].search(query)
+        file_attachment = self.env["ir.attachment"].sudo().search(query)
         return file_attachment
 
     def _get_image_write_date(self, field_name, query=False):
@@ -190,7 +184,7 @@ class LandingPage(models.Model):
         return extension
 
     def _get_image_payload(self, field_name, query=False):
-        base_url = self.env["ir.config_parameter"].get_param("web.base.url")
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         return (
             base_url
             + "/web/image/landing.page/"
@@ -256,11 +250,10 @@ class LandingPage(models.Model):
                 "status": self.status,
                 "community_type": self.community_type,
                 "community_secondary_type": self.community_secondary_type,
-                "legal_form": self.env["ir.translation"]._get_source(
-                    name="addons/energy_communities/models/res_company.py",
-                    types="code",
-                    lang=self.env.context["lang"],
+                "legal_form": get_translation(
                     source=legal_form_dict[self.community_secondary_type],
+                    lang=self.env.context["lang"],
+                    mods="energy_communities",
                 ),
                 "community_status": self.community_status,
                 "allow_new_members": self.allow_new_members,
@@ -271,8 +264,7 @@ class LandingPage(models.Model):
                 "twitter_link": self.twitter_link or "",
                 "instagram_link": self.instagram_link or "",
                 "telegram_link": self.telegram_link or "",
-                "community_active_services": self.company_id.get_active_services(),
-                "energy_actions": self.company_id.get_energy_actions_dict_list(),
+                "energy_actions": self.company_id.sudo().get_energy_actions_dict_list(),
                 "primary_image_file": primary_image_file,
                 "primary_image_file_write_date": primary_image_file_write_date,
                 "secondary_image_file": secondary_image_file,

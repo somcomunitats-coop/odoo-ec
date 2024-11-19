@@ -1,6 +1,8 @@
 from odoo import _
 from odoo.exceptions import UserError
 
+from odoo.addons.energy_communities.utils import get_translation
+
 from ...pywordpress_client.resources.authenticate import Authenticate
 from ...pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
