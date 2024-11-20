@@ -89,42 +89,44 @@
                     <br/><br/>
                     Here is a copy of the data we received:
                     <br/><br/>
-                        - Request to join: <t t-out="object.company_id.name"/><br/>
-                    <t t-if="object.is_company">
-                        - Company Name: <t t-out="object.company_name"/><br/>
-                        - Company VAT: <t t-out="object.vat"/><br/>
-                        - Company Email: <t t-out="object.company_email"/><br/>
-                        - Representative firstname: <t t-out="object.firstname"/><br/>
-                        - Representative lastname: <t t-out="object.lastname"/><br/>
-                        - Representative function: <t t-out="object.contact_person_function"/><br/>
-                        - Representative email: <t t-out="object.email"/><br/>
-                        - Representative phone: <t t-out="object.phone or ''"/><br/>
-                        <t t-if="object.gender">
-                        - Representative gender: <t t-out="dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]"/><br/>
+                    <ul>
+                        <li><strong>Request to join:</strong> <t t-out="object.company_id.name"/><br/></li>
+                        <t t-if="object.is_company">
+                            <li><strong>Company Name:</strong> <t t-out="object.company_name"/><br/></li>
+                            <li><strong>Company VAT:</strong> <t t-out="object.vat"/><br/></li>
+                            <li><strong>Company Email:</strong> <t t-out="object.company_email"/><br/></li>
+                            <li><strong>Representative firstname:</strong> <t t-out="object.firstname"/><br/></li>
+                            <li><strong>Representative lastname:</strong> <t t-out="object.lastname"/><br/></li>
+                            <li><strong>Representative function:</strong> <t t-out="object.contact_person_function"/><br/></li>
+                            <li><strong>Representative email:</strong> <t t-out="object.email"/><br/></li>
+                            <li><strong>Representative phone:</strong> <t t-out="object.phone or ''"/><br/></li>
+                            <t t-if="object.gender">
+                                <li><strong>Representative gender:</strong> <t t-out="dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]"/><br/></li>
+                            </t>
+                            <li><strong>Representative birthdate:</strong> <t t-out="object.birthdate"/><br/></li>
                         </t>
-                        - Representative birthdate: <t t-out="object.birthdate"/><br/>
-                    </t>
-                    <t t-else="">
-                        - VAT: <t t-out="object.vat"/><br/>
-                        - Firstname: <t t-out="object.firstname"/><br/>
-                        - Lastname: <t t-out="object.lastname"/><br/>
-                        - Email: <t t-out="object.email"/><br/>
-                        - Phone: <t t-out="object.phone or ''"/><br/>
-                        <t t-if="object.gender">
-                        - Gender: <t t-out="dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]"/><br/>
+                        <t t-else="">
+                            <li><strong>VAT:</strong> <t t-out="object.vat"/><br/></li>
+                            <li><strong>Firstname:</strong> <t t-out="object.firstname"/><br/></li>
+                            <li><strong>Lastname:</strong> <t t-out="object.lastname"/><br/></li>
+                            <li><strong>Email:</strong> <t t-out="object.email"/><br/></li>
+                            <li><strong>Phone:</strong> <t t-out="object.phone or ''"/><br/></li>
+                            <t t-if="object.gender">
+                                <li><strong>Gender:</strong> <t t-out="dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]"/><br/></li>
+                            </t>
+                            <li><strong>Birthdate:</strong> <t t-out="object.birthdate"/><br/></li>
                         </t>
-                        - Birthdate: <t t-out="object.birthdate"/><br/>
-                    </t>
-                        - Address: <t t-out="object.address"/><br/>
-                        - Zip code: <t t-out="object.zip_code"/><br/>
-                        - City: <t t-out="object.city"/><br/>
-                        - Country: <t t-out="object.country_id.name"/><br/>
-                        - Language: <t t-out="dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]"/><br/>
-                        - Initial share amount: <t t-out="object.subscription_amount"/><br/>
-                    <t t-if="object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit' and object.iban">
-                        - Bank account finished on: <t t-out="object.iban[-4:]"/><br/>
-                        - I authorize bank receipts to be sent to this account: <t t-out="object.mandate_approved and 'YES' or 'NOT'"/><br/>
-                    </t>
+                        <li><strong>Address:</strong> <t t-out="object.address"/><br/></li>
+                        <li><strong>Zip code:</strong> <t t-out="object.zip_code"/><br/></li>
+                        <li><strong>City:</strong> <t t-out="object.city"/><br/></li>
+                        <li><strong>Country:</strong> <t t-out="object.country_id.name"/><br/></li>
+                        <li><strong>Language:</strong> <t t-out="dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]"/><br/></li>
+                        <li><strong>Initial share amount:</strong> <t t-out="object.subscription_amount"/><br/></li>
+                        <t t-if="object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit' and object.iban">
+                            <li><strong>Bank account finished on:</strong> <t t-out="object.iban[-4:]"/><br/></li>
+                            <li><strong>I authorize bank receipts to be sent to this account:</strong> <t t-out="object.mandate_approved and 'YES' or 'NOT'"/><br/></li>
+                        </t>
+                    </ul>
                     <br/>
                     We keep in touch for any questions.<br/>
                     Yours faithfully,<br/>
@@ -169,10 +171,12 @@
                     <t t-else="">
                     Your request to become member of <t t-out="object.company_id.comercial_name or object.company_id.name"/> is already underway!<br/>
                     In order to complete it you must make a bank deposit of the amount indicated below:<br/><br/>
-                        - Initial registration fee amount: <t t-out="object.amount_total"/> €<br/>
-                        - Banck account number: <t t-out="( object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'"/><br/>
-                        - Receiver: <t t-out="object.company_id.name"/><br/>
-                        - Concept: Your first and last names<br/><br/>
+                    <ul>
+                        <li><strong>Initial registration fee amount:</strong> <t t-out="object.amount_total"/> €<br/></li>
+                        <li><strong>Banck account number:</strong> <t t-out="( object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'"/><br/></li>
+                        <li><strong>Receiver:</strong> <t t-out="object.company_id.name"/><br/></li>
+                        <li><strong>Concept:</strong> Your first and last names<br/><br/></li>
+                    </ul>
                     Once the payment is made, please send us the document proof of it by email to <t t-out="( object.company_id.coop_email_contact or object.company_id.email_formatted )"/><br/><br/>
                     </t>
                     We keep in touch for any questions.<br/>

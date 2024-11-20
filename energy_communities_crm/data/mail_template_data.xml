@@ -6,7 +6,7 @@
             <field name="name">Request for registration of the Energy Community on the platform</field>
             <field name="description">E-mail request for registration of the Energy Community in the platform</field>
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field name="subject">[Som Comunitats] Request for registration of the Energy Community on the platform</field>
+            <field name="subject">Request for registration of the Energy Community on the platform</field>
             <field name="email_to">{{ctx.get('email_to')}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
@@ -27,7 +27,7 @@
             <field name="name">Confirmation Email for CE Creation Lead Receipt</field>
             <field name="description">E-mail of confirmation for CE Creation Lead Receipt</field>
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field name="subject">[Som Comunitats] New Community Creation Request</field>
+            <field name="subject">New Community Creation Request</field>
             <field name="email_to">{{ctx.get('email_to')}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
@@ -50,7 +50,7 @@
             <field name="name">Confirmation Email for CE Contact Request Lead Receipt</field>
             <field name="description">E-mail of confirmation for CE Contact Request Lead Receipt</field>
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field name="subject">[Som Comunitats] Community Contact Request</field>
+            <field name="subject">Community Contact Request</field>
             <field name="email_to">{{object.email_from}}</field>
             <field name="email_cc">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
@@ -93,7 +93,7 @@
             <field name="name">Confirmation Email for CE News Request Lead Receipt</field>
             <field name="description">E-mail of confirmation for CE News Request Lead Receipt</field>
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field name="subject">[Som Comunitats] Community Newsletter Subscription Request</field>
+            <field name="subject">Community Newsletter Subscription Request</field>
             <field name="email_to">{{object.email_from}}</field>
             <field name="email_cc">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
@@ -120,7 +120,7 @@
             <field name="name">Confirmation Email for furture CE Contact Request Lead Receipt</field>
             <field name="description">E-mail of confirmation for furture CE Contact Request Lead Receipt</field>
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field name="subject">[Som Comunitats] Interested in Communities in your area</field>
+            <field name="subject">Interested in Communities in your area</field>
             <field name="email_to">{{object.email_from}}</field>
             <field name="email_cc">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
@@ -145,7 +145,7 @@
             <field name="name">Confirmation Email for Platform News Request Lead Receipt</field>
             <field name="description">E-mail of confirmation for Platform News Request Lead Receipt</field>
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field name="subject">[Som Comunitats] Newsletter Subscription Request</field>
+            <field name="subject">Newsletter Subscription Request</field>
             <field name="email_to">{{object.email_from}}</field>
             <field name="email_cc">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
@@ -170,7 +170,7 @@
             <field name="name">Confirmation Email Contact Platform Receipt</field>
             <field name="description">E-mail of confirmation for Contact Platform Receipt</field>
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field name="subject">[Som Comunitats] Contact to the platform</field>
+            <field name="subject">Contact to the platform</field>
             <field name="email_to">{{ctx.get('email_to')}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
@@ -192,7 +192,7 @@
             <field name="name">Confirmation Email for CE Coordinator Recruitment</field>
             <field name="description">E-mail of confirmation for CE Coordinator Recruitment</field>
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field name="subject">[Som Comunitats] Application for Recruitment Coordinator</field>
+            <field name="subject">Application for Recruitment Coordinator</field>
             <field name="email_to">{{ctx.get('email_to')}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
@@ -216,7 +216,7 @@
             <field name="name">Confirmation Email for CE info about Coordinators</field>
             <field name="description">E-mail of confirmation for CE info about Coordinators</field>
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field name="subject">[Som Comunitats] Contact request in relation to Coordinators</field>
+            <field name="subject">Contact request in relation to Coordinators</field>
             <field name="email_to">{{ctx.get('email_to')}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
@@ -240,7 +240,7 @@
             <field name="name">Auto-reply email upon receiving a subscription request for a Coordinator's Newsletter</field>
             <field name="description">E-mail of auto-reply upon receiving a subscription request for a Coordinator's Newsletter</field>
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field name="subject">[{{object.company_id.name}}] Newsletter Subscription</field>
+            <field name="subject">Newsletter Subscription</field>
             <field name="email_to">{{object.email_from}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
@@ -263,7 +263,7 @@
             <field name="name">Auto-reply email when receiving a request for information from a Coordinator</field>
             <field name="description">E-mail of auto-reply when receiving a request for information from a Coordinator</field>
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field name="subject">[{{object.company_id.name}}] Contact Form</field>
+            <field name="subject">Contact Form</field>
             <field name="email_to">{{object.email_from}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
@@ -284,7 +284,7 @@
             <field name="name">Auto-reply email when receiving a request for information from Tariffs page</field>
             <field name="description">E-mail of auto-reply when receiving a request for information from Tariffs page</field>
             <field name="email_from">{{object.team_id.alias_id.alias_name}}@{{object.team_id.alias_id.alias_domain}}</field>
-            <field name="subject">[{{object.company_id.name}}] Tariffs information</field>
+            <field name="subject">Tariffs information</field>
             <field name="email_to">{{object.email_from}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
