@@ -500,7 +500,7 @@ msgstr "Número d'operació"
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_share_increase
 msgid "Payment Received Confirmation"
-msgstr "[{{object.company_id.comercial_name or object.company_id.name}}] Confirmació recepció pagament increment capital social"
+msgstr "Confirmació recepció pagament increment capital social"
 
 #. module: cooperator
 #. odoo-python
@@ -629,7 +629,7 @@ msgstr ""
 #: model:mail.template,subject:cooperator.email_template_share_update
 #: model:mail.template,subject:cooperator.email_template_share_update_no_shares
 msgid "Share Update Confirmation"
-msgstr "[{{object.company_id.comercial_name or object.company_id.name}}] Actualització import d'aportació obligatòria"
+msgstr "Actualització import d'aportació obligatòria"
 
 #. module: cooperator
 #: model:mail.template,name:cooperator.email_template_share_update
@@ -669,7 +669,7 @@ msgstr "Diari subscripcions"
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_waiting_list
 msgid "Subscription Request Added to Waiting List"
-msgstr "[{{object.company_id.comercial_name or object.company_id.name}}] Sol·licitud de subscripció en llista d'espera"
+msgstr "Sol·licitud de subscripció en llista d'espera"
 
 #. module: cooperator
 #: model:mail.template,name:cooperator.email_template_waiting_list
@@ -840,7 +840,7 @@ msgstr "Valor total aportacions"
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_certificate
 msgid "Wellcome to the Energy Community {{object.env.company.comercial_name or object.env.company.name}}!"
-msgstr "[{{object.env.company.comercial_name or object.env.company.name}}] Benvinguda a la Comunitat Energètica !"
+msgstr "Benvinguda a la Comunitat Energètica !"
 
 #. module: cooperator
 #. odoo-python
@@ -879,14 +879,14 @@ msgstr "Cal que defineixis un compte comptable per a les sòcies a la teva compa
 msgid ""
 "Application to become Community membership"
 msgstr  ""
-"[{{object.company_id.comercial_name or object.company_id.name}}] Sol·licitud d'adhesió a la Comunitat Energètica"
+"Sol·licitud d'adhesió a la Comunitat Energètica"
 
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_release_capital
 msgid ""
 "Request to release capital for Energy Community"
 msgstr ""
-"[{{object.company_id.comercial_name or object.company_id.name}}] Sol·licitud pagament aportació obligatòria"
+"Sol·licitud pagament aportació obligatòria"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document

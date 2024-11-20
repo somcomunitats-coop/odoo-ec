@@ -363,7 +363,7 @@ msgid ""
 "Contribute to {{object.company_id.comercial_name or object.company_id.name}}"
 " Ref. ACSV{{object.id}}"
 msgstr ""
-"[{{object.company_id.comercial_name or object.company_id.name}}] Confirmació recepció sol·licitud d'aportació voluntària amb Ref. ACSV{{object.id}}"
+"Confirmació recepció sol·licitud d'aportació voluntària amb Ref. ACSV{{object.id}}"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move_line__voluntary_share_contribution
@@ -1194,6 +1194,7 @@ msgstr "Text del formulari de participació voluntària"
 #: model:ir.actions.act_window,name:energy_communities_cooperator.view_voluntary_share_interest_return_window
 #: model:ir.actions.report,name:energy_communities_cooperator.action_voluntary_share_interest_return_invoices
 #: model:ir.ui.menu,name:energy_communities_cooperator.view_voluntary_share_interest_return_menu
+#: model:mail.template,subject:energy_communities_cooperator.email_template_voluntary_share_interest_return
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_energy_communities_company_form
 msgid "Voluntary share interest return"
 msgstr "Retorn d'interessos d'aportacions voluntaries"
@@ -1230,7 +1231,7 @@ msgid ""
 "{{object.company_id.comercial_name or object.company_id.name}} with Ref. "
 "ACSV{{object.id}}"
 msgstr ""
-"[{{object.company_id.comercial_name or object.company_id.name}}] Aportació voluntària amb Ref. ACSV{{object.id}} rebuda !"
+"Aportació voluntària amb Ref. ACSV{{object.id}} rebuda !"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1313,15 +1314,6 @@ msgstr "Revisa la transferència SEPA."
 #, python-format
 msgid "ZIP code not found"
 msgstr "Cosi postal no trobat"
-
-#. module: energy_communities_cooperator
-#: model:mail.template,subject:energy_communities_cooperator.email_template_voluntary_share_interest_return
-msgid ""
-"[{{object.company_id.comercial_name or object.company_id.name}}] Voluntary "
-"share interest return"
-msgstr ""
-"[{{object.company_id.comercial_name or object.company_id.name}}] Liquidació d'interessos generats per "
-"aportacions voluntàries"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
