@@ -80,7 +80,7 @@
         <record id="email_template_voluntary_share_interest_return" model="mail.template">
             <field name="name">Voluntary shares interest return email</field>
             <field name="email_from">{{object.company_id.email_formatted}}</field>
-            <field name="subject" >[{{object.company_id.comercial_name or object.company_id.name}}] Voluntary share interest return</field>
+            <field name="subject" >Voluntary share interest return</field>
             <field name="partner_to">{{object.partner_id.id}}</field>
             <field name="email_to"/>
             <field name="model_id" ref="model_account_move" />
