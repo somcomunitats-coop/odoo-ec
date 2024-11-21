@@ -9,22 +9,6 @@ class Inscription(models.Model):
     }
     _description = "Inscriptions for a self-consumption"
 
-    @api.constrains("project_id", "partner_id", "code")
-    def _constraint_unique(self):
-        for record in self:
-            exist = self.search(
-                [
-                    ("id", "!=", record.id),
-                    ("project_id", "=", record.project_id),
-                    ("partner_id", "=", record.partner_id),
-                    ("code", "=", record.code),
-                ]
-            )
-            if exist:
-                raise ValidationError(
-                    _("Partner is already signed up in this project with that cups.")
-                )
-
     inscription_id = fields.Many2one(
         "energy_project.inscription", required=True, ondelete="cascade"
     )
@@ -54,6 +38,22 @@ class Inscription(models.Model):
         string="Vulnerability situation",
         related="partner_id.vulnerability_situation",
     )
+
+    @api.constrains("project_id", "partner_id", "supply_point_id")
+    def _constraint_unique(self):
+        for record in self:
+            exist = self.search(
+                [
+                    ("id", "!=", record.id),
+                    ("project_id", "=", record.project_id.id),
+                    ("partner_id", "=", record.partner_id.id),
+                    ("supply_point_id", "=", record.supply_point_id.id),
+                ]
+            )
+            if exist:
+                raise ValidationError(
+                    _("Partner is already signed up in this project with that cups.")
+                )
 
     def create_participant_table(self):
         ctx = self.env.context.copy()
