@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
-    <template
-    id="becomecooperator_ccee"
-    inherit_id="cooperator_website.becomecooperator"
-  >
-        <!-- <xpath expr="//div[@id='wrap']//h1" position="replace">
+    <template id="main_form_template_ccee" inherit_id="cooperator_website.main_form_template">
+      <xpath expr="//div[@id='wrap']//h1" position="replace">
             <h1 class="mt-4 text-center">
                 Become Cooperator of <t t-esc="company.name" /> member_eu_ES
             </h1>
@@ -38,9 +34,15 @@
             <p
       >Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
-        </xpath> -->
-    <!-- <xpath expr="//div[@name='my_account_link_container'][1]" position="replace" /> -->
-    <!-- <xpath expr="//div[@name='my_account_link_container']" position="replace" /> -->
+        </xpath>
+        <xpath expr="//div[@name='my_account_link_container'][1]" position="replace" />
+        <xpath expr="//div[@name='my_account_link_container']" position="replace" />
+    </template>
+
+    <template
+    id="becomecooperator_ccee"
+    inherit_id="cooperator_website.becomecooperator"
+  >
         <xpath expr="//div[@name='confirm_email_container']" position="after">
             <div
         t-if="not logged"
@@ -59,15 +61,15 @@
         />
             </div>
         </xpath>
-        <!-- <xpath expr="//div[@id='wrap']//input[@id='email']" position="attributes">
+        <xpath expr="//input[@id='email']" position="attributes">
             <attribute name="placeholder" />
-        </xpath> -->
-        <!-- <xpath
-      expr="//div[@id='wrap']//input[@id='confirm_email']"
+        </xpath>
+        <xpath
+      expr="//input[@id='confirm_email']"
       position="attributes"
     >
             <attribute name="placeholder" />
-        </xpath> -->
+        </xpath>
     </template>
 
     <template
