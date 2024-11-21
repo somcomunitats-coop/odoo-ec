@@ -40,18 +40,26 @@
             <xpath expr="//field[@name='subject']" position="after">
                 <field name="allowed_companies" invisible="1" />
                 <field
-            name="company_id"
-            groups="base.group_multi_company"
-            domain="[('id','in',allowed_companies)]"
-            widget="selection"
-          />
+                  name="company_id"
+                  groups="base.group_multi_company"
+                  domain="[('id','in',allowed_companies)]"
+                  widget="selection"
+                />
             </xpath>
             <xpath
-          expr="//page[@name='settings']/group/group/field[@name='name']"
-          position="attributes"
-        >
+              expr="//page[@name='settings']/group/group/field[@name='name']"
+              position="attributes"
+            >
               <attribute name="invisible">True</attribute>
             </xpath>
+            <!--<xpath expr="//sheet/group" position="inside">-->
+            <!--  <field-->
+            <!--    name="mailing_domain"-->
+            <!--    widget="domain"-->
+            <!--    options="{'model': 'mailing_model_real'}"-->
+            <!--    attrs="{'invisible':[('mailing_model_name', '!=', 'mailing.list')],'readonly': [('state', 'in', ('sending', 'done'))]}"-->
+            <!--  />-->
+            <!--</xpath>-->
         </field>
     </record>
   </data>

@@ -119,11 +119,6 @@ class LandingPage(models.Model):
         related="company_id.parent_id.landing_page_id",
     )
 
-    @api.constrains("slug_id")
-    def contrain_slug_id(self):
-        for record in self:
-            record.translate_slug_id()
-
     def update_translation(self, translation_name, original_value, trans_value, lang):
         translation = get_translation(
             source=original_value, lang=lang, mods="energy_communities"
@@ -147,20 +142,6 @@ class LandingPage(models.Model):
         #         }
         #     )
         return True
-
-    def translate_slug_id(self):
-        self.update_translation(
-            "landing.page,slug_id",
-            self.slug_id,
-            self.slug_id,
-            "ca_ES",
-        )
-        self.update_translation(
-            "landing.page,slug_id",
-            self.slug_id,
-            self.slug_id,
-            "es_ES",
-        )
 
     def _get_image_attachment(self, field_name, query):
         if not query:
