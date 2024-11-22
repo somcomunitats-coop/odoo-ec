@@ -52,14 +52,14 @@
             >
               <attribute name="invisible">True</attribute>
             </xpath>
-            <!--<xpath expr="//sheet/group" position="inside">-->
-            <!--  <field-->
-            <!--    name="mailing_domain"-->
-            <!--    widget="domain"-->
-            <!--    options="{'model': 'mailing_model_real'}"-->
-            <!--    attrs="{'invisible':[('mailing_model_name', '!=', 'mailing.list')],'readonly': [('state', 'in', ('sending', 'done'))]}"-->
-            <!--  />-->
-            <!--</xpath>-->
+            <xpath expr="//sheet/group" position="inside">
+              <field
+                name="mailing_domain"
+                widget="domain"
+                options="{'model': 'mailing_model_real'}"
+                attrs="{'invisible':[('mailing_model_name', '!=', 'mailing.list')],'readonly': [('state', 'in', ('sending', 'done'))]}"
+              />
+            </xpath>
         </field>
     </record>
   </data>
