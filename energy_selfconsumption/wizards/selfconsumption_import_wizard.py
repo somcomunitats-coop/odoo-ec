@@ -68,7 +68,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
         for index, line in enumerate(parsing_data):
             import_dict = self.get_line_dict(line)
             result = self.import_line(import_dict, project)
-            if not result[0]:
+            if result[0]:
                 error_string_list = "".join(
                     [
                         error_string_list,
