@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 
 from odoo.addons.energy_communities.utils import get_translation
 
@@ -12,13 +12,7 @@ from ..pywordpress_client.resources.authenticate import Authenticate
 from ..pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
 )
-from .res_company import (
-    _CE_MEMBER_STATUS_VALUES,
-    _CE_TYPE,
-    _HIERARCHY_LEVEL_VALUES,
-    _LEGAL_FORM_VALUES,
-)
-from .res_config_settings import ResConfigSettings
+from .res_company import _CE_MEMBER_STATUS_VALUES, _CE_TYPE, _LEGAL_FORM_VALUES
 
 
 class LandingPage(models.Model):
@@ -118,30 +112,6 @@ class LandingPage(models.Model):
         string="Parent landing page",
         related="company_id.parent_id.landing_page_id",
     )
-
-    def update_translation(self, translation_name, original_value, trans_value, lang):
-        translation = get_translation(
-            source=original_value, lang=lang, mods="energy_communities"
-        )
-        print("UPDATE TRANSLATION ON LANDING")
-        # __import__("ipdb").set_trace()
-        # if translation:
-        #     translation.write(
-        #         {"src": original_value, "value": trans_value, "state": "translated"}
-        #     )
-        # else:
-        #     self.env["ir.translation"].create(
-        #         {
-        #             "name": translation_name,
-        #             "res_id": self.id,
-        #             "lang": lang,
-        #             "type": "model",
-        #             "src": original_value,
-        #             "value": trans_value,
-        #             "state": "translated",
-        #         }
-        #     )
-        return True
 
     def _get_image_attachment(self, field_name, query):
         if not query:
