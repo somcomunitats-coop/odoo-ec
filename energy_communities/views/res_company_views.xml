@@ -52,16 +52,17 @@
           />
                 </header>
             </xpath>
+            
             <xpath expr="//field[@name='logo']" position="before">
-                <div class='oe_button_box'>
-                    <button
-            name="get_landing_page_form"
-            type="object"
-            string="My landing page"
-            class="oe_stat_button"
-            icon="fa-globe"
-            attrs="{'invisible': [('landing_page_id','=',False)]}"
-          />
+                <div class="oe_button_box" name="button_box">
+                  <button
+                    name="get_landing_page_form"
+                    type="object"
+                    string="My landing page"
+                    class="oe_stat_button"
+                    icon="fa-globe"
+                    attrs="{'invisible': [('landing_page_id','=',False)]}"
+                  />
                 </div>
                 <field name="admins" invisible="True" />
             </xpath>

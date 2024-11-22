@@ -131,7 +131,6 @@ class LandingPage(models.Model):
         return file_write_date
 
     def _get_image_extension(self, field_name, query):
-        file_write_date = ""
         file_attachment = self._get_image_attachment(field_name, query)
         extension = ""
         if file_attachment:
