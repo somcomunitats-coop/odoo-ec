@@ -98,15 +98,15 @@
                         </tr>
                         <!-- FOOTER -->
                         <tr>
-                            <td align="center" style="min-width: 590px; padding: 0 8px 0 8px; font-size:11px;">
+                            <td align="left" style="min-width: 590px; font-size:13px;">
                                 <div style="margin-top:32px;">
-                                    <b t-out="company.comercial_name or company.name" style="font-size:11px;"/><br/>
-                                    <p style="color: #999999; margin-top:2px; font-size:11px;">
+                                    <b t-out="company.comercial_name or company.name" style="font-size:13px;"/><br/>
+                                    <p style="color: #999999; margin-top:2px; font-size:13px;">
                                         <t t-out="company.phone"/>
                                         <t t-if="company.email and company.phone"> |</t>
                                         <a t-if="company.email" t-att-href="'mailto:%s' % company.email" style="text-decoration:none; color: #999999;" t-out="company.email"/>
                                         <t t-if="company.website and (company.phone or company.email)"> |</t>
-                                        <a target="_blank" href="https://somcomunitats.coop" style="color: #875A7B;">Som Comunitats</a>
+                                        <a t-if="company.website" t-att-href="'%s' % company.website" style="text-decoration:none; color: #999999;" t-out="company.website"/>
                                     </p>
                                 </div>
                             </td>
@@ -117,8 +117,8 @@
                     </tr>
                     <!-- POWERED BY -->
                     <tr>
-                        <td align="center" style="min-width: 590px;">
-                            Powered by <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=email" style="color: #875A7B;">Odoo</a>
+                        <td align="center" style="min-width: 590px;padding: 8px 0px 8px 0px;font-size:11px;">
+                            <a target="_blank" href="https://somcomunitats.coop" style="color: #875A7B;">Som Comunitats</a>
                         </td>
                     </tr>
                     </table>
