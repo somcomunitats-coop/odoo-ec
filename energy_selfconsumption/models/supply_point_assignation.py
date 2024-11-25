@@ -109,13 +109,12 @@ class SupplyPointAssignation(models.Model):
                         (
                             "project_id",
                             "=",
-                            record.distribution_table_id.selfconsumption_project_id.project_id.id,
+                            record.distribution_table_id.selfconsumption_project_id.id,
                         )
                     ]
                 )
                 .mapped("partner_id.supply_ids")
             )
-
             if record.supply_point_id.id not in supply_points.ids:
                 raise ValidationError(
                     _(
