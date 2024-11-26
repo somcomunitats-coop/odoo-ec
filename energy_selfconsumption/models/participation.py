@@ -8,5 +8,5 @@ class Participation(models.Model):
     name = fields.Char(string="Description")
     quantity = fields.Float(string="Quantity")
     project_id = fields.Many2one(
-        "energy_project.project", required=True, ondelete="cascade"
+        "energy_selfconsumption.selfconsumption", required=True, ondelete="cascade"
     )
