@@ -32,14 +32,19 @@ class CRMLeadService(Component):
                 crm_lead_create_respose.response[0].decode("utf-8")
             )
             crm_lead = self.env["crm.lead"].browse(crm_lead_dict.get("id", False))
-            # update some fields based on the selected source
+            # update some fields based on the selected xml source
             utm_source = self.env.ref("energy_communities." + target_source_xml_id)
             lead_update_dict = {
                 "name": self._get_crm_lead_name(crm_lead.id, params),
                 "description": self._get_crm_lead_description(params),
                 "source_id": utm_source.id,
-                "team_id": self._get_crm_lead_team_id(utm_source),
             }
+            # update only team_id an stage_id if it's overwriten by source
+            team_and_stage_from_source = (
+                self._get_team_and_stage_update_dict_from_source(utm_source)
+            )
+            if team_and_stage_from_source:
+                lead_update_dict = lead_update_dict | team_and_stage_from_source
             lead_update_dict.update(self._map_metadata_crm_fields(utm_source, params))
             crm_lead.write(lead_update_dict)
             # email autoresponder
@@ -98,10 +103,29 @@ class CRMLeadService(Component):
             )
         return description
 
-    def _get_crm_lead_team_id(self, utm_source):
+    def _get_team_and_stage_update_dict_from_source(self, utm_source):
+        utm_team_id_id = self._get_team_id_from_source(utm_source)
+        utm_stage_id_id = self._get_stage_id_from_team_id(utm_team_id_id)
+        if utm_team_id_id and utm_stage_id_id:
+            return {
+                "team_id": utm_team_id_id,
+                "stage_id": utm_stage_id_id,
+            }
+        return False
+
+    def _get_team_id_from_source(self, utm_source):
         if utm_source.crm_team_id:
             return utm_source.crm_team_id.id
-        return self.env["crm.team"]._get_default_team_id(user_id=self.env.user.id).id
+        return False
+
+    def _get_stage_id_from_team_id(self, team_id_id=False):
+        # perform search, return the first found
+        stage_id = self.env["crm.stage"].search(
+            [("team_id", "=", team_id_id)], order="sequence, id", limit=1
+        )
+        if stage_id:
+            return stage_id.id
+        return False
 
     def _map_metadata_crm_fields(self, utm_source, params):
         crm_update_dict = {}

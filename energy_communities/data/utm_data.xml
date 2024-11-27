@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!-- Sources to be used on CRM -->
     <record model="utm.source" id="ce_source_general_info">
         <field name="name">Information Newsletter (general)</field>
     </record>
@@ -16,7 +15,6 @@
     <record model="utm.source" id="ce_source_general_contact">
         <field name="name">Contact to the Platform</field>
     </record>
-    <!-- CE Other Sources -->
     <record model="utm.source" id="ce_source_creation_ce_proposal">
         <field name="name">CE creation</field>
     </record>
