@@ -185,7 +185,7 @@ class Selfconsumption(models.Model):
             "view_mode": "tree,form",
             "res_model": "energy_selfconsumption.inscription_selfconsumption",
             "domain": [("project_id", "=", self.id)],
-            "context": {"create": True, "default_project_id": self.id},
+            "context": {"create": True, "default_project_id": self.project_id.id},
         }
 
     def get_contracts(self):
