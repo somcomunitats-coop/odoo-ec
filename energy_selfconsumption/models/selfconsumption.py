@@ -103,7 +103,7 @@ class Selfconsumption(models.Model):
     distribution_table_count = fields.Integer(compute=_compute_distribution_table_count)
     inscription_ids = fields.One2many(
         "energy_selfconsumption.inscription_selfconsumption",
-        "project_id",
+        "selfconsumption_project_id",
         readonly=True,
     )
     inscription_count = fields.Integer(compute=_compute_inscription_count)
@@ -184,8 +184,8 @@ class Selfconsumption(models.Model):
             "name": "Inscriptions",
             "view_mode": "tree,form",
             "res_model": "energy_selfconsumption.inscription_selfconsumption",
-            "domain": [("project_id", "=", self.id)],
-            "context": {"create": True, "default_project_id": self.project_id.id},
+            "domain": [("project_id", "=", self.project_id.id), ("selfconsumption_project_id", "=", self.id)],
+            "context": {"create": True, "default_project_id": self.project_id.id, "default_selfconsumption_project_id": self.id},
         }
 
     def get_contracts(self):

@@ -12,6 +12,13 @@ class Inscription(models.Model):
     inscription_id = fields.Many2one(
         "energy_project.inscription", required=True, ondelete="cascade"
     )
+    selfconsumption_project_id = fields.Many2one(
+        "energy_selfconsumption.selfconsumption",
+        required=True,
+        ondelete="restrict",
+        string="Self-consumption Energy Project",
+        check_company=True,
+    )
     annual_electricity_use = fields.Float(string="Annual electricity use")
     participation = fields.Many2one(
         comodel_name="energy_project.participation", string="Participation"

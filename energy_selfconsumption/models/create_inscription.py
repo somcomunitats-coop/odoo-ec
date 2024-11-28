@@ -266,7 +266,8 @@ class CreateInscription(models.AbstractModel):
         """Creates the registration record."""
         self.env["energy_selfconsumption.inscription_selfconsumption"].sudo().create(
             {
-                "project_id": project.id,
+                "project_id": project.project_id.id,
+                "selfconsumption_project_id": project.id,
                 "partner_id": partner.id,
                 "effective_date": effective_date,
                 "mandate_id": mandate.id if mandate else False,
