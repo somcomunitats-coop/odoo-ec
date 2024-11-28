@@ -107,7 +107,7 @@ class SupplyPointAssignation(models.Model):
                 .search(
                     [
                         (
-                            "project_id",
+                            "selfconsumption_project_id",
                             "=",
                             record.distribution_table_id.selfconsumption_project_id.id,
                         )
