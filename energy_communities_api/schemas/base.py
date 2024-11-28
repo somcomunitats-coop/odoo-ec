@@ -31,8 +31,14 @@ class BaseListResponse(BaseResponse):
 
 # TODO: PagingParam could be none to return all elements
 class PagingParam(BaseModel):
-    page: Optional[int]
-    page_size: Optional[int]
+    page: Optional[int] = Field(
+        None, title="Page", description="Page for pagination request"
+    )
+    page_size: Optional[int] = Field(
+        None,
+        title="Page size",
+        description="Max numbers of elemets for a page",
+    )
 
 
 class QueryParams(BaseModel):
