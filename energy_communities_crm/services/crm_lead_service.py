@@ -199,7 +199,11 @@ class CRMLeadService(Component):
             template = self.env.ref(
                 "energy_communities_crm.{}".format(template_external_id)
             ).with_context(email_values)
-            template.send_mail(force_send=False, res_id=crm_lead_id)
+            template.send_mail(
+                force_send=False,
+                res_id=crm_lead_id,
+                email_layout_xmlid="mail.mail_notification_layout",
+            )
             return True
         return False
 

@@ -80,7 +80,9 @@ class VoluntaryShareInterestReturn(models.Model):
 
     def _send_voluntary_share_interest_return_email(self, move):
         self.company_id.get_voluntary_share_return_email_template().send_mail(
-            force_send=False, res_id=move.id
+            force_send=False,
+            res_id=move.id,
+            email_layout_xmlid="mail.mail_notification_layout",
         )
 
     def _display_notifications(self, subject, body):
