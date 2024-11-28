@@ -204,17 +204,15 @@ class SocialInfo(BaseModel):
     Social links representation
     """
     email: EmailStr = Field(..., title="Email", description="Contact email")
-    web: AnyHttpUrl = Field(..., title="Web", description="Url of the website")
-    twitter: Optional[AnyHttpUrl] = Field(
-        None, title="X", description="Url of X profile"
-    )
-    instagram: Optional[AnyHttpUrl] = Field(
+    web: str = Field(None, title="Web", description="Url of the website")
+    twitter: Optional[str] = Field(None, title="X", description="Url of X profile")
+    instagram: Optional[str] = Field(
         None, title="Instagram", description="Url of instagram profile"
     )
-    telegram: Optional[AnyHttpUrl] = Field(
+    telegram: Optional[str] = Field(
         None, title="Telegram", description="Url of telegram group"
     )
-    facebook: Optional[AnyHttpUrl] = Field(
+    facebook: Optional[str] = Field(
         None, title="Facebook", description="Url or invitation link of whatsapp group"
     )
 
