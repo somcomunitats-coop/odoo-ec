@@ -1,4 +1,3 @@
-from datetime import date
 from typing import List
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -12,7 +11,7 @@ class EnergyPoint(BaseModel):
     Schema for representing a energy value (production, selfconsumption...)
     """
     value: float = Field(..., title="Value", description="Value in kWh of the point")
-    date_: date = Field(
+    date_: str = Field(
         ...,
         alias="date",
         title="Date",
