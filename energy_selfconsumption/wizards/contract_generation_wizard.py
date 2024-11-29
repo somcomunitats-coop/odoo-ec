@@ -57,6 +57,7 @@ class ContractGenerationWizard(models.TransientModel):
             self.selfconsumption_id.product_id.contract_template_id.write(
                 {
                     "date_start": self.start_date,
+                    "recurring_next_date": self.start_date,
                 }
             )
 
