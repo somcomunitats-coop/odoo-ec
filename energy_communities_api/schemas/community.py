@@ -1,4 +1,3 @@
-from datetime import date
 from enum import Enum
 from typing import List, Optional
 
@@ -72,7 +71,7 @@ class CommunityServiceInfo(BaseModel, populate_by_name=True):
         description="Percentage of shares of a member in a community service",
     )
 
-    inscription_date: date = Field(
+    inscription_date: str = Field(
         ...,
         title="Inscription Date",
         description="When a member was inscribed in the community service",
