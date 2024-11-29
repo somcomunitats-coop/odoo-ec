@@ -3,7 +3,7 @@
     <template id="main_form_template_ccee" inherit_id="cooperator_website.main_form_template">
       <xpath expr="//div[@id='wrap']//h1" position="replace">
             <h1 class="mt-4 text-center">
-                Become Cooperator of <t t-esc="company.name" /> member_eu_ES
+                Become Cooperator of <t t-esc="company.name" />member_eu_ES
             </h1>
             <br />
             <p>This form allow you to request be member of the community: <t
@@ -329,7 +329,7 @@
 
     <template id="voluntary_share_text_template" name="voluntary_share_text_template">
         <h1 class="mt-4 text-center">
-            Voluntary Share of <t t-esc="company.name" /> vol_share_eu_es
+            Voluntary Share of <t t-esc="company.name" />vol_share_eu_es
         </h1>
         <br />
         <p>
