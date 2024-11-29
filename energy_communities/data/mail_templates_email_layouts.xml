@@ -79,7 +79,7 @@
                         </tr>
                         <!-- CONTENT -->
                         <tr>
-                            <td style="min-width: 590px;">
+                            <td style="min-width: 590px;padding-top:15px;">
                                 <t t-out="message.body"/>
                                 <ul t-if="tracking_values">
                                     <t t-foreach="tracking_values" t-as="tracking">
