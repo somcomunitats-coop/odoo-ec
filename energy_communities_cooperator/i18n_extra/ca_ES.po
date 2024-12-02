@@ -11,6 +11,7 @@ msgstr ""
 "PO-Revision-Date: 2024-11-11 14:47+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: ca_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -137,7 +138,7 @@ msgstr ""
 "       <li><strong>Ciutat:</strong> <t t-out=\"object.city\"></t><br></li>\n"
 "       <li><strong>Pais:</strong> <t t-out=\"object.country_id.name\"></t><br></li>\n"
 "       <li><strong>Idioma:</strong> <t t-out=\"dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]\"></t><br></li>\n"
-"       <li><strong>Import aportació inicial:</strong> <t t-out=\"object.subscription_amount\"></t><br></li>\n"
+"       <li><strong>Import aportació:</strong> <t t-out=\"object.subscription_amount\"></t><br></li>\n"
 "       <t t-if=\"object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit' and object.iban\">\n"
 "           <li><strong>Compte bancari acabat amb:</strong> <t t-out=\"object.iban[-4:]\"></t><br></li>\n"
 "           <li><strong>Autoritzo giros bancaris a aquest compte:</strong> <t t-out=\"object.mandate_approved and 'YES' or 'NOT'\"></t><br></li>\n"
@@ -269,7 +270,7 @@ msgstr "<strong>El teu contacte:</strong>"
 #. module: cooperator
 #: model:ir.model.constraint,message:cooperator.constraint_cooperative_membership_company_id_cooperator_register_numbe_key
 msgid "A cooperator register number must be unique (per company)"
-msgstr ""
+msgstr "Un registre de sòcia ha de ser únic per copmpanyia"
 
 #. module: cooperator
 #. odoo-python
@@ -459,7 +460,7 @@ msgstr "Nombre aportacions"
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Number of share must be greater than 0."
-msgstr "Nombre aportacions ha de ser superior a 0."
+msgstr "Nombre d'aportacions ha de ser superior a 0."
 
 #. module: cooperator
 #. odoo-python
@@ -528,12 +529,12 @@ msgstr ""
 #: model:ir.model.fields,help:cooperator.field_partner_create_subscription__share_unit_price
 #: model:ir.model.fields,help:cooperator.field_subscription_request__share_unit_price
 msgid "Price at which the product is sold to customers."
-msgstr "Preu en que el producte és venut a les sòcies"
+msgstr "Preu en que el producte és venut a les sòcies."
 
 #. module: cooperator
 #: model:ir.ui.menu,name:cooperator.menu_move_out_invoice_type
 msgid "Register Payment"
-msgstr "Registre pagament"
+msgstr "Registre de pagament"
 
 #. module: cooperator
 #: model:ir.ui.menu,name:cooperator.menu_cooperator_main_register
@@ -677,7 +678,7 @@ msgstr "Diari subscripcions"
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_waiting_list
 msgid "Subscription Request Added to Waiting List"
-msgstr "Sol·licitud de subscripció en llista d'espera"
+msgstr "Sol·licitud de subscripció afegida a la llista d'espera"
 
 #. module: cooperator
 #: model:mail.template,name:cooperator.email_template_waiting_list
@@ -812,7 +813,7 @@ msgstr "Aquesta operació cal que sigui aprovada abans de ser executada"
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share can not be subscribed an individual"
-msgstr "Aquesta aportació no pot ser subscrita per una Persona individual"
+msgstr "Aquesta aportació no pot ser subscrita per una persona física"
 
 #. module: cooperator
 #. odoo-python
@@ -820,7 +821,7 @@ msgstr "Aquesta aportació no pot ser subscrita per una Persona individual"
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share can not be subscribed by a company"
-msgstr "Aquesta aportació no pot ser subscrita per una Empresa"
+msgstr "Aquesta aportació no pot ser subscrita per una persona jurídica (empresa)"
 
 #. module: cooperator
 #. odoo-python
