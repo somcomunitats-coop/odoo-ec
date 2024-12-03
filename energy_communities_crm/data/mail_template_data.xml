@@ -17,8 +17,6 @@
                     <p>There is a new Energy Community registration request.</p>
                     <p>Go to Odoo to track this registration.</p><br/>
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team</p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             </field>
         </record>
@@ -40,8 +38,6 @@
                     <br />
                     <p>We keep in touch for any questions.</p>
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             </field>
         </record>
@@ -81,10 +77,6 @@
                       <li><strong>Message:</strong> <t t-out="ctx.get('metadata').get('message')"/></li>
                       % endif
                     </ul>
-                    <br />
-                    <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             </field>
         </record>
@@ -110,8 +102,6 @@
                     <p>We remain in contact for any questions.</p>
                     <br />
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             </field>
         </record>
@@ -135,8 +125,6 @@
                     <br />
                     <p>We keep in touch for any questions.</p>
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             </field>
         </record>
@@ -160,8 +148,6 @@
                     <p>We'll let you know if there's any news about the project.</p>
                     <br />
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             </field>
         </record>
@@ -182,8 +168,6 @@
                     <p>We have received your email. We will contact you as soon as possible.</p>
                     <br />
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             </field>
         </record>
@@ -206,8 +190,6 @@
                     <br />
                     <p>We keep in touch for any questions.</p>
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             </field>
         </record>
@@ -230,8 +212,6 @@
                     <br />
                     <p>We keep in touch for any questions.</p>
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             </field>
         </record>
@@ -254,7 +234,6 @@
                     <br />
                     <p>We keep in touch for any questions.</p>
                     <p>Yours faithfully,</p>
-                    <p><a href="https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}"><t t-out="object.company_id.name"/></a> team </p>
                 </div>
             </field>
         </record>
@@ -275,7 +254,6 @@
                     <p>We have received your email. We will contact you as soon as possible.</p>
                     <br />
                     <p>Yours faithfully,</p>
-                    <p><a href="https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}"><t t-out="object.company_id.name"/></a> team </p>
                 </div>
             </field>
         </record>
@@ -297,8 +275,6 @@
                     <p>We will contact you as soon as possible.</p>
                     <br />
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
             </field>
         </record>
