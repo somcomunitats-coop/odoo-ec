@@ -61,21 +61,21 @@
                     <br />
                     <p>Received data on your contact request:</p>
                     <ul>
-                      % if ctx.metadata.name:
+                      <t t-if="ctx.metadata.name">
                       <li><strong>Name:</strong> <t t-out="ctx.get('metadata').get('name')"/></li>
-                      % endif
-                      % if ctx.metadata.email_from:
+                      </t>
+                      <t t-if="ctx.metadata.email_from">
                       <li><strong>Email:</strong> <t t-out="ctx.get('metadata').get('email_from')"/></li>
-                      % endif
-                      % if ctx.metadata.phone:
+                      </t>
+                      <t t-if="ctx.metadata.phone">
                       <li><strong>Phone:</strong> <t t-out="ctx.get('metadata').get('phone')"/></li>
-                      % endif
-                      % if ctx.metadata.town:
+                      </t>
+                      <t t-if="ctx.metadata.town">
                       <li><strong>City:</strong> <t t-out="ctx.get('metadata').get('town')"/></li>
-                      % endif
-                      % if ctx.metadata.message:
+                      </t>
+                      <t t-if="ctx.metadata.message">
                       <li><strong>Message:</strong> <t t-out="ctx.get('metadata').get('message')"/></li>
-                      % endif
+                      </t>
                     </ul>
                 </div>
             </field>
