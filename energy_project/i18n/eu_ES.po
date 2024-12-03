@@ -4,18 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-23 12:01+0000\n"
-"PO-Revision-Date: 2024-01-23 13:16+0100\n"
-"Last-Translator: Daniil Digtyar Vasilieva <daniil.digtyar@somit.coop>\n"
+"POT-Creation-Date: 2024-12-03 10:20+0000\n"
+"PO-Revision-Date: 2024-12-03 10:20+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: eu_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 3.0.1\n"
 
 #. module: energy_project
 #: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
@@ -83,6 +81,12 @@ msgstr ""
 "                                    <br/>"
 
 #. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__acc_number
+msgid "Account Number"
+msgstr "Kontu zenbakia"
+
+#. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/project.py:0
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__active
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__active
@@ -102,9 +106,14 @@ msgid "Available Providers"
 msgstr "Eskuragarri dauden hornitzaileak"
 
 #. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__mandate_id
+msgid "Bank Mandate"
+msgstr "Banku Mandatua"
+
+#. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__zip
 msgid "C.P."
-msgstr "C.P."
+msgstr ""
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__city
@@ -167,6 +176,7 @@ msgid "Display Name"
 msgstr "Bistaratzeko izena"
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/project.py:0
 #: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__draft
 #, python-format
@@ -252,9 +262,14 @@ msgid "Energy Supplier"
 msgstr "Energia hornitzailea"
 
 #. module: energy_project
+#: model:uom.category,name:energy_project.energy_custom_uom_category
+msgid "Energy custom"
+msgstr "Ohitura energetikoa"
+
+#. module: energy_project
 #: model:ir.model,name:energy_project.model_energy_project_project
 msgid "Energy project"
-msgstr "Energia proiektua"
+msgstr "Energia Proiektua"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__state
@@ -287,9 +302,28 @@ msgstr "Goiburuaren deskribapena webguneko formularioan"
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__id
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__id
 msgid "ID"
-msgstr ""
+msgstr "Identificador"
 
 #. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,help:energy_project.field_energy_project_provider__token
+#, python-format
+msgid "If a provadir has an API, token for autentication / authorization"
+msgstr "Probadir batek API bat badu, autentifikazio/baimenerako tokena"
+
+#. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,help:energy_project.field_energy_project_provider__uri
+#, python-format
+msgid ""
+"If a provider has an API, URI of that API. Ex: https://api.provider.com"
+msgstr ""
+"Hornitzaile batek API bat badu, API horren URIa. Adibidez: https://api.provider.com"
+
+#. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/project.py:0
 #: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__activation
 #, python-format
@@ -297,6 +331,7 @@ msgid "In Activation"
 msgstr "Aktibazioan"
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/project.py:0
 #: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__inscription
 #, python-format
@@ -378,6 +413,11 @@ msgid "Manage Supplier"
 msgstr "Hornitzailea kudeatu"
 
 #. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__mandate_filtered_ids
+msgid "Mandate Filtered"
+msgstr "Mandatua Iragazita"
+
+#. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__city
 msgid "Municipio empresa"
 msgstr "Udal enpresa"
@@ -389,6 +429,9 @@ msgid "NIF empresa"
 msgstr "NIF enpresa"
 
 #. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__name
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__name
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__name
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__name
@@ -397,8 +440,22 @@ msgstr "NIF enpresa"
 #: model_terms:ir.ui.view,arch_db:energy_project.reseller_form_view
 #: model_terms:ir.ui.view,arch_db:energy_project.service_form_view
 #: model_terms:ir.ui.view,arch_db:energy_project.supplier_form_view
+#, python-format
 msgid "Name"
 msgstr "Proiektuaren Izena"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__company_name
+msgid "Name of the company"
+msgstr "Enpresaren izena"
+
+#. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,help:energy_project.field_energy_project_provider__name
+#, python-format
+msgid "Name of the provider"
+msgstr "Hornitzailearen izena"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__name
@@ -407,6 +464,7 @@ msgid "Nombre empresa"
 msgstr "Enpresa izena"
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/inscription.py:0
 #, python-format
 msgid "Non-partner"
@@ -419,6 +477,7 @@ msgid "Nº de orden"
 msgstr "Ordenan zenbakia"
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/inscription.py:0
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__partner_id
 #, python-format
@@ -426,16 +485,14 @@ msgid "Partner"
 msgstr "Bazkidea"
 
 #. module: energy_project
-#: code:addons/energy_project/models/inscription.py:0
-#: model:ir.model.constraint,message:energy_project.constraint_energy_project_inscription_unique_project_id_partner_id
-#, python-format
-msgid "Partner is already signed up in this project."
-msgstr "Bazkidea dagoeneko izena emanda dago proiektu honetan."
-
-#. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__portal
 msgid "Portal de medidas"
 msgstr "Neurrien ataria"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__privacy_policy
+msgid "Privacy policy"
+msgstr "Pribatutasun politika"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__project_id
@@ -523,6 +580,7 @@ msgid "Teléfono gratuito incidencias"
 msgstr "Doako telefono inpaktuak"
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/inscription.py:0
 #, python-format
 msgid ""
@@ -533,6 +591,14 @@ msgstr ""
 "erlazionatuta dago: {table_state}"
 
 #. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/inscription.py:0
+#, python-format
+msgid "The selected mandate does not belong to the chosen partner."
+msgstr "Hautatutako mandatua ez da aukeratutako bazkidearena."
+
+#. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/service_contract.py:0
 #, python-format
 msgid ""
@@ -575,6 +641,7 @@ msgstr ""
 "gehitzeko."
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/service_contract.py:0
 #: model:ir.model.constraint,message:energy_project.constraint_energy_project_service_contract_unique_service_id_provider_id_project_id
 #, python-format
@@ -583,11 +650,33 @@ msgstr ""
 "Dagoeneko hornitzaile honekin proiektu honi esleitutako zerbitzu bat dago."
 
 #. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/project.py:0
+#, python-format
+msgid ""
+"This is the form to request to participate in the shared self-consumption project that your Energy Community has started registrations for.\n"
+"It is necessary to fill in all the mandatory data to collect your interest in participating in this facility and also information that facilitates the necessary subsequent management.\n"
+"If you have any questions, you can contact {company_email}."
+msgstr ""
+"Hau da zure Energia Komunitateak erregistratzen hasi duen partekatutako autokontsumo proiektuan parte hartzeko eskatzeko inprimakia.\n"
+"Beharrezkoa da derrigorrezko datu guztiak betetzea instalazio honetan parte hartzeko interesa biltzeko eta baita beharrezkoa den ondorengo kudeaketa errazten duen informazioa ere.\n"
+"Galderarik baduzu, jar zaitezke harremanetan {company_email}."
+
+#. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/service_available.py:0
 #: model:ir.model.constraint,message:energy_project.constraint_energy_project_service_available_unique_service_id_provider_id
 #, python-format
 msgid "This service is already assigned to this provider."
 msgstr "Zerbitzu hau dagoeneko esleitu zaio hornitzaile honi."
+
+#. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__token
+#, python-format
+msgid "Token"
+msgstr ""
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__type
@@ -600,6 +689,7 @@ msgid "Type for energy project"
 msgstr "Energia proiekturako mota"
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/inscription.py:0
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__is_member
 #, python-format
@@ -607,9 +697,29 @@ msgid "Typology"
 msgstr "Tipologia"
 
 #. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__uri
+#, python-format
+msgid "URI"
+msgstr ""
+
+#. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__user_id
 #: model:res.groups,name:energy_project.group_user
+#, python-format
 msgid "User"
 msgstr "Erabiltzailea"
+
+#. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,help:energy_project.field_energy_project_provider__user_id
+#, python-format
+msgid "User related with this provider"
+msgstr "Hornitzaile honekin erlazionatutako erabiltzailea"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__zip
@@ -619,6 +729,11 @@ msgstr "Posta Kodea"
 #. module: energy_project
 #: model:uom.uom,name:energy_project.kw_uom
 msgid "kW"
+msgstr ""
+
+#. module: energy_project
+#: model:uom.uom,name:energy_project.kwh_uom
+msgid "kWh"
 msgstr ""
 
 #. module: energy_project
