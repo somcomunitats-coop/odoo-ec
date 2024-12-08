@@ -193,7 +193,7 @@ msgstr ""
 "       <li><strong>Aportación inicial:</strong> <t t-out=\"object.amount_total\"></t> €<br></li>\n"
 "       <li><strong>Número de cuenta:</strong> <t t-out=\"( object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'\"></t><br></li>\n"
 "       <li><strong>Beneficiario:</strong> <t t-out=\"object.company_id.name\"></t><br></li>\n"
-"       <li><strong>Concepto:</strong> <i>--indica el teu nom i cognoms--</i><br><br></li>\n"
+"       <li><strong>Concepto:</strong> <i>--Zure izen-abizenak--</i><br><br></li>\n"
 "    </ul>\n"
 "    Una vez realizado el ingreso, puedes enviarnos el justificante de pago respondiendo este mismo correo electrónico o escribiendo a <t t-out=\"( object.company_id.coop_email_contact or object.company_id.email_formatted )\"></t><br><br>\n"
 "    </t>\n"
@@ -311,6 +311,11 @@ msgstr "Plantilla de correo electrónico para certificado incremento capital soc
 #: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
 msgid "<span>Certificate generated on</span>"
 msgstr "<span>Certificado generado el</span>"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+msgid "<span>share(s)</span>"
+msgstr "<span>ekarpena(k)</span>"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
