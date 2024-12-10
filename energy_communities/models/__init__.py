@@ -18,3 +18,4 @@ from . import product
 from . import utm_source
 from . import account_move
 from . import mail_channel
+from . import mail_message
