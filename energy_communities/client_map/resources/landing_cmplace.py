@@ -318,33 +318,18 @@ class LandingCmPlace:
             0,
         )
         # es_ES Translation
-        self._update_translation(
-            "cm.place.external.link,name",
-            external_link.id,
-            MapClientConfig.MAPPING__EXTERNAL_LINK__BECOME_COOPERATOR__LINK_LABEL[
-                "ca_ES"
-            ],
-            MapClientConfig.MAPPING__EXTERNAL_LINK__BECOME_COOPERATOR__LINK_LABEL[
-                "es_ES"
-            ],
-            "es_ES",
-        )
-        self._update_translation(
-            "cm.place.external.link,url",
-            external_link.id,
-            "{base_url}/become_cooperator?odoo_company_id={odoo_company_id}".format(
-                base_url=self.landing.env["ir.config_parameter"].get_param(
-                    "web.base.url"
+        external_link.with_context(lang="es_ES").write(
+            {
+                "name": MapClientConfig.MAPPING__EXTERNAL_LINK__BECOME_COOPERATOR__LINK_LABEL[
+                    "es_ES"
+                ],
+                "url": "{base_url}/es/become_cooperator?odoo_company_id={odoo_company_id}".format(
+                    base_url=self.landing.env["ir.config_parameter"].get_param(
+                        "web.base.url"
+                    ),
+                    odoo_company_id=self.landing.company_id.id,
                 ),
-                odoo_company_id=self.landing.company_id.id,
-            ),
-            "{base_url}/es/become_cooperator?odoo_company_id={odoo_company_id}".format(
-                base_url=self.landing.env["ir.config_parameter"].get_param(
-                    "web.base.url"
-                ),
-                odoo_company_id=self.landing.company_id.id,
-            ),
-            "es_ES",
+            }
         )
         return external_link
 
@@ -354,7 +339,7 @@ class LandingCmPlace:
             external_link = self._get_or_create_external_link(
                 place.id,
                 MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["ca_ES"],
-                "{landing_link}/#contacte".format(
+                "{landing_link}#contacte".format(
                     landing_link=self.wp_landing_data["link"]
                 ),
                 "_top",
@@ -362,25 +347,21 @@ class LandingCmPlace:
                 0,
             )
             # es_ES Translation
-            self._update_translation(
-                "cm.place.external.link,name",
-                external_link.id,
-                MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["ca_ES"],
-                MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL["es_ES"],
-                "es_ES",
+            external_link.with_context(lang="es_ES").write(
+                {
+                    "name": MapClientConfig.MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL[
+                        "es_ES"
+                    ]
+                }
             )
         if self.wp_landing_data["translations"] and external_link:
             if "es" in self.wp_landing_data["translations"].keys():
-                self._update_translation(
-                    "cm.place.external.link,url",
-                    external_link.id,
-                    "{landing_link}/#contacte".format(
-                        landing_link=self.wp_landing_data["link"]
-                    ),
-                    "{landing_link}/#contacte".format(
-                        landing_link=self.wp_landing_data["translations"]["es"]
-                    ),
-                    "es_ES",
+                external_link.with_context(lang="es_ES").write(
+                    {
+                        "url": "{landing_link}#contacte".format(
+                            landing_link=self.wp_landing_data["translations"]["es"]
+                        ),
+                    }
                 )
         return external_link
 
@@ -396,102 +377,45 @@ class LandingCmPlace:
         # setup social sahreable url for better sharing
         place.write({"social_shareable_url": self.wp_landing_data["link"]})
         # es_ES Translation
-        self._update_translation(
-            "cm.place.external.link,name",
-            external_link.id,
-            MapClientConfig.MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL["ca_ES"],
-            MapClientConfig.MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL["es_ES"],
-            "es_ES",
+        external_link.with_context(lang="es_ES").write(
+            {
+                "name": MapClientConfig.MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL[
+                    "es_ES"
+                ],
+            }
         )
         if self.wp_landing_data["translations"]:
             if "es" in self.wp_landing_data["translations"].keys():
-                self._update_translation(
-                    "cm.place.external.link,url",
-                    external_link.id,
-                    self.wp_landing_data["link"],
-                    self.wp_landing_data["translations"]["es"],
-                    "es_ES",
+                place.with_context(lang="es_ES").write(
+                    {"social_shareable_url": self.wp_landing_data["translations"]["es"]}
                 )
-                self._update_translation(
-                    "cm.place,social_shareable_url",
-                    place.id,
-                    self.wp_landing_data["link"],
-                    self.wp_landing_data["translations"]["es"],
-                    "es_ES",
+                external_link.with_context(lang="es_ES").write(
+                    {"url": self.wp_landing_data["translations"]["es"]}
                 )
         return external_link
 
     def _apply_place_metadatas_translations(self, place):
         for lang_code in self._get_active_languages():
-            # place description: applied from landing short_description already translated
-            landing_short_description_trans = self._get_translation(
-                "landing.page,short_description",
-                self.landing.id,
+            self._apply_place_metadata_translation(
+                place.id,
+                MapClientConfig.MAPPING__OPEN_PLACE_DESCRIPTION_META_KEY,
+                self.landing.with_context(lang=lang_code).short_description,
                 lang_code,
-                translated=True,
             )
-            if landing_short_description_trans:
-                self._apply_place_metadata_translation(
-                    place.id,
-                    MapClientConfig.MAPPING__OPEN_PLACE_DESCRIPTION_META_KEY,
-                    landing_short_description_trans.src,
-                    landing_short_description_trans.value,
-                    lang_code,
-                )
         # place social headline: es_ES
         self._apply_place_metadata_translation(
             place.id,
             MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_META_KEY,
-            MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_ORIGINAL,
             MapClientConfig.MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_TRANSLATION["es_ES"],
             "es_ES",
         )
 
-    def _apply_place_metadata_translation(
-        self, place_id, meta_key, original_value, trans_value, lang
-    ):
+    def _apply_place_metadata_translation(self, place_id, meta_key, trans_value, lang):
         related_meta = self.landing.env["cm.place.presenter.metadata"].search(
             [("place_id", "=", place_id), ("key", "=", meta_key)]
         )
         if related_meta:
-            self._update_translation(
-                "cm.place.presenter.metadata,value",
-                related_meta.id,
-                original_value,
-                trans_value,
-                lang,
-            )
+            related_meta.with_context(lang=lang).write({"value": trans_value})
 
     def _get_active_languages(self):
         return self.landing.env["res.lang"].search([("active", "=", 1)]).mapped("code")
-
-    def _get_translation(self, translation_name, res_id, lang, translated=False):
-        query = [
-            ("name", "=", translation_name),
-            ("res_id", "=", res_id),
-            ("lang", "=", lang),
-        ]
-        if translated:
-            query.append(("state", "=", "translated"))
-        return self.landing.env["ir.translation"].search(query)
-
-    def _update_translation(
-        self, translation_name, res_id, original_value, trans_value, lang
-    ):
-        translation = self._get_translation(translation_name, res_id, lang)
-        if translation:
-            translation.write(
-                {"src": original_value, "value": trans_value, "state": "translated"}
-            )
-        else:
-            self.landing.env["ir.translation"].create(
-                {
-                    "name": translation_name,
-                    "res_id": res_id,
-                    "lang": lang,
-                    "type": "model",
-                    "src": original_value,
-                    "value": trans_value,
-                    "state": "translated",
-                }
-            )

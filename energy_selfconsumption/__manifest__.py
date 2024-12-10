@@ -9,16 +9,17 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.5.2.6",
+    "version": "16.0.0.1.1",
+    "license": "AGPL-3",
     "depends": [
         "base",
         "web",
         "mail",
         "account",
         "contract",
-        "contract_variable_quantity",
         "contract_queue_job",
         "contract_mandate",
+        "contract_variable_quantity",
         "energy_communities",
         "energy_communities_cooperator",
         "energy_project",
@@ -40,7 +41,6 @@
         "data/mail_template.xml",
         "data/ir_attachment_data.xml",
         "data/ir_cron.xml",
-        "views/template_views.xml",
         "views/contract_views.xml",
         "views/selfconsumption_views.xml",
         "views/supply_point_views.xml",
@@ -62,4 +62,11 @@
     "demo": [
         "demo/energy_selfconsumption_demo.xml",
     ],
+    "assets": {
+        "web.assets_common": [
+            "energy_selfconsumption/static/src/js/list_renderer.js",
+            "energy_selfconsumption/static/src/views/progress_bar_template.xml",
+            "energy_selfconsumption/static/src/js/progress_bar.js",
+        ]
+    },
 }

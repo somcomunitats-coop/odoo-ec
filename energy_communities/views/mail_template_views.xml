@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="email_template_form">
+            <field name="name">email.template.form</field>
+            <field name="model">mail.template</field>
+            <field name="inherit_id" ref="mail.email_template_form" />
+            <field name="arch" type="xml">
+                <button name="%(mail.mail_template_reset_action)d" position="attributes">
+                    <attribute name="groups">energy_communities.role_platform_admin</attribute>
+                </button>
+            </field>
+        </record>
+
+    </data>
+</odoo>

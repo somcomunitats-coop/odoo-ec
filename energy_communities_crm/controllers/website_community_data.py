@@ -8,6 +8,8 @@ from odoo.http import request
 from odoo.addons.energy_communities.models.res_company import (
     _LEGAL_FORM_VALUES,
 )
+from odoo.addons.energy_communities.utils import get_translation
+from odoo.addons.web.controllers.webclient import WebClient
 
 _COMMUNITY_DATA__FIELDS = {}
 _COMMUNITY_DATA__GENERAL_FIELDS = {
@@ -249,13 +251,10 @@ class WebsiteCommunityData(http.Controller):
     #
     # GETTERS
     #
-    def _get_translation(self, source):
-        return request.env["ir.translation"]._get_source(
-            name="addons/energy_communities_crm/controllers/website_community_data.py",
-            types="code",
-            lang=request.env.context["lang"],
-            source=source,
-        )
+    def _get_translation(self, source, lang="en", mods="energy_communities_crm"):
+        if "lang" in request.env.context:
+            lang = request.env.context["lang"]
+        return get_translation(source, lang, mods)
 
     def _get_localized_options(self, original_options):
         localized_options = []
@@ -263,12 +262,7 @@ class WebsiteCommunityData(http.Controller):
             localized_options.append(
                 {
                     "id": option["id"],
-                    "name": request.env["ir.translation"]._get_source(
-                        name="addons/energy_communities_crm/controllers/website_community_data.py",
-                        types="code",
-                        lang=request.env.context["lang"],
-                        source=option["name"],
-                    ),
+                    "name": self._get_translation(option["name"]),
                 }
             )
         return localized_options
@@ -276,11 +270,6 @@ class WebsiteCommunityData(http.Controller):
     def _get_community_data_submit_response(self, values):
         values = self._fill_values(values, True, False)
         return request.render("energy_communities_crm.community_data_page", values)
-
-    def _get_date_string(self, date_val):
-        if date_val:
-            return datetime.strftime(date_val, "%Y-%m-%d")
-        return False
 
     def _get_community_data_page_url(self, values):
         return "{base_url}/community-data?lead_id={lead_id}".format(
@@ -343,12 +332,7 @@ class WebsiteCommunityData(http.Controller):
             legal_forms.append(
                 {
                     "id": legal_form_id,
-                    "name": request.env["ir.translation"]._get_source(
-                        name="addons/energy_communities/models/res_company.py",
-                        types="code",
-                        lang=request.env.context["lang"],
-                        source=legal_form_name,
-                    ),
+                    "name": self._get_translation(legal_form_name),
                 }
             )
         return legal_forms
@@ -400,15 +384,15 @@ class WebsiteCommunityData(http.Controller):
         # packs
         values["pack_1"] = self._is_lead_pack(values["lead_id"], "pack_1")
         values["pack_2"] = self._is_lead_pack(values["lead_id"], "pack_2")
+        # date format
+        for date_field_key in _COMMUNITY_DATA__DATE_FIELDS.keys():
+            if date_field_key in values.keys():
+                values[date_field_key] = self._format_date(values[date_field_key])
         # form labels
         # form keys
         for field_key in _COMMUNITY_DATA__FIELDS.keys():
-            # values[field_key + "_label"] = _COMMUNITY_DATA__FIELDS[field_key]
-            values[field_key + "_label"] = request.env["ir.translation"]._get_source(
-                name="addons/energy_communities_crm/controllers/website_community_data.py",
-                types="code",
-                lang=request.env.context["lang"],
-                source=_COMMUNITY_DATA__FIELDS[field_key],
+            values[field_key + "_label"] = self._get_translation(
+                _COMMUNITY_DATA__FIELDS[field_key]
             )
             values[field_key + "_key"] = field_key
         # language selection
@@ -516,11 +500,6 @@ class WebsiteCommunityData(http.Controller):
             }
         return values
 
-    def _validate_regex(self, value, regex_string):
-        regex = re.compile(regex_string)
-        match = regex.match(str(value))
-        return bool(match)
-
     def _validate_past_date(self, date_string):
         form_date = datetime.strptime(date_string, "%d/%m/%Y").strftime("%Y-%m-%d")
         now = datetime.today().strftime("%Y-%m-%d")
@@ -567,10 +546,7 @@ class WebsiteCommunityData(http.Controller):
         # date validation
         for date_field_key in _COMMUNITY_DATA__DATE_FIELDS.keys():
             if date_field_key in values.keys():
-                if not self._validate_regex(
-                    values[date_field_key],
-                    r"(((0[1-9])|([12][0-9])|(3[01]))\/((0[0-9])|(1[012]))\/((20[012]\d|19\d\d)|(1\d|2[0123])))",
-                ):
+                if not self._valid_es_date_format(values[date_field_key]):
                     error.append(date_field_key)
                     error_msgs.append(
                         _("{} field must have date format (dd/mm/yyyy)").format(
@@ -601,9 +577,27 @@ class WebsiteCommunityData(http.Controller):
             return request.render("energy_communities_crm.community_data_page", values)
         return True
 
+    def _valid_es_date_format(self, date_value):
+        regex = re.compile(
+            r"(((0[1-9])|([12][0-9])|(3[01]))\/((0[0-9])|(1[012]))\/((20[012]\d|19\d\d)|(1\d|2[0123])))"
+        )
+        match = regex.match(str(date_value))
+        return bool(match)
+
     #
     # DATA PROCESSING
     #
+    def _format_date(self, date_value):
+        if not self._valid_es_date_format(date_value):
+            # Use try because date_value might not contain a dated format text
+            try:
+                date_value = datetime.strptime(date_value, "%Y-%m-%d").strftime(
+                    "%d/%m/%Y"
+                )
+            except Exception as e:
+                pass
+        return date_value
+
     def _process_lead_metadata(self, related_lead, values):
         changed_data = []
         for meta_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
@@ -646,7 +640,7 @@ class WebsiteCommunityData(http.Controller):
                     "name": value.filename,
                     "res_model": "crm.lead",
                     "res_id": lead.id,
-                    "datas": base64.encodestring(value.read()),
+                    "datas": base64.encodebytes(value.read()),
                     "public": True,
                 }
             )

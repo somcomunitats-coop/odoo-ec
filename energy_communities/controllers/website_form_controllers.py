@@ -153,9 +153,7 @@ class WebsiteFormController(http.Controller):
         # form labels
         # form keys
         for field_key in self.get_data_main_fields().keys():
-            values[field_key + "_label"] = self.get_translate_field_label(
-                self.get_data_main_fields(), values, field_key
-            )
+            values[field_key + "_label"] = self.get_translate_field_label(field_key)
             values[field_key + "_key"] = field_key
         # language selection
         values["lang_options"] = self._get_langs()
@@ -187,7 +185,7 @@ class WebsiteFormController(http.Controller):
     def get_form_submit(self, values):
         return ""
 
-    def get_translate_field_label(self, data_fields, values, field_key):
+    def get_translate_field_label(self, source):
         return ""
 
     def get_fill_values_custom(self, values):

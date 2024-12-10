@@ -3,44 +3,34 @@
     <data>
 
         <record id="email_templ_lead_assigned_to_coordinator_id" model="mail.template">
-            <field
-        name="name"
-      >Request for registration of the Energy Community on the platform</field>
-            <field name="email_from">${object.company_id.email}</field>
-            <field
-        name="subject"
-      >[Som Comunitats] Request for registration of the Energy Community on the platform</field>
-            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="name">Request for registration of the Energy Community on the platform</field>
+            <field name="description">E-mail request for registration of the Energy Community in the platform</field>
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="subject">Request for registration of the Energy Community on the platform</field>
+            <field name="email_to">{{ctx.get('email_to')}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
-            <field name="lang">${object.company_id.partner_id.lang}</field>
-            <field name="body_html">
-                <![CDATA[
-                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
-                        <p>Hello,</p><br/>
-                        <p>There is a new Energy Community registration request.</p>
-                        <p>Go to Odoo to track this registration.</p><br/>
-                        <p>Yours faithfully,</p>
-                        <p>Somcomunitats.coop team</p>
-                        <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
-                    </div>
-                ]]>
+            <field name="lang">{{object.company_id.partner_id.lang}}</field>
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p>Hello,</p><br/>
+                    <p>There is a new Energy Community registration request.</p>
+                    <p>Go to Odoo to track this registration.</p><br/>
+                    <p>Yours faithfully,</p>
+                </div>
             </field>
         </record>
 
     <record id="email_templ_lead_ce_creation_receipt_confirm_id" model="mail.template">
             <field name="name">Confirmation Email for CE Creation Lead Receipt</field>
-            <field name="email_from">${object.company_id.email}</field>
-            <field
-        name="subject"
-      >[Som Comunitats] New Community Creation Request</field>
-            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="description">E-mail of confirmation for CE Creation Lead Receipt</field>
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="subject">New Community Creation Request</field>
+            <field name="email_to">{{ctx.get('email_to')}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
-            <field name="lang">${ctx.get('lang')}</field>
-            <field
-        name="body_html"
-      ><![CDATA[
+            <field name="lang">{{object.company_id.partner_id.lang}}</field>
+            <field name="body_html" type="html">
                 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
                     <p>Hello,</p>
                     <p>Thank you for filling out the form and requesting the membership of your Energy Community on the Somcomunitats.coop platform.</p>
@@ -48,27 +38,22 @@
                     <br />
                     <p>We keep in touch for any questions.</p>
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
-            ]]></field>
+            </field>
         </record>
 
         <record id="email_templ_lead_request_contact_confirm_id" model="mail.template">
-            <field
-        name="name"
-      >Confirmation Email for CE Contact Request Lead Receipt</field>
-            <field name="email_from">${object.company_id.email}</field>
-            <field name="subject">[Som Comunitats] Community Contact Request</field>
-            <field name="email_to">${object.email_from}</field>
-            <field name="email_cc">${object.company_id.email}</field>
-            <field name="reply_to">${object.company_id.email}</field>
+            <field name="name">Confirmation Email for CE Contact Request Lead Receipt</field>
+            <field name="description">E-mail of confirmation for CE Contact Request Lead Receipt</field>
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="subject">Community Contact Request</field>
+            <field name="email_to">{{object.email_from}}</field>
+            <field name="email_cc">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
-            <field name="lang">${ctx.get('lang')}</field>
-            <field
-        name="body_html"
-      ><![CDATA[
+            <field name="lang">{{ctx.get('lang')}}</field>
+            <field name="body_html" type="html">
                 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
                     <p>Hello,</p>
                     <p>Thank you for contact.</p>
@@ -76,47 +61,38 @@
                     <br />
                     <p>Received data on your contact request:</p>
                     <ul>
-                      % if ctx.metadata.name:
-                      <li><strong>Name:</strong> ${ctx.metadata.name}</li>
-                      % endif
-                      % if ctx.metadata.email_from:
-                      <li><strong>Email:</strong> ${ctx.metadata.email_from}</li>
-                      % endif
-                      % if ctx.metadata.phone:
-                      <li><strong>Phone:</strong> ${ctx.metadata.phone}</li>
-                      % endif
-                      % if ctx.metadata.town:
-                      <li><strong>City:</strong> ${ctx.metadata.town}</li>
-                      % endif
-                      % if ctx.metadata.message:
-                      <li><strong>Message:</strong> ${ctx.metadata.message}</li>
-                      % endif
+                      <t t-if="ctx.metadata.name">
+                      <li><strong>Name:</strong> <t t-out="ctx.get('metadata').get('name')"/></li>
+                      </t>
+                      <t t-if="ctx.metadata.email_from">
+                      <li><strong>Email:</strong> <t t-out="ctx.get('metadata').get('email_from')"/></li>
+                      </t>
+                      <t t-if="ctx.metadata.phone">
+                      <li><strong>Phone:</strong> <t t-out="ctx.get('metadata').get('phone')"/></li>
+                      </t>
+                      <t t-if="ctx.metadata.town">
+                      <li><strong>City:</strong> <t t-out="ctx.get('metadata').get('town')"/></li>
+                      </t>
+                      <t t-if="ctx.metadata.message">
+                      <li><strong>Message:</strong> <t t-out="ctx.get('metadata').get('message')"/></li>
+                      </t>
                     </ul>
-                    <br />
-                    <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
-            ]]></field>
+            </field>
         </record>
 
         <record id="email_templ_lead_request_ce_news_confirm_id" model="mail.template">
-            <field
-        name="name"
-      >Confirmation Email for CE News Request Lead Receipt</field>
-            <field name="email_from">${object.company_id.email}</field>
-            <field
-        name="subject"
-      >[Som Comunitats] Community Newsletter Subscription Request</field>
-            <field name="email_to">${object.email_from}</field>
-            <field name="email_cc">${object.company_id.email}</field>
-            <field name="reply_to">${object.company_id.email}</field>
+            <field name="name">Confirmation Email for CE News Request Lead Receipt</field>
+            <field name="description">E-mail of confirmation for CE News Request Lead Receipt</field>
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="subject">Community Newsletter Subscription Request</field>
+            <field name="email_to">{{object.email_from}}</field>
+            <field name="email_cc">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
-            <field name="lang">${ctx.get('lang')}</field>
-            <field
-        name="body_html"
-      ><![CDATA[
+            <field name="lang">{{ctx.get('lang')}}</field>
+            <field name="body_html" type="html">
                 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
                     <p>Hello,</p>
                     <p>Thank you for filling out the form.</p>
@@ -126,32 +102,22 @@
                     <p>We remain in contact for any questions.</p>
                     <br />
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
-            ]]></field>
+            </field>
         </record>
 
-        <record
-      id="email_templ_lead_request_advise_future_ce_confirm_id"
-      model="mail.template"
-    >
-            <field
-        name="name"
-      >Confirmation Email for furture CE Contact Request Lead Receipt</field>
-            <field name="email_from">${object.company_id.email}</field>
-            <field
-        name="subject"
-      >[Som Comunitats] Interested in Communities in your area</field>
-            <field name="email_to">${object.email_from}</field>
-            <field name="email_cc">${object.company_id.email}</field>
-            <field name="reply_to">${object.company_id.email}</field>
+        <record id="email_templ_lead_request_advise_future_ce_confirm_id" model="mail.template">
+            <field name="name">Confirmation Email for furture CE Contact Request Lead Receipt</field>
+            <field name="description">E-mail of confirmation for furture CE Contact Request Lead Receipt</field>
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="subject">Interested in Communities in your area</field>
+            <field name="email_to">{{object.email_from}}</field>
+            <field name="email_cc">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
-            <field name="lang">${ctx.get('lang')}</field>
-            <field
-        name="body_html"
-      ><![CDATA[
+            <field name="lang">{{ctx.get('lang')}}</field>
+            <field name="body_html" type="html">
                 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
                     <p>Hello,</p>
                     <p>Thank you for filling out the form.</p>
@@ -159,32 +125,22 @@
                     <br />
                     <p>We keep in touch for any questions.</p>
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
-            ]]></field>
+            </field>
         </record>
 
-        <record
-      id="email_templ_lead_request_platform_news_confirm_id"
-      model="mail.template"
-    >
-            <field
-        name="name"
-      >Confirmation Email for Platform News Request Lead Receipt</field>
-            <field name="email_from">${object.company_id.email}</field>
-            <field
-        name="subject"
-      >[Som Comunitats] Newsletter Subscription Request</field>
-            <field name="email_to">${object.email_from}</field>
-            <field name="email_cc">${object.company_id.email}</field>
-            <field name="reply_to">${object.company_id.email}</field>
+        <record id="email_templ_lead_request_platform_news_confirm_id" model="mail.template">
+            <field name="name">Confirmation Email for Platform News Request Lead Receipt</field>
+            <field name="description">E-mail of confirmation for Platform News Request Lead Receipt</field>
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="subject">Newsletter Subscription Request</field>
+            <field name="email_to">{{object.email_from}}</field>
+            <field name="email_cc">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
-            <field name="lang">${ctx.get('lang')}</field>
-            <field
-        name="body_html"
-      ><![CDATA[
+            <field name="lang">{{ctx.get('lang')}}</field>
+            <field name="body_html" type="html">
                 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
                     <p>Hello,</p>
                     <p>Thank you for filling out the form.</p>
@@ -192,51 +148,40 @@
                     <p>We'll let you know if there's any news about the project.</p>
                     <br />
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
-            ]]></field>
+            </field>
         </record>
 
         <record id="email_templ_contact_platform_confirm_id" model="mail.template">
             <field name="name">Confirmation Email Contact Platform Receipt</field>
-            <field name="email_from">${object.company_id.email}</field>
-            <field name="subject">[Som Comunitats] Contact to the platform</field>
-            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="description">E-mail of confirmation for Contact Platform Receipt</field>
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="subject">Contact to the platform</field>
+            <field name="email_to">{{ctx.get('email_to')}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
-            <field name="lang">${ctx.get('lang')}</field>
-            <field
-        name="body_html"
-      ><![CDATA[
+            <field name="lang">{{ctx.get('lang')}}</field>
+            <field name="body_html" type="html">
                 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
                     <p>Hello,</p>
                     <p>Thank you for getting in touch.</p>
                     <p>We have received your email. We will contact you as soon as possible.</p>
                     <br />
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
-            ]]></field>
+            </field>
         </record>
 
-        <record
-      id="email_templ_lead_ce_source_coord_web_hiring_id"
-      model="mail.template"
-    >
+        <record id="email_templ_lead_ce_source_coord_web_hiring_id" model="mail.template">
             <field name="name">Confirmation Email for CE Coordinator Recruitment</field>
-            <field name="email_from">${object.company_id.email}</field>
-            <field
-        name="subject"
-      >[Som Comunitats] Application for Recruitment Coordinator</field>
-            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="description">E-mail of confirmation for CE Coordinator Recruitment</field>
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="subject">Application for Recruitment Coordinator</field>
+            <field name="email_to">{{ctx.get('email_to')}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
-            <field name="lang">${ctx.get('lang')}</field>
-            <field
-        name="body_html"
-      ><![CDATA[
+            <field name="lang">{{ctx.get('lang')}}</field>
+            <field name="body_html" type="html">
                 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
                     <p>Hello,</p>
                     <p>Thank you for filling out the form to request the hiring of a Coordinator.</p>
@@ -245,28 +190,20 @@
                     <br />
                     <p>We keep in touch for any questions.</p>
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
-            ]]></field>
+            </field>
         </record>
 
-        <record
-      id="email_templ_lead_ce_source_coord_web_other_id"
-      model="mail.template"
-    >
+        <record id="email_templ_lead_ce_source_coord_web_other_id" model="mail.template">
             <field name="name">Confirmation Email for CE info about Coordinators</field>
-            <field name="email_from">${object.company_id.email}</field>
-            <field
-        name="subject"
-      >[Som Comunitats] Contact request in relation to Coordinators</field>
-            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="description">E-mail of confirmation for CE info about Coordinators</field>
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="subject">Contact request in relation to Coordinators</field>
+            <field name="email_to">{{ctx.get('email_to')}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
-            <field name="lang">${ctx.get('lang')}</field>
-            <field
-        name="body_html"
-      ><![CDATA[
+            <field name="lang">{{ctx.get('lang')}}</field>
+            <field name="body_html" type="html">
                 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
                     <p>Hello,</p>
                     <p>Thank you for filling out the form to request contact regarding the Coordinators.</p>
@@ -275,27 +212,20 @@
                     <br />
                     <p>We keep in touch for any questions.</p>
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
-            ]]></field>
+            </field>
         </record>
 
         <record id="email_templ_landing_coord_newsletter" model="mail.template">
-            <field
-        name="name"
-      >Auto-reply email upon receiving a subscription request for a Coordinator's Newsletter</field>
-            <field name="email_from">${object.company_id.email}</field>
-            <field
-        name="subject"
-      >[${object.company_id.name] Newsletter Subscription</field>
-            <field name="email_to">${object.email_from}</field>
+            <field name="name">Auto-reply email upon receiving a subscription request for a Coordinator's Newsletter</field>
+            <field name="description">E-mail of auto-reply upon receiving a subscription request for a Coordinator's Newsletter</field>
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="subject">Newsletter Subscription</field>
+            <field name="email_to">{{object.email_from}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
-            <field name="lang">${object.company_id.partner_id.lang}</field>
-            <field
-        name="body_html"
-      ><![CDATA[
+            <field name="lang">{{object.company_id.partner_id.lang}}</field>
+            <field name="body_html" type="html">
                 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
                     <p>Hello,</p>
                     <p>Thank you for filling out the form.</p>
@@ -304,55 +234,40 @@
                     <br />
                     <p>We keep in touch for any questions.</p>
                     <p>Yours faithfully,</p>
-                    <p><a href="https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}">${object.company_id.name</a> team </p>
                 </div>
-            ]]></field>
+            </field>
         </record>
 
-                <record id="email_templ_landing_coord_contact" model="mail.template">
-            <field
-        name="name"
-      >Auto-reply email when receiving a request for information from a Coordinator</field>
-            <field name="email_from">${object.company_id.email}</field>
-            <field name="subject">[${object.company_id.name] Contact Form</field>
-            <field name="email_to">${object.email_from}</field>
+        <record id="email_templ_landing_coord_contact" model="mail.template">
+            <field name="name">Auto-reply email when receiving a request for information from a Coordinator</field>
+            <field name="description">E-mail of auto-reply when receiving a request for information from a Coordinator</field>
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+            <field name="subject">Contact Form</field>
+            <field name="email_to">{{object.email_from}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
-            <field name="lang">${object.company_id.partner_id.lang}</field>
-            <field
-        name="body_html"
-      ><![CDATA[
+            <field name="lang">{{object.company_id.partner_id.lang}}</field>
+            <field name="body_html" type="html">
                 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
                     <p>Hello,</p>
                     <p>Thanks for getting in touch.</p>
                     <p>We have received your email. We will contact you as soon as possible.</p>
                     <br />
                     <p>Yours faithfully,</p>
-                    <p><a href="https://somcomunitats.coop/landing/${object.company_id.landing_page_id.slug_id}">${object.company_id.name</a> team </p>
                 </div>
-            ]]></field>
+            </field>
         </record>
 
-        <record
-      id="email_templ_lead_ce_source_tariffs_page_contact"
-      model="mail.template"
-    >
-            <field
-        name="name"
-      >Auto-reply email when receiving a request for information from Tariffs page</field>
-            <field
-        name="email_from"
-      >${object.team_id.alias_id.alias_name}@${object.team_id.alias_id.alias_domain}</field>
-            <field
-        name="subject"
-      >[${object.company_id.name}] Tariffs information</field>
-            <field name="email_to">${object.email_from}</field>
+        <record id="email_templ_lead_ce_source_tariffs_page_contact" model="mail.template">
+            <field name="name">Auto-reply email when receiving a request for information from Tariffs page</field>
+            <field name="description">E-mail of auto-reply when receiving a request for information from Tariffs page</field>
+            <field name="email_from">{{object.team_id.alias_id.alias_name}}@{{object.team_id.alias_id.alias_domain}}</field>
+            <field name="subject">Tariffs information</field>
+            <field name="email_to">{{object.email_from}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
-            <field name="lang">${object.company_id.partner_id.lang}</field>
-            <field
-        name="body_html"
-      ><![CDATA[
+            <field name="lang">{{object.company_id.partner_id.lang}}</field>
+            <field name="body_html" type="html">
                 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
                     <p>Hello,</p>
                     <p>Thanks for getting in touch.</p>
@@ -360,10 +275,8 @@
                     <p>We will contact you as soon as possible.</p>
                     <br />
                     <p>Yours faithfully,</p>
-                    <p>Somcomunitats.coop team </p>
-                    <p><a href="https://somcomunitats.coop/recursos/">Resources and FAQs</a></p>
                 </div>
-            ]]></field>
+            </field>
         </record>
 
     </data>

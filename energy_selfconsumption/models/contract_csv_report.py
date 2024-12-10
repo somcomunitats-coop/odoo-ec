@@ -6,6 +6,7 @@ from odoo import models
 
 class DistributionTableCSV(models.AbstractModel):
     _name = "report.contract_contract.csv"
+    _description = "Report contract"
     _inherit = "report.report_csv.abstract"
 
     def create_csv_report(self, docids, data):

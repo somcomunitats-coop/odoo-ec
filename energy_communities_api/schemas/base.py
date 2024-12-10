@@ -1,17 +1,16 @@
 from datetime import date
 from typing import Optional
 
-from pydantic import BaseModel, Field
-
-from odoo.addons.pydantic import utils
+from pydantic import BaseModel, ConfigDict, Field
 
 DEFAULT_PAGE_SIZE = 20
 
 
 class NaiveOrmModel(BaseModel):
-    class Config:
-        orm_mode = True
-        getter_dict = utils.GenericOdooGetter
+    model_config = ConfigDict(from_attributes=True)
+    """
+    Base Orm class. In charge of mapping Pydantic models with odoo models
+    """
 
 
 class BaseResponse(BaseModel):
@@ -32,8 +31,14 @@ class BaseListResponse(BaseResponse):
 
 # TODO: PagingParam could be none to return all elements
 class PagingParam(BaseModel):
-    page: Optional[int]
-    page_size: Optional[int]
+    page: Optional[int] = Field(
+        None, title="Page", description="Page for pagination request"
+    )
+    page_size: Optional[int] = Field(
+        None,
+        title="Page size",
+        description="Max numbers of elemets for a page",
+    )
 
 
 class QueryParams(BaseModel):

@@ -1,12 +1,13 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from .base import BaseResponse, PaginationLinks
 
 
 class NetworkInfo(BaseModel):
-    class Config:
-        title = "General information for an overview of some opendata values for energy community members"
-
+    model_config = ConfigDict(title="NetworkInfo")
+    """
+    General information for an overview of some opendata values for energy community members
+    """
     members: int = Field(
         ...,
         title="Members",

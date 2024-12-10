@@ -69,7 +69,7 @@ class PartnerApiInfo(Component):
                 name=service.project_id.name,
                 status=service.project_id.state,
                 shares=member_contract.supply_point_assignation_id.coefficient,
-                inscription_date=member_contract.date_start,
+                inscription_date=member_contract.date_start.strftime("%Y-%m-%d"),
                 inscriptions=len(service.project_id.inscription_ids),
             )
             community_services += [service_info]
@@ -90,7 +90,7 @@ class PartnerApiInfo(Component):
                 name=project.name,
                 status=project.state,
                 shares=member_contract.supply_point_assignation_id.coefficient,
-                inscription_date=member_contract.date_start,
+                inscription_date=member_contract.date_start.strftime("%Y-%m-%d"),
                 inscriptions=len(project.inscription_ids),
             )
 

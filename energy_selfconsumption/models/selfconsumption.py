@@ -103,7 +103,7 @@ class Selfconsumption(models.Model):
     distribution_table_count = fields.Integer(compute=_compute_distribution_table_count)
     inscription_ids = fields.One2many(
         "energy_selfconsumption.inscription_selfconsumption",
-        "project_id",
+        "selfconsumption_project_id",
         readonly=True,
     )
     inscription_count = fields.Integer(compute=_compute_inscription_count)
@@ -184,8 +184,8 @@ class Selfconsumption(models.Model):
             "name": "Inscriptions",
             "view_mode": "tree,form",
             "res_model": "energy_selfconsumption.inscription_selfconsumption",
-            "domain": [("project_id", "=", self.id)],
-            "context": {"create": True, "default_project_id": self.id},
+            "domain": [("project_id", "=", self.project_id.id), ("selfconsumption_project_id", "=", self.id)],
+            "context": {"create": True, "default_project_id": self.project_id.id, "default_selfconsumption_project_id": self.id},
         }
 
     def get_contracts(self):
@@ -226,7 +226,7 @@ class Selfconsumption(models.Model):
             record.write({"state": "activation"})
         self.distribution_table_state("validated", "process")
 
-    @api.model
+    @api.model_create_multi
     def create(self, values):
         res = super().create(values)
         self.env["energy_project.participation"].create(
@@ -325,11 +325,13 @@ class Selfconsumption(models.Model):
             "target": "new",
         }
 
-    def set_inscription(self, selfconsumption_state):
+    def set_inscription(self):
         for record in self:
             record.write({"state": "inscription"})
-        if selfconsumption_state == "activation":
-            self.distribution_table_state("process", "validated")
+
+    def set_inscription_activation(self):
+        self.set_inscription()
+        self.distribution_table_state("process", "validated")
 
     def set_draft(self):
         for record in self:
@@ -446,7 +448,9 @@ class Selfconsumption(models.Model):
                 "first_date": first_date.strftime("%d-%m-%Y"),
                 "last_date": last_date.strftime("%d-%m-%Y"),
             }
-            selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
+            selfconsumption_id.with_context(ctx).message_post_with_template(
+                template.id, email_layout_xmlid="mail.mail_notification_layout"
+            )
 
     def send_energy_delivery_custom_invoicing_reminder(self):
         projects = self.env["contract.contract"].read_group(
@@ -477,7 +481,9 @@ class Selfconsumption(models.Model):
                 "first_date": first_date.strftime("%d-%m-%Y"),
                 "last_date": last_date.strftime("%d-%m-%Y"),
             }
-            selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
+            selfconsumption_id.with_context(ctx).message_post_with_template(
+                template.id, email_layout_xmlid="mail.mail_notification_layout"
+            )
 
     def send_power_acquired_invoicing_reminder(self):
         today = fields.date.today()
@@ -505,7 +511,9 @@ class Selfconsumption(models.Model):
             ctx = {
                 "next_invoicing": next_invoicing.strftime("%d-%m-%Y"),
             }
-            selfconsumption_id.with_context(ctx).message_post_with_template(template.id)
+            selfconsumption_id.with_context(ctx).message_post_with_template(
+                template.id, email_layout_xmlid="mail.mail_notification_layout"
+            )
 
     @api.constrains("code")
     def _check_valid_code(self):

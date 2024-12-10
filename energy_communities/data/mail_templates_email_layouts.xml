@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <template id="energy_communities.mail_notification_layout" 
+        name="Energy Communities: adapt Mail template Layout to Energy Communities Platform customizations"
+        inherit_id="mail.mail_notification_layout">
+
+            <xpath expr="//body" position="replace">
+                <body>
+                    <t t-set="subtype_internal" t-value="subtype and subtype.internal"/>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+                    <tbody>
+                        <!-- HEADER -->
+                        <tr>
+                            <td align="center" style="min-width: 590px;">
+                                <t t-call="mail.notification_preview"/>
+                                    <div t-if="has_button_access" itemscope="itemscope" itemtype="http://schema.org/EmailMessage">
+                                        <div itemprop="potentialAction" itemscope="itemscope" itemtype="http://schema.org/ViewAction">
+                                            <link itemprop="target" t-att-href="button_access['url']"/>
+                                            <link itemprop="url" t-att-href="button_access['url']"/>
+                                            <meta itemprop="name" t-att-content="button_access['title']"/>
+                                        </div>
+                                    </div>
+                                    <div t-if="subtitles or has_button_access or actions or not is_discussion"
+                                            summary="o_mail_notification" style="padding: 0px;">
+                                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 100%; margin-top: 5px;">
+                                            <tbody>
+                                                <tr>
+                                                    <td valign="center">
+                                                        <img t-att-src="'/logo.png?company=%s' % (company.id or 0)" style="padding: 0px; margin: 0px; height: auto; max-width: 200px; max-height: 36px;" t-att-alt=""/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="center" style="white-space:nowrap;">
+                                                        <table cellspacing="0" cellpadding="0" border="0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td t-if="has_button_access" t-att-style="'border-radius: 3px; text-align: center; background: ' + (company.secondary_color if company.secondary_color else '#875A7B')">
+                                                                        <a t-att-href="button_access['url']" style="font-size: 12px; color: #FFFFFF; display: block; padding: 8px 12px 11px; text-decoration: none !important; font-weight: 400;">
+                                                                            <t t-out="button_access['title']"/>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td t-if="has_button_access">&amp;nbsp;&amp;nbsp;</td>
+
+                                                                    <td t-if="subtitles" style="font-size: 12px;">
+                                                                        <t t-foreach="subtitles" t-as="subtitle">
+                                                                            <span t-attf-style="{{ 'font-weight:bold;' if subtitle_first else '' }}"
+                                                                                t-out="subtitle"/>
+                                                                            <br t-if="not subtitle_last"/>
+                                                                        </t>
+                                                                    </td>
+                                                                    <td t-else=""><span style="font-weight:bold;" t-out="record_name"/><br/></td>
+                                                                    <td>&amp;nbsp;&amp;nbsp;</td>
+
+                                                                    <td t-if="actions">
+                                                                        <t t-foreach="actions" t-as="action">
+                                                                            |
+                                                                            <a t-att-href="action['url']" style="font-size: 12px; color: #875A7B; text-decoration:none !important;">
+                                                                                <t t-out="action['title']"/>
+                                                                            </a>
+                                                                        </t>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="center">
+                                                        <p t-if="subtype_internal" style="background-color: #f2dede; padding: 5px; margin-bottom: 16px; font-size: 13px;">
+                                                            <strong>Internal communication</strong>: Replying will post an internal note. Followers won't receive any email notification.
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </td>
+                        </tr>
+                        <!-- CONTENT -->
+                        <tr>
+                            <td style="min-width: 590px;padding-top:15px;">
+                                <t t-out="message.body"/>
+                                <ul t-if="tracking_values">
+                                    <t t-foreach="tracking_values" t-as="tracking">
+                                        <li><t t-out="tracking[0]"/>: <t t-out="tracking[1]"/> &#8594; <t t-out="tracking[2]"/></li>
+                                    </t>
+                                </ul>
+                                <t class="o_signature">
+                                    <div t-if="email_add_signature and not is_html_empty(signature)" t-out="signature" style="font-size: 13px;"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <!-- FOOTER -->
+                        <tr>
+                            <td align="left" style="min-width: 590px; font-size:13px;">
+                                <div style="margin-top:32px;">
+                                    <b t-out="company.comercial_name or company.name" style="font-size:13px;"/><br/>
+                                    <p style="color: #999999; margin-top:2px; font-size:13px;">
+                                        <t t-out="company.phone"/>
+                                        <t t-if="company.email and company.phone"> |</t>
+                                        <a t-if="company.email" t-att-href="'mailto:%s' % company.email" style="text-decoration:none; color: #999999;" t-out="company.email"/>
+                                        <t t-if="company.website and (company.phone or company.email)"> |</t>
+                                        <a t-if="company.website" t-att-href="'%s' % company.website" style="text-decoration:none; color: #999999;" t-out="company.website"/>
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    </td>
+                    </tr>
+                    <!-- POWERED BY -->
+                    <tr>
+                        <td align="center" style="min-width: 590px;padding: 10px 0px 10px 0px;font-size:9px;">
+                           Powered by <a target="_blank" href="https://somcomunitats.coop" style="color: #875A7B;">Som Comunitats</a>
+                        </td>
+                    </tr>
+                    </table>
+                </body>
+            </xpath>
+
+        </template>
+
+
+        <!-- <template id="energy_communities.mail_notification_layout" 
+        name="Energy Communities: adapt Mail template Layout to Energy Communities Platform customizations"
+        inherit_id="mail.mail_notification_layout"> -->
+            
+            <!-- take out the name of the company after logo. We only want to have the logo -->
+            <!-- <xpath expr="//tbody/tr/td/img" position="attributes">
+                <attribute name="t-att-alt">''</attribute>
+            </xpath> -->
+            
+            <!-- use company_name and assign same font size on footer than body -->
+            <!-- <xpath expr="//body/div/div[4]/b"  position="attributes">
+                <attribute name="t-out">company.comercial_name or company.name</attribute>
+            </xpath>             -->
+            
+            <!-- erase footer grey line -->
+            <!-- <xpath expr="//body/div/div[4]/hr"  position="replace"/> -->
+            
+            <!-- move footer grey line -->
+            <!-- <xpath expr="//body/div/div[4]/p"  position="after">
+                <div>
+                    <img t-if="company.logo_url" t-att-src="('/web/image/res.company/%s/logo' % company.id)" style="width: 120px;"/>
+                </div>
+                <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 4px 0px;"/>
+            </xpath> -->
+            
+            <!-- change the powered by message -->
+            <!-- <xpath expr="//body/div/p/a"  position="replace">
+                <a target="_blank" href="https://somcomunitats.coop" style="color: #875A7B;">Som Comunitats</a>
+            </xpath> -->
+            
+            <!-- erase header 2nd grey line -->
+            <!-- <xpath expr="//tbody/tr[4]/td/hr" position="replace"/> -->
+            
+            <!-- take out the double jump-line -->
+            <!-- <xpath expr="//tbody//tbody/tr/td[5]" position="replace"/> -->
+            
+            <!-- erase header 1st grey line -->
+            <!-- <xpath expr="//tbody/tr[2]" position="replace"/>  -->
+
+
+        <!-- </template> -->
+
+        <!-- proceed to force the inheritance template ir_ui_view.mode = 'extension' because by default it becomes 'internal'
+        TODO: I+D in order if it is possible to do it by another way to tho that because
+        we tried to apply it: https://www.cybrosys.com/blog/an-overview-of-template-inheritance-in-odoo-16
+        bit in is not working on this concrete mail.mail_notification_layout template because it is implemented in 'data' folder 
+        instead of mail/src/components/... folder (as web_assets templates are)-->
+        <function name="write" model="ir.ui.view">
+            <function name="search" model="ir.ui.view">
+                <value eval="[('key', '=', 'energy_communities.mail_notification_layout')]"/>
+            </function>
+            <value eval="{'mode':'extension'}" />
+        </function>
+
+</odoo>

@@ -29,7 +29,7 @@
     />
         </record>
 
-        <record
+         <record
     id="selfconsumption_2_community_1_demo"
     model="energy_selfconsumption.selfconsumption"
   >
@@ -117,7 +117,6 @@
             <field name="signature_date" eval="datetime.today()" />
             <field name="state">valid</field>
         </record>
-
         <record
     id="inscription_2_selfconsumption_1_demo"
     model="energy_project.inscription"
@@ -499,6 +498,21 @@
         </record>
 
         <record
+    id="inscription_selfconsumption_1_selfconsumption_1_demo"
+    model="energy_selfconsumption.inscription_selfconsumption"
+  >
+          <field name="inscription_id" ref="inscription_1_selfconsumption_1_demo" />
+          <field name="annual_electricity_use">1.00</field>
+          <field
+      name="participation"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+    />
+          <field name="accept" eval="True" />
+          <field name="member" eval="True" />
+          <field name="supply_point_id" ref="supply_point_1_selfconsumption_1_demo" />
+        </record>
+
+        <record
     id="supply_point_2_selfconsumption_1_demo"
     model="energy_selfconsumption.supply_point"
   >
@@ -525,6 +539,21 @@
       eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
       model="subscription.request"
     />
+        </record>
+
+        <record
+    id="inscription_selfconsumption_2_selfconsumption_1_demo"
+    model="energy_selfconsumption.inscription_selfconsumption"
+  >
+          <field name="inscription_id" ref="inscription_2_selfconsumption_1_demo" />
+          <field name="annual_electricity_use">1.00</field>
+          <field
+      name="participation"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+    />
+          <field name="accept" eval="True" />
+          <field name="member" eval="True" />
+          <field name="supply_point_id" ref="supply_point_2_selfconsumption_1_demo" />
         </record>
 
         <record
@@ -557,6 +586,21 @@
         </record>
 
         <record
+    id="inscription_selfconsumption_3_selfconsumption_1_demo"
+    model="energy_selfconsumption.inscription_selfconsumption"
+  >
+          <field name="inscription_id" ref="inscription_3_selfconsumption_1_demo" />
+          <field name="annual_electricity_use">1.00</field>
+          <field
+      name="participation"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+    />
+          <field name="accept" eval="True" />
+          <field name="member" eval="True" />
+          <field name="supply_point_id" ref="supply_point_3_selfconsumption_1_demo" />
+        </record>
+
+        <record
     id="supply_point_4_selfconsumption_1_demo"
     model="energy_selfconsumption.supply_point"
   >
@@ -586,6 +630,21 @@
         </record>
 
         <record
+    id="inscription_selfconsumption_4_selfconsumption_1_demo"
+    model="energy_selfconsumption.inscription_selfconsumption"
+  >
+          <field name="inscription_id" ref="inscription_4_selfconsumption_1_demo" />
+          <field name="annual_electricity_use">1.00</field>
+          <field
+      name="participation"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+    />
+          <field name="accept" eval="True" />
+          <field name="member" eval="True" />
+          <field name="supply_point_id" ref="supply_point_4_selfconsumption_1_demo" />
+        </record>
+
+        <record
     id="supply_point_5_selfconsumption_1_demo"
     model="energy_selfconsumption.supply_point"
   >
@@ -612,6 +671,21 @@
       eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
       model="subscription.request"
     />
+        </record>
+
+        <record
+    id="inscription_selfconsumption_5_selfconsumption_1_demo"
+    model="energy_selfconsumption.inscription_selfconsumption"
+  >
+          <field name="inscription_id" ref="inscription_5_selfconsumption_1_demo" />
+          <field name="annual_electricity_use">1.00</field>
+          <field
+      name="participation"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+    />
+          <field name="accept" eval="True" />
+          <field name="member" eval="True" />
+          <field name="supply_point_id" ref="supply_point_5_selfconsumption_1_demo" />
         </record>
 
         <record id="partner_supply_point_6_demo" model="res.partner">
@@ -655,6 +729,21 @@
         </record>
 
         <record
+    id="inscription_selfconsumption_6_selfconsumption_1_demo"
+    model="energy_selfconsumption.inscription_selfconsumption"
+  >
+          <field name="inscription_id" ref="inscription_6_selfconsumption_1_demo" />
+          <field name="annual_electricity_use">1.00</field>
+          <field
+      name="participation"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+    />
+          <field name="accept" eval="True" />
+          <field name="member" eval="True" />
+          <field name="supply_point_id" ref="supply_point_6_selfconsumption_1_demo" />
+        </record>
+
+        <record
     id="supply_point_7_selfconsumption_1_demo"
     model="energy_selfconsumption.supply_point"
   >
@@ -681,6 +770,21 @@
       eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
       model="subscription.request"
     />
+        </record>
+
+        <record
+    id="inscription_selfconsumption_7_selfconsumption_1_demo"
+    model="energy_selfconsumption.inscription_selfconsumption"
+  >
+          <field name="inscription_id" ref="inscription_7_selfconsumption_1_demo" />
+          <field name="annual_electricity_use">1.00</field>
+          <field
+      name="participation"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+    />
+          <field name="accept" eval="True" />
+          <field name="member" eval="True" />
+          <field name="supply_point_id" ref="supply_point_7_selfconsumption_1_demo" />
         </record>
 
         <record
@@ -713,6 +817,21 @@
         </record>
 
         <record
+    id="inscription_selfconsumption_8_selfconsumption_1_demo"
+    model="energy_selfconsumption.inscription_selfconsumption"
+  >
+          <field name="inscription_id" ref="inscription_8_selfconsumption_1_demo" />
+          <field name="annual_electricity_use">1.00</field>
+          <field
+      name="participation"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+    />
+          <field name="accept" eval="True" />
+          <field name="member" eval="True" />
+          <field name="supply_point_id" ref="supply_point_8_selfconsumption_1_demo" />
+        </record>
+
+        <record
     id="supply_point_9_selfconsumption_1_demo"
     model="energy_selfconsumption.supply_point"
   >
@@ -739,6 +858,21 @@
       eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
       model="subscription.request"
     />
+        </record>
+
+        <record
+    id="inscription_selfconsumption_9_selfconsumption_1_demo"
+    model="energy_selfconsumption.inscription_selfconsumption"
+  >
+          <field name="inscription_id" ref="inscription_9_selfconsumption_1_demo" />
+          <field name="annual_electricity_use">1.00</field>
+          <field
+      name="participation"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+    />
+          <field name="accept" eval="True" />
+          <field name="member" eval="True" />
+          <field name="supply_point_id" ref="supply_point_9_selfconsumption_1_demo" />
         </record>
 
         <record
@@ -770,6 +904,61 @@
     />
         </record>
 
+        <record
+    id="inscription_selfconsumption_20_selfconsumption_1_demo"
+    model="energy_selfconsumption.inscription_selfconsumption"
+  >
+          <field name="inscription_id" ref="inscription_10_selfconsumption_1_demo" />
+          <field name="annual_electricity_use">1.00</field>
+          <field
+      name="participation"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+    />
+          <field name="accept" eval="True" />
+          <field name="member" eval="True" />
+          <field name="supply_point_id" ref="supply_point_10_selfconsumption_1_demo" />
+        </record>
+
+    <delete
+    model="energy_selfconsumption.supply_point_assignation"
+    search="[('supply_point_id','=',ref('supply_point_1_selfconsumption_1_demo'))]"
+  />
+    <delete
+    model="energy_selfconsumption.supply_point_assignation"
+    search="[('supply_point_id','=',ref('supply_point_2_selfconsumption_1_demo'))]"
+  />
+    <delete
+    model="energy_selfconsumption.supply_point_assignation"
+    search="[('supply_point_id','=',ref('supply_point_3_selfconsumption_1_demo'))]"
+  />
+    <delete
+    model="energy_selfconsumption.supply_point_assignation"
+    search="[('supply_point_id','=',ref('supply_point_4_selfconsumption_1_demo'))]"
+  />
+    <delete
+    model="energy_selfconsumption.supply_point_assignation"
+    search="[('supply_point_id','=',ref('supply_point_5_selfconsumption_1_demo'))]"
+  />
+    <delete
+    model="energy_selfconsumption.supply_point_assignation"
+    search="[('supply_point_id','=',ref('supply_point_6_selfconsumption_1_demo'))]"
+  />
+    <delete
+    model="energy_selfconsumption.supply_point_assignation"
+    search="[('supply_point_id','=',ref('supply_point_7_selfconsumption_1_demo'))]"
+  />
+    <delete
+    model="energy_selfconsumption.supply_point_assignation"
+    search="[('supply_point_id','=',ref('supply_point_8_selfconsumption_1_demo'))]"
+  />
+    <delete
+    model="energy_selfconsumption.supply_point_assignation"
+    search="[('supply_point_id','=',ref('supply_point_9_selfconsumption_1_demo'))]"
+  />
+    <delete
+    model="energy_selfconsumption.supply_point_assignation"
+    search="[('supply_point_id','=',ref('supply_point_10_selfconsumption_1_demo'))]"
+  />
         <record
     id="distribution_table_1_selfconsumption_1_demo"
     model="energy_selfconsumption.distribution_table"
@@ -959,5 +1148,5 @@
       eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
       model="energy_selfconsumption.distribution_table"
     />
-        </record>
+    </record>
 </odoo>

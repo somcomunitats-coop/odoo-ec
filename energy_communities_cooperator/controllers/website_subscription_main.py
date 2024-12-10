@@ -39,9 +39,9 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                 _("Not valid parameter value [odoo_company_id]"), status=500
             )
 
-        ctx = dict(request.context)
+        ctx = request.context.copy()
         ctx.update({"target_odoo_company_id": target_odoo_company_id})
-        request.context = ctx
+        request.env.context = ctx
 
         res = super().display_become_cooperator_page(**kwargs)
         return res
@@ -65,9 +65,9 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                 _("Not valid parameter value [odoo_company_id]"), status=500
             )
 
-        ctx = dict(request.context)
+        ctx = request.context.copy()
         ctx.update({"target_odoo_company_id": target_odoo_company_id})
-        request.context = ctx
+        request.env.context = ctx
 
         res = super().display_become_company_cooperator_page(**kwargs)
         return res
@@ -94,9 +94,9 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         if "vat" in kwargs:
             kwargs["vat"] = kwargs["vat"].upper().strip()
 
-        ctx = dict(request.context)
+        ctx = request.context.copy()
         ctx.update({"target_odoo_company_id": target_odoo_company_id})
-        request.context = ctx
+        request.env.context = ctx
 
         res = super().share_subscription(**kwargs)
         return res

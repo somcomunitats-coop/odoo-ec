@@ -91,4 +91,6 @@ class OpenDataApiInfo(Component):
 
         self.env.cr.execute(QUERY)
         inscriptions = self.QueryResult._make(self.env.cr.fetchone())
-        return inscriptions.total
+        if inscriptions.total:
+            return inscriptions.total
+        return 0

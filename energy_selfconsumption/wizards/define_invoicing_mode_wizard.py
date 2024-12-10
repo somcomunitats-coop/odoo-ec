@@ -5,6 +5,7 @@ from ..models.selfconsumption import INVOICING_VALUES
 
 class ContractGenerationWizard(models.TransientModel):
     _name = "energy_selfconsumption.define_invoicing_mode.wizard"
+    _description = "Service to generate contract"
     _inherit = [
         "contract.recurrency.mixin",
     ]
@@ -66,7 +67,7 @@ class ContractGenerationWizard(models.TransientModel):
     def _prepare_contract_line_template_values(self, product_id, formula_contract_id):
         return {
             "product_id": product_id.id,
-            "automatic_price": True,
+            "automatic_price": False,
             "company_id": self.env.company.id,
             "qty_type": self._get_qty_type(),
             "qty_formula_id": self._get_qty_formula_id(formula_contract_id),

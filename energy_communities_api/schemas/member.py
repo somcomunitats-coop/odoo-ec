@@ -1,18 +1,19 @@
 from typing import Optional
 
-from pydantic import Field
+from pydantic import ConfigDict, Field
 
 from .base import BaseResponse, NaiveOrmModel, PaginationLinks
 
 
 class MemberInfo(NaiveOrmModel):
-    class Config:
-        title: "Member Info"
-
+    model_config = ConfigDict(title="Member Info")
+    """
+    Schema for representing member data (name, email...)
+    """
     email: str = Field(
         ...,
         title="Email",
-        description="Lmail of the member",
+        description="Email of the member",
     )
     name: str = Field(
         ...,

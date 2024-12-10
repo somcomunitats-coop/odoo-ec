@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 
 class InvoicingWizard(models.TransientModel):
     _name = "energy_selfconsumption.invoicing.wizard"
+    _description = "Service to generate type invoicing"
 
     power = fields.Float(string="Total Energy Generated (kWh)")
     contract_ids = fields.Many2many("contract.contract", readonly=True)

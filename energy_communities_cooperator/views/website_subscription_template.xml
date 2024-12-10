@@ -1,26 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
-  <template
-    id="assets_frontend_cooperator"
-    inherit_id="web.assets_frontend"
-    name="cooperator_website_script"
-  >
-        <xpath expr="." position="inside">
-            <script
-        type="text/javascript"
-        src="/energy_communities_cooperator/static/src/js/cooperator.js"
-      />
-        </xpath>
-  </template>
-
-    <template
-    id="becomecooperator_ccee"
-    inherit_id="cooperator_website.becomecooperator"
-  >
-        <xpath expr="//div[@id='wrap']//h1" position="replace">
+    <template id="main_form_template_ccee" inherit_id="cooperator_website.main_form_template">
+      <xpath expr="//div[@id='wrap']//h1" position="replace">
             <h1 class="mt-4 text-center">
-                Become Cooperator of <t t-esc="company.name" /> member_eu_ES
+                Become Cooperator of <t t-esc="company.name" />member_eu_ES
             </h1>
             <br />
             <p>This form allow you to request be member of the community: <t
@@ -52,13 +35,19 @@
       >Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
         </xpath>
-    <xpath expr="//div[@name='my_account_link_container'][1]" position="replace" />
-    <xpath expr="//div[@name='my_account_link_container']" position="replace" />
+        <xpath expr="//div[@name='my_account_link_container'][1]" position="replace" />
+        <xpath expr="//div[@name='my_account_link_container']" position="replace" />
+    </template>
+
+    <template
+    id="becomecooperator_ccee"
+    inherit_id="cooperator_website.becomecooperator"
+  >
         <xpath expr="//div[@name='confirm_email_container']" position="after">
             <div
         t-if="not logged"
         style="display: none;"
-        class="form-group field-login"
+        class="form-group field-login mb-3"
       >
                 <label for="company_id">Target Odoo Company id</label>
                 <input
@@ -72,11 +61,11 @@
         />
             </div>
         </xpath>
-        <xpath expr="//div[@id='wrap']//input[@id='email']" position="attributes">
+        <xpath expr="//input[@id='email']" position="attributes">
             <attribute name="placeholder" />
         </xpath>
         <xpath
-      expr="//div[@id='wrap']//input[@id='confirm_email']"
+      expr="//input[@id='confirm_email']"
       position="attributes"
     >
             <attribute name="placeholder" />
@@ -87,7 +76,7 @@
     id="becomecompanycooperator"
     inherit_id="cooperator_website.becomecompanycooperator"
   >
-        <xpath expr="//div[@id='wrap']//h1" position="replace">
+        <!-- <xpath expr="//div[@id='wrap']//h1" position="replace">
             <h1 class="mt-4 text-center">
                 Become Company Cooperator of <t t-esc="company.name" /> member_eu_ES
             </h1>
@@ -119,12 +108,12 @@
             <p
       >Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
-        </xpath>
+        </xpath> -->
         <xpath expr="//div[@name='confirm_email_container']" position="after">
             <div
         t-if="not logged"
         style="display: none;"
-        class="form-group field-login"
+        class="form-group field-login mb-3"
       >
                 <label for="company_id">Target Odoo Company id</label>
                 <input
@@ -161,8 +150,8 @@
         <xpath expr="//div[@name='iban_container']" position="replace">
             <t t-if="share_payment_sepa_direct_debit">
                 <div
-          class="form-group field-bank_account"
-          t-attf-class="form-group #{error and 'iban' in error and 'has-error' or ''}"
+          class="form-group field-bank_account mb-3"
+          t-attf-class="form-group mb-3 #{error and 'iban' in error and 'has-error' or ''}"
           name="iban_container"
         >
                     <label for="iban">Bank Account Number</label>
@@ -181,7 +170,7 @@
           id="mandate_approved"
           name="mandate_approved_container"
         >
-                    <div t-attf-class="form-group">
+                    <div t-attf-class="form-group mb-3">
                         <div class="form-check">
                             <input
                 type="checkbox"
@@ -242,8 +231,8 @@
         <div class="row" name="voluntary_share_div">
             <div class="col-12">
                 <div
-          class="form-group field-bank_account"
-          t-attf-class="form-group #{error and 'iban' in error and 'has-error' or ''}"
+          class="form-group field-bank_account mb-3"
+          t-attf-class="form-group mb-3 #{error and 'iban' in error and 'has-error' or ''}"
           name="iban_container"
         >
                     <label for="iban">Bank Account Number</label>
@@ -260,7 +249,7 @@
                 </div>
             </div>
             <div class="col-12" id="mandate_approved" name="mandate_approved_container">
-                <div t-attf-class="form-group">
+                <div t-attf-class="form-group mb-3">
                     <div class="form-check">
                         <input
               type="checkbox"
@@ -278,8 +267,8 @@
             </div>
             <div class="col-md-5">
                 <div
-          class="form-group field-parts-type"
-          t-attf-class="form-group #{error and 'share_product_id' in error and 'has-error' or ''}"
+          class="form-group field-parts-type mb-3"
+          t-attf-class="form-group mb-3 #{error and 'share_product_id' in error and 'has-error' or ''}"
           name="share_product_container"
         >
                     <label for="share_product_id">Share type</label>
@@ -303,7 +292,7 @@
             </div>
             <div class="col-md-4 col-6">
                 <label for="ordered_parts">Share number</label>
-                <div t-attf-class="form-group" name="share_number_container">
+                <div t-attf-class="form-group mb-3" name="share_number_container">
                     <input
             type="number"
             name="ordered_parts"
@@ -340,7 +329,7 @@
 
     <template id="voluntary_share_text_template" name="voluntary_share_text_template">
         <h1 class="mt-4 text-center">
-            Voluntary Share of <t t-esc="company.name" /> vol_share_eu_es
+            Voluntary Share of <t t-esc="company.name" />vol_share_eu_es
         </h1>
         <br />
         <p>
@@ -376,8 +365,8 @@
                                 <t t-call="cooperator_website.csrf_template" />
 
                                 <div
-                  class="form-group"
-                  t-attf-class="form-group #{error and 'vat' in error and 'has-error' or ''}"
+                  class="form-group mb-3"
+                  t-attf-class="form-group mb-3 #{error and 'vat' in error and 'has-error' or ''}"
                   name="company_id_container"
                   style="display: none;"
                 >
@@ -392,7 +381,7 @@
                                 </div>
                                 <div name="voluntary_share_form_header_text_container">
                                     <p><t
-                      t-raw="company.voluntary_share_form_header_text"
+                      t-out="company.voluntary_share_form_header_text"
                     /></p>
                                 </div>
                 <div name="become_cooperator_terms">
@@ -409,8 +398,8 @@
 
                 </div>
                                 <div
-                  class="form-group"
-                  t-attf-class="form-group #{error and 'vat' in error and 'has-error' or ''}"
+                  class="form-group mb-3"
+                  t-attf-class="form-group mb-3 #{error and 'vat' in error and 'has-error' or ''}"
                   name="vat_container"
                 >
                                     <label for="vat">VAT</label>
@@ -423,7 +412,7 @@
                   />
                                 </div>
 
-                                <div class="form-group field-login">
+                                <div class="form-group field-login mb-3">
                                     <label for="email">Email</label>
                                     <input
                     class="form-control form-control-sm"
@@ -440,7 +429,7 @@
 
                                 <div
                   t-if="not logged"
-                  t-attf-class="form-group #{error and 'email_from' in error and 'has-error' or ''}"
+                  t-attf-class="form-group mb-3 #{error and 'email_from' in error and 'has-error' or ''}"
                   name="confirm_email_container"
                 >
                                     <label for="confirm_email">Confirm Email</label>
@@ -455,8 +444,8 @@
                                 </div>
 
                                 <div
-                  class="form-group field-phone"
-                  t-attf-class="form-group #{error and 'phone' in error and 'has-error' or ''}"
+                  class="form-group mb-3 field-phone"
+                  t-attf-class="form-group mb-3 #{error and 'phone' in error and 'has-error' or ''}"
                   name="phone_container"
                 >
                                     <label for="phone">Phone</label>

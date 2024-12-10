@@ -1,8 +1,5 @@
-odoo.define("community_data.oe_community_data", function (require) {
-  "use strict";
-  $(document).ready(function () {
-    var ajax = require("web.ajax");
-
+var oe_community_data_website = {
+  start: function () {
     $(".oe_community_data").each(function () {
       var oe_community_data = this;
 
@@ -137,5 +134,8 @@ odoo.define("community_data.oe_community_data", function (require) {
       // trigger change on load
       $(".data-trigger").trigger("change");
     });
-  });
+  },
+};
+$(document).ready(function () {
+  oe_community_data_website.start();
 });

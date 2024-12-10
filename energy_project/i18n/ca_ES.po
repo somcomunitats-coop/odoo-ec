@@ -4,18 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-23 12:01+0000\n"
-"PO-Revision-Date: 2024-01-23 13:09+0100\n"
-"Last-Translator: Daniil Digtyar Vasilieva <daniil.digtyar@somit.coop>\n"
+"POT-Creation-Date: 2024-12-03 10:20+0000\n"
+"PO-Revision-Date: 2024-12-03 10:20+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: ca_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 3.0.1\n"
 
 #. module: energy_project
 #: model_terms:ir.ui.view,arch_db:energy_project.view_res_config_settings_view_form
@@ -83,6 +81,12 @@ msgstr ""
 "                                    <br/>"
 
 #. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__acc_number
+msgid "Account Number"
+msgstr "Número de compte"
+
+#. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/project.py:0
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__active
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__active
@@ -102,9 +106,14 @@ msgid "Available Providers"
 msgstr "Proveïdors disponibles"
 
 #. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__mandate_id
+msgid "Bank Mandate"
+msgstr "Mandat bancari"
+
+#. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__zip
 msgid "C.P."
-msgstr "C.P."
+msgstr ""
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__city
@@ -167,6 +176,7 @@ msgid "Display Name"
 msgstr "Nom Visible"
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/project.py:0
 #: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__draft
 #, python-format
@@ -252,6 +262,11 @@ msgid "Energy Supplier"
 msgstr "Proveïdor d'energia"
 
 #. module: energy_project
+#: model:uom.category,name:energy_project.energy_custom_uom_category
+msgid "Energy custom"
+msgstr "Energia personalitzada"
+
+#. module: energy_project
 #: model:ir.model,name:energy_project.model_energy_project_project
 msgid "Energy project"
 msgstr "Projecte energètic"
@@ -287,9 +302,28 @@ msgstr "Descripció de la capçalera al formulari del lloc web"
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__id
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,help:energy_project.field_energy_project_provider__token
+#, python-format
+msgid "If a provadir has an API, token for autentication / authorization"
+msgstr "Si un provadir té una API, testimoni d'autenticació/autorització"
+
+#. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,help:energy_project.field_energy_project_provider__uri
+#, python-format
+msgid ""
+"If a provider has an API, URI of that API. Ex: https://api.provider.com"
+msgstr ""
+"Si un proveïdor té una API, URI d'aquesta API. Ex: https://api.provider.com"
+
+#. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/project.py:0
 #: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__activation
 #, python-format
@@ -297,6 +331,7 @@ msgid "In Activation"
 msgstr "En activació"
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/project.py:0
 #: model:ir.model.fields.selection,name:energy_project.selection__energy_project_project__state__inscription
 #, python-format
@@ -378,6 +413,11 @@ msgid "Manage Supplier"
 msgstr "Gestiona el proveïdor"
 
 #. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__mandate_filtered_ids
+msgid "Mandate Filtered"
+msgstr "Mandat filtrat"
+
+#. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__city
 msgid "Municipio empresa"
 msgstr "Municipi empresa"
@@ -386,9 +426,12 @@ msgstr "Municipi empresa"
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__vat
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__nif
 msgid "NIF empresa"
-msgstr "NIF empresa"
+msgstr ""
 
 #. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__name
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__name
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project_type__name
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__name
@@ -397,8 +440,22 @@ msgstr "NIF empresa"
 #: model_terms:ir.ui.view,arch_db:energy_project.reseller_form_view
 #: model_terms:ir.ui.view,arch_db:energy_project.service_form_view
 #: model_terms:ir.ui.view,arch_db:energy_project.supplier_form_view
+#, python-format
 msgid "Name"
 msgstr "Nom del projecte"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_project__company_name
+msgid "Name of the company"
+msgstr "Nom de l'empresa"
+
+#. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,help:energy_project.field_energy_project_provider__name
+#, python-format
+msgid "Name of the provider"
+msgstr "Nom del proveïdor"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__name
@@ -407,6 +464,7 @@ msgid "Nombre empresa"
 msgstr "Nom de l'Empresa"
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/inscription.py:0
 #, python-format
 msgid "Non-partner"
@@ -419,6 +477,7 @@ msgid "Nº de orden"
 msgstr "Nº d'ordre"
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/inscription.py:0
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__partner_id
 #, python-format
@@ -426,16 +485,14 @@ msgid "Partner"
 msgstr "Soci"
 
 #. module: energy_project
-#: code:addons/energy_project/models/inscription.py:0
-#: model:ir.model.constraint,message:energy_project.constraint_energy_project_inscription_unique_project_id_partner_id
-#, python-format
-msgid "Partner is already signed up in this project."
-msgstr "El soci ja està inscrit en aquest projecte."
-
-#. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_supplier__portal
 msgid "Portal de medidas"
 msgstr "Portal de mesures"
+
+#. module: energy_project
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__privacy_policy
+msgid "Privacy policy"
+msgstr "Política de privadesa"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_service_contract__project_id
@@ -523,6 +580,7 @@ msgid "Teléfono gratuito incidencias"
 msgstr "Telèfon gratuït incidències"
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/inscription.py:0
 #, python-format
 msgid ""
@@ -533,6 +591,14 @@ msgstr ""
 "distribució amb l'estat: {table_state}"
 
 #. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/inscription.py:0
+#, python-format
+msgid "The selected mandate does not belong to the chosen partner."
+msgstr "El mandat seleccionat no pertany al soci escollit."
+
+#. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/service_contract.py:0
 #, python-format
 msgid ""
@@ -576,6 +642,7 @@ msgstr ""
 "nou."
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/service_contract.py:0
 #: model:ir.model.constraint,message:energy_project.constraint_energy_project_service_contract_unique_service_id_provider_id_project_id
 #, python-format
@@ -583,11 +650,36 @@ msgid "There's already a service with this provider assigned to this project."
 msgstr "Ja hi ha un servei amb aquest proveïdor assignat a aquest projecte."
 
 #. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/project.py:0
+#, python-format
+msgid ""
+"This is the form to request to participate in the shared self-consumption project that your Energy Community has started registrations for.\n"
+"It is necessary to fill in all the mandatory data to collect your interest in participating in this facility and also information that facilitates the necessary subsequent management.\n"
+"If you have any questions, you can contact {company_email}."
+msgstr ""
+"Aquest és el formulari per sol·licitar participar en el projecte d'autoconsum "
+"compartit pel qual la teva Comunitat Energètica ha iniciat les inscripcions.\n"
+"És necessari completar tots els dades obligatoris per recollir el teu interès "
+"en participar en aquesta instal·lació i també informació que facilita la gestió "
+"necessària posterior.\n"
+"Si tens alguna pregunta, pots contactar amb {company_email}."
+
+#. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/service_available.py:0
 #: model:ir.model.constraint,message:energy_project.constraint_energy_project_service_available_unique_service_id_provider_id
 #, python-format
 msgid "This service is already assigned to this provider."
 msgstr "Aquest servei ja està assignat a aquest proveïdor."
+
+#. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__token
+#, python-format
+msgid "Token"
+msgstr ""
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__type
@@ -600,6 +692,7 @@ msgid "Type for energy project"
 msgstr "Tipus per a projecte energètic"
 
 #. module: energy_project
+#. odoo-python
 #: code:addons/energy_project/models/inscription.py:0
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_inscription__is_member
 #, python-format
@@ -607,9 +700,29 @@ msgid "Typology"
 msgstr "Tipologia "
 
 #. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__uri
+#, python-format
+msgid "URI"
+msgstr ""
+
+#. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,field_description:energy_project.field_energy_project_provider__user_id
 #: model:res.groups,name:energy_project.group_user
+#, python-format
 msgid "User"
 msgstr "Usuari"
+
+#. module: energy_project
+#. odoo-python
+#: code:addons/energy_project/models/provider.py:0
+#: model:ir.model.fields,help:energy_project.field_energy_project_provider__user_id
+#, python-format
+msgid "User related with this provider"
+msgstr "Usuari relacionat amb aquest proveïdor"
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_project__zip
@@ -620,6 +733,11 @@ msgstr "Codi Postal"
 #: model:uom.uom,name:energy_project.kw_uom
 msgid "kW"
 msgstr "kWunit description in lists"
+
+#. module: energy_project
+#: model:uom.uom,name:energy_project.kwh_uom
+msgid "kWh"
+msgstr ""
 
 #. module: energy_project
 #: model:ir.model.fields,field_description:energy_project.field_energy_project_reseller__scope

@@ -7,15 +7,15 @@ from . import schemas
 _logger = logging.getLogger(__name__)
 
 
-class LandingService(Component):
-    _inherit = "base.rest.private_abstract_service"
-    _name = "ce.landing.service"
+class OpendataLandingPageService(Component):
+    _inherit = ["base.rest.service"]
+    _name = "opendata_landingpage.api.service"
+    _collection = "opendata.api.services"
     _usage = "landing"
     _description = """
-        CE WP landing page requests
+        Set of endpoints that return opendata about energy communites public website page
     """
 
-    # TODO: This is not restful, we should ask for landing_id directly. Refactor WP before fixing this.
     def get(self, _id):
         related_company = self.env["res.company"].browse(_id)
         return self._to_dict(related_company.landing_page_id)
@@ -28,4 +28,4 @@ class LandingService(Component):
         return {}
 
     def _validator_return_get(self):
-        return schemas.S_LANDING_PAGE_CREATE
+        return schemas.S_LANDING_PAGE_GET_RETURN

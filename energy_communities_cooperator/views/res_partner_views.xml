@@ -1,43 +1,4 @@
 <odoo>
-  <record id="cooperator.view_partner_tree" model="ir.ui.view">
-          <field name="mode">primary</field>
-      </record>
-
-      <record
-    id="cooperator.action_partner_cooperator_form"
-    model="ir.actions.act_window"
-  >
-          <field name="view_id" ref="cooperator.view_partner_tree" />
-      </record>
-
-      <record
-    id="cooperator.action_partner_cooperator_candidate_form"
-    model="ir.actions.act_window"
-  >
-          <field name="view_id" ref="cooperator.view_partner_tree" />
-      </record>
-
-      <record
-    id="cooperator.action_company_representative_form"
-    model="ir.actions.act_window"
-  >
-          <field name="view_id" ref="cooperator.view_partner_tree" />
-      </record>
-
-  <record id="view_partner_tree" model="ir.ui.view">
-            <field name="name">view_partner_tree</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="cooperator.view_partner_tree" />
-            <field name="arch" type="xml">
-                <xpath
-        expr="/tree/field[@name='cooperator_register_number']"
-        position='attributes'
-      >
-                    <attribute name="readonly">1</attribute>
-                </xpath>
-            </field>
-        </record>
-
   <record id="cooperator_view_partner_form" model="ir.ui.view">
     <field name="name">view_company_form.inherit</field>
     <field name="model">res.partner</field>
@@ -96,6 +57,10 @@
           name="cooperative_membership_id"
           attrs="{'invisible': ['|',('cooperator', '=', False),('user_current_role', '!=', 'role_platform_admin')]}"
         />
+        <!--<field-->
+        <!--  name="cooperator_register_number"-->
+        <!--  attrs="{'invisible': [('member', '=', False)], 'readonly': True}"-->
+        <!--/>-->
       </field>
     </field>
   </record>

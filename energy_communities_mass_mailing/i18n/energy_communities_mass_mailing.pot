@@ -1,0 +1,131 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* energy_communities_mass_mailing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-03 17:34+0000\n"
+"PO-Revision-Date: 2024-12-03 17:34+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mailing_contact__allowed_companies
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mailing_list__allowed_companies
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mailing_mailing__allowed_companies
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_utm_campaign__allowed_companies
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_utm_stage__allowed_companies
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_utm_tag__allowed_companies
+msgid "Allowed Companies"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model,name:energy_communities_mass_mailing.model_utm_stage
+msgid "Campaign Stage"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mailing_contact__company_id
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mailing_list__company_id
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mailing_mailing__company_id
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_utm_campaign__company_id
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_utm_stage__company_id
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_utm_tag__company_id
+msgid "Company"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model,name:energy_communities_mass_mailing.model_partner_mail_list_wizard
+msgid "Create contact mailing list"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model,name:energy_communities_mass_mailing.model_mail_compose_message
+msgid "Email composition wizard"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model.fields,help:energy_communities_mass_mailing.field_mailing_list__sync_domain
+msgid "Filter partners to sync in this list"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model,name:energy_communities_mass_mailing.model_mailing_contact
+msgid "Mailing Contact"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model,name:energy_communities_mass_mailing.model_mailing_list
+msgid "Mailing List"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model,name:energy_communities_mass_mailing.model_mailing_mailing
+msgid "Mass Mailing"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model,name:energy_communities_mass_mailing.model_mailing_trace_report
+msgid "Mass Mailing Statistics"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:res.groups,name:energy_communities_mass_mailing.mass_mailing_super_user
+msgid "Mass Mailing Superuser"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#. odoo-python
+#: code:addons/energy_communities_mass_mailing/wizards/multicompany_easy_creation.py:0
+#, python-format
+msgid "New"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mailing_list__sync_domain
+msgid "Synchronization critera"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model,name:energy_communities_mass_mailing.model_utm_campaign
+msgid "UTM Campaign"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model,name:energy_communities_mass_mailing.model_utm_tag
+msgid "UTM Tag"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_account_invoice_send__user_current_company
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mail_compose_message__user_current_company
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mailing_contact__user_current_company
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mailing_list__user_current_company
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mailing_mailing__user_current_company
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_partner_mail_list_wizard__user_current_company
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_utm_campaign__user_current_company
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_utm_stage__user_current_company
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_utm_tag__user_current_company
+msgid "User Current Company"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mailing_contact__user_current_role
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mailing_list__user_current_role
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_mailing_mailing__user_current_role
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_utm_campaign__user_current_role
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_utm_stage__user_current_role
+#: model:ir.model.fields,field_description:energy_communities_mass_mailing.field_utm_tag__user_current_role
+msgid "User Current Role"
+msgstr ""
+
+#. module: energy_communities_mass_mailing
+#: model:ir.model,name:energy_communities_mass_mailing.model_account_multicompany_easy_creation_wiz
+msgid "Wizard Account Multi-company Easy Creation"
+msgstr ""

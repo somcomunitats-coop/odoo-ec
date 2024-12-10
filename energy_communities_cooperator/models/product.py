@@ -17,7 +17,9 @@ class ProductTemplate(models.Model):
         """We are fully overriding this function in order to make it multi-company sensitive"""
 
         if request:
-            default_company = request.env["res.company"]._company_default_get()
+            default_company = request.env["res.company"].browse(
+                request.env.context.get("target_odoo_company_id")
+            )
         else:
             default_company = self.env.user_id.company_id
 

@@ -1,54 +1,57 @@
-odoo.define("energy_selfconsumption.ListRenderer", function (require) {
-  "use strict";
+/** @odoo-module **/
 
-  var ListRenderer = require("web.ListRenderer");
-  var ListView = require("web.ListView");
-  var view_registry = require("web.view_registry");
-  var FieldOne2Many = require("web.relational_fields").FieldOne2Many;
-  var fieldRegistry = require("web.field_registry");
+import {ListRenderer} from "@web/views/list/list_renderer";
+import {listView} from "@web/views/list/list_view";
+import {X2ManyField} from "@web/views/fields/x2many/x2many_field";
+import {registry} from "@web/core/registry";
 
-  var ListRendererDistributionTable = ListRenderer.extend({
-    init: function (parent, state, params) {
-      this._super.apply(this, arguments);
-      this.distribution_table_type = "fixed";
-      if (typeof this.state.getContext().distribution_table_type != "undefined") {
-        this.distribution_table_type = this.state.getContext().distribution_table_type;
-      }
-    },
+// Extender ListRenderer para personalizar el renderizado
+class ListRendererDistributionTable extends ListRenderer {
+  setup() {
+    super.setup();
+    this.distribution_table_type = "fixed";
 
-    _renderBodyCell: function (record, node, colIndex, options) {
-      var $td = this._super.apply(this, arguments);
-      if (
-        this.distribution_table_type == "hourly" &&
-        node.attrs["name"] == "coefficient"
-      ) {
-        $td.html("*");
-      }
-      return $td;
-    },
-  });
+    const context = this.props.list.model.rootParams.context;
+    if (context && context.distribution_table_type) {
+      this.distribution_table_type = context.distribution_table_type;
+    }
+  }
 
-  var DistributionTableView = ListView.extend({
-    config: _.extend({}, ListView.prototype.config, {
-      Renderer: ListRendererDistributionTable,
-    }),
-  });
+  // Personalización de las celdas de la tabla
+  getFormattedValue(column, record) {
+    if (this.distribution_table_type === "hourly" && column.name === "coefficient") {
+      return "*";
+    }
+    return super.getFormattedValue(column, record);
+  }
+}
 
-  view_registry.add("distribution_table", DistributionTableView);
+// Extender ListView para utilizar el ListRenderer personalizado
+export const DistributionTableView = listView;
+DistributionTableView.Renderer = ListRendererDistributionTable;
 
-  var ListRendererDistributionTableFieldOne2Many = FieldOne2Many.extend({
-    _getRenderer: function () {
-      if (this.view.arch.tag === "tree") {
-        return ListRendererDistributionTable;
-      }
-      return this._super.apply(this, arguments);
-    },
-  });
+// Registrar el nuevo tipo de vista
+registry.category("views").add("distribution_table", DistributionTableView);
 
-  fieldRegistry.add(
-    "distribution_table_one2many",
-    ListRendererDistributionTableFieldOne2Many
-  );
+// Extender X2ManyField para utilizar el ListRenderer personalizado
+class ListRendererDistributionTableX2ManyField extends X2ManyField {
+  setup() {
+    super.setup();
+    if (
+      this.viewMode == "list" &&
+      this.__owl__.parent.props.record.data["type"] == "hourly"
+    ) {
+      this.props.value.records.map((record) => {
+        if ("coefficient" in record.data) {
+          record.data["coefficient"] = "*";
+          record.fields["coefficient"].type = "char";
+        }
+      });
+    }
+  }
+}
 
-  return ListRendererDistributionTable;
-});
+// Registrar el nuevo tipo de X2ManyField
+registry
+  .category("fields")
+  .add("distribution_table_one2many", ListRendererDistributionTableX2ManyField);

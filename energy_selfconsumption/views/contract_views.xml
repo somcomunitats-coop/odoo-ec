@@ -46,7 +46,7 @@
             <field name="code">action = records.invoicing_wizard_action()</field>
         </record>
 
-        <report
+        <!-- <report
       id="contract_contract_csv_report"
       model="contract.contract"
       string="Customized delivered energy template"
@@ -54,7 +54,16 @@
       name="contract_contract.csv"
       file="contract_contract"
       attachment_use="False"
-    />
+    /> -->
+        <record id="contract_contract_csv_report" model="ir.actions.report">
+            <field name="name">Customized delivered energy template</field>
+            <field name="model">contract.contract</field>
+            <field name="report_type">csv</field>
+            <field name="report_name">contract_contract.csv</field>
+            <field name="report_file">contract_contract</field>
+            <field name="binding_model_id" ref="contract.model_contract_contract" />
+            <field name="binding_type">report</field>
+        </record>
 
     </data>
 </odoo>

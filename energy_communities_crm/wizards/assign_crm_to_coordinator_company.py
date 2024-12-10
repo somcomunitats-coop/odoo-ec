@@ -89,4 +89,6 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
             template = self.env.ref(
                 "energy_communities_crm.email_templ_lead_assigned_to_coordinator_id"
             ).with_context(email_values)
-            self.crm_lead_id.message_post_with_template(template.id)
+            self.crm_lead_id.message_post_with_template(
+                template.id, email_layout_xmlid="mail.mail_notification_layout"
+            )

@@ -32,7 +32,7 @@
     <template id="form_headline" name="form_headline">
       <div
       t-attf-name="#{key}_container"
-      t-attf-class="form-group field-#{key} #{disabled and ' form-group-disabled'}"
+      t-attf-class="form-group mb-3 field-#{key} #{disabled and ' form-group-disabled'}"
       t-att-data-showif="showif"
     >
       <label><t t-esc="headline" /></label>
@@ -41,7 +41,7 @@
     <template id="form_field_text" name="form_field_text">
       <div
       t-attf-name="#{key}_container"
-      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-attf-class="form-group mb-3 #{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
       t-att-data-showif="showif"
     >
       <t t-call="energy_communities.form_field_part_label">
@@ -69,7 +69,7 @@
     <template id="form_field_hidden" name="form_field_text">
       <div
       t-attf-name="#{key}_container"
-      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-attf-class="form-group mb-3 #{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
       t-att-data-showif="showif"
     >
         <input
@@ -84,7 +84,7 @@
     <template id="form_field_number" name="form_field_number">
       <div
       t-attf-name="#{key}_container"
-      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-attf-class="form-group mb-3 #{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
       t-att-data-showif="showif"
     >
         <t t-call="energy_communities.form_field_part_label">
@@ -113,7 +113,7 @@
     <template id="form_field_email" name="form_field_email">
       <div
       t-attf-name="#{key}_container"
-      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-attf-class="form-group mb-3 #{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
       t-att-data-showif="showif"
     >
         <t t-call="energy_communities.form_field_part_label">
@@ -142,7 +142,7 @@
     <template id="form_field_textarea" name="form_field_textarea">
       <div
       t-attf-name="#{key}_container"
-      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-attf-class="form-group mb-3 #{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
       t-att-data-showif="showif"
     >
         <t t-call="energy_communities.form_field_part_label">
@@ -170,7 +170,7 @@
     <template id="form_field_selection" name="form_field_selection">
       <div
       t-attf-name="#{key}_container"
-      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-attf-class="form-group mb-3 #{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
       t-att-data-showif="showif"
     >
         <t t-call="energy_communities.form_field_part_label">
@@ -206,7 +206,7 @@
     <template id="form_field_selection_checkbox" name="form_field_selection_checkbox">
       <div
       t-attf-name="#{key}_container"
-      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-attf-class="form-group mb-3 #{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
       t-att-data-showif="showif"
     >
       <!-- TODO: Possible required validation trough javascript -->
@@ -243,7 +243,7 @@
     <template id="form_field_checkbox" name="form_field_checkbox">
       <div
       t-attf-name="#{key}_container"
-      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-attf-class="form-group mb-3 #{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
       t-att-data-showif="showif"
     >
         <div>
@@ -273,7 +273,7 @@
     <template id="form_field_selection_radio" name="form_field_selection_radio">
       <div
       t-attf-name="#{key}_container"
-      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-attf-class="form-group mb-3 #{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
       t-att-data-showif="showif"
     >
       <fieldset
@@ -311,7 +311,7 @@
       <div class="col-md-6">
         <div
         t-attf-name="#{key}_container"
-        t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+        t-attf-class="form-group mb-3 #{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
         t-att-data-showif="showif"
       >
           <t t-call="energy_communities.form_field_part_label">
@@ -347,7 +347,7 @@
     <template id="form_field_date_past" name="form_field_date_past">
         <div
       t-attf-name="#{key}_container"
-      t-attf-class="form-group#{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
+      t-attf-class="form-group mb-3 #{error and key in error and ' has-error ' or ' '}field-#{key}#{disabled and ' form-group-disabled'}"
       t-att-data-showif="showif"
     >
           <t t-set="date_placeholder">dd/mm/aaaa</t>

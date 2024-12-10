@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ProgressBarWidgetTemplate" owl="1">
+        <div class="o_progress_bar">
+            <div class="progress-bar-container" t-att-style="containerStyle">
+                <div class="progress-bar-green" t-att-style="progressStyle" />
+                <div class="progress-bar-red" t-att-style="overlayStyle" />
+            </div>
+            <span><t t-esc="state.percentage.toFixed(2)" />%</span>
+            <span style="display: block;float: right;">
+                <t t-esc="state.current_quantity.toFixed(2)" /> /
+                <t t-esc="state.max_quantity.toFixed(2)" />
+                <t t-esc="state.extra_label" />
+            </span>
+        </div>
+    </t>
+</templates>

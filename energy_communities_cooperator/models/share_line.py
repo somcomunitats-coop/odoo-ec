@@ -4,6 +4,7 @@ from odoo import api, fields, models
 class ShareLine(models.Model):
     _name = "share.line"
     _inherit = "share.line"
+    _description = "Share line"
 
     share_product_id = fields.Many2one(readonly=False)
     share_unit_price = fields.Monetary(

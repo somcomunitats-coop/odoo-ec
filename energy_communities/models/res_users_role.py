@@ -31,6 +31,7 @@ class ResUsersRole(models.Model):
         compute="_compute_priority_and_available_roles",
     )
 
+    # TODO: Try to refactor this to integrate better with energy_communities_api (method overwrite there)
     def _compute_priority_and_available_roles(self):
         available_roles = [
             (4, self.env.ref("energy_communities.role_ce_manager").id),
@@ -72,6 +73,10 @@ class ResUsersRole(models.Model):
                 record.priority = 7
                 record.available_role_ids = available_roles + internal_user_extra_roles
                 record.application_scope = self.COMMON_LAYER
+            elif record.code == "role_api_provider":
+                record.priority = 8
+                record.available_role_ids = []
+                record.application_scope = self.SPECIFIC_LAYER
 
 
 class ResUsersRoleLine(models.Model):

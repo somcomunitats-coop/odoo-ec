@@ -9,18 +9,15 @@ class Inscription(models.Model):
     }
     _description = "Inscriptions for a self-consumption"
 
-    _USED_IN_SELFCONSUMPTION_VALUES = [
-        ("yes", _("Yes")),
-        ("no", _("No")),
-    ]
-
-    _VULNERABILITY_SITUATION_VALUES = [
-        ("yes", _("Yes")),
-        ("no", _("No")),
-    ]
-
     inscription_id = fields.Many2one(
         "energy_project.inscription", required=True, ondelete="cascade"
+    )
+    selfconsumption_project_id = fields.Many2one(
+        "energy_selfconsumption.selfconsumption",
+        required=True,
+        ondelete="restrict",
+        string="Self-consumption Energy Project",
+        check_company=True,
     )
     annual_electricity_use = fields.Float(string="Annual electricity use")
     participation = fields.Many2one(
@@ -30,23 +27,21 @@ class Inscription(models.Model):
         string="Participation", related="participation.quantity"
     )
     accept = fields.Boolean(
-        String="I accept and authorize being able to issue payments"
+        string="I accept and authorize being able to issue payments"
         " to this bank account as part of participation in "
         "this shared self-consumption project of my energy "
         "community"
     )
-    member = fields.Boolean(String="Member/Non-Member")
+    member = fields.Boolean(string="Member/Non-Member")
     supply_point_id = fields.Many2one(
         "energy_selfconsumption.supply_point", required=True
     )
     code = fields.Char(string="CUPS", related="supply_point_id.code")
     used_in_selfconsumption = fields.Selection(
-        _USED_IN_SELFCONSUMPTION_VALUES,
         string="Used in selfconsumption",
         related="supply_point_id.used_in_selfconsumption",
     )
     vulnerability_situation = fields.Selection(
-        _VULNERABILITY_SITUATION_VALUES,
         string="Vulnerability situation",
         related="partner_id.vulnerability_situation",
     )

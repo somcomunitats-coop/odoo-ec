@@ -1,0 +1,16 @@
+<odoo>
+  <record id="sales_team.team_sales_department" model="crm.team">
+      <field
+      name="company_id"
+      model="res.company"
+      eval="obj(ref('base.main_company')).id"
+    />
+  </record>
+  <record id="sales_team.crm_team_1" model="crm.team">
+      <field
+      name="company_id"
+      model="res.company"
+      eval="obj(ref('base.main_company')).id"
+    />
+  </record>
+</odoo>

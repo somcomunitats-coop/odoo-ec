@@ -1,56 +1,41 @@
 <odoo>
-	<!--
-	<record model="ir.actions.act_window" id="crm.crm_lead_opportunities_tree_view">
-		<field name="name">Pipeline</field>
-		<field name="res_model">crm.lead</field>
-		<field name="view_mode">kanban,tree,graph,pivot,form,calendar,activity</field>
-		<field name="domain">[('type','=','opportunity')]</field>
-		<field name="context">
-			{
-            'default_type': 'opportunity',
-            'search_default_assigned_to_me': 0
-			}
-		</field>
-		<field name="search_view_id" ref="crm.view_crm_case_opportunities_filter" />
-	</record>
-	-->
-	<record id="ce_view_crm_case_opportunities_filter" model="ir.ui.view">
-		<field name="name">ce.view.crm.opportunities.leads.filter</field>
-		<field name="model">crm.lead</field>
-		<field name="inherit_id" ref="crm.view_crm_case_opportunities_filter" />
-		<field name="arch" type="xml">
-			<filter name="assigned_to_me" position="before">
-				<filter
+  <record id="ce_view_crm_case_opportunities_filter" model="ir.ui.view">
+    <field name="name">ce.view.crm.opportunities.leads.filter</field>
+    <field name="model">crm.lead</field>
+    <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter" />
+    <field name="arch" type="xml">
+      <filter name="assigned_to_me" position="before">
+        <filter
           name="ce_source_existing_ce_info"
           string="Newsletter CE"
           domain="[('source_id','=', %(energy_communities.ce_source_existing_ce_info)d)]"
         />
-				<filter
+        <filter
           name="ce_source_existing_ce_contact"
           string="Contact CE"
           domain="[('source_id','=', %(energy_communities.ce_source_existing_ce_contact)d)]"
         />
-				<filter
+        <filter
           name="ce_source_creation_ce_proposal"
           string="CE creation"
           domain="[('source_id','=', %(energy_communities.ce_source_creation_ce_proposal)d)]"
         />
-				<filter
+        <filter
           name="ce_source_coord_web_hiring"
           string="Hire COORD"
           domain="[('source_id','=', %(energy_communities.ce_source_coord_web_hiring)d)]"
         />
-				<filter
+        <filter
           name="ce_source_coord_web_other"
           string="Other COORD"
           domain="[('source_id','=', %(energy_communities.ce_source_coord_web_other)d)]"
         />
-						<filter
+            <filter
           name="ce_source_existing_coord_contact"
           string="Contact COORD"
           domain="[('source_id','=', %(energy_communities.ce_source_existing_coord_contact)d)]"
         />
-						<filter
+            <filter
           name="ce_source_existing_coord_info"
           string="Info COORD"
           domain="[('source_id','=', %(energy_communities.ce_source_existing_coord_info)d)]"
@@ -60,55 +45,38 @@
           string="Tariffs contact"
           domain="[('source_id','=', %(energy_communities.ce_source_tariffs_page_contact)d)]"
         />
-				<filter
-          name="no_web_form_origin"
-          string="No web form origin"
-          domain="[('source_id','=', False)]"
-        />
-				<separator />
-			</filter>
-		</field>
-	</record>
-
-	<record id="ce_view_crm_case_opportunities_filter_platform_admins" model="ir.ui.view">
-		<field name="name">ce.view.crm.opportunities.leads.filter.platform.admins</field>
-		<field name="model">crm.lead</field>
-		<field
-      name="inherit_id"
-      ref="energy_communities_crm.ce_view_crm_case_opportunities_filter"
-    />
-		<field
-      name="groups_id"
-      eval="[(ref('energy_communities.role_platform_admin_res_groups'))]"
-    />
-		<field name="arch" type="xml">
-			<filter name="ce_source_existing_ce_info" position="before">
-				<filter
+        <filter
           name="ce_source_general_info"
           string="Newsletter SomComunitats"
           domain="[('source_id','=', %(energy_communities.ce_source_general_info)d)]"
         />
-						<filter
+            <filter
           name="ce_source_general_contact"
           string="Contact SomComunitats"
           domain="[('source_id','=', %(energy_communities.ce_source_general_contact)d)]"
         />
-		</filter>
-		</field>
-	</record>
+        <filter
+          name="no_web_form_origin"
+          string="No web form origin"
+          domain="[('source_id','=', False)]"
+        />
+        <separator />
+      </filter>
+    </field>
+  </record>
 
-	<record id="ce_crm_lead_view_form" model="ir.ui.view">
-		<field name="name">ce.crm.lead.view.form</field>
-		<field name="model">crm.lead</field>
-		<field name="inherit_id" ref="crm.crm_lead_view_form" />
-		<field name="arch" type="xml">
-			<xpath expr="//sheet" position="before">
+  <record id="ce_crm_lead_view_form" model="ir.ui.view">
+    <field name="name">ce.crm.lead.view.form</field>
+    <field name="model">crm.lead</field>
+    <field name="inherit_id" ref="crm.crm_lead_view_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//sheet" position="before">
         <header>
           <field name="source_id" invisible="1" />
           <field name="finished" invisible="1" />
           <field name="company_hierarchy_level" invisible="1" />
           <field name="can_be_assigned_to_coordinator" invisible="1" />
-					<button
+          <button
             name="action_assign_crm_to_coordinator_company"
             type="object"
             string="Assing CRM to coordinator company"
@@ -122,27 +90,32 @@
             groups="energy_communities.group_platform_manager"
             attrs="{'invisible':['|',('source_id', '!=', %(energy_communities.ce_source_creation_ce_proposal)d),('probability','>=',100)]}"
           />
-				</header>
+        </header>
       </xpath>
-      <xpath expr="//field[@name='company_id']" position="attributes">
+      <field name="company_id" position="attributes">
         <attribute
           name="attrs"
         >{'readonly':[('user_current_role', '!=', 'role_platform_admin')],'required':1}</attribute>
+      </field>
+      <xpath expr="//group[@name='lead_partner']" position="after">
+        <group colspan="4">
+          <field name="user_current_role" invisible="1" />
+          <field name="external_id" readonly="1" />
+        </group>
       </xpath>
-      <xpath expr="//field[@name='company_id']" position="after">
-        <field name="user_current_role" invisible="1" />
-        <field name="external_id" readonly="1" />
+      <field name="lead_properties" position="after">
         <field
           name="ce_child_lead_id"
           string="Crm lead child"
           readonly="1"
           attrs="{'invisible':['|',('source_id', '!=', %(energy_communities.ce_source_creation_ce_proposal)d), ('company_hierarchy_level', '!=', 'instance')]}"
         />
-      </xpath>
+      </field>
+
       <xpath expr="//field[@name='team_id']" position="attributes">
         <attribute name="domain">[("company_id", "=", company_id)]</attribute>
       </xpath>
-		</field>
-	</record>
+    </field>
+  </record>
 
 </odoo>

@@ -21,7 +21,7 @@ class ResUsers(models.Model):
     _KC_CLIENT_AUTH_ACCESS_GROUP_ODOO = "odoo-allow"
 
     # TODO: Delete this field because it's included on the current_company_mixin
-    current_role = fields.Char(computed="_compute_current_role", store=False)
+    current_role = fields.Char(compute="_compute_current_role", store=False)
 
     last_user_invitation_through_kc = fields.Datetime(
         string=_("Last user invitation through Keycloak")
@@ -32,23 +32,24 @@ class ResUsers(models.Model):
         for record in self:
             record.current_role = record.get_current_role()
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals):
         user = super().create(vals)
-        if "login" in vals.keys():
-            partner = self._find_existing_related_partner(vals)
-            if partner:
-                target_company_ids = partner.company_ids | user.company_ids
-                partner.write({"company_ids": target_company_ids})
-                user.write(
-                    {"partner_id": partner.id, "company_ids": target_company_ids}
-                )
+        for val in vals:
+            if "login" in val.keys():
+                partner = self._find_existing_related_partner(val)
+                if partner:
+                    target_company_ids = partner.company_ids | user.company_ids
+                    partner.write({"company_ids": target_company_ids})
+                    user.write(
+                        {"partner_id": partner.id, "company_ids": target_company_ids}
+                    )
         return user
 
     @api.constrains("lang")
     def constrains_user_lang(self):
         for record in self:
-            if record.lang:
+            if record.lang and record.oauth_uid:
                 record._update_kc_user_lang()
 
     @api.constrains("login")
@@ -827,4 +828,3 @@ class ResUsers(models.Model):
             "type": "ir.actions.act_window",
             "target": "self",
         }
-

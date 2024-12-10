@@ -144,7 +144,7 @@
             </field>
         </record>
 
-        <report
+        <!-- <report
       id="distribution_table_hourly_csv_report"
       model="energy_selfconsumption.distribution_table"
       string="Distribution table template"
@@ -152,7 +152,21 @@
       name="energy_selfconsumption.distribution_table.csv"
       file="distribution_table"
       attachment_use="False"
-    />
+    /> -->
+        <record id="distribution_table_hourly_csv_report" model="ir.actions.report">
+            <field name="name">Customized delivered energy template</field>
+            <field name="model">energy_selfconsumption.distribution_table</field>
+            <field name="report_type">csv</field>
+            <field
+        name="report_name"
+      >energy_selfconsumption.distribution_table.csv</field>
+            <field name="report_file">distribution_table</field>
+            <field
+        name="binding_model_id"
+        ref="energy_selfconsumption.model_energy_selfconsumption_distribution_table"
+      />
+            <field name="binding_type">report</field>
+        </record>
 
          <record
       id="manager_clean_supply_point_assignation_action"

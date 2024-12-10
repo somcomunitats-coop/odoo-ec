@@ -21,13 +21,11 @@ class OAuthProvider(models.Model):
     superuser = fields.Char(
         string="Superuser",
         help="A super power user that is able to CRUD users on KC.",
-        placeholder="admin",
         required=False,
     )
     superuser_pwd = fields.Char(
         string="Superuser password",
         help='"Superuser" user password',
-        placeholder='I hope is not "admin"',
         required=False,
     )
     admin_user_endpoint = fields.Char(string="User admin URL")

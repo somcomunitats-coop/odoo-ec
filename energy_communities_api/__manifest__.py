@@ -9,10 +9,11 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL & SomIT",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "14.0.2.1.1",
+    "version": "16.0.0.1.0",
+    "license": "AGPL-3",
     "depends": [
         "auth_jwt",
-        "base_rest_auth_jwt",
+        # "base_rest_auth_jwt",
         "base_rest_pydantic",
         "base_rest",
         "component",
@@ -22,8 +23,8 @@
     ],
     "external_dependencies": {
         "python": [
-            "pydantic<2",
-            "extendable-pydantic==0.0.6",
+            "pydantic==2.9.2",
+            "extendable-pydantic==1.3.2",
             "email_validator==2.2.0",
         ]
     },
