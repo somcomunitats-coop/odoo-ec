@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.1.0",
+    "version": "16.0.0.1.1",
     "depends": [
         "account",
         "account_banking_mandate",
@@ -21,6 +21,7 @@
         "event",
         "l10n_es_aeat",
         "l10n_es_aeat_sii_oca",
+        "mail",
         "mail_multicompany",
         "metadata",
         "partner_firstname",
