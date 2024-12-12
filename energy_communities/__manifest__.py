@@ -7,7 +7,7 @@
         "account_lock_date_update",
         "account_multicompany_easy_creation",
         "account_payment_order",
-        # "account_reconciliation_widget",
+        "account_reconcile_oca",
         "auth_api_key",
         "auth_oidc",
         "auth_signup",
