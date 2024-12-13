@@ -58,7 +58,7 @@ class ResUsers(models.Model):
             if record.partner_id:
                 record.partner_id.write(
                     {
-                        "vat": self.login,
+                        # "vat": self.login,
                         "country_id": self.env.ref("base.es").id,
                     }
                 )
