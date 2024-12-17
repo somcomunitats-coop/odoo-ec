@@ -35,21 +35,28 @@
             </xpath>
             <xpath expr="//sheet" position="before">
                 <header>
-                    <field name="landing_page_id" invisible="1" />
-                    <field name="hierarchy_level" invisible="1" />
-                    <button
-            name="create_landing"
-            type="object"
-            string="Create landing page"
-            attrs="{'invisible': [('landing_page_id','!=',False)]}"
-          />
-                    <button
-            name="action_open_change_coordinator_wizard"
-            type="object"
-            string="Change coordinator"
-            groups="energy_communities.group_platform_manager"
-            attrs="{'invisible':[('hierarchy_level', '!=','community')]}"
-          />
+                  <field name="landing_page_id" invisible="1" />
+                  <field name="hierarchy_level" invisible="1" />
+                  <field name="website_id" invisible="1" />
+                  <button
+                    name="action_create_website"
+                    type="object"
+                    string="Create odoo website"
+                    attrs="{'invisible': [('website_id','!=',False)]}"
+                  />
+                  <button
+                    name="action_create_landing"
+                    type="object"
+                    string="Create landing page"
+                    attrs="{'invisible': [('landing_page_id','!=',False)]}"
+                  />
+                  <button
+                    name="action_open_change_coordinator_wizard"
+                    type="object"
+                    string="Change coordinator"
+                    groups="energy_communities.group_platform_manager"
+                    attrs="{'invisible':[('hierarchy_level', '!=','community')]}"
+                  />
                 </header>
             </xpath>
             
@@ -59,6 +66,14 @@
                     name="get_landing_page_form"
                     type="object"
                     string="My landing page"
+                    class="oe_stat_button"
+                    icon="fa-globe"
+                    attrs="{'invisible': [('landing_page_id','=',False)]}"
+                  />
+                  <button
+                    name="get_website_form"
+                    type="object"
+                    string="My website"
                     class="oe_stat_button"
                     icon="fa-globe"
                     attrs="{'invisible': [('landing_page_id','=',False)]}"

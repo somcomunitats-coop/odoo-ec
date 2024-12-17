@@ -1,5 +1,6 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.http import request
 
 
 class ResUsers(models.Model):
@@ -28,4 +29,15 @@ class ResUsers(models.Model):
                         "Trying to create user from partner ID {} but the partner doesn't have VAT defined"
                     ).format(rel_partner.id)
                 )
-        return super()._signup_create_user(values)
+        website_id_id = rel_partner.company_id.website_id.id
+        # Pass this values on session and context in order that website_id is always properly set user company's website
+        self = self.with_context({"website_id": website_id_id})
+        request.session["force_website_id"] = website_id_id
+        try:
+            return super()._signup_create_user(values)
+        except Exception:
+            raise ValidationError(
+                _(
+                    "Something went wrong. Probably there is no website defined for company: {}"
+                ).format(rel_partner.company_id.name)
+            )
