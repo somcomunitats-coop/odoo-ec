@@ -27,12 +27,23 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     create_user = fields.Boolean(string="Create user for cooperator", default=True)
 
     @api.depends("parent_id")
-    @api.onchange("parent_id")
     def _compute_parent_id_id(self):
         for record in self:
             record.parent_id_id = False
             if record.parent_id:
                 record.parent_id_id = record.parent_id.id
+
+    @api.onchange("parent_id")
+    def _setup_product_share_template(self):
+        for record in self:
+            record.product_share_template = False
+            if record.parent_id:
+                share_product_template = self.env["product.template"].search(
+                    [("is_share", "=", True), ("company_id", "=", record.parent_id.id)],
+                    limit=1,
+                )
+                if share_product_template:
+                    record.product_share_template = share_product_template.id
 
     def set_cooperative_account(self):
         self_new_company = self.with_company(self.new_company_id)

@@ -23,6 +23,7 @@
         "cooperator_account_banking_mandate",
         "l10n_es_cooperator",
         "energy_communities",
+        "energy_communities_crm",
     ],
     # always loaded
     "data": [
