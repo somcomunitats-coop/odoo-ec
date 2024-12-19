@@ -88,6 +88,7 @@ class ResCompany(models.Model):
         string="Energy Community state",
     )
     landing_page_id = fields.Many2one("landing.page", string=_("Landing Page"))
+    website_id = fields.Many2one("website", store=False, compute="_compute_website_id")
     landing_page_status = fields.Selection(related="landing_page_id.status")
     wordpress_db_username = fields.Char(string=_("Wordpress DB Admin Username"))
     wordpress_db_password = fields.Char(string=_("Wordpress DB Admin Password"))
@@ -112,6 +113,13 @@ class ResCompany(models.Model):
     )
 
     # COMPUTED FIELDS
+    def _compute_website_id(self):
+        for rec in self:
+            rec.website_id = False
+            rel_website = self.env["website"].search([("company_id", "=", rec.id)])
+            if rel_website:
+                rec.website_id = rel_website[0].id
+
     @api.depends("hierarchy_level")
     def _compute_parent_id_filtered_ids(self):
         for rec in self:
@@ -337,8 +345,20 @@ class ResCompany(models.Model):
         else:
             return "rest-ce-landing"
 
+    # WEBSITE
+    def action_create_website(self):
+        for rec in self:
+            website = self.env["website"]
+            vals = {
+                "company_id": rec.id,
+                "name": rec.name,
+                # "user_id": self.env.user.id
+            }
+            new_website = website.create(vals)
+            return self.get_website_form()
+
     # LANDING
-    def create_landing(self):
+    def action_create_landing(self):
         if not self.comercial_name:
             raise ValidationError(
                 _(
@@ -382,6 +402,16 @@ class ResCompany(models.Model):
             "view_mode": "form",
             "res_model": "landing.page",
             "res_id": self.landing_page_id.id,
+            "target": "current",
+        }
+
+    def get_website_form(self):
+        return {
+            "type": "ir.actions.act_window",
+            "view_type": "form",
+            "view_mode": "form",
+            "res_model": "website",
+            "res_id": self.website_id.id,
             "target": "current",
         }
 
