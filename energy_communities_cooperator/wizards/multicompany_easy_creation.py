@@ -5,12 +5,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     _name = "account.multicompany.easy.creation.wiz"
     _inherit = "account.multicompany.easy.creation.wiz"
 
-    def _default_product_share_template(self):
-        return self.env.ref(
-            "energy_communities_cooperator.share_capital_product_template",
-            raise_if_not_found=False,
-        )
-
+    parent_id_id = fields.Integer(store=False, compute="_compute_parent_id_id")
     property_cooperator_account = fields.Many2one(
         comodel_name="account.account",
         string="Cooperator Account",
@@ -22,9 +17,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     capital_share = fields.Monetary(string="Initial capital share", default=100)
     product_share_template = fields.Many2one(
         comodel_name="product.template",
-        default=_default_product_share_template,
         string="Product Share Template",
-        domain=[("is_share", "=", True)],
     )
     new_product_share_template = fields.Many2one(
         comodel_name="product.template",
@@ -32,6 +25,14 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         readonly=True,
     )
     create_user = fields.Boolean(string="Create user for cooperator", default=True)
+
+    @api.depends("parent_id")
+    @api.onchange("parent_id")
+    def _compute_parent_id_id(self):
+        for record in self:
+            record.parent_id_id = False
+            if record.parent_id:
+                record.parent_id_id = record.parent_id.id
 
     def set_cooperative_account(self):
         self_new_company = self.with_company(self.new_company_id)
