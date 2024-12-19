@@ -14,7 +14,8 @@
                     <page string="Cooperator">
                         <group string="Cooperator">
                             <field name="property_cooperator_account" />
-                            <field name="product_share_template" />
+                            <field name="parent_id_id" invisible="1" />
+                            <field name="product_share_template" required="1" domain="[('is_share', '=', True),('company_id','=',parent_id_id)]" />
                             <field name="capital_share" />
                             <field name="create_user" />
                         </group>
