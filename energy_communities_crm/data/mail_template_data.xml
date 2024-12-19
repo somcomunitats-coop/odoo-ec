@@ -61,20 +61,21 @@
                     <br />
                     <p>Received data on your contact request:</p>
                     <ul>
-                      <t t-if="ctx.metadata.name">
-                      <li><strong>Name:</strong> <t t-out="ctx.get('metadata').get('name')"/></li>
+                      <t t-set="metadata" t-value="ctx.get('metadata')" />
+                      <t t-if="metadata.get('name')">
+                      <li><strong>Name:</strong> <t t-out="metadata.get('name')"/></li>
                       </t>
-                      <t t-if="ctx.metadata.email_from">
-                      <li><strong>Email:</strong> <t t-out="ctx.get('metadata').get('email_from')"/></li>
+                      <t t-if="metadata.get('email_from')">
+                      <li><strong>Email:</strong> <t t-out="metadata.get('email_from')"/></li>
                       </t>
-                      <t t-if="ctx.metadata.phone">
-                      <li><strong>Phone:</strong> <t t-out="ctx.get('metadata').get('phone')"/></li>
+                      <t t-if="metadata.get('phone')">
+                      <li><strong>Phone:</strong> <t t-out="metadata.get('phone')"/></li>
                       </t>
-                      <t t-if="ctx.metadata.town">
-                      <li><strong>City:</strong> <t t-out="ctx.get('metadata').get('town')"/></li>
+                      <t t-if="metadata.get('town')">
+                      <li><strong>City:</strong> <t t-out="metadata.get('town')"/></li>
                       </t>
-                      <t t-if="ctx.metadata.message">
-                      <li><strong>Message:</strong> <t t-out="ctx.get('metadata').get('message')"/></li>
+                      <t t-if="metadata.get('message')">
+                      <li><strong>Message:</strong> <t t-out="metadata.get('message')"/></li>
                       </t>
                     </ul>
                 </div>
