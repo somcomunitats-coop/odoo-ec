@@ -30,37 +30,42 @@
         </field>
     </record>
     <record id="view_mail_mass_mailing_form_inherit" model="ir.ui.view">
-        <field name="name">mailing.mailing.form.inherit</field>
-        <field name="model">mailing.mailing</field>
-        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_form" />
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='subject']" position="before">
-              <field name="name" />
-            </xpath>
-            <xpath expr="//field[@name='subject']" position="after">
-                <field name="allowed_companies" invisible="1" />
-                <field
-                  name="company_id"
-                  groups="base.group_multi_company"
-                  domain="[('id','in',allowed_companies)]"
-                  widget="selection"
-                />
-            </xpath>
-            <xpath
-              expr="//page[@name='settings']/group/group/field[@name='name']"
-              position="attributes"
-            >
-              <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//sheet/group" position="inside">
-              <field
-                name="mailing_domain"
-                widget="domain"
-                options="{'model': 'mailing_model_real'}"
-                attrs="{'invisible':[('mailing_model_name', '!=', 'mailing.list')],'readonly': [('state', 'in', ('sending', 'done'))]}"
-              />
-            </xpath>
-        </field>
+      <field name="name">mailing.mailing.form.inherit</field>
+      <field name="model">mailing.mailing</field>
+      <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//div[hasclass('o_mass_mailing_subject')]" position="after">
+          <label class="o_form_label o_form_label_readonly" for="name">Name</label>
+          <div class="o_mass_mailing_name d-flex flex-row align-items-baseline">
+            <field class="text-break" name="name"/>
+          </div>
+          <label class="o_form_label o_form_label_readonly" groups="base.group_multi_company" for="company_id">Company</label>
+          <div class="o_mass_mailing_name d-flex flex-row align-items-baseline">
+            <field name="allowed_companies" invisible="1" />
+            <field
+              class="text-break"
+              name="company_id"
+              groups="base.group_multi_company"
+              domain="[('id','in',allowed_companies)]"
+              widget="selection"
+            />
+          </div>
+        </xpath>
+        <xpath
+          expr="//page[@name='settings']/group/group/field[@name='name']"
+          position="attributes"
+        >
+          <attribute name="invisible">True</attribute>
+        </xpath>
+        <xpath expr="//sheet/group" position="inside">
+          <field
+            name="mailing_domain"
+            widget="domain"
+            options="{'model': 'mailing_model_real'}"
+            attrs="{'invisible':[('mailing_model_name', '!=', 'mailing.list')],'readonly': [('state', 'in', ('sending', 'done'))]}"
+          />
+        </xpath>
+      </field>
     </record>
   </data>
 </odoo>
