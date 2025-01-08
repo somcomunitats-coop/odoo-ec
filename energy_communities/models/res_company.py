@@ -93,10 +93,6 @@ class ResCompany(models.Model):
     wordpress_db_username = fields.Char(string=_("Wordpress DB Admin Username"))
     wordpress_db_password = fields.Char(string=_("Wordpress DB Admin Password"))
     wordpress_base_url = fields.Char(string=_("Wordpress Base URL (JWT auth)"))
-    display_footer_doc_policy_text = fields.Boolean("Display footer doc policy text")
-    footer_doc_policy_text = fields.Html(
-        string="Footer doc policy text", translate=True
-    )
     notify_to_coord_child_ccee_submissions = fields.Boolean(
         string=_("Notify the Coordinator of new Subscriptions of their CCEE"),
         help=_(
