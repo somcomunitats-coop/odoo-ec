@@ -210,22 +210,25 @@ class ResUsers(models.Model):
         )
         raise ValidationError(error)
 
+    def _create_internal_user_role_line(self):
+        internal_user = self.env.ref("energy_communities.role_internal_user").id
+        internal_user_role = self.env["res.users.role.line"].search(
+            [
+                ("user_id", "=", self.id),
+                ("role_id", "=", internal_user),
+            ]
+        )
+        if not internal_user_role:
+            self.env["res.users.role.line"].create(
+                {
+                    "user_id": self.id,
+                    "role_id": internal_user,
+                }
+            )
+
     def _create_user_role_line(self, company_id, role_id):
         if not self.login_date:
-            internal_user = self.env.ref("energy_communities.role_internal_user").id
-            internal_user_role = self.env["res.users.role.line"].search(
-                [
-                    ("user_id", "=", self.id),
-                    ("role_id", "=", internal_user),
-                ]
-            )
-            if not internal_user_role:
-                self.env["res.users.role.line"].create(
-                    {
-                        "user_id": self.id,
-                        "role_id": internal_user,
-                    }
-                )
+            self._create_internal_user_role_line()
         user_roles = self.env["res.users.role.line"].search(
             [
                 ("user_id", "=", self.id),
@@ -273,30 +276,7 @@ class ResUsers(models.Model):
             raise exceptions.UserError(_("Role not found"))
 
     def make_internal_user(self):
-        already_user = self.env["res.users.role.line"].search(
-            [
-                ("user_id.id", "=", self.id),
-                ("active", "=", True),
-                ("role_id.code", "=", "role_internal_user"),
-            ]
-        )
-        if not already_user:
-            role = self.env.ref("energy_communities.role_internal_user")
-            self.write(
-                {
-                    "role_line_ids": [
-                        (
-                            0,
-                            0,
-                            {
-                                "user_id": self.id,
-                                "active": True,
-                                "role_id": role.id,
-                            },
-                        )
-                    ]
-                }
-            )
+        self._create_internal_user_role_line()
 
     def make_ce_user(self, company_id, role_name):
         related_company = self.company_ids.filtered(
@@ -314,7 +294,7 @@ class ResUsers(models.Model):
         )
         if not current_role:
             role = self.env["res.users.role"].search([("code", "=", role_name)])
-            self._set_user_roles(
+            self.sudo()._set_user_roles(
                 self.env["res.company"].browse(company_id),
                 self.env.ref("energy_communities.{}".format(role_name)),
             )
