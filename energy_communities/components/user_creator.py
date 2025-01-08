@@ -59,7 +59,7 @@ class UserCreator(Component):
                 )
 
     def create_users_from_communities_cooperator_partners(
-        self, communities, action, force_invite
+        self, communities, role_id, action, force_invite
     ) -> None:
         self._validate_create_users_from_communities_cooperator_partners(communities)
         for community in communities:
