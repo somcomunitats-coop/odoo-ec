@@ -267,14 +267,6 @@ class ResUsers(models.Model):
     #########################
     # USER_CREATOR
     #########################
-    def add_energy_community_role(self, company_id, role_name):
-        if role_name == "role_ce_member" or role_name == "role_ce_admin":
-            self.make_ce_user(company_id, role_name)
-        elif role_name == "role_coord_worker" or role_name == "role_coord_admin":
-            self.make_coord_user(company_id, role_name)
-        else:
-            raise exceptions.UserError(_("Role not found"))
-
     def make_internal_user(self):
         self._create_internal_user_role_line()
 

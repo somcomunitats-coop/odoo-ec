@@ -62,31 +62,6 @@ class TestResUsers(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
         # then create_users_on_keycloak function was called once time
         create_kc_user_mocked.assert_called_once()
 
-    @patch("odoo.addons.energy_communities.models.res_users.ResUsers.make_ce_user")
-    def test__add_energy_community_role__make_ce_user(self, make_ce_user_mocked):
-        self.random_user.add_energy_community_role(self.community.id, "role_ce_admin")
-
-        # then make_ce_user_mocked function was called once time
-        make_ce_user_mocked.assert_called_with(self.community.id, "role_ce_admin")
-
-    @patch("odoo.addons.energy_communities.models.res_users.ResUsers.make_coord_user")
-    def test__add_energy_community_role__make_coord_user(self, make_coord_user_mocked):
-        self.random_user.add_energy_community_role(
-            self.coordination.id, "role_coord_admin"
-        )
-
-        # then make_coord_user function was called once time
-        make_coord_user_mocked.assert_called_with(
-            self.coordination.id, "role_coord_admin"
-        )
-
-    def test__add_energy_community_role__role_not_found(self):
-        with self.assertRaises(UserError):
-            self.users_model.add_energy_community_role(
-                role_name="onering_owner",
-                company_id=self.coordination.id,
-            )
-
     def test__make_ce_user__already_user(self):
         self.community_admin.make_ce_user(self.community.id, "role_ce_member")
         rl = self.role_line_model.search(
