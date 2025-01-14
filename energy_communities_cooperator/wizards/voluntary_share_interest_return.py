@@ -237,7 +237,11 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
         return (self.end_date_period - self._get_period_start_date(inv_line)).days
 
     def _get_voluntary_share_price_unit(self, inv_line):
-        return inv_line.price_subtotal * self.interest / 36500
+        price_unit = inv_line.price_subtotal * self.interest / 36500
+        # In order to avoid invoices with unit_price = 0.0 we return a minimum of 0.01 as invoice is using 2 decimals
+        if price_unit < 0.01:
+            return 0.01
+        return price_unit
 
     def _find_related_invoice_line_from_share_line(self, share_line):
         if share_line.related_invoice_line:
