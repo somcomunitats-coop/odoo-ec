@@ -23,11 +23,17 @@ class AccountMove(models.Model):
 
     def set_cooperator_effective(self, effective_date):
         super().set_cooperator_effective(effective_date)
+        # Writing on member invoice it's related membership
         cooperative_membership = self.partner_id.get_cooperative_membership(
             self.company_id
         )
         if cooperative_membership:
             self.write({"membership_id": cooperative_membership.id})
+        # Propagate company membership as user role.
+        if self.partner_id.user_ids:
+            self.partner_id.user_ids[0].make_ce_user(
+                self.company_id.id, "role_ce_member"
+            )
 
     # TODO: Should we maintain this method?
     def send_capital_release_request_mail(self):
