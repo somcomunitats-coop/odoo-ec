@@ -182,11 +182,13 @@
             <group attrs="{'invisible': [('id', '=', False)]}">
               <field name="share_ids" widget="one2many" readonly="0">
                 <tree create="false" delete="false">
+                  <field name="id" />
                   <field name="share_product_id" />
                   <field name="share_number" />
                   <field name="share_unit_price" />
                   <field name="effective_date" />
                   <field name="total_amount_line" />
+                  <field name="related_invoice_line" />
                 </tree>
                 <form>
                   <group>
@@ -195,6 +197,10 @@
                     <field name="share_number" readonly="0" />
                     <field name="share_unit_price" />
                     <field name="total_amount_line" />
+                    <field name="partner_id_id" invisible="True"/>
+                    <field name="company_id_id" invisible="True"/>
+                    <field name="share_product_id_id" invisible="True"/>
+                    <field name="related_invoice_line" domain="[('move_id.partner_id', '=', partner_id_id),('move_id.company_id', '=', company_id_id),('move_id.payment_state', '=', 'paid'),('price_subtotal', '=', total_amount_line),('product_id', '=', share_product_id_id)]" />
                   </group>
                 </form>
               </field>
@@ -213,7 +219,16 @@
                   <field name="state" />
                 </tree>
               </field>
-              <field name="subscription_invoice_ids" />
+              <field name="subscription_invoice_ids" widget="one2many">
+                <tree>
+                  <field name="name" />
+                  <field name="date" />
+                  <field name="payment_date" />
+                  <field name="amount_total_signed" />
+                  <field name="payment_state" widget="badge" />
+                  <field name="state" widget="badge" />
+                </tree>
+              </field>
             </group>
             <group>
               <field name="data_policy_approved" />

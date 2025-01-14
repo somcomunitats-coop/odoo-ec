@@ -236,6 +236,8 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
         return inv_line.price_subtotal * self.interest / 36500
 
     def _find_related_invoice_line_from_share_line(self, share_line):
+        if share_line.related_invoice_line:
+            return share_line.related_invoice_line
         return self.env["account.move.line"].search(
             [
                 ("move_id.partner_id", "=", share_line.partner_id.id),
@@ -348,32 +350,21 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
                         ("company_id", "=", self.company_id.id),
                         ("payment_state", "=", "paid"),
                         ("partner_id", "=", partner.id),
+                        ("membership_id", "!=", None),
                     ]
                 )
                 for line in partner_company_invoices.invoice_line_ids.filtered(
                     lambda invoice_line: invoice_line.product_id.id
                     == voluntary_share_product.id
                 ):
-                    if not line.move_id.membership_id:
+                    if line.move_id.membership_id.company_id.id != self.company_id.id:
                         raise ValidationError(
                             _(
-                                "ERROR on Invoice {}. No related membership defined".format(
+                                "ERROR on Invoice {}. Related membership not in same company".format(
                                     line.move_id.id
                                 )
                             )
                         )
-                    else:
-                        if (
-                            line.move_id.membership_id.company_id.id
-                            != self.company_id.id
-                        ):
-                            raise ValidationError(
-                                _(
-                                    "ERROR on Invoice {}. Related membership not in same company".format(
-                                        line.move_id.id
-                                    )
-                                )
-                            )
                     total_in_account_move += line.price_subtotal
                 related_partner_membership = self.env["cooperative.membership"].search(
                     [

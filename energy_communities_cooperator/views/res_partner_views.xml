@@ -8,8 +8,8 @@
         expr="//page[@name='share']//field[@name='share_ids']/tree"
         position="attributes"
       >
-                    <attribute name="delete">0</attribute>
-                </xpath>
+        <attribute name="delete">[('user_current_role','=','role_platform_admin')]</attribute>
+      </xpath>
       <field name="coop_candidate" position="attributes">
         <attribute name="invisible">1</attribute>
       </field>
