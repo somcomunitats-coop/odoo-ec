@@ -111,7 +111,11 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
 
     def _get_voluntary_shares_invoice_line(self):
         voluntary_shares = {}
-        voluntary_share_product = self.company_id.voluntary_share_id
+        voluntary_share_product_template = self.company_id.voluntary_share_id
+        # TODO: We're assuming there is only one product.product for it's product.template
+        voluntary_share_product = self.env["product.product"].search(
+            [("product_tmpl_id", "=", voluntary_share_product_template.id)], limit=1
+        )
         memberships = self.env["cooperative.membership"].search(
             [("company_id", "=", self.company_id.id)]
         )
