@@ -111,7 +111,11 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
 
     def _get_voluntary_shares_invoice_line(self):
         voluntary_shares = {}
-        voluntary_share_product = self.company_id.voluntary_share_id
+        voluntary_share_product_template = self.company_id.voluntary_share_id
+        # TODO: We're assuming there is only one product.product for it's product.template
+        voluntary_share_product = self.env["product.product"].search(
+            [("product_tmpl_id", "=", voluntary_share_product_template.id)], limit=1
+        )
         memberships = self.env["cooperative.membership"].search(
             [("company_id", "=", self.company_id.id)]
         )
@@ -233,9 +237,15 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
         return (self.end_date_period - self._get_period_start_date(inv_line)).days
 
     def _get_voluntary_share_price_unit(self, inv_line):
-        return inv_line.price_subtotal * self.interest / 36500
+        price_unit = inv_line.price_subtotal * self.interest / 36500
+        # In order to avoid invoices with unit_price = 0.0 we return a minimum of 0.01 as invoice is using 2 decimals
+        if price_unit < 0.01:
+            return 0.01
+        return price_unit
 
     def _find_related_invoice_line_from_share_line(self, share_line):
+        if share_line.related_invoice_line:
+            return share_line.related_invoice_line
         return self.env["account.move.line"].search(
             [
                 ("move_id.partner_id", "=", share_line.partner_id.id),
@@ -348,32 +358,21 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
                         ("company_id", "=", self.company_id.id),
                         ("payment_state", "=", "paid"),
                         ("partner_id", "=", partner.id),
+                        ("membership_id", "!=", None),
                     ]
                 )
                 for line in partner_company_invoices.invoice_line_ids.filtered(
                     lambda invoice_line: invoice_line.product_id.id
                     == voluntary_share_product.id
                 ):
-                    if not line.move_id.membership_id:
+                    if line.move_id.membership_id.company_id.id != self.company_id.id:
                         raise ValidationError(
                             _(
-                                "ERROR on Invoice {}. No related membership defined".format(
+                                "ERROR on Invoice {}. Related membership not in same company".format(
                                     line.move_id.id
                                 )
                             )
                         )
-                    else:
-                        if (
-                            line.move_id.membership_id.company_id.id
-                            != self.company_id.id
-                        ):
-                            raise ValidationError(
-                                _(
-                                    "ERROR on Invoice {}. Related membership not in same company".format(
-                                        line.move_id.id
-                                    )
-                                )
-                            )
                     total_in_account_move += line.price_subtotal
                 related_partner_membership = self.env["cooperative.membership"].search(
                     [
