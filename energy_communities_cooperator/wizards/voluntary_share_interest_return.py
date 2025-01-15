@@ -204,15 +204,22 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
         return False
 
     def _prepare_inv_line_create_dict(self, origin_inv_line):
+        name = "contribution ref: [{inv_name}] #{inv_id} / contribution line ref: #{inv_line_id}".format(
+            inv_id=origin_inv_line.move_id.id,
+            inv_line_id=origin_inv_line.id,
+            inv_name=origin_inv_line.move_id.name,
+        )
+        quantity = self._get_voluntary_share_days_num(origin_inv_line)
+        price_unit = self._get_voluntary_share_price_unit(origin_inv_line)
+        if price_unit < 0.01:
+            price_unit = price_unit * quantity
+            name += " ({} days)".format(quantity)
+            quantity = 1
         return {
-            "name": "contribution ref: [{inv_name}] #{inv_id} / contribution line ref: #{inv_line_id}".format(
-                inv_id=origin_inv_line.move_id.id,
-                inv_line_id=origin_inv_line.id,
-                inv_name=origin_inv_line.move_id.name,
-            ),
+            "name": name,
             "account_id": self.return_line_account_id.id,
-            "quantity": self._get_voluntary_share_days_num(origin_inv_line),
-            "price_unit": self._get_voluntary_share_price_unit(origin_inv_line),
+            "quantity": quantity,
+            "price_unit": price_unit,
             "voluntary_share_return_start_date_period": self._get_period_start_date(
                 origin_inv_line
             ),
@@ -238,9 +245,6 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
 
     def _get_voluntary_share_price_unit(self, inv_line):
         price_unit = inv_line.price_subtotal * self.interest / 36500
-        # In order to avoid invoices with unit_price = 0.0 we return a minimum of 0.01 as invoice is using 2 decimals
-        if price_unit < 0.01:
-            return 0.01
         return price_unit
 
     def _find_related_invoice_line_from_share_line(self, share_line):
