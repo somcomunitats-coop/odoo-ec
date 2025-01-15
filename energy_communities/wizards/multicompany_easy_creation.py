@@ -281,7 +281,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             )
 
     def create_public_data(self):
-        new_landing = self.new_company_id.sudo().create_landing()
+        new_landing = self.new_company_id.sudo().action_create_landing()
         new_landing.sudo().write(
             {
                 "number_of_members": self.ce_number_of_members,
