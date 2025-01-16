@@ -37,7 +37,6 @@
         "views/crm_stage_views.xml",
         "views/crm_tag_views.xml",
         "views/crm_team_views.xml",
-        "views/energy_communities_crm_lead_views.xml",
         "views/utm_views.xml",
         "views/website_community_data_template.xml",
         "views/menus.xml",
