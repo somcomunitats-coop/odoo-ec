@@ -10,6 +10,12 @@ class ShareLine(models.Model):
     share_unit_price = fields.Monetary(
         readonly=False,
     )
+    related_invoice_line = fields.Many2one(
+        "account.move.line", string="Related invoice line"
+    )
+    partner_id_id = fields.Integer(related="partner_id.id", store=False)
+    company_id_id = fields.Integer(related="company_id.id", store=False)
+    share_product_id_id = fields.Integer(related="share_product_id.id", store=False)
 
     @api.onchange("share_product_id")
     def _setup_share_unit_price(self):
