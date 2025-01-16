@@ -807,14 +807,6 @@ msgid "Energy Community Name"
 msgstr ""
 
 #. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/models/crm_tag.py:0
-#: model:ir.model.fields.selection,name:energy_communities_crm.selection__crm_tag__tag_type__energy_service
-#, python-format
-msgid "Energy Service"
-msgstr ""
-
-#. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
 msgid ""
 "Explain, with a maximum of 500 characters, the process to become cooperator."
@@ -1232,14 +1224,6 @@ msgstr ""
 
 #. module: energy_communities_crm
 #. odoo-python
-#: code:addons/energy_communities_crm/models/crm_tag.py:0
-#: model:ir.model.fields.selection,name:energy_communities_crm.selection__crm_tag__tag_type__regular
-#, python-format
-msgid "Regular"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Related Lead closed."
@@ -1292,14 +1276,6 @@ msgstr ""
 
 #. module: energy_communities_crm
 #. odoo-python
-#: code:addons/energy_communities_crm/models/crm_tag.py:0
-#: model:ir.model.fields.selection,name:energy_communities_crm.selection__crm_tag__tag_type__service_plan
-#, python-format
-msgid "Service Plan"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "State"
@@ -1320,11 +1296,6 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:ir.model.constraint,message:energy_communities_crm.constraint_crm_tag_name_uniq
 msgid "Tag must be unique per company!"
-msgstr ""
-
-#. module: energy_communities_crm
-#: model:ir.model.fields,field_description:energy_communities_crm.field_crm_tag__tag_type
-msgid "Tag type"
 msgstr ""
 
 #. module: energy_communities_crm

@@ -85,7 +85,7 @@ class ResUsersRoleLine(models.Model):
     _sql_constraints = [
         (
             "user_role_uniq",
-            "unique (user_id,role_id,company_id)",
+            "unique(user_id,role_id,company_id)",
             "Roles can be assigned to a user only once at a time",
         )
     ]
