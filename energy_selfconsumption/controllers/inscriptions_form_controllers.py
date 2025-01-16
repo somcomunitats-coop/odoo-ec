@@ -373,7 +373,11 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         partner = (
             request.env["res.partner"]
             .sudo()
-            .search([("vat", "=", values["inscription_partner_id_vat"])])
+            .search([
+                ("vat", "=", values["inscription_partner_id_vat"]),
+                ("parent_id", "=", False),
+                ("company_ids", "in", (model.company_id.id))
+            ])
         )
         self.send_email(model, partner)
         return values
