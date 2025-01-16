@@ -54,10 +54,17 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                     "error_msgs": [_("Have to accept politic privacy.")],
                     "global_error": True,
                 }
+        project = (
+            request.env["energy_selfconsumption.selfconsumption"]
+            .sudo()
+            .browse(int(values["model_id"]))
+        )
         partner = (
             request.env["res.partner"]
             .sudo()
-            .search([("vat", "=", values["inscription_partner_id_vat"])])
+            .search([("vat", "=", values["inscription_partner_id_vat"]),
+                     ("parent_id", "=", False), 
+                     ("company_ids", "in", (project.company_id.id))])
         )
         if not partner:
             return {
@@ -70,9 +77,10 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             .sudo()
             .search(
                 [
-                    ("company_id", "=", partner.company_id.id),
+                    ("company_id", "=", project.company_id.id),
                     ("partner_id", "=", partner.id),
                     ("cooperator", "=", True),
+                    ("member", "=", True),
                 ]
             )
         )

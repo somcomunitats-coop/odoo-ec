@@ -155,6 +155,7 @@ class CreateInscription(models.AbstractModel):
                     ("company_id", "=", project.company_id.id),
                     ("partner_id", "=", partner.id),
                     ("cooperator", "=", True),
+                    ("member", "=", True),
                 ]
             )
         )
