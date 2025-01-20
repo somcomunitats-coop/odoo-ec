@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-03 09:34+0000\n"
-"PO-Revision-Date: 2024-12-03 09:34+0000\n"
+"POT-Creation-Date: 2025-01-20 11:04+0000\n"
+"PO-Revision-Date: 2025-01-20 11:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -716,6 +716,11 @@ msgid "Activate Registration Form"
 msgstr "Aktibatu Erregistro Inprimakia"
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Activate form"
+msgstr "Aktibatu formularioa"
+
+#. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
@@ -857,6 +862,11 @@ msgstr "Sortu automatikoki datuak (datu berriak)"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_form_fields_template
 msgid "BANK DETAILS"
 msgstr "BANKUKO DATUAK"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_error_message_template
+msgid "Back to form"
+msgstr "Itzuli formara"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__mandate_id
@@ -1399,7 +1409,7 @@ msgstr "Banaketa-koefizientea"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__energy_shares
 msgid "Distribution coefficient in kWh"
-msgstr ""
+msgstr "Banaketa koefizientea kWh-tan"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__energy_shares
@@ -1407,6 +1417,8 @@ msgid ""
 "Distribution coneffcient in kWh. The sum of all have to result in total "
 "project power"
 msgstr ""
+"Banaketa efizientea kWh-tan. Guztien baturak guztizkoa izan behar du "
+"proiektuaren boterea"
 
 #. module: energy_selfconsumption
 #. odoo-python
@@ -1471,7 +1483,9 @@ msgstr "Posta elektronikoa"
 #. module: energy_selfconsumption
 #: model:mail.template,description:energy_selfconsumption.selfconsumption_power_acquired_invoicing_reminder
 msgid "E-mail billing reminder of self-consumption of energy purchased"
-msgstr "Erositako energiaren autokontsumoaren abisua posta elektroniko bidezko fakturazioa"
+msgstr ""
+"Erositako energiaren autokontsumoaren abisua posta elektroniko bidezko "
+"fakturazioa"
 
 #. module: energy_selfconsumption
 #: model:mail.template,description:energy_selfconsumption.selfconsumption_insciption_form
@@ -1485,7 +1499,9 @@ msgstr "Energia Erkidegoaren autokontsumo proiektuan izena emateko e-maila"
 msgid ""
 "E-mail reminder of personalized billing of self-consumption of energy "
 "supplied"
-msgstr "Hornitutako energiaren autokontsumoaren fakturazio pertsonalizatuaren abisua posta elektronikoz"
+msgstr ""
+"Hornitutako energiaren autokontsumoaren fakturazio pertsonalizatuaren abisua"
+" posta elektronikoz"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__effective_date
@@ -1531,7 +1547,9 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model:mail.template,description:energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder
 msgid "Email reminder for self-consumption billing of supplied energy"
-msgstr "Hornitutako energiaren autokontsumoaren fakturazio posta elektronikoaren abisua"
+msgstr ""
+"Hornitutako energiaren autokontsumoaren fakturazio posta elektronikoaren "
+"abisua"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__account_move__selfconsumption_invoicing_mode__none
@@ -1652,10 +1670,8 @@ msgstr "Energia Proiektua"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_form_fields_template
-msgid ""
-"Enrollment in the shared self-consumption project of the Energy Community:"
-msgstr ""
-"Energia Erkidegoaren partekatutako autokontsumo proiektuan izena ematea:"
+msgid "Enrollment in the shared self-consumption project of the"
+msgstr "Partekatutako autokontsumo proiektuan izena ematea"
 
 #. module: energy_selfconsumption
 #. odoo-python
@@ -1922,10 +1938,10 @@ msgid ""
 "I accept and authorize being able to issue payments to this bank account as "
 "part of participation in this shared self-consumption project of my energy "
 "community"
-msgstr "Onetsi"
-"Onartu eta baimentzen dut banku-kontu honetara ordainketak "
-"egin ahal izatea nire energia-komunitatearen autokontsumo "
-"proiektu partekatu honetan parte hartzeko"
+msgstr ""
+"OnetsiOnartu eta baimentzen dut banku-kontu honetara ordainketak egin ahal "
+"izatea nire energia-komunitatearen autokontsumo proiektu partekatu honetan "
+"parte hartzeko"
 
 #. module: energy_selfconsumption
 #. odoo-python
@@ -3163,7 +3179,8 @@ msgstr "Autokontsumoa - Eskuratutako energia fakturatzeko abisua"
 #. module: energy_selfconsumption
 #: model:mail.template,name:energy_selfconsumption.selfconsumption_energy_delivered_custom_invoicing_reminder
 msgid "Selfconsumption Energy Delivered Custom Invoicing Reminder"
-msgstr "Autokontsumoko energia entregatutako fakturazio pertsonalizatuaren abisua"
+msgstr ""
+"Autokontsumoko energia entregatutako fakturazio pertsonalizatuaren abisua"
 
 #. module: energy_selfconsumption
 #: model:mail.template,name:energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder
@@ -3686,6 +3703,11 @@ msgstr "Tipologia"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_url_form
 msgid "URL"
 msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Unactivate form"
+msgstr "Desaktibatu inprimakia"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__used_in_selfconsumption

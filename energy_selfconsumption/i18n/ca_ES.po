@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-03 09:34+0000\n"
-"PO-Revision-Date: 2024-12-03 09:34+0000\n"
+"POT-Creation-Date: 2025-01-20 11:03+0000\n"
+"PO-Revision-Date: 2025-01-20 11:03+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -728,6 +728,11 @@ msgid "Activate Registration Form"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Activate form"
+msgstr "Activa el formulari"
+
+#. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
@@ -868,6 +873,11 @@ msgstr "Autogenerar dades (Noves dades)"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_form_fields_template
 msgid "BANK DETAILS"
 msgstr "DADES BANCÀRIES"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_error_message_template
+msgid "Back to form"
+msgstr "Tornar a la forma"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__mandate_id
@@ -1412,7 +1422,7 @@ msgstr "Coeficient de distribució"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__energy_shares
 msgid "Distribution coefficient in kWh"
-msgstr ""
+msgstr "Coeficient de distribució en kWh"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__energy_shares
@@ -1420,6 +1430,8 @@ msgid ""
 "Distribution coneffcient in kWh. The sum of all have to result in total "
 "project power"
 msgstr ""
+"Coneficient de distribució en kWh. La suma de tots ha de resultar en total "
+"poder del projecte"
 
 #. module: energy_selfconsumption
 #. odoo-python
@@ -1484,21 +1496,27 @@ msgstr "Correu electrònic"
 #. module: energy_selfconsumption
 #: model:mail.template,description:energy_selfconsumption.selfconsumption_power_acquired_invoicing_reminder
 msgid "E-mail billing reminder of self-consumption of energy purchased"
-msgstr "Recordatori de facturació per correu electrònic de l'autoconsum d'energia comprada"
+msgstr ""
+"Recordatori de facturació per correu electrònic de l'autoconsum d'energia "
+"comprada"
 
 #. module: energy_selfconsumption
 #: model:mail.template,description:energy_selfconsumption.selfconsumption_insciption_form
 msgid ""
 "E-mail of inscription in the self-consumption project of the Energy "
 "Community"
-msgstr "Correu electrònic d'inscripció al projecte d'autoconsum de la Comunitat de l'Energia"
+msgstr ""
+"Correu electrònic d'inscripció al projecte d'autoconsum de la Comunitat de "
+"l'Energia"
 
 #. module: energy_selfconsumption
 #: model:mail.template,description:energy_selfconsumption.selfconsumption_energy_delivered_custom_invoicing_reminder
 msgid ""
 "E-mail reminder of personalized billing of self-consumption of energy "
 "supplied"
-msgstr "Recordatori per correu electrònic de facturació personalitzada de l'autoconsum de l'energia subministrada"
+msgstr ""
+"Recordatori per correu electrònic de facturació personalitzada de "
+"l'autoconsum de l'energia subministrada"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__effective_date
@@ -1545,7 +1563,9 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model:mail.template,description:energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder
 msgid "Email reminder for self-consumption billing of supplied energy"
-msgstr "Recordatori per correu electrònic per a la facturació d'autoconsum de l'energia subministrada"
+msgstr ""
+"Recordatori per correu electrònic per a la facturació d'autoconsum de "
+"l'energia subministrada"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__account_move__selfconsumption_invoicing_mode__none
@@ -1666,10 +1686,8 @@ msgstr "Projecte energètic"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_form_fields_template
-msgid ""
-"Enrollment in the shared self-consumption project of the Energy Community:"
-msgstr ""
-"Inscripció al projecte d'autoconsum compartit de la Comunitat de l'Energia:"
+msgid "Enrollment in the shared self-consumption project of the"
+msgstr "Inscripció al projecte d'autoconsum compartit de la"
 
 #. module: energy_selfconsumption
 #. odoo-python
@@ -1938,9 +1956,9 @@ msgid ""
 "part of participation in this shared self-consumption project of my energy "
 "community"
 msgstr ""
-"Accepto i autorizo ​​poder emetre pagaments a aquest compte bancari "
-"com a part de la participació en aquest projecte d'autoconsum "
-"compartit de la meva comunitat energètica"
+"Accepto i autorizo ​​poder emetre pagaments a aquest compte bancari com a "
+"part de la participació en aquest projecte d'autoconsum compartit de la meva"
+" comunitat energètica"
 
 #. module: energy_selfconsumption
 #. odoo-python
@@ -2298,7 +2316,7 @@ msgstr "NIF/CIF no vàlid: {error}"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_interval
 msgid "Invoice Every"
-msgstr "Factura tots"
+msgstr "Factura cada"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_interval
@@ -3178,7 +3196,8 @@ msgstr "Autoconsum - Recordatori de facturació d'energia adquirida"
 #. module: energy_selfconsumption
 #: model:mail.template,name:energy_selfconsumption.selfconsumption_energy_delivered_custom_invoicing_reminder
 msgid "Selfconsumption Energy Delivered Custom Invoicing Reminder"
-msgstr "Recordatori de facturació personalitzada lliurada d'energia d'autoconsum"
+msgstr ""
+"Recordatori de facturació personalitzada lliurada d'energia d'autoconsum"
 
 #. module: energy_selfconsumption
 #: model:mail.template,name:energy_selfconsumption.selfconsumption_energy_delivered_invoicing_reminder
@@ -3700,6 +3719,11 @@ msgstr "Tipologia"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_url_form
 msgid "URL"
 msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "Unactivate form"
+msgstr "Desactiva el formulari"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__used_in_selfconsumption

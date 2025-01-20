@@ -137,9 +137,17 @@ class Selfconsumption(models.Model):
     conf_bank_details = fields.Boolean("Show bank details")
     conf_url_form = fields.Char(string="URL")
 
-    @api.onchange("conf_state")
-    def _onchange_conf_state(self):
-        if self.conf_state == "active":
+    def activate_form(self):
+        self.ensure_one()  # Ensures only one record is selected
+        if self.conf_state != "active":
+            if not self.company_id.data_policy_approval_text:
+                raise ValidationError(
+                    _(
+                        "You need to add the privacy policy file to display the form."
+                        "To modify the privacy policy go to company settings."
+                    )
+                )
+            self.conf_state = "active"
             self.conf_url_form = (
                 "{base_url}/inscription-data?model_id={model_id}".format(
                     base_url=self.env["ir.config_parameter"]
@@ -148,18 +156,15 @@ class Selfconsumption(models.Model):
                     model_id=self._origin.id,
                 )
             )
-            if not self.company_id.data_policy_approval_text:
-                raise ValidationError(
-                    _(
-                        "You need to add the privacy policy file to display the form."
-                        "To modify the privacy policy go to company settings."
-                    )
-                )
-        else:
+                       
+    def unactivate_form(self):
+        self.ensure_one()  # Ensures only one record is selected
+        if self.conf_state == "active":
             self.conf_url_form = ""
+            self.conf_state = "inactive"
 
     def action_redirect_to_page_form_inscription(self):
-        self.ensure_one()  # Asegura que solo haya un registro seleccionado
+        self.ensure_one()  # Ensures only one record is selected
         return {
             "type": "ir.actions.act_url",
             "url": self.conf_url_form,
