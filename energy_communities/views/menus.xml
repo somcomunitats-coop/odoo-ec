@@ -4,23 +4,21 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-    <menuitem
+  <menuitem
     id="ce_root_menu"
     name="Energy Communities"
     sequence="10"
     groups="group_platform_manager"
     web_icon="energy_communities,static/description/icon.png"
   />
-    <menuitem id="ce_config_menu" name="Configuration" parent="ce_root_menu" />
-
-        <menuitem
+  <menuitem id="ce_config_menu" name="Configuration" parent="ce_root_menu" sequence="99" />
+  <menuitem
     id="ce_config_sources_menu"
     name="Source types"
     parent="ce_config_menu"
     action="ce_utm_sources_action"
   />
-
-        <menuitem
+  <menuitem
     id="energy_actions_menu"
     name="Energy actions"
     parent="ce_config_menu"
