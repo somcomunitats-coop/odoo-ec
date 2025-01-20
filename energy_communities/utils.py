@@ -18,6 +18,18 @@ def user_creator(
     yield work.component(usage="user.create")
 
 
+@contextmanager
+def sale_order_utils(
+    env: Environment,
+) -> Component:
+    backend = env["utils.backend"].browse(1)
+    work = WorkContext(
+        model_name="sale.order",
+        collection=backend,
+    )
+    yield work.component(usage="sale.order.utils")
+
+
 def get_translation(source, lang, mods):
     translation = code_translations.get_web_translations(mods, lang)
     translation.update(code_translations.get_python_translations(mods, lang))
