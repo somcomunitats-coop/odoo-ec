@@ -14,11 +14,11 @@
     "depends": ["base", "product_contract", "energy_communities"],
     # always loaded
     "data": [
-        # 'security/ir.model.access.csv',
+        "security/ir.model.access.csv",
         "views/menus.xml",
         "views/contract_views.xml",
         "views/sale_order_views.xml",
-        # 'views/templates.xml',
+        "wizards/service_invoicing_create.xml",
     ],
     # only loaded in demonstration mode
     "demo": [],
