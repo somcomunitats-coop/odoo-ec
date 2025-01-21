@@ -11,3 +11,18 @@ class ContractContract(models.Model):
         string="Related community",
         domain="[('hierarchy_level','=','community')]",
     )
+
+    def action_activate_contract(self):
+        self.ensure_one()
+        wizard = self.env["service.invoicing.action.wizard"].create(
+            {"service_invoicing_id": self.id}
+        )
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Activate srvice invoicing"),
+            "res_model": "service.invoicing.action.wizard",
+            "view_type": "form",
+            "view_mode": "form",
+            "target": "new",
+            "res_id": wizard.id,
+        }
