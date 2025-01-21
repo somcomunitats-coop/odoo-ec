@@ -19,6 +19,15 @@
     <field name="model">contract.contract</field>
     <field name="inherit_id" ref="product_contract.contract_contract_customer_form_view" />
     <field name="arch" type="xml">
+      <xpath expr="//button[@name='action_preview']" position="after">
+      <!--<xpath expr="//header" position="inside">-->
+        <button
+          name="action_activate_contract"
+          type="object"
+          string="Activate"
+        />
+        <!--groups="energy_communities.group_platform_manager"-->
+      </xpath>
       <xpath expr="//field[@name='partner_id']" position="after">
         <field name="community_company_id" />
       </xpath>

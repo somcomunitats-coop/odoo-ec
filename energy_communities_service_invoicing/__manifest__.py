@@ -18,7 +18,8 @@
         "views/menus.xml",
         "views/contract_views.xml",
         "views/sale_order_views.xml",
-        "wizards/service_invoicing_create.xml",
+        "wizards/service_invoicing_action.xml",
+        "wizards/service_invoicing_action_create.xml",
     ],
     # only loaded in demonstration mode
     "demo": [],
