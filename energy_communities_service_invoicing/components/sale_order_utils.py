@@ -26,7 +26,6 @@ class SaleOrderUtils(Component):
             ],
         }
         return self.env["sale.order"].create(so_creation_dict)
-        # print("CREATE SO on component!")
 
     def get_related_contracts(self, sale_order):
         return (

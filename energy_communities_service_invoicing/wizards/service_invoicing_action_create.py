@@ -25,8 +25,8 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
             )
             so.action_confirm()
             rel_contracts = component.get_related_contracts(so)
-        with contract_utils(self.env) as component:
-            component.set_contract_on_hold(rel_contracts)
+        with contract_utils(self.env, rel_contracts) as component:
+            component.set_contract_on_hold()
         return {
             "type": "ir.actions.act_window",
             "res_model": "contract.contract",
