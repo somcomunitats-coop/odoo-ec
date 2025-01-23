@@ -19,5 +19,10 @@ class SaleOrder(models.Model):
         contracts = super().action_create_contract()
         if self.community_company_id:
             for contract in contracts:
-                contract.write({"community_company_id": self.community_company_id.id})
+                contract.write(
+                    {
+                        "community_company_id": self.community_company_id.id,
+                        "pricelist_id": self.pricelist_id.id,
+                    }
+                )
         return contracts

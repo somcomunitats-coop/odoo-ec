@@ -14,7 +14,8 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
 
     company_id = fields.Many2one("res.company", string="Coordinator")
     community_company_id = fields.Many2one("res.company", string="Community")
-    service_pack_id = fields.Many2one("product.product", string="Service")
+    service_pack_id = fields.Many2one("product.product", string="Service pack")
+    pricelist_id = fields.Many2one("product.pricelist", string="PriceList")
 
     def execute_create(self):
         with sale_order_utils(self.env) as component:
@@ -22,6 +23,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                 company_id=self.company_id,
                 community_company_id=self.community_company_id,
                 service_pack_id=self.service_pack_id,
+                pricelist_id=self.pricelist_id,
             )
             so.action_confirm()
             rel_contracts = component.get_related_contracts(so)
