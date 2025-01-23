@@ -15,8 +15,5 @@ class ServiceInvoicingActionWizard(models.TransientModel):
     execution_date = fields.Date(string="Execution date")
 
     def execute_activate(self):
-        with contract_utils(self.env) as component:
-            component.set_contract_active(
-                contract_id=self.service_invoicing_id,
-                activation_date="2025-03-01",
-            )
+        with contract_utils(self.env, self.service_invoicing_id) as component:
+            component.set_contract_active(self.execution_date)
