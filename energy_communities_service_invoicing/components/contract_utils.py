@@ -8,18 +8,23 @@ class ContractUtils(Component):
         for line in self.work.record.contract_line_ids:
             line.cancel()
 
-    def set_contract_active(self, activation_date):
+    def set_contract_active(self, execution_date):
         for line in self.work.record.contract_line_ids:
             if self._is_service_line(line):
                 line.write(
                     {
-                        "date_start": activation_date,
-                        "next_period_date_start": activation_date,
-                        "recurring_next_date": activation_date,
+                        "date_start": execution_date,
+                        "next_period_date_start": execution_date,
+                        "recurring_next_date": execution_date,
                         "is_canceled": False,
                     }
                 )
-                # line.is_cancelled = False
+                line._compute_state()
+
+    def set_contract_closed(self, execution_date):
+        for line in self.work.record.contract_line_ids:
+            if self._is_service_line(line):
+                line.write({"date_end": execution_date})
                 line._compute_state()
 
     def _is_service_line(self, contract_line):

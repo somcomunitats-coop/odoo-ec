@@ -13,13 +13,19 @@ class ContractContract(models.Model):
     )
 
     def action_activate_contract(self):
+        return self._action_contract("activate")
+
+    def action_close_contract(self):
+        return self._action_contract("close")
+
+    def _action_contract(self, action):
         self.ensure_one()
         wizard = self.env["service.invoicing.action.wizard"].create(
-            {"service_invoicing_id": self.id}
+            {"service_invoicing_id": self.id, "executed_action": action}
         )
         return {
             "type": "ir.actions.act_window",
-            "name": _("Activate srvice invoicing"),
+            # "name": _("Activate srvice invoicing"),
             "res_model": "service.invoicing.action.wizard",
             "view_type": "form",
             "view_mode": "form",

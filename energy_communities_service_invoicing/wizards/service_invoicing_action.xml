@@ -9,6 +9,7 @@
       <form string="Execute a service invoicing action">
         <sheet>
           <group>
+            <field name="executed_action" invisible="1" />
             <field name="service_invoicing_id" required="1" domain="[('community_company_id','!=',False)]"/>
             <field name="execution_date" required="1"/>
           </group>
@@ -19,6 +20,14 @@
             string="activate contract"
             type="object"
             class="btn-primary"
+            attrs="{'invisible': [('executed_action','!=','activate')]}"
+          />
+          <button
+            name="execute_close"
+            string="close contract"
+            type="object"
+            class="btn-primary"
+            attrs="{'invisible': [('executed_action','!=','close')]}"
           />
           <button
             string="Cancelar"

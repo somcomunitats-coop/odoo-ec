@@ -13,7 +13,19 @@ class ServiceInvoicingActionWizard(models.TransientModel):
         "contract.contract", string="Selected contract"
     )
     execution_date = fields.Date(string="Execution date")
+    executed_action = fields.Selection(
+        [
+            ("activate", _("Activate")),
+            ("close", _("Close")),
+            ("modify_pack", _("Modify pack")),
+            ("modify_pricelist", _("Modify pricelist")),
+        ]
+    )
 
     def execute_activate(self):
         with contract_utils(self.env, self.service_invoicing_id) as component:
             component.set_contract_active(self.execution_date)
+
+    def execute_close(self):
+        with contract_utils(self.env, self.service_invoicing_id) as component:
+            component.set_contract_closed(self.execution_date)

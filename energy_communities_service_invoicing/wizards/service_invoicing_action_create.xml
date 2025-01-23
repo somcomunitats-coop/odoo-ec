@@ -11,7 +11,7 @@
           <group>
             <field name="company_id" required="1" domain="[('hierarchy_level','=','coordinator')]"/>
             <field name="community_company_id" required="1" domain="[('hierarchy_level','=','community')]"/>
-            <field name="service_id" required="1" domain="[('is_contract','=',True)]"/>
+            <field name="service_pack_id" required="1" domain="[('is_contract','=',True)]"/>
           </group>
         </sheet>
         <footer>
