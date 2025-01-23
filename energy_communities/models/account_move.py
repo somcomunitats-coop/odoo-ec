@@ -10,9 +10,10 @@ class AccountMove(models.Model):
         for record in self:
             dates = []
             record.payment_date = False
-            for payment_info in record.invoice_payments_widget.get("content", []):
-                if payment_info:
-                    dates.append(payment_info.get("date", ""))
+            if record.invoice_payments_widget:
+                for payment_info in record.invoice_payments_widget.get("content", []):
+                    if payment_info:
+                        dates.append(payment_info.get("date", ""))
             if dates:
                 dates.sort()
                 record.payment_date = dates[0]
