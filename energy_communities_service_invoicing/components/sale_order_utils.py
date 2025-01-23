@@ -7,18 +7,18 @@ class SaleOrderUtils(Component):
     _inherit = "sale.order.utils"
 
     def create_service_invoicing_activation_sale_order(
-        self, company_id, community_company_id, service_pack_id
+        self, company_id, community_company_id, service_pack_id, pricelist_id
     ):
         so_creation_dict = {
             "partner_id": company_id.partner_id.id,
             "community_company_id": community_company_id.id,
+            "pricelist_id": pricelist_id.id,
             "order_line": [
                 (
                     0,
                     0,
                     {
                         "product_id": service_pack_id.id,
-                        # "product_uom,qty": 1,
                         "date_start": datetime.now(),
                         "date_end": datetime.now(),
                     },
