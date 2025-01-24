@@ -12,6 +12,28 @@
             <field name="executed_action" invisible="1" />
             <field name="service_invoicing_id" required="1" domain="[('community_company_id','!=',False)]"/>
             <field name="execution_date" required="1"/>
+            <field
+              name="executed_modification_action"
+              attrs="{
+               'invisible': [('executed_action','!=','modification')],
+               'required': [('executed_action','==','modification')]
+              }"
+            />
+            <field
+              name="pricelist_id"
+              attrs="{
+               'invisible': [('executed_modification_action','not in',['modify_all','modify_pricelist'])],
+               'required': [('executed_modification_action','in',['modify_all','modify_pricelist'])]
+              }"
+            />
+            <field
+              name="service_pack_id"
+              domain="[('is_contract','=',True)]"
+              attrs="{
+               'invisible': [('executed_modification_action','not in',['modify_all','modify_service_pack'])],
+               'required': [('executed_modification_action','in',['modify_all','modify_service_pack'])]
+              }"
+            />
           </group>
         </sheet>
         <footer>
@@ -23,6 +45,13 @@
             attrs="{'invisible': [('executed_action','!=','activate')]}"
           />
           <button
+            name="execute_modify"
+            string="modify"
+            type="object"
+            class="btn-primary"
+            attrs="{'invisible': [('executed_action','!=','modification')]}"
+          />
+          <button
             name="execute_close"
             string="close contract"
             type="object"
@@ -30,9 +59,9 @@
             attrs="{'invisible': [('executed_action','!=','close')]}"
           />
           <button
+            special="cancel"
             string="Cancelar"
             class="btn-secondary"
-            special="cancel"
           />
         </footer>
       </form>

@@ -7,6 +7,8 @@ from odoo.addons.energy_communities.utils import (
     sale_order_utils,
 )
 
+from ..utils import service_invoicing_view
+
 
 class ServiceInvoicingActionCreateWizard(models.TransientModel):
     _name = "service.invoicing.action.create.wizard"
@@ -16,30 +18,15 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
     community_company_id = fields.Many2one("res.company", string="Community")
     service_pack_id = fields.Many2one("product.product", string="Service pack")
     pricelist_id = fields.Many2one("product.pricelist", string="PriceList")
+    start_date = fields.Date(string="Start date")
 
     def execute_create(self):
         with sale_order_utils(self.env) as component:
-            so = component.create_service_invoicing_activation_sale_order(
-                company_id=self.company_id,
-                community_company_id=self.community_company_id,
-                service_pack_id=self.service_pack_id,
-                pricelist_id=self.pricelist_id,
+            service_invoicing_id = component.create_service_invoicing_on_hold(
+                self.company_id,
+                self.community_company_id,
+                self.service_pack_id,
+                self.pricelist_id,
+                self.start_date,
             )
-            so.action_confirm()
-            rel_contracts = component.get_related_contracts(so)
-        with contract_utils(self.env, rel_contracts) as component:
-            component.set_contract_on_hold()
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "contract.contract",
-            "views": [
-                (
-                    self.env.ref(
-                        "energy_communities_service_invoicing.view_contract_contract_customer_form"
-                    ).id,
-                    "form",
-                ),
-            ],
-            "target": "current",
-            "res_id": rel_contracts.id,
-        }
+        return service_invoicing_view(self.env, service_invoicing_id)
