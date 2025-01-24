@@ -7,6 +7,9 @@
         <xpath expr="//field[@name='partner_id']" position="after">
           <field name="community_company_id" />
         </xpath>
+        <xpath expr="//field[@name='company_id']" position="attributes">
+          <attribute name="required">0</attribute>
+        </xpath>
     </field>
   </record>
 </odoo>

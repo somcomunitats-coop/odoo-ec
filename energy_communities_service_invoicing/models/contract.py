@@ -11,12 +11,18 @@ class ContractContract(models.Model):
         string="Related community",
         domain="[('hierarchy_level','=','community')]",
     )
+    predecessor_contract_id = fields.Many2one(
+        "contract.contract", string="Predecessor contract"
+    )
 
     def action_activate_contract(self):
         return self._action_contract("activate")
 
     def action_close_contract(self):
         return self._action_contract("close")
+
+    def action_modify_contract(self):
+        return self._action_contract("modification")
 
     def _action_contract(self, action):
         self.ensure_one()
@@ -25,7 +31,7 @@ class ContractContract(models.Model):
         )
         return {
             "type": "ir.actions.act_window",
-            # "name": _("Activate srvice invoicing"),
+            "name": _("Executing: {}").format(action),
             "res_model": "service.invoicing.action.wizard",
             "view_type": "form",
             "view_mode": "form",

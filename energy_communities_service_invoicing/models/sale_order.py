@@ -14,6 +14,9 @@ class SaleOrder(models.Model):
         string="Related community",
         domain="[('hierarchy_level','=','community')]",
     )
+    # company_id = fields.Many2one(
+    #     required=False, index=True
+    # )
 
     def action_create_contract(self):
         contracts = super().action_create_contract()
