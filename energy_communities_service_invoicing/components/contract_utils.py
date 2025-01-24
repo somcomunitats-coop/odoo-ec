@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from odoo.addons.component.core import Component
 
 
@@ -176,6 +178,36 @@ class ContractUtils(Component):
                 else self.work.record.discount,
             },
         }
+
+    def set_start_date(self, date_start):
+        self.work.record.write({"date_start": date_start})
+        for line in self.work.record.contract_line_ids:
+            if self._is_service_line(line):
+                line.write({"date_start": date_start})
+                line._compute_state()
+
+    def modify(
+        self,
+        execution_date,
+        executed_modification_action,
+        pricelist_id=None,
+        service_pack_id=None,
+    ):
+        self.set_contract_closed(execution_date)
+        sale_order_utils = self.component(
+            usage="sale.order.utils", model_name="sale.order"
+        )
+        return sale_order_utils.create_service_invoicing(
+            self.work.record.company_id,
+            self.work.record.community_company_id,
+            self._get_service_pack_id()
+            if executed_modification_action not in ["modify_all", "modify_service_pack"]
+            else service_pack_id,
+            self.work.record.pricelist_id
+            if executed_modification_action not in ["modify_all", "modify_pricelist"]
+            else pricelist_id,
+            execution_date + timedelta(days=1),
+        )
 
     def _is_service_line(self, contract_line):
         if self.work.record.contract_template_id:

@@ -76,6 +76,11 @@
           attrs="{'invisible':['|',('status','not in',['paused','in_progress']),('pack_type','!=','platform_pack')]}"
         />
         <button
+          name="action_modify_contract"
+          type="object"
+          string="Modify"
+        />
+        <button
           name="action_close_contract"
           type="object"
           string="Close"

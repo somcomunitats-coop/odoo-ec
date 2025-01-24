@@ -26,6 +26,9 @@ class SaleOrder(models.Model):
         string="Service invoicing action description",
         default="none",
     )
+    # company_id = fields.Many2one(
+    #     required=False, index=True
+    # )
 
     def action_create_contract(self):
         contracts = super().action_create_contract()

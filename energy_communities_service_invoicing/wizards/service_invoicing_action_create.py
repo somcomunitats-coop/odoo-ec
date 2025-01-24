@@ -44,6 +44,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
         domain="[('id', 'in', allowed_payment_mode_ids)]",
     )
     pricelist_id = fields.Many2one("product.pricelist", string="PriceList")
+<<<<<<< HEAD
     discount = fields.Float(string="Discount (%)", digits="Discount", default=0)
 
     allowed_community_company_ids = fields.Many2many(
@@ -207,3 +208,17 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                         record.name
                     )
                 )
+=======
+    start_date = fields.Date(string="Start date")
+
+    def execute_create(self):
+        with sale_order_utils(self.env) as component:
+            service_invoicing_id = component.create_service_invoicing_on_hold(
+                self.company_id,
+                self.community_company_id,
+                self.service_pack_id,
+                self.pricelist_id,
+                self.start_date,
+            )
+        return service_invoicing_view(self.env, service_invoicing_id)
+>>>>>>> 1a953713 ([IMP] ✨ Contract modifications and Multicompany base structure)

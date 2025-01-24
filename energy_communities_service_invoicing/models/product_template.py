@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from odoo import api, fields, models
+=======
+from odoo import fields, models
+>>>>>>> 1a953713 ([IMP] ✨ Contract modifications and Multicompany base structure)
 
 
 class ProductTemplate(models.Model):

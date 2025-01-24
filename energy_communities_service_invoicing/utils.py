@@ -57,7 +57,11 @@ def service_invoicing_form_view_for_platform_admins(
         "views": [
             (
                 env.ref(
+<<<<<<< HEAD
                     "energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin"
+=======
+                    "energy_communities_service_invoicing.view_contract_contract_customer_form"
+>>>>>>> 1a953713 ([IMP] ✨ Contract modifications and Multicompany base structure)
                 ).id,
                 "form",
             ),
@@ -65,6 +69,7 @@ def service_invoicing_form_view_for_platform_admins(
         "target": "current",
         "res_id": service_invoicing_id.id,
     }
+<<<<<<< HEAD
 
 
 # TODO: Think a bit more about more about if this 3 methods must go to contract utils component
@@ -103,3 +108,5 @@ def get_existing_last_closed_pack_contract(
     if contract_id:
         query.append(("id", "!=", contract_id.id))
     return env["contract.contract"].search(query, limit=1)
+=======
+>>>>>>> 1a953713 ([IMP] ✨ Contract modifications and Multicompany base structure)
