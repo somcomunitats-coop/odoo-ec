@@ -12,6 +12,9 @@ class SaleOrder(models.Model):
         string="Related community",
         domain="[('hierarchy_level','=','community')]",
     )
+    # company_id = fields.Many2one(
+    #     required=False, index=True
+    # )
 
     service_invoicing_action = fields.Selection(
         selection=_SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES,
