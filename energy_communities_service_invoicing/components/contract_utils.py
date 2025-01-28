@@ -47,7 +47,7 @@ class ContractUtils(Component):
         sale_order_utils = self.component(
             usage="sale.order.utils", model_name="sale.order"
         )
-        return sale_order_utils.create_service_invoicing(
+        new_service_invoicing_id = sale_order_utils.create_service_invoicing(
             self.work.record.company_id,
             self.work.record.community_company_id,
             self._get_service_pack_id()
@@ -58,6 +58,8 @@ class ContractUtils(Component):
             else pricelist_id,
             execution_date + timedelta(days=1),
         )
+        self._setup_successors_and_predecessors(new_service_invoicing_id)
+        return new_service_invoicing_id
 
     def _is_service_line(self, contract_line):
         if self.work.record.contract_template_id:
@@ -74,3 +76,7 @@ class ContractUtils(Component):
             if not self._is_service_line(line):
                 return line.product_id
         return False
+
+    def _setup_successors_and_predecessors(self, new_service_invoicing_id):
+        self.work.record.write({"successor_contract_id": new_service_invoicing_id.id})
+        new_service_invoicing_id.write({"predecessor_contract_id": self.work.record.id})
