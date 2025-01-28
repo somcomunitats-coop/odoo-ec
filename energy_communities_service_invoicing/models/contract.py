@@ -14,6 +14,9 @@ class ContractContract(models.Model):
     predecessor_contract_id = fields.Many2one(
         "contract.contract", string="Predecessor contract"
     )
+    successor_contract_id = fields.Many2one(
+        "contract.contract", string="Successor contract"
+    )
 
     def action_activate_contract(self):
         return self._action_contract("activate")

@@ -46,18 +46,8 @@
         <field name="next_period_date_start" />
         <field name="next_period_date_end" />
         <field name="date_end" />
-      </xpath>
-      
-    </field>
-  </record>
-
-  <record id="contract_template_form_view" model="ir.ui.view">
-    <field name="name">contract.template form view  (in energy_communities service_invoicing)</field>
-    <field name="model">contract.contract</field>
-    <field name="inherit_id" ref="contract.contract_template_form_view" />
-    <field name="arch" type="xml">
-      <xpath expr="//field[@name='company_id']" position="attributes">
-        <attribute name="required">0</attribute>
+        <field name="predecessor_contract_id" />
+        <field name="successor_contract_id" />
       </xpath>
     </field>
   </record>
@@ -77,9 +67,36 @@
       model="ir.actions.act_window"
   >
     <field name="name">Service Products</field>
-    <field name="res_model">product.product</field>
+    <field name="res_model">product.template</field>
     <field name="view_mode">tree,form</field>
-    <field name="domain">[('is_contract','=',True)]</field>
+    <!--<field name="domain">[('is_contract','=',True)]</field>-->
+  </record>
+
+  <record
+      id="view_service_contract_templates_window"
+      model="ir.actions.act_window"
+  >
+    <field name="name">Service Contract Types</field>
+    <field name="res_model">contract.template</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record
+      id="view_service_sale_orders_window"
+      model="ir.actions.act_window"
+  >
+    <field name="name">Service Sale Orders</field>
+    <field name="res_model">sale.order</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record
+      id="view_service_tariffs_window"
+      model="ir.actions.act_window"
+  >
+    <field name="name">Service Tariffs</field>
+    <field name="res_model">sale.order</field>
+    <field name="view_mode">tree,form</field>
   </record>
 
   <record model="ir.actions.act_window.view" id="action_view_service_invoicing_tree">
@@ -110,4 +127,26 @@
     action="view_service_products_window"
     sequence="200"
   />
+  <menuitem
+    name="Service Contract Types"
+    id="view_service_contract_templates_menu"
+    parent="ce_service_invoicing_menu"
+    action="view_service_contract_templates_window"
+    sequence="300"
+  />
+  <menuitem
+    name="Service Sale Orders"
+    id="view_service_sale_orders_menu"
+    parent="ce_service_invoicing_menu"
+    action="view_service_sale_orders_window"
+    sequence="400"
+  />
+  <menuitem
+    name="Service Tariffs"
+    id="view_service_tariffs_menu"
+    parent="ce_service_invoicing_menu"
+    action="view_service_tariffs_window"
+    sequence="500"
+  />
+
 </odoo>
