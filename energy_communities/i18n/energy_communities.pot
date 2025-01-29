@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-09 14:49+0000\n"
-"PO-Revision-Date: 2025-01-09 14:49+0000\n"
+"POT-Creation-Date: 2025-01-28 16:52+0000\n"
+"PO-Revision-Date: 2025-01-28 16:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -67,6 +67,13 @@ msgstr ""
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_selection
 msgid "<option value=\"\">Please choose an option</option>"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.website_form_submit_confirmation
+msgid ""
+"<span class=\"fa fa-check-circle\"/>\n"
+"                                <span>Your submission has been sent <b>successfully</b></span>"
 msgstr ""
 
 #. module: energy_communities
@@ -623,11 +630,6 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__current_role
 msgid "Current Role"
-msgstr ""
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
-msgid "Customize documents text"
 msgstr ""
 
 #. module: energy_communities
@@ -1791,6 +1793,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_telegram_url
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__telegram_link
 msgid "Telegram link"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.website_form_submit_confirmation
+msgid "Thank You!"
 msgstr ""
 
 #. module: energy_communities
