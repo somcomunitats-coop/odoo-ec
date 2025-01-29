@@ -103,12 +103,6 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
             "res_id": voluntary_share_interest_return.id,
         }
 
-    # UNUSED!!
-    # TODO: Verify this is the criteria to include an invoice.
-    # Should it be effective based on payment date?
-    def _in_impacted_period(self, account_move):
-        return account_move.payment_date >= self.start_date_period
-
     def _get_voluntary_shares_invoice_line(self):
         voluntary_shares = {}
         voluntary_share_product_template = self.company_id.voluntary_share_id
@@ -131,7 +125,6 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
                             membership_voluntary_share
                         )
                     )
-                    # if self._in_impacted_period(related_invoice_line.move_id):
                     if membership.id in voluntary_shares.keys():
                         voluntary_shares[membership.id].append(related_invoice_line)
                     else:
@@ -157,7 +150,9 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
         inv_creation_dict = self._prepare_inv_create_dict(
             membership_id, voluntary_shares_inv_line, voluntary_share_interest_return_id
         )
-        invoice = self.env["account.move"].create(inv_creation_dict)
+        # empty inv_creation_dict means the invoice to be created is without lines (all lines out of period)
+        if inv_creation_dict:
+            invoice = self.env["account.move"].create(inv_creation_dict)
 
     def _prepare_inv_create_dict(
         self,
@@ -183,12 +178,17 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
         }
         total_contribution = 0
         for voluntary_share_inv_line in voluntary_shares_inv_line:
-            create_dict["invoice_line_ids"].append(
-                (0, 0, self._prepare_inv_line_create_dict(voluntary_share_inv_line))
+            inv_line_create_dict = self._prepare_inv_line_create_dict(
+                voluntary_share_inv_line
             )
-            total_contribution += voluntary_share_inv_line.price_subtotal
+            if inv_line_create_dict:
+                create_dict["invoice_line_ids"].append((0, 0, inv_line_create_dict))
+                total_contribution += voluntary_share_inv_line.price_subtotal
         create_dict["voluntary_share_total_contribution"] = total_contribution
-        return create_dict
+        # We won't generate an invoice without a total contribution. (all lines out of period)
+        if total_contribution > 0:
+            return create_dict
+        return False
 
     def _get_invoice_partner_bank(self, origin_inv_line):
         # TODO: This method must take into consideration that the bank account has a valid mandate
@@ -204,32 +204,36 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
         return False
 
     def _prepare_inv_line_create_dict(self, origin_inv_line):
-        name = "contribution ref: [{inv_name}] #{inv_id} / contribution line ref: #{inv_line_id}".format(
-            inv_id=origin_inv_line.move_id.id,
-            inv_line_id=origin_inv_line.id,
-            inv_name=origin_inv_line.move_id.name,
-        )
         quantity = self._get_voluntary_share_days_num(origin_inv_line)
-        price_unit = self._get_voluntary_share_price_unit(origin_inv_line)
-        if price_unit < 0.01:
-            price_unit = price_unit * quantity
-            name += " ({} days)".format(quantity)
-            quantity = 1
-        return {
-            "name": name,
-            "account_id": self.return_line_account_id.id,
-            "quantity": quantity,
-            "price_unit": price_unit,
-            "voluntary_share_return_start_date_period": self._get_period_start_date(
-                origin_inv_line
-            ),
-            "voluntary_share_return_end_date_period": self.end_date_period,
-            "voluntary_share_contribution": origin_inv_line.price_subtotal,
-            "voluntary_share_interest": self.interest,
-            "journal_id": self.journal_id.id,
-            "company_id": self.company_id.id,
-            "tax_ids": [(4, self.tax_id.id)],
-        }
+        # Negative quantity values implies payment date > end_period => line outside calculation period.
+        # We don't want to create those lines
+        if quantity > 0:
+            name = "contribution ref: [{inv_name}] #{inv_id} / contribution line ref: #{inv_line_id}".format(
+                inv_id=origin_inv_line.move_id.id,
+                inv_line_id=origin_inv_line.id,
+                inv_name=origin_inv_line.move_id.name,
+            )
+            price_unit = self._get_voluntary_share_price_unit(origin_inv_line)
+            if price_unit < 0.01:
+                price_unit = price_unit * quantity
+                name += " ({} days)".format(quantity)
+                quantity = 1
+            return {
+                "name": name,
+                "account_id": self.return_line_account_id.id,
+                "quantity": quantity,
+                "price_unit": price_unit,
+                "voluntary_share_return_start_date_period": self._get_period_start_date(
+                    origin_inv_line
+                ),
+                "voluntary_share_return_end_date_period": self.end_date_period,
+                "voluntary_share_contribution": origin_inv_line.price_subtotal,
+                "voluntary_share_interest": self.interest,
+                "journal_id": self.journal_id.id,
+                "company_id": self.company_id.id,
+                "tax_ids": [(4, self.tax_id.id)],
+            }
+        return False
 
     def _get_period_start_date(self, inv_line):
         payment_date = inv_line.move_id.payment_date
