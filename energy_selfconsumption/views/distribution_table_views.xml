@@ -66,6 +66,8 @@
                 mode="list"
                 context="{'default_distribution_table_id':id, 'distribution_table_type': type}"
                 attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                nolabel="1"
+                colspan="2"
               >
                                 <tree editable="bottom">
                                     <field

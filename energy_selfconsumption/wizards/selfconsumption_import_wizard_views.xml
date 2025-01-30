@@ -17,6 +17,8 @@
                             The template must have the following format and be a CSV file.</p>
                         <p
             >In the state list file, you can check which code is assigned for your state.</p>
+                        <p attrs="{'invisible':[('conf_bank_details','=', True)]}" style="color: red;"
+            >Warning: In the configuration of this registration, importing bank account is not marked.</p>
                         <button
               type="object"
               class="btn btn-primary mr-1"
@@ -45,6 +47,7 @@
                         <separator />
                         <group>
                             <field name="user_current_role" invisible="1" />
+                            <field name="conf_bank_details" invisible="1" />
                             <field
                 name="import_file"
                 filename="fname"

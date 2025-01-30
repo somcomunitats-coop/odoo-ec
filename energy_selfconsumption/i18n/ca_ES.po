@@ -6,8 +6,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< Updated upstream
 "POT-Creation-Date: 2025-01-20 11:03+0000\n"
 "PO-Revision-Date: 2025-01-20 11:03+0000\n"
+=======
+"POT-Creation-Date: 2025-01-30 11:36+0000\n"
+"PO-Revision-Date: 2025-01-30 11:36+0000\n"
+>>>>>>> Stashed changes
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -516,6 +521,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "<li>Line {line}: {error}</li>\n"
 msgstr "<li>Línia {line}: {error}</li>\n"
@@ -699,6 +705,11 @@ msgid "Accept"
 msgstr "Acceptar"
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_view_tree
+msgid "Accept terms"
+msgstr "Acceptar els termes"
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__tariff
 msgid "Access tariff"
 msgstr "Tarifa d'accés"
@@ -815,6 +826,13 @@ msgstr "Avança a Actiu"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid "Advance to In Inscription"
 msgstr "Avançar en Inscripció"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid ""
+"Warning: In the configuration of this registration, importing bank account is not marked."
+msgstr ""
+"Avís: a la configuració d'aquest registre, no es marca el compte bancari d'importació."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__annual_electricity_use
@@ -1116,6 +1134,11 @@ msgstr ""
 "                        mecanisme de compensació simplificat </b> entre els dèficits de consum de cada consumidor\n"
 "                        i la totalitat dels excedents de la instal·lació de l’autoconsum, tal com s’estableix el Rela\n"
 "                        Decret 244/2019, del 5 d'abril."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__conf_bank_details
+msgid "Conf Bank Details"
+msgstr "Dades bancàries de Conf"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -2796,6 +2819,7 @@ msgid "Other"
 msgstr "Altres"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__owner_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__owner_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__owner_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__owner_id
@@ -2894,6 +2918,7 @@ msgid "Partner with VAT:<b>{vat}</b> was not found."
 msgstr "No s'ha trobat el soci amb CIF/NIF:<b>{vat}</b>."
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__owner_id
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__owner_id
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__owner_id
 msgid "Partner with the legal obligation of the supply point"
@@ -3076,6 +3101,11 @@ msgid "Report contract"
 msgstr "Informe contracte"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_bank_details
+msgid "Request bank details"
+msgstr "Sol·liciteu les dades bancàries"
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__reseller_id
 msgid "Reseller"
 msgstr "Distribuïdor"
@@ -3116,6 +3146,15 @@ msgstr "Desa les dades"
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__supplier_id
 msgid "Select the associated Energy Supplier"
 msgstr "Seleccioneu el proveïdor d'energia associat"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_bank_details
+msgid ""
+"Select when you want to make the payment by bank transfer. If not requested,"
+" the payment must be made by bank transfer by the member."
+msgstr ""
+"Seleccioneu quan voleu fer el pagament per transferència bancària. Si no es demana,"
+" el pagament s'ha de fer mitjançant transferència bancària per part del soci."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__num_contracts
@@ -3295,11 +3334,6 @@ msgstr "energy_selfconsumption.distribution_table_import.wizard"
 #: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_selfconsumption_import_wizard
 msgid "Service to import project selfconsumption"
 msgstr "energy_selfconsumption.selfconsumption_import.wizard"
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_bank_details
-msgid "Show bank details"
-msgstr "Mostra les dades bancàries"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_form_fields_template
@@ -3519,8 +3553,8 @@ msgstr "L'energia generada ha de ser superior a 0 (kWh)."
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
-msgid "The file should contain 17 columns and not {header_length} columns."
-msgstr "El fitxer ha de contenir 17 columnes i no {header_length} columnes."
+msgid "The file should contain 28 columns and not {header_length} columns."
+msgstr "El fitxer ha de contenir 28 columnes i no {header_length} columnes."
 
 #. module: energy_selfconsumption
 #. odoo-python

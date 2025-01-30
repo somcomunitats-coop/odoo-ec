@@ -31,10 +31,9 @@ class CreateInscription(models.AbstractModel):
             .sudo()
             .search([("code", "=", values["supplypoint_cups"])])
         )
-
+        country = self._get_country(values, project)
         if not supply_point:
             try:
-                country = self._get_country(values, project)
                 vals = {
                     "code": values["supplypoint_cups"],
                     "owner_id": owner.id,
@@ -59,6 +58,30 @@ class CreateInscription(models.AbstractModel):
                     self.env["energy_selfconsumption.supply_point"].sudo().create(vals)
                 )
 
+            except Exception as e:
+                return True, _(str(e))
+        else:
+            try:
+                vals = {
+                    "owner_id": owner.id,
+                    "contracted_power": float(
+                        values.get("supplypoint_contracted_power", 0)
+                    ),
+                    "tariff": tariff,
+                    "partner_id": partner.id,
+                    "company_id": project.company_id.id,
+                    "street": values["supplypoint_street"],
+                    "city": values["supplypoint_city"],
+                    "country_id": country.id,
+                    "state_id": self._get_state(values, project, country).id,
+                    "zip": values["supplypoint_zip"],
+                    "cadastral_reference": values["supplypoint_cadastral_reference"],
+                }
+                if project.conf_used_in_selfconsumption:
+                    vals["used_in_selfconsumption"] = values.get(
+                        "supplypoint_used_in_selfconsumption", None
+                    )
+                supply_point.sudo().write(vals)
             except Exception as e:
                 return True, _(str(e))
 
@@ -119,7 +142,7 @@ class CreateInscription(models.AbstractModel):
         if not owner:
             return True, _("Owner could not be created or found.")
 
-        contracted_power = float(values.get("supplypoint_contracted_power", "0").replace(",", "."))
+        contracted_power = float(str(values.get("supplypoint_contracted_power", "0")).replace(",", "."))
         tariff = self._determine_tariff(contracted_power, values)
 
         return self._create_supply_point(
@@ -199,6 +222,18 @@ class CreateInscription(models.AbstractModel):
             )
 
         mandate_auth_date = self._get_mandate_auth_date(values)
+        mandate_obj = (
+            self.env["account.banking.mandate"]
+            .with_company(project.company_id)
+            .sudo()
+            .search([
+                ("partner_bank_id", "=", bank_account.id),
+                ("partner_id", "=", partner.id),
+                ("company_id", "=", project.company_id.id),
+            ])
+        )
+        if mandate_obj:
+            return False, mandate_obj
         return False, (
             self.env["account.banking.mandate"]
             .with_company(project.company_id)

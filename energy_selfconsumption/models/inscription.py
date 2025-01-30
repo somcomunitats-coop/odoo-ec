@@ -36,6 +36,10 @@ class Inscription(models.Model):
     supply_point_id = fields.Many2one(
         "energy_selfconsumption.supply_point", required=True
     )
+    owner_id = fields.Many2one(
+        related="supply_point_id.owner_id",
+        string="Owner",
+    )
     code = fields.Char(string="CUPS", related="supply_point_id.code")
     used_in_selfconsumption = fields.Selection(
         string="Used in selfconsumption",
@@ -43,7 +47,7 @@ class Inscription(models.Model):
     )
     vulnerability_situation = fields.Selection(
         string="Vulnerability situation",
-        related="partner_id.vulnerability_situation",
+        related="supply_point_id.owner_id.vulnerability_situation",
     )
 
     @api.constrains("project_id", "partner_id", "supply_point_id")

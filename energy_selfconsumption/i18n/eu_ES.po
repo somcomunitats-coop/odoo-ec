@@ -6,8 +6,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< Updated upstream
 "POT-Creation-Date: 2025-01-20 11:04+0000\n"
 "PO-Revision-Date: 2025-01-20 11:04+0000\n"
+=======
+"POT-Creation-Date: 2025-01-30 11:36+0000\n"
+"PO-Revision-Date: 2025-01-30 11:36+0000\n"
+>>>>>>> Stashed changes
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -509,6 +514,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "<li>Line {line}: {error}</li>\n"
 msgstr "<li>Lerroa {line}: {error}</li>\n"
@@ -687,6 +693,11 @@ msgid "Accept"
 msgstr "Onetsi"
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_view_tree
+msgid "Accept terms"
+msgstr "Onartu baldintzak"
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__tariff
 msgid "Access tariff"
 msgstr "Sarbide tarifa"
@@ -804,6 +815,13 @@ msgstr "Aktibora aurreratu"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid "Advance to In Inscription"
 msgstr "Izen-ematearen aurrerapena"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid ""
+"Warning: In the configuration of this registration, importing bank account is not marked."
+msgstr ""
+"Abisua: Erregistro honen konfigurazioan, banku-kontua inportatzea ez dago markatuta."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__annual_electricity_use
@@ -1103,6 +1121,11 @@ msgstr ""
 "                       kontsumitzaile bakoitzaren kontsumo-defizitaren arteko konpentsazio mekanismo sinplifikatua\n"
 "                       eta autokontsumoko instalazioaren soberakin guztiak, Realak ezarritakoaren arabera\n"
 "                       244/2019 Dekretua, apirilaren 5ekoa."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__conf_bank_details
+msgid "Conf Bank Details"
+msgstr "Conf Bank xehetasunak"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -2779,6 +2802,7 @@ msgid "Other"
 msgstr "Bestela"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__owner_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__owner_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__owner_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__owner_id
@@ -2878,6 +2902,7 @@ msgid "Partner with VAT:<b>{vat}</b> was not found."
 msgstr "IFK/NIF-ko bazkidea:<b>{vat}</b> ez da aurkitu."
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__owner_id
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__owner_id
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__owner_id
 msgid "Partner with the legal obligation of the supply point"
@@ -3059,6 +3084,11 @@ msgid "Report contract"
 msgstr "Txosten kontratua"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_bank_details
+msgid "Request bank details"
+msgstr "Eskatu banku-datuak"
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__reseller_id
 msgid "Reseller"
 msgstr "Saltxin"
@@ -3099,6 +3129,15 @@ msgstr "Gorde datuak"
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__supplier_id
 msgid "Select the associated Energy Supplier"
 msgstr "Hautatu lotutako Energia Hornitzailea"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_bank_details
+msgid ""
+"Select when you want to make the payment by bank transfer. If not requested,"
+" the payment must be made by bank transfer by the member."
+msgstr ""
+"Hautatu noiz egin nahi duzun ordainketa banku-transferentzia bidez. Ez bada eskatu,"
+" ordainketa banku-transferentzia bidez egin beharko du bazkideak."
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__num_contracts
@@ -3279,11 +3318,6 @@ msgstr "energy_selfconsumption.distribution_table_import.wizard"
 #: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_selfconsumption_import_wizard
 msgid "Service to import project selfconsumption"
 msgstr "energy_selfconsumption.selfconsumption_import.wizard"
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_bank_details
-msgid "Show bank details"
-msgstr "Erakutsi banku-datuak"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_form_fields_template
@@ -3503,8 +3537,8 @@ msgstr "Sortutako energia 0 (kWh) baino handiagoa izan behar da."
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
-msgid "The file should contain 17 columns and not {header_length} columns."
-msgstr "Fitxategiak 17 zutabe izan behar ditu eta ez {header_length} zutabe."
+msgid "The file should contain 28 columns and not {header_length} columns."
+msgstr "Fitxategiak 28 zutabe izan behar ditu eta ez {header_length} zutabe."
 
 #. module: energy_selfconsumption
 #. odoo-python

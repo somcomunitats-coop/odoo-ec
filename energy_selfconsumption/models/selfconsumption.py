@@ -134,7 +134,7 @@ class Selfconsumption(models.Model):
     )
     conf_used_in_selfconsumption = fields.Boolean("Show used in selfconsumption")
     conf_vulnerability_situation = fields.Boolean("Show vulnerability situation")
-    conf_bank_details = fields.Boolean("Show bank details")
+    conf_bank_details = fields.Boolean("Request bank details", default=True, help="Select when you want to make the payment by bank transfer. If not requested, the payment must be made by bank transfer by the member.")
     conf_url_form = fields.Char(string="URL")
 
     def activate_form(self):

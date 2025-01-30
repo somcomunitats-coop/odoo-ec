@@ -45,18 +45,22 @@ class SelfconsumptionImportWizard(models.TransientModel):
     )
 
     user_current_role = fields.Char()
+    conf_bank_details = fields.Boolean()
 
     @api.model
     def default_get(self, fields):
         defaults = super().default_get(fields)
         defaults["user_current_role"] = self.env.user.user_current_role
+        project = self.env["energy_selfconsumption.selfconsumption"].browse(self.env.context.get("active_id"))
+        if project:
+            defaults["conf_bank_details"] = project.conf_bank_details
         return defaults
 
     @api.constrains("import_file")
     def _constrains_import_file(self):
         if self.fname:
-            format = str(self.fname.split(".")[1])
-            if format != "csv":
+            format_file = str(self.fname.split(".")[1])
+            if format_file != "csv":
                 raise ValidationError(_("Only csv format files are accepted."))
 
     def import_file_button(self):
@@ -67,10 +71,19 @@ class SelfconsumptionImportWizard(models.TransientModel):
         active_id = self.env.context.get("active_id")
         project = self.env["energy_selfconsumption.selfconsumption"].browse(active_id)
         for index, line in enumerate(parsing_data):
-            import_dict = self.get_line_dict(line)
+            error, import_dict = self.get_line_dict(line)
+            if error:
+                error_string_list += "".join(
+                    [
+                        error_string_list,
+                        _("<li>Line {line}: {error}</li>\n").format(
+                            line=index, error=import_dict
+                        ),
+                    ]
+                )
             result = self.import_line(import_dict, project)
             if result[0]:
-                error_string_list = "".join(
+                error_string_list += "".join(
                     [
                         error_string_list,
                         _("<li>Line {line}: {error}</li>\n").format(
@@ -113,12 +126,25 @@ class SelfconsumptionImportWizard(models.TransientModel):
             "target": "new",
         }
 
+    def _get_state(self, name):
+        """Gets the state based on values and country."""
+        state = (
+            self.env["res.country.state"]
+            .sudo()
+            .search(
+                [("name", "=", name)], limit=1
+            )
+        )
+        if state:
+            return state.code
+        return False
+
     def get_line_dict(self, line):
         header = list(line.keys())
-        if len(header) != 17:
+        if len(header) != 28:
             raise ValidationError(
                 _(
-                    "The file should contain 17 columns and not {header_length} columns."
+                    "The file should contain 28 columns and not {header_length} columns."
                 ).format(header_length=len(header))
             )
         supplypoint_owner_id_same = "no"
@@ -128,29 +154,47 @@ class SelfconsumptionImportWizard(models.TransientModel):
             supplypoint_owner_id_same = "yes"
         if not line.get(header[14], False):
             supplypoint_owner_id_same = "yes"
-        return {
-            "inscription_partner_id_vat": line.get(header[0], False),
-            "effective_date": line.get(header[1], False),
-            "supplypoint_cups": line.get(header[2], False),
-            "supplypoint_contracted_power": float(
-                str(line.get(header[3], 0.0)).replace(",", ".")
-            ),
-            "tariff": line.get(header[4], False),
-            "supplypoint_street": line.get(header[5], False),
-            "street2": line.get(header[6], False),
-            "supplypoint_city": line.get(header[7], False),
-            "state": line.get(header[8], False),
-            "supplypoint_zip": line.get(header[9], False),
-            "country": line.get(header[10], False),
-            "supplypoint_cadastral_reference": line.get(header[11], False),
-            "supplypoint_owner_id_vat": line.get(header[12], False),
-            "supplypoint_owner_id_name": line.get(header[13], False),
-            "supplypoint_owner_id_lastname": line.get(header[14], False),
-            "inscription_acc_number": line.get(header[15], False),
-            "mandate_auth_date": line.get(header[16], False),
-            "date_format": self.date_format,
-            "supplypoint_owner_id_same": supplypoint_owner_id_same,
-        }
+        try:
+            return False, {
+                "inscription_partner_id_vat": line.get(header[0], False),
+                "effective_date": line.get(header[1], False),
+                "supplypoint_cups": line.get(header[2], False),
+                "supplypoint_contracted_power": float(
+                    str(line.get(header[3], 0.0)).replace(",", ".")
+                ),
+                "tariff": line.get(header[4], False),
+                "supplypoint_street": line.get(header[5], False),
+                "street2": line.get(header[6], False),
+                "supplypoint_city": line.get(header[7], False),
+                "state": self._get_state(line.get(header[8], "")),
+                "supplypoint_zip": line.get(header[9], False),
+                "country": line.get(header[10], False),
+                "supplypoint_cadastral_reference": line.get(header[11], False),
+                "supplypoint_owner_id_vat": line.get(header[12], False),
+                "supplypoint_owner_id_name": line.get(header[13], False),
+                "supplypoint_owner_id_lastname": line.get(header[14], False),
+                "supplypoint_owner_id_gender": line.get(header[15], False),  # New
+                "supplypoint_owner_id_birthdate_date": line.get(header[16], False),  # New
+                "supplypoint_owner_id_phone": line.get(header[17], False),  # New
+                "supplypoint_owner_id_lang": line.get(header[18], False),  # New
+                "supplypoint_owner_id_email": line.get(header[19], False),  # New
+                "supplypoint_owner_id_vulnerability_situation": line.get(header[20], False),  # New
+                "inscription_project_privacy": line.get(header[21], False),  # New
+                "inscription_acc_number": line.get(header[22], False),
+                "mandate_auth_date": line.get(header[23], False),
+                "date_format": self.date_format,
+                "supplypoint_owner_id_same": supplypoint_owner_id_same,
+                "supplypoint_used_in_selfconsumption": line.get(header[24], False),  # New
+                "inscriptionselfconsumption_annual_electricity_use": float(
+                    str(line.get(header[25], 0.0)).replace(",", ".")
+                ),  # New
+                "inscriptionselfconsumption_participation": float(
+                    str(line.get(header[26], 0.0)).replace(",", ".")
+                ),  # New
+                "inscriptionselfconsumption_accept": line.get(header[27], False),  # New
+            }
+        except Exception as e:
+            return True, _(str(e))
 
     def _parse_file(self, data_file):
         self.ensure_one()
