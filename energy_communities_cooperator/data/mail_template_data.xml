@@ -104,10 +104,10 @@
                         <t t-if="object.voluntary_share_interest_return_id">
                             <li><strong>Period:</strong> from <t t-out="object.voluntary_share_interest_return_id.start_date_period.strftime('%d/%m/%Y')"></t> to <t t-out="object.voluntary_share_interest_return_id.end_date_period.strftime('%d/%m/%Y')"></t></li>
                         </t>
-                        <li><strong>Total contribution:</strong> <t t-out="str('%.2f' | format(object.voluntary_share_total_contribution)).replace('.',',')"></t>€</li>
-                        <li><strong>Total interest:</strong> <t t-out="str('%.2f' | format(object.amount_untaxed)).replace('.',',')"></t>€</li>
-                        <li><strong>Taxes:</strong> <t t-out="str('%.2f' | format(object.amount_tax)).replace('.',',')"></t>€</li>
-                        <li><strong>Total to receive:</strong> <t t-out="str('%.2f' | format(object.amount_total)).replace('.',',')"></t>€</li>
+                        <li><strong>Total contribution:</strong> <t t-out="('%.2f'% object.voluntary_share_total_contribution).replace('.',',')"></t>€</li>
+                        <li><strong>Total interest:</strong> <t t-out="('%.2f'% object.amount_untaxed).replace('.',',')"></t>€</li>
+                        <li><strong>Taxes:</strong> <t t-out="('%.2f'% object.amount_tax).replace('.',',')"></t>€</li>
+                        <li><strong>Total to receive:</strong> <t t-out="('%.2f'% object.amount_total).replace('.',',')"></t>€</li>
                     </ul>
                     <br/>
                     Don't hesitate to contact us at <a t-if="object.company_id.email" t-att-href="object.company_id.email"><t t-out="object.company_id.email"></t></a> for any question you might have using the code: <t t-out="object.name"></t><br/>

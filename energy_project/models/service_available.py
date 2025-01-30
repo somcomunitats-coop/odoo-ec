@@ -8,7 +8,7 @@ class ServiceAvailable(models.Model):
     _sql_constraints = {
         (
             "unique_service_id_provider_id",
-            "unique (service_id, provider_id)",
+            "unique(service_id, provider_id)",
             _("This service is already assigned to this provider."),
         )
     }

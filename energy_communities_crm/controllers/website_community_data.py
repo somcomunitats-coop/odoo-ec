@@ -317,15 +317,6 @@ class WebsiteCommunityData(http.Controller):
             .mapped(lambda r: r.xml_id.replace("energy_communities.", ""))
         )
 
-    def _is_lead_pack(self, lead_id, pack_tag_ext_id):
-        leads = request.env["crm.lead"].sudo().search([("external_id", "=", lead_id)])
-        if leads:
-            lead = leads[0]
-            pack_tag = lead.tag_ids.filtered(
-                lambda tag: tag.tag_ext_id == "energy_communities." + pack_tag_ext_id
-            )
-            return bool(pack_tag)
-
     def _get_legal_forms(self):
         legal_forms = []
         for legal_form_id, legal_form_name in _LEGAL_FORM_VALUES:
@@ -381,9 +372,6 @@ class WebsiteCommunityData(http.Controller):
         values["form_submit_url"] = "/community-data/submit?lead_id={lead_id}".format(
             lead_id=values["lead_id"]
         )
-        # packs
-        values["pack_1"] = self._is_lead_pack(values["lead_id"], "pack_1")
-        values["pack_2"] = self._is_lead_pack(values["lead_id"], "pack_2")
         # date format
         for date_field_key in _COMMUNITY_DATA__DATE_FIELDS.keys():
             if date_field_key in values.keys():

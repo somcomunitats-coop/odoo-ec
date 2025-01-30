@@ -328,18 +328,8 @@ msgid "Both of the above options"
 msgstr ""
 
 #. module: energy_communities_crm
-#: model:ir.actions.act_window,name:energy_communities_crm.ce_crm_leads_ce_contact_action
-msgid "CE Contact"
-msgstr ""
-
-#. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.ce_view_crm_case_opportunities_filter
 msgid "CE creation"
-msgstr ""
-
-#. module: energy_communities_crm
-#: model:ir.actions.act_window,name:energy_communities_crm.ce_crm_leads_new_ce_request_action
-msgid "CE creation requests"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -772,22 +762,6 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities_crm
-#: model:ir.ui.menu,name:energy_communities_crm.ce_crm_leads_ce_contact_menu
-msgid "EC Contact"
-msgstr ""
-
-#. module: energy_communities_crm
-#: model:ir.ui.menu,name:energy_communities_crm.ce_crm_leads_new_ce_request_menu
-msgid "EC Creation"
-msgstr ""
-
-#. module: energy_communities_crm
-#: model:ir.actions.act_window,name:energy_communities_crm.ce_crm_leads_ce_newsletter_action
-#: model:ir.ui.menu,name:energy_communities_crm.ce_crm_leads_ce_info_menu
-msgid "EC Newsletter"
-msgstr ""
-
-#. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
@@ -804,14 +778,6 @@ msgstr ""
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Energy Community Name"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/models/crm_tag.py:0
-#: model:ir.model.fields.selection,name:energy_communities_crm.selection__crm_tag__tag_type__energy_service
-#, python-format
-msgid "Energy Service"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -853,19 +819,8 @@ msgid "Fiscal Name"
 msgstr ""
 
 #. module: energy_communities_crm
-#: model:ir.ui.menu,name:energy_communities_crm.ce_crm_leads_menu
-msgid "Form submissions"
-msgstr ""
-
-#. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.view_crm_lead_metadata_mapping_form
 msgid "General"
-msgstr ""
-
-#. module: energy_communities_crm
-#: model:ir.actions.act_window,name:energy_communities_crm.ce_crm_leads_general_info_action
-#: model:ir.ui.menu,name:energy_communities_crm.ce_crm_leads_general_info_menu
-msgid "General Newsletter"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1232,14 +1187,6 @@ msgstr ""
 
 #. module: energy_communities_crm
 #. odoo-python
-#: code:addons/energy_communities_crm/models/crm_tag.py:0
-#: model:ir.model.fields.selection,name:energy_communities_crm.selection__crm_tag__tag_type__regular
-#, python-format
-msgid "Regular"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Related Lead closed."
@@ -1292,14 +1239,6 @@ msgstr ""
 
 #. module: energy_communities_crm
 #. odoo-python
-#: code:addons/energy_communities_crm/models/crm_tag.py:0
-#: model:ir.model.fields.selection,name:energy_communities_crm.selection__crm_tag__tag_type__service_plan
-#, python-format
-msgid "Service Plan"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "State"
@@ -1320,11 +1259,6 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:ir.model.constraint,message:energy_communities_crm.constraint_crm_tag_name_uniq
 msgid "Tag must be unique per company!"
-msgstr ""
-
-#. module: energy_communities_crm
-#: model:ir.model.fields,field_description:energy_communities_crm.field_crm_tag__tag_type
-msgid "Tag type"
 msgstr ""
 
 #. module: energy_communities_crm

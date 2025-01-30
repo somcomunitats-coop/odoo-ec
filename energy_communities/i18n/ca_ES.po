@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-09 14:50+0000\n"
-"PO-Revision-Date: 2025-01-09 14:50+0000\n"
+"POT-Creation-Date: 2025-01-28 16:53+0000\n"
+"PO-Revision-Date: 2025-01-28 16:53+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -74,6 +74,15 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_selection
 msgid "<option value=\"\">Please choose an option</option>"
 msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.website_form_submit_confirmation
+msgid ""
+"<span class=\"fa fa-check-circle\"/>\n"
+"                                <span>Your submission has been sent <b>successfully</b></span>"
+msgstr ""
+"<span class=\"fa fa-check-circle\"/>\n"
+"                                <span>La teva resposta ha sigut enregistrada amb èxit</span>"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.res_partner_view_form
@@ -167,7 +176,6 @@ msgid "Admins to notify"
 msgstr "Admins a notificar"
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_aggregate_demand
 #: model:energy.action,name:energy_communities.energy_action_aggregate_demand
 msgid "Agregació i flexibilitat de la demanda"
 msgstr ""
@@ -483,7 +491,6 @@ msgid "Compras colectivas"
 msgstr "Compres col·lectives"
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_collective_purchases
 #: model:energy.action,name:energy_communities.energy_action_collective_purchases
 msgid "Compres col·lectives"
 msgstr ""
@@ -638,11 +645,6 @@ msgid "Current Role"
 msgstr "Rol actual"
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
-msgid "Customize documents text"
-msgstr "Personalització de textos en documents"
-
-#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_users_form_form_inherit
 msgid "DNI"
 msgstr ""
@@ -677,7 +679,6 @@ msgid "Draft"
 msgstr "Esborany"
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_energy_efficiency
 #: model:energy.action,name:energy_communities.energy_action_energy_efficiency
 msgid "Eficiencia energètica"
 msgstr "Eficiència Energètica"
@@ -700,7 +701,6 @@ msgid "Email is not valid"
 msgstr ""
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_thermal_energy
 #: model:energy.action,name:energy_communities.energy_action_thermal_energy
 msgid "Energia tèrmica i climatització"
 msgstr ""
@@ -743,11 +743,6 @@ msgstr "Responsable de la Comunitat Energètica"
 #: model:res.groups,name:energy_communities.role_ce_member_res_groups
 msgid "Energy Community Member"
 msgstr "Membre de la Comunitat Energètica"
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__ce_tag_ids
-msgid "Energy Community Services"
-msgstr "Serveis Comunitat Energètica"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_status
@@ -838,7 +833,6 @@ msgid "Force send invitation email in case it has been already sent"
 msgstr "Forçar enviament invitació en cas que ja s'hagi fet anteriorment"
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_citizen_education
 #: model:energy.action,name:energy_communities.energy_action_citizen_education
 msgid "Formació ciutadana"
 msgstr ""
@@ -860,7 +854,6 @@ msgid "Foundation date"
 msgstr "Data creació"
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_common_generation
 #: model:energy.action,name:energy_communities.energy_action_common_generation
 msgid "Generació renovable comunitaria"
 msgstr ""
@@ -1204,7 +1197,6 @@ msgid "Messages"
 msgstr "Missatges"
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_sustainable_mobility
 #: model:energy.action,name:energy_communities.energy_action_sustainable_mobility
 msgid "Mobilitat sostenible"
 msgstr ""
@@ -1370,16 +1362,6 @@ msgstr ""
 #, python-format
 msgid "Open"
 msgstr "Obert"
-
-#. module: energy_communities
-#: model:crm.tag,name:energy_communities.pack_1
-msgid "Pack 1"
-msgstr ""
-
-#. module: energy_communities
-#: model:crm.tag,name:energy_communities.pack_2
-msgid "Pack 2"
-msgstr ""
 
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_to_activate
@@ -1784,7 +1766,6 @@ msgid "Street"
 msgstr "Carrer"
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_renewable_energy
 #: model:energy.action,name:energy_communities.energy_action_renewable_energy
 msgid "Subministrament d'energia 100% renovable"
 msgstr ""
@@ -1819,6 +1800,11 @@ msgstr "Compte Telegram"
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__telegram_link
 msgid "Telegram link"
 msgstr "Enllaç de Telegram"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.website_form_submit_confirmation
+msgid "Thank You!"
+msgstr "Gràcies!"
 
 #. module: energy_communities
 #. odoo-python
