@@ -159,7 +159,6 @@ msgid "Admins to notify"
 msgstr ""
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_aggregate_demand
 #: model:energy.action,name:energy_communities.energy_action_aggregate_demand
 msgid "Agregació i flexibilitat de la demanda"
 msgstr ""
@@ -473,7 +472,6 @@ msgid "Compras colectivas"
 msgstr ""
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_collective_purchases
 #: model:energy.action,name:energy_communities.energy_action_collective_purchases
 msgid "Compres col·lectives"
 msgstr ""
@@ -665,7 +663,6 @@ msgid "Draft"
 msgstr ""
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_energy_efficiency
 #: model:energy.action,name:energy_communities.energy_action_energy_efficiency
 msgid "Eficiencia energètica"
 msgstr ""
@@ -688,7 +685,6 @@ msgid "Email is not valid"
 msgstr ""
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_thermal_energy
 #: model:energy.action,name:energy_communities.energy_action_thermal_energy
 msgid "Energia tèrmica i climatització"
 msgstr ""
@@ -730,11 +726,6 @@ msgstr ""
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_ce_member_res_groups
 msgid "Energy Community Member"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__ce_tag_ids
-msgid "Energy Community Services"
 msgstr ""
 
 #. module: energy_communities
@@ -826,7 +817,6 @@ msgid "Force send invitation email in case it has been already sent"
 msgstr ""
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_citizen_education
 #: model:energy.action,name:energy_communities.energy_action_citizen_education
 msgid "Formació ciutadana"
 msgstr ""
@@ -848,7 +838,6 @@ msgid "Foundation date"
 msgstr ""
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_common_generation
 #: model:energy.action,name:energy_communities.energy_action_common_generation
 msgid "Generació renovable comunitaria"
 msgstr ""
@@ -1189,7 +1178,6 @@ msgid "Messages"
 msgstr ""
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_sustainable_mobility
 #: model:energy.action,name:energy_communities.energy_action_sustainable_mobility
 msgid "Mobilitat sostenible"
 msgstr ""
@@ -1352,16 +1340,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_status__open
 #, python-format
 msgid "Open"
-msgstr ""
-
-#. module: energy_communities
-#: model:crm.tag,name:energy_communities.pack_1
-msgid "Pack 1"
-msgstr ""
-
-#. module: energy_communities
-#: model:crm.tag,name:energy_communities.pack_2
-msgid "Pack 2"
 msgstr ""
 
 #. module: energy_communities
@@ -1757,7 +1735,6 @@ msgid "Street"
 msgstr ""
 
 #. module: energy_communities
-#: model:crm.tag,name:energy_communities.ce_tag_renewable_energy
 #: model:energy.action,name:energy_communities.energy_action_renewable_energy
 msgid "Subministrament d'energia 100% renovable"
 msgstr ""
