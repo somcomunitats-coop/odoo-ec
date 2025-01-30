@@ -569,19 +569,9 @@ msgid "Both of the above options"
 msgstr "Ambdues opcions anteriors a l'hora"
 
 #. module: energy_communities_crm
-#: model:ir.actions.act_window,name:energy_communities_crm.ce_crm_leads_ce_contact_action
-msgid "CE Contact"
-msgstr "Contacte de CE"
-
-#. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.ce_view_crm_case_opportunities_filter
 msgid "CE creation"
 msgstr "Creació de CE"
-
-#. module: energy_communities_crm
-#: model:ir.actions.act_window,name:energy_communities_crm.ce_crm_leads_new_ce_request_action
-msgid "CE creation requests"
-msgstr "Sol·licituds creació CE"
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping_field__destination_field_key
@@ -1029,22 +1019,6 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities_crm
-#: model:ir.ui.menu,name:energy_communities_crm.ce_crm_leads_ce_contact_menu
-msgid "EC Contact"
-msgstr "Contacte CE"
-
-#. module: energy_communities_crm
-#: model:ir.ui.menu,name:energy_communities_crm.ce_crm_leads_new_ce_request_menu
-msgid "EC Creation"
-msgstr "Creació CE"
-
-#. module: energy_communities_crm
-#: model:ir.actions.act_window,name:energy_communities_crm.ce_crm_leads_ce_newsletter_action
-#: model:ir.ui.menu,name:energy_communities_crm.ce_crm_leads_ce_info_menu
-msgid "EC Newsletter"
-msgstr "CE Newsletter"
-
-#. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
@@ -1104,20 +1078,9 @@ msgid "Fiscal Name"
 msgstr "Nom Fiscal"
 
 #. module: energy_communities_crm
-#: model:ir.ui.menu,name:energy_communities_crm.ce_crm_leads_menu
-msgid "Form submissions"
-msgstr "Entrades de formulari"
-
-#. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.view_crm_lead_metadata_mapping_form
 msgid "General"
 msgstr ""
-
-#. module: energy_communities_crm
-#: model:ir.actions.act_window,name:energy_communities_crm.ce_crm_leads_general_info_action
-#: model:ir.ui.menu,name:energy_communities_crm.ce_crm_leads_general_info_menu
-msgid "General Newsletter"
-msgstr "Newsletter general"
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__company_hierarchy_level
