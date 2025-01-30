@@ -169,7 +169,9 @@ class CreateInscription(models.AbstractModel):
         )
 
     def _is_cooperator(self, partner, project):
-        """Verify if the partner is a cooperative member."""
+        """Verify if the partner is a cooperative member o no member but autorized in energy actions"""
+        if partner.no_member_autorized_in_energy_actions:
+            return True
         return bool(
             self.env["cooperative.membership"]
             .sudo()
