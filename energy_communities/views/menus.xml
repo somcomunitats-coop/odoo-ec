@@ -19,14 +19,6 @@
     parent="ce_config_menu"
     action="ce_utm_sources_action"
   />
-    <menuitem id="ce_users_menu" name="Users" parent="ce_root_menu" />
-        <menuitem
-    id="ce_create_user_wizard"
-    name="Create user"
-    parent="ce_users_menu"
-    action="action_open_assign_admin_wizard"
-    groups="group_admin"
-  />
 
         <menuitem
     id="energy_actions_menu"

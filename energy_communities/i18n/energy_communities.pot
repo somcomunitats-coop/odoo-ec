@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-03 17:37+0000\n"
-"PO-Revision-Date: 2024-12-03 17:37+0000\n"
+"POT-Creation-Date: 2025-01-09 14:49+0000\n"
+"PO-Revision-Date: 2025-01-09 14:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -52,6 +52,16 @@ msgstr ""
 #: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__invite_user_through_kc
 #, python-format
 msgid "3) Send invitation email to confirm email and reset password"
+msgstr ""
+
+#. module: energy_communities
+#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_campanya
+msgid ""
+"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
+"class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2></br><div "
+"class =\"flex text-[#8a9f96]\">Cuando haya novedades con la Comunidad "
+"Energética contactaremos contigo y con las personas que también han mostrado"
+" interés y le ofreceremos apoyo para activarla. ¡Vamos!</div>"
 msgstr ""
 
 #. module: energy_communities
@@ -192,16 +202,6 @@ msgid "Application scope"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
-msgid "Assign Admin Wizard"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model,name:energy_communities.model_assign_admin_wizard
-msgid "Assign admin Wizard"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
@@ -265,7 +265,6 @@ msgid "CRM Lead"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_change_coordinator_wizard_form
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_create_users_wizard_form
 msgid "Cancelar"
@@ -529,20 +528,12 @@ msgid "Coordinator"
 msgstr ""
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:res.groups,name:energy_communities.role_coord_admin_res_groups
-#, python-format
 msgid "Coordinator Admin"
 msgstr ""
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:res.groups,name:energy_communities.role_coord_worker_res_groups
-#, python-format
 msgid "Coordinator Worker"
 msgstr ""
 
@@ -585,11 +576,6 @@ msgid "Create Map Place"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.actions.act_window,name:energy_communities.action_open_assign_admin_wizard
-msgid "Create User"
-msgstr ""
-
-#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "Create landing page"
 msgstr ""
@@ -600,8 +586,8 @@ msgid "Create map place"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.ui.menu,name:energy_communities.ce_create_user_wizard
-msgid "Create user"
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
+msgid "Create odoo website"
 msgstr ""
 
 #. module: energy_communities
@@ -615,7 +601,6 @@ msgid "Create users Wizard"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__create_uid
@@ -626,7 +611,6 @@ msgid "Created by"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__create_date
@@ -662,7 +646,6 @@ msgid "Discussion Channel"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__display_name
@@ -670,11 +653,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_utils_backend__display_name
 msgid "Display Name"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__display_footer_doc_policy_text
-msgid "Display footer doc policy text"
 msgstr ""
 
 #. module: energy_communities
@@ -699,7 +677,6 @@ msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__email
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__email
 msgid "Email"
 msgstr ""
 
@@ -741,11 +718,7 @@ msgid "Energy Community"
 msgstr ""
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:res.groups,name:energy_communities.role_ce_admin_res_groups
-#, python-format
 msgid "Energy Community Administrator"
 msgstr ""
 
@@ -755,11 +728,7 @@ msgid "Energy Community Manager"
 msgstr ""
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
 #: model:res.groups,name:energy_communities.role_ce_member_res_groups
-#, python-format
 msgid "Energy Community Member"
 msgstr ""
 
@@ -837,11 +806,6 @@ msgid "Failed Messages"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__first_name
-msgid "First name"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_follower_ids
 msgid "Followers"
 msgstr ""
@@ -854,11 +818,6 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_res_company__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_res_company__footer_doc_policy_text
-msgid "Footer doc policy text"
 msgstr ""
 
 #. module: energy_communities
@@ -880,15 +839,6 @@ msgstr ""
 #. module: energy_communities
 #: model:cm.map,proposal_form_subtitle_step_form:energy_communities.map_campanya
 msgid "Formulario de creación"
-msgstr ""
-
-#. module: energy_communities
-#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_campanya
-msgid ""
-"Formulario enviado.</br>¡Muchas gracias por tu interés</br>Cuando haya "
-"novedades con la Comunidad Energética contactaremos contigo y con las "
-"personas que también han mostrado interés y le ofreceremos apoyo para "
-"activarla. ¡Vamos!"
 msgstr ""
 
 #. module: energy_communities
@@ -947,7 +897,6 @@ msgid "Hierarchy level"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__id
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__id
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__id
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__id
@@ -1035,11 +984,6 @@ msgid "Is Follower"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__is_new_admin
-msgid "Is a new admin?"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model,name:energy_communities.model_account_move
 msgid "Journal Entry"
 msgstr ""
@@ -1102,12 +1046,10 @@ msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__default_lang_id
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__lang
 msgid "Language"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard____last_update
@@ -1118,7 +1060,6 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__write_uid
@@ -1129,7 +1070,6 @@ msgid "Last Updated by"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__write_date
@@ -1137,11 +1077,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_utils_backend__write_date
 msgid "Last Updated on"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__last_name
-msgid "Last name"
 msgstr ""
 
 #. module: energy_communities
@@ -1239,6 +1174,11 @@ msgid "Map not found slug_id: {}"
 msgstr ""
 
 #. module: energy_communities
+#: model:ir.model,name:energy_communities.model_mail_message
+msgid "Message"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_has_error
 msgid "Message Delivery error"
 msgstr ""
@@ -1267,6 +1207,11 @@ msgstr ""
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "My landing page"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
+msgid "My website"
 msgstr ""
 
 #. module: energy_communities
@@ -1544,11 +1489,6 @@ msgid "Priority"
 msgstr ""
 
 #. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.view_assign_admin_wizard_form
-msgid "Process"
-msgstr ""
-
-#. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/wizards/create_users_wizard.py:0
 #, python-format
@@ -1627,11 +1567,6 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__activity_user_id
 msgid "Responsible User"
-msgstr ""
-
-#. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__role
-msgid "Role"
 msgstr ""
 
 #. module: energy_communities
@@ -1740,15 +1675,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__signup_type
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__signup_type
 msgid "Signup Token Type"
-msgstr ""
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#, python-format
-msgid ""
-"Since you are not a coordinator admin you are not allowed to assign "
-"coordinator admins."
 msgstr ""
 
 #. module: energy_communities
@@ -2038,11 +1964,6 @@ msgid "User Current Role"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__user_is_coordinator_worker
-msgid "User Is Coordinator Worker"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__admin_user_endpoint
 msgid "User admin URL"
 msgstr ""
@@ -2052,13 +1973,6 @@ msgstr ""
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid "User group odoo-allow doesn't exist."
-msgstr ""
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/wizards/assign_admin_wizard.py:0
-#, python-format
-msgid "User not found"
 msgstr ""
 
 #. module: energy_communities
@@ -2084,7 +1998,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
 #: code:addons/energy_communities/models/res_users.py:0
-#: model:ir.ui.menu,name:energy_communities.ce_users_menu
 #, python-format
 msgid "Users"
 msgstr ""
@@ -2111,7 +2024,6 @@ msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__vat
-#: model:ir.model.fields,field_description:energy_communities.field_assign_admin_wizard__vat
 msgid "VAT"
 msgstr ""
 
@@ -2127,6 +2039,7 @@ msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__website
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__website_id
 msgid "Website"
 msgstr ""
 

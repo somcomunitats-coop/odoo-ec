@@ -9,7 +9,7 @@
             <field name="user_current_role" invisible="True" />
             <field
             name="membership_id"
-            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')]}"
+            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')],'readonly': 0}"
           />
             <field
             name="voluntary_share_total_contribution"

@@ -119,7 +119,7 @@ class CreateInscription(models.AbstractModel):
         if not owner:
             return True, _("Owner could not be created or found.")
 
-        contracted_power = float(values.get("supplypoint_contracted_power", 0))
+        contracted_power = float(values.get("supplypoint_contracted_power", "0").replace(",", "."))
         tariff = self._determine_tariff(contracted_power, values)
 
         return self._create_supply_point(
@@ -155,6 +155,7 @@ class CreateInscription(models.AbstractModel):
                     ("company_id", "=", project.company_id.id),
                     ("partner_id", "=", partner.id),
                     ("cooperator", "=", True),
+                    ("member", "=", True),
                 ]
             )
         )

@@ -146,7 +146,7 @@ class ResUsers(models.Model):
         active_roles = active_roles | global_role_lines | company_role_lines
         return self._max_priority_role_line(active_roles) | common_global_role_lines
 
-    def set_user_roles(self, company_id, role_id):
+    def _set_user_roles(self, company_id, role_id):
         self._check_role_can_be_assingned(company_id, role_id)
         return self._create_user_role_line(company_id, role_id)
 
@@ -210,22 +210,25 @@ class ResUsers(models.Model):
         )
         raise ValidationError(error)
 
+    def _create_internal_user_role_line(self):
+        internal_user = self.env.ref("energy_communities.role_internal_user").id
+        internal_user_role = self.env["res.users.role.line"].search(
+            [
+                ("user_id", "=", self.id),
+                ("role_id", "=", internal_user),
+            ]
+        )
+        if not internal_user_role:
+            self.env["res.users.role.line"].create(
+                {
+                    "user_id": self.id,
+                    "role_id": internal_user,
+                }
+            )
+
     def _create_user_role_line(self, company_id, role_id):
         if not self.login_date:
-            internal_user = self.env.ref("energy_communities.role_internal_user").id
-            internal_user_role = self.env["res.users.role.line"].search(
-                [
-                    ("user_id", "=", self.id),
-                    ("role_id", "=", internal_user),
-                ]
-            )
-            if not internal_user_role:
-                self.env["res.users.role.line"].create(
-                    {
-                        "user_id": self.id,
-                        "role_id": internal_user,
-                    }
-                )
+            self._create_internal_user_role_line()
         user_roles = self.env["res.users.role.line"].search(
             [
                 ("user_id", "=", self.id),
@@ -273,30 +276,7 @@ class ResUsers(models.Model):
             raise exceptions.UserError(_("Role not found"))
 
     def make_internal_user(self):
-        already_user = self.env["res.users.role.line"].search(
-            [
-                ("user_id.id", "=", self.id),
-                ("active", "=", True),
-                ("role_id.code", "=", "role_internal_user"),
-            ]
-        )
-        if not already_user:
-            role = self.env.ref("energy_communities.role_internal_user")
-            self.write(
-                {
-                    "role_line_ids": [
-                        (
-                            0,
-                            0,
-                            {
-                                "user_id": self.id,
-                                "active": True,
-                                "role_id": role.id,
-                            },
-                        )
-                    ]
-                }
-            )
+        self._create_internal_user_role_line()
 
     def make_ce_user(self, company_id, role_name):
         related_company = self.company_ids.filtered(
@@ -314,21 +294,9 @@ class ResUsers(models.Model):
         )
         if not current_role:
             role = self.env["res.users.role"].search([("code", "=", role_name)])
-            self.write(
-                {
-                    "role_line_ids": [
-                        (
-                            0,
-                            0,
-                            {
-                                "user_id": self.id,
-                                "active": True,
-                                "role_id": role.id,
-                                "company_id": company_id,
-                            },
-                        )
-                    ]
-                }
+            self.sudo()._set_user_roles(
+                self.env["res.company"].browse(company_id),
+                self.env.ref("energy_communities.{}".format(role_name)),
             )
 
     def make_coord_user(self, company_id, role_name):
@@ -410,7 +378,7 @@ class ResUsers(models.Model):
             user_vals["company_ids"] = partner_id.company_ids
             user = self.sudo().with_context(no_reset_password=True).create(user_vals)
 
-        user.sudo().set_user_roles(company_id, role_id)
+        user.sudo()._set_user_roles(company_id, role_id)
 
         if action in ("create_kc_user", "invite_user_through_kc"):
             user.create_users_on_keycloak()

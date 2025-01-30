@@ -84,6 +84,7 @@
             <xpath expr="//notebook" position="inside">
                 <page string="Energy Communities">
                     <group>
+                        <field name="account_fiscal_country_id" />
                         <field name="hierarchy_level" />
                         <field name="parent_id_filtered_ids" invisible="True" />
                         <field
@@ -105,10 +106,6 @@
                           </tree>
                         </field>
                         <field name="admins" />
-                    </group>
-                    <group name="customize_docs_text" string="Customize documents text">
-                      <field name="display_footer_doc_policy_text" />
-                      <field name="footer_doc_policy_text" />
                     </group>
                     <group>
                       <field name="foundation_date" />
