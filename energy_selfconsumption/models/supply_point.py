@@ -14,7 +14,7 @@ class SupplyPoint(models.Model):
     _sql_constraints = {
         (
             "unique_code_company_id",
-            "unique (code, company_id)",
+            "unique(code, company_id)",
             _("A supply point with this code already exists."),
         )
     }

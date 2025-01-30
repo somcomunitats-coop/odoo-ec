@@ -98,7 +98,6 @@
                         <field name="legal_form" />
                         <field name="comercial_name" />
                         <field name="ce_status" />
-                        <field name="ce_tag_ids" />
                         <field name="community_energy_action_ids" widget="one2many">
                           <tree editable="top">
                               <field name="energy_action_id" />

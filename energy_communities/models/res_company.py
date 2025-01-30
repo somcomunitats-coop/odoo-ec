@@ -61,7 +61,6 @@ class ResCompany(models.Model):
         readonly=True,
         store=False,
     )
-    ce_tag_ids = fields.Many2many("crm.tag", string="Energy Community Services")
     foundation_date = fields.Date("Foundation date")
     social_telegram = fields.Char("Telegram Account")
     allow_new_members = fields.Boolean(string="Allow new members", default=True)
@@ -288,14 +287,6 @@ class ResCompany(models.Model):
                 .user_id
             )
         return users
-
-    def get_active_services(self):
-        """Return a list of dicts with the key data of each active Service"""
-        self.ensure_one()
-        res = []
-        for tag in self.ce_tag_ids:
-            res.append({"id": tag.id, "name": tag.name, "ext_id": tag.tag_ext_id})
-        return res
 
     def get_energy_actions_dict_list(self):
         """Return a list of dicts with the key data of each energy action"""

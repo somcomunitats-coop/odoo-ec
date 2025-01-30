@@ -188,14 +188,9 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         }
 
     def create_company(self):
-        pack_2_tag = self.env.ref("energy_communities.pack_2")
         allow_new_members = False
-        if self.crm_lead_id:
-            crm_pack_2_tag = self.crm_lead_id.tag_ids.filtered(
-                lambda tag: tag.id == pack_2_tag.id
-            )
-            if crm_pack_2_tag and self.ce_member_status == "open":
-                allow_new_members = True
+        if self.ce_member_status == "open":
+            allow_new_members = True
         vat = False
         if self.vat:
             vat = self.vat.replace(" ", "").upper()
@@ -241,8 +236,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "social_instagram": self.ce_instagram_url,
                     "social_facebook": self.ce_facebook_url,
                     "logo": self.landing_logo_file,
-                    # TODO: remove deprecated ce_tag_ids
-                    "ce_tag_ids": ce_tag_mids,
                     "community_energy_action_ids": energy_action_ids,
                 }
             )

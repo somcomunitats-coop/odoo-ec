@@ -9,7 +9,7 @@ class ServiceContract(models.Model):
     _sql_constraints = {
         (
             "unique_service_id_provider_id_project_id",
-            "unique (service_id, provider_id, project_id)",
+            "unique(service_id, provider_id, project_id)",
             _("There's already a service with this provider assigned to this project."),
         )
     }
