@@ -1,0 +1,16 @@
+<odoo>
+  <data>
+    <record
+      id="community_members_formula"
+      model="contract.line.qty.formula"
+    >
+      <field name="name">Community members</field>
+      <field name="code">
+result = env['res.users.role.line'].search_count([
+('role_id','in',[env.ref("energy_communities.role_ce_admin").id,env.ref("energy_communities.role_ce_member").id]),
+('company_id','=',contract.community_company_id.id)
+])
+      </field>
+    </record>
+  </data>
+</odoo>
