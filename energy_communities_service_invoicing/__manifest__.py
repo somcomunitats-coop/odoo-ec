@@ -15,6 +15,7 @@
     # always loaded
     "data": [
         "security/ir.model.access.csv",
+        "data/contract_line_qty_formula_data.xml",
         "views/menus.xml",
         "views/contract_views.xml",
         "views/sale_order_views.xml",
