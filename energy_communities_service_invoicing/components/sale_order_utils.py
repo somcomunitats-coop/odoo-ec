@@ -15,7 +15,7 @@ class SaleOrderUtils(Component):
     ):
         so_creation_dict = {
             "partner_id": company_id.partner_id.id,
-            "company_id": company_id.id,
+            # "company_id": company_id.id,
             "community_company_id": community_company_id.id,
             "pricelist_id": pricelist_id.id,
             "order_line": [

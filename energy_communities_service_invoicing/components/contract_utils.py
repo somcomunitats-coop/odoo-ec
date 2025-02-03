@@ -48,7 +48,7 @@ class ContractUtils(Component):
             usage="sale.order.utils", model_name="sale.order"
         )
         new_service_invoicing_id = sale_order_utils.create_service_invoicing(
-            self.work.record.company_id,
+            self.work.record.partner_id.related_company_id,
             self.work.record.community_company_id,
             self._get_service_pack_id()
             if executed_modification_action not in ["modify_all", "modify_service_pack"]

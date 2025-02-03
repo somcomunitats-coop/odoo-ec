@@ -32,7 +32,7 @@ class ResPartner(models.Model):
     )
     related_company_id = fields.Many2one(
         "res.company",
-        string="Related company",
+        string="Represented company",
         compute="compute_related_company_id",
         store=False,
     )
