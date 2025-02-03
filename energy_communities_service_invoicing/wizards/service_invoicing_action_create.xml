@@ -14,6 +14,7 @@
             <field name="start_date" required="1"/>
             <field name="service_pack_id" required="1" domain="[('is_contract','=',True)]"/>
             <field name="pricelist_id" required="1" />
+            <!--<field name="discount" required="1" />-->
           </group>
         </sheet>
         <footer>

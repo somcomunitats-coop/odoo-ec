@@ -19,6 +19,12 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
     service_pack_id = fields.Many2one("product.product", string="Service pack")
     pricelist_id = fields.Many2one("product.pricelist", string="PriceList")
     start_date = fields.Date(string="Start date")
+    # TODO: We could implement this to apply discount or in contract basis.
+    # discount = fields.Float(
+    #     string="Discount (%)",
+    #     digits="Discount",
+    #     default=0
+    # )
 
     def execute_create(self):
         with sale_order_utils(self.env) as component:
@@ -28,5 +34,6 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                 self.service_pack_id,
                 self.pricelist_id,
                 self.start_date,
+                # self.discount
             )
         return service_invoicing_view(self.env, service_invoicing_id)
