@@ -19,21 +19,27 @@
     <field name="model">contract.contract</field>
     <field name="inherit_id" ref="product_contract.contract_contract_customer_form_view" />
     <field name="arch" type="xml">
+      <xpath expr="//header" position="inside">
+        <field name="status" widget="statusbar" />
+      </xpath>
       <xpath expr="//button[@name='action_preview']" position="after">
         <button
           name="action_activate_contract"
           type="object"
           string="Activate"
+          attrs="{'invisible':[('status','not in',['ready_to_start'])]}"
         />
         <button
           name="action_modify_contract"
           type="object"
           string="Modify"
+          attrs="{'invisible':[('status','not in',['ready_to_start','in_progress'])]}"
         />
         <button
           name="action_close_contract"
           type="object"
           string="Close"
+          attrs="{'invisible':[('status','not in',['ready_to_start','in_progress'])]}"
         />
       </xpath>
       <xpath expr="//field[@name='partner_id']" position="after">
@@ -43,8 +49,6 @@
       <xpath expr="//field[@name='user_id']" position="after">
         <field name="date_start" />
         <field name="recurring_next_date" />
-        <field name="next_period_date_start" />
-        <field name="next_period_date_end" />
         <field name="date_end" />
         <field name="predecessor_contract_id" />
         <field name="successor_contract_id" />

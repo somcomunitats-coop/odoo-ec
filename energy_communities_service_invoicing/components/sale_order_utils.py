@@ -56,19 +56,22 @@ class SaleOrderUtils(Component):
             executed_modification_action,
         )
         so.action_confirm()
-        service_invoicing_id = self.get_related_contracts(so)
+        service_invoicing_id = self._get_related_contracts(so)
         # TODO: We must call contract_utils with a better component and workcontext modification approach
         with contract_utils(self.env, service_invoicing_id) as component:
+            component.clean_non_service_lines()
             component.set_start_date(start_date)
         return service_invoicing_id
 
-    def create_service_invoicing_initial(
+    def create_service_invoicing_ready_to_start(
         self,
         company_id,
         community_company_id,
         service_pack_id,
         pricelist_id,
         start_date,
+        executed_action,
+        executed_modification_action="none",
     ):
         service_invoicing_id = self.create_service_invoicing(
             company_id,
@@ -76,14 +79,15 @@ class SaleOrderUtils(Component):
             service_pack_id,
             pricelist_id,
             start_date,
-            "activate",
+            executed_action,
+            executed_modification_action,
         )
         # TODO: We must call contract_utils with a better component and workcontext modification approach
         with contract_utils(self.env, service_invoicing_id) as component:
-            component.set_contract_on_hold()
+            component.set_contract_ready_to_start()
         return service_invoicing_id
 
-    def get_related_contracts(self, sale_order):
+    def _get_related_contracts(self, sale_order):
         return (
             self.env["contract.line"]
             .search([("sale_order_line_id", "in", sale_order.order_line.ids)])
