@@ -3,6 +3,12 @@ from odoo.api import Environment
 
 from odoo.addons.contract.models.contract import ContractContract
 
+_CONTRACT_STATUS_VALUES = [
+    ("ready_to_start", _("Ready to start")),
+    ("in_progress", _("In progress")),
+    ("closed_planned", _("Planned closure")),
+    ("closed", _("Closed")),
+]
 _SERVICE_INVOICING_EXECUTED_ACTION_VALUES = [
     ("activate", _("Activate")),
     ("modification", _("Modification")),

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
@@ -18,7 +20,6 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
     community_company_id = fields.Many2one("res.company", string="Community")
     service_pack_id = fields.Many2one("product.product", string="Service pack")
     pricelist_id = fields.Many2one("product.pricelist", string="PriceList")
-    start_date = fields.Date(string="Start date")
     # TODO: We could implement this to apply discount or in contract basis.
     # discount = fields.Float(
     #     string="Discount (%)",
@@ -28,12 +29,13 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
 
     def execute_create(self):
         with sale_order_utils(self.env) as component:
-            service_invoicing_id = component.create_service_invoicing_initial(
+            service_invoicing_id = component.create_service_invoicing_ready_to_start(
                 self.company_id,
                 self.community_company_id,
                 self.service_pack_id,
                 self.pricelist_id,
-                self.start_date,
+                datetime.now(),
+                "activate",
                 # self.discount
             )
         return service_invoicing_view(self.env, service_invoicing_id)

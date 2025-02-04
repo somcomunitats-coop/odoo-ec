@@ -1,6 +1,10 @@
+from datetime import datetime
+
 from odoo import api, fields, models
 from odoo.exceptions import AccessError
 from odoo.tools.translate import _
+
+from ..utils import _CONTRACT_STATUS_VALUES
 
 
 class ContractContract(models.Model):
@@ -17,6 +21,18 @@ class ContractContract(models.Model):
     successor_contract_id = fields.Many2one(
         "contract.contract", string="Successor contract"
     )
+    status = fields.Selection(
+        selection=_CONTRACT_STATUS_VALUES,
+        required=True,
+        string="Status",
+        default="in_progress",
+    )
+
+    def compute_close_status(self, execution_date):
+        if execution_date.strftime("%Y-%m-%d") == datetime.now().strftime("%Y-%m-%d"):
+            self.write({"status": "closed"})
+        else:
+            self.write({"status": "closed_planned"})
 
     def action_activate_contract(self):
         return self._action_contract("activate")
