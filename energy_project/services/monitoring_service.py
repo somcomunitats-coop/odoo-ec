@@ -1,5 +1,7 @@
 from functools import lru_cache, reduce
 
+from sentry_sdk import capture_exception
+
 from ..backends.base import Backend
 from ..backends.domain import EnergyCurve, MeasureCurve
 
@@ -125,87 +127,97 @@ class MonitoringService:
     def energy_selfconsumption_ratio_by_member(
         self, system_id, member_id, date_from, date_to
     ) -> float:
-        selfconsumption_ratio_accu = lambda accumulator, point: (
-            accumulator[0] + point.selfconsumption,
-            accumulator[1] + point.production,
-        )
-        daily_metrics = self._get_project_daily_metrics_by_member(
-            system_id, member_id, date_from, date_to
-        )
-        if daily_metrics:
+        try:
+            selfconsumption_ratio_accu = lambda accumulator, point: (
+                accumulator[0] + point.selfconsumption,
+                accumulator[1] + point.production,
+            )
+            daily_metrics = self._get_project_daily_metrics_by_member(
+                system_id, member_id, date_from, date_to
+            )
             selfconsumed_energy, generated_energy = reduce(
                 selfconsumption_ratio_accu, daily_metrics, (0, 0)
             )
             return round(selfconsumed_energy / generated_energy, 4)
-        return 0.0
+        except Exception as e:
+            capture_exception(e)
+            return 0.0
 
     def energy_surplus_ratio_by_member(
         self, system_id, member_id, date_from, date_to
     ) -> float:
-        surplus_ratio_accu = lambda accumulator, point: (
-            accumulator[0] + point.gridinjection,
-            accumulator[1] + point.production,
-        )
-        daily_metrics = self._get_project_daily_metrics_by_member(
-            system_id, member_id, date_from, date_to
-        )
-        if daily_metrics:
+        try:
+            surplus_ratio_accu = lambda accumulator, point: (
+                accumulator[0] + point.gridinjection,
+                accumulator[1] + point.production,
+            )
+            daily_metrics = self._get_project_daily_metrics_by_member(
+                system_id, member_id, date_from, date_to
+            )
             energy_gridinjection, energy_production = reduce(
                 surplus_ratio_accu, daily_metrics, (0, 0)
             )
             return round(energy_gridinjection / energy_production, 4)
-        return 0.0
+        except Exception as e:
+            capture_exception(e)
+            return 0.0
 
     def energy_usage_ratio_by_member(
         self, system_id, member_id, date_from, date_to
     ) -> float:
-        energy_usage_accu = lambda accumulator, point: (
-            accumulator[0] + point.production,
-            accumulator[1] + point.consumption,
-        )
-        daily_metrics = self._get_project_daily_metrics_by_member(
-            system_id, member_id, date_from, date_to
-        )
-        if daily_metrics:
+        try:
+            energy_usage_accu = lambda accumulator, point: (
+                accumulator[0] + point.production,
+                accumulator[1] + point.consumption,
+            )
+            daily_metrics = self._get_project_daily_metrics_by_member(
+                system_id, member_id, date_from, date_to
+            )
             energy_production, energy_consumption = reduce(
                 energy_usage_accu, daily_metrics, (0, 0)
             )
             return round(energy_production / energy_consumption, 4)
-        return 0.0
+        except Exception as e:
+            capture_exception(e)
+            return 0.0
 
     def energy_usage_ratio_from_grid_by_member(
         self, system_id, member_id, date_from, date_to
     ) -> float:
-        energy_usage_ratio_from_grid_accu = lambda accumulator, point: (
-            accumulator[0] + point.gridconsumption,
-            accumulator[1] + point.consumption,
-        )
-        daily_metrics = self._get_project_daily_metrics_by_member(
-            system_id, member_id, date_from, date_to
-        )
-        if daily_metrics:
+        try:
+            energy_usage_ratio_from_grid_accu = lambda accumulator, point: (
+                accumulator[0] + point.gridconsumption,
+                accumulator[1] + point.consumption,
+            )
+            daily_metrics = self._get_project_daily_metrics_by_member(
+                system_id, member_id, date_from, date_to
+            )
             energy_gridconsumption, energy_consumption = reduce(
                 energy_usage_ratio_from_grid_accu, daily_metrics, (0, 0)
             )
             return round(energy_gridconsumption / energy_consumption, 4)
-        return 0.0
+        except Exception as e:
+            capture_exception(e)
+            return 0.0
 
     def energy_usage_ratio_from_selfconsumption_by_member(
         self, system_id, member_id, date_from, date_to
     ) -> float:
-        energy_production_ratio_accu = lambda accumulator, point: (
-            accumulator[0] + point.selfconsumption,
-            accumulator[1] + point.consumption,
-        )
-        daily_metrics = self._get_project_daily_metrics_by_member(
-            system_id, member_id, date_from, date_to
-        )
-        if daily_metrics:
+        try:
+            energy_production_ratio_accu = lambda accumulator, point: (
+                accumulator[0] + point.selfconsumption,
+                accumulator[1] + point.consumption,
+            )
+            daily_metrics = self._get_project_daily_metrics_by_member(
+                system_id, member_id, date_from, date_to
+            )
             energy_selfconsumption, energy_consumption = reduce(
                 energy_production_ratio_accu, daily_metrics, (0, 0)
             )
             return round(energy_selfconsumption / energy_consumption, 4)
-        return 0.0
+        except Exception as e:
+            capture_exception(e)
+            return 0.0
 
     def co2save_by_member(self, system_id, member_id, date_from, date_to) -> float:
         energy_selfconsumption = self.energy_selfconsumption_by_member(
