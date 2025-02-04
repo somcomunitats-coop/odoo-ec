@@ -1,8 +1,9 @@
-# Copyright 2017 LasLabs Inc.
-# Copyright 2018 ACSONE SA/NV.
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
 from odoo import _, api, fields, models
+
+from ..utils import (
+    _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES,
+    _SALE_ORDER_SERVICE_INVOICING_MODIFICATION_ACTION_VALUES,
+)
 
 
 class SaleOrder(models.Model):
@@ -14,9 +15,18 @@ class SaleOrder(models.Model):
         string="Related community",
         domain="[('hierarchy_level','=','community')]",
     )
-    # company_id = fields.Many2one(
-    #     required=False, index=True
-    # )
+
+    service_invoicing_action = fields.Selection(
+        selection=_SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES,
+        required=True,
+        string="Service invoicing action",
+        default="none",
+    )
+    service_invoicing_modification_action = fields.Selection(
+        selection=_SALE_ORDER_SERVICE_INVOICING_MODIFICATION_ACTION_VALUES,
+        string="Modification action",
+        default="none",
+    )
 
     def action_create_contract(self):
         contracts = super().action_create_contract()
