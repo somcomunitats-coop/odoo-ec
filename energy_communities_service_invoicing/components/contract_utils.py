@@ -57,6 +57,8 @@ class ContractUtils(Component):
             if executed_modification_action not in ["modify_all", "modify_pricelist"]
             else pricelist_id,
             execution_date + timedelta(days=1),
+            "modification",
+            executed_modification_action,
         )
         self._setup_successors_and_predecessors(new_service_invoicing_id)
         return new_service_invoicing_id

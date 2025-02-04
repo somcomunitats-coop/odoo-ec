@@ -28,7 +28,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
 
     def execute_create(self):
         with sale_order_utils(self.env) as component:
-            service_invoicing_id = component.create_service_invoicing_on_hold(
+            service_invoicing_id = component.create_service_invoicing_initial(
                 self.company_id,
                 self.community_company_id,
                 self.service_pack_id,
