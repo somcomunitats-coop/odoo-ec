@@ -5,19 +5,23 @@ from odoo.addons.energy_communities.utils import contract_utils
 class SaleOrderUtils(Component):
     _inherit = "sale.order.utils"
 
-    def create_service_invoicing_activation_sale_order(
+    def create_service_invoicing_sale_order(
         self,
         company_id,
         community_company_id,
         service_pack_id,
         pricelist_id,
         start_date,
+        executed_action,
+        executed_modification_action,
     ):
         so_creation_dict = {
             "partner_id": company_id.partner_id.id,
             # "company_id": company_id.id,
             "community_company_id": community_company_id.id,
             "pricelist_id": pricelist_id.id,
+            "service_invoicing_action": executed_action,
+            "service_invoicing_modification_action": executed_modification_action,
             "order_line": [
                 (
                     0,
@@ -39,9 +43,17 @@ class SaleOrderUtils(Component):
         service_pack_id,
         pricelist_id,
         start_date,
+        executed_action,
+        executed_modification_action="none",
     ):
-        so = self.create_service_invoicing_activation_sale_order(
-            company_id, community_company_id, service_pack_id, pricelist_id, start_date
+        so = self.create_service_invoicing_sale_order(
+            company_id,
+            community_company_id,
+            service_pack_id,
+            pricelist_id,
+            start_date,
+            executed_action,
+            executed_modification_action,
         )
         so.action_confirm()
         service_invoicing_id = self.get_related_contracts(so)
@@ -50,7 +62,7 @@ class SaleOrderUtils(Component):
             component.set_start_date(start_date)
         return service_invoicing_id
 
-    def create_service_invoicing_on_hold(
+    def create_service_invoicing_initial(
         self,
         company_id,
         community_company_id,
@@ -59,7 +71,12 @@ class SaleOrderUtils(Component):
         start_date,
     ):
         service_invoicing_id = self.create_service_invoicing(
-            company_id, community_company_id, service_pack_id, pricelist_id, start_date
+            company_id,
+            community_company_id,
+            service_pack_id,
+            pricelist_id,
+            start_date,
+            "activate",
         )
         # TODO: We must call contract_utils with a better component and workcontext modification approach
         with contract_utils(self.env, service_invoicing_id) as component:
