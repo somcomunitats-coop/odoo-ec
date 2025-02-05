@@ -907,6 +907,13 @@ msgstr ""
 msgid "is recorded in the register of cooperators under number"
 msgstr "está recogido en el registro socias con el número"
 
+#. module: cooperator
+#: model:ir.ui.menu,name:cooperator.menu_cooperator_cooperator
+#: model:ir.ui.menu,name:cooperator.menu_cooperator_main
+#: model_terms:ir.ui.view,arch_db:cooperator.view_res_partner_filter
+msgid "Cooperators"
+msgstr "Socias"
+
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
 msgid "+32 456 926 5059"

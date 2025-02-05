@@ -20,6 +20,9 @@ _VOLUNTARY_SHARE_FORM_FIELD = [
 
 
 class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
+    def get_subscription_response(self, values, kwargs):
+        return request.render("energy_communities.website_form_submit_confirmation")
+
     @http.route()
     def display_become_cooperator_page(self, **kwargs):
         target_odoo_company_id = False

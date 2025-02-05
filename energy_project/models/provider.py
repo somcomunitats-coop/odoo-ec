@@ -34,6 +34,5 @@ class Provider(models.Model):
     )
 
     def backend(self):
-        self.ensure_one()
-        if self.name == "Arkenova":
+        if "arkenova" in self.name.lower():
             return ArkenovaBackend(self.uri, self.token)
