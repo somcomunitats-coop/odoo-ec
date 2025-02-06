@@ -43,6 +43,7 @@ class SaleOrderUtils(Component):
         service_pack_id,
         pricelist_id,
         start_date,
+        discount,
         executed_action,
         executed_modification_action="none",
     ):
@@ -61,6 +62,7 @@ class SaleOrderUtils(Component):
         with contract_utils(self.env, service_invoicing_id) as component:
             component.clean_non_service_lines()
             component.set_start_date(start_date)
+            component.set_discount(discount)
         return service_invoicing_id
 
     def create_service_invoicing_ready_to_start(
@@ -70,6 +72,7 @@ class SaleOrderUtils(Component):
         service_pack_id,
         pricelist_id,
         start_date,
+        discount,
         executed_action,
         executed_modification_action="none",
     ):
@@ -79,12 +82,13 @@ class SaleOrderUtils(Component):
             service_pack_id,
             pricelist_id,
             start_date,
+            discount,
             executed_action,
             executed_modification_action,
         )
         # TODO: We must call contract_utils with a better component and workcontext modification approach
         with contract_utils(self.env, service_invoicing_id) as component:
-            component.set_contract_ready_to_start()
+            component.set_contract_status_ready_to_start()
         return service_invoicing_id
 
     def _get_related_contracts(self, sale_order):

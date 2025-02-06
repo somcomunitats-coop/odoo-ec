@@ -6,30 +6,33 @@ from odoo.addons.component.core import Component
 class ContractUtils(Component):
     _inherit = "contract.utils"
 
-    def set_contract_ready_to_start(self):
+    def set_contract_status_ready_to_start(self):
         for line in self.work.record.contract_line_ids:
             line.cancel()
         self.work.record.write({"status": "ready_to_start"})
 
-    def set_contract_active(self, execution_date):
+    def set_contract_status_active(self, execution_date):
         self._uncancel_contract_lines(execution_date)
         self.set_start_date(execution_date)
         self.work.record.write({"status": "in_progress"})
 
-    def set_contract_closed(self, execution_date):
+    def set_contract_status_closed(self, execution_date):
         for line in self.work.record.contract_line_ids:
             if self.work.record.status == "ready_to_start":
                 self._uncancel_contract_lines(execution_date)
             line.write({"date_end": execution_date})
             line._compute_state()
-        self.work.record.compute_close_status(execution_date)
+        self.work.record.set_close_status_type_by_date(execution_date)
 
     def set_start_date(self, date_start):
         self.work.record.write({"date_start": date_start})
         for line in self.work.record.contract_line_ids:
-            if self._is_service_line(line):
-                line.write({"date_start": date_start})
-                line._compute_state()
+            line.write({"date_start": date_start})
+            line._compute_state()
+
+    def set_discount(self, discount):
+        for line in self.work.record.contract_line_ids:
+            line.write({"discount": discount})
 
     def clean_non_service_lines(self):
         for line in self.work.record.contract_line_ids:
@@ -45,7 +48,7 @@ class ContractUtils(Component):
         service_pack_id=None,
     ):
         initial_status = self.work.record.status
-        self.set_contract_closed(execution_date)
+        self.set_contract_status_closed(execution_date)
         sale_order_utils = self.component(
             usage="sale.order.utils", model_name="sale.order"
         )
@@ -61,6 +64,7 @@ class ContractUtils(Component):
             "start_date": execution_date + timedelta(days=1),
             "executed_action": "modification",
             "executed_modification_action": executed_modification_action,
+            "discount": self.work.record.discount,
         }
         if initial_status == "ready_to_start":
             new_service_invoicing_id = (
