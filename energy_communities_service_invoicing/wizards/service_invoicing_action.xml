@@ -12,8 +12,19 @@
             <field name="executed_action" invisible="1" />
             <field name="service_invoicing_id" required="1" domain="[('community_company_id','!=',False)]"/>
             <field name="execution_date" required="1"/>
-            <field name="pricelist_id" />
-            <field name="service_pack_id" domain="[('is_contract','=',True)]"/>
+            <field
+              name="pricelist_id"
+              attrs="{
+               'invisible': [('executed_action','!=','modification')],
+              }"
+            />
+            <field
+              name="service_pack_id"
+              domain="[('is_contract','=',True)]"
+              attrs="{
+               'invisible': [('executed_action','!=','modification')],
+              }"
+            />
           </group>
         </sheet>
         <footer>
