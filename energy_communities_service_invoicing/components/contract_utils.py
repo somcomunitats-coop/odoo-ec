@@ -48,6 +48,7 @@ class ContractUtils(Component):
         service_pack_id=None,
     ):
         initial_status = self.work.record.status
+        executed_modification_action_list = executed_modification_action.split(",")
         self.set_contract_status_closed(execution_date)
         sale_order_utils = self.component(
             usage="sale.order.utils", model_name="sale.order"
@@ -55,12 +56,12 @@ class ContractUtils(Component):
         service_invoicing_params = {
             "company_id": self.work.record.partner_id.related_company_id,
             "community_company_id": self.work.record.community_company_id,
-            "service_pack_id": self._get_service_pack_id()
-            if executed_modification_action not in ["modify_all", "modify_service_pack"]
-            else service_pack_id,
-            "pricelist_id": self.work.record.pricelist_id
-            if executed_modification_action not in ["modify_all", "modify_pricelist"]
-            else pricelist_id,
+            "service_pack_id": service_pack_id
+            if "modify_service_pack" in executed_modification_action_list
+            else self.work.record.service_activation_product_id,
+            "pricelist_id": pricelist_id
+            if "modify_pricelist" in executed_modification_action_list
+            else self.work.record.pricelist_id,
             "start_date": execution_date + timedelta(days=1),
             "executed_action": "modification",
             "executed_modification_action": executed_modification_action,
@@ -88,20 +89,6 @@ class ContractUtils(Component):
                 )
             )
             return contract_line.product_id in contract_template_services
-        return False
-
-    def _get_service_pack_id(self):
-        if self.work.record.contract_template_id:
-            return self.env["product.product"].search(
-                [
-                    (
-                        "property_contract_template_id",
-                        "=",
-                        self.work.record.contract_template_id.id,
-                    )
-                ],
-                limit=1,
-            )
         return False
 
     def _setup_successors_and_predecessors(self, new_service_invoicing_id):

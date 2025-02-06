@@ -1,9 +1,6 @@
 from odoo import _, api, fields, models
 
-from ..utils import (
-    _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES,
-    _SALE_ORDER_SERVICE_INVOICING_MODIFICATION_ACTION_VALUES,
-)
+from ..utils import _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES
 
 
 class SaleOrder(models.Model):
@@ -22,8 +19,7 @@ class SaleOrder(models.Model):
         string="Service invoicing action",
         default="none",
     )
-    service_invoicing_modification_action = fields.Selection(
-        selection=_SALE_ORDER_SERVICE_INVOICING_MODIFICATION_ACTION_VALUES,
+    service_invoicing_modification_action = fields.Char(
         string="Modification action",
         default="none",
     )
