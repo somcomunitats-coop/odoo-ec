@@ -48,8 +48,10 @@
       <!-- For dev debug purposes -->
       <xpath expr="//field[@name='user_id']" position="after">
         <field name="date_start" />
+        <field name="last_date_invoiced" />
         <field name="recurring_next_date" />
         <field name="date_end" />
+        <field name="discount" />
         <field name="predecessor_contract_id" />
         <field name="successor_contract_id" />
       </xpath>

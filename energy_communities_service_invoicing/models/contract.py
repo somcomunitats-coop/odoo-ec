@@ -27,8 +27,31 @@ class ContractContract(models.Model):
         string="Status",
         default="in_progress",
     )
+    discount = fields.Float(
+        string="Discount (%)",
+        digits="Discount",
+        compute="_compute_discount",
+        store=False,
+    )
+    last_date_invoiced = fields.Date(
+        string="Last Date Invoiced", compute="_compute_last_date_invoiced", store=False
+    )
 
-    def compute_close_status(self, execution_date):
+    @api.depends("contract_line_ids")
+    def _compute_discount(self):
+        for record in self:
+            if record.contract_line_ids:
+                record.discount = record.contract_line_ids[0].discount
+
+    @api.depends("contract_line_ids")
+    def _compute_last_date_invoiced(self):
+        for record in self:
+            if record.contract_line_ids:
+                record.last_date_invoiced = record.contract_line_ids[
+                    0
+                ].last_date_invoiced
+
+    def set_close_status_type_by_date(self, execution_date):
         if execution_date.strftime("%Y-%m-%d") == datetime.now().strftime("%Y-%m-%d"):
             self.write({"status": "closed"})
         else:

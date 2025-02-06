@@ -31,11 +31,11 @@ class ServiceInvoicingActionWizard(models.TransientModel):
 
     def execute_activate(self):
         with contract_utils(self.env, self.service_invoicing_id) as component:
-            component.set_contract_active(self.execution_date)
+            component.set_contract_status_active(self.execution_date)
 
     def execute_close(self):
         with contract_utils(self.env, self.service_invoicing_id) as component:
-            component.set_contract_closed(self.execution_date)
+            component.set_contract_status_closed(self.execution_date)
 
     def execute_modify(self):
         with contract_utils(self.env, self.service_invoicing_id) as component:
