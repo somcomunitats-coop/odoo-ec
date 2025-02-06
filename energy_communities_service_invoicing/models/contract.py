@@ -36,6 +36,12 @@ class ContractContract(models.Model):
     last_date_invoiced = fields.Date(
         string="Last Date Invoiced", compute="_compute_last_date_invoiced", store=False
     )
+    service_activation_product_id = fields.Many2one(
+        "product.product",
+        string="Service Activation Product",
+        compute="_compute_service_activation_product_id",
+        store=False,
+    )
 
     @api.depends("contract_line_ids")
     def _compute_discount(self):
@@ -50,6 +56,23 @@ class ContractContract(models.Model):
                 record.last_date_invoiced = record.contract_line_ids[
                     0
                 ].last_date_invoiced
+
+    @api.depends("contract_template_id")
+    def _compute_service_activation_product_id(self):
+        for record in self:
+            if record.contract_template_id:
+                record.service_activation_product_id = self.env[
+                    "product.product"
+                ].search(
+                    [
+                        (
+                            "property_contract_template_id",
+                            "=",
+                            record.contract_template_id.id,
+                        )
+                    ],
+                    limit=1,
+                )
 
     def set_close_status_type_by_date(self, execution_date):
         if execution_date.strftime("%Y-%m-%d") == datetime.now().strftime("%Y-%m-%d"):

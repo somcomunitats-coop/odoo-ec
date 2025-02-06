@@ -14,17 +14,9 @@ _SERVICE_INVOICING_EXECUTED_ACTION_VALUES = [
     ("modification", _("Modification")),
     ("close", _("Close")),
 ]
-_SERVICE_INVOICING_EXECUTED_MODIFICATION_ACTION_VALUES = [
-    ("modify_all", _("Modify prices and service pack")),
-    ("modify_pricelist", _("Modify prices")),
-    ("modify_service_pack", _("Modify service pack")),
-]
 _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES = [
     ("none", _("None"))
 ] + _SERVICE_INVOICING_EXECUTED_ACTION_VALUES[:-1]
-_SALE_ORDER_SERVICE_INVOICING_MODIFICATION_ACTION_VALUES = [
-    ("none", _("None"))
-] + _SERVICE_INVOICING_EXECUTED_MODIFICATION_ACTION_VALUES
 
 
 def service_invoicing_view(env: Environment, service_invoicing_id: ContractContract):
