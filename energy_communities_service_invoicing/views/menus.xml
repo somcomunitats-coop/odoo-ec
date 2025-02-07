@@ -1,3 +1,46 @@
 <odoo>
   <menuitem id="ce_service_invoicing_menu" name="Services" parent="energy_communities.ce_root_menu" sequence="1" />
+  <menuitem
+    name="Service invoicing"
+    id="view_service_invoicing_menu"
+    parent="ce_service_invoicing_menu"
+    action="view_service_invoicing_window"
+    sequence="100"
+  />
+  <menuitem
+    name="Packs"
+    id="view_service_packs_menu"
+    parent="ce_service_invoicing_menu"
+    action="view_service_packs_window"
+    sequence="200"
+  />
+  <menuitem
+    name="Services"
+    id="view_services_menu"
+    parent="ce_service_invoicing_menu"
+    action="view_services_window"
+    sequence="300"
+  />
+  <!-- TODO: Create Services entry point -->
+  <menuitem
+    name="Packs contract templates"
+    id="view_service_contract_templates_menu"
+    parent="ce_service_invoicing_menu"
+    action="view_service_contract_templates_window"
+    sequence="400"
+  />
+  <menuitem
+    name="Service actions (sale orders)"
+    id="view_service_sale_orders_menu"
+    parent="ce_service_invoicing_menu"
+    action="view_service_sale_orders_window"
+    sequence="500"
+  />
+  <menuitem
+    name="Tariffs"
+    id="view_service_tariffs_menu"
+    parent="ce_service_invoicing_menu"
+    action="view_service_tariffs_window"
+    sequence="600"
+  />
 </odoo>
