@@ -22,7 +22,7 @@ class ContractUtils(Component):
                 self._uncancel_contract_lines(execution_date)
             line.write({"date_end": execution_date})
             line._compute_state()
-        self.work.record.set_close_status_type_by_date(execution_date)
+        self.work.record.set_close_status_type_by_date()
 
     def set_start_date(self, date_start):
         self.work.record.write({"date_start": date_start})

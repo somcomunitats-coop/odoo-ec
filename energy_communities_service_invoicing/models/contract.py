@@ -74,8 +74,8 @@ class ContractContract(models.Model):
                     limit=1,
                 )
 
-    def set_close_status_type_by_date(self, execution_date):
-        if execution_date.strftime("%Y-%m-%d") == datetime.now().strftime("%Y-%m-%d"):
+    def set_close_status_type_by_date(self):
+        if self.date_end.strftime("%Y-%m-%d") == datetime.now().strftime("%Y-%m-%d"):
             self.write({"status": "closed"})
         else:
             self.write({"status": "closed_planned"})
@@ -103,3 +103,12 @@ class ContractContract(models.Model):
             "target": "new",
             "res_id": wizard.id,
         }
+
+    @api.model
+    def cron_close_todays_closed_planned_contacts(self):
+        impacted_contracts = self.env["contract.contract"].search(
+            [("status", "closed_planned")]
+        )
+        for contract in impacted_contracts:
+            contract.set_close_status_type_by_date()
+        return True
