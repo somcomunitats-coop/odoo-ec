@@ -32,6 +32,7 @@ class SaleOrder(models.Model):
                     {
                         "community_company_id": self.community_company_id.id,
                         "pricelist_id": self.pricelist_id.id,
+                        "payment_mode_id": self.payment_mode_id.id,
                     }
                 )
         return contracts

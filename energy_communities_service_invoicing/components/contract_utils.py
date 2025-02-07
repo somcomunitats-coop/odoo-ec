@@ -62,6 +62,7 @@ class ContractUtils(Component):
             "pricelist_id": pricelist_id
             if "modify_pricelist" in executed_modification_action_list
             else self.work.record.pricelist_id,
+            "payment_mode_id": self.work.record.payment_mode_id,
             "start_date": execution_date + timedelta(days=1),
             "executed_action": "modification",
             "executed_modification_action": executed_modification_action,
