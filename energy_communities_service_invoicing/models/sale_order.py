@@ -37,3 +37,23 @@ class SaleOrder(models.Model):
                     }
                 )
         return contracts
+
+    def action_show_contracts(self):
+        self.ensure_one()
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "contract.action_customer_contract"
+        )
+
+        contracts = self.env["contract.contract"].search(
+            [("sale_order_id", "=", self.id)]
+        )
+        if len(contracts) == 1:
+            # If there is only one contract, open it directly
+            action.update(
+                {
+                    "res_id": contracts.id,
+                    "view_mode": "form",
+                    "views": filter(lambda view: view[1] == "form", action["views"]),
+                }
+            )
+        return action
