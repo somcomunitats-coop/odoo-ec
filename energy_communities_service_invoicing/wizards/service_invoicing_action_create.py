@@ -20,6 +20,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
     community_company_id = fields.Many2one("res.company", string="Community")
     service_pack_id = fields.Many2one("product.product", string="Service pack")
     pricelist_id = fields.Many2one("product.pricelist", string="PriceList")
+    payment_mode_id = fields.Many2one("account.payment.mode", string="Payment mode")
     discount = fields.Float(string="Discount (%)", digits="Discount", default=0)
 
     def execute_create(self):
@@ -29,6 +30,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                 self.community_company_id,
                 self.service_pack_id,
                 self.pricelist_id,
+                self.payment_mode_id,
                 datetime.now(),
                 self.discount,
                 "activate",
