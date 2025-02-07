@@ -11,7 +11,14 @@
     "category": "Contract Management",
     "version": "16.0.0.1.1",
     # any module necessary for this one to work correctly
-    "depends": ["base", "contract", "sale", "product_contract", "energy_communities"],
+    "depends": [
+        "base",
+        "contract",
+        "sale",
+        "product_contract",
+        "contract_variable_quantity",
+        "energy_communities",
+    ],
     # always loaded
     "data": [
         "security/ir.model.access.csv",

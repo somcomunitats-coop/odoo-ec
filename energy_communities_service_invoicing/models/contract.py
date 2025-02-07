@@ -42,6 +42,8 @@ class ContractContract(models.Model):
         compute="_compute_service_pack_id",
         store=False,
     )
+    # On energy_communities all contracts have skip_zero_qty marked by default
+    skip_zero_qty = fields.Boolean(default=True)
 
     @api.depends("contract_line_ids")
     def _compute_discount(self):
