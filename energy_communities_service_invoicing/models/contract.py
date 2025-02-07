@@ -36,10 +36,10 @@ class ContractContract(models.Model):
     last_date_invoiced = fields.Date(
         string="Last Date Invoiced", compute="_compute_last_date_invoiced", store=False
     )
-    service_activation_product_id = fields.Many2one(
+    service_pack_id = fields.Many2one(
         "product.product",
-        string="Service Activation Product",
-        compute="_compute_service_activation_product_id",
+        string="Service Pack",
+        compute="_compute_service_pack_id",
         store=False,
     )
 
@@ -58,12 +58,10 @@ class ContractContract(models.Model):
                 ].last_date_invoiced
 
     @api.depends("contract_template_id")
-    def _compute_service_activation_product_id(self):
+    def _compute_service_pack_id(self):
         for record in self:
             if record.contract_template_id:
-                record.service_activation_product_id = self.env[
-                    "product.product"
-                ].search(
+                record.service_pack_id = self.env["product.product"].search(
                     [
                         (
                             "property_contract_template_id",
