@@ -58,7 +58,7 @@ class ContractUtils(Component):
             "community_company_id": self.work.record.community_company_id,
             "service_pack_id": service_pack_id
             if "modify_service_pack" in executed_modification_action_list
-            else self.work.record.service_activation_product_id,
+            else self.work.record.service_pack_id,
             "pricelist_id": pricelist_id
             if "modify_pricelist" in executed_modification_action_list
             else self.work.record.pricelist_id,

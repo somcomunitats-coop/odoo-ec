@@ -45,7 +45,9 @@
       <xpath expr="//field[@name='partner_id']" position="after">
         <field name="community_company_id" />
       </xpath>
-      <!-- For dev debug purposes -->
+      <xpath expr="//field[@name='pricelist_id']" position="after">
+        <field name="service_pack_id" />
+      </xpath>
       <xpath expr="//field[@name='user_id']" position="after">
         <field name="date_start" />
         <field name="last_date_invoiced" />
@@ -127,14 +129,15 @@
     sequence="100"
   />
   <menuitem
-    name="Service Products"
+    name="Service Packs"
     id="view_service_products_menu"
     parent="ce_service_invoicing_menu"
     action="view_service_products_window"
     sequence="200"
   />
+  <!-- TODO: Create Services entry point -->
   <menuitem
-    name="Service Contract Types"
+    name="Service Packs Services"
     id="view_service_contract_templates_menu"
     parent="ce_service_invoicing_menu"
     action="view_service_contract_templates_window"
