@@ -23,9 +23,9 @@
                     <field name="used_in_selfconsumption" width="6%" optional="show"/>
                     <field name="vulnerability_situation" width="6%" optional="show"/>
                     <field name="annual_electricity_use" width="6%" optional="show"/>
-                    <field name="supply_point_id" width="10%" optional="hide" />
+                    <field name="supply_point_id" width="10%" optional="show" />
                     <field name="code" readonly="1" width="22%" optional="show"/>
-                    <field name="is_member" readonly="1" width="10%" optional="hide"/>
+                    <field name="is_member" readonly="1" width="10%" optional="show"/>
                     <field name="effective_date" width="6%" optional="hide"/>
                     <field name="mandate_filtered_ids" invisible="True" />
                     <field name="acc_number" width="12%" optional="show"/>
