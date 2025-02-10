@@ -72,7 +72,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 "global_error": True,
             }
         partner = partner.get_partner_with_type()
-        if not partner.no_member_autorized_in_energy_actions:
+        if not partner.with_company(project.company_id.id).no_member_autorized_in_energy_actions:
             cooperator = (
                 request.env["cooperative.membership"]
                 .sudo()
@@ -374,6 +374,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         partner = (
             request.env["res.partner"]
             .sudo()
+            .with_company(model.company_id.id)  
             .search([
                 ("vat", "=", values["inscription_partner_id_vat"]),
                 ("parent_id", "=", False),

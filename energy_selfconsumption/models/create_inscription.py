@@ -116,7 +116,7 @@ class CreateInscription(models.AbstractModel):
         project,
     ):
         """Create an entry for self-consumption on a specific project."""
-        partner = self._get_partner(values["inscription_partner_id_vat"])
+        partner = self._get_partner(values["inscription_partner_id_vat"], project.company_id.id)
         if not partner:
             return True, _("Partner with VAT:<b>{vat}</b> was not found.").format(
                 vat=values["inscription_partner_id_vat"]
@@ -153,16 +153,16 @@ class CreateInscription(models.AbstractModel):
             tariff,
         )
 
-    def _get_partner(self, vat):
+    def _get_partner(self, vat, company_id):
         """Search for a partner based on the VAT provided."""
         return (
             self.env["res.partner"]
             .sudo()
             .search(
                 [
-                    "|",
                     ("vat", "=", vat),
-                    ("vat", "=ilike", vat),
+                    ("parent_id", "=", False),
+                    ("company_ids", "in", (company_id))
                 ],
                 limit=1,
             )
@@ -170,7 +170,7 @@ class CreateInscription(models.AbstractModel):
 
     def _is_cooperator(self, partner, project):
         """Verify if the partner is a cooperative member o no member but autorized in energy actions"""
-        if partner.no_member_autorized_in_energy_actions:
+        if partner.with_company(project.company_id.id).no_member_autorized_in_energy_actions:
             return True
         return bool(
             self.env["cooperative.membership"]
