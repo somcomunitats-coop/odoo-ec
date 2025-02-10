@@ -289,9 +289,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
         logger.info(f"\n\n set_autogenerate_inscriptions_mandataris_supply_points")
         for i in range(0, 500):
             logger.info(f"\n\n Creando el cliente número {i}")
-            country_id = self.env["res.country"].search([("code", "=", "ES")])[0].id
+            country_id = self.env["res.country"].sudo().search([("code", "=", "ES")])[0].id
             vat = self.generar_vat_espanol()
-            partner = self.env["res.partner"].create(
+            partner = self.env["res.partner"].sudo().create(
                 {
                     "name": f"Prueba {vat} {i}",
                     "vat": vat,
@@ -306,28 +306,29 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "company_id": self.env.company.id,
                     "company_type": "person",
                     "cooperative_membership_id": self.env.company.partner_id.id,
+                    "no_member_autorized_in_energy_actions": True,
                 }
             )
 
-            bank_account = self.env["res.partner.bank"].create(
-                {
-                    "acc_number": self.generar_iban_espanol(),
-                    "partner_id": partner.id,
-                    "company_id": self.env.company.id,
-                }
-            )
+            # bank_account = self.env["res.partner.bank"].create(
+            #     {
+            #         "acc_number": self.generar_iban_espanol(),
+            #         "partner_id": partner.id,
+            #         "company_id": self.env.company.id,
+            #     }
+            # )
 
-            mandate = self.env["account.banking.mandate"].create(
-                {
-                    "format": "sepa",
-                    "type": "recurrent",
-                    "state": "valid",
-                    "signature_date": datetime.now().strftime("%Y-%m-%d"),
-                    "partner_bank_id": bank_account.id,
-                    "partner_id": partner.id,
-                    "company_id": self.env.company.id,
-                }
-            )
+            # mandate = self.env["account.banking.mandate"].create(
+            #     {
+            #         "format": "sepa",
+            #         "type": "recurrent",
+            #         "state": "valid",
+            #         "signature_date": datetime.now().strftime("%Y-%m-%d"),
+            #         "partner_bank_id": bank_account.id,
+            #         "partner_id": partner.id,
+            #         "company_id": self.env.company.id,
+            #     }
+            # )
 
             participation = (
                 self.env["energy_project.participation"]
@@ -362,7 +363,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
             else:
                 tariff = random.choice(_ACCESS_TARIFF_VALUES)[0]
 
-            supply_point = self.env["energy_selfconsumption.supply_point"].create(
+            supply_point = self.env["energy_selfconsumption.supply_point"].sudo().create(
                 {
                     "code": self.generate_cups(),
                     "name": partner.street,
@@ -378,17 +379,18 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 }
             )
 
-            self.env["energy_selfconsumption.inscription_selfconsumption"].create(
+            self.env["energy_selfconsumption.inscription_selfconsumption"].sudo().create(
                 {
                     "project_id": active_id,
                     "partner_id": partner.id,
                     "effective_date": datetime.now().strftime("%Y-%m-%d"),
-                    "mandate_id": mandate.id,
+                    "mandate_id": False,
                     "supply_point_id": supply_point.id,
                     "participation": participation[0].id,
                     "annual_electricity_use": 1.0,
                     "accept": True,
                     "member": True,
+                    "selfconsumption_project_id": active_id,
                 }
             )
         return True
@@ -401,7 +403,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
         for partner in partners_socios:
             if count == 500:
                 break
-            mandates = self.env["account.banking.mandate"].search(
+            mandates = self.env["account.banking.mandate"].sudo().search(
                 [
                     ("partner_id", "=", partner.id),
                     ("company_id", "=", partner.company_id.id),
@@ -425,7 +427,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 if participation:
                     self.env[
                         "energy_selfconsumption.inscription_selfconsumption"
-                    ].create(
+                    ].sudo().create(
                         {
                             "project_id": active_id,
                             "partner_id": partner.id,
@@ -436,6 +438,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                             "annual_electricity_use": 1.0,
                             "accept": True,
                             "member": True,
+                            "selfconsumption_project_id": active_id,
                         }
                     )
                     count += 1

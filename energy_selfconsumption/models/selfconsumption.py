@@ -89,7 +89,7 @@ class Selfconsumption(models.Model):
         required=True,
         default=lambda self: self.env.company.partner_id,
     )
-    power = fields.Float(string="Rated Power (kWn)")
+    power = fields.Float(string="Power (kW)")
     distribution_table_ids = fields.One2many(
         "energy_selfconsumption.distribution_table",
         "selfconsumption_project_id",

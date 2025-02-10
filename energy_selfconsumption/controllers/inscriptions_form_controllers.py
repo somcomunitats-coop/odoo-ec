@@ -72,23 +72,24 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 "global_error": True,
             }
         partner = partner.get_partner_with_type()
-        cooperator = (
-            request.env["cooperative.membership"]
-            .sudo()
-            .search(
-                [
-                    ("company_id", "=", project.company_id.id),
-                    ("partner_id", "=", partner.id),
-                    ("cooperator", "=", True),
-                    ("member", "=", True),
-                ]
+        if not partner.no_member_autorized_in_energy_actions:
+            cooperator = (
+                request.env["cooperative.membership"]
+                .sudo()
+                .search(
+                    [
+                        ("company_id", "=", project.company_id.id),
+                        ("partner_id", "=", partner.id),
+                        ("cooperator", "=", True),
+                        ("member", "=", True),
+                    ]
+                )
             )
-        )
-        if not cooperator:
-            return {
-                "error_msgs": [_("Partner is not cooperator.")],
-                "global_error": True,
-            }
+            if not cooperator:
+                return {
+                    "error_msgs": [_("Partner is not cooperator.")],
+                    "global_error": True,
+                }
         inscription = (
             request.env["energy_selfconsumption.inscription_selfconsumption"]
             .sudo()
