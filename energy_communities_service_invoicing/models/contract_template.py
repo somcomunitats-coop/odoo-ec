@@ -5,7 +5,7 @@ class ContractTemplate(models.Model):
     _name = "contract.template"
     _inherit = "contract.template"
 
-    is_pack = fields.Boolean(compute="_compute_is_pack", store=True)
+    is_pack = fields.Boolean(compute="compute_is_pack", store=True)
 
     def compute_is_pack(self):
         for record in self:
