@@ -18,6 +18,7 @@
         "product_contract",
         "contract_variable_quantity",
         "energy_communities",
+        "energy_communities_cooperator",  # TODO: This dependency is needed for active members formula. Need to refactor this.
     ],
     # always loaded
     "data": [
