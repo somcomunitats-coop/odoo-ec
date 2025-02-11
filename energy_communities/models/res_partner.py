@@ -32,11 +32,7 @@ class ResPartner(models.Model):
     )
     related_company_id = fields.Many2one(
         "res.company",
-<<<<<<< HEAD
         string="Represented company",
-=======
-        string="Related company",
->>>>>>> 1a953713 ([IMP] ✨ Contract modifications and Multicompany base structure)
         compute="compute_related_company_id",
         store=False,
     )
@@ -63,7 +59,6 @@ class ResPartner(models.Model):
 
     def compute_company_hierarchy_level(self):
         for record in self:
-<<<<<<< HEAD
             record.company_hierarchy_level = "none"
             if record.related_company_id:
                 record.company_hierarchy_level = (
@@ -91,18 +86,17 @@ class ResPartner(models.Model):
                             "You cannot remove company {} because there are banks referencing to it"
                         ).format(rpb.company_id.name)
                     )
-=======
             if self.related_company_id:
                 record.company_hierarchy_level = self.related_company_id.hierarchy_level
 
     def compute_related_company_id(self):
         for record in self:
             related_company_id = self.env["res.company"].search(
-                [("partner_id", "=", record.id)]
+                [("partner_id", "=", record.id)], limit=1
             )
             if related_company_id:
                 record.related_company_id = related_company_id.id
->>>>>>> 1a953713 ([IMP] ✨ Contract modifications and Multicompany base structure)
+
 
     @api.model_create_multi
     def create(self, vals):
@@ -134,6 +128,23 @@ class ResPartner(models.Model):
             )
             if partner.user_ids.company_ids.ids:
                 partner.write({"company_ids": partner.user_ids.company_ids.ids})
+        self.env["res.users"].browse(SUPERUSER_ID).partner_id.write(
+            {"company_ids": False}
+        )
+
+    # TODO: Rename this method. It has nothing to do with cooperator
+    def get_cooperator_from_vat(self, vat, company_id=False):
+        if vat:
+            vat = vat.strip()
+        # email could be falsy or be only made of whitespace.
+        if not vat:
+            return self.browse()
+        domain = [("vat", "ilike", vat)]
+        if company_id:
+            domain.append(("company_ids", "in", int(company_id)))
+        partner = self.search(domain, limit=1)
+        return partner
+any_ids": partner.user_ids.company_ids.ids})
         self.env["res.users"].browse(SUPERUSER_ID).partner_id.write(
             {"company_ids": False}
         )

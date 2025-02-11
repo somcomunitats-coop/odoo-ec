@@ -5,7 +5,6 @@ from odoo.addons.energy_communities.utils import contract_utils
 class SaleOrderUtils(Component):
     _inherit = "sale.order.utils"
 
-<<<<<<< HEAD
     def _create_service_invoicing_sale_order(
         self,
         company_id,
@@ -21,20 +20,6 @@ class SaleOrderUtils(Component):
             "partner_id": company_id.partner_id.id,
             "company_id": self.env.company.id,
             "commitment_date": start_date,
-=======
-    def create_service_invoicing_activation_sale_order(
-        self,
-        company_id,
-        community_company_id,
-        service_pack_id,
-        pricelist_id,
-        start_date,
-    ):
-        so_creation_dict = {
-            "partner_id": company_id.partner_id.id,
-            "company_id": company_id.id,
-            "community_company_id": community_company_id.id,
->>>>>>> 1a953713 ([IMP] ✨ Contract modifications and Multicompany base structure)
             "pricelist_id": pricelist_id.id,
             "service_invoicing_action": executed_action,
             "service_invoicing_action_description": executed_action_description,
@@ -43,11 +28,7 @@ class SaleOrderUtils(Component):
                     0,
                     0,
                     {
-<<<<<<< HEAD
                         "product_id": pack_id.id,
-=======
-                        "product_id": service_pack_id.id,
->>>>>>> 1a953713 ([IMP] ✨ Contract modifications and Multicompany base structure)
                         "date_start": start_date,
                         "date_end": start_date,
                     },
