@@ -18,7 +18,7 @@
     id="ce_root_menu"
     name="Energy Communities"
     sequence="10"
-    groups="group_platform_manager"
+    groups="group_platform_manager,group_admin,group_user"
     web_icon="energy_communities,static/description/icon.png"
   />
   <menuitem id="ce_config_menu" name="Configuration" parent="ce_root_menu" sequence="99" />
@@ -45,6 +45,18 @@
   />
 
   <!-- Hide menu items unless platform manager -->
+  <record model="ir.ui.menu" id="mail.menu_root_discuss">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
+  <record model="ir.ui.menu" id="calendar.mail_menu_calendar">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
+  <record model="ir.ui.menu" id="base.menu_board_root">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
+  <record model="ir.ui.menu" id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
   <record model="ir.ui.menu" id="community_maps.menu_root">
     <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
   </record>

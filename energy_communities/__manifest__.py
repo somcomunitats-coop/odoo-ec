@@ -16,6 +16,7 @@
         "base_technical_features",
         "base_user_role",
         "base_user_role_company",
+        "calendar",
         "community_maps",
         "contacts",
         "event",
