@@ -42,6 +42,26 @@
   </record>
 
   <record
+      id="view_service_invoices_issued_window"
+      model="ir.actions.act_window"
+  >
+    <field name="name">Service invoices (issued)</field>
+    <field name="res_model">account.move</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain" eval="[('move_type', 'in', ['out_invoice', 'out_refund']),('is_pack','=',True)]"/>
+  </record>
+
+  <record
+      id="view_service_invoices_received_window"
+      model="ir.actions.act_window"
+  >
+    <field name="name">Service invoices (received)</field>
+    <field name="res_model">account.move</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain" eval="[('move_type', 'in', ['in_invoice', 'in_refund']),('is_pack','=',True)]"/>
+  </record>
+
+  <record
       id="view_service_sale_orders_window"
       model="ir.actions.act_window"
   >

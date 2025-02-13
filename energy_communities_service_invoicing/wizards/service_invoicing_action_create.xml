@@ -37,16 +37,16 @@
     model="ir.actions.act_window"
     id="service_invoicing_action_create_wizard_action"
   >
-      <field name="name">Create community service invoicing</field>
+      <field name="name">Assign pack to community</field>
       <field name="res_model">service.invoicing.action.create.wizard</field>
       <field name="view_mode">form</field>
       <field name="target">new</field>
   </record>
   <menuitem
     id="service_invoicing_action_create_wizard_menu"
-    name="Create community service invoicing"
+    name="Assign pack to community"
     action="service_invoicing_action_create_wizard_action"
-    parent="energy_communities.ce_config_menu"
-    sequence="300"
+    parent="energy_communities.ce_assistants_menu"
+    sequence="100"
   />
 </odoo>

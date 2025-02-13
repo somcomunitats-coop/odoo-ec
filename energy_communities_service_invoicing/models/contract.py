@@ -36,6 +36,7 @@ class ContractContract(models.Model):
     last_date_invoiced = fields.Date(
         string="Last Date Invoiced", compute="_compute_last_date_invoiced", store=False
     )
+    is_pack = fields.Boolean(related="contract_template_id.is_pack")
     service_pack_id = fields.Many2one(
         "product.product",
         string="Service Pack",

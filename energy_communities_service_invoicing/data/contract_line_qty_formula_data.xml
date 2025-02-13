@@ -6,7 +6,7 @@
     >
       <field name="name">Community members</field>
       <field name="code">
-result = env['cooperative.membership'].search_count([
+result = env['cooperative.membership'].sudo().search_count([
 ('company_id','=',contract.community_company_id.id),
 ('member','=',True)
 ])
