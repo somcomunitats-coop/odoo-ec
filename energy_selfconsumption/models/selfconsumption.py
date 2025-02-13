@@ -134,7 +134,11 @@ class Selfconsumption(models.Model):
     )
     conf_used_in_selfconsumption = fields.Boolean("Show used in selfconsumption")
     conf_vulnerability_situation = fields.Boolean("Show vulnerability situation")
-    conf_bank_details = fields.Boolean("Request bank details", default=True, help="Select when you want to make the payment by bank transfer. If not requested, the payment must be made by bank transfer by the member.")
+    conf_bank_details = fields.Boolean(
+        "Request bank details",
+        default=True,
+        help="Select when you want to make the payment by bank transfer. If not requested, the payment must be made by bank transfer by the member.",
+    )
     conf_url_form = fields.Char(string="URL")
 
     def activate_form(self):
@@ -156,7 +160,7 @@ class Selfconsumption(models.Model):
                     model_id=self._origin.id,
                 )
             )
-                       
+
     def unactivate_form(self):
         self.ensure_one()  # Ensures only one record is selected
         if self.conf_state == "active":
@@ -189,8 +193,15 @@ class Selfconsumption(models.Model):
             "name": "Inscriptions",
             "view_mode": "tree,form",
             "res_model": "energy_selfconsumption.inscription_selfconsumption",
-            "domain": [("project_id", "=", self.project_id.id), ("selfconsumption_project_id", "=", self.id)],
-            "context": {"create": True, "default_project_id": self.project_id.id, "default_selfconsumption_project_id": self.id},
+            "domain": [
+                ("project_id", "=", self.project_id.id),
+                ("selfconsumption_project_id", "=", self.id),
+            ],
+            "context": {
+                "create": True,
+                "default_project_id": self.project_id.id,
+                "default_selfconsumption_project_id": self.id,
+            },
         }
 
     def get_contracts(self):
@@ -219,7 +230,15 @@ class Selfconsumption(models.Model):
         distribution_table_to_activate.write({"state": new_state})
         if new_state == "active":
             self.inscription_ids.filtered_domain(
-                [("supply_point_id", "in", self.distribution_table_ids.mapped("supply_point_assignation_ids.supply_point_id"))]
+                [
+                    (
+                        "supply_point_id",
+                        "in",
+                        self.distribution_table_ids.mapped(
+                            "supply_point_assignation_ids.supply_point_id"
+                        ),
+                    )
+                ]
             ).write({"state": "active"})
 
     def set_in_activation_state(self):

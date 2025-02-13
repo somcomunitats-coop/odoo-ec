@@ -62,9 +62,13 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         partner = (
             request.env["res.partner"]
             .sudo()
-            .search([("vat", "=", values["inscription_partner_id_vat"]),
-                     ("parent_id", "=", False), 
-                     ("company_ids", "in", (project.company_id.id))])
+            .search(
+                [
+                    ("vat", "=", values["inscription_partner_id_vat"]),
+                    ("parent_id", "=", False),
+                    ("company_ids", "in", (project.company_id.id)),
+                ]
+            )
         )
         if not partner:
             return {
@@ -72,7 +76,9 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 "global_error": True,
             }
         partner = partner.get_partner_with_type()
-        if not partner.with_company(project.company_id.id).no_member_autorized_in_energy_actions:
+        if not partner.with_company(
+            project.company_id.id
+        ).no_member_autorized_in_energy_actions:
             cooperator = (
                 request.env["cooperative.membership"]
                 .sudo()
@@ -375,12 +381,14 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         partner = (
             request.env["res.partner"]
             .sudo()
-            .with_company(model.company_id.id)  
-            .search([
-                ("vat", "=", values["inscription_partner_id_vat"]),
-                ("parent_id", "=", False),
-                ("company_ids", "in", (model.company_id.id))
-            ])
+            .with_company(model.company_id.id)
+            .search(
+                [
+                    ("vat", "=", values["inscription_partner_id_vat"]),
+                    ("parent_id", "=", False),
+                    ("company_ids", "in", (model.company_id.id)),
+                ]
+            )
         )
         self.send_email(model, partner)
         return values

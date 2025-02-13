@@ -72,7 +72,10 @@ class CreateDistributionTableWizard(models.TransientModel):
         default_fields["max_distributed_power"] = selfconsumption.power
 
         default_fields["distributed_power"] = sum(
-            map(lambda inscription: inscription.participation_real_quantity, inscriptions)
+            map(
+                lambda inscription: inscription.participation_real_quantity,
+                inscriptions,
+            )
         )
 
         default_fields["percentage_of_distributed_power"] = (

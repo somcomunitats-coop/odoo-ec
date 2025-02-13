@@ -51,7 +51,9 @@ class SelfconsumptionImportWizard(models.TransientModel):
     def default_get(self, fields):
         defaults = super().default_get(fields)
         defaults["user_current_role"] = self.env.user.user_current_role
-        project = self.env["energy_selfconsumption.selfconsumption"].browse(self.env.context.get("active_id"))
+        project = self.env["energy_selfconsumption.selfconsumption"].browse(
+            self.env.context.get("active_id")
+        )
         if project:
             defaults["conf_bank_details"] = project.conf_bank_details
         return defaults
@@ -129,11 +131,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
     def _get_state(self, name):
         """Gets the state based on values and country."""
         state = (
-            self.env["res.country.state"]
-            .sudo()
-            .search(
-                [("name", "=", name)], limit=1
-            )
+            self.env["res.country.state"].sudo().search([("name", "=", name)], limit=1)
         )
         if state:
             return state.code
@@ -174,17 +172,23 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 "supplypoint_owner_id_name": line.get(header[13], False),
                 "supplypoint_owner_id_lastname": line.get(header[14], False),
                 "supplypoint_owner_id_gender": line.get(header[15], False),  # New
-                "supplypoint_owner_id_birthdate_date": line.get(header[16], False),  # New
+                "supplypoint_owner_id_birthdate_date": line.get(
+                    header[16], False
+                ),  # New
                 "supplypoint_owner_id_phone": line.get(header[17], False),  # New
                 "supplypoint_owner_id_lang": line.get(header[18], False),  # New
                 "supplypoint_owner_id_email": line.get(header[19], False),  # New
-                "supplypoint_owner_id_vulnerability_situation": line.get(header[20], False),  # New
+                "supplypoint_owner_id_vulnerability_situation": line.get(
+                    header[20], False
+                ),  # New
                 "inscription_project_privacy": line.get(header[21], False),  # New
                 "inscription_acc_number": line.get(header[22], False),
                 "mandate_auth_date": line.get(header[23], False),
                 "date_format": self.date_format,
                 "supplypoint_owner_id_same": supplypoint_owner_id_same,
-                "supplypoint_used_in_selfconsumption": line.get(header[24], False),  # New
+                "supplypoint_used_in_selfconsumption": line.get(
+                    header[24], False
+                ),  # New
                 "inscriptionselfconsumption_annual_electricity_use": float(
                     str(line.get(header[25], 0.0)).replace(",", ".")
                 ),  # New
@@ -289,25 +293,33 @@ class SelfconsumptionImportWizard(models.TransientModel):
         logger.info(f"\n\n set_autogenerate_inscriptions_mandataris_supply_points")
         for i in range(0, 500):
             logger.info(f"\n\n Creando el cliente número {i}")
-            country_id = self.env["res.country"].sudo().search([("code", "=", "ES")])[0].id
+            country_id = (
+                self.env["res.country"].sudo().search([("code", "=", "ES")])[0].id
+            )
             vat = self.generar_vat_espanol()
-            partner = self.env["res.partner"].sudo().create(
-                {
-                    "name": f"Prueba {vat} {i}",
-                    "vat": vat,
-                    "country_id": country_id,
-                    "state_id": self.env["res.country.state"]
-                    .search([("code", "=", "MA"), ("country_id", "=", country_id)])[0]
-                    .id,
-                    "street": f"Calle imaginación {i}",
-                    "city": "Madrid",
-                    "zip": 28221,
-                    "type": "contact",
-                    "company_id": self.env.company.id,
-                    "company_type": "person",
-                    "cooperative_membership_id": self.env.company.partner_id.id,
-                    "no_member_autorized_in_energy_actions": True,
-                }
+            partner = (
+                self.env["res.partner"]
+                .sudo()
+                .create(
+                    {
+                        "name": f"Prueba {vat} {i}",
+                        "vat": vat,
+                        "country_id": country_id,
+                        "state_id": self.env["res.country.state"]
+                        .search([("code", "=", "MA"), ("country_id", "=", country_id)])[
+                            0
+                        ]
+                        .id,
+                        "street": f"Calle imaginación {i}",
+                        "city": "Madrid",
+                        "zip": 28221,
+                        "type": "contact",
+                        "company_id": self.env.company.id,
+                        "company_type": "person",
+                        "cooperative_membership_id": self.env.company.partner_id.id,
+                        "no_member_autorized_in_energy_actions": True,
+                    }
+                )
             )
 
             # bank_account = self.env["res.partner.bank"].create(
@@ -363,23 +375,29 @@ class SelfconsumptionImportWizard(models.TransientModel):
             else:
                 tariff = random.choice(_ACCESS_TARIFF_VALUES)[0]
 
-            supply_point = self.env["energy_selfconsumption.supply_point"].sudo().create(
-                {
-                    "code": self.generate_cups(),
-                    "name": partner.street,
-                    "street": partner.street,
-                    "city": partner.city,
-                    "zip": partner.zip,
-                    "state_id": partner.state_id.id,
-                    "country_id": partner.country_id.id,
-                    "owner_id": partner.id,
-                    "partner_id": partner.id,
-                    "contracted_power": contracted_power,
-                    "tariff": tariff,
-                }
+            supply_point = (
+                self.env["energy_selfconsumption.supply_point"]
+                .sudo()
+                .create(
+                    {
+                        "code": self.generate_cups(),
+                        "name": partner.street,
+                        "street": partner.street,
+                        "city": partner.city,
+                        "zip": partner.zip,
+                        "state_id": partner.state_id.id,
+                        "country_id": partner.country_id.id,
+                        "owner_id": partner.id,
+                        "partner_id": partner.id,
+                        "contracted_power": contracted_power,
+                        "tariff": tariff,
+                    }
+                )
             )
 
-            self.env["energy_selfconsumption.inscription_selfconsumption"].sudo().create(
+            self.env[
+                "energy_selfconsumption.inscription_selfconsumption"
+            ].sudo().create(
                 {
                     "project_id": active_id,
                     "partner_id": partner.id,
@@ -404,12 +422,16 @@ class SelfconsumptionImportWizard(models.TransientModel):
         for partner in partners_socios:
             if count == 500:
                 break
-            mandates = self.env["account.banking.mandate"].sudo().search(
-                [
-                    ("partner_id", "=", partner.id),
-                    ("company_id", "=", partner.company_id.id),
-                    ("state", "=", "valid"),
-                ]
+            mandates = (
+                self.env["account.banking.mandate"]
+                .sudo()
+                .search(
+                    [
+                        ("partner_id", "=", partner.id),
+                        ("company_id", "=", partner.company_id.id),
+                        ("state", "=", "valid"),
+                    ]
+                )
             )
             participation = (
                 self.env["energy_selfconsumptions.participation"]
@@ -424,7 +446,11 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     ]
                 )
             )
-            supply_point = self.env["energy_selfconsumption.supply_point"].sudo().search([("partner_id", "=", partner.id)])
+            supply_point = (
+                self.env["energy_selfconsumption.supply_point"]
+                .sudo()
+                .search([("partner_id", "=", partner.id)])
+            )
             if not supply_point:
                 _ACCESS_TARIFF_VALUES = [
                     ("6.1TD", "6.1TD"),
@@ -442,21 +468,33 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 else:
                     tariff = random.choice(_ACCESS_TARIFF_VALUES)[0]
 
-                supply_point = [self.env["energy_selfconsumption.supply_point"].sudo().create(
-                    {
-                        "code": self.generate_cups(),
-                        "name": partner.name or "Prueba",
-                        "street": partner.street or "Calle prueba",
-                        "city": partner.city or "Madrid",
-                        "zip": partner.zip or 28221,
-                        "state_id": partner.state_id.id or self.env["res.country.state"].sudo().search([("code", "=", "MA")])[0].id,
-                        "country_id": partner.country_id.id or self.env["res.country"].sudo().search([("code", "=", "ES")])[0].id,
-                        "owner_id": partner.id,
-                        "partner_id": partner.id,
-                        "contracted_power": contracted_power,
-                        "tariff": tariff,
-                    }
-                )]
+                supply_point = [
+                    self.env["energy_selfconsumption.supply_point"]
+                    .sudo()
+                    .create(
+                        {
+                            "code": self.generate_cups(),
+                            "name": partner.name or "Prueba",
+                            "street": partner.street or "Calle prueba",
+                            "city": partner.city or "Madrid",
+                            "zip": partner.zip or 28221,
+                            "state_id": partner.state_id.id
+                            or self.env["res.country.state"]
+                            .sudo()
+                            .search([("code", "=", "MA")])[0]
+                            .id,
+                            "country_id": partner.country_id.id
+                            or self.env["res.country"]
+                            .sudo()
+                            .search([("code", "=", "ES")])[0]
+                            .id,
+                            "owner_id": partner.id,
+                            "partner_id": partner.id,
+                            "contracted_power": contracted_power,
+                            "tariff": tariff,
+                        }
+                    )
+                ]
 
             if participation:
                 self.env[

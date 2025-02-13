@@ -20,7 +20,7 @@ class ResPartner(models.Model):
     no_member_autorized_in_energy_actions = fields.Boolean(
         string="Authorized guest",
         company_dependent=True,
-        help="Enable the contact to participate in Community Energy Actions despite not being an effective member of the Community."
+        help="Enable the contact to participate in Community Energy Actions despite not being an effective member of the Community.",
     )
 
     @api.depends("vat")

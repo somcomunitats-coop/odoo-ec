@@ -116,7 +116,9 @@ class CreateInscription(models.AbstractModel):
         project,
     ):
         """Create an entry for self-consumption on a specific project."""
-        partner = self._get_partner(values["inscription_partner_id_vat"], project.company_id.id)
+        partner = self._get_partner(
+            values["inscription_partner_id_vat"], project.company_id.id
+        )
         if not partner:
             return True, _("Partner with VAT:<b>{vat}</b> was not found.").format(
                 vat=values["inscription_partner_id_vat"]
@@ -142,7 +144,9 @@ class CreateInscription(models.AbstractModel):
         if not owner:
             return True, _("Owner could not be created or found.")
 
-        contracted_power = float(str(values.get("supplypoint_contracted_power", "0")).replace(",", "."))
+        contracted_power = float(
+            str(values.get("supplypoint_contracted_power", "0")).replace(",", ".")
+        )
         tariff = self._determine_tariff(contracted_power, values)
 
         return self._create_supply_point(
@@ -162,7 +166,7 @@ class CreateInscription(models.AbstractModel):
                 [
                     ("vat", "=", vat),
                     ("parent_id", "=", False),
-                    ("company_ids", "in", (company_id))
+                    ("company_ids", "in", (company_id)),
                 ],
                 limit=1,
             )
@@ -170,7 +174,9 @@ class CreateInscription(models.AbstractModel):
 
     def _is_cooperator(self, partner, project):
         """Verify if the partner is a cooperative member o no member but autorized in energy actions"""
-        if partner.with_company(project.company_id.id).no_member_autorized_in_energy_actions:
+        if partner.with_company(
+            project.company_id.id
+        ).no_member_autorized_in_energy_actions:
             return True
         return bool(
             self.env["cooperative.membership"]
@@ -228,11 +234,14 @@ class CreateInscription(models.AbstractModel):
             self.env["account.banking.mandate"]
             .with_company(project.company_id)
             .sudo()
-            .search([
-                ("partner_bank_id", "=", bank_account.id),
-                ("partner_id", "=", partner.id),
-                ("company_id", "=", project.company_id.id),
-            ], limit=1)
+            .search(
+                [
+                    ("partner_bank_id", "=", bank_account.id),
+                    ("partner_id", "=", partner.id),
+                    ("company_id", "=", project.company_id.id),
+                ],
+                limit=1,
+            )
         )
         if mandate_obj:
             return False, mandate_obj
@@ -280,7 +289,11 @@ class CreateInscription(models.AbstractModel):
                     float(values["inscriptionselfconsumption_participation"]),
                 )
             )
-        return self.env["energy_selfconsumptions.participation"].sudo().search(domain, limit=1)
+        return (
+            self.env["energy_selfconsumptions.participation"]
+            .sudo()
+            .search(domain, limit=1)
+        )
 
     def _get_effective_date(self, values):
         """Gets the effective date."""

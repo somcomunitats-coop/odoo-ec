@@ -56,5 +56,7 @@ class ContractLine(models.Model):
             )
 
             record.days_invoiced = (
-                (last_date_invoiced - first_date_invoiced).days + 1 if first_date_invoiced and last_date_invoiced else 0
+                (last_date_invoiced - first_date_invoiced).days + 1
+                if first_date_invoiced and last_date_invoiced
+                else 0
             )

@@ -7,6 +7,7 @@ STATE_VALUES = [
     ("change", _("Change")),
 ]
 
+
 class Inscription(models.Model):
     _name = "energy_selfconsumption.inscription_selfconsumption"
     _inherits = {
@@ -32,7 +33,8 @@ class Inscription(models.Model):
         string="Participation", related="participation_id.quantity"
     )
     participation_real_quantity = fields.Float(
-        string="Participation real quantity", default=lambda self: self.participation_id.quantity
+        string="Participation real quantity",
+        default=lambda self: self.participation_id.quantity,
     )
     state = fields.Selection(
         string="State",
@@ -65,7 +67,10 @@ class Inscription(models.Model):
 
     @api.onchange("participation_real_quantity")
     def _onchange_participation_real_quantity(self):
-        if self.participation_real_quantity != self.participation_quantity and self.state == "active":
+        if (
+            self.participation_real_quantity != self.participation_quantity
+            and self.state == "active"
+        ):
             self.state = "change"
 
     @api.constrains("project_id", "partner_id", "supply_point_id")
@@ -91,7 +96,7 @@ class Inscription(models.Model):
         ).read()[0]
         action["context"] = ctx
         return action
-    
+
     def change_state_inscription(self):
         ctx = self.env.context.copy()
         action = self.env.ref(
