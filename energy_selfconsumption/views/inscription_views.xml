@@ -8,6 +8,7 @@
       >energy_selfconsumption.inscription_selfconsumption</field>
             <field name="arch" type="xml">
                 <tree create="false" editable="bottom">
+                    <field name="state" width="6%" optional="show" readonly="1"/>
                     <field
             name="partner_id"
             options="{'no_create': True}"
@@ -39,6 +40,7 @@
                     <field name="member" readonly="1" width="6%" optional="hide"/>
                     <field name="accept" string="Accept terms" readonly="1" width="6%" optional="hide"/>
                     <field name="participation_quantity" sum="True" width="6%" optional="show"/>
+                    <field name="participation_real_quantity" sum="True" width="6%" optional="show" attrs="{'readonly': [('state', '=', 'active')]}" />
                 </tree>
             </field>
         </record>
@@ -58,6 +60,18 @@
             <field name="state">code</field>
             <field name="code">
                 action = record.create_participant_table()
+            </field>
+        </record>
+
+        <record model="ir.actions.server" id="inscription_to_change_state_action">
+            <field name="name">Change state inscription</field>
+            <field name="model_id" ref="model_energy_selfconsumption_inscription_selfconsumption" />
+            <field name="binding_model_id" ref="model_energy_selfconsumption_inscription_selfconsumption" />
+            <field name="binding_type">action</field>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = record.change_state_inscription()
             </field>
         </record>
     </data>

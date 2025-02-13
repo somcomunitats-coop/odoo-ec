@@ -116,7 +116,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 "global_error": True,
             }
         participation = (
-            request.env["energy_project.participation"]
+            request.env["energy_selfconsumptions.participation"]
             .sudo()
             .search(
                 [
@@ -124,7 +124,8 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                         "quantity",
                         "=",
                         float(values["inscriptionselfconsumption_participation"]),
-                    )
+                    ),
+                    ("project_id", "=", int(values["model_id"])),
                 ]
             )
         )
@@ -295,7 +296,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         ]
 
         participations = (
-            request.env["energy_project.participation"]
+            request.env["energy_selfconsumptions.participation"]
             .sudo()
             .search([("project_id", "=", int(values["model_id"]))])
         )

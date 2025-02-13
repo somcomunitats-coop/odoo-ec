@@ -72,7 +72,7 @@ class CreateDistributionTableWizard(models.TransientModel):
         default_fields["max_distributed_power"] = selfconsumption.power
 
         default_fields["distributed_power"] = sum(
-            map(lambda inscription: inscription.participation_quantity, inscriptions)
+            map(lambda inscription: inscription.participation_real_quantity, inscriptions)
         )
 
         default_fields["percentage_of_distributed_power"] = (
@@ -127,7 +127,7 @@ class CreateDistributionTableWizard(models.TransientModel):
     def get_supply_point_assignation_values(
         self, inscription, distribution_table, len_inscriptions
     ):
-        coefficient = inscription.participation_quantity
+        coefficient = inscription.participation_real_quantity
 
         if self.distribute_excess == "yes":
             distribute_excess_float = (
@@ -136,7 +136,7 @@ class CreateDistributionTableWizard(models.TransientModel):
 
             if self.type_distribute_excess == "proportional":
                 coefficient += distribute_excess_float * (
-                    inscription.participation_quantity / self.distributed_power
+                    inscription.participation_real_quantity / self.distributed_power
                 )
             else:
                 coefficient += distribute_excess_float / len_inscriptions

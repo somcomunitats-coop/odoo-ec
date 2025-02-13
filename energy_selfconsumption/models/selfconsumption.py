@@ -128,7 +128,7 @@ class Selfconsumption(models.Model):
         required=True,
     )
     conf_participation_ids = fields.One2many(
-        "energy_project.participation",
+        "energy_selfconsumptions.participation",
         "project_id",
         string="Participation",
     )
@@ -217,6 +217,10 @@ class Selfconsumption(models.Model):
             lambda table: table.state == actual_state
         )
         distribution_table_to_activate.write({"state": new_state})
+        if new_state == "active":
+            self.inscription_ids.filtered_domain(
+                [("supply_point_id", "in", self.distribution_table_ids.mapped("supply_point_assignation_ids.supply_point_id"))]
+            ).write({"state": "active"})
 
     def set_in_activation_state(self):
         for record in self:
@@ -234,28 +238,28 @@ class Selfconsumption(models.Model):
     @api.model_create_multi
     def create(self, values):
         res = super().create(values)
-        self.env["energy_project.participation"].create(
+        self.env["energy_selfconsumptions.participation"].create(
             {
                 "name": "0,5 kW",
                 "quantity": 0.5,
                 "project_id": res.id,
             }
         )
-        self.env["energy_project.participation"].create(
+        self.env["energy_selfconsumptions.participation"].create(
             {
                 "name": "1,0 kW",
                 "quantity": 1.0,
                 "project_id": res.id,
             }
         )
-        self.env["energy_project.participation"].create(
+        self.env["energy_selfconsumptions.participation"].create(
             {
                 "name": "1,5 kW",
                 "quantity": 1.5,
                 "project_id": res.id,
             }
         )
-        self.env["energy_project.participation"].create(
+        self.env["energy_selfconsumptions.participation"].create(
             {
                 "name": "2,0 kW",
                 "quantity": 2.0,

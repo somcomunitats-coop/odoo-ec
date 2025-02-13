@@ -331,7 +331,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
             # )
 
             participation = (
-                self.env["energy_project.participation"]
+                self.env["energy_selfconsumptions.participation"]
                 .sudo()
                 .search(
                     [
@@ -386,7 +386,8 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "effective_date": datetime.now().strftime("%Y-%m-%d"),
                     "mandate_id": False,
                     "supply_point_id": supply_point.id,
-                    "participation": participation[0].id,
+                    "participation_id": participation[0].id,
+                    "participation_real_quantity": participation[0].quantity,
                     "annual_electricity_use": 1.0,
                     "accept": True,
                     "member": True,
@@ -410,37 +411,72 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     ("state", "=", "valid"),
                 ]
             )
-            if mandates:
-                participation = (
-                    self.env["energy_project.participation"]
-                    .sudo()
-                    .search(
-                        [
-                            (
-                                "project_id",
-                                "=",
-                                active_id,
-                            )
-                        ]
-                    )
+            participation = (
+                self.env["energy_selfconsumptions.participation"]
+                .sudo()
+                .search(
+                    [
+                        (
+                            "project_id",
+                            "=",
+                            active_id,
+                        )
+                    ]
                 )
-                if participation:
-                    self.env[
-                        "energy_selfconsumption.inscription_selfconsumption"
-                    ].sudo().create(
-                        {
-                            "project_id": active_id,
-                            "partner_id": partner.id,
-                            "effective_date": datetime.now().strftime("%Y-%m-%d"),
-                            "mandate_id": mandates[0].id,
-                            "code": self.generate_cups(),
-                            "participation": participation[0].id,
-                            "annual_electricity_use": 1.0,
-                            "accept": True,
-                            "member": True,
-                            "selfconsumption_project_id": active_id,
-                        }
-                    )
-                    count += 1
+            )
+            supply_point = self.env["energy_selfconsumption.supply_point"].sudo().search([("partner_id", "=", partner.id)])
+            if not supply_point:
+                _ACCESS_TARIFF_VALUES = [
+                    ("6.1TD", "6.1TD"),
+                    ("6.2TD", "6.2TD"),
+                    ("6.3TD", "6.3TD"),
+                    ("6.4TD", "6.4TD"),
+                ]
+
+                contracted_power = round(random.uniform(1, 100), 2)
+
+                if contracted_power <= 15:
+                    tariff = "2.0TD"
+                elif contracted_power <= 50:
+                    tariff = "3.0TD"
+                else:
+                    tariff = random.choice(_ACCESS_TARIFF_VALUES)[0]
+
+                supply_point = [self.env["energy_selfconsumption.supply_point"].sudo().create(
+                    {
+                        "code": self.generate_cups(),
+                        "name": partner.name or "Prueba",
+                        "street": partner.street or "Calle prueba",
+                        "city": partner.city or "Madrid",
+                        "zip": partner.zip or 28221,
+                        "state_id": partner.state_id.id or self.env["res.country.state"].sudo().search([("code", "=", "MA")])[0].id,
+                        "country_id": partner.country_id.id or self.env["res.country"].sudo().search([("code", "=", "ES")])[0].id,
+                        "owner_id": partner.id,
+                        "partner_id": partner.id,
+                        "contracted_power": contracted_power,
+                        "tariff": tariff,
+                    }
+                )]
+
+            if participation:
+                self.env[
+                    "energy_selfconsumption.inscription_selfconsumption"
+                ].sudo().create(
+                    {
+                        "project_id": active_id,
+                        "partner_id": partner.id,
+                        "effective_date": datetime.now().strftime("%Y-%m-%d"),
+                        "mandate_id": mandates[0].id if mandates else False,
+                        "code": self.generate_cups(),
+                        "participation_id": participation[0].id,
+                        "participation_real_quantity": participation[0].quantity,
+                        "supply_point_id": supply_point[0].id,
+                        "annual_electricity_use": 1.0,
+                        "accept": True,
+                        "member": True,
+                        "selfconsumption_project_id": active_id,
+                    }
+                )
+                count += 1
 
         return True

@@ -232,7 +232,7 @@ class CreateInscription(models.AbstractModel):
                 ("partner_bank_id", "=", bank_account.id),
                 ("partner_id", "=", partner.id),
                 ("company_id", "=", project.company_id.id),
-            ])
+            ], limit=1)
         )
         if mandate_obj:
             return False, mandate_obj
@@ -280,7 +280,7 @@ class CreateInscription(models.AbstractModel):
                     float(values["inscriptionselfconsumption_participation"]),
                 )
             )
-        return self.env["energy_project.participation"].sudo().search(domain, limit=1)
+        return self.env["energy_selfconsumptions.participation"].sudo().search(domain, limit=1)
 
     def _get_effective_date(self, values):
         """Gets the effective date."""
@@ -309,7 +309,8 @@ class CreateInscription(models.AbstractModel):
                 "partner_id": partner.id,
                 "effective_date": effective_date,
                 "mandate_id": mandate.id if mandate else False,
-                "participation": participation.id,
+                "participation_id": participation.id,
+                "participation_real_quantity": participation.quantity,
                 "annual_electricity_use": annual_electricity_use,
                 "accept": True,
                 "member": True,

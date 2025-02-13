@@ -5,3 +5,4 @@ from . import define_invoicing_mode_wizard
 from . import distribution_table_import_wizard
 from . import invoicing_wizard
 from . import selfconsumption_import_wizard
+from . import change_state_inscription_wizard
