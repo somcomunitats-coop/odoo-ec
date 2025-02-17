@@ -26,7 +26,7 @@ def service_invoicing_view(env: Environment, service_invoicing_id: ContractContr
         "views": [
             (
                 env.ref(
-                    "energy_communities_service_invoicing.view_contract_contract_customer_form"
+                    "energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin"
                 ).id,
                 "form",
             ),
