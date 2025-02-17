@@ -1,6 +1,18 @@
 <odoo>
   <record
-      id="view_service_invoicing_window"
+      id="view_service_invoicing_window_platform_manager"
+      model="ir.actions.act_window"
+  >
+    <field name="name">Service Invoicing</field>
+    <field name="res_model">contract.contract</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">
+[('community_company_id','!=',False)]
+    </field>
+  </record>
+
+  <record
+      id="view_service_invoicing_window_coord_admin"
       model="ir.actions.act_window"
   >
     <field name="name">Service Invoicing</field>
@@ -81,23 +93,43 @@
   </record>
 
   <record
-    id="action_view_service_invoicing_tree"
+    id="action_view_service_invoicing_tree_platform_manager"
     model="ir.actions.act_window.view"
   >
     <field name="sequence" eval="1"/>
     <field name="view_mode">tree</field>
     <field name="view_id" ref="view_service_invoicing_tree"/>
-    <field name="act_window_id" ref="view_service_invoicing_window"/>
+    <field name="act_window_id" ref="view_service_invoicing_window_platform_manager"/>
   </record>
 
   <record
-    id="action_view_contract_contract_customer_form"
+    id="action_view_service_invoicing_tree_coord_admin"
+    model="ir.actions.act_window.view"
+  >
+    <field name="sequence" eval="1"/>
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="view_service_invoicing_tree"/>
+    <field name="act_window_id" ref="view_service_invoicing_window_coord_admin"/>
+  </record>
+
+  <record
+    id="action_view_contract_contract_customer_form_platform_manager"
     model="ir.actions.act_window.view"
   >
     <field name="sequence" eval="2"/>
     <field name="view_mode">form</field>
-    <field name="view_id" ref="contract.contract_contract_customer_form_view"/>
-    <field name="act_window_id" ref="view_service_invoicing_window"/>
-    </record>
-  
+    <field name="view_id" ref="view_contract_contract_customer_form_platform_admin"/>
+    <field name="act_window_id" ref="view_service_invoicing_window_platform_manager"/>
+  </record>
+
+  <record
+    id="action_view_contract_contract_customer_form_coord_admin"
+    model="ir.actions.act_window.view"
+  >
+    <field name="sequence" eval="2"/>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="view_contract_contract_customer_form_coord_admin"/>
+    <field name="act_window_id" ref="view_service_invoicing_window_coord_admin"/>
+  </record>
+
 </odoo>
