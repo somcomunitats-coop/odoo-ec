@@ -234,9 +234,9 @@ class Selfconsumption(models.Model):
                     (
                         "supply_point_id",
                         "in",
-                        self.distribution_table_ids.mapped(
+                        distribution_table_to_activate.mapped(
                             "supply_point_assignation_ids.supply_point_id"
-                        ),
+                        ).ids,
                     )
                 ]
             ).write({"state": "active"})

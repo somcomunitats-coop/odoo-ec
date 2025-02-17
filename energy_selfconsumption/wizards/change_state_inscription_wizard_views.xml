@@ -11,7 +11,7 @@
                         <field name="change_state_inscription_lines_wizard_ids" nolabel="1">
                             <tree editable="bottom">
                                 <field name="inscription_id" readonly="1" force_save="1"/>
-                                <field name="state" readonly="1" force_save="1" />
+                                <field name="state" />
                                 <field name="participation_real_quantity" />
                             </tree>
                         </field>

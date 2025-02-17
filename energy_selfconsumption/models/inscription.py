@@ -37,7 +37,7 @@ class Inscription(models.Model):
         default=lambda self: self.participation_id.quantity,
     )
     state = fields.Selection(
-        string="State",
+        string="Status",
         selection=STATE_VALUES,
         default="inactive",
     )

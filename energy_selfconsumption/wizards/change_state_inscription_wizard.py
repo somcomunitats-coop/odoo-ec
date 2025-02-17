@@ -90,7 +90,7 @@ class ChangeStateInscriptionLinesWizard(models.TransientModel):
         required=True,
     )
 
-    state = fields.Selection(STATE_VALUES, required=True, string="State")
+    state = fields.Selection(STATE_VALUES, required=True, string="Status")
 
     participation_real_quantity = fields.Float(
         string="Participation real quantity", required=True

@@ -9,34 +9,18 @@
             <field name="arch" type="xml">
                 <tree create="false" editable="bottom">
                     <field name="state" width="6%" optional="show" readonly="1"/>
-                    <field
-            name="partner_id"
-            options="{'no_create': True}"
-            width="14%"
-            optional="show"
-          />
-                    <field
-            name="owner_id"
-            options="{'no_create': True}"
-            width="14%"
-            optional="show"
-          />
-                    <field name="used_in_selfconsumption" width="6%" optional="show"/>
-                    <field name="vulnerability_situation" width="6%" optional="show"/>
-                    <field name="annual_electricity_use" width="6%" optional="show"/>
+                    <field name="partner_id" options="{'no_create': True}" width="14%" optional="show" />
+                    <field name="is_member" readonly="1" width="10%" optional="show"/>
                     <field name="supply_point_id" width="10%" optional="show" />
                     <field name="code" readonly="1" width="22%" optional="show"/>
-                    <field name="is_member" readonly="1" width="10%" optional="show"/>
-                    <field name="effective_date" width="6%" optional="hide"/>
+                    <field name="owner_id" options="{'no_create': True}" width="14%" optional="show" />
+                    <field name="annual_electricity_use" width="6%" optional="show"/>
+                    <field name="used_in_selfconsumption" width="6%" optional="show"/>
+                    <field name="vulnerability_situation" width="6%" optional="show"/>
                     <field name="mandate_filtered_ids" invisible="True" />
                     <field name="acc_number" width="12%" optional="show"/>
-                    <field
-            name="mandate_id"
-            domain="[('id', 'in', mandate_filtered_ids)]"
-            context="{'default_partner_id': partner_id}"
-            width="14%"
-            optional="hide"
-          />
+                    <field name="mandate_id" domain="[('id', 'in', mandate_filtered_ids)]" context="{'default_partner_id': partner_id}" width="14%" optional="hide" />
+                    <field name="effective_date" width="6%" optional="hide"/>
                     <field name="member" readonly="1" width="6%" optional="hide"/>
                     <field name="accept" string="Accept terms" readonly="1" width="6%" optional="hide"/>
                     <field name="participation_quantity" sum="True" width="6%" optional="show"/>
