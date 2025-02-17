@@ -89,7 +89,7 @@ class Selfconsumption(models.Model):
         required=True,
         default=lambda self: self.env.company.partner_id,
     )
-    power = fields.Float(string="Rated Power (kWn)")
+    power = fields.Float(string="Power (kW)")
     distribution_table_ids = fields.One2many(
         "energy_selfconsumption.distribution_table",
         "selfconsumption_project_id",
@@ -128,18 +128,30 @@ class Selfconsumption(models.Model):
         required=True,
     )
     conf_participation_ids = fields.One2many(
-        "energy_project.participation",
+        "energy_selfconsumptions.participation",
         "project_id",
         string="Participation",
     )
     conf_used_in_selfconsumption = fields.Boolean("Show used in selfconsumption")
     conf_vulnerability_situation = fields.Boolean("Show vulnerability situation")
-    conf_bank_details = fields.Boolean("Show bank details")
+    conf_bank_details = fields.Boolean(
+        "Request bank details",
+        default=True,
+        help="Select when you want to make the payment by bank transfer. If not requested, the payment must be made by bank transfer by the member.",
+    )
     conf_url_form = fields.Char(string="URL")
 
-    @api.onchange("conf_state")
-    def _onchange_conf_state(self):
-        if self.conf_state == "active":
+    def activate_form(self):
+        self.ensure_one()  # Ensures only one record is selected
+        if self.conf_state != "active":
+            if not self.company_id.data_policy_approval_text:
+                raise ValidationError(
+                    _(
+                        "You need to add the privacy policy file to display the form."
+                        "To modify the privacy policy go to company settings."
+                    )
+                )
+            self.conf_state = "active"
             self.conf_url_form = (
                 "{base_url}/inscription-data?model_id={model_id}".format(
                     base_url=self.env["ir.config_parameter"]
@@ -148,18 +160,15 @@ class Selfconsumption(models.Model):
                     model_id=self._origin.id,
                 )
             )
-            if not self.company_id.data_policy_approval_text:
-                raise ValidationError(
-                    _(
-                        "You need to add the privacy policy file to display the form."
-                        "To modify the privacy policy go to company settings."
-                    )
-                )
-        else:
+
+    def unactivate_form(self):
+        self.ensure_one()  # Ensures only one record is selected
+        if self.conf_state == "active":
             self.conf_url_form = ""
+            self.conf_state = "inactive"
 
     def action_redirect_to_page_form_inscription(self):
-        self.ensure_one()  # Asegura que solo haya un registro seleccionado
+        self.ensure_one()  # Ensures only one record is selected
         return {
             "type": "ir.actions.act_url",
             "url": self.conf_url_form,
@@ -184,8 +193,15 @@ class Selfconsumption(models.Model):
             "name": "Inscriptions",
             "view_mode": "tree,form",
             "res_model": "energy_selfconsumption.inscription_selfconsumption",
-            "domain": [("project_id", "=", self.project_id.id), ("selfconsumption_project_id", "=", self.id)],
-            "context": {"create": True, "default_project_id": self.project_id.id, "default_selfconsumption_project_id": self.id},
+            "domain": [
+                ("project_id", "=", self.project_id.id),
+                ("selfconsumption_project_id", "=", self.id),
+            ],
+            "context": {
+                "create": True,
+                "default_project_id": self.project_id.id,
+                "default_selfconsumption_project_id": self.id,
+            },
         }
 
     def get_contracts(self):
@@ -212,6 +228,18 @@ class Selfconsumption(models.Model):
             lambda table: table.state == actual_state
         )
         distribution_table_to_activate.write({"state": new_state})
+        if new_state == "active":
+            self.inscription_ids.filtered_domain(
+                [
+                    (
+                        "supply_point_id",
+                        "in",
+                        distribution_table_to_activate.mapped(
+                            "supply_point_assignation_ids.supply_point_id"
+                        ).ids,
+                    )
+                ]
+            ).write({"state": "active"})
 
     def set_in_activation_state(self):
         for record in self:
@@ -229,28 +257,28 @@ class Selfconsumption(models.Model):
     @api.model_create_multi
     def create(self, values):
         res = super().create(values)
-        self.env["energy_project.participation"].create(
+        self.env["energy_selfconsumptions.participation"].create(
             {
                 "name": "0,5 kW",
                 "quantity": 0.5,
                 "project_id": res.id,
             }
         )
-        self.env["energy_project.participation"].create(
+        self.env["energy_selfconsumptions.participation"].create(
             {
                 "name": "1,0 kW",
                 "quantity": 1.0,
                 "project_id": res.id,
             }
         )
-        self.env["energy_project.participation"].create(
+        self.env["energy_selfconsumptions.participation"].create(
             {
                 "name": "1,5 kW",
                 "quantity": 1.5,
                 "project_id": res.id,
             }
         )
-        self.env["energy_project.participation"].create(
+        self.env["energy_selfconsumptions.participation"].create(
             {
                 "name": "2,0 kW",
                 "quantity": 2.0,

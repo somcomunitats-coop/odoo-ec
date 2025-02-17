@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="change_state_inscription_wizard_form_view" model="ir.ui.view">
+            <field name="name">change_state_inscription_wizard_form</field>
+            <field name="model">energy_selfconsumption.change_state_inscription.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="change_state_inscription_lines_wizard_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="inscription_id" readonly="1" force_save="1"/>
+                                <field name="state" />
+                                <field name="participation_real_quantity" />
+                            </tree>
+                        </field>
+                    </sheet>
+                    <footer>
+                        <button type="object" name="change_state_inscription">Change state inscription</button>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="change_state_inscription_wizard_action" model="ir.actions.act_window">
+            <field name="name">Change state inscription</field>
+            <field name="res_model">energy_selfconsumption.change_state_inscription.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

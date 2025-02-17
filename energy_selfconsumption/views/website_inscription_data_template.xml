@@ -23,9 +23,7 @@
       src="/energy_selfconsumption/static/src/js/inscription-data-website.js"
     />
       <h1>
-          Enrollment in the shared self-consumption project of the Energy Community: <t
-        t-esc="company_name"
-      /> of the EC
+          Enrollment in the shared self-consumption project of the <t t-esc="company_name"/> of the EC
       </h1>
       <h2>
         Installation: <t t-esc="project_name" /> of the project
@@ -360,6 +358,12 @@
           <t t-raw="error_msg" />
         </div>
       </t>
+      <br />
+      <div t-if="error_msgs" class="col-md-12" style="text-align: end;">
+          <a type="button" href="javascript: history.go(-1)" class="btn btn-primary">
+            Back to form
+          </a>
+      </div>      
     </template>
 
     <template
