@@ -1,45 +1,56 @@
 <odoo>
-  <menuitem id="ce_service_invoicing_menu_platform_manager" name="Services" parent="energy_communities.ce_root_menu_platform_manager" sequence="1" />
-  <menuitem id="ce_service_invoicing_menu_coord_admin" name="Services Coord" parent="energy_communities.ce_root_menu_platform_manager" sequence="1" />
+  <menuitem
+    id="ce_service_invoicing_menu"
+    name="Services"
+    parent="energy_communities.ce_root_menu"
+    sequence="1"
+    groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups"
+  />
+  <!--<menuitem id="ce_service_invoicing_menu_coord_admin" name="Services Coord" parent="energy_communities.ce_root_menu_platform_manager" sequence="1" />-->
   <menuitem
     name="Service Contracts"
     id="view_service_invoicing_menu_platform_manager"
-    parent="ce_service_invoicing_menu_platform_manager"
+    parent="ce_service_invoicing_menu"
     action="view_service_invoicing_window_platform_manager"
+    groups="energy_communities.role_platform_admin_res_groups"
     sequence="100"
   />
   <menuitem
     name="Service Contracts"
     id="view_service_invoicing_menu_coord_admin"
-    parent="ce_service_invoicing_menu_coord_admin"
+    parent="ce_service_invoicing_menu"
     action="view_service_invoicing_window_coord_admin"
+    groups="energy_communities.role_coord_admin_res_groups"
     sequence="100"
   />
   <menuitem
     name="Platform Services"
     id="view_services_menu"
-    parent="ce_service_invoicing_menu_platform_manager"
+    parent="ce_service_invoicing_menu"
     action="view_services_window"
+    groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups"
     sequence="200"
   />
   <menuitem
     name="Service Packs"
     id="view_service_packs_menu"
-    parent="ce_service_invoicing_menu_platform_manager"
+    parent="ce_service_invoicing_menu"
     action="view_service_packs_window"
+    groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups"
     sequence="300"
   />
   <menuitem
     name="Service Packs templates"
     id="view_service_contract_templates_menu"
-    parent="ce_service_invoicing_menu_platform_manager"
+    parent="ce_service_invoicing_menu"
     action="view_service_contract_templates_window"
+    groups="energy_communities.role_platform_admin_res_groups"
     sequence="400"
   />
   <menuitem
     name="Service invoices issued"
     id="view_service_invoices_issued_menu"
-    parent="ce_service_invoicing_menu_platform_manager"
+    parent="ce_service_invoicing_menu"
     action="view_service_invoices_issued_window"
     groups="energy_communities.role_platform_admin_res_groups"
     sequence="500"
@@ -47,7 +58,7 @@
   <menuitem
     name="Service invoices received"
     id="view_service_invoices_received_menu"
-    parent="ce_service_invoicing_menu_platform_manager"
+    parent="ce_service_invoicing_menu"
     action="view_service_invoices_received_window"
     groups="energy_communities.role_coord_admin_res_groups,energy_communities.role_coord_worker_res_groups"
     sequence="500"
@@ -55,15 +66,17 @@
   <menuitem
     name="Service actions (sale orders)"
     id="view_service_sale_orders_menu"
-    parent="ce_service_invoicing_menu_platform_manager"
+    parent="ce_service_invoicing_menu"
     action="view_service_sale_orders_window"
+    groups="energy_communities.role_platform_admin_res_groups"
     sequence="550"
   />
   <menuitem
     name="Tariffs"
     id="view_service_tariffs_menu"
-    parent="ce_service_invoicing_menu_platform_manager"
+    parent="ce_service_invoicing_menu"
     action="view_service_tariffs_window"
+    groups="energy_communities.role_platform_admin_res_groups"
     sequence="600"
   />
 </odoo>
