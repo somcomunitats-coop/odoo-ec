@@ -47,6 +47,7 @@
     name="Assign pack to community"
     action="service_invoicing_action_create_wizard_action"
     parent="energy_communities.ce_assistants_menu"
+    groups="energy_communities.role_platform_admin_res_groups"
     sequence="100"
   />
 </odoo>
