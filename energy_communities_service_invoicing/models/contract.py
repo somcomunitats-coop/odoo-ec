@@ -53,12 +53,14 @@ class ContractContract(models.Model):
     @api.depends("contract_line_ids")
     def _compute_discount(self):
         for record in self:
+            record.discount = 0
             if record.contract_line_ids:
                 record.discount = record.contract_line_ids[0].discount
 
     @api.depends("contract_line_ids")
     def _compute_last_date_invoiced(self):
         for record in self:
+            record.last_date_invoiced = None
             if record.contract_line_ids:
                 record.last_date_invoiced = record.contract_line_ids[
                     0
@@ -67,8 +69,9 @@ class ContractContract(models.Model):
     @api.depends("contract_template_id")
     def _compute_service_pack_id(self):
         for record in self:
+            record.service_pack_id = False
             if record.contract_template_id:
-                record.service_pack_id = self.env["product.product"].search(
+                rel_product = self.env["product.product"].search(
                     [
                         (
                             "property_contract_template_id",
@@ -78,6 +81,8 @@ class ContractContract(models.Model):
                     ],
                     limit=1,
                 )
+                if rel_product:
+                    record.service_pack_id = rel_product.id
 
     def set_close_status_type_by_date(self):
         if self.date_end.strftime("%Y-%m-%d") == datetime.now().strftime("%Y-%m-%d"):

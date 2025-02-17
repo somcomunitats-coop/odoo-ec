@@ -54,8 +54,50 @@
     </field>
   </record>
 
-  <record id="view_contract_contract_customer_form" model="ir.ui.view">
-    <field name="name">contract.contract.form (in energy_communities service_invoicing)</field>
+  <record id="view_contract_contract_customer_form_coord_admin" model="ir.ui.view">
+    <field name="name">contract.contract.form (in energy_communities service_invoicing coordinator)</field>
+    <field name="model">contract.contract</field>
+    <field name="arch" type="xml">
+      <form edit="false" create="false" delete="false">
+        <header>
+          <field name="status" widget="statusbar" />
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+            <button
+              name="action_show_invoices"
+              type="object"
+              icon="fa-list"
+              class="oe_stat_button"
+            >
+              <field
+                string="Invoices"
+                name="invoice_count"
+                widget="statinfo"
+              />
+            </button>
+          </div>
+          <group>
+            <field name="name" />
+            <field name="service_pack_id" />
+            <field name="pricelist_id" />
+            <field name="service_pack_id" />
+            <field name="discount" />
+            <!--TODO: Instead of contract template id we must show related service products -->
+          </group>
+          <group>
+            <field name="date_start" />
+            <field name="last_date_invoiced" />
+            <field name="recurring_next_date" />
+            <field name="date_end" attrs="{'invisible': [('status','!=','closed')]}" />
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_contract_contract_customer_form_platform_admin" model="ir.ui.view">
+    <field name="name">contract.contract.form (in energy_communities service_invoicing platform admin)</field>
     <field name="model">contract.contract</field>
     <field name="inherit_id" ref="product_contract.contract_contract_customer_form_view" />
     <field name="arch" type="xml">

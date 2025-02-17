@@ -1,32 +1,74 @@
 <odoo>
+
+  <record model="ir.rule" id="energy_communities_service_invoicing.rule_contract_contract_admin">
+    <field name="name">Contract admins</field>
+    <field name="model_id" ref="model_contract_contract"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_platform_admin_res_groups')),(4, ref('energy_communities.role_coord_admin_res_groups'))]"/>
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="True" />
+    <field name="perm_unlink" eval="True" />
+  </record>
+
   <function name="write" model="ir.model.data">
       <function name="search" model="ir.model.data">
-          <value eval="[('module', '=', 'account'),('name', '=', 'account_move_comp_rule')]"/>
+          <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_contract_multi_company')]"/>
       </function>
       <value eval="{'noupdate': False}" />
   </function>
-  <record model="ir.rule" id="account.account_move_comp_rule">
+  <record model="ir.rule" id="contract.rule_contract_contract_multi_company">
+
     <field name="domain_force">
 [
-'|',
+'|','|',
+('partner_id','=',user.user_current_company.partner_id.id),
 ('company_id','=',False),
-('company_id', 'in', company_ids),
+('company_id','in',company_ids)
 ]
     </field>
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="False"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
   </record>
   <function name="write" model="ir.model.data">
     <function name="search" model="ir.model.data">
-        <value eval="[('module', '=', 'account'),('name', '=', 'account_move_comp_rule')]"/>
+        <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_contract_multi_company')]"/>
     </function>
     <value eval="{'noupdate': True}" />
   </function>
-</odoo>
 
-<!--    <field name="domain_force">-->
-<!--[-->
-<!--'|','|',-->
-<!--('company_id','=',False),-->
-<!--('company_id', 'in', company_ids),-->
-<!--('partner_id','=',user.user_current_company.partner_id.id)-->
-<!--]-->
-<!--    </field>-->
+  <function name="write" model="ir.model.data">
+      <function name="search" model="ir.model.data">
+          <value eval="[('module', '=', 'contract'),('name', '=', 'contract_contract_see_all')]"/>
+      </function>
+      <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="contract.contract_contract_see_all">
+    <field name="active">False</field>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'contract'),('name', '=', 'contract_contract_see_all')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
+
+  <function name="write" model="ir.model.data">
+      <function name="search" model="ir.model.data">
+          <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_contract_portal')]"/>
+      </function>
+      <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="contract.rule_contract_contract_portal">
+    <field name="active">False</field>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_contract_portal')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
+
+</odoo>
