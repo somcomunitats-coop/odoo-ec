@@ -1,5 +1,5 @@
 <odoo>
-
+  <!-- CONTRACT -->
   <record model="ir.rule" id="energy_communities_service_invoicing.rule_contract_contract_admin">
     <field name="name">Contract admins</field>
     <field name="model_id" ref="model_contract_contract"/>
@@ -69,6 +69,47 @@
         <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_contract_portal')]"/>
     </function>
     <value eval="{'noupdate': True}" />
+    </function>
+
+  <!-- PRODUCT TEMPLATE -->
+  <function name="write" model="ir.model.data">
+      <function name="search" model="ir.model.data">
+          <value eval="[('module', '=', 'product'),('name', '=', 'product_comp_rule')]"/>
+      </function>
+      <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="product.product_comp_rule">
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="False"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'product'),('name', '=', 'product_comp_rule')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
   </function>
 
+  <record model="ir.rule" id="energy_communities_service_invoicing.rule_product_template_coord_admin">
+    <field name="name">Product - Coordinator admin</field>
+    <field name="model_id" ref="model_product_template"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_coord_admin_res_groups'))]"/>
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="False" />
+    <field name="perm_unlink" eval="False" />
+  </record>
+
+  <record model="ir.rule" id="energy_communities_service_invoicing.rule_product_template_platform_admin">
+    <field name="name">Product - Platform admin</field>
+    <field name="model_id" ref="model_product_template"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_platform_admin_res_groups'))]"/>
+    <field name="domain_force">[(1, '=', 1)]</field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="True" />
+    <field name="perm_unlink" eval="True" />
+  </record>
 </odoo>
