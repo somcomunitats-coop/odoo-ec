@@ -37,6 +37,12 @@ class ContractContract(models.Model):
         string="Last Date Invoiced", compute="_compute_last_date_invoiced", store=False
     )
     is_pack = fields.Boolean(related="contract_template_id.is_pack")
+    related_contract_product_ids = fields.One2many(
+        "product.product",
+        string="Related services",
+        compute="_compute_related_contract_product_ids",
+        store=False,
+    )
     service_pack_id = fields.Many2one(
         "product.product",
         string="Service Pack",
@@ -49,6 +55,16 @@ class ContractContract(models.Model):
     )
     # On energy_communities all contracts have skip_zero_qty marked by default
     skip_zero_qty = fields.Boolean(default=True)
+
+    @api.depends("contract_template_id")
+    def _compute_related_contract_product_ids(self):
+        for record in self:
+            rel_products = [(5, 0, 0)]
+            record.related_contract_product_ids = rel_products
+            if record.contract_template_id:
+                for line in record.contract_template_id.contract_line_ids:
+                    rel_products.append((4, line.product_id.id))
+                record.related_contract_product_ids = rel_products
 
     @api.depends("contract_line_ids")
     def _compute_discount(self):

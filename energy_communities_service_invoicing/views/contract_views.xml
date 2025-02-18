@@ -81,6 +81,14 @@
           <group>
             <field name="name" />
             <field name="service_pack_id" options="{'no_open': True}" />
+            <field name="related_contract_product_ids" widget="one2many" >
+              <tree editable="bottom">
+                <field name="name" readonly="1"/>
+              </tree>
+              <form>
+                <field name="name" readonly="1"/>
+              </form>
+            </field>
             <field name="pricelist_id" />
             <field name="discount" />
             <!--TODO: Instead of contract template id we must show related service products -->
