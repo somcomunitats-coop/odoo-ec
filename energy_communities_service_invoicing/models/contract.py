@@ -55,6 +55,11 @@ class ContractContract(models.Model):
     )
     # On energy_communities all contracts have skip_zero_qty marked by default
     skip_zero_qty = fields.Boolean(default=True)
+    received_invoices_count = fields.Integer(compute="_compute_received_invoices_count")
+
+    def _compute_received_invoices_count(self):
+        for record in self:
+            record.received_invoices_count = len(record._get_received_invoices_ids())
 
     @api.depends("contract_template_id")
     def _compute_related_contract_product_ids(self):
@@ -129,6 +134,41 @@ class ContractContract(models.Model):
             "target": "new",
             "res_id": wizard.id,
         }
+
+    def action_show_received_invoices(self):
+        self.ensure_one()
+        tree_view = self.env.ref("account.view_invoice_tree", raise_if_not_found=False)
+        form_view = self.env.ref("account.view_move_form", raise_if_not_found=False)
+        ctx = dict(self.env.context)
+        ctx["default_move_type"] = "in_invoice"
+        action = {
+            "type": "ir.actions.act_window",
+            "name": "Invoices",
+            "res_model": "account.move",
+            "view_mode": "tree,form",
+            "domain": [("id", "in", self._get_received_invoices_ids())],
+            "context": ctx,
+        }
+        if tree_view and form_view:
+            action["views"] = [(tree_view.id, "tree"), (form_view.id, "form")]
+        return action
+
+    # TODO: Not working. Lack of access rules
+    def _get_received_invoices_ids(self):
+        received_invoices = []
+        issued_invoices = self.sudo()._get_related_invoices().ids
+        # related_partner = self.env["res.partner"].sudo.
+        all_received_invoices = self.env["account.move"].search(
+            [
+                ("partner_id", "=", self.sudo().company_id.partner_id.id),
+                ("move_type", "=", "in_invoice"),
+            ]
+        )
+        for invoice in all_received_invoices:
+            if invoice.sudo().ref_invoice_id:
+                if invoice.sudo().ref_invoice_id.id in issued_invoices:
+                    received_invoices.append(invoice.id)
+        return received_invoices
 
     @api.model
     def cron_close_todays_closed_planned_contacts(self):
