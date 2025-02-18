@@ -120,6 +120,9 @@ class ContractContract(models.Model):
     def action_modify_contract(self):
         return self._action_contract("modification")
 
+    def action_reopen_contract(self):
+        return self._action_contract("reopen")
+
     def _action_contract(self, action):
         self.ensure_one()
         wizard = self.env["service.invoicing.action.wizard"].create(

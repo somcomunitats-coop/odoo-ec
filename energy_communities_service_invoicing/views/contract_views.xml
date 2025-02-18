@@ -131,6 +131,12 @@
           string="Close"
           attrs="{'invisible':[('status','not in',['ready_to_start','in_progress'])]}"
         />
+        <button
+          name="action_reopen_contract"
+          type="object"
+          string="Reopen"
+          attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}"
+        />
       </xpath>
       <xpath expr="//field[@name='partner_id']" position="after">
         <field name="community_company_id" />

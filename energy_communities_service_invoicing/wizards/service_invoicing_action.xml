@@ -15,14 +15,16 @@
             <field
               name="pricelist_id"
               attrs="{
-               'invisible': [('executed_action','!=','modification')],
+               'invisible': [('executed_action','not in',['modification','reopen'])],
+               'required': [('executed_action','=','reopen')]
               }"
             />
             <field
               name="service_pack_id"
               domain="[('is_contract','=',True)]"
               attrs="{
-               'invisible': [('executed_action','!=','modification')],
+                'invisible': [('executed_action','not in',['modification','reopen'])],
+                'required': [('executed_action','=','reopen')]
               }"
             />
           </group>
@@ -48,6 +50,13 @@
             type="object"
             class="btn-primary"
             attrs="{'invisible': [('executed_action','!=','close')]}"
+          />
+          <button
+            name="execute_reopen"
+            string="reopen contract"
+            type="object"
+            class="btn-primary"
+            attrs="{'invisible': [('executed_action','!=','reopen')]}"
           />
           <button
             special="cancel"
