@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from odoo import api, fields, models
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, ValidationError
 from odoo.tools.translate import _
 
 from ..utils import _CONTRACT_STATUS_VALUES
@@ -56,6 +56,25 @@ class ContractContract(models.Model):
     # On energy_communities all contracts have skip_zero_qty marked by default
     skip_zero_qty = fields.Boolean(default=True)
     received_invoices_count = fields.Integer(compute="_compute_received_invoices_count")
+
+    @api.constrains("partner_id", "community_company_id")
+    def _constrain_unique_contract(self):
+        for record in self:
+            if record.community_company_id:
+                existing_contract = self.env["contract.contract"].search(
+                    [
+                        ("partner_id", "=", record.partner_id.id),
+                        ("community_company_id", "=", record.community_company_id.id),
+                        ("id", "!=", record.id),
+                        ("is_pack", "=", True),
+                    ]
+                )
+                if existing_contract:
+                    raise ValidationError(
+                        _(
+                            "It can only exists one service contract per Customer and related community."
+                        )
+                    )
 
     def _compute_received_invoices_count(self):
         for record in self:
