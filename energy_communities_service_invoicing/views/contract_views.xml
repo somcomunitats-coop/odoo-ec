@@ -63,6 +63,7 @@
           <field name="status" widget="statusbar" />
         </header>
         <sheet>
+          <!--TODO: Not working: redirect to invoices issued menu -->
           <div class="oe_button_box" name="button_box">
             <button
               name="action_show_invoices"
@@ -79,9 +80,8 @@
           </div>
           <group>
             <field name="name" />
-            <field name="service_pack_id" />
+            <field name="service_pack_id" readonly="1" />
             <field name="pricelist_id" />
-            <field name="service_pack_id" />
             <field name="discount" />
             <!--TODO: Instead of contract template id we must show related service products -->
           </group>
