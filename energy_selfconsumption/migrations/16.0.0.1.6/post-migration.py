@@ -4,17 +4,7 @@ logger = logging.getLogger(__name__)
 
 
 def migrate(cr, version):
-    logger.info(f"Starting migration from version {version}.")
-    cr.execute(
-        """ALTER TABLE energy_project_participation RENAME TO energy_selfconsumptions_participation;"""
-    )
-    logger.info(
-        "Renamed energy_project_participation to energy_selfconsumptions_participation."
-    )
-    cr.execute(
-        """ALTER TABLE energy_selfconsumption_inscription_selfconsumption RENAME COLUMN participation TO participation_id;"""
-    )
-    logger.info("Renamed column participation to participation_id.")
+    logger.info(f"Starting post-migration from version {version}.")
     cr.execute(
         """update energy_selfconsumption_inscription_selfconsumption set participation_real_quantity = (
                     select quantity from energy_selfconsumptions_participation where id = participation_id
@@ -30,4 +20,4 @@ def migrate(cr, version):
                 );"""
     )
     logger.info("Updated state.")
-    logger.info("Migration completed.")
+    logger.info("Post migration completed.")
