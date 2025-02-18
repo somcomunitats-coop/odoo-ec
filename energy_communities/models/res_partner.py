@@ -58,19 +58,19 @@ class ResPartner(models.Model):
 
     def compute_company_hierarchy_level(self):
         for record in self:
-            try:
-                related_company_id = record.related_company_id
-            except:
-                related_company_id = False
-            if related_company_id:
+            record.company_hierarchy_level = "none"
+            if record.related_company_id:
                 record.company_hierarchy_level = (
                     record.related_company_id.hierarchy_level
                 )
 
     def compute_related_company_id(self):
         for record in self:
-            related_company_id = self.env["res.company"].search(
-                [("partner_id", "=", record.id)], limit=1
+            record.related_company_id = False
+            related_company_id = (
+                self.env["res.company"]
+                .sudo()
+                .search([("partner_id", "=", record.id)], limit=1)
             )
             if related_company_id:
                 record.related_company_id = related_company_id[0].id
