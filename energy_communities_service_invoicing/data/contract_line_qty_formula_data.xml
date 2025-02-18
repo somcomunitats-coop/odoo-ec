@@ -11,6 +11,7 @@ result = env['cooperative.membership'].sudo().search_count([
 ('member','=',True)
 ])
       </field>
+      <field name="company_id" eval="ref('base.main_company')" />
     </record>
   </data>
 </odoo>
