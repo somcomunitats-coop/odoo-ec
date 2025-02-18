@@ -12,6 +12,7 @@ _CONTRACT_STATUS_VALUES = [
 _SERVICE_INVOICING_EXECUTED_ACTION_VALUES = [
     ("activate", _("Activate")),
     ("modification", _("Modification")),
+    ("reopen", _("Reopen")),
     ("close", _("Close")),
 ]
 _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES = [

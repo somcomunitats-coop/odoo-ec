@@ -44,6 +44,15 @@ class ServiceInvoicingActionWizard(models.TransientModel):
             )
         return service_invoicing_view(self.env, service_invoicing_id)
 
+    def execute_reopen(self):
+        with contract_utils(self.env, self.service_invoicing_id) as component:
+            service_invoicing_id = component.reopen(
+                self.execution_date,
+                self.pricelist_id,
+                self.service_pack_id,
+            )
+        return service_invoicing_view(self.env, service_invoicing_id)
+
     def _validate_execute_modify(self):
         if not self.pricelist_id and not self.service_pack_id:
             raise ValidationError(_("Select at least one value to modify"))
