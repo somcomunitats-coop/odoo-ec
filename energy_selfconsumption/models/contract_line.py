@@ -5,11 +5,6 @@ from odoo.exceptions import ValidationError
 class ContractLine(models.Model):
     _inherit = "contract.line"
 
-    days_invoiced = fields.Integer(
-        string="Days invoiced",
-        compute="_compute_days_invoiced",
-        store=True,
-    )
     main_line = fields.Boolean("Main line", default=False)
     # This validation is raised when writing date_start on the contract and recurring_next_date is yet not computed
     # Fixed by just checking when the recurrence is at line level (line_recurrence)
@@ -41,22 +36,3 @@ class ContractLine(models.Model):
                         )
                         % line.name
                     )
-
-    @api.depends("last_date_invoiced", "recurring_next_date")
-    def _compute_days_invoiced(self):
-        for record in self:
-            (
-                first_date_invoiced,
-                last_date_invoiced,
-                _,  # recurring_next_date
-            ) = record._get_period_to_invoice(
-                record.last_date_invoiced,
-                record.recurring_next_date,
-                stop_at_date_end=True,
-            )
-
-            record.days_invoiced = (
-                (last_date_invoiced - first_date_invoiced).days + 1
-                if first_date_invoiced and last_date_invoiced
-                else 0
-            )
