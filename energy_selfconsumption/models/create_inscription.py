@@ -353,7 +353,7 @@ class CreateInscription(models.AbstractModel):
         state = self._get_state(values, project, country)
         lang = self._get_language(values)
         formatted_birthdate = self._get_formatted_birthdate(values)
-        owner = self._get_existing_contact_owner(values)
+        owner = self._get_existing_contact_owner(values, project)
 
         if not owner:
             return self._create_new_owner(
@@ -400,23 +400,24 @@ class CreateInscription(models.AbstractModel):
 
     def _get_formatted_birthdate(self, values):
         """Gets the formatted date of birth."""
-        if "supplypoint_owner_id_birthdate_date" in values:
+        if "supplypoint_owner_id_birthdate_date" in values and values["supplypoint_owner_id_birthdate_date"] != '':
             birthdate_obj = datetime.strptime(
                 values["supplypoint_owner_id_birthdate_date"], "%d/%m/%Y"
             )
             return birthdate_obj.strftime("%Y-%m-%d")
         return None
 
-    def _get_existing_contact_owner(self, values):
+    def _get_existing_contact_owner(self, values, project):
         """Search for an existing VAT-based owner."""
         return (
             self.env["res.partner"]
             .sudo()
             .search(
                 [
+                    ("company_ids", "in", (project.company_id.id)),
                     ("vat", "=", values["supplypoint_owner_id_vat"]),
                     ("type", "=", "contact"),
-                ]
+                ], limit=1
             )
         )
 
