@@ -42,7 +42,10 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
         if existing_closed_contract:
             with contract_utils(self.env, existing_closed_contract) as component:
                 service_invoicing_id = component.reopen(
-                    datetime.now(), self.pricelist_id, self.service_pack_id
+                    datetime.now(),
+                    self.pricelist_id,
+                    self.service_pack_id,
+                    self.discount,
                 )
         # If none of previous create a new contract
         else:

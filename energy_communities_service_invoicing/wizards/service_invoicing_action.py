@@ -23,6 +23,7 @@ class ServiceInvoicingActionWizard(models.TransientModel):
     )
     pricelist_id = fields.Many2one("product.pricelist", string="Select pricelist")
     service_pack_id = fields.Many2one("product.product", string="Service pack")
+    discount = fields.Float(string="Discount (%)", digits="Discount")
 
     def execute_activate(self):
         with contract_utils(self.env, self.service_invoicing_id) as component:
@@ -41,6 +42,7 @@ class ServiceInvoicingActionWizard(models.TransientModel):
                 executed_modification_action,
                 self.pricelist_id,
                 self.service_pack_id,
+                self.discount,
             )
         return service_invoicing_view(self.env, service_invoicing_id)
 
@@ -50,19 +52,22 @@ class ServiceInvoicingActionWizard(models.TransientModel):
                 self.execution_date,
                 self.pricelist_id,
                 self.service_pack_id,
+                self.discount,
             )
         return service_invoicing_view(self.env, service_invoicing_id)
 
     def _validate_execute_modify(self):
-        if not self.pricelist_id and not self.service_pack_id:
+        if (
+            not self.pricelist_id
+            and not self.service_pack_id
+            and self.discount == self.service_invoicing_id.discount
+        ):
             raise ValidationError(_("Select at least one value to modify"))
 
     def _build_executed_modification_action(self):
-        executed_modification_action = ""
+        executed_modification_action = "modify_discount"
         if self.pricelist_id:
-            executed_modification_action += "modify_pricelist"
+            executed_modification_action += ",modify_pricelist"
         if self.service_pack_id:
-            if bool(executed_modification_action):
-                executed_modification_action += ","
-            executed_modification_action += "modify_service_pack"
+            executed_modification_action += ",modify_service_pack"
         return executed_modification_action
