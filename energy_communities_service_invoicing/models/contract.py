@@ -126,13 +126,20 @@ class ContractContract(models.Model):
         return self._action_contract("modification")
 
     def action_reopen_contract(self):
-        return self._action_contract("reopen")
+        return self._action_contract("reopen", self.service_pack_id, self.pricelist_id)
 
-    def _action_contract(self, action):
+    def _action_contract(self, action, service_pack_id=False, pricelist_id=False):
         self.ensure_one()
-        wizard = self.env["service.invoicing.action.wizard"].create(
-            {"service_invoicing_id": self.id, "executed_action": action}
-        )
+        create_dict = {
+            "service_invoicing_id": self.id,
+            "executed_action": action,
+            "discount": self.discount,
+        }
+        if service_pack_id:
+            create_dict["service_pack_id"] = service_pack_id.id
+        if pricelist_id:
+            create_dict["pricelist_id"] = pricelist_id.id
+        wizard = self.env["service.invoicing.action.wizard"].create(create_dict)
         return {
             "type": "ir.actions.act_window",
             "name": _("Executing: {}").format(action),

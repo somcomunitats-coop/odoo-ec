@@ -46,6 +46,7 @@ class ContractUtils(Component):
         executed_modification_action,
         pricelist_id=None,
         service_pack_id=None,
+        discount=None,
     ):
         initial_status = self.work.record.status
         self.set_contract_status_closed(execution_date)
@@ -58,6 +59,7 @@ class ContractUtils(Component):
             execution_date,
             pricelist_id,
             service_pack_id,
+            discount,
         )
         if initial_status == "ready_to_start":
             new_service_invoicing_id = (
@@ -74,10 +76,7 @@ class ContractUtils(Component):
         return new_service_invoicing_id
 
     def reopen(
-        self,
-        execution_date,
-        pricelist_id=None,
-        service_pack_id=None,
+        self, execution_date, pricelist_id=None, service_pack_id=None, discount=None
     ):
         self.set_contract_status_closed(execution_date)
         new_service_invoicing_id = self.component(
@@ -85,10 +84,11 @@ class ContractUtils(Component):
         ).create_service_invoicing_ready_to_start(
             **self._build_service_invoicing_params(
                 "reopen",
-                "modify_service_pack,modify_pricelist",
+                "modify_service_pack,modify_pricelist,modify_discount",
                 execution_date,
                 pricelist_id,
                 service_pack_id,
+                discount,
             )
         )
         self._setup_successors_and_predecessors(new_service_invoicing_id)
@@ -101,6 +101,7 @@ class ContractUtils(Component):
         execution_date,
         pricelist_id=None,
         service_pack_id=None,
+        discount=None,
     ):
         executed_modification_action_list = executed_modification_action.split(",")
         return {
@@ -118,7 +119,9 @@ class ContractUtils(Component):
             else execution_date,
             "executed_action": executed_action,
             "executed_modification_action": executed_modification_action,
-            "discount": self.work.record.discount,
+            "discount": discount
+            if "modify_discount" in executed_modification_action_list
+            else self.work.record.discount,
         }
 
     def _is_service_line(self, contract_line):

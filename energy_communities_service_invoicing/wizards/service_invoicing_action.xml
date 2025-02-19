@@ -27,6 +27,13 @@
                 'required': [('executed_action','=','reopen')]
               }"
             />
+            <field
+              name="discount"
+              attrs="{
+                'invisible': [('executed_action','not in',['modification','reopen'])],
+                'required': [('executed_action','=','reopen')]
+              }"
+            />
           </group>
         </sheet>
         <footer>

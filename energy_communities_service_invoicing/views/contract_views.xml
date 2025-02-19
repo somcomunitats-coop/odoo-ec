@@ -135,7 +135,7 @@
           name="action_reopen_contract"
           type="object"
           string="Reopen"
-          attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}"
+          attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('successor_contract_id','!=',False)]}"
         />
       </xpath>
       <xpath expr="//field[@name='partner_id']" position="after">
