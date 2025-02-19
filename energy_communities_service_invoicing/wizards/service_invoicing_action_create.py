@@ -9,7 +9,12 @@ from odoo.addons.energy_communities.utils import (
     sale_order_utils,
 )
 
-from ..utils import service_invoicing_view
+from ..utils import (
+    get_existing_last_closed_contract,
+    get_existing_open_contract,
+    raise_existing_same_open_contract_error,
+    service_invoicing_view,
+)
 
 
 class ServiceInvoicingActionCreateWizard(models.TransientModel):
@@ -24,15 +29,34 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
     discount = fields.Float(string="Discount (%)", digits="Discount", default=0)
 
     def execute_create(self):
-        with sale_order_utils(self.env) as component:
-            service_invoicing_id = component.create_service_invoicing_ready_to_start(
-                self.company_id,
-                self.community_company_id,
-                self.service_pack_id,
-                self.pricelist_id,
-                self.payment_mode_id,
-                datetime.now(),
-                self.discount,
-                "activate",
-            )
+        # Check if already open one and raise error
+        existing_contract = get_existing_open_contract(
+            self.env, self.company_id.partner_id, self.community_company_id
+        )
+        if existing_contract:
+            raise_existing_same_open_contract_error()
+        existing_closed_contract = get_existing_last_closed_contract(
+            self.env, self.company_id.partner_id, self.community_company_id
+        )
+        # If existing closed contract reopen it
+        if existing_closed_contract:
+            with contract_utils(self.env, existing_closed_contract) as component:
+                service_invoicing_id = component.reopen(
+                    datetime.now(), self.pricelist_id, self.service_pack_id
+                )
+        # If none of previous create a new contract
+        else:
+            with sale_order_utils(self.env) as component:
+                service_invoicing_id = (
+                    component.create_service_invoicing_ready_to_start(
+                        self.company_id,
+                        self.community_company_id,
+                        self.service_pack_id,
+                        self.pricelist_id,
+                        self.payment_mode_id,
+                        datetime.now(),
+                        self.discount,
+                        "activate",
+                    )
+                )
         return service_invoicing_view(self.env, service_invoicing_id)
