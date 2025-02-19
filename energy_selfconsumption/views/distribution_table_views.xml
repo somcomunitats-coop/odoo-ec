@@ -50,6 +50,7 @@
                   name="selfconsumption_project_id"
                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"
                   options="{'no_create': True}"
+                  invisible="1"
                 />
                             </group>
                             <group>
