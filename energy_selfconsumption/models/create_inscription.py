@@ -421,7 +421,7 @@ class CreateInscription(models.AbstractModel):
             )
         )
 
-    def _get_existing_owner_self_consumption_owner(self, values):
+    def _get_existing_owner_self_consumption_owner(self, values, project):
         """Search for an existing VAT-based owner."""
         return (
             self.env["res.partner"]
@@ -430,7 +430,8 @@ class CreateInscription(models.AbstractModel):
                 [
                     ("vat", "=", values["supplypoint_owner_id_vat"]),
                     ("type", "=", "owner_self-consumption"),
-                ]
+                    ("company_ids", "in", (project.company_id.id)),
+                ], limit=1
             )
         )
 
@@ -470,7 +471,7 @@ class CreateInscription(models.AbstractModel):
 
     def _update_owner_address(self, project, owner, values, country, state):
         """Update the address of an existing owner."""
-        exists = self._get_existing_owner_self_consumption_owner(values)
+        exists = self._get_existing_owner_self_consumption_owner(values, project)
         if exists:
             vals = {
                 "name": values["supplypoint_owner_id_name"],
