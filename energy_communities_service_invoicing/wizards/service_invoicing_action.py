@@ -24,6 +24,7 @@ class ServiceInvoicingActionWizard(models.TransientModel):
     pricelist_id = fields.Many2one("product.pricelist", string="Select pricelist")
     service_pack_id = fields.Many2one("product.product", string="Service pack")
     discount = fields.Float(string="Discount (%)", digits="Discount")
+    payment_mode_id = fields.Many2one("account.payment.mode", string="Payment mode")
 
     def execute_activate(self):
         with contract_utils(self.env, self.service_invoicing_id) as component:
@@ -43,6 +44,7 @@ class ServiceInvoicingActionWizard(models.TransientModel):
                 self.pricelist_id,
                 self.service_pack_id,
                 self.discount,
+                self.payment_mode_id,
             )
         return service_invoicing_view(self.env, service_invoicing_id)
 
@@ -53,6 +55,7 @@ class ServiceInvoicingActionWizard(models.TransientModel):
                 self.pricelist_id,
                 self.service_pack_id,
                 self.discount,
+                self.payment_mode_id,
             )
         return service_invoicing_view(self.env, service_invoicing_id)
 
@@ -60,14 +63,25 @@ class ServiceInvoicingActionWizard(models.TransientModel):
         if (
             not self.pricelist_id
             and not self.service_pack_id
+            and not self.payment_mode_id
             and self.discount == self.service_invoicing_id.discount
         ):
             raise ValidationError(_("Select at least one value to modify"))
 
     def _build_executed_modification_action(self):
-        executed_modification_action = "modify_discount"
+        executed_modification_action = ""
         if self.pricelist_id:
-            executed_modification_action += ",modify_pricelist"
+            executed_modification_action += "modify_pricelist"
         if self.service_pack_id:
-            executed_modification_action += ",modify_service_pack"
+            if bool(executed_modification_action):
+                executed_modification_action += ","
+            executed_modification_action += "modify_service_pack"
+        if self.payment_mode_id:
+            if bool(executed_modification_action):
+                executed_modification_action += ","
+            executed_modification_action += "modify_payment_mode"
+        if self.discount != self.service_invoicing_id.discount:
+            if bool(executed_modification_action):
+                executed_modification_action += ","
+            executed_action += "modify_discount"
         return executed_modification_action
