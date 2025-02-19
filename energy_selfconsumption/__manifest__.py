@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "16.0.0.1.4",
+    "version": "16.0.0.1.6",
     "license": "AGPL-3",
     "depends": [
         "base",
@@ -56,6 +56,7 @@
         "wizards/invoicing_wizard_views.xml",
         "wizards/clean_supply_point_assignation_wizard_views.xml",
         "wizards/create_distribution_table_wizard_views.xml",
+        "wizards/change_state_inscription_wizard_views.xml",
         "reports/selfconsumption_reports.xml",
         "reports/invoice_template.xml",
     ],

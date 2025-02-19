@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class Participation(models.Model):
-    _name = "energy_project.participation"
+    _name = "energy_selfconsumptions.participation"
     _description = "Participation inscription"
 
     name = fields.Char(string="Description")

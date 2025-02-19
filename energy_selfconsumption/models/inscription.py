@@ -1,6 +1,12 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
+STATE_VALUES = [
+    ("active", _("Active")),
+    ("inactive", _("Inactive")),
+    ("change", _("Change")),
+]
+
 
 class Inscription(models.Model):
     _name = "energy_selfconsumption.inscription_selfconsumption"
@@ -20,11 +26,20 @@ class Inscription(models.Model):
         check_company=True,
     )
     annual_electricity_use = fields.Float(string="Annual electricity use")
-    participation = fields.Many2one(
-        comodel_name="energy_project.participation", string="Participation"
+    participation_id = fields.Many2one(
+        comodel_name="energy_selfconsumptions.participation", string="Participation"
     )
     participation_quantity = fields.Float(
-        string="Participation", related="participation.quantity"
+        string="Participation", related="participation_id.quantity"
+    )
+    participation_real_quantity = fields.Float(
+        string="Participation real quantity",
+        default=lambda self: self.participation_id.quantity,
+    )
+    state = fields.Selection(
+        string="Status",
+        selection=STATE_VALUES,
+        default="inactive",
     )
     accept = fields.Boolean(
         string="I accept and authorize being able to issue payments"
@@ -36,6 +51,10 @@ class Inscription(models.Model):
     supply_point_id = fields.Many2one(
         "energy_selfconsumption.supply_point", required=True
     )
+    owner_id = fields.Many2one(
+        related="supply_point_id.owner_id",
+        string="Owner",
+    )
     code = fields.Char(string="CUPS", related="supply_point_id.code")
     used_in_selfconsumption = fields.Selection(
         string="Used in selfconsumption",
@@ -43,8 +62,16 @@ class Inscription(models.Model):
     )
     vulnerability_situation = fields.Selection(
         string="Vulnerability situation",
-        related="partner_id.vulnerability_situation",
+        related="supply_point_id.owner_id.vulnerability_situation",
     )
+
+    @api.onchange("participation_real_quantity")
+    def _onchange_participation_real_quantity(self):
+        if (
+            self.participation_real_quantity != self.participation_quantity
+            and self.state == "active"
+        ):
+            self.state = "change"
 
     @api.constrains("project_id", "partner_id", "supply_point_id")
     def _constraint_unique(self):
@@ -66,6 +93,14 @@ class Inscription(models.Model):
         ctx = self.env.context.copy()
         action = self.env.ref(
             "energy_selfconsumption.create_distribution_table_wizard_action"
+        ).read()[0]
+        action["context"] = ctx
+        return action
+
+    def change_state_inscription(self):
+        ctx = self.env.context.copy()
+        action = self.env.ref(
+            "energy_selfconsumption.change_state_inscription_wizard_action"
         ).read()[0]
         action["context"] = ctx
         return action

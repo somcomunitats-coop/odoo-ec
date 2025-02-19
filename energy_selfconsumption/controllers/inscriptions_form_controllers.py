@@ -62,9 +62,13 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         partner = (
             request.env["res.partner"]
             .sudo()
-            .search([("vat", "=", values["inscription_partner_id_vat"]),
-                     ("parent_id", "=", False), 
-                     ("company_ids", "in", (project.company_id.id))])
+            .search(
+                [
+                    ("vat", "=", values["inscription_partner_id_vat"]),
+                    ("parent_id", "=", False),
+                    ("company_ids", "in", (project.company_id.id)),
+                ]
+            )
         )
         if not partner:
             return {
@@ -72,23 +76,26 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 "global_error": True,
             }
         partner = partner.get_partner_with_type()
-        cooperator = (
-            request.env["cooperative.membership"]
-            .sudo()
-            .search(
-                [
-                    ("company_id", "=", project.company_id.id),
-                    ("partner_id", "=", partner.id),
-                    ("cooperator", "=", True),
-                    ("member", "=", True),
-                ]
+        if not partner.with_company(
+            project.company_id.id
+        ).no_member_autorized_in_energy_actions:
+            cooperator = (
+                request.env["cooperative.membership"]
+                .sudo()
+                .search(
+                    [
+                        ("company_id", "=", project.company_id.id),
+                        ("partner_id", "=", partner.id),
+                        ("cooperator", "=", True),
+                        ("member", "=", True),
+                    ]
+                )
             )
-        )
-        if not cooperator:
-            return {
-                "error_msgs": [_("Partner is not cooperator.")],
-                "global_error": True,
-            }
+            if not cooperator:
+                return {
+                    "error_msgs": [_("Partner is not cooperator.")],
+                    "global_error": True,
+                }
         inscription = (
             request.env["energy_selfconsumption.inscription_selfconsumption"]
             .sudo()
@@ -115,7 +122,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 "global_error": True,
             }
         participation = (
-            request.env["energy_project.participation"]
+            request.env["energy_selfconsumptions.participation"]
             .sudo()
             .search(
                 [
@@ -123,7 +130,8 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                         "quantity",
                         "=",
                         float(values["inscriptionselfconsumption_participation"]),
-                    )
+                    ),
+                    ("project_id", "=", int(values["model_id"])),
                 ]
             )
         )
@@ -294,7 +302,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         ]
 
         participations = (
-            request.env["energy_project.participation"]
+            request.env["energy_selfconsumptions.participation"]
             .sudo()
             .search([("project_id", "=", int(values["model_id"]))])
         )
@@ -373,11 +381,14 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         partner = (
             request.env["res.partner"]
             .sudo()
-            .search([
-                ("vat", "=", values["inscription_partner_id_vat"]),
-                ("parent_id", "=", False),
-                ("company_ids", "in", (model.company_id.id))
-            ])
+            .with_company(model.company_id.id)
+            .search(
+                [
+                    ("vat", "=", values["inscription_partner_id_vat"]),
+                    ("parent_id", "=", False),
+                    ("company_ids", "in", (model.company_id.id)),
+                ]
+            )
         )
         self.send_email(model, partner)
         return values

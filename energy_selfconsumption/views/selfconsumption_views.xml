@@ -211,11 +211,23 @@
                                                         <page
                 string="Inscription form configuration"
                 name="form_configuration"
+                autofocus="autofocus"
               >
-                                <label for="conf_state" />
-                                <field name="conf_state" widget="radio" />
+                                <field name="conf_state" widget="radio" invisible="1" />
                                 <button
-                  style="margin-left: 145px;"
+                  class="btn btn btn-primary"
+                  type="object"
+                  name="activate_form"
+                  attrs="{'invisible': [('conf_state', '==', 'active')]}"
+                >Activate form</button>
+                                <button
+                  class="btn btn btn-primary"
+                  type="object"
+                  name="unactivate_form"
+                  attrs="{'invisible': [('conf_state', '!=', 'active')]}"
+                >Unactivate form</button>
+                                <span style="margin: 0px 10px;"></span>
+                                <button
                   class="btn btn btn-primary"
                   type="object"
                   name="action_redirect_to_page_form_inscription"
@@ -275,7 +287,6 @@
                             <page
                 string="Invoicing Mode"
                 name="invoicing_mode"
-                autofocus="autofocus"
                 attrs="{'invisible':[('invoicing_mode', '==', False)]}"
               >
                                 <group>
