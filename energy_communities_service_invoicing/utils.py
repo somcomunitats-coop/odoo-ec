@@ -1,5 +1,6 @@
 from odoo import _
 from odoo.api import Environment
+from odoo.exceptions import ValidationError
 
 from odoo.addons.contract.models.contract import ContractContract
 
@@ -35,3 +36,39 @@ def service_invoicing_view(env: Environment, service_invoicing_id: ContractContr
         "target": "current",
         "res_id": service_invoicing_id.id,
     }
+
+
+# TODO: Think a bit more about more about if this 3 methods must go to contract utils component
+def raise_existing_same_open_contract_error():
+    raise ValidationError(
+        _("It can only exists one service contract per Customer and related community.")
+    )
+
+
+def get_existing_open_contract(
+    env, partner_id, community_company_id, contract_id=False
+):
+    query = [
+        ("partner_id", "=", partner_id.id),
+        ("community_company_id", "=", community_company_id.id),
+        ("is_pack", "=", True),
+        ("status", "in", ["ready_to_start", "in_progress"]),
+    ]
+    if contract_id:
+        query.append(("id", "!=", contract_id.id))
+    return env["contract.contract"].search(query, limit=1)
+
+
+def get_existing_last_closed_contract(
+    env, partner_id, community_company_id, contract_id=False
+):
+    query = [
+        ("partner_id", "=", partner_id.id),
+        ("community_company_id", "=", community_company_id.id),
+        ("is_pack", "=", True),
+        ("status", "in", ["closed_planned", "closed"]),
+        ("successor_contract_id", "=", False),
+    ]
+    if contract_id:
+        query.append(("id", "!=", contract_id.id))
+    return env["contract.contract"].search(query, limit=1)

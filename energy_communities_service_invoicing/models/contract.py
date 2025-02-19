@@ -1,10 +1,13 @@
 from datetime import datetime
 
 from odoo import api, fields, models
-from odoo.exceptions import AccessError, ValidationError
 from odoo.tools.translate import _
 
-from ..utils import _CONTRACT_STATUS_VALUES
+from ..utils import (
+    _CONTRACT_STATUS_VALUES,
+    get_existing_open_contract,
+    raise_existing_same_open_contract_error,
+)
 
 
 class ContractContract(models.Model):
@@ -61,21 +64,9 @@ class ContractContract(models.Model):
     def _constrain_unique_contract(self):
         for record in self:
             if record.community_company_id:
-                existing_contract = self.env["contract.contract"].search(
-                    [
-                        ("partner_id", "=", record.partner_id.id),
-                        ("community_company_id", "=", record.community_company_id.id),
-                        ("id", "!=", record.id),
-                        ("is_pack", "=", True),
-                        ("status", "in", ["ready_to_start", "in_progress"]),
-                    ]
-                )
+                existing_contract = record._get_existing_same_open_contract()
                 if existing_contract:
-                    raise ValidationError(
-                        _(
-                            "It can only exists one service contract per Customer and related community."
-                        )
-                    )
+                    raise_existing_same_open_contract_error()
 
     def _compute_received_invoices_count(self):
         for record in self:
@@ -125,12 +116,6 @@ class ContractContract(models.Model):
                 if rel_product:
                     record.service_pack_id = rel_product.id
 
-    def set_close_status_type_by_date(self):
-        if self.date_end.strftime("%Y-%m-%d") == datetime.now().strftime("%Y-%m-%d"):
-            self.write({"status": "closed"})
-        else:
-            self.write({"status": "closed_planned"})
-
     def action_activate_contract(self):
         return self._action_contract("activate")
 
@@ -176,6 +161,15 @@ class ContractContract(models.Model):
             action["views"] = [(tree_view.id, "tree"), (form_view.id, "form")]
         return action
 
+    @api.model
+    def cron_close_todays_closed_planned_contacts(self):
+        impacted_contracts = self.env["contract.contract"].search(
+            [("status", "closed_planned")]
+        )
+        for contract in impacted_contracts:
+            contract.set_close_status_type_by_date()
+        return True
+
     # TODO: Not working. Lack of access rules
     def _get_received_invoices_ids(self):
         received_invoices = []
@@ -193,11 +187,13 @@ class ContractContract(models.Model):
                     received_invoices.append(invoice.id)
         return received_invoices
 
-    @api.model
-    def cron_close_todays_closed_planned_contacts(self):
-        impacted_contracts = self.env["contract.contract"].search(
-            [("status", "closed_planned")]
+    def _get_existing_same_open_contract(self):
+        return get_existing_open_contract(
+            self.env, self.partner_id, self.community_company_id, self
         )
-        for contract in impacted_contracts:
-            contract.set_close_status_type_by_date()
-        return True
+
+    def set_close_status_type_by_date(self):
+        if self.date_end.strftime("%Y-%m-%d") == datetime.now().strftime("%Y-%m-%d"):
+            self.write({"status": "closed"})
+        else:
+            self.write({"status": "closed_planned"})
