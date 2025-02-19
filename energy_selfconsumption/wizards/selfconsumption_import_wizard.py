@@ -75,7 +75,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
         for index, line in enumerate(parsing_data):
             error, import_dict = self.get_line_dict(line)
             if error:
-                error_string_list += "".join(
+                error_string_list = "".join(
                     [
                         error_string_list,
                         _("<li>Line {line}: {error}</li>\n").format(
@@ -85,7 +85,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 )
             result = self.import_line(import_dict, project)
             if result[0]:
-                error_string_list += "".join(
+                error_string_list = "".join(
                     [
                         error_string_list,
                         _("<li>Line {line}: {error}</li>\n").format(
@@ -158,7 +158,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 "effective_date": line.get(header[1], False),
                 "supplypoint_cups": line.get(header[2], False),
                 "supplypoint_contracted_power": float(
-                    str(line.get(header[3], 0.0)).replace(",", ".")
+                    str(line.get(header[3], 0.0) if line.get(header[3],0.0)!='' else 0.0).replace(",", ".")
                 ),
                 "tariff": line.get(header[4], False),
                 "supplypoint_street": line.get(header[5], False),
@@ -190,10 +190,10 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     header[24], False
                 ),  # New
                 "inscriptionselfconsumption_annual_electricity_use": float(
-                    str(line.get(header[25], 0.0)).replace(",", ".")
+                    str(line.get(header[25], 0.0) if line.get(header[25],0.0)!='' else 0.0).replace(",", ".")
                 ),  # New
                 "inscriptionselfconsumption_participation": float(
-                    str(line.get(header[26], 0.0)).replace(",", ".")
+                    str(line.get(header[26], 0.0) if line.get(header[26],0.0)!='' else 0.0).replace(",", ".")
                 ),  # New
                 "inscriptionselfconsumption_accept": line.get(header[27], False),  # New
             }
