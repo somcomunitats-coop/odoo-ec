@@ -67,6 +67,7 @@ class ContractContract(models.Model):
                         ("community_company_id", "=", record.community_company_id.id),
                         ("id", "!=", record.id),
                         ("is_pack", "=", True),
+                        ("status", "in", ["ready_to_start", "in_progress"]),
                     ]
                 )
                 if existing_contract:
