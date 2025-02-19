@@ -46,6 +46,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                     self.pricelist_id,
                     self.service_pack_id,
                     self.discount,
+                    self.payment_mode_id,
                 )
         # If none of previous create a new contract
         else:

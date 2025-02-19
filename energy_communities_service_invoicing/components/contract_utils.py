@@ -47,6 +47,7 @@ class ContractUtils(Component):
         pricelist_id=None,
         service_pack_id=None,
         discount=None,
+        payment_mode_id=None,
     ):
         initial_status = self.work.record.status
         self.set_contract_status_closed(execution_date)
@@ -60,6 +61,7 @@ class ContractUtils(Component):
             pricelist_id,
             service_pack_id,
             discount,
+            payment_mode_id,
         )
         if initial_status == "ready_to_start":
             new_service_invoicing_id = (
@@ -76,7 +78,12 @@ class ContractUtils(Component):
         return new_service_invoicing_id
 
     def reopen(
-        self, execution_date, pricelist_id=None, service_pack_id=None, discount=None
+        self,
+        execution_date,
+        pricelist_id=None,
+        service_pack_id=None,
+        discount=None,
+        payment_mode_id=None,
     ):
         self.set_contract_status_closed(execution_date)
         new_service_invoicing_id = self.component(
@@ -84,11 +91,12 @@ class ContractUtils(Component):
         ).create_service_invoicing_ready_to_start(
             **self._build_service_invoicing_params(
                 "reopen",
-                "modify_service_pack,modify_pricelist,modify_discount",
+                "modify_service_pack,modify_pricelist,modify_discount,modify_payment_mode",
                 execution_date,
                 pricelist_id,
                 service_pack_id,
                 discount,
+                payment_mode_id,
             )
         )
         self._setup_successors_and_predecessors(new_service_invoicing_id)
@@ -102,6 +110,7 @@ class ContractUtils(Component):
         pricelist_id=None,
         service_pack_id=None,
         discount=None,
+        payment_mode_id=None,
     ):
         executed_modification_action_list = executed_modification_action.split(",")
         return {
@@ -113,7 +122,9 @@ class ContractUtils(Component):
             "pricelist_id": pricelist_id
             if "modify_pricelist" in executed_modification_action_list
             else self.work.record.pricelist_id,
-            "payment_mode_id": self.work.record.payment_mode_id,
+            "payment_mode_id": payment_mode_id
+            if "modify_payment_mode" in executed_modification_action_list
+            else self.work.record.payment_mode_id,
             "start_date": execution_date + timedelta(days=1)
             if executed_action == "modification"
             else execution_date,
