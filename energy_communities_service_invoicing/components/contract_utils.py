@@ -8,18 +8,41 @@ class ContractUtils(Component):
 
     def set_contract_status_ready_to_start(self):
         for line in self.work.record.contract_line_ids:
-            line.cancel()
+            line.write(
+                {
+                    "ordered_qty_type": line.qty_type,
+                    "ordered_quantity": line.quantity,
+                    "ordered_qty_formula_id": line.qty_formula_id.id,
+                    "qty_type": "fixed",
+                    "quantity": 0,
+                }
+            )
         self.work.record.write({"status": "ready_to_start"})
 
+    def _activate_contract_lines(self, execution_date):
+        for line in self.work.record.contract_line_ids:
+            line.write(
+                {
+                    "date_start": execution_date,
+                    "next_period_date_start": execution_date,
+                    "recurring_next_date": execution_date,
+                    "last_date_invoiced": None,
+                    "qty_type": line.ordered_qty_type,
+                    "quantity": line.ordered_quantity,
+                    "qty_formula_id": line.ordered_qty_formula_id.id,
+                }
+            )
+            line._compute_state()
+
     def set_contract_status_active(self, execution_date):
-        self._uncancel_contract_lines(execution_date)
+        self._activate_contract_lines(execution_date)
         self.set_start_date(execution_date)
         self.work.record.write({"status": "in_progress"})
 
     def set_contract_status_closed(self, execution_date):
         for line in self.work.record.contract_line_ids:
             if self.work.record.status == "ready_to_start":
-                self._uncancel_contract_lines(execution_date)
+                self._activate_contract_lines(execution_date)
             line.write({"date_end": execution_date})
             line._compute_state()
         self.work.record.set_close_status_type_by_date()
@@ -148,15 +171,3 @@ class ContractUtils(Component):
     def _setup_successors_and_predecessors(self, new_service_invoicing_id):
         self.work.record.write({"successor_contract_id": new_service_invoicing_id.id})
         new_service_invoicing_id.write({"predecessor_contract_id": self.work.record.id})
-
-    def _uncancel_contract_lines(self, execution_date):
-        for line in self.work.record.contract_line_ids:
-            line.write(
-                {
-                    "date_start": execution_date,
-                    "next_period_date_start": execution_date,
-                    "recurring_next_date": execution_date,
-                    "is_canceled": False,
-                }
-            )
-            line._compute_state()
