@@ -117,14 +117,10 @@ class ContractContract(models.Model):
                     record.service_pack_id = rel_product.id
 
     def _recurring_create_invoice(self, date_ref=False):
-        previous_last_date_invoiced = self.last_date_invoiced
         moves = super()._recurring_create_invoice(date_ref)
         for move in moves:
             if not move.line_ids:
-                for line in self.contract_line_ids:
-                    line.write({"last_date_invoiced": previous_last_date_invoiced})
                 move.unlink()
-
         return moves
 
     def action_activate_contract(self):
