@@ -184,7 +184,7 @@ class ContractContract(models.Model):
     @api.model
     def cron_close_todays_closed_planned_contacts(self):
         impacted_contracts = self.env["contract.contract"].search(
-            [("status", "closed_planned")]
+            [("status", "=", "closed_planned")]
         )
         for contract in impacted_contracts:
             contract.set_close_status_type_by_date()
