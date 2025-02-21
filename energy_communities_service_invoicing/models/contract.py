@@ -41,6 +41,7 @@ class ContractContract(models.Model):
         string="Last Date Invoiced", compute="_compute_last_date_invoiced", store=False
     )
     is_pack = fields.Boolean(related="contract_template_id.is_pack")
+    is_free_pack = fields.Boolean(related="contract_template_id.is_free_pack")
     related_contract_product_ids = fields.One2many(
         "product.product",
         string="Related services",
@@ -216,7 +217,7 @@ class ContractContract(models.Model):
         )
 
     def set_close_status_type_by_date(self):
-        if self.date_end.strftime("%Y-%m-%d") == datetime.now().strftime("%Y-%m-%d"):
+        if self.date_end.strftime("%Y-%m-%d") <= datetime.now().strftime("%Y-%m-%d"):
             self.write({"status": "closed"})
         else:
             self.write({"status": "closed_planned"})

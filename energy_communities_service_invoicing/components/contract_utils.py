@@ -39,7 +39,10 @@ class ContractUtils(Component):
 
     def set_contract_status_closed(self, execution_date):
         for line in self.work.record.contract_line_ids:
-            if self.work.record.status == "ready_to_start":
+            if (
+                self.work.record.status == "ready_to_start"
+                or self.work.record.is_free_pack
+            ):
                 self._activate_contract_lines(execution_date)
             line.write({"date_end": execution_date})
             line._compute_state()

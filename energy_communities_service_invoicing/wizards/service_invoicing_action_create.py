@@ -12,7 +12,6 @@ from odoo.addons.energy_communities.utils import (
 from ..utils import (
     get_existing_last_closed_contract,
     get_existing_open_contract,
-    get_pack_product_product_ids,
     raise_existing_same_open_contract_error,
     service_invoicing_view,
 )
@@ -21,7 +20,7 @@ from ..utils import (
 class ServiceInvoicingActionCreateWizard(models.TransientModel):
     _name = "service.invoicing.action.create.wizard"
     _description = "Create service invoicing for an energy community"
-    _inherit = ["user.currentcompany.mixin"]
+    _inherit = ["user.currentcompany.mixin", "service.invoicing.info.mixin"]
 
     company_id = fields.Many2one("res.company", string="Coordinator")
     community_company_id = fields.Many2one(
@@ -33,6 +32,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
         "product.product",
         string="Service pack",
         domain="[('id', 'in', pack_product_product_ids)]",
+        precompute=True,
     )
     payment_mode_id = fields.Many2one(
         "account.payment.mode",
@@ -52,11 +52,6 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
         _compute="_compute_ allowed_payment_mode_ids",
         store=False,
     )
-    pack_product_product_ids = fields.Many2many(
-        comodel_name="product.product",
-        _compute="_compute_pack_product_product_ids",
-        store=False,
-    )
 
     @api.depends("company_id")
     def _compute_allowed_community_company_ids(self):
@@ -74,15 +69,12 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                 [("company_id", "=", self.user_current_company.id)]
             )
 
-    def _compute_pack_product_product_ids(self):
-        for record in self:
-            record.pack_product_product_ids = get_pack_product_product_ids(self.env)
-
     @api.onchange("company_id")
     def _on_change_company_id(self):
         for record in self:
             record._compute_allowed_community_company_ids()
             record._compute_allowed_payment_mode_ids()
+            # TODO: This should be necessary if pack_product_product_ids gets properly auto computed
             record._compute_pack_product_product_ids()
 
     def execute_create(self):
