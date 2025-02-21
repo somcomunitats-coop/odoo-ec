@@ -45,21 +45,6 @@ def raise_existing_same_open_contract_error():
     )
 
 
-def get_pack_product_product_ids(env):
-    ret = env["product.product"].search(
-        [
-            (
-                "categ_id",
-                "=",
-                env.ref(
-                    "energy_communities_service_invoicing.product_category_pack"
-                ).id,
-            )
-        ]
-    )
-    return ret
-
-
 def get_existing_open_contract(
     env, partner_id, community_company_id, contract_id=False
 ):

@@ -6,6 +6,7 @@ class ContractTemplate(models.Model):
     _inherit = "contract.template"
 
     is_pack = fields.Boolean(compute="compute_is_pack", store=True)
+    is_free_pack = fields.Boolean(string="Is a free pack")
 
     def compute_is_pack(self):
         try:
@@ -14,8 +15,8 @@ class ContractTemplate(models.Model):
             ).id
         except:
             categ_id = False
-        if categ_id:
-            for record in self:
+        for record in self:
+            if categ_id:
                 record.is_pack = bool(
                     self.env["product.template"].search(
                         [
