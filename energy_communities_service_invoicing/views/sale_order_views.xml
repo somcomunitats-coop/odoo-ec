@@ -7,8 +7,8 @@
         <xpath expr="//field[@name='partner_id']" position="before">
           <field name="service_invoicing_action" readonly="1" />
           <field
-            name="service_invoicing_modification_action"
-            attrs="{'readonly': 1,'invisible': [('service_invoicing_action','!=', 'modification')]}"
+            name="service_invoicing_action_description"
+            attrs="{'readonly': 1,'invisible': [('service_invoicing_action','not in', ['modification','activate'])]}"
           />
         </xpath>
         <xpath expr="//field[@name='partner_id']" position="after">
