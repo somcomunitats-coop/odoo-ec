@@ -31,6 +31,7 @@
         "data/product_data.xml",
         "views/contract_line_formula_views.xml",
         "views/contract_views.xml",
+        "views/res_company_views.xml",
         "views/res_partner_views.xml",
         "views/sale_order_views.xml",
         "views/service_invoicing_views.xml",

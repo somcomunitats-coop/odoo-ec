@@ -65,6 +65,7 @@ class SaleOrderUtils(Component):
         # TODO: We must call contract_utils with a better component and workcontext modification approach
         with contract_utils(self.env, service_invoicing_id) as component:
             component.clean_non_service_lines()
+            component.set_configuration_journal_if_defined()
             component.set_start_date(start_date)
             component.set_discount(discount)
         return service_invoicing_id

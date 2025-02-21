@@ -56,9 +56,11 @@ class ContractContract(models.Model):
         "sale.order",
         string="Sale Order (activation)",
     )
+    received_invoices_count = fields.Integer(compute="_compute_received_invoices_count")
     # On energy_communities all contracts have skip_zero_qty marked by default
     skip_zero_qty = fields.Boolean(default=True)
-    received_invoices_count = fields.Integer(compute="_compute_received_invoices_count")
+    # On energy communities all contracts have company_id
+    company_id = fields.Many2one(required=True)
 
     @api.constrains("partner_id", "community_company_id")
     def _constrain_unique_contract(self):

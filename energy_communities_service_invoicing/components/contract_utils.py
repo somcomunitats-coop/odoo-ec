@@ -55,6 +55,11 @@ class ContractUtils(Component):
         for line in self.work.record.contract_line_ids:
             line.write({"discount": discount})
 
+    def set_configuration_journal_if_defined(self):
+        journal_id = self.work.record.company_id.service_invoicing_journal_id
+        if journal_id:
+            self.work.record.write({"journal_id": journal_id.id})
+
     def clean_non_service_lines(self):
         for line in self.work.record.contract_line_ids:
             if not self._is_service_line(line):
