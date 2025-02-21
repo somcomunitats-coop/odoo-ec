@@ -9,10 +9,13 @@
       <form string="Service invoicing">
         <sheet>
           <group>
+            <field name="allowed_community_company_ids" invisible="1" />
+            <field name="allowed_payment_mode_ids" invisible="1" />
+            <field name="pack_product_product_ids" invisible="1" />
             <field name="company_id" required="1" domain="[('hierarchy_level','=','coordinator')]"/>
-            <field name="community_company_id" required="1" domain="[('hierarchy_level','=','community')]"/>
-            <field name="service_pack_id" required="1" domain="[('is_contract','=',True)]"/>
-            <field name="pricelist_id" required="1" />
+            <field name="community_company_id" required="1" />
+            <field name="service_pack_id" required="1"/>
+            <field name="pricelist_id" required="1" domain="[('company_id','=',False)]"/>
             <field name="payment_mode_id" required="1" />
             <field name="discount" required="1" />
           </group>

@@ -12,6 +12,7 @@ from odoo.addons.energy_communities.utils import (
 from ..utils import (
     get_existing_last_closed_contract,
     get_existing_open_contract,
+    get_pack_product_product_ids,
     raise_existing_same_open_contract_error,
     service_invoicing_view,
 )
@@ -20,13 +21,69 @@ from ..utils import (
 class ServiceInvoicingActionCreateWizard(models.TransientModel):
     _name = "service.invoicing.action.create.wizard"
     _description = "Create service invoicing for an energy community"
+    _inherit = ["user.currentcompany.mixin"]
 
     company_id = fields.Many2one("res.company", string="Coordinator")
-    community_company_id = fields.Many2one("res.company", string="Community")
-    service_pack_id = fields.Many2one("product.product", string="Service pack")
+    community_company_id = fields.Many2one(
+        "res.company",
+        string="Community",
+        domain="[('id', 'in', allowed_community_company_ids)]",
+    )
+    service_pack_id = fields.Many2one(
+        "product.product",
+        string="Service pack",
+        domain="[('id', 'in', pack_product_product_ids)]",
+    )
+    payment_mode_id = fields.Many2one(
+        "account.payment.mode",
+        string="Payment mode",
+        domain="[('id', 'in', allowed_payment_mode_ids)]",
+    )
     pricelist_id = fields.Many2one("product.pricelist", string="PriceList")
-    payment_mode_id = fields.Many2one("account.payment.mode", string="Payment mode")
     discount = fields.Float(string="Discount (%)", digits="Discount", default=0)
+
+    allowed_community_company_ids = fields.Many2many(
+        comodel_name="res.company",
+        _compute="_compute_allowed_community_company_ids",
+        store=False,
+    )
+    allowed_payment_mode_ids = fields.Many2many(
+        comodel_name="account.payment.mode",
+        _compute="_compute_ allowed_payment_mode_ids",
+        store=False,
+    )
+    pack_product_product_ids = fields.Many2many(
+        comodel_name="product.product",
+        _compute="_compute_pack_product_product_ids",
+        store=False,
+    )
+
+    @api.depends("company_id")
+    def _compute_allowed_community_company_ids(self):
+        for record in self:
+            record.allowed_community_company_ids = self.env["res.company"].search(
+                [
+                    ("hierarchy_level", "=", "community"),
+                    ("parent_id", "=", record.company_id.id),
+                ]
+            )
+
+    def _compute_allowed_payment_mode_ids(self):
+        for record in self:
+            record.allowed_payment_mode_ids = self.env["account.payment.mode"].search(
+                [("company_id", "=", self.user_current_company.id)]
+            )
+
+    def _compute_pack_product_product_ids(self):
+        for record in self:
+            record.pack_product_product_ids = get_pack_product_product_ids(self.env)
+
+    @api.onchange("company_id")
+    def _on_change_company_id(self):
+        for record in self:
+            record._compute_allowed_community_company_ids()
+            record._compute_allowed_payment_mode_ids()
+            record._compute_pack_product_product_ids()
 
     def execute_create(self):
         # Check if already open one and raise error

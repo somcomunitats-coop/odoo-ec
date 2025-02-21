@@ -12,3 +12,7 @@ class ContractLine(models.Model):
         super()._compute_allowed()
         for record in self:
             record.is_cancel_allowed = True
+
+    # TODO:
+    # skip last_date_invoice validation for modification action if contract is ready to start or active on free plan.
+    # def _check_last_date_invoiced(self):
