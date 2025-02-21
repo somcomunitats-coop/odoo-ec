@@ -7,9 +7,9 @@
     <field name="arch" type="xml">
       <filter name="not_finished" position="before">
         <filter
-          name="ready_to_start"
-          string="Ready to start"
-          domain="[('status','=','ready_to_start')]"
+          name="paused"
+          string="Paused"
+          domain="[('status','=','paused')]"
         />
         <!--<separator />-->
       </filter>
@@ -41,7 +41,7 @@
         <field 
           name="status"
           widget="badge"
-          decoration-info="status == 'ready_to_start'"
+          decoration-info="status == 'paused'"
           decoration-danger="status == 'closed'"
           decoration-warning="status == 'closed_planned'"
           decoration-success="status == 'in_progress'"
@@ -117,19 +117,19 @@
           name="action_activate_contract"
           type="object"
           string="Activate"
-          attrs="{'invisible':[('status','not in',['ready_to_start'])]}"
+          attrs="{'invisible':[('status','not in',['paused'])]}"
         />
         <button
           name="action_modify_contract"
           type="object"
           string="Modify"
-          attrs="{'invisible':[('status','not in',['ready_to_start','in_progress'])]}"
+          attrs="{'invisible':[('status','not in',['paused','in_progress'])]}"
         />
         <button
           name="action_close_contract"
           type="object"
           string="Close"
-          attrs="{'invisible':[('status','not in',['ready_to_start','in_progress'])]}"
+          attrs="{'invisible':[('status','not in',['paused','in_progress'])]}"
         />
         <button
           name="action_reopen_contract"

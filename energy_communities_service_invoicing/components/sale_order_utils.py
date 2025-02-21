@@ -42,7 +42,7 @@ class SaleOrderUtils(Component):
             order_line._compute_name()
         return self.env["sale.order"].create(so_creation_dict)
 
-    def create_service_invoicing(
+    def _create_service_invoicing(
         self,
         company_id,
         community_company_id,
@@ -75,7 +75,7 @@ class SaleOrderUtils(Component):
                 component.set_configuration_service_invoicing_journal_if_defined()
         return service_invoicing_id
 
-    def create_service_invoicing_ready_to_start(
+    def create_service_invoicing_initial(
         self,
         company_id,
         community_company_id,
@@ -87,7 +87,7 @@ class SaleOrderUtils(Component):
         executed_action,
         executed_action_description="none",
     ):
-        service_invoicing_id = self.create_service_invoicing(
+        service_invoicing_id = self._create_service_invoicing(
             company_id,
             community_company_id,
             service_pack_id,
@@ -100,7 +100,9 @@ class SaleOrderUtils(Component):
         )
         # TODO: We must call contract_utils with a better component and workcontext modification approach
         with contract_utils(self.env, service_invoicing_id) as component:
-            component.set_contract_status_ready_to_start()
+            component.setup_initial_data()
+            if service_invoicing_id.is_free_pack:
+                component.set_contract_status_active(start_date)
         return service_invoicing_id
 
     def _get_related_contracts(self, sale_order):

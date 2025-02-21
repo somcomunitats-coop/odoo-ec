@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 from odoo.addons.contract.models.contract import ContractContract
 
 _CONTRACT_STATUS_VALUES = [
-    ("ready_to_start", _("Ready to start")),
+    ("paused", _("Paused")),
     ("in_progress", _("In progress")),
     ("closed_planned", _("Planned closure")),
     ("closed", _("Closed")),
@@ -52,7 +52,7 @@ def get_existing_open_contract(
         ("partner_id", "=", partner_id.id),
         ("community_company_id", "=", community_company_id.id),
         ("is_pack", "=", True),
-        ("status", "in", ["ready_to_start", "in_progress"]),
+        ("status", "in", ["paused", "in_progress"]),
     ]
     if contract_id:
         query.append(("id", "!=", contract_id.id))
