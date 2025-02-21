@@ -36,6 +36,10 @@ class SaleOrderUtils(Component):
                 )
             ],
         }
+        sale_order = self.env["sale.order"].create(so_creation_dict)
+        # Trigger name computattion in oder to include product's description_sale
+        for order_line in sale_order.order_line:
+            order_line._compute_name()
         return self.env["sale.order"].create(so_creation_dict)
 
     def create_service_invoicing(

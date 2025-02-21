@@ -12,6 +12,7 @@ from ..utils import (
 
 class ContractContract(models.Model):
     _inherit = "contract.contract"
+    _order = "id desc"
 
     community_company_id = fields.Many2one(
         "res.company",
