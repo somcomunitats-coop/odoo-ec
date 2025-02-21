@@ -1,5 +1,3 @@
-from datetime import timedelta
-
 from odoo.addons.component.core import Component
 
 
@@ -73,6 +71,9 @@ class ContractUtils(Component):
         payment_mode_id=None,
     ):
         initial_status = self.work.record.status
+        # TODO: control closing date in order to being able modify contract with previous date.
+        # on contract line:
+        # skip last_date_invoice validation for modification action if contract is ready to start or active on free plan.
         self.set_contract_status_closed(execution_date)
         sale_order_utils = self.component(
             usage="sale.order.utils", model_name="sale.order"
@@ -148,9 +149,7 @@ class ContractUtils(Component):
             "payment_mode_id": payment_mode_id
             if "modify_payment_mode" in executed_modification_action_list
             else self.work.record.payment_mode_id,
-            "start_date": execution_date + timedelta(days=1)
-            if executed_action == "modification"
-            else execution_date,
+            "start_date": execution_date,
             "executed_action": executed_action,
             "executed_modification_action": executed_modification_action,
             "discount": discount
