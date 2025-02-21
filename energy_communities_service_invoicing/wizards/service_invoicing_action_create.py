@@ -118,6 +118,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                         datetime.now(),
                         self.discount,
                         "activate",
+                        "active_platform_service_invocing",
                     )
                 )
         return service_invoicing_view(self.env, service_invoicing_id)

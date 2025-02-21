@@ -19,8 +19,8 @@ class SaleOrder(models.Model):
         string="Service invoicing action",
         default="none",
     )
-    service_invoicing_modification_action = fields.Char(
-        string="Modification action",
+    service_invoicing_action_description = fields.Char(
+        string="Service invoicing action description",
         default="none",
     )
 

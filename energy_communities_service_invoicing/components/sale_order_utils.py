@@ -14,7 +14,7 @@ class SaleOrderUtils(Component):
         payment_mode_id,
         start_date,
         executed_action,
-        executed_modification_action,
+        executed_action_description,
     ):
         so_creation_dict = {
             "partner_id": company_id.partner_id.id,
@@ -22,7 +22,7 @@ class SaleOrderUtils(Component):
             "community_company_id": community_company_id.id,
             "pricelist_id": pricelist_id.id,
             "service_invoicing_action": executed_action,
-            "service_invoicing_modification_action": executed_modification_action,
+            "service_invoicing_action_description": executed_action_description,
             "payment_mode_id": payment_mode_id.id,
             "order_line": [
                 (
@@ -48,7 +48,7 @@ class SaleOrderUtils(Component):
         start_date,
         discount,
         executed_action,
-        executed_modification_action="none",
+        executed_action_description="none",
     ):
         so = self.create_service_invoicing_sale_order(
             company_id,
@@ -58,16 +58,17 @@ class SaleOrderUtils(Component):
             payment_mode_id,
             start_date,
             executed_action,
-            executed_modification_action,
+            executed_action_description,
         )
         so.action_confirm()
         service_invoicing_id = self._get_related_contracts(so)
         # TODO: We must call contract_utils with a better component and workcontext modification approach
         with contract_utils(self.env, service_invoicing_id) as component:
             component.clean_non_service_lines()
-            component.set_configuration_journal_if_defined()
             component.set_start_date(start_date)
             component.set_discount(discount)
+            if executed_action_description == "active_platform_service_invocing":
+                component.set_configuration_service_invoicing_journal_if_defined()
         return service_invoicing_id
 
     def create_service_invoicing_ready_to_start(
@@ -80,7 +81,7 @@ class SaleOrderUtils(Component):
         start_date,
         discount,
         executed_action,
-        executed_modification_action="none",
+        executed_action_description="none",
     ):
         service_invoicing_id = self.create_service_invoicing(
             company_id,
@@ -91,7 +92,7 @@ class SaleOrderUtils(Component):
             start_date,
             discount,
             executed_action,
-            executed_modification_action,
+            executed_action_description,
         )
         # TODO: We must call contract_utils with a better component and workcontext modification approach
         with contract_utils(self.env, service_invoicing_id) as component:

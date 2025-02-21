@@ -55,7 +55,7 @@ class ContractUtils(Component):
         for line in self.work.record.contract_line_ids:
             line.write({"discount": discount})
 
-    def set_configuration_journal_if_defined(self):
+    def set_configuration_service_invoicing_journal_if_defined(self):
         journal_id = self.work.record.company_id.service_invoicing_journal_id
         if journal_id:
             self.work.record.write({"journal_id": journal_id.id})
@@ -134,31 +134,31 @@ class ContractUtils(Component):
     def _build_service_invoicing_params(
         self,
         executed_action,
-        executed_modification_action,
+        executed_action_description,
         execution_date,
         pricelist_id=None,
         service_pack_id=None,
         discount=None,
         payment_mode_id=None,
     ):
-        executed_modification_action_list = executed_modification_action.split(",")
+        executed_action_description_list = executed_action_description.split(",")
         return {
             "company_id": self.work.record.partner_id.related_company_id,
             "community_company_id": self.work.record.community_company_id,
             "service_pack_id": service_pack_id
-            if "modify_service_pack" in executed_modification_action_list
+            if "modify_service_pack" in executed_action_description_list
             else self.work.record.service_pack_id,
             "pricelist_id": pricelist_id
-            if "modify_pricelist" in executed_modification_action_list
+            if "modify_pricelist" in executed_action_description_list
             else self.work.record.pricelist_id,
             "payment_mode_id": payment_mode_id
-            if "modify_payment_mode" in executed_modification_action_list
+            if "modify_payment_mode" in executed_action_description_list
             else self.work.record.payment_mode_id,
             "start_date": execution_date,
             "executed_action": executed_action,
-            "executed_modification_action": executed_modification_action,
+            "executed_action_description": executed_action_description,
             "discount": discount
-            if "modify_discount" in executed_modification_action_list
+            if "modify_discount" in executed_action_description_list
             else self.work.record.discount,
         }
 
