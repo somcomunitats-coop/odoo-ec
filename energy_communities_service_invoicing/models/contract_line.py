@@ -19,9 +19,6 @@ class ContractLine(models.Model):
         # FIXME: Change method name according to real updated field
         # e.g.: _update_last_date_invoiced()
         for record in self:
-            if (
-                record.contract_id.status != "ready_to_start"
-                or record.contract_id.is_free_pack
-            ):
+            if record.contract_id.status == "paused" or record.contract_id.is_free_pack:
                 return
         super()._update_recurring_next_date()

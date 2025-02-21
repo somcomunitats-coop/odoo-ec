@@ -4,7 +4,7 @@ from odoo.addons.component.core import Component
 class ContractUtils(Component):
     _inherit = "contract.utils"
 
-    def set_contract_status_ready_to_start(self):
+    def setup_initial_data(self):
         for line in self.work.record.contract_line_ids:
             line.write(
                 {
@@ -15,7 +15,7 @@ class ContractUtils(Component):
                     "quantity": 0,
                 }
             )
-        self.work.record.write({"status": "ready_to_start"})
+        self.work.record.write({"status": "paused"})
 
     def _activate_contract_lines(self, execution_date):
         for line in self.work.record.contract_line_ids:
@@ -39,10 +39,7 @@ class ContractUtils(Component):
 
     def set_contract_status_closed(self, execution_date):
         for line in self.work.record.contract_line_ids:
-            if (
-                self.work.record.status == "ready_to_start"
-                or self.work.record.is_free_pack
-            ):
+            if self.work.record.status == "paused" or self.work.record.is_free_pack:
                 self._activate_contract_lines(execution_date)
             line.write({"date_end": execution_date})
             line._compute_state()
@@ -95,17 +92,12 @@ class ContractUtils(Component):
             discount,
             payment_mode_id,
         )
-        if initial_status == "ready_to_start":
-            new_service_invoicing_id = (
-                sale_order_utils.create_service_invoicing_ready_to_start(
-                    **service_invoicing_params
-                )
-            )
-        if initial_status == "in_progress":
-            new_service_invoicing_id = sale_order_utils.create_service_invoicing(
-                **service_invoicing_params
-            )
-
+        new_service_invoicing_id = sale_order_utils.create_service_invoicing_initial(
+            **service_invoicing_params
+        )
+        # Do we really want new contract to be in_progress on a modification??
+        if initial_status == "in_progress" and not self.work.record.is_free_pack:
+            self.set_contract_status_active()
         self._setup_successors_and_predecessors(new_service_invoicing_id)
         return new_service_invoicing_id
 
@@ -120,7 +112,7 @@ class ContractUtils(Component):
         self.set_contract_status_closed(execution_date)
         new_service_invoicing_id = self.component(
             usage="sale.order.utils", model_name="sale.order"
-        ).create_service_invoicing_ready_to_start(
+        ).create_service_invoicing_initial(
             **self._build_service_invoicing_params(
                 "reopen",
                 "modify_service_pack,modify_pricelist,modify_discount,modify_payment_mode",

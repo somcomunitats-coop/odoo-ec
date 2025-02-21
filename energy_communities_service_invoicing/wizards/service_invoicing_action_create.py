@@ -100,17 +100,15 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
         # If none of previous create a new contract
         else:
             with sale_order_utils(self.env) as component:
-                service_invoicing_id = (
-                    component.create_service_invoicing_ready_to_start(
-                        self.company_id,
-                        self.community_company_id,
-                        self.service_pack_id,
-                        self.pricelist_id,
-                        self.payment_mode_id,
-                        datetime.now(),
-                        self.discount,
-                        "activate",
-                        "active_platform_service_invocing",
-                    )
+                service_invoicing_id = component.create_service_invoicing_initial(
+                    self.company_id,
+                    self.community_company_id,
+                    self.service_pack_id,
+                    self.pricelist_id,
+                    self.payment_mode_id,
+                    datetime.now(),
+                    self.discount,
+                    "activate",
+                    "active_platform_service_invocing",
                 )
         return service_invoicing_view(self.env, service_invoicing_id)
