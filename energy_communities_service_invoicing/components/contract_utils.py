@@ -95,9 +95,10 @@ class ContractUtils(Component):
         new_service_invoicing_id = sale_order_utils.create_service_invoicing_initial(
             **service_invoicing_params
         )
+        # TODO:
         # Do we really want new contract to be in_progress on a modification??
-        if initial_status == "in_progress" and not self.work.record.is_free_pack:
-            self.set_contract_status_active()
+        # if initial_status == "in_progress" and not self.work.record.is_free_pack:
+        #     self.set_contract_status_active()
         self._setup_successors_and_predecessors(new_service_invoicing_id)
         return new_service_invoicing_id
 
