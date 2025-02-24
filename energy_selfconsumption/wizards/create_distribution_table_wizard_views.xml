@@ -13,24 +13,18 @@
                 <form>
                     <sheet>
                         <group>
+                            <field name="type" />
+                        </group>
+                        <group attrs="{'invisible':[('type','!=','fixed')]}">
                             <field name="max_distributed_power" invisible="1" />
                             <field
-                name="distributed_power"
-                widget="progress_bar_widget"
-                options="{'max_quantity': 'max_distributed_power', 'extra_label': 'kWn'}"
-              />
-                        <!-- <field name="distributed_power" widget="progress_bar_widget">
-                            <options>
-                                <option name="max_quantity" expr="max_distributed_power"/>
-                                <option name="extra_label">kW</option>
-                            </options>
-                        </field> -->
-                        </group>
-                        <group>
-                            <field name="type" />
+                                name="distributed_power"
+                                widget="progress_bar_widget"
+                                options="{'max_quantity': 'max_distributed_power', 'extra_label': 'kWn'}"
+                            />
                             <field name="distribute_excess" />
                         </group>
-                        <group attrs="{'invisible':[('distribute_excess','=','no')]}">
+                        <group attrs="{'invisible':['|',('type','!=','fixed'),('distribute_excess','=','no')]}">
                             <field name="type_distribute_excess" />
                         </group>
                     </sheet>
