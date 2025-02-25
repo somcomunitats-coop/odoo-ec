@@ -2,11 +2,16 @@ from odoo import _, fields, models
 
 from ..services.monitoring_service import MonitoringService
 
+DRAFT = "draft"
+INSCRIPTION = "inscription"
+ACTIVATION = "activation"
+ACTIVE = "active"
+
 STATE_VALUES = [
-    ("draft", _("Draft")),
-    ("inscription", _("In Inscription")),
-    ("activation", _("In Activation")),
-    ("active", _("Active")),
+    (DRAFT, _("Draft")),
+    (INSCRIPTION, _("In Inscription")),
+    (ACTIVATION, _("In Activation")),
+    (ACTIVE, _("Active")),
 ]
 
 
@@ -56,6 +61,11 @@ class Project(models.Model):
         required=True,
         default=lambda self: self.env.ref("base.es"),
     )
+
+    @property
+    def full_address(self):
+        street2 = f"{self.street2},"
+        return f"{self.street}, {street2} {self.zip}, {self.city}"
 
     def get_default_header_description(self):
         return _(

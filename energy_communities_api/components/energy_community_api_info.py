@@ -1,8 +1,11 @@
+from typing import List
+
 from odoo.exceptions import MissingError
 
 from odoo.addons.component.core import Component
+from odoo.addons.energy_project.models import DRAFT
 
-from ..schemas import EnergyCommunityInfo
+from ..schemas import CommunityServiceInfo, EnergyCommunityInfo
 
 
 class EnergyCommunityApiInfo(Component):
@@ -10,6 +13,11 @@ class EnergyCommunityApiInfo(Component):
     _inherit = "api.info"
     _usage = "api.info"
     _apply_on = "res.company"
+
+    _communities_services_domain = lambda _, community_id: [
+        ("company_id", "=", community_id),
+        ("state", "!=", DRAFT),
+    ]
 
     def get_energy_community_info(self, community_id) -> EnergyCommunityInfo:
         community = self.env[self._apply_on].search([("id", "=", community_id)])
@@ -33,3 +41,19 @@ class EnergyCommunityApiInfo(Component):
                 "facebook": community.social_facebook or None,
             },
         )
+
+    def get_community_services(self, community_id: str) -> List[CommunityServiceInfo]:
+        community_services = []
+        domain = self._communities_services_domain(community_id)
+        community_services = self.env["energy_project.project"].search(domain)
+        for service in community_services:
+            service_info = CommunityServiceInfo(
+                id=service.id,
+                type="fotovoltaic",
+                name=service.name,
+                status=service.state,
+                inscriptions=len(service.inscription_ids),
+                address=service.full_address,
+            )
+            community_services += [service_info]
+        return community_services
