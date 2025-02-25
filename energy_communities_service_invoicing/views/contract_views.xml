@@ -99,6 +99,12 @@
             <field name="recurring_next_date" />
             <field name="date_end" attrs="{'invisible': [('status','!=','closed')]}" />
           </group>
+          <group>
+            <field name="predecessor_contract_id" />
+            <field name="successor_contract_id" attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('successor_contract_id','!=',False)]}" />
+            <field name="closing_action" attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}" />
+            <field name="closing_action_description" attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}" />
+          </group>
         </sheet>
       </form>
     </field>
@@ -152,6 +158,8 @@
         <field name="discount" />
         <field name="predecessor_contract_id" />
         <field name="successor_contract_id" />
+        <field name="closing_action" attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}" />
+        <field name="closing_action_description" attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}" />
         <field name="sale_order_id" />
       </xpath>
     </field>

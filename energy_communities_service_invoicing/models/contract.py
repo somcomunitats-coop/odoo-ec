@@ -1,13 +1,17 @@
 from datetime import datetime
 
-from odoo import api, fields, models
-from odoo.tools.translate import _
+from odoo import _, api, fields, models
 
 from ..utils import (
     _CONTRACT_STATUS_VALUES,
+    _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES,
     get_existing_open_contract,
     raise_existing_same_open_contract_error,
 )
+
+_CLOSING_ACTION_VALUES = _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES + [
+    ("close", _("Close"))
+]
 
 
 class ContractContract(models.Model):
@@ -42,6 +46,18 @@ class ContractContract(models.Model):
     )
     is_pack = fields.Boolean(related="contract_template_id.is_pack")
     is_free_pack = fields.Boolean(related="contract_template_id.is_free_pack")
+    closing_action = fields.Selection(
+        selection=_CLOSING_ACTION_VALUES,
+        compute="_compute_closing_action",
+        string="Closing reason",
+        default="none",
+        store=True,
+    )
+    closing_action_description = fields.Char(
+        string="Closing reason description",
+        compute="_compute_closing_action_description",
+        store=True,
+    )
     related_contract_product_ids = fields.One2many(
         "product.product",
         string="Related services",
@@ -63,6 +79,28 @@ class ContractContract(models.Model):
     skip_zero_qty = fields.Boolean(default=True)
     # On energy communities all contracts have company_id
     company_id = fields.Many2one(required=True)
+
+    @api.depends("status", "successor_contract_id")
+    def _compute_closing_action(self):
+        for record in self:
+            record.closing_action = "none"
+            if record.status in ["closed", "closed_planned"]:
+                if record.successor_contract_id:
+                    record.closing_action = (
+                        record.successor_contract_id.sale_order_id.service_invoicing_action
+                    )
+                else:
+                    record.closing_action = "close"
+
+    @api.depends("status", "successor_contract_id")
+    def _compute_closing_action_description(self):
+        for record in self:
+            record.closing_action_description = ""
+            if record.status in ["closed", "closed_planned"]:
+                if record.successor_contract_id:
+                    record.closing_action_description = (
+                        record.successor_contract_id.sale_order_id.service_invoicing_action_description
+                    )
 
     @api.constrains("partner_id", "community_company_id")
     def _constrain_unique_contract(self):
