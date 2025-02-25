@@ -9,7 +9,7 @@ from odoo.addons.base_rest.tests.common import RegistryMixin
 from ..schemas import EnergyCommunityInfo
 
 try:
-    from .data import client_data, server_auth_url
+    from .data import client_data, community_data, server_auth_url
 except ImportError:
     pass
 
@@ -24,7 +24,7 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
     def setUp(self):
         super().setUp()
         self.maxDiff = None
-        self.community_id = "55"
+        self.community_id = community_data["community_id"]
         self.timeout = 600
         self.client = partial(self.url_open, timeout=self.timeout)
 
