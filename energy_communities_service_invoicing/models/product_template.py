@@ -30,3 +30,16 @@ class ProductTemplate(models.Model):
             ctemplates = self.env["contract.template"].search([])
             for ctemplate in ctemplates:
                 ctemplate.compute_is_pack()
+
+    @api.constrains("description_sale")
+    def compute_contract_template_line_name(self):
+        for record in self:
+            ctemplatelines = self.env["contract.template.line"].search(
+                [("product_id", "=", record.product_variant_id.id)]
+            )
+            for ctemplateline in ctemplatelines:
+                ctemplateline.write(
+                    {
+                        "name": ctemplateline.product_id.get_product_multiline_description_sale()
+                    }
+                )
