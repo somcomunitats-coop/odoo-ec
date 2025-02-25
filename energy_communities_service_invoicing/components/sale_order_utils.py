@@ -71,8 +71,7 @@ class SaleOrderUtils(Component):
             component.clean_non_service_lines()
             component.set_start_date(start_date)
             component.set_discount(discount)
-            if executed_action_description == "active_platform_service_invocing":
-                component.set_configuration_service_invoicing_journal_if_defined()
+            component.set_configuration_service_invoicing_journal_if_defined()
         return service_invoicing_id
 
     def create_service_invoicing_initial(
