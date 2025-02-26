@@ -1,4 +1,3 @@
-from . import service_invoicing_info_mixin
 from . import abstract_contract
 from . import account_move
 from . import contract
