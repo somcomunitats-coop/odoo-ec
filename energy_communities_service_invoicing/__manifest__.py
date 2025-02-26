@@ -15,6 +15,7 @@
         "base",
         "contract",
         "sale",
+        "sales_team",
         "purchase",
         "product",
         "product_contract",

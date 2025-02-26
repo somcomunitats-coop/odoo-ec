@@ -6,7 +6,7 @@ from odoo.addons.energy_communities.utils import contract_utils
 
 from ..utils import (
     _SERVICE_INVOICING_EXECUTED_ACTION_VALUES,
-    service_invoicing_view,
+    service_invoicing_form_view_for_platform_admins,
 )
 
 
@@ -46,7 +46,9 @@ class ServiceInvoicingActionWizard(models.TransientModel):
                 self.discount,
                 self.payment_mode_id,
             )
-        return service_invoicing_view(self.env, service_invoicing_id)
+        return service_invoicing_form_view_for_platform_admins(
+            self.env, service_invoicing_id
+        )
 
     def execute_reopen(self):
         with contract_utils(self.env, self.service_invoicing_id) as component:
@@ -57,7 +59,9 @@ class ServiceInvoicingActionWizard(models.TransientModel):
                 self.discount,
                 self.payment_mode_id,
             )
-        return service_invoicing_view(self.env, service_invoicing_id)
+        return service_invoicing_form_view_for_platform_admins(
+            self.env, service_invoicing_id
+        )
 
     def _validate_execute_modify(self):
         if (

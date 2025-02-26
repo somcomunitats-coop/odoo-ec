@@ -108,7 +108,7 @@ class ContractContract(models.Model):
             if record.community_company_id:
                 existing_contract = record._get_existing_same_open_contract()
                 if existing_contract:
-                    raise_existing_same_open_contract_error()
+                    raise_existing_same_open_contract_error(existing_contract)
 
     def _compute_received_invoices_count(self):
         for record in self:

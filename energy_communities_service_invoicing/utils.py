@@ -21,7 +21,25 @@ _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES = [
 ] + _SERVICE_INVOICING_EXECUTED_ACTION_VALUES[:-1]
 
 
-def service_invoicing_view(env: Environment, service_invoicing_id: ContractContract):
+def service_invoicing_tree_view(env: Environment):
+    return {
+        "type": "ir.actions.act_window",
+        "res_model": "contract.contract",
+        "views": [
+            (
+                env.ref(
+                    "energy_communities_service_invoicing.view_service_invoicing_tree"
+                ).id,
+                "form",
+            ),
+        ],
+        "target": "current",
+    }
+
+
+def service_invoicing_form_view_for_platform_admins(
+    env: Environment, service_invoicing_id: ContractContract
+):
     return {
         "type": "ir.actions.act_window",
         "res_model": "contract.contract",
@@ -39,9 +57,11 @@ def service_invoicing_view(env: Environment, service_invoicing_id: ContractContr
 
 
 # TODO: Think a bit more about more about if this 3 methods must go to contract utils component
-def raise_existing_same_open_contract_error():
+def raise_existing_same_open_contract_error(existing_contract):
     raise ValidationError(
-        _("It can only exists one service contract per Customer and related community.")
+        _(
+            "It already exists an open contract ({}) with same company and community."
+        ).format(existing_contract.name)
     )
 
 

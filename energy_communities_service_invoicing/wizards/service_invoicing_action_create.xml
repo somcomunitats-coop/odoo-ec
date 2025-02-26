@@ -11,12 +11,26 @@
           <group>
             <field name="allowed_community_company_ids" invisible="1" />
             <field name="allowed_payment_mode_ids" invisible="1" />
-            <field name="pack_product_product_ids" invisible="1" />
-            <field name="company_id" required="1" domain="[('hierarchy_level','=','coordinator')]"/>
-            <field name="community_company_id" required="1" />
-            <field name="service_pack_id" required="1"/>
+            <field name="pack_product_categ_id" invisible="1" />
+            <field
+              name="company_id"
+              domain="[('hierarchy_level','=','coordinator')]"
+              attrs="{'invisible':[('community_company_mids','!=',[])],'required':[('community_company_mids','=',[])]}"
+            />
+            <field
+              name="community_company_id"
+              attrs="{'invisible':[('community_company_mids','!=',[])],'required':[('community_company_mids','=',[])]}"
+            />
+            <field name="community_company_mids" />
+            <field name="service_pack_id"
+              required="1"
+              domain="[('categ_id','=',pack_product_categ_id)]"
+            />
             <field name="pricelist_id" required="1" domain="[('company_id','=',False)]"/>
-            <field name="payment_mode_id" required="1" />
+            <field
+              name="payment_mode_id"
+              attrs="{'invisible':[('community_company_mids','!=',[])],'required':[('community_company_mids','=',[])]}"
+            />
             <field name="discount" required="1" />
           </group>
         </sheet>

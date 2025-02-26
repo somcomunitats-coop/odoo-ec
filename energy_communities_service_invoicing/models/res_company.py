@@ -10,3 +10,11 @@ class ResCompany(models.Model):
         comodel_name="account.journal",
         string="Service invoicing journal",
     )
+    service_invoicing_payment_mode_id = fields.Many2one(
+        comodel_name="account.payment.mode",
+        string="Service invoicing payment mode",
+    )
+    service_invoicing_sale_team_id = fields.Many2one(
+        comodel_name="crm.team",
+        string="Service invoicing sales team",
+    )
