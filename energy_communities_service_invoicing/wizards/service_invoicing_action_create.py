@@ -8,9 +8,9 @@ from odoo.addons.energy_communities.utils import (
 )
 
 from ..utils import (
-    get_existing_last_closed_contract,
-    get_existing_open_contract,
-    raise_existing_same_open_contract_error,
+    get_existing_last_closed_pack_contract,
+    get_existing_open_pack_contract,
+    raise_existing_same_open_pack_contract_error,
     service_invoicing_form_view_for_platform_admins,
     service_invoicing_tree_view,
 )
@@ -110,7 +110,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
         self, community_company_id, company_id, payment_mode_id=False
     ):
         self._validate_service_invoicing_action_create([community_company_id.id])
-        existing_closed_contract = get_existing_last_closed_contract(
+        existing_closed_contract = get_existing_last_closed_pack_contract(
             self.env, company_id.partner_id, community_company_id
         )
         # If existing closed contract reopen it
@@ -181,11 +181,11 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
             raise ValidationError(_("You can only assign pack to communities"))
         # Check if already open one and raise error
         for record in impacted_records:
-            existing_contract = get_existing_open_contract(
+            existing_contract = get_existing_open_pack_contract(
                 self.env, record.parent_id.partner_id, record
             )
             if existing_contract:
-                raise_existing_same_open_contract_error(existing_contract)
+                raise_existing_same_open_pack_contract_error(existing_contract)
 
     def _validate_service_invoicing_action_create_multicommunity(self, company_id_list):
         impacted_records = self.env["res.company"].browse(company_id_list)

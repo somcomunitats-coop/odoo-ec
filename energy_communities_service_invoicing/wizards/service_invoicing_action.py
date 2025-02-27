@@ -87,5 +87,5 @@ class ServiceInvoicingActionWizard(models.TransientModel):
         if self.discount != self.service_invoicing_id.discount:
             if bool(executed_modification_action):
                 executed_modification_action += ","
-            executed_action += "modify_discount"
+            executed_modification_action += "modify_discount"
         return executed_modification_action

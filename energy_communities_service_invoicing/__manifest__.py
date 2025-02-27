@@ -30,6 +30,8 @@
         "data/contract_cron.xml",
         "data/contract_line_qty_formula_data.xml",
         "data/product_data.xml",
+        "report/report_invoice.xml",
+        "views/account_move_views.xml",
         "views/contract_line_formula_views.xml",
         "views/contract_template_views.xml",
         "views/contract_views.xml",
