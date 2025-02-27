@@ -22,29 +22,27 @@ _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES = [
 
 
 def service_invoicing_tree_view(env: Environment):
-    # return {
-    #     "type": "ir.actions.act_window",
-    #     "res_model": "contract.contract",
-    #     "views": [
-    #         (
-    #             env.ref(
-    #                 "energy_communities_service_invoicing.view_service_invoicing_tree"
-    #             ).id,
-    #             "tree",
-    #         ),
-    #     ],
-    #     "target": "current",
-    # }
-
     return {
-        # 'name': _('test'),
+        "name": _("Service Contracts"),
         "view_type": "tree",
-        "view_mode": "tree",
-        "view_id": env.ref(
-            "energy_communities_service_invoicing.view_service_invoicing_window_platform_manager"
-        ).id,
+        "view_mode": "tree,form",
+        "views": [
+            (
+                env.ref(
+                    "energy_communities_service_invoicing.view_service_invoicing_tree"
+                ).id,
+                "tree",
+            ),
+            (
+                env.ref(
+                    "energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin"
+                ).id,
+                "form",
+            ),
+        ],
         "res_model": "contract.contract",
-        # 'context': "{'type':'out_invoice'}",
+        "context": env["contract.contract"].get_service_invoicing_views_context(),
+        "domain": env["contract.contract"].get_service_invoicing_views_domain(),
         "type": "ir.actions.act_window",
         "target": "current",
     }

@@ -232,6 +232,15 @@ class ContractContract(models.Model):
             contract.set_close_status_type_by_date()
         return True
 
+    # TODO: It would be very cool being able to use this methods on service_invoicing xml act_window definition
+    @api.model
+    def get_service_invoicing_views_domain(self):
+        return [("community_company_id", "!=", False)]
+
+    @api.model
+    def get_service_invoicing_views_context(self):
+        return {"search_default_not_finished": 1, "search_default_paused": 1}
+
     # TODO: Not working. Lack of access rules
     def _get_received_invoices_ids(self):
         received_invoices = []
