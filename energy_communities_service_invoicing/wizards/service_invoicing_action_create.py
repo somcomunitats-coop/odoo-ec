@@ -1,11 +1,10 @@
-from datetime import datetime
-
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
 from odoo.addons.energy_communities.utils import (
     contract_utils,
+    get_successful_popup_message,
     sale_order_utils,
 )
 
@@ -14,7 +13,6 @@ from ..utils import (
     get_existing_open_contract,
     raise_existing_same_open_contract_error,
     service_invoicing_form_view_for_platform_admins,
-    service_invoicing_tree_view,
 )
 
 
@@ -23,6 +21,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
     _description = "Create service invoicing for an energy community"
     _inherit = ["user.currentcompany.mixin"]
 
+    execution_date = fields.Date(string="Execution date")
     company_id = fields.Many2one("res.company", string="Coordinator")
     community_company_id = fields.Many2one(
         "res.company",
@@ -99,7 +98,10 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                     community.parent_id,
                     self.env.company.service_invoicing_payment_mode_id,
                 )
-            return service_invoicing_tree_view(self.env)
+            return get_successful_popup_message(
+                _("Service invoicing contracts successfully created"),
+                _("Visit Community Management section to manage them"),
+            )
         else:
             service_invoicing_id = self._execute_create_one(
                 self.community_company_id, self.company_id, self.payment_mode_id
@@ -108,7 +110,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                 self.env, service_invoicing_id
             )
 
-    def execute_create_one(self, community_company_id, company_id, payment_mode_id):
+    def _execute_create_one(self, community_company_id, company_id, payment_mode_id):
         self._validate_service_invoicing_action_create([community_company_id.id])
         existing_closed_contract = get_existing_last_closed_contract(
             self.env, company_id.partner_id, community_company_id
@@ -117,7 +119,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
         if existing_closed_contract:
             with contract_utils(self.env, existing_closed_contract) as component:
                 service_invoicing_id = component.reopen(
-                    datetime.now(),
+                    self.execution_date,
                     self.pricelist_id,
                     self.service_pack_id,
                     self.discount,
@@ -132,7 +134,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                     self.service_pack_id,
                     self.pricelist_id,
                     payment_mode_id,
-                    datetime.now(),
+                    self.execution_date,
                     self.discount,
                     "activate",
                     "active_platform_service_invocing",
