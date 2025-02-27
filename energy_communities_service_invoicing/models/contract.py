@@ -5,8 +5,8 @@ from odoo import _, api, fields, models
 from ..utils import (
     _CONTRACT_STATUS_VALUES,
     _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES,
-    get_existing_open_contract,
-    raise_existing_same_open_contract_error,
+    get_existing_open_pack_contract,
+    raise_existing_same_open_pack_contract_error,
 )
 
 _CLOSING_ACTION_VALUES = _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES + [
@@ -106,9 +106,9 @@ class ContractContract(models.Model):
     def _constrain_unique_contract(self):
         for record in self:
             if record.community_company_id:
-                existing_contract = record._get_existing_same_open_contract()
+                existing_contract = record._get_existing_same_open_pack_contract()
                 if existing_contract:
-                    raise_existing_same_open_contract_error(existing_contract)
+                    raise_existing_same_open_pack_contract_error(existing_contract)
 
     def _compute_received_invoices_count(self):
         for record in self:
@@ -258,8 +258,8 @@ class ContractContract(models.Model):
                     received_invoices.append(invoice.id)
         return received_invoices
 
-    def _get_existing_same_open_contract(self):
-        return get_existing_open_contract(
+    def _get_existing_same_open_pack_contract(self):
+        return get_existing_open_pack_contract(
             self.env, self.partner_id, self.community_company_id, self
         )
 

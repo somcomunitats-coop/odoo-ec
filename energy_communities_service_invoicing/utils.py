@@ -68,7 +68,7 @@ def service_invoicing_form_view_for_platform_admins(
 
 
 # TODO: Think a bit more about more about if this 3 methods must go to contract utils component
-def raise_existing_same_open_contract_error(existing_contract):
+def raise_existing_same_open_pack_contract_error(existing_contract):
     raise ValidationError(
         _(
             "It already exists an open contract ({}) with same company and community."
@@ -76,7 +76,7 @@ def raise_existing_same_open_contract_error(existing_contract):
     )
 
 
-def get_existing_open_contract(
+def get_existing_open_pack_contract(
     env, partner_id, community_company_id, contract_id=False
 ):
     query = [
@@ -90,7 +90,7 @@ def get_existing_open_contract(
     return env["contract.contract"].search(query, limit=1)
 
 
-def get_existing_last_closed_contract(
+def get_existing_last_closed_pack_contract(
     env, partner_id, community_company_id, contract_id=False
 ):
     query = [
