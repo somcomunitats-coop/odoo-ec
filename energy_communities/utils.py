@@ -42,3 +42,16 @@ def get_translation(source, lang, mods):
     translation = code_translations.get_web_translations(mods, lang)
     translation.update(code_translations.get_python_translations(mods, lang))
     return translation.get(source, source)
+
+
+def get_successful_popup_message(title, message):
+    return {
+        "type": "ir.actions.client",
+        "tag": "display_notification",
+        "params": {
+            "type": "success",
+            "title": title,
+            "message": message,
+            "sticky": False,
+        },
+    }

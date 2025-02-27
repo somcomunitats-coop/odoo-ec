@@ -12,6 +12,7 @@
             <field name="allowed_community_company_ids" invisible="1" />
             <field name="allowed_payment_mode_ids" invisible="1" />
             <field name="pack_product_categ_id" invisible="1" />
+            <field name="execution_date" required="1"/>
             <field
               name="company_id"
               domain="[('hierarchy_level','=','coordinator')]"
