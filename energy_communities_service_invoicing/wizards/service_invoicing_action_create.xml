@@ -6,9 +6,10 @@
     <field name="name">service.invoicing.action.create.wizard.form</field>
     <field name="model">service.invoicing.action.create.wizard</field>
     <field name="arch" type="xml">
-      <form string="Service invoicing">
+      <form string="Service Contract">
         <sheet>
           <group>
+            <field name="creation_type" invisible="1" />
             <field name="allowed_community_company_ids" invisible="1" />
             <field name="allowed_payment_mode_ids" invisible="1" />
             <field name="pack_product_categ_id" invisible="1" />
@@ -16,21 +17,30 @@
             <field
               name="company_id"
               domain="[('hierarchy_level','=','coordinator')]"
-              attrs="{'invisible':[('community_company_mids','!=',[])],'required':[('community_company_mids','=',[])]}"
+              attrs="{'invisible':[('creation_type','=','multiple')],'required':[('creation_type','=','single')]}"
             />
             <field
               name="community_company_id"
-              attrs="{'invisible':[('community_company_mids','!=',[])],'required':[('community_company_mids','=',[])]}"
+              attrs="{'invisible':[('creation_type','=','multiple')],'required':[('creation_type','=','single')]}"
             />
-            <field name="community_company_mids" />
+            <field 
+              name="community_company_mids"
+              attrs="{'invisible':[('creation_type','=','single')],'required':[('creation_type','=','multiple')]}"
+              widget="many2many"
+            >
+             <tree>
+                <field name="name"/>
+                <field name="parent_id"/>
+             </tree>
+            </field>
             <field name="service_pack_id"
-              required="1"
               domain="[('categ_id','=',pack_product_categ_id)]"
+              required="1"
             />
             <field name="pricelist_id" required="1" domain="[('company_id','=',False)]"/>
             <field
               name="payment_mode_id"
-              attrs="{'invisible':[('community_company_mids','!=',[])],'required':[('community_company_mids','=',[])]}"
+              attrs="{'invisible':[('creation_type','=','multiple')]}"
             />
             <field name="discount" required="1" />
           </group>

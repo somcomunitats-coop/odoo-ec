@@ -23,7 +23,6 @@ class SaleOrderUtils(Component):
             "pricelist_id": pricelist_id.id,
             "service_invoicing_action": executed_action,
             "service_invoicing_action_description": executed_action_description,
-            "payment_mode_id": payment_mode_id.id,
             "order_line": [
                 (
                     0,
@@ -36,6 +35,8 @@ class SaleOrderUtils(Component):
                 )
             ],
         }
+        if payment_mode_id:
+            so_creation_dict["payment_mode_id"] = payment_mode_id.id
         # Apply configuration sales team to service invoicing sales order
         if company_id.service_invoicing_sale_team_id:
             so_creation_dict["team_id"] = company_id.service_invoicing_sale_team_id.id
@@ -83,11 +84,11 @@ class SaleOrderUtils(Component):
         community_company_id,
         service_pack_id,
         pricelist_id,
-        payment_mode_id,
         start_date,
         discount,
         executed_action,
         executed_action_description="none",
+        payment_mode_id=False,
     ):
         service_invoicing_id = self._create_service_invoicing(
             company_id,

@@ -10,7 +10,13 @@
         <sheet>
           <group>
             <field name="executed_action" invisible="1" />
-            <field name="service_invoicing_id" required="1" domain="[('community_company_id','!=',False)]"/>
+            <field
+              name="service_invoicing_id"
+              required="1"
+              readonly="1"
+              domain="[('community_company_id','!=',False)]"
+              options="{'no_open': True}"
+            />
             <field name="execution_date" required="1"/>
             <field
               name="service_pack_id"
