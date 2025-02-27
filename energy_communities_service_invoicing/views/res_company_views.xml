@@ -7,7 +7,7 @@
     <field name="state">code</field>
     <field name="groups_id" eval="[(4,ref('energy_communities.group_platform_manager'))]" />
     <field name="code">
-        action = model.get_service_invoicing_action_create_wizard_form_view()
+        action = model.get_multiple_service_invoicing_action_create_wizard_form_view()
     </field>
   </record>
   <record id="view_service_invocing_company_form" model="ir.ui.view">
@@ -20,7 +20,6 @@
           <group>
             <field name="id" invisible="1"/>
             <field name="service_invoicing_journal_id" domain="[('company_id', '=', id)]" />
-            <field name="service_invoicing_payment_mode_id" domain="[('company_id', '=', id)]" />
             <field name="service_invoicing_sale_team_id" domain="[('company_id', '=', id)]" />
           </group>
         </page>

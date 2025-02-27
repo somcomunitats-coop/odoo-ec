@@ -83,17 +83,16 @@ class ContractUtils(Component):
         sale_order_utils = self.component(
             usage="sale.order.utils", model_name="sale.order"
         )
-        service_invoicing_params = self._build_service_invoicing_params(
-            "modification",
-            executed_modification_action,
-            execution_date,
-            pricelist_id,
-            service_pack_id,
-            discount,
-            payment_mode_id,
-        )
         new_service_invoicing_id = sale_order_utils.create_service_invoicing_initial(
-            **service_invoicing_params
+            **self._build_service_invoicing_params(
+                "modification",
+                executed_modification_action,
+                execution_date,
+                pricelist_id,
+                service_pack_id,
+                discount,
+                payment_mode_id,
+            )
         )
         # TODO:
         # Do we really want new contract to be in_progress on a modification??

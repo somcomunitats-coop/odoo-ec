@@ -21,6 +21,9 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
     _description = "Create service invoicing for an energy community"
     _inherit = ["user.currentcompany.mixin"]
 
+    creation_type = fields.Selection(
+        [("single", "Single"), ("multiple", "Multiple")], default="single"
+    )
     execution_date = fields.Date(string="Execution date")
     company_id = fields.Many2one("res.company", string="Coordinator")
     community_company_id = fields.Many2one(
@@ -76,27 +79,23 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
     @api.depends("company_id", "community_company_mids")
     def _compute_allowed_payment_mode_ids(self):
         for record in self:
-            if record.community_company_mids:
-                query = [("company_id", "=", self.user_current_company.id)]
-            else:
-                query = [("company_id", "=", record.company_id.id)]
             record.allowed_payment_mode_ids = self.env["account.payment.mode"].search(
-                query
+                [("company_id", "=", self.user_current_company.id)]
             )
 
     @api.onchange("company_id")
     def _compute_service_invoicing_action_create_wizard_allowed_values(self):
         for record in self:
+            record._compute_pack_product_categ_id()
             record._compute_allowed_community_company_ids()
             record._compute_allowed_payment_mode_ids()
 
     def execute_create(self):
-        if self.community_company_mids:
+        if self.creation_type == "multiple":
             for community in self.community_company_mids:
                 self._execute_create_one(
                     community,
                     community.parent_id,
-                    self.env.company.service_invoicing_payment_mode_id,
                 )
             return service_invoicing_tree_view(self.env)
         else:
@@ -107,7 +106,9 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                 self.env, service_invoicing_id
             )
 
-    def _execute_create_one(self, community_company_id, company_id, payment_mode_id):
+    def _execute_create_one(
+        self, community_company_id, company_id, payment_mode_id=False
+    ):
         self._validate_service_invoicing_action_create([community_company_id.id])
         existing_closed_contract = get_existing_last_closed_contract(
             self.env, company_id.partner_id, community_company_id
@@ -130,15 +131,15 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                     community_company_id,
                     self.service_pack_id,
                     self.pricelist_id,
-                    payment_mode_id,
                     self.execution_date,
                     self.discount,
                     "activate",
                     "active_platform_service_invocing",
+                    payment_mode_id,
                 )
         return service_invoicing_id
 
-    def get_service_invoicing_action_create_wizard_form_view(self):
+    def get_multiple_service_invoicing_action_create_wizard_form_view(self):
         if "active_ids" in self.env.context.keys():
             self._validate_service_invoicing_action_create(
                 self.env.context["active_ids"]
@@ -148,6 +149,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
             )
             wizard = self.env["service.invoicing.action.create.wizard"].create(
                 {
+                    "creation_type": "multiple",
                     "community_company_mids": self.env.context["active_ids"],
                 }
             )
@@ -168,6 +170,10 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
         return False
 
     def _validate_service_invoicing_action_create(self, company_id_list):
+        if self.env.company.hierarchy_level != "instance":
+            raise ValidationError(
+                _("This action is only allowed when you're on instance level.")
+            )
         impacted_records = self.env["res.company"].browse(company_id_list)
         # Check all selected companies are communities
         hierarchy_levels = list(set(impacted_records.mapped("hierarchy_level")))
@@ -190,11 +196,4 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                     _("Community {} must have a parent coordinator defined").format(
                         record.name
                     )
-                )
-            # Check current company has configuration payment mode for multicompany creation
-            if not self.env.company.service_invoicing_payment_mode_id:
-                raise ValidationError(
-                    _(
-                        "Platform {} must have a service invoicing payment mode defined"
-                    ).format(self.env.company.name)
                 )
