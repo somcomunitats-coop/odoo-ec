@@ -191,13 +191,10 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                         record.name
                     )
                 )
-        # Check current company has configuration payment mode for multicompany creation
-        if (
-            self.community_company_mids
-            and not self.env.company.service_invoicing_payment_mode_id
-        ):
-            raise ValidationError(
-                _(
-                    "Platform {} must have a service invoicing payment mode defined"
-                ).format(self.env.company.name)
-            )
+            # Check current company has configuration payment mode for multicompany creation
+            if not self.env.company.service_invoicing_payment_mode_id:
+                raise ValidationError(
+                    _(
+                        "Platform {} must have a service invoicing payment mode defined"
+                    ).format(self.env.company.name)
+                )
