@@ -54,6 +54,61 @@
     </field>
   </record>
 
+  <record id="view_contract_contract_customer_form_platform_admin" model="ir.ui.view">
+    <field name="name">contract.contract.form (in energy_communities service_invoicing platform admin)</field>
+    <field name="model">contract.contract</field>
+    <field name="inherit_id" ref="product_contract.contract_contract_customer_form_view" />
+    <field name="arch" type="xml">
+      <xpath expr="//header" position="inside">
+        <field name="status" widget="statusbar" />
+      </xpath>
+      <xpath expr="//button[@name='action_preview']" position="after">
+        <button
+          name="action_activate_contract"
+          type="object"
+          string="Activate"
+          attrs="{'invisible':[('status','not in',['paused'])]}"
+        />
+        <button
+          name="action_modify_contract"
+          type="object"
+          string="Modify"
+          attrs="{'invisible':[('status','not in',['paused','in_progress'])]}"
+        />
+        <button
+          name="action_close_contract"
+          type="object"
+          string="Close"
+          attrs="{'invisible':[('status','not in',['paused','in_progress'])]}"
+        />
+        <button
+          name="action_reopen_contract"
+          type="object"
+          string="Reopen"
+          attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('successor_contract_id','!=',False)]}"
+        />
+      </xpath>
+      <xpath expr="//field[@name='partner_id']" position="after">
+        <field name="community_company_id" />
+      </xpath>
+      <xpath expr="//field[@name='pricelist_id']" position="after">
+        <field name="service_pack_id" />
+      </xpath>
+      <xpath expr="//field[@name='user_id']" position="after">
+        <field name="date_start" />
+        <field name="last_date_invoiced" />
+        <field name="recurring_next_date" />
+        <field name="date_end" />
+        <field name="discount" />
+        <field name="predecessor_contract_id" />
+        <field name="successor_contract_id" />
+        <field name="closing_action" attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}" />
+        <field name="closing_action_description" attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}" />
+        <field name="sale_order_id" />
+      </xpath>
+    </field>
+  </record>
+
   <record id="view_contract_contract_customer_form_coord_admin" model="ir.ui.view">
     <field name="name">contract.contract.form (in energy_communities service_invoicing coordinator)</field>
     <field name="model">contract.contract</field>
@@ -110,58 +165,5 @@
     </field>
   </record>
 
-  <record id="view_contract_contract_customer_form_platform_admin" model="ir.ui.view">
-    <field name="name">contract.contract.form (in energy_communities service_invoicing platform admin)</field>
-    <field name="model">contract.contract</field>
-    <field name="inherit_id" ref="product_contract.contract_contract_customer_form_view" />
-    <field name="arch" type="xml">
-      <xpath expr="//header" position="inside">
-        <field name="status" widget="statusbar" />
-      </xpath>
-      <xpath expr="//button[@name='action_preview']" position="after">
-        <button
-          name="action_activate_contract"
-          type="object"
-          string="Activate"
-          attrs="{'invisible':[('status','not in',['paused'])]}"
-        />
-        <button
-          name="action_modify_contract"
-          type="object"
-          string="Modify"
-          attrs="{'invisible':[('status','not in',['paused','in_progress'])]}"
-        />
-        <button
-          name="action_close_contract"
-          type="object"
-          string="Close"
-          attrs="{'invisible':[('status','not in',['paused','in_progress'])]}"
-        />
-        <button
-          name="action_reopen_contract"
-          type="object"
-          string="Reopen"
-          attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('successor_contract_id','!=',False)]}"
-        />
-      </xpath>
-      <xpath expr="//field[@name='partner_id']" position="after">
-        <field name="community_company_id" />
-      </xpath>
-      <xpath expr="//field[@name='pricelist_id']" position="after">
-        <field name="service_pack_id" />
-      </xpath>
-      <xpath expr="//field[@name='user_id']" position="after">
-        <field name="date_start" />
-        <field name="last_date_invoiced" />
-        <field name="recurring_next_date" />
-        <field name="date_end" />
-        <field name="discount" />
-        <field name="predecessor_contract_id" />
-        <field name="successor_contract_id" />
-        <field name="closing_action" attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}" />
-        <field name="closing_action_description" attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}" />
-        <field name="sale_order_id" />
-      </xpath>
-    </field>
-  </record>
+  
 </odoo>

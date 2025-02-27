@@ -3,12 +3,10 @@
       id="view_service_invoicing_window_platform_manager"
       model="ir.actions.act_window"
   >
-    <field name="name">Service Invoicing</field>
+    <field name="name">Service Contracts</field>
     <field name="res_model">contract.contract</field>
     <field name="view_mode">tree,form</field>
-    <field name="domain">
-[('community_company_id','!=',False)]
-    </field>
+    <field name="domain">[('community_company_id','!=',False)]</field>
     <field name="context">{"search_default_not_finished":1,"search_default_paused":1}</field>
   </record>
 
@@ -16,12 +14,10 @@
       id="view_service_invoicing_window_coord_admin"
       model="ir.actions.act_window"
   >
-    <field name="name">Service Invoicing</field>
+    <field name="name">Service Contracts</field>
     <field name="res_model">contract.contract</field>
     <field name="view_mode">tree,form</field>
-    <field name="domain">
-[('community_company_id','!=',False)]
-    </field>
+    <field name="domain">[('community_company_id','!=',False)]</field>
     <field name="context">{"search_default_not_finished":1,"search_default_paused":1}</field>
   </record>
 
