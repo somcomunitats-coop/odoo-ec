@@ -1,3 +1,4 @@
+from collections import namedtuple
 from datetime import datetime
 
 from odoo import _, api, fields, models
@@ -262,6 +263,33 @@ class ContractContract(models.Model):
         return get_existing_open_pack_contract(
             self.env, self.partner_id, self.community_company_id, self
         )
+
+    def get_active_monitoring_members(self):
+        QueryResult = namedtuple("QueryResult", ["total"])
+        QUERY = """
+            select count(energy_selfconsumption_supply_point.code) from energy_project_project
+            inner join energy_selfconsumption_selfconsumption on
+                energy_selfconsumption_selfconsumption.project_id = energy_project_project.id
+            inner join energy_selfconsumption_distribution_table on
+                energy_selfconsumption_distribution_table.selfconsumption_project_id = energy_selfconsumption_selfconsumption.id
+            inner join energy_selfconsumption_supply_point_assignation on
+                energy_selfconsumption_supply_point_assignation.distribution_table_id = energy_selfconsumption_distribution_table.id
+            inner join energy_selfconsumption_supply_point on
+                energy_selfconsumption_supply_point.id = energy_selfconsumption_supply_point_assignation.supply_point_id
+            inner join energy_project_service_contract on
+                energy_project_service_contract.project_id= energy_project_project.id
+            inner join energy_project_provider on energy_project_service_contract.provider_id=energy_project_provider.id
+            where
+                energy_project_project.company_id={current_company_id} and
+                energy_selfconsumption_distribution_table.state = 'active' and
+                energy_project_provider.name LIKE '{arkenova_like}';
+        """.format(
+            current_company_id=int(self.community_company_id.id),
+            arkenova_like="%Arkenova%",
+        )
+        self.env.cr.execute(QUERY)
+        members = QueryResult._make(self.env.cr.fetchone())
+        return members.total
 
     def set_close_status_type_by_date(self):
         if self.date_end.strftime("%Y-%m-%d") <= datetime.now().strftime("%Y-%m-%d"):
