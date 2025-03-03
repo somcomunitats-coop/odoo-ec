@@ -106,10 +106,27 @@ class ContractGenerationWizard(models.TransientModel):
                     contract_line_id.name += """\nCAU: {cau}\n"""
                 elif self.selfconsumption_id.invoicing_mode == "power_acquired":
                     contract_line_id.name += _(
-                        """\nCAU: {cau}\nTotal installed nominal power (kW): {power}\nPartition coefficient: {coefficient}"""
+                        """\nCAU: {cau}
+                        Total installed nominal power (kW): {power}
+                        Partition coefficient: {coefficient}
+                        Daily nominal power acquired: {power} kWn * {coefficient} = {power_acquired} kWn/day
+                        Days to be invoiced: {days_invoiced} days
+                        Total amount invoiced:  {days_invoiced} days * {power_acquired} kWn/day = {total_amount}\n"""
                     )
                     data["power"] = self.selfconsumption_id.power
                     data["coefficient"] = supply_point_assignation.coefficient
+                    first_date_invoiced, last_date_invoiced, recurring_next_date = contract_line_id._get_period_to_invoice(
+                        contract_line_id.last_date_invoiced,
+                        contract_line_id.recurring_next_date,
+                    )
+                    data["days_invoiced"] = (
+                        (last_date_invoiced - first_date_invoiced).days + 1
+                        if first_date_invoiced and last_date_invoiced
+                        else 0
+                    )
+                    data["power_acquired"] = (round(self.selfconsumption_id.power * supply_point_assignation.coefficient, 2)
+                                              if supply_point_assignation.coefficient else 0.0)
+                    data["total_amount"] = round(data["days_invoiced"] * data["power_acquired"], 2)
 
                 contract_line_id.write(
                     {"name": contract_line_id.name.format(**data), "main_line": True}
