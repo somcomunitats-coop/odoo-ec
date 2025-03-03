@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 10:06+0000\n"
-"PO-Revision-Date: 2025-02-13 10:06+0000\n"
+"POT-Creation-Date: 2025-03-03 07:47+0000\n"
+"PO-Revision-Date: 2025-03-03 07:47+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -408,7 +408,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
 msgid ""
 "<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</span>\n"
-"                                    <span groups=\"account.group_show_line_subtotals_tax_included\">Total Price</span>"
+"                    <span groups=\"account.group_show_line_subtotals_tax_included\">Total Price</span>"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -424,16 +424,6 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
 msgid "<span> kWn/day</span>"
-msgstr ""
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
-msgid "<span>Description</span>"
-msgstr ""
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
-msgid "<span>Disc.%</span>"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -474,16 +464,6 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
 msgid "<span>Total installation generation</span>"
-msgstr ""
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
-msgid "<span>Unit Price</span>"
-msgstr ""
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
-msgid "<strong class=\"mr16\">Subtotal</strong>"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -594,9 +574,11 @@ msgstr ""
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/inscription.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/change_state_inscription_wizard.py:0
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__active
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__active
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_line_wizard__state__active
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_change_state_inscription_lines_wizard__state__active
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__active
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_inscription_selfconsumption__state__active
@@ -828,6 +810,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_clean_supply_point_assignation_wizard
 msgid "Cancel"
 msgstr ""
@@ -835,11 +818,27 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/inscription.py:0
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/change_state_inscription_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_line_wizard__state__change
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_wizard__state__change
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_change_state_inscription_lines_wizard__state__change
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_inscription_selfconsumption__state__change
 #, python-format
 msgid "Change"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.actions.act_window,name:energy_selfconsumption.action_change_distribution_table_import_wizard
+msgid "Change distribution table"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__change_distribution_table_import_line_wizard_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__change_distribution_table_import_line_wizard_news_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__change_distribution_table_import_line_wizard_views_ids
+msgid "Change distribution table import line wizard"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -855,8 +854,26 @@ msgid "Change state inscription lines wizards"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__change_distribution_table_import_wizard_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__change_state_inscription_wizard_id
 msgid "Change state inscription wizard"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
+#: model:ir.model,name:energy_selfconsumption.model_change_distribution_table_import_line_wizard
+#, python-format
+msgid "Change_distribution_table_import_line_wizard"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
+#: model:ir.model,name:energy_selfconsumption.model_change_distribution_table_import_wizard
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+#, python-format
+msgid "Change_distribution_table_import_wizard"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -1093,6 +1110,8 @@ msgid "Create participant table"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__create_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard__create_uid
@@ -1113,6 +1132,8 @@ msgid "Created by"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__create_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard__create_date
@@ -1213,6 +1234,14 @@ msgid ""
 msgstr ""
 
 #. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_wizard__state__delete
+#, python-format
+msgid "Delete"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_delimiter
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__delimiter
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__delimiter
@@ -1231,6 +1260,8 @@ msgid "Description form"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard__display_name
@@ -1794,6 +1825,8 @@ msgid "IBAN"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard__id
@@ -1917,7 +1950,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/inscription.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/change_state_inscription_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_line_wizard__state__inactive
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_change_state_inscription_lines_wizard__state__inactive
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_inscription_selfconsumption__state__inactive
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__conf_state__inactive
@@ -1935,6 +1970,7 @@ msgid ""
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__inscription_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__inscription_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__inscription_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__inscription_ids
@@ -2196,6 +2232,8 @@ msgid "Last Date Invoiced"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard____last_update
@@ -2226,6 +2264,8 @@ msgid "Last Period Start"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__write_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard__write_uid
@@ -2246,6 +2286,8 @@ msgid "Last Updated by"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__write_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard__write_date
@@ -2455,9 +2497,22 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_wizard__state__new
+#, python-format
+msgid "New"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "New Supply Point"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+msgid "New registrations"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -2507,6 +2562,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_recurrency_mixin__next_period_date_start
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__next_period_date_start
 msgid "Next Period Start"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+msgid "Next step"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -2589,6 +2649,14 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_wizard__state__old
+#, python-format
+msgid "Old"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
@@ -2656,6 +2724,7 @@ msgid "Participation inscription"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__participation_real_quantity
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__participation_real_quantity
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__participation_real_quantity
 msgid "Participation real quantity"
@@ -2763,6 +2832,11 @@ msgid "Power acquired"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+msgid "Previous step"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__price
 msgid "Price"
 msgstr ""
@@ -2846,6 +2920,11 @@ msgid "Quotechar in import CSV file."
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+msgid "Record deregistration"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type
 msgid "Recurrence"
 msgstr ""
@@ -2910,6 +2989,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__activity_user_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_user_id
 msgid "Responsible User"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+msgid "Retain old records"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -3190,14 +3274,16 @@ msgid "State"
 msgstr ""
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__state
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__state
-msgid "Status"
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__supply_point_state
+msgid "State Name"
 msgstr ""
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__supply_point_state
-msgid "State Name"
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__state
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__state
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__state
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__state
+msgid "Status"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -3289,6 +3375,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_tree_view
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_partner_form_inherit
 msgid "Supply Points"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
+msgid "Tax 15%"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -3521,6 +3612,11 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid "Unactivate form"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+msgid "Update old records"
 msgstr ""
 
 #. module: energy_selfconsumption

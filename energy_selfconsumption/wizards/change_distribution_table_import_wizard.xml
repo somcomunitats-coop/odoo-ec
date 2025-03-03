@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- View change_distribution_table_import_wizard form -->
+        <record id="view_change_distribution_table_import_wizard_form" model="ir.ui.view">
+            <field name="name">view.change_distribution_table_import_wizard.form</field>
+            <field name="model">change.distribution.table.import.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Change_distribution_table_import_wizard">
+                    <div class="oe_title">
+                        <field name="state" invisible="1"/>
+                        <field name="change_distribution_table_import_line_wizard_ids" invisible="1">
+                            <tree editable="bottom" create="0">
+                                <field name="change_distribution_table_import_wizard_id" readonly="1" force_save="1"/>
+                                <field name="inscription_id" readonly="1" force_save="1"/>
+                                <field name="state" readonly="1" force_save="1"/>
+                                <field name="participation_real_quantity" readonly="1" force_save="1"/>
+                            </tree>
+                        </field>
+                        <h1 attrs="{'invisible': [('state', '!=', 'old')]}">Retain old records</h1>
+                        <h1 attrs="{'invisible': [('state', '!=', 'delete')]}">Record deregistration</h1>
+                        <h1 attrs="{'invisible': [('state', '!=', 'change')]}">Update old records</h1>
+                        <h1 attrs="{'invisible': [('state', '!=', 'new')]}">New registrations</h1>
+                        <field name="change_distribution_table_import_line_wizard_views_ids" mode="tree" nolabel="1" attrs="{'invisible': [('state', '=', 'new')]}">
+                            <tree editable="bottom" create="0">
+                                <field name="inscription_id" />
+                                <field name="state" />
+                                <field name="participation_real_quantity" />
+                            </tree>
+                        </field>
+                        <field name="change_distribution_table_import_line_wizard_news_ids" attrs="{'invisible': [('state', '!=', 'new')]}">
+                            <tree editable="bottom" create="0">
+                                <field name="change_distribution_table_import_wizard_id" invisible="1" readonly="1" force_save="1"/>
+                                <field name="inscription_id" readonly="1" force_save="1"/>
+                                <field name="state" readonly="1" force_save="1"/>
+                                <field name="participation_real_quantity" readonly="1" force_save="1"/>
+                            </tree>
+                        </field>
+                    </div>
+                    <footer>
+                        <button name="next_step" type="object" string="Next step" class="oe_highlight"/>
+                        <button name="previous_step" type="object" string="Previous step" class="oe_highlight" attrs="{'invisible': [('state', '==', 'old')]}"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action change_distribution_table_import_wizard -->
+        <record id="action_change_distribution_table_import_wizard" model="ir.actions.act_window">
+            <field name="name">Change distribution table</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">change.distribution.table.import.wizard</field>
+            <field name="binding_model_id" ref="model_energy_selfconsumption_inscription_selfconsumption" />
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+
+</odoo>
