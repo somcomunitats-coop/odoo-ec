@@ -48,6 +48,11 @@ class CreateDistributionTableWizard(models.TransientModel):
         string="Type distribute excess",
     )
 
+    @api.onchange('distributed_power')
+    def _onchange_distributed_power(self):
+        if self.distributed_power > self.max_distributed_power or self.distributed_power <= 0:
+            self.distribute_excess = 'yes'
+
     @api.model
     def default_get(self, default_fields):
         # OVERRIDE
@@ -82,12 +87,6 @@ class CreateDistributionTableWizard(models.TransientModel):
             default_fields["distributed_power"]
             / default_fields["max_distributed_power"]
         ) * 100
-
-        if default_fields["percentage_of_distributed_power"] == 0:
-            raise ValidationError(_("Your distribution percentage cannot be 0."))
-
-        if default_fields["percentage_of_distributed_power"] > 100:
-            raise ValidationError(_("Your distribution percentage cannot exceed 100%."))
 
         return default_fields
 
@@ -133,16 +132,28 @@ class CreateDistributionTableWizard(models.TransientModel):
         coefficient = inscription.participation_real_quantity
 
         if self.distribute_excess == "yes":
-            distribute_excess_float = (
-                self.max_distributed_power - self.distributed_power
-            )
-
-            if self.type_distribute_excess == "proportional":
-                coefficient += distribute_excess_float * (
-                    inscription.participation_real_quantity / self.distributed_power
+            if self.distributed_power < self.max_distributed_power:
+                distribute_excess_float = (
+                    self.max_distributed_power - self.distributed_power
                 )
+
+                if self.type_distribute_excess == "proportional":
+                    coefficient += distribute_excess_float * (
+                        inscription.participation_real_quantity / self.distributed_power
+                    )
+                else:
+                    coefficient += distribute_excess_float / len_inscriptions
             else:
-                coefficient += distribute_excess_float / len_inscriptions
+                distribute_excess_float = (
+                    self.distributed_power - self.max_distributed_power
+                )
+
+                if self.type_distribute_excess == "proportional":
+                    coefficient -= distribute_excess_float * (
+                        inscription.participation_real_quantity / self.distributed_power
+                    )
+                else:
+                    coefficient -= distribute_excess_float / len_inscriptions
 
         coefficient = coefficient / self.max_distributed_power
 
