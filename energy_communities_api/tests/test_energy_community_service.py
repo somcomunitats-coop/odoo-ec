@@ -75,3 +75,28 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
         self.assertEqual(response.status_code, 200)
         # and at least one community service
         self.assertGreaterEqual(len(response.json()["data"]), 1)
+
+    def test__communities_communities_services__with_paging_ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        # a member belonging into a energy_community
+        community_1_id = self.community_id
+        page_size = 1
+
+        # when we call for the energy services that offers that community
+        response = self.client(
+            f"/api/communities/communities/{community_1_id}/community_services?page_size={page_size}",
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and one community service
+        self.assertEqual(len(response.json()["data"]), 1)
+        # and no previous url but yes a next url
+        self.assertIsNone(response.json()["links"]["previous_page"])
+        self.assertIn(
+            "/api/communities/communities/29/community_services?page_size=1&page=2",
+            response.json()["links"]["next_page"],
+        )

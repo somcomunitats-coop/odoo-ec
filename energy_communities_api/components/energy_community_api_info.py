@@ -48,10 +48,7 @@ class EnergyCommunityApiInfo(Component):
 
     def get_community_services(self, community_id: int) -> List[CommunityServiceInfo]:
         community_services = []
-        domain = self._communities_services_domain(community_id)
-        community_projects = self.env["energy_selfconsumption.selfconsumption"].search(
-            domain
-        )
+        community_projects = self._get_projects(community_id)
         for service in community_projects:
             service_info = CommunityServiceInfo(
                 id=service.id,
@@ -71,3 +68,11 @@ class EnergyCommunityApiInfo(Component):
             )
             community_services += [service_info]
         return community_services
+
+    def _get_projects(self, community_id: int):
+        domain = self._communities_services_domain(community_id)
+        if self.work.paging:
+            return self.env["energy_selfconsumption.selfconsumption"].search(
+                domain, limit=self.work.paging.limit, offset=self.work.paging.offset
+            )
+        return self.env["energy_selfconsumption.selfconsumption"].search(domain)

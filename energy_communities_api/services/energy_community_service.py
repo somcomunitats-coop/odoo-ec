@@ -65,6 +65,7 @@ class EnergyCommunityApiService(Component):
             self._work_on_model,
             CommunityServiceInfo,
             member_community_id,
+            paging=paging,
         ) as component:
             total_community_services = component.total_community_services(community_id)
             community_services = component.get_community_services(community_id)
