@@ -4,6 +4,7 @@ from typing import List, Optional
 from pydantic import AnyHttpUrl, BaseModel, ConfigDict, EmailStr, Field
 
 from .base import (
+    Address,
     BaseListResponse,
     BaseResponse,
     NaiveOrmModel,
@@ -65,22 +66,34 @@ class CommunityServiceInfo(BaseModel, populate_by_name=True):
         description="Status of the service, ex: in_progres",
     )
 
-    shares: float = Field(
+    power: float = Field(
         ...,
+        title="Project power",
+        description="Project power",
+    )
+
+    shares: Optional[float] = Field(
+        default=None,
         title="Shares",
         description="Percentage of shares of a member in a community service",
     )
 
-    inscription_date: str = Field(
-        ...,
+    inscription_date: Optional[str] = Field(
+        default=None,
         title="Inscription Date",
         description="When a member was inscribed in the community service",
     )
 
-    inscriptions: int = Field(
-        ...,
+    inscriptions: Optional[int] = Field(
+        default=None,
         title="Total inscriptions",
         description="Total inscriptions of a community service",
+    )
+
+    address: Optional[Address] = Field(
+        default=None,
+        title="Address",
+        description="Address where is located this service",
     )
 
 

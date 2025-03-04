@@ -29,13 +29,7 @@ class TestEnergyCommunityApiInfo(TransactionComponentCase):
         api_info_component = work.component(usage="api.info")
         self.assertIsInstance(api_info_component, EnergyCommunityApiInfo)
 
-        # when we ask for the services that this member is involved
-        member_community_services = api_info_component.get_community_services(
-            community_id
-        )
-
-        # then we obtain all services in which that member has an inscription
-        self.assertGreaterEqual(
-            len(member_community_services),
-            1,
-        )
+        # when we ask for the services that comunity
+        community_services = api_info_component.get_community_services(community_id)
+        # then we obtain all services of that community
+        self.assertGreaterEqual(len(community_services), 1)

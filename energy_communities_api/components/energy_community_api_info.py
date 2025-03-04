@@ -3,9 +3,9 @@ from typing import List
 from odoo.exceptions import MissingError
 
 from odoo.addons.component.core import Component
-from odoo.addons.energy_project.models import DRAFT
+from odoo.addons.energy_project.models.project import DRAFT
 
-from ..schemas import CommunityServiceInfo, EnergyCommunityInfo
+from ..schemas import Address, CommunityServiceInfo, EnergyCommunityInfo
 
 
 class EnergyCommunityApiInfo(Component):
@@ -42,18 +42,32 @@ class EnergyCommunityApiInfo(Component):
             },
         )
 
-    def get_community_services(self, community_id: str) -> List[CommunityServiceInfo]:
+    def total_community_services(self, community_id: int) -> int:
+        domain = self._communities_services_domain(community_id)
+        return self.env["energy_selfconsumption.selfconsumption"].search_count(domain)
+
+    def get_community_services(self, community_id: int) -> List[CommunityServiceInfo]:
         community_services = []
         domain = self._communities_services_domain(community_id)
-        community_services = self.env["energy_project.project"].search(domain)
-        for service in community_services:
+        community_projects = self.env["energy_selfconsumption.selfconsumption"].search(
+            domain
+        )
+        for service in community_projects:
             service_info = CommunityServiceInfo(
                 id=service.id,
                 type="fotovoltaic",
                 name=service.name,
                 status=service.state,
                 inscriptions=len(service.inscription_ids),
-                address=service.full_address,
+                address=Address(
+                    street=service.street,
+                    street2=service.street2 or "",
+                    postal_code=service.zip,
+                    city=service.city,
+                    state=service.state_id.name,
+                    country=service.country_id.name,
+                ),
+                power=service.power,
             )
             community_services += [service_info]
         return community_services

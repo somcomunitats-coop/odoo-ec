@@ -74,4 +74,4 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
         # and at least one community service
-        self.assertGreaterThan(len(response.json("data")), 1)
+        self.assertGreaterEqual(len(response.json()["data"]), 1)
