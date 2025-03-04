@@ -73,15 +73,13 @@ class ResUsers(models.Model):
                     ).format(record.partner_id.id)
                 )
 
-    @api.constrains("company_ids")
-    def constrains_user_partner_id_company_ids(self):
-        for record in self:
-            record.equalize_user_partner_id_company_ids()
+    # @api.constrains("company_ids")
+    # def constrains_user_partner_id_company_ids(self):
+    #     for record in self:
+    #         record.equalize_user_partner_id_company_ids()
 
     def equalize_user_partner_id_company_ids(self):
-        self.partner_id.write(
-            {"company_id": self.company_id.id, "company_ids": self.company_ids}
-        )
+        self.partner_id.write({"company_ids": self.company_ids})
         return True
 
     def _find_existing_related_partner(self, vals):

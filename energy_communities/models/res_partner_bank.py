@@ -1,8 +1,10 @@
-from odoo import api, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class ResPartnerBank(models.Model):
     _inherit = "res.partner.bank"
+    _name = "res.partner.bank"
 
     _sql_constraints = [
         (
@@ -12,8 +14,15 @@ class ResPartnerBank(models.Model):
         ),
     ]
 
-    # https://github.com/OCA/bank-payment/blob/16.0/account_banking_mandate/models/res_partner_bank.py
-    # TODO: I+D: Check why setting company_id and company_ids on partner triggers bank account company_id constrain
-    # @api.constrains("company_id")
-    # def _company_constrains(self):
-    #     return True
+    company_id = fields.Many2one(
+        "res.company",
+        "Company",
+        related=False,
+        readonly=False,
+    )
+
+    @api.constrains("partner_id")
+    def _bank_account_company_id_not_null(self):
+        for record in self:
+            if not record.company_id:
+                raise ValidationError("Company must be defined for ")
