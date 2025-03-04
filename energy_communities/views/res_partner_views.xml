@@ -112,7 +112,7 @@
             groups="base.group_multi_company"
             widget="many2many_tags"
             options="{'no_create': True}"
-            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')]}"
+            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')],'readonly': [('has_rel_user','=',True)]}"
           />
                     <field
             name="company_ids_info"

@@ -1,6 +1,7 @@
 import logging
 
-from odoo import SUPERUSER_ID, api, fields, models
+from odoo import SUPERUSER_ID, _, api, fields, models
+from odoo.exceptions import ValidationError
 
 logger = logging.getLogger(__name__)
 
@@ -57,6 +58,17 @@ class ResPartner(models.Model):
             )
             if rel_company:
                 record.company_hierarchy_level = rel_company.hierarchy_level
+
+    @api.constrains("company_ids")
+    def _constrains_partner_company_ids(self):
+        for record in self:
+            for rpb in record.bank_ids:
+                if rpb.company_id not in record.company_ids:
+                    raise ValidationError(
+                        _(
+                            "You cannot remove company {} because there are banks referencing to it"
+                        ).format(rpb.company_id.name)
+                    )
 
     @api.model_create_multi
     def create(self, vals):
