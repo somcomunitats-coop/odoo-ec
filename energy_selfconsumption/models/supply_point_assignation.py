@@ -36,6 +36,11 @@ class SupplyPointAssignation(models.Model):
                 record.selfconsumption_project_id.power * record.coefficient
             )
 
+    @api.depends("coefficient")
+    def _compute_participacion(self):
+        for record in self:
+            record.participacion = record.coefficient * record.selfconsumption_project_id.power
+
     distribution_table_id = fields.Many2one(
         "energy_selfconsumption.distribution_table", required=True
     )
@@ -50,6 +55,7 @@ class SupplyPointAssignation(models.Model):
     supply_point_id = fields.Many2one(
         "energy_selfconsumption.supply_point", required=True
     )
+    participacion = fields.Float(string="Participacion",compute="_compute_participacion", store=True)
     coefficient = fields.Float(
         string="Distribution coefficient",
         digits=(7, 6),
