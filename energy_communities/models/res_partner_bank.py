@@ -14,11 +14,18 @@ class ResPartnerBank(models.Model):
         ),
     ]
 
+    def _get_company_domain(self):
+        if not self.partner_id:
+            return []
+        return [('id', 'in', self.partner_id.company_ids.ids)]
+    
     company_id = fields.Many2one(
         "res.company",
         "Company",
         related=False,
         readonly=False,
+        default=lambda self: self.env.company,
+        domain=_get_company_domain,
     )
 
     @api.constrains("partner_id")

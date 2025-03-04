@@ -38,6 +38,26 @@
           </field>
         </record>
 
+        <record id="view_partner_property_bank_form" model="ir.ui.view">
+            <field name="name">view_partner_property_bank_form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.view_partner_property_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='bank_ids']" position="replace">
+                    <field name="bank_ids" nolabel="1" colspan="2" context="{'default_allow_out_payment': True}">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="bank_id"/>
+                            <field name="acc_number" required="1"/>
+                            <field name="company_id" required="1" />
+                            <field name="allow_out_payment" widget="boolean_toggle" options="{'autosave': False}"/>
+                            <field name="acc_holder_name" invisible="1"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+
         <record id="view_partner_form" model="ir.ui.view">
             <field name="name">view_partner_form</field>
             <field name="model">res.partner</field>
