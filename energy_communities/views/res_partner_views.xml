@@ -134,7 +134,7 @@
                             <field name="sequence" widget="handle"/>
                             <field name="bank_id"/>
                             <field name="acc_number" required="1"/>
-                            <field name="company_id" required="1" />
+                            <field name="company_id" attrs="{'readonly':[('partner_id','!=',False),('allowed_company_ids','=',[])]}" />
                             <field name="allow_out_payment" widget="boolean_toggle" options="{'autosave': False}"/>
                             <field name="acc_holder_name" invisible="1"/>
                         </tree>
