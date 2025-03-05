@@ -159,14 +159,6 @@ class SubscriptionRequest(models.Model):
         else:
             partner_vals = self.get_partner_vals()
         partner = partner_obj.create(partner_vals)
-        # if self.iban:
-        #     self.env["res.partner.bank"].create(
-        #         {
-        #             "partner_id": partner.id,
-        #             "acc_number": self.iban,
-        #             "company_id": self.company_id.id
-        #         }
-        #     )
         return partner
 
     def _find_or_create_representative(self):
