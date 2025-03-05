@@ -33,7 +33,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
     invoice_date = fields.Date(string="Invoice date")
     invoice_date_due = fields.Date(string="Invoice due date")
 
-    # TODO: Only way we've found to setup defaults based on company is by getting it from currently selected one.
+    # Only way we've found to setup defaults based on company is by getting it from currently selected one.
     def default_get(self, fields):
         res = super().default_get(fields)
         res.update(
@@ -204,28 +204,33 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
         return False
 
     def _prepare_inv_line_create_dict(self, origin_inv_line):
-        quantity = self._get_voluntary_share_days_num(origin_inv_line)
+        days_quantity = self._get_voluntary_share_days_num(origin_inv_line)
+        period_start_date = self._get_period_start_date(origin_inv_line)
         # Negative quantity values implies payment date > end_period => line outside calculation period.
         # We don't want to create those lines
-        if quantity > 0:
-            name = "contribution ref: [{inv_name}] #{inv_id} / contribution line ref: #{inv_line_id}".format(
-                inv_id=origin_inv_line.move_id.id,
-                inv_line_id=origin_inv_line.id,
-                inv_name=origin_inv_line.move_id.name,
-            )
-            price_unit = self._get_voluntary_share_price_unit(origin_inv_line)
-            if price_unit < 0.01:
-                price_unit = price_unit * quantity
-                name += " ({} days)".format(quantity)
-                quantity = 1
+        if days_quantity > 0:
             return {
-                "name": name,
-                "account_id": self.return_line_account_id.id,
-                "quantity": quantity,
-                "price_unit": price_unit,
-                "voluntary_share_return_start_date_period": self._get_period_start_date(
-                    origin_inv_line
+                "name": """Voluntary share interest return
+                    contribution ref: [{inv_name}] #{inv_id}
+                    contribution line ref: #{inv_line_id}
+                    Period: from {period_start} to {period_end}
+                    Interest: {interest}%
+                    Price: {total_days} days * {price_unit_day} €/day
+                """.format(
+                    inv_id=origin_inv_line.move_id.id,
+                    inv_line_id=origin_inv_line.id,
+                    inv_name=origin_inv_line.move_id.name,
+                    period_start=period_start_date.strftime("%d/%m/%Y"),
+                    period_end=self.end_date_period.strftime("%d/%m/%Y"),
+                    interest=self.interest,
+                    total_days=days_quantity,
+                    price_unit_day="%.5f"
+                    % self._get_voluntary_share_price_unit_per_day(origin_inv_line),
                 ),
+                "account_id": self.return_line_account_id.id,
+                "quantity": 1,
+                "price_unit": self._get_voluntary_share_price_unit(origin_inv_line),
+                "voluntary_share_return_start_date_period": period_start_date,
                 "voluntary_share_return_end_date_period": self.end_date_period,
                 "voluntary_share_contribution": origin_inv_line.price_subtotal,
                 "voluntary_share_interest": self.interest,
@@ -248,8 +253,12 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
         return (self.end_date_period - self._get_period_start_date(inv_line)).days
 
     def _get_voluntary_share_price_unit(self, inv_line):
-        price_unit = inv_line.price_subtotal * self.interest / 36500
-        return price_unit
+        days_quantity = self._get_voluntary_share_days_num(inv_line)
+        price_unit_day = self._get_voluntary_share_price_unit_per_day(inv_line)
+        return price_unit_day * days_quantity
+
+    def _get_voluntary_share_price_unit_per_day(self, inv_line):
+        return inv_line.price_subtotal * self.interest / 36500
 
     def _find_related_invoice_line_from_share_line(self, share_line):
         if share_line.related_invoice_line:
