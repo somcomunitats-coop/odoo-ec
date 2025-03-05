@@ -60,6 +60,7 @@
         "views/landing_page_view.xml",
         "views/res_company_views.xml",
         "views/res_config_settings.xml",
+        "views/res_partner_bank_views.xml",
         "views/res_partner_views.xml",
         "views/cm_place.xml",
         "views/energy_action_views.xml",

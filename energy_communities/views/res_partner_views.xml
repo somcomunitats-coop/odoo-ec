@@ -129,6 +129,8 @@
             <xpath expr="//field[@name='bank_ids']" position="replace">
                     <field name="bank_ids" nolabel="1" colspan="2" context="{'default_allow_out_payment': True}">
                         <tree editable="bottom">
+                            <field name="partner_id" invisible="1"/>
+                            <field name="allowed_company_ids" invisible="1" />
                             <field name="sequence" widget="handle"/>
                             <field name="bank_id"/>
                             <field name="acc_number" required="1"/>
