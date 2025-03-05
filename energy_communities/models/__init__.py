@@ -17,5 +17,6 @@ from . import res_users_role
 from . import product
 from . import utm_source
 from . import account_move
+from . import account_banking_mandate
 from . import mail_channel
 from . import mail_message
