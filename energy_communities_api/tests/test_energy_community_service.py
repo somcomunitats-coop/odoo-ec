@@ -100,3 +100,21 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
             "/api/communities/communities/29/community_services?page_size=1&page=2",
             response.json()["links"]["next_page"],
         )
+
+    def test__communities_communities_services_metrics__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        # a member belonging into a energy_community
+        community_1_id = self.community_id
+
+        # when we call for the metrics of the energy services that offers that community
+        response = self.client(
+            "/api/communities/community/community_services/metrics",
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and at least one community service
+        self.assertGreaterEqual(len(response.json()["data"]), 1)

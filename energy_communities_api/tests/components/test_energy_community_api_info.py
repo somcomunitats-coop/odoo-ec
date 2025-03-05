@@ -1,3 +1,5 @@
+from datetime import date
+
 from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import TransactionComponentCase
 
@@ -22,9 +24,7 @@ class TestEnergyCommunityApiInfo(TransactionComponentCase):
 
         # given a api info component
         work = WorkContext(
-            "res.company",
-            collection=self.backend,
-            schema_class=CommunityServiceInfo,
+            "res.company", collection=self.backend, schema_class=CommunityServiceInfo
         )
         api_info_component = work.component(usage="api.info")
         self.assertIsInstance(api_info_component, EnergyCommunityApiInfo)
@@ -33,3 +33,27 @@ class TestEnergyCommunityApiInfo(TransactionComponentCase):
         community_services = api_info_component.get_community_services(community_id)
         # then we obtain all services of that community
         self.assertGreaterEqual(len(community_services), 1)
+
+    def test__get_community_services_metrics(self):
+        # given a energy community
+        community_id = int(community_data["community_id"])
+        # a range of dates
+        date_from = date(2024, 4, 1)
+        date_to = date(2024, 4, 30)
+
+        # given a api info component
+        work = WorkContext(
+            "res.company",
+            collection=self.backend,
+            schema_class=CommunityServiceInfo,
+            paging=None,
+        )
+        api_info_component = work.component(usage="api.info")
+        self.assertIsInstance(api_info_component, EnergyCommunityApiInfo)
+
+        # when we ask for the services that comunity
+        community_services_metrics = api_info_component.get_community_services_metrics(
+            community_id, date_from, date_to
+        )
+        # then we obtain all services of that community
+        self.assertGreaterEqual(len(community_services_metrics), 1)

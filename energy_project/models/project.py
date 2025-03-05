@@ -21,7 +21,7 @@ class Project(models.Model):
 
     name = fields.Char(required=True)
     type = fields.Many2one("energy_project.project_type", required=True, readonly=True)
-    state = fields.Selection(STATE_VALUES, default="draft", required=True)
+    state = fields.Selection(STATE_VALUES, default=DRAFT, required=True)
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
     )
@@ -61,11 +61,6 @@ class Project(models.Model):
         required=True,
         default=lambda self: self.env.ref("base.es"),
     )
-
-    @property
-    def full_address(self):
-        street2 = f"{self.street2},"
-        return f"{self.street}, {street2} {self.zip}, {self.city}"
 
     def get_default_header_description(self):
         return _(

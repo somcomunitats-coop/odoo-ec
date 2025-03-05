@@ -142,12 +142,12 @@ class CommunityServiceMetricsInfo(BaseModel):
         description="Type of this service, ex: fotovoltaic",
     )
 
-    shares: MetricInfo = Field(
-        ..., title="Shares", description="Shares that have a person for this project"
+    shares: Optional[MetricInfo] = Field(
+        None, title="Shares", description="Shares that have a person for this project"
     )
 
-    energy_shares: MetricInfo = Field(
-        ...,
+    energy_shares: Optional[MetricInfo] = Field(
+        None,
         title="Energy Shares",
         description="Energy shares (distribution coefficient in kWh) that have a person for this project",
     )

@@ -7,6 +7,8 @@ from odoo.addons.component.core import Component
 from ..schemas import (
     CommunityServiceInfo,
     CommunityServiceInfoListResponse,
+    CommunityServiceMetricsInfo,
+    CommunityServiceMetricsInfoListResponse,
     EnergyCommunityInfo,
     EnergyCommunityInfoResponse,
     QueryParams,
@@ -18,7 +20,7 @@ class EnergyCommunityApiService(Component):
     _inherit = ["base.rest.service", "api.service.utils"]
     _name = "energy_community.api.service"
     _collection = "energy_communities.api.services"
-    _usage = "communities"
+    _usage = "community"
     _description = """
         Set of enpoints that retrieve and manage information about energy communities
     """
@@ -73,6 +75,35 @@ class EnergyCommunityApiService(Component):
             request,
             CommunityServiceInfoListResponse,
             community_services,
+            total_community_services,
+            paging,
+        )
+
+    @restapi.method(
+        [(["/community_services/metrics"], "GET")],
+        input_param=PydanticModel(QueryParams),
+        output_param=PydanticModel(CommunityServiceMetricsInfoListResponse),
+    )
+    def community_service_metrics_info(self, query_params: QueryParams):
+        self._validate_headers()
+        community_id = request.httprequest.headers.get("CommunityId")
+        paging = self._get_pagination_limits(query_params)
+        date_from, date_to = self._get_dates_range(query_params)
+        with api_info(
+            self.env,
+            self._work_on_model,
+            CommunityServiceMetricsInfo,
+            community_id=community_id,
+            paging=paging,
+        ) as component:
+            total_community_services = component.total_community_services(community_id)
+            community_service_metrics = component.get_community_services_metrics(
+                community_id, date_from, date_to
+            )
+        return list_response(
+            request,
+            CommunityServiceMetricsInfoListResponse,
+            community_service_metrics,
             total_community_services,
             paging,
         )

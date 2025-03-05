@@ -1,3 +1,4 @@
+from datetime import date
 from typing import List
 
 from odoo.exceptions import MissingError
@@ -5,7 +6,12 @@ from odoo.exceptions import MissingError
 from odoo.addons.component.core import Component
 from odoo.addons.energy_project.models.project import DRAFT
 
-from ..schemas import Address, CommunityServiceInfo, EnergyCommunityInfo
+from ..schemas import (
+    Address,
+    CommunityServiceInfo,
+    CommunityServiceMetricsInfo,
+    EnergyCommunityInfo,
+)
 
 
 class EnergyCommunityApiInfo(Component):
@@ -68,6 +74,20 @@ class EnergyCommunityApiInfo(Component):
             )
             community_services += [service_info]
         return community_services
+
+    def get_community_services_metrics(
+        self, community_id: int, date_from: date, date_to: date
+    ) -> List[CommunityServiceMetricsInfo]:
+        metrics = []
+        metrics_component = self.component(usage="metrics.info")
+        community_projects = self._get_projects(community_id)
+        for project in community_projects:
+            metrics_info = metrics_component.get_project_metrics(
+                project, date_from, date_to
+            )
+            if metrics_info:
+                metrics += [metrics_info]
+        return metrics
 
     def _get_projects(self, community_id: int):
         domain = self._communities_services_domain(community_id)

@@ -15,7 +15,7 @@ class ProjectMetricsApiInfo(Component):
     _inherit = "api.info"
     _usage = "metrics.info"
 
-    def get_project_metrics(
+    def get_project_metrics_by_member(
         self, project, partner, date_from, date_to
     ) -> CommunityServiceMetricsInfo:
         monitoring_service = project.monitoring_service()
@@ -80,6 +80,62 @@ class ProjectMetricsApiInfo(Component):
             ),
             environment_saves=MetricInfo(
                 value=monitoring_service.co2save_by_member(**service_parameters),
+                unit=UnitEnum.grco2,
+            ),
+        )
+        return metrics_info
+
+    def get_project_metrics(
+        self, project, date_from, date_to
+    ) -> CommunityServiceMetricsInfo:
+        monitoring_service = project.project_id.monitoring_service()
+        if not monitoring_service:
+            return {}
+        service_parameters = {
+            "system_id": project.selfconsumption_id.code,
+            "date_from": date_from,
+            "date_to": date_to,
+        }
+        metrics_info = CommunityServiceMetricsInfo(
+            id=project.id,
+            name=project.name,
+            type="fotovoltaic",
+            energy_production=MetricInfo(
+                value=monitoring_service.energy_production_by_project(
+                    **service_parameters
+                ),
+                unit=UnitEnum.kwh,
+            ),
+            energy_consumption=MetricInfo(
+                value=monitoring_service.energy_consumption_by_project(
+                    **service_parameters
+                ),
+                unit=UnitEnum.kwh,
+            ),
+            selfproduction_ratio=MetricInfo(
+                value=monitoring_service.energy_selfconsumption_ratio(
+                    **service_parameters
+                ),
+                unit=UnitEnum.percentage,
+            ),
+            surplus_ratio=MetricInfo(
+                value=monitoring_service.energy_surplus_ratio(**service_parameters),
+                unit=UnitEnum.percentage,
+            ),
+            gridconsumption_ratio=MetricInfo(
+                value=monitoring_service.energy_usage_ratio_from_grid(
+                    **service_parameters
+                ),
+                unit=UnitEnum.percentage,
+            ),
+            selfconsumption_ratio=MetricInfo(
+                value=monitoring_service.energy_usage_ratio_from_selfconsumption(
+                    **service_parameters
+                ),
+                unit=UnitEnum.percentage,
+            ),
+            environment_saves=MetricInfo(
+                value=monitoring_service.co2save(**service_parameters),
                 unit=UnitEnum.grco2,
             ),
         )
