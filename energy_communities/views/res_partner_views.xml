@@ -112,7 +112,7 @@
             groups="base.group_multi_company"
             widget="many2many_tags"
             options="{'no_create': True}"
-            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')]}"
+            attrs="{'invisible': [('user_current_role', '!=', 'role_platform_admin')],'readonly': [('has_rel_user','=',True)]}"
           />
                     <field
             name="company_ids_info"
@@ -125,6 +125,20 @@
             style="padding: 10px; background-color: #ccc; border: 1px solid #aaa;"
           ><strong
             >Hint: In order to edit company related params you have to visit the related contact's user.</strong></p>
+                </xpath>
+            <xpath expr="//field[@name='bank_ids']" position="replace">
+                    <field name="bank_ids" nolabel="1" colspan="2" context="{'default_allow_out_payment': True}">
+                        <tree editable="bottom">
+                            <field name="partner_id" invisible="1"/>
+                            <field name="allowed_company_ids" invisible="1" />
+                            <field name="sequence" widget="handle"/>
+                            <field name="bank_id"/>
+                            <field name="acc_number" required="1"/>
+                            <field name="company_id" attrs="{'readonly':[('partner_id','!=',False),('allowed_company_ids','=',[])]}" />
+                            <field name="allow_out_payment" widget="boolean_toggle" options="{'autosave': False}"/>
+                            <field name="acc_holder_name" invisible="1"/>
+                        </tree>
+                    </field>
                 </xpath>
             </field>
         </record>
