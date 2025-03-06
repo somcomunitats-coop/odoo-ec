@@ -48,7 +48,7 @@
     <field name="name">Packs contract templates</field>
     <field name="res_model">contract.template</field>
     <field name="view_mode">tree,form</field>
-    <field name="domain">[(pack_type, '=', 'platform_pack')]</field>
+    <field name="domain">[('pack_type', '=', 'platform_pack')]</field>
   </record>
 
   <record

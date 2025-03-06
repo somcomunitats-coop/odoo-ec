@@ -86,7 +86,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
     @api.onchange("company_id")
     def _compute_service_invoicing_action_create_wizard_allowed_values(self):
         for record in self:
-            record._compute_pack_product_categ_id()
+            record._compute_platform_pack_product_categ_id()
             record._compute_allowed_community_company_ids()
             record._compute_allowed_payment_mode_ids()
 
