@@ -14,13 +14,7 @@
             </field>
         </record>
 
-        <menuitem name="Contacts" id="contacts_category_menu" parent="root" />
-        <menuitem
-      name="Owners"
-      id="res_partner_owners_menu"
-      parent="contacts_category_menu"
-      action="action_partner_owner_form"
-    />
+        
 
         <record id="action_partner_cooperator_form" model="ir.actions.act_window">
             <field name="name">Cooperators</field>
@@ -35,12 +29,7 @@
             </field>
         </record>
 
-        <menuitem
-      name="Cooperators"
-      id="res_partner_cooperators_menu"
-      parent="energy_selfconsumption.contacts_category_menu"
-      action="action_partner_cooperator_form"
-    />
+        
 
         <record id="view_partner_form_inherit" model="ir.ui.view">
             <field name="name">res.partner.form.buttons</field>

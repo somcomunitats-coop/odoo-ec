@@ -51,6 +51,8 @@
         "views/inscription_views.xml",
         "views/supply_point_assignation_views.xml",
         "views/website_inscription_data_template.xml",
+        "views/service_invoicing_views.xml",
+        "views/menus.xml",
         "wizards/selfconsumption_import_wizard_views.xml",
         "wizards/distribution_table_import_wizard_views.xml",
         "wizards/contract_generation_wizard_views.xml",

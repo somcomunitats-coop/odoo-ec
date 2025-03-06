@@ -147,11 +147,6 @@
             <field name="context" eval="{'default_country_id': ref('base.es')}" />
         </record>
 
-        <menuitem
-      name="Supply Points"
-      id="supply_point_menu"
-      action="supply_point_form_act_window"
-      parent="management_category_menu"
-    />
+        
     </data>
 </odoo>

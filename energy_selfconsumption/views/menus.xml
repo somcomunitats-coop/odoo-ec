@@ -1,0 +1,78 @@
+<odoo>
+  <menuitem
+    name="Self-consumption Management"
+    id="root"
+    web_icon="energy_selfconsumption,static/description/icon.png"
+  />
+
+  <menuitem name="Contacts" id="contacts_category_menu" parent="root" />
+  <menuitem
+    name="Owners"
+    id="res_partner_owners_menu"
+    parent="contacts_category_menu"
+    action="action_partner_owner_form"
+  />
+  <menuitem
+    name="Cooperators"
+    id="res_partner_cooperators_menu"
+    parent="energy_selfconsumption.contacts_category_menu"
+    action="action_partner_cooperator_form"
+  />
+  
+  <menuitem name="Management" id="management_category_menu" parent="root" />
+  <menuitem
+    name="Project"
+    id="project_menu"
+    parent="management_category_menu"
+    action="selfconsumption_form_view_act_window"
+  />
+  <menuitem
+    name="Supply Points"
+    id="supply_point_menu"
+    action="supply_point_form_act_window"
+    parent="management_category_menu"
+  />
+
+  <menuitem name="Invoicing" id="invoicing_category_menu" parent="root" />
+  <menuitem
+    name="Selfconsumption Services"
+    id="view_services_menu"
+    parent="invoicing_category_menu"
+    action="view_services_window"
+    groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups"
+    sequence="200"
+  />
+  <menuitem
+    name="Selfconsumption Packs"
+    id="view_service_packs_menu"
+    parent="invoicing_category_menu"
+    action="view_service_packs_window"
+    groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups"
+    sequence="300"
+  />
+  <menuitem
+    name="Selfconsumption Packs templates"
+    id="view_service_contract_templates_menu"
+    parent="invoicing_category_menu"
+    action="view_service_contract_templates_window"
+    groups="energy_communities.role_platform_admin_res_groups"
+    sequence="400"
+  />
+  <menuitem
+    name="Selfconsumption invoices issued"
+    id="view_service_invoices_issued_menu"
+    parent="invoicing_category_menu"
+    action="view_service_invoices_issued_window"
+    groups="energy_communities.role_platform_admin_res_groups"
+    sequence="500"
+  />
+  <menuitem
+    name="Selfconsumption contract actions (sale orders)"
+    id="view_service_sale_orders_menu"
+    parent="invoicing_category_menu"
+    action="view_service_sale_orders_window"
+    groups="energy_communities.role_platform_admin_res_groups"
+    sequence="550"
+  />
+
+</odoo>

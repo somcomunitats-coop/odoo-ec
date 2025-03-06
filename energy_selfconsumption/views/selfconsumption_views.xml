@@ -346,19 +346,6 @@
             </field>
         </record>
 
-        <menuitem
-      name="Self-consumption Management"
-      id="root"
-      web_icon="energy_selfconsumption,static/description/icon.png"
-    />
-        <menuitem name="Management" id="management_category_menu" parent="root" />
-        <menuitem
-      name="Project"
-      id="project_menu"
-      parent="management_category_menu"
-      action="selfconsumption_form_view_act_window"
-    />
-
         <!--Reports in Action menu-->
         <record id="manager_authorization_report_action" model="ir.actions.server">
             <field name="name">Download Self-consumption Manager Authorization</field>

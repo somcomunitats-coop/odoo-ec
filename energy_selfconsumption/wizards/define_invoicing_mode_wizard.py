@@ -62,6 +62,7 @@ class ContractGenerationWizard(models.TransientModel):
             "recurring_interval": self.recurring_interval,
             "recurring_rule_type": self.recurring_rule_type,
             "recurring_invoicing_type": "post-paid",
+            "pack_type": "selfconsumption_pack",
         }
 
     def _prepare_contract_line_template_values(self, product_id, formula_contract_id):

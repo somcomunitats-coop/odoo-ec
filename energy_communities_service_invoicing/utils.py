@@ -79,7 +79,6 @@ def raise_existing_same_open_platform_pack_contract_error(existing_contract):
 def get_existing_open_pack_contract(
     env, partner_id, pack_type, contract_id=False, custom_query=[]
 ):
-    #("community_company_id", "=", community_company_id.id),
     query = [
         ("partner_id", "=", partner_id.id), 
         ("pack_type", "=", pack_type),
@@ -89,6 +88,7 @@ def get_existing_open_pack_contract(
         query.append(("id", "!=", contract_id.id))
     query = custom_query + query
     return env["contract.contract"].search(query, limit=1)
+
 
 def get_existing_last_closed_pack_contract(
     env, partner_id, community_company_id, contract_id=False
