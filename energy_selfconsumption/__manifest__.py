@@ -59,6 +59,7 @@
         "wizards/change_state_inscription_wizard_views.xml",
         "reports/selfconsumption_reports.xml",
         "reports/invoice_template.xml",
+        "wizards/change_distribution_table_import_wizard.xml"
     ],
     "demo": [
         "demo/energy_selfconsumption_demo.xml",
