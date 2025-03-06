@@ -14,3 +14,4 @@ from . import project
 from . import selfconsumption
 from . import supply_point
 from . import supply_point_assignation
+from . import contract_template

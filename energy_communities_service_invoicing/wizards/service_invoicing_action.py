@@ -22,9 +22,10 @@ class ServiceInvoicingActionWizard(models.TransientModel):
         selection=_SERVICE_INVOICING_EXECUTED_ACTION_VALUES
     )
     pricelist_id = fields.Many2one("product.pricelist", string="Select pricelist")
-    service_pack_id = fields.Many2one("product.product", string="Service pack")
+    pack_id = fields.Many2one("product.product", string="Pack")
     discount = fields.Float(string="Discount (%)", digits="Discount")
     payment_mode_id = fields.Many2one("account.payment.mode", string="Payment mode")
+    pack_type = fields.Selection(related="service_invoicing_id.pack_type")
 
     def execute_activate(self):
         with contract_utils(self.env, self.service_invoicing_id) as component:
@@ -42,7 +43,7 @@ class ServiceInvoicingActionWizard(models.TransientModel):
                 self.execution_date,
                 executed_modification_action,
                 self.pricelist_id,
-                self.service_pack_id,
+                self.pack_id,
                 self.discount,
                 self.payment_mode_id,
             )
@@ -55,7 +56,7 @@ class ServiceInvoicingActionWizard(models.TransientModel):
             service_invoicing_id = component.reopen(
                 self.execution_date,
                 self.pricelist_id,
-                self.service_pack_id,
+                self.pack_id,
                 self.discount,
                 self.payment_mode_id,
             )
@@ -66,7 +67,7 @@ class ServiceInvoicingActionWizard(models.TransientModel):
     def _validate_execute_modify(self):
         if (
             not self.pricelist_id
-            and not self.service_pack_id
+            and not self.pack_id
             and not self.payment_mode_id
             and self.discount == self.service_invoicing_id.discount
         ):
@@ -76,10 +77,10 @@ class ServiceInvoicingActionWizard(models.TransientModel):
         executed_modification_action = ""
         if self.pricelist_id:
             executed_modification_action += "modify_pricelist"
-        if self.service_pack_id:
+        if self.pack_id:
             if bool(executed_modification_action):
                 executed_modification_action += ","
-            executed_modification_action += "modify_service_pack"
+            executed_modification_action += "modify_pack"
         if self.payment_mode_id:
             if bool(executed_modification_action):
                 executed_modification_action += ","

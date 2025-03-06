@@ -12,7 +12,7 @@
             <field name="creation_type" invisible="1" />
             <field name="allowed_community_company_ids" invisible="1" />
             <field name="allowed_payment_mode_ids" invisible="1" />
-            <field name="pack_product_categ_id" invisible="1" />
+            <field name="platform_pack_product_categ_id" invisible="1" />
             <field name="execution_date" required="1"/>
             <field
               name="company_id"
@@ -33,8 +33,8 @@
                 <field name="parent_id"/>
              </tree>
             </field>
-            <field name="service_pack_id"
-              domain="[('categ_id','=',pack_product_categ_id)]"
+            <field name="platform_pack_id"
+              domain="[('categ_id','=', platform_pack_product_categ_id)]"
               required="1"
             />
             <field name="pricelist_id" required="1" domain="[('company_id','=',False)]"/>

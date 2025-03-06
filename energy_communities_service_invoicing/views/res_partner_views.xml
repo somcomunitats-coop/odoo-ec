@@ -6,8 +6,8 @@
     <field name="arch" type="xml">
       <xpath expr="//field[@name='vat']" position="after">
         <field name="company_hierarchy_level" invisible="1" />
-        <field name="service_pack_id" attrs="{'invisible': [('company_hierarchy_level', '!=', 'community')]}" options="{'no_open': True}" />
-        <field name="pack_contract_status" attrs="{'invisible': [('company_hierarchy_level', '!=', 'community')]}" />
+        <field name="platform_pack_id" attrs="{'invisible': [('company_hierarchy_level', '!=', 'community')]}" options="{'no_open': True}" />
+        <field name="platform_pack_contract_status" attrs="{'invisible': [('company_hierarchy_level', '!=', 'community')]}" />
       </xpath>
     </field>
   </record>

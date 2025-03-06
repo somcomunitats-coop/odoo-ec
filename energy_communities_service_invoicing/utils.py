@@ -68,7 +68,7 @@ def service_invoicing_form_view_for_platform_admins(
 
 
 # TODO: Think a bit more about more about if this 3 methods must go to contract utils component
-def raise_existing_same_open_pack_contract_error(existing_contract):
+def raise_existing_same_open_platform_pack_contract_error(existing_contract):
     raise ValidationError(
         _(
             "It already exists an open contract ({}) with same company and community."
@@ -77,18 +77,18 @@ def raise_existing_same_open_pack_contract_error(existing_contract):
 
 
 def get_existing_open_pack_contract(
-    env, partner_id, community_company_id, contract_id=False
+    env, partner_id, pack_type, contract_id=False, custom_query=[]
 ):
+    #("community_company_id", "=", community_company_id.id),
     query = [
-        ("partner_id", "=", partner_id.id),
-        ("community_company_id", "=", community_company_id.id),
-        ("is_pack", "=", True),
+        ("partner_id", "=", partner_id.id), 
+        ("pack_type", "=", pack_type),
         ("status", "in", ["paused", "in_progress"]),
     ]
     if contract_id:
         query.append(("id", "!=", contract_id.id))
+    query = custom_query + query
     return env["contract.contract"].search(query, limit=1)
-
 
 def get_existing_last_closed_pack_contract(
     env, partner_id, community_company_id, contract_id=False
@@ -96,7 +96,7 @@ def get_existing_last_closed_pack_contract(
     query = [
         ("partner_id", "=", partner_id.id),
         ("community_company_id", "=", community_company_id.id),
-        ("is_pack", "=", True),
+        ("pack_type", "=", "platform_pack"),
         ("status", "in", ["closed_planned", "closed"]),
         ("successor_contract_id", "=", False),
     ]

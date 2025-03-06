@@ -10,6 +10,7 @@
         <sheet>
           <group>
             <field name="executed_action" invisible="1" />
+            <field name="pack_type" invisible="1" />
             <field
               name="service_invoicing_id"
               required="1"
@@ -19,8 +20,8 @@
             />
             <field name="execution_date" required="1"/>
             <field
-              name="service_pack_id"
-              domain="[('is_contract','=',True)]"
+              name="pack_id"
+              domain="[('pack_type','=', pack_type)]"
               attrs="{
                 'invisible': [('executed_action','not in',['modification','reopen'])],
                 'required': [('executed_action','=','reopen')]

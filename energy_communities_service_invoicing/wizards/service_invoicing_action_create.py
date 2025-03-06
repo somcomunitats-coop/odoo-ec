@@ -10,7 +10,7 @@ from odoo.addons.energy_communities.utils import (
 from ..utils import (
     get_existing_last_closed_pack_contract,
     get_existing_open_pack_contract,
-    raise_existing_same_open_pack_contract_error,
+    raise_existing_same_open_platform_pack_contract_error,
     service_invoicing_form_view_for_platform_admins,
     service_invoicing_tree_view,
 )
@@ -34,9 +34,9 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
     community_company_mids = fields.Many2many(
         comodel_name="res.company",
     )
-    service_pack_id = fields.Many2one(
+    platform_pack_id = fields.Many2one(
         "product.product",
-        string="Service pack",
+        string="Platform service pack",
     )
     payment_mode_id = fields.Many2one(
         "account.payment.mode",
@@ -48,22 +48,22 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
 
     allowed_community_company_ids = fields.Many2many(
         comodel_name="res.company",
-        _compute="_compute_allowed_community_company_ids",
+        compute="_compute_allowed_community_company_ids",
         store=False,
     )
     allowed_payment_mode_ids = fields.Many2many(
         comodel_name="account.payment.mode",
-        _compute="_compute_allowed_payment_mode_ids",
+        compute="_compute_allowed_payment_mode_ids",
         store=False,
     )
-    pack_product_categ_id = fields.Many2one(
-        "product.category", compute="_compute_pack_product_categ_id", store=False
+    platform_pack_product_categ_id = fields.Many2one(
+        "product.category", compute="_compute_platform_pack_product_categ_id", store=False
     )
 
-    def _compute_pack_product_categ_id(self):
+    def _compute_platform_pack_product_categ_id(self):
         for record in self:
-            record.pack_product_categ_id = self.env.ref(
-                "energy_communities_service_invoicing.product_category_pack"
+            record.platform_pack_product_categ_id = self.env.ref(
+                "energy_communities_service_invoicing.product_category_platform_pack"
             ).id
 
     @api.depends("company_id", "community_company_mids")
@@ -119,7 +119,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                 service_invoicing_id = component.reopen(
                     self.execution_date,
                     self.pricelist_id,
-                    self.service_pack_id,
+                    self.platform_pack_id,
                     self.discount,
                     payment_mode_id,
                 )
@@ -129,7 +129,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                 service_invoicing_id = component.create_service_invoicing_initial(
                     company_id,
                     community_company_id,
-                    self.service_pack_id,
+                    self.platform_pack_id,
                     self.pricelist_id,
                     self.execution_date,
                     self.discount,
@@ -182,10 +182,11 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
         # Check if already open one and raise error
         for record in impacted_records:
             existing_contract = get_existing_open_pack_contract(
-                self.env, record.parent_id.partner_id, record
+                self.env, record.parent_id.partner_id, "platform_pack", contract_id=False, custom_query=[("community_company_id", "=", record.id)]
             )
+
             if existing_contract:
-                raise_existing_same_open_pack_contract_error(existing_contract)
+                raise_existing_same_open_platform_pack_contract_error(existing_contract)
 
     def _validate_service_invoicing_action_create_multicommunity(self, company_id_list):
         impacted_records = self.env["res.company"].browse(company_id_list)

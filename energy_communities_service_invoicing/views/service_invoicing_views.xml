@@ -28,7 +28,7 @@
     <field name="name">Packs</field>
     <field name="res_model">product.template</field>
     <field name="view_mode">tree,form</field>
-    <field name="domain" eval="[('categ_id','=',ref('product_category_pack'))]" />
+    <field name="domain" eval="[('categ_id','=',ref('product_category_platform_pack'))]" />
   </record>
 
   <record
@@ -38,7 +38,7 @@
     <field name="name">Services</field>
     <field name="res_model">product.template</field>
     <field name="view_mode">tree,form</field>
-    <field name="domain" eval="[('categ_id','=',ref('product_category_service'))]" />
+    <field name="domain" eval="[('categ_id','=',ref('product_category_platform_service'))]" />
   </record>
 
   <record
@@ -48,7 +48,7 @@
     <field name="name">Packs contract templates</field>
     <field name="res_model">contract.template</field>
     <field name="view_mode">tree,form</field>
-    <field name="domain">[('is_pack','=',True)]</field>
+    <field name="domain">[(pack_type, '=', 'platform_pack')]</field>
   </record>
 
   <record
@@ -58,7 +58,7 @@
     <field name="name">Service invoices (issued)</field>
     <field name="res_model">account.move</field>
     <field name="view_mode">tree,form</field>
-    <field name="domain" eval="[('move_type', 'in', ['out_invoice', 'out_refund']),('is_pack','=',True)]"/>
+    <field name="domain" eval="[('move_type', 'in', ['out_invoice', 'out_refund']), ('pack_type', '=', 'platform_pack')]"/>
   </record>
 
   <record
@@ -68,7 +68,7 @@
     <field name="name">Service invoices (received)</field>
     <field name="res_model">account.move</field>
     <field name="view_mode">tree,form</field>
-    <field name="domain" eval="[('move_type', 'in', ['in_invoice', 'in_refund']),('is_pack','=',True)]"/>
+    <field name="domain" eval="[('move_type', 'in', ['in_invoice', 'in_refund']), ('pack_type', '=', 'platform_pack')]"/>
   </record>
 
   <record
