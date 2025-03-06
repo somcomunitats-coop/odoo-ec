@@ -47,9 +47,9 @@
           decoration-success="status == 'in_progress'"
         />
         <field name="partner_id" />
-        <field name="community_company_id" />
-        <field name="service_pack_id" />
-        <field name="is_pack" />
+        <field name="community_company_id" attrs="{'invisible': [('pack_type', '!=', 'platform_pack')]}" />
+        <field name="pack_id" />
+        <field name="pack_type" />
       </tree>
     </field>
   </record>
@@ -92,7 +92,7 @@
         <field name="community_company_id" />
       </xpath>
       <xpath expr="//field[@name='pricelist_id']" position="after">
-        <field name="service_pack_id" />
+        <field name="pack_id" />
       </xpath>
       <xpath expr="//field[@name='user_id']" position="after">
         <field name="date_start" />
@@ -135,7 +135,7 @@
           <!--</div>-->
           <group>
             <field name="name" />
-            <field name="service_pack_id" options="{'no_open': True}" />
+            <field name="pack_id" options="{'no_open': True}" />
             <field name="related_contract_product_ids" widget="one2many" >
               <tree editable="bottom">
                 <field name="name" readonly="1"/>

@@ -26,6 +26,7 @@
         "web_m2x_options",
         "l10n_es",
         "report_csv",
+        "energy_communities_service_invoicing",
     ],
     "external_dependencies": {
         "python": ["pandas>=2.0.3", "numpy>=1.24.4", "openupgradelib>=3.6.1"]
@@ -41,6 +42,7 @@
         "data/mail_template.xml",
         "data/ir_attachment_data.xml",
         "data/ir_cron.xml",
+        "data/product_data.xml",
         "views/contract_views.xml",
         "views/selfconsumption_views.xml",
         "views/supply_point_views.xml",

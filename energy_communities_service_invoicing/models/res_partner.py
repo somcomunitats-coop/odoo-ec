@@ -9,39 +9,39 @@ class ResPartner(models.Model):
     _name = "res.partner"
     _inherit = ["res.partner"]
 
-    service_pack_id = fields.Many2one(
+    platform_pack_id = fields.Many2one(
         "product.product",
-        string="Service Pack",
-        compute="_compute_service_pack_id",
+        string="Platform Service Pack",
+        compute="_compute_platform_pack_id",
         store=False,
     )
-    pack_contract_status = fields.Selection(
+    platform_pack_contract_status = fields.Selection(
         selection=_PACK_CONTRACT_STATUS_VALUES,
-        string="Service Pack Status",
-        compute="_compute_service_pack_status",
+        string="Platform Service Pack Status",
+        compute="_compute_platform_pack_status",
         store=False,
     )
 
-    def _compute_service_pack_status(self):
+    def _compute_platform_pack_status(self):
         for record in self:
-            record.pack_contract_status = "none"
-            rel_contract = record._get_related_service_contract()
+            record.platform_pack_contract_status = "none"
+            rel_contract = record._get_related_platform_pack_contract()
             if rel_contract:
-                record.pack_contract_status = rel_contract.status
+                record.platform_pack_contract_status = rel_contract.status
 
-    def _compute_service_pack_id(self):
+    def _compute_platform_pack_id(self):
         for record in self:
-            record.service_pack_id = False
-            rel_contract = record._get_related_service_contract()
+            record.platform_pack_id = False
+            rel_contract = record._get_related_platform_pack_contract()
             if rel_contract:
-                if rel_contract.service_pack_id:
-                    record.service_pack_id = rel_contract.service_pack_id.id
+                if rel_contract.pack_id:
+                    record.platform_pack_id = rel_contract.pack_id.id
 
-    def _get_related_service_contract(self):
+    def _get_related_platform_pack_contract(self):
         return self.env["contract.contract"].search(
             [
                 ("community_company_id", "=", self.related_company_id.id),
-                ("is_pack", "=", True),
+                ("pack_type", "=", "platform_pack"),
             ],
             limit=1,
         )

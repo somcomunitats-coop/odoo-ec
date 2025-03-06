@@ -7,7 +7,7 @@ from ..utils import (
     _CONTRACT_STATUS_VALUES,
     _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES,
     get_existing_open_pack_contract,
-    raise_existing_same_open_pack_contract_error,
+    raise_existing_same_open_platform_pack_contract_error,
 )
 
 _CLOSING_ACTION_VALUES = _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES + [
@@ -45,7 +45,7 @@ class ContractContract(models.Model):
     last_date_invoiced = fields.Date(
         string="Last Date Invoiced", compute="_compute_last_date_invoiced", store=False
     )
-    is_pack = fields.Boolean(related="contract_template_id.is_pack")
+    pack_type = fields.Selection(related="contract_template_id.pack_type")
     is_free_pack = fields.Boolean(related="contract_template_id.is_free_pack")
     closing_action = fields.Selection(
         selection=_CLOSING_ACTION_VALUES,
@@ -65,10 +65,10 @@ class ContractContract(models.Model):
         compute="_compute_related_contract_product_ids",
         store=False,
     )
-    service_pack_id = fields.Many2one(
+    pack_id = fields.Many2one(
         "product.product",
         string="Service Pack",
-        compute="_compute_service_pack_id",
+        compute="_compute_pack_id",
         store=False,
     )
     sale_order_id = fields.Many2one(
@@ -107,9 +107,9 @@ class ContractContract(models.Model):
     def _constrain_unique_contract(self):
         for record in self:
             if record.community_company_id:
-                existing_contract = record._get_existing_same_open_pack_contract()
+                existing_contract = record._get_existing_same_open_platform_pack_contract()
                 if existing_contract:
-                    raise_existing_same_open_pack_contract_error(existing_contract)
+                    raise_existing_same_open_platform_pack_contract_error(existing_contract)
 
     def _compute_received_invoices_count(self):
         for record in self:
@@ -142,9 +142,9 @@ class ContractContract(models.Model):
                 ].last_date_invoiced
 
     @api.depends("contract_template_id")
-    def _compute_service_pack_id(self):
+    def _compute_pack_id(self):
         for record in self:
-            record.service_pack_id = False
+            record.pack_id = False
             if record.contract_template_id:
                 rel_product = self.env["product.product"].search(
                     [
@@ -157,7 +157,7 @@ class ContractContract(models.Model):
                     limit=1,
                 )
                 if rel_product:
-                    record.service_pack_id = rel_product.id
+                    record.pack_id = rel_product.id
 
     def _recurring_create_invoice(self, date_ref=False):
         moves = super()._recurring_create_invoice(date_ref)
@@ -177,11 +177,11 @@ class ContractContract(models.Model):
 
     def action_reopen_contract(self):
         return self._action_contract(
-            "reopen", self.service_pack_id, self.pricelist_id, self.payment_mode_id
+            "reopen", self.pack_id, self.pricelist_id, self.payment_mode_id
         )
 
     def _action_contract(
-        self, action, service_pack_id=False, pricelist_id=False, payment_mode_id=False
+        self, action, pack_id=False, pricelist_id=False, payment_mode_id=False
     ):
         self.ensure_one()
         create_dict = {
@@ -189,8 +189,8 @@ class ContractContract(models.Model):
             "executed_action": action,
             "discount": self.discount,
         }
-        if service_pack_id:
-            create_dict["service_pack_id"] = service_pack_id.id
+        if pack_id:
+            create_dict["pack_id"] = pack_id.id
         if pricelist_id:
             create_dict["pricelist_id"] = pricelist_id.id
         if payment_mode_id:
@@ -259,9 +259,9 @@ class ContractContract(models.Model):
                     received_invoices.append(invoice.id)
         return received_invoices
 
-    def _get_existing_same_open_pack_contract(self):
+    def _get_existing_same_open_platform_pack_contract(self):
         return get_existing_open_pack_contract(
-            self.env, self.partner_id, self.community_company_id, self
+            self.env, self.partner_id, "platform_pack", contract_id=self, custom_query=[("community_company_id", "=", self.community_company_id.id)]
         )
 
     def get_active_monitoring_members(self):

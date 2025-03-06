@@ -71,7 +71,7 @@ class ContractUtils(Component):
         execution_date,
         executed_modification_action,
         pricelist_id=None,
-        service_pack_id=None,
+        pack_id=None,
         discount=None,
         payment_mode_id=None,
     ):
@@ -89,7 +89,7 @@ class ContractUtils(Component):
                 executed_modification_action,
                 execution_date,
                 pricelist_id,
-                service_pack_id,
+                pack_id,
                 discount,
                 payment_mode_id,
             )
@@ -105,7 +105,7 @@ class ContractUtils(Component):
         self,
         execution_date,
         pricelist_id=None,
-        service_pack_id=None,
+        pack_id=None,
         discount=None,
         payment_mode_id=None,
     ):
@@ -115,10 +115,10 @@ class ContractUtils(Component):
         ).create_service_invoicing_initial(
             **self._build_service_invoicing_params(
                 "reopen",
-                "modify_service_pack,modify_pricelist,modify_discount,modify_payment_mode",
+                "modify_pack,modify_pricelist,modify_discount,modify_payment_mode",
                 execution_date,
                 pricelist_id,
-                service_pack_id,
+                pack_id,
                 discount,
                 payment_mode_id,
             )
@@ -132,7 +132,7 @@ class ContractUtils(Component):
         executed_action_description,
         execution_date,
         pricelist_id=None,
-        service_pack_id=None,
+        pack_id=None,
         discount=None,
         payment_mode_id=None,
     ):
@@ -140,9 +140,9 @@ class ContractUtils(Component):
         return {
             "company_id": self.work.record.partner_id.related_company_id,
             "community_company_id": self.work.record.community_company_id,
-            "service_pack_id": service_pack_id
-            if "modify_service_pack" in executed_action_description_list
-            else self.work.record.service_pack_id,
+            "pack_id": pack_id
+            if "modify_pack" in executed_action_description_list
+            else self.work.record.pack_id,
             "pricelist_id": pricelist_id
             if "modify_pricelist" in executed_action_description_list
             else self.work.record.pricelist_id,

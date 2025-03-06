@@ -13,6 +13,7 @@ class ProductTemplate(models.Model):
         compute="_compute_related_contract_product_ids",
         store=False,
     )
+    pack_type = fields.Selection(related="property_contract_template_id.pack_type")
 
     @api.depends("property_contract_template_id")
     def _compute_related_contract_product_ids(self):
@@ -25,14 +26,13 @@ class ProductTemplate(models.Model):
                 record.related_contract_product_ids = rel_products
 
     @api.constrains("property_contract_template_id")
-    def compute_contract_template_is_pack(self):
-        for record in self:
-            ctemplates = self.env["contract.template"].search([])
-            for ctemplate in ctemplates:
-                ctemplate.compute_is_pack()
+    def _constraint_contract_template_pack_type(self):
+        ctemplates = self.env["contract.template"].search([])
+        for ctemplate in ctemplates:
+            ctemplate._compute_pack_type()
 
     @api.constrains("description_sale")
-    def compute_contract_template_line_name(self):
+    def _constraint_contract_template_line_name(self):
         for record in self:
             ctemplatelines = self.env["contract.template.line"].search(
                 [("product_id", "=", record.product_variant_id.id)]
