@@ -4,31 +4,86 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-    <menuitem
+
+  <record
+      id="view_ec_formulas_window"
+      model="ir.actions.act_window"
+  >
+    <field name="name">Formulas (quantity)</field>
+    <field name="res_model">contract.line.qty.formula</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <menuitem
     id="ce_root_menu"
-    name="Energy Communities"
+    name="Community Management"
     sequence="10"
-    groups="group_platform_manager"
+    groups="role_platform_admin_res_groups,role_coord_admin_res_groups,role_coord_worker_res_groups,role_ce_admin,role_ce_manager"
     web_icon="energy_communities,static/description/icon.png"
   />
-    <menuitem id="ce_config_menu" name="Configuration" parent="ce_root_menu" />
-
-        <menuitem
+  <!--<menuitem-->
+  <!--  id="ce_root_menu_coord_admin"-->
+  <!--  name="Coordinator management"-->
+  <!--  sequence="10"-->
+  <!--  groups="role_coord_admin_res_groups,role_coord_worker_res_groups"-->
+  <!--  web_icon="energy_communities,static/description/icon.png"-->
+  <!--/>-->
+  <!--<menuitem-->
+  <!--  id="ce_root_menu_community_admin"-->
+  <!--  name="Community management"-->
+  <!--  sequence="10"-->
+  <!--  groups="role_ce_admin,role_ce_manager"-->
+  <!--  web_icon="energy_communities,static/description/icon.png"-->
+  <!--/>-->
+  <menuitem
+    id="ce_assistants_menu"
+    name="Assistants"
+    parent="ce_root_menu"
+    groups="role_platform_admin_res_groups"
+    sequence="99"
+  />
+  <menuitem
+    id="ce_config_menu"
+    name="Configuration"
+    parent="ce_root_menu"
+    groups="role_platform_admin_res_groups"
+    sequence="999"
+  />
+  <menuitem
     id="ce_config_sources_menu"
     name="Source types"
     parent="ce_config_menu"
     action="ce_utm_sources_action"
+    groups="group_platform_manager"
   />
-
-        <menuitem
+  <menuitem
     id="energy_actions_menu"
     name="Energy actions"
     parent="ce_config_menu"
     action="energy_action_views"
     groups="group_platform_manager"
   />
+  <menuitem
+    id="ec_formulas_menu"
+    name="Formulas"
+    parent="ce_config_menu"
+    action="view_ec_formulas_window"
+    groups="group_platform_manager"
+  />
 
   <!-- Hide menu items unless platform manager -->
+  <record model="ir.ui.menu" id="mail.menu_root_discuss">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
+  <record model="ir.ui.menu" id="calendar.mail_menu_calendar">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
+  <record model="ir.ui.menu" id="base.menu_board_root">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
+  <record model="ir.ui.menu" id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root">
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+  </record>
   <record model="ir.ui.menu" id="community_maps.menu_root">
     <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
   </record>
