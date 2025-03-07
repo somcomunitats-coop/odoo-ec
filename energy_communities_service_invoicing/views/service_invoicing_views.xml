@@ -82,15 +82,6 @@
   </record>
 
   <record
-      id="view_service_tariffs_window"
-      model="ir.actions.act_window"
-  >
-    <field name="name">Tariffs</field>
-    <field name="res_model">product.pricelist</field>
-    <field name="view_mode">tree,form</field>
-  </record>
-
-  <record
     id="action_view_service_invoicing_tree_platform_manager"
     model="ir.actions.act_window.view"
   >

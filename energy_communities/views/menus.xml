@@ -21,55 +21,38 @@
     groups="role_platform_admin_res_groups,role_coord_admin_res_groups,role_coord_worker_res_groups,role_ce_admin,role_ce_manager"
     web_icon="energy_communities,static/description/icon.png"
   />
-  <!--<menuitem-->
-  <!--  id="ce_root_menu_coord_admin"-->
-  <!--  name="Coordinator management"-->
-  <!--  sequence="10"-->
-  <!--  groups="role_coord_admin_res_groups,role_coord_worker_res_groups"-->
-  <!--  web_icon="energy_communities,static/description/icon.png"-->
-  <!--/>-->
-  <!--<menuitem-->
-  <!--  id="ce_root_menu_community_admin"-->
-  <!--  name="Community management"-->
-  <!--  sequence="10"-->
-  <!--  groups="role_ce_admin,role_ce_manager"-->
-  <!--  web_icon="energy_communities,static/description/icon.png"-->
-  <!--/>-->
-  <menuitem
-    id="ce_assistants_menu"
-    name="Assistants"
-    parent="ce_root_menu"
-    groups="role_platform_admin_res_groups"
-    sequence="99"
-  />
   <menuitem
     id="ce_config_menu"
     name="Configuration"
     parent="ce_root_menu"
     groups="role_platform_admin_res_groups"
     sequence="999"
-  />
-  <menuitem
-    id="ce_config_sources_menu"
-    name="Source types"
-    parent="ce_config_menu"
-    action="ce_utm_sources_action"
-    groups="group_platform_manager"
-  />
-  <menuitem
-    id="energy_actions_menu"
-    name="Energy actions"
-    parent="ce_config_menu"
-    action="energy_action_views"
-    groups="group_platform_manager"
-  />
-  <menuitem
-    id="ec_formulas_menu"
-    name="Formulas"
-    parent="ce_config_menu"
-    action="view_ec_formulas_window"
-    groups="group_platform_manager"
-  />
+  >
+    <menuitem
+      id="ce_config_sources_menu"
+      name="Source types"
+      action="ce_utm_sources_action"
+      groups="group_platform_manager"
+    />
+    <menuitem
+      id="energy_actions_menu"
+      name="Energy actions"
+      action="energy_action_views"
+      groups="group_platform_manager"
+    />
+    <menuitem
+      id="ec_formulas_menu"
+      name="Formulas"
+      action="view_ec_formulas_window"
+      groups="group_platform_manager"
+    />
+    <menuitem
+      name="Tariffs"
+      id="view_service_tariffs_menu"
+      action="product.product_pricelist_action2"
+      groups="role_platform_admin_res_groups"
+    />
+  </menuitem>
 
   <!-- Hide menu items unless platform manager -->
   <record model="ir.ui.menu" id="mail.menu_root_discuss">
