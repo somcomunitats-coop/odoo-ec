@@ -38,13 +38,15 @@ class SaleOrderUtils(Component):
         if payment_mode_id:
             so_creation_dict["payment_mode_id"] = payment_mode_id.id
         # Apply configuration sales team to service invoicing sales order
-        if company_id.service_invoicing_sale_team_id:
-            so_creation_dict["team_id"] = company_id.service_invoicing_sale_team_id.id
+        if self.env.company.service_invoicing_sale_team_id:
+            so_creation_dict[
+                "team_id"
+            ] = self.env.company.service_invoicing_sale_team_id.id
         sale_order = self.env["sale.order"].create(so_creation_dict)
         # Trigger name computattion in oder to include product's description_sale
         for order_line in sale_order.order_line:
             order_line._compute_name()
-        return self.env["sale.order"].create(so_creation_dict)
+        return sale_order
 
     def _create_service_invoicing(
         self,

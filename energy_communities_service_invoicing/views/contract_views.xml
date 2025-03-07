@@ -93,6 +93,7 @@
       </xpath>
       <xpath expr="//field[@name='pricelist_id']" position="after">
         <field name="pack_id" />
+        <field name="pack_type" />
       </xpath>
       <xpath expr="//field[@name='user_id']" position="after">
         <field name="date_start" />
