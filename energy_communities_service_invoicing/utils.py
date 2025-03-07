@@ -4,6 +4,11 @@ from odoo.exceptions import ValidationError
 
 from odoo.addons.contract.models.contract import ContractContract
 
+PACK_VALUES = [
+    ("platform_pack", _("Platform Pack")),
+    ("none", _("None")),
+]
+
 _CONTRACT_STATUS_VALUES = [
     ("paused", _("Paused")),
     ("in_progress", _("In progress")),
@@ -77,18 +82,20 @@ def raise_existing_same_open_platform_pack_contract_error(existing_contract):
 
 
 def get_existing_open_pack_contract(
-    env, partner_id, pack_type, contract_id=False, custom_query=[]
+    env, partner_id, pack_type, contract_id=False, custom_query=False
 ):
-    #("community_company_id", "=", community_company_id.id),
+    # ("community_company_id", "=", community_company_id.id),
     query = [
-        ("partner_id", "=", partner_id.id), 
+        ("partner_id", "=", partner_id.id),
         ("pack_type", "=", pack_type),
         ("status", "in", ["paused", "in_progress"]),
     ]
     if contract_id:
         query.append(("id", "!=", contract_id.id))
-    query = custom_query + query
+    if custom_query:
+        query = custom_query + query
     return env["contract.contract"].search(query, limit=1)
+
 
 def get_existing_last_closed_pack_contract(
     env, partner_id, community_company_id, contract_id=False
