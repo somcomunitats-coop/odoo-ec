@@ -51,9 +51,10 @@ class CreateInscription(models.AbstractModel):
                     "cadastral_reference": values["supplypoint_cadastral_reference"],
                 }
                 if project.conf_used_in_selfconsumption:
-                    vals["used_in_selfconsumption"] = values.get(
-                        "supplypoint_used_in_selfconsumption", None
-                    )
+                    if values.get("supplypoint_used_in_selfconsumption", False) and values.get("supplypoint_used_in_selfconsumption", False) != "":
+                        vals["used_in_selfconsumption"] = values.get(
+                            "supplypoint_used_in_selfconsumption", None
+                        )
                 supply_point = (
                     self.env["energy_selfconsumption.supply_point"].sudo().create(vals)
                 )
@@ -340,11 +341,12 @@ class CreateInscription(models.AbstractModel):
         """Obtains or creates the owner of the supply."""
         if values.get("supplypoint_owner_id_same", "no") == "yes":
             if project.conf_vulnerability_situation:
-                partner.sudo().write(
-                    {
-                        "vulnerability_situation": values.get(
-                            "supplypoint_owner_id_vulnerability_situation", None
-                        )
+                if values.get("supplypoint_owner_id_vulnerability_situation", False) and values.get("supplypoint_owner_id_vulnerability_situation", False) != "":
+                    partner.sudo().write(
+                        {
+                            "vulnerability_situation": values.get(
+                                "supplypoint_owner_id_vulnerability_situation", None
+                            )
                     }
                 )
             return partner
@@ -353,7 +355,7 @@ class CreateInscription(models.AbstractModel):
         state = self._get_state(values, project, country)
         lang = self._get_language(values)
         formatted_birthdate = self._get_formatted_birthdate(values)
-        owner = self._get_existing_contact_owner(values)
+        owner = self._get_existing_contact_owner(values, project)
 
         if not owner:
             return self._create_new_owner(
@@ -400,27 +402,28 @@ class CreateInscription(models.AbstractModel):
 
     def _get_formatted_birthdate(self, values):
         """Gets the formatted date of birth."""
-        if "supplypoint_owner_id_birthdate_date" in values:
+        if "supplypoint_owner_id_birthdate_date" in values and values["supplypoint_owner_id_birthdate_date"] != '':
             birthdate_obj = datetime.strptime(
                 values["supplypoint_owner_id_birthdate_date"], "%d/%m/%Y"
             )
             return birthdate_obj.strftime("%Y-%m-%d")
         return None
 
-    def _get_existing_contact_owner(self, values):
+    def _get_existing_contact_owner(self, values, project):
         """Search for an existing VAT-based owner."""
         return (
             self.env["res.partner"]
             .sudo()
             .search(
                 [
+                    ("company_ids", "in", (project.company_id.id)),
                     ("vat", "=", values["supplypoint_owner_id_vat"]),
                     ("type", "=", "contact"),
-                ]
+                ], limit=1
             )
         )
 
-    def _get_existing_owner_self_consumption_owner(self, values):
+    def _get_existing_owner_self_consumption_owner(self, values, project):
         """Search for an existing VAT-based owner."""
         return (
             self.env["res.partner"]
@@ -429,7 +432,8 @@ class CreateInscription(models.AbstractModel):
                 [
                     ("vat", "=", values["supplypoint_owner_id_vat"]),
                     ("type", "=", "owner_self-consumption"),
-                ]
+                    ("company_ids", "in", (project.company_id.id)),
+                ], limit=1
             )
         )
 
@@ -462,40 +466,52 @@ class CreateInscription(models.AbstractModel):
             "zip": values["supplypoint_zip"],
         }
         if project.conf_vulnerability_situation:
-            vals["vulnerability_situation"] = values.get(
-                "supplypoint_owner_id_vulnerability_situation", None
-            )
+            if values.get("supplypoint_owner_id_vulnerability_situation", False) and values.get("supplypoint_owner_id_vulnerability_situation", False) != "":
+                vals["vulnerability_situation"] = values.get(
+                    "supplypoint_owner_id_vulnerability_situation", None
+                )
         return self.env["res.partner"].sudo().create(vals)
 
     def _update_owner_address(self, project, owner, values, country, state):
         """Update the address of an existing owner."""
-        exists = self._get_existing_owner_self_consumption_owner(values)
+        exists = self._get_existing_owner_self_consumption_owner(values, project)
         if exists:
             vals = {
-                "name": values["supplypoint_owner_id_name"],
-                "lastname": values["supplypoint_owner_id_lastname"],
-                "gender": values.get("supplypoint_owner_id_gender"),
-                "birthdate_date": self._get_formatted_birthdate(values),
-                "phone": values.get("supplypoint_owner_id_phone"),
-                "lang": self._get_language(values).code
-                if self._get_language(values)
-                else None,
-                "email": values.get("supplypoint_owner_id_email"),
-                "vat": values["supplypoint_owner_id_vat"],
                 "type": "owner_self-consumption",
                 "company_id": project.company_id.id,
                 "company_type": "person",
                 "parent_id": owner.id,
                 "country_id": country.id,
                 "state_id": state.id,
-                "street": values["supplypoint_street"],
-                "city": values["supplypoint_city"],
-                "zip": values["supplypoint_zip"],
             }
+            if values.get("supplypoint_owner_id_name", False) and values.get("supplypoint_owner_id_name", False) != "":
+                vals["name"] = values["supplypoint_owner_id_name"]
+            if values.get("supplypoint_owner_id_lastname", False) and values.get("supplypoint_owner_id_lastname", False) != "":
+                vals["lastname"] = values["supplypoint_owner_id_lastname"]
+            if values.get("supplypoint_owner_id_gender", False) and values.get("supplypoint_owner_id_gender", False) != "":
+                vals["gender"] = values.get("supplypoint_owner_id_gender")
+            if values.get("supplypoint_owner_id_birthdate_date", False) and values.get("supplypoint_owner_id_birthdate_date", False) != "":
+                vals["birthdate_date"] = self._get_formatted_birthdate(values)
+            if values.get("supplypoint_owner_id_phone", False) and values.get("supplypoint_owner_id_phone", False) != "":
+                vals["phone"] = values.get("supplypoint_owner_id_phone")
+            if values.get("supplypoint_owner_id_lang", False) and values.get("supplypoint_owner_id_lang", False) != "":
+                vals["lang"] = self._get_language(values).code
+            if values.get("supplypoint_owner_id_email", False) and values.get("supplypoint_owner_id_email", False) != "":
+                vals["email"] = values.get("supplypoint_owner_id_email")
+            if values.get("supplypoint_owner_id_vat", False) and values.get("supplypoint_owner_id_vat", False) != "":
+                vals["vat"] = values.get("supplypoint_owner_id_vat")
+            if values.get("supplypoint_street", False) and values.get("supplypoint_street", False) != "":
+                vals["street"] = values.get("supplypoint_street")
+            if values.get("supplypoint_city", False) and values.get("supplypoint_city", False) != "":
+                vals["city"] = values.get("supplypoint_city")
+            if values.get("supplypoint_zip", False) and values.get("supplypoint_zip", False) != "":
+                vals["zip"] = values.get("supplypoint_zip")
+
             if project.conf_vulnerability_situation:
-                vals["vulnerability_situation"] = values.get(
-                    "supplypoint_owner_id_vulnerability_situation", None
-                )
+                if values.get("supplypoint_owner_id_vulnerability_situation", False) and values.get("supplypoint_owner_id_vulnerability_situation", False) != "":
+                    vals["vulnerability_situation"] = values.get(
+                        "supplypoint_owner_id_vulnerability_situation", None
+                    )
             exists.sudo().write(vals)
             return exists
 
@@ -521,7 +537,8 @@ class CreateInscription(models.AbstractModel):
             "zip": values["supplypoint_zip"],
         }
         if project.conf_vulnerability_situation:
-            vals["vulnerability_situation"] = values.get(
-                "supplypoint_owner_id_vulnerability_situation", None
-            )
+            if values.get("supplypoint_owner_id_vulnerability_situation", False) and values.get("supplypoint_owner_id_vulnerability_situation", False) != "":
+                vals["vulnerability_situation"] = values.get(
+                    "supplypoint_owner_id_vulnerability_situation", None
+                )
         return self.env["res.partner"].sudo().create(vals)

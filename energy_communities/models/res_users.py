@@ -73,6 +73,15 @@ class ResUsers(models.Model):
                     ).format(record.partner_id.id)
                 )
 
+    @api.constrains("company_ids")
+    def constrains_user_partner_id_company_ids(self):
+        for record in self:
+            record.equalize_user_partner_id_company_ids()
+
+    def equalize_user_partner_id_company_ids(self):
+        self.partner_id.write({"company_ids": self.company_ids})
+        return True
+
     def _find_existing_related_partner(self, vals):
         query = [("vat", "=", vals["login"]), ("id", "!=", self.partner_id.id)]
         existing_partners = self.env["res.partner"].sudo().search(query, order="id asc")
