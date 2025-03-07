@@ -5,6 +5,7 @@
   <field name="inherit_id" ref="contract.contract_template_form_view" />
   <field name="arch" type="xml">
     <xpath expr="//field[@name='contract_type']" position="after">
+      <field name="pack_type" />
       <field name="is_free_pack" />
     </xpath>
   </field>
