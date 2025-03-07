@@ -26,7 +26,7 @@ class ResPartnerBank(models.Model):
 
     allowed_company_ids = fields.Many2many(
         comodel_name="res.company",
-        _compute="_compute_allowed_company_ids",
+        compute="_compute_allowed_company_ids",
         store=False,
     )
 
