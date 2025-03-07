@@ -19,7 +19,8 @@
         <page string="Services Invoicing">
           <group>
             <field name="id" invisible="1"/>
-            <field name="service_invoicing_journal_id" domain="[('company_id', '=', id)]" />
+            <field name="service_invoicing_sale_journal_id" domain="[('company_id', '=', id)]" />
+            <field name="service_invoicing_purchase_journal_id" domain="[('company_id', '=', id)]" />
             <field name="service_invoicing_sale_team_id" domain="[('company_id', '=', id)]" />
           </group>
         </page>

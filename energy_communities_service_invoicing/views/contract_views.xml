@@ -137,6 +137,7 @@
           <group>
             <field name="name" />
             <field name="pack_id" options="{'no_open': True}" />
+            <field name="pack_type" />
             <field name="related_contract_product_ids" widget="one2many" >
               <tree editable="bottom">
                 <field name="name" readonly="1"/>

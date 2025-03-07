@@ -1,3 +1,4 @@
+from . import pack_type_mixin
 from . import abstract_contract
 from . import account_move
 from . import contract
