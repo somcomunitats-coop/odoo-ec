@@ -107,9 +107,13 @@ class ContractContract(models.Model):
     def _constrain_unique_contract(self):
         for record in self:
             if record.community_company_id:
-                existing_contract = record._get_existing_same_open_platform_pack_contract()
+                existing_contract = (
+                    record._get_existing_same_open_platform_pack_contract()
+                )
                 if existing_contract:
-                    raise_existing_same_open_platform_pack_contract_error(existing_contract)
+                    raise_existing_same_open_platform_pack_contract_error(
+                        existing_contract
+                    )
 
     def _compute_received_invoices_count(self):
         for record in self:
@@ -167,35 +171,51 @@ class ContractContract(models.Model):
         return moves
 
     def action_activate_contract(self):
-        return self._action_contract("activate")
+        return self._action_contract("activate", {"execution_date": self.date_start})
 
     def action_close_contract(self):
-        return self._action_contract("close")
+        return self._action_contract(
+            "close",
+            {
+                "execution_date": self.last_date_invoiced
+                if self.last_date_invoiced
+                else self.date_start
+            },
+        )
 
     def action_modify_contract(self):
-        return self._action_contract("modification")
+        return self._action_contract(
+            "modification",
+            {
+                "execution_date": self.last_date_invoiced
+                if self.last_date_invoiced
+                else self.date_start
+            },
+        )
 
     def action_reopen_contract(self):
         return self._action_contract(
-            "reopen", self.pack_id, self.pricelist_id, self.payment_mode_id
+            "reopen",
+            {
+                "execution_date": self.date_end,
+                "pack_id": self.pack_id.id if self.pack_id else False,
+                "pricelist_id": self.pricelist_id.id if self.pricelist_id else False,
+                "payment_mode_id": self.payment_mode_id.id
+                if self.payment_mode_id
+                else False,
+            },
         )
 
-    def _action_contract(
-        self, action, pack_id=False, pricelist_id=False, payment_mode_id=False
-    ):
+    def _action_contract(self, action, wizard_defaults_extra):
         self.ensure_one()
-        create_dict = {
+        # wizard params
+        wizard_defaults = {
             "service_invoicing_id": self.id,
             "executed_action": action,
             "discount": self.discount,
-        }
-        if pack_id:
-            create_dict["pack_id"] = pack_id.id
-        if pricelist_id:
-            create_dict["pricelist_id"] = pricelist_id.id
-        if payment_mode_id:
-            create_dict["payment_mode_id"] = payment_mode_id.id
-        wizard = self.env["service.invoicing.action.wizard"].create(create_dict)
+        } | wizard_defaults_extra
+        # wizard creation and display
+        wizard = self.env["service.invoicing.action.wizard"].create(wizard_defaults)
         return {
             "type": "ir.actions.act_window",
             "name": _("Executing: {}").format(action),
@@ -261,7 +281,11 @@ class ContractContract(models.Model):
 
     def _get_existing_same_open_platform_pack_contract(self):
         return get_existing_open_pack_contract(
-            self.env, self.partner_id, "platform_pack", contract_id=self, custom_query=[("community_company_id", "=", self.community_company_id.id)]
+            self.env,
+            self.partner_id,
+            "platform_pack",
+            contract_id=self,
+            custom_query=[("community_company_id", "=", self.community_company_id.id)],
         )
 
     def get_active_monitoring_members(self):
