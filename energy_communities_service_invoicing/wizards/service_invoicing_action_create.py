@@ -57,7 +57,9 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
         store=False,
     )
     platform_pack_product_categ_id = fields.Many2one(
-        "product.category", compute="_compute_platform_pack_product_categ_id", store=False
+        "product.category",
+        compute="_compute_platform_pack_product_categ_id",
+        store=False,
     )
 
     def _compute_platform_pack_product_categ_id(self):
@@ -126,16 +128,19 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
         # If none of previous create a new contract
         else:
             with sale_order_utils(self.env) as component:
+                # TODO: pass community_company_id as metadata
                 service_invoicing_id = component.create_service_invoicing_initial(
                     company_id,
-                    community_company_id,
                     self.platform_pack_id,
                     self.pricelist_id,
                     self.execution_date,
-                    self.discount,
                     "activate",
                     "active_platform_service_invocing",
                     payment_mode_id,
+                    {
+                        "community_company_id": community_company_id.id,
+                        "discount": self.discount,
+                    },
                 )
         return service_invoicing_id
 
@@ -182,7 +187,11 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
         # Check if already open one and raise error
         for record in impacted_records:
             existing_contract = get_existing_open_pack_contract(
-                self.env, record.parent_id.partner_id, "platform_pack", contract_id=False, custom_query=[("community_company_id", "=", record.id)]
+                self.env,
+                record.parent_id.partner_id,
+                "platform_pack",
+                contract_id=False,
+                custom_query=[("community_company_id", "=", record.id)],
             )
 
             if existing_contract:
