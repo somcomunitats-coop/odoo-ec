@@ -38,8 +38,8 @@ class TestEnergyCommunityApiInfo(TransactionComponentCase):
         # given a energy community
         community_id = int(community_data["community_id"])
         # a range of dates
-        date_from = date(2024, 4, 1)
-        date_to = date(2024, 4, 30)
+        date_from = date(2024, 1, 1)
+        date_to = date(2024, 12, 31)
 
         # given a api info component
         work = WorkContext(

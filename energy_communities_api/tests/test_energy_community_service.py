@@ -1,3 +1,4 @@
+from datetime import date
 from functools import partial
 
 import requests
@@ -48,7 +49,7 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
 
         # when we call for the information if his/her community
         response = self.client(
-            f"/api/communities/communities/{community_1_id}",
+            "/api/communities/community/",
             headers={"Authorization": self.token, "CommunityId": community_1_id},
         )
         # then we obtain a 200 response code
@@ -68,7 +69,7 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
 
         # when we call for the energy services that offers that community
         response = self.client(
-            f"/api/communities/communities/{community_1_id}/community_services",
+            "/api/communities/community/community_services",
             headers={"Authorization": self.token, "CommunityId": community_1_id},
         )
         # then we obtain a 200 response code
@@ -87,7 +88,7 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
 
         # when we call for the energy services that offers that community
         response = self.client(
-            f"/api/communities/communities/{community_1_id}/community_services?page_size={page_size}",
+            f"/api/communities/community/community_services?page_size={page_size}",
             headers={"Authorization": self.token, "CommunityId": community_1_id},
         )
         # then we obtain a 200 response code
@@ -97,7 +98,7 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
         # and no previous url but yes a next url
         self.assertIsNone(response.json()["links"]["previous_page"])
         self.assertIn(
-            "/api/communities/communities/29/community_services?page_size=1&page=2",
+            "/api/communities/community/community_services?page_size=1&page=2",
             response.json()["links"]["next_page"],
         )
 
@@ -108,13 +109,17 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
         # self.token
         # a member belonging into a energy_community
         community_1_id = self.community_id
+        # and a range of dates
+        from_date = date(2024, 1, 1)
+        to_date = date(2024, 12, 31)
 
-        # when we call for the metrics of the energy services that offers that community
+        # when we call for the metrics of the energy services that offers that community between that two dates
         response = self.client(
-            "/api/communities/community/community_services/metrics",
+            f"/api/communities/community/community_services/metrics?from_date={from_date}&to_date={to_date}",
             headers={"Authorization": self.token, "CommunityId": community_1_id},
         )
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
         # and at least one community service
+
         self.assertGreaterEqual(len(response.json()["data"]), 1)

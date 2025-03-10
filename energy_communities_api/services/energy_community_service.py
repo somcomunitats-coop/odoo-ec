@@ -30,43 +30,41 @@ class EnergyCommunityApiService(Component):
         super().__init__(*args)
 
     @restapi.method(
-        [(["/<int:community_id>"], "GET")],
+        [(["/"], "GET")],
         output_param=PydanticModel(EnergyCommunityInfoResponse),
     )
-    def energy_community(self, community_id):
+    def energy_community(self):
         """
         Basic information about a energy community
         """
         self._validate_headers()
-        member_community_id = request.httprequest.headers.get("CommunityId")
+        community_id = int(request.httprequest.headers.get("CommunityId"))
         with api_info(
             self.env,
             self._work_on_model,
             EnergyCommunityInfo,
-            member_community_id,
+            community_id,
         ) as component:
             community_info = component.get_energy_community_info(community_id)
         return single_response(request, EnergyCommunityInfoResponse, community_info)
 
     @restapi.method(
-        [(["/<int:community_id>/community_services"], "GET")],
+        [(["/community_services"], "GET")],
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(CommunityServiceInfoListResponse),
     )
-    def energy_community_community_services_info(
-        self, community_id: int, query_params: QueryParams
-    ):
+    def energy_community_community_services_info(self, query_params: QueryParams):
         """
         Set of services that offer an energy community
         """
         self._validate_headers()
-        member_community_id = request.httprequest.headers.get("CommunityId")
+        community_id = int(request.httprequest.headers.get("CommunityId"))
         paging = self._get_pagination_limits(query_params)
         with api_info(
             self.env,
             self._work_on_model,
             CommunityServiceInfo,
-            member_community_id,
+            community_id,
             paging=paging,
         ) as component:
             total_community_services = component.total_community_services(community_id)
@@ -86,7 +84,7 @@ class EnergyCommunityApiService(Component):
     )
     def community_service_metrics_info(self, query_params: QueryParams):
         self._validate_headers()
-        community_id = request.httprequest.headers.get("CommunityId")
+        community_id = int(request.httprequest.headers.get("CommunityId"))
         paging = self._get_pagination_limits(query_params)
         date_from, date_to = self._get_dates_range(query_params)
         with api_info(

@@ -135,7 +135,7 @@ class ProjectMetricsApiInfo(Component):
                 unit=UnitEnum.percentage,
             ),
             environment_saves=MetricInfo(
-                value=monitoring_service.co2save(**service_parameters),
+                value=monitoring_service.co2save_by_project(**service_parameters),
                 unit=UnitEnum.grco2,
             ),
         )
