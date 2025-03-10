@@ -5,6 +5,20 @@ class ContractUtils(Component):
     _inherit = "contract.utils"
 
     def setup_initial_data(self):
+        self._set_configuration_journal_if_defined()
+        self._set_start_date(self.work.record.sale_order_id.commitment_date)
+        if "discount" in self.work.record.sale_order_id.metadata_line_ids.mapped("key"):
+            self._set_discount(
+                self.work.record.sale_order_id.get_metadata_value("discount")
+            )
+        contract_update_dict = {"status": "paused"}
+        for contract_update_data in self.work.record.sale_order_id.metadata_line_ids:
+            if contract_update_data.key not in ["discount"]:
+                value = contract_update_data.value
+                # TODO: Not a very robust condition. Assuming all Many2one fields are defined with _id at the end
+                if "_id" in contract_update_data.key:
+                    value = int(contract_update_data.value)
+                contract_update_dict[contract_update_data.key] = value
         for line in self.work.record.contract_line_ids:
             line.write(
                 {
@@ -15,7 +29,24 @@ class ContractUtils(Component):
                     "quantity": 0,
                 }
             )
-        self.work.record.write({"status": "paused"})
+        self.work.record.write(contract_update_dict)
+
+    def _set_start_date(self, date_start):
+        self.work.record.write({"date_start": date_start})
+        for line in self.work.record.contract_line_ids:
+            line.write({"date_start": date_start})
+            line._compute_state()
+
+    def _set_discount(self, discount):
+        for line in self.work.record.contract_line_ids:
+            line.write({"discount": discount})
+
+    # method to be extended if using component for another pack_type
+    def _set_configuration_journal_if_defined(self):
+        if self.work.record.pack_type == "platform_pack":
+            journal_id = self.work.record.company_id.service_invoicing_sale_journal_id
+            if journal_id:
+                self.work.record.write({"journal_id": journal_id.id})
 
     def _activate_contract_lines(self, execution_date):
         for line in self.work.record.contract_line_ids:
@@ -34,7 +65,7 @@ class ContractUtils(Component):
 
     def set_contract_status_active(self, execution_date):
         self._activate_contract_lines(execution_date)
-        self.set_start_date(execution_date)
+        self._set_start_date(execution_date)
         self.work.record.write({"status": "in_progress"})
 
     def set_contract_status_closed(self, execution_date):
@@ -44,23 +75,6 @@ class ContractUtils(Component):
             line.write({"date_end": execution_date})
             line._compute_state()
         self.work.record.set_close_status_type_by_date()
-
-    def set_start_date(self, date_start):
-        self.work.record.write({"date_start": date_start})
-        for line in self.work.record.contract_line_ids:
-            line.write({"date_start": date_start})
-            line._compute_state()
-
-    def set_discount(self, discount):
-        for line in self.work.record.contract_line_ids:
-            line.write({"discount": discount})
-
-    # method to be extended if using component for another pack_type
-    def set_configuration_journal_if_defined(self):
-        if self.work.record.pack_type == "platform_pack":
-            journal_id = self.work.record.company_id.service_invoicing_sale_journal_id
-            if journal_id:
-                self.work.record.write({"journal_id": journal_id.id})
 
     def clean_non_service_lines(self):
         for line in self.work.record.contract_line_ids:
@@ -141,7 +155,6 @@ class ContractUtils(Component):
         executed_action_description_list = executed_action_description.split(",")
         return {
             "company_id": self.work.record.partner_id.related_company_id,
-            "community_company_id": self.work.record.community_company_id,
             "pack_id": pack_id
             if "modify_pack" in executed_action_description_list
             else self.work.record.pack_id,
@@ -154,9 +167,14 @@ class ContractUtils(Component):
             "start_date": execution_date,
             "executed_action": executed_action,
             "executed_action_description": executed_action_description,
-            "discount": discount
-            if "modify_discount" in executed_action_description_list
-            else self.work.record.discount,
+            "metadata": {
+                "community_company_id": self.work.record.community_company_id.id
+                if self.work.record.community_company_id
+                else False,
+                "discount": discount
+                if "modify_discount" in executed_action_description_list
+                else self.work.record.discount,
+            },
         }
 
     def _is_service_line(self, contract_line):

@@ -15,6 +15,7 @@
         "base",
         "contract",
         "sale",
+        "sale_order_metadata",
         "sales_team",
         "purchase",
         "product",

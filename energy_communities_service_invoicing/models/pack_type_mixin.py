@@ -13,6 +13,7 @@ class PackTypeMixin(models.AbstractModel):
         compute_sudo=True,
         string="Pack Type",
         store=True,
+        default="none",
     )
 
     def _get_pack_type_from_product_category(self, pack_type, category_id):
