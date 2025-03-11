@@ -1,100 +1,74 @@
 <odoo>
   <record id="res_users_user_ce_1_demo" model="res.users">
-      <field name="partner_id" ref="energy_communities.res_partner_user_ce_1_demo" />
-      <field name="login">92614895J</field>
-      <field name="password">usuari-ce-1</field>
+    <field name="partner_id" ref="energy_communities.res_partner_user_ce_1_demo" />
+    <field name="login">92614895J</field>
+    <field name="password">usuari-ce-1</field>
   </record>
   <record id="res_users_admin_ce_1_demo" model="res.users">
-      <field name="partner_id" ref="energy_communities.res_partner_admin_ce_1_demo" />
-      <field name="login">20740340K</field>
-      <field name="password">admin-ce-1</field>
+    <field name="partner_id" ref="energy_communities.res_partner_admin_ce_1_demo" />
+    <field name="login">20740340K</field>
+    <field name="password">admin-ce-1</field>
   </record>
 
   <record id="res_users_user_ce_2_demo" model="res.users">
-      <field name="partner_id" ref="energy_communities.res_partner_user_ce_2_demo" />
-      <field name="login">45951114N</field>
-      <field name="password">usuari-ce-2</field>
+    <field name="partner_id" ref="energy_communities.res_partner_user_ce_2_demo" />
+    <field name="login">45951114N</field>
+    <field name="password">usuari-ce-2</field>
   </record>
 
   <record id="res_users_admin_ce_2_demo" model="res.users">
-      <field name="partner_id" ref="energy_communities.res_partner_admin_ce_2_demo" />
-      <field name="login">05346012F</field>
-      <field name="password">admin-ce-2</field>
-  </record>
-
-  <record id="res_users_user_ce_3_demo" model="res.users">
-      <field name="partner_id" ref="energy_communities.res_partner_user_ce_3_demo" />
-      <field name="login">28132715N</field>
-      <field name="password">usuari-ce-3</field>
-  </record>
-
-  <record id="res_users_admin_ce_3_demo" model="res.users">
-      <field name="partner_id" ref="energy_communities.res_partner_admin_ce_3_demo" />
-      <field name="login">62529941W</field>
-      <field name="password">admin-ce-3</field>
+    <field name="partner_id" ref="energy_communities.res_partner_admin_ce_2_demo" />
+    <field name="login">05346012F</field>
+    <field name="password">admin-ce-2</field>
   </record>
 
   <record id="res_users_admin_coordinator_1_demo" model="res.users">
-      <field
+    <field
       name="partner_id"
       ref="energy_communities.res_partner_admin_coordinator_1_demo"
     />
-      <field name="login">70305956Q</field>
-      <field name="password">admin-coordinadora-1</field>
-      <field
+    <field name="login">70305956Q</field>
+    <field name="password">admin-coordinadora-1</field>
+    <field
       name="company_id"
       model="res.company"
       eval="obj(ref('energy_communities.coordinator_company')).id"
     />
-      <field
+    <field
       name="company_ids"
       model="res.company"
       eval="[
-            (4, obj(ref('energy_communities.coordinator_company')).id),
-         ]"
-    />
-  </record>
-
-  <record id="res_users_worker_coordinator_1_demo" model="res.users">
-      <field
-      name="partner_id"
-      ref="energy_communities.res_partner_worker_coordinator_1_demo"
-    />
-      <field name="login">01849664G</field>
-      <field name="password">traballador-coordinadora-1</field>
-  <field
-      name="company_id"
-      model="res.company"
-      eval="obj(ref('energy_communities.coordinator_company')).id"
-    />
-      <field
-      name="company_ids"
-      model="res.company"
-      eval="[
-            (4, obj(ref('energy_communities.coordinator_company')).id),
-        ]"
+        (4, obj(ref('energy_communities.coordinator_company')).id),
+      ]"
     />
   </record>
 
   <record id="res_users_admin_plataforma_demo" model="res.users">
-      <field
+    <field
       name="partner_id"
       ref="energy_communities.res_partner_admin_plataforma_demo"
     />
-      <field name="login">33740605L</field>
-      <field name="password">admin-plataforma</field>
-      <field
+    <field name="login">33740605L</field>
+    <field name="password">admin-plataforma</field>
+    <field
       name="company_id"
       model="res.company"
       eval="obj(ref('base.main_company')).id"
     />
-      <field
+    <field
       name="company_ids"
       model="res.company"
       eval="[
-            (4, obj(ref('base.main_company')).id),
-            (4, obj(ref('energy_communities.coordinator_company')).id),
-        ]"
+        (4, obj().env.ref('base.main_company').id),
+      ]"
+    />
+    <field
+      name="role_line_ids"
+      model="res.users.role.line"
+      eval="[
+        (0,0, {'role_id': obj(ref('energy_communities.role_internal_user')).id}),
+        (0,0, {'role_id': obj(ref('energy_communities.role_platform_admin')).id}),
+      ]"
     />
   </record>
 
@@ -104,13 +78,29 @@
       model="res.company"
       eval="obj(ref('base.main_company')).id"
     />
-      <field
+    <field
       name="company_ids"
       model="res.company"
       eval="[
-            (4, obj(ref('base.main_company')).id),
-            (4, obj(ref('energy_communities.coordinator_company')).id),
-        ]"
+        (5, 0, 0),
+        (4, obj(ref('base.main_company')).id),
+        (4, obj(ref('energy_communities.coordinator_company')).id),
+      ]"
+    />
+    <field
+      name="role_line_ids"
+      model="res.users.role.line"
+      eval="[
+        (0,0, {'role_id': obj(ref('energy_communities.role_internal_user')).id}),
+        (0,0, {'role_id': obj(ref('energy_communities.role_platform_admin')).id}),
+      ]"
+    />
+  </record>
+
+  <record id="base.user_demo" model="res.users">
+    <field
+      name="active"
+      eval="False"
     />
   </record>
 </odoo>
