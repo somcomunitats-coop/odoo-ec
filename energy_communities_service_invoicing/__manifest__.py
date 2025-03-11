@@ -9,7 +9,7 @@
     "author": "Som comunitats",
     "website": "https://coopdevs.org",
     "category": "Contract Management",
-    "version": "16.0.0.1.1",
+    "version": "16.0.0.1.0",
     # any module necessary for this one to work correctly
     "depends": [
         "base",
