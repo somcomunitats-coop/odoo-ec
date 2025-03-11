@@ -1,0 +1,27 @@
+<odoo>
+  <data>
+    <record
+      id="active_community_members_formula"
+      model="contract.line.qty.formula"
+    >
+      <field name="name">Active community members</field>
+      <field name="code">
+result = env['cooperative.membership'].sudo().search_count([
+('company_id','=',contract.community_company_id.id),
+('member','=',True)
+])
+      </field>
+      <field name="company_id" eval="ref('base.main_company')" />
+    </record>
+    <record
+      id="active_monitoring_members_formula"
+      model="contract.line.qty.formula"
+    >
+      <field name="name">Active monitoring members</field>
+      <field name="code">
+result = contract.get_active_monitoring_members()
+      </field>
+      <field name="company_id" eval="ref('base.main_company')" />
+    </record>
+  </data>
+</odoo>

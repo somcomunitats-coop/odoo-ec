@@ -2,6 +2,8 @@ from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
+from ..utils import get_successful_popup_message
+
 
 class ChangeCoordinatorWizard(models.TransientModel):
     _name = "change.coordinator.wizard"
@@ -19,14 +21,7 @@ class ChangeCoordinatorWizard(models.TransientModel):
                 company.with_delay().change_coordinator(
                     self.incoming_coordinator, self.change_reason
                 )
-            return {
-                "type": "ir.actions.client",
-                "tag": "display_notification",
-                "params": {
-                    "type": "success",
-                    "title": _("Coordinator change successful"),
-                    "message": _("This community has been moved to a new coordinator"),
-                    "sticky": False,
-                    "next": {"type": "ir.actions.act_window_close"},
-                },
-            }
+            return get_successful_popup_message(
+                _("Coordinator change successful"),
+                _("This community has been moved to a new coordinator"),
+            )

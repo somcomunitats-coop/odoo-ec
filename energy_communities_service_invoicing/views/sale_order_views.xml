@@ -1,0 +1,19 @@
+<odoo>
+  <record id="ec_view_order_form" model="ir.ui.view">
+    <field name="name">sale.order.form (in energy_communities service_invoicing)</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form" />
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='partner_id']" position="before">
+          <field name="service_invoicing_action" readonly="1" />
+          <field
+            name="service_invoicing_action_description"
+            attrs="{'readonly': 1,'invisible': [('service_invoicing_action','not in', ['modification','activate'])]}"
+          />
+        </xpath>
+        <xpath expr="//field[@name='company_id']" position="attributes">
+          <attribute name="required">0</attribute>
+        </xpath>
+    </field>
+  </record>
+</odoo>

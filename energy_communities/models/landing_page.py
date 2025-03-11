@@ -12,6 +12,7 @@ from ..pywordpress_client.resources.authenticate import Authenticate
 from ..pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
 )
+from ..utils import get_successful_popup_message
 from .res_company import _CE_MEMBER_STATUS_VALUES, _CE_TYPE, _LEGAL_FORM_VALUES
 
 
@@ -270,18 +271,10 @@ class LandingPage(models.Model):
                 else:
                     self.sudo().remove_coordinator_filter_to_existing_communities()
             self.write({"publicdata_lastupdate_datetime": datetime.now()})
-            return {
-                "type": "ir.actions.client",
-                "tag": "display_notification",
-                "params": {
-                    "type": "success",
-                    "title": _("Public data update successful"),
-                    "message": _(
-                        "Wordpress landing and map place has been successfully updated."
-                    ),
-                    "sticky": False,
-                },
-            }
+            return get_successful_popup_message(
+                _("Public data update successful"),
+                _("Wordpress landing and map place has been successfully updated."),
+            )
 
     def _update_wordpress(self):
         instance_company = self.env["res.company"].search(

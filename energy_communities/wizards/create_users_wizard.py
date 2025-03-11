@@ -1,7 +1,7 @@
 from odoo import fields, models
 from odoo.tools.translate import _
 
-from ..utils import user_creator
+from ..utils import get_successful_popup_message, user_creator
 
 
 class CreateUsersWizard(models.TransientModel):
@@ -38,13 +38,6 @@ class CreateUsersWizard(models.TransientModel):
                 component.create_users_from_communities_cooperator_partners(
                     impacted_records, role_id, self.action, self.force_invite
                 )
-        return {
-            "type": "ir.actions.client",
-            "tag": "display_notification",
-            "params": {
-                "type": "success",
-                "message": _("Process has been started."),
-                "sticky": False,
-                "next": {"type": "ir.actions.act_window_close"},
-            },
-        }
+        return get_successful_popup_message(
+            _("User creation"), _("Process has been started.")
+        )

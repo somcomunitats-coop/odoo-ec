@@ -1,0 +1,276 @@
+<odoo>
+  <!-- CONTRACT -->
+  <record model="ir.rule" id="energy_communities_service_invoicing.rule_contract_contract_admin">
+    <field name="name">Contract admins</field>
+    <field name="model_id" ref="contract.model_contract_contract"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_platform_admin_res_groups')),(4, ref('energy_communities.role_coord_admin_res_groups'))]"/>
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="True" />
+    <field name="perm_unlink" eval="True" />
+  </record>
+
+  <function name="write" model="ir.model.data">
+      <function name="search" model="ir.model.data">
+          <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_contract_multi_company')]"/>
+      </function>
+      <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="contract.rule_contract_contract_multi_company">
+
+    <field name="domain_force">
+[
+'|','|',
+('partner_id','=',user.user_current_company.partner_id.id),
+('company_id','=',False),
+('company_id','in',company_ids)
+]
+    </field>
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="False"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_contract_multi_company')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
+
+  <function name="write" model="ir.model.data">
+      <function name="search" model="ir.model.data">
+          <value eval="[('module', '=', 'contract'),('name', '=', 'contract_contract_see_all')]"/>
+      </function>
+      <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="contract.contract_contract_see_all">
+    <field name="active">False</field>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'contract'),('name', '=', 'contract_contract_see_all')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
+
+  <function name="write" model="ir.model.data">
+      <function name="search" model="ir.model.data">
+          <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_contract_portal')]"/>
+      </function>
+      <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="contract.rule_contract_contract_portal">
+    <field name="active">False</field>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_contract_portal')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+    </function>
+
+  <!-- CONTRACT LINE -->
+  <function name="write" model="ir.model.data">
+      <function name="search" model="ir.model.data">
+          <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_line_multi_company')]"/>
+      </function>
+      <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="contract.rule_contract_line_multi_company">
+
+    <field name="domain_force">
+[
+'|','|',
+('partner_id','=',user.user_current_company.partner_id.id),
+('company_id','=',False),
+('company_id','in',company_ids)
+]
+    </field>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_line_multi_company')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
+
+  <!-- PRODUCT TEMPLATE -->
+  <function name="write" model="ir.model.data">
+      <function name="search" model="ir.model.data">
+          <value eval="[('module', '=', 'product'),('name', '=', 'product_comp_rule')]"/>
+      </function>
+      <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="product.product_comp_rule">
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="False"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'product'),('name', '=', 'product_comp_rule')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
+
+  <record model="ir.rule" id="energy_communities_service_invoicing.rule_product_template_coord_admin">
+    <field name="name">Product - Coordinator admin</field>
+    <field name="model_id" ref="product.model_product_template"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_coord_admin_res_groups'))]"/>
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="False" />
+    <field name="perm_unlink" eval="False" />
+  </record>
+
+  <record model="ir.rule" id="energy_communities_service_invoicing.rule_product_template_platform_admin">
+    <field name="name">Product - Platform admin</field>
+    <field name="model_id" ref="product.model_product_template"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_platform_admin_res_groups'))]"/>
+    <field name="domain_force">[(1, '=', 1)]</field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="True" />
+    <field name="perm_unlink" eval="True" />
+  </record>
+
+  <!-- CONTRACT TEMPLATE -->
+  <function name="write" model="ir.model.data">
+      <function name="search" model="ir.model.data">
+          <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_template_line_multi_company')]"/>
+      </function>
+      <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="contract.rule_contract_template_line_multi_company">
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="False"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_template_line_multi_company')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
+  <function name="write" model="ir.model.data">
+      <function name="search" model="ir.model.data">
+          <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_template_multi_company')]"/>
+      </function>
+      <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="contract.rule_contract_template_multi_company">
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="False"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'contract'),('name', '=', 'rule_contract_template_multi_company')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
+
+  <record model="ir.rule" id="energy_communities_service_invoicing.rule_contract_template_platform_admin">
+    <field name="name">Contract template platform admins</field>
+    <field name="model_id" ref="contract.model_contract_template"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_platform_admin_res_groups'))]"/>
+    <field name="domain_force">[(1, '=', 1)]</field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="True" />
+    <field name="perm_unlink" eval="True" />
+  </record>
+
+  <record model="ir.rule" id="energy_communities_service_invoicing.rule_contract_template_coord_admin">
+    <field name="name">Contract template coordinator admins</field>
+    <field name="model_id" ref="contract.model_contract_template"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_coord_admin_res_groups'))]"/>
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="True" />
+    <field name="perm_unlink" eval="True" />
+  </record>
+
+  <record model="ir.rule" id="energy_communities_service_invoicing.rule_contract_template_line_platform_admin">
+    <field name="name">Contract template line platform admins</field>
+    <field name="model_id" ref="contract.model_contract_template_line"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_platform_admin_res_groups'))]"/>
+    <field name="domain_force">[(1, '=', 1)]</field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="True" />
+    <field name="perm_unlink" eval="True" />
+  </record>
+
+  <record model="ir.rule" id="energy_communities_service_invoicing.rule_contract_template_line_coord_admin">
+    <field name="name">Contract template line coordinator admins</field>
+    <field name="model_id" ref="contract.model_contract_template_line"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_coord_admin_res_groups'))]"/>
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="True" />
+    <field name="perm_unlink" eval="True" />
+  </record>
+
+  <!-- CONTRACT LINE QUANTITY FORMULA -->
+  <record model="ir.rule" id="energy_communities_service_invoicing.rule_contract_line_qty_formula_multi_company">
+    <field name="name">Contract Line Formula Multicompany</field>
+    <field name="model_id" ref="model_contract_line_qty_formula"/>
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="perm_read" eval="True" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="True" />
+    <field name="perm_unlink" eval="True" />
+  </record>
+
+  <!-- PRODUCT PRICELIST -->
+  <function name="write" model="ir.model.data">
+      <function name="search" model="ir.model.data">
+          <value eval="[('module', '=', 'product'),('name', '=', 'product_pricelist_comp_rule')]"/>
+      </function>
+      <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="product.product_pricelist_comp_rule">
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="False"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'product'),('name', '=', 'product_pricelist_comp_rule')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
+
+  <record model="ir.rule" id="energy_communities_service_invoicing.rule_product_pricelist_coord_admin">
+    <field name="name">Pricelist - Coordinator admin</field>
+    <field name="model_id" ref="product.model_product_pricelist"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_coord_admin_res_groups'))]"/>
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="False" />
+    <field name="perm_unlink" eval="True" />
+  </record>
+
+  <record model="ir.rule" id="energy_communities_service_invoicing.rule_product_pricelist_platform_admin">
+    <field name="name">Pricelist - Platform admin</field>
+    <field name="model_id" ref="product.model_product_pricelist"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_platform_admin_res_groups'))]"/>
+    <field name="domain_force">[(1, '=', 1)]</field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="True" />
+    <field name="perm_unlink" eval="True" />
+  </record>
+
+</odoo>

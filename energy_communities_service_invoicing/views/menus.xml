@@ -1,0 +1,100 @@
+<odoo>
+  <menuitem
+    id="ce_service_invoicing_menu"
+    name="Services"
+    parent="energy_communities.ce_root_menu"
+    sequence="1"
+    groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups"
+  />
+  
+
+  <menuitem
+    name="Activity"
+    id="view_service_invoicing_activity_menu"
+    parent="ce_service_invoicing_menu"
+    sequence="100"
+  >
+    <menuitem
+      name="Service Contracts"
+      id="view_service_invoicing_menu_platform_manager"
+      action="view_service_invoicing_window_platform_manager"
+      groups="energy_communities.role_platform_admin_res_groups"
+      sequence="100"
+    />
+    <menuitem
+      name="Service Contracts"
+      id="view_service_invoicing_menu_coord_admin"
+      action="view_service_invoicing_window_coord_admin"
+      groups="energy_communities.role_coord_admin_res_groups"
+      sequence="100"
+    />
+    
+    <menuitem
+      name="Service invoices issued"
+      id="view_service_invoices_issued_menu"
+      action="view_service_invoices_issued_window"
+      groups="energy_communities.role_platform_admin_res_groups"
+      sequence="500"
+    />
+    <menuitem
+      name="Service invoices received"
+      id="view_service_invoices_received_menu"
+      action="view_service_invoices_received_window"
+      groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups,energy_communities.role_coord_worker_res_groups"
+      sequence="500"
+    />
+    <menuitem
+      name="Service actions (sale orders)"
+      id="view_service_sale_orders_menu"
+      action="view_service_sale_orders_window"
+      groups="energy_communities.role_platform_admin_res_groups"
+      sequence="550"
+    />
+
+  </menuitem>
+
+  <menuitem
+    name="Configuration"
+    id="view_service_invoicing_configuration_menu"
+    parent="ce_service_invoicing_menu"
+    sequence="200"
+  >
+    <menuitem
+      name="Platform Services"
+      id="view_services_menu"
+      action="view_services_window"
+      groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups"
+      sequence="200"
+    />
+    <menuitem
+      name="Service Packs"
+      id="view_service_packs_menu"
+      action="view_service_packs_window"
+      groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups"
+      sequence="300"
+    />
+    <menuitem
+      name="Service Packs templates"
+      id="view_service_contract_templates_menu"
+      action="view_service_contract_templates_window"
+      groups="energy_communities.role_platform_admin_res_groups"
+      sequence="400"
+    />
+  </menuitem>
+
+  <menuitem
+    name="Assistants"
+    id="view_service_invoicing_assistants_menu"
+    parent="ce_service_invoicing_menu"
+    groups="energy_communities.role_platform_admin_res_groups"
+    sequence="300"
+  >
+    <menuitem
+      id="service_invoicing_action_create_wizard_menu"
+      name="Assign pack to community"
+      action="service_invoicing_action_create_wizard_action"
+      groups="energy_communities.role_platform_admin_res_groups"
+      sequence="100"
+    />
+  </menuitem>
+</odoo>

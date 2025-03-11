@@ -1,0 +1,171 @@
+<odoo>
+
+  <record id="contract_contract_search_view" model="ir.ui.view">
+    <field name="name">contract.contract search view (in service invoicing)</field>
+    <field name="model">contract.contract</field>
+    <field name="inherit_id" ref="contract.contract_contract_search_view" />
+    <field name="arch" type="xml">
+      <filter name="not_finished" position="before">
+        <filter
+          name="paused"
+          string="Paused"
+          domain="[('status','=','paused')]"
+        />
+        <!--<separator />-->
+      </filter>
+      <filter name="not_finished" position="attributes">
+        <attribute name="domain">[('status','=','in_progress')]</attribute>
+      </filter>
+      <filter name="finished" position="before">
+        <filter
+          name="closed_planned"
+          string="Planned closure"
+          domain="[('status','=','closed_planned')]"
+        />
+        <!--<separator />-->
+      </filter>
+      <filter name="finished" position="attributes">
+        <attribute name="string">Closed</attribute>
+        <attribute name="domain">[('status','=','closed')]</attribute>
+      </filter>
+    </field>
+  </record>
+
+  <record id="view_service_invoicing_tree" model="ir.ui.view">
+    <field name="name">service.invoicing.tree</field>
+    <field name="model">contract.contract</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name" />
+        <field 
+          name="status"
+          widget="badge"
+          decoration-info="status == 'paused'"
+          decoration-danger="status == 'closed'"
+          decoration-warning="status == 'closed_planned'"
+          decoration-success="status == 'in_progress'"
+        />
+        <field name="partner_id" />
+        <field name="community_company_id" attrs="{'invisible': [('pack_type', '!=', 'platform_pack')]}" />
+        <field name="pack_id" />
+        <field name="pack_type" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="view_contract_contract_customer_form_platform_admin" model="ir.ui.view">
+    <field name="name">contract.contract.form (in energy_communities service_invoicing platform admin)</field>
+    <field name="model">contract.contract</field>
+    <field name="inherit_id" ref="product_contract.contract_contract_customer_form_view" />
+    <field name="arch" type="xml">
+      <xpath expr="//header" position="inside">
+        <field name="status" widget="statusbar" />
+      </xpath>
+      <xpath expr="//button[@name='action_preview']" position="after">
+        <button
+          name="action_activate_contract"
+          type="object"
+          string="Activate"
+          attrs="{'invisible':['|',('status','not in',['paused']),('pack_type','!=','platform_pack')]}"
+        />
+        <button
+          name="action_modify_contract"
+          type="object"
+          string="Modify"
+          attrs="{'invisible':['|',('status','not in',['paused','in_progress']),('pack_type','!=','platform_pack')]}"
+        />
+        <button
+          name="action_close_contract"
+          type="object"
+          string="Close"
+          attrs="{'invisible':['|',('status','not in',['paused','in_progress']),('pack_type','!=','platform_pack')]}"
+        />
+        <button
+          name="action_reopen_contract"
+          type="object"
+          string="Reopen"
+          attrs="{'invisible':['|','|',('status','not in',['closed','closed_planned']),('successor_contract_id','!=',False),('pack_type','!=','platform_pack')]}"
+        />
+      </xpath>
+      <xpath expr="//field[@name='partner_id']" position="after">
+        <field name="community_company_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}"/>
+      </xpath>
+      <xpath expr="//field[@name='pricelist_id']" position="after">
+        <field name="pack_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
+        <field name="pack_type" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
+      </xpath>
+      <xpath expr="//field[@name='user_id']" position="after">
+        <field name="date_start" />
+        <field name="last_date_invoiced" />
+        <field name="recurring_next_date" />
+        <field name="date_end" />
+        <field name="discount" />
+        <field name="predecessor_contract_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
+        <field name="successor_contract_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
+        <field name="closing_action" attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('pack_type','!=','platform_pack')]}" />
+        <field name="closing_action_description" attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('pack_type','!=','platform_pack')]}" />
+        <field name="sale_order_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
+      </xpath>
+    </field>
+  </record>
+
+  <record id="view_contract_contract_customer_form_coord_admin" model="ir.ui.view">
+    <field name="name">contract.contract.form (in energy_communities service_invoicing coordinator)</field>
+    <field name="model">contract.contract</field>
+    <field name="arch" type="xml">
+      <form edit="false" create="false" delete="false">
+        <header>
+          <field name="status" widget="statusbar" />
+        </header>
+        <sheet>
+          <!--TODO: Not working: redirect to invoices issued menu -->
+          <!--<div class="oe_button_box" name="button_box">-->
+          <!--  <button-->
+          <!--    name="action_show_received_invoices"-->
+          <!--    type="object"-->
+          <!--    icon="fa-list"-->
+          <!--    class="oe_stat_button"-->
+          <!--  >-->
+          <!--    <field-->
+          <!--      string="Invoices"-->
+          <!--      name="received_invoices_count"-->
+          <!--      widget="statinfo"-->
+          <!--    />-->
+          <!--  </button>-->
+          <!--</div>-->
+          <group>
+            <field name="name" />
+            <field name="pack_id" options="{'no_open': True}" />
+            <field name="pack_type" />
+            <field name="related_contract_product_ids" widget="one2many" >
+              <tree editable="bottom">
+                <field name="name" readonly="1"/>
+              </tree>
+              <form>
+                <field name="name" readonly="1"/>
+              </form>
+            </field>
+            <field name="pricelist_id" />
+            <field name="discount" />
+            <!--TODO: Instead of contract template id we must show related service products -->
+          </group>
+          <group>
+            <field name="date_start" />
+            <field name="last_date_invoiced" />
+            <field name="recurring_next_date" />
+            <field name="date_end" attrs="{'invisible': [('status','!=','closed')]}" />
+          </group>
+          <group>
+            <field name="predecessor_contract_id" />
+            <field name="successor_contract_id" attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('successor_contract_id','!=',False)]}" />
+            <field name="closing_action" attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}" />
+            <field name="closing_action_description" attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}" />
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  
+</odoo>
