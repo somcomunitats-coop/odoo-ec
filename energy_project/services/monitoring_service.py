@@ -344,6 +344,30 @@ class MonitoringService:
         co2_saved = energy_selfconsumption * self.SPANISH_CO2_SAVE_RATIO
         return co2_saved
 
+    def daily_consumption_by_project(
+        self, system_id, date_from, date_to
+    ) -> EnergyCurve:
+        daily_metrics = self._get_project_daily_metrics(system_id, date_from, date_to)
+        return [point.consumption_measure for point in daily_metrics]
+
+    def daily_selfconsumption_by_project(
+        self, system_id, date_from, date_to
+    ) -> EnergyCurve:
+        daily_metrics = self._get_project_daily_metrics(system_id, date_from, date_to)
+        return [point.selfconsumption_measure for point in daily_metrics]
+
+    def daily_gridinjection_by_project(
+        self, system_id, date_from, date_to
+    ) -> EnergyCurve:
+        daily_metrics = self._get_project_daily_metrics(system_id, date_from, date_to)
+        return [point.gridinjection_measure for point in daily_metrics]
+
+    def daily_production_by_project(
+        self, system_id, date_from, date_to
+    ) -> MeasureCurve:
+        daily_metrics = self._get_project_daily_metrics(system_id, date_from, date_to)
+        return [point.production_measure for point in daily_metrics]
+
     @lru_cache
     def _get_project_daily_metrics_by_member(
         self, system_id, member_id, from_date, to_date

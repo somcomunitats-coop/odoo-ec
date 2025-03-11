@@ -148,7 +148,7 @@ class ProjectApiInfo(Component):
     _usage = "api.info"
     _apply_on = "energy_project.project"
 
-    def get_project_daily_production(
+    def get_project_daily_production_by_member(
         self, project, partner, date_from, date_to
     ) -> List[EnergyPoint]:
         monitoring_service = project.monitoring_service()
@@ -170,7 +170,7 @@ class ProjectApiInfo(Component):
         if project.exists():
             return project
 
-    def get_project_daily_selfconsumption(
+    def get_project_daily_selfconsumption_by_member(
         self, project, partner, date_from, date_to
     ) -> List[EnergyPoint]:
         monitoring_service = project.monitoring_service()
@@ -187,7 +187,7 @@ class ProjectApiInfo(Component):
             return [EnergyPoint(**point._asdict()) for point in daily_selfconsumption]
         return []
 
-    def get_project_daily_exported_energy(
+    def get_project_daily_exported_energy_by_member(
         self, project, partner, date_from, date_to
     ) -> List[EnergyPoint]:
         monitoring_service = project.monitoring_service()
@@ -204,7 +204,7 @@ class ProjectApiInfo(Component):
             return [EnergyPoint(**point._asdict()) for point in daily_exported_energy]
         return []
 
-    def get_project_daily_consumed_energy(
+    def get_project_daily_consumed_energy_by_member(
         self, project, partner, date_from, date_to
     ) -> List[EnergyPoint]:
         monitoring_service = project.monitoring_service()
@@ -215,6 +215,58 @@ class ProjectApiInfo(Component):
             daily_consumed_energy = monitoring_service.daily_consumption_by_member(
                 system_id=project.selfconsumption_id.code,
                 member_id=member_contract.code,
+                date_from=date_from,
+                date_to=date_to,
+            )
+            return [EnergyPoint(**point._asdict()) for point in daily_consumed_energy]
+        return []
+
+    def get_project_daily_production(
+        self, project, date_from, date_to
+    ) -> List[EnergyPoint]:
+        monitoring_service = project.monitoring_service()
+        if monitoring_service:
+            daily_production = monitoring_service.daily_production_by_project(
+                system_id=project.selfconsumption_id.code,
+                date_from=date_from,
+                date_to=date_to,
+            )
+            return [EnergyPoint(**point._asdict()) for point in daily_production]
+        return []
+
+    def get_project_daily_selfconsumption(
+        self, project, date_from, date_to
+    ) -> List[EnergyPoint]:
+        monitoring_service = project.monitoring_service()
+        if monitoring_service:
+            daily_selfconsumption = monitoring_service.daily_selfconsumption_by_project(
+                system_id=project.selfconsumption_id.code,
+                date_from=date_from,
+                date_to=date_to,
+            )
+            return [EnergyPoint(**point._asdict()) for point in daily_selfconsumption]
+        return []
+
+    def get_project_daily_exported_energy(
+        self, project, date_from, date_to
+    ) -> List[EnergyPoint]:
+        monitoring_service = project.monitoring_service()
+        if monitoring_service:
+            daily_exported_energy = monitoring_service.daily_gridinjection_by_project(
+                system_id=project.selfconsumption_id.code,
+                date_from=date_from,
+                date_to=date_to,
+            )
+            return [EnergyPoint(**point._asdict()) for point in daily_exported_energy]
+        return []
+
+    def get_project_daily_consumed_energy(
+        self, project, date_from, date_to
+    ) -> List[EnergyPoint]:
+        monitoring_service = project.monitoring_service()
+        if monitoring_service:
+            daily_consumed_energy = monitoring_service.daily_consumption_by_project(
+                system_id=project.selfconsumption_id.code,
                 date_from=date_from,
                 date_to=date_to,
             )
