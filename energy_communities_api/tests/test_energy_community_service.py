@@ -64,7 +64,7 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
         # self.url_open
         # and a valid token
         # self.token
-        # a member belonging into a energy_community
+        # and an energy community
         community_1_id = self.community_id
 
         # when we call for the energy services that offers that community
@@ -76,6 +76,26 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
         self.assertEqual(response.status_code, 200)
         # and at least one community service
         self.assertGreaterEqual(len(response.json()["data"]), 1)
+
+    def test__communities_communities_services__detail_ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        # and an energy community
+        community_1_id = self.community_id
+        # and a service of that community
+        service_id = community_data["service_id"]
+
+        # when we call for the detail of that service
+        response = self.client(
+            f"/api/communities/community/community_services/{service_id}",
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the datail of that service
+        self.assertDictEqual(response.json()["data"], community_data["service_info"])
 
     def test__communities_communities_services__with_paging_ok(self):
         # given http_client
@@ -123,3 +143,27 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
         # and at least one community service
 
         self.assertGreaterEqual(len(response.json()["data"]), 1)
+
+    def test__community_service_metrics__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        # and energy_community
+        community_1_id = self.community_id
+        # and a community service
+        service_id = community_data["service_id"]
+        # and a range of dates
+        from_date = date(2024, 1, 1)
+        to_date = date(2024, 12, 31)
+
+        # when we call for the metrics of that service that offer the community
+        response = self.client(
+            f"/api/communities/community/community_services/{service_id}/metrics?from_date={from_date}&to_date={to_date}",
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+        )
+
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and its metrics information
+        self.assertDictEqual(response.json()["data"], community_data["service_metrics"])

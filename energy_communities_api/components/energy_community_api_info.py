@@ -25,6 +25,12 @@ class EnergyCommunityApiInfo(Component):
         ("state", "!=", DRAFT),
     ]
 
+    _community_service_domain = lambda _, community_id, service_id: [
+        ("company_id", "=", community_id),
+        ("id", "=", service_id),
+        ("state", "!=", DRAFT),
+    ]
+
     def get_energy_community_info(self, community_id) -> EnergyCommunityInfo:
         community = self.env[self._apply_on].search([("id", "=", community_id)])
         if not community:
@@ -56,24 +62,15 @@ class EnergyCommunityApiInfo(Component):
         community_services = []
         community_projects = self._get_projects(community_id)
         for service in community_projects:
-            service_info = CommunityServiceInfo(
-                id=service.id,
-                type="fotovoltaic",
-                name=service.name,
-                status=service.state,
-                inscriptions=len(service.inscription_ids),
-                address=Address(
-                    street=service.street,
-                    street2=service.street2 or "",
-                    postal_code=service.zip,
-                    city=service.city,
-                    state=service.state_id.name,
-                    country=service.country_id.name,
-                ),
-                power=service.power,
-            )
+            service_info = self._community_service_info(service)
             community_services += [service_info]
         return community_services
+
+    def community_service_detail(
+        self, community_id: int, service_id: int
+    ) -> CommunityServiceInfo:
+        community_service = self._get_project(community_id, service_id)
+        return self._community_service_info(community_service)
 
     def get_community_services_metrics(
         self, community_id: int, date_from: date, date_to: date
@@ -89,6 +86,13 @@ class EnergyCommunityApiInfo(Component):
                 metrics += [metrics_info]
         return metrics
 
+    def get_community_service_metrics(
+        self, community_id: int, service_id: int, date_from: date, date_to: date
+    ) -> CommunityServiceMetricsInfo:
+        metrics_component = self.component(usage="metrics.info")
+        project = self._get_project(community_id, service_id)
+        return metrics_component.get_project_metrics(project, date_from, date_to)
+
     def _get_projects(self, community_id: int):
         domain = self._communities_services_domain(community_id)
         if self.work.paging:
@@ -96,3 +100,26 @@ class EnergyCommunityApiInfo(Component):
                 domain, limit=self.work.paging.limit, offset=self.work.paging.offset
             )
         return self.env["energy_selfconsumption.selfconsumption"].search(domain)
+
+    def _get_project(self, community_id, service_id: int):
+        domain = self._community_service_domain(community_id, service_id)
+        return self.env["energy_selfconsumption.selfconsumption"].search(domain)
+
+    def _community_service_info(self, service) -> CommunityServiceInfo:
+        service_info = CommunityServiceInfo(
+            id=service.id,
+            type="fotovoltaic",
+            name=service.name,
+            status=service.state,
+            inscriptions=len(service.inscription_ids),
+            address=Address(
+                street=service.street,
+                street2=service.street2 or "",
+                postal_code=service.zip,
+                city=service.city,
+                state=service.state_id.name,
+                country=service.country_id.name,
+            ),
+            power=service.power,
+        )
+        return service_info

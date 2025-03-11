@@ -7,8 +7,10 @@ from odoo.addons.component.core import Component
 from ..schemas import (
     CommunityServiceInfo,
     CommunityServiceInfoListResponse,
+    CommunityServiceInfoResponse,
     CommunityServiceMetricsInfo,
     CommunityServiceMetricsInfoListResponse,
+    CommunityServiceMetricsInfoResponse,
     EnergyCommunityInfo,
     EnergyCommunityInfoResponse,
     QueryParams,
@@ -78,11 +80,41 @@ class EnergyCommunityApiService(Component):
         )
 
     @restapi.method(
+        [(["/community_services/<int:service_id>"], "GET")],
+        input_param=PydanticModel(QueryParams),
+        output_param=PydanticModel(CommunityServiceInfoResponse),
+    )
+    def energy_community_community_services_detail_info(
+        self, service_id: int, query_params: QueryParams
+    ):
+        """
+        Detailed information about a communty services of an energy community
+        """
+        self._validate_headers()
+        community_id = int(request.httprequest.headers.get("CommunityId"))
+        paging = self._get_pagination_limits(query_params)
+        with api_info(
+            self.env,
+            self._work_on_model,
+            CommunityServiceInfo,
+            community_id,
+            paging=paging,
+        ) as component:
+            community_service = component.community_service_detail(
+                community_id, service_id
+            )
+        return single_response(
+            request,
+            CommunityServiceInfoResponse,
+            community_service,
+        )
+
+    @restapi.method(
         [(["/community_services/metrics"], "GET")],
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(CommunityServiceMetricsInfoListResponse),
     )
-    def community_service_metrics_info(self, query_params: QueryParams):
+    def community_services_metrics_info(self, query_params: QueryParams):
         self._validate_headers()
         community_id = int(request.httprequest.headers.get("CommunityId"))
         paging = self._get_pagination_limits(query_params)
@@ -104,4 +136,30 @@ class EnergyCommunityApiService(Component):
             community_service_metrics,
             total_community_services,
             paging,
+        )
+
+    @restapi.method(
+        [(["/community_services/<int:service_id>/metrics"], "GET")],
+        input_param=PydanticModel(QueryParams),
+        output_param=PydanticModel(CommunityServiceMetricsInfoResponse),
+    )
+    def community_service_metrics_info(
+        self, service_id: int, query_params: QueryParams
+    ):
+        self._validate_headers()
+        community_id = int(request.httprequest.headers.get("CommunityId"))
+        date_from, date_to = self._get_dates_range(query_params)
+        with api_info(
+            self.env,
+            self._work_on_model,
+            CommunityServiceMetricsInfo,
+            community_id=community_id,
+        ) as component:
+            community_service_metrics = component.get_community_service_metrics(
+                community_id, service_id, date_from, date_to
+            )
+        return single_response(
+            request,
+            CommunityServiceMetricsInfoResponse,
+            community_service_metrics,
         )
