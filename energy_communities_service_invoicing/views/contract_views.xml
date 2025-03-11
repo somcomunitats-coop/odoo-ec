@@ -67,33 +67,33 @@
           name="action_activate_contract"
           type="object"
           string="Activate"
-          attrs="{'invisible':[('status','not in',['paused'])]}"
+          attrs="{'invisible':['|',('status','not in',['paused']),('pack_type','!=','platform_pack')]}"
         />
         <button
           name="action_modify_contract"
           type="object"
           string="Modify"
-          attrs="{'invisible':[('status','not in',['paused','in_progress'])]}"
+          attrs="{'invisible':['|',('status','not in',['paused','in_progress']),('pack_type','!=','platform_pack')]}"
         />
         <button
           name="action_close_contract"
           type="object"
           string="Close"
-          attrs="{'invisible':[('status','not in',['paused','in_progress'])]}"
+          attrs="{'invisible':['|',('status','not in',['paused','in_progress']),('pack_type','!=','platform_pack')]}"
         />
         <button
           name="action_reopen_contract"
           type="object"
           string="Reopen"
-          attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('successor_contract_id','!=',False)]}"
+          attrs="{'invisible':['|','|',('status','not in',['closed','closed_planned']),('successor_contract_id','!=',False),('pack_type','!=','platform_pack')]}"
         />
       </xpath>
       <xpath expr="//field[@name='partner_id']" position="after">
-        <field name="community_company_id" />
+        <field name="community_company_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}"/>
       </xpath>
       <xpath expr="//field[@name='pricelist_id']" position="after">
-        <field name="pack_id" />
-        <field name="pack_type" />
+        <field name="pack_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
+        <field name="pack_type" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
       </xpath>
       <xpath expr="//field[@name='user_id']" position="after">
         <field name="date_start" />
@@ -101,11 +101,11 @@
         <field name="recurring_next_date" />
         <field name="date_end" />
         <field name="discount" />
-        <field name="predecessor_contract_id" />
-        <field name="successor_contract_id" />
-        <field name="closing_action" attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}" />
-        <field name="closing_action_description" attrs="{'invisible':[('status','not in',['closed','closed_planned'])]}" />
-        <field name="sale_order_id" />
+        <field name="predecessor_contract_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
+        <field name="successor_contract_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
+        <field name="closing_action" attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('pack_type','!=','platform_pack')]}" />
+        <field name="closing_action_description" attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('pack_type','!=','platform_pack')]}" />
+        <field name="sale_order_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
       </xpath>
     </field>
   </record>
