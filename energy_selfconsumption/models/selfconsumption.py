@@ -210,11 +210,11 @@ class Selfconsumption(models.Model):
             "type": "ir.actions.act_window",
             "name": "Contracts",
             "views": [
-                [self.env.ref("energy_selfconsumption.contract_tree_view").id, "tree"],
-                [
+                (self.env.ref("energy_selfconsumption.contract_tree_view").id, "tree"),
+                (
                     self.env.ref("contract.contract_contract_customer_form_view").id,
                     "form",
-                ],
+                ),
             ],
             "res_model": "contract.contract",
             "domain": [("project_id", "=", self.id)],

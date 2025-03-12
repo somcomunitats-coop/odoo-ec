@@ -11,7 +11,7 @@ class AccountMove(models.Model):
         comodel_name="contract.contract",
         compute="_compute_related_contract_id_is_contract",
         compute_sudo=True,
-        store=False,
+        store=True,
     )
     is_contract = fields.Boolean(
         compute="_compute_related_contract_id_is_contract",
@@ -23,6 +23,7 @@ class AccountMove(models.Model):
         string="Related community",
         related="related_contract_id.community_company_id",
         domain="[('hierarchy_level','=','community')]",
+        store=True,
     )
 
     @api.depends("invoice_line_ids", "auto_invoice_id")
