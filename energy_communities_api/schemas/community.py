@@ -66,8 +66,8 @@ class CommunityServiceInfo(BaseModel, populate_by_name=True):
         description="Status of the service, ex: in_progres",
     )
 
-    power: float = Field(
-        ...,
+    power: Optional[float] = Field(
+        default=None,
         title="Project power",
         description="Project power",
     )

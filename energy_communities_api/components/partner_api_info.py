@@ -106,7 +106,7 @@ class PartnerApiInfo(Component):
         )
         for project in projects:
             metrics_component = self.component(usage="metrics.info")
-            metrics_info = metrics_component.get_project_metrics(
+            metrics_info = metrics_component.get_project_metrics_by_member(
                 project, partner, date_from, date_to
             )
             if metrics_info:
@@ -120,7 +120,7 @@ class PartnerApiInfo(Component):
         project = self.env["energy_project.project"].search(domain)
         if project:
             metrics_component = self.component(usage="metrics.info")
-            metrics_info = metrics_component.get_project_metrics(
+            metrics_info = metrics_component.get_project_metrics_by_member(
                 project, partner, date_from, date_to
             )
             return metrics_info
