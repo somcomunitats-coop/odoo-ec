@@ -51,7 +51,8 @@ class AccountMove(models.Model):
     def custom_compute_pack_type(self):
         self._set_custom_pack_type_on_invoice()
 
-    # define configuration intercompany journal
+    # Inter Company:
+    # define configuration journal
     def _prepare_invoice_data(self, dest_company):
         inv_data = super()._prepare_invoice_data(dest_company)
         if (
@@ -62,3 +63,15 @@ class AccountMove(models.Model):
                 "journal_id"
             ] = dest_company.sudo().service_invoicing_purchase_journal_id.id
         return inv_data
+
+
+class AccountMoveLine(models.Model):
+    _inherit = "account.move.line"
+
+    # Inter Company:
+    # propagate name from origin invoice
+    @api.model
+    def _prepare_account_move_line(self, dest_move, dest_company):
+        vals = super()._prepare_account_move_line(dest_move, dest_company)
+        vals["name"] = self.name
+        return vals
