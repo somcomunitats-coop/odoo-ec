@@ -20,11 +20,14 @@ class TestEnergyCommunityApiInfo(TransactionComponentCase):
 
     def test__get_community_services(self):
         # given a energy community
-        community_id = community_data["community_id"]
+        community_id = int(community_data["community_id"])
 
         # given a api info component
         work = WorkContext(
-            "res.company", collection=self.backend, schema_class=CommunityServiceInfo
+            "res.company",
+            collection=self.backend,
+            schema_class=CommunityServiceInfo,
+            paging=None,
         )
         api_info_component = work.component(usage="api.info")
         self.assertIsInstance(api_info_component, EnergyCommunityApiInfo)

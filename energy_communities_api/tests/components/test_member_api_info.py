@@ -14,7 +14,7 @@ from ...schemas import (
 )
 
 try:
-    from ..data import client_data
+    from ..data import client_data, client_data_response, community_data
 except:
     pass
 
@@ -23,12 +23,18 @@ class TestMemberApiInfo(TransactionComponentCase):
     def setUp(self):
         super().setUp()
         self.maxDiff = None
-        self.backend = self.env["api.info.backend"].browse(1)
+        self.community_id = int(community_data["community_id"])
+        self.backend = (
+            self.env["api.info.backend"].with_company(self.community_id).browse(1)
+        )
 
     def test__get_member_info(self):
         # given a energy community member
-        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
-        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
+        member = (
+            self.env["res.partner"]
+            .with_company(self.community_id)
+            .search([("vat", "=", client_data["username"])])
+        )
         # given a api info component
         work = WorkContext(
             "res.partner", collection=self.backend, schema_class=MemberInfo
@@ -40,15 +46,7 @@ class TestMemberApiInfo(TransactionComponentCase):
         member_info = api_info_component.get_member_info(member)
 
         # then we have the information related whit that partner
-        self.assertDictEqual(
-            member_info.dict(),
-            {
-                "email": "virginie@demo.net",
-                "lang": "en_US",
-                "name": "Virginie Leloup",
-                "member_number": "0",
-            },
-        )
+        self.assertDictEqual(member_info.model_dump(), client_data_response)
         self.assertIsInstance(member_info, MemberInfo)
 
     @patch(
@@ -77,7 +75,7 @@ class TestMemberApiInfo(TransactionComponentCase):
         self.assertListEqual(
             member_communities,
             [
-                CommunityInfo.from_orm(community)
+                CommunityInfo.model_validate(community)
                 for community in fake_energy_communities()
             ],
         )
@@ -167,7 +165,7 @@ class TestMemberApiInfo(TransactionComponentCase):
         # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
         member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
         # given an id of a community service
-        service_id = 32
+        service_id = community_data["service_id"]
         # given a api info component
         work = WorkContext(
             "res.partner",

@@ -46,7 +46,7 @@ class TestProjectApiInfo(TransactionComponentCase):
 
         # when we ask for the daily energy production of a project in which the member is involv
         # between two dates
-        daily_production = component.get_project_daily_production(
+        daily_production = component.get_project_daily_production_by_member(
             project, member, date_from, date_to
         )
 
@@ -75,7 +75,7 @@ class TestProjectApiInfo(TransactionComponentCase):
 
         # when we ask for the daily energy selfconumption of the member in that project
         # between two dates
-        daily_selfconsumption = component.get_project_daily_selfconsumption(
+        daily_selfconsumption = component.get_project_daily_selfconsumption_by_member(
             project, member, date_from, date_to
         )
 
@@ -104,7 +104,7 @@ class TestProjectApiInfo(TransactionComponentCase):
 
         # when we ask for the daily exported energy of the member in that project
         # between two dates
-        exported_energy = component.get_project_daily_exported_energy(
+        exported_energy = component.get_project_daily_exported_energy_by_member(
             project, member, date_from, date_to
         )
 
@@ -133,7 +133,7 @@ class TestProjectApiInfo(TransactionComponentCase):
 
         # when we ask for the daily consumed energy of the member in that project
         # between two dates
-        exported_energy = component.get_project_daily_consumed_energy(
+        exported_energy = component.get_project_daily_consumed_energy_by_member(
             project, member, date_from, date_to
         )
 
