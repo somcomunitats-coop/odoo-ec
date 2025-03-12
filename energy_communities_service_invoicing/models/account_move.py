@@ -7,20 +7,14 @@ class AccountMove(models.Model):
     _name = "account.move"
     _inherit = ["account.move", "pack.type.mixin"]
 
-    ref_invoice_id = fields.Many2one(
-        comodel_name="account.move",
-        compute="_compute_ref_invoice_id_related_contract_id_is_contract",
-        compute_sudo=True,
-        store=False,
-    )
     related_contract_id = fields.Many2one(
         comodel_name="contract.contract",
-        compute="_compute_ref_invoice_id_related_contract_id_is_contract",
+        compute="_compute_related_contract_id_is_contract",
         compute_sudo=True,
         store=False,
     )
     is_contract = fields.Boolean(
-        compute="_compute_ref_invoice_id_related_contract_id_is_contract",
+        compute="_compute_related_contract_id_is_contract",
         compute_sudo=True,
         store=True,
     )
@@ -31,24 +25,17 @@ class AccountMove(models.Model):
         domain="[('hierarchy_level','=','community')]",
     )
 
-    @api.depends("invoice_line_ids", "ref")
-    def _compute_ref_invoice_id_related_contract_id_is_contract(self):
+    @api.depends("invoice_line_ids", "auto_invoice_id")
+    def _compute_related_contract_id_is_contract(self):
         for record in self:
-            record.ref_invoice_id = False
             record.related_contract_id = False
             record.is_contract = False
-            rel_inv = False
-            if record.ref:
-                rel_inv = (
-                    self.env["account.move"]
-                    .sudo()
-                    .search([("name", "=", record.ref)], limit=1)
-                )
-                if rel_inv:
-                    record.ref_invoice_id = rel_inv.id
-                    record.is_contract = rel_inv.is_contract
-                    if rel_inv.related_contract_id:
-                        record.related_contract_id = rel_inv.related_contract_id.id
+            if record.auto_invoice_id:
+                record.is_contract = record.auto_invoice_id.is_contract
+                if record.auto_invoice_id.related_contract_id:
+                    record.related_contract_id = (
+                        record.auto_invoice_id.related_contract_id.id
+                    )
             else:
                 if record.invoice_line_ids:
                     first_move_line = record.invoice_line_ids[0]
@@ -57,12 +44,12 @@ class AccountMove(models.Model):
                         record.related_contract_id = rel_contract.id
                         record.is_contract = True
 
-    def custom_compute_pack_type(self):
-        self._set_custom_pack_type_on_invoice()
-
-    @api.depends("ref", "invoice_line_ids")
+    @api.depends("invoice_line_ids", "auto_invoice_id")
     def _compute_pack_type(self):
         super()._compute_pack_type()
+
+    def custom_compute_pack_type(self):
+        self._set_custom_pack_type_on_invoice()
 
     # define configuration intercompany journal
     def _prepare_invoice_data(self, dest_company):
