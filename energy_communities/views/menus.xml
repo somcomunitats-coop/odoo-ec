@@ -67,9 +67,6 @@
   <record model="ir.ui.menu" id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root">
     <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
   </record>
-  <record model="ir.ui.menu" id="community_maps.menu_root">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
-  </record>
   <record model="ir.ui.menu" id="website.menu_website_configuration">
     <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
   </record>
