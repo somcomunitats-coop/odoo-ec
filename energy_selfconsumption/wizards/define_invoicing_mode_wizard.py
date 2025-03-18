@@ -30,6 +30,20 @@ class ContractGenerationWizard(models.TransientModel):
         else:
             self.recurring_rule_type = "monthlylastday"
 
+    def create_contract_template(self):
+        service_invoicing_action_create_wizard = self.env["service.invoicing.action.create.wizard"].create({
+            "creation_type": "single",
+            "execution_date": fields.Date.today(),# ÁUN NO SE QUE DATE SE DEBE USAR
+            "company_id": self.env.company.id,
+            "community_company_id": self.env.company.id,
+            "community_company_mids": [self.env.company.id],
+            "pricelist_id": self.env.ref("energy_selfconsumption.selfconsumption_pricelist").id,
+            "pack_id": self.env.ref("energy_selfconsumption.selfconsumption_pack").id,
+            "discount": 0.0,
+            "payment_mode_id": self.env.ref("account.payment_mode_cash").id,#ÁUN NO SE QUE PAYMENT MODE SE DEBE USAR
+        })
+        service_invoicing_action_create_wizard.execute_create()
+
     def _prepare_product_values(self):
         account_income_xml_id = "l10n_es.%i_account_common_7050" % self.env.company.id
         account_income_id = self.env.ref(account_income_xml_id)
