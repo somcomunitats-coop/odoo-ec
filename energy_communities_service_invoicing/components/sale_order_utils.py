@@ -1,11 +1,12 @@
+from odoo.exceptions import MissingError
+
 from odoo.addons.component.core import Component
-from odoo.addons.energy_communities.utils import contract_utils
 
 
 class SaleOrderUtils(Component):
     _inherit = "sale.order.utils"
 
-    def _create_service_invoicing_sale_order(
+    def create_service_invoicing_sale_order(
         self,
         company_id,
         pack_id,
@@ -53,7 +54,7 @@ class SaleOrderUtils(Component):
         # Trigger name computattion in oder to include product's description_sale
         for order_line in sale_order.order_line:
             order_line._compute_name()
-        return sale_order
+        self.work.record = sale_order
 
     def create_service_invoicing_initial(
         self,
@@ -66,7 +67,7 @@ class SaleOrderUtils(Component):
         payment_mode_id=False,
         metadata=False,
     ):
-        so = self._create_service_invoicing_sale_order(
+        self.create_service_invoicing_sale_order(
             company_id,
             pack_id,
             pricelist_id,
@@ -76,19 +77,22 @@ class SaleOrderUtils(Component):
             executed_action_description,
             metadata,
         )
-        so.action_confirm()
-        service_invoicing_id = self._get_related_contracts(so)
-        # TODO: We must call contract_utils with a better component and workcontext modification approach
-        with contract_utils(self.env, service_invoicing_id) as component:
-            component.setup_initial_data()
-            component.clean_non_service_lines()
-            if service_invoicing_id.is_free_pack:
-                component.set_contract_status_active(start_date)
-        return service_invoicing_id
+        contract_utils = self.confirm()
+        # TODO: Decide if this must be by design
+        if contract_utils.work.record.is_free_pack:
+            contract_utils.set_contract_status_active(start_date)
+        return contract_utils.work.record
 
-    def _get_related_contracts(self, sale_order):
-        return (
-            self.env["contract.line"]
-            .search([("sale_order_line_id", "in", sale_order.order_line.ids)])
-            .mapped("contract_id")
-        )
+    def confirm(self):
+        if not self.work.record:
+            raise MissingError(
+                _("Sale order must be defined in order to confirm it on component")
+            )
+        self.work.record.action_confirm()
+        with self.collection.work_on(
+            "contract.contract", record=self.work.record.service_invoicing_id
+        ) as work:
+            contract_utils = work.component("contract.utils")
+            contract_utils.setup_initial_data()
+            contract_utils.clean_non_service_lines()
+            return contract_utils

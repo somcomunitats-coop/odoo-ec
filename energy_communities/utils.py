@@ -6,6 +6,7 @@ from odoo.tools.translate import code_translations
 
 from odoo.addons.component.core import Component, WorkContext
 from odoo.addons.contract.models.contract import ContractContract
+from odoo.addons.sale.models.sale_order import SaleOrder
 
 
 def _get_component(
@@ -34,8 +35,9 @@ def contract_utils(
 @contextmanager
 def sale_order_utils(
     env: Environment,
+    sale_order_id: SaleOrder = None,
 ) -> Component:
-    yield _get_component(env, "sale.order", "sale.order.utils")
+    yield _get_component(env, "sale.order", "sale.order.utils", sale_order_id)
 
 
 def get_translation(source, lang, mods):
