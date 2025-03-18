@@ -9,7 +9,6 @@ from ..models.res_company import (
     _HIERARCHY_LEVEL_BASE_VALUES,
     _LEGAL_FORM_VALUES,
 )
-from ..utils import get_successful_popup_message
 
 _logger = logging.getLogger(__name__)
 
@@ -176,10 +175,17 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             self.with_delay().thread_action_accept()
         else:
             self.thread_action_accept()
-        return get_successful_popup_message(
-            _("Company creation successful"),
-            _("Community creation process has been started."),
-        )
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "type": "success",
+                "title": _("Company creation successful"),
+                "message": _("Community creation process has been started."),
+                "sticky": False,
+                "next": {"type": "ir.actions.act_window_close"},
+            },
+        }
 
     def create_company(self):
         allow_new_members = False

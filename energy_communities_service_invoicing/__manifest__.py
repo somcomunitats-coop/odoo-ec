@@ -9,7 +9,7 @@
     "author": "Som comunitats",
     "website": "https://coopdevs.org",
     "category": "Contract Management",
-    "version": "16.0.0.1.1",
+    "version": "16.0.0.1.2",
     # any module necessary for this one to work correctly
     "depends": [
         "base",
@@ -41,10 +41,11 @@
         "views/res_partner_views.xml",
         "views/sale_order_views.xml",
         "views/service_invoicing_views.xml",
-        "views/menus.xml",
         "wizards/service_invoicing_action.xml",
         "wizards/service_invoicing_action_create.xml",
+        "views/menus.xml",
     ],
+    "post_init_hook": "post_setup_intercompany_invoicing_config",
     # only loaded in demonstration mode
     "demo": [],
 }
