@@ -46,20 +46,21 @@
                 <xpath expr="//field[@name='vat']" position="after">
                   <field name="company_hierarchy_level" invisible="1" />
                   <field name="user_current_role" />
+                  <field name="related_company_id" options="{'no_open': True}" readonly="1" attrs="{'invisible': [('company_hierarchy_level', '=', 'none')]}" />
                 </xpath>
                 <xpath expr="//field[@name='name']" position="before">
                   <h4
-            style="color:green;"
-            attrs="{'invisible': [('company_hierarchy_level', '!=', 'instance')]}"
-          >Platform company</h4>
+                    style="color:green;"
+                    attrs="{'invisible': [('company_hierarchy_level', '!=', 'instance')]}"
+                  >Platform company</h4>
                   <h4
-            style="color:green;"
-            attrs="{'invisible': [('company_hierarchy_level', '!=', 'coordinator')]}"
-          >Coordinator company</h4>
+                    style="color:green;"
+                    attrs="{'invisible': [('company_hierarchy_level', '!=', 'coordinator')]}"
+                  >Coordinator company</h4>
                   <h4
-            style="color:green;"
-            attrs="{'invisible': [('company_hierarchy_level', '!=', 'community')]}"
-          >Community company</h4>
+                    style="color:green;"
+                    attrs="{'invisible': [('company_hierarchy_level', '!=', 'community')]}"
+                  >Community company</h4>
                 </xpath>
                 <xpath expr="//field[@name='child_ids']" position="after">
                   <label

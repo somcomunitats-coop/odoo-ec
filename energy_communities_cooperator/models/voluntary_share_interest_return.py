@@ -2,6 +2,8 @@ from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
+from odoo.addons.energy_communities.utils import get_successful_popup_message
+
 
 class VoluntaryShareInterestReturn(models.Model):
     _name = "voluntary.share.interest.return"
@@ -90,14 +92,4 @@ class VoluntaryShareInterestReturn(models.Model):
             subject=subject,
             body=body,
         )
-        return {
-            "type": "ir.actions.client",
-            "tag": "display_notification",
-            "params": {
-                "type": "success",
-                "title": subject,
-                "message": body,
-                "sticky": False,
-                "next": {"type": "ir.actions.act_window_close"},
-            },
-        }
+        return get_successful_popup_message(subject, body)

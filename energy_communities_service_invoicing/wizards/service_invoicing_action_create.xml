@@ -1,0 +1,73 @@
+<odoo>
+  <record
+    id="view_service_invoicing_action_create_wizard_form"
+    model="ir.ui.view"
+  >
+    <field name="name">service.invoicing.action.create.wizard.form</field>
+    <field name="model">service.invoicing.action.create.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Service Contract">
+        <sheet>
+          <group>
+            <field name="creation_type" invisible="1" />
+            <field name="allowed_community_company_ids" invisible="1" />
+            <field name="allowed_payment_mode_ids" invisible="1" />
+            <field name="platform_pack_product_categ_id" invisible="1" />
+            <field name="execution_date" required="1"/>
+            <field
+              name="company_id"
+              domain="[('hierarchy_level','=','coordinator')]"
+              attrs="{'invisible':[('creation_type','=','multiple')],'required':[('creation_type','=','single')]}"
+            />
+            <field
+              name="community_company_id"
+              attrs="{'invisible':[('creation_type','=','multiple')],'required':[('creation_type','=','single')]}"
+            />
+            <field 
+              name="community_company_mids"
+              attrs="{'invisible':[('creation_type','=','single')],'required':[('creation_type','=','multiple')]}"
+              widget="many2many"
+            >
+             <tree>
+                <field name="name"/>
+                <field name="parent_id"/>
+             </tree>
+            </field>
+            <field name="platform_pack_id"
+              domain="[('categ_id','=', platform_pack_product_categ_id)]"
+              required="1"
+            />
+            <field name="pricelist_id" required="1" domain="[('company_id','=',False)]"/>
+            <field
+              name="payment_mode_id"
+              attrs="{'invisible':[('creation_type','=','multiple')]}"
+            />
+            <field name="discount" required="1" />
+          </group>
+        </sheet>
+        <footer>
+          <button
+            name="execute_create"
+            string="create"
+            type="object"
+            class="btn-primary"
+          />
+          <button
+            string="Cancelar"
+            class="btn-secondary"
+            special="cancel"
+          />
+        </footer>
+      </form>
+    </field>
+  </record>
+  <record
+    model="ir.actions.act_window"
+    id="service_invoicing_action_create_wizard_action"
+  >
+      <field name="name">Assign pack to community</field>
+      <field name="res_model">service.invoicing.action.create.wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+  </record>
+</odoo>

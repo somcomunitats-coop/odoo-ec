@@ -1,0 +1,101 @@
+<odoo>
+  <record
+    id="view_service_invoicing_action_wizard_form"
+    model="ir.ui.view"
+  >
+    <field name="name">service.invoicing.action.wizard.form</field>
+    <field name="model">service.invoicing.action.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Execute a service invoicing action">
+        <sheet>
+          <group>
+            <field name="executed_action" invisible="1" />
+            <field name="pack_type" invisible="1" />
+            <field
+              name="service_invoicing_id"
+              required="1"
+              readonly="1"
+              domain="[('community_company_id','!=',False)]"
+              options="{'no_open': True}"
+            />
+            <field name="execution_date" required="1"/>
+            <field
+              name="pack_id"
+              domain="[('pack_type','=', pack_type)]"
+              attrs="{
+                'invisible': [('executed_action','not in',['modification','reopen'])],
+                'required': [('executed_action','=','reopen')]
+              }"
+            />
+            <field
+              name="pricelist_id"
+              attrs="{
+               'invisible': [('executed_action','not in',['modification','reopen'])],
+               'required': [('executed_action','=','reopen')]
+              }"
+            />
+            <field
+              name="payment_mode_id"
+              attrs="{
+               'invisible': [('executed_action','not in',['modification','reopen'])],
+               'required': [('executed_action','=','reopen')]
+              }"
+            />
+            <field
+              name="discount"
+              attrs="{
+                'invisible': [('executed_action','not in',['modification','reopen'])],
+                'required': [('executed_action','=','reopen')]
+              }"
+            />
+          </group>
+        </sheet>
+        <footer>
+          <button
+            name="execute_activate"
+            string="activate contract"
+            type="object"
+            class="btn-primary"
+            attrs="{'invisible': [('executed_action','!=','activate')]}"
+          />
+          <button
+            name="execute_modify"
+            string="modify"
+            type="object"
+            class="btn-primary"
+            attrs="{'invisible': [('executed_action','!=','modification')]}"
+          />
+          <button
+            name="execute_close"
+            string="close contract"
+            type="object"
+            class="btn-primary"
+            attrs="{'invisible': [('executed_action','!=','close')]}"
+          />
+          <button
+            name="execute_reopen"
+            string="reopen contract"
+            type="object"
+            class="btn-primary"
+            attrs="{'invisible': [('executed_action','!=','reopen')]}"
+          />
+          <button
+            special="cancel"
+            string="Cancelar"
+            class="btn-secondary"
+          />
+        </footer>
+      </form>
+    </field>
+  </record>
+  <record
+    model="ir.actions.act_window"
+    id="service_invoicing_action_wizard_action"
+  >
+      <field name="name">Service invoicing actions</field>
+      <field name="res_model">service.invoicing.action.wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+  </record>
+
+</odoo>

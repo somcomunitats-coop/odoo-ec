@@ -1,0 +1,12 @@
+<odoo>
+  <record id="view_contract_line_qty_formula_form" model="ir.ui.view">
+    <field name="name">contract.line.qty.formula form(in energy_communities service_invoicing)</field>
+    <field name="model">contract.line.qty.formula</field>
+    <field name="inherit_id" ref="contract_variable_quantity.view_contract_line_qty_formula_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='code']" position="before">
+        <field name="company_id" />
+      </xpath>
+    </field>
+  </record>
+</odoo>

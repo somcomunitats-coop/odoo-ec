@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 10:04+0000\n"
-"PO-Revision-Date: 2025-02-13 10:04+0000\n"
+"POT-Creation-Date: 2025-03-03 07:47+0000\n"
+"PO-Revision-Date: 2025-03-03 07:47+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,20 +18,28 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
 #, python-format
 msgid ""
 "\n"
 "CAU: {cau}\n"
-"Total installed nominal power (kW): {power}\n"
-"Partition coefficient: {coefficient}"
+"                        Total installed nominal power (kW): {power}\n"
+"                        Partition coefficient: {coefficient}\n"
+"                        Daily nominal power acquired: {power} kWn * {coefficient} = {power_acquired} kWn/day\n"
+"                        Days to be invoiced: {days_invoiced} days\n"
+"                        Total amount invoiced:  {days_invoiced} days * {power_acquired} kWn/day = {total_amount}\n"
 msgstr ""
 "\n"
 "CAU: {cau}\n"
-"Potencia nominal total instalada (kW): {power}\n"
-"Coeficiente de partición: {coefficient}"
+"                        Poténcia nominal instalada total (kW): {power}\n"
+"                        Coeficient de partición: {coefficient}\n"
+"                        Poténcia nominal adquirida diaria: {power} kWn * {coefficient} = {power_acquired} kWn/día\n"
+"                        Días a facturar: {days_invoiced} días\n"
+"                        Cantidad total a facturar:  {days_invoiced} días * {power_acquired} kWn/día = {total_amount}\n"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid ""
@@ -48,6 +56,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid ""
 "\n"
@@ -59,6 +68,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid ""
@@ -73,6 +83,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid ""
@@ -502,6 +513,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "<li>Line {line}: {error}</li>\n"
 msgstr "<li>Línea {line}: {error}</li>"
@@ -522,7 +535,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
 msgid ""
 "<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</span>\n"
-"                                    <span groups=\"account.group_show_line_subtotals_tax_included\">Total Price</span>"
+"                    <span groups=\"account.group_show_line_subtotals_tax_included\">Total Price</span>"
 msgstr ""
 "<span groups=\"account.group_show_line_subtotals_tax_excluded\">Cantidad</span>\n"
 "                                    <span groups=\"account.group_show_line_subtotals_tax_included\">Precio Total</span>"
@@ -541,16 +554,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
 msgid "<span> kWn/day</span>"
 msgstr "<span> kWn/día</span>"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
-msgid "<span>Description</span>"
-msgstr "<span>Descripción</span>"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
-msgid "<span>Disc.%</span>"
-msgstr "<span>Desc.%</span>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
@@ -593,16 +596,6 @@ msgid "<span>Total installation generation</span>"
 msgstr "<span>Total generado de la instalación</span>"
 
 #. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
-msgid "<span>Unit Price</span>"
-msgstr "<span>Precio unidad</span>"
-
-#. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
-msgid "<strong class=\"mr16\">Subtotal</strong>"
-msgstr ""
-
-#. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_headline_message_closed
 msgid "<strong>Closed form</strong>"
 msgstr "<strong>Formulario cerrado</strong>"
@@ -638,6 +631,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_selfconsumption_unique_code
 #, python-format
 msgid "A project with this CAU already exists."
@@ -645,6 +639,7 @@ msgstr "Ya existe un proyecto con esta CAU."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: model:ir.model.constraint,message:energy_selfconsumption.constraint_energy_selfconsumption_supply_point_unique_code_company_id
 #, python-format
@@ -684,6 +679,7 @@ msgstr "Número de cuenta"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
 #, python-format
 msgid "Accounting Journal not found."
 msgstr "Diario de contabilidad no encontrado."
@@ -711,8 +707,10 @@ msgstr "Activar formulario"
 #: code:addons/energy_selfconsumption/models/inscription.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/wizards/change_state_inscription_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__active
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__active
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_line_wizard__state__active
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_change_state_inscription_lines_wizard__state__active
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__active
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_inscription_selfconsumption__state__active
@@ -759,6 +757,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Address"
 msgstr "Dirección"
@@ -800,12 +799,14 @@ msgstr "Consumo anual de electricidad"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Annual electricity use?"
 msgstr "¿Consumo anual de electricidad?"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Are you in a vulnerable situation?"
@@ -824,6 +825,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/clean_supply_point_assignation_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/clean_supply_point_assignation_wizard.py:0
 #, python-format
 msgid "Are you sure you want to delete all assigned distribution points?"
@@ -871,6 +873,7 @@ msgstr "Período de facturación"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Birthdate"
 msgstr "Fecha de nacimiento"
@@ -882,6 +885,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "CIF/NIF"
@@ -901,12 +905,14 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid "CSV file could not be loaded"
 msgstr "No se ha podido cargar el archivo CSV"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__code
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__code
@@ -920,6 +926,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid ""
 "CUPS is the Unified Code of the Point of Supply. You can find it on "
@@ -930,6 +937,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
 #, python-format
 msgid ""
@@ -950,12 +958,14 @@ msgstr "Referencia catastral"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Cadastral reference of the property"
 msgstr "Referencia catastral de la propiedad"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_clean_supply_point_assignation_wizard
 msgid "Cancel"
 msgstr "Cancelar"
@@ -964,11 +974,26 @@ msgstr "Cancelar"
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/inscription.py:0
 #: code:addons/energy_selfconsumption/wizards/change_state_inscription_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_line_wizard__state__change
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_wizard__state__change
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_change_state_inscription_lines_wizard__state__change
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_inscription_selfconsumption__state__change
 #, python-format
 msgid "Change"
 msgstr "Cambiar"
+
+#. module: energy_selfconsumption
+#: model:ir.actions.act_window,name:energy_selfconsumption.action_change_distribution_table_import_wizard
+msgid "Change distribution table"
+msgstr "Cambiar tabla de distribución"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__change_distribution_table_import_line_wizard_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__change_distribution_table_import_line_wizard_news_ids
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__change_distribution_table_import_line_wizard_views_ids
+msgid "Change distribution table import line wizard"
+msgstr "Cambiar tabla de distribución"
 
 #. module: energy_selfconsumption
 #: model:ir.actions.act_window,name:energy_selfconsumption.change_state_inscription_wizard_action
@@ -983,12 +1008,31 @@ msgid "Change state inscription lines wizards"
 msgstr "Cambiar estado de inscripción"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__change_distribution_table_import_wizard_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__change_state_inscription_wizard_id
 msgid "Change state inscription wizard"
 msgstr "Cambiar estado de inscripción"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
+#: model:ir.model,name:energy_selfconsumption.model_change_distribution_table_import_line_wizard
+#, python-format
+msgid "Change_distribution_table_import_line_wizard"
+msgstr "Cambiar tabla de distribución"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
+#: model:ir.model,name:energy_selfconsumption.model_change_distribution_table_import_wizard
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+#, python-format
+msgid "Change_distribution_table_import_wizard"
+msgstr "Cambiar tabla de distribución"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__city
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__city
@@ -1011,6 +1055,7 @@ msgstr "Asistente para la asignación de puntos de suministro limpios"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.actions.server,name:energy_selfconsumption.manager_clean_supply_point_assignation_action
 #, python-format
@@ -1037,12 +1082,14 @@ msgstr "El coeficiente es válido"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
+#: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
 #, python-format
 msgid "Coefficient can't be negative."
 msgstr "El coeficiente no puede ser negativo."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #, python-format
 msgid "Coefficient distribution must sum to 1."
@@ -1059,6 +1106,7 @@ msgstr "Compañía"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Company Name"
@@ -1133,6 +1181,7 @@ msgstr "Confirmar"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Confirm E-mail"
 msgstr "Confirmar e-mail"
@@ -1157,6 +1206,7 @@ msgstr "Contrato"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
 #, python-format
 msgid "Contract - %s - %s"
@@ -1225,6 +1275,8 @@ msgid "Create participant table"
 msgstr "Crear tabla de participantes"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__create_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard__create_uid
@@ -1245,6 +1297,8 @@ msgid "Created by"
 msgstr "Creado por"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__create_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__create_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard__create_date
@@ -1325,6 +1379,7 @@ msgstr "Días facturados"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 #, python-format
 msgid "Define Invoicing Mode"
@@ -1345,6 +1400,14 @@ msgid ""
 msgstr ""
 
 #. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_wizard__state__delete
+#, python-format
+msgid "Delete"
+msgstr "Eliminar"
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table__hourly_coefficients_imported_delimiter
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table_import_wizard__delimiter
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__delimiter
@@ -1363,6 +1426,8 @@ msgid "Description form"
 msgstr "Descripción del formulario"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__display_name
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__display_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard__display_name
@@ -1435,12 +1500,14 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Do you currently have self-consumption?"
 msgstr "¿Tiene actualmente autoconsumo?"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Dont exit participation for this project."
@@ -1475,6 +1542,7 @@ msgstr "Descargar Autorización del Gestor de Autoconsumo"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__draft
 #, python-format
 msgid "Draft"
@@ -1482,6 +1550,7 @@ msgstr "Borrador"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "E-mail"
@@ -1584,6 +1653,7 @@ msgstr "Final"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__energy_delivered
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__energy_delivered
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_delivered
@@ -1594,6 +1664,7 @@ msgstr "Energía Entregada"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__energy_custom
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__energy_custom
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__energy_custom
@@ -1603,6 +1674,7 @@ msgstr "Energía entregada personalizada"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid "Energy Delivered Custom: {energy_delivered} kWh"
@@ -1621,6 +1693,7 @@ msgstr "Fórmula Variable de Energía Entregada"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid "Energy Delivered: {energy_delivered} kWh"
 msgstr "Energía Entregada: {energy_delivered} kWh"
@@ -1633,6 +1706,7 @@ msgstr "Proyecto Energético"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Energy Project Name"
@@ -1666,6 +1740,7 @@ msgstr "Inscripción en el proyecto de autoconsumo compartido del"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Error format date."
 msgstr "Error de formato de fecha."
@@ -1673,7 +1748,10 @@ msgstr "Error de formato de fecha."
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Error parsing the file"
@@ -1681,6 +1759,7 @@ msgstr "Error al analizar el archivo"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Error reading file"
@@ -1720,6 +1799,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Female"
@@ -1776,6 +1856,8 @@ msgstr "Nombre"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_create_distribution_table_wizard__type__fixed
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__fixed
@@ -1807,6 +1889,7 @@ msgstr "Icono de fuente impresionante, p. fa-tasks"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid ""
 "For the 2.0TD rate, the maximum contracted power must be between 0 and 15 "
@@ -1818,6 +1901,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid ""
 "For the 3.0TD rate, the maximum contracted power must be greater than 15 kW."
@@ -1827,6 +1911,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Gender"
@@ -1839,6 +1924,7 @@ msgstr "Generar"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Generate Contracts"
@@ -1879,6 +1965,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid ""
 "Have to accept and authorize being able to issue payments to this bank "
@@ -1892,12 +1979,14 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Have to accept politic privacy."
 msgstr "Tienes que aceptar la política de privacidad."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_header_description
 #, python-format
@@ -1907,6 +1996,7 @@ msgstr "Descripción de la cabecera en el formulario del sitio web"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid ""
 "How much power of the collective PV installation you would like to purchase."
@@ -1915,6 +2005,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__accept
 #, python-format
@@ -1930,12 +2021,14 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "I accept privacy policy"
 msgstr "Acepto la política de privacidad"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "I prefer to not share it"
@@ -1944,11 +2037,14 @@ msgstr "Prefiero no compartirlo"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "IBAN"
 msgstr ""
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard__id
@@ -2005,6 +2101,7 @@ msgstr "Importar"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.actions.act_window,name:energy_selfconsumption.distribution_table_import_wizard_action
 #, python-format
 msgid "Import Distribution Table"
@@ -2012,6 +2109,7 @@ msgstr "Importar tabla de distribución"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Import Errors"
@@ -2028,6 +2126,7 @@ msgstr "Importar archivo (*.csv)"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Import Inscriptions and Supply Points"
 msgstr "Importar inscripciones y puntos de suministro"
@@ -2039,6 +2138,7 @@ msgstr "Importar datos"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Import errors found: <ul>{list}</ul>"
@@ -2056,6 +2156,7 @@ msgstr "Importar tabla"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__process
 #, python-format
@@ -2075,6 +2176,8 @@ msgstr ""
 #: code:addons/energy_selfconsumption/models/inscription.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/wizards/change_state_inscription_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_line_wizard__state__inactive
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_change_state_inscription_lines_wizard__state__inactive
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_inscription_selfconsumption__state__inactive
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__conf_state__inactive
@@ -2085,6 +2188,7 @@ msgstr "Inactivo"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid ""
 "Information necessary for the formalization of the distribution "
@@ -2094,6 +2198,7 @@ msgstr ""
 "encontrarlo en cadastro.es"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__inscription_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__inscription_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__inscription_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__inscription_ids
@@ -2133,12 +2238,15 @@ msgstr "Instalación:"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CAU: Last 3 digits are not numbers"
 msgstr "CAU no válida: los últimos 3 dígitos no son números"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
@@ -2149,12 +2257,15 @@ msgstr "CAU no válida: El CUPS no comienza con 'ES'."
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CAU: The CUPS has an incorrect format."
 msgstr "CAU no válido: El CUPS tiene un formato incorrecto."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CAU: The character after CUPS is not A"
@@ -2164,12 +2275,16 @@ msgstr "CAU no válida: el carácter después de CUPS no es A"
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CAU: The checksum of the CUPS is incorrect."
 msgstr "CAU no válida: la suma de comprobación del CUPS es incorrecta."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
@@ -2183,6 +2298,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CAU: The length is not correct"
 msgstr "CAU no válida: la longitud no es correcta"
@@ -2190,12 +2306,15 @@ msgstr "CAU no válida: la longitud no es correcta"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CIL: Last 3 digits are not numbers"
 msgstr "CIL no válido: los últimos 3 dígitos no son números"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
@@ -2206,6 +2325,8 @@ msgstr "CIL no válido: CUPS no comienza con 'ES'."
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CIL: The CUPS has an incorrect format."
 msgstr "CIL no válido: El CUPS tiene un formato incorrecto."
@@ -2214,12 +2335,16 @@ msgstr "CIL no válido: El CUPS tiene un formato incorrecto."
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CIL: The checksum of the CUPS is incorrect."
 msgstr "CIL no válido: la suma de comprobación de CUPS es incorrecta."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
@@ -2233,12 +2358,14 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Invalid CIL: The length is not correct"
 msgstr "CIL no válido: la longitud no es correcta"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "Invalid CUPS: The checksum is incorrect."
@@ -2247,12 +2374,14 @@ msgstr "CUPS no válidos: la suma de comprobación es incorrecta."
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "Invalid CUPS: The length is incorrect."
 msgstr "CUPS no válidos: La longitud es incorrecta."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "Invalid CUPS: does not start with 'ES'."
@@ -2261,6 +2390,7 @@ msgstr "CUPS no válidos: no comienza con 'ES'."
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "Invalid CUPS: has an incorrect format."
 msgstr "CUPS no válidos: tiene un formato incorrecto."
@@ -2268,6 +2398,8 @@ msgstr "CUPS no válidos: tiene un formato incorrecto."
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "Invalid Cadastral Reference: {error}"
@@ -2276,12 +2408,14 @@ msgstr "Referencia catastral no válida: {error}"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
 msgid "Invalid IBAN: {error}"
 msgstr "IBAN no válido: {error}"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "Invalid VAT: {error}"
@@ -2325,6 +2459,7 @@ msgstr "Es seguidor"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Is the owner the same partner?"
 msgstr "¿El titular es el mismo socio?"
@@ -2342,12 +2477,14 @@ msgstr "Apunte contable"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Lang"
 msgstr "Idioma"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Language not found."
@@ -2359,6 +2496,8 @@ msgid "Last Date Invoiced"
 msgstr "Última fecha facturada"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard____last_update
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard____last_update
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard____last_update
@@ -2389,6 +2528,8 @@ msgid "Last Period Start"
 msgstr "Inicio del último período"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__write_uid
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard__write_uid
@@ -2409,6 +2550,8 @@ msgid "Last Updated by"
 msgstr "Última actualización por"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__write_date
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_clean_supply_point_assignation_wizard__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__write_date
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_wizard__write_date
@@ -2436,6 +2579,7 @@ msgstr "Apellido"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Lastname"
 msgstr "Apellido"
@@ -2449,6 +2593,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_create_distribution_table_wizard__type_distribute_excess__linear
 #, python-format
@@ -2499,6 +2644,7 @@ msgstr "Línea principal"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Male"
 msgstr "Hombre"
@@ -2516,6 +2662,7 @@ msgstr "Mandato Filtrado"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
 #, python-format
 msgid "Mandate not found for {partner}"
 msgstr "Mandato no encontrado para {partner}"
@@ -2527,6 +2674,7 @@ msgstr "Potencia máxima distribuida"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__contracted_power
 #, python-format
@@ -2571,6 +2719,7 @@ msgstr "Modalidad"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Must have a valid Distribution Table."
 msgstr "Debe tener una tabla de distribución válida."
@@ -2596,6 +2745,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__supply_point_name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__name
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__name
@@ -2618,10 +2768,24 @@ msgstr "Datos necesarios para la integración de la Comunidad:"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_wizard__state__new
+#, python-format
+msgid "New"
+msgstr "Nuevo"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
 #, python-format
 msgid "New Supply Point"
 msgstr "Nuevo Punto de Suministro"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+msgid "New registrations"
+msgstr "Nuevos registros"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__activity_calendar_event_id
@@ -2673,22 +2837,33 @@ msgid "Next Period Start"
 msgstr "Próximo Período de Comienzo"
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+msgid "Next step"
+msgstr "Siguiente paso"
+
+#. module: energy_selfconsumption
 #. odoo-python
+
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/models/partner.py:0
+#: code:addons/energy_selfconsumption/models/partner.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_create_distribution_table_wizard__distribute_excess__no
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__used_in_selfconsumption__no
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__res_partner__vulnerability_situation__no
 #, python-format
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
 msgid "No participation found for this project."
@@ -2697,7 +2872,10 @@ msgstr "No se ha encontrado participación para este proyecto."
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "No valid encoding was found for the attached file"
@@ -2706,6 +2884,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Not binary"
@@ -2755,8 +2934,19 @@ msgstr "OTROS DATOS NECESARIOS"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/change_distribution_table_import_wizard.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__change_distribution_table_import_wizard__state__old
+#, python-format
+msgid "Old"
+msgstr "Antiguo"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "Only csv format files are accepted."
@@ -2764,6 +2954,7 @@ msgstr "Solo se aceptan archivos en formato csv."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Other"
@@ -2785,6 +2976,7 @@ msgstr "Suministro del propietario"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
 msgid "Owner could not be created or found."
@@ -2812,6 +3004,7 @@ msgstr "Participación"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Participation does not exist."
 msgstr "La participación no existe."
@@ -2822,6 +3015,7 @@ msgid "Participation inscription"
 msgstr "Inscripción de participación"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__participation_real_quantity
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__participation_real_quantity
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__participation_real_quantity
 msgid "Participation real quantity"
@@ -2835,12 +3029,14 @@ msgstr "Socio"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Partner does not exist."
 msgstr "El socio no existe."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
 #: code:addons/energy_selfconsumption/models/inscription.py:0
 #, python-format
 msgid "Partner is already signed up in this project with that cups."
@@ -2849,12 +3045,14 @@ msgstr "El socio ya está inscrito en este proyecto con esas copas."
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Partner is not cooperator."
 msgstr "Socio no es cooperador."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
 msgid "Partner with VAT {vat} is already registered in project {code}"
@@ -2863,12 +3061,14 @@ msgstr "Socio con CIF/NIF {vat} ya está registrado en el proyecto {code}"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
 msgid "Partner with VAT:<b>{vat}</b> is not a cooperator."
 msgstr "Colaborador con CIF/NIF:<b>{vat}</b> no es un colaborador."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
 msgid "Partner with VAT:<b>{vat}</b> was not found."
@@ -2894,6 +3094,7 @@ msgstr "Porcentaje de energía distribuida"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Phone"
 msgstr "Teléfono"
@@ -2905,6 +3106,7 @@ msgstr "Potencia (kW)"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__power_acquired
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__power_acquired
@@ -2929,6 +3131,11 @@ msgid "Power acquired"
 msgstr "Potencia adquirida"
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+msgid "Previous step"
+msgstr "Paso anterior"
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__price
 msgid "Price"
 msgstr "Precio"
@@ -2940,6 +3147,7 @@ msgstr "Política de privacidad"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "Privacy policy file text"
@@ -2971,12 +3179,16 @@ msgstr "Proyecto"
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Project must have a valid Code."
 msgstr "El proyecto debe tener un código CUP válido."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
@@ -2986,6 +3198,7 @@ msgstr "El proyecto debe tener una potencia nominal válida."
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid "Project must have defined a invoicing mode before activation."
 msgstr ""
@@ -2994,6 +3207,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_create_distribution_table_wizard__type_distribute_excess__proportional
 #, python-format
@@ -3012,6 +3226,11 @@ msgstr "Cantidad"
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__quotechar
 msgid "Quotechar in import CSV file."
 msgstr "Quotechar en archivo CSV de importación."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+msgid "Record deregistration"
+msgstr "Registro de desinscripción"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__recurring_rule_type
@@ -3080,6 +3299,11 @@ msgstr "Restablecer a borrador"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__activity_user_id
 msgid "Responsible User"
 msgstr "Usuario responsable"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+msgid "Retain old records"
+msgstr "Mantener registros antiguos"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -3162,12 +3386,14 @@ msgstr "Recordatorio de facturación autoconsumo ${ object.name }"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #, python-format
 msgid "Self-consumption project already has a table in process"
 msgstr "El proyecto de autoconsumo ya tiene una tabla en proceso"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #, python-format
 msgid "Self-consumption project already has a validated table"
@@ -3371,15 +3597,17 @@ msgid "State"
 msgstr "Provincia"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__supply_point_state
+msgid "State Name"
+msgstr "Nombre del Estado"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__state
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_wizard__state
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__state
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__state
 msgid "Status"
 msgstr "Estado"
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__supply_point_state
-msgid "State Name"
-msgstr "Nombre del Estado"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_distribution_table__activity_state
@@ -3477,12 +3705,18 @@ msgid "Supply Points"
 msgstr "Puntos de Suministro"
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
+msgid "Tax 15%"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__owner_vat
 msgid "Tax ID"
 msgstr "Impuesto ID"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
 msgid "The IBAN field cannot be empty."
@@ -3501,12 +3735,14 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid "The contract has no lines"
 msgstr "El contrato no tiene líneas"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "The email is not the same."
@@ -3516,6 +3752,8 @@ msgstr "El correo electrónico no es el mismo."
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid "The energy generated must be greater than 0 (kWh)."
 msgstr "La energía generada debe ser superior a 0 (kWh)."
@@ -3523,12 +3761,14 @@ msgstr "La energía generada debe ser superior a 0 (kWh)."
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
 #, python-format
 msgid "The file should contain 28 columns and not {header_length} columns."
 msgstr "El archivo debe contener 28 columnas y no {header_length} columnas."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid ""
@@ -3541,6 +3781,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
 #, python-format
 msgid ""
 "The number of contracts selected does not match the number of contracts "
@@ -3552,6 +3793,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
+#: code:addons/energy_selfconsumption/models/supply_point_assignation.py:0
 #, python-format
 msgid "The partner of the supply point is not subscribed to the project"
 msgstr "El socio del punto de suministro no está suscrito al proyecto"
@@ -3559,12 +3801,14 @@ msgstr "El socio del punto de suministro no está suscrito al proyecto"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #, python-format
 msgid "The project has to have a power greater than 0."
 msgstr "El proyecto debe tener una potencia superior a 0."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid ""
@@ -3582,6 +3826,7 @@ msgstr "La suma de todos los coeficientes debe dar como resultado 1"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #, python-format
 msgid ""
 "The sum of coefficients for the following hours is not equal to 1: %s, "
@@ -3591,12 +3836,14 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #, python-format
 msgid "The sum of coefficients is not equal to 1: %s"
 msgstr "La suma de los coeficiente no es igual a 1: %s"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #, python-format
 msgid ""
@@ -3618,6 +3865,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid ""
 "There is already an individual photovoltaic self-consumption or collective "
@@ -3628,6 +3876,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/contract_generation_wizard.py:0
 #, python-format
 msgid "There is no distribution table in proces of activation."
@@ -3654,6 +3903,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/distribution_table_import_wizard.py:0
 #, python-format
 msgid "There isn't any supply point with this code: {code}"
 msgstr "No hay ningún punto de suministro con este código: {code}"
@@ -3677,6 +3927,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #, python-format
 msgid ""
@@ -3734,6 +3985,11 @@ msgid "Unactivate form"
 msgstr "Desactivar formulario"
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
+msgid "Update old records"
+msgstr "Actualizar registros antiguos"
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__used_in_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__used_in_selfconsumption
 msgid "Used in selfconsumption"
@@ -3747,6 +4003,7 @@ msgstr "Rol actual del usuario"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "VAT of the partner"
 msgstr "CIF/NIF del socio"
@@ -3759,6 +4016,7 @@ msgstr "Validar"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__state__validated
 #, python-format
 msgid "Validated"
@@ -3766,6 +4024,7 @@ msgstr "Validado"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: code:addons/energy_selfconsumption/models/distribution_table.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_distribution_table__type__hourly
 #, python-format
@@ -3810,6 +4069,7 @@ msgstr "Historial de comunicaciones del sitio web"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "What participation would you like?"
 msgstr "¿Qué participación le gustaría?"
@@ -3819,8 +4079,14 @@ msgstr "¿Qué participación le gustaría?"
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/models/partner.py:0
 #: code:addons/energy_selfconsumption/models/partner.py:0
 #: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_create_distribution_table_wizard__distribute_excess__yes
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__used_in_selfconsumption__yes
@@ -3831,6 +4097,7 @@ msgstr "Sí"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid "You are already enrolled in this self-consumption project."
@@ -3862,6 +4129,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid ""
 "You can find the annual electricity use on the electricity bill(Total annual"
@@ -3872,6 +4140,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/clean_supply_point_assignation_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/clean_supply_point_assignation_wizard.py:0
 #, python-format
 msgid ""
@@ -3884,6 +4153,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/contract_line.py:0
+#: code:addons/energy_selfconsumption/models/contract_line.py:0
 #, python-format
 msgid ""
 "You can't have a date of next invoice anterior to the start of the contract "
@@ -3894,6 +4164,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
 msgid ""
@@ -3906,6 +4177,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
 msgid "You have successfully registered."
 msgstr "Se ha registrado correctamente."
@@ -3913,6 +4185,8 @@ msgstr "Se ha registrado correctamente."
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/change_state_inscription_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/change_state_inscription_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #, python-format
 msgid "You have to select at least one entry."
@@ -3920,6 +4194,7 @@ msgstr "Debe seleccionar al menos una entrada."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
 msgid ""
@@ -3938,12 +4213,14 @@ msgstr "Sus datos se han registrado correctamente."
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #, python-format
 msgid "Your distribution percentage cannot be 0."
 msgstr "Su porcentaje de distribución no puede ser 0."
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #, python-format
 msgid "Your distribution percentage cannot exceed 100%."
@@ -3957,6 +4234,7 @@ msgstr "Código Postal"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__zip
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__zip

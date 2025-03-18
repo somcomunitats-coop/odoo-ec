@@ -1,3 +1,4 @@
+from . import pack_type_mixin
 from . import account_move
 from . import contract
 from . import contract_csv_report
@@ -14,3 +15,4 @@ from . import project
 from . import selfconsumption
 from . import supply_point
 from . import supply_point_assignation
+from . import contract_template

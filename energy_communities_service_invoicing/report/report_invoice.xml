@@ -1,0 +1,16 @@
+<odoo>
+  <template id="report_invoice_document" inherit_id="account.report_invoice_document">
+    <xpath expr="//div[@id='informations']" position="inside">
+      <div class="col-auto col-3 mw-100 mb-2" t-if="o.pack_type == 'platform_pack'">
+        <strong>Community:</strong>
+        <t t-if="o.related_community_company_id.comercial_name">
+          <p class="m-0" t-field="o.related_community_company_id.comercial_name"/>
+        </t>
+        <t t-else="">
+          <p class="m-0" t-field="o.related_community_company_id.name"/>
+        </t>
+      </div>
+    </xpath>
+  </template>
+</odoo>
+

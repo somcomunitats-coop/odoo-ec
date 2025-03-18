@@ -30,6 +30,12 @@ class ResPartner(models.Model):
         compute="compute_company_hierarchy_level",
         store=True,
     )
+    related_company_id = fields.Many2one(
+        "res.company",
+        string="Represented company",
+        compute="compute_related_company_id",
+        store=False,
+    )
     company_ids_info = fields.Many2many(
         string="Companies",
         comodel_name="res.company",
@@ -53,11 +59,22 @@ class ResPartner(models.Model):
 
     def compute_company_hierarchy_level(self):
         for record in self:
-            rel_company = self.env["res.company"].search(
-                [("partner_id", "=", record.id)]
+            record.company_hierarchy_level = "none"
+            if record.related_company_id:
+                record.company_hierarchy_level = (
+                    record.related_company_id.hierarchy_level
+                )
+
+    def compute_related_company_id(self):
+        for record in self:
+            record.related_company_id = False
+            related_company_id = (
+                self.env["res.company"]
+                .sudo()
+                .search([("partner_id", "=", record.id)], limit=1)
             )
-            if rel_company:
-                record.company_hierarchy_level = rel_company.hierarchy_level
+            if related_company_id:
+                record.related_company_id = related_company_id[0].id
 
     @api.constrains("company_ids")
     def _constrains_partner_company_ids(self):

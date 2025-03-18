@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "16.0.0.1.7",
+    "version": "16.0.0.2.1",
     "license": "AGPL-3",
     "depends": [
         "base",
@@ -26,6 +26,7 @@
         "web_m2x_options",
         "l10n_es",
         "report_csv",
+        "energy_communities_service_invoicing",
     ],
     "external_dependencies": {
         "python": ["pandas>=2.0.3", "numpy>=1.24.4", "openupgradelib>=3.6.1"]
@@ -41,6 +42,7 @@
         "data/mail_template.xml",
         "data/ir_attachment_data.xml",
         "data/ir_cron.xml",
+        "data/product_data.xml",
         "views/contract_views.xml",
         "views/selfconsumption_views.xml",
         "views/supply_point_views.xml",
@@ -59,6 +61,7 @@
         "wizards/change_state_inscription_wizard_views.xml",
         "reports/selfconsumption_reports.xml",
         "reports/invoice_template.xml",
+        "wizards/change_distribution_table_import_wizard.xml",
     ],
     "demo": [
         "demo/energy_selfconsumption_demo.xml",

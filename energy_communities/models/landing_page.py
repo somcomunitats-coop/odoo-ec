@@ -12,6 +12,7 @@ from ..pywordpress_client.resources.authenticate import Authenticate
 from ..pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
 )
+from ..utils import get_successful_popup_message
 from .res_company import _CE_MEMBER_STATUS_VALUES, _CE_TYPE, _LEGAL_FORM_VALUES
 
 
@@ -154,6 +155,9 @@ class LandingPage(models.Model):
         )
 
     def to_dict(self):
+        # TODO: Refactor this image processing. Build it into a method
+        # images
+        # company logo
         if self.company_logo:
             attachment_query = [
                 ("res_id", "=", self.company_id.id),
@@ -164,10 +168,10 @@ class LandingPage(models.Model):
             company_logo_write_date = self._get_image_write_date(
                 "company_logo", attachment_query
             )
-
         else:
             company_logo = ""
             company_logo_write_date = ""
+        # primary image
         if self.primary_image_file:
             primary_image_file = self._get_image_payload("primary_image_file")
             primary_image_file_write_date = self._get_image_write_date(
@@ -176,6 +180,7 @@ class LandingPage(models.Model):
         else:
             primary_image_file = ""
             primary_image_file_write_date = ""
+        # secondary image
         if self.secondary_image_file:
             secondary_image_file = self._get_image_payload("secondary_image_file")
             secondary_image_file_write_date = self._get_image_write_date(
@@ -184,15 +189,7 @@ class LandingPage(models.Model):
         else:
             secondary_image_file = ""
             secondary_image_file_write_date = ""
-        if self.map_place_id:
-            map_reference = self.map_place_id.slug_id
-        else:
-            map_reference = ""
-        if self.why_become_cooperator == "<p><br></p>":
-            self.why_become_cooperator = ""
-        if self.become_cooperator_process == "<p><br></p>":
-            self.become_cooperator_process = ""
-        legal_form_dict = dict(_LEGAL_FORM_VALUES)
+        # returned dict
         return {
             "landing": {
                 "id": self.id,
@@ -205,7 +202,7 @@ class LandingPage(models.Model):
                 "community_type": self.community_type,
                 "community_secondary_type": self.community_secondary_type,
                 "legal_form": get_translation(
-                    source=legal_form_dict[self.community_secondary_type],
+                    source=dict(_LEGAL_FORM_VALUES)[self.community_secondary_type],
                     lang=self.env.context["lang"],
                     mods="energy_communities",
                 ),
@@ -227,9 +224,15 @@ class LandingPage(models.Model):
                 "company_logo_write_date": company_logo_write_date,
                 "short_description": self.short_description or "",
                 "long_description": self.long_description or "",
-                "why_become_cooperator": self.why_become_cooperator,
-                "become_cooperator_process": self.become_cooperator_process,
-                "map_reference": map_reference,
+                "why_become_cooperator": ""
+                if self.why_become_cooperator == "<p><br></p>"
+                or not self.why_become_cooperator
+                else self.why_become_cooperator,
+                "become_cooperator_process": ""
+                if self.become_cooperator_process == "<p><br></p>"
+                or not self.become_cooperator_process
+                else self.become_cooperator_process,
+                "map_reference": self.map_place_id.slug_id if self.map_place_id else "",
                 "street": self.street or "",
                 "postal_code": self.postal_code or "",
                 "city": self.city or "",
@@ -270,18 +273,10 @@ class LandingPage(models.Model):
                 else:
                     self.sudo().remove_coordinator_filter_to_existing_communities()
             self.write({"publicdata_lastupdate_datetime": datetime.now()})
-            return {
-                "type": "ir.actions.client",
-                "tag": "display_notification",
-                "params": {
-                    "type": "success",
-                    "title": _("Public data update successful"),
-                    "message": _(
-                        "Wordpress landing and map place has been successfully updated."
-                    ),
-                    "sticky": False,
-                },
-            }
+            return get_successful_popup_message(
+                _("Public data update successful"),
+                _("Wordpress landing and map place has been successfully updated."),
+            )
 
     def _update_wordpress(self):
         instance_company = self.env["res.company"].search(

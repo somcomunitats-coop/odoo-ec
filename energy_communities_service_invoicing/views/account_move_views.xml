@@ -1,0 +1,32 @@
+<odoo>
+  <record id="account_move_search" model="ir.ui.view">
+    <field name="name">account.move search view (in service invoicing)</field>
+    <field name="model">account.move</field>
+    <field name="inherit_id" ref="account.view_account_invoice_filter" />
+    <field name="arch" type="xml">
+      <filter name="groupy_by_partner" position="after">
+          <filter
+            string="Related community"
+            name="group_by_related_community"
+            domain="[]"
+            context="{'group_by':'related_community_company_id'}"
+          />
+      </filter>
+    </field>
+  </record>
+  <record id="account_move_form" model="ir.ui.view">
+      <field name="name">account.move.form.inherit</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_move_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='partner_id']" position="after">
+          <field name="pack_type" />
+          <field name="is_contract" invisible="True" />
+          <field name="invoice_origin" attrs="{'invisible': [('is_contract','=',False)]}" />
+          <field name="related_contract_id" attrs="{'invisible': [('is_contract','=',False)]}" />
+          <field name="related_community_company_id" attrs="{'invisible': [('pack_type' ,'!=', 'platform_pack')]}" />
+        </xpath>
+      </field>
+  </record>
+</odoo>
+

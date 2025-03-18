@@ -1,36 +1,37 @@
-<?xml version="1.0" ?>
 <odoo>
     <record model="ir.rule" id="landing_page_company_rule">
         <field name="name">Landing Page multi-company</field>
         <field name="model_id" ref="energy_communities.model_landing_page" />
         <field name="global" eval="True" />
-        <field
-      name="domain_force"
-    >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="domain_force">
+['|',('company_id', '=', False),('company_id', 'in', company_ids)]
+        </field>
     </record>
 
     <record model="ir.rule" id="mail_message_company_rule">
         <field name="name">mail.message multi-company</field>
         <field name="model_id" ref="mail.model_mail_message" />
         <field name="global" eval="True" />
-        <field name="domain_force">['|', ('author_id.company_ids', '=', False),
-                                    ('author_id.company_ids', 'in', company_ids)]</field>
+        <field name="domain_force">
+['|',('author_id.company_ids', '=', False),('author_id.company_ids', 'in', company_ids)]
+        </field>
     </record>
 
     <record model="ir.rule" id="mail_followers_company_rule">
         <field name="name">mail.followers multi-company</field>
         <field name="model_id" ref="mail.model_mail_followers" />
         <field name="global" eval="True" />
-        <field name="domain_force">['|', ('partner_id.company_ids', '=', False),
-                                    ('partner_id.company_ids', 'in', company_ids)]</field>
+        <field name="domain_force">
+['|',('partner_id.company_ids', '=', False),('partner_id.company_ids', 'in', company_ids)]
+        </field>
     </record>
 
     <record model="ir.rule" id="mail_activity_company_rule">
         <field name="name">mail.activity multi-company</field>
         <field name="model_id" ref="mail.model_mail_activity" />
         <field name="global" eval="True" />
-        <field name="domain_force">['|', ('user_id.partner_id.company_ids', '=', False),
-                                    ('user_id.partner_id.company_ids', 'in', company_ids)]
+        <field name="domain_force">
+['|',('user_id.partner_id.company_ids', '=', False),('user_id.partner_id.company_ids', 'in', company_ids)]
         </field>
     </record>
 
@@ -45,9 +46,9 @@
       <field name="perm_write" eval="False" />
       <field name="perm_create" eval="False" />
       <field name="perm_unlink" eval="False" />
-        <field
-      name="domain_force"
-    >['|', ('company_ids', '=', False), ('company_ids', 'in', company_ids)]</field>
+        <field name="domain_force">
+['|',('company_ids', '=', False),('company_ids', 'in', company_ids)]
+        </field>
     </record>
     <function name="write" model="ir.model.data">
         <function name="search" model="ir.model.data">
@@ -58,9 +59,7 @@
 
     <function name="write" model="ir.model.data">
         <function name="search" model="ir.model.data">
-            <value
-        eval="[('module', '=', 'base'),('name', '=', 'res_partner_rule_private_employee')]"
-      />
+            <value eval="[('module', '=', 'base'),('name', '=', 'res_partner_rule_private_employee')]"/>
         </function>
         <value eval="{'noupdate': False}" />
     </function>
@@ -69,9 +68,7 @@
     </record>
     <function name="write" model="ir.model.data">
         <function name="search" model="ir.model.data">
-            <value
-        eval="[('module', '=', 'base'),('name', '=', 'res_partner_rule_private_employee')]"
-      />
+          <value eval="[('module', '=', 'base'),('name', '=', 'res_partner_rule_private_employee')]"/>
         </function>
         <value eval="{'noupdate': True}" />
     </function>
@@ -80,9 +77,16 @@
       <field name="name">res.partner multi-company</field>
       <field name="model_id" ref="base.model_res_partner" />
       <field name="groups" eval="[(4, ref('base.group_user'))]" />
-      <field
-      name="domain_force"
-    >["&amp;","|",('company_ids', '=', False),('company_ids', 'in', company_ids),"|",('type', '!=', 'private'), ('type', '=', False)]</field>
+      <field name="domain_force">
+[
+'&amp;','|',
+('company_ids', '=', False),
+('company_ids', 'in', company_ids),
+'|',
+('type', '!=', 'private'),
+('type', '=', False)
+]
+      </field>
       <field name="perm_read" eval="True" />
       <field name="perm_write" eval="False" />
       <field name="perm_create" eval="False" />
@@ -93,9 +97,15 @@
       <field name="name">res.partner Platform-admin multi-company</field>
       <field name="model_id" ref="base.model_res_partner" />
       <field name="groups" eval="[(4, ref('base.group_user'))]" />
-      <field
-      name="domain_force"
-    >['&amp;',('user_current_role', '=', 'role_platform_admin'),'|', ('type', '!=', 'private'), ('type', '=', False)]</field>
+      <field name="domain_force">
+[
+'&amp;',
+('user_current_role', '=', 'role_platform_admin'),
+'|',
+('type', '!=', 'private'),
+('type', '=', False)
+]
+      </field>
       <field name="perm_read" eval="False" />
       <field name="perm_write" eval="True" />
       <field name="perm_create" eval="True" />
@@ -106,9 +116,16 @@
       <field name="name">res.partner Coordinator-admin-worker multi-company</field>
       <field name="model_id" ref="base.model_res_partner" />
       <field name="groups" eval="[(4, ref('base.group_user'))]" />
-      <field
-      name="domain_force"
-    >['&amp;','&amp;',('user_current_role', 'in', ['role_coord_admin','role_coord_worker']),('company_hierarchy_level','!=','instance'),'|', ('type', '!=', 'private'), ('type', '=', False)]</field>
+      <field name="domain_force">
+[
+'&amp;','&amp;',
+('user_current_role', 'in', ['role_coord_admin','role_coord_worker']),
+('company_hierarchy_level','!=','instance'),
+'|',
+('type', '!=', 'private'),
+('type', '=', False)
+]
+      </field>
       <field name="perm_read" eval="False" />
       <field name="perm_write" eval="True" />
       <field name="perm_create" eval="True" />
@@ -119,9 +136,16 @@
       <field name="name">res.partner Community-manager-admin multi-company</field>
       <field name="model_id" ref="base.model_res_partner" />
       <field name="groups" eval="[(4, ref('base.group_user'))]" />
-      <field
-      name="domain_force"
-    >['&amp;','&amp;',('user_current_role', 'in', ['role_ce_manager','role_ce_admin']),('company_hierarchy_level','not in',['instance','coordinator']),'|', ('type', '!=', 'private'), ('type', '=', False)]</field>
+      <field name="domain_force">
+[
+'&amp;','&amp;',
+('user_current_role', 'in', ['role_ce_manager','role_ce_admin']),
+('company_hierarchy_level','not in',['instance','coordinator']),
+'|',
+('type', '!=', 'private'),
+('type', '=', False)
+]
+      </field>
       <field name="perm_read" eval="False" />
       <field name="perm_write" eval="True" />
       <field name="perm_create" eval="True" />
@@ -133,11 +157,12 @@
         <field name="model_id" ref="account_reconcile_oca.model_account_account_reconcile"/>
         <field name="groups" eval="[(4, ref('base.group_user'))]" />
         <field name="domain_force">
-            [('company_id', 'in', company_ids)]
+[('company_id', 'in', company_ids)]
         </field>
         <field name="perm_read" eval="True" />
         <field name="perm_write" eval="True" />
         <field name="perm_create" eval="True" />
         <field name="perm_unlink" eval="False" />
     </record>
+
 </odoo>
