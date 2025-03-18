@@ -9,6 +9,22 @@
     <field name="domain">[('community_company_id','!=',False)]</field>
     <field name="context">{"search_default_not_finished":1,"search_default_paused":1}</field>
   </record>
+  <record
+    id="action_view_service_invoicing_tree_platform_manager"
+    model="ir.actions.act_window.view"
+  >
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="view_service_invoicing_tree"/>
+    <field name="act_window_id" ref="view_service_invoicing_window_platform_manager"/>
+  </record>
+  <record
+    id="action_view_contract_contract_customer_form_platform_manager"
+    model="ir.actions.act_window.view"
+  >
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="view_contract_contract_customer_form_platform_admin"/>
+    <field name="act_window_id" ref="view_service_invoicing_window_platform_manager"/>
+  </record>
 
   <record
       id="view_service_invoicing_window_coord_admin"
@@ -19,6 +35,22 @@
     <field name="view_mode">tree,form</field>
     <field name="domain">[('community_company_id','!=',False)]</field>
     <field name="context">{"search_default_not_finished":1,"search_default_paused":1}</field>
+  </record>
+  <record
+    id="action_view_service_invoicing_tree_coord_admin"
+    model="ir.actions.act_window.view"
+  >
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="view_service_invoicing_tree"/>
+    <field name="act_window_id" ref="view_service_invoicing_window_coord_admin"/>
+  </record>
+  <record
+    id="action_view_contract_contract_customer_form_coord_admin"
+    model="ir.actions.act_window.view"
+  >
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="view_contract_contract_customer_form_coord_admin"/>
+    <field name="act_window_id" ref="view_service_invoicing_window_coord_admin"/>
   </record>
 
   <record
@@ -52,23 +84,25 @@
   </record>
 
   <record
-      id="view_service_invoices_issued_window"
+      id="view_service_invoices_issued_act_window"
       model="ir.actions.act_window"
   >
     <field name="name">Service invoices (issued)</field>
     <field name="res_model">account.move</field>
     <field name="view_mode">tree,form</field>
     <field name="domain" eval="[('move_type', 'in', ['out_invoice', 'out_refund']), ('pack_type', '=', 'platform_pack')]"/>
+    <field name="context">{"default_move_type": "out_invoice","search_default_group_by_related_community":1}</field>
   </record>
 
   <record
-      id="view_service_invoices_received_window"
+      id="view_service_invoices_received_act_window"
       model="ir.actions.act_window"
   >
     <field name="name">Service invoices (received)</field>
     <field name="res_model">account.move</field>
     <field name="view_mode">tree,form</field>
     <field name="domain" eval="[('move_type', 'in', ['in_invoice', 'in_refund']), ('pack_type', '=', 'platform_pack')]"/>
+    <field name="context">{"default_move_type": "in_invoice","search_default_group_by_related_community":1}</field>
   </record>
 
   <record
@@ -79,46 +113,6 @@
     <field name="res_model">sale.order</field>
     <field name="view_mode">tree,form</field>
     <field name="domain">[('service_invoicing_action','!=','none')]</field>
-  </record>
-
-  <record
-    id="action_view_service_invoicing_tree_platform_manager"
-    model="ir.actions.act_window.view"
-  >
-    <field name="sequence" eval="1"/>
-    <field name="view_mode">tree</field>
-    <field name="view_id" ref="view_service_invoicing_tree"/>
-    <field name="act_window_id" ref="view_service_invoicing_window_platform_manager"/>
-  </record>
-
-  <record
-    id="action_view_service_invoicing_tree_coord_admin"
-    model="ir.actions.act_window.view"
-  >
-    <field name="sequence" eval="1"/>
-    <field name="view_mode">tree</field>
-    <field name="view_id" ref="view_service_invoicing_tree"/>
-    <field name="act_window_id" ref="view_service_invoicing_window_coord_admin"/>
-  </record>
-
-  <record
-    id="action_view_contract_contract_customer_form_platform_manager"
-    model="ir.actions.act_window.view"
-  >
-    <field name="sequence" eval="2"/>
-    <field name="view_mode">form</field>
-    <field name="view_id" ref="view_contract_contract_customer_form_platform_admin"/>
-    <field name="act_window_id" ref="view_service_invoicing_window_platform_manager"/>
-  </record>
-
-  <record
-    id="action_view_contract_contract_customer_form_coord_admin"
-    model="ir.actions.act_window.view"
-  >
-    <field name="sequence" eval="1"/>
-    <field name="view_mode">form</field>
-    <field name="view_id" ref="view_contract_contract_customer_form_coord_admin"/>
-    <field name="act_window_id" ref="view_service_invoicing_window_coord_admin"/>
   </record>
 
 </odoo>

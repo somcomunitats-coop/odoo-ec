@@ -274,8 +274,8 @@ class ContractContract(models.Model):
             ]
         )
         for invoice in all_received_invoices:
-            if invoice.sudo().ref_invoice_id:
-                if invoice.sudo().ref_invoice_id.id in issued_invoices:
+            if invoice.sudo().auto_invoice_id:
+                if invoice.sudo().auto_invoice_id.id in issued_invoices:
                     received_invoices.append(invoice.id)
         return received_invoices
 

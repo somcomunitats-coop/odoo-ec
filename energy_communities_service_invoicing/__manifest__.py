@@ -45,6 +45,7 @@
         "wizards/service_invoicing_action_create.xml",
         "views/menus.xml",
     ],
+    "post_init_hook": "post_setup_intercompany_invoicing_config",
     # only loaded in demonstration mode
     "demo": [],
 }
