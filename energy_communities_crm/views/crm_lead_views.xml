@@ -30,12 +30,12 @@
           string="Other COORD"
           domain="[('source_id','=', %(energy_communities.ce_source_coord_web_other)d)]"
         />
-            <filter
+        <filter
           name="ce_source_existing_coord_contact"
           string="Contact COORD"
           domain="[('source_id','=', %(energy_communities.ce_source_existing_coord_contact)d)]"
         />
-            <filter
+        <filter
           name="ce_source_existing_coord_info"
           string="Info COORD"
           domain="[('source_id','=', %(energy_communities.ce_source_existing_coord_info)d)]"
@@ -50,7 +50,7 @@
           string="Newsletter SomComunitats"
           domain="[('source_id','=', %(energy_communities.ce_source_general_info)d)]"
         />
-            <filter
+        <filter
           name="ce_source_general_contact"
           string="Contact SomComunitats"
           domain="[('source_id','=', %(energy_communities.ce_source_general_contact)d)]"

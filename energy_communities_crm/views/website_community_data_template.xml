@@ -249,7 +249,6 @@
             <t t-set="value" t-value="ce_member_mandatory_contribution" />
             <t t-set="key" t-value="ce_member_mandatory_contribution_key" />
             <t t-set="label" t-value="ce_member_mandatory_contribution_label" />
-            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-12">
@@ -258,7 +257,6 @@
             <t t-set="key" t-value="ce_registration_tool_key" />
             <t t-set="label" t-value="ce_registration_tool_label" />
             <t t-set="rows" t-value="5" />
-            <t t-set="required" t-value="True" />
             <t
             t-set="description"
           >Non-computer support, Excels, computer program (which one?)</t>
@@ -270,7 +268,6 @@
             <t t-set="key" t-value="ce_account_management_key" />
             <t t-set="label" t-value="ce_account_management_label" />
             <t t-set="options" t-value="community_management_options" />
-            <t t-set="required" t-value="True" />
             <t t-set="trigger">ce_management_can_enter_platform</t>
           </t>
         </div>
@@ -280,7 +277,6 @@
             <t t-set="key" t-value="ce_tax_management_key" />
             <t t-set="label" t-value="ce_tax_management_label" />
             <t t-set="options" t-value="community_management_options" />
-            <t t-set="required" t-value="True" />
             <t t-set="trigger">ce_management_can_enter_platform</t>
           </t>
         </div>
@@ -303,7 +299,6 @@
             <t t-set="key" t-value="ce_manager_key" />
             <t t-set="label" t-value="ce_manager_label" />
             <t t-set="options" t-value="community_manager_options" />
-            <t t-set="required" t-value="True" />
             <t
             t-set="trigger"
           >ce_manager_headline,ce_manager_firstname,ce_manager_surname,ce_manager_email,ce_manager_phone</t>
@@ -365,7 +360,6 @@
             <t t-set="key" t-value="ce_payment_method_key" />
             <t t-set="label" t-value="ce_payment_method_label" />
             <t t-set="options" t-value="community_payment_method_options" />
-            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-12">
@@ -388,7 +382,6 @@
             <t t-set="key" t-value="ce_extra_charges_key" />
             <t t-set="label" t-value="ce_extra_charges_label" />
             <t t-set="rows" t-value="5" />
-            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-12">
@@ -397,7 +390,6 @@
             <t t-set="key" t-value="ce_voluntary_contributions_key" />
             <t t-set="label" t-value="ce_voluntary_contributions_label" />
             <t t-set="rows" t-value="5" />
-            <t t-set="required" t-value="True" />
           </t>
         </div>
         <div class="col-md-12">
