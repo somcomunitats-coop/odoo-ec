@@ -8,7 +8,7 @@ class SaleOrderUtils(Component):
 
     def create_service_invoicing_sale_order(
         self,
-        company_id,
+        partner_id,
         pack_id,
         pricelist_id,
         payment_mode_id,
@@ -18,7 +18,7 @@ class SaleOrderUtils(Component):
         metadata,
     ):
         so_creation_dict = {
-            "partner_id": company_id.partner_id.id,
+            "partner_id": partner_id.id,
             "company_id": self.env.company.id,
             "commitment_date": start_date,
             "pricelist_id": pricelist_id.id,
@@ -58,7 +58,7 @@ class SaleOrderUtils(Component):
 
     def create_service_invoicing_initial(
         self,
-        company_id,
+        partner_id,
         pack_id,
         pricelist_id,
         start_date,
@@ -68,7 +68,7 @@ class SaleOrderUtils(Component):
         metadata=False,
     ):
         self.create_service_invoicing_sale_order(
-            company_id,
+            partner_id,
             pack_id,
             pricelist_id,
             payment_mode_id,
@@ -77,11 +77,7 @@ class SaleOrderUtils(Component):
             executed_action_description,
             metadata,
         )
-        contract_utils = self.confirm()
-        # TODO: Decide if this must be by design
-        if contract_utils.work.record.is_free_pack:
-            contract_utils.set_contract_status_active(start_date)
-        return contract_utils.work.record
+        return self.confirm()
 
     def confirm(self):
         if not self.work.record:
@@ -95,4 +91,9 @@ class SaleOrderUtils(Component):
             contract_utils = work.component("contract.utils")
             contract_utils.setup_initial_data()
             contract_utils.clean_non_service_lines()
-            return contract_utils
+            # TODO: Decide if this must be by design
+            if contract_utils.work.record.is_free_pack:
+                contract_utils.set_contract_status_active(
+                    self.work.record.commitment_date
+                )
+            return contract_utils.work.record
