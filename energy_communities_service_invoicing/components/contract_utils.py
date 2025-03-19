@@ -154,7 +154,7 @@ class ContractUtils(Component):
     ):
         executed_action_description_list = executed_action_description.split(",")
         return {
-            "company_id": self.work.record.partner_id.related_company_id,
+            "partner_id": self.work.record.partner_id,
             "pack_id": pack_id
             if "modify_pack" in executed_action_description_list
             else self.work.record.pack_id,

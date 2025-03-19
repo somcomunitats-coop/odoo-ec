@@ -130,7 +130,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
             with sale_order_utils(self.env) as component:
                 # TODO: pass community_company_id as metadata
                 service_invoicing_id = component.create_service_invoicing_initial(
-                    company_id,
+                    company_id.partner_id,
                     self.platform_pack_id,
                     self.pricelist_id,
                     self.execution_date,
