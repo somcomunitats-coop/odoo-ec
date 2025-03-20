@@ -1,4 +1,7 @@
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
+
+from odoo.addons.energy_communities.utils import sale_order_utils
 
 from ..models.selfconsumption import INVOICING_VALUES
 
@@ -31,18 +34,125 @@ class ContractGenerationWizard(models.TransientModel):
             self.recurring_rule_type = "monthlylastday"
 
     def create_contract_template(self):
-        service_invoicing_action_create_wizard = self.env["service.invoicing.action.create.wizard"].create({
-            "creation_type": "single",
-            "execution_date": fields.Date.today(),# ÁUN NO SE QUE DATE SE DEBE USAR
-            "company_id": self.env.company.id,
-            "community_company_id": self.env.company.id,
-            "community_company_mids": [self.env.company.id],
-            "pricelist_id": self.env.ref("energy_selfconsumption.selfconsumption_pricelist").id,
-            "pack_id": self.env.ref("energy_selfconsumption.selfconsumption_pack").id,
-            "discount": 0.0,
-            "payment_mode_id": self.env.ref("account.payment_mode_cash").id,#ÁUN NO SE QUE PAYMENT MODE SE DEBE USAR
-        })
-        service_invoicing_action_create_wizard.execute_create()
+        # Select product
+        product_template = None
+        pack = None
+        if self.invoicing_mode == "power_acquired":
+            product_template = self.env.ref(
+                "energy_selfconsumption.product_product_power_acquired_product_template"
+            )
+            pack = self.env.ref(
+                "energy_selfconsumption.product_product_power_acquired_product_pack_template"
+            )
+        elif self.invoicing_mode == "energy_delivered":
+            product_template = self.env.ref(
+                "energy_selfconsumption.product_product_energy_delivered_product_template"
+            )
+            pack = self.env.ref(
+                "energy_selfconsumption.product_product_energy_delivered_product_pack_template"
+            )
+        elif self.invoicing_mode == "energy_custom":
+            product_template = self.env.ref(
+                "energy_selfconsumption.product_product_energy_custom_product_template"
+            )
+            pack = self.env.ref(
+                "energy_selfconsumption.product_product_energy_custom_product_pack_template"
+            )
+        else:
+            raise ValidationError(_("Invalid invoicing mode"))
+
+        # Create pricelist
+        pricelist = self.env["product.pricelist"].create(
+            {
+                "name": f"{self.selfconsumption_id.name} {self.invoicing_mode} Selfconsumption Pricelist",
+                "company_id": self.env.company.id,
+                "currency_id": self.env.company.currency_id.id,
+                "discount_policy": "without_discount",
+                "item_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "base": "standard_price",
+                            "product_tmpl_id": product_template.id,
+                            "product_id": product_template.product_variant_id.id,
+                            "compute_price": "fixed",
+                            "fixed_price": self.price,
+                            "categ_id": self.env.ref(
+                                "energy_selfconsumption.product_category_selfconsumption_service"
+                            ).id,
+                        },
+                    )
+                ],
+            }
+        )
+
+        # Get distribution table
+        distribution_id = (
+            self.selfconsumption_id.distribution_table_ids.filtered_domain(
+                [("state", "=", "process")]
+            )
+        )
+        if not distribution_id:
+            raise ValidationError(
+                _("There is no distribution table in proces of activation.")
+            )
+
+        # Search accounting journal
+        journal_id = self.env["account.journal"].search(
+            [("company_id", "=", self.env.company.id), ("type", "=", "sale")], limit=1
+        )
+        if not journal_id:
+            raise UserWarning(_("Accounting Journal not found."))
+
+        # Create sale order
+        for supply_point_assignation in distribution_id.supply_point_assignation_ids:
+            inscription_id = self.selfconsumption_id.inscription_ids.filtered_domain(
+                [
+                    (
+                        "partner_id",
+                        "=",
+                        supply_point_assignation.supply_point_id.partner_id.id,
+                    )
+                ]
+            )
+
+            if not inscription_id.mandate_id:
+                raise ValidationError(
+                    _("Mandate not found for {partner}").format(
+                        partner=supply_point_assignation.supply_point_id.partner_id.name
+                    )
+                )
+            with sale_order_utils(self.env) as component:
+                component.create_service_invoicing_initial(
+                    self.env,
+                    inscription_id.partner_id,
+                    pack.id,
+                    pricelist.id,
+                    fields.Date.today(),
+                    "create",
+                    executed_action_description="none",
+                    payment_mode_id=False,
+                    metadata={
+                        "selfconsumption_id": self.selfconsumption_id.id,
+                        "supply_point_id": supply_point_assignation.supply_point_id.id,
+                        "recurring_interval": self.recurring_interval,
+                        "recurring_rule_type": self.recurring_rule_type,
+                        "journal_id": journal_id.id,
+                    },
+                )
+
+        self.selfconsumption_id.write(
+            {
+                "invoicing_mode": self.invoicing_mode,
+                "product_id": pack.id,
+                "contract_template_id": pack.property_contract_template_id.id,
+            }
+        )
+
+        return {
+            "type": "ir.actions.act_window_close",
+        }
 
     def _prepare_product_values(self):
         account_income_xml_id = "l10n_es.%i_account_common_7050" % self.env.company.id

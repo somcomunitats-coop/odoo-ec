@@ -90,10 +90,4 @@ class SaleOrderUtils(Component):
         ) as work:
             contract_utils = work.component("contract.utils")
             contract_utils.setup_initial_data()
-            contract_utils.clean_non_service_lines()
-            # TODO: Decide if this must be by design
-            if contract_utils.work.record.is_free_pack:
-                contract_utils.set_contract_status_active(
-                    self.work.record.commitment_date
-                )
             return contract_utils.work.record

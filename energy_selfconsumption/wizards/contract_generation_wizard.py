@@ -1,6 +1,11 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
+from odoo.addons.energy_communities.utils import (
+    contract_utils,
+    sale_order_utils,
+)
+
 
 class ContractGenerationWizard(models.TransientModel):
     _name = "energy_selfconsumption.contract_generation.wizard"
@@ -25,6 +30,106 @@ class ContractGenerationWizard(models.TransientModel):
         return self.env["account.payment.mode"].search(
             [("company_id", "=", self.env.company.id), ("payment_type", "=", "inbound")]
         )
+
+    def generate_contracts(self):
+        # Get distribution table
+        distribution_id = (
+            self.selfconsumption_id.distribution_table_ids.filtered_domain(
+                [("state", "=", "process")]
+            )
+        )
+        if not distribution_id:
+            raise _("There is no distribution table in proces of activation.")
+        # Get sale orders
+        sale_orders = (
+            self.env["sale.order.metadata.line"]
+            .search(
+                [
+                    ("selfconsumption_id", "=", self.selfconsumption_id.id),
+                    ("state", "=", "draft"),
+                ]
+            )
+            .mapped("order_id")
+        )
+
+        for sale_order in sale_orders:
+            sale_order.write({"commitment_date": self.start_date})
+            with sale_order_utils(self.env, sale_order) as component:
+                contract = component.confirm()
+
+            for contract_line in contract.contract_line_ids:
+                supply_point_assignation = (
+                    distribution_id.supply_point_assignation_ids.filtered_domain(
+                        [
+                            ("partner_id", "=", contract.partner_id.id),
+                            (
+                                "supply_point_id",
+                                "=",
+                                sale_order.metadata_line_ids.filtered_domain(
+                                    [("key", "=", "supply_point_id")]
+                                ).mapped("value"),
+                            ),
+                        ]
+                    )
+                )
+                data = {
+                    "code": supply_point_assignation.supply_point_id.code,
+                    "owner_id": supply_point_assignation.supply_point_id.owner_id.display_name,
+                    "cau": self.selfconsumption_id.code,
+                }
+                contract_line.name.replace("#code#", data["code"])
+                contract_line.name.replace("#owner_id#", data["owner_id"])
+                # Each invoicing type has different data in the description column, so we need to check and modify
+                if self.selfconsumption_id.invoicing_mode == "energy_delivered":
+                    contract_line.name.replace("#cau#", data["cau"])
+                elif self.selfconsumption_id.invoicing_mode == "power_acquired":
+                    data["power"] = self.selfconsumption_id.power
+                    data["coefficient"] = supply_point_assignation.coefficient
+                    (
+                        first_date_invoiced,
+                        last_date_invoiced,
+                        recurring_next_date,
+                    ) = contract_line._get_period_to_invoice(
+                        contract_line.last_date_invoiced,
+                        contract_line.recurring_next_date,
+                    )
+                    data["days_invoiced"] = (
+                        (last_date_invoiced - first_date_invoiced).days + 1
+                        if first_date_invoiced and last_date_invoiced
+                        else 0
+                    )
+                    data["power_acquired"] = (
+                        round(
+                            self.selfconsumption_id.power
+                            * supply_point_assignation.coefficient,
+                            2,
+                        )
+                        if supply_point_assignation.coefficient
+                        else 0.0
+                    )
+                    data["total_amount"] = round(
+                        data["days_invoiced"] * data["power_acquired"], 2
+                    )
+
+                    contract_line.name.replace("#cau#", data["cau"])
+                    contract_line.name.replaceAll("#power#", data["power"])
+                    contract_line.name.replaceAll("#coefficient#", data["coefficient"])
+                    contract_line.name.replaceAll(
+                        "#power_acquired#", data["power_acquired"]
+                    )
+                    contract_line.name.replaceAll(
+                        "#days_invoiced#", data["days_invoiced"]
+                    )
+                    contract_line.name.replace("#total_amount#", data["total_amount"])
+
+                contract_line.write({"main_line": True})
+
+            with contract_utils(self.env, contract) as component:
+                component.set_contract_status_active(self.start_date)
+
+        self.selfconsumption_id.write({"state": "active"})
+        self.selfconsumption_id.distribution_table_state("process", "active")
+        return True
 
     def generate_contracts_button(self):
         """
@@ -115,7 +220,11 @@ class ContractGenerationWizard(models.TransientModel):
                     )
                     data["power"] = self.selfconsumption_id.power
                     data["coefficient"] = supply_point_assignation.coefficient
-                    first_date_invoiced, last_date_invoiced, recurring_next_date = contract_line_id._get_period_to_invoice(
+                    (
+                        first_date_invoiced,
+                        last_date_invoiced,
+                        recurring_next_date,
+                    ) = contract_line_id._get_period_to_invoice(
                         contract_line_id.last_date_invoiced,
                         contract_line_id.recurring_next_date,
                     )
@@ -124,9 +233,18 @@ class ContractGenerationWizard(models.TransientModel):
                         if first_date_invoiced and last_date_invoiced
                         else 0
                     )
-                    data["power_acquired"] = (round(self.selfconsumption_id.power * supply_point_assignation.coefficient, 2)
-                                              if supply_point_assignation.coefficient else 0.0)
-                    data["total_amount"] = round(data["days_invoiced"] * data["power_acquired"], 2)
+                    data["power_acquired"] = (
+                        round(
+                            self.selfconsumption_id.power
+                            * supply_point_assignation.coefficient,
+                            2,
+                        )
+                        if supply_point_assignation.coefficient
+                        else 0.0
+                    )
+                    data["total_amount"] = round(
+                        data["days_invoiced"] * data["power_acquired"], 2
+                    )
 
                 contract_line_id.write(
                     {"name": contract_line_id.name.format(**data), "main_line": True}

@@ -96,6 +96,21 @@
                             <button
                 class="oe_stat_button"
                 type="object"
+                name="get_sale_orders"
+                icon="fa-files-o"
+                attrs="{'invisible': [('state', '==', 'draft')]}"
+                groups="energy_communities.role_platform_admin_res_groups"
+              >
+                                <field
+                  string="Sale Orders"
+                  name="sale_orders_count"
+                  widget="statinfo"
+                />
+                            </button>
+
+                            <button
+                class="oe_stat_button"
+                type="object"
                 name="get_contracts"
                 icon="fa-files-o"
                 attrs="{'invisible': [('state', '!=', 'active')]}"
