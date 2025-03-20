@@ -47,5 +47,5 @@
     ],
     "post_init_hook": "post_setup_intercompany_invoicing_config",
     # only loaded in demonstration mode
-    "demo": [],
+    "demo": ["demo/product_template_demo.xml"],
 }
