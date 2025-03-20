@@ -4,31 +4,46 @@ from odoo.addons.component.core import Component
 class ContractUtils(Component):
     _inherit = "contract.utils"
 
-    def setup_initial_data(self):
+    def _setup_contract_get_update_dict_initial(self):
         self._set_configuration_journal_if_defined()
         self._set_start_date(self.work.record.sale_order_id.commitment_date)
-        if "discount" in self.work.record.sale_order_id.metadata_line_ids.mapped("key"):
+        self._set_lines_ordered_values()
+        contract_update_dict = {"status": "paused"}
+        # metadata mapping
+        metadata_keys_arr = self.work.record.sale_order_id.metadata_line_ids.mapped(
+            "key"
+        )
+        if "discount" in metadata_keys_arr:
             self._set_discount(
                 self.work.record.sale_order_id.get_metadata_value("discount")
             )
-        contract_update_dict = {"status": "paused"}
+        recurrence_dict = {}
+        if "recurring_interval" in metadata_keys_arr:
+            recurrence_dict[
+                "recurring_interval"
+            ] = self.work.record.sale_order_id.get_metadata_value("recurring_interval")
+        if "recurring_rule_type" in metadata_keys_arr:
+            recurrence_dict[
+                "recurring_rule_type"
+            ] = self.work.record.sale_order_id.get_metadata_value("recurring_rule_type")
+        if recurrence_dict:
+            self._set_contract_recurrency(**recurrence_dict)
         for contract_update_data in self.work.record.sale_order_id.metadata_line_ids:
-            if contract_update_data.key not in ["discount"]:
+            if contract_update_data.key not in [
+                "discount",
+                "recurring_interval",
+                "recurring_rule_type",
+            ]:
                 value = contract_update_data.value
                 # TODO: Not a very robust condition. Assuming all Many2one fields are defined with _id at the end
+                # TODO: Problems always when type is not text
                 if "_id" in contract_update_data.key:
                     value = int(contract_update_data.value)
                 contract_update_dict[contract_update_data.key] = value
-        for line in self.work.record.contract_line_ids:
-            line.write(
-                {
-                    "ordered_qty_type": line.qty_type,
-                    "ordered_quantity": line.quantity,
-                    "ordered_qty_formula_id": line.qty_formula_id.id,
-                    "qty_type": "fixed",
-                    "quantity": 0,
-                }
-            )
+        return contract_update_dict
+
+    def setup_initial_data(self):
+        contract_update_dict = self._setup_contract_get_update_dict_initial()
         self.work.record.write(contract_update_dict)
 
     def _set_start_date(self, date_start):
@@ -40,6 +55,23 @@ class ContractUtils(Component):
     def _set_discount(self, discount):
         for line in self.work.record.contract_line_ids:
             line.write({"discount": discount})
+
+    def _set_contract_recurrency(self, **recurrence):
+        for line in self.work.record.contract_line_ids:
+            if recurrence:
+                line.write(recurrence)
+
+    def _set_lines_ordered_values(self):
+        for line in self.work.record.contract_line_ids:
+            line.write(
+                {
+                    "ordered_qty_type": line.qty_type,
+                    "ordered_quantity": line.quantity,
+                    "ordered_qty_formula_id": line.qty_formula_id.id,
+                    "qty_type": "fixed",
+                    "quantity": 0,
+                }
+            )
 
     # method to be extended if using component for another pack_type
     def _set_configuration_journal_if_defined(self):
