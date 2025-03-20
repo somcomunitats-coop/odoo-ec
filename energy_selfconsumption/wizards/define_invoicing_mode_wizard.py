@@ -124,16 +124,15 @@ class ContractGenerationWizard(models.TransientModel):
                     )
                 )
             with sale_order_utils(self.env) as component:
-                component.create_service_invoicing_initial(
-                    self.env,
+                component.create_service_invoicing_sale_order(
                     inscription_id.partner_id,
-                    pack.id,
-                    pricelist.id,
+                    pack,
+                    pricelist,
+                    False,
                     fields.Date.today(),
-                    "create",
-                    executed_action_description="none",
-                    payment_mode_id=False,
-                    metadata={
+                    "activate",
+                    "active_selfconsumption_contract",
+                    {
                         "selfconsumption_id": self.selfconsumption_id.id,
                         "supply_point_id": supply_point_assignation.supply_point_id.id,
                         "recurring_interval": self.recurring_interval,
@@ -146,7 +145,6 @@ class ContractGenerationWizard(models.TransientModel):
             {
                 "invoicing_mode": self.invoicing_mode,
                 "product_id": pack.id,
-                "contract_template_id": pack.property_contract_template_id.id,
             }
         )
 

@@ -61,7 +61,7 @@ class Selfconsumption(models.Model):
         for record in self:
             sale_orders = (
                 self.env["sale.order.metadata.line"]
-                .search([("selfconsumption_id", "=", record.id)])
+                .search([("key", "=", "selfconsumption_id"), ("value", "=", record.id)])
                 .mapped("order_id")
             )
             record.sale_orders_count = len(sale_orders)
@@ -123,7 +123,7 @@ class Selfconsumption(models.Model):
     contract_template_id = fields.Many2one(
         "contract.template",
         string="Contract Template",
-        related="product_id.contract_template_id",
+        related="product_id.property_contract_template_id",
     )
     supplier_id = fields.Many2one(
         "energy_project.supplier",
@@ -218,7 +218,7 @@ class Selfconsumption(models.Model):
         self.ensure_one()
         sale_orders = (
             self.env["sale.order.metadata.line"]
-            .search([("selfconsumption_id", "=", self.id)])
+            .search([("key", "=", "selfconsumption_id"), ("value", "=", self.id)])
             .mapped("order_id")
         )
         return {
