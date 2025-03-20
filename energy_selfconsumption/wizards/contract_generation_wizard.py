@@ -45,11 +45,12 @@ class ContractGenerationWizard(models.TransientModel):
             self.env["sale.order.metadata.line"]
             .search(
                 [
-                    ("selfconsumption_id", "=", self.selfconsumption_id.id),
-                    ("state", "=", "draft"),
+                    ("key", "=", "selfconsumption_id"),
+                    ("value", "=", self.selfconsumption_id.id),
                 ]
             )
             .mapped("order_id")
+            .filtered(lambda so: so.state == "draft")
         )
 
         for sale_order in sale_orders:
@@ -61,13 +62,14 @@ class ContractGenerationWizard(models.TransientModel):
                 supply_point_assignation = (
                     distribution_id.supply_point_assignation_ids.filtered_domain(
                         [
-                            ("partner_id", "=", contract.partner_id.id),
                             (
                                 "supply_point_id",
                                 "=",
-                                sale_order.metadata_line_ids.filtered_domain(
-                                    [("key", "=", "supply_point_id")]
-                                ).mapped("value"),
+                                int(
+                                    sale_order.metadata_line_ids.filtered_domain(
+                                        [("key", "=", "supply_point_id")]
+                                    ).mapped("value")[0]
+                                ),
                             ),
                         ]
                     )
@@ -112,17 +114,21 @@ class ContractGenerationWizard(models.TransientModel):
                     )
 
                     contract_line.name.replace("#cau#", data["cau"])
-                    contract_line.name.replaceAll("#power#", data["power"])
-                    contract_line.name.replaceAll("#coefficient#", data["coefficient"])
-                    contract_line.name.replaceAll(
-                        "#power_acquired#", data["power_acquired"]
+                    contract_line.name.replace("#power#", str(data["power"]))
+                    contract_line.name.replace(
+                        "#coefficient#", str(data["coefficient"])
                     )
-                    contract_line.name.replaceAll(
-                        "#days_invoiced#", data["days_invoiced"]
+                    contract_line.name.replace(
+                        "#power_acquired#", str(data["power_acquired"])
                     )
-                    contract_line.name.replace("#total_amount#", data["total_amount"])
+                    contract_line.name.replace(
+                        "#days_invoiced#", str(data["days_invoiced"])
+                    )
+                    contract_line.name.replace(
+                        "#total_amount#", str(data["total_amount"])
+                    )
 
-                contract_line.write({"main_line": True})
+            contract.contract_line_ids[0].write({"main_line": True})
 
             with contract_utils(self.env, contract) as component:
                 component.set_contract_status_active(self.start_date)

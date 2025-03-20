@@ -6,5 +6,5 @@ class ContractLineFormula(models.Model):
     _inherit = "contract.line.qty.formula"
 
     company_id = fields.Many2one(
-        "res.company", default=lambda self: self.env.company, required=True
+        "res.company", default=lambda self: self.env.company, required=False
     )
