@@ -6,6 +6,36 @@
     <field name="name">Selfconsumption Service</field>
   </record>
 
+  <record id="product_product_energy_delivered_product_pack_template" model="product.template">
+      <field name="name">Energy delivered pack</field>
+      <field name="categ_id" ref="product_category_selfconsumption_pack"/>
+      <field name="standard_price">0.0</field>
+      <field name="list_price">0.0</field>
+      <field name="sale_ok" eval="False"/>
+      <field name="purchase_ok" eval="False"/> 
+      <field name="detailed_type">service</field>
+  </record>
+
+  <record id="product_product_power_acquired_product_pack_template" model="product.template">
+      <field name="name">Power acquired pack</field>
+      <field name="categ_id" ref="product_category_selfconsumption_pack"/>
+      <field name="standard_price">0.0</field>
+      <field name="list_price">0.0</field>
+      <field name="sale_ok" eval="False"/>
+      <field name="purchase_ok" eval="False"/> 
+      <field name="detailed_type">service</field>
+  </record>
+
+  <record id="product_product_energy_custom_product_pack_template" model="product.template">
+      <field name="name">Energy custom pack</field>
+      <field name="categ_id" ref="product_category_selfconsumption_pack"/>
+      <field name="standard_price">0.0</field>
+      <field name="list_price">0.0</field>
+      <field name="sale_ok" eval="False"/>
+      <field name="purchase_ok" eval="False"/> 
+      <field name="detailed_type">service</field>
+  </record>
+
   <record id="product_product_energy_delivered_product_template" model="product.template">
       <field name="name">Energy delivered</field>
       <field name="categ_id" ref="product_category_selfconsumption_service"/>

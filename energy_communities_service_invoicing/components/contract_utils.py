@@ -45,6 +45,16 @@ class ContractUtils(Component):
     def setup_initial_data(self):
         contract_update_dict = self._setup_contract_get_update_dict_initial()
         self.work.record.write(contract_update_dict)
+        self._clean_non_service_lines()
+        # TODO: Decide if this must be by design
+        if self.work.record.is_free_pack:
+            self.set_contract_status_active(self.work.record.commitment_date)
+
+    def _clean_non_service_lines(self):
+        for line in self.work.record.contract_line_ids:
+            if not self._is_service_line(line):
+                line.cancel()
+                line.unlink()
 
     def _set_start_date(self, date_start):
         self.work.record.write({"date_start": date_start})
@@ -107,12 +117,6 @@ class ContractUtils(Component):
             line.write({"date_end": execution_date})
             line._compute_state()
         self.work.record.set_close_status_type_by_date()
-
-    def clean_non_service_lines(self):
-        for line in self.work.record.contract_line_ids:
-            if not self._is_service_line(line):
-                line.cancel()
-                line.unlink()
 
     def modify(
         self,

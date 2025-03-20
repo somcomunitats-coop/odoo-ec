@@ -57,6 +57,15 @@ class Selfconsumption(models.Model):
             )
             record.contracts_count = related_contracts
 
+    def _compute_sale_orders_count(self):
+        for record in self:
+            sale_orders = (
+                self.env["sale.order.metadata.line"]
+                .search([("selfconsumption_id", "=", record.id)])
+                .mapped("order_id")
+            )
+            record.sale_orders_count = len(sale_orders)
+
     def _compute_report_distribution_table(self):
         """
         This compute field gets the distribution table needed to generate the reports.
@@ -108,6 +117,7 @@ class Selfconsumption(models.Model):
     )
     inscription_count = fields.Integer(compute=_compute_inscription_count)
     contracts_count = fields.Integer(compute=_compute_contract_count)
+    sale_orders_count = fields.Integer(compute=_compute_sale_orders_count)
     invoicing_mode = fields.Selection(INVOICING_VALUES, string="Invoicing Mode")
     product_id = fields.Many2one("product.product", string="Product")
     contract_template_id = fields.Many2one(
@@ -202,6 +212,21 @@ class Selfconsumption(models.Model):
                 "default_project_id": self.project_id.id,
                 "default_selfconsumption_project_id": self.id,
             },
+        }
+
+    def get_sale_orders(self):
+        self.ensure_one()
+        sale_orders = (
+            self.env["sale.order.metadata.line"]
+            .search([("selfconsumption_id", "=", self.id)])
+            .mapped("order_id")
+        )
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Sale Orders",
+            "view_mode": "tree,form",
+            "res_model": "sale.order",
+            "domain": [("id", "in", sale_orders.ids)],
         }
 
     def get_contracts(self):
