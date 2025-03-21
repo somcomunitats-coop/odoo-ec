@@ -215,12 +215,15 @@ class Selfconsumption(models.Model):
         }
 
     def get_sale_orders(self):
-        self.ensure_one()
-        sale_orders = (
+        return (
             self.env["sale.order.metadata.line"]
             .search([("key", "=", "selfconsumption_id"), ("value", "=", self.id)])
             .mapped("order_id")
         )
+
+    def get_sale_orders_view(self):
+        self.ensure_one()
+        sale_orders = self.get_sale_orders()
         return {
             "type": "ir.actions.act_window",
             "name": "Sale Orders",
@@ -230,19 +233,25 @@ class Selfconsumption(models.Model):
         }
 
     def get_contracts(self):
+        return self.env["contract.contract"].search([("project_id", "=", self.id)])
+
+    def get_contracts_view(self):
         self.ensure_one()
+        contracts = self.get_contracts()
         return {
             "type": "ir.actions.act_window",
             "name": "Contracts",
             "views": [
                 (self.env.ref("energy_selfconsumption.contract_tree_view").id, "tree"),
                 (
-                    self.env.ref("contract.contract_contract_customer_form_view").id,
+                    self.env.ref(
+                        "energy_selfconsumption.view_contract_contract_customer_form_platform_admin"
+                    ).id,
                     "form",
                 ),
             ],
             "res_model": "contract.contract",
-            "domain": [("project_id", "=", self.id)],
+            "domain": [("id", "in", contracts.ids)],
             "context": {
                 "create": True,
                 "default_project_id": self.id,

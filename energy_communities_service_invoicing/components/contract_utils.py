@@ -4,6 +4,7 @@ from odoo.addons.component.core import Component
 class ContractUtils(Component):
     _inherit = "contract.utils"
 
+    # TODO: decouple this method into smaller parts
     def _setup_contract_get_update_dict_initial(self):
         self._set_configuration_journal_if_defined()
         self._set_start_date(self.work.record.sale_order_id.commitment_date)
@@ -19,13 +20,19 @@ class ContractUtils(Component):
             )
         recurrence_dict = {}
         if "recurring_interval" in metadata_keys_arr:
-            recurrence_dict[
-                "recurring_interval"
-            ] = self.work.record.sale_order_id.get_metadata_value("recurring_interval")
+            recurrence_dict["recurring_interval"] = int(
+                self.work.record.sale_order_id.get_metadata_value("recurring_interval")
+            )
         if "recurring_rule_type" in metadata_keys_arr:
             recurrence_dict[
                 "recurring_rule_type"
             ] = self.work.record.sale_order_id.get_metadata_value("recurring_rule_type")
+        if "recurring_invoicing_type" in metadata_keys_arr:
+            recurrence_dict[
+                "recurring_invoicing_type"
+            ] = self.work.record.sale_order_id.get_metadata_value(
+                "recurring_invoicing_type"
+            )
         if recurrence_dict:
             self._set_contract_recurrency(**recurrence_dict)
         for contract_update_data in self.work.record.sale_order_id.metadata_line_ids:
@@ -33,6 +40,7 @@ class ContractUtils(Component):
                 "discount",
                 "recurring_interval",
                 "recurring_rule_type",
+                "recurring_invoicing_type",
             ]:
                 value = contract_update_data.value
                 # TODO: Not a very robust condition. Assuming all Many2one fields are defined with _id at the end
