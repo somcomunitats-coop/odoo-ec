@@ -65,5 +65,16 @@
             <field name="binding_type">report</field>
         </record>
 
+      <record id="view_contract_contract_customer_form_platform_admin" model="ir.ui.view">
+        <field name="name">contract.contract.form (in selfconsumption platform admin)</field>
+        <field name="model">contract.contract</field>
+        <field name="inherit_id" ref="energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin" />
+        <field name="arch" type="xml">
+          <xpath expr="//field[@name='partner_id']" position="after">
+            <field name="project_id" attrs="{'invisible': [('pack_type','!=','selfconsumption_pack')]}"/>
+          </xpath>
+        </field>
+      </record>
+
     </data>
 </odoo>

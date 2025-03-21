@@ -29,7 +29,7 @@ class SaleOrderUtils(Component):
                     0,
                     0,
                     {
-                        "product_id": pack_id.id,
+                        "product_id": pack_id.product_variant_id.id,
                         "date_start": start_date,
                         "date_end": start_date,
                     },
@@ -79,11 +79,10 @@ class SaleOrderUtils(Component):
         )
         return self.confirm()
 
-    def confirm(self):
-        if not self.work.record:
-            raise MissingError(
-                _("Sale order must be defined in order to confirm it on component")
-            )
+    def confirm(self, **so_extra):
+        self._validate_sale_order_confirm()
+        if so_extra:
+            self.work.record.write(so_extra)
         self.work.record.action_confirm()
         with self.collection.work_on(
             "contract.contract", record=self.work.record.service_invoicing_id
@@ -91,3 +90,9 @@ class SaleOrderUtils(Component):
             contract_utils = work.component("contract.utils")
             contract_utils.setup_initial_data()
             return contract_utils.work.record
+
+    def _validate_sale_order_confirm(self):
+        if not self.work.record:
+            raise MissingError(
+                _("Sale order must be defined in order to confirm it on component")
+            )
