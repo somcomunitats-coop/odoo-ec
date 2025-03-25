@@ -7,7 +7,7 @@ from odoo.addons.energy_communities.utils import (
 )
 
 
-@tagged("-at_install", "post_install")
+@tagged("-at_install", "post_install", "energy_selfconsumption")
 class TestSeriveInvoicingContractGeneration(TransactionCase):
     def setUp(self):
         super().setUp()
@@ -15,9 +15,12 @@ class TestSeriveInvoicingContractGeneration(TransactionCase):
         # TODO: In order to complete the test we must
         # have a selfconsumption project on demo data
         # in activation with one inscription and without invoicing_mode
-        self.selfconsumption = self.env[
-            "energy_selfconsumption.selfconsumption"
-        ].browse(26)
+        # self.selfconsumption = self.env[
+        #     "energy_selfconsumption.selfconsumption"
+        # ].browse(26)
+        self.selfconsumption = self.env.ref(
+            "energy_selfconsumption_demo.selfconsumption_1_community_1_demo"
+        )
 
     def test_contract_generation_wizard(self):
         # pack_product = self.env.ref("energy_selfconsumption.product_product_power_acquired_product_pack_template")

@@ -56,7 +56,6 @@ class ContractGenerationWizard(models.TransientModel):
             with sale_order_utils(self.env, sale_order) as component:
                 contract = component.confirm(**so_extra)
             # 2.- setup contract line description
-            # TODO: This must be moved to contract dynamic invoice generation
             self._setup_selfconsumption_contract_line_description(
                 distribution_id, contract, sale_order
             )
@@ -71,7 +70,6 @@ class ContractGenerationWizard(models.TransientModel):
         self.selfconsumption_id.distribution_table_state("process", "active")
         return True
 
-    # TODO: This must be moved to contract dynamic invoice generation
     def _setup_selfconsumption_contract_line_description(
         self, distribution_id, contract, sale_order
     ):
@@ -94,14 +92,12 @@ class ContractGenerationWizard(models.TransientModel):
             data = {
                 "code": supply_point_assignation.supply_point_id.code,
                 "owner_id": supply_point_assignation.supply_point_id.owner_id.display_name,
-                "cau": self.selfconsumption_id.code,
             }
-            contract_line.name.replace("#code#", data["code"])
-            contract_line.name.replace("#owner_id#", data["owner_id"])
             # Each invoicing type has different data in the description column, so we need to check and modify
             if self.selfconsumption_id.invoicing_mode == "energy_delivered":
-                contract_line.name.replace("#cau#", data["cau"])
+                data["cau"] = self.selfconsumption_id.code
             elif self.selfconsumption_id.invoicing_mode == "power_acquired":
+                data["cau"] = self.selfconsumption_id.code
                 data["power"] = self.selfconsumption_id.power
                 data["coefficient"] = supply_point_assignation.coefficient
                 (
@@ -129,16 +125,7 @@ class ContractGenerationWizard(models.TransientModel):
                 data["total_amount"] = round(
                     data["days_invoiced"] * data["power_acquired"], 2
                 )
-                contract_line.name.replace("#cau#", data["cau"])
-                contract_line.name.replace("#power#", str(data["power"]))
-                contract_line.name.replace("#coefficient#", str(data["coefficient"]))
-                contract_line.name.replace(
-                    "#power_acquired#", str(data["power_acquired"])
-                )
-                contract_line.name.replace(
-                    "#days_invoiced#", str(data["days_invoiced"])
-                )
-                contract_line.name.replace("#total_amount#", str(data["total_amount"]))
+            contract_line._set_name(data)
 
     # TODO: DEPRECATED and not in use. Remove before merging branch
     def generate_contracts_button(self):
