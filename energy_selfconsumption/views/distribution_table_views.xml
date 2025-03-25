@@ -109,7 +109,7 @@
             <field name="name">energy_selfconsumption.distribution_table.tree</field>
             <field name="model">energy_selfconsumption.distribution_table</field>
             <field name="arch" type="xml">
-                <tree string="Distribution Table">
+                <tree string="Distribution Table" decoration-warning="state == 'validated'" decoration-success="state == 'active'" decoration-danger="state == 'cancelled'">
                     <field name="name" />
                     <field name="selfconsumption_project_id" />
                     <field name="create_date" />

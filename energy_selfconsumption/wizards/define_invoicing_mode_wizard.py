@@ -140,6 +140,7 @@ class ContractGenerationWizard(models.TransientModel):
                         "recurring_invoicing_type": self.recurring_invoicing_type,
                         "journal_id": journal_id.id,
                         "project_id": self.selfconsumption_id.id,
+                        "company_id": self.selfconsumption_id.company_id.id,
                     },
                 )
         self.selfconsumption_id.write(

@@ -29,6 +29,27 @@
             </field>
         </record>
 
+        <record id="inscription_search_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.inscription_selfconsumption.search</field>
+            <field name="model">energy_selfconsumption.inscription_selfconsumption</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="Actives" name="actives" domain="[('state', '=', 'active')]"/>
+                    <filter string="Changes" name="updates" domain="[('state', '=', 'change'), ('participation_real_quantity', '>', 0)]"/>
+                    <filter string="Retirements" name="deletes" domain="[('state', '=', 'change'), ('participation_real_quantity', '=', 0)]"/>
+                    <filter string="News" name="inactives" domain="[('state', '=', 'inactive')]"/>
+                    <separator/>
+                    <field name="code" />
+                    <field name="partner_id" />
+                    <field name="owner_id" />
+                    <group expand="1" string="Group By">
+                        <filter string="State" name="state" domain="[]" context="{'group_by':'state'}" />
+                        <filter string="Partner" name="partner_id" domain="[]" context="{'group_by':'partner_id'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record model="ir.actions.server" id="inscription_to_participant_action">
             <field name="name">Create participant table</field>
             <field

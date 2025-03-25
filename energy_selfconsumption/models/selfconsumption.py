@@ -59,11 +59,7 @@ class Selfconsumption(models.Model):
 
     def _compute_sale_orders_count(self):
         for record in self:
-            sale_orders = (
-                self.env["sale.order.metadata.line"]
-                .search([("key", "=", "selfconsumption_id"), ("value", "=", record.id)])
-                .mapped("order_id")
-            )
+            sale_orders = self.get_sale_orders()
             record.sale_orders_count = len(sale_orders)
 
     def _compute_report_distribution_table(self):
@@ -185,7 +181,7 @@ class Selfconsumption(models.Model):
             "target": "new",
         }
 
-    def get_distribution_tables(self):
+    def get_distribution_tables_view(self):
         self.ensure_one()
         return {
             "type": "ir.actions.act_window",
@@ -196,7 +192,7 @@ class Selfconsumption(models.Model):
             "context": {"create": True, "default_selfconsumption_project_id": self.id},
         }
 
-    def get_inscriptions(self):
+    def get_inscriptions_view(self):
         self.ensure_one()
         return {
             "type": "ir.actions.act_window",

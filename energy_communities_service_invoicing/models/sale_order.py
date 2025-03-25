@@ -28,7 +28,7 @@ class SaleOrder(models.Model):
         for record in self:
             record.service_invoicing_id = False
             contract = self.env["contract.contract"].search(
-                [("sale_order_id", "=", self.id)], limit=1
+                [("sale_order_id", "=", record.id)], limit=1
             )
             if contract:
                 record.service_invoicing_id = contract.id

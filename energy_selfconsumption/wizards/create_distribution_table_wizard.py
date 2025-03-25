@@ -48,10 +48,13 @@ class CreateDistributionTableWizard(models.TransientModel):
         string="Type distribute excess",
     )
 
-    @api.onchange('distributed_power')
+    @api.onchange("distributed_power")
     def _onchange_distributed_power(self):
-        if self.distributed_power > self.max_distributed_power or self.distributed_power <= 0:
-            self.distribute_excess = 'yes'
+        if (
+            self.distributed_power > self.max_distributed_power
+            or self.distributed_power <= 0
+        ):
+            self.distribute_excess = "yes"
 
     @api.model
     def default_get(self, default_fields):
@@ -124,7 +127,7 @@ class CreateDistributionTableWizard(models.TransientModel):
             values_list, distribution_table
         )
 
-        return selfconsumption.get_distribution_tables()
+        return selfconsumption.get_distribution_tables_view()
 
     def get_supply_point_assignation_values(
         self, inscription, distribution_table, len_inscriptions

@@ -8,6 +8,7 @@ STATE_VALUES = [
     ("validated", _("Validated")),
     ("process", _("In process")),
     ("active", _("Active")),
+    ("cancelled", _("Cancelled")),
 ]
 
 TYPE_VALUES = [("fixed", _("Fixed")), ("hourly", _("Variable hourly"))]
