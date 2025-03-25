@@ -6,7 +6,7 @@
     <field name="name">service.invoicing.action.wizard.form</field>
     <field name="model">service.invoicing.action.wizard</field>
     <field name="arch" type="xml">
-      <form string="Execute a service invoicing action">
+      <form>
         <sheet>
           <group>
             <field name="executed_action" invisible="1" />
