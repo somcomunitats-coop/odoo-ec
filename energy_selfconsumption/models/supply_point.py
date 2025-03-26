@@ -87,6 +87,7 @@ class SupplyPoint(models.Model):
     used_in_selfconsumption = fields.Selection(
         _USED_IN_SELFCONSUMPTION_VALUES, string="Used in selfconsumption"
     )
+    active = fields.Boolean(default=True)
 
     @api.onchange("partner_id")
     def _onchange_partner_id(self):
