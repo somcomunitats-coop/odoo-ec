@@ -404,12 +404,12 @@ msgstr "Tipo de Pack"
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_packs_window
 msgid "Packs"
-msgstr "Packs"
+msgstr "Packs de servicios"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_contract_templates_window
 msgid "Packs contract templates"
-msgstr "Plantillas de Packs de Servicios"
+msgstr "Plantillas de Packs de servicios"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -548,7 +548,7 @@ msgstr "Edita un mínimo de un valor"
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__pricelist_id
 msgid "Select pricelist"
-msgstr "Selecciona listado de precios"
+msgstr "Listado de precios"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__service_invoicing_id
@@ -584,7 +584,7 @@ msgstr "Packs de servicios"
 #. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_contract_templates_menu
 msgid "Service Packs templates"
-msgstr "Plantillas de Packs de Servicios"
+msgstr "Plantillas de Packs de servicios"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_sale_orders_window
@@ -595,22 +595,22 @@ msgstr "Pedidos de Packs"
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_invoices_issued_act_window
 msgid "Service invoices (issued)"
-msgstr "Facturas de servicios de plataforma (emitidas)"
+msgstr "Facturas de servicios (emitidas)"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_invoices_received_act_window
 msgid "Service invoices (received)"
-msgstr "Facturas de servicios de plataforma (recibidas)"
+msgstr "Facturas de servicios (recibidas)"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoices_issued_menu
 msgid "Service invoices issued"
-msgstr "Facturas de servicio emitidas"
+msgstr "Facturas de servicio (emitidas)"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoices_received_menu
 msgid "Service invoices received"
-msgstr "Facturas de servicio recibidas"
+msgstr "Facturas de servicio (recibidas)"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_sale_order__service_invoicing_action
@@ -644,6 +644,10 @@ msgstr "Equip de ventas para la facturación de servicios de plataforma"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_services_window
+msgid "Services"
+msgstr "Servicios"
+
+#. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.ce_service_invoicing_menu
 msgid "Services"
 msgstr "Servicios de Plataforma"
