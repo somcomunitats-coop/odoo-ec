@@ -163,17 +163,9 @@ class ContractGenerationWizard(models.TransientModel):
                 }
             )
 
-            inscription_id = self.selfconsumption_id.inscription_ids.filtered_domain(
-                [
-                    (
-                        "partner_id",
-                        "=",
-                        supply_point_assignation.supply_point_id.partner_id.id,
-                    )
-                ]
-            )
+            inscription = supply_point_assignation._get_inscription()
 
-            if not inscription_id.mandate_id:
+            if not inscription.mandate_id:
                 raise ValidationError(
                     _("Mandate not found for {partner}").format(
                         partner=supply_point_assignation.supply_point_id.partner_id.name
@@ -192,7 +184,7 @@ class ContractGenerationWizard(models.TransientModel):
                     "company_id": self.env.company.id,
                     "contract_template_id": self.selfconsumption_id.product_id.contract_template_id.id,
                     "payment_mode_id": self.payment_mode.id,
-                    "mandate_id": inscription_id.mandate_id.id,
+                    "mandate_id": inscription.mandate_id.id,
                 }
             )
             # We use the next method from the contract model to update the contract fields with contract template

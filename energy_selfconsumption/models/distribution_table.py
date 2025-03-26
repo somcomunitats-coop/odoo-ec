@@ -33,12 +33,7 @@ class DistributionTable(models.Model):
             else:
                 record.coefficient_is_valid = True
 
-    name = fields.Char(
-        readonly=True,
-        default=lambda self: self.env.ref(
-            "energy_selfconsumption.distribution_table_sequence", False
-        ).next_by_id(),
-    )
+    name = fields.Char()
     selfconsumption_project_id = fields.Many2one(
         "energy_selfconsumption.selfconsumption", required=True
     )
@@ -55,6 +50,8 @@ class DistributionTable(models.Model):
     coefficient_is_valid = fields.Boolean(
         compute=_compute_coefficient_is_valid, readonly=True, store=False
     )
+    date_start = fields.Date(string="Start date")
+    date_end = fields.Date(string="End date")
     active = fields.Boolean(default=True)
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
@@ -91,6 +88,18 @@ class DistributionTable(models.Model):
                         "The supply point can't be removed because the distribution table state is {table_state}"
                     ).format(table_state=record.state)
                 )
+
+    @api.model_create_multi
+    def create(self, vals):
+        for val in vals:
+            if "selfconsumption_project_id" in val:
+                project_id = val["selfconsumption_project_id"]
+                count = (
+                    self.search_count([("selfconsumption_project_id", "=", project_id)])
+                    + 1
+                )
+                val["name"] = f"DT{str(count).zfill(3)}"
+        return super().create(vals)
 
     def write(self, vals):
         if "type" in vals and self.supply_point_assignation_ids:

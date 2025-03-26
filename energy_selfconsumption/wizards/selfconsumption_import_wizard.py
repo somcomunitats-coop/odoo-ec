@@ -158,7 +158,11 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 "effective_date": line.get(header[1], False),
                 "supplypoint_cups": line.get(header[2], False),
                 "supplypoint_contracted_power": float(
-                    str(line.get(header[3], 0.0) if line.get(header[3],0.0)!='' else 0.0).replace(",", ".")
+                    str(
+                        line.get(header[3], 0.0)
+                        if line.get(header[3], 0.0) != ""
+                        else 0.0
+                    ).replace(",", ".")
                 ),
                 "tariff": line.get(header[4], False),
                 "supplypoint_street": line.get(header[5], False),
@@ -190,10 +194,18 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     header[24], False
                 ),  # New
                 "inscriptionselfconsumption_annual_electricity_use": float(
-                    str(line.get(header[25], 0.0) if line.get(header[25],0.0)!='' else 0.0).replace(",", ".")
+                    str(
+                        line.get(header[25], 0.0)
+                        if line.get(header[25], 0.0) != ""
+                        else 0.0
+                    ).replace(",", ".")
                 ),  # New
                 "inscriptionselfconsumption_participation": float(
-                    str(line.get(header[26], 0.0) if line.get(header[26],0.0)!='' else 0.0).replace(",", ".")
+                    str(
+                        line.get(header[26], 0.0)
+                        if line.get(header[26], 0.0) != ""
+                        else 0.0
+                    ).replace(",", ".")
                 ),  # New
                 "inscriptionselfconsumption_accept": line.get(header[27], False),  # New
             }
@@ -405,6 +417,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "mandate_id": False,
                     "supply_point_id": supply_point.id,
                     "participation_id": participation[0].id,
+                    "participation_assigned_quantity": participation[0].quantity,
                     "participation_real_quantity": participation[0].quantity,
                     "annual_electricity_use": 1.0,
                     "accept": True,
@@ -507,6 +520,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                         "mandate_id": mandates[0].id if mandates else False,
                         "code": self.generate_cups(),
                         "participation_id": participation[0].id,
+                        "participation_assigned_quantity": participation[0].quantity,
                         "participation_real_quantity": participation[0].quantity,
                         "supply_point_id": supply_point[0].id,
                         "annual_electricity_use": 1.0,

@@ -43,7 +43,9 @@ class ChangeStateInscriptionWizard(models.TransientModel):
                         "change_state_inscription_wizard_id": self.id,
                         "inscription_id": inscription.id,
                         "state": inscription.state,
-                        "participation_real_quantity": inscription.participation_real_quantity,
+                        "participation_real_quantity": inscription.participation_real_quantity
+                        if inscription.state == "active"
+                        else inscription.participation_assigned_quantity,
                     },
                 )
             )
@@ -56,18 +58,25 @@ class ChangeStateInscriptionWizard(models.TransientModel):
         for (
             change_state_inscription_lines_wizard
         ) in self.change_state_inscription_lines_wizard_ids:
-            inscription = self.env[
-                "energy_selfconsumption.inscription_selfconsumption"
-            ].browse(change_state_inscription_lines_wizard.inscription_id.id)
+            inscription = change_state_inscription_lines_wizard.inscription_id
             vals = {}
             if inscription.state != change_state_inscription_lines_wizard.state:
                 vals["state"] = change_state_inscription_lines_wizard.state
             if (
-                inscription.participation_real_quantity
-                != change_state_inscription_lines_wizard.participation_real_quantity
+                round(inscription.participation_assigned_quantity, 2)
+                != round(
+                    change_state_inscription_lines_wizard.participation_real_quantity, 2
+                )
+                and inscription.state != "active"
+            ) or (
+                round(inscription.participation_real_quantity, 2)
+                != round(
+                    change_state_inscription_lines_wizard.participation_real_quantity, 2
+                )
+                and inscription.state == "active"
             ):
                 vals[
-                    "participation_real_quantity"
+                    "participation_assigned_quantity"
                 ] = change_state_inscription_lines_wizard.participation_real_quantity
             if vals != {}:
                 inscription.update(vals)
@@ -99,14 +108,14 @@ class ChangeStateInscriptionLinesWizard(models.TransientModel):
     @api.onchange("participation_real_quantity")
     def _onchange_participation_real_quantity(self):
         if (
-            self.participation_real_quantity
-            != self.inscription_id.participation_quantity
+            round(self.participation_real_quantity, 2)
+            != round(self.inscription_id.participation_real_quantity, 2)
             and self.state == "active"
         ):
             self.state = "change"
         if (
-            self.participation_real_quantity
-            == self.inscription_id.participation_quantity
+            round(self.participation_real_quantity, 2)
+            == round(self.inscription_id.participation_real_quantity, 2)
             and self.state == "change"
         ):
             self.state = "active"
