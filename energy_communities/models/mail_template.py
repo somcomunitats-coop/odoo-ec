@@ -1,8 +1,9 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class MailTemplate(models.Model):
-    _inherit = "mail.template"
+    _name = "mail.template"
+    _inherit = ["mail.template", "user.currentcompany.mixin"]
 
     company_id = fields.Many2one(required=False, default=lambda self: self.env.company)
 
@@ -22,3 +23,8 @@ class MailTemplate(models.Model):
             )
             for template in self
         ]
+
+    @api.returns("self", lambda value: value.id)
+    def copy(self, default=None):
+        default = dict(default or {}, company_id=self.env.company.id)
+        return super().copy(default=default)
