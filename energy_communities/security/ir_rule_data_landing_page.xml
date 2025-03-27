@@ -1,0 +1,10 @@
+<odoo>
+    <record model="ir.rule" id="landing_page_company_rule">
+        <field name="name">Landing Page multi-company</field>
+        <field name="model_id" ref="energy_communities.model_landing_page" />
+        <field name="global" eval="True" />
+        <field name="domain_force">
+['|',('company_id', '=', False),('company_id', 'in', company_ids)]
+        </field>
+    </record>
+</odoo>
