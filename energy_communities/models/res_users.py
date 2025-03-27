@@ -93,7 +93,6 @@ class ResUsers(models.Model):
         _odoo_auth_roles = [
             self.env.ref("energy_communities.role_platform_admin"),
             self.env.ref("energy_communities.role_coord_admin"),
-            self.env.ref("energy_communities.role_coord_worker"),
             self.env.ref("energy_communities.role_ce_admin"),
         ]
         _app_auth_roles = [self.env.ref("energy_communities.role_ce_member")]
@@ -163,7 +162,6 @@ class ResUsers(models.Model):
         user_roles = [
             "role_platform_admin",
             "role_coord_admin",
-            "role_coord_worker",
             "role_ce_admin",
             "role_ce_manager",
             "role_ce_member",
@@ -279,7 +277,7 @@ class ResUsers(models.Model):
     def add_energy_community_role(self, company_id, role_name):
         if role_name == "role_ce_member" or role_name == "role_ce_admin":
             self.make_ce_user(company_id, role_name)
-        elif role_name == "role_coord_worker" or role_name == "role_coord_admin":
+        elif role_name == "role_coord_admin":
             self.make_coord_user(company_id, role_name)
         else:
             raise exceptions.UserError(_("Role not found"))

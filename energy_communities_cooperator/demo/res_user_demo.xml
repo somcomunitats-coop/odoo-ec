@@ -222,10 +222,6 @@
                     'role_id': ref('energy_communities.role_internal_user')
                     }),
                    (0, 0, {
-                    'role_id': ref('energy_communities.role_coord_worker'),
-                    'company_id':ref('energy_communities.coordinator_company'),
-                    }),
-                   (0, 0, {
                     'role_id': ref('energy_communities.role_ce_manager'),
                     'company_id':obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id.id,
                     }),

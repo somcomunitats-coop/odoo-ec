@@ -262,7 +262,6 @@ def migrate(cr, version):
                 env.ref("energy_communities.role_ce_admin"),
                 env.ref("energy_communities.role_ce_manager"),
                 env.ref("energy_communities.role_coord_admin"),
-                env.ref("energy_communities.role_coord_worker"),
                 env.ref(
                     "energy_communities.role_platform_admin",
                 ),

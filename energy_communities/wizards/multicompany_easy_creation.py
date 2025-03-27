@@ -143,9 +143,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 }
 
     def add_company_managers(self):
-        coord_members = self.parent_id.get_users(
-            ["role_coord_admin", "role_coord_worker"]
-        )
+        coord_members = self.parent_id.get_users(["role_coord_admin"])
         for manager in coord_members:
             manager.make_ce_user(self.new_company_id.id, "role_ce_manager")
 
