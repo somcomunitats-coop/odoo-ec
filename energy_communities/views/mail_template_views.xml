@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <data>
-        <record model="ir.ui.view" id="email_template_form">
-            <field name="name">email.template.form</field>
-            <field name="model">mail.template</field>
-            <field name="inherit_id" ref="mail.email_template_form" />
-            <field name="arch" type="xml">
-                <button name="%(mail.mail_template_reset_action)d" position="attributes">
-                    <attribute name="groups">energy_communities.role_platform_admin</attribute>
-                </button>
-            </field>
-        </record>
-
-    </data>
+  <data>
+    <record model="ir.ui.view" id="email_template_form">
+      <field name="name">mail.template.form (in energy_communities)</field>
+      <field name="model">mail.template</field>
+      <field name="inherit_id" ref="mail_template_multi_company.mail_template_form_view" />
+      <field name="arch" type="xml">
+        <button name="%(mail.mail_template_reset_action)d" position="attributes">
+          <attribute name="groups">energy_communities.role_platform_admin</attribute>
+        </button>
+        <field name="company_id" position="before">
+          <field name="user_current_role" invisible="1"/>
+        </field>
+        <field name="company_id" position="attributes">
+          <attribute name="attrs">{'readonly': [('user_current_role','!=','role_platform_admin')]}</attribute>
+        </field>
+      </field>
+    </record>
+  </data>
 </odoo>
