@@ -83,7 +83,7 @@
       <field name="domain_force">
 [
 '&amp;','&amp;',
-('user_current_role', 'in', ['role_coord_admin','role_coord_worker']),
+('user_current_role', 'in', ['role_coord_admin']),
 ('company_hierarchy_level','!=','instance'),
 '|',
 ('type', '!=', 'private'),
