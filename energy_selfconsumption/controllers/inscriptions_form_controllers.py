@@ -103,6 +103,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 [
                     ("project_id", "=", int(values["model_id"])),
                     ("partner_id", "=", partner.id),
+                    ("code", "=", values["supplypoint_cups"]),
                 ]
             )
         )
@@ -394,7 +395,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         return values
 
     def send_email(self, model, partner):
-        email_values = {"email_to": partner.email}
+        email_values = {"email_to": partner.email, "lang": partner.lang}
         template = request.env.ref(
             "energy_selfconsumption.selfconsumption_insciption_form"
         ).with_context(email_values)
