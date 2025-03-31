@@ -27,9 +27,8 @@ class CreateInscription(models.AbstractModel):
     ):
         """Create the supply point if it does not already exist."""
         supply_point = (
-            self.env["energy_selfconsumption.supply_point"]
-            .sudo()
-            .with_context(active_test=False)
+            self.env["energy_selfconsumption.supply_point"].sudo()
+            # .with_context(active_test=False)
             .search([("code", "=", values["supplypoint_cups"])])
         )
         country = self._get_country(values, project)
