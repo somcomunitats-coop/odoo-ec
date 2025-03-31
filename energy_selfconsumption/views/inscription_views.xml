@@ -24,8 +24,30 @@
                     <field name="member" readonly="1" width="6%" optional="hide"/>
                     <field name="accept" string="Accept terms" readonly="1" width="6%" optional="hide"/>
                     <field name="participation_quantity" sum="True" width="6%" optional="show"/>
-                    <field name="participation_real_quantity" sum="True" width="6%" optional="show" attrs="{'readonly': [('state', '=', 'active')]}" />
+                    <field name="participation_assigned_quantity" sum="True" width="6%" optional="show" attrs="{'readonly': [('state', '=', 'active')]}" />
+                    <field name="participation_real_quantity" sum="True" width="6%" optional="show" readonly="1" />
                 </tree>
+            </field>
+        </record>
+
+        <record id="inscription_search_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.inscription_selfconsumption.search</field>
+            <field name="model">energy_selfconsumption.inscription_selfconsumption</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="Actives" name="actives" domain="[('state', '=', 'active')]"/>
+                    <filter string="Changes" name="updates" domain="[('state', '=', 'change'), ('participation_assigned_quantity', '>', 0)]"/>
+                    <filter string="Retirements" name="deletes" domain="[('state', '=', 'change'), ('participation_assigned_quantity', '=', 0)]"/>
+                    <filter string="News" name="inactives" domain="[('state', '=', 'inactive')]"/>
+                    <separator/>
+                    <field name="code" />
+                    <field name="partner_id" />
+                    <field name="owner_id" />
+                    <group expand="1" string="Group By">
+                        <filter string="State" name="state" domain="[]" context="{'group_by':'state'}" />
+                        <filter string="Partner" name="partner_id" domain="[]" context="{'group_by':'partner_id'}" />
+                    </group>
+                </search>
             </field>
         </record>
 

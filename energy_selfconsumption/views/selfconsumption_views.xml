@@ -68,7 +68,7 @@
                             <button
                 class="oe_stat_button"
                 type="object"
-                name="get_inscriptions"
+                name="get_inscriptions_view"
                 icon="fa-pencil-square-o"
                 context="{'default_effective_date': today}"
               >
@@ -82,7 +82,7 @@
                             <button
                 class="oe_stat_button"
                 type="object"
-                name="get_distribution_tables"
+                name="get_distribution_tables_view"
                 icon="fa-table"
                 attrs="{'invisible': [('state', '==', 'draft')]}"
               >

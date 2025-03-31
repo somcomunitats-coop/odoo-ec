@@ -59,11 +59,7 @@ class Selfconsumption(models.Model):
 
     def _compute_sale_orders_count(self):
         for record in self:
-            sale_orders = (
-                self.env["sale.order.metadata.line"]
-                .search([("key", "=", "selfconsumption_id"), ("value", "=", record.id)])
-                .mapped("order_id")
-            )
+            sale_orders = self.get_sale_orders()
             record.sale_orders_count = len(sale_orders)
 
     def _compute_report_distribution_table(self):
@@ -185,7 +181,7 @@ class Selfconsumption(models.Model):
             "target": "new",
         }
 
-    def get_distribution_tables(self):
+    def get_distribution_tables_view(self):
         self.ensure_one()
         return {
             "type": "ir.actions.act_window",
@@ -196,7 +192,7 @@ class Selfconsumption(models.Model):
             "context": {"create": True, "default_selfconsumption_project_id": self.id},
         }
 
-    def get_inscriptions(self):
+    def get_inscriptions_view(self):
         self.ensure_one()
         return {
             "type": "ir.actions.act_window",
@@ -264,19 +260,46 @@ class Selfconsumption(models.Model):
         distribution_table_to_activate = self.distribution_table_ids.filtered(
             lambda table: table.state == actual_state
         )
+        # If the new state is active, we need to cancel the active distribution table
+        if new_state == "active":
+            distribution_table_active = self.distribution_table_ids.filtered(
+                lambda table: table.state == "active"
+            )
+            distribution_table_active.write(
+                {"date_end": datetime.now(), "state": "cancelled"}
+            )
         distribution_table_to_activate.write({"state": new_state})
         if new_state == "active":
-            self.inscription_ids.filtered_domain(
-                [
-                    (
-                        "supply_point_id",
-                        "in",
-                        distribution_table_to_activate.mapped(
-                            "supply_point_assignation_ids.supply_point_id"
-                        ).ids,
-                    )
-                ]
-            ).write({"state": "active"})
+            # We need to update the start date of the distribution table
+            distribution_table_to_activate.write({"start_date": datetime.now()})
+            # If the new state is active, we need to update the inscriptions
+            for supply_point_assignation in distribution_table_to_activate.mapped(
+                "supply_point_assignation_ids"
+            ):
+                inscription = supply_point_assignation._get_inscription()
+                inscription.write(
+                    {
+                        "participation_real_quantity": supply_point_assignation.energy_shares,
+                        "state": "active",
+                    }
+                )
+            # We need to delete the inscriptions that are in change state
+            inscriptions = self.inscription_ids.filtered_domain(
+                [("state", "=", "change")]
+            )
+            # We need to delete the supply point assignations that are in change state
+            for distibution_table in self.distribution_table_ids:
+                for supply_point_assignation in distibution_table.mapped(
+                    "supply_point_assignation_ids"
+                ):
+                    inscription = supply_point_assignation._get_inscription()
+                    if inscription.id in inscriptions.ids:
+                        supply_point_assignation.unlink()
+            # We need to inactive the supply points that are in change state
+            supply_points = inscriptions.mapped("supply_point_id")
+            supply_points.write({"active": False})
+            # We need to delete the inscriptions that are in change state
+            inscriptions.unlink()
 
     def set_in_activation_state(self):
         for record in self:
