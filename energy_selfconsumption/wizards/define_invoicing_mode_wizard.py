@@ -65,8 +65,8 @@ class ContractGenerationWizard(models.TransientModel):
         pricelist = self.env["product.pricelist"].create(
             {
                 "name": f"{self.selfconsumption_id.name} {self.invoicing_mode} Selfconsumption Pricelist",
-                "company_id": self.env.company.id,
-                "currency_id": self.env.company.currency_id.id,
+                "company_id": self.selfconsumption_id.company_id.id,
+                "currency_id": self.selfconsumption_id.company_id.currency_id.id,
                 "discount_policy": "without_discount",
                 "item_ids": [
                     (
@@ -100,7 +100,11 @@ class ContractGenerationWizard(models.TransientModel):
 
         # Search accounting journal
         journal_id = self.env["account.journal"].search(
-            [("company_id", "=", self.env.company.id), ("type", "=", "sale")], limit=1
+            [
+                ("company_id", "=", self.selfconsumption_id.company_id.id),
+                ("type", "=", "sale"),
+            ],
+            limit=1,
         )
         if not journal_id:
             raise UserWarning(_("Accounting Journal not found."))

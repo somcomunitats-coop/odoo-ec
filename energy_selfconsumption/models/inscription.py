@@ -5,6 +5,7 @@ STATE_VALUES = [
     ("active", _("Active")),
     ("inactive", _("Inactive")),
     ("change", _("Change")),
+    ("cancelled", _("Cancelled")),
 ]
 
 
