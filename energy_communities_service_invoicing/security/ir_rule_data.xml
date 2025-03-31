@@ -82,8 +82,7 @@
 
     <field name="domain_force">
 [
-'|','|',
-('partner_id','=',user.user_current_company.partner_id.id),
+'|',
 ('company_id','=',False),
 ('company_id','in',company_ids)
 ]
