@@ -57,7 +57,7 @@ class ContractGenerationWizard(models.TransientModel):
                 contract = component.confirm(**so_extra)
             # 2.- setup contract line description
             self.selfconsumption_id._setup_selfconsumption_contract_line_description(
-                distribution_id, contract, sale_order
+                distribution_id, contract
             )
             # 3.- setup contract line main_line
             contract.contract_line_ids[0].write({"main_line": True})

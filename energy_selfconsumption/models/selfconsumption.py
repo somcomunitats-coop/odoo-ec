@@ -15,6 +15,9 @@ from odoo.addons.energy_communities.utils import (
     contract_utils,
     sale_order_utils,
 )
+from odoo.addons.energy_communities_service_invoicing.utils import (
+    get_existing_pack_contract,
+)
 
 _logger = logging.getLogger(__name__)
 
@@ -58,7 +61,7 @@ class Selfconsumption(models.Model):
     def _compute_contract_count(self):
         for record in self:
             related_contracts = self.env["contract.contract"].search_count(
-                [("project_id", "=", record.id)]
+                [("project_id", "=", record.id), ("state", "=", "in_progress")]
             )
             record.contracts_count = related_contracts
 
@@ -396,130 +399,70 @@ class Selfconsumption(models.Model):
         # TODO:
         # Generate new sale orders
         # Select product
-        product_template = None
         pack = None
         if self.invoicing_mode == "power_acquired":
-            product_template = self.env.ref(
-                "energy_selfconsumption.product_product_power_acquired_product_template"
-            )
             pack = self.env.ref(
                 "energy_selfconsumption.product_product_power_acquired_product_pack_template"
             )
         elif self.invoicing_mode == "energy_delivered":
-            product_template = self.env.ref(
-                "energy_selfconsumption.product_product_energy_delivered_product_template"
-            )
             pack = self.env.ref(
                 "energy_selfconsumption.product_product_energy_delivered_product_pack_template"
             )
         elif self.invoicing_mode == "energy_custom":
-            product_template = self.env.ref(
-                "energy_selfconsumption.product_product_energy_custom_product_template"
-            )
             pack = self.env.ref(
                 "energy_selfconsumption.product_product_energy_custom_product_pack_template"
             )
         else:
             raise ValidationError(_("Invalid invoicing mode"))
 
-        # Create pricelist
-        pricelist = self.env["product.pricelist"].create(
-            {
-                "name": f"{self.name} {self.invoicing_mode} Selfconsumption Pricelist",
-                "company_id": self.company_id.id,
-                "currency_id": self.company_id.currency_id.id,
-                "discount_policy": "without_discount",
-                "item_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "base": "standard_price",
-                            "product_tmpl_id": product_template.id,
-                            "product_id": product_template.product_variant_id.id,
-                            "compute_price": "fixed",
-                            "fixed_price": self.price,
-                            "categ_id": self.env.ref(
-                                "energy_selfconsumption.product_category_selfconsumption_service"
-                            ).id,
-                        },
-                    )
-                ],
-            }
-        )
-
         # Search accounting journal
         journal_id = self.env["account.journal"].search(
-            [("company_id", "=", self.env.company.id), ("type", "=", "sale")], limit=1
+            [("company_id", "=", self.company_id.id), ("type", "=", "sale")], limit=1
         )
         if not journal_id:
             raise UserWarning(_("Accounting Journal not found."))
 
-        # Generate new contracts
-        contracts = self.get_contracts().filtered_domain(
-            [("state", "=", "in_progress")]
-        )
-        for contract in contracts:
-            with contract_utils(self.env, contract) as component:
-                component.modify(
-                    execution_date=fields.Date.today(),
-                    executed_modification_action="",
-                    pricelist_id=contract.pricelist_id,
-                    pack_id=pack,
-                    discount=None,
-                    payment_mode_id=self.payment_mode,
-                )
-
-        # 2.- setup contract line description
-        # self.selfconsumption_id._setup_selfconsumption_contract_line_description(
-        #     distribution_table_validated,
-        #     contract,
-        #     component.work.record,  # Sale order
-        # )
-
         # Create sale order
-        partners_sale_orders = self.get_sale_orders().mapped("partner_id")
         for (
             supply_point_assignation
         ) in distribution_table_validated.supply_point_assignation_ids:
-            if (
-                supply_point_assignation.supply_point_id.partner_id.id
-                not in partners_sale_orders.ids
-            ):
-                inscription_id = (
-                    self.selfconsumption_id.inscription_ids.filtered_domain(
-                        [
-                            (
-                                "partner_id",
-                                "=",
-                                supply_point_assignation.supply_point_id.partner_id.id,
-                            )
-                        ]
+            inscription_id = self.selfconsumption_id.inscription_ids.filtered_domain(
+                [
+                    (
+                        "partner_id",
+                        "=",
+                        supply_point_assignation.supply_point_id.partner_id.id,
+                    )
+                ]
+            )
+
+            if not inscription_id.mandate_id:
+                raise ValidationError(
+                    _("Mandate not found for {partner}").format(
+                        partner=supply_point_assignation.supply_point_id.partner_id.name
                     )
                 )
 
-                if not inscription_id.mandate_id:
-                    raise ValidationError(
-                        _("Mandate not found for {partner}").format(
-                            partner=supply_point_assignation.supply_point_id.partner_id.name
-                        )
-                    )
-
-                so_extra = {
-                    "commitment_date": fields.Date.today(),
-                    "payment_mode_id": self.payment_mode.id,
-                }
+            service_invoicing_id = False
+            existing_contract = get_existing_pack_contract(
+                self.env,
+                inscription_id.partner_id,
+                "selfconsumption_pack",
+                ["closed_planned", "in_progress", "paused", "closed"],
+                [("project_id", "=", self.id)],
+            )
+            if not existing_contract:
                 with sale_order_utils(self.env) as component:
-                    component.create_service_invoicing_sale_order(
+                    service_invoicing_id = component.create_service_invoicing_initial(
                         inscription_id.partner_id,
                         pack,
-                        pricelist,
-                        False,
+                        self.pricelist_id,
                         fields.Date.today(),
                         "activate",
                         "active_selfconsumption_contract",
+                        self.payment_mode_id,
                         {
-                            "selfconsumption_id": self.selfconsumption_id.id,
+                            "selfconsumption_id": self.id,
                             "supply_point_id": supply_point_assignation.supply_point_id.id,
                             "recurring_interval": self.recurring_interval,
                             "recurring_rule_type": self.recurring_rule_type,
@@ -529,18 +472,35 @@ class Selfconsumption(models.Model):
                             "company_id": self.company_id.id,
                         },
                     )
-                    contract = component.confirm(**so_extra)
-                    # 2.- setup contract line description
-                    self.selfconsumption_id._setup_selfconsumption_contract_line_description(
-                        distribution_table_validated,
-                        contract,
-                        component.work.record,  # Sale order
-                    )
+            if not service_invoicing_id:
+                existing_closed_contract = get_existing_pack_contract(
+                    self.env,
+                    inscription_id.partner_id,
+                    "selfconsumption_pack",
+                    ["closed_planned", "closed"],
+                    [("project_id", "=", self.id)],
+                )
+                if existing_closed_contract:
+                    with contract_utils(
+                        self.env, existing_closed_contract
+                    ) as component:
+                        service_invoicing_id = component.reopen(
+                            fields.Date.today(),
+                            self.pricelist_id,
+                            pack,
+                            False,
+                            self.payment_mode_id,
+                        )
+            if service_invoicing_id:
+                # 2.- setup contract line description
+                self._setup_selfconsumption_contract_line_description(
+                    distribution_table_validated, service_invoicing_id
+                )
                 # 3.- setup contract line main_line
-                contract.contract_line_ids[0].write({"main_line": True})
+                service_invoicing_id.contract_line_ids[0].write({"main_line": True})
                 # 4.- mark contract as active
-                with contract_utils(self.env, contract) as component:
-                    component.set_contract_status_active(self.start_date)
+                with contract_utils(self.env, service_invoicing_id) as component:
+                    component.set_contract_status_active(fields.Date.today())
 
     def set_in_activation_state(self):
         for record in self:
@@ -687,11 +647,18 @@ class Selfconsumption(models.Model):
         return {
             "type": "ir.actions.act_window",
             "name": "Contracts",
+            "view_type": "tree",
+            "view_mode": "tree,form",
             "views": [
-                (self.env.ref("energy_selfconsumption.contract_tree_view").id, "tree"),
                 (
                     self.env.ref(
-                        "energy_selfconsumption.view_contract_contract_customer_form_platform_admin"
+                        "energy_communities_service_invoicing.view_service_invoicing_tree"
+                    ).id,
+                    "tree",
+                ),
+                (
+                    self.env.ref(
+                        "energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin"
                     ).id,
                     "form",
                 ),
@@ -701,9 +668,10 @@ class Selfconsumption(models.Model):
             "context": {
                 "create": True,
                 "default_project_id": self.id,
-                "search_default_filter_next_period_date_start": True,
-                "search_default_filter_next_period_date_end": True,
+                "search_default_not_finished": 1,
+                "search_default_paused": 1,
             },
+            "target": "current",
         }
 
     def distribution_table_state(self, actual_state, new_state):
@@ -738,51 +706,28 @@ class Selfconsumption(models.Model):
                 [("state", "=", "change")]
             )
             inscriptions.write({"state": "cancelled"})
-            sale_orders = self.get_sale_orders()
-            for sale_order in sale_orders:
-                if sale_order.partner_id.id in inscriptions.mapped("partner_id").ids:
-                    sale_order.action_cancel()
             contracts = self.get_contracts()
             for contract in contracts:
                 if contract.partner_id.id in inscriptions.mapped("partner_id").ids:
                     with contract_utils(self.env, contract) as component:
                         component.set_contract_status_closed(fields.Date.today())
-            # We need to delete the inscriptions that are in change state
-            # inscriptions = self.inscription_ids.filtered_domain(
-            #     [("state", "=", "change")]
-            # )
-            # We need to delete the supply point assignations that are in change state
-            # for distibution_table in self.distribution_table_ids:
-            #     for supply_point_assignation in distibution_table.mapped(
-            #         "supply_point_assignation_ids"
-            #     ):
-            #         inscription = supply_point_assignation._get_inscription()
-            #         if inscription.id in inscriptions.ids:
-            #             supply_point_assignation.unlink()
-            # We need to inactive the supply points that are in change state
-            # supply_points = inscriptions.mapped("supply_point_id")
-            # supply_points.write({"active": False})
-            # We need to delete the inscriptions that are in change state
-            # inscriptions.unlink()
 
     def _setup_selfconsumption_contract_line_description(
-        self, distribution_id, contract, sale_order
+        self, distribution_id, contract
     ):
         for contract_line in contract.contract_line_ids:
-            supply_point_assignation = (
-                distribution_id.supply_point_assignation_ids.filtered_domain(
-                    [
-                        (
-                            "supply_point_id",
-                            "=",
-                            int(
-                                sale_order.metadata_line_ids.filtered_domain(
-                                    [("key", "=", "supply_point_id")]
-                                ).mapped("value")[0]
-                            ),
+            supply_point_assignation = distribution_id.supply_point_assignation_ids.filtered_domain(
+                [
+                    (
+                        "supply_point_id",
+                        "=",
+                        int(
+                            contract.sale_order_id.metadata_line_ids.filtered_domain(
+                                [("key", "=", "supply_point_id")]
+                            ).mapped("value")[0]
                         ),
-                    ]
-                )
+                    ),
+                ]
             )
             data = {
                 "code": supply_point_assignation.supply_point_id.code,

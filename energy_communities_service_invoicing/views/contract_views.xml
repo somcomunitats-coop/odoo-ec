@@ -89,11 +89,11 @@
         />
       </xpath>
       <xpath expr="//field[@name='partner_id']" position="after">
-        <field name="community_company_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}"/>
+        <field name="community_company_id" attrs="{'invisible': [('pack_type','=','none')]}"/>
       </xpath>
       <xpath expr="//field[@name='pricelist_id']" position="after">
-        <field name="pack_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
-        <field name="pack_type" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
+        <field name="pack_id" attrs="{'invisible': [('pack_type','=','none')]}" />
+        <field name="pack_type" attrs="{'invisible': [('pack_type','=','none')]}" />
       </xpath>
       <xpath expr="//field[@name='user_id']" position="after">
         <field name="date_start" />
@@ -101,11 +101,11 @@
         <field name="recurring_next_date" />
         <field name="date_end" />
         <field name="discount" />
-        <field name="predecessor_contract_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
-        <field name="successor_contract_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
-        <field name="closing_action" attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('pack_type','!=','platform_pack')]}" />
-        <field name="closing_action_description" attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('pack_type','!=','platform_pack')]}" />
-        <field name="sale_order_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}" />
+        <field name="predecessor_contract_id" attrs="{'invisible': [('pack_type','=','none')]}" />
+        <field name="successor_contract_id" attrs="{'invisible': [('pack_type','=','none')]}" />
+        <field name="closing_action" attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('pack_type','=','none')]}" />
+        <field name="closing_action_description" attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('pack_type','=','none')]}" />
+        <field name="sale_order_id" attrs="{'invisible': [('pack_type','=','none')]}" />
       </xpath>
     </field>
   </record>
