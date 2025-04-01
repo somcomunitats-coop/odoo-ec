@@ -61,7 +61,7 @@ class Selfconsumption(models.Model):
     def _compute_contract_count(self):
         for record in self:
             related_contracts = self.env["contract.contract"].search_count(
-                [("project_id", "=", record.id), ("state", "=", "in_progress")]
+                [("project_id", "=", record.id), ("status", "=", "in_progress")]
             )
             record.contracts_count = related_contracts
 
