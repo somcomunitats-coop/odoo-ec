@@ -55,6 +55,12 @@
               name="set_invoicing_mode"
               attrs="{'invisible':[('invoicing_mode', '!=', False)]}"
             />
+                        <button
+              type="object"
+              string="Set new distribution table"
+              name="set_new_distribution_table"
+              attrs="{'invisible':[('state', '!=', 'active')]}"
+            />
 
                         <field
               name="state"
