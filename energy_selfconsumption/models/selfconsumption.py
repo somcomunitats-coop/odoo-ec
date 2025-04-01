@@ -455,9 +455,30 @@ class Selfconsumption(models.Model):
         if not journal_id:
             raise UserWarning(_("Accounting Journal not found."))
 
-        partners_sale_orders = self.get_sale_orders().mapped("partner_id")
+        # Generate new contracts
+        contracts = self.get_contracts().filtered_domain(
+            [("state", "=", "in_progress")]
+        )
+        for contract in contracts:
+            with contract_utils(self.env, contract) as component:
+                component.modify(
+                    execution_date=fields.Date.today(),
+                    executed_modification_action="",
+                    pricelist_id=contract.pricelist_id,
+                    pack_id=pack,
+                    discount=None,
+                    payment_mode_id=self.payment_mode,
+                )
+
+        # 2.- setup contract line description
+        # self.selfconsumption_id._setup_selfconsumption_contract_line_description(
+        #     distribution_table_validated,
+        #     contract,
+        #     component.work.record,  # Sale order
+        # )
 
         # Create sale order
+        partners_sale_orders = self.get_sale_orders().mapped("partner_id")
         for (
             supply_point_assignation
         ) in distribution_table_validated.supply_point_assignation_ids:
@@ -520,26 +541,6 @@ class Selfconsumption(models.Model):
                 # 4.- mark contract as active
                 with contract_utils(self.env, contract) as component:
                     component.set_contract_status_active(self.start_date)
-
-        # Generate new contracts
-        contracts = self.get_contracts().filtered_domain(
-            [("state", "=", "in_progress")]
-        )
-        for contract in contracts:
-            with contract_utils(self.env, contract) as component:
-                new_contract = component.modify(
-                    execution_date=fields.Date.today(),
-                    executed_modification_action="",
-                    pricelist_id=contract.pricelist_id,
-                    pack_id=pack,
-                    discount=None,
-                    payment_mode_id=self.payment_mode,
-                )
-                self.selfconsumption_id._setup_selfconsumption_contract_line_description(
-                    distribution_table_validated,
-                    new_contract,
-                    component.work.record,  # Sale order
-                )
 
     def set_in_activation_state(self):
         for record in self:
@@ -721,7 +722,7 @@ class Selfconsumption(models.Model):
         distribution_table_to_activate.write({"state": new_state})
         if new_state == "active":
             # We need to update the start date of the distribution table
-            distribution_table_to_activate.write({"start_date": fields.Date.today()})
+            distribution_table_to_activate.write({"date_start": fields.Date.today()})
             # If the new state is active, we need to update the inscriptions
             for supply_point_assignation in distribution_table_to_activate.mapped(
                 "supply_point_assignation_ids"
@@ -744,7 +745,8 @@ class Selfconsumption(models.Model):
             contracts = self.get_contracts()
             for contract in contracts:
                 if contract.partner_id.id in inscriptions.mapped("partner_id").ids:
-                    contract.action_cancel()
+                    with contract_utils(self.env, contract) as component:
+                        component.set_contract_status_closed(fields.Date.today())
             # We need to delete the inscriptions that are in change state
             # inscriptions = self.inscription_ids.filtered_domain(
             #     [("state", "=", "change")]
