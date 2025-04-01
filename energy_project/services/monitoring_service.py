@@ -308,7 +308,7 @@ class MonitoringService:
                 accumulator[1] + point.consumption,
             )
             daily_metrics = self._get_project_daily_metrics(
-                system_id, member_id, date_from, date_to
+                system_id, date_from, date_to
             )
             energy_gridconsumption, energy_consumption = reduce(
                 energy_usage_ratio_from_grid_accu, daily_metrics, (0, 0)
@@ -327,7 +327,7 @@ class MonitoringService:
                 accumulator[1] + point.consumption,
             )
             daily_metrics = self._get_project_daily_metrics(
-                system_id, member_id, date_from, date_to
+                system_id, date_from, date_to
             )
             energy_selfconsumption, energy_consumption = reduce(
                 energy_production_ratio_accu, daily_metrics, (0, 0)
