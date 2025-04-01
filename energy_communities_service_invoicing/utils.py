@@ -110,3 +110,25 @@ def get_existing_last_closed_pack_contract(
     if contract_id:
         query.append(("id", "!=", contract_id.id))
     return env["contract.contract"].search(query, limit=1)
+
+
+def get_existing_pack_contract(
+    env,
+    partner_id,
+    pack_type,
+    status,
+    extra_query=False,
+    successor_contract_id=False,
+    contract_id=False,
+):
+    query = [
+        ("partner_id", "=", partner_id.id),
+        ("pack_type", "=", pack_type),
+        ("status", "in", status),
+        ("successor_contract_id", "=", successor_contract_id),
+    ]
+    if extra_query:
+        query = extra_query + query
+    if contract_id:
+        query.append(("id", "!=", contract_id.id))
+    return env["contract.contract"].search(query, limit=1)

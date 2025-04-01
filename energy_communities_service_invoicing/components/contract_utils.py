@@ -197,6 +197,11 @@ class ContractUtils(Component):
         payment_mode_id=None,
     ):
         executed_action_description_list = executed_action_description.split(",")
+        metadata_line_ids = {}
+        for metadata_line in self.work.record.sale_order_id.metadata_line_ids:
+            metadata_line_ids[metadata_line.key] = metadata_line.value
+        if "modify_discount" in executed_action_description_list:
+            metadata_line_ids["discount"] = discount
         return {
             "partner_id": self.work.record.partner_id,
             "pack_id": pack_id
@@ -211,14 +216,7 @@ class ContractUtils(Component):
             "start_date": execution_date,
             "executed_action": executed_action,
             "executed_action_description": executed_action_description,
-            "metadata": {
-                "community_company_id": self.work.record.community_company_id.id
-                if self.work.record.community_company_id
-                else False,
-                "discount": discount
-                if "modify_discount" in executed_action_description_list
-                else self.work.record.discount,
-            },
+            "metadata": metadata_line_ids,
         }
 
     def _is_service_line(self, contract_line):

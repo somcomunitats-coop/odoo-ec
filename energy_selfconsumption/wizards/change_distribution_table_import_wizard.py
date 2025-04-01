@@ -9,6 +9,7 @@ STATE_VALUES = [
     ("active", _("Active")),
     ("inactive", _("Inactive")),
     ("change", _("Change")),
+    ("cancelled", _("Cancelled")),
 ]
 
 STATE_WIZARD_VALUES = [
@@ -33,7 +34,7 @@ class Change_distribution_table_import_wizard(models.TransientModel):
         "change.distribution.table.import.line.wizard",
         "change_distribution_table_import_wizard_id",
         string="Change distribution table import line wizard",
-        domain=[("state", "=", "inactive")],
+        domain=[("state", "in", ["inactive", "cancelled"])],
     )
 
     change_distribution_table_import_line_wizard_views_ids = fields.One2many(
@@ -116,7 +117,7 @@ class Change_distribution_table_import_wizard(models.TransientModel):
                     "=",
                     self.env.context["default_selfconsumption_project_id"],
                 ),
-                ("state", "=", "inactive"),
+                ("state", "in", ["inactive", "cancelled"]),
             ]
         )
 
@@ -163,7 +164,7 @@ class Change_distribution_table_import_wizard(models.TransientModel):
         elif self.state == "new":
             self.change_distribution_table_import_line_wizard_views_ids = (
                 self.change_distribution_table_import_line_wizard_ids.filtered(
-                    lambda line: line.state == "inactive"
+                    lambda line: line.state in ["inactive", "cancelled"]
                 )
             )
         else:
