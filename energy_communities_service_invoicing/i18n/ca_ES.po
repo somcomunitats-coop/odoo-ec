@@ -1,0 +1,741 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* energy_communities_service_invoicing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-25 15:32+0000\n"
+"PO-Revision-Date: 2025-03-25 15:32+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: energy_communities_service_invoicing
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.report_invoice_document
+msgid "<strong>Community:</strong>"
+msgstr "Comunitat:"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_contract_abstract_contract
+msgid "Abstract Recurring Contract"
+msgstr "Contracte recurrent abstracte"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_contract_abstract_contract_line
+msgid "Abstract Recurring Contract Line"
+msgstr "Línia de contracte recurrent abstracta"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__closing_action__activate
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__sale_order__service_invoicing_action__activate
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__service_invoicing_action_wizard__executed_action__activate
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin
+#, python-format
+msgid "Activate"
+msgstr "Activar"
+
+#. module: energy_communities_service_invoicing
+#: model:contract.line.qty.formula,name:energy_communities_service_invoicing.active_community_members_formula
+msgid "Active community members"
+msgstr "Membres actius de la comunitat"
+
+#. module: energy_communities_service_invoicing
+#: model:contract.line.qty.formula,name:energy_communities_service_invoicing.active_monitoring_members_formula
+msgid "Active monitoring members"
+msgstr "Membres de monitorització actius"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoicing_activity_menu
+msgid "Activity"
+msgstr "Activitat"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_pack_type_mixin
+msgid "Add pack_type to any model"
+msgstr "Afegeix typus de pack a qualsevol model"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__allowed_community_company_ids
+msgid "Allowed Community Company"
+msgstr "Comunitat permesa"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__allowed_companies
+msgid "Allowed Companies"
+msgstr "Companyies permeses"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__allowed_payment_mode_ids
+msgid "Allowed Payment Mode"
+msgstr "Mode de pagament permès"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.actions.act_window,name:energy_communities_service_invoicing.service_invoicing_action_create_wizard_action
+#: model:ir.actions.server,name:energy_communities_service_invoicing.service_invoicing_action_create_wizard_from_company_action
+#: model:ir.ui.menu,name:energy_communities_service_invoicing.service_invoicing_action_create_wizard_menu
+msgid "Assign pack to community"
+msgstr "Assignar Pack a Comunitat"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoicing_assistants_menu
+msgid "Assistants"
+msgstr "Assistents"
+
+#. module: energy_communities_service_invoicing
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_create_wizard_form
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_wizard_form
+msgid "Cancelar"
+msgstr "Cancel·lar"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/models/contract.py:0
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__closing_action__close
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__service_invoicing_action_wizard__executed_action__close
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin
+#, python-format
+msgid "Close"
+msgstr "Tancar"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.actions.server,name:energy_communities_service_invoicing.contract_cron_for_invoice_closure_ir_actions_server
+#: model:ir.cron,cron_name:energy_communities_service_invoicing.contract_cron_for_invoice_closure
+msgid "Close today's (closed planned) Contracts "
+msgstr "Tancar el contractes planificats per ser tancats"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__status__closed
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__res_partner__platform_pack_contract_status__closed
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.contract_contract_search_view
+#, python-format
+msgid "Closed"
+msgstr "Tancat"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__closing_action
+msgid "Closing reason"
+msgstr "Motiu del tancament"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__closing_action_description
+msgid "Closing reason description"
+msgstr "Motiu detallat del tancament"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__community_company_id
+msgid "Community"
+msgstr "Comunitat"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__community_company_mids
+msgid "Community Company Mids"
+msgstr "Community Company Mids"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action_create.py:0
+#, python-format
+msgid "Community {} must have a parent coordinator defined"
+msgstr "La comunitat {} ha de tenir una coordinadora definida"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_res_company
+msgid "Companies"
+msgstr "Empreses"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_abstract_contract__company_id
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__company_id
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_line_qty_formula__company_id
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_template__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoicing_configuration_menu
+msgid "Configuration"
+msgstr "Configuració"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_res_partner
+msgid "Contact"
+msgstr "Contacte"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_contract_contract
+msgid "Contract"
+msgstr "Contracte"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_contract_line
+msgid "Contract Line"
+msgstr "Línia de contracte"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_contract_line_qty_formula
+msgid "Contract Line Formula"
+msgstr "Fórmula de línia de contracte"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_contract_template
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_product_product__property_contract_template_id
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_product_template__property_contract_template_id
+msgid "Contract Template"
+msgstr "Model de Contracte"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__company_id
+msgid "Coordinator"
+msgstr "Coordinadora"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_service_invoicing_action_create_wizard
+msgid "Create service invoicing for an energy community"
+msgstr "Crea un contracte de serveis de plataforma per una comunitat"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__create_uid
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__create_uid
+msgid "Created by"
+msgstr "Creat per"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__create_date
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__create_date
+msgid "Created on"
+msgstr "Creat el"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__creation_type
+msgid "Creation Type"
+msgstr "Tipus de creació"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__discount
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__discount
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__discount
+msgid "Discount (%)"
+msgstr "Descompte (%)"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__display_name
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__display_name
+msgid "Display Name"
+msgstr "Nom"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_service_invoicing_action_wizard
+msgid "Execute actions on service invoicing"
+msgstr "Executa accions sobre un contracte"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__executed_action
+msgid "Executed Action"
+msgstr "Acció executada"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/models/contract.py:0
+#, python-format
+msgid "Executing: {}"
+msgstr "Executant: {}"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__execution_date
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__execution_date
+msgid "Execution date"
+msgstr "Data inici de contracte"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__id
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,help:energy_communities_service_invoicing.field_contract_contract__skip_zero_qty
+msgid "If checked, contract lines with 0 qty don't create invoice line"
+msgstr ""
+"Si està marcat, les línies de contracte amb 0 qty no creen una línia de "
+"factura"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__status__in_progress
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__res_partner__platform_pack_contract_status__in_progress
+#, python-format
+msgid "In progress"
+msgstr "En curs"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_bank_statement_line__is_contract
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_move__is_contract
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_payment__is_contract
+msgid "Is Contract"
+msgstr "És un contracte"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__is_free_pack
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_template__is_free_pack
+msgid "Is a free pack"
+msgstr "És un pack gratuït"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#, python-format
+msgid ""
+"It already exists an open contract ({}) with same company and community."
+msgstr ""
+"Ja existeix un contracte en curs ({}) amb la mateixa companyia i comunitat."
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_account_move
+msgid "Journal Entry"
+msgstr "Assentament comptable"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunt comptable"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__last_date_invoiced
+msgid "Last Date Invoiced"
+msgstr "Darrera Data de Facturació"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard____last_update
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard____last_update
+msgid "Last Modified on"
+msgstr "Darrera modificació el"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__write_uid
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Darrera actualització per"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__write_date
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__write_date
+msgid "Last Updated on"
+msgstr "Darrera actualització el"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__closing_action__modification
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__sale_order__service_invoicing_action__modification
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__service_invoicing_action_wizard__executed_action__modification
+#, python-format
+msgid "Modification"
+msgstr "Modificació"
+
+#. module: energy_communities_service_invoicing
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin
+msgid "Modify"
+msgstr "Modificar"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__service_invoicing_action_create_wizard__creation_type__multiple
+msgid "Multiple"
+msgstr "Multiple"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/models/res_partner.py:0
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__account_move__pack_type__none
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__closing_action__none
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_template__pack_type__none
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__pack_type_mixin__pack_type__none
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__res_partner__platform_pack_contract_status__none
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__sale_order__service_invoicing_action__none
+#, python-format
+msgid "None"
+msgstr "Cap"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_line__ordered_qty_formula_id
+msgid "Ordered Qty Formula"
+msgstr "Fórmula de quantitat demanada"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_line__ordered_qty_type
+msgid "Ordered Qty Type"
+msgstr "Tipus de quantitat demanada"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_line__ordered_quantity
+msgid "Ordered Quantity"
+msgstr "Quantitat demanada"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__pack_id
+msgid "Pack"
+msgstr "Pack"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_bank_statement_line__pack_type
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_move__pack_type
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_payment__pack_type
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__pack_type
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_template__pack_type
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_pack_type_mixin__pack_type
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_product_product__pack_type
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_product_template__pack_type
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__pack_type
+msgid "Pack Type"
+msgstr "Tipus de pack"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_packs_window
+msgid "Packs"
+msgstr "Packs de serveis"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_contract_templates_window
+msgid "Packs contract templates"
+msgstr "Plantilles de Packs de serveis"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__status__paused
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__res_partner__platform_pack_contract_status__paused
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.contract_contract_search_view
+#, python-format
+msgid "Paused"
+msgstr "En pausa"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__payment_mode_id
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__payment_mode_id
+msgid "Payment mode"
+msgstr "Mode de pagament"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__status__closed_planned
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__res_partner__platform_pack_contract_status__closed_planned
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.contract_contract_search_view
+#, python-format
+msgid "Planned closure"
+msgstr "Tancament planificat"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__account_move__pack_type__platform_pack
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_template__pack_type__platform_pack
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__pack_type_mixin__pack_type__platform_pack
+#, python-format
+msgid "Platform Pack"
+msgstr "Pack de Plataforma"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__platform_pack_product_categ_id
+msgid "Platform Pack Product Categ"
+msgstr "Categoria de producte de Packs de Plataforma"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_partner__platform_pack_id
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_users__platform_pack_id
+msgid "Platform Service Pack"
+msgstr "Pack de servei de Plataforma"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_partner__platform_pack_contract_status
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_users__platform_pack_contract_status
+msgid "Platform Service Pack Status"
+msgstr "Estat del pack de servei de Plataforma"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.ui.menu,name:energy_communities_service_invoicing.view_services_menu
+msgid "Platform Services"
+msgstr "Serveis"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__platform_pack_id
+msgid "Platform service pack"
+msgstr "Packs de serveis"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__predecessor_contract_id
+msgid "Predecessor contract"
+msgstr "Contracte predecessor"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__pricelist_id
+msgid "PriceList"
+msgstr "Llista de preus"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_product_template
+msgid "Product"
+msgstr "Plantilla de producte"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__received_invoices_count
+msgid "Received Invoices Count"
+msgstr "Número de contractes rebuts"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_bank_statement_line__related_contract_id
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_move__related_contract_id
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_payment__related_contract_id
+msgid "Related Contract"
+msgstr "Contracte relacionat"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_bank_statement_line__related_community_company_id
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_move__related_community_company_id
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_payment__related_community_company_id
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__community_company_id
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.account_move_search
+msgid "Related community"
+msgstr "Comunitat relacionada"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__related_contract_product_ids
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_product_product__related_contract_product_ids
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_product_template__related_contract_product_ids
+msgid "Related services"
+msgstr "Serveis relacionats"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__closing_action__reopen
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__sale_order__service_invoicing_action__reopen
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__service_invoicing_action_wizard__executed_action__reopen
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin
+#, python-format
+msgid "Reopen"
+msgstr "Reobrir"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__sale_order_id
+msgid "Sale Order (activation)"
+msgstr "Comandes de Packs de Plataforma"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_sale_order
+msgid "Sales Order"
+msgstr "Comanda de venda"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action.py:0
+#, python-format
+msgid "Select at least one value to modify"
+msgstr "Edita un mínim d'un valor"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__pricelist_id
+msgid "Select pricelist"
+msgstr "Llistat de preus"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__service_invoicing_id
+msgid "Selected contract"
+msgstr "Contracte seleccionat"
+
+#. module: energy_communities_service_invoicing
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_create_wizard_form
+msgid "Service Contract"
+msgstr "Contracte de servei"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_invoicing_window_coord_admin
+#: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_invoicing_window_platform_manager
+#: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoicing_menu_coord_admin
+#: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoicing_menu_platform_manager
+#, python-format
+msgid "Service Contracts"
+msgstr "Contractes de servei"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__pack_id
+msgid "Service Pack"
+msgstr "Pack de servei"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_packs_menu
+msgid "Service Packs"
+msgstr "Packs de serveis"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_contract_templates_menu
+msgid "Service Packs templates"
+msgstr "Plantilles de Packs de serveis"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_sale_orders_window
+#: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_sale_orders_menu
+msgid "Service actions (sale orders)"
+msgstr "Comandes de Packs"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_invoices_issued_act_window
+msgid "Service invoices (issued)"
+msgstr "Factures de serveis (emeses)"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_invoices_received_act_window
+msgid "Service invoices (received)"
+msgstr "Factures de serveis (rebudes)"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoices_issued_menu
+msgid "Service invoices issued"
+msgstr "Factures de serveis (emeses)"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoices_received_menu
+msgid "Service invoices received"
+msgstr "Factures de serveis (rebudes)"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_sale_order__service_invoicing_action
+msgid "Service invoicing action"
+msgstr "Acció en facturació de serveis"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_sale_order__service_invoicing_action_description
+msgid "Service invoicing action description"
+msgstr "Descripció de l'acció en facturació de serveis"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.actions.act_window,name:energy_communities_service_invoicing.service_invoicing_action_wizard_action
+msgid "Service invoicing actions"
+msgstr "Accions de facturació del servei"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_company__service_invoicing_purchase_journal_id
+msgid "Service invoicing purchase journal"
+msgstr "Diari de factures de serveis de plataforma rebudes"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_company__service_invoicing_sale_journal_id
+msgid "Service invoicing sale journal"
+msgstr "Diari de factures de serveis de plataforma emeses"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_company__service_invoicing_sale_team_id
+msgid "Service invoicing sales team"
+msgstr "Equip de vendes per la facturació de serveis de plataforma"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_services_window
+msgid "Services"
+msgstr "Serveis"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.ui.menu,name:energy_communities_service_invoicing.ce_service_invoicing_menu
+msgid "Services"
+msgstr "Serveis de Plataforma"
+
+#. module: energy_communities_service_invoicing
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invocing_company_form
+msgid "Services Invoicing"
+msgstr "Facturació de serveis"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__service_invoicing_action_create_wizard__creation_type__single
+msgid "Single"
+msgstr "Individual"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__skip_zero_qty
+msgid "Skip Zero Qty Lines"
+msgstr "Saltar línies de quantitat zero"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__status
+msgid "Status"
+msgstr "Estat"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_abstract_contract_line__price_subtotal
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_line__price_subtotal
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_template_line__price_subtotal
+msgid "Sub Total"
+msgstr "Subtotal"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__successor_contract_id
+msgid "Successor contract"
+msgstr "Contracte successor"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action_create.py:0
+#, python-format
+msgid "This action is only allowed when you're on instance level."
+msgstr "Aquesta acció només està permesa quan ens trobem a la companyia Plataforma"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_abstract_contract_line__price_unit
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_line__price_unit
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_template_line__price_unit
+msgid "Unit Price"
+msgstr "Preu Unitari"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__user_current_company
+msgid "User Current Company"
+msgstr "Companyia actual de l'usuari"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__user_current_role
+msgid "User Current Role"
+msgstr "Rol actual de l'usuari"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action_create.py:0
+#, python-format
+msgid "You can only assign pack to communities"
+msgstr "Només pots assignar Packs de serveis de Plataforma a Comunitats"
+
+#. module: energy_communities_service_invoicing
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_wizard_form
+msgid "activate contract"
+msgstr "activar contracte"
+
+#. module: energy_communities_service_invoicing
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_wizard_form
+msgid "close contract"
+msgstr "tancar contracte"
+
+#. module: energy_communities_service_invoicing
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_create_wizard_form
+msgid "create"
+msgstr "crear"
+
+#. module: energy_communities_service_invoicing
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_wizard_form
+msgid "modify"
+msgstr "modificar"
+
+#. module: energy_communities_service_invoicing
+#: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_wizard_form
+msgid "reopen contract"
+msgstr "reobrir el contracte"
