@@ -18,6 +18,7 @@
         "base_user_role_company",
         "calendar",
         "community_maps",
+        "community_maps_key_submissions",
         "contacts",
         "event",
         "l10n_es_aeat",
