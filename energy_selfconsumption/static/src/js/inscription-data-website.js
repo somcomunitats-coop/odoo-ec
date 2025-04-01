@@ -40,6 +40,16 @@ var oe_inscription_website_data = {
       $("#project_conf_policy_privacy_text_click").trigger("click");
       $("#supplypoint_owner_id_same").trigger("change");
       $(".data-trigger").trigger("change");
+      $("#supplypoint_contracted_power").on("input", function () {
+        let value = $(this).val();
+        value = value.replace(/[^0-9.,]/g, "");
+        value = value.replace(",", ".");
+        let parts = value.split(".");
+        if (parts.length > 2) {
+          value = parts[0] + "." + parts.slice(1).join("");
+        }
+        $(this).val(value);
+      });
     });
   },
 };
