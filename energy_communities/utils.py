@@ -55,5 +55,6 @@ def get_successful_popup_message(title, message):
             "title": title,
             "message": message,
             "sticky": False,
+            "next": {"type": "ir.actions.act_window_close"},
         },
     }
