@@ -192,6 +192,8 @@ class DistributionTableImportWizard(models.TransientModel):
             "distribution_table_id": self.env.context.get("active_id"),
             "supply_point_id": supply_point_id,
             "coefficient": coefficient,
+            "energy_shares": distribution_table.selfconsumption_project_id.power
+            * coefficient,
             "company_id": distribution_table.company_id.id,
         }
 

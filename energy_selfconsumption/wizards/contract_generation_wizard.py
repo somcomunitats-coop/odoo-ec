@@ -1,6 +1,11 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
+from odoo.addons.energy_communities.utils import (
+    contract_utils,
+    sale_order_utils,
+)
+
 
 class ContractGenerationWizard(models.TransientModel):
     _name = "energy_selfconsumption.contract_generation.wizard"
@@ -26,6 +31,48 @@ class ContractGenerationWizard(models.TransientModel):
             [("company_id", "=", self.env.company.id), ("payment_type", "=", "inbound")]
         )
 
+    def _get_impacted_sale_orders(self):
+        sale_orders = self.selfconsumption_id.get_sale_orders()
+        return sale_orders.filtered(lambda so: so.state == "draft")
+
+    def action_generate_contracts(self):
+        # Get distribution table
+        distribution_id = (
+            self.selfconsumption_id.distribution_table_ids.filtered_domain(
+                [("state", "=", "process")]
+            )
+        )
+        if not distribution_id:
+            raise ValidationError(
+                _("There is no distribution table in proces of activation.")
+            )
+        # Iterate trough sale orders and:
+        for sale_order in self._get_impacted_sale_orders():
+            # 1.-confirm sale order
+            so_extra = {
+                "commitment_date": self.start_date,
+                "payment_mode_id": self.payment_mode.id,
+            }
+            with sale_order_utils(self.env, sale_order) as component:
+                contract = component.confirm(**so_extra)
+            # 2.- setup contract line description
+            self.selfconsumption_id._setup_selfconsumption_contract_line_description(
+                distribution_id, contract
+            )
+            # 3.- setup contract line main_line
+            contract.contract_line_ids[0].write({"main_line": True})
+            # 4.- mark contract as active
+            with contract_utils(self.env, contract) as component:
+                component.set_contract_status_active(self.start_date)
+        # 5.- mark project as active
+        self.selfconsumption_id.write(
+            {"payment_mode_id": self.payment_mode.id, "state": "active"}
+        )
+        #  6.- mark distribution table as active
+        self.selfconsumption_id.distribution_table_state("process", "active")
+        return True
+
+    # TODO: DEPRECATED and not in use. Remove before merging branch
     def generate_contracts_button(self):
         """
         This method generates contracts based on supply point assignations.
@@ -61,17 +108,9 @@ class ContractGenerationWizard(models.TransientModel):
                 }
             )
 
-            inscription_id = self.selfconsumption_id.inscription_ids.filtered_domain(
-                [
-                    (
-                        "partner_id",
-                        "=",
-                        supply_point_assignation.supply_point_id.partner_id.id,
-                    )
-                ]
-            )
+            inscription = supply_point_assignation._get_inscription()
 
-            if not inscription_id.mandate_id:
+            if not inscription.mandate_id:
                 raise ValidationError(
                     _("Mandate not found for {partner}").format(
                         partner=supply_point_assignation.supply_point_id.partner_id.name
@@ -90,7 +129,7 @@ class ContractGenerationWizard(models.TransientModel):
                     "company_id": self.env.company.id,
                     "contract_template_id": self.selfconsumption_id.product_id.contract_template_id.id,
                     "payment_mode_id": self.payment_mode.id,
-                    "mandate_id": inscription_id.mandate_id.id,
+                    "mandate_id": inscription.mandate_id.id,
                 }
             )
             # We use the next method from the contract model to update the contract fields with contract template
@@ -115,7 +154,11 @@ class ContractGenerationWizard(models.TransientModel):
                     )
                     data["power"] = self.selfconsumption_id.power
                     data["coefficient"] = supply_point_assignation.coefficient
-                    first_date_invoiced, last_date_invoiced, recurring_next_date = contract_line_id._get_period_to_invoice(
+                    (
+                        first_date_invoiced,
+                        last_date_invoiced,
+                        recurring_next_date,
+                    ) = contract_line_id._get_period_to_invoice(
                         contract_line_id.last_date_invoiced,
                         contract_line_id.recurring_next_date,
                     )
@@ -124,9 +167,18 @@ class ContractGenerationWizard(models.TransientModel):
                         if first_date_invoiced and last_date_invoiced
                         else 0
                     )
-                    data["power_acquired"] = (round(self.selfconsumption_id.power * supply_point_assignation.coefficient, 2)
-                                              if supply_point_assignation.coefficient else 0.0)
-                    data["total_amount"] = round(data["days_invoiced"] * data["power_acquired"], 2)
+                    data["power_acquired"] = (
+                        round(
+                            self.selfconsumption_id.power
+                            * supply_point_assignation.coefficient,
+                            2,
+                        )
+                        if supply_point_assignation.coefficient
+                        else 0.0
+                    )
+                    data["total_amount"] = round(
+                        data["days_invoiced"] * data["power_acquired"], 2
+                    )
 
                 contract_line_id.write(
                     {"name": contract_line_id.name.format(**data), "main_line": True}

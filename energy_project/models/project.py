@@ -13,6 +13,7 @@ STATE_VALUES = [
 class Project(models.Model):
     _name = "energy_project.project"
     _description = "Energy project"
+    _inherit = ["contract.recurrency.basic.mixin"]
 
     name = fields.Char(required=True)
     type = fields.Many2one("energy_project.project_type", required=True, readonly=True)
@@ -56,6 +57,9 @@ class Project(models.Model):
         required=True,
         default=lambda self: self.env.ref("base.es"),
     )
+
+    # invoicing fields
+    pricelist_id = fields.Many2one("product.pricelist", string="Tariffs")
 
     def get_default_header_description(self):
         return _(

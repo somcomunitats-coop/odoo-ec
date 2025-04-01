@@ -29,17 +29,12 @@ class SupplyPointAssignation(models.Model):
                 ]
             )
 
-    @api.depends("selfconsumption_project_id.power")
+    @api.depends("coefficient", "selfconsumption_project_id.power")
     def _compute_energy_shares(self):
         for record in self:
             record.energy_shares = (
                 record.selfconsumption_project_id.power * record.coefficient
             )
-
-    @api.depends("coefficient")
-    def _compute_participacion(self):
-        for record in self:
-            record.participacion = record.coefficient * record.selfconsumption_project_id.power
 
     distribution_table_id = fields.Many2one(
         "energy_selfconsumption.distribution_table", required=True
@@ -55,7 +50,6 @@ class SupplyPointAssignation(models.Model):
     supply_point_id = fields.Many2one(
         "energy_selfconsumption.supply_point", required=True
     )
-    participacion = fields.Float(string="Participacion",compute="_compute_participacion", store=True)
     coefficient = fields.Float(
         string="Distribution coefficient",
         digits=(7, 6),
@@ -67,7 +61,7 @@ class SupplyPointAssignation(models.Model):
         string="Distribution coefficient in kWh",
         help="Distribution coneffcient in kWh. The sum of all have to result in total project power",
         compute="_compute_energy_shares",
-        readonly=True,
+        store=True,
     )
 
     owner_id = fields.Many2one("res.partner", related="supply_point_id.owner_id")
@@ -134,3 +128,15 @@ class SupplyPointAssignation(models.Model):
             self.coefficient = -self.coefficient
         if self.coefficient > 1:
             self.coefficient = 1
+
+    def _get_inscription(self):
+        return self.env["energy_selfconsumption.inscription_selfconsumption"].search(
+            [
+                (
+                    "selfconsumption_project_id",
+                    "=",
+                    self.distribution_table_id.selfconsumption_project_id.id,
+                ),
+                ("supply_point_id", "=", self.supply_point_id.id),
+            ]
+        )

@@ -22,3 +22,9 @@ class ContractLine(models.Model):
             if record.contract_id.status == "paused" or record.contract_id.is_free_pack:
                 return
         super()._update_recurring_next_date()
+
+    def _set_name(self, data):
+        name = self.name
+        for key, value in data.items():
+            name = name.replace(f"#{key}#", str(value))
+        self.write({"name": name})

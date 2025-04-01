@@ -26,15 +26,16 @@
                 />
                             </group>
                             <group col="2">
-                                <field name="recurring_interval" required="True" />
-                                <field name="recurring_rule_type" required="True" />
+                                <field name="recurring_rule_type" required="True" attrs="{'readonly': [('invoicing_mode','!=','energy_custom')]}" />
+                                <field name="recurring_interval" required="True" attrs="{'invisible': [('recurring_rule_type','=','monthlylastday')]}" />
+                                <field name="recurring_invoicing_type" required="True" attrs="{'invisible': [('recurring_rule_type','=','monthlylastday')]}" />
                             </group>
                         </group>
                     </sheet>
                     <footer>
-                        <button
-              name="save_data_to_selfconsumption"
-              string="Save Data"
+                    <button
+              name="create_contract_template"
+              string="Create Contract Template"
               type="object"
               class="btn-primary"
             />

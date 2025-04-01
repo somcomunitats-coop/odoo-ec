@@ -55,6 +55,12 @@
               name="set_invoicing_mode"
               attrs="{'invisible':[('invoicing_mode', '!=', False)]}"
             />
+                        <button
+              type="object"
+              string="Set new distribution table"
+              name="set_new_distribution_table"
+              attrs="{'invisible':[('state', '!=', 'active')]}"
+            />
 
                         <field
               name="state"
@@ -68,7 +74,7 @@
                             <button
                 class="oe_stat_button"
                 type="object"
-                name="get_inscriptions"
+                name="get_inscriptions_view"
                 icon="fa-pencil-square-o"
                 context="{'default_effective_date': today}"
               >
@@ -82,7 +88,7 @@
                             <button
                 class="oe_stat_button"
                 type="object"
-                name="get_distribution_tables"
+                name="get_distribution_tables_view"
                 icon="fa-table"
                 attrs="{'invisible': [('state', '==', 'draft')]}"
               >
@@ -96,7 +102,22 @@
                             <button
                 class="oe_stat_button"
                 type="object"
-                name="get_contracts"
+                name="get_sale_orders_view"
+                icon="fa-files-o"
+                attrs="{'invisible': [('state', '==', 'draft')]}"
+                groups="energy_communities.role_platform_admin_res_groups"
+              >
+                                <field
+                  string="Sale Orders"
+                  name="sale_orders_count"
+                  widget="statinfo"
+                />
+                            </button>
+
+                            <button
+                class="oe_stat_button"
+                type="object"
+                name="get_contracts_view"
                 icon="fa-files-o"
                 attrs="{'invisible': [('state', '!=', 'active')]}"
               >
@@ -293,9 +314,13 @@
                                     <field name="invoicing_mode" readonly="True" />
                                     <field name="product_id" readonly="True" />
                                     <field
-                    name="contract_template_id"
-                    readonly="True"
-                  />
+                                      name="contract_template_id"
+                                      readonly="True"
+                                    />
+                                    <field name="pricelist_id" readonly="1"/>
+                                    <field name="recurring_rule_type" attrs="{'readonly': True}" />
+                                    <field name="recurring_interval" attrs="{'readonly': True,'invisible': [('recurring_rule_type','=','monthlylastday')]}" />
+                                    <field name="recurring_invoicing_type" attrs="{'readonly': True,'invisible': [('recurring_rule_type','=','monthlylastday')]}" />
                                 </group>
                             </page>
                               <page string="External Services" name="energy_services">
