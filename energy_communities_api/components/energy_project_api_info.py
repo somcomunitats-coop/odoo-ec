@@ -90,7 +90,7 @@ class ProjectMetricsApiInfo(Component):
     ) -> CommunityServiceMetricsInfo:
         monitoring_service = project.project_id.monitoring_service()
         if not monitoring_service:
-            return {}
+            return None
         service_parameters = {
             "system_id": project.selfconsumption_id.code,
             "date_from": date_from,

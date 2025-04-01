@@ -308,7 +308,7 @@ class CommunityServiceMetricsInfoResponse(BaseResponse):
     Return a community service metric information in which a member is involved.
     """
 
-    data: CommunityServiceMetricsInfo
+    data: Optional[CommunityServiceMetricsInfo]
     links: PaginationLinks
 
 

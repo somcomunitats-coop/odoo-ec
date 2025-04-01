@@ -168,6 +168,30 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
         # and its metrics information
         self.assertDictEqual(response.json()["data"], community_data["service_metrics"])
 
+    def test__community_service_metrics__without_monitoring_provider(self):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        # and energy_community
+        community_1_id = self.community_id
+        # and a community service without a monitoring provider
+        service_id = community_data["service_id_whithout_provider"]
+        # and a range of dates
+        from_date = date(2024, 1, 1)
+        to_date = date(2024, 12, 31)
+
+        # when we call for the metrics of that service
+        response = self.client(
+            f"/api/communities/community/community_services/{service_id}/metrics?from_date={from_date}&to_date={to_date}",
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+        )
+
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and data is empty
+        self.assertIsNone(response.json()["data"])
+
     def test__community_service_energy_production__ok(self):
         # given http_client
         # self.url_open
