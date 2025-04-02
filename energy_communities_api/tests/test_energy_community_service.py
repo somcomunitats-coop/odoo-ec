@@ -97,6 +97,26 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
         # and the datail of that service
         self.assertDictEqual(response.json()["data"], community_data["service_info"])
 
+    def test__communities_communities_services__service_not_found(self):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        # and an energy community
+        community_1_id = self.community_id
+        # and an undefined service
+        service_id = 453678
+
+        # when we call for the detail of that service
+        response = self.client(
+            f"/api/communities/community/community_services/{service_id}",
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+        )
+        # then we obtain a 404 response code
+        self.assertEqual(response.status_code, 404)
+        # and a not found response
+        self.assertDictEqual(response.json(), {"code": 404, "name": "Not Found"})
+
     def test__communities_communities_services__with_paging_ok(self):
         # given http_client
         # self.url_open

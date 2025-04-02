@@ -89,8 +89,10 @@ class EnergyCommunityApiInfo(Component):
     def get_community_service_metrics(
         self, community_id: int, service_id: int, date_from: date, date_to: date
     ) -> CommunityServiceMetricsInfo:
-        metrics_component = self.component(usage="metrics.info")
         project = self._get_project(community_id, service_id)
+        if not project:
+            raise MissingError(f"Community service with id {service_id} not found")
+        metrics_component = self.component(usage="metrics.info")
         return metrics_component.get_project_metrics(project, date_from, date_to)
 
     def _get_projects(self, community_id: int):

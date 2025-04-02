@@ -1,3 +1,4 @@
+from odoo.exceptions import MissingError
 from odoo.http import request
 
 from odoo.addons.base_rest import restapi
@@ -35,6 +36,18 @@ class EnergyCommunityApiService(Component):
 
     def __init__(self, *args):
         super().__init__(*args)
+
+    def check_service(self, community_id, service_id):
+        with api_info(
+            self.env,
+            self._work_on_model,
+            CommunityServiceInfo,
+            community_id,
+        ) as component:
+            service = component._get_project(community_id, service_id)
+            if not service:
+                raise MissingError(f"Community service with id {service_id} not found")
+        return True
 
     @restapi.method(
         [(["/"], "GET")],
@@ -97,6 +110,7 @@ class EnergyCommunityApiService(Component):
         """
         self._validate_headers()
         community_id = int(request.httprequest.headers.get("CommunityId"))
+        self.check_service(community_id, service_id)
         paging = self._get_pagination_limits(query_params)
         with api_info(
             self.env,
@@ -153,6 +167,7 @@ class EnergyCommunityApiService(Component):
     ):
         self._validate_headers()
         community_id = int(request.httprequest.headers.get("CommunityId"))
+        self.check_service(community_id, service_id)
         date_from, date_to = self._get_dates_range(query_params)
         with api_info(
             self.env,
