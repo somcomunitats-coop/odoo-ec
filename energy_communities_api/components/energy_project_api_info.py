@@ -20,7 +20,7 @@ class ProjectMetricsApiInfo(Component):
     ) -> CommunityServiceMetricsInfo:
         monitoring_service = project.monitoring_service()
         if not monitoring_service:
-            return {}
+            return None
         member_contract = project.contract_ids.filtered(
             lambda contract: contract.partner_id == partner
         )

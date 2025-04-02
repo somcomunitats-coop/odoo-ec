@@ -111,6 +111,7 @@ class EnergyCommunityApiInfo(Component):
             type="fotovoltaic",
             name=service.name,
             status=service.state,
+            has_monitoring=service.project_id.monitoring_service() is not None,
             inscriptions=len(service.inscription_ids),
             address=Address(
                 street=service.street,

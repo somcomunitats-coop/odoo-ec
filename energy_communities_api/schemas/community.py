@@ -66,6 +66,12 @@ class CommunityServiceInfo(BaseModel, populate_by_name=True):
         description="Status of the service, ex: in_progres",
     )
 
+    has_monitoring: bool = Field(
+        ...,
+        title="Has monitoring",
+        description="If this service has a monitoring provider",
+    )
+
     power: Optional[float] = Field(
         default=None,
         title="Project power",
