@@ -220,10 +220,10 @@ class MonitoringService:
             return 0.0
 
     def co2save_by_member(self, system_id, member_id, date_from, date_to) -> float:
-        energy_selfconsumption = self.energy_selfconsumption_by_member(
+        energy_production = self.energy_production_by_member(
             system_id, member_id, date_from, date_to
         )
-        co2_saved = energy_selfconsumption * self.SPANISH_CO2_SAVE_RATIO
+        co2_saved = energy_production * self.SPANISH_CO2_SAVE_RATIO
         return co2_saved
 
     ## -- Project methods -- ##
@@ -338,10 +338,10 @@ class MonitoringService:
             return 0.0
 
     def co2save_by_project(self, system_id, date_from, date_to) -> float:
-        energy_selfconsumption = self.energy_selfconsumption_by_project(
+        energy_production = self.energy_production_by_project(
             system_id, date_from, date_to
         )
-        co2_saved = energy_selfconsumption * self.SPANISH_CO2_SAVE_RATIO
+        co2_saved = energy_production * self.SPANISH_CO2_SAVE_RATIO
         return co2_saved
 
     def daily_consumption_by_project(

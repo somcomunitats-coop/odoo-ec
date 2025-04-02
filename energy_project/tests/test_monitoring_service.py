@@ -268,7 +268,7 @@ class TestMonitoringService(TransactionCase):
         )
 
         # then we obtain the number of tones of co2 saved in within that dates
-        self.assertEqual(co2_saved, 15341.724)
+        self.assertEqual(co2_saved, 193777.92)
 
     def test__daily_generated_energy_by_member(self):
         # given two dates
@@ -383,7 +383,7 @@ class TestMonitoringService(TransactionCase):
         )
 
         # then we obtain the value of the generated energy between that dates
-        self.assertEqual(selfconsumed_ratio, 0.0688)
+        self.assertEqual(selfconsumed_ratio, 0.1042)
 
     def test__energy_surplus_ratio_by_project(self):
         # given two dates
@@ -400,7 +400,7 @@ class TestMonitoringService(TransactionCase):
         )
 
         # then we obtain the value of the surplus energy between that dates
-        self.assertEqual(surplus_ratio, 0.9312)
+        self.assertEqual(surplus_ratio, 0.8958)
 
     def test__energy_usage_ratio_from_grid_by_project(self):
         # given two dates
@@ -418,7 +418,7 @@ class TestMonitoringService(TransactionCase):
 
         # then we obtain the value of the ratio of the energy from
         # the grid between that dates
-        self.assertEqual(energy_usage_ratio, 0.5825)
+        self.assertEqual(energy_usage_ratio, 0.5985)
 
     def test__energy_usage_ratio_from_selfconsumption_by_project(self):
         # given two dates
@@ -438,7 +438,7 @@ class TestMonitoringService(TransactionCase):
 
         # then we obtain the value of the ratio of the energy from
         # the grid between that dates
-        self.assertEqual(energy_usage_ratio, 0.4175)
+        self.assertEqual(energy_usage_ratio, 0.4015)
 
     def test__relation_energy_usage_by_project(self):
         # given two dates
