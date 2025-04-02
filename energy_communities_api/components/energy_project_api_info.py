@@ -100,6 +100,10 @@ class ProjectMetricsApiInfo(Component):
             id=project.id,
             name=project.name,
             type="fotovoltaic",
+            power=MetricInfo(
+                value=project.selfconsumption_id.power,
+                unit=UnitEnum.kw,
+            ),
             energy_production=MetricInfo(
                 value=monitoring_service.energy_production_by_project(
                     **service_parameters

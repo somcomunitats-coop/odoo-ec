@@ -99,6 +99,7 @@ class CommunityServiceInfo(BaseModel, populate_by_name=True):
 
 class UnitEnum(str, Enum):
     wh = "Wh"
+    kw = "kW"
     kwh = "kWh"
     kwp = "kWp"
     kwn = "kWn"
@@ -140,6 +141,12 @@ class CommunityServiceMetricsInfo(BaseModel):
         alias="type",
         title="Type",
         description="Type of this service, ex: fotovoltaic",
+    )
+
+    power: Optional[MetricInfo] = Field(
+        None,
+        title="Power",
+        descriptio="Power that has a service (if is a selfconumption installation)",
     )
 
     shares: Optional[MetricInfo] = Field(
