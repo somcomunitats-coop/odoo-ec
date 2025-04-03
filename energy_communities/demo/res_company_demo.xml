@@ -128,4 +128,12 @@
     <!--    eval="obj(ref('energy_community_company_3_wizard')).new_company_id.bank_journal_ids[0]"-->
     <!--  />-->
     <!--    </record>-->
+
+    <record id="l10n_es.demo_company_es" model="res.company">
+      <field
+        name="active"
+        eval="False"
+      />
+    </record>
+
 </odoo>
