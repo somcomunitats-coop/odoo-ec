@@ -16,7 +16,12 @@ class MailTemplate(models.Model):
                 "%s%s"
                 % (
                     template.company_id
-                    and "[%s] " % template.company_id.name
+                    and "[%s] "
+                    % (
+                        template.company_id.comercial_name
+                        if template.company_id.comercial_name
+                        else template.company_id.name
+                    )
                     or "[GLOBAL] ",
                     template.name,
                 ),
