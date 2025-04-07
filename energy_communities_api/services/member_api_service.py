@@ -131,7 +131,7 @@ class MemberApiService(Component):
             )
             if not service:
                 raise MissingError(f"Community service with id {service_id} not found")
-            return single_response(request, CommunityServiceInfoResponse, service)
+        return single_response(request, CommunityServiceInfoResponse, service)
 
     @restapi.method(
         [(["/community_services/metrics"], "GET")],
