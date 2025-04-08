@@ -4,7 +4,8 @@ logger = logging.getLogger(__name__)
 
 
 def migrate(cr, version):
-    logger.info(f"Starting post-migration from version {version}.")
+    logger.info("Starting post-migration from version %s.", version)
+    logger.info("Old contracts reopened.")
     cr.execute(
         """
         UPDATE energy_selfconsumption_inscription_selfconsumption

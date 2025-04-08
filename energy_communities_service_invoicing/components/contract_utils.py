@@ -168,6 +168,7 @@ class ContractUtils(Component):
         pack_id=None,
         discount=None,
         payment_mode_id=None,
+        metadata=None,
     ):
         self.set_contract_status_closed(execution_date)
         new_service_invoicing_id = self.component(
@@ -181,6 +182,7 @@ class ContractUtils(Component):
                 pack_id,
                 discount,
                 payment_mode_id,
+                metadata,
             )
         )
         self._setup_successors_and_predecessors(new_service_invoicing_id)
@@ -195,11 +197,15 @@ class ContractUtils(Component):
         pack_id=None,
         discount=None,
         payment_mode_id=None,
+        metadata=None,
     ):
         executed_action_description_list = executed_action_description.split(",")
         metadata_line_ids = {}
-        for metadata_line in self.work.record.sale_order_id.metadata_line_ids:
-            metadata_line_ids[metadata_line.key] = metadata_line.value
+        if metadata:
+            metadata_line_ids = metadata
+        else:
+            for metadata_line in self.work.record.sale_order_id.metadata_line_ids:
+                metadata_line_ids[metadata_line.key] = metadata_line.value
         if "modify_discount" in executed_action_description_list:
             metadata_line_ids["discount"] = discount
         return {

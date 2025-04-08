@@ -1,5 +1,6 @@
 import base64
 import logging
+import re
 from datetime import datetime, timedelta
 from io import StringIO
 
@@ -623,7 +624,7 @@ class Selfconsumption(models.Model):
     def get_sale_orders(self):
         return (
             self.env["sale.order.metadata.line"]
-            .search([("key", "=", "selfconsumption_id"), ("value", "=", self.id)])
+            .search([("key", "=", "selfconsumption_id"), ("value", "=", str(self.id))])
             .mapped("order_id")
         )
 
@@ -962,6 +963,184 @@ class Selfconsumption(models.Model):
                 res_id=selfconsumption_id.id,
                 email_layout_xmlid="mail.mail_notification_layout",
             )
+
+    def update_old_contract_to_service_invoicing(self):
+        _logger.info(f"Starting update_old_contract_to_service_invoicing.")
+        selfconsumption_project_ids = self.env[
+            "energy_selfconsumption.selfconsumption"
+        ].search([("state", "=", "active")])
+        for selfconsumption_project in selfconsumption_project_ids:
+            sale_orders = selfconsumption_project.get_sale_orders()
+            contracts = selfconsumption_project.get_contracts()
+            if (
+                len(sale_orders) == 0 and len(contracts) > 0
+            ):  # if there are no sale orders, we need to reopen the contracts
+                _logger.info(
+                    f"Reopening contracts for selfconsumption project {selfconsumption_project.name}."
+                )
+
+                price = contracts[0].contract_line_ids[0].price_unit
+
+                pack = None
+                product_template = None
+                if selfconsumption_project.invoicing_mode == "power_acquired":
+                    product_template = self.env.ref(
+                        "energy_selfconsumption.product_product_power_acquired_product_template"
+                    )
+                    pack = self.env.ref(
+                        "energy_selfconsumption.product_product_power_acquired_product_pack_template"
+                    )
+                elif selfconsumption_project.invoicing_mode == "energy_delivered":
+                    product_template = self.env.ref(
+                        "energy_selfconsumption.product_product_energy_delivered_product_template"
+                    )
+                    pack = self.env.ref(
+                        "energy_selfconsumption.product_product_energy_delivered_product_pack_template"
+                    )
+                elif selfconsumption_project.invoicing_mode == "energy_custom":
+                    product_template = self.env.ref(
+                        "energy_selfconsumption.product_product_energy_custom_product_template"
+                    )
+                    pack = self.env.ref(
+                        "energy_selfconsumption.product_product_energy_custom_product_pack_template"
+                    )
+                else:
+                    raise ValidationError(_("Invalid invoicing mode"))
+
+                # Create pricelist
+                pricelist = self.env["product.pricelist"].create(
+                    {
+                        "name": f"{selfconsumption_project.name} {self.invoicing_mode} Selfconsumption Pricelist",
+                        "company_id": selfconsumption_project.company_id.id,
+                        "currency_id": selfconsumption_project.company_id.currency_id.id,
+                        "discount_policy": "without_discount",
+                        "item_ids": [
+                            (
+                                0,
+                                0,
+                                {
+                                    "base": "standard_price",
+                                    "product_tmpl_id": product_template.id,
+                                    "product_id": product_template.product_variant_id.id,
+                                    "compute_price": "fixed",
+                                    "fixed_price": price,
+                                    "categ_id": self.env.ref(
+                                        "energy_selfconsumption.product_category_selfconsumption_service"
+                                    ).id,
+                                },
+                            )
+                        ],
+                    }
+                )
+
+                payment_mode = self.env["account.payment.mode"].search(
+                    [
+                        ("company_id", "=", selfconsumption_project.company_id.id),
+                        ("payment_type", "=", "inbound"),
+                    ]
+                )
+                if not payment_mode:
+                    raise UserWarning(_("Payment mode not found."))
+
+                selfconsumption_project.write(
+                    {
+                        "product_id": pack.product_variant_id.id,
+                        "recurring_rule_type": "monthlylastday",
+                        "recurring_interval": 1,
+                        "recurring_invoicing_type": "pre-paid",
+                        "pricelist_id": pricelist.id,
+                        "payment_mode_id": payment_mode[0],
+                    }
+                )
+                _logger.info(f"Selfconsumption {self.selfconsumption_id.name} updated.")
+
+                # Search accounting journal
+                journal_id = self.env["account.journal"].search(
+                    [
+                        ("company_id", "=", selfconsumption_project.company_id.id),
+                        ("type", "=", "sale"),
+                    ],
+                    limit=1,
+                )
+                if not journal_id:
+                    raise UserWarning(_("Accounting Journal not found."))
+
+                for contract in contracts:
+                    _logger.info(f"Reopening contract {contract.name}.")
+                    distribution_table_active = (
+                        selfconsumption_project.distribution_table_ids.filtered(
+                            lambda table: table.state == "active"
+                        )
+                    )
+
+                    with contract_utils(self.env, contract) as component:
+                        contract_cups = contract.contract_line_ids[0].name
+                        match = re.search(r"CUPS:\s*(\S+)", contract_cups)
+                        if match:
+                            contract_cups = match.group(1)
+                            supply_point_id = self.env[
+                                "energy_selfconsumption.supply_point"
+                            ].search([("code", "=", contract_cups)])
+                            if not supply_point_id:
+                                raise ValidationError(
+                                    _(
+                                        "Supply point not found. Company: %s, Proyect: %s, Contract: %s, Line: %s",
+                                        contract.company_id.name,
+                                        selfconsumption_project.name,
+                                        contract.name,
+                                        contract_cups,
+                                    )
+                                )
+                            if len(supply_point_id) > 1:
+                                raise ValidationError(
+                                    _(
+                                        "More than one supply point found. Company: %s, Proyect: %s, Contract: %s, Line: %s",
+                                        contract.company_id.name,
+                                        selfconsumption_project.name,
+                                        contract.name,
+                                        contract_cups,
+                                    )
+                                )
+                        else:
+                            raise ValidationError(
+                                _(
+                                    "CUPS not found in contract line description. Company: %s, Proyect: %s, Contract: %s, Line: %s",
+                                    contract.company_id.name,
+                                    selfconsumption_project.name,
+                                    contract.name,
+                                    contract_cups,
+                                )
+                            )
+                        component.set_contract_status_closed(fields.Date.today())
+                        service_invoicing_id = component.reopen(
+                            fields.Date.today(),
+                            pricelist,
+                            pack,
+                            False,
+                            payment_mode[0],
+                            {
+                                "selfconsumption_id": selfconsumption_project.id,
+                                "supply_point_id": supply_point_id.id,
+                                "recurring_interval": selfconsumption_project.recurring_interval,
+                                "recurring_rule_type": selfconsumption_project.recurring_rule_type,
+                                "recurring_invoicing_type": selfconsumption_project.recurring_invoicing_type,
+                                "journal_id": journal_id.id,
+                                "project_id": selfconsumption_project.id,
+                                "company_id": selfconsumption_project.company_id.id,
+                            },
+                        )
+
+                    # 2.- setup contract line description
+                    selfconsumption_project._setup_selfconsumption_contract_line_description(
+                        distribution_table_active, service_invoicing_id
+                    )
+                    # 3.- setup contract line main_line
+                    service_invoicing_id.contract_line_ids[0].write({"main_line": True})
+                    # 4.- mark contract as active
+                    with contract_utils(self.env, service_invoicing_id) as component:
+                        component.set_contract_status_active(fields.Date.today())
+                    # contract_component.set_contract_status_active(fields.Date.today())
+                    _logger.info(f"Contract {service_invoicing_id.name} reopened.")
 
 
 class CoefficientReport(models.TransientModel):

@@ -60,6 +60,7 @@
               string="Set new distribution table"
               name="set_new_distribution_table"
               attrs="{'invisible':[('state', '!=', 'active')]}"
+              confirm="Are you sure you want to set a new distribution table?"
             />
 
                         <field
@@ -321,6 +322,7 @@
                                     <field name="recurring_rule_type" attrs="{'readonly': True}" />
                                     <field name="recurring_interval" attrs="{'readonly': True,'invisible': [('recurring_rule_type','=','monthlylastday')]}" />
                                     <field name="recurring_invoicing_type" attrs="{'readonly': True,'invisible': [('recurring_rule_type','=','monthlylastday')]}" />
+                                    <field name="payment_mode_id" attrs="{'readonly': True}" />
                                 </group>
                             </page>
                               <page string="External Services" name="energy_services">

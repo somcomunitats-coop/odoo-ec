@@ -19,7 +19,9 @@ class SaleOrderUtils(Component):
     ):
         so_creation_dict = {
             "partner_id": partner_id.id,
-            "company_id": self.env.company.id,
+            "company_id": int(metadata["company_id"])
+            if "company_id" in metadata
+            else self.env.company.id,
             "commitment_date": start_date,
             "pricelist_id": pricelist_id.id,
             "service_invoicing_action": executed_action,
