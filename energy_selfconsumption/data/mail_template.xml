@@ -5,8 +5,11 @@
             <field name="name">Selfconsumption Energy Delivered Invoicing Reminder</field>
             <field name="description">Email reminder for self-consumption billing of supplied energy</field>
             <field name="email_from">{{ (object.company_id.coop_email_contact or object.company_id.email_formatted) }}</field>
+            <field name="email_to">{{ object.owner_id.email }}</field>
+            <field name="lang">{{ object.owner_id.lang }}</field>
             <field name="subject">Selfconsumption - Energy Delivered Invoicing Reminder</field>
             <field name="model_id" ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"/>
+            <field name="auto_delete" eval="False" />
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
                     <p>Hi,</p>
@@ -37,8 +40,11 @@
             <field name="name">Selfconsumption Energy Delivered Custom Invoicing Reminder</field>
             <field name="description">E-mail reminder of personalized billing of self-consumption of energy supplied</field>
             <field name="email_from">{{ (object.company_id.coop_email_contact or object.company_id.email_formatted) }}</field>
+            <field name="email_to">{{ object.owner_id.email }}</field>
+            <field name="lang">{{ object.owner_id.lang }}</field>
             <field name="subject">Self-consumption billing reminder {{object.name}}</field>
             <field name="model_id" ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"/>
+            <field name="auto_delete" eval="False" />
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
                     <p>Hi,</p>
@@ -79,8 +85,11 @@
             <field name="name">Selfconsumption Power Acquired Invoicing Reminder</field>
             <field name="description">E-mail billing reminder of self-consumption of energy purchased</field>
             <field name="email_from">{{ (object.company_id.coop_email_contact or object.company_id.email_formatted) }}</field>
+            <field name="email_to">{{ object.owner_id.email }}</field>
+            <field name="lang">{{ object.owner_id.lang }}</field>
             <field name="subject">Selfconsumption - Power Acquired Invoicing Reminder</field>
             <field name="model_id" ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"/>
+            <field name="auto_delete" eval="False" />
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
                     <p>Hi,</p>
@@ -105,7 +114,10 @@
             <field name="name">Registration in self-consumption project of the Energy Community</field>
             <field name="description">E-mail of inscription in the self-consumption project of the Energy Community</field>
             <field name="email_from">{{ (object.company_id.coop_email_contact or object.company_id.email_formatted) }}</field>
+            <field name="email_to">{{ ctx.get('email_to') }}</field>
             <field name="subject">Registration in {{ object.name }}</field>
+            <field name="lang">{{ ctx.get('lang') }}</field>
+            <field name="auto_delete" eval="False" />
             <field name="model_id" ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"/>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
