@@ -42,7 +42,6 @@ class ResUsersRole(models.Model):
         internal_user_extra_roles = [
             (4, self.env.ref("energy_communities.role_platform_admin").id),
             (4, self.env.ref("energy_communities.role_coord_admin").id),
-            (4, self.env.ref("energy_communities.role_coord_worker").id),
         ]
         for record in self:
             if record.code == "role_platform_admin":
@@ -53,28 +52,24 @@ class ResUsersRole(models.Model):
                 record.priority = 2
                 record.available_role_ids = available_roles
                 record.application_scope = self.SPECIFIC_LAYER
-            elif record.code == "role_coord_worker":
+            elif record.code == "role_ce_manager":
                 record.priority = 3
                 record.available_role_ids = available_roles
                 record.application_scope = self.SPECIFIC_LAYER
-            elif record.code == "role_ce_manager":
+            elif record.code == "role_ce_admin":
                 record.priority = 4
                 record.available_role_ids = available_roles
                 record.application_scope = self.SPECIFIC_LAYER
-            elif record.code == "role_ce_admin":
+            elif record.code == "role_ce_member":
                 record.priority = 5
                 record.available_role_ids = available_roles
                 record.application_scope = self.SPECIFIC_LAYER
-            elif record.code == "role_ce_member":
-                record.priority = 6
-                record.available_role_ids = available_roles
-                record.application_scope = self.SPECIFIC_LAYER
             elif record.code == "role_internal_user":
-                record.priority = 7
+                record.priority = 6
                 record.available_role_ids = available_roles + internal_user_extra_roles
                 record.application_scope = self.COMMON_LAYER
             elif record.code == "role_api_provider":
-                record.priority = 8
+                record.priority = 7
                 record.available_role_ids = []
                 record.application_scope = self.SPECIFIC_LAYER
 

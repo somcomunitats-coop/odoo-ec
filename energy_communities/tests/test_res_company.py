@@ -132,25 +132,3 @@ class TestResCompany(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
             .user_id
         )
         self.assertEqual(community_users, user + platform_admins)
-
-    @skip(
-        "This test is not stable and consistent, until we understand what want to test, we will skip it"
-    )
-    def test__get_users__with_roles(self):
-        # Given a coord company and coord admin
-        company_instance = self.env["res.company"].search(
-            [("hierarchy_level", "=", "instance")]
-        )
-        company_coordinator = self.create_company(
-            "Som", "coordinator", company_instance.id
-        )
-        first_user = self.create_user("Tom", "Bombadil")
-        second_user = self.create_user("Frodo", "Baggins")
-        self.make_coord_user(company_coordinator, first_user)
-        self.make_coord_user(company_coordinator, second_user, "role_coord_worker")
-
-        # When we want all users of company_coordinator
-        community_users = company_coordinator.get_users(["role_coord_worker"])
-
-        # Then returns all community users
-        self.assertEqual(community_users, second_user)

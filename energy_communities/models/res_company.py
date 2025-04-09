@@ -129,7 +129,6 @@ class ResCompany(models.Model):
                 )
                 rec.available_role_ids = [
                     (4, self.env.ref("energy_communities.role_coord_admin").id),
-                    (4, self.env.ref("energy_communities.role_coord_worker").id),
                 ]
             elif rec.hierarchy_level == "community":
                 rec.parent_id_filtered_ids = self.search(
@@ -482,9 +481,7 @@ class ResCompany(models.Model):
                 )
 
     def _sanitize_outgoing_coordinator_users(self, outgoing_coordinator):
-        coord_users = outgoing_coordinator.get_users(
-            ["role_coord_admin", "role_coord_worker"]
-        )
+        coord_users = outgoing_coordinator.get_users(["role_coord_admin"])
         if coord_users:
             for user in coord_users:
                 # remove community manager role for the outgoing coordinator admins/managers
@@ -500,9 +497,7 @@ class ResCompany(models.Model):
                     user.write({"company_ids": [(3, self.id)]})
 
     def _sanitize_incoming_coordinator_users(self, incoming_coordinator):
-        coord_users = incoming_coordinator.get_users(
-            ["role_coord_admin", "role_coord_worker"]
-        )
+        coord_users = incoming_coordinator.get_users(["role_coord_admin"])
         if coord_users:
             for user in coord_users:
                 # Add community manager role for the incoming coordinator admins/workers
