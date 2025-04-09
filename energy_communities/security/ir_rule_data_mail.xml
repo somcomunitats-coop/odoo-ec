@@ -1,0 +1,98 @@
+<odoo>
+  <record model="ir.rule" id="mail_message_company_rule">
+    <field name="name">mail.message multi-company</field>
+    <field name="model_id" ref="mail.model_mail_message" />
+    <field name="global" eval="True" />
+    <field name="domain_force">
+['|',('author_id.company_ids', '=', False),('author_id.company_ids', 'in', company_ids)]
+    </field>
+  </record>
+
+  <record model="ir.rule" id="mail_followers_company_rule">
+    <field name="name">mail.followers multi-company</field>
+    <field name="model_id" ref="mail.model_mail_followers" />
+    <field name="global" eval="True" />
+    <field name="domain_force">
+['|',('partner_id.company_ids', '=', False),('partner_id.company_ids', 'in', company_ids)]
+    </field>
+  </record>
+
+  <record model="ir.rule" id="mail_activity_company_rule">
+    <field name="name">mail.activity multi-company</field>
+    <field name="model_id" ref="mail.model_mail_activity" />
+    <field name="global" eval="True" />
+    <field name="domain_force">
+['|',('user_id.partner_id.company_ids', '=', False),('user_id.partner_id.company_ids', 'in', company_ids)]
+    </field>
+  </record>
+
+  <record id="mail_template_multi_company.mail_template_company_rule" model="ir.rule">
+    <field name="perm_read" eval="True" />
+    <field name="perm_write" eval="False" />
+    <field name="perm_create" eval="False" />
+    <field name="perm_unlink" eval="False" />
+  </record>
+
+  <record model="ir.rule" id="mail_template_platform_admin_rule">
+    <field name="name">Mail Template Platform admins</field>
+    <field name="model_id" ref="mail.model_mail_template"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_platform_admin_res_groups'))]"/>
+    <field name="domain_force">
+['|',('company_id','=',False),('company_id','in',company_ids)]
+    </field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="True" />
+    <field name="perm_unlink" eval="True" />
+  </record>
+
+  <record model="ir.rule" id="mail_template_manager_rule">
+    <field name="name">Mail Template Managers</field>
+    <field name="model_id" ref="mail.model_mail_template"/>
+    <field name="groups" eval="[
+      (4, ref('energy_communities.role_coord_admin_res_groups')),
+      (4, ref('energy_communities.role_ce_manager_res_groups')),
+      (4, ref('energy_communities.role_ce_admin_res_groups')),
+    ]"/>
+    <field name="domain_force">
+[('company_id', 'in', company_ids)]
+    </field>
+    <field name="perm_read" eval="False" />
+    <field name="perm_write" eval="True" />
+    <field name="perm_create" eval="True" />
+    <field name="perm_unlink" eval="True" />
+  </record>
+
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+      <value eval="[('module', '=', 'mail'),('name', '=', 'mail_template_employee_rule')]"/>
+    </function>
+    <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="mail.mail_template_employee_rule">
+    <field name="active" eval="False" />
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+      <value eval="[('module', '=', 'mail'),('name', '=', 'mail_template_employee_rule')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
+
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+      <value eval="[('module', '=', 'mail'),('name', '=', 'mail_template_editor_rule')]"/>
+    </function>
+    <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="mail.mail_template_editor_rule">
+    <field name="active" eval="False" />
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+      <value eval="[('module', '=', 'mail'),('name', '=', 'mail_template_editor_rule')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
+
+</odoo>
