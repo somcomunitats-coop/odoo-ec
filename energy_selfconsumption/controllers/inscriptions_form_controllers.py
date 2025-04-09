@@ -103,6 +103,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 [
                     ("project_id", "=", int(values["model_id"])),
                     ("partner_id", "=", partner.id),
+                    ("code", "=", values["supplypoint_cups"]),
                 ]
             )
         )
@@ -394,11 +395,12 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         return values
 
     def send_email(self, model, partner):
-        email_values = {"email_to": partner.email}
+        ctx = {"email_to": partner.email, "lang": partner.lang, "partner_name": partner.name}
         template = request.env.ref(
             "energy_selfconsumption.selfconsumption_insciption_form"
-        ).with_context(email_values)
-        ctx = {"partner_name": partner.name}
-        model.with_context(ctx).message_post_with_template(
-            template.id, email_layout_xmlid="mail.mail_notification_layout"
+        ).with_context(ctx)
+        template.with_context(ctx).send_mail(
+            force_send=True,
+            res_id=model.id,
+            email_layout_xmlid="mail.mail_notification_layout",
         )
