@@ -4,6 +4,7 @@ from .base import (
     PaginationLinks,
     DEFAULT_PAGE_SIZE,
     QueryParams,
+    Address,
 )
 from .member import (
     MemberInfo,

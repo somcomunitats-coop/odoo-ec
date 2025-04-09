@@ -14,7 +14,7 @@ def _next_url(url_parsed, paging, total_results):
     params = dict(parse.parse_qsl(url_parsed.query))
     if paging.offset + paging.limit < total_results:
         params["page_size"] = paging.limit
-        params["page"] = int(params["page"]) + 1
+        params["page"] = int(params.get("page", 1)) + 1
         return url_parsed._replace(query=parse.urlencode(params)).geturl()
 
 

@@ -33,7 +33,8 @@ class TestMemberApiService(HttpCase, RegistryMixin):
     def setUp(self):
         super().setUp()
         self.maxDiff = None
-        self.community_id = "3"
+        self.community_id = "29"
+        self.community_service_id = 64
         self.timeout = 600
         self.client = partial(self.url_open, timeout=self.timeout)
 
@@ -43,7 +44,6 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             data = client_data
             response = requests.post(server_auth_url, data=data)
             self._token = response.json().get("access_token")
-
         return f"Bearer {self._token}"
 
     @property
@@ -130,10 +130,10 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             response.json(),
             {
                 "code": 401,
-                "description": "<p>The server could not verify that you are authorized to "
-                "access the URL requested. You either supplied the wrong "
-                "credentials (e.g. a bad password), or your browser doesn't "
-                "understand how to supply the credentials required.</p>",
+                "description": "<p>The server could not verify that you are authorized "
+                "to access the URL requested. You either supplied the wrong credentials "
+                "(e.g. a bad password), or your browser doesn&#x27;t understand how to "
+                "supply the credentials required.</p>",
                 "name": "Unauthorized",
             },
         )
@@ -244,13 +244,15 @@ class TestMemberApiService(HttpCase, RegistryMixin):
 
         # when we call for the energy_communties that i belong
         response = self.client(
-            "/api/energy-communities/me/communities?page=2&page_size=2",
+            "/api/energy-communities/me/communities?page_size=2",
             headers={
                 "Authorization": self.token,
             },
         )
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 200)
+        # and in data we have at least one community
+        self.assertGreaterEqual(len(response.json()["data"]), 1)
 
     @patch(
         "odoo.addons.energy_communities_api.components.partner_api_info.PartnerApiInfo.total_member_communities"
@@ -361,7 +363,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             {
                 "code": 400,
                 "name": "Bad Request",
-                "description": "<p>BadRequest [<br>{<br>&quot;loc&quot;: [<br>&quot;page&quot;<br>],<br>&quot;msg&quot;: &quot;value is not a valid integer&quot;,<br>&quot;type&quot;: &quot;type_error.integer&quot;<br>}<br>]</p>",
+                "description": "<p>BadRequest [<br>{<br>&quot;type&quot;: &quot;int_parsing&quot;,<br>&quot;loc&quot;: [<br>&quot;page&quot;<br>],<br>&quot;msg&quot;: &quot;Input should be a valid integer, unable to parse string as an integer&quot;,<br>&quot;input&quot;: &quot;fgdhjkl&quot;,<br>&quot;url&quot;: &quot;https://errors.pydantic.dev/2.9/v/int_parsing&quot;<br>}<br>]</p>",
             },
         )
 
@@ -371,7 +373,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and a valid personal token
         # self.token
         # a community id
-        communty_id = "55"
+        communty_id = self.community_id
         # when we call for the energy_communties that i belong
         response = self.client(
             "/api/energy-communities/me/community_services/metrics?from_date=2024-04-01&to_date=2024-04-30",
@@ -445,9 +447,9 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and a valid personal token
         # self.token
         # a community id
-        communty_id = "55"
+        communty_id = self.community_id
         # a community service id
-        service_id = 32
+        service_id = self.community_service_id
         # when we call for the metrics of that community service
         url = f"/api/energy-communities/me/community_services/{service_id}/metrics?from_date=2024-04-01&to_date=2024-04-30"
         response = self.client(
@@ -470,7 +472,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and a valid personal token
         # self.token
         # a community id
-        communty_id = "55"
+        communty_id = self.community_id
         # when we call for the energy_communties that i belong
         response = self.client(
             "/api/energy-communities/me/community_services/",
@@ -491,9 +493,9 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and a valid personal token
         # self.token
         # a community id
-        communty_id = "55"
+        communty_id = self.community_id
         # a community service id
-        community_service_id = 32
+        community_service_id = self.community_service_id
         # when we call for the energy_communties that i belong
         response = self.client(
             f"/api/energy-communities/me/community_services/{community_service_id}",
@@ -516,9 +518,9 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and a valid personal token
         # self.token
         # a community id
-        communty_id = "55"
+        communty_id = self.community_id
         # a community service id
-        community_service_id = 32
+        community_service_id = self.community_service_id
         # when we call for the production of that isntallation of a community service
         url = f"/api/energy-communities/me/community_services/{community_service_id}/production?from_date=2024-04-01&to_date=2024-04-30"
         response = self.client(
@@ -540,9 +542,9 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and a valid personal token
         # self.token
         # a community id
-        communty_id = "55"
+        communty_id = self.community_id
         # a community service id
-        community_service_id = 456
+        community_service_id = 2345
         # when we call for the production of that isntallation of a community service
         url = f"/api/energy-communities/me/community_services/{community_service_id}/production?from_date=2024-04-01&to_date=2024-04-30"
         response = self.client(
@@ -564,9 +566,9 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and a valid personal token
         # self.token
         # a community id
-        communty_id = "55"
+        communty_id = self.community_id
         # a community service id
-        community_service_id = 32
+        community_service_id = self.community_service_id
         # when we call for the member selfconsumption of that installation
         url = f"/api/energy-communities/me/community_services/{community_service_id}/selfconsumption?from_date=2024-04-01&to_date=2024-04-30"
         response = self.client(
@@ -588,9 +590,9 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and a valid personal token
         # self.token
         # a community id
-        communty_id = "55"
+        communty_id = self.community_id
         # a community service id
-        community_service_id = 32
+        community_service_id = self.community_service_id
         # when we call for the energy exported of that member for installation
         url = f"/api/energy-communities/me/community_services/{community_service_id}/energy_exported?from_date=2024-04-01&to_date=2024-04-30"
         response = self.client(
@@ -612,9 +614,9 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and a valid personal token
         # self.token
         # a community id
-        communty_id = "55"
+        communty_id = self.community_id
         # a community service id
-        community_service_id = 32
+        community_service_id = self.community_service_id
         # when we call for the energy comsuption of that member for installation
         url = f"/api/energy-communities/me/community_services/{community_service_id}/energy_consumed?from_date=2024-04-01&to_date=2024-04-30"
         response = self.client(

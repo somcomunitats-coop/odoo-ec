@@ -31,11 +31,11 @@ class TestOpenDataService(HttpCase, RegistryMixin):
             response.json(),
             {
                 "data": {
-                    "energy_communities_active": 71,
+                    "energy_communities_active": 83,
                     "energy_communities_goal": 1110,
-                    "energy_communities_total": 515,
-                    "inscriptions_in_activation": 444,
-                    "members": 2401,
+                    "energy_communities_total": 528,
+                    "inscriptions_in_activation": 445,
+                    "members": 3137,
                 },
                 "links": {
                     "next_page": None,

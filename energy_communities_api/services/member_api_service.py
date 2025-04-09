@@ -131,7 +131,7 @@ class MemberApiService(Component):
             )
             if not service:
                 raise MissingError(f"Community service with id {service_id} not found")
-            return single_response(request, CommunityServiceInfoResponse, service)
+        return single_response(request, CommunityServiceInfoResponse, service)
 
     @restapi.method(
         [(["/community_services/metrics"], "GET")],
@@ -223,7 +223,7 @@ class MemberApiService(Component):
                 raise MissingError(
                     f"Service with id {service_id} has not a project associated"
                 )
-            daily_production = component.get_project_daily_production(
+            daily_production = component.get_project_daily_production_by_member(
                 project, self.env.user.partner_id, date_from, date_to
             )
         return list_response(
@@ -258,8 +258,10 @@ class MemberApiService(Component):
                 raise MissingError(
                     f"Service with id {service_id} has not a project associated"
                 )
-            daily_selfconsumption = component.get_project_daily_selfconsumption(
-                project, self.env.user.partner_id, date_from, date_to
+            daily_selfconsumption = (
+                component.get_project_daily_selfconsumption_by_member(
+                    project, self.env.user.partner_id, date_from, date_to
+                )
             )
         return list_response(
             request,
@@ -293,8 +295,10 @@ class MemberApiService(Component):
                 raise MissingError(
                     f"Service with id {service_id} has not a project associated"
                 )
-            daily_selfconsumption = component.get_project_daily_exported_energy(
-                project, self.env.user.partner_id, date_from, date_to
+            daily_selfconsumption = (
+                component.get_project_daily_exported_energy_by_member(
+                    project, self.env.user.partner_id, date_from, date_to
+                )
             )
         return list_response(
             request,
@@ -328,8 +332,10 @@ class MemberApiService(Component):
                 raise MissingError(
                     f"Service with id {service_id} has not a project associated"
                 )
-            daily_selfconsumption = component.get_project_daily_consumed_energy(
-                project, self.env.user.partner_id, date_from, date_to
+            daily_selfconsumption = (
+                component.get_project_daily_consumed_energy_by_member(
+                    project, self.env.user.partner_id, date_from, date_to
+                )
             )
         return list_response(
             request,
