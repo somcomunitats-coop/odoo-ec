@@ -17,6 +17,21 @@ class SaleOrder(models.Model):
         string="Service invoicing action description",
         default="none",
     )
+    service_invoicing_id = fields.Many2one(
+        "contract.contract",
+        string="Related contract",
+        compute="_compute_service_invoicing_id",
+        store=False,
+    )
+
+    def _compute_service_invoicing_id(self):
+        for record in self:
+            record.service_invoicing_id = False
+            contract = self.env["contract.contract"].search(
+                [("sale_order_id", "=", record.id)], limit=1
+            )
+            if contract:
+                record.service_invoicing_id = contract.id
 
     def action_create_contract(self):
         contracts = super().action_create_contract()
@@ -32,18 +47,13 @@ class SaleOrder(models.Model):
 
     def action_show_contracts(self):
         self.ensure_one()
-        action = self.env["ir.actions.act_window"]._for_xml_id(
-            "contract.action_customer_contract"
-        )
-
-        contracts = self.env["contract.contract"].search(
-            [("sale_order_id", "=", self.id)]
-        )
-        if len(contracts) == 1:
-            # If there is only one contract, open it directly
+        if self.service_invoicing_id:
+            action = self.env["ir.actions.act_window"]._for_xml_id(
+                "contract.action_customer_contract"
+            )
             action.update(
                 {
-                    "res_id": contracts.id,
+                    "res_id": self.service_invoicing_id.id,
                     "view_mode": "form",
                     "views": filter(lambda view: view[1] == "form", action["views"]),
                 }

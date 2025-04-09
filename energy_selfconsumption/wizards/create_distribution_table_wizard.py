@@ -48,10 +48,13 @@ class CreateDistributionTableWizard(models.TransientModel):
         string="Type distribute excess",
     )
 
-    @api.onchange('distributed_power')
+    @api.onchange("distributed_power")
     def _onchange_distributed_power(self):
-        if self.distributed_power > self.max_distributed_power or self.distributed_power <= 0:
-            self.distribute_excess = 'yes'
+        if (
+            self.distributed_power > self.max_distributed_power
+            or self.distributed_power <= 0
+        ):
+            self.distribute_excess = "yes"
 
     @api.model
     def default_get(self, default_fields):
@@ -78,7 +81,9 @@ class CreateDistributionTableWizard(models.TransientModel):
 
         default_fields["distributed_power"] = sum(
             map(
-                lambda inscription: inscription.participation_real_quantity,
+                lambda inscription: inscription.participation_real_quantity
+                if inscription.state == "active"
+                else inscription.participation_assigned_quantity,
                 inscriptions,
             )
         )
@@ -124,12 +129,16 @@ class CreateDistributionTableWizard(models.TransientModel):
             values_list, distribution_table
         )
 
-        return selfconsumption.get_distribution_tables()
+        return selfconsumption.get_distribution_tables_view()
 
     def get_supply_point_assignation_values(
         self, inscription, distribution_table, len_inscriptions
     ):
-        coefficient = inscription.participation_real_quantity
+        coefficient = (
+            inscription.participation_real_quantity
+            if inscription.state == "active"
+            else inscription.participation_assigned_quantity
+        )
 
         if self.distribute_excess == "yes":
             if self.distributed_power < self.max_distributed_power:
@@ -138,9 +147,16 @@ class CreateDistributionTableWizard(models.TransientModel):
                 )
 
                 if self.type_distribute_excess == "proportional":
-                    coefficient += distribute_excess_float * (
-                        inscription.participation_real_quantity / self.distributed_power
-                    )
+                    if inscription.state == "active":
+                        coefficient += distribute_excess_float * (
+                            inscription.participation_real_quantity
+                            / self.distributed_power
+                        )
+                    else:
+                        coefficient += distribute_excess_float * (
+                            inscription.participation_assigned_quantity
+                            / self.distributed_power
+                        )
                 else:
                     coefficient += distribute_excess_float / len_inscriptions
             else:
@@ -149,9 +165,16 @@ class CreateDistributionTableWizard(models.TransientModel):
                 )
 
                 if self.type_distribute_excess == "proportional":
-                    coefficient -= distribute_excess_float * (
-                        inscription.participation_real_quantity / self.distributed_power
-                    )
+                    if inscription.state == "active":
+                        coefficient -= distribute_excess_float * (
+                            inscription.participation_real_quantity
+                            / self.distributed_power
+                        )
+                    else:
+                        coefficient -= distribute_excess_float * (
+                            inscription.participation_assigned_quantity
+                            / self.distributed_power
+                        )
                 else:
                     coefficient -= distribute_excess_float / len_inscriptions
 
@@ -161,5 +184,7 @@ class CreateDistributionTableWizard(models.TransientModel):
             "distribution_table_id": distribution_table.id,
             "supply_point_id": inscription.supply_point_id.id,
             "coefficient": coefficient,
+            "energy_shares": distribution_table.selfconsumption_project_id.power
+            * coefficient,
             "company_id": distribution_table.company_id.id,
         }
