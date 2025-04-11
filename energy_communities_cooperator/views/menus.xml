@@ -1,8 +1,23 @@
 <odoo>
-<record model="ir.ui.menu" id="cooperator.menu_cooperator_templates">
+  <record model="ir.ui.menu" id="cooperator.menu_cooperator_templates">
     <field
       name="groups_id"
       eval="[(6,0,[ref('energy_communities.group_platform_manager')])]"
     />
   </record>
+  <record
+      id="view_ec_formulas_window"
+      model="ir.actions.act_window"
+  >
+    <field name="name">Formulas (quantity)</field>
+    <field name="res_model">contract.line.qty.formula</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <menuitem
+      id="ec_formulas_menu"
+      name="Formulas"
+      action="view_ec_formulas_window"
+      groups="energy_communities.group_platform_manager"
+      parent="energy_communities.ce_config_menu"
+  />
 </odoo>

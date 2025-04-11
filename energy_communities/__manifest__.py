@@ -45,12 +45,11 @@
     "demo": [
         "demo/res_lang_demo.xml",
         "demo/res_company_demo.xml",
-        "demo/res_partner_demo.xml",
         "demo/res_user_demo.xml",
     ],
     "data": [
-        "security/ir.model.access.csv",
         "security/res_groups_roles_data.xml",
+        "security/ir.model.access.csv",
         "security/ir_rule_data_account.xml",
         "security/ir_rule_data_landing_page.xml",
         "security/ir_rule_data_mail.xml",
