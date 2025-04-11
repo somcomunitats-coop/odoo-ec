@@ -1,3 +1,5 @@
+from collections import namedtuple
+
 from odoo import fields, models
 
 
@@ -48,6 +50,7 @@ class Contract(models.Model):
         action["res_id"] = wizard_id.id
         return action
 
+    # TODO: Why do we need this one?
     def _recurring_create_invoice(self, date_ref=False):
         last_period_date_start = last_period_date_end = False
         if len(self) > 1:
@@ -69,6 +72,33 @@ class Contract(models.Model):
             [("project_id.selfconsumption_id.invoicing_mode", "!=", "energy_delivered")]
         )
         return domain
+
+    def get_active_monitoring_members(self):
+        QueryResult = namedtuple("QueryResult", ["total"])
+        QUERY = """
+            select count(energy_selfconsumption_supply_point.code) from energy_project_project
+            inner join energy_selfconsumption_selfconsumption on
+                energy_selfconsumption_selfconsumption.project_id = energy_project_project.id
+            inner join energy_selfconsumption_distribution_table on
+                energy_selfconsumption_distribution_table.selfconsumption_project_id = energy_selfconsumption_selfconsumption.id
+            inner join energy_selfconsumption_supply_point_assignation on
+                energy_selfconsumption_supply_point_assignation.distribution_table_id = energy_selfconsumption_distribution_table.id
+            inner join energy_selfconsumption_supply_point on
+                energy_selfconsumption_supply_point.id = energy_selfconsumption_supply_point_assignation.supply_point_id
+            inner join energy_project_service_contract on
+                energy_project_service_contract.project_id= energy_project_project.id
+            inner join energy_project_provider on energy_project_service_contract.provider_id=energy_project_provider.id
+            where
+                energy_project_project.company_id={current_company_id} and
+                energy_selfconsumption_distribution_table.state = 'active' and
+                energy_project_provider.name LIKE '{arkenova_like}';
+        """.format(
+            current_company_id=int(self.community_company_id.id),
+            arkenova_like="%Arkenova%",
+        )
+        self.env.cr.execute(QUERY)
+        members = QueryResult._make(self.env.cr.fetchone())
+        return members.total
 
 
 class ContractRecurrencyMixin(models.AbstractModel):

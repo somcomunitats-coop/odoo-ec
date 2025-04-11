@@ -1,18 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!--
-     Copyright 2022 Som Energia & Coopdevs
-     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
--->
 <odoo>
-
-  <record
-      id="view_ec_formulas_window"
-      model="ir.actions.act_window"
-  >
-    <field name="name">Formulas (quantity)</field>
-    <field name="res_model">contract.line.qty.formula</field>
-    <field name="view_mode">tree,form</field>
-  </record>
 
   <menuitem
     id="ce_root_menu"
@@ -38,12 +24,6 @@
       id="energy_actions_menu"
       name="Energy actions"
       action="energy_action_views"
-      groups="group_platform_manager"
-    />
-    <menuitem
-      id="ec_formulas_menu"
-      name="Formulas"
-      action="view_ec_formulas_window"
       groups="group_platform_manager"
     />
     <menuitem
@@ -90,3 +70,4 @@
   </record>
 
 </odoo>
+

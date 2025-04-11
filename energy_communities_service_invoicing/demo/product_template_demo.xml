@@ -1,0 +1,34 @@
+<odoo>
+  <record id="demo_platform_service_product_template" model="product.template">
+      <field name="name">Platform service product</field>
+      <field name="categ_id" ref="product_category_platform_service"/>
+      <field name="standard_price">0.62</field>
+      <field name="list_price">0.62</field>
+      <field name="sale_ok" eval="True"/>
+      <field name="purchase_ok" eval="False"/> 
+      <field name="detailed_type">service</field>
+  </record>
+
+  <record id="demo_platform_pack_contract_template" model="contract.template">
+    <field name="name">Platform pack contract template</field>
+    <field name="contract_type">sale</field>
+    <field name="contract_line_ids" eval="[(0,0,{
+      'product_id': ref('demo_platform_service_product_template'),'automatic_price':True,'qty_type': 'variable',
+      'qty_formula_id': ref('active_community_members_formula'),
+      'name': 'Platform service product detailed description'
+    })]"/>
+  </record>
+
+  <record id="demo_platform_pack_product_template" model="product.template">
+      <field name="name">Platform pack product</field>
+      <field name="categ_id" ref="product_category_platform_pack"/>
+      <field name="standard_price">0.0</field>
+      <field name="list_price">0.0</field>
+      <field name="sale_ok" eval="True"/>
+      <field name="purchase_ok" eval="False"/> 
+      <field name="detailed_type" eval="'service'" />
+      <field name="is_contract" eval="True"/>
+      <field name="property_contract_template_id" ref="demo_platform_pack_contract_template" />
+  </record>
+
+</odoo>
