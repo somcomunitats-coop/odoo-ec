@@ -143,8 +143,11 @@ class ResUsers(models.Model):
             lambda r: r.role_id.application_scope
             == self.env["res.users.role"].COMMON_LAYER
         )
-
-        company_ids = self.env.context.get("active_company_ids") or self.company_id.ids
+        company_ids = (
+            self.env.context.get("active_company_ids")
+            or self.env.context.get("allowed_company_ids")
+            or self.company_id.ids
+        )
         company_role_lines = active_roles.search(
             [
                 ("user_id", "=", self.id),
@@ -252,13 +255,6 @@ class ResUsers(models.Model):
                 }
             )
 
-    # TODO: Delete this method when deleting unused services using it.
-    # TODO: Modify this method to make it compatible with currentuser mixin
-    def get_role_codes(self):
-        # TODO Map all code to company and enable (We should update the API schema too)
-        return self.role_line_ids[0].role_id.code
-
-    # TODO: Check how this is compatible with new role refactors.
     def get_related_company_role(self, company_id, role_codes=False):
         if role_codes:
             current_role_lines = self.role_line_ids.filtered(
@@ -274,14 +270,6 @@ class ResUsers(models.Model):
     #########################
     # USER_CREATOR
     #########################
-    def add_energy_community_role(self, company_id, role_name):
-        if role_name == "role_ce_member" or role_name == "role_ce_admin":
-            self.make_ce_user(company_id, role_name)
-        elif role_name == "role_coord_admin":
-            self.make_coord_user(company_id, role_name)
-        else:
-            raise exceptions.UserError(_("Role not found"))
-
     def make_internal_user(self):
         self._create_internal_user_role_line()
 
@@ -305,15 +293,6 @@ class ResUsers(models.Model):
                 self.env["res.company"].browse(company_id),
                 self.env.ref("energy_communities.{}".format(role_name)),
             )
-
-    def make_coord_user(self, company_id, role_name):
-        # create ce user on this company
-        self.make_ce_user(company_id, role_name)
-        # apply manager role the child companies
-        company = self.env["res.company"].browse(company_id)
-        child_companies = company.get_child_companies()
-        for child_company in child_companies:
-            self.make_ce_user(child_company.id, "role_ce_manager")
 
     def create_energy_community_base_user(
         cls, vat, first_name, last_name, lang_code, email
@@ -763,32 +742,6 @@ class ResUsers(models.Model):
             return resp.json()
         except JSONDecodeError:
             raise exceptions.UserError(_("Something went wrong. Please check logs."))
-
-    def _get_enabled_roles(self):
-        active_roles = self.env["res.users.role.line"]
-        global_role_lines = active_roles.search(
-            [
-                ("user_id", "=", self.id),
-                ("company_id", "=", None),
-            ]
-        )
-        common_global_role_lines = global_role_lines.filtered(
-            lambda r: r.role_id.application_scope
-            == self.env["res.users.role"].COMMON_LAYER
-        )
-        company_ids = (
-            self.env.context.get("active_company_ids")
-            or self.env.context.get("allowed_company_ids")
-            or self.company_id.ids
-        )
-        company_role_lines = active_roles.search(
-            [
-                ("user_id", "=", self.id),
-                ("company_id", "=", company_ids[0]),
-            ]
-        )
-        active_roles = active_roles | global_role_lines | company_role_lines
-        return self._max_priority_role_line(active_roles) | common_global_role_lines
 
     def action_open_form_view(self):
         self.ensure_one()

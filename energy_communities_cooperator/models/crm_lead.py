@@ -19,9 +19,9 @@ class CrmLead(models.Model):
 
         creation_dict.update(
             {
-                "property_cooperator_account": self.env["account.account"]
-                .search([("code", "like", "44000%")], limit=1)
-                .id,
+                "property_cooperator_account": self.env.ref(
+                    "l10n_es.{}_account_common_4400".format(creation_dict["parent_id"])
+                ).id,
                 "product_share_template": self.env["product.template"]
                 .search(
                     [

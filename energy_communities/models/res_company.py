@@ -503,18 +503,3 @@ class ResCompany(models.Model):
                 # Add community manager role for the incoming coordinator admins/workers
                 # Add access to community for the incoming coordinator admins/workers
                 user.make_ce_user(self.id, "role_ce_manager")
-
-    # TODO: Unused functions. Delete if really not needed.
-    def check_ce_has_admin(self):
-        self.ensure_one()
-        admin_roles_ids = [
-            r["odoo_role_id"]
-            for r in self.env["res.users"].ce_user_roles_mapping().values()
-            if r["is_admin"]
-        ]
-        company_user_ids = self.get_ce_members().ids
-        admins_user_ids = []
-        for admin_role in self.env["res.users.role"].sudo().browse(admin_roles_ids):
-            for role_line in admin_role.line_ids:
-                admins_user_ids.append(role_line.user_id.id)
-        return any([user in admins_user_ids for user in company_user_ids])

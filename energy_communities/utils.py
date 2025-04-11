@@ -4,6 +4,7 @@ from typing import Any
 from odoo.api import Environment
 from odoo.tools.translate import code_translations
 
+from odoo.addons.base.models.res_users import Users
 from odoo.addons.component.core import Component, WorkContext
 from odoo.addons.contract.models.contract import ContractContract
 from odoo.addons.sale.models.sale_order import SaleOrder
@@ -22,6 +23,11 @@ def user_creator(
     env: Environment,
 ) -> Component:
     yield _get_component(env, "res.users", "user.create")
+
+
+@contextmanager
+def user_role_utils(env: Environment, user_id: Users) -> Component:
+    yield _get_component(env, "res.users", "user.role.utils", user_id)
 
 
 @contextmanager
