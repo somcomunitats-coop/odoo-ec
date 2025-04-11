@@ -2,7 +2,6 @@ from . import models
 from . import controllers
 from . import services
 from . import wizards
-from . import tests
 
 import logging
 from odoo import SUPERUSER_ID, api
@@ -15,6 +14,16 @@ def post_setup_multicompany_crm(cr, registry):
     env = api.Environment(cr, SUPERUSER_ID, {})
     tags = env["crm.tag"].search([])
     tag_count = 0
+    # convert system sales teams into platform company team
+    instance_crm_team = env.ref("sales_team.team_sales_department")
+    instance_crm_team.write(
+        {"company_id": env.ref("base.main_company").id, "is_default_team": True}
+    )
+    env.ref("sales_team.crm_team_1").write(
+        {
+            "company_id": env.ref("base.main_company").id,
+        }
+    )
     # convert system tags on not company dependant tags
     for tag in tags:
         if tag.company_id and tag.tag_ext_id:
@@ -50,9 +59,6 @@ def post_setup_multicompany_crm(cr, registry):
         existing_lead = env["crm.lead"].search([("tag_ids", "in", tag.id)])
         if not existing_lead:
             tag.unlink()
-
-    instance_crm_team = env.ref("sales_team.team_sales_department")
-    instance_crm_team.write({"is_default_team": True})
 
     # auto reference existing stages
     existing_stages = env["crm.stage"].sudo().search([])
