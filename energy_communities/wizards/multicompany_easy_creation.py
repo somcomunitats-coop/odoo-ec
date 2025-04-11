@@ -9,7 +9,7 @@ from ..models.res_company import (
     _HIERARCHY_LEVEL_BASE_VALUES,
     _LEGAL_FORM_VALUES,
 )
-from ..utils import get_successful_popup_message
+from ..utils import get_successful_popup_message, user_role_utils
 
 _logger = logging.getLogger(__name__)
 
@@ -142,11 +142,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "value": {"parent_id": self.env.ref("base.main_company").id},
                     "domain": {"parent_id": [("hierarchy_level", "=", "instance")]},
                 }
-
-    def add_company_managers(self):
-        coord_members = self.parent_id.get_users(["role_coord_admin"])
-        for manager in coord_members:
-            manager.make_ce_user(self.new_company_id.id, "role_ce_manager")
 
     def add_company_log(self):
         message = _(
