@@ -23,6 +23,7 @@ S_LANDING_PAGE_GET_RETURN = {
             "number_of_members": {"type": "integer"},
             "external_website_link": {"type": "string"},
             "show_web_link_on_header": {"type": "boolean"},
+            "show_newsletter_form": {"type": "boolean"},
             "twitter_link": {"type": "string"},
             "instagram_link": {"type": "string"},
             "telegram_link": {"type": "string"},
