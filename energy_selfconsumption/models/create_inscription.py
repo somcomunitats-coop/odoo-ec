@@ -25,6 +25,7 @@ class CreateInscription(models.AbstractModel):
         owner,
         tariff,
     ):
+        partner = partner.sudo().get_partner_with_type()
         """Create the supply point if it does not already exist."""
         supply_point = (
             self.env["energy_selfconsumption.supply_point"].sudo()
@@ -325,7 +326,7 @@ class CreateInscription(models.AbstractModel):
         annual_electricity_use,
         supply_point,
     ):
-        partner = partner.sudo().get_partner_with_type()
+        # partner = partner.sudo().get_partner_with_type()
         """Creates the registration record."""
         self.env["energy_selfconsumption.inscription_selfconsumption"].sudo().create(
             {
