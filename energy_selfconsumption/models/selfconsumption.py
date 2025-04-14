@@ -1045,9 +1045,11 @@ class Selfconsumption(models.Model):
                 selfconsumption_project.write(
                     {
                         "product_id": pack.product_variant_id.id,
-                        "recurring_rule_type": "monthlylastday",
-                        "recurring_interval": 1,
-                        "recurring_invoicing_type": "pre-paid",
+                        "recurring_rule_type": contracts[0].recurring_rule_type,
+                        "recurring_interval": contracts[0].recurring_interval,
+                        "recurring_invoicing_type": contracts[
+                            0
+                        ].recurring_invoicing_type,
                         "pricelist_id": pricelist.id,
                         "payment_mode_id": payment_mode[0],
                     }
@@ -1111,9 +1113,11 @@ class Selfconsumption(models.Model):
                                     contract_cups,
                                 )
                             )
-                        component.set_contract_status_closed(fields.Date.today())
+                        component.set_contract_status_closed(
+                            contract.last_date_invoiced
+                        )
                         service_invoicing_id = component.reopen(
-                            fields.Date.today(),
+                            contract.recurring_next_date,
                             pricelist,
                             pack,
                             False,
@@ -1138,7 +1142,9 @@ class Selfconsumption(models.Model):
                     service_invoicing_id.contract_line_ids[0].write({"main_line": True})
                     # 4.- mark contract as active
                     with contract_utils(self.env, service_invoicing_id) as component:
-                        component.set_contract_status_active(fields.Date.today())
+                        component.set_contract_status_active(
+                            contract.last_date_invoiced
+                        )
                     # contract_component.set_contract_status_active(fields.Date.today())
                     _logger.info(f"Contract {service_invoicing_id.name} reopened.")
 
