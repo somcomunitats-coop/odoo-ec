@@ -9,7 +9,7 @@
     "author": "Som Comunitats",
     "website": "https://coopdevs.org",
     "category": "Marketing",
-    "version": "16.0.0.1.1",
+    "version": "16.0.0.1.2",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [

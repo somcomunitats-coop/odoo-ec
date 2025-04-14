@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL & SomIT",
     "website": "https://coopdevs.org",
     "category": "Customizations",
-    "version": "16.0.0.1.0",
+    "version": "16.0.0.2.0",
     "license": "AGPL-3",
     "depends": [
         "auth_jwt",
