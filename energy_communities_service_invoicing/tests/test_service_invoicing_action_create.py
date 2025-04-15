@@ -47,7 +47,6 @@ class TestSeriveInvoicingActionCreate(TransactionCase):
         ].search([("id", "=", 25)])
         contract = self.env["contract.contract"].search([("id", "=", 14)])[0]
         self.assertTrue(bool(contract.recurring_next_date))
-        __import__("ipdb").set_trace()
         # Get make a price list
         price = contract.contract_line_ids[0].price_unit
         product_template = self.env.ref(
@@ -107,9 +106,6 @@ class TestSeriveInvoicingActionCreate(TransactionCase):
         with contract_utils(self.env, contract) as component:
             component.set_contract_status_closed(contract.last_date_invoiced)
             self.assertTrue(bool(contract.recurring_next_date))
-            rnd = contract.recurring_next_date
-            rnd_line = contract.contract_line_ids[0].recurring_next_date
-            __import__("ipdb").set_trace()
             service_invoicing_id = component.reopen(
                 contract.last_date_invoiced,
                 pricelist,
@@ -128,12 +124,16 @@ class TestSeriveInvoicingActionCreate(TransactionCase):
                     "company_id": selfconsumption_project.company_id.id,
                 },
             )
-            # self.assertTrue(bool(contract.recurring_next_date))
+            self.assertTrue(bool(contract.recurring_next_date))
         with contract_utils(self.env, service_invoicing_id) as component:
             component.set_contract_status_active(contract.last_date_invoiced)
 
         self.assertEqual(service_invoicing_id.status, "in_progress")
         self.assertEqual(service_invoicing_id.date_start, contract.last_date_invoiced)
-        # self.assertEqual(contract.date_end, contract.last_date_invoiced)
-        __import__("ipdb").set_trace()
-        self.assertEqual(service_invoicing_id.recurring_next_date, rnd)
+        self.assertEqual(contract.date_end, contract.last_date_invoiced)
+        self.assertEqual(service_invoicing_id.recurring_next_date, contract.recurring_next_date)
+        self.assertEqual(service_invoicing_id.contract_line_ids[0].recurring_next_date, contract.contract_line_ids[0].recurring_next_date)
+        self.assertEqual(service_invoicing_id.recurring_next_date, service_invoicing_id.contract_line_ids[0].recurring_next_date)
+        self.assertEqual(service_invoicing_id.recurring_interval, service_invoicing_id.contract_line_ids[0].recurring_interval)
+        self.assertEqual(service_invoicing_id.recurring_rule_type, service_invoicing_id.contract_line_ids[0].recurring_rule_type)
+        self.assertEqual(service_invoicing_id.recurring_invoicing_type, service_invoicing_id.contract_line_ids[0].recurring_invoicing_type)

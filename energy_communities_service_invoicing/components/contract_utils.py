@@ -42,9 +42,6 @@ class ContractUtils(Component):
         for contract_update_data in self.work.record.sale_order_id.metadata_line_ids:
             if contract_update_data.key not in [
                 "discount",
-                # "recurring_interval",
-                # "recurring_rule_type",
-                # "recurring_invoicing_type",
             ]:
                 value = contract_update_data.value
                 # TODO: Not a very robust condition. Assuming all Many2one fields are defined with _id at the end
@@ -52,7 +49,6 @@ class ContractUtils(Component):
                 if "_id" in contract_update_data.key:
                     value = int(contract_update_data.value)
                 contract_update_dict[contract_update_data.key] = value
-        __import__("ipdb").set_trace()
         return contract_update_dict
 
     def setup_initial_data(self):
@@ -105,17 +101,13 @@ class ContractUtils(Component):
 
     def _activate_contract_lines(self, execution_date):
         for line in self.work.record.contract_line_ids:
-            line.write(
-                {
-                    "date_start": execution_date,
-                    # "next_period_date_start": execution_date,
-                    # "recurring_next_date": execution_date,
-                    # "last_date_invoiced": None,
-                    "qty_type": line.ordered_qty_type,
-                    "quantity": line.ordered_quantity,
-                    "qty_formula_id": line.ordered_qty_formula_id.id,
-                }
-            )
+            line_dict = {
+                "date_start": execution_date,
+                "qty_type": line.ordered_qty_type,
+                "quantity": line.ordered_quantity,
+                "qty_formula_id": line.ordered_qty_formula_id.id,
+            }
+            line.write(line_dict)
             line._compute_state()
 
     def set_contract_status_active(self, execution_date):
@@ -140,7 +132,6 @@ class ContractUtils(Component):
         discount=None,
         payment_mode_id=None,
     ):
-        initial_status = self.work.record.status
         # TODO: control closing date in order to being able modify contract with previous date.
         # on contract line:
         # skip last_date_invoice validation for modification action if contract is ready to start or active on free plan.
@@ -161,6 +152,7 @@ class ContractUtils(Component):
         )
         # TODO:
         # Do we really want new contract to be in_progress on a modification??
+        # initial_status = self.work.record.status
         # if initial_status == "in_progress" and not self.work.record.is_free_pack:
         #     self.set_contract_status_active()
         self._setup_successors_and_predecessors(new_service_invoicing_id)
@@ -175,7 +167,6 @@ class ContractUtils(Component):
         payment_mode_id=None,
         metadata=None,
     ):
-        self.set_contract_status_closed(execution_date)
         new_service_invoicing_id = self.component(
             usage="sale.order.utils", model_name="sale.order"
         ).create_service_invoicing_initial(
