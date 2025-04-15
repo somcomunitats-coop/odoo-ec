@@ -90,6 +90,15 @@ class CommunityServiceInfo(BaseModel, populate_by_name=True):
         description="When a member was inscribed in the community service",
     )
 
+    open_inscriptions: Optional[bool] = Field(
+        default=None,
+        title="True if service has open inscriptions, false if close, None for ignore",
+    )
+
+    inscriptions_url_form: Optional[str] = Field(
+        default="", title="Url of the inscription form, if inscriptions are open"
+    )
+
     inscriptions: Optional[int] = Field(
         default=None,
         title="Total inscriptions",
