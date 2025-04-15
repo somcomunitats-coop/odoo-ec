@@ -288,9 +288,7 @@ class ContractContract(models.Model):
         )
 
     def set_close_status_type_by_date(self):
-        if self.date_end and self.date_end.strftime(
-            "%Y-%m-%d"
-        ) <= datetime.now().strftime("%Y-%m-%d"):
+        if self.date_end and self.date_end <= datetime.now().date():
             self.write({"status": "closed"})
         else:
             self.write({"status": "closed_planned"})
