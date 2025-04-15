@@ -265,14 +265,8 @@ class LandingPage(models.Model):
     def action_update_public_data(self):
         for record in self:
             record._update_wordpress()
-            if self.map_place_id:
-                record.sudo()._update_landing_place()
-            if self.hierarchy_level == "coordinator":
-                if self.status == "publish":
-                    self.sudo().create_or_update_and_apply_coordinator_filter()
-                else:
-                    self.sudo().remove_coordinator_filter_to_existing_communities()
-            self.write({"publicdata_lastupdate_datetime": datetime.now()})
+            record.update_map_place()
+            record.write({"publicdata_lastupdate_datetime": datetime.now()})
             return get_successful_popup_message(
                 _("Public data update successful"),
                 _("Wordpress landing and map place has been successfully updated."),
@@ -295,6 +289,15 @@ class LandingPage(models.Model):
                 self.company_hierarchy_level_url(),
                 self.wp_landing_page_id,
             ).update(landing_page_data)
+
+    def update_map_place(self):
+        if self.map_place_id:
+            self.sudo()._update_landing_place()
+        if self.hierarchy_level == "coordinator":
+            if self.status == "publish":
+                self.sudo().create_or_update_and_apply_coordinator_filter()
+            else:
+                self.sudo().remove_coordinator_filter_to_existing_communities()
 
     def create_landing_place(self):
         LandingCmPlaceResource(self).create()
