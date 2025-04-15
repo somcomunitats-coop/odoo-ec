@@ -968,7 +968,7 @@ class Selfconsumption(models.Model):
         _logger.info(f"Starting update_old_contract_to_service_invoicing.")
         selfconsumption_project_ids = self.env[
             "energy_selfconsumption.selfconsumption"
-        ].search([("state", "=", "active")])
+        ].search([("state", "=", "active"),("company_id", "!=", 29)])
         for selfconsumption_project in selfconsumption_project_ids:
             sale_orders = selfconsumption_project.get_sale_orders()
             contracts = selfconsumption_project.get_contracts()
@@ -1074,7 +1074,6 @@ class Selfconsumption(models.Model):
                             lambda table: table.state == "active"
                         )
                     )
-
                     with contract_utils(self.env, contract) as component:
                         contract_cups = contract.contract_line_ids[0].name
                         match = re.search(r"CUPS:\s*(\S+)", contract_cups)
@@ -1113,11 +1112,12 @@ class Selfconsumption(models.Model):
                                     contract_cups,
                                 )
                             )
+                        execute_date = contract.last_date_invoiced if contract.last_date_invoiced else contract.date_start
                         component.set_contract_status_closed(
-                            contract.last_date_invoiced
+                            execute_date
                         )
                         service_invoicing_id = component.reopen(
-                            contract.recurring_next_date,
+                            execute_date,
                             pricelist,
                             pack,
                             False,
@@ -1143,7 +1143,7 @@ class Selfconsumption(models.Model):
                     # 4.- mark contract as active
                     with contract_utils(self.env, service_invoicing_id) as component:
                         component.set_contract_status_active(
-                            contract.last_date_invoiced
+                            execute_date
                         )
                     # contract_component.set_contract_status_active(fields.Date.today())
                     _logger.info(f"Contract {service_invoicing_id.name} reopened.")

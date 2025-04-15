@@ -41,10 +41,10 @@ class SaleOrderUtils(Component):
         if payment_mode_id:
             so_creation_dict["payment_mode_id"] = payment_mode_id.id
         # Apply configuration sales team to service invoicing sales order
-        if self.env.company.service_invoicing_sale_team_id:
-            so_creation_dict[
-                "team_id"
-            ] = self.env.company.service_invoicing_sale_team_id.id
+        # if self.env.company.service_invoicing_sale_team_id:
+        #     so_creation_dict[
+        #         "team_id"
+        #     ] = self.env.company.service_invoicing_sale_team_id.id
         if metadata:
             metadata_list = []
             for meta_key in metadata.keys():
