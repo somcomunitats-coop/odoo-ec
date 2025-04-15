@@ -86,6 +86,7 @@ class SaleOrderUtils(Component):
         if so_extra:
             self.work.record.write(so_extra)
         self.work.record.action_confirm()
+        __import__("ipdb").set_trace()
         with self.collection.work_on(
             "contract.contract", record=self.work.record.service_invoicing_id
         ) as work:

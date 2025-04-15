@@ -33,14 +33,18 @@ class ContractUtils(Component):
             ] = self.work.record.sale_order_id.get_metadata_value(
                 "recurring_invoicing_type"
             )
+        if "last_date_invoiced" in metadata_keys_arr:
+            recurrence_dict[
+                "last_date_invoiced"
+            ] = self.work.record.sale_order_id.get_metadata_value("last_date_invoiced")
         if recurrence_dict:
             self._set_contract_recurrency(**recurrence_dict)
         for contract_update_data in self.work.record.sale_order_id.metadata_line_ids:
             if contract_update_data.key not in [
                 "discount",
-                "recurring_interval",
-                "recurring_rule_type",
-                "recurring_invoicing_type",
+                # "recurring_interval",
+                # "recurring_rule_type",
+                # "recurring_invoicing_type",
             ]:
                 value = contract_update_data.value
                 # TODO: Not a very robust condition. Assuming all Many2one fields are defined with _id at the end
@@ -48,6 +52,7 @@ class ContractUtils(Component):
                 if "_id" in contract_update_data.key:
                     value = int(contract_update_data.value)
                 contract_update_dict[contract_update_data.key] = value
+        __import__("ipdb").set_trace()
         return contract_update_dict
 
     def setup_initial_data(self):
@@ -103,9 +108,9 @@ class ContractUtils(Component):
             line.write(
                 {
                     "date_start": execution_date,
-                    "next_period_date_start": execution_date,
-                    "recurring_next_date": execution_date,
-                    "last_date_invoiced": None,
+                    # "next_period_date_start": execution_date,
+                    # "recurring_next_date": execution_date,
+                    # "last_date_invoiced": None,
                     "qty_type": line.ordered_qty_type,
                     "quantity": line.ordered_quantity,
                     "qty_formula_id": line.ordered_qty_formula_id.id,
