@@ -121,6 +121,7 @@ class ContractUtils(Component):
                 self._activate_contract_lines(execution_date)
             line.write({"date_end": execution_date})
             line._compute_state()
+            line.read(["recurring_next_date"])
         self.work.record.set_close_status_type_by_date()
 
     def modify(

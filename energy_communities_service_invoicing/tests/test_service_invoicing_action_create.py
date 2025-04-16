@@ -123,9 +123,7 @@ class TestSeriveInvoicingActionCreate(TransactionCase):
             if contract.date_end:
                 close_date = contract.date_end
                 # TODO: Verify why not all lines preserve date_end after this execution
-                # __import__('ipdb').set_trace()
                 component.set_contract_status_closed(close_date)
-                # __import__('ipdb').set_trace()
                 self.assertEqual(contract.contract_line_ids[0].date_end, close_date)
                 self.assertEqual(contract.date_end, close_date)
                 self.assertEqual(contract.status, "closed")
