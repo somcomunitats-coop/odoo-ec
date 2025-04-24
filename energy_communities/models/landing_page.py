@@ -56,7 +56,8 @@ class LandingPage(models.Model):
     become_cooperator_process = fields.Html(
         string="Become cooperator process", translate=True
     )
-    map_place_id = fields.Many2one("cm.place", "Place reference")
+    # map_place_id = fields.Many2one("cm.place", "Place reference")
+    map_place_ids = fields.One2many("cm.place", "Place references")
     street = fields.Char(string="Street")
     postal_code = fields.Char(string="Postal code")
     city = fields.Char(string="City")

@@ -33,24 +33,25 @@ class LandingCmPlace:
         self._create_update_place("update")
 
     def _create_update_place(self, mode):
-        validated_place_data = self._validate_and_prepare_place_data()
-        if validated_place_data["errors"]:
-            error_msg = ""
-            for error in validated_place_data["errors"]:
-                error_msg += error + "\n"
-            raise UserError(error_msg)
-        else:
-            if mode == "create":
-                place = self.landing.env["cm.place"].create(
-                    validated_place_data["data"]
-                )
-                self.landing.write({"map_place_id": place.id})
-            if mode == "update":
-                place = self.landing.map_place_id
+        for map_slug in MapClientConfig.MAPPING__MAPS:
+            validated_place_data = self._validate_and_prepare_place_data(map_slug)
+            if validated_place_data["errors"]:
+                error_msg = ""
+                for error in validated_place_data["errors"]:
+                    error_msg += error + "\n"
+                raise UserError(error_msg)
+            else:
+                if mode == "create":
+                    place = self.landing.env["cm.place"].create(
+                        validated_place_data["data"]
+                    )
+                    # self.landing.write({"map_place_id": place.id})
+                if mode == "update":
+                    place = self.landing.map_place_id
+                    if place:
+                        place.write(validated_place_data["data"])
                 if place:
-                    place.write(validated_place_data["data"])
-            if place:
-                self._place_extra_data_setup(place)
+                    self._place_extra_data_setup(place)
 
     def _place_extra_data_setup(self, place):
         # presenter metadata
@@ -62,16 +63,16 @@ class LandingCmPlace:
         # apply translations
         self._apply_place_metadatas_translations(place)
 
-    def _validate_and_prepare_place_data(self):
+    def _validate_and_prepare_place_data(self, map_slug):
         """
         Try to generate a place data dictionary and collect errors if they're
         @returns: dictionary with 'data' key as the dict to be used for place creation or update and 'errors' key to collect errors if they're
         """
         ret_dict = {
             "data": {
-                "company_id": MapClientConfig.MAPPING__INSTANCE_ID,
                 "name": self.landing.name,
-                "slug_id": self.landing.slug_id,
+                "slug_id": self.landing.slug_id + "-" + map_slug,
+                "landing_id": self.landing.id,
                 "type": "place",
                 "status": MapClientConfig.MAPPING__LANDING_STATUS__MAP_PLACE_STATUS[
                     self.landing.status
@@ -94,15 +95,12 @@ class LandingCmPlace:
                 )
             )
         # Map reference
-        map = self.landing.env["cm.map"].search(
-            [("slug_id", "=", MapClientConfig.MAPPING__MAP)]
-        )
+        map = self.landing.env["cm.map"].search([("slug_id", "=", map_slug)])
         if map:
             ret_dict["data"]["map_id"] = map.id
+            ret_dict["data"]["company_id"] = map.company_id.id
         else:
-            ret_dict["errors"].append(
-                _("Map not found slug_id: {}").format(self.MAPPING__MAP)
-            )
+            ret_dict["errors"].append(_("Map not found slug_id: {}").format(map_slug))
         # Lat and Lng
         if self.landing.lat:
             ret_dict["data"]["lat"] = self.landing.lat
