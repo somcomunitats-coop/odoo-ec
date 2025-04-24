@@ -475,10 +475,9 @@ class ResCompany(models.Model):
                 and incoming_coordinator.landing_page_status == "publish"
             ):
                 filter_coord_arr.append((4, incoming_coord_filter.id))
-            if community_landing_page.map_place_id and filter_coord_arr:
-                community_landing_page.map_place_id.sudo().write(
-                    {"filter_mids": filter_coord_arr}
-                )
+            if community_landing_page.map_place_ids and filter_coord_arr:
+                for place in community_landing_page.map_place_ids:
+                    place.sudo().write({"filter_mids": filter_coord_arr})
 
     def _sanitize_outgoing_coordinator_users(self, outgoing_coordinator):
         coord_users = outgoing_coordinator.get_users(["role_coord_admin"])

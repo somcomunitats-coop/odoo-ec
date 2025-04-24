@@ -22,7 +22,7 @@
             name="action_create_landing_place"
             type="object"
             string="Create map place"
-            attrs="{'invisible': [('map_place_id','!=',False)]}"
+            attrs="{'invisible': [('map_place_ids','!=',False)]}"
           />
           <button
             name="action_update_public_data"
@@ -78,7 +78,7 @@
           <group>
             <field name="lat" required="1" />
             <field name="lng" required="1" />
-            <field name="map_place_id" />
+            <field name="map_place_ids" />
             <field name="street" />
             <field name="postal_code" />
             <field name="city" />
