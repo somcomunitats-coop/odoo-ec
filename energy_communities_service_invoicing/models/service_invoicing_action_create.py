@@ -1,9 +1,13 @@
+import datetime
+import logging
 import re
 from collections import namedtuple
 
 from odoo import models
 
 from odoo.addons.energy_communities.utils import contract_utils
+
+_logger = logging.getLogger(__name__)
 
 
 class ActionCreate(models.AbstractModel):
@@ -71,22 +75,11 @@ class ActionCreate(models.AbstractModel):
         )
         return pricelist
 
-    def get_payment_mode(self, selfconsumption_project):
-        payment_mode = self.env["account.payment.mode"].search(
-            [
-                ("company_id", "=", selfconsumption_project.company_id.id),
-                ("payment_type", "=", "inbound"),
-            ]
-        )
-        if not payment_mode:
-            raise UserWarning(_("Payment mode not found."))
-        return payment_mode
-
     def update_selfconsumption_project(self, selfconsumption_project, contracts):
         price = contracts[0].contract_line_ids[0].price_unit
         pack, _ = self.get_product_pack(selfconsumption_project)
         pricelist = self.get_pricelist_for_project(selfconsumption_project, price)
-        payment_mode = self.get_payment_mode(selfconsumption_project)
+        payment_mode = contracts[0].payment_mode_id
 
         selfconsumption_project.write(
             {
@@ -95,7 +88,7 @@ class ActionCreate(models.AbstractModel):
                 "recurring_interval": contracts[0].recurring_interval,
                 "recurring_invoicing_type": contracts[0].recurring_invoicing_type,
                 "pricelist_id": pricelist.id,
-                "payment_mode_id": payment_mode[0],
+                "payment_mode_id": payment_mode.id,
             }
         )
 
@@ -154,21 +147,22 @@ class ActionCreate(models.AbstractModel):
     def reclose_contract(self, contract):
         assert (
             bool(contract.date_end) is True
-        ), f"Contract {contract.contract.name} has not date_end definded"
+        ), f"Contract {contract.name} has not date_end definded"
         with contract_utils(self.env, contract) as component:
             component.set_contract_status_closed(contract.date_end)
 
     def reopen_contract_without_date_end(self, selfconsumption_project, contract):
         assert (
             contract.date_end is False
-        ), f"Contract {contract.contract.name} has already an end date"
+        ), f"Contract {contract.name} has already an end date"
 
         price = contract.contract_line_ids[0].price_unit
         pack, _ = self.get_product_pack(selfconsumption_project)
-        pricelist = self.get_pricelist_for_project(selfconsumption_project, price)
-        payment_mode = self.get_payment_mode(selfconsumption_project)
+        pricelist = selfconsumption_project.pricelist_id
+        payment_mode = selfconsumption_project.payment_mode_id
         supply_point_id = self.get_supply_point_id(selfconsumption_project, contract)
-        journal_id = self.get_journal(project)
+        journal_id = self.get_journal(selfconsumption_project)
+        contract._compute_recurring_next_date()
         execute_date = (
             contract.last_date_invoiced
             if contract.last_date_invoiced
@@ -176,6 +170,8 @@ class ActionCreate(models.AbstractModel):
         )
         with contract_utils(self.env, contract) as component:
             component.set_contract_status_closed(execute_date)
+            if contract.recurring_rule_type == "monthlylastday":
+                execute_date = execute_date + datetime.timedelta(days=1)
             new_contract_id = component.reopen(
                 execute_date,
                 pricelist,
@@ -185,15 +181,17 @@ class ActionCreate(models.AbstractModel):
                 {
                     "selfconsumption_id": selfconsumption_project.id,
                     "supply_point_id": supply_point_id.id,
-                    "recurring_interval": selfconsumption_project.recurring_interval,
-                    "recurring_rule_type": selfconsumption_project.recurring_rule_type,
-                    "recurring_invoicing_type": selfconsumption_project.recurring_invoicing_type,
+                    "recurring_interval": contract.recurring_interval,
+                    "recurring_rule_type": contract.recurring_rule_type,
+                    "recurring_invoicing_type": contract.recurring_invoicing_type,
                     "journal_id": journal_id.id,
                     "project_id": selfconsumption_project.id,
                     "company_id": selfconsumption_project.company_id.id,
                 },
             )
-            return new_contract_id
+        with contract_utils(self.env, new_contract_id) as component:
+            component.set_contract_status_active(execute_date)
+        return new_contract_id
 
     def setup_contract_line_description(self, project, contract_id):
         distribution_table_active = project.distribution_table_ids.filtered(
@@ -206,11 +204,8 @@ class ActionCreate(models.AbstractModel):
     def setup_contract_main_line(self, contract_id):
         contract_id.contract_line_ids[0].write({"main_line": True})
 
-    def active_contract(self, contract_id, execute_date):
-        with contract_utils(self.env, contract_id) as component:
-            component.set_contract_status_active(execute_date)
-
     def update_old_contract_to_service_invoicing(self):
+        migrated_contracts = []
         _logger.info("Starting update_old_contract_to_service_invoicing.")
 
         selfconsumption_project_ids = self.env[
@@ -236,6 +231,7 @@ class ActionCreate(models.AbstractModel):
                     _logger.info(f"Reopening contract {contract.name}.")
                     if contract.date_end:
                         self.reclose_contract(contract)
+                        migrated_contracts.append(contract)
                     else:
                         contract_id = self.reopen_contract_without_date_end(
                             project, contract
@@ -245,12 +241,6 @@ class ActionCreate(models.AbstractModel):
 
                         _logger.info("Setup contract line main_line.")
                         self.setup_contract_main_line(contract_id)
-
-                        _logger.info("mark contract as active.")
-                        execute_date = (
-                            contract.last_date_invoiced
-                            if contract.last_date_invoiced
-                            else contract.date_start
-                        )
-                        self.active_contract(contract_id, execute_date)
+                        migrated_contracts.append(contract_id)
                         _logger.info(f"Contract {contract_id.name} reopened.")
+        return migrated_contracts

@@ -57,7 +57,7 @@
 
         <record id="update_old_contract_to_service_invoicing_to_admin" model="ir.cron">
             <field name="name">Update old contract to service invoicing</field>
-            <field name="model_id" ref="energy_selfconsumption.model_energy_selfconsumption_selfconsumption"/>
+            <field name="model_id" ref="energy_communities_service_invoicing.model_energy_communities_service_invoicing_action_create"/>
             <field name="code">model.sudo().update_old_contract_to_service_invoicing()</field>
             <field name="user_id" ref="base.user_root" />
             <field name="active" eval="False" />
