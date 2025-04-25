@@ -36,7 +36,7 @@
         "website_event",
     ],
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
-    "website": "https://coopdevs.org",
+    "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Cooperative management",
     "description": """
     Energy Communities customizations.

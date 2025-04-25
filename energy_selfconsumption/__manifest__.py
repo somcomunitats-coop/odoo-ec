@@ -7,7 +7,7 @@
         Module for energetic self-consumption projects.
     """,
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
-    "website": "https://coopdevs.org",
+    "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Customizations",
     "version": "16.0.0.3.0",
     "license": "AGPL-3",

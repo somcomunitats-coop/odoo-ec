@@ -7,7 +7,7 @@
         This addon enables an API/REST communication with energy communities platform
     """,
     "author": "Coopdevs Treball SCCL & Som Energia SCCL & SomIT",
-    "website": "https://coopdevs.org",
+    "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Customizations",
     "version": "16.0.0.2.0",
     "license": "AGPL-3",
