@@ -7,7 +7,7 @@
         Use mass_mailing on a energy communities setup
     """,
     "author": "Som Comunitats",
-    "website": "https://coopdevs.org",
+    "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Marketing",
     "version": "16.0.0.1.1",
     "license": "AGPL-3",

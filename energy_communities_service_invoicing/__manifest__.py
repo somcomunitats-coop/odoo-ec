@@ -7,7 +7,7 @@
         Long description of module's purpose
     """,
     "author": "Som comunitats",
-    "website": "https://coopdevs.org",
+    "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Contract Management",
     "version": "16.0.0.1.2",
     # any module necessary for this one to work correctly
