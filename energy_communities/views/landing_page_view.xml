@@ -6,6 +6,7 @@
     <field name="arch" type="xml">
       <form create="false">
         <header>
+          <field name="map_sync_mode" invisible="True" />
           <button
             name="action_landing_page_status"
             type="object"
@@ -22,12 +23,13 @@
             name="action_create_landing_place"
             type="object"
             string="Create map place"
-            attrs="{'invisible': [('map_place_ids','!=',False)]}"
+            attrs="{'invisible': [('map_sync_mode','!=','create')]}"
           />
           <button
             name="action_update_public_data"
             type="object"
             string="Update (wp landing / map place)"
+            attrs="{'invisible': [('map_sync_mode','!=','update')]}"
           />
           <field name="status" widget="statusbar" />
         </header>
@@ -78,7 +80,15 @@
           <group>
             <field name="lat" required="1" />
             <field name="lng" required="1" />
-            <field name="map_place_ids" />
+            <field name="map_place_ids" widget="one2many" readonly="1">
+              <tree editable="top">
+                <field name="name" />
+                <field name="status" />
+                <field name="company_id" />
+                <field name="map_id" />
+                <field name="slug_id" />
+              </tree>
+            </field>
             <field name="street" />
             <field name="postal_code" />
             <field name="city" />
