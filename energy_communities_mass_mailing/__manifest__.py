@@ -9,7 +9,7 @@
     "author": "Som Comunitats",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Marketing",
-    "version": "16.0.0.1.2",
+    "version": "16.0.0.1.3",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [

@@ -1,6 +1,6 @@
 {
     "name": "energy_communities_l10n_es_ticketbai",
-    "version": "16.0.1.0.0",
+    "version": "16.0.0.1.0",
     "author": "Som IT SCCL & Som Energia SCCL",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "TicketBAI management",
