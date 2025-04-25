@@ -51,7 +51,7 @@ class ActionCreate(models.AbstractModel):
         # Create pricelist
         pricelist = self.env["product.pricelist"].create(
             {
-                "name": f"{selfconsumption_project.name} {selfconsumption_project.invoicing_mode} Selfconsumption Pricelist",
+                "name": f"{selfconsumption_project.name} Pricelist",
                 "company_id": selfconsumption_project.company_id.id,
                 "currency_id": selfconsumption_project.company_id.currency_id.id,
                 "discount_policy": "without_discount",
