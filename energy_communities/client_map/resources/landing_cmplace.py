@@ -33,25 +33,32 @@ class LandingCmPlace:
         self._create_update_place("update")
 
     def _create_update_place(self, mode):
-        for map_slug in MapClientConfig.MAPPING__MAPS:
-            validated_place_data = self._validate_and_prepare_place_data(map_slug)
-            if validated_place_data["errors"]:
-                error_msg = ""
-                for error in validated_place_data["errors"]:
-                    error_msg += error + "\n"
-                raise UserError(error_msg)
-            else:
-                if mode == "create":
+        if mode == "create":
+            for map_slug in MapClientConfig.MAPPING__MAPS:
+                validated_place_data = self._validate_and_prepare_place_data(map_slug)
+                if validated_place_data["errors"]:
+                    self._display_sync_validation_errors(validated_place_data["errors"])
+                else:
                     place = self.landing.env["cm.place"].create(
                         validated_place_data["data"]
                     )
-                    # self.landing.write({"map_place_id": place.id})
-                if mode == "update":
-                    place = self.landing.map_place_id
-                    if place:
-                        place.write(validated_place_data["data"])
-                if place:
                     self._place_extra_data_setup(place)
+        if mode == "update":
+            for place in self.landing.map_place_ids:
+                validated_place_data = self._validate_and_prepare_place_data(
+                    place.map_id.slug_id
+                )
+                if validated_place_data["errors"]:
+                    self._display_sync_validation_errors(validated_place_data["errors"])
+                else:
+                    place.write(validated_place_data["data"])
+                    self._place_extra_data_setup(place)
+
+    def _display_sync_validation_errors(self, errors):
+        error_msg = ""
+        for error in errors:
+            error_msg += error + "\n"
+        raise UserError(error_msg)
 
     def _place_extra_data_setup(self, place):
         # presenter metadata
