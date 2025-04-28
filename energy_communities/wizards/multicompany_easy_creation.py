@@ -9,6 +9,7 @@ from ..models.res_company import (
     _HIERARCHY_LEVEL_BASE_VALUES,
     _LEGAL_FORM_VALUES,
 )
+from ..utils import get_successful_popup_message, user_role_utils
 
 _logger = logging.getLogger(__name__)
 
@@ -142,13 +143,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "domain": {"parent_id": [("hierarchy_level", "=", "instance")]},
                 }
 
-    def add_company_managers(self):
-        coord_members = self.parent_id.get_users(
-            ["role_coord_admin", "role_coord_worker"]
-        )
-        for manager in coord_members:
-            manager.make_ce_user(self.new_company_id.id, "role_ce_manager")
-
     def add_company_log(self):
         message = _(
             "Community created from: <a href='/web#id={id}&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
@@ -164,8 +158,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
 
     def action_accept(self):
         self.create_company()
-        self.control_company_partner_visibility()
-        self.add_company_managers()
+        self.apply_new_company_to_impacted_users()
+        self.apply_new_company_partner_visibility()
         if self.create_landing:
             self.create_public_data()
         if self.crm_lead_id:
@@ -175,17 +169,11 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             self.with_delay().thread_action_accept()
         else:
             self.thread_action_accept()
-        return {
-            "type": "ir.actions.client",
-            "tag": "display_notification",
-            "params": {
-                "type": "success",
-                "title": _("Company creation successful"),
-                "message": _("Community creation process has been started."),
-                "sticky": False,
-                "next": {"type": "ir.actions.act_window_close"},
-            },
-        }
+
+        return get_successful_popup_message(
+            _("Company creation successful"),
+            _("Community creation process has been started."),
+        )
 
     def create_company(self):
         allow_new_members = False
@@ -231,7 +219,30 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             )
         )
 
-    def control_company_partner_visibility(self):
+    def apply_new_company_to_impacted_users(self):
+        system_impacted_user_id_list = [
+            self.env.ref("base.public_user").id,
+            self.env.ref("base.user_admin").id,
+        ]
+        # Apply new company to all users selected on wizard
+        for user in self.user_ids:
+            platform_admin_role = user.get_related_company_role(
+                self.new_company_id.id, ["role_platform_admin"]
+            )
+            # if user is a platform admin or system user: apply company_ids in order to gain visibility
+            if platform_admin_role or user.id in system_impacted_user_id_list:
+                user.write({"company_ids": [(4, self.new_company_id.id)]})
+            else:
+                new_company_hierarchy_level = self.new_company_id.hierarchy_level
+                with user_role_utils(self.env, user) as component:
+                    if new_company_hierarchy_level == "coordinator":
+                        component.apply_coordinator_role_in_company(self.new_company_id)
+                    if new_company_hierarchy_level == "community":
+                        component.apply_coordinator_role_in_company(
+                            self.new_company_id.parent_id
+                        )
+
+    def apply_new_company_partner_visibility(self):
         company_hierarchy_level = self.new_company_id.hierarchy_level
         if company_hierarchy_level == "coordinator":
             # apply to new company-partner all visible companies (company_ids)

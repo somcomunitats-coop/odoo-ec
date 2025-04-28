@@ -7,9 +7,9 @@
         Long description of module's purpose
     """,
     "author": "Som comunitats",
-    "website": "https://coopdevs.org",
+    "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Contract Management",
-    "version": "16.0.0.1.2",
+    "version": "16.0.0.2.2",
     # any module necessary for this one to work correctly
     "depends": [
         "base",
@@ -47,5 +47,5 @@
     ],
     "post_init_hook": "post_setup_intercompany_invoicing_config",
     # only loaded in demonstration mode
-    "demo": [],
+    "demo": ["demo/product_template_demo.xml"],
 }

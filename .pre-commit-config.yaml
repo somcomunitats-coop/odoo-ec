@@ -34,7 +34,7 @@ repos:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
       - id: oca-fix-manifest-website
-        args: ["https://coopdevs.org"]
+        args: ["https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce"]
       - id: oca-gen-addon-readme
         args:
           - --addons-dir=.

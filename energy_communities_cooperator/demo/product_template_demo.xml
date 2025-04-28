@@ -1,0 +1,17 @@
+<odoo>
+  <record id="coordinator_company_1_share_type_demo" model="product.template">
+    <field name="name">Coordinator 1 Share</field>
+    <field name="short_name">Share Coord 1</field>
+    <field name="default_code">share_coord_1</field>
+    <field name="categ_id" ref="cooperator.product_category_company_share" />
+    <field name="is_share" eval="True" />
+    <field name="default_share_product" eval="True" />
+    <field name="force_min_qty" eval="True" />
+    <field name="minimum_quantity">1</field>
+    <field name="by_individual" eval="True" />
+    <field name="by_company" eval="True" />
+    <field name="list_price">50</field>
+    <field name="display_on_website" eval="True" />
+    <field name="company_id" ref="energy_communities.coordinator_company_1" />
+  </record>
+</odoo>

@@ -68,6 +68,7 @@ class PartnerApiInfo(Component):
                 type="fotovoltaic",
                 name=service.project_id.name,
                 status=service.project_id.state,
+                has_monitoring=service.project_id.monitoring_service() is not None,
                 shares=member_contract.supply_point_assignation_id.coefficient,
                 inscription_date=member_contract.date_start.strftime("%Y-%m-%d"),
                 inscriptions=len(service.project_id.inscription_ids),
@@ -89,6 +90,7 @@ class PartnerApiInfo(Component):
                 type="fotovoltaic",
                 name=project.name,
                 status=project.state,
+                has_monitoring=project.monitoring_service() is not None,
                 shares=member_contract.supply_point_assignation_id.coefficient,
                 inscription_date=member_contract.date_start.strftime("%Y-%m-%d"),
                 inscriptions=len(project.inscription_ids),
@@ -106,7 +108,7 @@ class PartnerApiInfo(Component):
         )
         for project in projects:
             metrics_component = self.component(usage="metrics.info")
-            metrics_info = metrics_component.get_project_metrics(
+            metrics_info = metrics_component.get_project_metrics_by_member(
                 project, partner, date_from, date_to
             )
             if metrics_info:
@@ -120,7 +122,7 @@ class PartnerApiInfo(Component):
         project = self.env["energy_project.project"].search(domain)
         if project:
             metrics_component = self.component(usage="metrics.info")
-            metrics_info = metrics_component.get_project_metrics(
+            metrics_info = metrics_component.get_project_metrics_by_member(
                 project, partner, date_from, date_to
             )
             return metrics_info

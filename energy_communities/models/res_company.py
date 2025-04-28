@@ -129,7 +129,6 @@ class ResCompany(models.Model):
                 )
                 rec.available_role_ids = [
                     (4, self.env.ref("energy_communities.role_coord_admin").id),
-                    (4, self.env.ref("energy_communities.role_coord_worker").id),
                 ]
             elif rec.hierarchy_level == "community":
                 rec.parent_id_filtered_ids = self.search(
@@ -482,9 +481,7 @@ class ResCompany(models.Model):
                 )
 
     def _sanitize_outgoing_coordinator_users(self, outgoing_coordinator):
-        coord_users = outgoing_coordinator.get_users(
-            ["role_coord_admin", "role_coord_worker"]
-        )
+        coord_users = outgoing_coordinator.get_users(["role_coord_admin"])
         if coord_users:
             for user in coord_users:
                 # remove community manager role for the outgoing coordinator admins/managers
@@ -500,26 +497,9 @@ class ResCompany(models.Model):
                     user.write({"company_ids": [(3, self.id)]})
 
     def _sanitize_incoming_coordinator_users(self, incoming_coordinator):
-        coord_users = incoming_coordinator.get_users(
-            ["role_coord_admin", "role_coord_worker"]
-        )
+        coord_users = incoming_coordinator.get_users(["role_coord_admin"])
         if coord_users:
             for user in coord_users:
                 # Add community manager role for the incoming coordinator admins/workers
                 # Add access to community for the incoming coordinator admins/workers
                 user.make_ce_user(self.id, "role_ce_manager")
-
-    # TODO: Unused functions. Delete if really not needed.
-    def check_ce_has_admin(self):
-        self.ensure_one()
-        admin_roles_ids = [
-            r["odoo_role_id"]
-            for r in self.env["res.users"].ce_user_roles_mapping().values()
-            if r["is_admin"]
-        ]
-        company_user_ids = self.get_ce_members().ids
-        admins_user_ids = []
-        for admin_role in self.env["res.users.role"].sudo().browse(admin_roles_ids):
-            for role_line in admin_role.line_ids:
-                admins_user_ids.append(role_line.user_id.id)
-        return any([user in admins_user_ids for user in company_user_ids])

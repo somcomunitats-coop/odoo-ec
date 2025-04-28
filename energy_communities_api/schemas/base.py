@@ -101,3 +101,24 @@ class Error(BaseModel):
 
     code: str
     description: str
+
+
+class Address(BaseModel):
+    """
+    Representation for an address in energy communities project
+    """
+
+    street: str = Field(
+        title="Street", description="Full street adress, ex. Carrer del Vall 6, 3er 1a"
+    )
+    street2: Optional[str] = Field(
+        default="",
+        title="Street2",
+        description="Complementation to street address, ex. second door at IT lab",
+    )
+    postal_code: str = Field(
+        title="Postal code", description="Postal code of the address"
+    )
+    city: str = Field(title="City", description="City of the address")
+    state: str = Field(title="State", description="State of the address")
+    country: str = Field(title="Country", description="Country of the address")

@@ -1,24 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!--
-     Copyright 2022 Som Energia & Coopdevs
-     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
--->
 <odoo>
-
-  <record
-      id="view_ec_formulas_window"
-      model="ir.actions.act_window"
-  >
-    <field name="name">Formulas (quantity)</field>
-    <field name="res_model">contract.line.qty.formula</field>
-    <field name="view_mode">tree,form</field>
-  </record>
 
   <menuitem
     id="ce_root_menu"
     name="Community Management"
     sequence="10"
-    groups="role_platform_admin_res_groups,role_coord_admin_res_groups,role_coord_worker_res_groups,role_ce_admin,role_ce_manager"
+    groups="role_platform_admin_res_groups,role_coord_admin_res_groups,role_ce_admin,role_ce_manager"
     web_icon="energy_communities,static/description/icon.png"
   />
   <menuitem
@@ -41,12 +27,6 @@
       groups="group_platform_manager"
     />
     <menuitem
-      id="ec_formulas_menu"
-      name="Formulas"
-      action="view_ec_formulas_window"
-      groups="group_platform_manager"
-    />
-    <menuitem
       name="Tariffs"
       id="view_service_tariffs_menu"
       action="product.product_pricelist_action2"
@@ -65,9 +45,6 @@
     <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
   </record>
   <record model="ir.ui.menu" id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
-  </record>
-  <record model="ir.ui.menu" id="community_maps.menu_root">
     <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
   </record>
   <record model="ir.ui.menu" id="website.menu_website_configuration">
@@ -93,3 +70,4 @@
   </record>
 
 </odoo>
+

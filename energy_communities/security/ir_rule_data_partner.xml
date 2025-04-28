@@ -1,40 +1,4 @@
 <odoo>
-    <record model="ir.rule" id="landing_page_company_rule">
-        <field name="name">Landing Page multi-company</field>
-        <field name="model_id" ref="energy_communities.model_landing_page" />
-        <field name="global" eval="True" />
-        <field name="domain_force">
-['|',('company_id', '=', False),('company_id', 'in', company_ids)]
-        </field>
-    </record>
-
-    <record model="ir.rule" id="mail_message_company_rule">
-        <field name="name">mail.message multi-company</field>
-        <field name="model_id" ref="mail.model_mail_message" />
-        <field name="global" eval="True" />
-        <field name="domain_force">
-['|',('author_id.company_ids', '=', False),('author_id.company_ids', 'in', company_ids)]
-        </field>
-    </record>
-
-    <record model="ir.rule" id="mail_followers_company_rule">
-        <field name="name">mail.followers multi-company</field>
-        <field name="model_id" ref="mail.model_mail_followers" />
-        <field name="global" eval="True" />
-        <field name="domain_force">
-['|',('partner_id.company_ids', '=', False),('partner_id.company_ids', 'in', company_ids)]
-        </field>
-    </record>
-
-    <record model="ir.rule" id="mail_activity_company_rule">
-        <field name="name">mail.activity multi-company</field>
-        <field name="model_id" ref="mail.model_mail_activity" />
-        <field name="global" eval="True" />
-        <field name="domain_force">
-['|',('user_id.partner_id.company_ids', '=', False),('user_id.partner_id.company_ids', 'in', company_ids)]
-        </field>
-    </record>
-
     <function name="write" model="ir.model.data">
         <function name="search" model="ir.model.data">
             <value eval="[('module', '=', 'base'),('name', '=', 'res_partner_rule')]" />
@@ -119,7 +83,7 @@
       <field name="domain_force">
 [
 '&amp;','&amp;',
-('user_current_role', 'in', ['role_coord_admin','role_coord_worker']),
+('user_current_role', 'in', ['role_coord_admin']),
 ('company_hierarchy_level','!=','instance'),
 '|',
 ('type', '!=', 'private'),
@@ -150,19 +114,6 @@
       <field name="perm_write" eval="True" />
       <field name="perm_create" eval="True" />
       <field name="perm_unlink" eval="False" />
-    </record>
-
-    <record model="ir.rule" id="account_account_reconcile_restricted_company_rule">
-        <field name="name">Account Account Reconcile Record: multi-company</field>
-        <field name="model_id" ref="account_reconcile_oca.model_account_account_reconcile"/>
-        <field name="groups" eval="[(4, ref('base.group_user'))]" />
-        <field name="domain_force">
-[('company_id', 'in', company_ids)]
-        </field>
-        <field name="perm_read" eval="True" />
-        <field name="perm_write" eval="True" />
-        <field name="perm_create" eval="True" />
-        <field name="perm_unlink" eval="False" />
     </record>
 
 </odoo>

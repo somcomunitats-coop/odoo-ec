@@ -83,18 +83,13 @@ class CrmLead(models.Model):
         creation_partner = self._search_partner_for_company_wizard_creation(
             creation_dict
         )
-        if creation_partner:
-            creation_dict["creation_partner"] = creation_partner.id
-        users = [user.id for user in self.company_id.get_users()]
-        users = users + [
-            self.env.ref("base.user_admin").id,
-            self.env.ref("base.public_user").id,
-        ]
         creation_dict.update(
             {
                 "parent_id": self.company_id.id,
                 "crm_lead_id": self.id,
-                "user_ids": users,
+                "user_ids": self.env[
+                    "account.multicompany.easy.creation.wiz"
+                ]._get_company_creation_related_users_list(self.company_id),
                 "chart_template_id": self.env.ref(
                     "l10n_es.account_chart_template_pymes"
                 ).id,
@@ -108,6 +103,7 @@ class CrmLead(models.Model):
                 "create_user": False,
                 "create_landing": True,
                 "create_place": True,
+                "creation_partner": creation_partner.id if creation_partner else False,
             }
         )
         return creation_dict

@@ -25,10 +25,11 @@ class CreateInscription(models.AbstractModel):
         owner,
         tariff,
     ):
+        partner = partner.sudo().get_partner_with_type()
         """Create the supply point if it does not already exist."""
         supply_point = (
-            self.env["energy_selfconsumption.supply_point"]
-            .sudo()
+            self.env["energy_selfconsumption.supply_point"].sudo()
+            # .with_context(active_test=False)
             .search([("code", "=", values["supplypoint_cups"])])
         )
         country = self._get_country(values, project)
@@ -85,6 +86,7 @@ class CreateInscription(models.AbstractModel):
                     "state_id": self._get_state(values, project, country).id,
                     "zip": values["supplypoint_zip"],
                     "cadastral_reference": values["supplypoint_cadastral_reference"],
+                    "active": True,
                 }
                 if project.conf_used_in_selfconsumption:
                     vals["used_in_selfconsumption"] = values.get(
@@ -324,7 +326,7 @@ class CreateInscription(models.AbstractModel):
         annual_electricity_use,
         supply_point,
     ):
-        partner = partner.sudo().get_partner_with_type()
+        # partner = partner.sudo().get_partner_with_type()
         """Creates the registration record."""
         self.env["energy_selfconsumption.inscription_selfconsumption"].sudo().create(
             {
@@ -334,6 +336,7 @@ class CreateInscription(models.AbstractModel):
                 "effective_date": effective_date,
                 "mandate_id": mandate.id if mandate else False,
                 "participation_id": participation.id,
+                "participation_assigned_quantity": participation.quantity,
                 "participation_real_quantity": participation.quantity,
                 "annual_electricity_use": annual_electricity_use,
                 "accept": True,

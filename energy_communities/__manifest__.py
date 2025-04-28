@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.2.2",
+    "version": "16.0.0.3.1",
     "depends": [
         "account",
         "account_banking_mandate",
@@ -18,12 +18,14 @@
         "base_user_role_company",
         "calendar",
         "community_maps",
+        "community_maps_key_submissions",
         "contacts",
         "event",
         "l10n_es_aeat",
         "l10n_es_aeat_sii_oca",
         "mail",
         "mail_multicompany",
+        "mail_template_multi_company",
         "metadata",
         "partner_firstname",
         "partner_multi_company",
@@ -34,7 +36,7 @@
         "website_event",
     ],
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
-    "website": "https://coopdevs.org",
+    "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Cooperative management",
     "description": """
     Energy Communities customizations.
@@ -43,13 +45,15 @@
     "demo": [
         "demo/res_lang_demo.xml",
         "demo/res_company_demo.xml",
-        "demo/res_partner_demo.xml",
         "demo/res_user_demo.xml",
     ],
     "data": [
-        "security/res_users_role_data.xml",
-        "security/ir_rule_data.xml",
+        "security/res_groups_roles_data.xml",
         "security/ir.model.access.csv",
+        "security/ir_rule_data_account.xml",
+        "security/ir_rule_data_landing_page.xml",
+        "security/ir_rule_data_mail.xml",
+        "security/ir_rule_data_partner.xml",
         "data/product_data.xml",
         "data/auth_oauth_provider_data.xml",
         "data/ir_cron.xml",

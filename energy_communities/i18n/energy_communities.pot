@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-28 16:52+0000\n"
-"PO-Revision-Date: 2025-01-28 16:52+0000\n"
+"POT-Creation-Date: 2025-03-26 11:23+0000\n"
+"PO-Revision-Date: 2025-03-26 11:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -185,6 +185,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__allowed_companies
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__allowed_companies
 msgid "Allowed Companies"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_setup_bank_manual_config__allowed_company_ids
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner_bank__allowed_company_ids
+msgid "Allowed Company"
 msgstr ""
 
 #. module: energy_communities
@@ -373,6 +379,11 @@ msgid "Community"
 msgstr ""
 
 #. module: energy_communities
+#: model:ir.ui.menu,name:energy_communities.ce_root_menu
+msgid "Community Management"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__admins
 msgid "Community admins"
 msgstr ""
@@ -434,8 +445,10 @@ msgid "Companies"
 msgstr ""
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_setup_bank_manual_config__company_id
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__company_id
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__company_id
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner_bank__company_id
 msgid "Company"
 msgstr ""
 
@@ -535,11 +548,6 @@ msgstr ""
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_coord_admin_res_groups
 msgid "Coordinator Admin"
-msgstr ""
-
-#. module: energy_communities
-#: model:res.groups,name:energy_communities.role_coord_worker_res_groups
-msgid "Coordinator Worker"
 msgstr ""
 
 #. module: energy_communities
@@ -704,7 +712,6 @@ msgstr ""
 
 #. module: energy_communities
 #: model:ir.module.category,name:energy_communities.energy_communities_category
-#: model:ir.ui.menu,name:energy_communities.ce_root_menu
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_res_partner_filter
 msgid "Energy Communities"
@@ -831,6 +838,16 @@ msgstr ""
 #. module: energy_communities
 #: model:cm.map,proposal_form_subtitle_step_form:energy_communities.map_campanya
 msgid "Formulario de creación"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.ui.menu,name:energy_communities.ec_formulas_menu
+msgid "Formulas"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.actions.act_window,name:energy_communities.view_ec_formulas_window
+msgid "Formulas (quantity)"
 msgstr ""
 
 #. module: energy_communities
@@ -1533,6 +1550,12 @@ msgid "Related users"
 msgstr ""
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner__related_company_id
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__related_company_id
+msgid "Represented company"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__reset_password_endpoint
 msgid "Reset password URL"
 msgstr ""
@@ -1762,6 +1785,11 @@ msgid "Superuser password"
 msgstr ""
 
 #. module: energy_communities
+#: model:ir.ui.menu,name:energy_communities.view_service_tariffs_menu
+msgid "Tariffs"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__social_telegram
 msgid "Telegram Account"
 msgstr ""
@@ -1954,6 +1982,13 @@ msgstr ""
 
 #. module: energy_communities
 #. odoo-python
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#, python-format
+msgid "User creation"
+msgstr ""
+
+#. module: energy_communities
+#. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid "User group odoo-allow doesn't exist."
@@ -2019,6 +2054,11 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_landing_page_id
 msgid "WP Landing Page"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.website_form_submit_confirmation
+msgid "We will get back to you shortly."
 msgstr ""
 
 #. module: energy_communities
@@ -2104,6 +2144,13 @@ msgstr ""
 #, python-format
 msgid ""
 "You cannot link more than one user to a partner. Please check partner {}"
+msgstr ""
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/res_partner.py:0
+#, python-format
+msgid "You cannot remove company {} because there are banks referencing to it"
 msgstr ""
 
 #. module: energy_communities

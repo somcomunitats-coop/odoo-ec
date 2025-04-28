@@ -7,12 +7,12 @@
         Energy communities cooperative membership management
     """,
     "author": "Som Comunitats SCCL",
-    "website": "https://coopdevs.org",
+    "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Cooperative management",
-    "version": "16.0.0.1.9",
+    "version": "16.0.0.2.1",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
@@ -52,6 +52,7 @@
     ],
     # only loaded in demonstration mode
     "demo": [
+        "demo/product_template_demo.xml",
         "demo/res_company_demo.xml",
         "demo/res_user_demo.xml",
         "demo/subscription_request_demo.xml",

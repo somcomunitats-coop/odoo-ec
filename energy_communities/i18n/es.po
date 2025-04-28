@@ -6,14 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-28 16:54+0000\n"
-"PO-Revision-Date: 2025-01-28 16:54+0000\n"
+"POT-Creation-Date: 2025-03-26 11:24+0000\n"
+"PO-Revision-Date: 2025-03-26 12:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.5\n"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser_pwd
@@ -52,17 +54,15 @@ msgstr "2) Crear usuaria en Keycloak (en caso de que aún no existe)"
 #: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__invite_user_through_kc
 #, python-format
 msgid "3) Send invitation email to confirm email and reset password"
-msgstr ""
-"3) Enviar correo de invitación para confirmar email y resetear contraseña"
+msgstr "3) Enviar correo de invitación para confirmar email y resetear contraseña"
 
 #. module: energy_communities
 #: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_campanya
 msgid ""
-"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
-"class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2></br><div "
-"class =\"flex text-[#8a9f96]\">Cuando haya novedades con la Comunidad "
-"Energética contactaremos contigo y con las personas que también han mostrado"
-" interés y le ofreceremos apoyo para activarla. ¡Vamos!</div>"
+"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 class=\"text-lg font-"
+"medium\">¡Muchas gracias por tu interés!</h2></br><div class =\"flex text-[#8a9f96]\">Cuando "
+"haya novedades con la Comunidad Energética contactaremos contigo y con las personas que "
+"también han mostrado interés y le ofreceremos apoyo para activarla. ¡Vamos!</div>"
 msgstr ""
 
 #. module: energy_communities
@@ -82,17 +82,17 @@ msgstr ""
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.res_partner_view_form
 msgid ""
-"<strong>Hint: In order to edit company related params you have to visit the "
-"related contact's user.</strong>"
+"<strong>Hint: In order to edit company related params you have to visit the related contact's "
+"user.</strong>"
 msgstr ""
-"<strong>Consejo: Para poder editar los campos relacionados con la compañía "
-"se tiene que editar el usuario relacionado.</strong>"
+"<strong>Consejo: Para poder editar los campos relacionados con la compañía se tiene que "
+"editar el usuario relacionado.</strong>"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.mail_notification_layout
 msgid ""
-"<strong>Internal communication</strong>: Replying will post an internal "
-"note. Followers won't receive any email notification."
+"<strong>Internal communication</strong>: Replying will post an internal note. Followers won't "
+"receive any email notification."
 msgstr ""
 
 #. module: energy_communities
@@ -103,7 +103,7 @@ msgstr "Un super-usuario con permisos para CRUD en KC."
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_open
 msgid "Abierta"
-msgstr ""
+msgstr "Abierta"
 
 #. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_energy_actions
@@ -178,7 +178,7 @@ msgstr "Agregación y flexibilidad de la demanda"
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_flexibility
 msgid "Agregación y flexibilidad de la demanda"
-msgstr ""
+msgstr "Agregación y flexibilidad de la demanda"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__allow_new_members
@@ -191,6 +191,12 @@ msgstr "Autoriza nuevos miembros"
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__allowed_companies
 msgid "Allowed Companies"
 msgstr "Compañias permitidas"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_setup_bank_manual_config__allowed_company_ids
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner_bank__allowed_company_ids
+msgid "Allowed Company"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__allow_new_members
@@ -222,7 +228,6 @@ msgstr "Número de adjuntos"
 #: code:addons/energy_communities/_services/ce_community_service.py:0
 #: code:addons/energy_communities/_services/ce_member_profile_service.py:0
 #: code:addons/energy_communities/_services/ce_member_service.py:0
-#: code:addons/energy_communities/_services/ce_member_service.py:0
 #, python-format
 msgid "Authorization token not found"
 msgstr "Token de autorización no encontrado"
@@ -253,7 +258,7 @@ msgstr "Generar usuarias de plataforma para las socias"
 #. module: energy_communities
 #: model:cm.map,searchbar_placeholder:energy_communities.map_campanya
 msgid "Buscar dirección o municipio"
-msgstr ""
+msgstr "Buscar dirección o municipio"
 
 #. module: energy_communities
 #. odoo-python
@@ -279,7 +284,7 @@ msgstr "Iniciativa CRM"
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_change_coordinator_wizard_form
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_create_users_wizard_form
 msgid "Cancelar"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: energy_communities
 #: model:ir.actions.act_window,name:energy_communities.act_window_change_coordinator
@@ -332,7 +337,7 @@ msgstr "Ciudad"
 #. module: energy_communities
 #: model:cm.place.category,name:energy_communities.map_place_category_citizen
 msgid "Ciudadanía"
-msgstr ""
+msgstr "Ciudadanía"
 
 #. module: energy_communities
 #: model_terms:ir.actions.act_window,help:energy_communities.ce_utm_sources_action
@@ -378,6 +383,11 @@ msgid "Community"
 msgstr "Comunidad"
 
 #. module: energy_communities
+#: model:ir.ui.menu,name:energy_communities.ce_root_menu
+msgid "Community Management"
+msgstr "Comunidades Energéticas"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__admins
 msgid "Community admins"
 msgstr "Administradoras de comunidad"
@@ -392,11 +402,11 @@ msgstr "Companyia Comunidad Energètica"
 #: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
 #, python-format
 msgid ""
-"Community created from: <a "
-"href='/web#id={id}&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
+"Community created from: <a href='/web#id={id}"
+"&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
 msgstr ""
-"Comunidad creada desde: <a "
-"href='/web#id={id}&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
+"Comunidad creada desde: <a href='/web#id={id}"
+"&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
 
 #. module: energy_communities
 #. odoo-python
@@ -441,8 +451,10 @@ msgid "Companies"
 msgstr "Empreses"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_setup_bank_manual_config__company_id
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__company_id
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__company_id
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner_bank__company_id
 msgid "Company"
 msgstr "Compañía"
 
@@ -455,8 +467,7 @@ msgstr "Logotipo de la compañia"
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
-msgid ""
-"Company comercial name must be established in order to create a landing"
+msgid "Company comercial name must be established in order to create a landing"
 msgstr "El nombre comercial debe estar definido para crear una Landing"
 
 #. module: energy_communities
@@ -483,7 +494,7 @@ msgstr "Logo de la compañía"
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_collective_purchases
 msgid "Compras colectivas"
-msgstr ""
+msgstr "Compras colectivas"
 
 #. module: energy_communities
 #: model:energy.action,name:energy_communities.energy_action_collective_purchases
@@ -505,11 +516,11 @@ msgstr "Configuración"
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid ""
-"Conflict on user values. Please verify that all values supposed to be unique"
-" are really unique. %(detail)s"
+"Conflict on user values. Please verify that all values supposed to be unique are really "
+"unique. %(detail)s"
 msgstr ""
-"Conflicto con los datos de usuario. Por favor verifica que los datos que se "
-"supone que son únicos para cada usuario, realmente lo son. %(detail)s"
+"Conflicto con los datos de usuario. Por favor verifica que los datos que se supone que son "
+"únicos para cada usuario, realmente lo son. %(detail)s"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_partner
@@ -529,7 +540,7 @@ msgstr "Cooperativa"
 #. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_coordinator
 msgid "Coordinadora"
-msgstr ""
+msgstr "Coordinadora"
 
 #. module: energy_communities
 #. odoo-python
@@ -545,11 +556,6 @@ msgstr "Coordinadora"
 #: model:res.groups,name:energy_communities.role_coord_admin_res_groups
 msgid "Coordinator Admin"
 msgstr "Coordinador Administrador"
-
-#. module: energy_communities
-#: model:res.groups,name:energy_communities.role_coord_worker_res_groups
-msgid "Coordinator Worker"
-msgstr "Coordinador Trabajador"
 
 #. module: energy_communities
 #. odoo-python
@@ -571,12 +577,12 @@ msgstr "Cordinadoras"
 #. module: energy_communities
 #: model:cm.map,proposal_form_title:energy_communities.map_campanya
 msgid "Crea una comunidad en el mapa"
-msgstr ""
+msgstr "Crea una comunidad en el mapa"
 
 #. module: energy_communities
 #: model:cm.map,proposal_cta_title:energy_communities.map_campanya
 msgid "Crear una comunidad"
-msgstr ""
+msgstr "Crear una comunidad"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__create_landing
@@ -602,7 +608,7 @@ msgstr "Crear punto de mapa"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "Create odoo website"
-msgstr ""
+msgstr "Crear web de Odoo"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__create_user_in_keycloak
@@ -612,7 +618,7 @@ msgstr "Crear usuario de KeyCloak/SSO desde la socia"
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_create_users_wizard
 msgid "Create users Wizard"
-msgstr ""
+msgstr "Creación de usuarios"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__create_uid
@@ -642,12 +648,12 @@ msgstr "Rol actual"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_users_form_form_inherit
 msgid "DNI"
-msgstr ""
+msgstr "DNI"
 
 #. module: energy_communities
 #: model:cm.map,proposal_form_subtitle_step_address:energy_communities.map_campanya
 msgid "Dirección"
-msgstr ""
+msgstr "Dirección"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_mail_channel
@@ -681,7 +687,7 @@ msgstr "Eficiencia energética"
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_efficiency
 msgid "Eficiencia energética"
-msgstr ""
+msgstr "Eficiencia energética"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__email
@@ -693,7 +699,7 @@ msgstr "Correo electrónico"
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid "Email is not valid"
-msgstr ""
+msgstr "Correo no válido"
 
 #. module: energy_communities
 #: model:energy.action,name:energy_communities.energy_action_thermal_energy
@@ -713,7 +719,6 @@ msgstr "Acciones energéticas"
 
 #. module: energy_communities
 #: model:ir.module.category,name:energy_communities.energy_communities_category
-#: model:ir.ui.menu,name:energy_communities.ce_root_menu
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_res_partner_filter
 msgid "Energy Communities"
@@ -763,7 +768,7 @@ msgstr ""
 #. module: energy_communities
 #: model:cm.form.model,button_label:energy_communities.map_form_model_campanya
 msgid "Enviar"
-msgstr ""
+msgstr "Enviar"
 
 #. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_community_status
@@ -825,8 +830,7 @@ msgstr "Iconos de Font awesome p.ej. fa-tasks"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__force_invite
 msgid "Force send invitation email in case it has been already sent"
-msgstr ""
-"Forzar envio de invitación en caso de que ya se ha hecho anteriormente"
+msgstr "Forzar envio de invitación en caso de que ya se ha hecho anteriormente"
 
 #. module: energy_communities
 #: model:energy.action,name:energy_communities.energy_action_citizen_education
@@ -836,12 +840,22 @@ msgstr "Formación ciudadana"
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_training
 msgid "Formación ciudadana"
-msgstr ""
+msgstr "Formación ciudadana"
 
 #. module: energy_communities
 #: model:cm.map,proposal_form_subtitle_step_form:energy_communities.map_campanya
 msgid "Formulario de creación"
-msgstr ""
+msgstr "Formulario de creación"
+
+#. module: energy_communities
+#: model:ir.ui.menu,name:energy_communities.ec_formulas_menu
+msgid "Formulas"
+msgstr "Formulas de cantidad"
+
+#. module: energy_communities
+#: model:ir.actions.act_window,name:energy_communities.view_ec_formulas_window
+msgid "Formulas (quantity)"
+msgstr "Formulas de cantidad"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__foundation_date
@@ -857,7 +871,7 @@ msgstr "Generación renovable comunitaria"
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_generation
 msgid "Generación renovable comunitaria"
-msgstr ""
+msgstr "Generación renovable comunitaria"
 
 #. module: energy_communities
 #. odoo-python
@@ -883,12 +897,12 @@ msgstr "Tiene un mensaje"
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__has_rel_user
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__has_rel_user
 msgid "Has Rel User"
-msgstr ""
+msgstr "Tiene usuario relacionado"
 
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__community_energy_action__public_status__hidden
 msgid "Hidden"
-msgstr ""
+msgstr "Oculto"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__hierarchy_level
@@ -938,13 +952,11 @@ msgstr "Si está marcado, algunos mensages tienen problemas de entrega."
 #: model:ir.model.fields,help:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
 #, python-format
 msgid ""
-"If it is checked, the Coordinator will receive a copy of each auto-response "
-"email that is generated in any of its CCEE when a new Member Subscription "
-"request is received."
+"If it is checked, the Coordinator will receive a copy of each auto-response email that is "
+"generated in any of its CCEE when a new Member Subscription request is received."
 msgstr ""
-"Si está marcado la Coordinadora recibirá una copia de cada correo de "
-"autorespuesta que se genere en cualquiera de sus CCEE cuando se reciba una "
-"nueva sociedad de socia en la CE."
+"Si está marcado la Coordinadora recibirá una copia de cada correo de autorespuesta que se "
+"genere en cualquiera de sus CCEE cuando se reciba una nueva sociedad de socia en la CE."
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__incoming_coordinator
@@ -969,7 +981,7 @@ msgstr "Empresario individual"
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_type__industrial
 #, python-format
 msgid "Industrial"
-msgstr ""
+msgstr "Industrial"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_instagram_url
@@ -1018,16 +1030,14 @@ msgstr "Página Landing"
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Landing lat param required for place creation"
-msgstr ""
-"La latitud es una parámetro requerido para la creación de un punto de mapa"
+msgstr "La latitud es una parámetro requerido para la creación de un punto de mapa"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Landing lng param required for place creation"
-msgstr ""
-"La longitud es una parámetro requerido para la creación de un punto de mapa"
+msgstr "La longitud es una parámetro requerido para la creación de un punto de mapa"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_landing_page
@@ -1048,7 +1058,7 @@ msgstr "Referencia a la página web"
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid "Lang is not valid"
-msgstr ""
+msgstr "Idioma no válido"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__default_lang_id
@@ -1202,7 +1212,7 @@ msgstr "Movilidad sostenible"
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_mobility
 msgid "Movilidad sostenible"
-msgstr ""
+msgstr "Movilidad sostenible"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__my_activity_date_deadline
@@ -1217,7 +1227,7 @@ msgstr "Mi página Landing"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "My website"
-msgstr ""
+msgstr "Mi web"
 
 #. module: energy_communities
 #: model:cm.map,external_link_cta_txt:energy_communities.map_campanya
@@ -1261,15 +1271,15 @@ msgid ""
 "Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats Energètiques\n"
 "        "
 msgstr ""
+"Nivel de accesp de los usuarios a la plataforma Odoo de las Comunidades Energéticas\n"
+"        "
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/_services/ce_community_service.py:0
 #, python-format
 msgid "No Odoo Company found for odoo_company_id %s"
-msgstr ""
-"No se ha encontrado ninguna compañía en Odoo para el parámetro: "
-"odoo_company_id= %s"
+msgstr "No se ha encontrado ninguna compañía en Odoo para el parámetro: odoo_company_id= %s"
 
 #. module: energy_communities
 #. odoo-python
@@ -1285,16 +1295,12 @@ msgstr "No se ha encontrado ningún Contacto para el Usuario con login: %s"
 #: code:addons/energy_communities/_services/ce_member_service.py:0
 #, python-format
 msgid "No Odoo User found for KeyCloak user id %s"
-msgstr ""
-"No se ha encontrado ningún Usuario de Odoo vinculado al Usuario de KeyCloak:"
-" %s"
+msgstr "No se ha encontrado ningún Usuario de Odoo vinculado al Usuario de KeyCloak: %s"
 
 #. module: energy_communities
 #: model:cm.map,noresults_msg:energy_communities.map_campanya
-msgid ""
-"No hemos encontrado resultados. Prueba a cambiar la configuración de "
-"filtros."
-msgstr ""
+msgid "No hemos encontrado resultados. Prueba a cambiar la configuración de filtros."
+msgstr "No hemos encontrado resultados. Prueba a cambiar la configuración de filtros."
 
 #. module: energy_communities
 #. odoo-python
@@ -1350,11 +1356,10 @@ msgstr "Proveedor OAuth2"
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid ""
-"Only users that belongs to the 'Coordinator' or 'Instance' company can "
-"create new Map Places."
+"Only users that belongs to the 'Coordinator' or 'Instance' company can create new Map Places."
 msgstr ""
-"Solo usuarios pertenecientes a la compañía 'Instancia' o 'Coordinadora' "
-"puedes crear nuevos puntos de mapa."
+"Solo usuarios pertenecientes a la compañía 'Instancia' o 'Coordinadora' puedes crear nuevos "
+"puntos de mapa."
 
 #. module: energy_communities
 #. odoo-python
@@ -1368,7 +1373,7 @@ msgstr "Abierto"
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_to_activate
 msgid "Para activar"
-msgstr ""
+msgstr "Para activar"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__parent_id
@@ -1437,7 +1442,6 @@ msgstr "Lugar de referencia"
 
 #. module: energy_communities
 #. odoo-python
-#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Place status filter not found slug_id: {}"
@@ -1554,6 +1558,12 @@ msgid "Related users"
 msgstr "Usuarios relacionados"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_partner__related_company_id
+#: model:ir.model.fields,field_description:energy_communities.field_res_users__related_company_id
+msgid "Represented company"
+msgstr "Compañía representada"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__reset_password_endpoint
 msgid "Reset password URL"
 msgstr "Enlace de reseteo de contraseña"
@@ -1581,22 +1591,18 @@ msgstr "Rol no encontrado"
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
-msgid ""
-"Role {} is not available for company {} of type {}. This type of company "
-"allows roles {}"
+msgid "Role {} is not available for company {} of type {}. This type of company allows roles {}"
 msgstr ""
-"El rol {} no se puede elegir para la compañía {} de tipo {}. Este tipo de "
-"compañías permiten los roles {}"
+"El rol {} no se puede elegir para la compañía {} de tipo {}. Este tipo de compañías permiten "
+"los roles {}"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
-msgid ""
-"Role {} is not available for user with {} role. This role only allows {}"
+msgid "Role {} is not available for user with {} role. This role only allows {}"
 msgstr ""
-"El rol {} no se puede elegir para usuarios con el rol {}. Solo se pueden "
-"elegir los roles {}"
+"El rol {} no se puede elegir para usuarios con el rol {}. Solo se pueden elegir los roles {}"
 
 #. module: energy_communities
 #: model:ir.model.constraint,message:energy_communities.constraint_res_users_role_line_user_role_uniq
@@ -1622,11 +1628,11 @@ msgstr "Imagen secundaria"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_create_users_wizard_form
 msgid ""
-"Select the stages to be covered by each partner (the selection of a stage "
-"implies the execution of the precedents):"
+"Select the stages to be covered by each partner (the selection of a stage implies the "
+"execution of the precedents):"
 msgstr ""
-"Selecciona las etapes a cubrir para cada persona socia (la selección de una "
-"etapa implica la execución de los precedentes):"
+"Selecciona las etapes a cubrir para cada persona socia (la selección de una etapa implica la "
+"execución de los precedentes):"
 
 #. module: energy_communities
 #. odoo-python
@@ -1775,12 +1781,12 @@ msgstr "Suministro de energía 100% renovable"
 #. module: energy_communities
 #: model:cm.form.model,cta_button_label:energy_communities.map_form_model_campanya
 msgid "Sumarme"
-msgstr ""
+msgstr "Sumarme"
 
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_supply
 msgid "Suministro de energía 100% renovable"
-msgstr ""
+msgstr "Suministro de energía 100% renovable"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__superuser
@@ -1791,6 +1797,11 @@ msgstr "Super Usuario"
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__superuser_pwd
 msgid "Superuser password"
 msgstr "Contraseña super usuario"
+
+#. module: energy_communities
+#: model:ir.ui.menu,name:energy_communities.view_service_tariffs_menu
+msgid "Tariffs"
+msgstr "Tarifas"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__social_telegram
@@ -1813,10 +1824,8 @@ msgstr "Gracias!"
 #: code:addons/energy_communities/_services/ce_community_service.py:0
 #: code:addons/energy_communities/_services/ce_member_profile_service.py:0
 #: code:addons/energy_communities/_services/ce_member_service.py:0
-#: code:addons/energy_communities/_services/ce_member_service.py:0
 #, python-format
-msgid ""
-"The received oauth KeyCloak token have not been validated by KeyCloak : {}"
+msgid "The received oauth KeyCloak token have not been validated by KeyCloak : {}"
 msgstr "El oauth token recibido no ha sido validado por Keycloak: {}"
 
 #. module: energy_communities
@@ -1831,20 +1840,18 @@ msgstr "El rol '{}' no es válido"
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid ""
-"There has been a coordinator change             from [OLD:{outgoing_id}] "
-"{outgoing_name} to [NEW:{incoming_id}] {incoming_name},             Change "
-"reason: {change_reason}"
+"There has been a coordinator change             from [OLD:{outgoing_id}] {outgoing_name} to "
+"[NEW:{incoming_id}] {incoming_name},             Change reason: {change_reason}"
 msgstr ""
-"Ha habido un cambio de coordinadora             de [OLD:{outgoing_id}] "
-"{outgoing_name} a [NEW:{incoming_id}] {incoming_name},             Motivo "
-"del cambio: {change_reason}"
+"Ha habido un cambio de coordinadora             de [OLD:{outgoing_id}] {outgoing_name} a [NEW:"
+"{incoming_id}] {incoming_name},             Motivo del cambio: {change_reason}"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/components/user_creator.py:0
 #, python-format
 msgid "There is at least one selected no community companies"
-msgstr ""
+msgstr "Existe almenos una compañía seleccionada que no es Comunidad"
 
 #. module: energy_communities
 #. odoo-python
@@ -1865,15 +1872,15 @@ msgstr "Este código de idioma %s no está activo en Odoo. Los activos son: %s"
 #: code:addons/energy_communities/components/user_creator.py:0
 #, python-format
 msgid ""
-"This wizard can only run with ONE company selected. Please limit the context"
-" of the selected companies to one."
+"This wizard can only run with ONE company selected. Please limit the context of the selected "
+"companies to one."
 msgstr ""
 
 #. module: energy_communities
 #: model:cm.map,categories_filter_title:energy_communities.map_campanya
 #: model:cm.map,proposal_form_subtitle_step_category:energy_communities.map_campanya
 msgid "Tipo de comunidad"
-msgstr ""
+msgstr "Tipo de comunidad"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_twitter_url
@@ -1896,32 +1903,25 @@ msgstr "Origen UTM"
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid ""
-"Unable to create new company because there is an allready existing company "
-"with this NAME: {}"
-msgstr ""
-"No es posible crear la nueva compañía porque ya existe una con este nombre: "
-"{}"
+"Unable to create new company because there is an allready existing company with this NAME: {}"
+msgstr "No es posible crear la nueva compañía porque ya existe una con este nombre: {}"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid ""
-"Unable to create new company because there is an allready existing company "
-"with this VAT number: {}"
-msgstr ""
-"No es posible crear la nueva compañía porque ya existe una con este NIF/CIF:"
-" {}"
+"Unable to create new company because there is an allready existing company with this VAT "
+"number: {}"
+msgstr "No es posible crear la nueva compañía porque ya existe una con este NIF/CIF: {}"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/_services/ce_member_profile_service.py:0
 #, python-format
-msgid ""
-"Unable to update the lang in Keycloak for the related KC user ID: {}.{}"
+msgid "Unable to update the lang in Keycloak for the related KC user ID: {}.{}"
 msgstr ""
-"No se ha podido actualizar el idioma en KeyCloak para el usuario de KeyCloak"
-" con ID: {}.{}"
+"No se ha podido actualizar el idioma en KeyCloak para el usuario de KeyCloak con ID: {}.{}"
 
 #. module: energy_communities
 #. odoo-python
@@ -1994,6 +1994,13 @@ msgstr "URL usuario admin"
 
 #. module: energy_communities
 #. odoo-python
+#: code:addons/energy_communities/wizards/create_users_wizard.py:0
+#, python-format
+msgid "User creation"
+msgstr "Creación de usuario"
+
+#. module: energy_communities
+#. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid "User group odoo-allow doesn't exist."
@@ -2021,7 +2028,6 @@ msgstr ""
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
-#: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid "Users"
 msgstr "Usuarios"
@@ -2040,8 +2046,7 @@ msgstr "Usuarios asociados a un rol"
 #: model:ir.model.fields,help:energy_communities.field_res_company__create_user_in_keycloak
 msgid "Users created by cooperator are pushed automatically to keycloak"
 msgstr ""
-"Los usuarios creados por el módulo Cooperator son replicados automáticamente"
-" en KeyCloak"
+"Los usuarios creados por el módulo Cooperator son replicados automáticamente en KeyCloak"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_utils_backend
@@ -2056,12 +2061,17 @@ msgstr "NIF"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_partner_form
 msgid "View"
-msgstr ""
+msgstr "Ver"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_landing_page_id
 msgid "WP Landing Page"
 msgstr "Página Landing WP"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.website_form_submit_confirmation
+msgid "We will get back to you shortly."
+msgstr "No pondremos en contacto contigo en breve."
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__website
@@ -2092,7 +2102,6 @@ msgstr "'account.multicompany.easy.creation.wiz'"
 
 #. module: energy_communities
 #. odoo-python
-#: code:addons/energy_communities/models/res_company.py:0
 #: code:addons/energy_communities/models/res_company.py:0
 #: code:addons/energy_communities/models/res_config_settings.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__wordpress_base_url
@@ -2138,16 +2147,20 @@ msgstr "Página landing y punto de mapa actualizados satisfactoriamente."
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid "You cannot create a instance company with a parent company."
-msgstr ""
-"No puede haber una compañía de nivel Instancia con una empresa matriz "
-"asignada."
+msgstr "No puede haber una compañía de nivel Instancia con una empresa matriz asignada."
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
-msgid ""
-"You cannot link more than one user to a partner. Please check partner {}"
+msgid "You cannot link more than one user to a partner. Please check partner {}"
+msgstr ""
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/res_partner.py:0
+#, python-format
+msgid "You cannot remove company {} because there are banks referencing to it"
 msgstr ""
 
 #. module: energy_communities
@@ -2332,7 +2345,9 @@ msgid ""
 "          \"type\": \"Display\",\n"
 "          \"scope\": \"#/properties/newsletter_info\",\n"
 "          \"options\": {\n"
-"            \"html\": \"<div class='p-1 border border-transparent empty:hidden text-sm text-gray-500'>Amb l'enviament d'aquest formulari, accepteu rebre notícies d'aquesta Comunitat</div>\"\n"
+"            \"html\": \"<div class='p-1 border border-transparent empty:hidden text-sm text-"
+"gray-500'>Amb l'enviament d'aquest formulari, accepteu rebre notícies d'aquesta Comunitat</"
+"div>\"\n"
 "          }\n"
 "        }\n"
 "      ]\n"
@@ -2456,7 +2471,8 @@ msgstr ""
 "          \"type\": \"Display\",\n"
 "          \"scope\": \"#/properties/newsletter_info\",\n"
 "          \"options\": {\n"
-"            \"html\": \"<div class='p-1 border border-transparent empty:hidden text-sm text-gray-500'>Con el envío de este formulario acepto recibir noticias de esta Comunidad</div>\"\n"
+"            \"html\": \"<div class='p-1 border border-transparent empty:hidden text-sm text-"
+"gray-500'>Con el envío de este formulario acepto recibir noticias de esta Comunidad</div>\"\n"
 "          }\n"
 "        }\n"
 "      ]\n"
@@ -2661,7 +2677,8 @@ msgid ""
 "        },\n"
 "        {\n"
 "          \"type\": \"Display\",\n"
-"          \"label\": \"{% if submission_number %}{{submission_number}} interesadas - {% endif %}{{goalProgress}}% completada\",\n"
+"          \"label\": \"{% if submission_number %}{{submission_number}} interesadas - {% endif "
+"%}{{goalProgress}}% completada\",\n"
 "          \"scope\": \"#/properties/progress\",\n"
 "          \"options\": { \"progress\": true }\n"
 "        }\n"
@@ -2776,13 +2793,37 @@ msgstr ""
 msgid ""
 "{\n"
 "\"pd_title\": \"{{name}}\",\n"
-"\"pd_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}</div></div>{% endif %}{% endfor %}\",\n"
-"\"pd_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
-"\"pd_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</div>\",\n"
-"\"pd_target_objective\": \"<p class='m-2'>Objetivo: <strong>{{ goalTarget }} {% if category_slug == 'industrial' %}empresas{% else %}personas{% endif %}</strong></p>\",\n"
-"\"progress\": \"<div class='flex justify-between'><div>{% if submission_number %}<strong>{{submission_number}}</strong> interesadas</div><div>{% endif %}<strong>{{goalProgress}}%</strong> completada</div></div>\",\n"
-"\"pd_secondary_description\": \"<p class='m-2 mb-4 flex flex-col justify-center align-center text-center'>¿Ya está impulsando una comunidad en este municipio?<br><a href='https://somcomunitats.coop/es/alta-nova-comunitat?map_place_ref={{slug}}' target='_parent'>Solicita darla de alta</a></p>\",\n"
-"\"pd_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparte y haz crecer la Comunidad Energética</p></div>\"\n"
+"\"pd_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-de-"
+"la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
+"fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if "
+"filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% "
+"endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></"
+"i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}"
+"</div></div>{% endif %}{% endfor %}\",\n"
+"\"pd_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
+"fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-"
+"pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
+"\"pd_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if "
+"filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-"
+"pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div "
+"class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 "
+"rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full "
+"absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full "
+"absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 "
+"absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-"
+"{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</"
+"div>\",\n"
+"\"pd_target_objective\": \"<p class='m-2'>Objetivo: <strong>{{ goalTarget }} {% if "
+"category_slug == 'industrial' %}empresas{% else %}personas{% endif %}</strong></p>\",\n"
+"\"progress\": \"<div class='flex justify-between'><div>{% if submission_number %}"
+"<strong>{{submission_number}}</strong> interesadas</div><div>{% endif %}"
+"<strong>{{goalProgress}}%</strong> completada</div></div>\",\n"
+"\"pd_secondary_description\": \"<p class='m-2 mb-4 flex flex-col justify-center align-center "
+"text-center'>¿Ya está impulsando una comunidad en este municipio?<br><a href='https://"
+"somcomunitats.coop/es/alta-nova-comunitat?map_place_ref={{slug}}' target='_parent'>Solicita "
+"darla de alta</a></p>\",\n"
+"\"pd_social_headline\": \"<div class='flex justify-center align-center text-center'><p "
+"class='font-semibold text-white'>Comparte y haz crecer la Comunidad Energética</p></div>\"\n"
 "}"
 msgstr ""
 
@@ -2791,16 +2832,53 @@ msgstr ""
 msgid ""
 "{\n"
 "\"po2_title\": \"{{name}}\",\n"
-"\"po2_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}</div></div>{% endif %}{% endfor %}\",\n"
-"\"po2_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
-"\"po2_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</div>\",\n"
-"\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></div>\"\n"
+"\"po2_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-"
+"de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
+"fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if "
+"filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% "
+"endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></"
+"i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}"
+"</div></div>{% endif %}{% endfor %}\",\n"
+"\"po2_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative "
+"z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-"
+"pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
+"\"po2_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if "
+"filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-"
+"pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div "
+"class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 "
+"rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full "
+"absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full "
+"absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 "
+"absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-"
+"{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</"
+"div>\",\n"
+"\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p "
+"class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></"
+"div>\"\n"
 "}"
 msgstr ""
 "{\n"
 "\"po2_title\": \"{{name}}\",\n"
-"\"po2_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}</div></div>{% endif %}{% endfor %}\",\n"
-"\"po2_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
-"\"po2_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</div>\",\n"
-"\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparte y haz crecer la Comunidad Energética</p></div>\"\n"
+"\"po2_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-"
+"de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
+"fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if "
+"filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% "
+"endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></"
+"i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}"
+"</div></div>{% endif %}{% endfor %}\",\n"
+"\"po2_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative "
+"z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-"
+"pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
+"\"po2_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if "
+"filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-"
+"pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div "
+"class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 "
+"rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full "
+"absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full "
+"absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 "
+"absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-"
+"{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</"
+"div>\",\n"
+"\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p "
+"class='font-semibold text-white'>Comparte y haz crecer la Comunidad Energética</p></div>\"\n"
 "}"

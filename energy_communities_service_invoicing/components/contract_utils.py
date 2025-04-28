@@ -4,32 +4,66 @@ from odoo.addons.component.core import Component
 class ContractUtils(Component):
     _inherit = "contract.utils"
 
-    def setup_initial_data(self):
+    # TODO: decouple this method into smaller parts
+    def _setup_contract_get_update_dict_initial(self):
         self._set_configuration_journal_if_defined()
         self._set_start_date(self.work.record.sale_order_id.commitment_date)
-        if "discount" in self.work.record.sale_order_id.metadata_line_ids.mapped("key"):
+        self._set_lines_ordered_values()
+        contract_update_dict = {"status": "paused"}
+        # metadata mapping
+        metadata_keys_arr = self.work.record.sale_order_id.metadata_line_ids.mapped(
+            "key"
+        )
+        if "discount" in metadata_keys_arr:
             self._set_discount(
                 self.work.record.sale_order_id.get_metadata_value("discount")
             )
-        contract_update_dict = {"status": "paused"}
+        recurrence_dict = {}
+        if "recurring_interval" in metadata_keys_arr:
+            recurrence_dict["recurring_interval"] = int(
+                self.work.record.sale_order_id.get_metadata_value("recurring_interval")
+            )
+        if "recurring_rule_type" in metadata_keys_arr:
+            recurrence_dict[
+                "recurring_rule_type"
+            ] = self.work.record.sale_order_id.get_metadata_value("recurring_rule_type")
+        if "recurring_invoicing_type" in metadata_keys_arr:
+            recurrence_dict[
+                "recurring_invoicing_type"
+            ] = self.work.record.sale_order_id.get_metadata_value(
+                "recurring_invoicing_type"
+            )
+        if "last_date_invoiced" in metadata_keys_arr:
+            recurrence_dict[
+                "last_date_invoiced"
+            ] = self.work.record.sale_order_id.get_metadata_value("last_date_invoiced")
+        if recurrence_dict:
+            self._set_contract_recurrency(**recurrence_dict)
         for contract_update_data in self.work.record.sale_order_id.metadata_line_ids:
-            if contract_update_data.key not in ["discount"]:
+            if contract_update_data.key not in [
+                "discount",
+            ]:
                 value = contract_update_data.value
                 # TODO: Not a very robust condition. Assuming all Many2one fields are defined with _id at the end
+                # TODO: Problems always when type is not text
                 if "_id" in contract_update_data.key:
                     value = int(contract_update_data.value)
                 contract_update_dict[contract_update_data.key] = value
-        for line in self.work.record.contract_line_ids:
-            line.write(
-                {
-                    "ordered_qty_type": line.qty_type,
-                    "ordered_quantity": line.quantity,
-                    "ordered_qty_formula_id": line.qty_formula_id.id,
-                    "qty_type": "fixed",
-                    "quantity": 0,
-                }
-            )
+        return contract_update_dict
+
+    def setup_initial_data(self):
+        contract_update_dict = self._setup_contract_get_update_dict_initial()
         self.work.record.write(contract_update_dict)
+        self._clean_non_service_lines()
+        # TODO: Decide if this must be by design
+        if self.work.record.is_free_pack:
+            self.set_contract_status_active(self.work.record.commitment_date)
+
+    def _clean_non_service_lines(self):
+        for line in self.work.record.contract_line_ids:
+            if not self._is_service_line(line):
+                line.cancel()
+                line.unlink()
 
     def _set_start_date(self, date_start):
         self.work.record.write({"date_start": date_start})
@@ -41,6 +75,23 @@ class ContractUtils(Component):
         for line in self.work.record.contract_line_ids:
             line.write({"discount": discount})
 
+    def _set_contract_recurrency(self, **recurrence):
+        for line in self.work.record.contract_line_ids:
+            if recurrence:
+                line.write(recurrence)
+
+    def _set_lines_ordered_values(self):
+        for line in self.work.record.contract_line_ids:
+            line.write(
+                {
+                    "ordered_qty_type": line.qty_type,
+                    "ordered_quantity": line.quantity,
+                    "ordered_qty_formula_id": line.qty_formula_id.id,
+                    "qty_type": "fixed",
+                    "quantity": 0,
+                }
+            )
+
     # method to be extended if using component for another pack_type
     def _set_configuration_journal_if_defined(self):
         if self.work.record.pack_type == "platform_pack":
@@ -50,17 +101,13 @@ class ContractUtils(Component):
 
     def _activate_contract_lines(self, execution_date):
         for line in self.work.record.contract_line_ids:
-            line.write(
-                {
-                    "date_start": execution_date,
-                    "next_period_date_start": execution_date,
-                    "recurring_next_date": execution_date,
-                    "last_date_invoiced": None,
-                    "qty_type": line.ordered_qty_type,
-                    "quantity": line.ordered_quantity,
-                    "qty_formula_id": line.ordered_qty_formula_id.id,
-                }
-            )
+            line_dict = {
+                "date_start": execution_date,
+                "qty_type": line.ordered_qty_type,
+                "quantity": line.ordered_quantity,
+                "qty_formula_id": line.ordered_qty_formula_id.id,
+            }
+            line.write(line_dict)
             line._compute_state()
 
     def set_contract_status_active(self, execution_date):
@@ -74,13 +121,8 @@ class ContractUtils(Component):
                 self._activate_contract_lines(execution_date)
             line.write({"date_end": execution_date})
             line._compute_state()
+            line.read(["recurring_next_date"])
         self.work.record.set_close_status_type_by_date()
-
-    def clean_non_service_lines(self):
-        for line in self.work.record.contract_line_ids:
-            if not self._is_service_line(line):
-                line.cancel()
-                line.unlink()
 
     def modify(
         self,
@@ -91,7 +133,6 @@ class ContractUtils(Component):
         discount=None,
         payment_mode_id=None,
     ):
-        initial_status = self.work.record.status
         # TODO: control closing date in order to being able modify contract with previous date.
         # on contract line:
         # skip last_date_invoice validation for modification action if contract is ready to start or active on free plan.
@@ -112,6 +153,7 @@ class ContractUtils(Component):
         )
         # TODO:
         # Do we really want new contract to be in_progress on a modification??
+        # initial_status = self.work.record.status
         # if initial_status == "in_progress" and not self.work.record.is_free_pack:
         #     self.set_contract_status_active()
         self._setup_successors_and_predecessors(new_service_invoicing_id)
@@ -124,8 +166,8 @@ class ContractUtils(Component):
         pack_id=None,
         discount=None,
         payment_mode_id=None,
+        metadata=None,
     ):
-        self.set_contract_status_closed(execution_date)
         new_service_invoicing_id = self.component(
             usage="sale.order.utils", model_name="sale.order"
         ).create_service_invoicing_initial(
@@ -137,6 +179,7 @@ class ContractUtils(Component):
                 pack_id,
                 discount,
                 payment_mode_id,
+                metadata,
             )
         )
         self._setup_successors_and_predecessors(new_service_invoicing_id)
@@ -151,10 +194,19 @@ class ContractUtils(Component):
         pack_id=None,
         discount=None,
         payment_mode_id=None,
+        metadata=None,
     ):
         executed_action_description_list = executed_action_description.split(",")
+        metadata_line_ids = {}
+        if metadata:
+            metadata_line_ids = metadata
+        else:
+            for metadata_line in self.work.record.sale_order_id.metadata_line_ids:
+                metadata_line_ids[metadata_line.key] = metadata_line.value
+        if "modify_discount" in executed_action_description_list:
+            metadata_line_ids["discount"] = discount
         return {
-            "company_id": self.work.record.partner_id.related_company_id,
+            "partner_id": self.work.record.partner_id,
             "pack_id": pack_id
             if "modify_pack" in executed_action_description_list
             else self.work.record.pack_id,
@@ -167,14 +219,7 @@ class ContractUtils(Component):
             "start_date": execution_date,
             "executed_action": executed_action,
             "executed_action_description": executed_action_description,
-            "metadata": {
-                "community_company_id": self.work.record.community_company_id.id
-                if self.work.record.community_company_id
-                else False,
-                "discount": discount
-                if "modify_discount" in executed_action_description_list
-                else self.work.record.discount,
-            },
+            "metadata": metadata_line_ids,
         }
 
     def _is_service_line(self, contract_line):

@@ -10,5 +10,5 @@ class ContractTemplate(models.Model):
         if self.pack_type == "none":
             self._set_custom_pack_type_on_contract_template(
                 "selfconsumption_pack",
-                "selfconsumption.product_category_selfconsumption_pack",
+                "energy_selfconsumption.product_category_selfconsumption_pack",
             )

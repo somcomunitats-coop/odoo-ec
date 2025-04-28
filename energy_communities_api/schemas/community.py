@@ -4,6 +4,7 @@ from typing import List, Optional
 from pydantic import AnyHttpUrl, BaseModel, ConfigDict, EmailStr, Field
 
 from .base import (
+    Address,
     BaseListResponse,
     BaseResponse,
     NaiveOrmModel,
@@ -65,27 +66,46 @@ class CommunityServiceInfo(BaseModel, populate_by_name=True):
         description="Status of the service, ex: in_progres",
     )
 
-    shares: float = Field(
+    has_monitoring: bool = Field(
         ...,
+        title="Has monitoring",
+        description="If this service has a monitoring provider",
+    )
+
+    power: Optional[float] = Field(
+        default=None,
+        title="Project power",
+        description="Project power",
+    )
+
+    shares: Optional[float] = Field(
+        default=None,
         title="Shares",
         description="Percentage of shares of a member in a community service",
     )
 
-    inscription_date: str = Field(
-        ...,
+    inscription_date: Optional[str] = Field(
+        default=None,
         title="Inscription Date",
         description="When a member was inscribed in the community service",
     )
 
-    inscriptions: int = Field(
-        ...,
+    inscriptions: Optional[int] = Field(
+        default=None,
         title="Total inscriptions",
         description="Total inscriptions of a community service",
+    )
+
+    address: Optional[Address] = Field(
+        default=None,
+        title="Address",
+        description="Address where is located this service",
     )
 
 
 class UnitEnum(str, Enum):
     wh = "Wh"
+    kw = "kW"
     kwh = "kWh"
     kwp = "kWp"
     kwn = "kWn"
@@ -129,12 +149,18 @@ class CommunityServiceMetricsInfo(BaseModel):
         description="Type of this service, ex: fotovoltaic",
     )
 
-    shares: MetricInfo = Field(
-        ..., title="Shares", description="Shares that have a person for this project"
+    power: Optional[MetricInfo] = Field(
+        None,
+        title="Power",
+        descriptio="Power that has a service (if is a selfconumption installation)",
     )
 
-    energy_shares: MetricInfo = Field(
-        ...,
+    shares: Optional[MetricInfo] = Field(
+        None, title="Shares", description="Shares that have a person for this project"
+    )
+
+    energy_shares: Optional[MetricInfo] = Field(
+        None,
         title="Energy Shares",
         description="Energy shares (distribution coefficient in kWh) that have a person for this project",
     )
@@ -295,7 +321,7 @@ class CommunityServiceMetricsInfoResponse(BaseResponse):
     Return a community service metric information in which a member is involved.
     """
 
-    data: CommunityServiceMetricsInfo
+    data: Optional[CommunityServiceMetricsInfo]
     links: PaginationLinks
 
 

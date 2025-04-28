@@ -29,15 +29,6 @@
         ]"
     />
     </record>
-    <record model="res.users.role" id="energy_communities.role_coord_worker">
-        <field
-      name="implied_ids"
-      eval="[
-               (4, ref('mass_mailing.group_mass_mailing_user')),
-               (4, ref('mass_mailing.group_mass_mailing_campaign')),
-        ]"
-    />
-    </record>
     <record model="res.users.role" id="energy_communities.role_platform_admin">
         <field
       name="implied_ids"

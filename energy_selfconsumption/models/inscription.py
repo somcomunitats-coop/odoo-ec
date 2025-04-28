@@ -5,6 +5,7 @@ STATE_VALUES = [
     ("active", _("Active")),
     ("inactive", _("Inactive")),
     ("change", _("Change")),
+    ("cancelled", _("Cancelled")),
 ]
 
 
@@ -30,10 +31,14 @@ class Inscription(models.Model):
         comodel_name="energy_selfconsumptions.participation", string="Participation"
     )
     participation_quantity = fields.Float(
-        string="Participation", related="participation_id.quantity"
+        string="Requested participation", related="participation_id.quantity"
+    )
+    participation_assigned_quantity = fields.Float(
+        string="Agreed participation",
+        default=lambda self: self.participation_id.quantity,
     )
     participation_real_quantity = fields.Float(
-        string="Participation real quantity",
+        string="Actual participation",
         default=lambda self: self.participation_id.quantity,
     )
     state = fields.Selection(
@@ -65,10 +70,10 @@ class Inscription(models.Model):
         related="supply_point_id.owner_id.vulnerability_situation",
     )
 
-    @api.onchange("participation_real_quantity")
-    def _onchange_participation_real_quantity(self):
+    @api.onchange("participation_assigned_quantity")
+    def _onchange_participation_assigned_quantity(self):
         if (
-            self.participation_real_quantity != self.participation_quantity
+            self.participation_assigned_quantity != self.participation_quantity
             and self.state == "active"
         ):
             self.state = "change"

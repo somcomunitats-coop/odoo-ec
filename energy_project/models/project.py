@@ -2,21 +2,27 @@ from odoo import _, fields, models
 
 from ..services.monitoring_service import MonitoringService
 
+DRAFT = "draft"
+INSCRIPTION = "inscription"
+ACTIVATION = "activation"
+ACTIVE = "active"
+
 STATE_VALUES = [
-    ("draft", _("Draft")),
-    ("inscription", _("In Inscription")),
-    ("activation", _("In Activation")),
-    ("active", _("Active")),
+    (DRAFT, _("Draft")),
+    (INSCRIPTION, _("In Inscription")),
+    (ACTIVATION, _("In Activation")),
+    (ACTIVE, _("Active")),
 ]
 
 
 class Project(models.Model):
     _name = "energy_project.project"
     _description = "Energy project"
+    _inherit = ["contract.recurrency.basic.mixin"]
 
     name = fields.Char(required=True)
     type = fields.Many2one("energy_project.project_type", required=True, readonly=True)
-    state = fields.Selection(STATE_VALUES, default="draft", required=True)
+    state = fields.Selection(STATE_VALUES, default=DRAFT, required=True)
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
     )
@@ -56,6 +62,9 @@ class Project(models.Model):
         required=True,
         default=lambda self: self.env.ref("base.es"),
     )
+
+    # invoicing fields
+    pricelist_id = fields.Many2one("product.pricelist", string="Tariffs")
 
     def get_default_header_description(self):
         return _(

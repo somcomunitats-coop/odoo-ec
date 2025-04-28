@@ -1,0 +1,63 @@
+<odoo>
+    <record id="contract_template_energy_delivered_selfconsumption_pack" model="contract.template">
+        <field name="name">Energy delivered selfconsumption pack</field>
+        <field name="contract_type">sale</field>
+    </record>
+
+    <record id="contract_template_line_energy_delivered_selfconsumption_pack" model="contract.template.line">
+        <field name="contract_id" ref="contract_template_energy_delivered_selfconsumption_pack"/>
+        <field name="name">CUPS: #code#\nOwner: #owner_id#\nInvoicing period: #START# - #END#\nCAU: #cau#\n</field>
+        <field name="product_id" search="[('product_tmpl_id', '=', ref('product_product_energy_delivered_product_template'))]" />
+        <field name="automatic_price" eval="True" />
+        <field name="qty_type">variable</field>
+        <field name="qty_formula_id" ref="energy_selfconsumption.energy_delivered_variable_formula"/>
+        <field name="quantity">1</field>
+        <field name="uom_id" ref="energy_project.kw_uom"/>
+    </record>
+
+    <record id="contract_template_power_acquired_selfconsumption_pack" model="contract.template">
+        <field name="name">Power acquired selfconsumption pack</field>
+        <field name="contract_type">sale</field>
+    </record>
+
+    <record id="contract_template_line_power_acquired_selfconsumption_pack" model="contract.template.line">
+        <field name="contract_id" ref="contract_template_power_acquired_selfconsumption_pack"/>
+        <field name="name">CUPS: #code#\nOwner: #owner_id#\nInvoicing period: #START# - #END#\nCAU: #cau#\nTotal installed nominal power (kW): #power#\nPartition coefficient: #coefficient#\nDaily nominal power acquired: #power# kWn * #coefficient# = #power_acquired# kWn/day\nDays to be invoiced: #days_invoiced# days\nTotal amount invoiced:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount#\n</field>
+        <field name="product_id" search="[('product_tmpl_id', '=', ref('product_product_power_acquired_product_template'))]" />
+        <field name="automatic_price" eval="True" />
+        <field name="qty_type">variable</field>
+        <field name="qty_formula_id" ref="energy_selfconsumption.power_acquired_formula"/>
+        <field name="quantity">1</field>
+        <field name="uom_id" ref="energy_project.kw_uom"/>
+    </record>
+
+    <record id="contract_template_energy_custom_selfconsumption_pack" model="contract.template">
+        <field name="name">Energy custom selfconsumption pack</field>
+        <field name="contract_type">sale</field>
+    </record>
+
+    <record id="contract_template_line_energy_custom_selfconsumption_pack" model="contract.template.line">
+        <field name="contract_id" ref="contract_template_energy_custom_selfconsumption_pack"/>
+        <field name="name">CUPS: #code#\nOwner: #owner_id#\nInvoicing period: #START# - #END#\n</field>
+        <field name="product_id" search="[('product_tmpl_id', '=', ref('product_product_energy_custom_product_template'))]" />
+        <field name="automatic_price" eval="True" />
+        <field name="qty_type">fixed</field>
+        <field name="quantity">1</field>
+        <field name="uom_id" ref="energy_project.kw_uom"/>
+    </record>
+
+    <record id="product_product_energy_delivered_product_pack_template" model="product.template">
+        <field name="is_contract" eval="True"/>
+        <field name="property_contract_template_id" ref="contract_template_energy_delivered_selfconsumption_pack"/>
+    </record>
+
+    <record id="product_product_power_acquired_product_pack_template" model="product.template">
+        <field name="is_contract" eval="True"/>
+        <field name="property_contract_template_id" ref="contract_template_power_acquired_selfconsumption_pack"/>
+    </record>
+
+    <record id="product_product_energy_custom_product_pack_template" model="product.template">
+        <field name="is_contract" eval="True"/>
+        <field name="property_contract_template_id" ref="contract_template_energy_custom_selfconsumption_pack"/>
+    </record>
+</odoo>
