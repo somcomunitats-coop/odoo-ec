@@ -151,6 +151,14 @@ class LandingPage(models.Model):
             else:
                 record.map_sync_mode = "create"
 
+    @api.depends("wp_landing_page_id")
+    def _compute_wp_sync_mode(self):
+        for record in self:
+            if record.wp_landing_page_id:
+                record.wp_sync_mode = "update"
+            else:
+                record.wp_sync_mode = "none"
+
     def _get_image_attachment(self, field_name, query):
         if not query:
             query = [
