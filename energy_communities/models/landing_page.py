@@ -28,6 +28,11 @@ class LandingPage(models.Model):
     name = fields.Char(string="Name", translate=True)
     company_id = fields.Many2one("res.company", string="Company")
     wp_landing_page_id = fields.Integer(string="WP Landing Page")
+    wp_sync_mode = map_sync_mode = fields.Selection(
+        [("none", _("None")), ("update", _("Update"))],
+        compute="_compute_wp_sync_mode",
+        store=False,
+    )
     status = fields.Selection(
         selection=[("draft", _("Draft")), ("publish", _("Publish"))],
         default="draft",
@@ -126,6 +131,14 @@ class LandingPage(models.Model):
                 record.map_sync_mode = "update"
             else:
                 record.map_sync_mode = "create"
+
+    @api.depends("wp_landing_page_id")
+    def _compute_wp_sync_mode(self):
+        for record in self:
+            if record.wp_landing_page_id:
+                record.wp_sync_mode = "update"
+            else:
+                record.wp_sync_mode = "none"
 
     def _get_image_attachment(self, field_name, query):
         if not query:
