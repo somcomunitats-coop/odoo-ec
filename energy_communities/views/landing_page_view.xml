@@ -7,6 +7,7 @@
       <form create="false">
         <header>
           <field name="map_sync_mode" invisible="True" />
+          <field name="wp_sync_mode" invisible="True" />
           <button
             name="action_landing_page_status"
             type="object"
@@ -29,7 +30,7 @@
             name="action_update_public_data"
             type="object"
             string="Update (wp landing / map place)"
-            attrs="{'invisible': [('map_sync_mode','!=','update')]}"
+            attrs="{'invisible': [('wp_sync_mode','!=','update'),('map_sync_mode','!=','update')]}"
           />
           <field name="status" widget="statusbar" />
         </header>
@@ -80,8 +81,8 @@
           <group>
             <field name="lat" required="1" />
             <field name="lng" required="1" />
-            <field name="map_place_ids" widget="one2many" readonly="1">
-              <tree editable="top">
+            <field name="map_place_ids" options="{'widget': 'one2many', 'no_create': True, 'no_create_edit':True, 'no_open': True}" readonly="1">
+              <tree editable="bottom">
                 <field name="name" />
                 <field name="status" />
                 <field name="company_id" />
