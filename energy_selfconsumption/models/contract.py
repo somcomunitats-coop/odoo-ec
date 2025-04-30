@@ -8,7 +8,7 @@ class Contract(models.Model):
 
     supply_point_assignation_id = fields.Many2one(
         "energy_selfconsumption.supply_point_assignation",
-        string="Selfconsumption project",
+        string="Supply point assignation",
     )
     # TODO: Move this field into energy_project module
     project_id = fields.Many2one(
@@ -51,7 +51,6 @@ class Contract(models.Model):
         action["res_id"] = wizard_id.id
         return action
 
-    # TODO: Why do we need this one?
     def _recurring_create_invoice(self, date_ref=False):
         last_period_date_start = last_period_date_end = False
         if len(self) > 1:

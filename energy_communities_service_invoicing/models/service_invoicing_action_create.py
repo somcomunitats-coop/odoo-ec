@@ -4,6 +4,7 @@ import re
 from collections import namedtuple
 
 from odoo import models
+from odoo.exceptions import ValidationError
 
 from odoo.addons.energy_communities.utils import contract_utils
 
@@ -244,3 +245,46 @@ class ActionCreate(models.AbstractModel):
                         migrated_contracts.append(contract_id)
                         _logger.info(f"Contract {contract_id.name} reopened.")
         return migrated_contracts
+
+    def update_supply_point_assignation_on_selfconsumption_contracts(self):
+        migrated_contracts = []
+        _logger.info("Starting update_old_contract_to_service_invoicing.")
+
+        selfconsumption_project_ids = self.env[
+            "energy_selfconsumption.selfconsumption"
+        ].search([("state", "=", "active"), ("company_id", "!=", 29)])
+
+        for selfconsumption in selfconsumption_project_ids:
+            contracts = self.env["contract.contract"].search(
+                [
+                    ("project_id", "=", selfconsumption.project_id.id),
+                    ("predecessor_contract_id", "!=", False),
+                ]
+            )
+            for contract in contracts:
+                contract.write(
+                    {
+                        "supply_point_assignation_id": contract.predecessor_contract_id.supply_point_assignation_id.id
+                    }
+                )
+                if selfconsumption.invoicing_mode == "energy_delivered":
+                    for line in contract.contract_line_ids:
+                        line.write(
+                            {
+                                "qty_formula_id": self.env.ref(
+                                    "energy_selfconsumption.energy_delivered_formula"
+                                ).id
+                            }
+                        )
+                self.env["sale.order.metadata.line"].create(
+                    {
+                        "order_id": contract.sale_order_id.id,
+                        "key": "supply_point_assignation_id",
+                        "value": str(
+                            contract.predecessor_contract_id.supply_point_assignation_id.id
+                        ),
+                    }
+                )
+                self.setup_contract_line_description(selfconsumption, contract)
+
+    _logger.info("Everything went good!")

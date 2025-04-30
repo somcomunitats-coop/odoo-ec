@@ -167,24 +167,14 @@ Make sure that all the selected contracts have the same invoicing period, from {
             template_name = contract.contract_template_id.contract_line_ids[0].name
 
             if invoicing_mode == "energy_delivered":
-                self._process_energy_delivered(contract, template_name, res)
+                self._process_energy_delivered(contract, res)
             elif invoicing_mode == "energy_custom":
                 if not exit_df:
                     raise ValidationError(_("CSV file could not be loaded"))
                 self._process_energy_custom(df, contract, template_name, res)
         return res
 
-    def _process_energy_delivered(self, contract, template_name, res):
-        template_name += _("Energy Delivered: {energy_delivered} kWh")
-        contract.contract_line_ids.write(
-            {
-                "name": template_name.format(
-                    energy_delivered=self.power,
-                    code=contract.supply_point_assignation_id.supply_point_id.code,
-                    owner_id=contract.supply_point_assignation_id.supply_point_id.owner_id.display_name,
-                )
-            }
-        )
+    def _process_energy_delivered(self, contract, res):
         res.append(
             contract.with_context(
                 {"energy_delivered": self.power}
