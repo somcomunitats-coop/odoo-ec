@@ -140,6 +140,7 @@ class ContractGenerationWizard(models.TransientModel):
                     {
                         "selfconsumption_id": self.selfconsumption_id.id,
                         "supply_point_id": supply_point_assignation.supply_point_id.id,
+                        "supply_point_assignation_id": supply_point_assignation.id,
                         "recurring_interval": self.recurring_interval,
                         "recurring_rule_type": self.recurring_rule_type,
                         "recurring_invoicing_type": self.recurring_invoicing_type,

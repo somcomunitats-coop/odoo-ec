@@ -654,6 +654,7 @@ class Selfconsumption(models.Model):
             "domain": [("id", "in", sale_orders.ids)],
         }
 
+    # TODO: Review if we need to use all contracts or only the active ones when this method is used
     def get_contracts(self):
         return self.env["contract.contract"].search([("project_id", "=", self.id)])
 

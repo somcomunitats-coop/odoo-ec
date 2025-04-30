@@ -254,23 +254,37 @@ class ActionCreate(models.AbstractModel):
             "energy_selfconsumption.selfconsumption"
         ].search([("state", "=", "active"), ("company_id", "!=", 29)])
 
-        for project in selfconsumption_project_ids:
-            sale_orders = project.get_sale_orders()
-            contracts = project.get_contracts()
+        for selfconsumption in selfconsumption_project_ids:
+            contracts = self.env["contract.contract"].search(
+                [
+                    ("project_id", "=", selfconsumption.project_id.id),
+                    ("predecessor_contract_id", "!=", False),
+                ]
+            )
             for contract in contracts:
-                supply_point = self.env["energy_selfconsumption.supply_point"]
-                supply_point_found = 0
-                for (
-                    supply_point_assignation
-                ) in project.current_distribution_table.supply_point_assignation_ids:
-                    if supply_point_assignation.owner_id.id == contract.partner_id.id:
-                        supply_point_found = supply_point_found + 1
-                if supply_point_found != 1:
-                    __import__("ipdb").set_trace()
-                    raise ValidationError(
-                        "We have a problem on contract {contract_name} spa_count {spa_count}".format(
-                            contract_name=contract.name, spa_count=supply_point_found
+                contract.write(
+                    {
+                        "supply_point_assignation_id": contract.predecessor_contract_id.supply_point_assignation_id.id
+                    }
+                )
+                if selfconsumption.invoicing_mode == "energy_delivered":
+                    for line in contract.contract_line_ids:
+                        line.write(
+                            {
+                                "qty_formula_id": self.env.ref(
+                                    "energy_selfconsumption.energy_delivered_formula"
+                                ).id
+                            }
                         )
-                    )
+                self.env["sale.order.metadata.line"].create(
+                    {
+                        "order_id": contract.sale_order_id.id,
+                        "key": "supply_point_assignation_id",
+                        "value": str(
+                            contract.predecessor_contract_id.supply_point_assignation_id.id
+                        ),
+                    }
+                )
+                self.setup_contract_line_description(selfconsumption, contract)
 
     _logger.info("Everything went good!")
