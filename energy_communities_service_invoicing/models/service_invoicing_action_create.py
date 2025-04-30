@@ -4,6 +4,7 @@ import re
 from collections import namedtuple
 
 from odoo import models
+from odoo.exceptions import ValidationError
 
 from odoo.addons.energy_communities.utils import contract_utils
 
@@ -244,3 +245,32 @@ class ActionCreate(models.AbstractModel):
                         migrated_contracts.append(contract_id)
                         _logger.info(f"Contract {contract_id.name} reopened.")
         return migrated_contracts
+
+    def update_supply_point_assignation_on_selfconsumption_contracts(self):
+        migrated_contracts = []
+        _logger.info("Starting update_old_contract_to_service_invoicing.")
+
+        selfconsumption_project_ids = self.env[
+            "energy_selfconsumption.selfconsumption"
+        ].search([("state", "=", "active"), ("company_id", "!=", 29)])
+
+        for project in selfconsumption_project_ids:
+            sale_orders = project.get_sale_orders()
+            contracts = project.get_contracts()
+            for contract in contracts:
+                supply_point = self.env["energy_selfconsumption.supply_point"]
+                supply_point_found = 0
+                for (
+                    supply_point_assignation
+                ) in project.current_distribution_table.supply_point_assignation_ids:
+                    if supply_point_assignation.owner_id.id == contract.partner_id.id:
+                        supply_point_found = supply_point_found + 1
+                if supply_point_found != 1:
+                    __import__("ipdb").set_trace()
+                    raise ValidationError(
+                        "We have a problem on contract {contract_name} spa_count {spa_count}".format(
+                            contract_name=contract.name, spa_count=supply_point_found
+                        )
+                    )
+
+    _logger.info("Everything went good!")

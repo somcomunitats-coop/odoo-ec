@@ -8,7 +8,7 @@ class Contract(models.Model):
 
     supply_point_assignation_id = fields.Many2one(
         "energy_selfconsumption.supply_point_assignation",
-        string="Selfconsumption project",
+        string="Supply point assignation",
     )
     # TODO: Move this field into energy_project module
     project_id = fields.Many2one(

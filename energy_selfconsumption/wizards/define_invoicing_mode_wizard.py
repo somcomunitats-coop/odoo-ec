@@ -128,6 +128,7 @@ class ContractGenerationWizard(models.TransientModel):
                     )
                 )
             with sale_order_utils(self.env) as component:
+                # TODO: apply supply_point_assignation to metadata
                 component.create_service_invoicing_sale_order(
                     inscription_id.partner_id,
                     pack,
