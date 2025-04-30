@@ -51,7 +51,6 @@ class Contract(models.Model):
         action["res_id"] = wizard_id.id
         return action
 
-    # TODO: Why do we need this one?
     def _recurring_create_invoice(self, date_ref=False):
         last_period_date_start = last_period_date_end = False
         if len(self) > 1:
@@ -66,13 +65,6 @@ class Contract(models.Model):
                 }
             )
         return res
-
-    def _get_contracts_to_invoice_domain(self, date_ref=None):
-        domain = super()._get_contracts_to_invoice_domain(date_ref)
-        domain.extend(
-            [("project_id.selfconsumption_id.invoicing_mode", "!=", "energy_delivered")]
-        )
-        return domain
 
     def get_active_monitoring_members(self):
         QueryResult = namedtuple("QueryResult", ["total"])

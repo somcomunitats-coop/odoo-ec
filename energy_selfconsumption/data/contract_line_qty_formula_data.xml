@@ -17,8 +17,14 @@ result = contract.supply_point_assignation_id.distribution_table_id.selfconsumpt
     <field name="name">Energy Delivered Formula</field>
     <field name="code">
 energy_delivered = 0
-if 'energy_delivered' in context:
-  energy_delivered = context['energy_delivered']
+selfconsumption = self.env["energy_selfconsumption.selfconsumption"].search(
+            [
+                ("project_id", "=", self.project_id.id)
+            ],
+            limit=1
+        )
+if selfconsumption:
+    energy_delivered = selfconsumption.power
 result = energy_delivered * contract.supply_point_assignation_id.coefficient
     </field>
     <field name="company_id" eval="False" />
