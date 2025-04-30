@@ -123,6 +123,9 @@ class LandingPage(models.Model):
         string="Parent landing page",
         related="company_id.parent_id.landing_page_id",
     )
+    cooperator_button_ids = fields.One2many(
+        "landing.cooperator.button", "landing_page_id", string="Cooperator buttons"
+    )
 
     @api.depends("map_place_ids")
     def _compute_map_sync_mode(self):

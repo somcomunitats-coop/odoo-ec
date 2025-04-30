@@ -8,6 +8,7 @@ from . import cm_map
 from . import cm_place
 from . import community_energy_action
 from . import energy_action
+from . import landing_cooperator_button
 from . import landing_page
 from . import mail_channel
 from . import mail_message

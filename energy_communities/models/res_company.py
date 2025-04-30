@@ -3,6 +3,7 @@ import re
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+from ..client_map.config import LandingClientConfig
 from ..pywordpress_client.resources.authenticate import Authenticate
 from ..pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
@@ -223,6 +224,16 @@ class ResCompany(models.Model):
                 )
 
     # GETTERS
+    def get_become_cooperator_button_label(self, mode, lang):
+        return LandingClientConfig.COOPERATOR_BUTTON_LABEL_CONFIG[mode][lang]
+
+    def get_become_cooperator_button_link(self, mode, lang):
+        return LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG[mode].format(
+            base_url=self.env["ir.config_parameter"].get_param("web.base.url"),
+            lang=lang,
+            odoo_company_id=self.id,
+        )
+
     def _get_admin_role_name_from_hierarchy_level(self):
         if self.hierarchy_level == "community":
             return "role_ce_admin"

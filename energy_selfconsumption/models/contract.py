@@ -66,12 +66,12 @@ class Contract(models.Model):
             )
         return res
 
-    def _get_contracts_to_invoice_domain(self, date_ref=None):
-        domain = super()._get_contracts_to_invoice_domain(date_ref)
-        domain.extend(
-            [("project_id.selfconsumption_id.invoicing_mode", "!=", "energy_delivered")]
-        )
-        return domain
+    # def _get_contracts_to_invoice_domain(self, date_ref=None):
+    #     domain = super()._get_contracts_to_invoice_domain(date_ref)
+    #     domain.extend(
+    #         [("project_id.selfconsumption_id.invoicing_mode", "!=", "energy_delivered")]
+    #     )
+    #     return domain
 
     def get_active_monitoring_members(self):
         QueryResult = namedtuple("QueryResult", ["total"])

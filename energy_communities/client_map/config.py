@@ -1,3 +1,28 @@
+class LandingClientConfig:
+    COOPERATOR_BUTTON_URL_CONFIG = {
+        "become_cooperator": "{base_url}/{lang}/become_cooperator?odoo_company_id={odoo_company_id}",
+        "become_company_cooperator": "{base_url}/{lang}/become_company_cooperator?odoo_company_id={odoo_company_id}",
+        "contact": "{landing_link}#contacte",
+    }
+    COOPERATOR_BUTTON_LABEL_CONFIG = {
+        "become_cooperator": {
+            "ca_ES": "Fer-me soci/a com a ciutadania",
+            "es_ES": "Hazte socio/a como ciudadania",
+            "eu_ES": "Egin zaitez bazkide herritar gisa",
+        },
+        "become_company_cooperator": {
+            "ca_ES": "Fer-me soci/a com a empresa",
+            "es_ES": "Hazte socio/a como empresa",
+            "eu_ES": "Egin zaitez bazkide enpresa gisa",
+        },
+        "contact": {
+            "ca_ES": "Posa-t’hi en contacte",
+            "es_ES": "Ponte en contacto",
+            "eu_ES": "Jarri harremanetan",
+        },
+    }
+
+
 class MapClientConfig:
     # mapping between landings params and place params
     MAPPING__INSTANCE_ID = 1
