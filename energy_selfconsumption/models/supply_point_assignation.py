@@ -94,6 +94,20 @@ class SupplyPointAssignation(models.Model):
 
     owner_vat = fields.Char(related="owner_id.vat", store=False)
 
+    def name_get(self):
+        return [
+            (
+                model.id,
+                "%s-%s-%s"
+                % (
+                    model.id,
+                    model.code,
+                    model.owner_vat,
+                ),
+            )
+            for model in self
+        ]
+
     @api.constrains("coefficient")
     def constraint_coefficient(self):
         for record in self:
