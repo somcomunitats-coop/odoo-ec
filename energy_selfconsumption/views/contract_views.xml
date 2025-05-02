@@ -72,6 +72,7 @@
         <field name="arch" type="xml">
           <xpath expr="//field[@name='partner_id']" position="after">
             <field name="project_id" attrs="{'invisible': [('pack_type','!=','selfconsumption_pack')]}"/>
+            <field name="supply_point_assignation_id" attrs="{'invisible': [('pack_type','!=','selfconsumption_pack')]}"/>
           </xpath>
         </field>
       </record>
