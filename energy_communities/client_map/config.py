@@ -1,4 +1,5 @@
 class LandingClientConfig:
+    TRANSLATION_LANGS_MANAGED = ["ca_ES", "es_ES", "eu_ES"]
     COOPERATOR_BUTTON_URL_CONFIG = {
         "become_cooperator": "{base_url}/{lang}/become_cooperator?odoo_company_id={odoo_company_id}",
         "become_company_cooperator": "{base_url}/{lang}/become_company_cooperator?odoo_company_id={odoo_company_id}",
@@ -6,16 +7,19 @@ class LandingClientConfig:
     }
     COOPERATOR_BUTTON_LABEL_CONFIG = {
         "become_cooperator": {
+            "en_US": "Fer-me soci/a com a ciutadania",
             "ca_ES": "Fer-me soci/a com a ciutadania",
             "es_ES": "Hazte socio/a como ciudadania",
             "eu_ES": "Egin zaitez bazkide herritar gisa",
         },
         "become_company_cooperator": {
+            "en_US": "Fer-me soci/a com a empresa",
             "ca_ES": "Fer-me soci/a com a empresa",
             "es_ES": "Hazte socio/a como empresa",
             "eu_ES": "Egin zaitez bazkide enpresa gisa",
         },
         "contact": {
+            "en_US": "Posa-t’hi en contacte",
             "ca_ES": "Posa-t’hi en contacte",
             "es_ES": "Ponte en contacto",
             "eu_ES": "Jarri harremanetan",
@@ -52,19 +56,25 @@ class MapClientConfig:
     MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_META_KEY = "po2_social_headline"
     MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_ORIGINAL = "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></div>"
     MAPPING__OPEN_PLACE_SOCIAL_HEADLINE_TRANSLATION = {
-        "es_ES": "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparte y hagamos crecer la Comunidad Energética</p></div>"
+        "en_US": "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></div>",
+        "ca_ES": "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></div>",
+        "es_ES": "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparte y hagamos crecer la Comunidad Energética</p></div>",
+        "eu_ES": "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'> *EUS* Comparte y hagamos crecer la Comunidad Energética</p></div>",
     }
     MAPPING__EXTERNAL_LINK__BECOME_COOPERATOR__LINK_LABEL = {
+        "en_US": "Fes-te'n soci/a",
         "ca_ES": "Fes-te'n soci/a",
         "es_ES": "Hazte socio/a",
         "eu_ES": "Bazkide bihurtu",
     }
     MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL = {
+        "en_US": "Posa-t'hi en contacte",
         "ca_ES": "Posa-t'hi en contacte",
         "es_ES": "Ponte en contacto",
         "eu_ES": "Jarri harremanetan",
     }
     MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL = {
+        "en_US": "Veure pàgina de la Comunitat",
         "ca_ES": "Veure pàgina de la Comunitat",
         "es_ES": "Ver página de la Comunidad",
         "eu_ES": "Ikus Komunitatearen orria",

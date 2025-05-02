@@ -81,13 +81,27 @@
           <group>
             <field name="lat" required="1" />
             <field name="lng" required="1" />
-            <field name="map_place_ids" options="{'widget': 'one2many', 'no_create': True, 'no_create_edit':True, 'no_open': True}" readonly="1">
+            <field name="map_place_ids" options="{'widget': 'one2many'}">
+              <tree editable="bottom" create="0" delete="0">
+                <field name="name" readonly="true" />
+                <field name="status" readonly="true" />
+                <field name="company_id" readonly="true" />
+                <field name="map_id" readonly="true" />
+                <field name="slug_id" readonly="true" />
+              </tree>
+            </field>
+            <field name="cooperator_button_ids" options="{'widget': 'one2many'}">
               <tree editable="bottom">
+                <button
+                  string="Restore defaults"
+                  name="action_restore_defaults"
+                  type="object"
+                  class="btn-primary"
+                />
                 <field name="name" />
-                <field name="status" />
-                <field name="company_id" />
-                <field name="map_id" />
-                <field name="slug_id" />
+                <field name="url" />
+                <field name="mode" readonly="true" />
+                <field name="visibility" required="true" />
               </tree>
             </field>
             <field name="street" />
