@@ -128,6 +128,7 @@ class ContractGenerationWizard(models.TransientModel):
                     )
                 )
             with sale_order_utils(self.env) as component:
+                # TODO: apply supply_point_assignation to metadata
                 component.create_service_invoicing_sale_order(
                     inscription_id.partner_id,
                     pack,
@@ -139,6 +140,7 @@ class ContractGenerationWizard(models.TransientModel):
                     {
                         "selfconsumption_id": self.selfconsumption_id.id,
                         "supply_point_id": supply_point_assignation.supply_point_id.id,
+                        "supply_point_assignation_id": supply_point_assignation.id,
                         "recurring_interval": self.recurring_interval,
                         "recurring_rule_type": self.recurring_rule_type,
                         "recurring_invoicing_type": self.recurring_invoicing_type,

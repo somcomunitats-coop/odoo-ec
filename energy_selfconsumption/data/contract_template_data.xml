@@ -10,7 +10,7 @@
         <field name="product_id" search="[('product_tmpl_id', '=', ref('product_product_energy_delivered_product_template'))]" />
         <field name="automatic_price" eval="True" />
         <field name="qty_type">variable</field>
-        <field name="qty_formula_id" ref="energy_selfconsumption.energy_delivered_variable_formula"/>
+        <field name="qty_formula_id" ref="energy_selfconsumption.energy_delivered_formula"/>
         <field name="quantity">1</field>
         <field name="uom_id" ref="energy_project.kw_uom"/>
     </record>

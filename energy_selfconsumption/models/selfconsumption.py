@@ -89,6 +89,16 @@ class Selfconsumption(models.Model):
             else:
                 record.report_distribution_table = False
 
+    def _compute_current_distribution_table(self):
+        for record in self:
+            table_in_active = record.distribution_table_ids.filtered_domain(
+                [("state", "=", "active")]
+            )
+            if table_in_active:
+                record.report_distribution_table = table_in_active
+            else:
+                record.report_distribution_table = False
+
     project_id = fields.Many2one(
         "energy_project.project", required=True, ondelete="cascade"
     )
@@ -112,6 +122,12 @@ class Selfconsumption(models.Model):
         "energy_selfconsumption.distribution_table",
         compute=_compute_report_distribution_table,
         readonly=True,
+    )
+    current_distribution_table = report_distribution_table = fields.Many2one(
+        "energy_selfconsumption.distribution_table",
+        compute=_compute_current_distribution_table,
+        readonly=True,
+        store=False,
     )
     distribution_table_count = fields.Integer(compute=_compute_distribution_table_count)
     inscription_ids = fields.One2many(
@@ -638,6 +654,7 @@ class Selfconsumption(models.Model):
             "domain": [("id", "in", sale_orders.ids)],
         }
 
+    # TODO: Review if we need to use all contracts or only the active ones when this method is used
     def get_contracts(self):
         return self.env["contract.contract"].search([("project_id", "=", self.id)])
 

@@ -65,6 +65,7 @@ class SupplyPointAssignation(models.Model):
     )
 
     owner_id = fields.Many2one("res.partner", related="supply_point_id.owner_id")
+    partner_id = fields.Many2one("res.partner", related="supply_point_id.partner_id")
     code = fields.Char(related="supply_point_id.code")
     table_coefficient_is_valid = fields.Boolean(
         related="distribution_table_id.coefficient_is_valid"
@@ -92,6 +93,20 @@ class SupplyPointAssignation(models.Model):
     owner_surnames = fields.Char(related="owner_id.lastname", store=False)
 
     owner_vat = fields.Char(related="owner_id.vat", store=False)
+
+    def name_get(self):
+        return [
+            (
+                model.id,
+                "%s-%s-%s"
+                % (
+                    model.id,
+                    model.code,
+                    model.owner_vat,
+                ),
+            )
+            for model in self
+        ]
 
     @api.constrains("coefficient")
     def constraint_coefficient(self):
