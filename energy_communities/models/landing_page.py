@@ -230,6 +230,7 @@ class LandingPage(models.Model):
                 "status": self.status,
                 "community_type": self.community_type,
                 "community_secondary_type": self.community_secondary_type,
+                # TODO: review this weird way of getting a translation. Why not by API header context lang?
                 "legal_form": get_translation(
                     source=dict(_LEGAL_FORM_VALUES)[self.community_secondary_type],
                     lang=self.env.context["lang"],
@@ -261,6 +262,7 @@ class LandingPage(models.Model):
                 if self.become_cooperator_process == "<p><br></p>"
                 or not self.become_cooperator_process
                 else self.become_cooperator_process,
+                "cooperator_buttons": self._get_become_cooperator_button_list(),
                 "map_reference": self.slug_id or "",
                 "street": self.street or "",
                 "postal_code": self.postal_code or "",
@@ -272,6 +274,14 @@ class LandingPage(models.Model):
                 "management_services": self.management_services or "",
             }
         }
+
+    def _get_become_cooperator_button_list(self):
+        button_list = []
+        for coop_button in self.cooperator_button_ids.filtered(
+            lambda button: button.visibility == "visible"
+        ):
+            button_list.append(coop_button.to_dict())
+        return button_list
 
     def _must_display_map(self):
         if self.hierarchy_level == "coordinator":

@@ -40,3 +40,6 @@ class LandingCooperatorButton(models.Model):
             _("Cooperator button restore successful"),
             _("Label and url restored to defaults."),
         )
+
+    def to_dict(self):
+        return {"name": self.name, "url": self.url}
