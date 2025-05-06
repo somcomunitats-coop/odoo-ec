@@ -51,6 +51,12 @@
             />
                         <button
               type="object"
+              string="Export CSV Inscriptions"
+              name="action_export_csv_inscriptions_wizard"
+              attrs="{'invisible':[('state','not in',['draft', 'inscription'])]}"
+            />
+                        <button
+              type="object"
               string="Define Invoicing Mode"
               name="set_invoicing_mode"
               attrs="{'invisible':[('invoicing_mode', '!=', False)]}"

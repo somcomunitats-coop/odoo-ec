@@ -63,7 +63,8 @@
         "wizards/distribution_table_import_wizard_views.xml",
         "wizards/invoicing_wizard_views.xml",
         "wizards/selfconsumption_import_wizard_views.xml",
-        "wizards/set_iban_inscriptions_wizard_views.xml"
+        "wizards/set_iban_inscriptions_wizard_views.xml",
+        "wizards/export_csv_inscriptions_wizard_views.xml"
     ],
     "demo": [
         "demo/energy_selfconsumption_demo.xml",

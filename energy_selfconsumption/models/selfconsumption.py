@@ -803,6 +803,10 @@ class Selfconsumption(models.Model):
             )
             raise ValidationError(error_message)
 
+    def action_export_csv_inscriptions_wizard(self):
+        self.ensure_one()
+        return self.env.ref("energy_selfconsumption.action_export_csv_inscritions_wizard").read()[0]
+
     def action_manager_authorization_report(self):
         self.ensure_one()
         self.validate_state(self.state)
