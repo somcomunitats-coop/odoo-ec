@@ -33,13 +33,7 @@ class LandingCmPlace:
         self._create_update_place("update")
 
     def restore_cooperator_button_defaults(self, cooperator_button):
-        self._become_cooperator_button_translation(
-            cooperator_button, "en_US", force_overwrite=True
-        )
-        for lang in LandingClientConfig.TRANSLATION_LANGS_MANAGED:
-            self._become_cooperator_button_translation(
-                cooperator_button, lang, force_overwrite=True
-            )
+        self._apply_cooperator_button_translations(cooperator_button)
         self._create_update_place("update")
 
     def _create_update_place(self, mode):
@@ -309,36 +303,41 @@ class LandingCmPlace:
                         cooperator_button.url,
                         "_blank",
                         self.button_configs["yellow"].id,
+                        cooperator_button.sort_order,
                         cooperator_button,
                     ).id
                 )
-        new_external_links_ids.append(self._landing_external_link(place).id)
+        new_external_links_ids.append(
+            self._landing_external_link(place, len(new_external_links_ids) - 1).id
+        )
         # remove old external_links if needed
         for existing_external_link in existing_external_links:
             if existing_external_link.id not in new_external_links_ids:
                 existing_external_link.unlink()
 
-    def _get_or_create_cooperator_button(self, mode):
+    def _get_or_create_cooperator_button(self, cooperator_mode):
         existing_cooperator_button = self.landing.env[
             "landing.cooperator.button"
-        ].search([("landing_page_id", "=", self.landing.id), ("mode", "=", mode)])
+        ].search(
+            [("landing_page_id", "=", self.landing.id), ("mode", "=", cooperator_mode)]
+        )
         if existing_cooperator_button:
             cooperator_button = existing_cooperator_button[0]
         else:
             cooperator_button = False
             create_dict = {
                 "landing_page_id": self.landing.id,
-                "mode": mode,
+                "mode": cooperator_mode,
                 "name": self.landing.company_id.get_become_cooperator_button_label(
-                    mode, "ca_ES"
+                    cooperator_mode, "ca_ES"
                 ),
             }
-            if mode in ["become_cooperator", "become_company_cooperator"]:
+            if cooperator_mode in ["become_cooperator", "become_company_cooperator"]:
                 # become_cooperator scenario
                 create_dict[
                     "url"
                 ] = self.landing.company_id.get_become_cooperator_button_link(
-                    mode, "ca_ES"
+                    cooperator_mode, "ca_ES"
                 )
             else:
                 # contact_us scenario
@@ -354,58 +353,53 @@ class LandingCmPlace:
                 cooperator_button = self.landing.env[
                     "landing.cooperator.button"
                 ].create(create_dict)
-        # translations
-        if cooperator_button:
-            for lang in LandingClientConfig.TRANSLATION_LANGS_MANAGED:
-                self._become_cooperator_button_translation(
-                    cooperator_button, lang, force_overwrite=False
-                )
+            # translations
+            if cooperator_button:
+                self._apply_cooperator_button_translations(cooperator_button)
         return cooperator_button
 
-    def _become_cooperator_button_translation(
-        self, cooperator_button, lang, force_overwrite=False
-    ):
+    def _apply_cooperator_button_translations(self, cooperator_button):
+        self._become_cooperator_button_translation(cooperator_button, "en_US")
+        for lang in LandingClientConfig.TRANSLATION_LANGS_MANAGED:
+            self._become_cooperator_button_translation(cooperator_button, lang)
+
+    def _become_cooperator_button_translation(self, cooperator_button, lang):
         mode = cooperator_button.mode
         if mode in ["become_cooperator", "become_company_cooperator"]:
-            update_dict = {}
-            if not cooperator_button.with_context(lang=lang).name or force_overwrite:
-                update_dict[
-                    "name"
-                ] = self.landing.company_id.get_become_cooperator_button_label(
-                    mode, lang
-                )
-            if not cooperator_button.with_context(lang=lang).url or force_overwrite:
-                update_dict[
-                    "url"
-                ] = self.landing.company_id.get_become_cooperator_button_link(
-                    mode, lang
-                )
-            cooperator_button.with_context(lang=lang).write(update_dict)
+            # become_cooperator scenario
+            cooperator_button.with_context(lang=lang).write(
+                {
+                    "name": self.landing.company_id.get_become_cooperator_button_label(
+                        mode, lang
+                    ),
+                    "url": self.landing.company_id.get_become_cooperator_button_link(
+                        mode, lang
+                    ),
+                }
+            )
         else:
             # contact_us scenario
-            if not cooperator_button.with_context(lang=lang).name or force_overwrite:
-                cooperator_button.with_context(lang=lang).write(
-                    {
-                        "name": self.landing.company_id.get_become_cooperator_button_label(
-                            mode, lang
-                        ),
-                    }
-                )
-            if not cooperator_button.with_context(lang=lang).url or force_overwrite:
-                if self.wp_landing_data["translations"]:
-                    lang_short = lang[:2]
-                    if lang_short in self.wp_landing_data["translations"].keys():
-                        cooperator_button.with_context(lang=lang).write(
-                            {
-                                "url": LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG[
-                                    "contact"
-                                ].format(
-                                    landing_link=self.wp_landing_data["translations"][
-                                        lang_short
-                                    ]
-                                ),
-                            }
-                        )
+            cooperator_button.with_context(lang=lang).write(
+                {
+                    "name": self.landing.company_id.get_become_cooperator_button_label(
+                        mode, lang
+                    ),
+                }
+            )
+            if self.wp_landing_data["translations"]:
+                lang_short = lang[:2]
+                if lang_short in self.wp_landing_data["translations"].keys():
+                    cooperator_button.with_context(lang=lang).write(
+                        {
+                            "url": LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG[
+                                "contact"
+                            ].format(
+                                landing_link=self.wp_landing_data["translations"][
+                                    lang_short
+                                ]
+                            ),
+                        }
+                    )
 
     def _get_or_create_external_link(
         self,
@@ -414,6 +408,7 @@ class LandingCmPlace:
         url,
         target,
         button_color_config_id,
+        sort_order,
         cooperator_button=False,
     ):
         existing_external_links = self.landing.env["cm.place.external.link"].search(
@@ -423,6 +418,7 @@ class LandingCmPlace:
                 ("url", "=", url),
                 ("target", "=", target),
                 ("button_color_config_id", "=", button_color_config_id),
+                ("sort_order", "=", sort_order),
             ]
         )
         if existing_external_links:
@@ -448,13 +444,14 @@ class LandingCmPlace:
                 )
         return external_link
 
-    def _landing_external_link(self, place):
+    def _landing_external_link(self, place, sort_order):
         external_link = self._get_or_create_external_link(
             place.id,
             MapClientConfig.MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL["ca_ES"],
             self.wp_landing_data["link"],
             "_top",
             self.button_configs["green"].id,
+            sort_order,
         )
         # setup social sahreable url for better sharing
         place.write({"social_shareable_url": self.wp_landing_data["link"]})

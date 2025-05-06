@@ -90,7 +90,7 @@
                 <field name="slug_id" readonly="true" />
               </tree>
             </field>
-            <field name="cooperator_button_ids" options="{'widget': 'one2many'}">
+            <field name="cooperator_button_ids" options="{'widget': 'one2many_list'}">
               <tree editable="bottom">
                 <button
                   string="Restore defaults"
@@ -102,6 +102,7 @@
                 <field name="url" />
                 <field name="mode" readonly="true" />
                 <field name="visibility" required="true" />
+                <field name="sort_order" widget="handle"/>
               </tree>
             </field>
             <field name="street" />

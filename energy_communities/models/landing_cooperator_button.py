@@ -28,6 +28,9 @@ class LandingCooperatorButton(models.Model):
         default="visible",
     )
     landing_page_id = fields.Many2one("landing.page", string="Landing Page")
+    sort_order = fields.Integer(string=_("Sort order"))
+
+    _order = "sort_order asc"
 
     def action_restore_defaults(self):
         LandingCmPlaceResource(self.landing_page_id).restore_cooperator_button_defaults(
