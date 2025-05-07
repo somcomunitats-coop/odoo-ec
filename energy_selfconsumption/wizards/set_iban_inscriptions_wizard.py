@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
-
+from stdnum.es import iban
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 
@@ -21,45 +21,23 @@ class Set_iban_inscriptions_wizard(models.TransientModel):
         selfconsumption_id = self.env['energy_selfconsumption.selfconsumption'].browse(self.env.context.get('active_id'))
         if not selfconsumption_id:
             raise ValidationError(_("There is no selfconsumption."))
-        # Get distribution table
-        distribution_id = (
-            self.selfconsumption_id.distribution_table_ids.filtered_domain(
-                [("state", "=", "process")]
-            )
-        )
-        if not distribution_id:
-            raise ValidationError(
-                _("There is no distribution table in proces of activation.")
-            )
         # Get inscriptions
-        inscriptions_ids = distribution_id.selfconsumption_project_id.inscription_ids.mapped(
-                "partner_id.supply_ids"
-            ).filtered_domain(
-                [
-                    (
-                        "id",
-                        "not in",
-                        distribution_id.supply_point_assignation_ids.mapped(
-                            "supply_point_id.id"
-                        ),
-                    )
-                ]
-            )
         set_iban_inscriptions_line_wizard_ids = []
-        for inscription in inscriptions_ids:
-            if not inscription.acc_number:
-                set_iban_inscriptions_line_wizard_ids.append((0, 0, {
-                    'inscription_id': inscription.id,
-                    'partner_id': inscription.partner_id.id,
-                }))
-
+        for inscription in selfconsumption_id.inscription_ids:
+            set_iban_inscriptions_line_wizard_ids.append((0, 0, {
+                'inscription_id': inscription.id,
+                'partner_id': inscription.partner_id.id,
+                'iban': inscription.mandate_id and inscription.mandate_id.partner_bank_id and inscription.mandate_id.partner_bank_id.acc_number or '',
+                'date_mandate': inscription.mandate_id and inscription.mandate_id.signature_date or '',
+            }))
         default_fields['set_iban_inscriptions_line_wizard_ids'] = set_iban_inscriptions_line_wizard_ids
         return default_fields
     
     @api.model
     def default_get(self, default_fields):
+        default_fields = super().default_get(default_fields)
         default_fields = self.get_default_inscriptions(default_fields)
-        return super().default_get(default_fields)
+        return default_fields
 
     def set_iban_inscriptions(self):
         if not self.set_iban_inscriptions_line_wizard_ids:
@@ -68,10 +46,11 @@ class Set_iban_inscriptions_wizard(models.TransientModel):
             if not line.iban:
                 _logger.warning(f"The IBAN field is empty for inscription {line.inscription_id.id}.")
                 continue
+            iban_number = line.iban.replace(" ", "")
             try:
-                line.iban.validate(line.iban)
+                iban.validate(iban_number)
             except Exception as e:
-                return True, _("Invalid IBAN: {error}").format(error=e)
+                raise ValidationError(_(f"Invalid IBAN: {e}"))
             
             if not line.date_mandate:
                 line.date_mandate = fields.Date.today()
@@ -81,7 +60,7 @@ class Set_iban_inscriptions_wizard(models.TransientModel):
                 .sudo()
                 .search(
                     [
-                        ("acc_number", "=", line.iban),
+                        ("acc_number", "=", iban_number),
                         ("partner_id", "=", line.inscription_id.partner_id.id),
                         ("company_id", "=", line.inscription_id.partner_id.company_id.id),
                     ]
@@ -94,17 +73,15 @@ class Set_iban_inscriptions_wizard(models.TransientModel):
                     .sudo()
                     .create(
                         {
-                            "acc_number": line.iban,
+                            "acc_number": iban_number,
                             "partner_id": line.inscription_id.partner_id.id,
                             "company_id": line.inscription_id.partner_id.company_id.id,
                         }
                     )
                 )
+
             mandate_obj = (
-                self.env["account.banking.mandate"]
-                .with_company(line.inscription_id.partner_id.company_id.id)
-                .sudo()
-                .search(
+                self.env["account.banking.mandate"].sudo().search(
                     [
                         ("partner_bank_id", "=", bank_account.id),
                         ("partner_id", "=", line.inscription_id.partner_id.id),
@@ -113,8 +90,21 @@ class Set_iban_inscriptions_wizard(models.TransientModel):
                     limit=1,
                 )
             )
-            line.inscription_id.mandate_id = mandate_obj
-            return True
+            if not mandate_obj:
+                mandate_obj = (
+                    self.env["account.banking.mandate"]
+                    .with_company(line.inscription_id.partner_id.company_id.id)
+                    .sudo()
+                    .create({
+                        "partner_bank_id": bank_account.id,
+                        "partner_id": line.inscription_id.partner_id.id,
+                        "company_id": line.inscription_id.partner_id.company_id.id,
+                        "signature_date": line.date_mandate,
+                    })
+                )
+            line.inscription_id.write({"mandate_id":mandate_obj.id})
+        selfconsumption_id = self.env['energy_selfconsumption.selfconsumption'].browse(self.env.context.get('active_id'))
+        return selfconsumption_id.get_inscriptions_view()
 
 class Set_iban_inscriptions_line_wizard(models.TransientModel):
     _name = 'energy_selfconsumption.set_iban_inscriptions_line_wizard'
@@ -140,12 +130,10 @@ class Set_iban_inscriptions_line_wizard(models.TransientModel):
 
     iban = fields.Char(
         string='IBAN',
-        required=True,
     )
     
     date_mandate = fields.Date(
         string='Date mandate',
-        required=True,
     )
 
     

@@ -6,7 +6,7 @@
         <field name="name">view.set_iban_inscriptions.form</field>
         <field name="model">energy_selfconsumption.set_iban_inscriptions_wizard</field>
         <field name="arch" type="xml">
-            <form string="Set_iban_inscriptions">
+            <form string="Review bank accounts">
                 <field name="set_iban_inscriptions_line_wizard_ids" mode="tree" nolabel="1">
                     <tree editable="bottom" create="0">
                         <field name="set_iban_inscriptions_wizard_id" invisible="1" readonly="1" force_save="1"/>
@@ -26,7 +26,7 @@
 
     <!-- Action set_iban_inscriptions -->
     <record id="action_set_iban_inscriptions" model="ir.actions.act_window">
-        <field name="name">Set_iban_inscriptions</field>
+        <field name="name">Review bank accounts</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">energy_selfconsumption.set_iban_inscriptions_wizard</field>
         <field name="binding_model_id" ref="model_energy_selfconsumption_inscription_selfconsumption" />

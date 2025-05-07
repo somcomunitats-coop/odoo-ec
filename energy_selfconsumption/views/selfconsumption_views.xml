@@ -57,6 +57,12 @@
             />
                         <button
               type="object"
+              string="Review bank accounts"
+              name="action_set_iban_inscriptions"
+              attrs="{'invisible':[('state','not in',['activation', 'active'])]}"
+            />
+                        <button
+              type="object"
               string="Define Invoicing Mode"
               name="set_invoicing_mode"
               attrs="{'invisible':[('invoicing_mode', '!=', False)]}"

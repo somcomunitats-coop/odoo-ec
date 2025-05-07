@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, _
 from odoo.exceptions import ValidationError
 import base64
 import csv
@@ -8,8 +8,8 @@ class ExportCsvInscriptionsWizard(models.TransientModel):
     _name = "export.csv.inscritions.wizard"
     _description = "Asistente para exportar CSV"
 
-    file_data = fields.Binary("Archivo CSV", readonly=True)
-    file_name = fields.Char("Nombre del archivo", readonly=True)
+    file_data = fields.Binary("File CSV", readonly=True)
+    file_name = fields.Char("Name file", readonly=True)
 
     def exportar_csv(self):
         output = StringIO()
@@ -74,7 +74,7 @@ class ExportCsvInscriptionsWizard(models.TransientModel):
 
         self.write({
             'file_data': base64.b64encode(csv_data),
-            'file_name': 'exportacion_socios.csv'
+            'file_name': _('export_inscriptions.csv')
         })
 
         return {
