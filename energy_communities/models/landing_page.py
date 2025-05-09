@@ -340,9 +340,14 @@ class LandingPage(models.Model):
 
     def create_landing_place(self):
         LandingCmPlaceResource(self).create()
+        return True
+
+    def update_landing_place(self):
+        return self._update_landing_place()
 
     def _update_landing_place(self):
         LandingCmPlaceResource(self).update()
+        return True
 
     def company_hierarchy_level_url(self):
         if self.hierarchy_level == "coordinator":

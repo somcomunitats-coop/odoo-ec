@@ -388,6 +388,8 @@ class LandingCmPlace:
             )
             if self.wp_landing_data["translations"]:
                 lang_short = lang[:2]
+                if lang_short == "en":
+                    lang_short = "ca"  # odoo default "en" is on website "ca"
                 if lang_short in self.wp_landing_data["translations"].keys():
                     cooperator_button.with_context(lang=lang).write(
                         {

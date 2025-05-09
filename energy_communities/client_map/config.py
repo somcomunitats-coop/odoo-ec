@@ -59,7 +59,7 @@ class MapClientConfig:
         "en_US": "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></div>",
         "ca_ES": "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></div>",
         "es_ES": "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparte y hagamos crecer la Comunidad Energética</p></div>",
-        "eu_ES": "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'> *EUS* Comparte y hagamos crecer la Comunidad Energética</p></div>",
+        "eu_ES": "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Partekatu eta lagundu hazten energia-komunitateari</p></div>",
     }
     MAPPING__EXTERNAL_LINK__BECOME_COOPERATOR__LINK_LABEL = {
         "en_US": "Fes-te'n soci/a",
