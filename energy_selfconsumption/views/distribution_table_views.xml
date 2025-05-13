@@ -123,7 +123,7 @@
                 </tree>
             </field>
         </record>
-
+<!--
         <record id="distribution_table_search_view" model="ir.ui.view">
             <field name="name">energy_selfconsumption.distribution_table.search</field>
             <field name="model">energy_selfconsumption.distribution_table</field>
@@ -140,17 +140,12 @@
                 <field name="name" />
                 <search string="Distribution Table">
                     <group expand="1" string="Group By">
-                        <filter
-              string="Self-consumption Project"
-              name="selfconsumption_project_id"
-              domain="[]"
-              context="{'group_by':'selfconsumption_project_id'}"
-            />
+                        <filter string="Self-consumption Project" name="selfconsumption_project_id" domain="[]" context="{'group_by':'selfconsumption_project_id'}"/>
                     </group>
                 </search>
             </field>
         </record>
-
+-->
         <record id="distribution_table_act_window" model="ir.actions.act_window">
             <field name="name">Distribution Table</field>
             <field name="type">ir.actions.act_window</field>

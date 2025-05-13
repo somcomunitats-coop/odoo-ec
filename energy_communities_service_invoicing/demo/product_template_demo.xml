@@ -12,8 +12,8 @@
   <record id="demo_platform_pack_contract_template" model="contract.template">
     <field name="name">Platform pack contract template</field>
     <field name="contract_type">sale</field>
-    <field name="contract_line_ids" eval="[(0,0,{
-      'product_id': ref('demo_platform_service_product_template'),'automatic_price':True,'qty_type': 'variable',
+    <field name="contract_line_ids" model="product.template" eval="[(0,0,{
+      'product_id': obj(ref('demo_platform_service_product_template')).product_variant_id.id,'automatic_price':True,'qty_type': 'variable',
       'qty_formula_id': ref('active_community_members_formula'),
       'name': 'Platform service product detailed description'
     })]"/>
