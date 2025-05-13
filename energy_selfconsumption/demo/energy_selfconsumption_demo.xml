@@ -59,23 +59,23 @@
     />
         </record>
 
-        <record id="mandate_1_community_1_demo" model="account.banking.mandate">
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field
-      name="partner_bank_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).partner_id.bank_ids[0]"
-      model="subscription.request"
-    />
-            <field name="signature_date" eval="datetime.today()" />
-            <field name="state">valid</field>
-        </record>
+    <!--    <record id="mandate_1_community_1_demo" model="account.banking.mandate">-->
+    <!--        <field-->
+    <!--  name="company_id"-->
+    <!--  eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"-->
+    <!--  model="subscription.request"-->
+    <!--/>-->
+    <!--        <field name="format">sepa</field>-->
+    <!--        <field name="scheme">CORE</field>-->
+    <!--        <field name="recurrent_sequence_type">first</field>-->
+    <!--        <field-->
+    <!--  name="partner_bank_id"-->
+    <!--  eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).partner_id.bank_ids[0]"-->
+    <!--  model="subscription.request"-->
+    <!--/>-->
+    <!--        <field name="signature_date" eval="datetime.today()" />-->
+    <!--        <field name="state">valid</field>-->
+    <!--    </record>-->
 
         <record
     id="inscription_1_selfconsumption_1_demo"
@@ -97,26 +97,27 @@
       eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
       model="subscription.request"
     />
-            <field name="mandate_id" ref="mandate_1_community_1_demo" />
         </record>
+            <!--<field name="mandate_id" ref="mandate_1_community_1_demo" />-->
 
-        <record id="mandate_2_community_1_demo" model="account.banking.mandate">
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field
-      name="partner_bank_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).partner_id.bank_ids[0]"
-      model="subscription.request"
-    />
-            <field name="signature_date" eval="datetime.today()" />
-            <field name="state">valid</field>
-        </record>
+    <!--    <record id="mandate_2_community_1_demo" model="account.banking.mandate">-->
+    <!--        <field-->
+    <!--  name="company_id"-->
+    <!--  eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).company_id"-->
+    <!--  model="subscription.request"-->
+    <!--/>-->
+    <!--        <field name="format">sepa</field>-->
+    <!--        <field name="scheme">CORE</field>-->
+    <!--        <field name="recurrent_sequence_type">first</field>-->
+    <!--        <field-->
+    <!--  name="partner_bank_id"-->
+    <!--  eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).partner_id.bank_ids[0]"-->
+    <!--  model="subscription.request"-->
+    <!--/>-->
+    <!--        <field name="signature_date" eval="datetime.today()" />-->
+    <!--        <field name="state">valid</field>-->
+    <!--    </record>-->
+
         <record
     id="inscription_2_selfconsumption_1_demo"
     model="energy_project.inscription"
@@ -137,26 +138,26 @@
       eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).company_id"
       model="subscription.request"
     />
-            <field name="mandate_id" ref="mandate_2_community_1_demo" />
         </record>
+            <!--<field name="mandate_id" ref="mandate_2_community_1_demo" />-->
 
-        <record id="mandate_3_community_1_demo" model="account.banking.mandate">
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field
-      name="partner_bank_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).partner_id.bank_ids[0]"
-      model="subscription.request"
-    />
-                        <field name="signature_date" eval="datetime.today()" />
-            <field name="state">valid</field>
-        </record>
+    <!--    <record id="mandate_3_community_1_demo" model="account.banking.mandate">-->
+    <!--        <field-->
+    <!--  name="company_id"-->
+    <!--  eval="obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).company_id"-->
+    <!--  model="subscription.request"-->
+    <!--/>-->
+    <!--        <field name="format">sepa</field>-->
+    <!--        <field name="scheme">CORE</field>-->
+    <!--        <field name="recurrent_sequence_type">first</field>-->
+    <!--        <field-->
+    <!--  name="partner_bank_id"-->
+    <!--  eval="obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).partner_id.bank_ids[0]"-->
+    <!--  model="subscription.request"-->
+    <!--/>-->
+    <!--                    <field name="signature_date" eval="datetime.today()" />-->
+    <!--        <field name="state">valid</field>-->
+    <!--    </record>-->
 
         <record
     id="inscription_3_selfconsumption_1_demo"
@@ -178,26 +179,26 @@
       eval="obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).company_id"
       model="subscription.request"
     />
-            <field name="mandate_id" ref="mandate_3_community_1_demo" />
         </record>
+            <!--<field name="mandate_id" ref="mandate_3_community_1_demo" />-->
 
-        <record id="mandate_4_community_1_demo" model="account.banking.mandate">
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field
-      name="partner_bank_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).partner_id.bank_ids[0]"
-      model="subscription.request"
-    />
-                        <field name="signature_date" eval="datetime.today()" />
-            <field name="state">valid</field>
-        </record>
+    <!--    <record id="mandate_4_community_1_demo" model="account.banking.mandate">-->
+    <!--        <field-->
+    <!--  name="company_id"-->
+    <!--  eval="obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).company_id"-->
+    <!--  model="subscription.request"-->
+    <!--/>-->
+    <!--        <field name="format">sepa</field>-->
+    <!--        <field name="scheme">CORE</field>-->
+    <!--        <field name="recurrent_sequence_type">first</field>-->
+    <!--        <field-->
+    <!--  name="partner_bank_id"-->
+    <!--  eval="obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).partner_id.bank_ids[0]"-->
+    <!--  model="subscription.request"-->
+    <!--/>-->
+    <!--                    <field name="signature_date" eval="datetime.today()" />-->
+    <!--        <field name="state">valid</field>-->
+    <!--    </record>-->
 
         <record
     id="inscription_4_selfconsumption_1_demo"
@@ -219,26 +220,26 @@
       eval="obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).company_id"
       model="subscription.request"
     />
-            <field name="mandate_id" ref="mandate_4_community_1_demo" />
         </record>
+            <!--<field name="mandate_id" ref="mandate_4_community_1_demo" />-->
 
-        <record id="mandate_5_community_1_demo" model="account.banking.mandate">
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field
-      name="partner_bank_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).partner_id.bank_ids[0]"
-      model="subscription.request"
-    />
-                        <field name="signature_date" eval="datetime.today()" />
-            <field name="state">valid</field>
-        </record>
+    <!--    <record id="mandate_5_community_1_demo" model="account.banking.mandate">-->
+    <!--        <field-->
+    <!--  name="company_id"-->
+    <!--  eval="obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).company_id"-->
+    <!--  model="subscription.request"-->
+    <!--/>-->
+    <!--        <field name="format">sepa</field>-->
+    <!--        <field name="scheme">CORE</field>-->
+    <!--        <field name="recurrent_sequence_type">first</field>-->
+    <!--        <field-->
+    <!--  name="partner_bank_id"-->
+    <!--  eval="obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).partner_id.bank_ids[0]"-->
+    <!--  model="subscription.request"-->
+    <!--/>-->
+    <!--                    <field name="signature_date" eval="datetime.today()" />-->
+    <!--        <field name="state">valid</field>-->
+    <!--    </record>-->
 
         <record
     id="inscription_5_selfconsumption_1_demo"
@@ -260,213 +261,8 @@
       eval="obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).company_id"
       model="subscription.request"
     />
-            <field name="mandate_id" ref="mandate_5_community_1_demo" />
         </record>
-
-        <record id="mandate_6_community_1_demo" model="account.banking.mandate">
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_6_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field
-      name="partner_bank_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_6_community_1_demo')).partner_id.bank_ids[0]"
-      model="subscription.request"
-    />
-                        <field name="signature_date" eval="datetime.today()" />
-            <field name="state">valid</field>
-        </record>
-
-        <record
-    id="inscription_6_selfconsumption_1_demo"
-    model="energy_project.inscription"
-  >
-            <field
-      name="project_id"
-      model="energy_selfconsumption.selfconsumption"
-      eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"
-    />
-            <field name="effective_date" eval="datetime.today()" />
-            <field
-      name="partner_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_6_community_1_demo')).partner_id"
-      model="subscription.request"
-    />
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_6_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="mandate_id" ref="mandate_6_community_1_demo" />
-        </record>
-
-        <record id="mandate_7_community_1_demo" model="account.banking.mandate">
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_7_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field
-      name="partner_bank_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_7_community_1_demo')).partner_id.bank_ids[0]"
-      model="subscription.request"
-    />
-                        <field name="signature_date" eval="datetime.today()" />
-            <field name="state">valid</field>
-        </record>
-
-        <record
-    id="inscription_7_selfconsumption_1_demo"
-    model="energy_project.inscription"
-  >
-            <field
-      name="project_id"
-      model="energy_selfconsumption.selfconsumption"
-      eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"
-    />
-            <field name="effective_date" eval="datetime.today()" />
-            <field
-      name="partner_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_7_community_1_demo')).partner_id"
-      model="subscription.request"
-    />
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_7_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="mandate_id" ref="mandate_7_community_1_demo" />
-        </record>
-
-        <record id="mandate_8_community_1_demo" model="account.banking.mandate">
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_8_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field
-      name="partner_bank_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_8_community_1_demo')).partner_id.bank_ids[0]"
-      model="subscription.request"
-    />
-                        <field name="signature_date" eval="datetime.today()" />
-            <field name="state">valid</field>
-        </record>
-
-        <record
-    id="inscription_8_selfconsumption_1_demo"
-    model="energy_project.inscription"
-  >
-            <field
-      name="project_id"
-      model="energy_selfconsumption.selfconsumption"
-      eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"
-    />
-            <field name="effective_date" eval="datetime.today()" />
-            <field
-      name="partner_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_8_community_1_demo')).partner_id"
-      model="subscription.request"
-    />
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_8_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="mandate_id" ref="mandate_8_community_1_demo" />
-        </record>
-
-        <record id="mandate_9_community_1_demo" model="account.banking.mandate">
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_9_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field
-      name="partner_bank_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_9_community_1_demo')).partner_id.bank_ids[0]"
-      model="subscription.request"
-    />
-                        <field name="signature_date" eval="datetime.today()" />
-            <field name="state">valid</field>
-        </record>
-
-        <record
-    id="inscription_9_selfconsumption_1_demo"
-    model="energy_project.inscription"
-  >
-            <field
-      name="project_id"
-      model="energy_selfconsumption.selfconsumption"
-      eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"
-    />
-            <field name="effective_date" eval="datetime.today()" />
-            <field
-      name="partner_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_9_community_1_demo')).partner_id"
-      model="subscription.request"
-    />
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_9_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="mandate_id" ref="mandate_9_community_1_demo" />
-        </record>
-
-        <record id="mandate_10_community_1_demo" model="account.banking.mandate">
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_10_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="format">sepa</field>
-            <field name="scheme">CORE</field>
-            <field name="recurrent_sequence_type">first</field>
-            <field
-      name="partner_bank_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_10_community_1_demo')).partner_id.bank_ids[0]"
-      model="subscription.request"
-    />
-                        <field name="signature_date" eval="datetime.today()" />
-            <field name="state">valid</field>
-        </record>
-
-        <record
-    id="inscription_10_selfconsumption_1_demo"
-    model="energy_project.inscription"
-  >
-            <field
-      name="project_id"
-      model="energy_selfconsumption.selfconsumption"
-      eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"
-    />
-            <field name="effective_date" eval="datetime.today()" />
-            <field
-      name="partner_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_10_community_1_demo')).partner_id"
-      model="subscription.request"
-    />
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_10_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-            <field name="mandate_id" ref="mandate_10_community_1_demo" />
-        </record>
+            <!--<field name="mandate_id" ref="mandate_5_community_1_demo" />-->
 
         <record
     id="supply_point_1_selfconsumption_1_demo"
@@ -497,20 +293,23 @@
     />
         </record>
 
-        <record
-    id="inscription_selfconsumption_1_selfconsumption_1_demo"
-    model="energy_selfconsumption.inscription_selfconsumption"
-  >
-          <field name="inscription_id" ref="inscription_1_selfconsumption_1_demo" />
+
+      <record
+        id="inscription_selfconsumption_1_selfconsumption_1_demo"
+        model="energy_selfconsumption.inscription_selfconsumption"
+      >
+          <field name="selfconsumption_project_id" eval="ref('selfconsumption_1_community_1_demo')" model="energy_selfconsumption.selfconsumption" />
+          <field name="inscription_id" eval="ref('inscription_1_selfconsumption_1_demo')" model="energy_project.inscription" />
           <field name="annual_electricity_use">1.00</field>
           <field
-      name="participation"
-      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
-    />
+            model="energy_selfconsumptions.participation"
+            name="participation_id"
+            search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+          />
           <field name="accept" eval="True" />
           <field name="member" eval="True" />
           <field name="supply_point_id" ref="supply_point_1_selfconsumption_1_demo" />
-        </record>
+      </record>
 
         <record
     id="supply_point_2_selfconsumption_1_demo"
@@ -541,20 +340,22 @@
     />
         </record>
 
-        <record
-    id="inscription_selfconsumption_2_selfconsumption_1_demo"
-    model="energy_selfconsumption.inscription_selfconsumption"
-  >
-          <field name="inscription_id" ref="inscription_2_selfconsumption_1_demo" />
+      <record
+        id="inscription_selfconsumption_2_selfconsumption_1_demo"
+        model="energy_selfconsumption.inscription_selfconsumption"
+      >
+          <field name="selfconsumption_project_id" eval="ref('selfconsumption_1_community_1_demo')" model="energy_selfconsumption.selfconsumption" />
+          <field name="inscription_id" eval="ref('inscription_2_selfconsumption_1_demo')" model="energy_project.inscription" />
           <field name="annual_electricity_use">1.00</field>
           <field
-      name="participation"
-      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
-    />
+            model="energy_selfconsumptions.participation"
+            name="participation_id"
+            search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+          />
           <field name="accept" eval="True" />
           <field name="member" eval="True" />
           <field name="supply_point_id" ref="supply_point_2_selfconsumption_1_demo" />
-        </record>
+      </record>
 
         <record
     id="supply_point_3_selfconsumption_1_demo"
@@ -585,20 +386,22 @@
     />
         </record>
 
-        <record
-    id="inscription_selfconsumption_3_selfconsumption_1_demo"
-    model="energy_selfconsumption.inscription_selfconsumption"
-  >
-          <field name="inscription_id" ref="inscription_3_selfconsumption_1_demo" />
+      <record
+        id="inscription_selfconsumption_3_selfconsumption_1_demo"
+        model="energy_selfconsumption.inscription_selfconsumption"
+      >
+          <field name="selfconsumption_project_id" eval="ref('selfconsumption_1_community_1_demo')" model="energy_selfconsumption.selfconsumption" />
+          <field name="inscription_id" eval="ref('inscription_3_selfconsumption_1_demo')" model="energy_project.inscription" />
           <field name="annual_electricity_use">1.00</field>
           <field
-      name="participation"
-      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
-    />
+            model="energy_selfconsumptions.participation"
+            name="participation_id"
+            search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+          />
           <field name="accept" eval="True" />
           <field name="member" eval="True" />
           <field name="supply_point_id" ref="supply_point_3_selfconsumption_1_demo" />
-        </record>
+      </record>
 
         <record
     id="supply_point_4_selfconsumption_1_demo"
@@ -629,20 +432,22 @@
     />
         </record>
 
-        <record
-    id="inscription_selfconsumption_4_selfconsumption_1_demo"
-    model="energy_selfconsumption.inscription_selfconsumption"
-  >
-          <field name="inscription_id" ref="inscription_4_selfconsumption_1_demo" />
+      <record
+        id="inscription_selfconsumption_4_selfconsumption_1_demo"
+        model="energy_selfconsumption.inscription_selfconsumption"
+      >
+          <field name="selfconsumption_project_id" eval="ref('selfconsumption_1_community_1_demo')" model="energy_selfconsumption.selfconsumption" />
+          <field name="inscription_id" eval="ref('inscription_4_selfconsumption_1_demo')" model="energy_project.inscription" />
           <field name="annual_electricity_use">1.00</field>
           <field
-      name="participation"
-      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
-    />
+            model="energy_selfconsumptions.participation"
+            name="participation_id"
+            search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+          />
           <field name="accept" eval="True" />
           <field name="member" eval="True" />
           <field name="supply_point_id" ref="supply_point_4_selfconsumption_1_demo" />
-        </record>
+      </record>
 
         <record
     id="supply_point_5_selfconsumption_1_demo"
@@ -673,20 +478,22 @@
     />
         </record>
 
-        <record
-    id="inscription_selfconsumption_5_selfconsumption_1_demo"
-    model="energy_selfconsumption.inscription_selfconsumption"
-  >
-          <field name="inscription_id" ref="inscription_5_selfconsumption_1_demo" />
+      <record
+        id="inscription_selfconsumption_5_selfconsumption_1_demo"
+        model="energy_selfconsumption.inscription_selfconsumption"
+      >
+          <field name="selfconsumption_project_id" eval="ref('selfconsumption_1_community_1_demo')" model="energy_selfconsumption.selfconsumption" />
+          <field name="inscription_id" eval="ref('inscription_5_selfconsumption_1_demo')" model="energy_project.inscription" />
           <field name="annual_electricity_use">1.00</field>
           <field
-      name="participation"
-      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
-    />
+            model="energy_selfconsumptions.participation"
+            name="participation_id"
+            search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+          />
           <field name="accept" eval="True" />
           <field name="member" eval="True" />
           <field name="supply_point_id" ref="supply_point_5_selfconsumption_1_demo" />
-        </record>
+      </record>
 
         <record id="partner_supply_point_6_demo" model="res.partner">
             <field name="name">Dalmazio Granado Serrano</field>
@@ -728,197 +535,7 @@
     />
         </record>
 
-        <record
-    id="inscription_selfconsumption_6_selfconsumption_1_demo"
-    model="energy_selfconsumption.inscription_selfconsumption"
-  >
-          <field name="inscription_id" ref="inscription_6_selfconsumption_1_demo" />
-          <field name="annual_electricity_use">1.00</field>
-          <field
-      name="participation"
-      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
-    />
-          <field name="accept" eval="True" />
-          <field name="member" eval="True" />
-          <field name="supply_point_id" ref="supply_point_6_selfconsumption_1_demo" />
-        </record>
-
-        <record
-    id="supply_point_7_selfconsumption_1_demo"
-    model="energy_selfconsumption.supply_point"
-  >
-            <field name="name">Casa Rufino Menchaca</field>
-            <field name="code">ES0396311162407481ZW1F</field>
-            <field name="street">Carrer de Badalona</field>
-            <field name="street2">27-17</field>
-            <field name="zip">08014</field>
-            <field name="city">Barcelona</field>
-            <field name="state_id" ref="base.state_es_b" />
-            <field name="country_id" ref="base.es" />
-            <field
-      name="owner_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_6_community_1_demo')).partner_id"
-      model="subscription.request"
-    />
-            <field
-      name="partner_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_6_community_1_demo')).partner_id"
-      model="subscription.request"
-    />
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-        </record>
-
-        <record
-    id="inscription_selfconsumption_7_selfconsumption_1_demo"
-    model="energy_selfconsumption.inscription_selfconsumption"
-  >
-          <field name="inscription_id" ref="inscription_7_selfconsumption_1_demo" />
-          <field name="annual_electricity_use">1.00</field>
-          <field
-      name="participation"
-      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
-    />
-          <field name="accept" eval="True" />
-          <field name="member" eval="True" />
-          <field name="supply_point_id" ref="supply_point_7_selfconsumption_1_demo" />
-        </record>
-
-        <record
-    id="supply_point_8_selfconsumption_1_demo"
-    model="energy_selfconsumption.supply_point"
-  >
-            <field name="name">Casa Nataly Gamboa</field>
-            <field name="code">ES0023192224927503ZZ1F</field>
-            <field name="street">Carrer del Vallespir</field>
-            <field name="street2">16</field>
-            <field name="zip">08014</field>
-            <field name="city">Barcelona</field>
-            <field name="state_id" ref="base.state_es_b" />
-            <field name="country_id" ref="base.es" />
-            <field
-      name="owner_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_7_community_1_demo')).partner_id"
-      model="subscription.request"
-    />
-            <field
-      name="partner_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_7_community_1_demo')).partner_id"
-      model="subscription.request"
-    />
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-        </record>
-
-        <record
-    id="inscription_selfconsumption_8_selfconsumption_1_demo"
-    model="energy_selfconsumption.inscription_selfconsumption"
-  >
-          <field name="inscription_id" ref="inscription_8_selfconsumption_1_demo" />
-          <field name="annual_electricity_use">1.00</field>
-          <field
-      name="participation"
-      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
-    />
-          <field name="accept" eval="True" />
-          <field name="member" eval="True" />
-          <field name="supply_point_id" ref="supply_point_8_selfconsumption_1_demo" />
-        </record>
-
-        <record
-    id="supply_point_9_selfconsumption_1_demo"
-    model="energy_selfconsumption.supply_point"
-  >
-            <field name="name">Casa Ana Romo</field>
-            <field name="code">ES0023365004784035BK1F</field>
-            <field name="street">Carrer de Robrenyo, 30</field>
-            <field name="street2">30</field>
-            <field name="zip">08014</field>
-            <field name="city">Barcelona</field>
-            <field name="state_id" ref="base.state_es_b" />
-            <field name="country_id" ref="base.es" />
-            <field
-      name="owner_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_8_community_1_demo')).partner_id"
-      model="subscription.request"
-    />
-            <field
-      name="partner_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_8_community_1_demo')).partner_id"
-      model="subscription.request"
-    />
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-        </record>
-
-        <record
-    id="inscription_selfconsumption_9_selfconsumption_1_demo"
-    model="energy_selfconsumption.inscription_selfconsumption"
-  >
-          <field name="inscription_id" ref="inscription_9_selfconsumption_1_demo" />
-          <field name="annual_electricity_use">1.00</field>
-          <field
-      name="participation"
-      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
-    />
-          <field name="accept" eval="True" />
-          <field name="member" eval="True" />
-          <field name="supply_point_id" ref="supply_point_9_selfconsumption_1_demo" />
-        </record>
-
-        <record
-    id="supply_point_10_selfconsumption_1_demo"
-    model="energy_selfconsumption.supply_point"
-  >
-            <field name="name">Casa John Zepeda</field>
-            <field name="code">ES0023960481038487JZ1F</field>
-            <field name="street">Carrer d'Olzinelles</field>
-            <field name="street2">91</field>
-            <field name="zip">08014</field>
-            <field name="city">Barcelona</field>
-            <field name="state_id" ref="base.state_es_b" />
-            <field name="country_id" ref="base.es" />
-            <field
-      name="owner_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_9_community_1_demo')).partner_id"
-      model="subscription.request"
-    />
-            <field
-      name="partner_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_9_community_1_demo')).partner_id"
-      model="subscription.request"
-    />
-            <field
-      name="company_id"
-      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-      model="subscription.request"
-    />
-        </record>
-
-        <record
-    id="inscription_selfconsumption_20_selfconsumption_1_demo"
-    model="energy_selfconsumption.inscription_selfconsumption"
-  >
-          <field name="inscription_id" ref="inscription_10_selfconsumption_1_demo" />
-          <field name="annual_electricity_use">1.00</field>
-          <field
-      name="participation"
-      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
-    />
-          <field name="accept" eval="True" />
-          <field name="member" eval="True" />
-          <field name="supply_point_id" ref="supply_point_10_selfconsumption_1_demo" />
-        </record>
-
+    
     <delete
     model="energy_selfconsumption.supply_point_assignation"
     search="[('supply_point_id','=',ref('supply_point_1_selfconsumption_1_demo'))]"
@@ -939,27 +556,7 @@
     model="energy_selfconsumption.supply_point_assignation"
     search="[('supply_point_id','=',ref('supply_point_5_selfconsumption_1_demo'))]"
   />
-    <delete
-    model="energy_selfconsumption.supply_point_assignation"
-    search="[('supply_point_id','=',ref('supply_point_6_selfconsumption_1_demo'))]"
-  />
-    <delete
-    model="energy_selfconsumption.supply_point_assignation"
-    search="[('supply_point_id','=',ref('supply_point_7_selfconsumption_1_demo'))]"
-  />
-    <delete
-    model="energy_selfconsumption.supply_point_assignation"
-    search="[('supply_point_id','=',ref('supply_point_8_selfconsumption_1_demo'))]"
-  />
-    <delete
-    model="energy_selfconsumption.supply_point_assignation"
-    search="[('supply_point_id','=',ref('supply_point_9_selfconsumption_1_demo'))]"
-  />
-    <delete
-    model="energy_selfconsumption.supply_point_assignation"
-    search="[('supply_point_id','=',ref('supply_point_10_selfconsumption_1_demo'))]"
-  />
-        <record
+            <record
     id="distribution_table_1_selfconsumption_1_demo"
     model="energy_selfconsumption.distribution_table"
   >
@@ -986,7 +583,7 @@
       ref="distribution_table_1_selfconsumption_1_demo"
     />
             <field name="supply_point_id" ref="supply_point_1_selfconsumption_1_demo" />
-            <field name="coefficient">0.1321</field>
+            <field name="coefficient">0.132</field>
             <field
       name="company_id"
       eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
@@ -1054,7 +651,7 @@
       ref="distribution_table_1_selfconsumption_1_demo"
     />
             <field name="supply_point_id" ref="supply_point_5_selfconsumption_1_demo" />
-            <field name="coefficient">0.103</field>
+            <field name="coefficient">0.557</field>
             <field
       name="company_id"
       eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
@@ -1062,91 +659,10 @@
     />
         </record>
 
-        <record
-    id="supply_point_assignation_6_distribution_table_1_demo"
-    model="energy_selfconsumption.supply_point_assignation"
-  >
-            <field
-      name="distribution_table_id"
-      ref="distribution_table_1_selfconsumption_1_demo"
-    />
-            <field name="supply_point_id" ref="supply_point_6_selfconsumption_1_demo" />
-            <field name="coefficient">0.1241</field>
-            <field
-      name="company_id"
-      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
-      model="energy_selfconsumption.distribution_table"
-    />
-        </record>
+      <function
+        name="button_validate"
+        model="energy_selfconsumption.distribution_table"
+        eval="[ref('distribution_table_1_selfconsumption_1_demo')]"
+      />
 
-        <record
-    id="supply_point_assignation_7_distribution_table_1_demo"
-    model="energy_selfconsumption.supply_point_assignation"
-  >
-            <field
-      name="distribution_table_id"
-      ref="distribution_table_1_selfconsumption_1_demo"
-    />
-            <field name="supply_point_id" ref="supply_point_7_selfconsumption_1_demo" />
-            <field name="coefficient">0.092</field>
-            <field
-      name="company_id"
-      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
-      model="energy_selfconsumption.distribution_table"
-    />
-        </record>
-
-        <record
-    id="supply_point_assignation_8_distribution_table_1_demo"
-    model="energy_selfconsumption.supply_point_assignation"
-  >
-            <field
-      name="distribution_table_id"
-      ref="distribution_table_1_selfconsumption_1_demo"
-    />
-            <field name="supply_point_id" ref="supply_point_8_selfconsumption_1_demo" />
-            <field name="coefficient">0.071</field>
-            <field
-      name="company_id"
-      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
-      model="energy_selfconsumption.distribution_table"
-    />
-        </record>
-
-        <record
-    id="supply_point_assignation_9_distribution_table_1_demo"
-    model="energy_selfconsumption.supply_point_assignation"
-  >
-            <field
-      name="distribution_table_id"
-      ref="distribution_table_1_selfconsumption_1_demo"
-    />
-            <field name="supply_point_id" ref="supply_point_9_selfconsumption_1_demo" />
-            <field name="coefficient">0.087</field>
-            <field
-      name="company_id"
-      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
-      model="energy_selfconsumption.distribution_table"
-    />
-        </record>
-
-        <record
-    id="supply_point_assignation_10_distribution_table_1_demo"
-    model="energy_selfconsumption.supply_point_assignation"
-  >
-            <field
-      name="distribution_table_id"
-      ref="distribution_table_1_selfconsumption_1_demo"
-    />
-            <field
-      name="supply_point_id"
-      ref="supply_point_10_selfconsumption_1_demo"
-    />
-            <field name="coefficient">0.0798</field>
-            <field
-      name="company_id"
-      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
-      model="energy_selfconsumption.distribution_table"
-    />
-    </record>
-</odoo>
+    </odoo>

@@ -12,14 +12,8 @@ class TestSeriveInvoicingContractGeneration(TransactionCase):
     def setUp(self):
         super().setUp()
         self.maxDiff = None
-        # TODO: In order to complete the test we must
-        # have a selfconsumption project on demo data
-        # in activation with one inscription and without invoicing_mode
-        # self.selfconsumption = self.env[
-        #     "energy_selfconsumption.selfconsumption"
-        # ].browse(26)
         self.selfconsumption = self.env.ref(
-            "energy_selfconsumption_demo.selfconsumption_1_community_1_demo"
+            "energy_selfconsumption.selfconsumption_1_community_1_demo"
         )
 
     def test_contract_generation_wizard(self):

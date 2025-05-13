@@ -124,32 +124,31 @@
             </field>
         </record>
 
-        <record id="distribution_table_search_view" model="ir.ui.view">
-            <field name="name">energy_selfconsumption.distribution_table.search</field>
-            <field name="model">energy_selfconsumption.distribution_table</field>
-            <field name="arch" type="xml">
-                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
-                <filter string="Validated" name="validated" domain="[('state', '=', 'validated')]"/>
-                <filter string="In process" name="process" domain="[('state', '=', 'process')]"/>
-                <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
-                <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
-                <separator/>
-                <filter string="Fixed" name="fixed" domain="[('type', '=', 'fixed')]"/>
-                <filter string="Variable hourly" name="hourly" domain="[('type', '=', 'hourly')]"/>
-                <separator/>
-                <field name="name" />
-                <search string="Distribution Table">
-                    <group expand="1" string="Group By">
-                        <filter
-              string="Self-consumption Project"
-              name="selfconsumption_project_id"
-              domain="[]"
-              context="{'group_by':'selfconsumption_project_id'}"
-            />
-                    </group>
-                </search>
-            </field>
-        </record>
+      <record id="distribution_table_search_view" model="ir.ui.view">
+        <field name="name">energy_selfconsumption.distribution_table.search</field>
+        <field name="model">energy_selfconsumption.distribution_table</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+          <search string="Distribution Table">
+            <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+            <filter string="Validated" name="validated" domain="[('state', '=', 'validated')]"/>
+            <filter string="In process" name="process" domain="[('state', '=', 'process')]"/>
+            <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+            <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+            <filter string="Fixed" name="fixed" domain="[('type', '=', 'fixed')]"/>
+            <filter string="Variable hourly" name="hourly" domain="[('type', '=', 'hourly')]"/>
+            <field name="name" />
+            <group expand="1" string="Group By">
+              <filter
+                string="Self-consumption Project"
+                name="selfconsumption_project_id"
+                domain="[]"
+                context="{'group_by':'selfconsumption_project_id'}"
+              />
+            </group>
+          </search>
+        </field>
+      </record>
 
         <record id="distribution_table_act_window" model="ir.actions.act_window">
             <field name="name">Distribution Table</field>
@@ -197,9 +196,7 @@
             <field
         name="code"
       >action = records.action_clean_supply_point_assignation_wizard()</field>
-        </record>
+        </record> 
 
-
-
-    </data>
+  </data>
 </odoo>
