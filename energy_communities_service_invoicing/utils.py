@@ -9,17 +9,26 @@ PACK_VALUES = [
     ("none", _("None")),
 ]
 
+PAUSED = "paused"
+IN_PROGRESS = "in_progress"
+CLOSED_PLANNED = "closed_planned"
+CLOSED = "closed"
 _CONTRACT_STATUS_VALUES = [
-    ("paused", _("Paused")),
-    ("in_progress", _("In progress")),
-    ("closed_planned", _("Planned closure")),
-    ("closed", _("Closed")),
+    (PAUSED, _("Paused")),
+    (IN_PROGRESS, _("In progress")),
+    (CLOSED_PLANNED, _("Planned closure")),
+    (CLOSED, _("Closed")),
 ]
+
+ACTIVATE = "activate"
+MODIFICATION = "modification"
+REOPEN = "reopen"
+CLOSE = "close"
 _SERVICE_INVOICING_EXECUTED_ACTION_VALUES = [
-    ("activate", _("Activate")),
-    ("modification", _("Modification")),
-    ("reopen", _("Reopen")),
-    ("close", _("Close")),
+    (ACTIVATE, _("Activate")),
+    (MODIFICATION, _("Modification")),
+    (REOPEN, _("Reopen")),
+    (CLOSE, _("Close")),
 ]
 _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES = [
     ("none", _("None"))
