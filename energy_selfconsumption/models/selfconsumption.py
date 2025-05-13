@@ -431,13 +431,6 @@ class Selfconsumption(models.Model):
         else:
             raise ValidationError(_("Invalid invoicing mode"))
 
-        # Search accounting journal
-        journal_id = self.env["account.journal"].search(
-            [("company_id", "=", self.company_id.id), ("type", "=", "sale")], limit=1
-        )
-        if not journal_id:
-            raise UserWarning(_("Accounting Journal not found."))
-
         # Create sale order
         for (
             supply_point_assignation
@@ -483,7 +476,6 @@ class Selfconsumption(models.Model):
                             "recurring_interval": self.recurring_interval,
                             "recurring_rule_type": self.recurring_rule_type,
                             "recurring_invoicing_type": self.recurring_invoicing_type,
-                            "journal_id": journal_id.id,
                             "project_id": self.id,
                             "company_id": self.company_id.id,
                         },
