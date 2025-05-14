@@ -52,6 +52,7 @@
     ],
     # only loaded in demonstration mode
     "demo": [
+        "demo/account_payment_mode_demo.xml",
         "demo/product_template_demo.xml",
         "demo/res_company_demo.xml",
         "demo/res_user_demo.xml",
