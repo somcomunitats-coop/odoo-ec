@@ -18,6 +18,7 @@
     "depends": [
         "base",
         "account_multicompany_easy_creation",
+        "contract_variable_quantity",
         "cooperator",
         "cooperator_account_payment",
         "cooperator_account_banking_mandate",
