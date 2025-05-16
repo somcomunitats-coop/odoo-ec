@@ -172,7 +172,7 @@ class ActionCreate(models.AbstractModel):
                     "recurring_interval": contract.recurring_interval,
                     "recurring_rule_type": contract.recurring_rule_type,
                     "recurring_invoicing_type": contract.recurring_invoicing_type,
-                    "journal": contract.journal_id.id,
+                    "journal_id": contract.journal_id.id,
                     "project_id": selfconsumption_project.id,
                     "company_id": selfconsumption_project.company_id.id,
                 },
