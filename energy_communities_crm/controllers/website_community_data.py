@@ -207,7 +207,7 @@ class WebsiteCommunityData(http.Controller):
                     values[field_name] = field_value
                     form_values[field_name] = field_value
                 else:
-                    lead_meta = related_lead.get_metadata(field_name)
+                    lead_meta = related_lead.get_metadata_line(field_name)
                     if lead_meta:
                         lead_meta.unlink()
 
