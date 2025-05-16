@@ -51,6 +51,7 @@
         "security/res_groups_roles_data.xml",
         "security/ir.model.access.csv",
         "security/ir_rule_data_account.xml",
+        "security/ir_rule_data_company.xml",
         "security/ir_rule_data_landing_page.xml",
         "security/ir_rule_data_mail.xml",
         "security/ir_rule_data_partner.xml",

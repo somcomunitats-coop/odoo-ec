@@ -5,7 +5,7 @@
     <field name="inherit_id" ref="base.view_partner_bank_form" />
     <field name="arch" type="xml">
       <field name="company_id" position="before">
-        <field name="allowed_company_ids" />
+        <field name="allowed_company_ids" invisible="1" />
       </field>
       <field name="company_id" position="attributes">
         <attribute name="attrs">{'readonly':[('partner_id','!=',False),('allowed_company_ids','=',[])]}</attribute>
