@@ -53,11 +53,11 @@
     ],
     # only loaded in demonstration mode
     "demo": [
-        "demo/account_payment_mode_demo.xml",
-        "demo/product_template_demo.xml",
         "demo/res_company_demo.xml",
+        "demo/product_template_demo.xml",
         "demo/res_user_demo.xml",
         "demo/subscription_request_demo.xml",
+        # "demo/subscription_request_payments_demo.xml",
     ],
     "assets": {
         "web.assets_common": [
@@ -65,3 +65,4 @@
         ]
     },
 }
+# "demo/account_payment_mode_demo.xml",
