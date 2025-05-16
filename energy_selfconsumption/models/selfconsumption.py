@@ -444,7 +444,6 @@ class Selfconsumption(models.Model):
                     )
                 ]
             )
-
             if not inscription_id.mandate_id:
                 raise ValidationError(
                     _("Mandate not found for {partner}").format(
@@ -461,6 +460,22 @@ class Selfconsumption(models.Model):
                 [("project_id", "=", self.id)],
             )
             if not existing_contract:
+                so_metadata = {
+                    "selfconsumption_id": self.id,
+                    "supply_point_id": supply_point_assignation.supply_point_id.id,
+                    "recurring_interval": self.recurring_interval,
+                    "recurring_rule_type": self.recurring_rule_type,
+                    "recurring_invoicing_type": self.recurring_invoicing_type,
+                    "project_id": self.id,
+                    "company_id": self.company_id.id,
+                }
+                # config journal if defined
+                sale_journal_id = pack.categ_id.with_context(
+                    company_id=self.company_id.id
+                ).service_invoicing_sale_journal_id
+                if sale_journal_id:
+                    so_metadata["journal_id"] = sale_journal_id.id
+                # create service invoicing
                 with sale_order_utils(self.env) as component:
                     service_invoicing_id = component.create_service_invoicing_initial(
                         inscription_id.partner_id,
@@ -470,15 +485,7 @@ class Selfconsumption(models.Model):
                         "activate",
                         "active_selfconsumption_contract",
                         self.payment_mode_id,
-                        {
-                            "selfconsumption_id": self.id,
-                            "supply_point_id": supply_point_assignation.supply_point_id.id,
-                            "recurring_interval": self.recurring_interval,
-                            "recurring_rule_type": self.recurring_rule_type,
-                            "recurring_invoicing_type": self.recurring_invoicing_type,
-                            "project_id": self.id,
-                            "company_id": self.company_id.id,
-                        },
+                        so_metadata,
                     )
             if not service_invoicing_id:
                 existing_closed_contract = get_existing_pack_contract(

@@ -6,7 +6,6 @@ class ContractUtils(Component):
 
     # TODO: decouple this method into smaller parts
     def _setup_contract_get_update_dict_initial(self):
-        # self._set_configuration_journal_if_defined()
         self._set_start_date(self.work.record.sale_order_id.commitment_date)
         self._set_lines_ordered_values()
         contract_update_dict = {"status": "paused"}
@@ -57,7 +56,9 @@ class ContractUtils(Component):
         self._clean_non_service_lines()
         # TODO: Decide if this must be by design
         if self.work.record.is_free_pack:
-            self.set_contract_status_active(self.work.record.commitment_date)
+            self.set_contract_status_active(
+                self.work.record.sale_order_id.commitment_date
+            )
 
     def _clean_non_service_lines(self):
         for line in self.work.record.contract_line_ids:
@@ -91,14 +92,6 @@ class ContractUtils(Component):
                     "quantity": 0,
                 }
             )
-
-    # TODO: Move this setup to sale order creation (metadata)
-    # method to be extended if using component for another pack_type
-    # def _set_configuration_journal_if_defined(self):
-    #     if self.work.record.pack_type == "platform_pack":
-    #         journal_id = self.work.record.company_id.service_invoicing_sale_journal_id
-    #         if journal_id:
-    #             self.work.record.write({"journal_id": journal_id.id})
 
     def _activate_contract_lines(self, execution_date):
         for line in self.work.record.contract_line_ids:

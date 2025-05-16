@@ -93,18 +93,6 @@ class ActionCreate(models.AbstractModel):
             }
         )
 
-    def get_journal(self, selfconsumption_project):
-        journal_id = self.env["account.journal"].search(
-            [
-                ("company_id", "=", selfconsumption_project.company_id.id),
-                ("type", "=", "sale"),
-            ],
-            limit=1,
-        )
-        if not journal_id:
-            raise UserWarning(_("Accounting Journal not found."))
-        return journal_id
-
     def get_supply_point_id(self, selfconsumption_project, contract):
         contract_cups = contract.contract_line_ids[0].name
         match = re.search(r"CUPS:\s*(\S+)", contract_cups)
@@ -184,6 +172,7 @@ class ActionCreate(models.AbstractModel):
                     "recurring_interval": contract.recurring_interval,
                     "recurring_rule_type": contract.recurring_rule_type,
                     "recurring_invoicing_type": contract.recurring_invoicing_type,
+                    "journal": contract.journal_id.id,
                     "project_id": selfconsumption_project.id,
                     "company_id": selfconsumption_project.company_id.id,
                 },

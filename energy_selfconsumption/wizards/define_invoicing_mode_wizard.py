@@ -117,6 +117,22 @@ class ContractGenerationWizard(models.TransientModel):
                     )
                 )
             with sale_order_utils(self.env) as component:
+                so_metadata = {
+                    "selfconsumption_id": self.selfconsumption_id.id,
+                    "supply_point_id": supply_point_assignation.supply_point_id.id,
+                    "supply_point_assignation_id": supply_point_assignation.id,
+                    "recurring_interval": self.recurring_interval,
+                    "recurring_rule_type": self.recurring_rule_type,
+                    "recurring_invoicing_type": self.recurring_invoicing_type,
+                    "project_id": self.selfconsumption_id.id,
+                    "company_id": self.selfconsumption_id.company_id.id,
+                }
+                # config journal if defined
+                sale_journal_id = pack.categ_id.with_context(
+                    company_id=self.selfconsumption_id.company_id.id
+                ).service_invoicing_sale_journal_id
+                if sale_journal_id:
+                    so_metadata["journal_id"] = sale_journal_id.id
                 component.create_service_invoicing_sale_order(
                     inscription_id.partner_id,
                     pack,
@@ -125,16 +141,7 @@ class ContractGenerationWizard(models.TransientModel):
                     fields.Date.today(),
                     "activate",
                     "active_selfconsumption_contract",
-                    {
-                        "selfconsumption_id": self.selfconsumption_id.id,
-                        "supply_point_id": supply_point_assignation.supply_point_id.id,
-                        "supply_point_assignation_id": supply_point_assignation.id,
-                        "recurring_interval": self.recurring_interval,
-                        "recurring_rule_type": self.recurring_rule_type,
-                        "recurring_invoicing_type": self.recurring_invoicing_type,
-                        "project_id": self.selfconsumption_id.id,
-                        "company_id": self.selfconsumption_id.company_id.id,
-                    },
+                    so_metadata,
                 )
         self.selfconsumption_id.write(
             {

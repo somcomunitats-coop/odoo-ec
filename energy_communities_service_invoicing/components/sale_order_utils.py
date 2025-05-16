@@ -17,11 +17,14 @@ class SaleOrderUtils(Component):
         executed_action_description,
         metadata,
     ):
+        company_id_id = (
+            int(metadata["company_id"])
+            if "company_id" in metadata
+            else self.env.company.id
+        )
         so_creation_dict = {
             "partner_id": partner_id.id,
-            "company_id": int(metadata["company_id"])
-            if "company_id" in metadata
-            else self.env.company.id,
+            "company_id": company_id_id,
             "commitment_date": start_date,
             "pricelist_id": pricelist_id.id,
             "service_invoicing_action": executed_action,
@@ -41,12 +44,11 @@ class SaleOrderUtils(Component):
         if payment_mode_id:
             so_creation_dict["payment_mode_id"] = payment_mode_id.id
         # Apply configuration sales team to service invoicing sales order
-        # TODO: Check if we ALWAYS receive here metadata["company_id"]
-        company_id = self.env["res.company"].browse(int(metadata["company_id"]))
-        if company_id.service_invoicing_sale_team_id:
-            so_creation_dict[
-                "team_id"
-            ] = self.env.company.service_invoicing_sale_team_id.id
+        team_id = pack_id.categ_id.with_context(
+            company_id=company_id_id
+        ).service_invoicing_sale_team_id
+        if team_id:
+            so_creation_dict["team_id"] = team_id.id
         if metadata:
             metadata_list = []
             for meta_key in metadata.keys():
