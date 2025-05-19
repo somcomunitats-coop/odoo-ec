@@ -286,5 +286,5 @@ class CrmLead(models.Model):
             return True
         return False
 
-    def get_metadata(self, meta_key):
+    def get_metadata_line(self, meta_key):
         return self.metadata_line_ids.filtered(lambda record: record.key == meta_key)
