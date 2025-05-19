@@ -4,10 +4,10 @@ from . import account_move
 from . import auth_oauth_provider
 from . import user_current_company_mixin
 from . import cm_filter
-from . import cm_map
 from . import cm_place
 from . import community_energy_action
 from . import energy_action
+from . import landing_cooperator_button
 from . import landing_page
 from . import mail_channel
 from . import mail_message

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 
 from odoo.addons.energy_communities.utils import get_translation
 
@@ -28,6 +28,11 @@ class LandingPage(models.Model):
     name = fields.Char(string="Name", translate=True)
     company_id = fields.Many2one("res.company", string="Company")
     wp_landing_page_id = fields.Integer(string="WP Landing Page")
+    wp_sync_mode = map_sync_mode = fields.Selection(
+        [("none", _("None")), ("update", _("Update"))],
+        compute="_compute_wp_sync_mode",
+        store=False,
+    )
     status = fields.Selection(
         selection=[("draft", _("Draft")), ("publish", _("Publish"))],
         default="draft",
@@ -56,7 +61,12 @@ class LandingPage(models.Model):
     become_cooperator_process = fields.Html(
         string="Become cooperator process", translate=True
     )
-    map_place_id = fields.Many2one("cm.place", "Place reference")
+    map_place_ids = fields.One2many("cm.place", "landing_id", string="Place references")
+    map_sync_mode = fields.Selection(
+        [("create", _("Create")), ("update", _("Update"))],
+        compute="_compute_map_sync_mode",
+        store=False,
+    )
     street = fields.Char(string="Street")
     postal_code = fields.Char(string="Postal code")
     city = fields.Char(string="City")
@@ -113,6 +123,25 @@ class LandingPage(models.Model):
         string="Parent landing page",
         related="company_id.parent_id.landing_page_id",
     )
+    cooperator_button_ids = fields.One2many(
+        "landing.cooperator.button", "landing_page_id", string="Cooperator buttons"
+    )
+
+    @api.depends("map_place_ids")
+    def _compute_map_sync_mode(self):
+        for record in self:
+            if record.map_place_ids:
+                record.map_sync_mode = "update"
+            else:
+                record.map_sync_mode = "create"
+
+    @api.depends("wp_landing_page_id")
+    def _compute_wp_sync_mode(self):
+        for record in self:
+            if record.wp_landing_page_id:
+                record.wp_sync_mode = "update"
+            else:
+                record.wp_sync_mode = "none"
 
     def _get_image_attachment(self, field_name, query):
         if not query:
@@ -189,7 +218,7 @@ class LandingPage(models.Model):
         else:
             secondary_image_file = ""
             secondary_image_file_write_date = ""
-        # returned dict
+        # place_reference
         return {
             "landing": {
                 "id": self.id,
@@ -201,6 +230,7 @@ class LandingPage(models.Model):
                 "status": self.status,
                 "community_type": self.community_type,
                 "community_secondary_type": self.community_secondary_type,
+                # TODO: review this weird way of getting a translation. Why not by API header context lang?
                 "legal_form": get_translation(
                     source=dict(_LEGAL_FORM_VALUES)[self.community_secondary_type],
                     lang=self.env.context["lang"],
@@ -232,7 +262,8 @@ class LandingPage(models.Model):
                 if self.become_cooperator_process == "<p><br></p>"
                 or not self.become_cooperator_process
                 else self.become_cooperator_process,
-                "map_reference": self.map_place_id.slug_id if self.map_place_id else "",
+                "cooperator_buttons": self._get_become_cooperator_button_list(),
+                "map_reference": self.slug_id or "",
                 "street": self.street or "",
                 "postal_code": self.postal_code or "",
                 "city": self.city or "",
@@ -243,6 +274,14 @@ class LandingPage(models.Model):
                 "management_services": self.management_services or "",
             }
         }
+
+    def _get_become_cooperator_button_list(self):
+        button_list = []
+        for coop_button in self.cooperator_button_ids.filtered(
+            lambda button: button.visibility == "visible"
+        ):
+            button_list.append(coop_button.to_dict())
+        return button_list
 
     def _must_display_map(self):
         if self.hierarchy_level == "coordinator":
@@ -291,7 +330,7 @@ class LandingPage(models.Model):
             ).update(landing_page_data)
 
     def update_map_place(self):
-        if self.map_place_id:
+        if self.map_place_ids:
             self.sudo()._update_landing_place()
         if self.hierarchy_level == "coordinator":
             if self.status == "publish":
@@ -301,9 +340,14 @@ class LandingPage(models.Model):
 
     def create_landing_place(self):
         LandingCmPlaceResource(self).create()
+        return True
+
+    def update_landing_place(self):
+        return self._update_landing_place()
 
     def _update_landing_place(self):
         LandingCmPlaceResource(self).update()
+        return True
 
     def company_hierarchy_level_url(self):
         if self.hierarchy_level == "coordinator":
@@ -387,7 +431,7 @@ class LandingPage(models.Model):
         )
         for community in existing_communities:
             if community.landing_page_id:
-                if community.landing_page_id.map_place_id:
+                if community.landing_page_id.map_place_ids:
                     related_coordinator_filter = community.landing_page_id.get_map_coordinator_filter_in_related_place(
                         self.company_id
                     )
@@ -396,6 +440,7 @@ class LandingPage(models.Model):
                             mode = 4
                         if type == "remove":
                             mode = 3
-                        community.landing_page_id.map_place_id.write(
-                            {"filter_mids": [(mode, related_coordinator_filter.id)]}
-                        )
+                        for place in community.landing_page_id.map_place_ids:
+                            place.write(
+                                {"filter_mids": [(mode, related_coordinator_filter.id)]}
+                            )

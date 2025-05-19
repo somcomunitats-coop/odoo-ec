@@ -6,16 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-26 11:24+0000\n"
-"PO-Revision-Date: 2025-03-26 12:47+0100\n"
+"POT-Creation-Date: 2025-05-09 13:38+0000\n"
+"PO-Revision-Date: 2025-05-09 13:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: ca_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser_pwd
@@ -54,20 +52,31 @@ msgstr "2) Crear usuari al Keycloak (en cas que encara no existeixi)"
 #: model:ir.model.fields.selection,name:energy_communities.selection__create_users_wizard__action__invite_user_through_kc
 #, python-format
 msgid "3) Send invitation email to confirm email and reset password"
-msgstr "3) Enviar correu invitació per confirmar email i resetejar contrasenya"
+msgstr ""
+"3) Enviar correu invitació per confirmar email i resetejar contrasenya"
 
 #. module: energy_communities
 #: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_campanya
+#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_energetica
+#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_goiener
 msgid ""
-"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 class=\"text-lg font-"
-"medium\">¡Muchas gracias por tu interés!</h2></br><div class =\"flex text-[#8a9f96]\">Cuando "
-"haya novedades con la Comunidad Energética contactaremos contigo y con las personas que "
-"también han mostrado interés y le ofreceremos apoyo para activarla. ¡Vamos!</div>"
+"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
+"class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2><p class "
+"=\"text-[#8a9f96] text-sm text-justify\">Cuando haya novedades con la "
+"Comunidad Energética contactaremos contigo y con las personas que también "
+"han mostrado interés y le ofreceremos apoyo para activarla.</p><p class "
+"=\"text-[#8a9f96] text-sm text-justify\">Comparte la información de la "
+"futura Comunidad Energética entre tu gente para hacerla posible entre "
+"todos!</p><p class =\"text-[#8a9f96] text-sm text-justify\">¡Vamos!</p>"
 msgstr ""
-"<h1 class=\"text-lg font-semibold\">Formulari enviat.</h1><h2 class=\"text-lg font-"
-"medium\">Moltes gràcies pel teu interès!</h2></br><div class=\"flex text-[#8a9f96]\">Quan hi "
-"hagi novetats amb la Comunitat Energètica contactarem amb tu i amb les persones que també han "
-"mostrat interès i us oferirem suport per activar-la. Som-hi!</div>"
+"<h1 class=\"text-lg font-semibold\">Formulari enviat.</h1><h2 class=\"text-"
+"lg font-medium\">Moltes gràcies pel teu interès!</h2><p "
+"class=\"text-[#8a9f96] text-sm text-justify mb-2 mt-2\">Quan hi hagi "
+"novetats amb la Comunitat Energètica contactarem amb tu i amb les persones "
+"que també han mostrat interès i us oferirem suport per activar-la.</p><p "
+"class=\"text-[#8a9f96] text-sm text-justify mb-2\">Comparteix la informació "
+"de la futura Comunitat Energètica entre la teva gent i feu-la possible entre"
+" totes!</p><p class=\"text-[#8a9f96] text-sm text-justify mb-2\">Som-hi!</p>"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_selection
@@ -86,17 +95,17 @@ msgstr ""
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.res_partner_view_form
 msgid ""
-"<strong>Hint: In order to edit company related params you have to visit the related contact's "
-"user.</strong>"
+"<strong>Hint: In order to edit company related params you have to visit the "
+"related contact's user.</strong>"
 msgstr ""
-"<strong>Consell: Per modificar els camps relacionats amb les companyies s'ha d'editar el seu "
-"usuari relacionat.</strong>"
+"<strong>Consell: Per modificar els camps relacionats amb les companyies s'ha"
+" d'editar el seu usuari relacionat.</strong>"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.mail_notification_layout
 msgid ""
-"<strong>Internal communication</strong>: Replying will post an internal note. Followers won't "
-"receive any email notification."
+"<strong>Internal communication</strong>: Replying will post an internal "
+"note. Followers won't receive any email notification."
 msgstr ""
 
 #. module: energy_communities
@@ -105,14 +114,9 @@ msgid "A super power user that is able to CRUD users on KC."
 msgstr "Un super-usuari amb permisos pper CRUD en KC."
 
 #. module: energy_communities
-#: model:cm.filter,name:energy_communities.map_filter_open
-msgid "Abierta"
-msgstr "Oberta"
-
-#. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_energy_actions
 msgid "Accions energètiques"
-msgstr "Accions energètiques"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.constraint,message:energy_communities.constraint_res_partner_bank_unique_number
@@ -170,19 +174,10 @@ msgid "Administrator"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_cm_map__admins_to_notify
-msgid "Admins to notify"
-msgstr "Admins a notificar"
-
-#. module: energy_communities
+#: model:cm.filter,name:energy_communities.map_filter_flexibility
 #: model:energy.action,name:energy_communities.energy_action_aggregate_demand
 msgid "Agregació i flexibilitat de la demanda"
-msgstr "Agregació i flexibilitat de la demanda"
-
-#. module: energy_communities
-#: model:cm.filter,name:energy_communities.map_filter_flexibility
-msgid "Agregación y flexibilidad de la demanda"
-msgstr "Agregació i flexibilitat de la demanda"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__allow_new_members
@@ -190,6 +185,8 @@ msgid "Allow new members"
 msgstr "Autoritza nous membres"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_cm_place__allowed_companies
+#: model:ir.model.fields,field_description:energy_communities.field_mail_template__allowed_companies
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__allowed_companies
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__allowed_companies
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__allowed_companies
@@ -200,12 +197,17 @@ msgstr "Empresas permitidas"
 #: model:ir.model.fields,field_description:energy_communities.field_account_setup_bank_manual_config__allowed_company_ids
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner_bank__allowed_company_ids
 msgid "Allowed Company"
-msgstr ""
+msgstr "Companyia permesa"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__allow_new_members
 msgid "Allows new members"
 msgstr "Autoritza nous membres"
+
+#. module: energy_communities
+#: model:cm.filter,name:energy_communities.map_filter_key_group
+msgid "Amb grup motor"
+msgstr ""
 
 #. module: energy_communities
 #. odoo-python
@@ -228,15 +230,6 @@ msgid "Attachment Count"
 msgstr "Número d'adjunts"
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/_services/ce_community_service.py:0
-#: code:addons/energy_communities/_services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/_services/ce_member_service.py:0
-#, python-format
-msgid "Authorization token not found"
-msgstr "Token d'autorització no trobat"
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__available_role_ids
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role__available_role_ids
 msgid "Available roles"
@@ -246,6 +239,22 @@ msgstr "Roles disponibles"
 #: model:ir.model,name:energy_communities.model_res_partner_bank
 msgid "Bank Accounts"
 msgstr "Comptes bancaris"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__mode__become_cooperator
+#, python-format
+msgid "Become Cooperator"
+msgstr "Esdevé membre"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__mode__become_company_cooperator
+#, python-format
+msgid "Become company cooperator"
+msgstr "Esdevé membre empresa"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__landing_become_cooperator_process
@@ -261,6 +270,8 @@ msgstr "Generar usuaris de plataforma per a les sòcies"
 
 #. module: energy_communities
 #: model:cm.map,searchbar_placeholder:energy_communities.map_campanya
+#: model:cm.map,searchbar_placeholder:energy_communities.map_sumate_energetica
+#: model:cm.map,searchbar_placeholder:energy_communities.map_sumate_goiener
 msgid "Buscar dirección o municipio"
 msgstr "Buscar adreça o municipi"
 
@@ -340,8 +351,8 @@ msgstr "Ciutat"
 
 #. module: energy_communities
 #: model:cm.place.category,name:energy_communities.map_place_category_citizen
-msgid "Ciudadanía"
-msgstr "Ciutadania"
+msgid "Ciutadania"
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.actions.act_window,help:energy_communities.ce_utm_sources_action
@@ -406,11 +417,11 @@ msgstr "Companyia Comunitat Energètica"
 #: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
 #, python-format
 msgid ""
-"Community created from: <a href='/web#id={id}"
-"&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
+"Community created from: <a "
+"href='/web#id={id}&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
 msgstr ""
-"Communitat creada desde: <a href='/web#id={id}"
-"&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
+"Communitat creada desde: <a "
+"href='/web#id={id}&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
 
 #. module: energy_communities
 #. odoo-python
@@ -458,6 +469,7 @@ msgstr "Empreses"
 #: model:ir.model.fields,field_description:energy_communities.field_account_setup_bank_manual_config__company_id
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__company_id
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__company_id
+#: model:ir.model.fields,field_description:energy_communities.field_mail_template__company_id
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner_bank__company_id
 msgid "Company"
 msgstr "Companyia"
@@ -471,7 +483,8 @@ msgstr "Logotip de companyia"
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
-msgid "Company comercial name must be established in order to create a landing"
+msgid ""
+"Company comercial name must be established in order to create a landing"
 msgstr "El nom comercial ha d'estar definit per poder crear una Landing"
 
 #. module: energy_communities
@@ -497,13 +510,13 @@ msgstr "Logo de la companyia"
 
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_collective_purchases
-msgid "Compras colectivas"
+msgid "Compres col.lectives"
 msgstr "Compres col·lectives"
 
 #. module: energy_communities
 #: model:energy.action,name:energy_communities.energy_action_collective_purchases
 msgid "Compres col·lectives"
-msgstr "Compres col·lectives"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_res_config_settings
@@ -520,14 +533,18 @@ msgstr "Configuració"
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid ""
-"Conflict on user values. Please verify that all values supposed to be unique are really "
-"unique. %(detail)s"
+"Conflict on user values. Please verify that all values supposed to be unique"
+" are really unique. %(detail)s"
 msgstr ""
-"Conflicte amb les dades de usuari. Si us plau, verifica que les dades que se suposa que són "
-"úniques per a cada usuari, realment ho siguin%(detail)s"
+"Conflicte amb les dades de usuari. Si us plau, verifica que les dades que se"
+" suposa que són úniques per a cada usuari, realment ho siguin%(detail)s"
 
 #. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #: model:ir.model,name:energy_communities.model_res_partner
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__mode__contact
+#, python-format
 msgid "Contact"
 msgstr "Contacte"
 
@@ -542,9 +559,21 @@ msgid "Cooperative"
 msgstr "Cooperativa"
 
 #. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
+#, python-format
+msgid "Cooperator button restore successful"
+msgstr "Botó de soci restaurat satisfactòriament"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__cooperator_button_ids
+msgid "Cooperator buttons"
+msgstr "Butons de soci"
+
+#. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_coordinator
 msgid "Coordinadora"
-msgstr "Coordinadora"
+msgstr ""
 
 #. module: energy_communities
 #. odoo-python
@@ -560,6 +589,14 @@ msgstr "Coordinadora"
 #: model:res.groups,name:energy_communities.role_coord_admin_res_groups
 msgid "Coordinator Admin"
 msgstr "Administrador de Coordinadora"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/migrations/16.0.0.3.0/pre-migrate.py:0
+#: code:addons/energy_communities/migrations/16.0.0.3.0/pre-migrate.py:0
+#, python-format
+msgid "Coordinator Worker"
+msgstr ""
 
 #. module: energy_communities
 #. odoo-python
@@ -585,8 +622,18 @@ msgstr "Crea una comunitat al mapa"
 
 #. module: energy_communities
 #: model:cm.map,proposal_cta_title:energy_communities.map_campanya
+#: model:cm.map,proposal_cta_title:energy_communities.map_sumate_energetica
+#: model:cm.map,proposal_cta_title:energy_communities.map_sumate_goiener
 msgid "Crear una comunidad"
 msgstr "Crear una comunitat"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__map_sync_mode__create
+#, python-format
+msgid "Create"
+msgstr "Crear"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__create_landing
@@ -629,6 +676,7 @@ msgstr "Creació d'usuaris"
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_energy_action__create_uid
+#: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_uid
 #: model:ir.model.fields,field_description:energy_communities.field_utils_backend__create_uid
 msgid "Created by"
@@ -639,6 +687,7 @@ msgstr "Creat per"
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_energy_action__create_date
+#: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__create_date
 #: model:ir.model.fields,field_description:energy_communities.field_utils_backend__create_date
 msgid "Created on"
@@ -648,6 +697,14 @@ msgstr "Creat el"
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__current_role
 msgid "Current Role"
 msgstr "Rol actual"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__mode__custom
+#, python-format
+msgid "Custom"
+msgstr "Personalitzat"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_users_form_form_inherit
@@ -669,6 +726,7 @@ msgstr "Canal de debat"
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_energy_action__display_name
+#: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__display_name
 #: model:ir.model.fields,field_description:energy_communities.field_utils_backend__display_name
 msgid "Display Name"
@@ -684,19 +742,20 @@ msgid "Draft"
 msgstr "Esborany"
 
 #. module: energy_communities
+#: model:cm.filter,name:energy_communities.map_filter_efficiency
 #: model:energy.action,name:energy_communities.energy_action_energy_efficiency
 msgid "Eficiencia energètica"
-msgstr "Eficiència Energètica"
-
-#. module: energy_communities
-#: model:cm.filter,name:energy_communities.map_filter_efficiency
-msgid "Eficiencia energética"
 msgstr "Eficiència Energètica"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__email
 msgid "Email"
 msgstr "Correu electrònic"
+
+#. module: energy_communities
+#: model:ir.model,name:energy_communities.model_mail_template
+msgid "Email Templates"
+msgstr "Plantilles de correu electrònic"
 
 #. module: energy_communities
 #. odoo-python
@@ -706,9 +765,10 @@ msgid "Email is not valid"
 msgstr "El correu no és vàlid"
 
 #. module: energy_communities
+#: model:cm.filter,name:energy_communities.map_filter_thermal_energy
 #: model:energy.action,name:energy_communities.energy_action_thermal_energy
 msgid "Energia tèrmica i climatització"
-msgstr "Energia tèrmica i climatització"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__energy_action_id
@@ -765,19 +825,16 @@ msgid "Energy actions"
 msgstr "Accions energètiques"
 
 #. module: energy_communities
-#: model:cm.filter,name:energy_communities.map_filter_thermal_energy
-msgid "Energía térmica y climatización"
-msgstr "Energía tèrmica y climatització"
-
-#. module: energy_communities
 #: model:cm.form.model,button_label:energy_communities.map_form_model_campanya
+#: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_energetica
+#: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_goiener
 msgid "Enviar"
-msgstr "Enviar"
+msgstr ""
 
 #. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_community_status
 msgid "Estat actual de la comunitat"
-msgstr "Estat actual de la comunitat"
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_change_coordinator_wizard_form
@@ -837,29 +894,15 @@ msgid "Force send invitation email in case it has been already sent"
 msgstr "Forçar enviament invitació en cas que ja s'hagi fet anteriorment"
 
 #. module: energy_communities
+#: model:cm.filter,name:energy_communities.map_filter_training
 #: model:energy.action,name:energy_communities.energy_action_citizen_education
 msgid "Formació ciutadana"
-msgstr "Formació ciutadana"
-
-#. module: energy_communities
-#: model:cm.filter,name:energy_communities.map_filter_training
-msgid "Formación ciudadana"
-msgstr "Formació ciutadana"
+msgstr ""
 
 #. module: energy_communities
 #: model:cm.map,proposal_form_subtitle_step_form:energy_communities.map_campanya
 msgid "Formulario de creación"
 msgstr "Formulari de creació"
-
-#. module: energy_communities
-#: model:ir.ui.menu,name:energy_communities.ec_formulas_menu
-msgid "Formulas"
-msgstr "Formules de quantitat"
-
-#. module: energy_communities
-#: model:ir.actions.act_window,name:energy_communities.view_ec_formulas_window
-msgid "Formulas (quantity)"
-msgstr "Formules de quantitat"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__foundation_date
@@ -870,12 +913,12 @@ msgstr "Data creació"
 #. module: energy_communities
 #: model:energy.action,name:energy_communities.energy_action_common_generation
 msgid "Generació renovable comunitaria"
-msgstr "Generació renovable comunitaria"
+msgstr ""
 
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_generation
-msgid "Generación renovable comunitaria"
-msgstr "Generació renovable comunitaria"
+msgid "Generació renovable comunitària"
+msgstr ""
 
 #. module: energy_communities
 #. odoo-python
@@ -904,7 +947,11 @@ msgid "Has Rel User"
 msgstr "Té usuari relacionat"
 
 #. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__community_energy_action__public_status__hidden
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__visibility__hidden
+#, python-format
 msgid "Hidden"
 msgstr "Amagat"
 
@@ -920,10 +967,11 @@ msgstr "Nivell jeràrquic"
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__id
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__id
 #: model:ir.model.fields,field_description:energy_communities.field_energy_action__id
+#: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__id
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__id
 #: model:ir.model.fields,field_description:energy_communities.field_utils_backend__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_utm_source__source_ext_id
@@ -956,11 +1004,13 @@ msgstr "Si està marcat, alguns missatges tenen un error d'entrega."
 #: model:ir.model.fields,help:energy_communities.field_res_company__notify_to_coord_child_ccee_submissions
 #, python-format
 msgid ""
-"If it is checked, the Coordinator will receive a copy of each auto-response email that is "
-"generated in any of its CCEE when a new Member Subscription request is received."
+"If it is checked, the Coordinator will receive a copy of each auto-response "
+"email that is generated in any of its CCEE when a new Member Subscription "
+"request is received."
 msgstr ""
-"Si està marcat la Coordinadora rebrà una còpia de cada correu d’autoresposta que es generi en "
-"qualsevol de les seves CCEE quan es rebi una nova socilitud de sòcia a la CE."
+"Si està marcat la Coordinadora rebrà una còpia de cada correu d’autoresposta"
+" que es generi en qualsevol de les seves CCEE quan es rebi una nova "
+"socilitud de sòcia a la CE."
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_change_coordinator_wizard__incoming_coordinator
@@ -985,7 +1035,7 @@ msgstr "Empresari Individual"
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_type__industrial
 #, python-format
 msgid "Industrial"
-msgstr "Industrial"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_instagram_url
@@ -1009,6 +1059,21 @@ msgid "Journal Entry"
 msgstr "Assentament comptable"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_places_search
+msgid "Key Group NOT activated"
+msgstr "Grup clau no activat"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_places_search
+msgid "Key Group activated"
+msgstr "Grup clau activat"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_cm_place__key_group_activated
+msgid "Key group activated"
+msgstr "Grup clau activat"
+
+#. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
@@ -1022,7 +1087,15 @@ msgstr "Proveïdor KeyCloak"
 
 #. module: energy_communities
 #. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
+#, python-format
+msgid "Label and url restored to defaults."
+msgstr "Text i Link restaurat to els valors inicials."
+
+#. module: energy_communities
+#. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__landing_page_id
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__landing_page_id
 #: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
 #, python-format
@@ -1044,18 +1117,19 @@ msgid "Landing lng param required for place creation"
 msgstr "La longitud és requerida per la creació d'un punt de mapa"
 
 #. module: energy_communities
+#: model:ir.model,name:energy_communities.model_landing_cooperator_button
 #: model:ir.model,name:energy_communities.model_landing_page
 #: model:ir.model.fields,field_description:energy_communities.field_cm_filter__landing_id
 msgid "Landing page"
-msgstr "landing.page"
+msgstr "Pàgina Landing"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/cm_place.py:0
-#: model:ir.model.fields,field_description:energy_communities.field_cm_place__landing_reference
+#: model:ir.model.fields,field_description:energy_communities.field_cm_place__landing_id
 #, python-format
 msgid "Landing reference"
-msgstr "Referència a la pàgina web"
+msgstr "Referència a la Landing"
 
 #. module: energy_communities
 #. odoo-python
@@ -1074,6 +1148,7 @@ msgstr "Idioma"
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_energy_action____last_update
+#: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page____last_update
 #: model:ir.model.fields,field_description:energy_communities.field_utils_backend____last_update
 msgid "Last Modified on"
@@ -1084,6 +1159,7 @@ msgstr "Última modificació el"
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_energy_action__write_uid
+#: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_uid
 #: model:ir.model.fields,field_description:energy_communities.field_utils_backend__write_uid
 msgid "Last Updated by"
@@ -1094,6 +1170,7 @@ msgstr "Última actualització per"
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_create_users_wizard__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_energy_action__write_date
+#: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__write_date
 #: model:ir.model.fields,field_description:energy_communities.field_utils_backend__write_date
 msgid "Last Updated on"
@@ -1187,6 +1264,11 @@ msgid "Main Attachment"
 msgstr "Adjunt principal"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__map_sync_mode
+msgid "Map Sync Mode"
+msgstr ""
+
+#. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
@@ -1209,14 +1291,15 @@ msgid "Messages"
 msgstr "Missatges"
 
 #. module: energy_communities
+#: model:cm.filter,name:energy_communities.map_filter_mobility
 #: model:energy.action,name:energy_communities.energy_action_sustainable_mobility
 msgid "Mobilitat sostenible"
-msgstr "Mobilitat sostenible"
+msgstr ""
 
 #. module: energy_communities
-#: model:cm.filter,name:energy_communities.map_filter_mobility
-msgid "Movilidad sostenible"
-msgstr "Mobilitat sostenible"
+#: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__mode
+msgid "Mode"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__my_activity_date_deadline
@@ -1236,7 +1319,7 @@ msgstr "La meva web"
 #. module: energy_communities
 #: model:cm.map,external_link_cta_txt:energy_communities.map_campanya
 msgid "Més informació"
-msgstr "Més informació"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__company_hierarchy_level__none
@@ -1245,6 +1328,7 @@ msgstr "Cap"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_energy_action__name
+#: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__name
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__name
 msgid "Name"
 msgstr "Nom"
@@ -1275,35 +1359,14 @@ msgid ""
 "Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats Energètiques\n"
 "        "
 msgstr ""
-"Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats Energètiques\n"
-"        "
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/_services/ce_community_service.py:0
-#, python-format
-msgid "No Odoo Company found for odoo_company_id %s"
-msgstr "No s'ha trobat cap empresa al Odoo pel paràmetre: odoo_company_id= %s"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/_services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/_services/ce_member_service.py:0
-#, python-format
-msgid "No Odoo Partner found for Odoo user with login username %s"
-msgstr "No s'ha trobat cap Contacte per al Usuari amb el login: %s"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/_services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/_services/ce_member_service.py:0
-#, python-format
-msgid "No Odoo User found for KeyCloak user id %s"
-msgstr "No s'ha trobat cap Usuari d'Odoo vinculat al Usuari de KeyCloak: %s"
 
 #. module: energy_communities
 #: model:cm.map,noresults_msg:energy_communities.map_campanya
-msgid "No hemos encontrado resultados. Prueba a cambiar la configuración de filtros."
+#: model:cm.map,noresults_msg:energy_communities.map_sumate_energetica
+#: model:cm.map,noresults_msg:energy_communities.map_sumate_goiener
+msgid ""
+"No hemos encontrado resultados. Prueba a cambiar la configuración de "
+"filtros."
 msgstr "No hem trobats resultats. Prova a canviar la configuració de filtres."
 
 #. module: energy_communities
@@ -1315,6 +1378,14 @@ msgstr "No hem trobats resultats. Prova a canviar la configuració de filtres."
 #, python-format
 msgid "Non profit association"
 msgstr "Associació sense ànim de lucre"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__wp_sync_mode__none
+#, python-format
+msgid "None"
+msgstr "Cap"
 
 #. module: energy_communities
 #. odoo-python
@@ -1356,14 +1427,20 @@ msgid "OAuth2 provider"
 msgstr "Proveïdor OAuth2"
 
 #. module: energy_communities
+#: model:cm.filter,name:energy_communities.map_filter_open
+msgid "Oberta"
+msgstr ""
+
+#. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid ""
-"Only users that belongs to the 'Coordinator' or 'Instance' company can create new Map Places."
+"Only users that belongs to the 'Coordinator' or 'Instance' company can "
+"create new Map Places."
 msgstr ""
-"Només usuaris pertanyents a una companyia coordinadora o instància poden crear nous punts de "
-"mapa."
+"Només usuaris pertanyents a una companyia coordinadora o instància poden "
+"crear nous punts de mapa."
 
 #. module: energy_communities
 #. odoo-python
@@ -1373,11 +1450,6 @@ msgstr ""
 #, python-format
 msgid "Open"
 msgstr "Obert"
-
-#. module: energy_communities
-#: model:cm.filter,name:energy_communities.map_filter_to_activate
-msgid "Para activar"
-msgstr "Per activar"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__parent_id
@@ -1421,6 +1493,11 @@ msgid "Payment Date"
 msgstr "Data de pagament"
 
 #. module: energy_communities
+#: model:cm.filter,name:energy_communities.map_filter_to_activate
+msgid "Per activar"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__phone
 msgid "Phone"
 msgstr "Telèfon"
@@ -1440,12 +1517,13 @@ msgid "Place presenter not found slug_id: {}"
 msgstr "Presenter del punt no trobat per slug_id: {}"
 
 #. module: energy_communities
-#: model:ir.model.fields,field_description:energy_communities.field_landing_page__map_place_id
-msgid "Place reference"
-msgstr "Referència del lloc"
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__map_place_ids
+msgid "Place references"
+msgstr ""
 
 #. module: energy_communities
 #. odoo-python
+#: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
 #, python-format
 msgid "Place status filter not found slug_id: {}"
@@ -1585,27 +1663,30 @@ msgid "Responsible User"
 msgstr "Usuari responsable"
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/models/res_users.py:0
-#, python-format
-msgid "Role not found"
-msgstr "Rol no trobat"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/models/res_users.py:0
-#, python-format
-msgid "Role {} is not available for company {} of type {}. This type of company allows roles {}"
+#: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
+msgid "Restore defaults"
 msgstr ""
-"El rol {} no es pot triar per a la empresa {} de tipus {}. Aquest tipus de empresas permeten "
-"els rols {}"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
-msgid "Role {} is not available for user with {} role. This role only allows {}"
-msgstr "El rol {} no es pot triar per a usuaris amb el rol {}. Només es poden triar els rols {}"
+msgid ""
+"Role {} is not available for company {} of type {}. This type of company "
+"allows roles {}"
+msgstr ""
+"El rol {} no es pot triar per a la empresa {} de tipus {}. Aquest tipus de "
+"empresas permeten els rols {}"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/res_users.py:0
+#, python-format
+msgid ""
+"Role {} is not available for user with {} role. This role only allows {}"
+msgstr ""
+"El rol {} no es pot triar per a usuaris amb el rol {}. Només es poden triar "
+"els rols {}"
 
 #. module: energy_communities
 #: model:ir.model.constraint,message:energy_communities.constraint_res_users_role_line_user_role_uniq
@@ -1631,11 +1712,11 @@ msgstr "Imatge secundària"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_create_users_wizard_form
 msgid ""
-"Select the stages to be covered by each partner (the selection of a stage implies the "
-"execution of the precedents):"
+"Select the stages to be covered by each partner (the selection of a stage "
+"implies the execution of the precedents):"
 msgstr ""
-"Selecciona les etapes a cubrir per a cada persona sòcia (la selecció d'una etapa implica la "
-"execució dels precedents):"
+"Selecciona les etapes a cubrir per a cada persona sòcia (la selecció d'una "
+"etapa implica la execució dels precedents):"
 
 #. module: energy_communities
 #. odoo-python
@@ -1720,6 +1801,14 @@ msgid "Something went wrong. Please check logs."
 msgstr "Quelcom ha anat malament. Si us plau revisa els LOGS."
 
 #. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
+#: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__sort_order
+#, python-format
+msgid "Sort order"
+msgstr "Ordre"
+
+#. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_config_sources_menu
 msgid "Source types"
 msgstr "Tipus d'origens"
@@ -1777,19 +1866,17 @@ msgid "Street"
 msgstr "Carrer"
 
 #. module: energy_communities
+#: model:cm.filter,name:energy_communities.map_filter_supply
 #: model:energy.action,name:energy_communities.energy_action_renewable_energy
 msgid "Subministrament d'energia 100% renovable"
-msgstr "Subministrament d'energia 100% renovable"
+msgstr ""
 
 #. module: energy_communities
 #: model:cm.form.model,cta_button_label:energy_communities.map_form_model_campanya
+#: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_energetica
+#: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_goiener
 msgid "Sumarme"
 msgstr "Sumar-me"
-
-#. module: energy_communities
-#: model:cm.filter,name:energy_communities.map_filter_supply
-msgid "Suministro de energía 100% renovable"
-msgstr "Subministrament d'energia 100% renovable"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__superuser
@@ -1824,30 +1911,16 @@ msgstr "Gràcies!"
 
 #. module: energy_communities
 #. odoo-python
-#: code:addons/energy_communities/_services/ce_community_service.py:0
-#: code:addons/energy_communities/_services/ce_member_profile_service.py:0
-#: code:addons/energy_communities/_services/ce_member_service.py:0
-#, python-format
-msgid "The received oauth KeyCloak token have not been validated by KeyCloak : {}"
-msgstr "El oauth token rebut no ha estat validat per Keycloak: {}"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/_services/ce_member_service.py:0
-#, python-format
-msgid "The role code '{}' is not a valid one"
-msgstr "El rol '{}' no és vàlid"
-
-#. module: energy_communities
-#. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid ""
-"There has been a coordinator change             from [OLD:{outgoing_id}] {outgoing_name} to "
-"[NEW:{incoming_id}] {incoming_name},             Change reason: {change_reason}"
+"There has been a coordinator change             from [OLD:{outgoing_id}] "
+"{outgoing_name} to [NEW:{incoming_id}] {incoming_name},             Change "
+"reason: {change_reason}"
 msgstr ""
-"Hi ha hagut un canvi de Coordinadora             de [OLD:{outgoing_id}] {outgoing_name} a "
-"[NEW:{incoming_id}] {incoming_name},             Motiu del canvi: {change_reason}"
+"Hi ha hagut un canvi de Coordinadora             de [OLD:{outgoing_id}] "
+"{outgoing_name} a [NEW:{incoming_id}] {incoming_name},             Motiu del"
+" canvi: {change_reason}"
 
 #. module: energy_communities
 #. odoo-python
@@ -1865,22 +1938,17 @@ msgstr "La Comunitat ha sigut moguda a una nova Coordinadora"
 
 #. module: energy_communities
 #. odoo-python
-#: code:addons/energy_communities/_services/ce_member_profile_service.py:0
-#, python-format
-msgid "This language code %s is not active in Odoo. Active ones: %s"
-msgstr "Aquest codi d'idioma %s no està actiu a l'Odoo. Els actius són: %s"
-
-#. module: energy_communities
-#. odoo-python
 #: code:addons/energy_communities/components/user_creator.py:0
 #, python-format
 msgid ""
-"This wizard can only run with ONE company selected. Please limit the context of the selected "
-"companies to one."
+"This wizard can only run with ONE company selected. Please limit the context"
+" of the selected companies to one."
 msgstr ""
 
 #. module: energy_communities
 #: model:cm.map,categories_filter_title:energy_communities.map_campanya
+#: model:cm.map,categories_filter_title:energy_communities.map_sumate_energetica
+#: model:cm.map,categories_filter_title:energy_communities.map_sumate_goiener
 #: model:cm.map,proposal_form_subtitle_step_category:energy_communities.map_campanya
 msgid "Tipo de comunidad"
 msgstr "Tipus de Comunitat"
@@ -1906,31 +1974,22 @@ msgstr "Origen UTM"
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid ""
-"Unable to create new company because there is an allready existing company with this NAME: {}"
-msgstr "No és possible crear la nova companyia per que ja existeix una amb aquest nom: {}"
+"Unable to create new company because there is an allready existing company "
+"with this NAME: {}"
+msgstr ""
+"No és possible crear la nova companyia per que ja existeix una amb aquest "
+"nom: {}"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid ""
-"Unable to create new company because there is an allready existing company with this VAT "
-"number: {}"
-msgstr "No és possible crear la nova companyia per que ja existeix una amb aquest NIF/CIF: {}"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/_services/ce_member_profile_service.py:0
-#, python-format
-msgid "Unable to update the lang in Keycloak for the related KC user ID: {}.{}"
-msgstr "No s'ha pogut actualizar l'idioma al KeyCloak pel usuari de KeyCloak amb ID: {}.{}"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/_services/ce_member_profile_service.py:0
-#, python-format
-msgid "Unable to validate the received oauth KeyCloak token: {}"
-msgstr "No s'ha pogut validar el Oauth token rebut: {}"
+"Unable to create new company because there is an allready existing company "
+"with this VAT number: {}"
+msgstr ""
+"No és possible crear la nova companyia per que ja existeix una amb aquest "
+"NIF/CIF: {}"
 
 #. module: energy_communities
 #. odoo-python
@@ -1946,6 +2005,16 @@ msgstr "En definició"
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
 msgid "Unpublish"
 msgstr "Despublicar"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_page.py:0
+#: code:addons/energy_communities/models/landing_page.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__map_sync_mode__update
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__wp_sync_mode__update
+#, python-format
+msgid "Update"
+msgstr "Actualitzar"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
@@ -1964,6 +2033,11 @@ msgid "Upload a new one to change"
 msgstr "Carregueu-ne una de nou per canviar"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__url
+msgid "Url"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__creation_partner
 msgid "Use existing partner linked to new company"
 msgstr "Fer servir contacte existent per vincular-ho a la nova companyia"
@@ -1976,6 +2050,8 @@ msgstr "Usuaris"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__user_current_company
+#: model:ir.model.fields,field_description:energy_communities.field_cm_place__user_current_company
+#: model:ir.model.fields,field_description:energy_communities.field_mail_template__user_current_company
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__user_current_company
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__user_current_company
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__user_current_company
@@ -1983,6 +2059,8 @@ msgid "User Current Company"
 msgstr "Companyia actial de l'usuari"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_cm_place__user_current_role
+#: model:ir.model.fields,field_description:energy_communities.field_mail_template__user_current_role
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__user_current_role
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__user_current_role
 #: model:ir.model.fields,field_description:energy_communities.field_user_currentcompany_mixin__user_current_role
@@ -2030,6 +2108,7 @@ msgstr ""
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
+#: code:addons/energy_communities/models/res_users.py:0
 #, python-format
 msgid "Users"
 msgstr "Usuaris"
@@ -2047,7 +2126,9 @@ msgstr "Usuaris relacionats amb el rol"
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_res_company__create_user_in_keycloak
 msgid "Users created by cooperator are pushed automatically to keycloak"
-msgstr "Els usuaris creats pel mòdul Cooperator són replicats automàticament a KeyCloak"
+msgstr ""
+"Els usuaris creats pel mòdul Cooperator són replicats automàticament a "
+"KeyCloak"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_utils_backend
@@ -2062,6 +2143,19 @@ msgstr "NIF"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_partner_form
 msgid "View"
+msgstr "Veure"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__visibility
+msgid "Visibility"
+msgstr "Visibilitat"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__visibility__visible
+#, python-format
+msgid "Visible"
 msgstr ""
 
 #. module: energy_communities
@@ -2072,7 +2166,7 @@ msgstr "Pàgina de destinació WP"
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.website_form_submit_confirmation
 msgid "We will get back to you shortly."
-msgstr "Ens posarem en contacte amb tu al més aviat possible"
+msgstr "Ens posarem en contacte amb tu al més aviat possible."
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__website
@@ -2103,6 +2197,7 @@ msgstr "Assistent per facilitar la creació de companyies"
 
 #. module: energy_communities
 #. odoo-python
+#: code:addons/energy_communities/models/res_company.py:0
 #: code:addons/energy_communities/models/res_company.py:0
 #: code:addons/energy_communities/models/res_config_settings.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__wordpress_base_url
@@ -2144,18 +2239,25 @@ msgid "Wordpress landing and map place has been successfully updated."
 msgstr "Landing de wordpress i punt de mapa s'han actualitzat amb èxit."
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_sync_mode
+msgid "Wp Sync Mode"
+msgstr ""
+
+#. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
 #, python-format
 msgid "You cannot create a instance company with a parent company."
 msgstr ""
-"Ho hi pot haver una empresa de nivell Instància que tingui una empresa principal assignada."
+"Ho hi pot haver una empresa de nivell Instància que tingui una empresa "
+"principal assignada."
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
 #, python-format
-msgid "You cannot link more than one user to a partner. Please check partner {}"
+msgid ""
+"You cannot link more than one user to a partner. Please check partner {}"
 msgstr ""
 
 #. module: energy_communities
@@ -2194,11 +2296,6 @@ msgid "cm.filter"
 msgstr ""
 
 #. module: energy_communities
-#: model:ir.model,name:energy_communities.model_cm_map
-msgid "cm.map"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model,name:energy_communities.model_cm_place
 msgid "cm.place"
 msgstr ""
@@ -2226,12 +2323,18 @@ msgstr "dd/mm/aaaa"
 #. module: energy_communities
 #: model:cm.map,cookies_link:energy_communities.map_campanya
 msgid "https://somcomunitats.coop/es/politica-de-cookies/"
-msgstr ""
+msgstr "https://somcomunitats.coop/es/politica-de-cookies/"
 
 #. module: energy_communities
 #: model:cm.map,privacy_link:energy_communities.map_campanya
+#: model:cm.map,privacy_link:energy_communities.map_sumate_goiener
 msgid "https://somcomunitats.coop/es/politica-de-privacidad/"
-msgstr ""
+msgstr "https://somcomunitats.coop/politica-de-privacitat/"
+
+#. module: energy_communities
+#: model:cm.map,privacy_link:energy_communities.map_sumate_energetica
+msgid "https://www.energetica.coop/politica-de-privacidad/"
+msgstr "https://www.energetica.coop/politica-de-privacidad/"
 
 #. module: energy_communities
 #: model:cm.form.model,json_uischema:energy_communities.map_form_model_campanya
@@ -2341,22 +2444,300 @@ msgid ""
 "      ]\n"
 "    },\n"
 "    {\n"
-"      \"type\": \"VerticalLayout\",\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Informació sobre protecció de dades\",\n"
 "      \"elements\": [\n"
 "        {\n"
-"          \"type\": \"Display\",\n"
-"          \"scope\": \"#/properties/newsletter_info\",\n"
-"          \"options\": {\n"
-"            \"html\": \"<div class='p-1 border border-transparent empty:hidden text-sm text-"
-"gray-500'>Amb l'enviament d'aquest formulari, accepteu rebre notícies d'aquesta Comunitat</"
-"div>\"\n"
-"          }\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Display\",\n"
+"              \"scope\": \"#/properties/newsletter_info\",\n"
+"              \"options\": {\n"
+"                \"html\": \"<div class='p-1 border border-transparent empty:hidden text-sm text-gray-500'><p class='mb-2'>Les seves dades seran tractades per gestionar el registre com a persona interessada en ser membre d’una Comunitat Energètica i mantenir-lo informat sobre la constitució de les comunitats energètiques que puguin ser del seu interès. Les seves dades podran ser cedides a una Comunitat Energètica en procés de constitució, per tal d’informar-la del seu possible interès a participar en ella i facilitar d’aquesta manera els contactes previs  per  a un futur membre de la Comunitat Energètica que es vol constituir i mantenir-lo informat sobre els avenços i novetats en relació amb aquesta Comunitat Energètica. Quan la Comunitat Energètica sigui finalment constituïda, les seves dades seran cedides a la mateixa per tal que es gestioni l’alta definitiva. La Comunitat Energètica, com a responsable, l’informarà correctament sobre el tractament de les seves dades.</p><p class='mb-2'>Si marca la casella d’acceptació, podrem enviar-li comunicacions sobre els serveis i activitats de SOM COMUNITATS, inclús per mitjans electrònics.</p><p class='mb-2'>Pot exercir el seu dret d'accés, rectificació, supressió, oposició, limitació i portabilitat de les seves dades a <a class='underline text-[#8a9f96]' href='mailto:info@somcomnuitats.coop' target='_blank'>info@somcomunitats.coop</a>.</p></div>\"\n"
+"              }\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/newsletter\",\n"
+"              \"label\": \"Accepto rebre informació sobre el serveis de SOM COMUNITATS per mitjans electrònics.\"\n"
+"            }\n"
+"          ]\n"
 "        }\n"
 "      ]\n"
 "    }\n"
 "  ]\n"
 "}"
 msgstr ""
+
+#. module: energy_communities
+#: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_energetica
+#: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_goiener
+msgid ""
+"{\n"
+"  \"type\": \"VerticalLayout\",\n"
+"  \"elements\": [\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Datos de contacto\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/name\",\n"
+"              \"label\": \"Nombre\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/surname\",\n"
+"              \"label\": \"Apellidos\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/vat\",\n"
+"              \"label\": \"NIF\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/email\",\n"
+"              \"label\": \"Correo electrónico\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/phone\",\n"
+"              \"label\": \"Teléfono\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"   {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Como quieres participar en la Comunidad?*\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_member_implication\",\n"
+"              \"label\": false,\n"
+"              \"options\": {\n"
+"                \"format\": \"radio\"\n"
+"               }\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"De qué Servicios energéticos te gustaría participar\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_common_generation\",\n"
+"              \"label\": \"Generación renovable comunitaria\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_sustainable_mobility\",\n"
+"              \"label\": \"Movilidad sostenible\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_citizen_education\",\n"
+"              \"label\": \"Formación ciudadana\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_thermal_energy\",\n"
+"              \"label\": \"Energía térmica y climatización\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_collective_purchases\",\n"
+"              \"label\": \"Compras colectivas\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_aggregate_demand\",\n"
+"              \"label\": \"Agregación y flexibilidad de la demanda\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_renewable_energy\",\n"
+"              \"label\": \"Suministro de energía 100% renovable\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_energy_efficiency\",\n"
+"              \"label\": \"Eficiencia energética\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Información sobre protección de datos\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Display\",\n"
+"              \"scope\": \"#/properties/newsletter_info\",\n"
+"              \"options\": {\n"
+"                \"html\": \"<div class='p-1 border border-transparent empty:hidden text-sm text-gray-500'><p class='mb-2'>Sus datos serán tratados para gestionar el registro como persona interesada en ser  miembro de una   Comunidad Energética y mantenerlo informado sobre la constitución de  las comunidades energéticas que puedan ser de su interés. Sus datos podrán ser cedidos a una Comunidad Energética en proceso de constitución, a fin de informarle de su posible interés en participar en ella y facilitar así los contactos previos para eventualmente poder entrar en ella. La Comunidad Energética, como responsable, lo informará correctamente sobre el tratamiento de sus datos.</p><p class='mb-2'>Si marca la casilla de aceptación, podremos enviarle comunicaciones sobre los servicios y actividades de SOM COMUNITATS, incluso por medios electrónicos.</p><p class='mb-2'>Puede ejercer su derecho de acceso, rectificación, supresión, oposición, limitación y portabilidad de sus datos en <a class='underline text-[#8a9f96]' href='mailto:info@somcomnuitats.coop' target='_blank'>info@somcomunitats.coop</a>.</p></div>\"\n"
+"              }\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/newsletter\",\n"
+"              \"label\": \"Acepto recibir información sobre los servicios de SOM COMUNITATS por medios electrónicos.\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    }\n"
+"  ]\n"
+"}"
+msgstr ""
+"{\n"
+"  \"type\": \"VerticalLayout\",\n"
+"  \"elements\": [\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Dades de contacte\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/name\",\n"
+"              \"label\": \"Nom\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/surname\",\n"
+"              \"label\": \"Cognoms\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/email\",\n"
+"              \"label\": \"Correu electrònic\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/phone\",\n"
+"              \"label\": \"Telèfon\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Com vols participar en la Comunitat?*\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_member_implication\",\n"
+"              \"label\": false,\n"
+"              \"options\": {\n"
+"                \"format\": \"radio\"\n"
+"               }\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"De quins Serveis energètics t'agradaria participar\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_common_generation\",\n"
+"              \"label\": \"Generació renovable comunitaria\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_sustainable_mobility\",\n"
+"              \"label\": \"Mobilitat sostenible\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_citizen_education\",\n"
+"              \"label\": \"Formació ciutadana\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_thermal_energy\",\n"
+"              \"label\": \"Energia tèrmica i climatització\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_collective_purchases\",\n"
+"              \"label\": \"Compres col.lectives\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_aggregate_demand\",\n"
+"              \"label\": \"Agregació i flexibilitat de la demanda\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_renewable_energy\",\n"
+"              \"label\": \"Subministrament d'energia 100% renovable\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_energy_efficiency\",\n"
+"              \"label\": \"Eficiencia energètica\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Informació sobre protecció de dades\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Display\",\n"
+"              \"scope\": \"#/properties/newsletter_info\",\n"
+"              \"options\": {\n"
+"                \"html\": \"<div class='p-1 border border-transparent empty:hidden text-sm text-gray-500'><p class='mb-2'>Les seves dades seran tractades per gestionar el registre com a persona interessada en ser membre d’una Comunitat Energètica i mantenir-lo informat sobre la constitució de les comunitats energètiques que puguin ser del seu interès. Les seves dades podran ser cedides a una Comunitat Energètica en procés de constitució, per tal d’informar-la del seu possible interès a participar en ella i facilitar d’aquesta manera els contactes previs  per  a un futur membre de la Comunitat Energètica que es vol constituir i mantenir-lo informat sobre els avenços i novetats en relació amb aquesta Comunitat Energètica. Quan la Comunitat Energètica sigui finalment constituïda, les seves dades seran cedides a la mateixa per tal que es gestioni l’alta definitiva. La Comunitat Energètica, com a responsable, l’informarà correctament sobre el tractament de les seves dades.</p><p class='mb-2'>Si marca la casella d’acceptació, podrem enviar-li comunicacions sobre els serveis i activitats de SOM COMUNITATS, inclús per mitjans electrònics.</p><p class='mb-2'>Pot exercir el seu dret d'accés, rectificació, supressió, oposició, limitació i portabilitat de les seves dades a <a class='underline text-[#8a9f96]' href='mailto:info@somcomnuitats.coop' target='_blank'>info@somcomunitats.coop</a>.</p></div>\"\n"
+"              }\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/newsletter\",\n"
+"              \"label\": \"Accepto rebre informació sobre el serveis de SOM COMUNITATS per mitjans electrònics.\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    }\n"
+"  ]\n"
+"}"
 
 #. module: energy_communities
 #: model:cm.form.model,json_schema:energy_communities.map_form_model_campanya
@@ -2435,6 +2816,154 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
+#: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_energetica
+#: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_goiener
+msgid ""
+"{\n"
+"  \"type\": \"object\",\n"
+"  \"properties\": {\n"
+"    \"name\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"surname\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"email\": {\n"
+"      \"type\": \"string\",\n"
+"      \"format\": \"email\"\n"
+"    },\n"
+"    \"phone\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"ce_member_implication\": {\n"
+"      \"type\": \"string\",\n"
+"      \"enum\": [\n"
+"        \"low\",        \n"
+"        \"medium\",\n"
+"        \"high\",\n"
+"        \"leadership\"\n"
+"      ],\n"
+"      \"i18n\": \"ce_member_implication\",\n"
+"      \"translations\": {\n"
+"        \"low\": \"No puedo participar mucho\",\n"
+"        \"medium\": \"Puedo participar un poco\",\n"
+"        \"high\": \"Quiero y puedo participar\",\n"
+"        \"leadership\": \"Me gustaría liderar y participar\"\n"
+"      }\n"
+"    },\n"
+"    \"ce_tag_common_generation\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_energy_efficiency\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_sustainable_mobility\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_citizen_education\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_thermal_energy\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_collective_purchases\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_renewable_energy\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_aggregate_demand\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"newsletter\": {\n"
+"      \"type\": \"boolean\"\n"
+"    }\n"
+"  },\n"
+"  \"required\": [\n"
+"    \"name\",\n"
+"    \"surname\",\n"
+"    \"email\",\n"
+"    \"phone\",\n"
+"    \"ce_member_implication\"\n"
+"  ]\n"
+"}"
+msgstr ""
+"{\n"
+"  \"type\": \"object\",\n"
+"  \"properties\": {\n"
+"    \"name\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"surname\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"email\": {\n"
+"      \"type\": \"string\",\n"
+"      \"format\": \"email\"\n"
+"    },\n"
+"    \"phone\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"ce_member_implication\": {\n"
+"      \"type\": \"string\",\n"
+"      \"enum\": [\n"
+"        \"low\",        \n"
+"        \"medium\",\n"
+"        \"high\",\n"
+"        \"leadership\"\n"
+"      ],\n"
+"      \"i18n\": \"ce_member_implication\",\n"
+"      \"translations\": {\n"
+"        \"low\": \"No puc participar gaire\",\n"
+"        \"medium\": \"Puc participar una mica\",\n"
+"        \"high\": \"Vull i puc participar\",\n"
+"        \"leadership\": \"M'agradaria liderar i participar\"\n"
+"      }\n"
+"    },\n"
+"    \"ce_tag_common_generation\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_energy_efficiency\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_sustainable_mobility\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_citizen_education\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_thermal_energy\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_collective_purchases\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_renewable_energy\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_aggregate_demand\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"newsletter\": {\n"
+"      \"type\": \"boolean\"\n"
+"    }\n"
+"  },\n"
+"  \"required\": [\n"
+"    \"name\",\n"
+"    \"surname\",\n"
+"    \"email\",\n"
+"    \"phone\",\n"
+"    \"ce_member_implication\"\n"
+"  ]\n"
+"}"
+
+#. module: energy_communities
 #: model:cm.presenter.model,json_uischema:energy_communities.map_presenter_model_to_activate
 msgid ""
 "{\n"
@@ -2484,8 +3013,7 @@ msgid ""
 "        },\n"
 "        {\n"
 "          \"type\": \"Display\",\n"
-"          \"label\": \"{% if submission_number %}{{submission_number}} interesadas - {% endif "
-"%}{{goalProgress}}% completada\",\n"
+"          \"label\": \"{% if submission_number %}{{submission_number}} interessades - {% endif %}{{goalProgress}}% completada\",\n"
 "          \"scope\": \"#/properties/progress\",\n"
 "          \"options\": { \"progress\": true }\n"
 "        }\n"
@@ -2510,6 +3038,79 @@ msgid ""
 "        {\n"
 "          \"type\": \"Display\",\n"
 "          \"scope\": \"#/properties/pd_social_headline\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"InteractionSocial\",\n"
+"          \"IconColor\": \"#153f2d\",\n"
+"          \"IconBackgroundColor\": \"#fff\"\n"
+"        }\n"
+"      ]\n"
+"    }\n"
+"  ]\n"
+"}"
+msgstr ""
+
+#. module: energy_communities
+#: model:cm.presenter.model,json_uischema:energy_communities.map_presenter_model_key_group
+msgid ""
+"{\n"
+"  \"type\":\"VerticalLayout\",\n"
+"  \"elements\": [\n"
+"    {\n"
+"      \"type\": \"HorizontalLayout\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Container\",\n"
+"          \"scope\": \"#/properties/pgm_filter_state\",\n"
+"          \"backgroundColor\": \"#8ec23a\",\n"
+"          \"textColor\": \"#fff\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"Container\",\n"
+"          \"scope\": \"#/properties/pgm_category\",\n"
+"          \"backgroundColor\": \"#e8f3ec\",\n"
+"          \"textColor\": \"#153f2d\"\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/pgm_title\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/pgm_description\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"EnergyActions\",\n"
+"      \"scope\": \"#/properties/pgm_filter_energy_actions\",\n"
+"      \"backgroundColor\": \"#51ab50\",\n"
+"      \"textColor\": \"#153f2d\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"border\": true,\n"
+"      \"borderColor\": \"#c5e2d0\",\n"
+"      \"backgroundColor\": \"#FFFFFF\",\n"
+"      \"textColor\": \"#000000\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"            \"type\": \"InteractionButtons\"\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"center\": true,\n"
+"      \"border\": true,\n"
+"      \"borderColor\": \"transparent\",\n"
+"      \"backgroundColor\": \"#153f2d\",\n"
+"      \"textColor\": \"#FFFFFF\",\n"
+"      \"showInResult\": true,\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Display\",\n"
+"          \"scope\": \"#/properties/pgm_social_headline\"\n"
 "        },\n"
 "        {\n"
 "          \"type\": \"InteractionSocial\",\n"
@@ -2594,73 +3195,117 @@ msgid ""
 "  ]\n"
 "}"
 msgstr ""
+"{\n"
+"  \"type\":\"VerticalLayout\",\n"
+"  \"elements\": [\n"
+"    {\n"
+"      \"type\": \"HorizontalLayout\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Container\",\n"
+"          \"scope\": \"#/properties/po2_filter_state\",\n"
+"          \"backgroundColor\": \"#8ec23a\",\n"
+"          \"textColor\": \"#fff\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"Container\",\n"
+"          \"scope\": \"#/properties/po2_category\",\n"
+"          \"backgroundColor\": \"#e8f3ec\",\n"
+"          \"textColor\": \"#153f2d\"\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/po2_title\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/po2_description\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"EnergyActions\",\n"
+"      \"scope\": \"#/properties/po2_filter_energy_actions\",\n"
+"      \"backgroundColor\": \"#51ab50\",\n"
+"      \"textColor\": \"#153f2d\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"border\": true,\n"
+"      \"borderColor\": \"#c5e2d0\",\n"
+"      \"backgroundColor\": \"#FFFFFF\",\n"
+"      \"textColor\": \"#000000\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"            \"type\": \"InteractionButtons\"\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"center\": true,\n"
+"      \"border\": true,\n"
+"      \"borderColor\": \"transparent\",\n"
+"      \"backgroundColor\": \"#153f2d\",\n"
+"      \"textColor\": \"#FFFFFF\",\n"
+"      \"showInResult\": true,\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Display\",\n"
+"          \"scope\": \"#/properties/po2_social_headline\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"InteractionSocial\",\n"
+"          \"IconColor\": \"#153f2d\",\n"
+"          \"IconBackgroundColor\": \"#fff\"\n"
+"        }\n"
+"      ]\n"
+"    }\n"
+"  ]\n"
+"}"
 
 #. module: energy_communities
 #: model:cm.presenter.model,json_dataschema:energy_communities.map_presenter_model_to_activate
 msgid ""
 "{\n"
 "\"pd_title\": \"{{name}}\",\n"
-"\"pd_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-de-"
-"la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
-"fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if "
-"filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% "
-"endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></"
-"i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}"
-"</div></div>{% endif %}{% endfor %}\",\n"
-"\"pd_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
-"fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-"
-"pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
-"\"pd_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if "
-"filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-"
-"pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div "
-"class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 "
-"rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full "
-"absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full "
-"absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 "
-"absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-"
-"{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</"
-"div>\",\n"
-"\"pd_target_objective\": \"<p class='m-2'>Objetivo: <strong>{{ goalTarget }} {% if "
-"category_slug == 'industrial' %}empresas{% else %}personas{% endif %}</strong></p>\",\n"
-"\"progress\": \"<div class='flex justify-between'><div>{% if submission_number %}"
-"<strong>{{submission_number}}</strong> interesadas</div><div>{% endif %}"
-"<strong>{{goalProgress}}%</strong> completada</div></div>\",\n"
-"\"pd_secondary_description\": \"<p class='m-2 mb-4 flex flex-col justify-center align-center "
-"text-center'>¿Ya está impulsando una comunidad en este municipio?<br><a href='https://"
-"somcomunitats.coop/es/alta-nova-comunitat?map_place_ref={{slug}}' target='_parent'>Solicita "
-"darla de alta</a></p>\",\n"
-"\"pd_social_headline\": \"<div class='flex justify-center align-center text-center'><p "
-"class='font-semibold text-white'>Comparte y haz crecer la Comunidad Energética</p></div>\"\n"
+"\"pd_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}</div></div>{% endif %}{% endfor %}\",\n"
+"\"pd_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
+"\"pd_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</div>\",\n"
+"\"pd_target_objective\": \"<p class='m-2'>Objectiu: <strong>{{ goalTarget }} {% if category_slug == 'industrial' %}empreses{% else %}persones{% endif %}</strong></p>\",\n"
+"\"progress\": \"<div class='flex justify-between'><div>{% if submission_number %}<strong>{{submission_number}}</strong> interesadas</div><div>{% endif %}<strong>{{goalProgress}}%</strong> completada</div></div>\",\n"
+"\"pd_secondary_description\": \"<p class='m-2 mb-4 flex flex-col justify-center align-center text-center'>Ja esteu impulsant una comunitat en aquest municipi?<br><a href='https://somcomunitats.coop/alta-nova-comunitat?map_place_ref={{slug}}' target='_parent'>Sol·licita donar-la d’alta</a></p>\",\n"
+"\"pd_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></div>\"\n"
 "}"
 msgstr ""
+
+#. module: energy_communities
+#: model:cm.presenter.model,json_dataschema:energy_communities.map_presenter_model_key_group
+msgid ""
+"{\n"
+"\"pgm_title\": \"{{name}}\",\n"
+"\"pgm_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}</div></div>{% endif %}{% endfor %}\",\n"
+"\"pgm_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
+"\"pgm_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</div>\",\n"
+"\"pgm_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparte y haz crecer la Comunidad Energética</p></div>\"\n"
+"}"
+msgstr ""
+"{\n"
+"\"pgm_title\": \"{{name}}\",\n"
+"\"pgm_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}</div></div>{% endif %}{% endfor %}\",\n"
+"\"pgm_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
+"\"pgm_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</div>\",\n"
+"\"pgm_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></div>\"\n"
+"}"
 
 #. module: energy_communities
 #: model:cm.presenter.model,json_dataschema:energy_communities.map_presenter_model_open
 msgid ""
 "{\n"
 "\"po2_title\": \"{{name}}\",\n"
-"\"po2_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-"
-"de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
-"fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if "
-"filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% "
-"endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></"
-"i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}"
-"</div></div>{% endif %}{% endfor %}\",\n"
-"\"po2_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative "
-"z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-"
-"pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
-"\"po2_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if "
-"filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-"
-"pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div "
-"class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 "
-"rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full "
-"absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full "
-"absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 "
-"absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-"
-"{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</"
-"div>\",\n"
-"\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p "
-"class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></"
-"div>\"\n"
+"\"po2_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}</div></div>{% endif %}{% endfor %}\",\n"
+"\"po2_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
+"\"po2_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</div>\",\n"
+"\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></div>\"\n"
 "}"
 msgstr ""
