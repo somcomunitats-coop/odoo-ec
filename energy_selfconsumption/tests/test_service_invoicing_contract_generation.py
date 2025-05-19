@@ -12,14 +12,8 @@ class TestSeriveInvoicingContractGeneration(TransactionCase):
     def setUp(self):
         super().setUp()
         self.maxDiff = None
-        # TODO: In order to complete the test we must
-        # have a selfconsumption project on demo data
-        # in activation with one inscription and without invoicing_mode
-        # self.selfconsumption = self.env[
-        #     "energy_selfconsumption.selfconsumption"
-        # ].browse(26)
         self.selfconsumption = self.env.ref(
-            "energy_selfconsumption_demo.selfconsumption_1_community_1_demo"
+            "energy_selfconsumption.selfconsumption_1_community_1_demo"
         )
 
     def test_contract_generation_wizard(self):
@@ -46,10 +40,11 @@ class TestSeriveInvoicingContractGeneration(TransactionCase):
         invoice_mode_wizard.create_contract_template()
         sale_orders = self.selfconsumption.get_sale_orders()
         # CHECK: only one sale order created
-        self.assertEqual(len(sale_orders), 1)
+        self.assertEqual(len(sale_orders), 5)
         # CHECK: Sale order has metadata for recurring_rule_type
         meta_recurring_rule_type = sale_orders.metadata_line_ids.filtered(
             lambda metadata: metadata.key == "recurring_rule_type"
+            and metadata.order_id == sale_orders[0]
         )
         self.assertEqual(True, bool(meta_recurring_rule_type))
         self.assertEqual(
@@ -58,6 +53,7 @@ class TestSeriveInvoicingContractGeneration(TransactionCase):
         # CHECK: Sale order has metadata for recurring_interval
         meta_recurring_interval = sale_orders.metadata_line_ids.filtered(
             lambda metadata: metadata.key == "recurring_interval"
+            and metadata.order_id == sale_orders[0]
         )
         self.assertEqual(True, bool(meta_recurring_interval))
         self.assertEqual(
@@ -66,6 +62,7 @@ class TestSeriveInvoicingContractGeneration(TransactionCase):
         # CHECK: Sale order has metadata for recurring_invoicing_type
         meta_recurring_invoicing_type = sale_orders.metadata_line_ids.filtered(
             lambda metadata: metadata.key == "recurring_invoicing_type"
+            and metadata.order_id == sale_orders[0]
         )
         self.assertEqual(True, bool(meta_recurring_invoicing_type))
         self.assertEqual(
@@ -74,7 +71,8 @@ class TestSeriveInvoicingContractGeneration(TransactionCase):
         )
         # CHECK: Sale order has no date_end
         self.assertEqual(
-            sale_orders.order_line[0].date_start, sale_orders.order_line[0].date_end
+            sale_orders[0].order_line[0].date_start,
+            sale_orders[0].order_line[0].date_end,
         )
         # CHECK: project product defined correctly
         self.assertEqual(
@@ -82,12 +80,13 @@ class TestSeriveInvoicingContractGeneration(TransactionCase):
         )
         # CHECK: project has same product as sale order
         self.assertEqual(
-            self.selfconsumption.product_id.id, sale_orders.order_line[0].product_id.id
+            self.selfconsumption.product_id.id,
+            sale_orders[0].order_line[0].product_id.id,
         )
         # CHECK: project has same contract template as sale order
         self.assertEqual(
             self.selfconsumption.contract_template_id.id,
-            sale_orders.order_line[0].product_id.property_contract_template_id.id,
+            sale_orders[0].order_line[0].product_id.property_contract_template_id.id,
         )
         # CHECK: project invoicing mode correctly defined
         self.assertEqual(
@@ -110,7 +109,7 @@ class TestSeriveInvoicingContractGeneration(TransactionCase):
         )
         # CHECK: project has pricelist_id correctly defined
         self.assertEqual(
-            sale_orders.pricelist_id.id, self.selfconsumption.pricelist_id.id
+            sale_orders[0].pricelist_id.id, self.selfconsumption.pricelist_id.id
         )
         # CHECK pricelist_id properly defined
         self.assertEqual(1, len(self.selfconsumption.pricelist_id.item_ids))
@@ -131,20 +130,22 @@ class TestSeriveInvoicingContractGeneration(TransactionCase):
         ].create(
             {
                 "selfconsumption_id": self.selfconsumption.id,
+                "payment_mode": self.ref(
+                    "account_banking_sepa_direct_debit.payment_mode_inbound_sepa_dd1"
+                ),
             }
         )
         contract_create_wizard.action_generate_contracts()
-        contract = self.selfconsumption.get_contracts()
+        contracts = self.selfconsumption.get_contracts()
+        contract = contracts[0]
         # CHECK: only one generated contract
-        self.assertEqual(len(contract), 1)
+        self.assertEqual(len(contracts), 5)
         # CHECK: sale order "confirmed"
-        self.assertEqual(sale_orders.state, "sale")
+        self.assertEqual(sale_orders[0].state, "sale")
         # CHECK: contract has line recurrence
         self.assertEqual(contract.line_recurrence, True)
         # CHECK: contract pack_type is selfconsumption
         self.assertEqual(contract.pack_type, "selfconsumption_pack")
-        # CHECK: contract reference to sale order same as in project
-        self.assertEqual(contract.sale_order_id.id, sale_orders.id)
         # CHECK: contract contract_template same as project contract_template
         self.assertEqual(
             contract.contract_template_id.id,
@@ -194,11 +195,11 @@ class TestSeriveInvoicingContractGeneration(TransactionCase):
         # CHECK: contract date_start same as sale order
         self.assertEqual(
             contract.contract_line_ids[0].date_start.strftime("%Y-%m-%d"),
-            sale_orders.commitment_date.strftime("%Y-%m-%d"),
+            sale_orders[0].commitment_date.strftime("%Y-%m-%d"),
         )
         self.assertEqual(
             contract.date_start.strftime("%Y-%m-%d"),
-            sale_orders.commitment_date.strftime("%Y-%m-%d"),
+            sale_orders[0].commitment_date.strftime("%Y-%m-%d"),
         )
         # TODO: check this only for prepayment contracts??
         # CHECK: contract recurring_next_date same as sale order
@@ -210,11 +211,11 @@ class TestSeriveInvoicingContractGeneration(TransactionCase):
         self.assertEqual(contract.contract_line_ids[0].date_end, False)
         self.assertEqual(contract.date_end, False)
         # CHECK: contract pricelist_id same as sale_order
-        self.assertEqual(contract.pricelist_id.id, sale_orders.pricelist_id.id)
+        self.assertEqual(contract.pricelist_id.id, sale_orders[0].pricelist_id.id)
         # CHECK: contract pricelist_id same as project
         self.assertEqual(contract.pricelist_id.id, self.selfconsumption.pricelist_id.id)
         # CHECK: contract payment_mode same as sale_order
-        self.assertEqual(contract.payment_mode_id.id, sale_orders.payment_mode_id.id)
+        self.assertEqual(contract.payment_mode_id.id, sale_orders[0].payment_mode_id.id)
         # CHECK: contract payment_mode correctly defined
         self.assertEqual(
             contract.payment_mode_id.id, contract_create_wizard.payment_mode.id

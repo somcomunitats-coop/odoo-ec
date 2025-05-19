@@ -18,6 +18,7 @@
     "depends": [
         "base",
         "account_multicompany_easy_creation",
+        "contract_variable_quantity",
         "cooperator",
         "cooperator_account_payment",
         "cooperator_account_banking_mandate",
@@ -52,10 +53,11 @@
     ],
     # only loaded in demonstration mode
     "demo": [
-        "demo/product_template_demo.xml",
         "demo/res_company_demo.xml",
+        "demo/product_template_demo.xml",
         "demo/res_user_demo.xml",
         "demo/subscription_request_demo.xml",
+        # "demo/subscription_request_payments_demo.xml",
     ],
     "assets": {
         "web.assets_common": [
@@ -63,3 +65,4 @@
         ]
     },
 }
+# "demo/account_payment_mode_demo.xml",
