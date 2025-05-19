@@ -97,6 +97,28 @@ class TestEnergyCommunityApiService(HttpCase, RegistryMixin):
         # and the datail of that service
         self.assertDictEqual(response.json()["data"], community_data["service_info"])
 
+    def test__communities_communities_services__detail_open_inscriptions(self):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        # and an energy community
+        community_1_id = self.community_id
+        # and a service of that community that has open inscriptions
+        service_id = community_data["service_id"]
+
+        # when we call for the detail of that service
+        response = self.client(
+            f"/api/communities/community/community_services/{service_id}",
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and inscriptions are open
+        self.assertTrue(response.json()["data"]["open_inscriptions"])
+        # and also there is an url_form
+        self.assertNotEqual(response.json()["data"]["inscriptions_url_form"], "")
+
     def test__communities_communities_services__service_not_found(self):
         # given http_client
         # self.url_open

@@ -5,6 +5,7 @@ from odoo.exceptions import MissingError
 
 from odoo.addons.component.core import Component
 from odoo.addons.energy_project.models.project import DRAFT
+from odoo.addons.energy_selfconsumption.models.selfconsumption import ACTIVE
 
 from ..schemas import (
     Address,
@@ -114,7 +115,11 @@ class EnergyCommunityApiInfo(Component):
             name=service.name,
             status=service.state,
             has_monitoring=service.project_id.monitoring_service() is not None,
+            open_inscriptions=service.conf_state == ACTIVE,
             inscriptions=len(service.inscription_ids),
+            inscriptions_url_form=service.conf_state == ACTIVE
+            and service.conf_url_form
+            or "",
             address=Address(
                 street=service.street,
                 street2=service.street2 or "",

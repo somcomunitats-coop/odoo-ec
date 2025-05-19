@@ -19,11 +19,9 @@ class ProjectMetricsApiInfo(Component):
         self, project, partner, date_from, date_to
     ) -> CommunityServiceMetricsInfo:
         monitoring_service = project.monitoring_service()
-        if not monitoring_service:
+        member_contract = project.get_member_contract(partner)
+        if not monitoring_service and not member_contract:
             return None
-        member_contract = project.contract_ids.filtered(
-            lambda contract: contract.partner_id == partner
-        )
         service_parameters = {
             "system_id": project.selfconsumption_id.code,
             "member_id": member_contract.code,
@@ -152,14 +150,17 @@ class ProjectApiInfo(Component):
     _usage = "api.info"
     _apply_on = "energy_project.project"
 
+    def get_project_from_service(self, service_id):
+        project = self.env[self._apply_on].browse(service_id)
+        if project.exists():
+            return project
+
     def get_project_daily_production_by_member(
         self, project, partner, date_from, date_to
     ) -> List[EnergyPoint]:
         monitoring_service = project.monitoring_service()
-        if monitoring_service:
-            member_contract = project.contract_ids.filtered(
-                lambda contract: contract.partner_id == partner
-            )
+        member_contract = project.get_member_contract(partner)
+        if monitoring_service and member_contract:
             daily_production = monitoring_service.daily_production_by_member(
                 system_id=project.selfconsumption_id.code,
                 member_id=member_contract.code,
@@ -169,19 +170,12 @@ class ProjectApiInfo(Component):
             return [EnergyPoint(**point._asdict()) for point in daily_production]
         return []
 
-    def get_project_from_service(self, service_id):
-        project = self.env[self._apply_on].browse(service_id)
-        if project.exists():
-            return project
-
     def get_project_daily_selfconsumption_by_member(
         self, project, partner, date_from, date_to
     ) -> List[EnergyPoint]:
         monitoring_service = project.monitoring_service()
-        if monitoring_service:
-            member_contract = project.contract_ids.filtered(
-                lambda contract: contract.partner_id == partner
-            )
+        member_contract = project.get_member_contract(partner)
+        if monitoring_service and member_contract:
             daily_selfconsumption = monitoring_service.daily_selfconsumption_by_member(
                 system_id=project.selfconsumption_id.code,
                 member_id=member_contract.code,
@@ -195,10 +189,8 @@ class ProjectApiInfo(Component):
         self, project, partner, date_from, date_to
     ) -> List[EnergyPoint]:
         monitoring_service = project.monitoring_service()
-        if monitoring_service:
-            member_contract = project.contract_ids.filtered(
-                lambda contract: contract.partner_id == partner
-            )
+        member_contract = project.get_member_contract(partner)
+        if monitoring_service and member_contract:
             daily_exported_energy = monitoring_service.daily_gridinjection_by_member(
                 system_id=project.selfconsumption_id.code,
                 member_id=member_contract.code,
@@ -212,10 +204,8 @@ class ProjectApiInfo(Component):
         self, project, partner, date_from, date_to
     ) -> List[EnergyPoint]:
         monitoring_service = project.monitoring_service()
-        if monitoring_service:
-            member_contract = project.contract_ids.filtered(
-                lambda contract: contract.partner_id == partner
-            )
+        member_contract = project.get_member_contract(partner)
+        if monitoring_service and member_contract:
             daily_consumed_energy = monitoring_service.daily_consumption_by_member(
                 system_id=project.selfconsumption_id.code,
                 member_id=member_contract.code,
