@@ -502,12 +502,6 @@
     <field name="state">draft</field>
   </record>
 
-  <function
-    name="validate_subscription_request_with_company"
-    model="subscription.request"
-    eval="[ref('subscription_4_community_2_demo')]"
-  />
-
   <record id="subscription_5_community_2_demo" model="subscription.request">
     <field name="firstname">Manel</field>
     <field name="lastname">Cardona Villanueva</field>
@@ -539,12 +533,6 @@
     <field name="lang">es_ES</field>
     <field name="state">draft</field>
   </record>
-
-  <function
-    name="validate_subscription_request_with_company"
-    model="subscription.request"
-    eval="[ref('subscription_5_community_2_demo')]"
-  />
 
 </odoo>
 
