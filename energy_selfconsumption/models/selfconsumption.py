@@ -95,9 +95,9 @@ class Selfconsumption(models.Model):
                 [("state", "=", "active")]
             )
             if table_in_active:
-                record.report_distribution_table = table_in_active
+                record.current_distribution_table = table_in_active
             else:
-                record.report_distribution_table = False
+                record.current_distribution_table = False
 
     project_id = fields.Many2one(
         "energy_project.project", required=True, ondelete="cascade"
@@ -123,7 +123,7 @@ class Selfconsumption(models.Model):
         compute=_compute_report_distribution_table,
         readonly=True,
     )
-    current_distribution_table = report_distribution_table = fields.Many2one(
+    current_distribution_table = fields.Many2one(
         "energy_selfconsumption.distribution_table",
         compute=_compute_current_distribution_table,
         readonly=True,
