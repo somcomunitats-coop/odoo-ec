@@ -41,7 +41,7 @@ class MapClientConfig:
         "energy_communities.energy_action_aggregate_demand": "agregacio-i-flexibilitat-de-la-demanda",
     }
     MAPPING__MAP = "campanya"
-    MAPPING__MAPS = ["campanya", "sumate-goiener", "sumate-energetica"]
+    MAPPING__MAPS = ["campanya", "sumate-goiener", "sumate-energetica", "sumate-ecoo"]
     MAPPING__LANDING_COMMUNITY_STATUS__MAP_FILTER = {"open": "oberta"}
     MAPPING__LANDING_STATUS__MAP_PLACE_STATUS = {
         "draft": "draft",
