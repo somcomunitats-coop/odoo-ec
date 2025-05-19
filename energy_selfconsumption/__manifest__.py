@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Customizations",
-    "version": "16.0.0.3.3",
+    "version": "16.0.0.4.0",
     "license": "AGPL-3",
     "depends": [
         "base",
@@ -64,7 +64,7 @@
         "wizards/invoicing_wizard_views.xml",
         "wizards/selfconsumption_import_wizard_views.xml",
         "wizards/set_iban_inscriptions_wizard_views.xml",
-        "wizards/export_csv_inscriptions_wizard_views.xml"
+        "wizards/export_csv_inscriptions_wizard_views.xml",
     ],
     "demo": [
         "demo/energy_selfconsumption_demo.xml",
