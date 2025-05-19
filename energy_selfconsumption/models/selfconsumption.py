@@ -802,6 +802,17 @@ class Selfconsumption(models.Model):
             )
             raise ValidationError(error_message)
 
+    def action_export_csv_inscriptions_wizard(self):
+        self.ensure_one()
+        wizard = self.env["export.csv.inscritions.wizard"].with_context({
+            "active_id": self.id,
+        }).create({})
+        return wizard.exportar_csv()
+    
+    def action_set_iban_inscriptions(self):
+        self.ensure_one()
+        return self.env.ref("energy_selfconsumption.action_set_iban_inscriptions").read()[0]
+
     def action_manager_authorization_report(self):
         self.ensure_one()
         self.validate_state(self.state)
