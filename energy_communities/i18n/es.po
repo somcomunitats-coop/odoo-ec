@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-09 13:38+0000\n"
-"PO-Revision-Date: 2025-05-09 13:38+0000\n"
+"POT-Creation-Date: 2025-05-20 14:29+0000\n"
+"PO-Revision-Date: 2025-05-20 14:29+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,9 +56,19 @@ msgstr ""
 "3) Enviar correo de invitación para confirmar email y resetear contraseña"
 
 #. module: energy_communities
-#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_campanya
-#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_energetica
 #: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_goiener
+msgid ""
+"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
+"class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2></br><div "
+"class =\"flex text-[#8a9f96]\">Cuando haya novedades con la Comunidad "
+"Energética contactaremos contigo y con las personas que también han mostrado"
+" interés y le ofreceremos apoyo para activarla. ¡Vamos!</div>"
+msgstr ""
+
+#. module: energy_communities
+#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_campanya
+#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_coordinadora
+#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_energetica
 msgid ""
 "<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
 "class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2><p class "
@@ -262,6 +272,7 @@ msgstr "Generar usuarias de plataforma para las socias"
 
 #. module: energy_communities
 #: model:cm.map,searchbar_placeholder:energy_communities.map_campanya
+#: model:cm.map,searchbar_placeholder:energy_communities.map_sumate_ecooo
 #: model:cm.map,searchbar_placeholder:energy_communities.map_sumate_energetica
 #: model:cm.map,searchbar_placeholder:energy_communities.map_sumate_goiener
 msgid "Buscar dirección o municipio"
@@ -455,7 +466,7 @@ msgstr "Tipo de comunidad"
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__company_ids_info
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__company_ids_info
 msgid "Companies"
-msgstr "Compañías"
+msgstr "Empreses"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_setup_bank_manual_config__company_id
@@ -614,6 +625,7 @@ msgstr ""
 
 #. module: energy_communities
 #: model:cm.map,proposal_cta_title:energy_communities.map_campanya
+#: model:cm.map,proposal_cta_title:energy_communities.map_sumate_ecooo
 #: model:cm.map,proposal_cta_title:energy_communities.map_sumate_energetica
 #: model:cm.map,proposal_cta_title:energy_communities.map_sumate_goiener
 msgid "Crear una comunidad"
@@ -818,6 +830,7 @@ msgstr "Acciones energéticas"
 
 #. module: energy_communities
 #: model:cm.form.model,button_label:energy_communities.map_form_model_campanya
+#: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_coordinadora
 #: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_energetica
 #: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_goiener
 msgid "Enviar"
@@ -1359,6 +1372,7 @@ msgstr ""
 
 #. module: energy_communities
 #: model:cm.map,noresults_msg:energy_communities.map_campanya
+#: model:cm.map,noresults_msg:energy_communities.map_sumate_ecooo
 #: model:cm.map,noresults_msg:energy_communities.map_sumate_energetica
 #: model:cm.map,noresults_msg:energy_communities.map_sumate_goiener
 msgid ""
@@ -1870,6 +1884,7 @@ msgstr "Suministro de energía 100% renovable"
 
 #. module: energy_communities
 #: model:cm.form.model,cta_button_label:energy_communities.map_form_model_campanya
+#: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_coordinadora
 #: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_energetica
 #: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_goiener
 msgid "Sumarme"
@@ -1944,6 +1959,7 @@ msgstr ""
 
 #. module: energy_communities
 #: model:cm.map,categories_filter_title:energy_communities.map_campanya
+#: model:cm.map,categories_filter_title:energy_communities.map_sumate_ecooo
 #: model:cm.map,categories_filter_title:energy_communities.map_sumate_energetica
 #: model:cm.map,categories_filter_title:energy_communities.map_sumate_goiener
 #: model:cm.map,proposal_form_subtitle_step_category:energy_communities.map_campanya
@@ -2324,6 +2340,7 @@ msgstr ""
 
 #. module: energy_communities
 #: model:cm.map,privacy_link:energy_communities.map_campanya
+#: model:cm.map,privacy_link:energy_communities.map_sumate_ecooo
 #: model:cm.map,privacy_link:energy_communities.map_sumate_goiener
 msgid "https://somcomunitats.coop/es/politica-de-privacidad/"
 msgstr ""
@@ -2602,6 +2619,7 @@ msgstr ""
 "}"
 
 #. module: energy_communities
+#: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_coordinadora
 #: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_energetica
 #: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_goiener
 msgid ""
@@ -2889,6 +2907,7 @@ msgstr ""
 "}"
 
 #. module: energy_communities
+#: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_coordinadora
 #: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_energetica
 #: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_goiener
 msgid ""
