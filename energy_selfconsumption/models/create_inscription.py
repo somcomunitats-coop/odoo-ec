@@ -33,8 +33,12 @@ class CreateInscription(models.AbstractModel):
             .search([("code", "=", values["supplypoint_cups"])])
         )
         country = self._get_country(values, project)
+        street = values["supplypoint_street"]
+        if values.get("street2", False):
+            street += " " + values.get("street2", "")
         if not supply_point:
             try:
+
                 vals = {
                     "code": values["supplypoint_cups"],
                     "owner_id": owner.id,
@@ -46,7 +50,7 @@ class CreateInscription(models.AbstractModel):
                     "tariff": tariff,
                     "partner_id": partner.id,
                     "company_id": project.company_id.id,
-                    "street": values["supplypoint_street"],
+                    "street": street,
                     "city": values["supplypoint_city"],
                     "country_id": country.id,
                     "state_id": self._get_state(values, project, country).id,
@@ -80,7 +84,7 @@ class CreateInscription(models.AbstractModel):
                     "tariff": tariff,
                     "partner_id": partner.id,
                     "company_id": project.company_id.id,
-                    "street": values["supplypoint_street"],
+                    "street": street,
                     "city": values["supplypoint_city"],
                     "country_id": country.id,
                     "state_id": self._get_state(values, project, country).id,

@@ -9,7 +9,7 @@
     "author": "Som comunitats",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Contract Management",
-    "version": "16.0.0.2.3",
+    "version": "16.0.0.3.0",
     # any module necessary for this one to work correctly
     "depends": [
         "base",
@@ -37,6 +37,7 @@
         "views/contract_line_formula_views.xml",
         "views/contract_template_views.xml",
         "views/contract_views.xml",
+        "views/product_category_views.xml",
         "views/res_company_views.xml",
         "views/res_partner_views.xml",
         "views/sale_order_views.xml",

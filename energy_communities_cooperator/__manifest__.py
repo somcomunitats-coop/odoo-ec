@@ -12,12 +12,13 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Cooperative management",
-    "version": "16.0.0.2.1",
+    "version": "16.0.0.3.0",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
         "base",
         "account_multicompany_easy_creation",
+        "contract_variable_quantity",
         "cooperator",
         "cooperator_account_payment",
         "cooperator_account_banking_mandate",
@@ -52,10 +53,11 @@
     ],
     # only loaded in demonstration mode
     "demo": [
-        "demo/product_template_demo.xml",
         "demo/res_company_demo.xml",
+        "demo/product_template_demo.xml",
         "demo/res_user_demo.xml",
         "demo/subscription_request_demo.xml",
+        # "demo/subscription_request_payments_demo.xml",
     ],
     "assets": {
         "web.assets_common": [
@@ -63,3 +65,4 @@
         ]
     },
 }
+# "demo/account_payment_mode_demo.xml",

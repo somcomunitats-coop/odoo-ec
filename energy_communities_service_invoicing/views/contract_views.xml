@@ -89,7 +89,7 @@
         />
       </xpath>
       <xpath expr="//field[@name='partner_id']" position="after">
-        <field name="community_company_id" attrs="{'invisible': [('pack_type','=','none')]}"/>
+        <field name="community_company_id" attrs="{'invisible': [('pack_type','!=','platform_pack')]}"/>
       </xpath>
       <xpath expr="//field[@name='pricelist_id']" position="after">
         <field name="pack_id" attrs="{'invisible': [('pack_type','=','none')]}" />

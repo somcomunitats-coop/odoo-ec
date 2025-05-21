@@ -1,0 +1,21 @@
+<odoo>
+
+<function name="write" model="ir.model.data">
+  <function name="search" model="ir.model.data">
+    <value eval="[('module', '=', 'base'),('name', '=', 'res_company_rule_employee')]" />
+  </function>
+  <value eval="{'noupdate': False}" />
+</function>
+<record model="ir.rule" id="base.res_company_rule_employee">
+  <field name="domain_force">
+[('id','in', user.company_ids.ids)]
+  </field>
+</record>
+<function name="write" model="ir.model.data">
+  <function name="search" model="ir.model.data">
+    <value eval="[('module', '=', 'base'),('name', '=', 'res_company_rule_employee')]" />
+  </function>
+  <value eval="{'noupdate': True}" />
+</function>
+
+</odoo>

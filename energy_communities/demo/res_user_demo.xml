@@ -97,6 +97,14 @@
         (4, obj(ref('energy_communities.coordinator_company_1')).id),
       ]"
     />
+    <field
+      name="role_line_ids"
+      model="res.users.role.line"
+      eval="[
+        (0,0, {'role_id': obj(ref('energy_communities.role_internal_user')).id}),
+        (0,0, {'role_id': obj(ref('energy_communities.role_platform_admin')).id}),
+      ]"
+    />
   </record>
 
   <record id="base.user_demo" model="res.users">

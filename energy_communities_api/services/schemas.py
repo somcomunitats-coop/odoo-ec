@@ -4,6 +4,11 @@ S_ENERGY_ACTION = {
     "ext_id": {"type": "string"},
 }
 
+S_COOPERATOR_BUTTON = {
+    "name": {"type": "string"},
+    "url": {"type": "string"},
+}
+
 S_LANDING_PAGE_GET_RETURN = {
     "landing": {
         "type": "dict",
@@ -41,6 +46,10 @@ S_LANDING_PAGE_GET_RETURN = {
             "long_description": {"type": "string"},
             "why_become_cooperator": {"type": "string"},
             "become_cooperator_process": {"type": "string"},
+            "cooperator_buttons": {
+                "type": "list",
+                "schema": {"type": "dict", "schema": S_COOPERATOR_BUTTON},
+            },
             "map_reference": {"type": "string"},
             "street": {"type": "string"},
             "postal_code": {"type": "string"},

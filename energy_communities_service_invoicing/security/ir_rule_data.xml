@@ -3,7 +3,7 @@
   <record model="ir.rule" id="energy_communities_service_invoicing.rule_contract_contract_admin">
     <field name="name">Contract admins</field>
     <field name="model_id" ref="contract.model_contract_contract"/>
-    <field name="groups" eval="[(4, ref('energy_communities.role_platform_admin_res_groups')),(4, ref('energy_communities.role_coord_admin_res_groups'))]"/>
+    <field name="groups" eval="[(4, ref('energy_communities.role_platform_admin_res_groups')),(4, ref('energy_communities.role_coord_admin_res_groups')),(4, ref('energy_communities.role_ce_admin_res_groups')), (4, ref('energy_communities.role_ce_manager_res_groups'))]"/>
     <field name="domain_force">[('company_id', 'in', company_ids)]</field>
     <field name="perm_read" eval="False" />
     <field name="perm_write" eval="True" />

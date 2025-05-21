@@ -1,0 +1,19 @@
+<odoo noupdate="1">  
+    <record id="coordinator_company_1_payment_mode_sepa" model="account.payment.mode">
+        <field name="name">Recibo domiciliado socias</field>
+        <field name="company_id" ref="energy_communities.coordinator_company_1" />
+        <field name="payment_method_id" ref="account_banking_sepa_direct_debit.sepa_direct_debit" />
+        <field name="payment_type" >inbound</field>
+        <field name="payment_order_ok" eval="True" />
+        <field name="bank_account_link">fixed</field>
+        <field name="fixed_journal_id" model="account.journal" eval="obj().search([
+                    ('type', '=', 'sale'),
+                    ('company_id', '=', ref('energy_communities.coordinator_company_1'))], limit=1).id"/>
+        <!--<field name="initiating_party_identifier">ES81001F71450555</field> ES81001F71450555-->
+        <!-- <field name="initiating_party_issuer">F71450555001</field> F71450555001-->
+        <!-- <field name="sepa_creditor_identifier">ES81001F71450555</field> ES81001F71450555-->
+        <field name="group_lines" eval="True" />
+        <field name="default_journal_ids" search="[('type', '=', 'sale')]" />
+        <field name="default_payment_mode">same</field>
+    </record>
+</odoo>

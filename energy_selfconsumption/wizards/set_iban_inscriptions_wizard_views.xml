@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View set_iban_inscriptions form -->
+    <record id="view_set_iban_inscriptions_form" model="ir.ui.view">
+        <field name="name">view.set_iban_inscriptions.form</field>
+        <field name="model">energy_selfconsumption.set_iban_inscriptions_wizard</field>
+        <field name="arch" type="xml">
+            <form string="Review bank accounts">
+                <field name="set_iban_inscriptions_line_wizard_ids" mode="tree" nolabel="1">
+                    <tree editable="bottom" create="0">
+                        <field name="set_iban_inscriptions_wizard_id" invisible="1" readonly="1" force_save="1"/>
+                        <field name="inscription_id" readonly="1" force_save="1"/>
+                        <field name="partner_id" readonly="1" force_save="1"/>
+                        <field name="iban" force_save="1"/>
+                        <field name="date_mandate" force_save="1"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="set_iban_inscriptions" type="object" string="Set_iban_inscriptions" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action set_iban_inscriptions -->
+    <record id="action_set_iban_inscriptions" model="ir.actions.act_window">
+        <field name="name">Review bank accounts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">energy_selfconsumption.set_iban_inscriptions_wizard</field>
+        <field name="binding_model_id" ref="model_energy_selfconsumption_inscription_selfconsumption" />
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

@@ -56,13 +56,15 @@ class AccountMove(models.Model):
     # define configuration journal
     def _prepare_invoice_data(self, dest_company):
         inv_data = super()._prepare_invoice_data(dest_company)
-        if (
-            self.pack_type == "platform_pack"
-            and dest_company.sudo().service_invoicing_purchase_journal_id
-        ):
-            inv_data[
-                "journal_id"
-            ] = dest_company.sudo().service_invoicing_purchase_journal_id.id
+        if self.pack_type != "none":
+            if self.related_contract_id:
+                purchase_journal_id = (
+                    self.related_contract_id.pack_id.categ_id.with_context(
+                        company_id=dest_company.id
+                    ).service_invoicing_purchase_journal_id
+                )
+                if purchase_journal_id:
+                    inv_data["journal_id"] = purchase_journal_id.id
         return inv_data
 
 

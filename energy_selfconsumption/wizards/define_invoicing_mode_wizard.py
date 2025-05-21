@@ -98,17 +98,6 @@ class ContractGenerationWizard(models.TransientModel):
                 _("There is no distribution table in proces of activation.")
             )
 
-        # Search accounting journal
-        journal_id = self.env["account.journal"].search(
-            [
-                ("company_id", "=", self.selfconsumption_id.company_id.id),
-                ("type", "=", "sale"),
-            ],
-            limit=1,
-        )
-        if not journal_id:
-            raise UserWarning(_("Accounting Journal not found."))
-
         # Create sale order
         for supply_point_assignation in distribution_id.supply_point_assignation_ids:
             inscription_id = self.selfconsumption_id.inscription_ids.filtered_domain(
@@ -128,7 +117,22 @@ class ContractGenerationWizard(models.TransientModel):
                     )
                 )
             with sale_order_utils(self.env) as component:
-                # TODO: apply supply_point_assignation to metadata
+                so_metadata = {
+                    "selfconsumption_id": self.selfconsumption_id.id,
+                    "supply_point_id": supply_point_assignation.supply_point_id.id,
+                    "supply_point_assignation_id": supply_point_assignation.id,
+                    "recurring_interval": self.recurring_interval,
+                    "recurring_rule_type": self.recurring_rule_type,
+                    "recurring_invoicing_type": self.recurring_invoicing_type,
+                    "project_id": self.selfconsumption_id.id,
+                    "company_id": self.selfconsumption_id.company_id.id,
+                }
+                # config journal if defined
+                sale_journal_id = pack.categ_id.with_context(
+                    company_id=self.selfconsumption_id.company_id.id
+                ).service_invoicing_sale_journal_id
+                if sale_journal_id:
+                    so_metadata["journal_id"] = sale_journal_id.id
                 component.create_service_invoicing_sale_order(
                     inscription_id.partner_id,
                     pack,
@@ -137,17 +141,7 @@ class ContractGenerationWizard(models.TransientModel):
                     fields.Date.today(),
                     "activate",
                     "active_selfconsumption_contract",
-                    {
-                        "selfconsumption_id": self.selfconsumption_id.id,
-                        "supply_point_id": supply_point_assignation.supply_point_id.id,
-                        "supply_point_assignation_id": supply_point_assignation.id,
-                        "recurring_interval": self.recurring_interval,
-                        "recurring_rule_type": self.recurring_rule_type,
-                        "recurring_invoicing_type": self.recurring_invoicing_type,
-                        "journal_id": journal_id.id,
-                        "project_id": self.selfconsumption_id.id,
-                        "company_id": self.selfconsumption_id.company_id.id,
-                    },
+                    so_metadata,
                 )
         self.selfconsumption_id.write(
             {
