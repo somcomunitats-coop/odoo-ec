@@ -9,38 +9,25 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [energy_communities](energy_communities/) | 16.0.0.4.0 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Base module for manage energy communities 
 [energy_communities_api](energy_communities_api/) | 16.0.0.3.0 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| HTTP API for energy communities 
-[energy_communities_cooperator](energy_communities_cooperator/) | 16.0.0.3.0 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| 
-[energy_communities_crm](energy_communities_crm/) | 16.0.0.2.2 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| 
-[energy_communities_l10n_es_tickectbai](energy_communities_l10n_es_tickectbai/) | 16.0.0.1.0 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| 
-[energy_communities_mass_mailing](energy_communities_mass_mailing/) | 16.0.0.1.3 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| 
-[energy_communities_service_invoicing](energy_communities_service_invoicing/) | 16.0.0.3.0 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| 
-[energy_project](energy_project/) | 16.0.0.2.1 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| 
-[energy_selfconsumption](energy_selfconumption/) | 16.0.0.4.0 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| 
+[energy_communities_cooperator](energy_communities_cooperator/) | 16.0.0.3.0 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Cooperator custumizations for energy communities management 
+[energy_communities_crm](energy_communities_crm/) | 16.0.0.2.2 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| CRM custumizations for energy communities management
+[energy_communities_l10n_es_tickectbai](energy_communities_l10n_es_tickectbai/) | 16.0.0.1.0 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Ticketbai custumizations for energy communities management
+[energy_communities_mass_mailing](energy_communities_mass_mailing/) | 16.0.0.1.3 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Mass Mailing custumizations for energy communities management
+[energy_communities_service_invoicing](energy_communities_service_invoicing/) | 16.0.0.3.0 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Addon for implement Som Comunitats service invoicing model
+[energy_project](energy_project/) | 16.0.0.2.1 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Som Comunitats energy project model implementation
+[energy_selfconsumption](energy_selfconumption/) | 16.0.0.4.0 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Energy selfconsumption addon for manage selfconsumption installations in a energy community
 
 
 ## Getting started
-TODO
+To start with our project, please refer to our [initial setup article](https://git.coopdevs.org/coopdevs/comunitats-energetiques/documentacio/-/wikis/home/Configuration/Setup-inicial-entorn-local-developer-Odoo-SomComunitats)
 
-### Test and Deploy
-TODO
+### Test
+In this [article](https://git.coopdevs.org/coopdevs/comunitats-energetiques/documentacio/-/wikis/Testing-Odoo) we explain how we test ower code 
 
-### Installation
-TODO
-
-### Usage
-TODO
-
-### Support
-TODO
-
-### Roadmap
-TODO
 
 ### Contributing
-TODO
+If you want to contribute with us, we are please to know about your interest in info@somcomunitats.coop
 
-### Authors and acknowledgment
-TODO
 
 <!-- ### License
 This repository is licensed under [AGPL-3.0](LICENSE). -->
