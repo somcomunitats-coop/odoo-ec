@@ -313,6 +313,20 @@ class ResCompany(models.Model):
                 )
         return res
 
+    def get_all_energy_actions_dict_list(self):
+        """Return all energy actions for the current energy community"""
+        self.ensure_one()
+        res = [
+            {
+                "id": energy_action.energy_action_id.id,
+                "name": energy_action.energy_action_id.name,
+                "ext_id": energy_action.energy_action_id.xml_id,
+                "is_active": energy_action.public_status == "published",
+            }
+            for energy_action in self.community_energy_action_ids
+        ]
+        return res
+
     def get_lower_hierarchy_level(self):
         if self.hierarchy_level == "instance":
             return "coordinator"
