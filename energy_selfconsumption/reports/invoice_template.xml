@@ -43,5 +43,14 @@
                     <span t-out="taxes" id="line_tax_ids">Tax 15%</span>
                 </td>
             </xpath>
+            <xpath expr="//p[@name='payment_communication']" position="replace">
+                <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference and o.payment_mode_id.payment_method_id.code != 'sepa_direct_debit'" name="payment_communication" class="mt-4">
+                    Please use the following communication for your payment : <b><span t-field="o.payment_reference"/></b>
+                    <t t-if="o.partner_bank_id">
+                        <br/>
+                        on this account: <span t-field="o.partner_bank_id" class="fw-bold"/>
+                    </t>
+                </p>
+            </xpath>
         </template>
 </odoo>
