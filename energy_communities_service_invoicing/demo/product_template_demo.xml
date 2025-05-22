@@ -2,22 +2,25 @@
   <record id="demo_platform_service_product_template" model="product.template">
       <field name="name">Platform service product</field>
       <field name="categ_id" ref="product_category_platform_service"/>
-      <field name="standard_price">0.62</field>
-      <field name="list_price">0.62</field>
+      <field name="standard_price">0.0</field>
+      <field name="list_price">0.0</field>
       <field name="sale_ok" eval="True"/>
       <field name="purchase_ok" eval="False"/> 
       <field name="detailed_type">service</field>
+      <field name="taxes_id" eval="[(5,0,0)]" />
+      <field name="company_id" eval="False" />
   </record>
 
   <record id="demo_platform_pack_contract_template" model="contract.template">
     <field name="name">Platform pack contract template</field>
     <field name="contract_type">sale</field>
     <field name="contract_line_ids" model="product.template" eval="[(0,0,{
-      'product_id': obj(ref('demo_platform_service_product_template')).product_variant_id.id,'automatic_price':True,'qty_type': 'variable',
+      'product_id': obj(ref('demo_platform_service_product_template')).product_variant_id.id,
+      'automatic_price':True,
+      'qty_type': 'variable',
       'qty_formula_id': ref('active_community_members_formula'),
       'name': 'Platform service product detailed description'
     })]"/>
-
   </record>
 
   <record id="demo_platform_pack_product_template" model="product.template">
@@ -30,6 +33,16 @@
       <field name="detailed_type" eval="'service'" />
       <field name="is_contract" eval="True"/>
       <field name="property_contract_template_id" ref="demo_platform_pack_contract_template" />
+      <field name="taxes_id" eval="[(5,0,0)]" />
+      <field name="company_id" eval="False" />
+  </record>
+
+  <record id="demo_service_invoicing_pricelist" model="product.pricelist">
+    <field name="name">Service invoicing pricelist</field>
+    <field name="item_ids" model="product.template" eval="[(0,0,{
+      'product_tmpl_id': obj(ref('demo_platform_service_product_template')).id,
+      'fixed_price': 0.62,
+    })]"/>
   </record>
 
 </odoo>
