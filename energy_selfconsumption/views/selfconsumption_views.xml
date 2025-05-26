@@ -332,8 +332,8 @@
                                     />
                                     <field name="pricelist_id" readonly="1"/>
                                     <field name="recurring_rule_type" attrs="{'readonly': True}" />
-                                    <field name="recurring_interval" attrs="{'readonly': True,'invisible': [('recurring_rule_type','=','monthlylastday')]}" />
-                                    <field name="recurring_invoicing_type" attrs="{'readonly': True,'invisible': [('recurring_rule_type','=','monthlylastday')]}" />
+                                    <field name="recurring_interval" attrs="{'readonly': True}" />
+                                    <field name="recurring_invoicing_type" attrs="{'readonly': True}" />
                                     <field name="payment_mode_id" attrs="{'readonly': True}" />
                                 </group>
                             </page>
