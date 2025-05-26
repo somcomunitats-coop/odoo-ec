@@ -156,8 +156,8 @@ class ContractUtils(Component):
     def reopen(
         self,
         execution_date,
-        pricelist_id=None,
-        pack_id=None,
+        pricelist_id,
+        pack_id,
         discount=None,
         payment_mode_id=None,
         metadata=None,
@@ -206,7 +206,7 @@ class ContractUtils(Component):
             else self.work.record.pack_id,
             "pricelist_id": pricelist_id
             if "modify_pricelist" in executed_action_description_list
-            else self.work.record.pricelist_id,
+            else self.work.record.pricelist_id,  # TODO: This will fail if no pricelist defined on contract
             "payment_mode_id": payment_mode_id
             if "modify_payment_mode" in executed_action_description_list
             else self.work.record.payment_mode_id,
