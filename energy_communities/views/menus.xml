@@ -32,6 +32,13 @@
       action="product.product_pricelist_action2"
       groups="role_platform_admin_res_groups"
     />
+
+    <menuitem
+      name="Product Categories"
+      id="view_product_categories_menu"
+      action="product.product_category_action_form"
+      groups="role_platform_admin_res_groups"
+    />
   </menuitem>
 
   <!-- Hide menu items unless platform manager -->
