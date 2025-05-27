@@ -35,6 +35,8 @@
         "report/report_invoice.xml",
         "views/account_move_views.xml",
         "views/contract_line_formula_views.xml",
+        "views/contract_line_views.xml",
+        "views/contract_template_line_views.xml",
         "views/contract_template_views.xml",
         "views/contract_views.xml",
         "views/product_category_views.xml",

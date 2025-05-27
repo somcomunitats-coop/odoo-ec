@@ -1,3 +1,7 @@
+from datetime import datetime
+
+from dateutil.parser import parse
+
 from odoo import _
 from odoo.api import Environment
 from odoo.exceptions import ValidationError
@@ -141,3 +145,34 @@ def get_existing_pack_contract(
     if contract_id:
         query.append(("id", "!=", contract_id.id))
     return env["contract.contract"].search(query, limit=1)
+
+
+def get_monthdays_selection_options():
+    day_list = []
+    for i in range(1, 31):
+        day_list.append((f"{i:02}", f"{i:02}"))
+    return day_list
+
+
+def get_month_selection_options():
+    return [
+        ("01", "January"),
+        ("02", "February"),
+        ("03", "March"),
+        ("04", "April"),
+        ("05", "May"),
+        ("06", "June"),
+        ("07", "July"),
+        ("08", "August"),
+        ("09", "September"),
+        ("10", "October"),
+        ("11", "November"),
+        ("12", "December"),
+    ]
+
+
+def validate_monthday_date(month, day):
+    try:
+        parse(str(datetime.now().year) + "-" + month + "-" + day)
+    except Exception as e:
+        raise ValidationError(e.args[0] % e.args[1])

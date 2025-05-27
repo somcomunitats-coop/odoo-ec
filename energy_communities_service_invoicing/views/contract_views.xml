@@ -106,6 +106,22 @@
         <field name="closing_action" attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('pack_type','=','none')]}" />
         <field name="closing_action_description" attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('pack_type','=','none')]}" />
         <field name="sale_order_id" attrs="{'invisible': [('pack_type','=','none')]}" />
+        <field name="recurring_rule_mode" />
+        <field name="recurring_invoicing_type" />
+        <field name="recurring_interval" attrs="{'invisible': [('recurring_rule_mode','!=','interval')]}" />
+        <field name="recurring_rule_type" attrs="{'invisible': [('recurring_rule_mode','!=','interval')]}" />
+        <field name="recurring_invoicing_fixed_type" attrs="{
+            'invisible': [('recurring_rule_mode','!=','fixed')],
+            'required': [('recurring_rule_mode','==','fixed')],
+          }" />
+          <field name="fixed_invoicing_day" attrs="{
+            'invisible': [('recurring_rule_mode','!=','fixed')],
+            'required': [('recurring_rule_mode','==','fixed')],
+          }" />
+          <field name="fixed_invoicing_month" attrs="{
+            'invisible': ['|',('recurring_rule_mode','!=','fixed'),('recurring_invoicing_fixed_type','!=','yearly')],
+            'required': [('recurring_rule_mode','==','fixed'),('recurring_invoicing_fixed_type','==','yearly')],
+          }" />
       </xpath>
     </field>
   </record>
