@@ -1,104 +1,128 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+Distribution Table Views
+========================
+
+This file contains views for managing distribution tables in energy 
+self-consumption projects. Distribution tables define how energy is 
+distributed among participants in a self-consumption project.
+
+Main functionalities:
+- Form view with workflow states (draft → validated → process → active)
+- Editable tree for supply point assignations and coefficients
+- Import functionality for bulk data loading
+- CSV report generation for energy distribution
+- State-based decorations and validations
+- Coefficient validation and visual feedback
+-->
 <odoo>
     <data>
+        
+        <!-- Form View: Distribution Table Management -->
         <record id="distribution_table_form_view" model="ir.ui.view">
-            <field
-        name="name"
-      >energy_selfconsumption.distribution_table_form_view.form</field>
+            <field name="name">energy_selfconsumption.distribution_table_form_view.form</field>
             <field name="model">energy_selfconsumption.distribution_table</field>
             <field name="arch" type="xml">
                 <form string="Distribution Table">
+                    
+                    <!-- Header with workflow buttons and status -->
                     <header>
-                        <button
-              type="object"
-              string="Validate"
-              name="button_validate"
-              states="draft"
-              class="btn btn-primary"
-            />
-                        <button
-              type="object"
-              string="Reset to draft"
-              name="button_draft"
-              attrs="{'invisible':[('state','not in',['validated'])]}"
-            />
-                        <button
-              type="object"
-              name="action_distribution_table_import_wizard"
-              string="Import table"
-              states="draft"
-            />
-                        <field
-              name="state"
-              widget="statusbar"
-              readonly="True"
-              statusbar_visible="draft,validated,process,active"
-            />
+                        <!-- Workflow advance buttons -->
+                        <button type="object"
+                                string="Validate"
+                                name="button_validate"
+                                states="draft"
+                                class="btn btn-primary" />
+                        
+                        <!-- Workflow rollback buttons -->
+                        <button type="object"
+                                string="Reset to draft"
+                                name="button_draft"
+                                attrs="{'invisible':[('state','not in',['validated'])]}" />
+                        
+                        <!-- Data import button -->
+                        <button type="object"
+                                name="action_distribution_table_import_wizard"
+                                string="Import table"
+                                states="draft" />
+                        
+                        <!-- Status bar -->
+                        <field name="state"
+                               widget="statusbar"
+                               readonly="True"
+                               statusbar_visible="draft,validated,process,active" />
+                        
+                        <!-- Hidden control fields -->
                         <field name="selfconsumption_project_state" invisible="1" />
                     </header>
+                    
                     <sheet>
-                        <widget
-              name="web_ribbon"
-              text="Archived"
-              bg_color="bg-danger"
-              attrs="{'invisible': [('active', '=', True)]}"
-            />
+                        <!-- Archived indicator -->
+                        <widget name="web_ribbon"
+                                text="Archived"
+                                bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}" />
+                        
+                        <!-- Hidden control fields -->
                         <field name="active" invisible="True" />
+                        
+                        <!-- Distribution table basic information -->
                         <group>
+                            <!-- Left column: Date information -->
                             <group>
-                                <field name="date_start" readonly="1" attrs="{'invisible': [('state', 'not in', ['active', 'cancelled'])]}" />
-                                <field
-                  name="selfconsumption_project_id"
-                  attrs="{'readonly': [('state', 'not in', ['draft'])]}"
-                  options="{'no_create': True}"
-                  invisible="1"
-                />
+                                <field name="date_start" 
+                                       readonly="1" 
+                                       attrs="{'invisible': [('state', 'not in', ['active', 'cancelled'])]}" />
+                                <field name="selfconsumption_project_id"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                       options="{'no_create': True}"
+                                       invisible="1" />
                             </group>
+                            
+                            <!-- Right column: Configuration -->
                             <group>
-                                <field name="date_end" readonly="1" attrs="{'invisible': [('state', 'not in', ['active', 'cancelled'])]}" />
-                                <field
-                  name="type"
-                  attrs="{'readonly': [('state', 'not in', ['draft'])]}"
-                />
-                                
+                                <field name="date_end" 
+                                       readonly="1" 
+                                       attrs="{'invisible': [('state', 'not in', ['active', 'cancelled'])]}" />
+                                <field name="type"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}" />
                             </group>
                         </group>
+                        
+                        <!-- Supply point assignations section -->
                         <group>
-                            <field
-                name="supply_point_assignation_ids"
-                widget="distribution_table_one2many"
-                mode="list"
-                context="{'default_distribution_table_id':id, 'distribution_table_type': type}"
-                attrs="{'readonly': [('state', 'not in', ['draft'])]}"
-                nolabel="1"
-                colspan="2"
-              >
+                            <field name="supply_point_assignation_ids"
+                                   widget="distribution_table_one2many"
+                                   mode="list"
+                                   context="{'default_distribution_table_id':id, 'distribution_table_type': type}"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                   nolabel="1"
+                                   colspan="2">
                                 <tree editable="bottom">
-                                    <field
-                    name="supply_point_filtered_ids"
-                    invisible="True"
-                  />
-                                    <field
-                    name="table_coefficient_is_valid"
-                    invisible="True"
-                  />
-                                    <field
-                    name="supply_point_id"
-                    options="{'no_create': True, 'search_more': True}"
-                    domain="[('id', 'in', supply_point_filtered_ids)]"
-                  />
+                                    <!-- Hidden control fields -->
+                                    <field name="supply_point_filtered_ids" invisible="True" />
+                                    <field name="table_coefficient_is_valid" invisible="True" />
+                                    
+                                    <!-- Supply point selection -->
+                                    <field name="supply_point_id"
+                                           options="{'no_create': True, 'search_more': True}"
+                                           domain="[('id', 'in', supply_point_filtered_ids)]" />
+                                    
+                                    <!-- Supply point details -->
                                     <field name="owner_id" />
                                     <field name="code" />
-                                    <field name="energy_shares" readonly="True"  sum="True"/>
-                                    <field
-                    name="coefficient"
-                    sum="True"
-                    decoration-success="table_coefficient_is_valid == True"
-                  />
+                                    
+                                    <!-- Energy distribution data -->
+                                    <field name="energy_shares" readonly="True" sum="True"/>
+                                    <field name="coefficient"
+                                           sum="True"
+                                           decoration-success="table_coefficient_is_valid == True" />
                                 </tree>
                             </field>
                         </group>
                     </sheet>
+                    
+                    <!-- Communication and activity tracking -->
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers" />
                         <field name="activity_ids" widget="mail_activity" />
@@ -108,48 +132,64 @@
             </field>
         </record>
 
+        <!-- Tree View: Distribution Table List -->
         <record id="distribution_table_tree_view" model="ir.ui.view">
             <field name="name">energy_selfconsumption.distribution_table.tree</field>
             <field name="model">energy_selfconsumption.distribution_table</field>
             <field name="arch" type="xml">
-                <tree string="Distribution Table" decoration-warning="state == 'validated'" decoration-success="state == 'active'" decoration-danger="state == 'cancelled'">
+                <tree string="Distribution Table" 
+                      decoration-warning="state == 'validated'" 
+                      decoration-success="state == 'active'" 
+                      decoration-danger="state == 'cancelled'">
+                    <!-- Main identification fields -->
                     <field name="name" />
                     <field name="selfconsumption_project_id" />
                     <field name="create_date" />
+                    
+                    <!-- Date range -->
                     <field name="date_start" />
                     <field name="date_end" />
+                    
+                    <!-- Configuration and status -->
                     <field name="type" />
                     <field name="state" />
                 </tree>
             </field>
         </record>
 
-      <record id="distribution_table_search_view" model="ir.ui.view">
-        <field name="name">energy_selfconsumption.distribution_table.search</field>
-        <field name="model">energy_selfconsumption.distribution_table</field>
-        <field name="type">search</field>
-        <field name="arch" type="xml">
-          <search string="Distribution Table">
-            <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
-            <filter string="Validated" name="validated" domain="[('state', '=', 'validated')]"/>
-            <filter string="In process" name="process" domain="[('state', '=', 'process')]"/>
-            <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
-            <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
-            <filter string="Fixed" name="fixed" domain="[('type', '=', 'fixed')]"/>
-            <filter string="Variable hourly" name="hourly" domain="[('type', '=', 'hourly')]"/>
-            <field name="name" />
-            <group expand="1" string="Group By">
-              <filter
-                string="Self-consumption Project"
-                name="selfconsumption_project_id"
-                domain="[]"
-                context="{'group_by':'selfconsumption_project_id'}"
-              />
-            </group>
-          </search>
-        </field>
-      </record>
+        <!-- Search View: Filters and Groupings -->
+        <record id="distribution_table_search_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.distribution_table.search</field>
+            <field name="model">energy_selfconsumption.distribution_table</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Distribution Table">
+                    <!-- Filters by state -->
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Validated" name="validated" domain="[('state', '=', 'validated')]"/>
+                    <filter string="In process" name="process" domain="[('state', '=', 'process')]"/>
+                    <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    
+                    <!-- Filters by type -->
+                    <filter string="Fixed" name="fixed" domain="[('type', '=', 'fixed')]"/>
+                    <filter string="Variable hourly" name="hourly" domain="[('type', '=', 'hourly')]"/>
+                    
+                    <!-- Search fields -->
+                    <field name="name" />
+                    
+                    <!-- Grouping options -->
+                    <group expand="1" string="Group By">
+                        <filter string="Self-consumption Project"
+                                name="selfconsumption_project_id"
+                                domain="[]"
+                                context="{'group_by':'selfconsumption_project_id'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
 
+        <!-- Action Window: Distribution Tables -->
         <record id="distribution_table_act_window" model="ir.actions.act_window">
             <field name="name">Distribution Table</field>
             <field name="type">ir.actions.act_window</field>
@@ -162,41 +202,28 @@
             </field>
         </record>
 
+        <!-- CSV Report: Energy Distribution Template -->
         <record id="distribution_table_hourly_csv_report" model="ir.actions.report">
             <field name="name">Customized delivered energy template</field>
             <field name="model">energy_selfconsumption.distribution_table</field>
             <field name="report_type">csv</field>
-            <field
-        name="report_name"
-      >energy_selfconsumption.distribution_table.csv</field>
+            <field name="report_name">energy_selfconsumption.distribution_table.csv</field>
             <field name="report_file">distribution_table</field>
-            <field
-        name="binding_model_id"
-        ref="energy_selfconsumption.model_energy_selfconsumption_distribution_table"
-      />
+            <field name="binding_model_id"
+                   ref="energy_selfconsumption.model_energy_selfconsumption_distribution_table" />
             <field name="binding_type">report</field>
         </record>
 
-         <record
-      id="manager_clean_supply_point_assignation_action"
-      model="ir.actions.server"
-    >
+        <!-- Server Action: Clean Supply Point Assignations -->
+        <record id="manager_clean_supply_point_assignation_action" model="ir.actions.server">
             <field name="name">Clean supply point assignation</field>
-            <field
-        name="model_id"
-        ref="model_energy_selfconsumption_distribution_table"
-      />
-            <field
-        name="binding_model_id"
-        ref="model_energy_selfconsumption_distribution_table"
-      />
+            <field name="model_id" ref="model_energy_selfconsumption_distribution_table" />
+            <field name="binding_model_id" ref="model_energy_selfconsumption_distribution_table" />
             <field name="binding_type">action</field>
             <field name="binding_view_types">list,form</field>
             <field name="state">code</field>
-            <field
-        name="code"
-      >action = records.action_clean_supply_point_assignation_wizard()</field>
-        </record> 
+            <field name="code">action = records.action_clean_supply_point_assignation_wizard()</field>
+        </record>
 
-  </data>
+    </data>
 </odoo>

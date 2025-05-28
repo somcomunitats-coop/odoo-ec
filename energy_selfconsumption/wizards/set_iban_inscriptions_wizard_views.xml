@@ -1,30 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Set IBAN Inscriptions Wizard Views
+===================================
+
+This file contains views for the IBAN inscriptions wizard that allows
+reviewing and setting bank account information for inscriptions in
+self-consumption projects.
+
+Main functionalities:
+- Review existing bank account data for inscriptions
+- Edit IBAN and mandate date information
+- Bulk update of bank account details
+- Validation of bank account information
+- Integration with inscription management workflow
+-->
 <odoo>
 
-    <!-- View set_iban_inscriptions form -->
+    <!-- Form View: Set IBAN Inscriptions Wizard -->
     <record id="view_set_iban_inscriptions_form" model="ir.ui.view">
         <field name="name">view.set_iban_inscriptions.form</field>
         <field name="model">energy_selfconsumption.set_iban_inscriptions_wizard</field>
         <field name="arch" type="xml">
             <form string="Review bank accounts">
-                <field name="set_iban_inscriptions_line_wizard_ids" mode="tree" nolabel="1">
+                <!-- Editable tree for bank account management -->
+                <field name="set_iban_inscriptions_line_wizard_ids" 
+                       mode="tree" 
+                       nolabel="1">
                     <tree editable="bottom" create="0">
-                        <field name="set_iban_inscriptions_wizard_id" invisible="1" readonly="1" force_save="1"/>
-                        <field name="inscription_id" readonly="1" force_save="1"/>
-                        <field name="partner_id" readonly="1" force_save="1"/>
+                        <!-- Hidden control fields -->
+                        <field name="set_iban_inscriptions_wizard_id" 
+                               invisible="1" 
+                               readonly="1" 
+                               force_save="1"/>
+                        
+                        <!-- Inscription and partner information (readonly) -->
+                        <field name="inscription_id" 
+                               readonly="1" 
+                               force_save="1"/>
+                        <field name="partner_id" 
+                               readonly="1" 
+                               force_save="1"/>
+                        
+                        <!-- Editable bank account fields -->
                         <field name="iban" force_save="1"/>
                         <field name="date_mandate" force_save="1"/>
                     </tree>
                 </field>
+                
+                <!-- Footer with action buttons -->
                 <footer>
-                    <button name="set_iban_inscriptions" type="object" string="Set_iban_inscriptions" class="oe_highlight"/>
+                    <button name="set_iban_inscriptions" 
+                            type="object" 
+                            string="Set_iban_inscriptions" 
+                            class="oe_highlight"/>
                     <button special="cancel" string="Cancel"/>
                 </footer>
             </form>
         </field>
     </record>
 
-    <!-- Action set_iban_inscriptions -->
+    <!-- Action Window: Set IBAN Inscriptions -->
     <record id="action_set_iban_inscriptions" model="ir.actions.act_window">
         <field name="name">Review bank accounts</field>
         <field name="type">ir.actions.act_window</field>

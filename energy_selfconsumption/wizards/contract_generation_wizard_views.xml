@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+Contract Generation Wizard Views
+=================================
+
+This file contains views for the contract generation wizard that creates
+recurring billing contracts when activating energy self-consumption projects.
+
+Main functionalities:
+- Project activation with contract generation
+- Start date configuration for recurring billing
+- Payment mode selection for inbound payments
+- Warning about recurring billing activation
+- Automatic contract creation for all supply points
+-->
 <odoo>
     <data>
 
+        <!-- Form View: Contract Generation Wizard -->
         <record id="contract_generation_wizard_form_view" model="ir.ui.view">
-            <field
-        name="name"
-      >energy_selfconsumption.contract_generation_wizard.form</field>
-            <field
-        name="model"
-      >energy_selfconsumption.contract_generation.wizard</field>
+            <field name="name">energy_selfconsumption.contract_generation_wizard.form</field>
+            <field name="model">energy_selfconsumption.contract_generation.wizard</field>
             <field name="arch" type="xml">
                 <form string="Contract Generation">
-                                        <p>
-                        <b
-            >Attention!</b> You are activating a project and thus activating its recurring billing.
+                    <!-- Warning and Instructions -->
+                    <p>
+                        <b>Attention!</b> You are activating a project and thus activating its recurring billing.
                     </p>
                     <p>
                         To activate the recurring invoicing process, define the date from which you want
@@ -21,23 +32,28 @@
                         established recurrence.
                     </p>
 
+                    <!-- Configuration Fields -->
                     <group>
+                        <!-- Start date for recurring billing -->
                         <field name="start_date" />
-                        <field
-              name="payment_mode"
-              domain="[('company_id', '=', context.get('default_company_id', False)), ('payment_type', '=', 'inbound')]"
-            />
+                        
+                        <!-- Payment mode selection -->
+                        <field name="payment_mode"
+                               domain="[('company_id', '=', context.get('default_company_id', False)), ('payment_type', '=', 'inbound')]" />
                     </group>
-                     <footer>
-                        <button
-              class="btn-primary"
-              type="object"
-              name="action_generate_contracts"
-            >Generate contracts</button>
-            <button string="Cancel" special="cancel" />
+                    
+                    <!-- Footer with Generation Actions -->
+                    <footer>
+                        <button class="btn-primary"
+                                type="object"
+                                name="action_generate_contracts">
+                            Generate contracts
+                        </button>
+                        <button string="Cancel" special="cancel" />
                     </footer>
                 </form>
             </field>
         </record>
+        
     </data>
 </odoo>

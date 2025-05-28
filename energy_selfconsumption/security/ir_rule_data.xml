@@ -1,65 +1,68 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+IR Rule Data
+============
+
+This file defines security rules for multi-company access control in self-consumption
+models. Rules ensure that users can only access records from their own company
+or records without company restrictions.
+
+Main security rules:
+- Supply Point multi-company access control
+- Distribution Table multi-company access control  
+- Supply Point Assignation multi-company access control
+
+All rules apply to energy community roles (admin, manager, member, coordinator)
+and platform managers, enforcing company-based data isolation.
+-->
 <odoo>
-    <record model="ir.rule" id="supply_point_company_rule">
-        <field name="name">Supply Point multi-company</field>
-        <field
-      name="model_id"
-      ref="energy_selfconsumption.model_energy_selfconsumption_supply_point"
-    />
-        <field
-      name="groups"
-      eval="[
-          (4, ref('energy_communities.role_ce_admin_res_groups')),
-          (4,ref('energy_communities.role_ce_manager_res_groups')),
-          (4,ref('energy_communities.role_ce_member_res_groups')),
-          (4,ref('energy_communities.role_coord_admin_res_groups')),
-          (4,ref('energy_communities.group_platform_manager')),
-        ]"
-    />
-        <field
-      name="domain_force"
-    >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-    </record>
+    <data>
+        
+        <!-- ========================================== -->
+        <!-- MULTI-COMPANY ACCESS RULES                -->
+        <!-- ========================================== -->
+        
+        <!-- Rule: Supply Point Multi-company Access -->
+        <record model="ir.rule" id="supply_point_company_rule">
+            <field name="name">Supply Point multi-company</field>
+            <field name="model_id" ref="energy_selfconsumption.model_energy_selfconsumption_supply_point" />
+            <field name="groups" eval="[
+                (4, ref('energy_communities.role_ce_admin_res_groups')),
+                (4, ref('energy_communities.role_ce_manager_res_groups')),
+                (4, ref('energy_communities.role_ce_member_res_groups')),
+                (4, ref('energy_communities.role_coord_admin_res_groups')),
+                (4, ref('energy_communities.group_platform_manager')),
+            ]" />
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
 
-    <record model="ir.rule" id="distribution_table_rule">
-        <field name="name">Distribution Table multi-company</field>
-        <field
-      name="model_id"
-      ref="energy_selfconsumption.model_energy_selfconsumption_distribution_table"
-    />
-        <field
-      name="groups"
-      eval="[
-          (4, ref('energy_communities.role_ce_admin_res_groups')),
-          (4,ref('energy_communities.role_ce_manager_res_groups')),
-          (4,ref('energy_communities.role_ce_member_res_groups')),
-          (4,ref('energy_communities.role_coord_admin_res_groups')),
-          (4,ref('energy_communities.group_platform_manager')),
-        ]"
-    />
-        <field
-      name="domain_force"
-    >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-    </record>
+        <!-- Rule: Distribution Table Multi-company Access -->
+        <record model="ir.rule" id="distribution_table_rule">
+            <field name="name">Distribution Table multi-company</field>
+            <field name="model_id" ref="energy_selfconsumption.model_energy_selfconsumption_distribution_table" />
+            <field name="groups" eval="[
+                (4, ref('energy_communities.role_ce_admin_res_groups')),
+                (4, ref('energy_communities.role_ce_manager_res_groups')),
+                (4, ref('energy_communities.role_ce_member_res_groups')),
+                (4, ref('energy_communities.role_coord_admin_res_groups')),
+                (4, ref('energy_communities.group_platform_manager')),
+            ]" />
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
 
-    <record model="ir.rule" id="supply_point_assignation_rule">
-        <field name="name">Supply Point Assignation multi-company</field>
-        <field
-      name="model_id"
-      ref="energy_selfconsumption.model_energy_selfconsumption_supply_point_assignation"
-    />
-        <field
-      name="groups"
-      eval="[
-          (4, ref('energy_communities.role_ce_admin_res_groups')),
-          (4,ref('energy_communities.role_ce_manager_res_groups')),
-          (4,ref('energy_communities.role_ce_member_res_groups')),
-          (4,ref('energy_communities.role_coord_admin_res_groups')),
-          (4,ref('energy_communities.group_platform_manager')),
-        ]"
-    />
-        <field
-      name="domain_force"
-    >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-    </record>
+        <!-- Rule: Supply Point Assignation Multi-company Access -->
+        <record model="ir.rule" id="supply_point_assignation_rule">
+            <field name="name">Supply Point Assignation multi-company</field>
+            <field name="model_id" ref="energy_selfconsumption.model_energy_selfconsumption_supply_point_assignation" />
+            <field name="groups" eval="[
+                (4, ref('energy_communities.role_ce_admin_res_groups')),
+                (4, ref('energy_communities.role_ce_manager_res_groups')),
+                (4, ref('energy_communities.role_ce_member_res_groups')),
+                (4, ref('energy_communities.role_coord_admin_res_groups')),
+                (4, ref('energy_communities.group_platform_manager')),
+            ]" />
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+        
+    </data>
 </odoo>

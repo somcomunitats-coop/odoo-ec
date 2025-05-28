@@ -1,110 +1,119 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+Supply Point Views
+==================
+
+This file contains views for managing supply points in energy self-consumption
+projects. Supply points represent electricity consumption locations that can
+participate in self-consumption projects.
+
+Main functionalities:
+- Form view with complete supply point details
+- Tree view for supply point listing
+- Address management with Spanish country default
+- Integration with self-consumption project assignations
+- Partner and owner relationship management
+- Power and tariff configuration
+-->
 <odoo>
     <data>
 
+        <!-- Form View: Supply Point Details -->
         <record id="supply_point_form_view" model="ir.ui.view">
             <field name="name">energy_selfconsumption.supply_point.form</field>
             <field name="model">energy_selfconsumption.supply_point</field>
             <field name="arch" type="xml">
                 <form string="Supply Points">
                     <sheet>
+                        <!-- Supply point title -->
                         <div class="oe_title">
                             <label for="name" />
                             <h1>
                                 <field name="name" placeholder="Title" readonly="1" />
                             </h1>
                         </div>
+                        
+                        <!-- Main supply point information -->
                         <group>
+                            <!-- Left column: Technical and partner data -->
                             <group>
+                                <!-- CUPS identification code -->
                                 <field name="code" />
-                                <field
-                  name="partner_id"
-                  options="{'no_create': True}"
-                />
-                                <field
-                  name="owner_id"
-                  domain="['|', ('member', '=' , False), ('id', '=', partner_id)]"
-                />
-                                <field
-                  name="reseller_id"
-                  options="{'no_create': True, 'no_edit':True, 'no_open': True}"
-                />
-                <field
-                  name="supplier_id"
-                  options="{'no_create': True, 'no_edit':True, 'no_open': True}"
-                />
-                <field name="cadastral_reference" />
-                <field name="contracted_power" />
-                                <p
-                  colspan="2"
-                  class="text-warning"
-                  attrs="{'invisible': [('contracted_power', '&lt;', 100)]}"
-                ><b>
-                                The indicated maximum contracted power is very high.
-                                Please check that this is correct.
-                                Remember that we use '.' to express decimals, not ','.
-                </b></p>
-                <field name="tariff" />
+                                
+                                <!-- Partner relationships -->
+                                <field name="partner_id"
+                                       options="{'no_create': True}" />
+                                <field name="owner_id"
+                                       domain="['|', ('member', '=' , False), ('id', '=', partner_id)]" />
+                                
+                                <!-- Energy suppliers -->
+                                <field name="reseller_id"
+                                       options="{'no_create': True, 'no_edit':True, 'no_open': True}" />
+                                <field name="supplier_id"
+                                       options="{'no_create': True, 'no_edit':True, 'no_open': True}" />
+                                
+                                <!-- Location reference -->
+                                <field name="cadastral_reference" />
+                                
+                                <!-- Power configuration -->
+                                <field name="contracted_power" />
+                                
+                                <!-- High power warning -->
+                                <p colspan="2"
+                                   class="text-warning"
+                                   attrs="{'invisible': [('contracted_power', '&lt;', 100)]}">
+                                    <b>
+                                        The indicated maximum contracted power is very high.
+                                        Please check that this is correct.
+                                        Remember that we use '.' to express decimals, not ','.
+                                    </b>
+                                </p>
+                                
+                                <!-- Tariff configuration -->
+                                <field name="tariff" />
                             </group>
+                            
+                            <!-- Right column: Address information -->
                             <group>
-                                <span
-                  class="o_form_label o_td_label"
-                  name="address_name"
-                >
+                                <span class="o_form_label o_td_label" name="address_name">
                                     <b>Address</b>
                                 </span>
                                 <div class="o_address_format">
-                                    <field
-                    name="street"
-                    placeholder="Street..."
-                    class="o_address_street"
-                  />
-                                    <field
-                    name="street2"
-                    placeholder="Street 2..."
-                    class="o_address_street"
-                  />
-                                    <field
-                    name="city"
-                    placeholder="City"
-                    class="o_address_city"
-                  />
-                                    <field
-                    name="state_id"
-                    class="o_address_state"
-                    placeholder="State"
-                    options="{'no_open': True, 'no_quick_create': True}"
-                    context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"
-                  />
-                                    <field
-                    name="zip"
-                    placeholder="ZIP"
-                    class="o_address_zip"
-                  />
-                                    <field
-                    name="country_id"
-                    placeholder="Country"
-                    class="o_address_country"
-                    options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
-                  />
+                                    <field name="street"
+                                           placeholder="Street..."
+                                           class="o_address_street" />
+                                    <field name="street2"
+                                           placeholder="Street 2..."
+                                           class="o_address_street" />
+                                    <field name="city"
+                                           placeholder="City"
+                                           class="o_address_city" />
+                                    <field name="state_id"
+                                           class="o_address_state"
+                                           placeholder="State"
+                                           options="{'no_open': True, 'no_quick_create': True}"
+                                           context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}" />
+                                    <field name="zip"
+                                           placeholder="ZIP"
+                                           class="o_address_zip" />
+                                    <field name="country_id"
+                                           placeholder="Country"
+                                           class="o_address_country"
+                                           options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
                                 </div>
                             </group>
                         </group>
 
+                        <!-- Additional information tabs -->
                         <notebook>
-                            <page
-                string="Self-consumption Projects"
-                name="selfconsumption_project"
-                autofocus="autofocus"
-              >
+                            <!-- Self-consumption projects tab -->
+                            <page string="Self-consumption Projects"
+                                  name="selfconsumption_project"
+                                  autofocus="autofocus">
                                 <field name="supply_point_assignation_ids">
-                                    <tree
-                    default_order="distribution_table_create_date desc"
-                  >
-                                        <field
-                      name="selfconsumption_project_id"
-                      string="Name"
-                    />
+                                    <tree default_order="distribution_table_create_date desc">
+                                        <field name="selfconsumption_project_id"
+                                               string="Name" />
                                         <field name="distribution_table_state" />
                                         <field name="distribution_table_create_date" />
                                     </tree>
@@ -112,6 +121,8 @@
                             </page>
                         </notebook>
                     </sheet>
+                    
+                    <!-- Communication and activity tracking -->
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers" />
                         <field name="activity_ids" widget="mail_activity" />
@@ -121,11 +132,13 @@
             </field>
         </record>
 
+        <!-- Tree View: Supply Point List -->
         <record id="supply_point_tree_view" model="ir.ui.view">
             <field name="name">energy_selfconsumption.supply_point.tree</field>
             <field name="model">energy_selfconsumption.supply_point</field>
             <field name="arch" type="xml">
                 <tree string="Supply Points">
+                    <!-- Main identification fields -->
                     <field name="street" />
                     <field name="code" />
                     <field name="partner_id" />
@@ -134,6 +147,7 @@
             </field>
         </record>
 
+        <!-- Action Window: Supply Points -->
         <record id="supply_point_form_act_window" model="ir.actions.act_window">
             <field name="name">Supply Points</field>
             <field name="type">ir.actions.act_window</field>
@@ -144,14 +158,15 @@
                     There is no examples click here to add new Supply Points.
                 </p>
             </field>
+            <!-- Default to Spanish country -->
             <field name="context" eval="{'default_country_id': ref('base.es')}" />
         </record>
 
-        <menuitem
-      name="Supply Points"
-      id="supply_point_menu"
-      action="supply_point_form_act_window"
-      parent="management_category_menu"
-    />
+        <!-- Menu Item: Supply Points -->
+        <menuitem name="Supply Points"
+                  id="supply_point_menu"
+                  action="supply_point_form_act_window"
+                  parent="management_category_menu" />
+                  
     </data>
 </odoo>

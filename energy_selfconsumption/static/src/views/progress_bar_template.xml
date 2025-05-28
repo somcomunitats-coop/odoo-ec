@@ -1,17 +1,51 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Progress Bar Widget Template
+============================
+
+This template defines the visual structure for the progress bar widget used in
+energy self-consumption projects. It displays power distribution progress with
+visual indicators and percentage/value information.
+
+Template features:
+- Dynamic progress bar with color-coded states
+- Percentage display with decimal precision
+- Current vs maximum value display with units
+- Responsive styling with proper visual hierarchy
+
+Used by: ProgressBarWidget component in progress_bar.js
+-->
 <templates id="template" xml:space="preserve">
+    
+    <!-- ========================================== -->
+    <!-- PROGRESS BAR WIDGET TEMPLATE              -->
+    <!-- ========================================== -->
+    
     <t t-name="ProgressBarWidgetTemplate" owl="1">
         <div class="o_progress_bar">
+            
+            <!-- Progress Bar Container -->
             <div class="progress-bar-container" t-att-style="containerStyle">
+                <!-- Main Progress Bar (Green/Purple/Red based on state) -->
                 <div class="progress-bar-green" t-att-style="progressStyle" />
+                
+                <!-- Overlay for Visual Effects -->
                 <div class="progress-bar-red" t-att-style="overlayStyle" />
             </div>
-            <span><t t-esc="state.percentage.toFixed(2)" />%</span>
-            <span style="display: block;float: right;">
+            
+            <!-- Percentage Display -->
+            <span>
+                <t t-esc="state.percentage.toFixed(2)" />%
+            </span>
+            
+            <!-- Current vs Maximum Values Display -->
+            <span style="display: block; float: right;">
                 <t t-esc="state.current_quantity.toFixed(2)" /> /
                 <t t-esc="state.max_quantity.toFixed(2)" />
                 <t t-esc="state.extra_label" />
             </span>
+            
         </div>
     </t>
+    
 </templates>

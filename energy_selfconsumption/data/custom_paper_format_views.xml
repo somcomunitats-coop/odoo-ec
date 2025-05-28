@@ -1,13 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Custom Paper Format Views
+=========================
+
+This file defines custom paper format configuration for self-consumption reports.
+The format is specifically designed for the Manager Authorization report with
+optimized margins and layout for A4 paper.
+
+Main functionality:
+- A4 custom format for self-consumption manager authorization reports
+- Portrait orientation with optimized margins
+- Specific dimensions for professional document layout
+-->
 <odoo>
-    <record id="custom_paperformat_id" model="report.paperformat">
-        <field name="name">A4 Format Self-consumption Manager Authorization</field>
-        <field name="format">custom</field>
-        <field name="page_width">210</field>
-        <field name="page_height">297</field>
-        <field name="margin_top">25</field>
-        <field name="margin_bottom">25</field>
-        <field name="margin_left">18</field>
-        <field name="margin_right">18</field>
-        <field name="orientation">Portrait</field>
-    </record>
+    <data>
+        
+        <!-- Paper Format: A4 Self-consumption Manager Authorization -->
+        <record id="custom_paperformat_id" model="report.paperformat">
+            <field name="name">A4 Format Self-consumption Manager Authorization</field>
+            <field name="format">custom</field>
+            
+            <!-- Page dimensions (A4 in mm) -->
+            <field name="page_width">210</field>
+            <field name="page_height">297</field>
+            
+            <!-- Margins configuration -->
+            <field name="margin_top">25</field>
+            <field name="margin_bottom">25</field>
+            <field name="margin_left">18</field>
+            <field name="margin_right">18</field>
+            
+            <!-- Page orientation -->
+            <field name="orientation">Portrait</field>
+        </record>
+        
+    </data>
 </odoo>

@@ -1,25 +1,51 @@
+<!--
+Export CSV Inscriptions Wizard Views
+=====================================
+
+This file contains views for the CSV export wizard that allows exporting
+inscription data from energy self-consumption projects to CSV format.
+
+Main functionalities:
+- Export inscriptions data to CSV file
+- File download functionality
+- Simple wizard interface for data export
+- Integration with inscription management
+-->
 <odoo>
+
+    <!-- Form View: Export CSV Inscriptions Wizard -->
     <record id="view_export_csv_inscritions_wizard" model="ir.ui.view">
         <field name="name">export.csv.inscritions.wizard.form</field>
         <field name="model">export.csv.inscritions.wizard</field>
         <field name="arch" type="xml">
             <form string="Export CSV">
+                <!-- File Download Section -->
                 <group>
                     <field name="file_data" filename="file_name" />
                     <field name="file_name" invisible="1"/>
                 </group>
+                
+                <!-- Footer with Export Actions -->
                 <footer>
-                    <button string="Export CSV" type="object" name="exportar_csv" class="btn-primary" attrs="{'invisible':[('file_data', '!=', False)]}"/>
-                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    <button string="Export CSV" 
+                            type="object" 
+                            name="exportar_csv" 
+                            class="btn-primary" 
+                            attrs="{'invisible':[('file_data', '!=', False)]}"/>
+                    <button string="Cancel" 
+                            class="btn-secondary" 
+                            special="cancel"/>
                 </footer>
             </form>
         </field>
     </record>
 
+    <!-- Action Window: Export CSV Inscriptions Wizard -->
     <record id="action_export_csv_inscritions_wizard" model="ir.actions.act_window">
         <field name="name">Export CSV</field>
         <field name="res_model">export.csv.inscritions.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
+    
 </odoo>

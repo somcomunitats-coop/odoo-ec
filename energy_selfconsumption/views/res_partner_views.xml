@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+Partner Views Extensions
+========================
+
+This file extends the standard partner views to add energy self-consumption
+specific functionality. It provides specialized views for owners and cooperators
+and adds supply point information to partner forms.
+
+Main functionalities:
+- Owners action window (partners with supply points)
+- Cooperators action window (members of the cooperative)
+- Partner form extension with supply point statistics
+- Menu items for contact management
+-->
 <odoo>
     <data>
+        
+        <!-- Action Window: Owners (Partners with Supply Points) -->
         <record id="action_partner_owner_form" model="ir.actions.act_window">
             <field name="name">Owners</field>
             <field name="res_model">res.partner</field>
@@ -14,14 +30,16 @@
             </field>
         </record>
 
+        <!-- Menu Structure: Contacts Category -->
         <menuitem name="Contacts" id="contacts_category_menu" parent="root" />
-        <menuitem
-      name="Owners"
-      id="res_partner_owners_menu"
-      parent="contacts_category_menu"
-      action="action_partner_owner_form"
-    />
+        
+        <!-- Menu Item: Owners -->
+        <menuitem name="Owners"
+                  id="res_partner_owners_menu"
+                  parent="contacts_category_menu"
+                  action="action_partner_owner_form" />
 
+        <!-- Action Window: Cooperators (Cooperative Members) -->
         <record id="action_partner_cooperator_form" model="ir.actions.act_window">
             <field name="name">Cooperators</field>
             <field name="res_model">res.partner</field>
@@ -35,30 +53,27 @@
             </field>
         </record>
 
-        <menuitem
-      name="Cooperators"
-      id="res_partner_cooperators_menu"
-      parent="energy_selfconsumption.contacts_category_menu"
-      action="action_partner_cooperator_form"
-    />
+        <!-- Menu Item: Cooperators -->
+        <menuitem name="Cooperators"
+                  id="res_partner_cooperators_menu"
+                  parent="energy_selfconsumption.contacts_category_menu"
+                  action="action_partner_cooperator_form" />
 
+        <!-- Form View Extension: Partner with Supply Point Statistics -->
         <record id="view_partner_form_inherit" model="ir.ui.view">
             <field name="name">res.partner.form.buttons</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form" />
             <field name="arch" type="xml">
                 <div name="button_box" position="inside">
-                    <button
-            class="oe_stat_button"
-            type="object"
-            name="get_supply_points"
-            icon="fa-lightbulb-o"
-          >
-                        <field
-              string="Supply Points"
-              name="supply_point_count"
-              widget="statinfo"
-            />
+                    <!-- Supply Points Statistics Button -->
+                    <button class="oe_stat_button"
+                            type="object"
+                            name="get_supply_points"
+                            icon="fa-lightbulb-o">
+                        <field string="Supply Points"
+                               name="supply_point_count"
+                               widget="statinfo" />
                     </button>
                 </div>
             </field>

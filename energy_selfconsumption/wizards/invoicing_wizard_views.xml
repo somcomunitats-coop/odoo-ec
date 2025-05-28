@@ -1,77 +1,97 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+Invoicing Wizard Views
+======================
+
+This file contains views for the invoicing wizard that generates invoices
+for energy self-consumption projects based on different invoicing modes.
+
+Main functionalities:
+- Billing period configuration
+- Multiple invoicing modes support:
+  * Power acquired mode
+  * Energy delivered mode  
+  * Custom energy mode with CSV import
+- CSV template download for custom energy data
+- Contract count display
+- Admin-only access control
+- File format configuration for CSV imports
+-->
 <odoo>
     <data>
 
+        <!-- Form View: Invoicing Wizard -->
         <record id="invoicing_wizard_form_view" model="ir.ui.view">
-            <field name="name">energy_selfconsumption.invoicing_wizard.form
-            </field>
+            <field name="name">energy_selfconsumption.invoicing_wizard.form</field>
             <field name="model">energy_selfconsumption.invoicing.wizard</field>
             <field name="arch" type="xml">
                 <form string="Generate invoices">
                     <sheet>
+                        <!-- Billing Period Configuration -->
                         <group string="Billing period">
                             <field name="next_period_date_start" />
                             <field name="next_period_date_end" />
                             <field name="invoicing_mode" readonly="1" invisible="1" />
                         </group>
+                        
+                        <!-- Power and Contract Information -->
                         <group>
-
-                            <field
-                name="power"
-                attrs="{'invisible': [('invoicing_mode', '!=', 'energy_delivered')], 'required': [('invoicing_mode', '=', 'energy_delivered')]}"
-              />
+                            <!-- Power field for energy delivered mode -->
+                            <field name="power"
+                                   attrs="{'invisible': [('invoicing_mode', '!=', 'energy_delivered')], 
+                                           'required': [('invoicing_mode', '=', 'energy_delivered')]}" />
+                            
+                            <!-- Contract count display -->
                             <field name="num_contracts" readonly="1" />
                         </group>
-                        <group
-              cols="4"
-              attrs="{'invisible': [('invoicing_mode', '!=', 'energy_custom')]}"
-            >
+                        
+                        <!-- Custom Energy Mode Configuration -->
+                        <group cols="4"
+                               attrs="{'invisible': [('invoicing_mode', '!=', 'energy_custom')]}">
+                            
+                            <!-- File Upload and Format Configuration -->
                             <group>
-                                <field
-                  name="import_file"
-                  filename="fname"
-                  widget="binary"
-                />
-
-                            <field
-                  name="fname"
-                  invisible="1"
-                  attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
-                />
-                            <field
-                  name="delimiter"
-                  attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
-                />
-                            <field
-                  name="quotechar"
-                  attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
-                />
-                            <field
-                  name="encoding"
-                  attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}"
-                />
+                                <!-- CSV file upload -->
+                                <field name="import_file"
+                                       filename="fname"
+                                       widget="binary" />
+                                
+                                <!-- File configuration fields -->
+                                <field name="fname"
+                                       invisible="1"
+                                       attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}" />
+                                <field name="delimiter"
+                                       attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}" />
+                                <field name="quotechar"
+                                       attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}" />
+                                <field name="encoding"
+                                       attrs="{'required': [('invoicing_mode', '=', 'energy_custom')]}" />
                             </group>
+                            
+                            <!-- Template Download -->
                             <group>
-                                <button
-                  type="object"
-                  class="btn btn-secondary mr-1"
-                  name="download_template_button"
-                >Download
-                            Template</button>
+                                <button type="object"
+                                        class="btn btn-secondary mr-1"
+                                        name="download_template_button">
+                                    Download Template
+                                </button>
                             </group>
                         </group>
                     </sheet>
+                    
+                    <!-- Footer with Generate Action -->
                     <footer>
-                        <button
-              type="object"
-              class="btn btn-primary mr-1"
-              name="generate_invoices"
-            >Generate</button>
+                        <button type="object"
+                                class="btn btn-primary mr-1"
+                                name="generate_invoices">
+                            Generate
+                        </button>
                     </footer>
                 </form>
             </field>
         </record>
 
+        <!-- Action Window: Invoicing Wizard (Admin Only) -->
         <record id="invoicing_wizard_act_window" model="ir.actions.act_window">
             <field name="name">Generate invoices</field>
             <field name="type">ir.actions.act_window</field>
@@ -80,5 +100,6 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
+        
     </data>
 </odoo>

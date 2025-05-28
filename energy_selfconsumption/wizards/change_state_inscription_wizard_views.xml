@@ -1,33 +1,59 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+Change State Inscription Wizard Views
+======================================
+
+This file contains views for the inscription state change wizard that allows
+modifying the state and participation quantities of inscriptions in
+energy self-consumption projects.
+
+Main functionalities:
+- Bulk state change for multiple inscriptions
+- Participation quantity adjustment
+- Editable tree view for efficient data entry
+- State transition management
+- Real quantity tracking
+-->
 <odoo>
     <data>
 
+        <!-- Form View: Change State Inscription Wizard -->
         <record id="change_state_inscription_wizard_form_view" model="ir.ui.view">
             <field name="name">change_state_inscription_wizard_form</field>
             <field name="model">energy_selfconsumption.change_state_inscription.wizard</field>
             <field name="arch" type="xml">
                 <form>
                     <sheet>
+                        <!-- Editable tree for inscription state changes -->
                         <field name="change_state_inscription_lines_wizard_ids" nolabel="1">
                             <tree editable="bottom">
+                                <!-- Inscription identification (readonly) -->
                                 <field name="inscription_id" readonly="1" force_save="1"/>
+                                
+                                <!-- Editable state and quantity fields -->
                                 <field name="state" />
                                 <field name="participation_real_quantity" />
                             </tree>
                         </field>
                     </sheet>
+                    
+                    <!-- Footer with State Change Action -->
                     <footer>
-                        <button type="object" name="change_state_inscription">Change state inscription</button>
+                        <button type="object" name="change_state_inscription">
+                            Change state inscription
+                        </button>
                     </footer>
                 </form>
             </field>
         </record>
 
+        <!-- Action Window: Change State Inscription Wizard -->
         <record id="change_state_inscription_wizard_action" model="ir.actions.act_window">
             <field name="name">Change state inscription</field>
             <field name="res_model">energy_selfconsumption.change_state_inscription.wizard</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
+        
     </data>
 </odoo>

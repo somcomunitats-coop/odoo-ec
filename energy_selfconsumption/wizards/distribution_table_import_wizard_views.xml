@@ -1,44 +1,65 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+Distribution Table Import Wizard Views
+=======================================
+
+This file contains views for the distribution table import wizard that allows
+importing distribution table data from CSV files for energy self-consumption
+projects.
+
+Main functionalities:
+- CSV file upload for distribution table data
+- Template download for proper file format
+- File format configuration (delimiter, quote char, encoding)
+- Clean option to remove existing data before import
+- Validation and processing of distribution coefficients
+- Supply point assignation management
+-->
 <odoo>
     <data>
 
+        <!-- Form View: Distribution Table Import Wizard -->
         <record id="distribution_table_import_wizard_form_view" model="ir.ui.view">
-            <field
-        name="name"
-      >energy_selfconsumption.distribution_table_import.wizard.form</field>
-            <field
-        name="model"
-      >energy_selfconsumption.distribution_table_import.wizard</field>
+            <field name="name">energy_selfconsumption.distribution_table_import.wizard.form</field>
+            <field name="model">energy_selfconsumption.distribution_table_import.wizard</field>
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <p
-            >You can download an example template for the import of distribution tables. The template must
-                            have the following format and be a CSV file.</p>
-                        <button
-              type="object"
-              class="btn btn-primary"
-              name="download_template_button"
-            >Download
-                            Template</button>
+                        <!-- Instructions -->
+                        <p>You can download an example template for the import of distribution tables. 
+                           The template must have the following format and be a CSV file.</p>
+                        
+                        <!-- Template Download Button -->
+                        <button type="object"
+                                class="btn btn-primary"
+                                name="download_template_button">
+                            Download Template
+                        </button>
+                        
                         <separator />
+                        
+                        <!-- File Upload Section -->
                         <group>
-                            <field
-                name="import_file"
-                filename="fname"
-                widget="binary"
-              />
+                            <field name="import_file"
+                                   filename="fname"
+                                   widget="binary" />
                             <field name="fname" invisible="1" />
                         </group>
+                        
+                        <!-- CSV Format Configuration -->
                         <group>
                             <field name="delimiter" />
                             <field name="quotechar" />
                             <field name="encoding" />
                         </group>
+                        
+                        <!-- Import Options -->
                         <group>
                             <field name="clean" />
                         </group>
                     </sheet>
+                    
+                    <!-- Footer with Import Action -->
                     <footer>
                         <button type="object" name="import_file_button">Import</button>
                     </footer>
@@ -46,16 +67,13 @@
             </field>
         </record>
 
-        <record
-      id="distribution_table_import_wizard_action"
-      model="ir.actions.act_window"
-    >
+        <!-- Action Window: Distribution Table Import Wizard -->
+        <record id="distribution_table_import_wizard_action" model="ir.actions.act_window">
             <field name="name">Import Distribution Table</field>
-            <field
-        name="res_model"
-      >energy_selfconsumption.distribution_table_import.wizard</field>
+            <field name="res_model">energy_selfconsumption.distribution_table_import.wizard</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
+        
     </data>
 </odoo>

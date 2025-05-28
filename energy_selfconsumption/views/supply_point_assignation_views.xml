@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+Supply Point Assignation Views
+==============================
+
+This file contains views for managing supply point assignations in energy
+self-consumption projects. Assignations represent the relationship between
+supply points and distribution tables.
+
+Main functionalities:
+- Form view for assignation details
+- Tree view for assignation listing
+- Read-only fields for calculated data
+- Distribution coefficient validation
+-->
 <odoo>
     <data>
+        
+        <!-- Form View: Supply Point Assignation -->
         <record id="supply_point_assignation_form_view" model="ir.ui.view">
-            <field
-        name="name"
-      >energy_selfconsumption.supply_point_assignation.form</field>
+            <field name="name">energy_selfconsumption.supply_point_assignation.form</field>
             <field name="model">energy_selfconsumption.supply_point_assignation</field>
             <field name="arch" type="xml">
                 <form string="Supply Point Assignations">
                     <sheet>
+                        <!-- Main assignation information -->
                         <group>
+                            <!-- Left column: Distribution data -->
                             <group>
                                 <field name="distribution_table_id" readonly="True" />
                                 <field name="supply_point_id" readonly="True" />
                                 <field name="energy_shares" readonly="True" />
                                 <field name="coefficient" readonly="True" />
                             </group>
+                            
+                            <!-- Right column: Supply point data -->
                             <group>
                                 <field name="owner_id" />
                                 <field name="code" />
@@ -27,13 +45,13 @@
             </field>
         </record>
 
+        <!-- Tree View: Supply Point Assignation List -->
         <record id="supply_point_assignation_tree_view" model="ir.ui.view">
-            <field
-        name="name"
-      >energy_selfconsumption.supply_point_assignation.tree</field>
+            <field name="name">energy_selfconsumption.supply_point_assignation.tree</field>
             <field name="model">energy_selfconsumption.supply_point_assignation</field>
             <field name="arch" type="xml">
                 <tree string="Supply Point Assignations">
+                    <!-- Main fields for list view -->
                     <field name="distribution_table_id" />
                     <field name="supply_point_id" />
                     <field name="energy_shares" />
@@ -41,5 +59,6 @@
                 </tree>
             </field>
         </record>
+        
     </data>
 </odoo>

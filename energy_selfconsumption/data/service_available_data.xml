@@ -1,15 +1,28 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Service Available Data
+======================
+
+This file defines the available services for energy self-consumption projects.
+It links monitoring services with their providers to establish service availability
+within the energy community ecosystem.
+
+Main functionality:
+- Links self-consumption monitoring service with Arkenova provider
+- Establishes service-provider relationships for project management
+- Enables service selection during project configuration
+-->
 <odoo>
     <data>
-        <record
-      id="service_available_selfconsumption_monitoring_arkenova"
-      model="energy_project.service_available"
-    >
-            <field
-        name="service_id"
-        ref="energy_selfconsumption.service_selfconsumption_monitoring"
-      />
-            <field name="provider_id" ref="energy_selfconsumption.provider_arkenova" />
+        
+        <!-- Service Available: Self-consumption Monitoring by Arkenova -->
+        <record id="service_available_selfconsumption_monitoring_arkenova" 
+                model="energy_project.service_available">
+            <field name="service_id" 
+                   ref="energy_selfconsumption.service_selfconsumption_monitoring" />
+            <field name="provider_id" 
+                   ref="energy_selfconsumption.provider_arkenova" />
         </record>
+        
     </data>
 </odoo>

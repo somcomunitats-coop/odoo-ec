@@ -1,8 +1,23 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Project Type Data
+=================
+
+This file defines the project type for energy self-consumption projects.
+This type is used to categorize and identify self-consumption projects
+within the energy project management system.
+
+Main functionality:
+- Defines the "Self-consumption Project" type for project classification
+- Used as a reference in self-consumption project creation
+-->
 <odoo>
     <data>
+        
+        <!-- Project Type: Self-consumption Project -->
         <record id="selfconsumption_project_type" model="energy_project.project_type">
             <field name="name">Self-consumption Project</field>
         </record>
+        
     </data>
 </odoo>

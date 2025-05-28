@@ -1,53 +1,71 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+Create Distribution Table Wizard Views
+=======================================
+
+This file contains views for the distribution table creation wizard that
+allows creating new distribution tables for energy self-consumption projects.
+
+Main functionalities:
+- Distribution table type selection (fixed or hourly)
+- Power distribution configuration for fixed type
+- Excess distribution options
+- Progress bar visualization for distributed power
+- Dynamic field visibility based on table type
+-->
 <odoo>
     <data>
 
+        <!-- Form View: Create Distribution Table Wizard -->
         <record id="create_distribution_table_wizard_form_view" model="ir.ui.view">
-            <field
-        name="name"
-      >energy_selfconsumption.create_distribution_table.wizard.form</field>
-            <field
-        name="model"
-      >energy_selfconsumption.create_distribution_table.wizard</field>
+            <field name="name">energy_selfconsumption.create_distribution_table.wizard.form</field>
+            <field name="model">energy_selfconsumption.create_distribution_table.wizard</field>
             <field name="arch" type="xml">
                 <form>
                     <sheet>
+                        <!-- Distribution Table Type Selection -->
                         <group>
                             <field name="type" />
                         </group>
+                        
+                        <!-- Fixed Type Configuration -->
                         <group attrs="{'invisible':[('type','!=','fixed')]}">
+                            <!-- Hidden field for progress bar maximum -->
                             <field name="max_distributed_power" invisible="1" />
-                            <field
-                                name="distributed_power"
-                                widget="progress_bar_widget"
-                                options="{'max_quantity': 'max_distributed_power', 'extra_label': 'kWn'}"
-                            />
+                            
+                            <!-- Power distribution progress bar -->
+                            <field name="distributed_power"
+                                   widget="progress_bar_widget"
+                                   options="{'max_quantity': 'max_distributed_power', 'extra_label': 'kWn'}" />
+                            
+                            <!-- Excess distribution option -->
                             <field name="distribute_excess" />
                         </group>
+                        
+                        <!-- Excess Distribution Type (conditional) -->
                         <group attrs="{'invisible':['|',('type','!=','fixed'),('distribute_excess','=','no')]}">
                             <field name="type_distribute_excess" />
                         </group>
                     </sheet>
+                    
+                    <!-- Footer with Creation Action -->
                     <footer>
-                        <button
-              type="object"
-              name="create_distribution_table"
-            >Create distribution table</button>
+                        <button type="object"
+                                name="create_distribution_table">
+                            Create distribution table
+                        </button>
                     </footer>
                 </form>
             </field>
         </record>
 
-        <record
-      id="create_distribution_table_wizard_action"
-      model="ir.actions.act_window"
-    >
+        <!-- Action Window: Create Distribution Table Wizard -->
+        <record id="create_distribution_table_wizard_action" model="ir.actions.act_window">
             <field name="name">Create participant table</field>
-            <field
-        name="res_model"
-      >energy_selfconsumption.create_distribution_table.wizard</field>
+            <field name="res_model">energy_selfconsumption.create_distribution_table.wizard</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
+        
     </data>
 </odoo>
