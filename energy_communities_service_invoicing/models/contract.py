@@ -144,6 +144,15 @@ class ContractContract(models.Model):
                     0
                 ].last_date_invoiced
 
+    @api.depends("recurring_next_date", "contract_line_ids")
+    def _compute_next_period_date_start(self):
+        for record in self:
+            record.last_date_invoiced = None
+            if record.contract_line_ids:
+                record.next_period_date_start = record.contract_line_ids[
+                    0
+                ].next_period_date_start
+
     @api.depends("contract_template_id")
     def _compute_pack_id(self):
         for record in self:

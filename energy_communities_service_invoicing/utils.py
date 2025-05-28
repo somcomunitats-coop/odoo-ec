@@ -172,7 +172,9 @@ def get_month_selection_options():
 
 
 def validate_monthday_date(month, day):
-    try:
-        parse(str(datetime.now().year) + "-" + month + "-" + day)
-    except Exception as e:
-        raise ValidationError(e.args[0] % e.args[1])
+    if month and day:
+        try:
+            parse(str(datetime.now().year) + "-" + month + "-" + day)
+        except Exception as e:
+            raise ValidationError(e.args[0] % e.args[1])
+    return True

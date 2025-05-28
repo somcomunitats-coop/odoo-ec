@@ -99,6 +99,8 @@
         <field name="date_start" />
         <field name="last_date_invoiced" />
         <field name="recurring_next_date" />
+        <field name="next_period_date_start" />
+        <field name="next_period_date_end" />
         <field name="date_end" />
         <field name="discount" />
         <field name="predecessor_contract_id" attrs="{'invisible': [('pack_type','=','none')]}" />
