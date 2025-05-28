@@ -224,6 +224,20 @@ Hint: you can delete all the associated distribution points at once using an act
             )
         return super().write(vals)
 
+    def unlink(self):
+        """
+        Delete distribution table records
+        """
+        for record in self:
+            if record.state != DISTRIBUTION_STATE_DRAFT:
+                raise ValidationError(
+                    _(
+                        "You cannot delete a distribution table that is not in draft state."
+                    )
+                )
+            record.supply_point_assignation_ids.unlink()
+        return super().unlink()
+
     # State management methods
     def button_validate(self):
         """

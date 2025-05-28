@@ -138,7 +138,7 @@ Main functionalities:
             <field name="model">energy_selfconsumption.distribution_table</field>
             <field name="arch" type="xml">
                 <tree string="Distribution Table" 
-                      decoration-warning="state == 'validated'" 
+                      decoration-warning="state in ['validated', 'process']" 
                       decoration-success="state == 'active'" 
                       decoration-danger="state == 'cancelled'">
                     <!-- Main identification fields -->
@@ -212,17 +212,6 @@ Main functionalities:
             <field name="binding_model_id"
                    ref="energy_selfconsumption.model_energy_selfconsumption_distribution_table" />
             <field name="binding_type">report</field>
-        </record>
-
-        <!-- Server Action: Clean Supply Point Assignations -->
-        <record id="manager_clean_supply_point_assignation_action" model="ir.actions.server">
-            <field name="name">Clean supply point assignation</field>
-            <field name="model_id" ref="model_energy_selfconsumption_distribution_table" />
-            <field name="binding_model_id" ref="model_energy_selfconsumption_distribution_table" />
-            <field name="binding_type">action</field>
-            <field name="binding_view_types">list,form</field>
-            <field name="state">code</field>
-            <field name="code">action = records.action_clean_supply_point_assignation_wizard()</field>
         </record>
 
     </data>

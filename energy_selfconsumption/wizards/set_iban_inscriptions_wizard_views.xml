@@ -60,11 +60,10 @@ Main functionalities:
     </record>
 
     <!-- Action Window: Set IBAN Inscriptions -->
-    <record id="action_set_iban_inscriptions" model="ir.actions.act_window">
+    <record id="button_action_set_iban_inscriptions" model="ir.actions.act_window">
         <field name="name">Review bank accounts</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">energy_selfconsumption.set_iban_inscriptions_wizard</field>
-        <field name="binding_model_id" ref="model_energy_selfconsumption_inscription_selfconsumption" />
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>

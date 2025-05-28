@@ -100,6 +100,20 @@ managing collective self-consumption projects under Spanish energy regulations.
         "data/product_data.xml",
         "data/contract_template_data.xml",
         "data/project_type_data.xml",
+        # Reports
+        "reports/invoice_template.xml",
+        "reports/selfconsumption_reports.xml",
+        # Wizards
+        "wizards/change_distribution_table_import_wizard.xml",
+        "wizards/change_state_inscription_wizard_views.xml",
+        "wizards/contract_generation_wizard_views.xml",
+        "wizards/create_distribution_table_wizard_views.xml",
+        "wizards/define_invoicing_mode_wizard_view.xml",
+        "wizards/distribution_table_import_wizard_views.xml",
+        "wizards/invoicing_wizard_views.xml",
+        "wizards/selfconsumption_import_wizard_views.xml",
+        "wizards/set_iban_inscriptions_wizard_views.xml",
+        "wizards/export_csv_inscriptions_wizard_views.xml",
         # Main views
         "views/contract_views.xml",
         "views/distribution_table_views.xml",
@@ -109,21 +123,6 @@ managing collective self-consumption projects under Spanish energy regulations.
         "views/supply_point_assignation_views.xml",
         "views/supply_point_views.xml",
         "views/website_inscription_data_template.xml",
-        # Reports
-        "reports/invoice_template.xml",
-        "reports/selfconsumption_reports.xml",
-        # Wizards
-        "wizards/change_distribution_table_import_wizard.xml",
-        "wizards/change_state_inscription_wizard_views.xml",
-        "wizards/clean_supply_point_assignation_wizard_views.xml",
-        "wizards/contract_generation_wizard_views.xml",
-        "wizards/create_distribution_table_wizard_views.xml",
-        "wizards/define_invoicing_mode_wizard_view.xml",
-        "wizards/distribution_table_import_wizard_views.xml",
-        "wizards/invoicing_wizard_views.xml",
-        "wizards/selfconsumption_import_wizard_views.xml",
-        "wizards/set_iban_inscriptions_wizard_views.xml",
-        "wizards/export_csv_inscriptions_wizard_views.xml",
     ],
     # Demo data
     "demo": [

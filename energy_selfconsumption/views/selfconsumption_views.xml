@@ -38,11 +38,17 @@ Main functionalities:
                                 name="set_in_activation_state"
                                 attrs="{'invisible':[('state','not in',['inscription'])]}"
                                 class="btn btn-primary" />
+
+                        <button type="object"
+                                string="Define Invoicing Mode"
+                                name="set_invoicing_mode"
+                                attrs="{'invisible':['|',('state','not in',['activation']),('invoicing_mode', '!=', False)]}"
+                                class="btn btn-primary" />
                         
                         <button type="object"
                                 string="Advance to Active"
                                 name="activate"
-                                attrs="{'invisible':[('state','not in',['activation'])]}"
+                                attrs="{'invisible':['|',('state','not in',['activation']),('invoicing_mode', '=', False)]}"
                                 class="btn btn-primary" />
                         
                         <!-- Workflow rollback buttons -->
@@ -59,8 +65,8 @@ Main functionalities:
                                 attrs="{'invisible':[('state','not in',['inscription'])]}" />
                         
                         <!-- Data management buttons -->
-                        <button type="object"
-                                name="action_selfconsumption_import_wizard"
+                        <button type="action"
+                                name="%(energy_selfconsumption.button_action_selfconsumption_import_wizard)d"
                                 string="Import Participants &amp; Supply Points"
                                 attrs="{'invisible':[('state','not in',['draft', 'inscription'])]}"
                                 help="Import participant inscriptions and supply point data from CSV files" />
@@ -70,16 +76,17 @@ Main functionalities:
                                 name="action_export_csv_inscriptions_wizard"
                                 attrs="{'invisible':[('state','not in',['draft', 'inscription'])]}" />
                         
-                        <button type="object"
+                        <button type="action"
                                 string="Review bank accounts"
-                                name="action_set_iban_inscriptions"
+                                name="%(energy_selfconsumption.button_action_set_iban_inscriptions)d"
                                 attrs="{'invisible':[('state','not in',['activation', 'active'])]}" />
                         
                         <!-- Configuration buttons -->
-                        <button type="object"
-                                string="Define Invoicing Mode"
-                                name="set_invoicing_mode"
-                                attrs="{'invisible':[('invoicing_mode', '!=', False)]}" />
+                        <button type="action"
+                                string="Change distribution table"
+                                context="{'default_selfconsumption_project_id': id}"
+                                name="%(energy_selfconsumption.button_action_change_distribution_table_import_wizard)d"
+                                attrs="{'invisible':[('state', '!=', 'active')]}" />
                         
                         <button type="object"
                                 string="Set new distribution table"
@@ -134,7 +141,7 @@ Main functionalities:
                             <button class="oe_stat_button"
                                     type="object"
                                     name="get_contracts_view"
-                                    icon="fa-files-o"
+                                    icon="fa-book"
                                     attrs="{'invisible': [('state', '!=', 'active')]}">
                                 <field string="Contracts"
                                        name="contracts_count"
@@ -248,7 +255,7 @@ Main functionalities:
                 >Unactivate form</button>
                                 <span style="margin: 0px 10px;"></span>
                                 <button
-                  class="btn btn btn-primary"
+                  class="btn btn-secondary"
                   type="object"
                   name="action_redirect_to_page_form_inscription"
                   attrs="{'invisible': [('conf_state', '!=', 'active')]}"
@@ -344,7 +351,10 @@ Main functionalities:
             <field name="name">energy_selfconsumption.selfconsumption.tree</field>
             <field name="model">energy_selfconsumption.selfconsumption</field>
             <field name="arch" type="xml">
-                <tree string="Self-Consumption Projects">
+                <tree string="Self-Consumption Projects"
+                      decoration-info="state == 'inscription'"
+                      decoration-warning="state == 'activation'" 
+                      decoration-success="state == 'active'">
                     <field name="name" />
                     <field name="street" />
                     <field name="city" />

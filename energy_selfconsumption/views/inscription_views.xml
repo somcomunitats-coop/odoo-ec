@@ -20,7 +20,11 @@ Main functionalities:
             <field name="name">Inscription List</field>
             <field name="model">energy_selfconsumption.inscription_selfconsumption</field>
             <field name="arch" type="xml">
-                <tree create="false" editable="bottom">
+                <tree create="false" 
+                      editable="bottom"
+                      decoration-warning="state == 'change'" 
+                      decoration-success="state == 'active'" 
+                      decoration-danger="state == 'cancelled'">
                     <!-- Inscription state -->
                     <field name="state" width="6%" optional="show" readonly="1"/>
                     
@@ -77,6 +81,8 @@ Main functionalities:
                             domain="[('state', '=', 'change'), ('participation_assigned_quantity', '=', 0)]"/>
                     <filter string="News" name="inactives" 
                             domain="[('state', '=', 'inactive')]"/>
+                    <filter string="Cancelled" name="cancelled" 
+                            domain="[('state', '=', 'cancelled')]"/>
                     
                     <separator/>
                     

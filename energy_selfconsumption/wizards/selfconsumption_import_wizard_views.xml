@@ -88,8 +88,8 @@ Main functionalities:
         </record>
 
         <!-- Action Window: Self-consumption Import Wizard -->
-        <record id="selfconsumption_import_wizard_action" model="ir.actions.act_window">
-            <field name="name">Import data</field>
+        <record id="button_action_selfconsumption_import_wizard" model="ir.actions.act_window">
+            <field name="name">Import Inscriptions and Supply Points</field>
             <field name="res_model">energy_selfconsumption.selfconsumption_import.wizard</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>

@@ -441,6 +441,7 @@ class Selfconsumption(models.Model):
     def set_inscription(self):
         """Set project state to inscription"""
         for record in self:
+            record.unactivate_form()
             record.write({"state": "inscription"})
 
     def set_inscription_activation(self):
@@ -779,7 +780,7 @@ class Selfconsumption(models.Model):
             for supply_point_assignation in distribution_table_to_activate.mapped(
                 "supply_point_assignation_ids"
             ):
-                inscription = supply_point_assignation._get_inscription()
+                inscription = supply_point_assignation.get_inscription()
                 inscription.write(
                     {
                         "participation_real_quantity": supply_point_assignation.energy_shares,
@@ -851,18 +852,6 @@ class Selfconsumption(models.Model):
                 )
             contract_line._set_name(data)
 
-    def action_selfconsumption_import_wizard(self):
-        self.ensure_one()
-        return {
-            "name": _("Import Inscriptions and Supply Points"),
-            "type": "ir.actions.act_window",
-            "view_mode": "form",
-            "res_model": "energy_selfconsumption.selfconsumption_import.wizard",
-            "views": [(False, "form")],
-            "view_id": False,
-            "target": "new",
-        }
-
     def validate_state(self, state):
         if state not in ("activation", ACTIVE):
             error_message = _(
@@ -882,12 +871,6 @@ class Selfconsumption(models.Model):
             .create({})
         )
         return wizard.exportar_csv()
-
-    def action_set_iban_inscriptions(self):
-        self.ensure_one()
-        return self.env.ref(
-            "energy_selfconsumption.action_set_iban_inscriptions"
-        ).read()[0]
 
     def action_manager_authorization_report(self):
         self.ensure_one()

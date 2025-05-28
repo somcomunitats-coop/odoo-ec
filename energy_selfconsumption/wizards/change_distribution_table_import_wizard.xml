@@ -110,11 +110,10 @@ Main functionalities:
         </record>
 
         <!-- Action Window: Change Distribution Table Import Wizard -->
-        <record id="action_change_distribution_table_import_wizard" model="ir.actions.act_window">
+        <record id="button_action_change_distribution_table_import_wizard" model="ir.actions.act_window">
             <field name="name">Change distribution table</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">change.distribution.table.import.wizard</field>
-            <field name="binding_model_id" ref="model_energy_selfconsumption_inscription_selfconsumption" />
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
