@@ -359,7 +359,7 @@ class ChangeDistributionTableImportWizard(models.TransientModel):
             dict: Wizard action configuration
         """
         action = self.env.ref(
-            "energy_selfconsumption.action_change_distribution_table_import_wizard"
+            "energy_selfconsumption.button_action_change_distribution_table_import_wizard"
         ).read()[0]
         action.update({"res_id": self.id})
         return action

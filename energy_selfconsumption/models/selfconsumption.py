@@ -113,26 +113,6 @@ class Selfconsumption(models.Model):
             sale_orders = self.get_sale_orders()
             record.sale_orders_count = len(sale_orders)
 
-    def _compute_report_distribution_table(self):
-        """
-        Get the distribution table needed to generate reports.
-        Prioritizes tables in process state, then active ones.
-        Only one table of each type should exist.
-        """
-        for record in self:
-            table_in_process = record.distribution_table_ids.filtered_domain(
-                [("state", "=", "process")]
-            )
-            table_in_active = record.distribution_table_ids.filtered_domain(
-                [("state", "=", ACTIVE)]
-            )
-            if table_in_process:
-                record.report_distribution_table = table_in_process
-            elif table_in_active:
-                record.report_distribution_table = table_in_active
-            else:
-                record.report_distribution_table = False
-
     def _compute_current_distribution_table(self):
         """Get the currently active distribution table"""
         for record in self:
@@ -168,8 +148,6 @@ class Selfconsumption(models.Model):
     )
     report_distribution_table = fields.Many2one(
         "energy_selfconsumption.distribution_table",
-        compute=_compute_report_distribution_table,
-        readonly=True,
         help="Distribution table used for report generation",
     )
     current_distribution_table = fields.Many2one(
@@ -872,8 +850,36 @@ class Selfconsumption(models.Model):
         )
         return wizard.exportar_csv()
 
+    def _set_report_distribution_table(self):
+        """
+        Get the distribution table needed to generate reports.
+        Prioritizes tables in process state, then active ones.
+        Only one table of each type should exist.
+        """
+        for record in self:
+            if self.env.context.get("distribution_table_id", False):
+                record.report_distribution_table = (
+                    record.distribution_table_ids.filtered_domain(
+                        [("id", "=", self.env.context.get("distribution_table_id"))]
+                    )
+                )
+            else:
+                table_in_process = record.distribution_table_ids.filtered_domain(
+                    [("state", "=", "process")]
+                )
+                table_in_active = record.distribution_table_ids.filtered_domain(
+                    [("state", "=", ACTIVE)]
+                )
+                if table_in_process:
+                    record.report_distribution_table = table_in_process
+                elif table_in_active:
+                    record.report_distribution_table = table_in_active
+                else:
+                    raise ValidationError(_("No distribution table found"))
+
     def action_manager_authorization_report(self):
         self.ensure_one()
+        self._set_report_distribution_table()
         self.validate_state(self.state)
         return self.env.ref(
             "energy_selfconsumption.selfconsumption_manager_authorization_report"
@@ -881,12 +887,15 @@ class Selfconsumption(models.Model):
 
     def action_power_sharing_agreement_report(self):
         self.ensure_one()
+        self._set_report_distribution_table()
         self.validate_state(self.state)
         return self.env.ref(
             "energy_selfconsumption.power_sharing_agreement_report"
         ).report_action(self)
 
     def action_manager_partition_coefficient_report(self):
+        self.ensure_one()
+        self._set_report_distribution_table()
         self.validate_state(self.state)
         tables_to_use = self.report_distribution_table
         file_content = ""

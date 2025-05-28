@@ -45,6 +45,25 @@ Main functionalities:
                                 name="action_distribution_table_import_wizard"
                                 string="Import table"
                                 states="draft" />
+
+                        <!-- Report generation buttons -->
+                        <button type="object"
+                                name="action_manager_authorization_report"
+                                string="Manager Authorization Report"
+                                class="btn btn-secondary"
+                                attrs="{'invisible': [('state', 'in', ['draft'])]}" />
+                        
+                        <button type="object"
+                                name="action_power_sharing_agreement_report"
+                                string="Power Sharing Agreement Report"
+                                class="btn btn-secondary"
+                                attrs="{'invisible': [('state', 'in', ['draft'])]}" />
+                        
+                        <button type="object"
+                                name="action_manager_partition_coefficient_report"
+                                string="Partition Coefficient Report"
+                                class="btn btn-secondary"
+                                attrs="{'invisible': [('state', 'in', ['draft'])]}" />
                         
                         <!-- Status bar -->
                         <field name="state"

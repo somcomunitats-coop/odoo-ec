@@ -383,3 +383,21 @@ Hint: you can delete all the associated distribution points at once using an act
         return self.supply_point_assignation_ids.filtered(
             lambda a: a.supply_point_id == supply_point
         )
+
+    def action_manager_authorization_report(self):
+        self.ensure_one()
+        return self.with_context(
+            distribution_table_id=self.id
+        ).selfconsumption_project_id.action_manager_authorization_report()
+
+    def action_power_sharing_agreement_report(self):
+        self.ensure_one()
+        return self.with_context(
+            distribution_table_id=self.id
+        ).selfconsumption_project_id.action_power_sharing_agreement_report()
+
+    def action_manager_partition_coefficient_report(self):
+        self.ensure_one()
+        return self.with_context(
+            distribution_table_id=self.id
+        ).selfconsumption_project_id.action_manager_partition_coefficient_report()
