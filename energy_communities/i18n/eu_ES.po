@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-20 14:29+0000\n"
-"PO-Revision-Date: 2025-05-20 14:29+0000\n"
+"POT-Creation-Date: 2025-05-28 11:48+0000\n"
+"PO-Revision-Date: 2025-05-28 11:48+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,28 +56,7 @@ msgstr ""
 "3) Enviar correo de invitación para confirmar email y resetear contraseña"
 
 #. module: energy_communities
-#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_goiener
-msgid ""
-"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
-"class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2></br><div "
-"class =\"flex text-[#8a9f96]\">Cuando haya novedades con la Comunidad "
-"Energética contactaremos contigo y con las personas que también han mostrado"
-" interés y le ofreceremos apoyo para activarla. ¡Vamos!</div>"
-msgstr ""
-"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
-"class=\"text-lg font-medium mb-2\">¡Muchas gracias por tu interés!</h2><p "
-"class =\"text-[#8a9f96] text-sm text-justify mb-2 mt0\">Cuando haya "
-"novedades con la Comunidad Energética contactaremos contigo y con las "
-"personas que también han mostrado interés y le ofreceremos apoyo para "
-"activarla.</p><p class =\"text-[#8a9f96] text-sm text-justify\">Comparte la "
-"información de la futura Comunidad Energética entre tu gente para hacerla "
-"posible entre todos!</p><p class =\"text-[#8a9f96] text-sm text-"
-"justify\">¡Vamos!</p>"
-
-#. module: energy_communities
 #: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_campanya
-#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_energetica
 msgid ""
 "<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
 "class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2><p class "
@@ -97,6 +76,19 @@ msgstr ""
 "información de la futura Comunidad Energética entre tu gente para hacerla "
 "posible entre todos!</p><p class =\"text-[#8a9f96] text-sm text-"
 "justify\">¡Vamos!</p>"
+
+#. module: energy_communities
+#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_coordinadora
+msgid ""
+"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
+"class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2><p class "
+"=\"text-[#8a9f96] text-sm text-justify\">Cuando haya novedades con la "
+"Comunidad Energética contactaremos contigo y con las personas que también "
+"han mostrado interés.</p><p class =\"text-[#8a9f96] text-sm text-"
+"justify\">Comparte la información de la futura Comunidad Energética entre tu"
+" gente para hacerla posible entre todos!</p><p class =\"text-[#8a9f96] text-"
+"sm text-justify\">¡Vamos!</p>"
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_selection
@@ -223,11 +215,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__allow_new_members
 msgid "Allows new members"
 msgstr "Kide berriei baimena ematea"
-
-#. module: energy_communities
-#: model:cm.filter,name:energy_communities.map_filter_key_group
-msgid "Amb grup motor"
-msgstr "Motor taldearekin."
 
 #. module: energy_communities
 #. odoo-python
@@ -373,7 +360,7 @@ msgstr "Hiria"
 #. module: energy_communities
 #: model:cm.place.category,name:energy_communities.map_place_category_citizen
 msgid "Ciutadania"
-msgstr "Ciudadanía"
+msgstr "Herritartasuna"
 
 #. module: energy_communities
 #: model_terms:ir.actions.act_window,help:energy_communities.ce_utm_sources_action
@@ -484,7 +471,7 @@ msgstr "Komunitate mota"
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__company_ids_info
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__company_ids_info
 msgid "Companies"
-msgstr "Enpresak"
+msgstr "Compañías"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_setup_bank_manual_config__company_id
@@ -849,8 +836,6 @@ msgstr "Acciones energéticas"
 #. module: energy_communities
 #: model:cm.form.model,button_label:energy_communities.map_form_model_campanya
 #: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_energetica
-#: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_goiener
 msgid "Enviar"
 msgstr "Bidali"
 
@@ -864,6 +849,11 @@ msgstr "Komunitatearen egungo egoera"
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_create_users_wizard_form
 msgid "Execute"
 msgstr "Ejecutar"
+
+#. module: energy_communities
+#: model:cm.filter,name:energy_communities.map_filter_external
+msgid "Externa"
+msgstr "Kanpokoa"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_energy_action__xml_id
@@ -1903,8 +1893,6 @@ msgstr "%100eko energia berriztagarrien hornidura"
 #. module: energy_communities
 #: model:cm.form.model,cta_button_label:energy_communities.map_form_model_campanya
 #: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_energetica
-#: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_goiener
 msgid "Sumarme"
 msgstr "Bat egin"
 
@@ -2638,8 +2626,6 @@ msgstr ""
 
 #. module: energy_communities
 #: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_energetica
-#: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_goiener
 msgid ""
 "{\n"
 "  \"type\": \"VerticalLayout\",\n"
@@ -3060,8 +3046,6 @@ msgstr ""
 
 #. module: energy_communities
 #: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_energetica
-#: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_goiener
 msgid ""
 "{\n"
 "  \"type\": \"object\",\n"
@@ -3340,7 +3324,7 @@ msgstr ""
 "        },\n"
 "        {\n"
 "          \"type\": \"Display\",\n"
-"          \"label\": \"{% if submission_number %}{{submission_number}} interesadas - {% endif %}{{goalProgress}}% completada\",\n"
+"          \"label\": \"{% if submission_number %}{{submission_number}} interesdunak - {% endif %}{{goalProgress}}% osatuta\",\n"
 "          \"scope\": \"#/properties/progress\",\n"
 "          \"options\": { \"progress\": true }\n"
 "        }\n"
@@ -3377,7 +3361,7 @@ msgstr ""
 "}"
 
 #. module: energy_communities
-#: model:cm.presenter.model,json_uischema:energy_communities.map_presenter_model_key_group
+#: model:cm.presenter.model,json_uischema:energy_communities.map_presenter_model_external
 msgid ""
 "{\n"
 "  \"type\":\"VerticalLayout\",\n"
@@ -3541,14 +3525,14 @@ msgstr ""
 "\"pd_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}</div></div>{% endif %}{% endfor %}\",\n"
 "\"pd_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
 "\"pd_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</div>\",\n"
-"\"pd_target_objective\": \"<p class='m-2'>Objetivo: <strong>{{ goalTarget }} {% if category_slug == 'industrial' %}empresas{% else %}personas{% endif %}</strong></p>\",\n"
-"\"progress\": \"<div class='flex justify-between'><div>{% if submission_number %}<strong>{{submission_number}}</strong> interesadas</div><div>{% endif %}<strong>{{goalProgress}}%</strong> completada</div></div>\",\n"
-"\"pd_secondary_description\": \"<p class='m-2 mb-4 flex flex-col justify-center align-center text-center'>¿Ya está impulsando una comunidad en este municipio?<br><a href='https://somcomunitats.coop/es/alta-nova-comunitat?map_place_ref={{slug}}' target='_parent'>Solicita darla de alta</a></p>\",\n"
-"\"pd_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparte y haz crecer la Comunidad Energética</p></div>\"\n"
+"\"pd_target_objective\": \"<p class='m-2'>Helburua: <strong>{{ goalTarget }} {% if category_slug == 'industrial' %}enpresak{% else %}pertsona{% endif %}</strong></p>\",\n"
+"\"progress\": \"<div class='flex justify-between'><div>{% if submission_number %}<strong>{{submission_number}}</strong> interesatuak</div><div>{% endif %}<strong>{{goalProgress}}%</strong> osatuta</div></div>\",\n"
+"\"pd_secondary_description\": \"<p class='m-2 mb-4 flex flex-col justify-center align-center text-center'>Dagoeneko ari zara udalerri honetan komunitate bat sustatzen?<br><a href='https://somcomunitats.coop/eu/alta-nova-comunitat?map_place_ref={{slug}}' target='_parent'>Eskatu alta emateko</a></p>\",\n"
+"\"pd_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Partekatu eta lagundu hazten energia-komunitateari</p></div>\"\n"
 "}"
 
 #. module: energy_communities
-#: model:cm.presenter.model,json_dataschema:energy_communities.map_presenter_model_key_group
+#: model:cm.presenter.model,json_dataschema:energy_communities.map_presenter_model_external
 msgid ""
 "{\n"
 "\"pgm_title\": \"{{name}}\",\n"
@@ -3582,5 +3566,5 @@ msgstr ""
 "\"po2_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}</div></div>{% endif %}{% endfor %}\",\n"
 "\"po2_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
 "\"po2_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</div>\",\n"
-"\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparte y haz crecer la Comunidad Energética</p></div>\"\n"
+"\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Partekatu eta lagundu hazten energia-komunitateari</p></div>\"\n"
 "}"

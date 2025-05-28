@@ -93,13 +93,13 @@
     </record>
     <function name="write" model="ir.model.data">
         <function name="search" model="ir.model.data">
-            <value eval="[('module', '=', 'energy_communities'),('name', '=', 'map_filter_key_group')]" />
+            <value eval="[('module', '=', 'energy_communities'),('name', '=', 'map_filter_external')]" />
         </function>
         <value eval="{'noupdate': False}" />
     </function>
-    <record model="cm.filter" id="map_filter_key_group">
-        <field name="name">Amb grup motor</field>
-        <field name="slug_id">amb-grup-motor</field>
+    <record model="cm.filter" id="map_filter_external">
+        <field name="name">Externa</field>
+        <field name="slug_id">externa</field>
         <field name="filter_group_id" ref="map_filter_group_community_status" />
     </record>
     <function name="write" model="ir.model.data">
@@ -222,26 +222,6 @@
     </record>
     <function name="write" model="ir.model.data">
         <function name="search" model="ir.model.data">
-            <value eval="[('module', '=', 'energy_communities'),('name', '=', 'map_form_model_sumate_goiener')]" />
-        </function>
-        <value eval="{'noupdate': False}" />
-    </function>
-    <record model="cm.form.model" id="map_form_model_sumate_goiener">
-        <field name="name">[Goiener] Sumate Form</field>
-        <field name="slug_id">sumate-goiener-form</field>
-    </record>
-    <function name="write" model="ir.model.data">
-        <function name="search" model="ir.model.data">
-            <value eval="[('module', '=', 'energy_communities'),('name', '=', 'map_form_model_sumate_energetica')]" />
-        </function>
-        <value eval="{'noupdate': False}" />
-    </function>
-    <record model="cm.form.model" id="map_form_model_sumate_energetica">
-        <field name="name">[Energética] Sumate Form</field>
-        <field name="slug_id">sumate-energetica-form</field>
-    </record>
-    <function name="write" model="ir.model.data">
-        <function name="search" model="ir.model.data">
             <value eval="[('module', '=', 'energy_communities'),('name', '=', 'map_form_model_sumate_coordinadora')]" />
         </function>
         <value eval="{'noupdate': False}" />
@@ -270,11 +250,11 @@
     </record>
     <function name="write" model="ir.model.data">
         <function name="search" model="ir.model.data">
-            <value eval="[('module', '=', 'energy_communities'),('name', '=', 'map_presenter_model_key_group')]" />
+            <value eval="[('module', '=', 'energy_communities'),('name', '=', 'map_presenter_model_external')]" />
         </function>
         <value eval="{'noupdate': False}" />
     </function>
-    <record model="cm.presenter.model" id="map_presenter_model_key_group">
-        <field name="name">CE Amb grup motor</field>
+    <record model="cm.presenter.model" id="map_presenter_model_external">
+        <field name="name">CE Externa</field>
     </record>
 </odoo>
