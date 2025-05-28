@@ -9,6 +9,7 @@ reduce magic numbers/strings.
 from odoo import _
 
 # Invoicing mode constants
+INVOICING_MODE_NONE = "none"
 INVOICING_MODE_POWER_ACQUIRED = "power_acquired"
 INVOICING_MODE_ENERGY_DELIVERED = "energy_delivered"
 INVOICING_MODE_ENERGY_CUSTOM = "energy_custom"
@@ -34,12 +35,22 @@ PROJECT_STATE_INSCRIPTION = "inscription"
 PROJECT_STATE_ACTIVATION = "activation"
 PROJECT_STATE_ACTIVE = "active"
 
+# Inscription state constants
+INSCRIPTION_STATE_ACTIVE = "active"
+INSCRIPTION_STATE_INACTIVE = "inactive"
+INSCRIPTION_STATE_CHANGE = "change"
+INSCRIPTION_STATE_CANCELLED = "cancelled"
+
 # Distribution table state constants
 DISTRIBUTION_STATE_DRAFT = "draft"
 DISTRIBUTION_STATE_PROCESS = "process"
 DISTRIBUTION_STATE_VALIDATED = "validated"
 DISTRIBUTION_STATE_ACTIVE = "active"
 DISTRIBUTION_STATE_INACTIVE = "inactive"
+
+# Distribution table type constants
+DISTRIBUTION_TYPE_FIXED = "fixed"
+DISTRIBUTION_TYPE_HOURLY = "hourly"
 
 # CAU and CIL validation constants
 CAU_LENGTH_24 = 24
@@ -88,6 +99,12 @@ MAX_POWER_VALUE = 10000.0  # 10 MW
 # File processing constants
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
 ALLOWED_FILE_EXTENSIONS = [".csv", ".xlsx", ".xls"]
+
+# CSV processing constants
+CSV_DELIMITER = ","
+CSV_QUOTE_CHAR = '"'
+CSV_FILE_EXTENSION = "csv"
+DEFAULT_ENCODING = "utf-8"
 
 # Email template constants
 TEMPLATE_ENERGY_DELIVERY_REMINDER = "energy_delivery_invoicing_reminder"
