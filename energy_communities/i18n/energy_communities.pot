@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-20 14:29+0000\n"
-"PO-Revision-Date: 2025-05-20 14:29+0000\n"
+"POT-Creation-Date: 2025-05-28 11:48+0000\n"
+"PO-Revision-Date: 2025-05-28 11:48+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -55,19 +55,7 @@ msgid "3) Send invitation email to confirm email and reset password"
 msgstr ""
 
 #. module: energy_communities
-#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_goiener
-msgid ""
-"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
-"class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2></br><div "
-"class =\"flex text-[#8a9f96]\">Cuando haya novedades con la Comunidad "
-"Energética contactaremos contigo y con las personas que también han mostrado"
-" interés y le ofreceremos apoyo para activarla. ¡Vamos!</div>"
-msgstr ""
-
-#. module: energy_communities
 #: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_campanya
-#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_energetica
 msgid ""
 "<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
 "class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2><p class "
@@ -77,6 +65,19 @@ msgid ""
 "=\"text-[#8a9f96] text-sm text-justify\">Comparte la información de la "
 "futura Comunidad Energética entre tu gente para hacerla posible entre "
 "todos!</p><p class =\"text-[#8a9f96] text-sm text-justify\">¡Vamos!</p>"
+msgstr ""
+
+#. module: energy_communities
+#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_coordinadora
+msgid ""
+"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
+"class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2><p class "
+"=\"text-[#8a9f96] text-sm text-justify\">Cuando haya novedades con la "
+"Comunidad Energética contactaremos contigo y con las personas que también "
+"han mostrado interés.</p><p class =\"text-[#8a9f96] text-sm text-"
+"justify\">Comparte la información de la futura Comunidad Energética entre tu"
+" gente para hacerla posible entre todos!</p><p class =\"text-[#8a9f96] text-"
+"sm text-justify\">¡Vamos!</p>"
 msgstr ""
 
 #. module: energy_communities
@@ -199,11 +200,6 @@ msgstr ""
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__allow_new_members
 msgid "Allows new members"
-msgstr ""
-
-#. module: energy_communities
-#: model:cm.filter,name:energy_communities.map_filter_key_group
-msgid "Amb grup motor"
 msgstr ""
 
 #. module: energy_communities
@@ -822,8 +818,6 @@ msgstr ""
 #. module: energy_communities
 #: model:cm.form.model,button_label:energy_communities.map_form_model_campanya
 #: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_energetica
-#: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_goiener
 msgid "Enviar"
 msgstr ""
 
@@ -836,6 +830,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_change_coordinator_wizard_form
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_create_users_wizard_form
 msgid "Execute"
+msgstr ""
+
+#. module: energy_communities
+#: model:cm.filter,name:energy_communities.map_filter_external
+msgid "Externa"
 msgstr ""
 
 #. module: energy_communities
@@ -1856,8 +1855,6 @@ msgstr ""
 #. module: energy_communities
 #: model:cm.form.model,cta_button_label:energy_communities.map_form_model_campanya
 #: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_energetica
-#: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_goiener
 msgid "Sumarme"
 msgstr ""
 
@@ -2446,8 +2443,6 @@ msgstr ""
 
 #. module: energy_communities
 #: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_energetica
-#: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_goiener
 msgid ""
 "{\n"
 "  \"type\": \"VerticalLayout\",\n"
@@ -2663,8 +2658,6 @@ msgstr ""
 
 #. module: energy_communities
 #: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_energetica
-#: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_goiener
 msgid ""
 "{\n"
 "  \"type\": \"object\",\n"
@@ -2827,7 +2820,7 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: model:cm.presenter.model,json_uischema:energy_communities.map_presenter_model_key_group
+#: model:cm.presenter.model,json_uischema:energy_communities.map_presenter_model_external
 msgid ""
 "{\n"
 "  \"type\":\"VerticalLayout\",\n"
@@ -2988,7 +2981,7 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: model:cm.presenter.model,json_dataschema:energy_communities.map_presenter_model_key_group
+#: model:cm.presenter.model,json_dataschema:energy_communities.map_presenter_model_external
 msgid ""
 "{\n"
 "\"pgm_title\": \"{{name}}\",\n"
