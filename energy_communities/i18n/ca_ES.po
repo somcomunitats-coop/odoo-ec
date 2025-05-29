@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-20 14:29+0000\n"
-"PO-Revision-Date: 2025-05-20 14:29+0000\n"
+"POT-Creation-Date: 2025-05-28 11:48+0000\n"
+"PO-Revision-Date: 2025-05-28 11:48+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,27 +56,7 @@ msgstr ""
 "3) Enviar correu invitació per confirmar email i resetejar contrasenya"
 
 #. module: energy_communities
-#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_goiener
-msgid ""
-"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
-"class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2></br><div "
-"class =\"flex text-[#8a9f96]\">Cuando haya novedades con la Comunidad "
-"Energética contactaremos contigo y con las personas que también han mostrado"
-" interés y le ofreceremos apoyo para activarla. ¡Vamos!</div>"
-msgstr ""
-"<h1 class=\"text-lg font-semibold\">Formulari enviat.</h1><h2 class=\"text-"
-"lg font-medium\">Moltes gràcies pel teu interès!</h2><p "
-"class=\"text-[#8a9f96] text-sm text-justify mb-2 mt-2\">Quan hi hagi "
-"novetats amb la Comunitat Energètica contactarem amb tu i amb les persones "
-"que també han mostrat interès i us oferirem suport per activar-la.</p><p "
-"class=\"text-[#8a9f96] text-sm text-justify mb-2\">Comparteix la informació "
-"de la futura Comunitat Energètica entre la teva gent i feu-la possible entre"
-" totes!</p><p class=\"text-[#8a9f96] text-sm text-justify mb-2\">Som-hi!</p>"
-
-#. module: energy_communities
 #: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_campanya
-#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_energetica
 msgid ""
 "<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
 "class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2><p class "
@@ -95,6 +75,27 @@ msgstr ""
 "class=\"text-[#8a9f96] text-sm text-justify mb-2\">Comparteix la informació "
 "de la futura Comunitat Energètica entre la teva gent i feu-la possible entre"
 " totes!</p><p class=\"text-[#8a9f96] text-sm text-justify mb-2\">Som-hi!</p>"
+
+#. module: energy_communities
+#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_coordinadora
+msgid ""
+"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
+"class=\"text-lg font-medium\">¡Muchas gracias por tu interés!</h2><p class "
+"=\"text-[#8a9f96] text-sm text-justify\">Cuando haya novedades con la "
+"Comunidad Energética contactaremos contigo y con las personas que también "
+"han mostrado interés.</p><p class =\"text-[#8a9f96] text-sm text-"
+"justify\">Comparte la información de la futura Comunidad Energética entre tu"
+" gente para hacerla posible entre todos!</p><p class =\"text-[#8a9f96] text-"
+"sm text-justify\">¡Vamos!</p>"
+msgstr ""
+"<h1 class=\"text-lg font-semibold\">Formulari enviat.</h1><h2 class=\"text-"
+"lg font-medium\">Moltes gràcies pel teu interès!</h2><p "
+"class=\"text-[#8a9f96] text-sm text-justify mb-2 mt-2\">Quan hi hagi "
+"novetats amb la Comunitat Energètica contactarem amb tu i amb les persones "
+"que també han mostrat interès.</p><p class=\"text-[#8a9f96] text-sm text-"
+"justify mb-2\">Comparteix la informació de la futura Comunitat Energètica "
+"entre la teva gent i feu-la possible entre totes!</p><p "
+"class=\"text-[#8a9f96] text-sm text-justify mb-2\">Som-hi!</p>"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_selection
@@ -221,11 +222,6 @@ msgstr "Companyia permesa"
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__allow_new_members
 msgid "Allows new members"
 msgstr "Autoritza nous membres"
-
-#. module: energy_communities
-#: model:cm.filter,name:energy_communities.map_filter_key_group
-msgid "Amb grup motor"
-msgstr ""
 
 #. module: energy_communities
 #. odoo-python
@@ -847,8 +843,6 @@ msgstr "Accions energètiques"
 #. module: energy_communities
 #: model:cm.form.model,button_label:energy_communities.map_form_model_campanya
 #: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_energetica
-#: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_goiener
 msgid "Enviar"
 msgstr ""
 
@@ -862,6 +856,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_create_users_wizard_form
 msgid "Execute"
 msgstr "Executar"
+
+#. module: energy_communities
+#: model:cm.filter,name:energy_communities.map_filter_external
+msgid "Externa"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_energy_action__xml_id
@@ -1896,8 +1895,6 @@ msgstr ""
 #. module: energy_communities
 #: model:cm.form.model,cta_button_label:energy_communities.map_form_model_campanya
 #: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_energetica
-#: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_goiener
 msgid "Sumarme"
 msgstr "Sumar-me"
 
@@ -2497,8 +2494,6 @@ msgstr ""
 
 #. module: energy_communities
 #: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_energetica
-#: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_goiener
 msgid ""
 "{\n"
 "  \"type\": \"VerticalLayout\",\n"
@@ -2843,8 +2838,6 @@ msgstr ""
 
 #. module: energy_communities
 #: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_coordinadora
-#: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_energetica
-#: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_goiener
 msgid ""
 "{\n"
 "  \"type\": \"object\",\n"
@@ -3078,7 +3071,7 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: model:cm.presenter.model,json_uischema:energy_communities.map_presenter_model_key_group
+#: model:cm.presenter.model,json_uischema:energy_communities.map_presenter_model_external
 msgid ""
 "{\n"
 "  \"type\":\"VerticalLayout\",\n"
@@ -3307,7 +3300,7 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities
-#: model:cm.presenter.model,json_dataschema:energy_communities.map_presenter_model_key_group
+#: model:cm.presenter.model,json_dataschema:energy_communities.map_presenter_model_external
 msgid ""
 "{\n"
 "\"pgm_title\": \"{{name}}\",\n"
