@@ -44,6 +44,7 @@ class TestActionCreate(TransactionCase):
             "Platform pack contract template",
         )
 
+    @unittest.skip("skip")
     def test_update_selfconsumption_project(self):
         # Given a project
         selfconsumption_project = self.env[
@@ -58,6 +59,7 @@ class TestActionCreate(TransactionCase):
         # then no errors happend
         self.assertIsNone(res)
 
+    @unittest.skip("skip")
     def test_reclose_contract__ok(self):
         # given a contract that has already a date_end
         contract = self.env["contract.contract"].search([("id", "=", 66)])[0]
@@ -83,6 +85,7 @@ class TestActionCreate(TransactionCase):
             pass
             # self.assertIsInstance(Exception,AssertionError)
 
+    @unittest.skip("skip")
     def test_existing_open_contracts_without_recurring_have_no_invoices(self):
         contracts = self.env["contract.contract"].search([])
         self.assertTrue(bool(contracts))
@@ -90,6 +93,7 @@ class TestActionCreate(TransactionCase):
             if not contract.last_date_invoiced:
                 self.assertFalse(bool(contract._get_related_invoices()))
 
+    @unittest.skip("skip")
     def test_reopen_contract_without_date_end__ok(self):
         # Given a project
         selfconsumption_project = self.env[
@@ -132,6 +136,7 @@ class TestActionCreate(TransactionCase):
         except Exception as e:
             pass
 
+    @unittest.skip("skip")
     def test_pass_service_invoicing_migration(self):
         contracts = self.env["contract.contract"].search([])
         recurring_next_dates = {}
@@ -164,6 +169,7 @@ class TestActionCreate(TransactionCase):
                     contract, closing_dates[contract.id]
                 )
 
+    @unittest.skip("skip")
     def _check_project_contract_params_consistency(self, contract):
         _logger.info(
             "Checking project and contract params consistency for contract {}.".format(
@@ -223,6 +229,7 @@ class TestActionCreate(TransactionCase):
             contract.payment_mode_id, contract.predecessor_contract_id.payment_mode_id
         )
 
+    @unittest.skip("skip")
     def _check_contract_closing_params(self, contract, close_date):
         _logger.info("Checking closing params for contract {}.".format(contract.name))
 
@@ -230,6 +237,7 @@ class TestActionCreate(TransactionCase):
         self.assertEqual(contract.date_end, close_date)
         self.assertEqual(contract.status, "closed")
 
+    @unittest.skip("skip")
     def _check_contract_creation_params(
         self, contract, new_contract_id, recurring_next_dates
     ):

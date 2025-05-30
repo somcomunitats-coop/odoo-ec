@@ -94,7 +94,7 @@ class SaleOrderUtils(Component):
             "contract.contract", record=self.work.record.service_invoicing_id
         ) as work:
             contract_utils = work.component("contract.utils")
-            contract_utils.setup_initial_data()
+            contract_utils.initial_setup()
             return contract_utils.work.record
 
     def _validate_sale_order_confirm(self):

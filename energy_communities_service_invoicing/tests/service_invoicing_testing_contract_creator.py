@@ -38,23 +38,18 @@ class ServiceInvoicingTestingContractCreator:
         return self.env["contract.contract"].browse(int(contract_view["res_id"]))
 
     def _get_component_service_invoicing_contract(
-        self,
-        recurring_rule_type=False,
-        recurring_interval=False,
-        recurring_invoicing_type=False,
+        self, so_metadata=False, execution_date=False
     ):
-        so_metadata = {
+        if not so_metadata:
+            so_metadata = {}
+        if not execution_date:
+            execution_date = fields.Date.today()
+        so_metadata = so_metadata | {
             "company_id": self.env.ref("energy_communities.coordinator_company_1").id,
             "pricelist_id": self.env.ref(
                 "energy_communities_service_invoicing.demo_service_invoicing_pricelist"
             ).id,
         }
-        if recurring_rule_type:
-            so_metadata["recurring_rule_type"] = recurring_rule_type
-        if recurring_interval:
-            so_metadata["recurring_interval"] = recurring_interval
-        if recurring_invoicing_type:
-            so_metadata["recurring_invoicing_type"] = recurring_invoicing_type
         # create service invoicing
         with sale_order_utils(self.env) as component:
             contract = component.create_service_invoicing_initial(
@@ -65,14 +60,14 @@ class ServiceInvoicingTestingContractCreator:
                 self.env.ref(
                     "energy_communities_service_invoicing.demo_service_invoicing_pricelist"
                 ),
-                fields.Date.today(),
+                execution_date,
                 "activate",
                 "testing_contract",
                 False,  # TODO: no payment mode defined!
                 so_metadata,
             )
         with contract_utils(self.env, contract) as component:
-            component.set_contract_status_active(component.work.record.date_start)
+            component.activate(component.work.record.date_start)
         return contract
 
     def _get_community_1_company(self):

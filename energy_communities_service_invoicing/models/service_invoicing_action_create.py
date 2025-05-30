@@ -138,7 +138,7 @@ class ActionCreate(models.AbstractModel):
             bool(contract.date_end) is True
         ), f"Contract {contract.name} has not date_end definded"
         with contract_utils(self.env, contract) as component:
-            component.set_contract_status_closed(contract.date_end)
+            component.close(contract.date_end)
 
     def reopen_contract_without_date_end(self, selfconsumption_project, contract):
         assert (
@@ -157,7 +157,7 @@ class ActionCreate(models.AbstractModel):
             else contract.date_start
         )
         with contract_utils(self.env, contract) as component:
-            component.set_contract_status_closed(execute_date)
+            component.close(execute_date)
             if contract.recurring_rule_type == "monthlylastday":
                 execute_date = execute_date + datetime.timedelta(days=1)
             new_contract_id = component.reopen(
@@ -178,7 +178,7 @@ class ActionCreate(models.AbstractModel):
                 },
             )
         with contract_utils(self.env, new_contract_id) as component:
-            component.set_contract_status_active(execute_date)
+            component.activate(execute_date)
         return new_contract_id
 
     def setup_contract_line_description(self, project, contract_id):

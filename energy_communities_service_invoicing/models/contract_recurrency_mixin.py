@@ -24,9 +24,9 @@ class ContractRecurrencyBasicMixin(models.AbstractModel):
         string="Recurrence mode",
         required=True,
     )
+    # TODO: We must implement other interval recurrency. (Monthly, Quaterly,...)
     recurring_invoicing_fixed_type = fields.Selection(
         [
-            ("monthly", "Month(s)"),
             ("yearly", "Year(s)"),
         ],
         default="yearly",

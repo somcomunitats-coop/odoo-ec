@@ -2,6 +2,8 @@ from datetime import datetime
 
 from odoo import _, api, fields, models
 
+from odoo.addons.energy_communities.utils import contract_utils
+
 from ..utils import (
     _CONTRACT_STATUS_VALUES,
     _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES,
@@ -40,9 +42,6 @@ class ContractContract(models.Model):
         digits="Discount",
         compute="_compute_discount",
         store=False,
-    )
-    last_date_invoiced = fields.Date(
-        string="Last Date Invoiced", compute="_compute_last_date_invoiced", store=False
     )
     pack_type = fields.Selection(related="contract_template_id.pack_type")
     is_free_pack = fields.Boolean(related="contract_template_id.is_free_pack")
@@ -135,24 +134,6 @@ class ContractContract(models.Model):
             if record.contract_line_ids:
                 record.discount = record.contract_line_ids[0].discount
 
-    @api.depends("contract_line_ids")
-    def _compute_last_date_invoiced(self):
-        for record in self:
-            record.last_date_invoiced = None
-            if record.contract_line_ids:
-                record.last_date_invoiced = record.contract_line_ids[
-                    0
-                ].last_date_invoiced
-
-    @api.depends("recurring_next_date", "contract_line_ids")
-    def _compute_next_period_date_start(self):
-        for record in self:
-            record.last_date_invoiced = None
-            if record.contract_line_ids:
-                record.next_period_date_start = record.contract_line_ids[
-                    0
-                ].next_period_date_start
-
     @api.depends("contract_template_id")
     def _compute_pack_id(self):
         for record in self:
@@ -173,9 +154,13 @@ class ContractContract(models.Model):
 
     def _recurring_create_invoice(self, date_ref=False):
         moves = super()._recurring_create_invoice(date_ref)
+        # if invoice has no lines we delete it
         for move in moves:
             if not move.line_ids:
                 move.unlink()
+        # once invoices have been generated we propagate recurrency to contract
+        with contract_utils(self.env, self) as component:
+            component.propagate_recurrency_values_to_contract()
         return moves
 
     def action_activate_contract(self):

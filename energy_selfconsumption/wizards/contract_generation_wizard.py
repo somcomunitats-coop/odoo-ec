@@ -63,7 +63,7 @@ class ContractGenerationWizard(models.TransientModel):
             contract.contract_line_ids[0].write({"main_line": True})
             # 4.- mark contract as active
             with contract_utils(self.env, contract) as component:
-                component.set_contract_status_active(self.start_date)
+                component.activate(self.start_date)
         # 5.- mark project as active
         self.selfconsumption_id.write(
             {"payment_mode_id": self.payment_mode.id, "state": "active"}
