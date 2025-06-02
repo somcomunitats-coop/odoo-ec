@@ -495,14 +495,14 @@ class ResCompany(models.Model):
         if coord_users:
             for user in coord_users:
                 # remove community manager role for the outgoing coordinator admins/managers
-                outgoing_user_manager_roles = user.get_related_company_role(
-                    self.id, ["role_ce_manager"]
+                outgoing_user_manager_roles = user.get_user_role_lines(
+                    company_id=self.id, role_codes=["role_ce_manager"]
                 )
                 if outgoing_user_manager_roles:
                     for role in outgoing_user_manager_roles:
                         role.unlink()
                 # remove access to community for the outgoing coordinator admins/managers if needed
-                outgoing_user_roles = user.get_related_company_role(self.id)
+                outgoing_user_roles = user.get_user_role_lines(company_id=self.id)
                 if not outgoing_user_roles:
                     user.write({"company_ids": [(3, self.id)]})
 
