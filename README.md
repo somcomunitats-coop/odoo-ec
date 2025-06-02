@@ -7,7 +7,7 @@ This repository contains customizations of the project CE (Singulars)
 
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[energy_communities](energy_communities/) | 16.0.0.4.0 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Base module for manage energy communities 
+[energy_communities](energy_communities/) | 16.0.0.4.4 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Base module for manage energy communities 
 [energy_communities_api](energy_communities_api/) | 16.0.0.3.0 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| HTTP API for energy communities 
 [energy_communities_cooperator](energy_communities_cooperator/) | 16.0.0.3.0 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Cooperator custumizations for energy communities management 
 [energy_communities_crm](energy_communities_crm/) | 16.0.0.2.2 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| CRM custumizations for energy communities management
