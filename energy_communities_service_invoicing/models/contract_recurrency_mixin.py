@@ -13,7 +13,6 @@ from ..utils import (
 class ContractRecurrencyBasicMixin(models.AbstractModel):
     _inherit = "contract.recurrency.basic.mixin"
     _name = "contract.recurrency.basic.mixin"
-    _description = "Basic recurrency mixin for abstract contract models"
 
     recurring_rule_mode = fields.Selection(
         [
