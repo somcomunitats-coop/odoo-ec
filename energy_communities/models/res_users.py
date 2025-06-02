@@ -255,17 +255,13 @@ class ResUsers(models.Model):
                 }
             )
 
-    def get_related_company_role(self, company_id, role_codes=False):
+    def get_user_role_lines(self, company_id=False, role_codes=False):
+        query = [("user_id", "=", self.id)]
+        if company_id:
+            query.append(("company_id", "=", company_id))
         if role_codes:
-            current_role_lines = self.role_line_ids.filtered(
-                lambda role_line: role_line.company_id.id == company_id
-                and role_line.role_id.code in role_codes
-            )
-        else:
-            current_role_lines = self.role_line_ids.filtered(
-                lambda role_line: role_line.company_id.id == company_id
-            )
-        return current_role_lines
+            query.append(("role_id.code", "in", role_codes))
+        return self.env["res.users.role.line"].search(query)
 
     #########################
     # USER_CREATOR

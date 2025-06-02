@@ -226,8 +226,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         ]
         # Apply new company to all users selected on wizard
         for user in self.user_ids:
-            platform_admin_role = user.get_related_company_role(
-                self.new_company_id.id, ["role_platform_admin"]
+            platform_admin_role = user.get_user_role_lines(
+                role_codes=["role_platform_admin"]
             )
             # if user is a platform admin or system user: apply company_ids in order to gain visibility
             if platform_admin_role or user.id in system_impacted_user_id_list:
