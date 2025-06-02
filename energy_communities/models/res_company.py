@@ -316,14 +316,20 @@ class ResCompany(models.Model):
     def get_all_energy_actions_dict_list(self):
         """Return all energy actions for the current energy community"""
         self.ensure_one()
+        energy_actions = self.env["energy.action"].search([])
+        published_energy_actions_ids = set(
+            self.community_energy_action_ids.filtered_domain(
+                [("public_status", "=", "published")]
+            ).energy_action_id.ids
+        )
         res = [
             {
-                "id": energy_action.energy_action_id.id,
-                "name": energy_action.energy_action_id.name,
-                "ext_id": energy_action.energy_action_id.xml_id,
-                "is_active": energy_action.public_status == "published",
+                "id": energy_action.id,
+                "name": energy_action.name,
+                "ext_id": energy_action.xml_id,
+                "is_active": energy_action.id in published_energy_actions_ids,
             }
-            for energy_action in self.community_energy_action_ids
+            for energy_action in energy_actions
         ]
         return res
 

@@ -230,6 +230,11 @@ class EnergyAction(BaseModel):
     type_: str = Field(
         ..., alias="ext_id", title="Type", description="Type of the energy action"
     )
+    is_active: bool = Field(
+        ...,
+        title="Is Active",
+        description="Check that indicates if this energy action is active or not",
+    )
 
 
 class SocialInfo(BaseModel):
