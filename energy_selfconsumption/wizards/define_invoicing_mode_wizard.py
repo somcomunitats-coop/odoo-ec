@@ -126,6 +126,7 @@ class ContractGenerationWizard(models.TransientModel):
                     "recurring_invoicing_type": self.recurring_invoicing_type,
                     "project_id": self.selfconsumption_id.id,
                     "company_id": self.selfconsumption_id.company_id.id,
+                    "mandate_id": inscription_id.mandate_id.id,
                 }
                 # config journal if defined
                 sale_journal_id = pack.categ_id.with_context(
