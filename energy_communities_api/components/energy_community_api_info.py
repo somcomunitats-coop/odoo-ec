@@ -42,7 +42,7 @@ class EnergyCommunityApiInfo(Component):
             name=community.name,
             coordinator=community.parent_id.sudo().name,
             members=len(community.get_ce_members()),
-            services=community.sudo().get_energy_actions_dict_list(),
+            services=community.sudo().get_all_energy_actions_dict_list(),
             image=community.logo,
             landing_photo=community.landing_page_id.sudo().primary_image_file,
             social={
