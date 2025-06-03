@@ -237,7 +237,6 @@ class TestServiceInvoicingRecurrency(
             expected_next_period_date_end=date(2025, 8, 31),
         )
 
-    @unittest.skip("skip")
     def test_service_invoicing_recurrency_dates_case_5(self):
         # CASE 5: fixed yearly prepaid (starts before invoicing day)
         contract = self._get_component_service_invoicing_contract(
@@ -493,6 +492,8 @@ class TestServiceInvoicingRecurrency(
                 initial_next_period_date_end,
             )
 
+    # TODO: test_service_invoicing_closing_recurrency(self):
+
     def _check_recurrency_dates(
         self,
         contract,
@@ -502,6 +503,8 @@ class TestServiceInvoicingRecurrency(
         expected_next_period_date_start,
         expected_next_period_date_end,
     ):
+        # invoices = self.env["account.move"].search([("partner_id","=",contract.partner_id.id)])
+        # __import__('ipdb').set_trace()
         self.assertEqual(contract.date_start, expected_date_start)
         self.assertEqual(contract.last_date_invoiced, expected_last_date_invoiced)
         self.assertEqual(contract.recurring_next_date, expected_recurring_next_date)

@@ -159,6 +159,10 @@ class ContractUtils(Component):
                 line.write(recurrence_dict)
                 line._compute_state()
 
+        if self.work.record.recurring_rule_mode == "fixed":
+            for line in self.work.record.contract_line_ids:
+                self._recompute_fixed_recurrence_params(line)
+
     def propagate_recurrency_values_to_contract(self, contract=False):
         if not contract:
             contract = self.work.record
@@ -182,6 +186,11 @@ class ContractUtils(Component):
                     value = int(contract_update_data.value)
                 contract_update_dict[contract_update_data.key] = value
         self.work.record.write(contract_update_dict)
+
+    def _recompute_fixed_recurrence_params(self, line):
+        line._compute_recurring_next_date()
+        line._compute_next_period_date_start()
+        line._compute_next_period_date_end()
 
     def _build_service_invoicing_params(
         self,
