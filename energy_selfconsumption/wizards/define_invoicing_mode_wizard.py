@@ -127,6 +127,8 @@ class ContractGenerationWizard(models.TransientModel):
                     "project_id": self.selfconsumption_id.id,
                     "company_id": self.selfconsumption_id.company_id.id,
                 }
+                if inscription_id.mandate_id:
+                    so_metadata["mandate_id"] = inscription_id.mandate_id.id
                 # config journal if defined
                 sale_journal_id = pack.categ_id.with_context(
                     company_id=self.selfconsumption_id.company_id.id
