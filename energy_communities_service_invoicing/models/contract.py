@@ -1,4 +1,6 @@
-from datetime import datetime
+from datetime import date, datetime
+
+from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
 
@@ -101,18 +103,6 @@ class ContractContract(models.Model):
                         record.successor_contract_id.sale_order_id.service_invoicing_action_description
                     )
 
-    @api.constrains("partner_id", "community_company_id")
-    def _constrain_unique_contract(self):
-        for record in self:
-            if record.community_company_id:
-                existing_contract = (
-                    record._get_existing_same_open_platform_pack_contract()
-                )
-                if existing_contract:
-                    raise_existing_same_open_platform_pack_contract_error(
-                        existing_contract
-                    )
-
     def _compute_received_invoices_count(self):
         for record in self:
             record.received_invoices_count = len(record._get_received_invoices_ids())
@@ -151,6 +141,41 @@ class ContractContract(models.Model):
                 )
                 if rel_product:
                     record.pack_id = rel_product.id
+
+    @api.depends(
+        "contract_line_ids.recurring_next_date",
+        "contract_line_ids.is_canceled",
+    )
+    # pylint: disable=missing-return
+    def _compute_recurring_next_date(self):
+        for contract in self:
+            if contract.recurring_rule_mode == "fixed":
+                for line in contract.contract_line_ids:
+                    if line.recurring_invoicing_type == "pre-paid":
+                        year = contract.next_period_date_end.year
+                    if line.recurring_invoicing_type == "post-paid":
+                        year = (
+                            contract.next_period_date_end + relativedelta(years=+1)
+                        ).year
+                    line.recurring_next_date = date(
+                        year,
+                        int(contract.fixed_invoicing_month),
+                        int(contract.fixed_invoicing_day),
+                    )
+            if contract.recurring_rule_mode == "interval":
+                super()._compute_recurring_next_date()
+
+    @api.constrains("partner_id", "community_company_id")
+    def _constrain_unique_contract(self):
+        for record in self:
+            if record.community_company_id:
+                existing_contract = (
+                    record._get_existing_same_open_platform_pack_contract()
+                )
+                if existing_contract:
+                    raise_existing_same_open_platform_pack_contract_error(
+                        existing_contract
+                    )
 
     def _recurring_create_invoice(self, date_ref=False):
         moves = super()._recurring_create_invoice(date_ref)

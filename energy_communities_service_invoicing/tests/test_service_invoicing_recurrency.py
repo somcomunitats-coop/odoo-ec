@@ -1,4 +1,3 @@
-import unittest
 from datetime import date
 
 from dateutil.relativedelta import relativedelta
@@ -71,15 +70,6 @@ class TestServiceInvoicingRecurrency(
         )
         self._check_recurrency_dates(
             contract,
-            expected_date_start=_EXECUTION_DATE,
-            expected_last_date_invoiced=False,
-            expected_recurring_next_date=_EXECUTION_DATE,
-            expected_next_period_date_start=_EXECUTION_DATE,
-            expected_next_period_date_end=_EXECUTION_DATE
-            + relativedelta(months=+2, days=-1),
-        )
-        self._check_recurrency_dates(
-            contract,
             expected_date_start=date(2025, 5, 12),
             expected_last_date_invoiced=False,
             expected_recurring_next_date=date(2025, 5, 12),
@@ -87,16 +77,6 @@ class TestServiceInvoicingRecurrency(
             expected_next_period_date_end=date(2025, 7, 11),
         )
         contract.recurring_create_invoice()
-        self._check_recurrency_dates(
-            contract,
-            expected_date_start=_EXECUTION_DATE,
-            expected_last_date_invoiced=_EXECUTION_DATE
-            + relativedelta(months=+2, days=-1),
-            expected_recurring_next_date=_EXECUTION_DATE + relativedelta(months=+2),
-            expected_next_period_date_start=_EXECUTION_DATE + relativedelta(months=+2),
-            expected_next_period_date_end=contract.last_date_invoiced
-            + relativedelta(months=+2),
-        )
         self._check_recurrency_dates(
             contract,
             expected_date_start=date(2025, 5, 12),
@@ -113,15 +93,6 @@ class TestServiceInvoicingRecurrency(
         )
         self._check_recurrency_dates(
             contract,
-            expected_date_start=_EXECUTION_DATE,
-            expected_last_date_invoiced=False,
-            expected_recurring_next_date=_EXECUTION_DATE + relativedelta(months=+2),
-            expected_next_period_date_start=_EXECUTION_DATE,
-            expected_next_period_date_end=_EXECUTION_DATE
-            + relativedelta(months=+2, days=-1),
-        )
-        self._check_recurrency_dates(
-            contract,
             expected_date_start=date(2025, 5, 12),
             expected_last_date_invoiced=False,
             expected_recurring_next_date=date(2025, 7, 12),
@@ -129,16 +100,6 @@ class TestServiceInvoicingRecurrency(
             expected_next_period_date_end=date(2025, 7, 11),
         )
         contract.recurring_create_invoice()
-        self._check_recurrency_dates(
-            contract,
-            expected_date_start=_EXECUTION_DATE,
-            expected_last_date_invoiced=_EXECUTION_DATE
-            + relativedelta(months=+2, days=-1),
-            expected_recurring_next_date=_EXECUTION_DATE + relativedelta(months=+4),
-            expected_next_period_date_start=_EXECUTION_DATE + relativedelta(months=+2),
-            expected_next_period_date_end=contract.last_date_invoiced
-            + relativedelta(months=+2),
-        )
         self._check_recurrency_dates(
             contract,
             expected_date_start=date(2025, 5, 12),
@@ -155,15 +116,6 @@ class TestServiceInvoicingRecurrency(
         )
         self._check_recurrency_dates(
             contract,
-            expected_date_start=_EXECUTION_DATE,
-            expected_last_date_invoiced=False,
-            expected_recurring_next_date=_EXECUTION_DATE,
-            expected_next_period_date_start=_EXECUTION_DATE,
-            expected_next_period_date_end=_EXECUTION_DATE
-            + relativedelta(months=+1, day=31),
-        )
-        self._check_recurrency_dates(
-            contract,
             expected_date_start=date(2025, 5, 12),
             expected_last_date_invoiced=False,
             expected_recurring_next_date=date(2025, 5, 12),
@@ -171,18 +123,6 @@ class TestServiceInvoicingRecurrency(
             expected_next_period_date_end=date(2025, 6, 30),
         )
         contract.recurring_create_invoice()
-        self._check_recurrency_dates(
-            contract,
-            expected_date_start=_EXECUTION_DATE,
-            expected_last_date_invoiced=_EXECUTION_DATE
-            + relativedelta(months=+1, day=31),
-            expected_recurring_next_date=_EXECUTION_DATE
-            + relativedelta(months=+2, day=1),
-            expected_next_period_date_start=_EXECUTION_DATE
-            + relativedelta(months=+2, day=1),
-            expected_next_period_date_end=contract.last_date_invoiced
-            + relativedelta(months=+2, day=31),
-        )
         self._check_recurrency_dates(
             contract,
             expected_date_start=date(2025, 5, 12),
@@ -199,16 +139,6 @@ class TestServiceInvoicingRecurrency(
         )
         self._check_recurrency_dates(
             contract,
-            expected_date_start=_EXECUTION_DATE,
-            expected_last_date_invoiced=False,
-            expected_recurring_next_date=_EXECUTION_DATE
-            + relativedelta(months=+1, day=31),
-            expected_next_period_date_start=_EXECUTION_DATE,
-            expected_next_period_date_end=_EXECUTION_DATE
-            + relativedelta(months=+1, day=31),
-        )
-        self._check_recurrency_dates(
-            contract,
             expected_date_start=date(2025, 5, 12),
             expected_last_date_invoiced=False,
             expected_recurring_next_date=date(2025, 6, 30),
@@ -216,18 +146,6 @@ class TestServiceInvoicingRecurrency(
             expected_next_period_date_end=date(2025, 6, 30),
         )
         contract.recurring_create_invoice()
-        self._check_recurrency_dates(
-            contract,
-            expected_date_start=_EXECUTION_DATE,
-            expected_last_date_invoiced=_EXECUTION_DATE
-            + relativedelta(months=+1, day=31),
-            expected_recurring_next_date=_EXECUTION_DATE
-            + relativedelta(months=+3, day=31),
-            expected_next_period_date_start=_EXECUTION_DATE
-            + relativedelta(months=+2, day=1),
-            expected_next_period_date_end=contract.last_date_invoiced
-            + relativedelta(months=+2, day=31),
-        )
         self._check_recurrency_dates(
             contract,
             expected_date_start=date(2025, 5, 12),
@@ -254,13 +172,12 @@ class TestServiceInvoicingRecurrency(
         self._check_recurrency_dates(
             contract,
             expected_date_start=date(2025, 5, 12),
-            expected_last_date_invoiced=(2025, 8, 7),
+            expected_last_date_invoiced=date(2026, 8, 6),
             expected_recurring_next_date=date(2026, 8, 7),
             expected_next_period_date_start=date(2026, 8, 7),
             expected_next_period_date_end=date(2027, 8, 6),
         )
 
-    @unittest.skip("skip")
     def test_service_invoicing_recurrency_dates_case_6(self):
         # CASE 6: fixed yearly prepaid (starts after invoicing day)
         contract = self._get_component_service_invoicing_contract(
@@ -278,13 +195,12 @@ class TestServiceInvoicingRecurrency(
         self._check_recurrency_dates(
             contract,
             expected_date_start=date(2025, 11, 20),
-            expected_last_date_invoiced=(2026, 8, 7),
+            expected_last_date_invoiced=date(2027, 8, 6),
             expected_recurring_next_date=date(2027, 8, 7),
             expected_next_period_date_start=date(2027, 8, 7),
             expected_next_period_date_end=date(2028, 8, 6),
         )
 
-    @unittest.skip("skip")
     def test_service_invoicing_recurrency_dates_case_7(self):
         # CASE 7: fixed yearly postpaid (starts before invoicing day)
         contract = self._get_component_service_invoicing_contract(
@@ -302,13 +218,12 @@ class TestServiceInvoicingRecurrency(
         self._check_recurrency_dates(
             contract,
             expected_date_start=date(2025, 5, 12),
-            expected_last_date_invoiced=(2025, 8, 7),
+            expected_last_date_invoiced=date(2025, 8, 6),
             expected_recurring_next_date=date(2026, 8, 7),
             expected_next_period_date_start=date(2025, 8, 7),
             expected_next_period_date_end=date(2026, 8, 6),
         )
 
-    @unittest.skip("skip")
     def test_service_invoicing_recurrency_dates_case_8(self):
         # CASE 8: fixed yearly postpaid (starts after invoicing day)
         contract = self._get_component_service_invoicing_contract(
@@ -326,13 +241,12 @@ class TestServiceInvoicingRecurrency(
         self._check_recurrency_dates(
             contract,
             expected_date_start=date(2025, 11, 20),
-            expected_last_date_invoiced=(2026, 8, 7),
+            expected_last_date_invoiced=date(2026, 8, 6),
             expected_recurring_next_date=date(2027, 8, 7),
             expected_next_period_date_start=date(2026, 8, 7),
             expected_next_period_date_end=date(2027, 8, 6),
         )
 
-    @unittest.skip("skip")
     def test_service_invoicing_recurrency_dates_case_9(self):
         # CASE 9: fixed yearly prepaid (starts same day as invoicing day)
         contract = self._get_component_service_invoicing_contract(
@@ -350,13 +264,12 @@ class TestServiceInvoicingRecurrency(
         self._check_recurrency_dates(
             contract,
             expected_date_start=date(2026, 8, 7),
-            expected_last_date_invoiced=(2026, 8, 7),
-            expected_recurring_next_date=date(2028, 8, 7),
-            expected_next_period_date_start=date(2028, 8, 7),
-            expected_next_period_date_end=date(2029, 8, 6),
+            expected_last_date_invoiced=date(2027, 8, 6),
+            expected_recurring_next_date=date(2027, 8, 7),
+            expected_next_period_date_start=date(2027, 8, 7),
+            expected_next_period_date_end=date(2028, 8, 6),
         )
 
-    @unittest.skip("skip")
     def test_service_invoicing_recurrency_dates_case_10(self):
         # CASE 10: fixed yearly postpaid (starts same day as invoicing day)
         contract = self._get_component_service_invoicing_contract(
@@ -366,18 +279,18 @@ class TestServiceInvoicingRecurrency(
             contract,
             expected_date_start=date(2026, 8, 7),
             expected_last_date_invoiced=False,
-            expected_recurring_next_date=date(2026, 8, 7),
-            expected_next_period_date_start=date(2025, 8, 7),
-            expected_next_period_date_end=date(2026, 8, 6),
+            expected_recurring_next_date=date(2027, 8, 7),
+            expected_next_period_date_start=date(2026, 8, 7),
+            expected_next_period_date_end=date(2027, 8, 6),
         )
         contract.recurring_create_invoice()
         self._check_recurrency_dates(
             contract,
             expected_date_start=date(2026, 8, 7),
-            expected_last_date_invoiced=(2026, 8, 7),
-            expected_recurring_next_date=date(2027, 8, 7),
-            expected_next_period_date_start=date(2026, 8, 7),
-            expected_next_period_date_end=date(2027, 8, 6),
+            expected_last_date_invoiced=date(2027, 8, 6),
+            expected_recurring_next_date=date(2028, 8, 7),
+            expected_next_period_date_start=date(2027, 8, 7),
+            expected_next_period_date_end=date(2028, 8, 6),
         )
 
     def test_service_invoicing_wizard_config_recurrency_propagation(self):
@@ -519,8 +432,7 @@ class TestServiceInvoicingRecurrency(
         self.assertEqual(obj_1.recurring_invoicing_type, obj_2.recurring_invoicing_type)
         self.assertEqual(obj_1.recurring_rule_mode, obj_2.recurring_rule_mode)
         self.assertEqual(
-            obj_1.recurring_invoicing_fixed_type,
-            obj_2.recurring_invoicing_fixed_type,
+            obj_1.recurring_invoicing_fixed_type, obj_2.recurring_invoicing_fixed_type
         )
         self.assertEqual(obj_1.fixed_invoicing_day, obj_2.fixed_invoicing_day)
         self.assertEqual(obj_1.fixed_invoicing_month, obj_2.fixed_invoicing_month)

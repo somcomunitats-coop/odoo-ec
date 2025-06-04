@@ -104,7 +104,10 @@ class ContractRecurrencyMixin(models.AbstractModel):
                 int(self.fixed_invoicing_month),
                 int(self.fixed_invoicing_day),
             )
-            if self.date_start > next_invoice_date:
+            if self.date_start > next_invoice_date or (
+                self.date_start == next_invoice_date
+                and self.recurring_invoicing_type == "post-paid"
+            ):
                 next_invoice_date += relativedelta(years=+1)
         if self.date_end and next_invoice_date > self.date_end:
             next_invoice_date = False
@@ -113,11 +116,18 @@ class ContractRecurrencyMixin(models.AbstractModel):
     def get_next_period_date_start_fixed(self):
         if self.last_date_invoiced:
             if self.recurring_invoicing_type == "pre-paid":
+                # next_period_date_start = self.last_date_invoiced + relativedelta(
+                #     years=+1
+                # )
                 next_period_date_start = self.last_date_invoiced + relativedelta(
-                    years=+1
+                    days=+1
                 )
             if self.recurring_invoicing_type == "post-paid":
-                next_period_date_start = self.last_date_invoiced
+                # __import__('ipdb').set_trace()
+                # next_period_date_start = self.last_date_invoiced
+                next_period_date_start = self.last_date_invoiced + relativedelta(
+                    days=+1
+                )
         else:
             next_period_date_start = date(
                 self.date_start.year,
@@ -128,12 +138,16 @@ class ContractRecurrencyMixin(models.AbstractModel):
                 self.recurring_invoicing_type == "pre-paid"
                 and self.date_start > next_period_date_start
             ):
-                next_period_date_start = self.date_start + relativedelta(years=+1)
+                next_period_date_start = date(
+                    (self.date_start + relativedelta(years=+1)).year,
+                    int(self.fixed_invoicing_month),
+                    int(self.fixed_invoicing_day),
+                )
             if self.recurring_invoicing_type == "post-paid":
                 if self.date_start != next_period_date_start:
                     next_period_date_start = self.date_start
-                else:
-                    next_period_date_start += relativedelta(years=-1)
+                # else:
+                #     next_period_date_start += relativedelta(years=+1)
         if self.date_end and next_period_date_start >= self.date_end:
             next_period_date_start = False
         return next_period_date_start
@@ -141,13 +155,15 @@ class ContractRecurrencyMixin(models.AbstractModel):
     def get_next_period_date_end_fixed(self):
         if self.last_date_invoiced:
             if self.recurring_invoicing_type == "pre-paid":
-                next_period_date_end = self.last_date_invoiced + relativedelta(
-                    years=+2, days=-1
-                )
+                # next_period_date_end = self.last_date_invoiced + relativedelta(
+                #     years=+2, days=-1
+                # )
+                next_period_date_end = self.last_date_invoiced + relativedelta(years=+1)
             if self.recurring_invoicing_type == "post-paid":
-                next_period_date_end = self.last_date_invoiced + relativedelta(
-                    years=+1, days=-1
-                )
+                # next_period_date_end = self.last_date_invoiced + relativedelta(
+                #     years=+1, days=-1
+                # )
+                next_period_date_end = self.last_date_invoiced + relativedelta(years=+1)
         else:
             next_period_date_end = date(
                 self.date_start.year,
@@ -156,13 +172,16 @@ class ContractRecurrencyMixin(models.AbstractModel):
             )
             if self.recurring_invoicing_type == "pre-paid":
                 if self.date_start > next_period_date_end:
-                    next_period_date_end += relativedelta(years=+2, days=-1)
+                    # next_period_date_end += relativedelta(years=+2, days=-1)
+                    next_period_date_end += relativedelta(years=+1)
                 if self.date_start <= next_period_date_end:
                     next_period_date_end += relativedelta(years=+1, days=-1)
             if self.recurring_invoicing_type == "post-paid":
                 if self.date_start > next_period_date_end:
-                    next_period_date_end += relativedelta(years=+2, days=-1)
-                if self.date_start <= next_period_date_end:
+                    next_period_date_end += relativedelta(years=+1)
+                if self.date_start < next_period_date_end:
+                    next_period_date_end += relativedelta(days=-1)
+                if self.date_start == next_period_date_end:
                     next_period_date_end += relativedelta(years=+1, days=-1)
         if self.date_end and next_period_date_end >= self.date_end:
             next_period_date_end = False
