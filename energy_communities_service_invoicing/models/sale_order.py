@@ -38,6 +38,7 @@ class SaleOrder(models.Model):
         for contract in contracts:
             contract.write(
                 {
+                    "date_start": self.commitment_date,
                     "pricelist_id": self.pricelist_id.id,
                     "payment_mode_id": self.payment_mode_id.id,
                     "sale_order_id": self.id,
