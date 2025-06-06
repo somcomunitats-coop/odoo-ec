@@ -57,45 +57,6 @@ class ContractLine(models.Model):
                     )
                 )
 
-    @api.constrains("recurring_next_date", "date_start")
-    def _check_recurring_next_date_start_date(self):
-        """
-        Validate recurring next date is not before start date
-
-        This validation ensures that the next invoice date is not set to a date
-        that is before the contract line start date. This is particularly important
-        for line-level recurrence in self-consumption contracts.
-
-        Note: This validation is only applied when line_recurrence is enabled
-        to fix an issue where the validation was raised during contract creation
-        before recurring_next_date was computed.
-
-        Raises:
-            ValidationError: If next invoice date is before start date
-        """
-        for line in self:
-            # Skip validation for section lines or lines without recurring date
-            if line.display_type == "line_section" or not line.recurring_next_date:
-                continue
-
-            # Only validate when line recurrence is enabled and dates are set
-            if (
-                line.contract_id.line_recurrence
-                and line.date_start
-                and line.recurring_next_date
-            ):
-                if line.date_start > line.recurring_next_date:
-                    raise ValidationError(
-                        _(
-                            "The next invoice date ({next_date}) cannot be before "
-                            "the start date ({start_date}) of contract line '{line_name}'"
-                        ).format(
-                            next_date=line.recurring_next_date.strftime("%Y-%m-%d"),
-                            start_date=line.date_start.strftime("%Y-%m-%d"),
-                            line_name=line.name or _("Unnamed Line"),
-                        )
-                    )
-
     # Business logic methods
     def is_main_line(self):
         """
