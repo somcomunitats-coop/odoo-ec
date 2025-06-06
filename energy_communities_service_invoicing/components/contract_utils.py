@@ -1,16 +1,17 @@
 from odoo.addons.component.core import Component
 
-_RECURRENCY_VALUES = {
+_RECURRENCY_VALUES_SETUP = {
     "recurring_interval": int,
     "recurring_rule_type": str,
     "recurring_invoicing_type": str,
-    "last_date_invoiced": str,
     "recurring_rule_mode": str,
     "recurring_invoicing_fixed_type": str,
     "fixed_invoicing_day": str,
     "fixed_invoicing_month": str,
     "recurring_next_date": str,
 }
+
+_RECURRENCY_VALUES = _RECURRENCY_VALUES_SETUP | {"last_date_invoiced": str}
 
 
 class ContractUtils(Component):
@@ -123,6 +124,7 @@ class ContractUtils(Component):
         for line in self.work.record.contract_line_ids:
             line.write(
                 {
+                    "date_start": self.work.record.date_start,
                     "ordered_qty_type": line.qty_type,
                     "ordered_quantity": line.quantity,
                     "ordered_qty_formula_id": line.qty_formula_id.id,
@@ -159,20 +161,20 @@ class ContractUtils(Component):
                 line.write(recurrence_dict)
                 line._compute_state()
 
-        if self.work.record.recurring_rule_mode == "fixed":
-            for line in self.work.record.contract_line_ids:
+        for line in self.work.record.contract_line_ids:
+            if line.recurring_rule_mode == "fixed":
                 self._recompute_fixed_recurrence_params(line)
 
-    def propagate_recurrency_values_to_contract(self, contract=False):
-        if not contract:
-            contract = self.work.record
-        if self.work.record.contract_line_ids:
+    def propagate_recurrency_values_to_contract(self, f_contract=False):
+        if not f_contract:
+            f_contract = self.work.record
+        if f_contract.contract_line_ids:
             update_dict = {}
             for rec_value in _RECURRENCY_VALUES.keys():
                 update_dict[rec_value] = getattr(
-                    contract.contract_line_ids[0], rec_value
+                    f_contract.contract_line_ids[0], rec_value
                 )
-            contract.write(update_dict)
+            f_contract.write(update_dict)
 
     def _set_resting_metadata_in_contract(self, metadata_keys_arr):
         fields_to_ignore = list(_RECURRENCY_VALUES.keys()) + ["discount"]
@@ -189,8 +191,8 @@ class ContractUtils(Component):
 
     def _recompute_fixed_recurrence_params(self, line):
         line._compute_recurring_next_date()
-        line._compute_next_period_date_start()
-        line._compute_next_period_date_end()
+        # line._compute_next_period_date_start()
+        # line._compute_next_period_date_end()
 
     def _build_service_invoicing_params(
         self,
@@ -213,8 +215,8 @@ class ContractUtils(Component):
         if "modify_discount" in executed_action_description_list:
             metadata_line_ids["discount"] = discount
 
-        # setup recurrency fields from old contract
-        for recurrency_field in _RECURRENCY_VALUES.keys():
+        # setup recurrency fields from old contract (exclude last_date_invoiced)
+        for recurrency_field in _RECURRENCY_VALUES_SETUP.keys():
             if recurrency_field not in metadata_line_ids.keys():
                 recurrency_value = getattr(self.work.record, recurrency_field)
                 if recurrency_value:

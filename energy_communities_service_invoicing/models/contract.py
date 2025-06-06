@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
 
@@ -149,19 +149,6 @@ class ContractContract(models.Model):
     # pylint: disable=missing-return
     def _compute_recurring_next_date(self):
         for contract in self:
-            if contract.recurring_rule_mode == "fixed":
-                for line in contract.contract_line_ids:
-                    if line.recurring_invoicing_type == "pre-paid":
-                        year = contract.next_period_date_end.year
-                    if line.recurring_invoicing_type == "post-paid":
-                        year = (
-                            contract.next_period_date_end + relativedelta(years=+1)
-                        ).year
-                    line.recurring_next_date = date(
-                        year,
-                        int(contract.fixed_invoicing_month),
-                        int(contract.fixed_invoicing_day),
-                    )
             if contract.recurring_rule_mode == "interval":
                 super()._compute_recurring_next_date()
 
