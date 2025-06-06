@@ -1,0 +1,48 @@
+<odoo>
+  <record id="contract_template_line_form_view" model="ir.ui.view">
+    <field name="name">contract.template.line form view (in service invoicing)</field>
+    <field name="model">contract.template.line</field>
+    <field name="inherit_id" ref="contract.contract_template_line_form_view"/>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <field name="recurring_invoicing_type" position="attributes">
+        <attribute name="attrs">{'invisible':True}</attribute>
+      </field>
+      <field name="is_auto_renew" position="after">
+        <field name="recurring_rule_mode" />
+          <field name="recurring_invoicing_fixed_type" attrs="{
+            'invisible': [('recurring_rule_mode','!=','fixed')],
+            'required': [('recurring_rule_mode','==','fixed')],
+          }" />
+          <field name="fixed_invoicing_day" attrs="{
+            'invisible': [('recurring_rule_mode','!=','fixed')],
+            'required': [('recurring_rule_mode','==','fixed')],
+          }" />
+          <field name="fixed_invoicing_month" attrs="{
+            'invisible': ['|',('recurring_rule_mode','!=','fixed'),('recurring_invoicing_fixed_type','!=','yearly')],
+            'required': [('recurring_rule_mode','==','fixed'),('recurring_invoicing_fixed_type','==','yearly')],
+          }" />
+          <field name="recurring_invoicing_type"/>
+      </field>
+      <!--<xpath expr="//field[@name='recurring_interval']" position="before">-->
+          
+      <!--    <field name="recurring_invoicing_type"/>-->
+      <!--</xpath>-->
+      <xpath expr="//label[@for='recurring_interval']" position="attributes">
+        <attribute name="attrs">{'invisible':[('recurring_rule_mode','!=','interval')]}</attribute>
+      </xpath>
+      <field name="recurring_interval" position="attributes">
+        <attribute name="attrs">{'invisible':[('recurring_rule_mode','!=','interval')]}</attribute>
+      </field>
+      <field name="recurring_rule_type" position="attributes">
+        <attribute name="attrs">{'invisible':[('recurring_rule_mode','!=','interval')]}</attribute>
+      </field>
+      <field name="is_auto_renew" position="attributes">
+        <attribute name="attrs">{'invisible':True}</attribute>
+      </field>
+      <field name="recurring_invoicing_offset" position="attributes">
+        <attribute name="attrs">{'invisible':True}</attribute>
+      </field>
+    </field>
+  </record>
+</odoo>

@@ -518,7 +518,7 @@ class Selfconsumption(models.Model):
                 service_invoicing_id.contract_line_ids[0].write({"main_line": True})
                 # 4.- mark contract as active
                 with contract_utils(self.env, service_invoicing_id) as component:
-                    component.set_contract_status_active(fields.Date.today())
+                    component.activate(fields.Date.today())
 
     def set_in_activation_state(self):
         for record in self:
@@ -729,7 +729,7 @@ class Selfconsumption(models.Model):
             for contract in contracts:
                 if contract.partner_id.id in inscriptions.mapped("partner_id").ids:
                     with contract_utils(self.env, contract) as component:
-                        component.set_contract_status_closed(fields.Date.today())
+                        component.close(fields.Date.today())
 
     def _setup_selfconsumption_contract_line_description(
         self, distribution_id, contract
@@ -807,14 +807,22 @@ class Selfconsumption(models.Model):
 
     def action_export_csv_inscriptions_wizard(self):
         self.ensure_one()
-        wizard = self.env["export.csv.inscritions.wizard"].with_context({
-            "active_id": self.id,
-        }).create({})
+        wizard = (
+            self.env["export.csv.inscritions.wizard"]
+            .with_context(
+                {
+                    "active_id": self.id,
+                }
+            )
+            .create({})
+        )
         return wizard.exportar_csv()
-    
+
     def action_set_iban_inscriptions(self):
         self.ensure_one()
-        return self.env.ref("energy_selfconsumption.action_set_iban_inscriptions").read()[0]
+        return self.env.ref(
+            "energy_selfconsumption.action_set_iban_inscriptions"
+        ).read()[0]
 
     def action_manager_authorization_report(self):
         self.ensure_one()

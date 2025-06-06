@@ -1,11 +1,6 @@
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
-from odoo.addons.energy_communities.utils import (
-    contract_utils,
-    sale_order_utils,
-)
-
 
 @tagged("-at_install", "post_install", "energy_selfconsumption")
 class TestSeriveInvoicingContractGeneration(TransactionCase):

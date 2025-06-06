@@ -1,6 +1,10 @@
 from datetime import datetime
 
+from dateutil.relativedelta import relativedelta
+
 from odoo import _, api, fields, models
+
+from odoo.addons.energy_communities.utils import contract_utils
 
 from ..utils import (
     _CONTRACT_STATUS_VALUES,
@@ -40,9 +44,6 @@ class ContractContract(models.Model):
         digits="Discount",
         compute="_compute_discount",
         store=False,
-    )
-    last_date_invoiced = fields.Date(
-        string="Last Date Invoiced", compute="_compute_last_date_invoiced", store=False
     )
     pack_type = fields.Selection(related="contract_template_id.pack_type")
     is_free_pack = fields.Boolean(related="contract_template_id.is_free_pack")
@@ -102,18 +103,6 @@ class ContractContract(models.Model):
                         record.successor_contract_id.sale_order_id.service_invoicing_action_description
                     )
 
-    @api.constrains("partner_id", "community_company_id")
-    def _constrain_unique_contract(self):
-        for record in self:
-            if record.community_company_id:
-                existing_contract = (
-                    record._get_existing_same_open_platform_pack_contract()
-                )
-                if existing_contract:
-                    raise_existing_same_open_platform_pack_contract_error(
-                        existing_contract
-                    )
-
     def _compute_received_invoices_count(self):
         for record in self:
             record.received_invoices_count = len(record._get_received_invoices_ids())
@@ -135,15 +124,6 @@ class ContractContract(models.Model):
             if record.contract_line_ids:
                 record.discount = record.contract_line_ids[0].discount
 
-    @api.depends("contract_line_ids")
-    def _compute_last_date_invoiced(self):
-        for record in self:
-            record.last_date_invoiced = None
-            if record.contract_line_ids:
-                record.last_date_invoiced = record.contract_line_ids[
-                    0
-                ].last_date_invoiced
-
     @api.depends("contract_template_id")
     def _compute_pack_id(self):
         for record in self:
@@ -162,11 +142,37 @@ class ContractContract(models.Model):
                 if rel_product:
                     record.pack_id = rel_product.id
 
+    @api.depends(
+        "contract_line_ids.recurring_next_date",
+        "contract_line_ids.is_canceled",
+    )
+    # pylint: disable=missing-return
+    def _compute_recurring_next_date(self):
+        for contract in self:
+            if contract.recurring_rule_mode == "interval":
+                super()._compute_recurring_next_date()
+
+    @api.constrains("partner_id", "community_company_id")
+    def _constrain_unique_contract(self):
+        for record in self:
+            if record.community_company_id:
+                existing_contract = (
+                    record._get_existing_same_open_platform_pack_contract()
+                )
+                if existing_contract:
+                    raise_existing_same_open_platform_pack_contract_error(
+                        existing_contract
+                    )
+
     def _recurring_create_invoice(self, date_ref=False):
         moves = super()._recurring_create_invoice(date_ref)
+        # if invoice has no lines we delete it
         for move in moves:
             if not move.line_ids:
                 move.unlink()
+        # once invoices have been generated we propagate recurrency to contract
+        with contract_utils(self.env, self) as component:
+            component.propagate_recurrency_values_to_contract()
         return moves
 
     def action_activate_contract(self):
