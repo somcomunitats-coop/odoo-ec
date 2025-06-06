@@ -24,88 +24,48 @@ class ContractUtils(Component):
 
     _inherit = "contract.utils"
 
-    def _setup_contract_get_update_dict_initial(self):
-        """
-        Get initial contract update dictionary with self-consumption customizations
-
-        This method extends the base contract setup to handle specific fields
-        related to self-consumption projects and supply points that should not
-        be automatically updated during contract setup.
-
-        Returns:
-            dict: Contract update dictionary with self-consumption fields excluded
-        """
-        try:
-            # Get base contract update dictionary
-            contract_update_dict = super()._setup_contract_get_update_dict_initial()
-
-            # Remove self-consumption specific fields that should not be auto-updated
-            self._remove_selfconsumption_fields(contract_update_dict)
-
-            return contract_update_dict
-
-        except Exception as e:
-            logger.error(f"Error setting up contract update dictionary: {e}")
-            # Return base dictionary as fallback
-            return super()._setup_contract_get_update_dict_initial()
-
-    def _remove_selfconsumption_fields(self, contract_update_dict):
-        """
-        Remove self-consumption specific fields from contract update dictionary
-
-        These fields are managed separately and should not be automatically
-        updated during standard contract setup operations.
-
-        Args:
-            contract_update_dict (dict): Contract update dictionary to modify
-        """
+    def _set_resting_metadata_in_contract(self, metadata_keys_arr):
         # Fields that should not be auto-updated for self-consumption contracts
         fields_to_remove = [
             "selfconsumption_id",  # Self-consumption project reference
             "supply_point_id",  # Supply point reference
         ]
-
         for field in fields_to_remove:
-            if field in contract_update_dict:
-                del contract_update_dict[field]
+            if field in metadata_keys_arr:
+                metadata_keys_arr.remove(field)
                 logger.debug(f"Removed field '{field}' from contract update dictionary")
+        super()._set_resting_metadata_in_contract(metadata_keys_arr)
 
-    # Utility methods for contract management
-    def get_selfconsumption_contract_fields(self):
-        """
-        Get list of fields specific to self-consumption contracts
-
-        Returns:
-            list: List of field names specific to self-consumption contracts
-        """
-        return [
-            "selfconsumption_id",
-            "supply_point_id",
-            "distribution_table_id",
-            "participation_quantity",
-        ]
-
-    def validate_selfconsumption_contract_setup(self, contract):
-        """
-        Validate self-consumption contract setup
-
-        Args:
-            contract: Contract record to validate
-
-        Returns:
-            bool: True if contract setup is valid
-
-        Raises:
-            ValidationError: If contract setup is invalid
-        """
-        if not contract:
-            return False
-
-        # Check if contract has self-consumption project
-        if hasattr(contract, "selfconsumption_id") and contract.selfconsumption_id:
-            logger.info(
-                f"Contract {contract.id} is linked to self-consumption project {contract.selfconsumption_id.id}"
-            )
-            return True
-
-        return False
+    # TODO: Remove all this if we're not going to use it
+    # # Utility methods for contract management
+    # def get_selfconsumption_contract_fields(self):
+    #     """
+    #     Get list of fields specific to self-consumption contracts
+    #     Returns:
+    #         list: List of field names specific to self-consumption contracts
+    #     """
+    #     return [
+    #         "selfconsumption_id",
+    #         "supply_point_id",
+    #         "distribution_table_id",
+    #         "participation_quantity",
+    #     ]
+    # def validate_selfconsumption_contract_setup(self, contract):
+    #     """
+    #     Validate self-consumption contract setup
+    #     Args:
+    #         contract: Contract record to validate
+    #     Returns:
+    #         bool: True if contract setup is valid
+    #     Raises:
+    #         ValidationError: If contract setup is invalid
+    #     """
+    #     if not contract:
+    #         return False
+    #     # Check if contract has self-consumption project
+    #     if hasattr(contract, "selfconsumption_id") and contract.selfconsumption_id:
+    #         logger.info(
+    #             f"Contract {contract.id} is linked to self-consumption project {contract.selfconsumption_id.id}"
+    #         )
+    #         return True
+    #     return False

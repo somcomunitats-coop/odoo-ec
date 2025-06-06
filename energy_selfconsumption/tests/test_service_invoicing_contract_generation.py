@@ -12,20 +12,22 @@ class TestSeriveInvoicingContractGeneration(TransactionCase):
         )
 
     def test_contract_generation_wizard(self):
-        # pack_product = self.env.ref("energy_selfconsumption.product_product_power_acquired_product_pack_template")
-        # pack_product = self.env.ref("energy_selfconsumption.product_product_energy_delivered_product_pack_template")
         pack_product = self.env.ref(
-            "energy_selfconsumption.product_product_energy_custom_product_pack_template"
+            "energy_selfconsumption.product_product_power_acquired_product_pack_template"
         )
+        # pack_product = self.env.ref("energy_selfconsumption.product_product_energy_delivered_product_pack_template")
+        # pack_product = self.env.ref(
+        # "energy_selfconsumption.product_product_energy_custom_product_pack_template"
+        # )
         # WORKFLOW: invoicing mode execution
         invoice_mode_wizard = self.env[
             "energy_selfconsumption.define_invoicing_mode.wizard"
         ].create(
             {
                 "selfconsumption_id": self.selfconsumption.id,
-                # "invoicing_mode": "power_acquired",
+                "invoicing_mode": "power_acquired",
                 # "invoicing_mode": "energy_delivered",
-                "invoicing_mode": "energy_custom",
+                # "invoicing_mode": "energy_custom",
                 "price": 11,
                 "recurring_rule_type": "quarterly",
                 "recurring_interval": 2,

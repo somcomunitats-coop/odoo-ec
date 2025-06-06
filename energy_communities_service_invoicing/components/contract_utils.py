@@ -179,14 +179,20 @@ class ContractUtils(Component):
     def _set_resting_metadata_in_contract(self, metadata_keys_arr):
         fields_to_ignore = list(_RECURRENCY_VALUES.keys()) + ["discount"]
         contract_update_dict = {"status": "paused"}
-        for contract_update_data in self.work.record.sale_order_id.metadata_line_ids:
-            if contract_update_data.key not in fields_to_ignore:
-                value = contract_update_data.value
-                # TODO: Not a very robust condition. Assuming all Many2one fields are defined with _id at the end
-                # TODO: Problems always when type is not text
-                if "_id" in contract_update_data.key:
-                    value = int(contract_update_data.value)
-                contract_update_dict[contract_update_data.key] = value
+        for meta_key in metadata_keys_arr:
+            if meta_key not in fields_to_ignore:
+                metadata_line = (
+                    self.work.record.sale_order_id.metadata_line_ids.filtered(
+                        lambda meta_line: meta_line.key == meta_key
+                    )
+                )
+                if metadata_line:
+                    value = metadata_line.value
+                    # TODO: Not a very robust condition. Assuming all Many2one fields are defined with _id at the end
+                    # TODO: Problems always when type is not text
+                    if "_id" in metadata_line.key:
+                        value = int(metadata_line.value)
+                    contract_update_dict[meta_key] = value
         self.work.record.write(contract_update_dict)
 
     def _recompute_fixed_recurrence_params(self, line):

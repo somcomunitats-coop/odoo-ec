@@ -361,7 +361,7 @@ class ContractGenerationWizard(models.TransientModel):
             contract: Contract to activate
         """
         with contract_utils(self.env, contract) as component:
-            component.set_contract_status_active(self.start_date)
+            component.activate(self.start_date)
 
     def _activate_project_and_distribution(self):
         """
