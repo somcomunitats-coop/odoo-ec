@@ -10,7 +10,6 @@ Main scheduled tasks:
 - Energy delivered custom invoicing reminders (daily)
 - Energy delivered invoicing reminders (daily)
 - Power acquired invoicing reminders (daily)
-- Contract update for service invoicing (inactive by default)
 
 All tasks run daily and send email reminders to administrators for
 timely billing and project management.
@@ -59,18 +58,5 @@ timely billing and project management.
             <field name="nextcall">2023-12-01 06:00:00</field>
         </record>
 
-        <!-- ========================================== -->
-        <!-- MAINTENANCE CRON JOBS                     -->
-        <!-- ========================================== -->
-        
-        <!-- Cron Job: Update Old Contracts to Service Invoicing (Inactive) -->
-        <record id="update_old_contract_to_service_invoicing_to_admin" model="ir.cron">
-            <field name="name">Update old contract to service invoicing</field>
-            <field name="model_id" ref="energy_communities_service_invoicing.model_energy_communities_service_invoicing_action_create"/>
-            <field name="code">model.sudo().update_supply_point_assignation_on_selfconsumption_contracts()</field>
-            <field name="user_id" ref="base.user_root" />
-            <field name="active" eval="False" />
-        </record>
-        
     </data>
 </odoo>
