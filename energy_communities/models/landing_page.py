@@ -86,12 +86,6 @@ class LandingPage(models.Model):
         required=True,
         string="Community secondary type",
     )
-    community_status = fields.Selection(
-        selection=_CE_MEMBER_STATUS_VALUES,
-        default="open",
-        required=True,
-        string="Community status",
-    )
     publicdata_lastupdate_datetime = fields.Datetime(
         string="Last wordpress/map update date"
     )
@@ -236,7 +230,6 @@ class LandingPage(models.Model):
                     lang=self.env.context["lang"],
                     mods="energy_communities",
                 ),
-                "community_status": self.community_status,
                 "allow_new_members": self.allow_new_members,
                 "number_of_members": self.number_of_members,
                 "external_website_link": self.external_website_link or "",

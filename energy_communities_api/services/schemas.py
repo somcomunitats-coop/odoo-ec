@@ -23,7 +23,6 @@ S_LANDING_PAGE_GET_RETURN = {
             "community_type": {"type": "string"},
             "community_secondary_type": {"type": "string"},
             "legal_form": {"type": "string"},
-            "community_status": {"type": "string"},
             "allow_new_members": {"type": "boolean"},
             "number_of_members": {"type": "integer"},
             "external_website_link": {"type": "string"},

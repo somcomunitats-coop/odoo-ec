@@ -281,7 +281,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 "number_of_members": self.ce_number_of_members,
                 "community_type": self.landing_community_type,
                 "community_secondary_type": self.legal_form,
-                "community_status": self.ce_member_status,
                 "external_website_link": self.website,
                 "primary_image_file": self.landing_primary_image_file,
                 "secondary_image_file": self.landing_secondary_image_file,
