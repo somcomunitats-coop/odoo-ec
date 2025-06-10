@@ -51,6 +51,15 @@ class TestSelfconsumptionServiceInvoicing(TransactionCase):
         self._project_contract_generation_case(_TESTING_CASES["energy_custom"])
 
     # TODO: test_project_distribution_table_change_case_xy()
+    # def test_project_distribution_table_change_case_1(self):
+    #     self._project_distribution_table_change_case(_TESTING_CASES["power_acquired"])
+    # def _project_distribution_table_change_case(self, case):
+    #     self._workflow_project_invoicing_mode_definition(case.invoicing_mode)
+    #     self._workflow_project_contract_generation()
+    #     self._workflow_change_inscriptions()
+    #     self._workflow_change_distribution_table()
+    #     self._assert_project_contract_data() # Reuse assertions from first creation but on new contracts
+    #     self._assert_project_contracts_data_consistency_between_old_and_new() # Check recurrence dates match between new and old
 
     def _project_invoicing_mode_definition_case(self, case):
         # WORKFLOW: invoicing mode execution
@@ -62,7 +71,7 @@ class TestSelfconsumptionServiceInvoicing(TransactionCase):
         self._assert_project_invoicing_mode_data(
             invoice_mode_wizard, self.env.ref(case.pack_product_ref)
         )
-        # TODO: Assert Dates Match properly with expected
+        # TODO: Assert Dates Match properly with expected??
 
     def _project_contract_generation_case(self, case):
         # WORKFLOW: invoicing mode execution and contract generation
