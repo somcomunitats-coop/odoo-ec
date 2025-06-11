@@ -72,8 +72,14 @@ class CrmLead(models.Model):
     @api.depends("company_id")
     def _compute_team_id(self):
         for record in self:
-            team = self.env["crm.team"].get_create_default_sale_team(record.company_id)
-            record.team_id = team.id
+            if (
+                not record.team_id
+                or record.team_id.company_id.id != record.company_id.id
+            ):
+                team = self.env["crm.team"].get_create_default_sale_team(
+                    record.company_id
+                )
+                record.team_id = team.id
 
     def _get_default_community_wizard(self):
         self.ensure_one()
