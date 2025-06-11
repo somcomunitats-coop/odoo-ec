@@ -104,9 +104,7 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
                         str(self.coordinator_company.id)
                     )
                 ).id,
-                "product_share_template": self.env.ref(
-                    "energy_communities_cooperator.coordinator_company_1_share_type_demo"
-                ).id,
+                "product_share_template": False,
                 "create_user": False,
                 "create_landing": True,
                 "create_place": True,
