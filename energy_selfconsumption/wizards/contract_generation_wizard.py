@@ -46,6 +46,28 @@ class ContractGenerationWizard(models.TransientModel):
             raise ValidationError(
                 _("There is no distribution table in proces of activation.")
             )
+        # If payment mode is not "04" - "Transfer"
+        if self.payment_mode.facturae_code not in ["04"]:
+            for (
+                supply_point_assignation
+            ) in distribution_id.supply_point_assignation_ids:
+                inscription_id = (
+                    self.selfconsumption_id.inscription_ids.filtered_domain(
+                        [
+                            (
+                                "partner_id",
+                                "=",
+                                supply_point_assignation.supply_point_id.partner_id.id,
+                            )
+                        ]
+                    )
+                )
+                if not inscription_id.mandate_id:
+                    raise ValidationError(
+                        _("Mandate not found for {partner}").format(
+                            partner=supply_point_assignation.supply_point_id.partner_id.name
+                        )
+                    )
         # Iterate trough sale orders and:
         for sale_order in self._get_impacted_sale_orders():
             # 1.-confirm sale order
