@@ -110,12 +110,6 @@ class ContractGenerationWizard(models.TransientModel):
                 ]
             )
 
-            if not inscription_id.mandate_id:
-                raise ValidationError(
-                    _("Mandate not found for {partner}").format(
-                        partner=supply_point_assignation.supply_point_id.partner_id.name
-                    )
-                )
             with sale_order_utils(self.env) as component:
                 so_metadata = {
                     "selfconsumption_id": self.selfconsumption_id.id,
