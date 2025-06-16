@@ -40,3 +40,5 @@ from .selfconsumption_project import (
 )
 
 from .network_info import NetworkInfo, NetworkInfoResponse
+
+from .invoice import InvoiceInfo, InvoiceInfoListResponse
