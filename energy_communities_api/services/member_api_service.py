@@ -15,6 +15,8 @@ from ..schemas import (
     CommunityServiceMetricsInfoListResponse,
     CommunityServiceMetricsInfoResponse,
     EnergyPoint,
+    InvoiceInfo,
+    InvoiceInfoListResponse,
     MemberInfo,
     MemberInfoResponse,
     ProjectEnergyConsumedInfoListResponse,
@@ -343,4 +345,21 @@ class MemberApiService(Component):
             daily_selfconsumption,
             len(daily_selfconsumption),
             paging,
+        )
+
+    @restapi.method(
+        [(["/invoices"], "GET")],
+        output_param=PydanticModel(InvoiceInfoListResponse),
+    )
+    def invoices(self):
+        with api_info(self.env, self._work_on_model, InvoiceInfo) as component:
+            total_member_invoices = component.get_total_member_invoices(
+                self.env.user.partner_id
+            )
+            member_invoices = component.get_member_invoices(self.env.user.partner_id)
+        return list_response(
+            request,
+            InvoiceInfoListResponse,
+            member_invoices,
+            total_member_invoices,
         )

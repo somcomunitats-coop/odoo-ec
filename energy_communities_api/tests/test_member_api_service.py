@@ -631,3 +631,25 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and the selfconsumed energy
         response = response.json()
         self.assertGreaterEqual(response["count"], 1)
+
+    def test__me_invoices_list_endpoint__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = self.community_id
+        # when we call for the list of invoices of that member
+        url = "/api/energy-communities/me/invoices"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and all invoices that belongs to that member
+        response = response.json()
+        self.assertGreaterEqual(response["count"], 1)
