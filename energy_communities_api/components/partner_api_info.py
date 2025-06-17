@@ -8,6 +8,7 @@ from ..schemas import (
     CommunityInfo,
     CommunityServiceInfo,
     CommunityServiceMetricsInfo,
+    InvoiceInfo,
     MemberInfo,
 )
 
@@ -136,7 +137,26 @@ class PartnerApiInfo(Component):
 
     def get_total_member_invoices(self, partner: Partner) -> int:
         domain = self._member_invoices(partner)
-        return self.env["account.move"].search_count(domain)
+        return (
+            self.env["account.move"]
+            .search_count(domain)
+            .filtered(lambda record: record.company_id == partner.company_id)
+        )
+
+    def get_member_invoices(self, partner: Partner) -> List[InvoiceInfo]:
+        invoices = self._get_invoices(partner)
+        return [
+            InvoiceInfo(
+                id=invoice.id,
+                number=invoice.display_name,
+                service_type="other",
+                state=invoice.payment_state_for_api,
+                amount_total=invoice.amount_total,
+                date=str(invoice.date),
+                pdf_url="https://localhost.bar",
+            )
+            for invoice in invoices
+        ]
 
     def _get_communities(self, partner: Partner):
         domain = self._communities_domain(partner)
@@ -152,4 +172,12 @@ class PartnerApiInfo(Component):
             self.env["cooperative.membership"]
             .search(domain)
             .mapped(lambda record: record.company_id)
+        )
+
+    def _get_invoices(self, partner: Partner):
+        domain = self._member_invoices(partner)
+        return (
+            self.env["account.move"]
+            .search(domain)
+            .filtered(lambda record: record.company_id == partner.company_id)
         )

@@ -9,6 +9,7 @@ from ...schemas import (
     CommunityInfo,
     CommunityServiceInfo,
     CommunityServiceMetricsInfo,
+    InvoiceInfo,
     MemberInfo,
     PaginationLimits,
 )
@@ -201,5 +202,27 @@ class TestMemberApiInfo(TransactionComponentCase):
         # when we ask for the number of invoices of that member
         total_invoices = api_info_component.get_total_member_invoices(member)
 
-        # then we obtain the corresponding community service
+        # then the number of total invoices
         self.assertGreater(total_invoices, 0)
+
+    def test__get_member_invoices(self):
+        # given a energy community member
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
+        # given a api info component
+        work = WorkContext(
+            "res.partner",
+            collection=self.backend,
+            schema_class=CommunityServiceInfo,
+            community_id=member.company_id,
+        )
+        api_info_component = work.component(usage="api.info")
+        self.assertIsInstance(api_info_component, PartnerApiInfo)
+
+        # when we ask for all invoices of that member
+        member_invoices = api_info_component.get_member_invoices(member)
+
+        # then we obtain all invoices for that member
+        self.assertGreater(len(member_invoices), 0)
+        for invoice in member_invoices:
+            self.assertIsInstance(invoice, InvoiceInfo)

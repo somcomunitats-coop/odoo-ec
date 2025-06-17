@@ -7,7 +7,8 @@ from odoo.addons.account.models.account_move import PAYMENT_STATE_SELECTION
 from .base import BaseResponse, NaiveOrmModel, PaginationLinks
 
 PaymentState = Enum(
-    "PaymentState", ((state.upper(), state) for state, _ in PAYMENT_STATE_SELECTION)
+    "PaymentState",
+    ((state.upper(), state) for state, _ in PAYMENT_STATE_SELECTION + [("draft", "_")]),
 )
 
 InvoiceType = Enum(
