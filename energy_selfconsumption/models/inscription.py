@@ -46,12 +46,7 @@ class Inscription(models.Model):
         selection=STATE_VALUES,
         default="inactive",
     )
-    accept = fields.Boolean(
-        string="I accept and authorize being able to issue payments"
-        " to this bank account as part of participation in "
-        "this shared self-consumption project of my energy "
-        "community"
-    )
+    accept = fields.Boolean(string="I accept bank wire transfer")
     member = fields.Boolean(string="Member/Non-Member")
     supply_point_id = fields.Many2one(
         "energy_selfconsumption.supply_point", required=True
