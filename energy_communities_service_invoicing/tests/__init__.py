@@ -1,2 +1,3 @@
 from . import test_service_invoicing_components
 from . import test_service_invoicing_recurrency
+from . import test_subscription_payment_with_recurring_fee
