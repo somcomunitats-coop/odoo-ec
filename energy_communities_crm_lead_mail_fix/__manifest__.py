@@ -1,6 +1,6 @@
 {
     "name": "Energy communities CRM Lead Mail Body Fix",
-    "version": "16.0.1.0.0",
+    "version": "16.0.0.1.0",
     "category": "Sales/CRM",
     "summary": "Fix missing email body in CRM leads created from emails without existing partners",
     "description": """
