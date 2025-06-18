@@ -1,4 +1,4 @@
-# Energy Communities CRM
+# Energy communities CRM Lead Mail Body Fix
 
 <add description>
 
