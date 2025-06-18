@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Partner Tag for auto-created partners from CRM Lead emails -->
+        <record id="partner_tag_from_crm_lead" model="res.partner.category">
+            <field name="name">From CRM Lead creation</field>
+            <field name="color">4</field>
+            <field name="active">True</field>
+        </record>
+        
+    </data>
+</odoo> 
