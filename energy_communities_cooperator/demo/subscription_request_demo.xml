@@ -380,8 +380,8 @@
     />
     <field
       name="share_product_id"
-      model="account.multicompany.easy.creation.wiz"
-      eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      model="product.template"
+      eval="obj(ref('cooperator.product_template_share_type_2_demo')).product_variant_id.id"
     />
     <field name="type">new</field>
     <field name="lang">es_ES</field>
@@ -418,8 +418,8 @@
     />
     <field
       name="share_product_id"
-      model="account.multicompany.easy.creation.wiz"
-      eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      model="product.template"
+      eval="obj(ref('cooperator.product_template_share_type_2_demo')).product_variant_id.id"
     />
     <field name="type">new</field>
     <field name="lang">es_ES</field>
@@ -456,8 +456,8 @@
     />
     <field
       name="share_product_id"
-      model="account.multicompany.easy.creation.wiz"
-      eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      model="product.template"
+      eval="obj(ref('cooperator.product_template_share_type_2_demo')).product_variant_id.id"
     />
     <field name="type">new</field>
     <field name="lang">es_ES</field>
@@ -494,8 +494,8 @@
     />
     <field
       name="share_product_id"
-      model="account.multicompany.easy.creation.wiz"
-      eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      model="product.template"
+      eval="obj(ref('cooperator.product_template_share_type_2_demo')).product_variant_id.id"
     />
     <field name="type">new</field>
     <field name="lang">es_ES</field>
@@ -526,8 +526,8 @@
     />
     <field
       name="share_product_id"
-      model="account.multicompany.easy.creation.wiz"
-      eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_product_share_template.product_variant_id.id"
+      model="product.template"
+      eval="obj(ref('cooperator.product_template_share_type_2_demo')).product_variant_id.id"
     />
     <field name="type">new</field>
     <field name="lang">es_ES</field>
