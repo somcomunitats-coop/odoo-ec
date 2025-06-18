@@ -71,6 +71,52 @@ class CreateDistributionTable(models.AbstractModel):
                 distribution_table, "Unexpected Error", str(e)
             )
             return False
+        
+    def create_energy_selfconsumption_supply_point_assignation(
+        self, values_list, distribution_table
+    ):
+        """
+        Create supply point assignations using bulk SQL insert
+
+        This method performs bulk insertion of supply point assignations
+        for improved performance when dealing with large datasets.
+
+        Args:
+            values_list (list): List of dictionaries containing assignation data
+            distribution_table: Distribution table record to assign points to
+
+        Returns:
+            bool: True if successful, False if errors occurred
+        """
+        if not values_list:
+            _logger.warning("No values provided for supply point assignation creation")
+            return False
+
+        if not distribution_table:
+            _logger.error("Distribution table is required for assignation creation")
+            return False
+
+        try:
+            self._validate_assignation_values(values_list)
+            success = self._create_energy_selfconsumption_supply_point_assignation(values_list, distribution_table)
+
+            if success:
+                self._send_success_notification(distribution_table, len(values_list))
+
+            return success
+
+        except ValidationError as e:
+            _logger.error(f"Validation error in assignation creation: {e}")
+            self._send_error_notification(
+                distribution_table, "Validation Error", str(e)
+            )
+            return False
+        except Exception as e:
+            _logger.error(f"Unexpected error in assignation creation: {e}")
+            self._send_error_notification(
+                distribution_table, "Unexpected Error", str(e)
+            )
+            return False
 
     def _validate_assignation_values(self, values_list):
         """
@@ -207,6 +253,31 @@ class CreateDistributionTable(models.AbstractModel):
                 f"Query: {query}\nError: {str(e)}",
             )
             return False
+        
+    def _create_energy_selfconsumption_supply_point_assignation(self, values_list, distribution_table):
+        """
+        Create supply point assignations using bulk SQL insert
+
+        Args:
+            values_list (list): Validated assignation values
+            distribution_table: Distribution table record
+
+        Returns:
+            bool: True if successful, False otherwise
+        """
+        try:
+            for values in values_list:
+                self.env["energy_selfconsumption.supply_point_assignation"].create({
+                    "distribution_table_id": distribution_table.id,
+                    "supply_point_id": values["supply_point_id"],
+                    "coefficient": float(values["coefficient"]),
+                    "energy_shares": float(values["energy_shares"]),
+                    "company_id": values["company_id"],
+                })
+            return True
+        except Exception as e:
+            _logger.error(f"Error creating supply point assignations: {e}")
+            return False
 
     def _contains_null_values(self, data_batch):
         """
@@ -316,7 +387,7 @@ class CreateDistributionTable(models.AbstractModel):
             )
 
             # Create assignations
-            success = self.create_energy_selfconsumption_supply_point_assignation_sql(
+            success = self.create_energy_selfconsumption_supply_point_assignation(
                 assignation_data, distribution_table
             )
 

@@ -1,6 +1,7 @@
 import base64
 import logging
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 from io import StringIO
 
 import chardet
@@ -547,7 +548,7 @@ class Selfconsumption(models.Model):
                         self.env, existing_closed_contract
                     ) as component:
                         service_invoicing_id = component.reopen(
-                            fields.Date.today(),
+                            self.initial_last_date_invoiced + relativedelta(days=+1),
                             self.pricelist_id,
                             pack,
                             False,
@@ -703,6 +704,9 @@ class Selfconsumption(models.Model):
     # TODO: Review if we need to use all contracts or only the active ones when this method is used
     def get_contracts(self):
         return self.env["contract.contract"].search([("project_id", "=", self.id)])
+    
+    def get_active_contracts(self):
+        return self.env["contract.contract"].search([("project_id", "=", self.id), ("status", "=", "in_progress")])
 
     def get_contracts_view(self):
         self.ensure_one()

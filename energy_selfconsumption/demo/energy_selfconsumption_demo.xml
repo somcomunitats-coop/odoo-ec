@@ -143,7 +143,7 @@ Main demo data includes:
     </record>
 
     <!-- Inscription 5: Fifth cooperator -->
-    <record id="inscription_5_selfconsumption_1_demo" model="energy_project.inscription">
+    <!-- <record id="inscription_5_selfconsumption_1_demo" model="energy_project.inscription">
         <field name="project_id" 
                model="energy_selfconsumption.selfconsumption"
                eval="obj(ref('selfconsumption_1_community_1_demo')).project_id" />
@@ -157,7 +157,7 @@ Main demo data includes:
         <field name="mandate_id" 
                model="subscription.request"
                search="[('partner_id', '=', obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).partner_id.id)]" />
-    </record>
+    </record> -->
 
     <!-- ========================================== -->
     <!-- SUPPLY POINTS                             -->
@@ -200,6 +200,7 @@ Main demo data includes:
         <field model="energy_selfconsumptions.participation"
                name="participation_id"
                search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]" />
+        <field name="participation_assigned_quantity" eval="0.5" />
         <field name="accept" eval="True" />
         <field name="member" eval="True" />
         <field name="supply_point_id" ref="supply_point_1_selfconsumption_1_demo" />
@@ -242,6 +243,7 @@ Main demo data includes:
         <field model="energy_selfconsumptions.participation"
                name="participation_id"
                search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]" />
+        <field name="participation_assigned_quantity" eval="0.5" />
         <field name="accept" eval="True" />
         <field name="member" eval="True" />
         <field name="supply_point_id" ref="supply_point_2_selfconsumption_1_demo" />
@@ -284,6 +286,7 @@ Main demo data includes:
         <field model="energy_selfconsumptions.participation"
                name="participation_id"
                search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]" />
+        <field name="participation_assigned_quantity" eval="0.5" />
         <field name="accept" eval="True" />
         <field name="member" eval="True" />
         <field name="supply_point_id" ref="supply_point_3_selfconsumption_1_demo" />
@@ -325,7 +328,8 @@ Main demo data includes:
         <field name="annual_electricity_use">1.00</field>
         <field model="energy_selfconsumptions.participation"
                name="participation_id"
-               search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]" />
+               search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',1.0)]" />
+        <field name="participation_assigned_quantity" eval="1.0" />
         <field name="accept" eval="True" />
         <field name="member" eval="True" />
         <field name="supply_point_id" ref="supply_point_4_selfconsumption_1_demo" />
@@ -357,7 +361,7 @@ Main demo data includes:
     </record>
 
     <!-- Self-consumption Inscription 5: Link inscription to supply point -->
-    <record id="inscription_selfconsumption_5_selfconsumption_1_demo" model="energy_selfconsumption.inscription_selfconsumption">
+    <!-- <record id="inscription_selfconsumption_5_selfconsumption_1_demo" model="energy_selfconsumption.inscription_selfconsumption">
         <field name="selfconsumption_project_id" 
                eval="ref('selfconsumption_1_community_1_demo')" 
                model="energy_selfconsumption.selfconsumption" />
@@ -371,7 +375,7 @@ Main demo data includes:
         <field name="accept" eval="True" />
         <field name="member" eval="True" />
         <field name="supply_point_id" ref="supply_point_5_selfconsumption_1_demo" />
-    </record>
+    </record> -->
 
     <!-- ========================================== -->
     <!-- DISTRIBUTION TABLE AND ASSIGNATIONS       -->
@@ -422,21 +426,21 @@ Main demo data includes:
     <record id="supply_point_assignation_4_distribution_table_1_demo" model="energy_selfconsumption.supply_point_assignation">
         <field name="distribution_table_id" ref="distribution_table_1_selfconsumption_1_demo" />
         <field name="supply_point_id" ref="supply_point_4_selfconsumption_1_demo" />
-        <field name="coefficient">0.098</field>
+        <field name="coefficient">0.655</field>
         <field name="company_id" 
                eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
                model="energy_selfconsumption.distribution_table" />
     </record>
 
     <!-- Supply Point Assignation 5: Casa Marc Ortiz (55.7% coefficient) -->
-    <record id="supply_point_assignation_5_distribution_table_1_demo" model="energy_selfconsumption.supply_point_assignation">
+    <!-- <record id="supply_point_assignation_5_distribution_table_1_demo" model="energy_selfconsumption.supply_point_assignation">
         <field name="distribution_table_id" ref="distribution_table_1_selfconsumption_1_demo" />
         <field name="supply_point_id" ref="supply_point_5_selfconsumption_1_demo" />
         <field name="coefficient">0.557</field>
         <field name="company_id" 
                eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
                model="energy_selfconsumption.distribution_table" />
-    </record>
+    </record> -->
 
     <!-- ========================================== -->
     <!-- WORKFLOW AUTOMATION                       -->

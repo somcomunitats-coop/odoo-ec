@@ -336,9 +336,14 @@ class CreateDistributionTableWizard(models.TransientModel):
             assignation_values.append(values)
 
         # Use bulk creation service
+        # self.env[
+        #     "energy_selfconsumption.create_distribution_table"
+        # ].create_energy_selfconsumption_supply_point_assignation_sql(
+        #     assignation_values, distribution_table
+        # )
         self.env[
             "energy_selfconsumption.create_distribution_table"
-        ].create_energy_selfconsumption_supply_point_assignation_sql(
+        ].create_energy_selfconsumption_supply_point_assignation(
             assignation_values, distribution_table
         )
 
