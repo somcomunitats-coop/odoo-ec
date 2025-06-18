@@ -2083,7 +2083,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__accept
 #, python-format
 msgid ""
 "I accept and authorize being able to issue payments to this bank account as "
@@ -2093,6 +2092,13 @@ msgstr ""
 "Accepto i autorizo ​​poder emetre pagaments a aquest compte bancari com a "
 "part de la participació en aquest projecte d'autoconsum compartit de la meva"
 " comunitat energètica"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__accept
+#, python-format
+msgid "I accept bank wire transfer"
+msgstr "Accepto transferència bancària"
 
 #. module: energy_selfconsumption
 #. odoo-python
