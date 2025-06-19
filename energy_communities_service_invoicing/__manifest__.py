@@ -18,7 +18,6 @@
         "sale_order_metadata",
         "sales_team",
         "purchase",
-        "product",
         "product_contract",
         "contract_variable_quantity",
         "energy_communities",
@@ -39,16 +38,22 @@
         "views/contract_template_line_views.xml",
         "views/contract_template_views.xml",
         "views/contract_views.xml",
+        "views/cooperative_membership_views.xml",
         "views/product_category_views.xml",
         "views/res_company_views.xml",
         "views/res_partner_views.xml",
         "views/sale_order_views.xml",
         "views/service_invoicing_views.xml",
+        "views/service_invoicing_views.xml",
+        "views/subscription_request_views.xml",
         "wizards/service_invoicing_action.xml",
         "wizards/service_invoicing_action_create.xml",
         "views/menus.xml",
     ],
     "post_init_hook": "post_setup_intercompany_invoicing_config",
     # only loaded in demonstration mode
-    "demo": ["demo/product_template_demo.xml"],
+    "demo": [
+        "demo/product_template_demo.xml",
+        # "demo/subscription_request_demo.xml"
+    ],
 }

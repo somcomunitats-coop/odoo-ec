@@ -107,6 +107,7 @@ class ResCompany(models.Model):
     community_energy_action_ids = fields.One2many(
         "community.energy.action", "company_id", string="Community energy actions"
     )
+    pricelist_id = fields.Many2one("product.pricelist", string="Company Tariffs")
 
     # COMPUTED FIELDS
     def _compute_website_id(self):

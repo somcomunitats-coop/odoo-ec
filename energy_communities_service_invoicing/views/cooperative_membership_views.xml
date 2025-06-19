@@ -1,0 +1,12 @@
+<odoo>
+  <record model="ir.ui.view" id="cooperative_membership_form">
+    <field name="name">cooperative.membership.form (from service_invoicing)</field>
+    <field name="model">cooperative.membership</field>
+    <field name="inherit_id" ref="energy_communities_cooperator.cooperative_membership_form" />
+    <field name="arch" type="xml">
+      <field name="effective_date" position="after">
+        <field name="service_invoicing_id" />
+      </field>
+    </field>
+  </record>
+</odoo>

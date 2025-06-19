@@ -1,0 +1,19 @@
+<odoo>
+  <function
+    name="validate_subscription_request_with_company"
+    model="subscription.request"
+    eval="[ref('energy_communities_cooperator.subscription_1_community_2_demo')]"
+  />
+
+  <function
+    name="validate_subscription_request_with_company"
+    model="subscription.request"
+    eval="[ref('energy_communities_cooperator.subscription_2_community_2_demo')]"
+  />
+
+  <function
+    name="validate_subscription_request_with_company"
+    model="subscription.request"
+    eval="[ref('energy_communities_cooperator.subscription_3_community_2_demo')]"
+  />
+</odoo>

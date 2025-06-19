@@ -29,6 +29,7 @@
         "metadata",
         "partner_firstname",
         "partner_multi_company",
+        "product",
         "purchase",
         "queue_job",
         "sale_management",
