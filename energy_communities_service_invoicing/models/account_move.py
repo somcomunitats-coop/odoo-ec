@@ -1,4 +1,13 @@
+from datetime import date, datetime
+
+from dateutil.relativedelta import relativedelta
+
 from odoo import api, fields, models
+
+from odoo.addons.energy_communities.utils import (
+    contract_utils,
+    sale_order_utils,
+)
 
 from ..utils import PACK_VALUES
 
@@ -52,7 +61,6 @@ class AccountMove(models.Model):
     def custom_compute_pack_type(self):
         self._set_custom_pack_type_on_invoice()
 
-    # Inter Company:
     # define configuration journal
     def _prepare_invoice_data(self, dest_company):
         inv_data = super()._prepare_invoice_data(dest_company)
@@ -66,6 +74,41 @@ class AccountMove(models.Model):
                 if purchase_journal_id:
                     inv_data["journal_id"] = purchase_journal_id.id
         return inv_data
+
+    def post_process_confirm_paid(self, effective_date):
+        super().post_process_confirm_paid(effective_date)
+        if self.subscription_request:
+            subscriptions_sale_order = (
+                self.subscription_request.service_invoicing_sale_order_id
+            )
+            if subscriptions_sale_order:
+                # confirm sale order
+                with sale_order_utils(self.env, subscriptions_sale_order) as component:
+                    new_contract = component.confirm()
+                # activate contract
+                with contract_utils(self.env, new_contract) as component:
+                    activation_date = self.payment_date
+                    # Note: On contract activation when invoice payment we assume first iteration of contract is payed with the invoice
+                    # So, recurring_next_date must be based on this assumption.
+                    # On fixed yearly basis we add 1 day in order to move invoicing date one year.
+                    if (
+                        component.work.record.recurring_rule_mode == "fixed"
+                        and activation_date
+                        == date(
+                            datetime.now().year,
+                            int(component.work.record.fixed_invoicing_month),
+                            int(component.work.record.fixed_invoicing_day),
+                        )
+                    ):
+                        activation_date = activation_date + relativedelta(days=+1)
+                    component.activate(activation_date)
+                # link contract to partners membership
+                related_membership = self.partner_id.get_partner_membership_for_company(
+                    self.company_id
+                )
+                if related_membership:
+                    related_membership.write({"service_invoicing_id": new_contract.id})
+        return True
 
 
 class AccountMoveLine(models.Model):

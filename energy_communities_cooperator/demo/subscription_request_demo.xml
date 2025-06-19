@@ -388,12 +388,6 @@
     <field name="state">draft</field>
   </record>
 
-  <function
-    name="validate_subscription_request_with_company"
-    model="subscription.request"
-    eval="[ref('subscription_1_community_2_demo')]"
-  />
-
   <record id="subscription_2_community_2_demo" model="subscription.request">
     <field name="firstname">Benjamí</field>
     <field name="lastname">Tórrez Loera</field>
@@ -426,12 +420,6 @@
     <field name="state">draft</field>
   </record>
 
-  <function
-    name="validate_subscription_request_with_company"
-    model="subscription.request"
-    eval="[ref('subscription_2_community_2_demo')]"
-  />
-
   <record id="subscription_3_community_2_demo" model="subscription.request">
     <field name="firstname">Marta</field>
     <field name="lastname">Saavedra Negrón</field>
@@ -463,12 +451,6 @@
     <field name="lang">es_ES</field>
     <field name="state">draft</field>
   </record>
-
-  <function
-    name="validate_subscription_request_with_company"
-    model="subscription.request"
-    eval="[ref('subscription_3_community_2_demo')]"
-  />
 
   <record id="subscription_4_community_2_demo" model="subscription.request">
     <field name="firstname">Sandra</field>

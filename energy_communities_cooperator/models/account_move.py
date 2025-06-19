@@ -20,6 +20,7 @@ class AccountMove(models.Model):
     def post_process_confirm_paid(self, effective_date):
         if not self.membership_id:
             self.set_cooperator_effective(effective_date)
+        return True
 
     def set_cooperator_effective(self, effective_date):
         super().set_cooperator_effective(effective_date)
