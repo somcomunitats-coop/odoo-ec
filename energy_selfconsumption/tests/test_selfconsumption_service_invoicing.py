@@ -4,7 +4,9 @@ from datetime import datetime
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
-from odoo.addons.energy_communities_service_invoicing.tests.service_invoicing_testing_contract_creator import ServiceInvoicingTestingContractCreator
+from odoo.addons.energy_communities_service_invoicing.tests.service_invoicing_testing_contract_creator import (
+    ServiceInvoicingTestingContractCreator,
+)
 
 SelfconsumptionTestingCase = namedtuple(
     "SelfconsumptionTestingCase", ["pack_product_ref", "invoicing_mode"]
@@ -27,7 +29,9 @@ _TESTING_CASES = {
 
 
 @tagged("-at_install", "post_install", "energy_selfconsumption")
-class TestSelfconsumptionServiceInvoicing(TransactionCase, ServiceInvoicingTestingContractCreator):
+class TestSelfconsumptionServiceInvoicing(
+    TransactionCase, ServiceInvoicingTestingContractCreator
+):
     def setUp(self):
         super().setUp()
         self.maxDiff = None
@@ -46,10 +50,9 @@ class TestSelfconsumptionServiceInvoicing(TransactionCase, ServiceInvoicingTesti
         self.subscription_5_supply_point_5 = self.env.ref(
             "energy_selfconsumption.supply_point_5_selfconsumption_1_demo"
         )
-        self.selfconsumption_participation_1 = self.env["energy_selfconsumptions.participation"].search([
-            ("project_id", "=", self.selfconsumption.id),
-            ("quantity", "=", 0.5)
-        ])
+        self.selfconsumption_participation_1 = self.env[
+            "energy_selfconsumptions.participation"
+        ].search([("project_id", "=", self.selfconsumption.id), ("quantity", "=", 0.5)])
 
     def test_project_invoicing_mode_definition_case_1(self):
         self._project_invoicing_mode_definition_case(_TESTING_CASES["power_acquired"])
@@ -72,14 +75,13 @@ class TestSelfconsumptionServiceInvoicing(TransactionCase, ServiceInvoicingTesti
     def test_project_distribution_table_change_case_1(self):
         self._project_distribution_table_change_case(_TESTING_CASES["power_acquired"])
 
-    # def test_project_distribution_table_change_case_2(self):
-    #     self._project_distribution_table_change_case(_TESTING_CASES["energy_delivered"])
+    def test_project_distribution_table_change_case_2(self):
+        self._project_distribution_table_change_case(_TESTING_CASES["energy_delivered"])
 
-    # def test_project_distribution_table_change_case_3(self):
-    #     self._project_distribution_table_change_case(_TESTING_CASES["energy_custom"])
+    def test_project_distribution_table_change_case_3(self):
+        self._project_distribution_table_change_case(_TESTING_CASES["energy_custom"])
 
     def _project_distribution_table_change_case(self, case):
-        self.assertEqual(case.invoicing_mode, "power_acquired")
         self._workflow_project_invoicing_mode_definition(case.invoicing_mode)
         self._workflow_project_contract_generation()
         self._workflow_change_inscriptions()
@@ -94,7 +96,9 @@ class TestSelfconsumptionServiceInvoicing(TransactionCase, ServiceInvoicingTesti
         self._workflow_change_distribution_table()
         self._assert_project_contract_data()
         self.selfconsumption.set_new_distribution_table()
-        self._assert_project_contracts_data_consistency_between_old_and_new(dict_contracts)
+        self._assert_project_contracts_data_consistency_between_old_and_new(
+            dict_contracts
+        )
 
     def _project_invoicing_mode_definition_case(self, case):
         # WORKFLOW: invoicing mode execution
@@ -148,11 +152,15 @@ class TestSelfconsumptionServiceInvoicing(TransactionCase, ServiceInvoicingTesti
         )
         contract_create_wizard.action_generate_contracts()
         return contract_create_wizard
-    
-    def _workflow_change_inscriptions(self):        
+
+    def _workflow_change_inscriptions(self):
         # New inscriptions
-        mandate = self.env["account.banking.mandate"].search([("partner_id", "in", [self.subscription_5_inscription_5.partner_id.id])])
-        self.inscription_5_new = self.env["energy_selfconsumption.inscription_selfconsumption"].create(
+        mandate = self.env["account.banking.mandate"].search(
+            [("partner_id", "in", [self.subscription_5_inscription_5.partner_id.id])]
+        )
+        self.inscription_5_new = self.env[
+            "energy_selfconsumption.inscription_selfconsumption"
+        ].create(
             {
                 "project_id": self.selfconsumption.project_id.id,
                 "effective_date": datetime.today(),
@@ -167,60 +175,57 @@ class TestSelfconsumptionServiceInvoicing(TransactionCase, ServiceInvoicingTesti
                 "supply_point_id": self.subscription_5_supply_point_5.id,
             }
         )
-        self.inscription_5_new.write({
-            "participation_assigned_quantity": self.inscription_5_new.participation_quantity,
-            "participation_real_quantity": self.inscription_5_new.participation_quantity
-        })
+        self.inscription_5_new.write(
+            {
+                "participation_assigned_quantity": self.inscription_5_new.participation_quantity,
+                "participation_real_quantity": self.inscription_5_new.participation_quantity,
+            }
+        )
         # Get inscriptions ids
         inscriptions_ids = [
             self.inscription_1.id,
             self.inscription_2.id,
-            self.inscription_5_new.id
+            self.inscription_5_new.id,
         ]
-        change_inscriptions_wizard = self.env[
-            "energy_selfconsumption.change_state_inscription.wizard"
-        ].with_context(
-            active_ids=inscriptions_ids
-        ).create({})
+        change_inscriptions_wizard = (
+            self.env["energy_selfconsumption.change_state_inscription.wizard"]
+            .with_context(active_ids=inscriptions_ids)
+            .create({})
+        )
         inscription_id_1 = change_inscriptions_wizard.change_state_inscription_lines_wizard_ids.filtered(
             lambda line: line.inscription_id.id == inscriptions_ids[0]
         )
-        inscription_id_1.write({
-            "participation_real_quantity": 0.25,
-            "state": "change"
-        })
+        inscription_id_1.write({"participation_real_quantity": 0.25, "state": "change"})
         inscription_id_2 = change_inscriptions_wizard.change_state_inscription_lines_wizard_ids.filtered(
             lambda line: line.inscription_id.id == inscriptions_ids[1]
         )
-        inscription_id_2.write({
-            "participation_real_quantity": 0.00,
-            "state": "change"
-        })
+        inscription_id_2.write({"participation_real_quantity": 0.00, "state": "change"})
         change_inscriptions_wizard.change_state_inscription()
 
     def _workflow_change_distribution_table(self):
-        change_distribution_table_wizard = self.env[
-            "change.distribution.table.import.wizard"
-        ].with_context(
-            default_selfconsumption_project_id=self.selfconsumption.id
-        ).create({})
-        valid_lines = (
-            change_distribution_table_wizard.change_distribution_table_import_line_wizard_ids.filtered(
-                lambda line: not (
-                    line.state == 'change'
-                    and line.participation_real_quantity == 0
-                )
+        change_distribution_table_wizard = (
+            self.env["change.distribution.table.import.wizard"]
+            .with_context(default_selfconsumption_project_id=self.selfconsumption.id)
+            .create({})
+        )
+        valid_lines = change_distribution_table_wizard.change_distribution_table_import_line_wizard_ids.filtered(
+            lambda line: not (
+                line.state == "change" and line.participation_real_quantity == 0
             )
         )
-        create_distribution_table_wizard = self.env[
-            "energy_selfconsumption.create_distribution_table.wizard"
-        ].with_context(
-            active_ids=valid_lines.inscription_id.ids,
-            active_model="energy_selfconsumption.inscription_selfconsumption",
-        ).create({})
-        create_distribution_table_wizard.write({
-            "distribute_excess": "yes",
-        })
+        create_distribution_table_wizard = (
+            self.env["energy_selfconsumption.create_distribution_table.wizard"]
+            .with_context(
+                active_ids=valid_lines.inscription_id.ids,
+                active_model="energy_selfconsumption.inscription_selfconsumption",
+            )
+            .create({})
+        )
+        create_distribution_table_wizard.write(
+            {
+                "distribute_excess": "yes",
+            }
+        )
         create_distribution_table_wizard.create_distribution_table()
         distribution_table = self.selfconsumption.distribution_table_ids.filtered(
             lambda table: table.state == "draft"
@@ -354,7 +359,9 @@ class TestSelfconsumptionServiceInvoicing(TransactionCase, ServiceInvoicingTesti
             # ASSERT: contract uom_id same as project
             self.assertEqual(
                 contract.contract_line_ids[0].uom_id.id,
-                self.selfconsumption.contract_template_id.contract_line_ids[0].uom_id.id,
+                self.selfconsumption.contract_template_id.contract_line_ids[
+                    0
+                ].uom_id.id,
             )
             # ASSERT: contract recurring_rule_type same as project
             self.assertEqual(
@@ -384,25 +391,39 @@ class TestSelfconsumptionServiceInvoicing(TransactionCase, ServiceInvoicingTesti
             self.assertEqual(contract.contract_line_ids[0].date_end, False)
             self.assertEqual(contract.date_end, False)
             # ASSERT: contract pricelist_id same as sale_order
-            self.assertEqual(contract.pricelist_id.id, contract.sale_order_id.pricelist_id.id)
+            self.assertEqual(
+                contract.pricelist_id.id, contract.sale_order_id.pricelist_id.id
+            )
             # ASSERT: contract pricelist_id same as project
-            self.assertEqual(contract.pricelist_id.id, self.selfconsumption.pricelist_id.id)
+            self.assertEqual(
+                contract.pricelist_id.id, self.selfconsumption.pricelist_id.id
+            )
             # ASSERT: contract payment_mode same as sale_order
-            self.assertEqual(contract.payment_mode_id.id, contract.sale_order_id.payment_mode_id.id)
+            self.assertEqual(
+                contract.payment_mode_id.id, contract.sale_order_id.payment_mode_id.id
+            )
             # ASSERT: contract payment_mode correctly defined
             if contract_create_wizard:
                 self.assertEqual(
                     contract.payment_mode_id.id, contract_create_wizard.payment_mode.id
                 )
 
-    def _assert_project_contracts_data_consistency_between_old_and_new(self, dict_contracts):
+    def _assert_project_contracts_data_consistency_between_old_and_new(
+        self, dict_contracts
+    ):
         contracts = self.selfconsumption.get_active_contracts()
         for contract in contracts:
             if contract.predecessor_contract_id:
                 self._assert_recurrency_config_consistency_between_old_and_new(
                     contract.predecessor_contract_id,
                     contract,
-                    dict_contracts[contract.predecessor_contract_id.id]["recurring_next_date"],
-                    dict_contracts[contract.predecessor_contract_id.id]["next_period_date_start"],
-                    dict_contracts[contract.predecessor_contract_id.id]["next_period_date_end"],
+                    dict_contracts[contract.predecessor_contract_id.id][
+                        "recurring_next_date"
+                    ],
+                    dict_contracts[contract.predecessor_contract_id.id][
+                        "next_period_date_start"
+                    ],
+                    dict_contracts[contract.predecessor_contract_id.id][
+                        "next_period_date_end"
+                    ],
                 )
