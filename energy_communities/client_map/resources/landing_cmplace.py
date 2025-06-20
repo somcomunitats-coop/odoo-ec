@@ -141,11 +141,10 @@ class LandingCmPlace:
                 _("Place category not found slug_id: {}").format(place_category_slug)
             )
         # Community status filter
+        # All landings are created on map as open places
         filters = self.landing.env["cm.filter"].search([])
         place_community_status_slug = (
-            MapClientConfig.MAPPING__LANDING_COMMUNITY_STATUS__MAP_FILTER[
-                self.landing.community_status
-            ]
+            MapClientConfig.MAPPING__LANDING_COMMUNITY_STATUS__MAP_FILTER["open"]
         )
         place_community_status = filters.filtered(
             lambda r: r.slug_id == place_community_status_slug
@@ -187,10 +186,9 @@ class LandingCmPlace:
                     )
 
         # Presenter
+        # All landings are created on map as open places
         presenter_name = (
-            MapClientConfig.MAPPING__LANDING_COMMUNITY_STATUS__MAP_PRESENTER[
-                self.landing.community_status
-            ]
+            MapClientConfig.MAPPING__LANDING_COMMUNITY_STATUS__MAP_PRESENTER["open"]
         )
         presenter = self.landing.env["cm.presenter.model"].search(
             [("name", "=", presenter_name)]
