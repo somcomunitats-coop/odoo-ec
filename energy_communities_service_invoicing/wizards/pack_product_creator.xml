@@ -27,17 +27,38 @@
             <field name="description_sale" required="1" />
             <field name="lst_price" />
             <field name="taxes_id" widget="many2many_tags" />
+            <field name="recurring_rule_mode" required="1" />
+            <field name="recurring_invoicing_type" required="1" />
+            <field name="recurring_interval" attrs="{'required': [('recurring_rule_mode','=','interval')],'invisible': [('recurring_rule_mode','!=','interval')]}" />
+            <field name="recurring_rule_type" attrs="{'required': [('recurring_rule_mode','=','interval')],'invisible': [('recurring_rule_mode','!=','interval')]}" />
+            <field name="recurring_invoicing_fixed_type" attrs="{'readonly': True, 'required': [('recurring_rule_mode','=','fixed')],'invisible': [('recurring_rule_mode','!=','fixed')]}" />
+            <field name="fixed_invoicing_day" attrs="{'required': [('recurring_rule_mode','=','fixed')],'invisible': [('recurring_rule_mode','!=','fixed')]}" />
+            <field name="fixed_invoicing_month" attrs="{'required': [('recurring_rule_mode','=','fixed')],'invisible': [('recurring_rule_mode','!=','fixed')]}" />
             <field name="service_product_ids" widget="one2many">
               <tree>
                 <field name="name" />
                 <field name="description_sale" />
                 <field name="lst_price" />
+                <field name="qty_type" />
+                <field name="qty_formula_id" />
+                <field name="quantity" />
+                <field name="taxes_id" widget="many2many_tags" />
               </tree>
               <form>
                 <group>
                   <field name="name" required="1" />
                   <field name="description_sale" required="1" />
                   <field name="lst_price" />
+                  <field name="qty_type" required="1" />
+                  <field
+                    name="qty_formula_id"
+                    attrs="{'invisible': [('qty_type', '!=', 'variable')],'required': [('qty_type','=','variable')]}"
+                  />
+                  <field
+                    name="quantity"
+                    attrs="{'invisible': [('qty_type', '!=', 'fixed')]}"
+                  />
+                  <field name="taxes_id" widget="many2many_tags" />
                 </group>
               </form>
             </field>
