@@ -40,6 +40,7 @@
         "views/contract_views.xml",
         "views/cooperative_membership_views.xml",
         "views/product_category_views.xml",
+        "views/product_template_views.xml",
         "views/res_company_views.xml",
         "views/res_partner_views.xml",
         "views/sale_order_views.xml",

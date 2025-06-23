@@ -3,6 +3,7 @@ from odoo import api, fields, models
 
 class PackProductCreatorWizard(models.TransientModel):
     _name = "pack.product.creator.wizard"
+    _inherit = ["contract.recurrency.basic.mixin"]
     _description = "Assistant for creating a pack product complete configuration"
 
     company_id = fields.Many2one(

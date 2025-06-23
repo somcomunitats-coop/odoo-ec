@@ -12,3 +12,17 @@ class PackProductCreatorWizardServiceProduct(models.TransientModel):
         "Service price",
         digits="Product Price",
     )
+    quantity = fields.Float(default=1.0, string="Quantity")
+    qty_type = fields.Selection(
+        selection=[("fixed", "Fixed quantity"), ("variable", "Variable quantity")],
+        default="fixed",
+        string="Quantity type",
+    )
+    qty_formula_id = fields.Many2one(
+        comodel_name="contract.line.qty.formula", string="Quantity formula"
+    )
+    taxes_id = fields.Many2many(
+        "account.tax",
+        string="Customer Taxes",
+        domain=[("type_tax_use", "=", "sale")],
+    )

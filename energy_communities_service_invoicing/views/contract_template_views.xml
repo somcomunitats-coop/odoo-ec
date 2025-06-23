@@ -8,6 +8,12 @@
       <field name="pack_type" />
       <field name="is_free_pack" />
     </xpath>
+    <field name="journal_id" position="attributes">
+      <attribute name="invisible">1</attribute>
+    </field>
+    <field name="pricelist_id" position="attributes">
+      <attribute name="invisible">1</attribute>
+    </field>
   </field>
 </record>
 </odoo>
