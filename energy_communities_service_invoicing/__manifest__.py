@@ -46,6 +46,7 @@
         "views/service_invoicing_views.xml",
         "views/service_invoicing_views.xml",
         "views/subscription_request_views.xml",
+        "wizards/pack_product_creator.xml",
         "wizards/service_invoicing_action.xml",
         "wizards/service_invoicing_action_create.xml",
         "views/menus.xml",

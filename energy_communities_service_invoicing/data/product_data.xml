@@ -1,6 +1,11 @@
 <odoo>
   <record id="product_category_platform_pack" model="product.category">
     <field name="name">Platform Service Pack</field>
+    <field
+      name="parent_id"
+      model="product.category"
+      eval="obj(ref('energy_communities.product_category_pack')).id"
+    />
   </record>
   <record id="product_category_platform_service" model="product.category">
     <field name="name">Platform Service</field>

@@ -88,14 +88,5 @@
       </form>
     </field>
   </record>
-  <record
-    model="ir.actions.act_window"
-    id="service_invoicing_action_wizard_action"
-  >
-      <field name="name">Service invoicing actions</field>
-      <field name="res_model">service.invoicing.action.wizard</field>
-      <field name="view_mode">form</field>
-      <field name="target">new</field>
-  </record>
 
 </odoo>
