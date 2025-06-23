@@ -3,16 +3,30 @@
     <field name="name">Voluntary Company Share</field>
   </record>
 
+  <record id="product_category_pack" model="product.category">
+    <field name="name">Packs</field>
+  </record>
+
   <record id="product_category_recurring_fee_service" model="product.category">
     <field name="name">Recurring fee Service</field>
   </record>
 
   <record id="product_category_recurring_fee_pack" model="product.category">
     <field name="name">Recurring fee Pack</field>
+    <field
+      name="parent_id"
+      model="product.category"
+      eval="obj(ref('energy_communities.product_category_pack')).id"
+    />
   </record>
 
   <record id="product_category_share_recurring_fee_pack" model="product.category">
     <field name="name">Share with recurring fee Pack</field>
+    <field
+      name="parent_id"
+      model="product.category"
+      eval="obj(ref('energy_communities.product_category_pack')).id"
+    />
   </record>
 
 </odoo>
