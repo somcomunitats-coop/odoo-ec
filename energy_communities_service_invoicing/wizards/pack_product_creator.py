@@ -1,5 +1,7 @@
 from odoo import api, fields, models
 
+from odoo.addons.energy_communities.utils import product_utils
+
 
 class PackProductCreatorWizard(models.TransientModel):
     _name = "pack.product.creator.wizard"
@@ -30,4 +32,5 @@ class PackProductCreatorWizard(models.TransientModel):
     )
 
     def execute_create(self):
-        print("Hello world")
+        with product_utils(self.env) as component:
+            component.create_product()
