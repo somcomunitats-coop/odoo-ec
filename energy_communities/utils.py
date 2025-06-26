@@ -7,6 +7,7 @@ from odoo.tools.translate import code_translations
 from odoo.addons.base.models.res_users import Users
 from odoo.addons.component.core import Component, WorkContext
 from odoo.addons.contract.models.contract import ContractContract
+from odoo.addons.product.models.product_template import ProductTemplate
 from odoo.addons.sale.models.sale_order import SaleOrder
 
 
@@ -36,6 +37,14 @@ def contract_utils(
     contract_id: ContractContract,
 ) -> Component:
     yield _get_component(env, "contract.contract", "contract.utils", contract_id)
+
+
+@contextmanager
+def product_utils(
+    env: Environment,
+    product_template_id: ProductTemplate = None,
+) -> Component:
+    yield _get_component(env, "product.template", "product.utils", product_template_id)
 
 
 @contextmanager
