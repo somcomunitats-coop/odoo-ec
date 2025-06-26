@@ -1,14 +1,20 @@
-from typing import Optional
+from typing import List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
+
+from odoo.addons.product.models.product_template import ProductTemplate
 
 
-class PackProductCreationData(BaseModel):
+class BaseProductCreationData(BaseModel):
+    company_id: Optional[int] = None
     categ_id: int
     name: str
-    description_sale: str
-    lst_price: float
+    description_sale: Optional[str] = None
+    list_price: float
     taxes_id: list
+
+
+class PackProductCreationData(BaseProductCreationData):
     recurring_rule_mode: str
     recurring_invoicing_type: str
     recurring_interval: Optional[int] = None
@@ -18,12 +24,13 @@ class PackProductCreationData(BaseModel):
     fixed_invoicing_month: Optional[str] = None
 
 
-class ServiceProductCreationData(BaseModel):
-    categ_id: int
-    name: str
-    description_sale: str
-    lst_price: float
-    taxes_id: list
+class ServiceProductCreationData(BaseProductCreationData):
     qty_type: Optional[str] = None
     quantity: Optional[float] = None
     qty_formula_ref: Optional[int] = None
+
+
+class ProductCreationResult(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+    pack_product_template: Optional[ProductTemplate] = None
+    service_product_template_list: Optional[List[ProductTemplate]] = None

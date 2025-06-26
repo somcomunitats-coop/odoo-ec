@@ -16,7 +16,7 @@ class PackProductCreatorWizard(models.TransientModel):
     pack_categ_id = fields.Many2one("product.category", string="Pack category")
     name = fields.Char(string="Pack name")
     description_sale = fields.Text(string="Sales description")
-    lst_price = fields.Float(
+    list_price = fields.Float(
         "Pack activation price",
         digits="Product Price",
     )
@@ -33,4 +33,4 @@ class PackProductCreatorWizard(models.TransientModel):
 
     def execute_create(self):
         with product_utils(self.env) as component:
-            component.create_product()
+            component.create_products()
