@@ -12,7 +12,6 @@ PACK_VALUES = [
     ("platform_pack", _("Platform Pack")),
     ("none", _("None")),
 ]
-
 PAUSED = "paused"
 IN_PROGRESS = "in_progress"
 CLOSED_PLANNED = "closed_planned"
@@ -37,6 +36,14 @@ _SERVICE_INVOICING_EXECUTED_ACTION_VALUES = [
 _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES = [
     ("none", _("None"))
 ] + _SERVICE_INVOICING_EXECUTED_ACTION_VALUES[:-1]
+
+_PACK_PRODUCT_PARENT_CATEG_REF = "energy_communities.product_category_pack"
+_SHARE_PRODUCTS_CATEG_REFS = [
+    "energy_communities.product_category_share_recurring_fee_pack",
+    "cooperator.product_category_company_share",
+    "energy_communities.product_category_company_voluntary_share",
+    "energy_communities_cooperator.product_category_company_voluntary_share",
+]
 
 
 def service_invoicing_tree_view(env: Environment):
@@ -101,7 +108,7 @@ def get_existing_open_pack_contract(
     query = [
         ("partner_id", "=", partner_id.id),
         ("pack_type", "=", pack_type),
-        ("status", "in", ["paused", "in_progress"]),
+        ("status", "in", [PAUSED, IN_PROGRESS]),
     ]
     if contract_id:
         query.append(("id", "!=", contract_id.id))

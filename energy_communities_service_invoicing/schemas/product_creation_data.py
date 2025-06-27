@@ -27,7 +27,7 @@ class PackProductCreationData(BaseProductCreationData):
 class ServiceProductCreationData(BaseProductCreationData):
     qty_type: Optional[str] = None
     quantity: Optional[float] = None
-    qty_formula_ref: Optional[int] = None
+    qty_formula_id: Optional[int] = None
 
 
 class ProductCreationResult(BaseModel):
