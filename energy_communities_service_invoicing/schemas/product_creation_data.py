@@ -30,6 +30,14 @@ class ServiceProductCreationData(BaseProductCreationData):
     qty_formula_id: Optional[int] = None
 
 
+class ServiceProductExistingData(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+    product_template: ProductTemplate
+    qty_type: Optional[str] = None
+    quantity: Optional[float] = None
+    qty_formula_id: Optional[int] = None
+
+
 class ProductCreationResult(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
     pack_product_template: Optional[ProductTemplate] = None
