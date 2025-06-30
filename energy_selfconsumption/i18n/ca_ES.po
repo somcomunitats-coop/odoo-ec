@@ -5354,7 +5354,6 @@ msgstr "Data d’inici de la facturació"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__selfconsumption_project_state
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__state
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__state
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__state_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__state_id
@@ -5364,6 +5363,11 @@ msgstr "Data d’inici de la facturació"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
 msgid "State"
 msgstr "Província"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__state
+msgid "State"
+msgstr "Estat"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__change_state_inscription_wizard_id
