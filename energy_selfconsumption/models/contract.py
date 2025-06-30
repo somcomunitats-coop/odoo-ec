@@ -87,9 +87,20 @@ class Contract(models.Model):
         Returns:
             dict: Window action dictionary for the invoicing wizard
         """
+        # Get invoicing mode from first contract
+        invoicing_mode = False
+        contracts = self.env["contract.contract"].search([("id", "in", self.ids)])
+        if contracts:
+            invoicing_mode = contracts[0].project_id.selfconsumption_id.invoicing_mode or False
+        
         # Create wizard with current contract
-        wizard_id = self.env["energy_selfconsumption.invoicing.wizard"].create(
-            {"contract_ids": [(6, 0, self.ids)]}
+        wizard_id = self.env["energy_selfconsumption.invoicing.wizard"].with_context(
+            active_ids=self.ids
+        ).create(
+            {
+                "contract_ids": [(6, 0, self.ids)],
+                "invoicing_mode": invoicing_mode,
+            }
         )
 
         # Get action reference and update with wizard ID
@@ -132,6 +143,11 @@ class Contract(models.Model):
                     "last_period_date_end": last_period_date_end,
                 }
             )
+        res.write(
+            {
+                "energy_delivered": self.env.context.get("energy_delivered", 0),
+            }
+        )
 
         return res
 

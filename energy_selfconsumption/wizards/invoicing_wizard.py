@@ -116,12 +116,12 @@ class InvoicingWizard(models.TransientModel):
         """
         active_ids = self.env.context.get("active_ids", [])
         if not active_ids:
-            return None
+            return False
 
         contracts = self.env["contract.contract"].search([("id", "in", active_ids)])
         if contracts:
             return contracts[0].project_id.selfconsumption_id.invoicing_mode
-        return None
+        return False
 
     # Computed methods
     @api.depends("contract_ids")

@@ -72,6 +72,11 @@ class AccountMove(models.Model):
         help="Invoicing mode of the associated self-consumption project",
     )
 
+    energy_delivered = fields.Float(
+        string="Energy Delivered",
+        help="Energy delivered for energy delivered mode",
+    )
+
     # Computed methods
     def _compute_selfconsumption_invoicing_mode(self):
         """

@@ -806,7 +806,7 @@ class Selfconsumption(models.Model):
             elif self.selfconsumption_id.invoicing_mode == "power_acquired":
                 data["cau"] = self.selfconsumption_id.code
                 data["power"] = self.selfconsumption_id.power
-                data["coefficient"] = supply_point_assignation.coefficient
+                data["coefficient"] = round(supply_point_assignation.coefficient, 2)
                 (
                     first_date_invoiced,
                     last_date_invoiced,
@@ -823,7 +823,7 @@ class Selfconsumption(models.Model):
                 data["power_acquired"] = (
                     round(
                         self.selfconsumption_id.power
-                        * supply_point_assignation.coefficient,
+                        * round(supply_point_assignation.coefficient, 2),
                         2,
                     )
                     if supply_point_assignation.coefficient

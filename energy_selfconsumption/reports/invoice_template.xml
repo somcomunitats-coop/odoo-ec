@@ -90,7 +90,7 @@ Main functionalities:
             <t t-if="o.selfconsumption_invoicing_mode == 'energy_delivered'">
                 <!-- Total installation generation -->
                 <td name="td_total_installation_generation" class="text-end">
-                    <span t-field="line.selfconsumption_id.power"/>
+                    <span t-out="o.energy_delivered"/>
                     <span> kWh</span>
                 </td>
                 
