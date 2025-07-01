@@ -41,7 +41,6 @@
   </record>
 
   <record id="product.list0" model="product.pricelist">
-    <field name="name">Platform pricelist</field>
     <field name="item_ids" model="product.template" eval="[(0,0,{
       'product_tmpl_id': obj(ref('demo_platform_service_product_template')).id,
       'fixed_price': 0.62,
@@ -114,6 +113,18 @@
       'fixed_price': 8.17,
     })]"/>
   </record>
+
+  <function name="write" model="res.company">
+    <value
+      model="res.company"
+      eval="[obj(ref('base.main_company')).id]"
+    />
+    <value
+      eval="{
+        'pricelist_id': ref('product.list0'),
+      }"
+    />
+  </function>
 
   <function name="write" model="res.company">
     <value

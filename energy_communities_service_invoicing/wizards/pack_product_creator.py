@@ -1,6 +1,16 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
-from odoo.addons.energy_communities.utils import product_utils
+from odoo.addons.energy_communities.utils import (
+    _PACK_PRODUCTS_RELATION_TO_SERVICES_REFS,
+    get_successful_popup_message,
+    product_utils,
+)
+
+from ..schemas import (
+    PackProductCreationData,
+    ProductCreationParams,
+    ServiceProductCreationData,
+)
 
 
 class PackProductCreatorWizard(models.TransientModel):
@@ -32,5 +42,66 @@ class PackProductCreatorWizard(models.TransientModel):
     )
 
     def execute_create(self):
+        result = self._create_products()
+        return get_successful_popup_message(
+            _("Pack product creation successful"),
+            _("Please visit the products view in orde to see the new items."),
+        )
+
+    def _create_products(self):
+        creation_params = self._build_creation_params()
         with product_utils(self.env) as component:
-            component.create_products()
+            return component.create_products(
+                creation_params.pack, creation_params.services
+            )
+
+    def _build_creation_params(self):
+        services = []
+        for service in self.service_product_ids:
+            services.append(
+                ServiceProductCreationData(
+                    company_id=self.company_id.id if self.company_id else None,
+                    categ_id=self.env.ref(
+                        _PACK_PRODUCTS_RELATION_TO_SERVICES_REFS[
+                            self.pack_categ_id.data_xml_id
+                        ]
+                    ).id,
+                    name=service.name,
+                    description_sale=service.description_sale,
+                    list_price=service.list_price,
+                    taxes_id=service.taxes_id.ids if service.taxes_id else [],
+                    qty_type=service.qty_type,
+                    quantity=service.quantity,
+                    qty_formula_id=service.qty_formula_id.id
+                    if service.qty_formula_id
+                    else None,
+                )
+            )
+        return ProductCreationParams(
+            pack=PackProductCreationData(
+                company_id=self.company_id.id if self.company_id else None,
+                categ_id=self.pack_categ_id.id,
+                name=self.name,
+                description_sale=self.description_sale,
+                list_price=self.list_price,
+                taxes_id=self.taxes_id.ids if self.taxes_id else [],
+                recurring_rule_mode=self.recurring_rule_mode,
+                recurring_invoicing_type=self.recurring_invoicing_type,
+                recurring_interval=self.recurring_interval
+                if self.recurring_interval
+                else None,
+                recurring_rule_type=self.recurring_rule_type
+                if self.recurring_rule_type
+                else None,
+                recurring_invoicing_fixed_type=self.recurring_invoicing_fixed_type
+                if self.recurring_invoicing_fixed_type
+                else None,
+                fixed_invoicing_day=self.fixed_invoicing_day
+                if self.fixed_invoicing_day
+                else None,
+                fixed_invoicing_month=self.fixed_invoicing_month
+                if self.fixed_invoicing_month
+                else None,
+            ),
+            services=services,
+        )

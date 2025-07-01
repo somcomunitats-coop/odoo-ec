@@ -9,6 +9,7 @@ from odoo.addons.product.models.product_template import ProductTemplate
 from ..schemas import (
     BaseProductCreationData,
     PackProductCreationData,
+    ProductCreationParams,
     ProductCreationResult,
     ServiceProductCreationData,
 )
@@ -26,11 +27,9 @@ ProductUtilsTestingCase = namedtuple(
     "ProductUtilsTestingCase", ["pack_product_case", "service_product_case"]
 )
 
-TestCaseData = namedtuple("TestCaseData", ["pack", "services"])
-
 _PACK_PRODUCT_TESTING_CASES = {
     "fixed_prepaid_recurring_fee_pack": PackProductDataTestingCase(
-        "Community 1",
+        "Platform Company",
         "energy_communities.product_category_recurring_fee_pack",
         "Recurring fee pack test 1",
         "Recurring fee pack test 1 long description",
@@ -48,7 +47,7 @@ _PACK_PRODUCT_TESTING_CASES = {
 _SERVICE_PRODUCT_TESTING_CASES = {
     "recurring_fee_services": [
         ServiceProductDataTestingCase(
-            "Community 1",
+            "Platform Company",
             "energy_communities.product_category_recurring_fee_service",
             "Recurring fee service test 1",
             "Recurring fee service test 1 long description",
@@ -59,7 +58,7 @@ _SERVICE_PRODUCT_TESTING_CASES = {
             False,
         ),
         ServiceProductDataTestingCase(
-            "Community 1",
+            "Platform Company",
             "energy_communities.product_category_recurring_fee_service",
             "Recurring fee service test 2",
             "Recurring fee service test 2 long description",
@@ -86,6 +85,53 @@ class TestProductUtilsComponent(TransactionCase):
         super().setUp()
         self.maxDiff = None
 
+    def test_pack_product_creator_wizard_case_1(self):
+        self._pack_product_creator_wizard_case(
+            _TESTING_CASES["fixed_prepaid_recurring_fee"]
+        )
+
+    def _pack_product_creator_wizard_case(self, case):
+        data = self._prepare_all_case_data(case)
+        # WORKFLOW: Create a pack creator wizard and execute create
+        services = []
+        for service_data in data.services:
+            services.append(
+                (
+                    0,
+                    0,
+                    {
+                        "name": service_data.name,
+                        "description_sale": service_data.description_sale,
+                        "list_price": service_data.list_price,
+                        "quantity": service_data.quantity,
+                        "qty_type": service_data.qty_type,
+                        "qty_formula_id": service_data.qty_formula_id,
+                        "taxes_id": service_data.taxes_id,
+                    },
+                )
+            )
+        wizard = self.env["pack.product.creator.wizard"].create(
+            {
+                "company_id": data.pack.company_id,
+                "pack_categ_id": data.pack.categ_id,
+                "name": data.pack.name,
+                "description_sale": data.pack.description_sale,
+                "list_price": data.pack.list_price,
+                "taxes_id": data.pack.taxes_id,
+                "recurring_rule_mode": data.pack.recurring_rule_mode,
+                "recurring_invoicing_type": data.pack.recurring_invoicing_type,
+                "recurring_interval": data.pack.recurring_interval,
+                "recurring_rule_type": data.pack.recurring_rule_type,
+                "recurring_invoicing_fixed_type": data.pack.recurring_invoicing_fixed_type,
+                "fixed_invoicing_day": data.pack.fixed_invoicing_day,
+                "fixed_invoicing_month": data.pack.fixed_invoicing_month,
+                "service_product_ids": services,
+            }
+        )
+        result = wizard._create_products()
+        # ASSERT CREATION WENT OK
+        self._assert_creation_ok(result, data)
+
     def test_pack_product_creator_component_case_1(self):
         self._pack_product_creator_component_case(
             _TESTING_CASES["fixed_prepaid_recurring_fee"]
@@ -111,6 +157,10 @@ class TestProductUtilsComponent(TransactionCase):
         with product_utils(self.env) as component:
             result = component.create_products(data.pack, data.services)
 
+        # ASSERT CREATION WENT OK
+        self._assert_creation_ok(result, data)
+
+    def _assert_creation_ok(self, result, data):
         # ASSERT: Creation returns a ProductCreationResult
         self.assertIsInstance(result, ProductCreationResult)
         # ASSERT: Product Creation OK
@@ -166,7 +216,7 @@ class TestProductUtilsComponent(TransactionCase):
             # CONTRACT TEMPLATE
             contract_template = pack_product.property_contract_template_id
             self.assertEqual(
-                contract_template.name, "[TEMPLATE] %s".format(data.pack.name)
+                contract_template.name, "[TEMPLATE] {}".format(data.pack.name)
             )
             self.assertEqual(contract_template.company_id.id, data.pack.company_id)
             self.assertEqual(
@@ -246,13 +296,13 @@ class TestProductUtilsComponent(TransactionCase):
                     ServiceProductCreationData,
                 )
             )
-        return TestCaseData(
-            self._prepare_one_case_data(
+        return ProductCreationParams(
+            pack=self._prepare_one_case_data(
                 case.pack_product_case,
                 PackProductDataTestingCase,
                 PackProductCreationData,
             ),
-            services,
+            services=services,
         )
 
     def _prepare_one_case_data(
