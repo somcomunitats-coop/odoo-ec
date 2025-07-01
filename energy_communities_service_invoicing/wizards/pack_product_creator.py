@@ -51,9 +51,7 @@ class PackProductCreatorWizard(models.TransientModel):
     def _create_products(self):
         creation_params = self._build_creation_params()
         with product_utils(self.env) as component:
-            return component.create_products(
-                creation_params.pack, creation_params.services
-            )
+            return component.create_products(creation_params)
 
     def _build_creation_params(self):
         services = []

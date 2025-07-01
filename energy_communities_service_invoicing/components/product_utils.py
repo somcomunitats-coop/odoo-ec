@@ -10,6 +10,7 @@ from odoo.addons.product.models.product_template import ProductTemplate
 from ..schemas import (
     BaseProductCreationData,
     PackProductCreationData,
+    ProductCreationParams,
     ProductCreationResult,
     ServiceProductCreationData,
 )
@@ -20,15 +21,14 @@ class ProductUtils(Component):
 
     def create_products(
         self,
-        pack_product_creation_data: PackProductCreationData = False,
-        service_product_creation_data_list: List[ServiceProductCreationData] = False,
+        product_creation_params: ProductCreationParams,
     ) -> ProductCreationResult:
         pack_product_template = False
         service_product_template_list = []
         # CREATE SERVICE PRODUCTS
-        if service_product_creation_data_list:
-            self._validate_service_configuration(service_product_creation_data_list[0])
-            for service_product_creation_data in service_product_creation_data_list:
+        if product_creation_params.services:
+            self._validate_service_configuration(product_creation_params.services[0])
+            for service_product_creation_data in product_creation_params.services:
                 service_product_template_list.append(
                     self._create_base_product(
                         BaseProductCreationData(
@@ -42,11 +42,11 @@ class ProductUtils(Component):
                     )
                 )
         # CREATE PACK PRODUCT
-        if pack_product_creation_data:
+        if product_creation_params.pack:
             self._apply_services_on_system_pricelist(service_product_template_list)
             pack_product_template = self._create_pack_product(
-                pack_product_creation_data,
-                service_product_creation_data_list,
+                product_creation_params.pack,
+                product_creation_params.services,
                 service_product_template_list,
             )
         return ProductCreationResult(
