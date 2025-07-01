@@ -38,6 +38,11 @@ class ServiceProductExistingData(BaseModel):
     qty_formula_id: Optional[int] = None
 
 
+class ProductCreationParams(BaseModel):
+    pack: Optional[PackProductCreationData] = None
+    services: Optional[List[ServiceProductCreationData]] = None
+
+
 class ProductCreationResult(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
     pack_product_template: Optional[ProductTemplate] = None

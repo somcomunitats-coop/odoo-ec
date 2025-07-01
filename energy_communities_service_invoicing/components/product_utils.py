@@ -140,7 +140,7 @@ class ProductUtils(Component):
         service_product_template_list: List[ProductTemplate] = False,
     ) -> None:
         creation_data = {
-            "name": "[TEMPLATE] %s".format(pack_product.name),
+            "name": "[TEMPLATE] {}".format(pack_product.name),
             "company_id": pack_product.company_id.id
             if pack_product.company_id
             else None,
