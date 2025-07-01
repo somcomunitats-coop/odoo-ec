@@ -155,7 +155,7 @@ class TestProductUtilsComponent(TransactionCase):
 
         # WORKFLOW: Create products
         with product_utils(self.env) as component:
-            result = component.create_products(data.pack, data.services)
+            result = component.create_products(data)
 
         # ASSERT CREATION WENT OK
         self._assert_creation_ok(result, data)
