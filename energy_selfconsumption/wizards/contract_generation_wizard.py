@@ -301,7 +301,7 @@ class ContractGenerationWizard(models.TransientModel):
         contract = self._confirm_sale_order(sale_order)
 
         # 2. Setup contract line description
-        self._setup_contract_line_description(contract, distribution_table)
+        # self._setup_contract_line_description(contract, distribution_table)
 
         # 3. Setup main contract line
         self._setup_main_contract_line(contract)
@@ -331,17 +331,8 @@ class ContractGenerationWizard(models.TransientModel):
 
         return contract
 
-    def _setup_contract_line_description(self, contract, distribution_table):
-        """
-        Setup contract line descriptions based on distribution table
+    # def _setup_contract_line_description(self, contract, distribution_table):
 
-        Args:
-            contract: Contract to setup
-            distribution_table: Distribution table for descriptions
-        """
-        self.selfconsumption_id._setup_selfconsumption_contract_line_description(
-            distribution_table, contract
-        )
 
     def _setup_main_contract_line(self, contract):
         """

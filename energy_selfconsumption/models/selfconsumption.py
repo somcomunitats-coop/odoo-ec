@@ -555,13 +555,9 @@ class Selfconsumption(models.Model):
                             self.payment_mode_id,
                         )
             if service_invoicing_id:
-                # 2.- setup contract line description
-                self._setup_selfconsumption_contract_line_description(
-                    distribution_table_validated, service_invoicing_id
-                )
-                # 3.- setup contract line main_line
+                # 2.- setup contract line main_line
                 service_invoicing_id.contract_line_ids[0].write({"main_line": True})
-                # 4.- mark contract as active
+                # 3.- mark contract as active
                 with contract_utils(self.env, service_invoicing_id) as component:
                     component.activate(fields.Date.today())
 
@@ -778,61 +774,6 @@ class Selfconsumption(models.Model):
                 if contract.partner_id.id in inscriptions.mapped("partner_id").ids:
                     with contract_utils(self.env, contract) as component:
                         component.close(fields.Date.today())
-
-    def _setup_selfconsumption_contract_line_description(
-        self, distribution_id, contract
-    ):
-        for contract_line in contract.contract_line_ids:
-            supply_point_assignation = distribution_id.supply_point_assignation_ids.filtered_domain(
-                [
-                    (
-                        "supply_point_id",
-                        "=",
-                        int(
-                            contract.sale_order_id.metadata_line_ids.filtered_domain(
-                                [("key", "=", "supply_point_id")]
-                            ).mapped("value")[0]
-                        ),
-                    ),
-                ]
-            )
-            data = {
-                "code": supply_point_assignation.supply_point_id.code,
-                "owner_id": supply_point_assignation.supply_point_id.owner_id.display_name,
-            }
-            # Each invoicing type has different data in the description column, so we need to check and modify
-            if self.selfconsumption_id.invoicing_mode == "energy_delivered":
-                data["cau"] = self.selfconsumption_id.code
-            elif self.selfconsumption_id.invoicing_mode == "power_acquired":
-                data["cau"] = self.selfconsumption_id.code
-                data["power"] = self.selfconsumption_id.power
-                data["coefficient"] = round(supply_point_assignation.coefficient, 2)
-                (
-                    first_date_invoiced,
-                    last_date_invoiced,
-                    recurring_next_date,
-                ) = contract_line._get_period_to_invoice(
-                    contract_line.last_date_invoiced,
-                    contract_line.recurring_next_date,
-                )
-                data["days_invoiced"] = (
-                    (last_date_invoiced - first_date_invoiced).days + 1
-                    if first_date_invoiced and last_date_invoiced
-                    else 0
-                )
-                data["power_acquired"] = (
-                    round(
-                        self.selfconsumption_id.power
-                        * round(supply_point_assignation.coefficient, 2),
-                        2,
-                    )
-                    if supply_point_assignation.coefficient
-                    else 0.0
-                )
-                data["total_amount"] = round(
-                    data["days_invoiced"] * data["power_acquired"], 2
-                )
-            contract_line._set_name(data)
 
     def validate_state(self, state):
         if state not in ("activation", ACTIVE):

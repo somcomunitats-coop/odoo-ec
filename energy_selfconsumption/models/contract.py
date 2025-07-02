@@ -148,7 +148,6 @@ class Contract(models.Model):
                 "energy_delivered": self.env.context.get("energy_delivered", 0),
             }
         )
-
         return res
 
     def _get_contracts_to_invoice_domain(self, date_ref=None):

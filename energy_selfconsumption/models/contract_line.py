@@ -201,3 +201,31 @@ class ContractLine(models.Model):
                         ),
                     }
                 }
+            
+    def _insert_markers(self, first_date_invoiced, last_date_invoiced):
+        name = super()._insert_markers(first_date_invoiced, last_date_invoiced)
+        name = self._setup_selfconsumption_invoice_line_description(name)
+        return name
+    
+    def _setup_selfconsumption_invoice_line_description(
+        self, name
+    ):
+        supply_point_assignation = self.contract_id.supply_point_assignation_id
+        selfconsumption_id = supply_point_assignation.distribution_table_id.selfconsumption_project_id
+        name = name.replace("#code#", supply_point_assignation.supply_point_id.code)
+        name = name.replace("#owner_id#", supply_point_assignation.owner_id.display_name)
+        # Each invoicing type has different data in the description column, so we need to check and modify
+        if selfconsumption_id.invoicing_mode in ["energy_delivered", "power_acquired"]:
+            name = name.replace("#cau#", selfconsumption_id.code)
+        if selfconsumption_id.invoicing_mode == "power_acquired":
+            name = name.replace("#power#", str(selfconsumption_id.power))
+            name = name.replace("#coefficient#", str(round(supply_point_assignation.coefficient, 6)))
+            days_timedelta = self.contract_id.next_period_date_end - self.contract_id.next_period_date_start
+            if days_timedelta:
+                days_between = days_timedelta.days + 1
+            else:
+                days_between = 0
+            name = name.replace("#days_invoiced#", str(days_between))
+            name = name.replace("#power_acquired#", str(round(selfconsumption_id.power * supply_point_assignation.coefficient, 2)))
+            name = name.replace("#total_amount#", str(round(selfconsumption_id.power * supply_point_assignation.coefficient * days_between, 2)))
+        return name
