@@ -24,7 +24,7 @@
               options="{'no_open': True}"
             />
             <field name="name" required="1"/>
-            <field name="description_sale" required="1" />
+            <field name="description_sale" />
             <field name="list_price" />
             <field name="taxes_id" widget="many2many_tags" />
             <field name="recurring_rule_mode" required="1" />
@@ -36,6 +36,8 @@
             <field name="fixed_invoicing_month" attrs="{'required': [('recurring_rule_mode','=','fixed')],'invisible': [('recurring_rule_mode','!=','fixed')]}" />
             <field name="service_product_ids" widget="one2many">
               <tree>
+                <field name="type" />
+                <field name="existing_service_product_id" />
                 <field name="name" />
                 <field name="description_sale" />
                 <field name="list_price" />
@@ -46,8 +48,20 @@
               </tree>
               <form>
                 <group>
-                  <field name="name" required="1" />
-                  <field name="description_sale" required="1" />
+                  <field name="type" required="1" />
+                  <field
+                    name="existing_service_product_id"
+                    attrs="{'invisible': [('type', '!=', 'existing')],'required': [('type','=','existing')]}"
+                    domain="[('is_service','=',True)]"
+                  />
+                  <field
+                    name="name"
+                    attrs="{'invisible': [('type', '!=', 'new')],'required': [('type','=','new')]}"
+                  />
+                  <field
+                    name="description_sale"
+                    attrs="{'invisible': [('type', '!=', 'new')]}"
+                  />
                   <field name="list_price" />
                   <field name="qty_type" required="1" />
                   <field
@@ -58,7 +72,11 @@
                     name="quantity"
                     attrs="{'invisible': [('qty_type', '!=', 'fixed')]}"
                   />
-                  <field name="taxes_id" widget="many2many_tags" />
+                  <field
+                    name="taxes_id"
+                    widget="many2many_tags"
+                    attrs="{'invisible': [('type', '!=', 'new')]}"
+                  />
                 </group>
               </form>
             </field>

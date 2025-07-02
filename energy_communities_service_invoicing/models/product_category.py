@@ -1,6 +1,10 @@
 from odoo import _, api, fields, models
 
-from ..utils import _PACK_PRODUCT_PARENT_CATEG_REF, _SHARE_PRODUCTS_CATEG_REFS
+from ..utils import (
+    _PACK_PRODUCT_PARENT_CATEG_REF,
+    _SERVICE_PRODUCT_PARENT_CATEG_REF,
+    _SHARE_PRODUCTS_CATEG_REFS,
+)
 
 
 class ProductCategory(models.Model):
@@ -8,7 +12,10 @@ class ProductCategory(models.Model):
     _inherit = "product.category"
 
     is_pack = fields.Boolean(
-        "Is a pack category", compute="_compute_is_pack", store=False
+        "Is a pack category", compute="_compute_is_pack", store=True
+    )
+    is_service = fields.Boolean(
+        "Is a service category", compute="_compute_is_service", store=True
     )
     is_config_share = fields.Boolean(
         "Is a shared based on config", compute="_compute_is_config_share", store=False
@@ -40,6 +47,14 @@ class ProductCategory(models.Model):
             if record.parent_id:
                 if record.parent_id.data_xml_id == _PACK_PRODUCT_PARENT_CATEG_REF:
                     record.is_pack = True
+
+    @api.depends("parent_id")
+    def _compute_is_service(self):
+        for record in self:
+            record.is_service = False
+            if record.parent_id:
+                if record.parent_id.data_xml_id == _SERVICE_PRODUCT_PARENT_CATEG_REF:
+                    record.is_service = True
 
     @api.depends("data_xml_id")
     def _compute_is_config_share(self):

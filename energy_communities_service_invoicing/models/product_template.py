@@ -17,7 +17,10 @@ class ProductTemplate(models.Model):
     is_config_share = fields.Boolean(
         "Is a shared based on config", compute="_compute_is_config_share", store=False
     )
-    is_pack = fields.Boolean("Is a pack", compute="_compute_is_pack", store=False)
+    is_pack = fields.Boolean("Is a pack", related="categ_id.is_pack")
+    is_service = fields.Boolean(
+        "Is a service", compute="_compute_is_service", store=True
+    )
 
     @api.depends("property_contract_template_id")
     def _compute_related_contract_product_ids(self):
@@ -37,11 +40,11 @@ class ProductTemplate(models.Model):
                 record.is_config_share = record.categ_id.is_config_share
 
     @api.depends("categ_id")
-    def _compute_is_pack(self):
+    def _compute_is_service(self):
         for record in self:
-            record.is_pack = False
+            record.is_service = False
             if record.categ_id:
-                record.is_pack = record.categ_id.is_pack
+                record.is_service = record.categ_id.is_service
 
     @api.constrains("property_contract_template_id")
     def _constraint_contract_template_pack_type(self):

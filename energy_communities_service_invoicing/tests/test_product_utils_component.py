@@ -1,5 +1,3 @@
-from collections import namedtuple
-
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
@@ -12,71 +10,15 @@ from ..schemas import (
     ProductCreationParams,
     ProductCreationResult,
     ServiceProductCreationData,
+    ServiceProductExistingData,
 )
 from ..utils import _SHARE_PRODUCTS_CATEG_REFS
-
-PackProductDataTestingCase = namedtuple(
-    "PackProductDataTestingCase", list(PackProductCreationData.model_fields.keys())
+from .testing_cases import (
+    _PRODUCT_UTILS_TESTING_CASES,
+    PackProductDataTestingCase,
+    ServiceProductCreationDataTestingCase,
+    ServiceProductExistingDataTestingCase,
 )
-ServiceProductDataTestingCase = namedtuple(
-    "ServiceProductDataTestingCase",
-    list(ServiceProductCreationData.model_fields.keys()),
-)
-
-ProductUtilsTestingCase = namedtuple(
-    "ProductUtilsTestingCase", ["pack_product_case", "service_product_case"]
-)
-
-_PACK_PRODUCT_TESTING_CASES = {
-    "fixed_prepaid_recurring_fee_pack": PackProductDataTestingCase(
-        "Platform Company",
-        "energy_communities.product_category_recurring_fee_pack",
-        "Recurring fee pack test 1",
-        "Recurring fee pack test 1 long description",
-        11,
-        ["l10n_es.4_account_tax_template_s_iva21s"],
-        "fixed",
-        "pre-paid",
-        False,
-        False,
-        "yearly",
-        "22",
-        "03",
-    )
-}
-_SERVICE_PRODUCT_TESTING_CASES = {
-    "recurring_fee_services": [
-        ServiceProductDataTestingCase(
-            "Platform Company",
-            "energy_communities.product_category_recurring_fee_service",
-            "Recurring fee service test 1",
-            "Recurring fee service test 1 long description",
-            18,
-            ["l10n_es.4_account_tax_template_s_iva21s"],
-            "fixed",
-            1,
-            False,
-        ),
-        ServiceProductDataTestingCase(
-            "Platform Company",
-            "energy_communities.product_category_recurring_fee_service",
-            "Recurring fee service test 2",
-            "Recurring fee service test 2 long description",
-            17,
-            ["l10n_es.4_account_tax_template_s_iva21s"],
-            "fixed",
-            3,
-            False,
-        ),
-    ]
-}
-
-_TESTING_CASES = {
-    "fixed_prepaid_recurring_fee": ProductUtilsTestingCase(
-        _PACK_PRODUCT_TESTING_CASES["fixed_prepaid_recurring_fee_pack"],
-        _SERVICE_PRODUCT_TESTING_CASES["recurring_fee_services"],
-    )
-}
 
 
 @tagged("-at_install", "post_install")
@@ -87,19 +29,20 @@ class TestProductUtilsComponent(TransactionCase):
 
     def test_pack_product_creator_wizard_case_1(self):
         self._pack_product_creator_wizard_case(
-            _TESTING_CASES["fixed_prepaid_recurring_fee"]
+            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_recurring_fee"]
         )
 
     def _pack_product_creator_wizard_case(self, case):
         data = self._prepare_all_case_data(case)
         # WORKFLOW: Create a pack creator wizard and execute create
         services = []
-        for service_data in data.services:
+        for service_data in data.new_services:
             services.append(
                 (
                     0,
                     0,
                     {
+                        "type": "new",
                         "name": service_data.name,
                         "description_sale": service_data.description_sale,
                         "list_price": service_data.list_price,
@@ -134,7 +77,7 @@ class TestProductUtilsComponent(TransactionCase):
 
     def test_pack_product_creator_component_case_1(self):
         self._pack_product_creator_component_case(
-            _TESTING_CASES["fixed_prepaid_recurring_fee"]
+            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_recurring_fee"]
         )
 
     def _pack_product_creator_component_case(self, case):
@@ -144,7 +87,7 @@ class TestProductUtilsComponent(TransactionCase):
         self.assertFalse(
             bool(self.env["product.template"].search([("name", "=", data.pack.name)]))
         )
-        for service_data in data.services:
+        for service_data in data.new_services:
             self.assertFalse(
                 bool(
                     self.env["product.template"].search(
@@ -168,13 +111,17 @@ class TestProductUtilsComponent(TransactionCase):
         self._assert_base_product_data(result.pack_product_template, data.pack)
         self._assert_pack_product_data(result, data)
         # for services
-        self.assertTrue(bool(result.service_product_template_list))
+        self.assertTrue(bool(result.new_service_product_template_list))
         i = 0
-        for service_product_template in result.service_product_template_list:
-            self._assert_base_product_data(service_product_template, data.services[i])
+        for service_product_template in result.new_service_product_template_list:
+            self._assert_base_product_data(
+                service_product_template, data.new_services[i]
+            )
             i += 1
         if data.pack:
-            self._assert_services_on_price_list(result.service_product_template_list)
+            self._assert_services_on_price_list(
+                result.new_service_product_template_list
+            )
 
     def _assert_base_product_data(self, product_template, test_data):
         if product_template:
@@ -220,28 +167,31 @@ class TestProductUtilsComponent(TransactionCase):
             )
             self.assertEqual(contract_template.company_id.id, data.pack.company_id)
             self.assertEqual(
-                len(contract_template.contract_line_ids), len(data.services)
+                len(contract_template.contract_line_ids), len(data.new_services)
             )
             i = 0
             for contract_line in contract_template.contract_line_ids:
-                if data.services[i].description_sale:
+                if data.new_services[i].description_sale:
                     self.assertEqual(
-                        contract_line.name, data.services[i].description_sale
+                        contract_line.name, data.new_services[i].description_sale
                     )
                 else:
-                    self.assertEqual(contract_line.name, data.services[i].name)
+                    self.assertEqual(contract_line.name, data.new_services[i].name)
                 self.assertEqual(
                     contract_line.product_id,
-                    result.service_product_template_list[i].product_variant_id,
+                    result.new_service_product_template_list[i].product_variant_id,
                 )
                 self.assertTrue(contract_line.automatic_price)
                 self.assertFalse(bool(contract_line.price_unit))
-                self.assertEqual(contract_line.qty_type, data.services[i].qty_type)
-                if data.services[i].quantity:
-                    self.assertEqual(contract_line.quantity, data.services[i].quantity)
-                if data.services[i].qty_formula_id:
+                self.assertEqual(contract_line.qty_type, data.new_services[i].qty_type)
+                if data.new_services[i].quantity:
                     self.assertEqual(
-                        contract_line.qty_formula_id.id, data.services[i].qty_formula_id
+                        contract_line.quantity, data.new_services[i].quantity
+                    )
+                if data.new_services[i].qty_formula_id:
+                    self.assertEqual(
+                        contract_line.qty_formula_id.id,
+                        data.new_services[i].qty_formula_id,
                     )
                 self.assertEqual(
                     contract_line.recurring_rule_mode, data.pack.recurring_rule_mode
@@ -287,22 +237,33 @@ class TestProductUtilsComponent(TransactionCase):
             self.assertTrue(bool(related_price_list_item))
 
     def _prepare_all_case_data(self, case):
-        services = []
+        new_services = []
+        existing_services = []
         for service_data in case.service_product_case:
-            services.append(
-                self._prepare_one_case_data(
-                    service_data,
-                    ServiceProductDataTestingCase,
-                    ServiceProductCreationData,
+            if isinstance(service_data, ServiceProductCreationDataTestingCase):
+                new_services.append(
+                    self._prepare_one_case_data(
+                        service_data,
+                        ServiceProductCreationDataTestingCase,
+                        ServiceProductCreationData,
+                    )
                 )
-            )
+            if isinstance(service_data, ServiceProductExistingDataTestingCase):
+                existing_services.append(
+                    self._prepare_one_case_data(
+                        service_data,
+                        ServiceProductExistingDataTestingCase,
+                        ServiceProductExistingData,
+                    )
+                )
         return ProductCreationParams(
             pack=self._prepare_one_case_data(
                 case.pack_product_case,
                 PackProductDataTestingCase,
                 PackProductCreationData,
             ),
-            services=services,
+            new_services=new_services,
+            existing_services=existing_services,
         )
 
     def _prepare_one_case_data(
@@ -321,7 +282,7 @@ class TestProductUtilsComponent(TransactionCase):
                             if data_val
                             else None
                         )
-                    elif field == "categ_id":
+                    elif field in ["categ_id", "product_template_id"]:
                         params[field] = self.env.ref(data_val).id
                     elif field == "taxes_id":
                         params[field] = self._prepare_refs_data(data_val)
