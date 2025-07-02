@@ -31,8 +31,8 @@ class ServiceProductCreationData(BaseProductCreationData):
 
 
 class ServiceProductExistingData(BaseModel):
-    model_config = ConfigDict(arbitrary_types_allowed=True)
-    product_template: ProductTemplate
+    product_template_id: int
+    list_price: float
     qty_type: Optional[str] = None
     quantity: Optional[float] = None
     qty_formula_id: Optional[int] = None
@@ -40,10 +40,12 @@ class ServiceProductExistingData(BaseModel):
 
 class ProductCreationParams(BaseModel):
     pack: Optional[PackProductCreationData] = None
-    services: Optional[List[ServiceProductCreationData]] = None
+    new_services: Optional[List[ServiceProductCreationData]] = None
+    existing_services: Optional[List[ServiceProductExistingData]] = None
 
 
 class ProductCreationResult(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
     pack_product_template: Optional[ProductTemplate] = None
-    service_product_template_list: Optional[List[ProductTemplate]] = None
+    new_service_product_template_list: Optional[List[ProductTemplate]] = None
+    existing_service_product_template_list: Optional[List[ProductTemplate]] = None

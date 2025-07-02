@@ -10,6 +10,7 @@ from ..schemas import (
     PackProductCreationData,
     ProductCreationParams,
     ServiceProductCreationData,
+    ServiceProductExistingData,
 )
 
 
@@ -54,27 +55,41 @@ class PackProductCreatorWizard(models.TransientModel):
             return component.create_products(creation_params)
 
     def _build_creation_params(self):
-        services = []
+        new_services = []
+        existing_services = []
         for service in self.service_product_ids:
-            services.append(
-                ServiceProductCreationData(
-                    company_id=self.company_id.id if self.company_id else None,
-                    categ_id=self.env.ref(
-                        _PACK_PRODUCTS_RELATION_TO_SERVICES_REFS[
-                            self.pack_categ_id.data_xml_id
-                        ]
-                    ).id,
-                    name=service.name,
-                    description_sale=service.description_sale,
-                    list_price=service.list_price,
-                    taxes_id=service.taxes_id.ids if service.taxes_id else [],
-                    qty_type=service.qty_type,
-                    quantity=service.quantity,
-                    qty_formula_id=service.qty_formula_id.id
-                    if service.qty_formula_id
-                    else None,
+            if service.type == "new":
+                new_services.append(
+                    ServiceProductCreationData(
+                        company_id=self.company_id.id if self.company_id else None,
+                        categ_id=self.env.ref(
+                            _PACK_PRODUCTS_RELATION_TO_SERVICES_REFS[
+                                self.pack_categ_id.data_xml_id
+                            ]
+                        ).id,
+                        name=service.name,
+                        description_sale=service.description_sale,
+                        list_price=service.list_price,
+                        taxes_id=service.taxes_id.ids if service.taxes_id else [],
+                        qty_type=service.qty_type,
+                        quantity=service.quantity,
+                        qty_formula_id=service.qty_formula_id.id
+                        if service.qty_formula_id
+                        else None,
+                    )
                 )
-            )
+            if service.type == "existing":
+                existing_services.append(
+                    ServiceProductExistingData(
+                        product_template_id=service.existing_service_product_id.id,
+                        list_price=service.list_price,
+                        qty_type=service.qty_type,
+                        quantity=service.quantity,
+                        qty_formula_id=service.qty_formula_id.id
+                        if service.qty_formula_id
+                        else None,
+                    )
+                )
         return ProductCreationParams(
             pack=PackProductCreationData(
                 company_id=self.company_id.id if self.company_id else None,
@@ -101,5 +116,6 @@ class PackProductCreatorWizard(models.TransientModel):
                 if self.fixed_invoicing_month
                 else None,
             ),
-            services=services,
+            new_services=new_services,
+            existing_services=existing_services,
         )

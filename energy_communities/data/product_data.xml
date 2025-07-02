@@ -7,8 +7,17 @@
     <field name="name">Packs</field>
   </record>
 
+  <record id="product_category_service" model="product.category">
+    <field name="name">Services</field>
+  </record>
+
   <record id="product_category_recurring_fee_service" model="product.category">
     <field name="name">Recurring fee Service</field>
+    <field
+      name="parent_id"
+      model="product.category"
+      eval="obj(ref('energy_communities.product_category_service')).id"
+    />
   </record>
 
   <record id="product_category_recurring_fee_pack" model="product.category">

@@ -38,6 +38,7 @@ _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES = [
 ] + _SERVICE_INVOICING_EXECUTED_ACTION_VALUES[:-1]
 
 _PACK_PRODUCT_PARENT_CATEG_REF = "energy_communities.product_category_pack"
+_SERVICE_PRODUCT_PARENT_CATEG_REF = "energy_communities.product_category_service"
 _SHARE_PRODUCTS_CATEG_REFS = [
     "energy_communities.product_category_share_recurring_fee_pack",
     "cooperator.product_category_company_share",
