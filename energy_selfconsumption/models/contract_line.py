@@ -239,7 +239,7 @@ class ContractLine(models.Model):
             days_invoiced = self._get_days_invoiced(dates)
             name = name.replace("#days_invoiced#", str(days_invoiced))
             name = name.replace(
-                "#total_amount#", str(self._get_quantity_to_invoice(*dates))
+                "#total_amount#", str(round(self._get_quantity_to_invoice(*dates), 2))
             )
         return name
 
