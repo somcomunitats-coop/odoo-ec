@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-28 11:48+0000\n"
-"PO-Revision-Date: 2025-05-28 11:48+0000\n"
+"POT-Creation-Date: 2025-07-03 10:11+0000\n"
+"PO-Revision-Date: 2025-07-03 10:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -67,15 +67,14 @@ msgid ""
 "futura Comunidad Energética entre tu gente para hacerla posible entre "
 "todos!</p><p class =\"text-[#8a9f96] text-sm text-justify\">¡Vamos!</p>"
 msgstr ""
-"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 "
-"class=\"text-lg font-medium mb-2\">¡Muchas gracias por tu interés!</h2><p "
-"class =\"text-[#8a9f96] text-sm text-justify mb-2 mt0\">Cuando haya "
-"novedades con la Comunidad Energética contactaremos contigo y con las "
-"personas que también han mostrado interés y le ofreceremos apoyo para "
-"activarla.</p><p class =\"text-[#8a9f96] text-sm text-justify\">Comparte la "
-"información de la futura Comunidad Energética entre tu gente para hacerla "
-"posible entre todos!</p><p class =\"text-[#8a9f96] text-sm text-"
-"justify\">¡Vamos!</p>"
+"<h1 class=\"text-lg font-semibold\">Formularioa bidali da.</h1><h2 "
+"class=\"text-lg font-medium\">Eskerrik asko zure interesagatik!</h2><p class"
+" =\"text-[#8a9f96] text-sm text-justify\">Energia-komunitatearen inguruko "
+"berritasunak daudenean, zurekin eta interesa agertu dutenekin harremanetan "
+"jarriko gara .</p><p class =\"text-[#8a9f96] text-sm text-"
+"justify\">Partekatu sortuko dugun energia-komunitatearen informazioa zure "
+"inguruan, denon artean posible egiteko!</p><p class =\"text-[#8a9f96] text-"
+"sm text-justify\">Aurrera!</p>"
 
 #. module: energy_communities
 #: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_coordinadora
@@ -89,6 +88,14 @@ msgid ""
 " gente para hacerla posible entre todos!</p><p class =\"text-[#8a9f96] text-"
 "sm text-justify\">¡Vamos!</p>"
 msgstr ""
+"<h1 class=\"text-lg font-semibold\">Formularioa bidali da.</h1><h2 "
+"class=\"text-lg font-medium\">Eskerrik asko zure interesagatik!</h2><p class"
+" =\"text-[#8a9f96] text-sm text-justify\">Energia-komunitatearen inguruko "
+"berritasunak daudenean, zurekin eta interesa agertu dutenekin harremanetan "
+"jarriko gara .</p><p class =\"text-[#8a9f96] text-sm text-"
+"justify\">Partekatu sortuko dugun energia-komunitatearen informazioa zure "
+"inguruan, denon artean posible egiteko!</p><p class =\"text-[#8a9f96] text-"
+"sm text-justify\">Aurrera!</p>"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_selection
@@ -371,7 +378,6 @@ msgstr "Haz clic para definir un nuevo Source."
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__ce_member_status__closed
-#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_status__closed
 #, python-format
 msgid "Closed"
 msgstr "Itxita"
@@ -456,7 +462,6 @@ msgstr "Komunitate bigarren mailako mota"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_member_status
-#: model:ir.model.fields,field_description:energy_communities.field_landing_page__community_status
 msgid "Community status"
 msgstr "Erkidego-egoera"
 
@@ -471,7 +476,7 @@ msgstr "Komunitate mota"
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__company_ids_info
 #: model:ir.model.fields,field_description:energy_communities.field_res_users__company_ids_info
 msgid "Companies"
-msgstr "Compañías"
+msgstr "Enpresak"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_setup_bank_manual_config__company_id
@@ -1465,7 +1470,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__ce_member_status__open
-#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_status__open
 #, python-format
 msgid "Open"
 msgstr "Ireki"
@@ -1605,6 +1609,11 @@ msgstr "EL proceso ha empezado."
 #: model:ir.model,name:energy_communities.model_product_template
 msgid "Product"
 msgstr "Plantilla de producte"
+
+#. module: energy_communities
+#: model:ir.ui.menu,name:energy_communities.view_product_categories_menu
+msgid "Product Categories"
+msgstr ""
 
 #. module: energy_communities
 #. odoo-python
