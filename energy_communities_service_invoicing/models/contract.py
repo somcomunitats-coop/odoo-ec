@@ -175,6 +175,11 @@ class ContractContract(models.Model):
             component.propagate_recurrency_values_to_contract()
         return moves
 
+    def propagate_recurrency_values_to_contract(self):
+        with contract_utils(self.env, self) as component:
+            component.propagate_recurrency_values_to_contract()
+        return True
+
     def action_activate_contract(self):
         return self._action_contract("activate", {"execution_date": self.date_start})
 

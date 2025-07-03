@@ -9,6 +9,7 @@ _RECURRENCY_VALUES_SETUP = {
     "fixed_invoicing_day": str,
     "fixed_invoicing_month": str,
     "recurring_next_date": str,
+    "next_period_date_start": str,
 }
 
 _RECURRENCY_VALUES = _RECURRENCY_VALUES_SETUP | {"last_date_invoiced": str}
