@@ -282,7 +282,7 @@ class TestProductUtilsComponent(TransactionCase):
                             if data_val
                             else None
                         )
-                    elif field in ["categ_id", "product_template_id"]:
+                    elif field in ["categ_id", "product_template_id", "qty_formula_id"]:
                         params[field] = self.env.ref(data_val).id
                     elif field == "taxes_id":
                         params[field] = self._prepare_refs_data(data_val)

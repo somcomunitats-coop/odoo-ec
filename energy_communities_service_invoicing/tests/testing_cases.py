@@ -81,7 +81,27 @@ _SERVICE_PRODUCT_TESTING_CASES = {
             3,
             False,
         ),
-    ]
+    ],
+    "platform_services": [
+        ServiceProductCreationDataTestingCase(
+            "Platform Company",
+            "product_category_platform_service",
+            "Platform service test 1",
+            "Platform service test 1 long description",
+            3,
+            ["l10n_es.4_account_tax_template_s_iva21s"],
+            "variable",
+            False,
+            "energy_communities_service_invoicing.active_community_members_formula",
+        ),
+        ServiceProductExistingDataTestingCase(
+            "energy_communities_service_invoicing.demo_platform_service_product_template",
+            17,
+            "fixed",
+            2,
+            False,
+        ),
+    ],
 }
 
 _PRODUCT_UTILS_TESTING_CASES = {
