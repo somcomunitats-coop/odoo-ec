@@ -32,27 +32,14 @@ class TestProductUtilsComponent(TransactionCase):
             _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_recurring_fee"]
         )
 
+    def test_pack_product_creator_wizard_case_2(self):
+        self._pack_product_creator_wizard_case(
+            _PRODUCT_UTILS_TESTING_CASES["interval_prepaid_platform"]
+        )
+
     def _pack_product_creator_wizard_case(self, case):
         data = self._prepare_all_case_data(case)
         # WORKFLOW: Create a pack creator wizard and execute create
-        services = []
-        for service_data in data.new_services:
-            services.append(
-                (
-                    0,
-                    0,
-                    {
-                        "type": "new",
-                        "name": service_data.name,
-                        "description_sale": service_data.description_sale,
-                        "list_price": service_data.list_price,
-                        "quantity": service_data.quantity,
-                        "qty_type": service_data.qty_type,
-                        "qty_formula_id": service_data.qty_formula_id,
-                        "taxes_id": service_data.taxes_id,
-                    },
-                )
-            )
         wizard = self.env["pack.product.creator.wizard"].create(
             {
                 "company_id": data.pack.company_id,
@@ -68,16 +55,57 @@ class TestProductUtilsComponent(TransactionCase):
                 "recurring_invoicing_fixed_type": data.pack.recurring_invoicing_fixed_type,
                 "fixed_invoicing_day": data.pack.fixed_invoicing_day,
                 "fixed_invoicing_month": data.pack.fixed_invoicing_month,
-                "service_product_ids": services,
+                "service_product_ids": self._get_wizard_lines_creation_data(
+                    data.new_services
+                )
+                + self._get_wizard_lines_creation_data(data.existing_services),
             }
+        )
+        new_wizard_lines = self._get_wizard_lines_creation_data(data.new_services)
+        existing_wizard_lines = self._get_wizard_lines_creation_data(
+            data.existing_services
         )
         result = wizard._create_products()
         # ASSERT CREATION WENT OK
         self._assert_creation_ok(result, data)
 
+    def _get_wizard_lines_creation_data(self, services_data):
+        services = []
+        for service_data in services_data:
+            if isinstance(service_data, ServiceProductCreationData):
+                line_create_dict = {
+                    "type": "new",
+                    "name": service_data.name,
+                    "description_sale": service_data.description_sale,
+                    "list_price": service_data.list_price,
+                    "quantity": service_data.quantity,
+                    "qty_type": service_data.qty_type,
+                    "qty_formula_id": service_data.qty_formula_id,
+                    "taxes_id": service_data.taxes_id,
+                }
+            if isinstance(service_data, ServiceProductExistingData):
+                product_template = self.env["product.template"].browse(
+                    service_data.product_template_id
+                )
+                line_create_dict = {
+                    "type": "existing",
+                    "existing_service_product_id": product_template.id,
+                    "list_price": service_data.list_price,
+                    "quantity": service_data.quantity,
+                    "qty_type": service_data.qty_type,
+                    "qty_formula_id": service_data.qty_formula_id,
+                }
+            services.append((0, 0, line_create_dict))
+        return services
+
     def test_pack_product_creator_component_case_1(self):
         self._pack_product_creator_component_case(
             _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_recurring_fee"]
+        )
+
+    def test_pack_product_creator_component_case_2(self):
+        self._pack_product_creator_component_case(
+            _PRODUCT_UTILS_TESTING_CASES["interval_prepaid_platform"]
         )
 
     def _pack_product_creator_component_case(self, case):
@@ -178,14 +206,14 @@ class TestProductUtilsComponent(TransactionCase):
                 contract_template,
                 result.new_service_product_template_list,
             )
-            # self._assert_pack_contract_lines_consistency(
-            #     len(data.new_services),
-            #     len(data.existing_services),
-            #     data.pack,
-            #     data.existing_services,
-            #     contract_template,
-            #     result.existing_service_product_template_list,
-            # )
+            self._assert_pack_contract_lines_consistency(
+                len(data.new_services),
+                len(data.existing_services),
+                data.pack,
+                data.existing_services,
+                contract_template,
+                result.existing_service_product_template_list,
+            )
 
     def _assert_pack_contract_lines_consistency(
         self,

@@ -49,8 +49,8 @@ _PACK_PRODUCT_TESTING_CASES = {
         ["l10n_es.4_account_tax_template_s_iva21s"],
         "interval",
         "pre-paid",
-        "quaterly",
         2,
+        "quarterly",
         False,
         False,
         False,
@@ -85,7 +85,7 @@ _SERVICE_PRODUCT_TESTING_CASES = {
     "platform_services": [
         ServiceProductCreationDataTestingCase(
             "Platform Company",
-            "product_category_platform_service",
+            "energy_communities_service_invoicing.product_category_platform_service",
             "Platform service test 1",
             "Platform service test 1 long description",
             3,
@@ -96,7 +96,7 @@ _SERVICE_PRODUCT_TESTING_CASES = {
         ),
         ServiceProductExistingDataTestingCase(
             "energy_communities_service_invoicing.demo_platform_service_product_template",
-            17,
+            15,
             "fixed",
             2,
             False,
@@ -108,5 +108,9 @@ _PRODUCT_UTILS_TESTING_CASES = {
     "fixed_prepaid_recurring_fee": ProductUtilsTestingCase(
         _PACK_PRODUCT_TESTING_CASES["fixed_prepaid_recurring_fee_pack"],
         _SERVICE_PRODUCT_TESTING_CASES["recurring_fee_services"],
-    )
+    ),
+    "interval_prepaid_platform": ProductUtilsTestingCase(
+        _PACK_PRODUCT_TESTING_CASES["interval_prepaid_platform_pack"],
+        _SERVICE_PRODUCT_TESTING_CASES["platform_services"],
+    ),
 }

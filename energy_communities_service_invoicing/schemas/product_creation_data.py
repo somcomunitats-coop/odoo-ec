@@ -10,7 +10,7 @@ class BaseProductCreationData(BaseModel):
     categ_id: int
     name: str
     description_sale: Optional[str] = None
-    list_price: float
+    list_price: float = 0.0
     taxes_id: list
 
 
@@ -32,7 +32,7 @@ class ServiceProductCreationData(BaseProductCreationData):
 
 class ServiceProductExistingData(BaseModel):
     product_template_id: int
-    list_price: float
+    list_price: float = 0.0
     qty_type: Optional[str] = None
     quantity: Optional[float] = None
     qty_formula_id: Optional[int] = None

@@ -20,7 +20,6 @@ class ProductCategory(models.Model):
     is_config_share = fields.Boolean(
         "Is a shared based on config", compute="_compute_is_config_share", store=False
     )
-    data_xml_id = fields.Char("XML ID", compute="_compute_data_xml_id", store=True)
     service_invoicing_sale_journal_id = fields.Many2one(
         comodel_name="account.journal",
         string="Service invoicing sale journal",
@@ -62,10 +61,3 @@ class ProductCategory(models.Model):
             record.is_config_share = False
             if record.data_xml_id in _SHARE_PRODUCTS_CATEG_REFS:
                 record.is_config_share = True
-
-    def _compute_data_xml_id(self):
-        for record in self:
-            res = record.get_external_id()
-            record.data_xml_id = False
-            if res.get(record.id):
-                record.data_xml_id = res.get(record.id)
