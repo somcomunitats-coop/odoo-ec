@@ -1,12 +1,18 @@
 import base64
 import logging
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 from io import StringIO
 
 import chardet
 import pandas as pd
 from stdnum.es import cups, referenciacatastral
-from stdnum.exceptions import *
+from stdnum.exceptions import (
+    InvalidChecksum,
+    InvalidComponent,
+    InvalidFormat,
+    InvalidLength,
+)
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
@@ -21,13 +27,14 @@ from odoo.addons.energy_communities_service_invoicing.utils import (
 
 _logger = logging.getLogger(__name__)
 
-
+# Constants for invoicing values
 INVOICING_VALUES = [
     ("power_acquired", _("Power Acquired")),
     ("energy_delivered", _("Energy Delivered")),
     ("energy_custom", _("Energy Delivered Custom")),
 ]
 
+# Constants for configuration states
 ACTIVE = "active"
 INACTIVE = "inactive"
 
@@ -36,8 +43,37 @@ CONF_STATE_VALUES = [
     (INACTIVE, _("Inactive")),
 ]
 
+# Constants for CAU and CIL validation
+CAU_LENGTH_24 = 24
+CAU_LENGTH_26 = 26
+CIL_LENGTH_23 = 23
+CIL_LENGTH_25 = 25
+CUPS_LENGTH_20 = 20
+CUPS_LENGTH_22 = 22
+CAU_SEPARATOR = "A"
+LAST_DIGITS_COUNT = 3
+
+# Constants for default participation values
+DEFAULT_PARTICIPATIONS = [
+    {"name": "0,5 kW", "quantity": 0.5},
+    {"name": "1,0 kW", "quantity": 1.0},
+    {"name": "1,5 kW", "quantity": 1.5},
+    {"name": "2,0 kW", "quantity": 2.0},
+]
+
 
 class Selfconsumption(models.Model):
+    """
+    Self-consumption Energy Project Model
+
+    This model manages energy self-consumption projects including:
+    - Project configuration and validation
+    - Distribution tables management
+    - Inscriptions handling
+    - Contract generation and management
+    - Invoicing processes
+    """
+
     _name = "energy_selfconsumption.selfconsumption"
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _inherits = {
@@ -53,15 +89,19 @@ class Selfconsumption(models.Model):
         ),
     ]
 
+    # Compute methods
     def _compute_distribution_table_count(self):
+        """Calculate the number of distribution tables for each record"""
         for record in self:
             record.distribution_table_count = len(record.distribution_table_ids)
 
     def _compute_inscription_count(self):
+        """Calculate the number of inscriptions for each record"""
         for record in self:
             record.inscription_count = len(record.inscription_ids)
 
     def _compute_contract_count(self):
+        """Calculate the number of active contracts for each record"""
         for record in self:
             related_contracts = self.env["contract.contract"].search_count(
                 [("project_id", "=", record.id), ("status", "=", "in_progress")]
@@ -69,30 +109,13 @@ class Selfconsumption(models.Model):
             record.contracts_count = related_contracts
 
     def _compute_sale_orders_count(self):
+        """Calculate the number of sale orders for each record"""
         for record in self:
             sale_orders = self.get_sale_orders()
             record.sale_orders_count = len(sale_orders)
 
-    def _compute_report_distribution_table(self):
-        """
-        This compute field gets the distribution table needed to generate the reports.
-        It prioritizes the table in process and then the active one. It can only be one of each.
-        """
-        for record in self:
-            table_in_process = record.distribution_table_ids.filtered_domain(
-                [("state", "=", "process")]
-            )
-            table_in_active = record.distribution_table_ids.filtered_domain(
-                [("state", "=", ACTIVE)]
-            )
-            if table_in_process:
-                record.report_distribution_table = table_in_process
-            elif table_in_active:
-                record.report_distribution_table = table_in_active
-            else:
-                record.report_distribution_table = False
-
     def _compute_current_distribution_table(self):
+        """Get the currently active distribution table"""
         for record in self:
             table_in_active = record.distribution_table_ids.filtered_domain(
                 [("state", "=", "active")]
@@ -102,10 +125,11 @@ class Selfconsumption(models.Model):
             else:
                 record.current_distribution_table = False
 
+    # Field definitions
     project_id = fields.Many2one(
         "energy_project.project", required=True, ondelete="cascade"
     )
-    code = fields.Char(string="CAU")
+    code = fields.Char(string="CAU", help="Self-consumption Authorization Code")
     cil = fields.Char(
         string="CIL", help="Production facility code for liquidation purposes"
     )
@@ -114,282 +138,303 @@ class Selfconsumption(models.Model):
         string="Owner",
         required=True,
         default=lambda self: self.env.company.partner_id,
+        help="Owner of the self-consumption project",
     )
-    power = fields.Float(string="Power (kW)")
+    power = fields.Float(string="Power (kW)", help="Total power capacity in kilowatts")
     distribution_table_ids = fields.One2many(
         "energy_selfconsumption.distribution_table",
         "selfconsumption_project_id",
         readonly=True,
+        help="Distribution tables associated with this project",
     )
     report_distribution_table = fields.Many2one(
         "energy_selfconsumption.distribution_table",
-        compute=_compute_report_distribution_table,
-        readonly=True,
+        help="Distribution table used for report generation",
     )
     current_distribution_table = fields.Many2one(
         "energy_selfconsumption.distribution_table",
         compute=_compute_current_distribution_table,
         readonly=True,
         store=False,
+        help="Currently active distribution table",
     )
-    distribution_table_count = fields.Integer(compute=_compute_distribution_table_count)
+    distribution_table_count = fields.Integer(
+        compute=_compute_distribution_table_count, help="Number of distribution tables"
+    )
     inscription_ids = fields.One2many(
         "energy_selfconsumption.inscription_selfconsumption",
         "selfconsumption_project_id",
         readonly=True,
+        help="Inscriptions for this self-consumption project",
     )
-    inscription_count = fields.Integer(compute=_compute_inscription_count)
-    contracts_count = fields.Integer(compute=_compute_contract_count)
-    sale_orders_count = fields.Integer(compute=_compute_sale_orders_count)
-    invoicing_mode = fields.Selection(INVOICING_VALUES, string="Invoicing Mode")
-    payment_mode_id = fields.Many2one("account.payment.mode", string="Payment mode")
-    product_id = fields.Many2one("product.product", string="Product")
+    inscription_count = fields.Integer(
+        compute=_compute_inscription_count, help="Number of inscriptions"
+    )
+    contracts_count = fields.Integer(
+        compute=_compute_contract_count, help="Number of active contracts"
+    )
+    sale_orders_count = fields.Integer(
+        compute=_compute_sale_orders_count, help="Number of sale orders"
+    )
+    invoicing_mode = fields.Selection(
+        INVOICING_VALUES,
+        string="Invoicing Mode",
+        help="Method used for invoicing this project",
+    )
+    payment_mode_id = fields.Many2one(
+        "account.payment.mode",
+        string="Payment mode",
+        help="Default payment mode for this project",
+    )
+    product_id = fields.Many2one(
+        "product.product", string="Product", help="Product associated with this project"
+    )
     contract_template_id = fields.Many2one(
         "contract.template",
         string="Contract Template",
         related="product_id.property_contract_template_id",
+        help="Template used for contract generation",
     )
     supplier_id = fields.Many2one(
         "energy_project.supplier",
         string="Energy Supplier",
         help="Select the associated Energy Supplier",
     )
-    cadastral_reference = fields.Char(string="Cadastral reference")
+    cadastral_reference = fields.Char(
+        string="Cadastral reference",
+        help="Official cadastral reference for the project location",
+    )
     conf_state = fields.Selection(
         CONF_STATE_VALUES,
         string="Activate Registration Form",
         default=INACTIVE,
         required=True,
+        help="Controls whether the registration form is active",
     )
     conf_participation_ids = fields.One2many(
         "energy_selfconsumptions.participation",
         "project_id",
         string="Participation",
+        help="Available participation options for this project",
     )
-    conf_used_in_selfconsumption = fields.Boolean("Show used in selfconsumption")
-    conf_vulnerability_situation = fields.Boolean("Show vulnerability situation")
+    conf_used_in_selfconsumption = fields.Boolean(
+        "Show used in selfconsumption", help="Display usage in self-consumption field"
+    )
+    conf_vulnerability_situation = fields.Boolean(
+        "Show vulnerability situation", help="Display vulnerability situation field"
+    )
     conf_bank_details = fields.Boolean(
         "Request bank details",
         default=True,
         help="Select when you want to make the payment by bank transfer. If not requested, the payment must be made by bank transfer by the member.",
     )
-    conf_url_form = fields.Char(string="URL")
+    conf_url_form = fields.Char(string="URL", help="URL for the registration form")
+
+    # Validation methods
+    def _validate_cups_code(self, code, code_type, cups_length, total_length):
+        """
+        Generic method to validate CUPS-based codes (CAU/CIL)
+
+        Args:
+            code (str): The code to validate
+            code_type (str): Type of code ('CAU' or 'CIL') for error messages
+            cups_length (int): Expected CUPS length (20 or 22)
+            total_length (int): Expected total code length
+
+        Returns:
+            str: The last digits after CUPS validation
+
+        Raises:
+            ValidationError: If validation fails
+        """
+        try:
+            cups.validate(code[:cups_length])
+        except InvalidLength:
+            error_message = _(
+                "Invalid {code_type}: The first characters related to CUPS are incorrect. The length is incorrect."
+            ).format(code_type=code_type)
+            raise ValidationError(error_message)
+        except InvalidComponent:
+            error_message = _(
+                "Invalid {code_type}: The CUPS does not start with 'ES'."
+            ).format(code_type=code_type)
+            raise ValidationError(error_message)
+        except InvalidFormat:
+            error_message = _(
+                "Invalid {code_type}: The CUPS has an incorrect format."
+            ).format(code_type=code_type)
+            raise ValidationError(error_message)
+        except InvalidChecksum:
+            error_message = _(
+                "Invalid {code_type}: The checksum of the CUPS is incorrect."
+            ).format(code_type=code_type)
+            raise ValidationError(error_message)
+
+        return code[cups_length:]
 
     @api.constrains("code")
     def _check_valid_code(self):
         """
-        The following are evaluated:
-            1. The first 20 or 22 digits correspond to the CUPS.
-            2. The character after CUPS is A
-            3. And the last 3 characters are numbers.
-            4. Taking into account that the length of the CUPS can vary, the length of the CAU can be 24 or 26 characters.
+        Validate CAU (Self-consumption Authorization Code) format.
+
+        The validation checks:
+        1. First 20 or 22 digits correspond to valid CUPS
+        2. Character after CUPS is 'A'
+        3. Last 3 characters are numbers
+        4. Total length is 24 or 26 characters
         """
         for record in self:
-            if record.code:
-                # Validate the total length of the CAU, check if the first digits are CUPS and get the last 4 characters
-                if len(record.code) == 24:
-                    try:
-                        cups.validate(record.code[:20])
-                    except InvalidLength:
-                        error_message = _(
-                            "Invalid CAU: The first characters related to CUPS are incorrect. The length is incorrect."
-                        )
-                        raise ValidationError(error_message)
-                    except InvalidComponent:
-                        error_message = _(
-                            "Invalid CAU: The CUPS does not start with 'ES'."
-                        )
-                        raise ValidationError(error_message)
-                    except InvalidFormat:
-                        error_message = _(
-                            "Invalid CAU: The CUPS has an incorrect format."
-                        )
-                        raise ValidationError(error_message)
-                    except InvalidChecksum:
-                        error_message = _(
-                            "Invalid CAU: The checksum of the CUPS is incorrect."
-                        )
-                        raise ValidationError(error_message)
-                    last_digits = record.code[20:]
-                elif len(record.code) == 26:
-                    try:
-                        cups.validate(record.code[:22])
-                    except InvalidLength:
-                        error_message = _(
-                            "Invalid CAU: The first characters related to CUPS are incorrect. The length is incorrect."
-                        )
-                        raise ValidationError(error_message)
-                    except InvalidComponent:
-                        error_message = _(
-                            "Invalid CAU: The CUPS does not start with 'ES'."
-                        )
-                        raise ValidationError(error_message)
-                    except InvalidFormat:
-                        error_message = _(
-                            "Invalid CAU: The CUPS has an incorrect format."
-                        )
-                        raise ValidationError(error_message)
-                    except InvalidChecksum:
-                        error_message = _(
-                            "Invalid CAU: The checksum of the CUPS is incorrect."
-                        )
-                        raise ValidationError(error_message)
-                    last_digits = record.code[22:]
-                else:
-                    error_message = _("Invalid CAU: The length is not correct")
-                    raise ValidationError(error_message)
+            if not record.code:
+                continue
 
-                # Check if the character after CUPS is 'A'
-                if not last_digits.startswith("A"):
-                    error_message = _("Invalid CAU: The character after CUPS is not A")
-                    raise ValidationError(error_message)
+            code_length = len(record.code)
 
-                # Check if the last 3 characters are numbers
-                if not last_digits[-3:].isdigit():
-                    error_message = _("Invalid CAU: Last 3 digits are not numbers")
-                    raise ValidationError(error_message)
+            # Determine CUPS length based on total code length
+            if code_length == CAU_LENGTH_24:
+                cups_length = CUPS_LENGTH_20
+            elif code_length == CAU_LENGTH_26:
+                cups_length = CUPS_LENGTH_22
+            else:
+                error_message = _("Invalid CAU: The length is not correct")
+                raise ValidationError(error_message)
+
+            # Validate CUPS portion and get remaining digits
+            last_digits = self._validate_cups_code(
+                record.code, "CAU", cups_length, code_length
+            )
+
+            # Check if the character after CUPS is 'A'
+            if not last_digits.startswith(CAU_SEPARATOR):
+                error_message = _("Invalid CAU: The character after CUPS is not A")
+                raise ValidationError(error_message)
+
+            # Check if the last 3 characters are numbers
+            if not last_digits[-LAST_DIGITS_COUNT:].isdigit():
+                error_message = _("Invalid CAU: Last 3 digits are not numbers")
+                raise ValidationError(error_message)
 
     @api.constrains("cil")
     def _check_valid_cil(self):
         """
-        The following are evaluated:
-            1. The first 20 or 22 digits correspond to the CUPS.
-            2. And the last 3 characters are numbers.
+        Validate CIL (Production facility code for liquidation) format.
+
+        The validation checks:
+        1. First 20 or 22 digits correspond to valid CUPS
+        2. Last 3 characters are numbers
+        3. Total length is 23 or 25 characters
         """
         for record in self:
-            if record.cil:
-                if len(record.cil) == 23:
-                    try:
-                        cups.validate(record.code[:20])
-                    except InvalidLength:
-                        error_message = _(
-                            "Invalid CIL: The first characters related to CUPS are incorrect. The length is incorrect."
-                        )
-                        raise ValidationError(error_message)
-                    except InvalidComponent:
-                        error_message = _(
-                            "Invalid CIL: The CUPS does not start with 'ES'."
-                        )
-                        raise ValidationError(error_message)
-                    except InvalidFormat:
-                        error_message = _(
-                            "Invalid CIL: The CUPS has an incorrect format."
-                        )
-                        raise ValidationError(error_message)
-                    except InvalidChecksum:
-                        error_message = _(
-                            "Invalid CIL: The checksum of the CUPS is incorrect."
-                        )
-                        raise ValidationError(error_message)
-                    last_digits = record.cil[20:]
-                elif len(record.cil) == 25:
-                    try:
-                        cups.validate(record.code[:22])
-                    except InvalidLength:
-                        error_message = _(
-                            "Invalid CIL: The first characters related to CUPS are incorrect. The length is incorrect."
-                        )
-                        raise ValidationError(error_message)
-                    except InvalidComponent:
-                        error_message = _(
-                            "Invalid CIL: The CUPS does not start with 'ES'."
-                        )
-                        raise ValidationError(error_message)
-                    except InvalidFormat:
-                        error_message = _(
-                            "Invalid CIL: The CUPS has an incorrect format."
-                        )
-                        raise ValidationError(error_message)
-                    except InvalidChecksum:
-                        error_message = _(
-                            "Invalid CIL: The checksum of the CUPS is incorrect."
-                        )
-                        raise ValidationError(error_message)
-                    last_digits = record.cil[22:]
-                else:
-                    error_message = _("Invalid CIL: The length is not correct")
-                    raise ValidationError(error_message)
+            if not record.cil:
+                continue
 
-                # Check if the last 3 characters are numbers
-                if not last_digits[-3:].isdigit():
-                    error_message = _("Invalid CIL: Last 3 digits are not numbers")
-                    raise ValidationError(error_message)
+            code_length = len(record.cil)
+
+            # Determine CUPS length based on total code length
+            if code_length == CIL_LENGTH_23:
+                cups_length = CUPS_LENGTH_20
+            elif code_length == CIL_LENGTH_25:
+                cups_length = CUPS_LENGTH_22
+            else:
+                error_message = _("Invalid CIL: The length is not correct")
+                raise ValidationError(error_message)
+
+            # Validate CUPS portion and get remaining digits
+            # Note: Using record.code instead of record.cil seems to be a bug in original code
+            # This should be fixed to use record.cil
+            last_digits = self._validate_cups_code(
+                record.cil, "CIL", cups_length, code_length
+            )
+
+            # Check if the last 3 characters are numbers
+            if not last_digits[-LAST_DIGITS_COUNT:].isdigit():
+                error_message = _("Invalid CIL: Last 3 digits are not numbers")
+                raise ValidationError(error_message)
 
     @api.constrains("cadastral_reference")
     def _check_valid_cadastral_reference(self):
+        """Validate Spanish cadastral reference format"""
         for record in self:
             if record.cadastral_reference:
                 try:
-                    referenciacatastral.validate(self.cadastral_reference)
+                    referenciacatastral.validate(record.cadastral_reference)
                 except Exception as e:
                     error_message = _("Invalid Cadastral Reference: {error}").format(
                         error=e
                     )
                     raise ValidationError(error_message)
 
+    # CRUD methods
+    def _create_default_participations(self):
+        """Create default participation options for the project"""
+        participation_model = self.env["energy_selfconsumptions.participation"]
+        for participation_data in DEFAULT_PARTICIPATIONS:
+            participation_model.create(
+                {
+                    **participation_data,
+                    "project_id": self.id,
+                }
+            )
+
     @api.model_create_multi
     def create(self, values):
+        """
+        Create new self-consumption project records with default participations
+
+        Args:
+            values (list): List of dictionaries containing field values
+
+        Returns:
+            recordset: Created records
+        """
         res = super().create(values)
-        self.env["energy_selfconsumptions.participation"].create(
-            {
-                "name": "0,5 kW",
-                "quantity": 0.5,
-                "project_id": res.id,
-            }
-        )
-        self.env["energy_selfconsumptions.participation"].create(
-            {
-                "name": "1,0 kW",
-                "quantity": 1.0,
-                "project_id": res.id,
-            }
-        )
-        self.env["energy_selfconsumptions.participation"].create(
-            {
-                "name": "1,5 kW",
-                "quantity": 1.5,
-                "project_id": res.id,
-            }
-        )
-        self.env["energy_selfconsumptions.participation"].create(
-            {
-                "name": "2,0 kW",
-                "quantity": 2.0,
-                "project_id": res.id,
-            }
-        )
+        # Create default participation options for each new project
+        for record in res:
+            record._create_default_participations()
         return res
 
     def unlink(self):
+        """
+        Delete self-consumption project records
+
+        Note: Contains TODO items for additional validation logic
+        """
         for record in self:
-            # TODO:
-            # An extra control is needed when deleting a supply_point_assignation_ids
+            # TODO: Add extra control when deleting supply_point_assignation_ids
             # depending on the state of the distribution_table_ids model.
             # record.distribution_table_ids.supply_point_assignation_ids.unlink()
-            # Extra control is needed when deleting a distribution_table_ids
+
+            # TODO: Add extra control when deleting distribution_table_ids
             # depending on the status
             # record.distribution_table_ids.unlink()
-            # An extra control is needed when deleting an inscription_ids depending
+
+            # TODO: Add extra control when deleting inscription_ids depending
             # on whether the supply_point_assignation_ids model of
             # distribution_table_ids is present. And depending on whether it is an open
             # enrollment for the public.
             # record.inscription_ids.unlink()
+
             record.project_id.unlink()
         return super().unlink()
 
+    # State management methods
     def set_inscription(self):
+        """Set project state to inscription"""
         for record in self:
+            record.unactivate_form()
             record.write({"state": "inscription"})
 
     def set_inscription_activation(self):
+        """Set project to inscription state and validate distribution table"""
         self.set_inscription()
         self.distribution_table_state("process", "validated")
 
     def set_draft(self):
+        """Set project state to draft"""
         for record in self:
             record.write({"state": "draft"})
 
     def set_invoicing_mode(self):
+        """Open wizard to define invoicing mode"""
         return {
             "name": _("Define Invoicing Mode"),
             "type": "ir.actions.act_window",
@@ -503,20 +548,16 @@ class Selfconsumption(models.Model):
                         self.env, existing_closed_contract
                     ) as component:
                         service_invoicing_id = component.reopen(
-                            fields.Date.today(),
+                            self.initial_last_date_invoiced + relativedelta(days=+1),
                             self.pricelist_id,
                             pack,
                             False,
                             self.payment_mode_id,
                         )
             if service_invoicing_id:
-                # 2.- setup contract line description
-                self._setup_selfconsumption_contract_line_description(
-                    distribution_table_validated, service_invoicing_id
-                )
-                # 3.- setup contract line main_line
+                # 2.- setup contract line main_line
                 service_invoicing_id.contract_line_ids[0].write({"main_line": True})
-                # 4.- mark contract as active
+                # 3.- mark contract as active
                 with contract_utils(self.env, service_invoicing_id) as component:
                     component.activate(fields.Date.today())
 
@@ -659,6 +700,9 @@ class Selfconsumption(models.Model):
     # TODO: Review if we need to use all contracts or only the active ones when this method is used
     def get_contracts(self):
         return self.env["contract.contract"].search([("project_id", "=", self.id)])
+    
+    def get_active_contracts(self):
+        return self.env["contract.contract"].search([("project_id", "=", self.id), ("status", "=", "in_progress")])
 
     def get_contracts_view(self):
         self.ensure_one()
@@ -714,7 +758,7 @@ class Selfconsumption(models.Model):
             for supply_point_assignation in distribution_table_to_activate.mapped(
                 "supply_point_assignation_ids"
             ):
-                inscription = supply_point_assignation._get_inscription()
+                inscription = supply_point_assignation.get_inscription()
                 inscription.write(
                     {
                         "participation_real_quantity": supply_point_assignation.energy_shares,
@@ -730,73 +774,6 @@ class Selfconsumption(models.Model):
                 if contract.partner_id.id in inscriptions.mapped("partner_id").ids:
                     with contract_utils(self.env, contract) as component:
                         component.close(fields.Date.today())
-
-    def _setup_selfconsumption_contract_line_description(
-        self, distribution_id, contract
-    ):
-        for contract_line in contract.contract_line_ids:
-            supply_point_assignation = distribution_id.supply_point_assignation_ids.filtered_domain(
-                [
-                    (
-                        "supply_point_id",
-                        "=",
-                        int(
-                            contract.sale_order_id.metadata_line_ids.filtered_domain(
-                                [("key", "=", "supply_point_id")]
-                            ).mapped("value")[0]
-                        ),
-                    ),
-                ]
-            )
-            data = {
-                "code": supply_point_assignation.supply_point_id.code,
-                "owner_id": supply_point_assignation.supply_point_id.owner_id.display_name,
-            }
-            # Each invoicing type has different data in the description column, so we need to check and modify
-            if self.selfconsumption_id.invoicing_mode == "energy_delivered":
-                data["cau"] = self.selfconsumption_id.code
-            elif self.selfconsumption_id.invoicing_mode == "power_acquired":
-                data["cau"] = self.selfconsumption_id.code
-                data["power"] = self.selfconsumption_id.power
-                data["coefficient"] = supply_point_assignation.coefficient
-                (
-                    first_date_invoiced,
-                    last_date_invoiced,
-                    recurring_next_date,
-                ) = contract_line._get_period_to_invoice(
-                    contract_line.last_date_invoiced,
-                    contract_line.recurring_next_date,
-                )
-                data["days_invoiced"] = (
-                    (last_date_invoiced - first_date_invoiced).days + 1
-                    if first_date_invoiced and last_date_invoiced
-                    else 0
-                )
-                data["power_acquired"] = (
-                    round(
-                        self.selfconsumption_id.power
-                        * supply_point_assignation.coefficient,
-                        2,
-                    )
-                    if supply_point_assignation.coefficient
-                    else 0.0
-                )
-                data["total_amount"] = round(
-                    data["days_invoiced"] * data["power_acquired"], 2
-                )
-            contract_line._set_name(data)
-
-    def action_selfconsumption_import_wizard(self):
-        self.ensure_one()
-        return {
-            "name": _("Import Inscriptions and Supply Points"),
-            "type": "ir.actions.act_window",
-            "view_mode": "form",
-            "res_model": "energy_selfconsumption.selfconsumption_import.wizard",
-            "views": [(False, "form")],
-            "view_id": False,
-            "target": "new",
-        }
 
     def validate_state(self, state):
         if state not in ("activation", ACTIVE):
@@ -818,14 +795,36 @@ class Selfconsumption(models.Model):
         )
         return wizard.exportar_csv()
 
-    def action_set_iban_inscriptions(self):
-        self.ensure_one()
-        return self.env.ref(
-            "energy_selfconsumption.action_set_iban_inscriptions"
-        ).read()[0]
+    def _set_report_distribution_table(self):
+        """
+        Get the distribution table needed to generate reports.
+        Prioritizes tables in process state, then active ones.
+        Only one table of each type should exist.
+        """
+        for record in self:
+            if self.env.context.get("distribution_table_id", False):
+                record.report_distribution_table = (
+                    record.distribution_table_ids.filtered_domain(
+                        [("id", "=", self.env.context.get("distribution_table_id"))]
+                    )
+                )
+            else:
+                table_in_process = record.distribution_table_ids.filtered_domain(
+                    [("state", "=", "process")]
+                )
+                table_in_active = record.distribution_table_ids.filtered_domain(
+                    [("state", "=", ACTIVE)]
+                )
+                if table_in_process:
+                    record.report_distribution_table = table_in_process
+                elif table_in_active:
+                    record.report_distribution_table = table_in_active
+                else:
+                    raise ValidationError(_("No distribution table found"))
 
     def action_manager_authorization_report(self):
         self.ensure_one()
+        self._set_report_distribution_table()
         self.validate_state(self.state)
         return self.env.ref(
             "energy_selfconsumption.selfconsumption_manager_authorization_report"
@@ -833,12 +832,15 @@ class Selfconsumption(models.Model):
 
     def action_power_sharing_agreement_report(self):
         self.ensure_one()
+        self._set_report_distribution_table()
         self.validate_state(self.state)
         return self.env.ref(
             "energy_selfconsumption.power_sharing_agreement_report"
         ).report_action(self)
 
     def action_manager_partition_coefficient_report(self):
+        self.ensure_one()
+        self._set_report_distribution_table()
         self.validate_state(self.state)
         tables_to_use = self.report_distribution_table
         file_content = ""

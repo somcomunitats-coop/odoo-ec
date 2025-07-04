@@ -1,66 +1,112 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+Self-consumption Inscription Views
+==================================
+
+This file contains views for managing inscriptions in energy self-consumption
+projects. Inscriptions represent partner participation in self-consumption projects.
+
+Main functionalities:
+- Editable tree view for mass inscription management
+- Filters by inscription state (active, changes, withdrawals, new)
+- Server actions for creating participant tables
+- Bank mandate and billing data management
+-->
 <odoo>
     <data>
+        
+        <!-- Tree View: Inscription List -->
         <record id="inscription_view_tree" model="ir.ui.view">
             <field name="name">Inscription List</field>
-            <field
-        name="model"
-      >energy_selfconsumption.inscription_selfconsumption</field>
+            <field name="model">energy_selfconsumption.inscription_selfconsumption</field>
             <field name="arch" type="xml">
-                <tree create="false" editable="bottom">
+                <tree create="false" 
+                      editable="bottom"
+                      decoration-warning="state == 'change'" 
+                      decoration-success="state == 'active'" 
+                      decoration-danger="state == 'cancelled'">
+                    <!-- Inscription state -->
                     <field name="state" width="6%" optional="show" readonly="1"/>
+                    
+                    <!-- Partner information -->
                     <field name="partner_id" options="{'no_create': True}" width="14%" optional="show" />
                     <field name="is_member" readonly="1" width="10%" optional="show"/>
+                    
+                    <!-- Supply point information -->
                     <field name="supply_point_id" width="10%" optional="show" />
                     <field name="code" readonly="1" width="22%" optional="show"/>
                     <field name="owner_id" options="{'no_create': True}" width="14%" optional="show" />
+                    
+                    <!-- Consumption and characteristics data -->
                     <field name="annual_electricity_use" width="6%" optional="show"/>
                     <field name="used_in_selfconsumption" width="6%" optional="show"/>
                     <field name="vulnerability_situation" width="6%" optional="show"/>
+                    
+                    <!-- Banking information and mandates -->
                     <field name="mandate_filtered_ids" invisible="True" />
                     <field name="acc_number" width="12%" optional="show"/>
-                    <field name="mandate_id" domain="[('id', 'in', mandate_filtered_ids)]" context="{'default_partner_id': partner_id}" width="14%" optional="hide" />
+                    <field name="mandate_id" 
+                           domain="[('id', 'in', mandate_filtered_ids)]" 
+                           context="{'default_partner_id': partner_id}" 
+                           width="14%" optional="hide" />
+                    
+                    <!-- Dates and acceptances -->
                     <field name="effective_date" width="6%" optional="hide"/>
                     <field name="member" readonly="1" width="6%" optional="hide"/>
-                    <field name="accept" readonly="1" width="6%" optional="hide"/>
+                    <field name="accept" string="Accept terms" readonly="1" width="6%" optional="hide"/>
+                    
+                    <!-- Participation quantities -->
                     <field name="participation_quantity" sum="True" width="6%" optional="show"/>
-                    <field name="participation_assigned_quantity" sum="True" width="6%" optional="show" attrs="{'readonly': [('state', '=', 'active')]}" />
-                    <field name="participation_real_quantity" sum="True" width="6%" optional="show" readonly="1" />
+                    <field name="participation_assigned_quantity" 
+                           sum="True" width="6%" optional="show" 
+                           attrs="{'readonly': [('state', '=', 'active')]}" />
+                    <field name="participation_real_quantity" 
+                           sum="True" width="6%" optional="show" readonly="1" />
                 </tree>
             </field>
         </record>
 
+        <!-- Search View: Filters and Groupings -->
         <record id="inscription_search_view" model="ir.ui.view">
             <field name="name">energy_selfconsumption.inscription_selfconsumption.search</field>
             <field name="model">energy_selfconsumption.inscription_selfconsumption</field>
             <field name="arch" type="xml">
                 <search>
-                    <filter string="Actives" name="actives" domain="[('state', '=', 'active')]"/>
-                    <filter string="Changes" name="updates" domain="[('state', '=', 'change'), ('participation_assigned_quantity', '>', 0)]"/>
-                    <filter string="Retirements" name="deletes" domain="[('state', '=', 'change'), ('participation_assigned_quantity', '=', 0)]"/>
-                    <filter string="News" name="inactives" domain="[('state', '=', 'inactive')]"/>
+                    <!-- Filters by inscription state -->
+                    <filter string="Actives" name="actives" 
+                            domain="[('state', '=', 'active')]"/>
+                    <filter string="Changes" name="updates" 
+                            domain="[('state', '=', 'change'), ('participation_assigned_quantity', '>', 0)]"/>
+                    <filter string="Retirements" name="deletes" 
+                            domain="[('state', '=', 'change'), ('participation_assigned_quantity', '=', 0)]"/>
+                    <filter string="News" name="inactives" 
+                            domain="[('state', '=', 'inactive')]"/>
+                    <filter string="Cancelled" name="cancelled" 
+                            domain="[('state', '=', 'cancelled')]"/>
+                    
                     <separator/>
+                    
+                    <!-- Search fields -->
                     <field name="code" />
                     <field name="partner_id" />
                     <field name="owner_id" />
+                    
+                    <!-- Grouping options -->
                     <group expand="1" string="Group By">
-                        <filter string="State" name="state" domain="[]" context="{'group_by':'state'}" />
-                        <filter string="Partner" name="partner_id" domain="[]" context="{'group_by':'partner_id'}" />
+                        <filter string="State" name="state" 
+                                domain="[]" context="{'group_by':'state'}" />
+                        <filter string="Partner" name="partner_id" 
+                                domain="[]" context="{'group_by':'partner_id'}" />
                     </group>
                 </search>
             </field>
         </record>
 
+        <!-- Server Action: Create Participant Table -->
         <record model="ir.actions.server" id="inscription_to_participant_action">
             <field name="name">Create participant table</field>
-            <field
-        name="model_id"
-        ref="model_energy_selfconsumption_inscription_selfconsumption"
-      />
-            <field
-        name="binding_model_id"
-        ref="model_energy_selfconsumption_inscription_selfconsumption"
-      />
+            <field name="model_id" ref="model_energy_selfconsumption_inscription_selfconsumption" />
+            <field name="binding_model_id" ref="model_energy_selfconsumption_inscription_selfconsumption" />
             <field name="binding_type">action</field>
             <field name="binding_view_types">list,form</field>
             <field name="state">code</field>
@@ -69,6 +115,7 @@
             </field>
         </record>
 
+        <!-- Server Action: Change Inscription State -->
         <record model="ir.actions.server" id="inscription_to_change_state_action">
             <field name="name">Change state inscription</field>
             <field name="model_id" ref="model_energy_selfconsumption_inscription_selfconsumption" />
@@ -80,5 +127,6 @@
                 action = record.change_state_inscription()
             </field>
         </record>
+        
     </data>
 </odoo>

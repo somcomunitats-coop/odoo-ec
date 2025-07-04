@@ -8,292 +8,628 @@ import pandas as pd
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from ..models.selfconsumption import INVOICING_VALUES
+from ..models.config import (
+    CSV_DELIMITER,
+    CSV_QUOTE_CHAR,
+    DISPLAY_DATE_FORMAT,
+    INVOICING_MODE_ENERGY_CUSTOM,
+    INVOICING_MODE_ENERGY_DELIVERED,
+    INVOICING_VALUES,
+    MIN_POWER_VALUE,
+)
+
+# Constants for invoicing wizard
+DEFAULT_ENCODING = "utf-8"
+VALID_INVOICING_MODES = [INVOICING_MODE_ENERGY_DELIVERED, INVOICING_MODE_ENERGY_CUSTOM]
+CSV_FILE_EXTENSION = "csv"
+ENERGY_DELIVERED_TEMPLATE = "Energy Delivered Custom: {energy_delivered} kWh"
 
 logger = logging.getLogger(__name__)
 
 
 class InvoicingWizard(models.TransientModel):
+    """
+    Invoicing Wizard for Self-consumption Projects
+
+    This wizard handles invoice generation for self-consumption energy projects,
+    supporting different invoicing modes:
+    - Energy delivered: Fixed energy amount for all contracts
+    - Energy custom: Individual energy amounts from CSV file
+
+    Features:
+    - Contract validation and grouping
+    - CSV file import and processing
+    - Period validation
+    - Bulk invoice generation
+    """
+
     _name = "energy_selfconsumption.invoicing.wizard"
     _description = "Service to generate type invoicing"
 
-    power = fields.Float(string="Total Energy Generated (kWh)")
-    contract_ids = fields.Many2many("contract.contract", readonly=True)
+    # Energy and contract fields
+    power = fields.Float(
+        string="Total Energy Generated (kWh)",
+        help="Total energy generated for energy delivered mode",
+    )
+    contract_ids = fields.Many2many(
+        "contract.contract",
+        readonly=True,
+        help="Contracts selected for invoice generation",
+    )
+
+    # Period fields (computed)
     next_period_date_start = fields.Date(
         string="Start",
         compute="_compute_next_period_date_start_and_end",
         readonly=True,
+        help="Start date of the invoicing period",
     )
     next_period_date_end = fields.Date(
         string="End",
         compute="_compute_next_period_date_start_and_end",
         readonly=True,
+        help="End date of the invoicing period",
     )
+
+    # Contract count and mode
     num_contracts = fields.Integer(
         string="Selected contracts",
         default=lambda self: len(self.env.context.get("active_ids", [])),
+        help="Number of contracts selected for invoicing",
     )
-
-    def _get_invoicing_mode(self):
-        for contract in self.env["contract.contract"].search(
-            [("id", "in", self.env.context.get("active_ids", []))]
-        ):
-            return contract.project_id.selfconsumption_id.invoicing_mode
-        return None
-
     invoicing_mode = fields.Selection(
-        INVOICING_VALUES, string="Invoicing Mode", default=_get_invoicing_mode
+        INVOICING_VALUES,
+        string="Invoicing Mode",
+        default="_get_invoicing_mode",
+        help="Invoicing mode of the selected contracts",
     )
 
-    import_file = fields.Binary(string="Import File (*.csv)")
-    fname = fields.Char(string="File Name")
+    # CSV import fields
+    import_file = fields.Binary(
+        string="Import File (*.csv)",
+        help="CSV file with custom energy amounts per contract",
+    )
+    fname = fields.Char(string="File Name", help="Name of the imported file")
     delimiter = fields.Char(
-        default=",",
+        default=CSV_DELIMITER,
         string="File Delimiter",
-        help="Delimiter in import CSV file.",
+        help="Delimiter in import CSV file",
     )
     quotechar = fields.Char(
-        default='"',
+        default=CSV_QUOTE_CHAR,
         string="File Quotechar",
-        help="Quotechar in import CSV file.",
+        help="Quote character in import CSV file",
     )
     encoding = fields.Char(
-        default="utf-8",
+        default=DEFAULT_ENCODING,
         string="File Encoding",
-        help="Encoding format in import CSV file.",
+        help="Encoding format in import CSV file",
     )
 
-    @api.constrains("import_file")
-    def _constrains_import_file(self):
-        if self.fname:
-            format = str(self.fname.split(".")[-1])
-            if format != "csv":
-                raise ValidationError(_("Only csv format files are accepted."))
+    # Default methods
+    def _get_invoicing_mode(self):
+        """
+        Get invoicing mode from selected contracts
 
+        Returns:
+            str: Invoicing mode or None if no contracts selected
+        """
+        active_ids = self.env.context.get("active_ids", [])
+        if not active_ids:
+            return False
+
+        contracts = self.env["contract.contract"].search([("id", "in", active_ids)])
+        if contracts:
+            return contracts[0].project_id.selfconsumption_id.invoicing_mode
+        return False
+
+    # Computed methods
     @api.depends("contract_ids")
     def _compute_next_period_date_start_and_end(self):
+        """
+        Compute period dates from contract lines
+
+        Gets the period dates from the main line or first line
+        of the first contract.
+        """
         for record in self:
-            if (
-                len(record.contract_ids) > 0
-                and len(record.contract_ids[0].contract_line_ids[0]) > 0
-            ):
-                main_line = record.contract_ids[0].get_main_line()
-                record.next_period_date_start = (
-                    main_line.next_period_date_start
-                    if main_line
-                    else record.contract_ids[0]
-                    .contract_line_ids[0]
-                    .next_period_date_start
-                )
-                record.next_period_date_end = (
-                    main_line.next_period_date_end
-                    if main_line
-                    else record.contract_ids[0].next_period_date_end
-                )
+            record.next_period_date_start = False
+            record.next_period_date_end = False
+
+            if not record.contract_ids:
+                continue
+
+            first_contract = record.contract_ids[0]
+            if not first_contract.contract_line_ids:
+                continue
+
+            # Get main line or first line
+            main_line = first_contract.get_main_line()
+            reference_line = (
+                main_line if main_line else first_contract.contract_line_ids[0]
+            )
+
+            record.next_period_date_start = reference_line.next_period_date_start
+            record.next_period_date_end = reference_line.next_period_date_end
+
+    # Validation constraints
+    @api.constrains("import_file", "fname")
+    def _check_import_file_format(self):
+        """
+        Validate imported file format
+
+        Raises:
+            ValidationError: If file format is not CSV
+        """
+        for record in self:
+            if record.fname:
+                file_extension = record.fname.split(".")[-1].lower()
+                if file_extension != CSV_FILE_EXTENSION:
+                    raise ValidationError(
+                        _(
+                            "Only CSV format files are accepted. Current file: {filename}"
+                        ).format(filename=record.fname)
+                    )
 
     @api.constrains("contract_ids")
-    def constraint_contract_ids(self):
+    def _check_contract_consistency(self):
+        """
+        Validate contract consistency for invoicing
+
+        Checks:
+        - All contracts belong to the same project
+        - All contracts have valid invoicing mode
+        - All contracts have the same invoicing period
+
+        Raises:
+            ValidationError: If validation fails
+        """
         for record in self:
+            if not record.contract_ids:
+                continue
+
             contract_list = record.contract_ids
+            first_contract = contract_list[0]
 
-            all_same_project = all(
-                element.project_id == contract_list[0].project_id
-                for element in contract_list
-            )
-            if not all_same_project:
-                raise ValidationError(
-                    _(
-                        """
-Some of the contract selected are not of the same self-consumption project.
+            # Check same project
+            if not self._validate_same_project(contract_list, first_contract):
+                return
 
-Please make sure that you are invoicing for only the same self-consumption project {project_name}.
-"""
-                    ).format(
-                        project_name=contract_list[0].project_id.selfconsumption_id.name
-                    )
-                )
+            # Check valid invoicing mode
+            if not self._validate_invoicing_mode(contract_list):
+                return
 
-            valid_invoicing_mode = ["energy_delivered", "energy_custom"]
+            # Check same period
+            if not self._validate_same_period(contract_list, first_contract):
+                return
 
-            all_invoicing_mode = all(
-                element.project_id.selfconsumption_id.invoicing_mode
-                in valid_invoicing_mode
-                for element in contract_list
-            )
-            if not all_invoicing_mode:
-                raise ValidationError(
-                    _(
-                        """
-Some of the contract selected are not defined as energy delivered self-consumption projects.
+    def _validate_same_project(self, contract_list, first_contract):
+        """
+        Validate all contracts belong to the same project
 
-Please make sure that you are invoicing the correct self-consumption project.
-"""
-                    )
-                )
+        Args:
+            contract_list: List of contracts to validate
+            first_contract: Reference contract
 
-            all_equal_period = all(
-                element.next_period_date_start
-                == contract_list[0].next_period_date_start
-                and element.next_period_date_end
-                == contract_list[0].next_period_date_end
-                for element in contract_list
-            )
-            if not all_equal_period:
-                raise ValidationError(
-                    _(
-                        """
-Select only contracts with the same period of invoicing.
-Make sure that all the selected contracts have the same invoicing period, from {next_period_date_start} to {next_period_date_end}.
-"""
-                    ).format(
-                        next_period_date_start=contract_list[0].next_period_date_start,
-                        next_period_date_end=contract_list[0].next_period_date_end,
-                    )
-                )
+        Returns:
+            bool: True if valid
 
-    @api.constrains("power")
-    def constraint_power(self):
-        for record in self:
-            if not record.power or record.power <= 0:
-                raise ValidationError(
-                    _("The energy generated must be greater than 0 (kWh).")
-                )
-
-    def generate_invoices(self):
-        df, exit_df = self.parse_csv_file()
-        res = []
-        for contract in self.contract_ids:
-            invoicing_mode = contract.project_id.selfconsumption_id.invoicing_mode
-            template_name = contract.contract_template_id.contract_line_ids[0].name
-
-            if invoicing_mode == "energy_delivered":
-                self._process_energy_delivered(contract, res)
-            elif invoicing_mode == "energy_custom":
-                if not exit_df:
-                    raise ValidationError(_("CSV file could not be loaded"))
-                self._process_energy_custom(df, contract, template_name, res)
-        return res
-
-    def _process_energy_delivered(self, contract, res):
-        res.append(
-            contract.with_context(
-                {"energy_delivered": self.power}
-            )._recurring_create_invoice()
+        Raises:
+            ValidationError: If contracts from different projects
+        """
+        all_same_project = all(
+            contract.project_id == first_contract.project_id
+            for contract in contract_list
         )
 
-    def _process_energy_custom(self, df, contract, template_name, res):
+        if not all_same_project:
+            project_name = first_contract.project_id.selfconsumption_id.name
+            raise ValidationError(
+                _(
+                    "Some contracts are not from the same self-consumption project. "
+                    "Please ensure all contracts belong to project '{project_name}'."
+                ).format(project_name=project_name)
+            )
+        return True
+
+    def _validate_invoicing_mode(self, contract_list):
+        """
+        Validate contracts have valid invoicing mode
+
+        Args:
+            contract_list: List of contracts to validate
+
+        Returns:
+            bool: True if valid
+
+        Raises:
+            ValidationError: If invalid invoicing mode
+        """
+        all_valid_mode = all(
+            contract.project_id.selfconsumption_id.invoicing_mode
+            in VALID_INVOICING_MODES
+            for contract in contract_list
+        )
+
+        if not all_valid_mode:
+            raise ValidationError(
+                _(
+                    "Some contracts are not configured for energy delivered invoicing. "
+                    "Please ensure all contracts have valid invoicing mode."
+                )
+            )
+        return True
+
+    def _validate_same_period(self, contract_list, first_contract):
+        """
+        Validate all contracts have the same invoicing period
+
+        Args:
+            contract_list: List of contracts to validate
+            first_contract: Reference contract
+
+        Returns:
+            bool: True if valid
+
+        Raises:
+            ValidationError: If different periods
+        """
+        first_start = first_contract.next_period_date_start
+        first_end = first_contract.next_period_date_end
+
+        all_same_period = all(
+            contract.next_period_date_start == first_start
+            and contract.next_period_date_end == first_end
+            for contract in contract_list
+        )
+
+        if not all_same_period:
+            raise ValidationError(
+                _(
+                    "Selected contracts have different invoicing periods. "
+                    "Please select contracts with the same period: {start} to {end}"
+                ).format(
+                    start=first_start.strftime(DISPLAY_DATE_FORMAT)
+                    if first_start
+                    else "N/A",
+                    end=first_end.strftime(DISPLAY_DATE_FORMAT) if first_end else "N/A",
+                )
+            )
+        return True
+
+    @api.constrains("power")
+    def _check_power_value(self):
+        """
+        Validate power value is positive
+
+        Raises:
+            ValidationError: If power is not positive
+        """
+        for record in self:
+            if record.power is not False and record.power <= MIN_POWER_VALUE:
+                raise ValidationError(
+                    _(
+                        "The energy generated must be greater than {min_value} kWh"
+                    ).format(min_value=MIN_POWER_VALUE)
+                )
+
+    # Main action methods
+    def generate_invoices(self):
+        """
+        Generate invoices for selected contracts
+
+        Main method that orchestrates invoice generation based on
+        the invoicing mode (energy delivered or energy custom).
+
+        Returns:
+            list: List of generated invoice records
+        """
+        self.ensure_one()
+
+        if not self.contract_ids:
+            raise ValidationError(_("No contracts selected for invoicing"))
+
+        # Parse CSV file if needed
+        df, csv_loaded = self._parse_csv_if_needed()
+
+        # Generate invoices
+        generated_invoices = []
+        for contract in self.contract_ids:
+            invoicing_mode = contract.project_id.selfconsumption_id.invoicing_mode
+
+            if invoicing_mode == INVOICING_MODE_ENERGY_DELIVERED:
+                invoice = self._process_energy_delivered_contract(contract)
+                generated_invoices.append(invoice)
+
+            elif invoicing_mode == INVOICING_MODE_ENERGY_CUSTOM:
+                if not csv_loaded:
+                    raise ValidationError(
+                        _("CSV file is required for energy custom mode")
+                    )
+                invoice = self._process_energy_custom_contract(df, contract)
+                generated_invoices.append(invoice)
+
+        return generated_invoices
+
+    def _parse_csv_if_needed(self):
+        """
+        Parse CSV file if energy custom mode is used
+
+        Returns:
+            tuple: (DataFrame, success_flag)
+        """
+        # Check if any contract uses energy custom mode
+        uses_custom_mode = any(
+            contract.project_id.selfconsumption_id.invoicing_mode
+            == INVOICING_MODE_ENERGY_CUSTOM
+            for contract in self.contract_ids
+        )
+
+        if uses_custom_mode:
+            return self.parse_csv_file()
+        return None, True
+
+    def _process_energy_delivered_contract(self, contract):
+        """
+        Process contract with energy delivered mode
+
+        Args:
+            contract: Contract record to process
+
+        Returns:
+            account.move: Generated invoice
+        """
+        return contract.with_context(
+            {"energy_delivered": self.power}
+        )._recurring_create_invoice()
+
+    def _process_energy_custom_contract(self, df, contract):
+        """
+        Process contract with energy custom mode
+
+        Args:
+            df: DataFrame with CSV data
+            contract: Contract record to process
+
+        Returns:
+            account.move: Generated invoice
+        """
+        # Validate CSV data count
         if len(self.contract_ids) != df.shape[0]:
             raise ValidationError(
                 _(
-                    "The number of contracts selected does not match "
-                    "the number of contracts loaded by the csv."
-                )
-            )
-        template_name += _("Energy Delivered Custom: {energy_delivered} kWh")
-        main_line = contract.get_main_line()
-        if len(contract.contract_line_ids) == 0:
-            raise ValidationError(_("The contract has no lines"))
-        next_period_date_start = (
-            main_line.next_period_date_start
-            if main_line
-            else contract.contract_line_ids[0].next_period_date_start
-        )
-        next_period_date_end = (
-            main_line.next_period_date_end
-            if main_line
-            else contract.contract_line_ids[0].next_period_date_end
-        )
-        row = df[
-            (df["CUPS"] == contract.supply_point_assignation_id.supply_point_id.code)
-            & (df["CAU"] == contract.project_id.selfconsumption_id.code)
-            & (
-                df["Periode facturat start (dd/mm/aaaa)"]
-                == next_period_date_start.strftime("%d/%m/%Y")
-            )
-            & (
-                df["Periode facturat end (dd/mm/aaaa)"]
-                == next_period_date_end.strftime("%d/%m/%Y")
-            )
-        ]
-        if row.empty:
-            raise ValidationError(
-                _(
-                    """
-Project (CAU) {cau} :
-For CUPS {cups} no data found for period
-{next_period_date_start} - {next_period_date_end}"""
-                ).format(
-                    cau=contract.project_id.selfconsumption_id.code,
-                    cups=contract.supply_point_assignation_id.supply_point_id.code,
-                    next_period_date_start=next_period_date_start.strftime("%d/%m/%Y"),
-                    next_period_date_end=next_period_date_end.strftime("%d/%m/%Y"),
-                )
-            )
-        else:
-            indice = row.get("CUPS").index[0]
-            cups = row.get("CUPS")[indice]
-            kwh = round(
-                float(row.get("Energia a facturar (kWh)")[indice].replace(",", ".")), 2
-            )
-            if kwh <= 0:
-                raise ValidationError(
-                    _("The energy generated must be greater than 0 (kWh).")
-                )
-            self._update_contract_lines(contract, cups, kwh, template_name)
-            res.append(
-                contract.with_context(
-                    {"energy_delivered": kwh}
-                )._recurring_create_invoice()
+                    "Number of selected contracts ({selected}) does not match "
+                    "number of contracts in CSV ({csv_count})"
+                ).format(selected=len(self.contract_ids), csv_count=df.shape[0])
             )
 
-    def _update_contract_lines(self, contract, cups, kwh, template_name):
+        # Get contract data
+        contract_data = self._extract_contract_data_from_csv(df, contract)
+
+        # Update contract lines with custom energy
+        self._update_contract_lines_with_custom_energy(contract, contract_data)
+
+        # Generate invoice
+        return contract.with_context(
+            {"energy_delivered": contract_data["energy"]}
+        )._recurring_create_invoice()
+
+    def _extract_contract_data_from_csv(self, df, contract):
+        """
+        Extract contract-specific data from CSV
+
+        Args:
+            df: DataFrame with CSV data
+            contract: Contract record
+
+        Returns:
+            dict: Contract data with CUPS, energy, and period info
+        """
+        # Get contract identifiers
+        cups_code = contract.supply_point_assignation_id.supply_point_id.code
+        cau_code = contract.project_id.selfconsumption_id.code
+
+        # Get period dates
+        main_line = contract.get_main_line()
+        reference_line = main_line if main_line else contract.contract_line_ids[0]
+
+        period_start = reference_line.next_period_date_start.strftime(
+            DISPLAY_DATE_FORMAT
+        )
+        period_end = reference_line.next_period_date_end.strftime(DISPLAY_DATE_FORMAT)
+
+        # Find matching row in CSV
+        matching_rows = df[
+            (df["CUPS"] == cups_code)
+            & (df["CAU"] == cau_code)
+            & (df["Periode facturat start (dd/mm/aaaa)"] == period_start)
+            & (df["Periode facturat end (dd/mm/aaaa)"] == period_end)
+        ]
+
+        if matching_rows.empty:
+            raise ValidationError(
+                _(
+                    "No data found in CSV for:\n"
+                    "Project (CAU): {cau}\n"
+                    "CUPS: {cups}\n"
+                    "Period: {start} - {end}"
+                ).format(
+                    cau=cau_code, cups=cups_code, start=period_start, end=period_end
+                )
+            )
+
+        # Extract energy value
+        row_index = matching_rows.index[0]
+        energy_str = matching_rows.loc[row_index, "Energia a facturar (kWh)"]
+        energy_value = round(float(str(energy_str).replace(",", ".")), 2)
+
+        if energy_value <= MIN_POWER_VALUE:
+            raise ValidationError(
+                _(
+                    "Energy value must be greater than {min_value} kWh. "
+                    "Found: {energy} kWh for CUPS {cups}"
+                ).format(min_value=MIN_POWER_VALUE, energy=energy_value, cups=cups_code)
+            )
+
+        return {
+            "cups": cups_code,
+            "energy": energy_value,
+            "period_start": period_start,
+            "period_end": period_end,
+        }
+
+    def _update_contract_lines_with_custom_energy(self, contract, contract_data):
+        """
+        Update contract lines with custom energy data
+
+        Args:
+            contract: Contract record
+            contract_data: Dictionary with contract data
+        """
+        if not contract.contract_line_ids:
+            raise ValidationError(
+                _("Contract {contract_name} has no lines to update").format(
+                    contract_name=contract.name or contract.display_name
+                )
+            )
+
+        # Get template name
+        template_name = contract.contract_template_id.contract_line_ids[0].name
+        template_name += " " + ENERGY_DELIVERED_TEMPLATE
+
+        # Update all contract lines
         for line in contract.contract_line_ids:
             line.write(
                 {
                     "name": template_name.format(
-                        energy_delivered=str(kwh),
-                        code=cups,
+                        energy_delivered=contract_data["energy"],
+                        code=contract_data["cups"],
                         owner_id=contract.supply_point_assignation_id.supply_point_id.owner_id.display_name,
                     ),
-                    "quantity": kwh,
+                    "quantity": contract_data["energy"],
                 }
             )
 
-    def _parse_file(self, data_file):
-        self.ensure_one()
-        try:
-            try:
-                decoded_file = data_file.decode(self.encoding)
-            except UnicodeDecodeError:
-                detected_encoding = chardet.detect(data_file).get("encoding", False)
-                if not detected_encoding:
-                    logger.warning(
-                        "No valid encoding was found for the attached file",
-                        exc_info=True,
-                    )
-                    return False, False
-                decoded_file = data_file.decode(detected_encoding)
+    # CSV processing methods
+    def parse_csv_file(self):
+        """
+        Parse uploaded CSV file
 
+        Returns:
+            tuple: (DataFrame, success_flag)
+        """
+        if not self.import_file:
+            return None, False
+
+        try:
+            file_data = base64.b64decode(self.import_file)
+            return self._parse_file_data(file_data)
+        except Exception as e:
+            logger.error(f"Error parsing CSV file: {e}")
+            return None, False
+
+    def _parse_file_data(self, file_data):
+        """
+        Parse file data into DataFrame
+
+        Args:
+            file_data: Binary file data
+
+        Returns:
+            tuple: (DataFrame, success_flag)
+        """
+        try:
+            # Try to decode with specified encoding
+            try:
+                decoded_file = file_data.decode(self.encoding)
+            except UnicodeDecodeError:
+                # Auto-detect encoding if specified encoding fails
+                detected_encoding = chardet.detect(file_data).get("encoding")
+                if not detected_encoding:
+                    logger.warning("No valid encoding detected for file")
+                    return None, False
+                decoded_file = file_data.decode(detected_encoding)
+
+            # Parse CSV
             df = pd.read_csv(
                 StringIO(decoded_file),
                 delimiter=self.delimiter,
                 quotechar=self.quotechar,
             )
+
+            # Validate CSV structure
+            if not self._validate_csv_structure(df):
+                return None, False
+
             return df, True
-        except Exception:
-            logger.warning("Parser error", exc_info=True)
-            return False, False
 
-    def parse_csv_file(self):
-        if self.import_file:
-            file_data = base64.b64decode(self.import_file)
-            return self._parse_file(file_data)
-        return False, False
+        except Exception as e:
+            logger.error(f"Error parsing file data: {e}")
+            return None, False
 
+    def _validate_csv_structure(self, df):
+        """
+        Validate CSV file structure
+
+        Args:
+            df: DataFrame to validate
+
+        Returns:
+            bool: True if valid structure
+        """
+        required_columns = [
+            "CUPS",
+            "CAU",
+            "Energia a facturar (kWh)",
+            "Periode facturat start (dd/mm/aaaa)",
+            "Periode facturat end (dd/mm/aaaa)",
+        ]
+
+        missing_columns = [col for col in required_columns if col not in df.columns]
+
+        if missing_columns:
+            raise ValidationError(
+                _("CSV file is missing required columns: {columns}").format(
+                    columns=", ".join(missing_columns)
+                )
+            )
+
+        if df.empty:
+            raise ValidationError(_("CSV file is empty"))
+
+        return True
+
+    # Utility methods
     def download_template_button(self):
+        """
+        Download CSV template for energy custom mode
+
+        Returns:
+            dict: Report action for template download
+        """
         self.ensure_one()
-        logger.info("\n\n download_template_button")
-        doc_ids = self.contract_ids.ids
+
+        if not self.contract_ids:
+            raise ValidationError(_("No contracts selected for template generation"))
+
         return self.env.ref(
             "energy_selfconsumption.contract_contract_csv_report"
-        ).report_action(docids=doc_ids)
+        ).report_action(docids=self.contract_ids.ids)
+
+    def get_wizard_summary(self):
+        """
+        Get summary information about the wizard state
+
+        Returns:
+            dict: Summary information
+        """
+        self.ensure_one()
+
+        return {
+            "contract_count": len(self.contract_ids),
+            "invoicing_mode": self.invoicing_mode,
+            "has_csv_file": bool(self.import_file),
+            "period_start": self.next_period_date_start,
+            "period_end": self.next_period_date_end,
+            "total_energy": self.power,
+        }

@@ -1,30 +1,46 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+Define Invoicing Mode Wizard Views
+===================================
+
+This file contains views for the invoicing mode definition wizard that allows
+configuring the billing method for energy self-consumption projects.
+
+Main functionalities:
+- Invoicing mode selection (power acquired, energy delivered, custom energy)
+- Price configuration based on selected mode
+- Recurring billing configuration (interval, type)
+- Contract template creation
+- Dynamic field visibility based on invoicing mode
+-->
 <odoo>
     <data>
+        
+        <!-- Form View: Define Invoicing Mode Wizard -->
         <record model="ir.ui.view" id="define_invoicing_mode_wizard_form_view">
-            <field
-        name="name"
-      >energy_selfconsumption.define_invoicing_mode.wizard.form</field>
-            <field
-        name="model"
-      >energy_selfconsumption.define_invoicing_mode.wizard</field>
+            <field name="name">energy_selfconsumption.define_invoicing_mode.wizard.form</field>
+            <field name="model">energy_selfconsumption.define_invoicing_mode.wizard</field>
             <field name="arch" type="xml">
                 <form string="Define Invoicing Mode Wizard">
                     <sheet>
                         <group>
+                            <!-- Left column: Invoicing mode and pricing -->
                             <group col="1">
+                                <!-- Invoicing mode selection -->
                                 <field name="invoicing_mode" />
-                                <field
-                  name="price"
-                  string="kWh Price (€/kWh)"
-                  attrs="{'invisible': [('invoicing_mode', 'not in', ['energy_delivered', 'energy_custom'])]}"
-                />
-                                <field
-                  name="price"
-                  string="kWn Price per day (€/kWn/day)"
-                  attrs="{'invisible': [('invoicing_mode', '!=', 'power_acquired')]}"
-                />
+                                
+                                <!-- Price for energy-based modes -->
+                                <field name="price"
+                                       string="kWh Price (€/kWh)"
+                                       attrs="{'invisible': [('invoicing_mode', 'not in', ['energy_delivered', 'energy_custom'])]}" />
+                                
+                                <!-- Price for power-based mode -->
+                                <field name="price"
+                                       string="kWn Price per day (€/kWn/day)"
+                                       attrs="{'invisible': [('invoicing_mode', '!=', 'power_acquired')]}" />
                             </group>
+                            
+                            <!-- Right column: Recurring billing configuration -->
                             <group col="2">
                                 <field name="recurring_rule_type" required="True" />
                                 <field name="recurring_interval" required="True" />
@@ -32,16 +48,17 @@
                             </group>
                         </group>
                     </sheet>
+                    
+                    <!-- Footer with contract template creation -->
                     <footer>
-                    <button
-              name="create_contract_template"
-              string="Create Contract Template"
-              type="object"
-              class="btn-primary"
-            />
+                        <button name="create_contract_template"
+                                string="Create Contract Template"
+                                type="object"
+                                class="btn-primary" />
                     </footer>
                 </form>
             </field>
         </record>
+        
     </data>
 </odoo>

@@ -1,6 +1,28 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Mail Templates
+==============
+
+This file defines email templates for automated communications in self-consumption
+projects. Templates include billing reminders and inscription confirmations.
+
+Main templates:
+- Energy Delivered Invoicing Reminder: Standard billing reminder
+- Energy Delivered Custom Invoicing Reminder: Custom billing with CSV upload
+- Power Acquired Invoicing Reminder: Power capacity billing reminder
+- Self-consumption Inscription Form: Registration confirmation email
+
+All templates support dynamic content with project and partner information,
+and are configured for automatic sending based on project events.
+-->
 <odoo>
     <data>
+        
+        <!-- ========================================== -->
+        <!-- BILLING REMINDER TEMPLATES                -->
+        <!-- ========================================== -->
+        
+        <!-- Template: Energy Delivered Invoicing Reminder -->
         <record id="selfconsumption_energy_delivered_invoicing_reminder" model="mail.template">
             <field name="name">Selfconsumption Energy Delivered Invoicing Reminder</field>
             <field name="description">Email reminder for self-consumption billing of supplied energy</field>
@@ -36,6 +58,7 @@
             </field>
         </record>
 
+        <!-- Template: Energy Delivered Custom Invoicing Reminder -->
         <record id="selfconsumption_energy_delivered_custom_invoicing_reminder" model="mail.template">
             <field name="name">Selfconsumption Energy Delivered Custom Invoicing Reminder</field>
             <field name="description">E-mail reminder of personalized billing of self-consumption of energy supplied</field>
@@ -81,6 +104,7 @@
             </field>
         </record>
 
+        <!-- Template: Power Acquired Invoicing Reminder -->
         <record id="selfconsumption_power_acquired_invoicing_reminder" model="mail.template">
             <field name="name">Selfconsumption Power Acquired Invoicing Reminder</field>
             <field name="description">E-mail billing reminder of self-consumption of energy purchased</field>
@@ -101,7 +125,7 @@
                         has started the invoicing process on <b><t t-out="ctx.get('next_invoicing')"/></b> according to the established recurrence.
                     </p>
                     <p>
-                        Invoices are created in “draft” and it is therefore necessary that they be validated and sent as soon as possible.
+                        Invoices are created in "draft" and it is therefore necessary that they be validated and sent as soon as possible.
                     </p>
                     <p>
                         For any questions or incidents, contact the support team; support@somcomunitats.coop.
@@ -110,6 +134,11 @@
             </field>
         </record>
 
+        <!-- ========================================== -->
+        <!-- INSCRIPTION CONFIRMATION TEMPLATES        -->
+        <!-- ========================================== -->
+        
+        <!-- Template: Self-consumption Inscription Confirmation -->
         <record id="selfconsumption_insciption_form" model="mail.template">
             <field name="name">Registration in self-consumption project of the Energy Community</field>
             <field name="description">E-mail of inscription in the self-consumption project of the Energy Community</field>
@@ -135,5 +164,6 @@
                 </div>
             </field>
         </record>
+        
     </data>
 </odoo>

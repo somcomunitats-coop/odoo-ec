@@ -1,12 +1,12 @@
 /** @odoo-module **/
 
-import { Component, useState } from "@odoo/owl";
-import { registry } from "@web/core/registry";
+import {Component, useState} from "@odoo/owl";
+import {registry} from "@web/core/registry";
 
 class ProgressBarWidget extends Component {
   setup() {
     // Obtener valores desde this.props
-    const { record } = this.props;
+    const {record} = this.props;
 
     // Configurar el estado inicial usando hooks de OWL
     this.state = useState({
@@ -16,15 +16,16 @@ class ProgressBarWidget extends Component {
     });
 
     // Calcular el porcentaje basado en los valores actuales
-    this.state.percentage = (this.state.current_quantity / this.state.max_quantity) * 100;
+    this.state.percentage =
+      (this.state.current_quantity / this.state.max_quantity) * 100;
   }
 
   get progressStyle() {
-    let background_color = '#7C7BAD';
+    let background_color = "#7C7BAD";
     if (this.state.percentage > 100) {
-      background_color = '#a10000';
+      background_color = "#a10000";
     } else if (this.state.percentage == 100) {
-      background_color = '#00a12a';
+      background_color = "#00a12a";
     }
     let width = this.state.percentage > 100 ? 100 : this.state.percentage;
     return `

@@ -1,42 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Res Users Role Data
+===================
+
+This file defines role extensions for energy community users, adding energy project
+permissions to existing roles. Each role is granted appropriate access levels
+based on their responsibilities within the energy community.
+
+Role permissions:
+- CE Member: Basic user access to energy projects
+- CE Admin: Full administrative access to energy projects
+- CE Manager: Full administrative access to energy projects
+- Coordinator Admin: Full administrative access to energy projects
+- Platform Admin: Full administrative access to energy projects
+
+All administrative roles receive the same level of access for energy project management.
+-->
 <odoo>
-    <record model="res.users.role" id="energy_communities.role_ce_member">
-        <field
-      name="implied_ids"
-      eval="[
+    <data>
+        
+        <!-- ========================================== -->
+        <!-- ENERGY COMMUNITY ROLE EXTENSIONS          -->
+        <!-- ========================================== -->
+        
+        <!-- Role Extension: Energy Community Member -->
+        <record model="res.users.role" id="energy_communities.role_ce_member">
+            <field name="implied_ids" eval="[
                 (4, ref('energy_project.group_user')),
-        ]"
-    />
-    </record>
-    <record model="res.users.role" id="energy_communities.role_ce_admin">
-        <field
-      name="implied_ids"
-      eval="[
-               (4, ref('energy_project.group_admin')),
-        ]"
-    />
-    </record>
-    <record model="res.users.role" id="energy_communities.role_ce_manager">
-        <field
-      name="implied_ids"
-      eval="[
-               (4, ref('energy_project.group_admin')),
-        ]"
-    />
-    </record>
-    <record model="res.users.role" id="energy_communities.role_coord_admin">
-        <field
-      name="implied_ids"
-      eval="[
-               (4, ref('energy_project.group_admin')),
-        ]"
-    />
-    </record>
-    <record model="res.users.role" id="energy_communities.role_platform_admin">
-        <field
-      name="implied_ids"
-      eval="[
-               (4, ref('energy_project.group_admin')),
-        ]"
-    />
-    </record>
+            ]" />
+        </record>
+        
+        <!-- Role Extension: Energy Community Admin -->
+        <record model="res.users.role" id="energy_communities.role_ce_admin">
+            <field name="implied_ids" eval="[
+                (4, ref('energy_project.group_admin')),
+            ]" />
+        </record>
+        
+        <!-- Role Extension: Energy Community Manager -->
+        <record model="res.users.role" id="energy_communities.role_ce_manager">
+            <field name="implied_ids" eval="[
+                (4, ref('energy_project.group_admin')),
+            ]" />
+        </record>
+        
+        <!-- Role Extension: Coordinator Admin -->
+        <record model="res.users.role" id="energy_communities.role_coord_admin">
+            <field name="implied_ids" eval="[
+                (4, ref('energy_project.group_admin')),
+            ]" />
+        </record>
+        
+        <!-- Role Extension: Platform Admin -->
+        <record model="res.users.role" id="energy_communities.role_platform_admin">
+            <field name="implied_ids" eval="[
+                (4, ref('energy_project.group_admin')),
+            ]" />
+        </record>
+        
+    </data>
 </odoo>

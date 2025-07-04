@@ -1,81 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Product Data
+============
+
+This file defines product categories and product templates for self-consumption
+billing and services. Products are organized into packs and individual services
+for different billing modes.
+
+Main components:
+- Product categories for organization (packs and services)
+- Pack products for bundled billing (energy delivered, power acquired, custom)
+- Individual service products for detailed billing
+- All products configured as services with proper units of measure
+-->
 <odoo>
-  <record id="product_category_selfconsumption_pack" model="product.category">
-    <field name="name">Selfconsumption Pack</field>
-  </record>
-  <record id="product_category_selfconsumption_service" model="product.category">
-    <field name="name">Selfconsumption Service</field>
-  </record>
+    <data>
+        
+        <!-- ========================================== -->
+        <!-- PRODUCT CATEGORIES                        -->
+        <!-- ========================================== -->
+        
+        <!-- Category: Self-consumption Packs -->
+        <record id="product_category_selfconsumption_pack" model="product.category">
+            <field name="name">Selfconsumption Pack</field>
+        </record>
+        
+        <!-- Category: Self-consumption Services -->
+        <record id="product_category_selfconsumption_service" model="product.category">
+            <field name="name">Selfconsumption Service</field>
+        </record>
 
-  <record id="product_product_energy_delivered_product_pack_template" model="product.template">
-      <field name="name">Energy delivered pack</field>
-      <field name="categ_id" ref="product_category_selfconsumption_pack"/>
-      <field name="standard_price">0.0</field>
-      <field name="list_price">0.0</field>
-      <field name="sale_ok" eval="True"/>
-      <field name="purchase_ok" eval="False"/> 
-      <field name="detailed_type">service</field>
-      <field name="company_id" eval="False"/>
-  </record>
+        <!-- ========================================== -->
+        <!-- PACK PRODUCTS                             -->
+        <!-- ========================================== -->
+        
+        <!-- Pack Product: Energy Delivered -->
+        <record id="product_product_energy_delivered_product_pack_template" model="product.template">
+            <field name="name">Energy delivered pack</field>
+            <field name="categ_id" ref="product_category_selfconsumption_pack"/>
+            <field name="standard_price">0.0</field>
+            <field name="list_price">0.0</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="purchase_ok" eval="False"/> 
+            <field name="detailed_type">service</field>
+            <field name="company_id" eval="False"/>
+        </record>
 
-  <record id="product_product_power_acquired_product_pack_template" model="product.template">
-      <field name="name">Power acquired pack</field>
-      <field name="categ_id" ref="product_category_selfconsumption_pack"/>
-      <field name="standard_price">0.0</field>
-      <field name="list_price">0.0</field>
-      <field name="sale_ok" eval="True"/>
-      <field name="purchase_ok" eval="False"/> 
-      <field name="detailed_type">service</field>
-      <field name="company_id" eval="False"/>
-  </record>
+        <!-- Pack Product: Power Acquired -->
+        <record id="product_product_power_acquired_product_pack_template" model="product.template">
+            <field name="name">Power acquired pack</field>
+            <field name="categ_id" ref="product_category_selfconsumption_pack"/>
+            <field name="standard_price">0.0</field>
+            <field name="list_price">0.0</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="purchase_ok" eval="False"/> 
+            <field name="detailed_type">service</field>
+            <field name="company_id" eval="False"/>
+        </record>
 
-  <record id="product_product_energy_custom_product_pack_template" model="product.template">
-      <field name="name">Energy custom pack</field>
-      <field name="categ_id" ref="product_category_selfconsumption_pack"/>
-      <field name="standard_price">0.0</field>
-      <field name="list_price">0.0</field>
-      <field name="sale_ok" eval="True"/>
-      <field name="purchase_ok" eval="False"/> 
-      <field name="detailed_type">service</field>
-      <field name="company_id" eval="False"/>
-  </record>
+        <!-- Pack Product: Energy Custom -->
+        <record id="product_product_energy_custom_product_pack_template" model="product.template">
+            <field name="name">Energy custom pack</field>
+            <field name="categ_id" ref="product_category_selfconsumption_pack"/>
+            <field name="standard_price">0.0</field>
+            <field name="list_price">0.0</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="purchase_ok" eval="False"/> 
+            <field name="detailed_type">service</field>
+            <field name="company_id" eval="False"/>
+        </record>
 
-  <record id="product_product_energy_delivered_product_template" model="product.template">
-      <field name="name">Energy delivered</field>
-      <field name="categ_id" ref="product_category_selfconsumption_service"/>
-      <field name="standard_price">0.0</field>
-      <field name="list_price">0.0</field>
-      <field name="sale_ok" eval="True"/>
-      <field name="purchase_ok" eval="False"/> 
-      <field name="detailed_type">service</field>
-      <field name="uom_id" ref="energy_project.kw_uom"/>
-      <field name="uom_po_id" ref="energy_project.kw_uom"/>
-      <field name="company_id" eval="False"/>
-  </record>
+        <!-- ========================================== -->
+        <!-- SERVICE PRODUCTS                          -->
+        <!-- ========================================== -->
+        
+        <!-- Service Product: Energy Delivered -->
+        <record id="product_product_energy_delivered_product_template" model="product.template">
+            <field name="name">Energy delivered</field>
+            <field name="categ_id" ref="product_category_selfconsumption_service"/>
+            <field name="standard_price">0.0</field>
+            <field name="list_price">0.0</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="purchase_ok" eval="False"/> 
+            <field name="detailed_type">service</field>
+            <field name="uom_id" ref="energy_project.kw_uom"/>
+            <field name="uom_po_id" ref="energy_project.kw_uom"/>
+            <field name="company_id" eval="False"/>
+        </record>
 
-  <record id="product_product_power_acquired_product_template" model="product.template">
-      <field name="name">Power acquired</field>
-      <field name="categ_id" ref="product_category_selfconsumption_service"/>
-      <field name="standard_price">0.0</field>
-      <field name="list_price">0.0</field>
-      <field name="sale_ok" eval="True"/>
-      <field name="purchase_ok" eval="False"/> 
-      <field name="detailed_type">service</field>
-      <field name="uom_id" ref="energy_project.kw_uom"/>
-      <field name="uom_po_id" ref="energy_project.kw_uom"/>
-      <field name="company_id" eval="False"/>
-  </record>
+        <!-- Service Product: Power Acquired -->
+        <record id="product_product_power_acquired_product_template" model="product.template">
+            <field name="name">Power acquired</field>
+            <field name="categ_id" ref="product_category_selfconsumption_service"/>
+            <field name="standard_price">0.0</field>
+            <field name="list_price">0.0</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="purchase_ok" eval="False"/> 
+            <field name="detailed_type">service</field>
+            <field name="uom_id" ref="energy_project.kw_uom"/>
+            <field name="uom_po_id" ref="energy_project.kw_uom"/>
+            <field name="company_id" eval="False"/>
+        </record>
 
-  <record id="product_product_energy_custom_product_template" model="product.template">
-      <field name="name">Energy custom</field>
-      <field name="categ_id" ref="product_category_selfconsumption_service"/>
-      <field name="standard_price">0.0</field>
-      <field name="list_price">0.0</field>
-      <field name="sale_ok" eval="True"/>
-      <field name="purchase_ok" eval="False"/> 
-      <field name="detailed_type">service</field>
-      <field name="uom_id" ref="energy_project.kw_uom"/>
-      <field name="uom_po_id" ref="energy_project.kw_uom"/>
-      <field name="company_id" eval="False"/>
-  </record>
+        <!-- Service Product: Energy Custom -->
+        <record id="product_product_energy_custom_product_template" model="product.template">
+            <field name="name">Energy custom</field>
+            <field name="categ_id" ref="product_category_selfconsumption_service"/>
+            <field name="standard_price">0.0</field>
+            <field name="list_price">0.0</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="purchase_ok" eval="False"/> 
+            <field name="detailed_type">service</field>
+            <field name="uom_id" ref="energy_project.kw_uom"/>
+            <field name="uom_po_id" ref="energy_project.kw_uom"/>
+            <field name="company_id" eval="False"/>
+        </record>
+        
+    </data>
 </odoo>
 

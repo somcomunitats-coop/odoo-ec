@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-28 11:48+0000\n"
-"PO-Revision-Date: 2025-05-28 11:48+0000\n"
+"POT-Creation-Date: 2025-07-03 10:11+0000\n"
+"PO-Revision-Date: 2025-07-03 10:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -378,7 +378,6 @@ msgstr "Clica per definir un nou Source."
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__ce_member_status__closed
-#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_status__closed
 #, python-format
 msgid "Closed"
 msgstr "Tancat"
@@ -463,7 +462,6 @@ msgstr "Tipus secundari Comunitat"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_member_status
-#: model:ir.model.fields,field_description:energy_communities.field_landing_page__community_status
 msgid "Community status"
 msgstr "Estat Comunitat"
 
@@ -1467,7 +1465,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__ce_member_status__open
-#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_status__open
 #, python-format
 msgid "Open"
 msgstr "Obert"
@@ -1607,6 +1604,11 @@ msgstr "El procés ha començat."
 #: model:ir.model,name:energy_communities.model_product_template
 msgid "Product"
 msgstr "Plantilla de producte"
+
+#. module: energy_communities
+#: model:ir.ui.menu,name:energy_communities.view_product_categories_menu
+msgid "Product Categories"
+msgstr ""
 
 #. module: energy_communities
 #. odoo-python

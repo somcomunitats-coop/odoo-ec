@@ -1,40 +1,61 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+Contract Views Extensions
+=========================
+
+This file extends contract views to add energy self-consumption specific
+functionality. It provides specialized views for managing contracts related
+to self-consumption projects.
+
+Main functionalities:
+- Tree view with supply point and period information
+- Search view with grouping by next period date
+- Server action for invoice generation (admin only)
+- CSV report for energy delivery data
+- Form view extension for self-consumption pack contracts
+-->
 <odoo>
     <data>
+        
+        <!-- Tree View: Contract List with Self-consumption Data -->
         <record id="contract_tree_view" model="ir.ui.view">
             <field name="name">energy_selfconsumption.contract.tree</field>
             <field name="model">contract.contract</field>
             <field name="arch" type="xml">
                 <tree string="Contracts" expand="1">
+                    <!-- Partner and supply point information -->
                     <field name="partner_id" />
                     <field name="supply_point_name" />
                     <field name="code" />
+                    
+                    <!-- Period dates -->
                     <field name="next_period_date_start" />
                     <field name="next_period_date_end" />
                     <field name="last_period_date_start" />
                     <field name="last_period_date_end" />
                 </tree>
             </field>
-
         </record>
+        
+        <!-- Search View Extension: Additional Grouping Options -->
         <record id="contract_search_view" model="ir.ui.view">
             <field name="name">energy_selfconsumption.contract.search</field>
             <field name="model">contract.contract</field>
             <field name="inherit_id" ref="contract.contract_contract_search_view" />
             <field name="arch" type="xml">
                 <xpath expr="/search" position="inside">
+                    <!-- Additional grouping options -->
                     <group expand="1" string="Group By">
-                      <filter
-                        string="Next Period Date Start"
-                        name="filter_next_period_date_end"
-                        domain="[]"
-                        context="{'group_by':'next_period_date_end'}"
-                      />
+                        <filter string="Next Period Date Start"
+                                name="filter_next_period_date_end"
+                                domain="[]"
+                                context="{'group_by':'next_period_date_end'}" />
                     </group>
                 </xpath>
             </field>
         </record>
 
+        <!-- Server Action: Generate Invoices (Admin Only) -->
         <record id="contract_invoicing_wizard_action" model="ir.actions.server">
             <field name="name">Generate invoices</field>
             <field name="model_id" ref="model_contract_contract" />
@@ -46,15 +67,7 @@
             <field name="code">action = records.invoicing_wizard_action()</field>
         </record>
 
-        <!-- <report
-      id="contract_contract_csv_report"
-      model="contract.contract"
-      string="Customized delivered energy template"
-      report_type="csv"
-      name="contract_contract.csv"
-      file="contract_contract"
-      attachment_use="False"
-    /> -->
+        <!-- CSV Report: Energy Delivery Template -->
         <record id="contract_contract_csv_report" model="ir.actions.report">
             <field name="name">Customized delivered energy template</field>
             <field name="model">contract.contract</field>
@@ -65,17 +78,21 @@
             <field name="binding_type">report</field>
         </record>
 
-      <record id="view_contract_contract_customer_form_platform_admin" model="ir.ui.view">
-        <field name="name">contract.contract.form (in selfconsumption platform admin)</field>
-        <field name="model">contract.contract</field>
-        <field name="inherit_id" ref="energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin" />
-        <field name="arch" type="xml">
-          <xpath expr="//field[@name='partner_id']" position="after">
-            <field name="project_id" attrs="{'invisible': [('pack_type','!=','selfconsumption_pack')]}"/>
-            <field name="supply_point_assignation_id" attrs="{'invisible': [('pack_type','!=','selfconsumption_pack')]}"/>
-          </xpath>
-        </field>
-      </record>
+        <!-- Form View Extension: Self-consumption Pack Contracts -->
+        <record id="view_contract_contract_customer_form_platform_admin" model="ir.ui.view">
+            <field name="name">contract.contract.form (in selfconsumption platform admin)</field>
+            <field name="model">contract.contract</field>
+            <field name="inherit_id" ref="energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <!-- Self-consumption specific fields -->
+                    <field name="project_id" 
+                           attrs="{'invisible': [('pack_type','!=','selfconsumption_pack')]}" />
+                    <field name="supply_point_assignation_id" 
+                           attrs="{'invisible': [('pack_type','!=','selfconsumption_pack')]}" />
+                </xpath>
+            </field>
+        </record>
 
     </data>
 </odoo>

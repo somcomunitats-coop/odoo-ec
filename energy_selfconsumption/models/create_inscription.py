@@ -6,113 +6,227 @@ from odoo import _, models
 
 
 class CreateInscription(models.AbstractModel):
+    """
+    Service to create inscriptions for self-consumption projects
+
+    This abstract model provides methods to handle the creation of inscriptions
+    for self-consumption energy projects, including:
+    - Partner validation and verification
+    - Supply point creation and management
+    - Bank mandate creation
+    - Participation assignment
+    """
+
     _name = "energy_selfconsumption.create_inscription_selfconsumption"
     _description = "Service to create inscriptions for a self-consumption"
 
+    # Constants for tariff determination
+    TARIFF_2_0TD_LIMIT = 15  # kW
+    TARIFF_3_0TD_LIMIT = 300  # kW
+    DEFAULT_TARIFF_LOW = "2.0TD"
+    DEFAULT_TARIFF_MEDIUM = "3.0TD"
+    DEFAULT_TARIFF_HIGH = "6.1TD"
+
     def _determine_tariff(self, contracted_power, values):
-        """Determina la tarifa en función de la potencia contratada."""
-        return values.get("tariff") or (
-            "2.0TD"
-            if contracted_power <= 15
-            else ("3.0TD" if contracted_power <= 300 else "6.1TD")
+        """
+        Determine the appropriate tariff based on contracted power
+
+        Args:
+            contracted_power (float): Contracted power in kW
+            values (dict): Form values that may contain tariff override
+
+        Returns:
+            str: Tariff code (2.0TD, 3.0TD, or 6.1TD)
+        """
+        # Return explicit tariff if provided
+        if values.get("tariff"):
+            return values["tariff"]
+
+        # Determine tariff based on power thresholds
+        if contracted_power <= self.TARIFF_2_0TD_LIMIT:
+            return self.DEFAULT_TARIFF_LOW
+        elif contracted_power <= self.TARIFF_3_0TD_LIMIT:
+            return self.DEFAULT_TARIFF_MEDIUM
+        else:
+            return self.DEFAULT_TARIFF_HIGH
+
+    def _build_supply_point_address(self, values):
+        """
+        Build complete address string for supply point
+
+        Args:
+            values (dict): Form values containing address information
+
+        Returns:
+            str: Complete address string
+        """
+        street = values["supplypoint_street"]
+        if values.get("street2"):
+            street += " " + values["street2"]
+        return street
+
+    def _prepare_supply_point_values(
+        self, values, project, partner, owner, tariff, country, state
+    ):
+        """
+        Prepare values dictionary for supply point creation/update
+
+        Args:
+            values (dict): Form values
+            project: Self-consumption project record
+            partner: Partner record
+            owner: Owner partner record
+            tariff (str): Tariff code
+            country: Country record
+            state: State record
+
+        Returns:
+            dict: Values for supply point creation/update
+        """
+        street = self._build_supply_point_address(values)
+        contracted_power = float(
+            str(values.get("supplypoint_contracted_power", "0")).replace(",", ".")
         )
 
-    def _create_supply_point(
-        self,
-        values,
-        project,
-        partner,
-        owner,
-        tariff,
+        vals = {
+            "owner_id": owner.id,
+            "contracted_power": contracted_power,
+            "tariff": tariff,
+            "partner_id": partner.id,
+            "company_id": project.company_id.id,
+            "street": street,
+            "city": values["supplypoint_city"],
+            "country_id": country.id,
+            "state_id": state.id,
+            "zip": values["supplypoint_zip"],
+            "cadastral_reference": values["supplypoint_cadastral_reference"],
+        }
+
+        # Add self-consumption usage if configured
+        if project.conf_used_in_selfconsumption:
+            usage_value = values.get("supplypoint_used_in_selfconsumption")
+            if usage_value and usage_value != "":
+                vals["used_in_selfconsumption"] = usage_value
+
+        return vals
+
+    def _create_new_supply_point(self, values, project, partner, owner, tariff):
+        """
+        Create a new supply point record
+
+        Args:
+            values (dict): Form values
+            project: Self-consumption project record
+            partner: Partner record
+            owner: Owner partner record
+            tariff (str): Tariff code
+
+        Returns:
+            tuple: (error_flag, supply_point_or_error_message)
+        """
+        try:
+            country = self._get_country(values, project)
+            state = self._get_state(values, project, country)
+
+            vals = self._prepare_supply_point_values(
+                values, project, partner, owner, tariff, country, state
+            )
+            vals["code"] = values["supplypoint_cups"]
+
+            supply_point = (
+                self.env["energy_selfconsumption.supply_point"].sudo().create(vals)
+            )
+            return False, supply_point
+
+        except Exception as e:
+            return True, _(str(e))
+
+    def _update_existing_supply_point(
+        self, supply_point, values, project, partner, owner, tariff
     ):
+        """
+        Update an existing supply point record
+
+        Args:
+            supply_point: Existing supply point record
+            values (dict): Form values
+            project: Self-consumption project record
+            partner: Partner record
+            owner: Owner partner record
+            tariff (str): Tariff code
+
+        Returns:
+            tuple: (error_flag, supply_point_or_error_message)
+        """
+        try:
+            country = self._get_country(values, project)
+            state = self._get_state(values, project, country)
+
+            vals = self._prepare_supply_point_values(
+                values, project, partner, owner, tariff, country, state
+            )
+            vals["active"] = True
+
+            supply_point.sudo().write(vals)
+            return False, supply_point
+
+        except Exception as e:
+            return True, _(str(e))
+
+    def _create_supply_point(self, values, project, partner, owner, tariff):
+        """
+        Create or update supply point based on CUPS code
+
+        Args:
+            values (dict): Form values
+            project: Self-consumption project record
+            partner: Partner record
+            owner: Owner partner record
+            tariff (str): Tariff code
+
+        Returns:
+            tuple: (error_flag, success_message_or_error)
+        """
+        # Get partner with proper type context
         partner = partner.sudo().get_partner_with_type()
-        """Create the supply point if it does not already exist."""
+
+        # Search for existing supply point
         supply_point = (
-            self.env["energy_selfconsumption.supply_point"].sudo()
-            # .with_context(active_test=False)
+            self.env["energy_selfconsumption.supply_point"]
+            .sudo()
             .search([("code", "=", values["supplypoint_cups"])])
         )
-        country = self._get_country(values, project)
-        street = values["supplypoint_street"]
-        if values.get("street2", False):
-            street += " " + values.get("street2", "")
+
+        # Create or update supply point
         if not supply_point:
-            try:
-
-                vals = {
-                    "code": values["supplypoint_cups"],
-                    "owner_id": owner.id,
-                    "contracted_power": float(
-                        str(values.get("supplypoint_contracted_power", "0")).replace(
-                            ",", "."
-                        )
-                    ),
-                    "tariff": tariff,
-                    "partner_id": partner.id,
-                    "company_id": project.company_id.id,
-                    "street": street,
-                    "city": values["supplypoint_city"],
-                    "country_id": country.id,
-                    "state_id": self._get_state(values, project, country).id,
-                    "zip": values["supplypoint_zip"],
-                    "cadastral_reference": values["supplypoint_cadastral_reference"],
-                }
-                if project.conf_used_in_selfconsumption:
-                    if (
-                        values.get("supplypoint_used_in_selfconsumption", False)
-                        and values.get("supplypoint_used_in_selfconsumption", False)
-                        != ""
-                    ):
-                        vals["used_in_selfconsumption"] = values.get(
-                            "supplypoint_used_in_selfconsumption", None
-                        )
-                supply_point = (
-                    self.env["energy_selfconsumption.supply_point"].sudo().create(vals)
-                )
-
-            except Exception as e:
-                return True, _(str(e))
+            error, supply_point = self._create_new_supply_point(
+                values, project, partner, owner, tariff
+            )
         else:
-            try:
-                vals = {
-                    "owner_id": owner.id,
-                    "contracted_power": float(
-                        str(values.get("supplypoint_contracted_power", "0")).replace(
-                            ",", "."
-                        )
-                    ),
-                    "tariff": tariff,
-                    "partner_id": partner.id,
-                    "company_id": project.company_id.id,
-                    "street": street,
-                    "city": values["supplypoint_city"],
-                    "country_id": country.id,
-                    "state_id": self._get_state(values, project, country).id,
-                    "zip": values["supplypoint_zip"],
-                    "cadastral_reference": values["supplypoint_cadastral_reference"],
-                    "active": True,
-                }
-                if project.conf_used_in_selfconsumption:
-                    vals["used_in_selfconsumption"] = values.get(
-                        "supplypoint_used_in_selfconsumption", None
-                    )
-                supply_point.sudo().write(vals)
-            except Exception as e:
-                return True, _(str(e))
+            error, supply_point = self._update_existing_supply_point(
+                supply_point, values, project, partner, owner, tariff
+            )
 
+        if error:
+            return True, supply_point  # supply_point contains error message
+
+        # Validate participation
         participation = self._get_participation(values, project)
         if not participation:
             return True, _("No participation found for this project.")
+
+        # Create bank mandate
         error, mandate = self._create_bank_mandate(values, partner, project)
         if error:
-            msg_error = mandate
-            return True, msg_error
+            return True, mandate  # mandate contains error message
 
+        # Get additional data
         effective_date = self._get_effective_date(values)
         annual_electricity_use = values.get(
             "inscriptionselfconsumption_annual_electricity_use", False
         )
 
+        # Create inscription record
         self._create_inscription_record(
             project,
             partner,
@@ -125,12 +239,18 @@ class CreateInscription(models.AbstractModel):
 
         return False, _("You have successfully registered.")
 
-    def create_inscription(
-        self,
-        values,
-        project,
-    ):
-        """Create an entry for self-consumption on a specific project."""
+    def create_inscription(self, values, project):
+        """
+        Main method to create an inscription for self-consumption project
+
+        Args:
+            values (dict): Form values containing all inscription data
+            project: Self-consumption project record
+
+        Returns:
+            tuple: (error_flag, message)
+        """
+        # Validate partner existence
         partner = self._get_partner(
             values["inscription_partner_id_vat"], project.company_id.id
         )
@@ -139,13 +259,16 @@ class CreateInscription(models.AbstractModel):
                 vat=values["inscription_partner_id_vat"]
             )
 
+        # Validate cooperator status
         if not self._is_cooperator(partner, project):
             return True, _("Partner with VAT:<b>{vat}</b> is not a cooperator.").format(
                 vat=values["inscription_partner_id_vat"]
             )
 
+        # Set default date format if not provided
         values.setdefault("date_format", "%Y-%m-%d")
 
+        # Check for duplicate registration
         if self._is_partner_already_registered(
             project, partner, values["supplypoint_cups"]
         ):
@@ -153,29 +276,31 @@ class CreateInscription(models.AbstractModel):
                 "Partner with VAT {vat} is already registered in project {code}"
             ).format(vat=partner.vat, code=project.code)
 
-        owner = self._get_owner(
-            values,
-            project,
-            partner,
-        )
+        # Get or create owner
+        owner = self._get_owner(values, project, partner)
         if not owner:
             return True, _("Owner could not be created or found.")
 
+        # Determine tariff based on contracted power
         contracted_power = float(
             str(values.get("supplypoint_contracted_power", "0")).replace(",", ".")
         )
         tariff = self._determine_tariff(contracted_power, values)
 
-        return self._create_supply_point(
-            values,
-            project,
-            partner,
-            owner,
-            tariff,
-        )
+        # Create supply point and complete inscription
+        return self._create_supply_point(values, project, partner, owner, tariff)
 
     def _get_partner(self, vat, company_id):
-        """Search for a partner based on the VAT provided."""
+        """
+        Search for a partner based on VAT number
+
+        Args:
+            vat (str): VAT number to search for
+            company_id (int): Company ID for multi-company context
+
+        Returns:
+            res.partner: Partner record or False if not found
+        """
         return (
             self.env["res.partner"]
             .sudo()
@@ -190,11 +315,23 @@ class CreateInscription(models.AbstractModel):
         )
 
     def _is_cooperator(self, partner, project):
-        """Verify if the partner is a cooperative member o no member but autorized in energy actions"""
+        """
+        Verify if partner is a cooperative member or authorized for energy actions
+
+        Args:
+            partner: Partner record to verify
+            project: Project record for company context
+
+        Returns:
+            bool: True if partner is authorized, False otherwise
+        """
+        # Check if partner is authorized for energy actions without membership
         if partner.with_company(
             project.company_id.id
         ).no_member_autorized_in_energy_actions:
             return True
+
+        # Check cooperative membership
         return bool(
             self.env["cooperative.membership"]
             .sudo()
