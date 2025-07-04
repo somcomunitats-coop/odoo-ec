@@ -49,7 +49,9 @@ class ProductUtils(Component):
         if product_creation_params.existing_services:
             existing_service_product_template_list = list(
                 map(
-                    lambda existing_data: existing_data.product_template_id,
+                    lambda existing_data: self.env["product.template"].browse(
+                        existing_data.product_template_id
+                    ),
                     product_creation_params.existing_services,
                 )
             )

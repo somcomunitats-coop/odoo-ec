@@ -6,6 +6,7 @@
       model="product.category"
       eval="obj(ref('energy_communities.product_category_pack')).id"
     />
+    <field name="data_xml_id">energy_communities_service_invoicing.product_category_platform_pack</field>
   </record>
   <record id="product_category_platform_service" model="product.category">
     <field name="name">Platform Service</field>
@@ -14,6 +15,7 @@
       model="product.category"
       eval="obj(ref('energy_communities.product_category_service')).id"
     />
+    <field name="data_xml_id">energy_communities_service_invoicing.product_category_platform_service</field>
   </record>
 
   <record id="product.list0" model="product.pricelist">

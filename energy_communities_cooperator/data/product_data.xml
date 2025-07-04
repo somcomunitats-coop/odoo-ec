@@ -15,8 +15,13 @@
         <field name="active">False</field>
     </record>
 
+    <record id="cooperator.product_category_company_share" model="product.category">
+      <field name="data_xml_id">cooperator.product_category_company_share</field>
+    </record>
+
     <record id="product_category_company_voluntary_share" model="product.category">
-        <field name="name">Voluntary Company Share</field>
+      <field name="name">Voluntary Company Share</field>
+      <field name="data_xml_id">energy_communities_cooperator.product_category_company_voluntary_share</field>
     </record>
 
     <record id="voluntary_share_capital_product_template" model="product.template">

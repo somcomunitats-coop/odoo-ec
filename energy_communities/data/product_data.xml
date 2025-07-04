@@ -1,14 +1,17 @@
 <odoo>
   <record id="product_category_company_voluntary_share" model="product.category">
     <field name="name">Voluntary Company Share</field>
+    <field name="data_xml_id">energy_communities.product_category_company_voluntary_share</field>
   </record>
 
   <record id="product_category_pack" model="product.category">
     <field name="name">Packs</field>
+    <field name="data_xml_id">energy_communities.product_category_pack</field>
   </record>
 
   <record id="product_category_service" model="product.category">
     <field name="name">Services</field>
+    <field name="data_xml_id">energy_communities.product_category_service</field>
   </record>
 
   <record id="product_category_recurring_fee_service" model="product.category">
@@ -18,6 +21,7 @@
       model="product.category"
       eval="obj(ref('energy_communities.product_category_service')).id"
     />
+    <field name="data_xml_id">energy_communities.product_category_recurring_fee_service</field>
   </record>
 
   <record id="product_category_recurring_fee_pack" model="product.category">
@@ -27,6 +31,7 @@
       model="product.category"
       eval="obj(ref('energy_communities.product_category_pack')).id"
     />
+    <field name="data_xml_id">energy_communities.product_category_recurring_fee_pack</field>
   </record>
 
   <record id="product_category_share_recurring_fee_pack" model="product.category">
@@ -36,6 +41,7 @@
       model="product.category"
       eval="obj(ref('energy_communities.product_category_pack')).id"
     />
+    <field name="data_xml_id">energy_communities.product_category_share_recurring_fee_pack</field>
   </record>
 
 </odoo>
