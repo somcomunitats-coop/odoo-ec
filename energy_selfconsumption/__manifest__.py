@@ -45,13 +45,11 @@ projects and communities, including:
 This module is specifically designed for Spanish energy communities and cooperatives
 managing collective self-consumption projects under Spanish energy regulations.
     """,
-    "author": "Coopdevs Treball SCCL & Som Energia SCCL",
+    "author": "Som IT SCCL & Som Energia SCCL",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
-    "version": "16.0.0.4.7",
+    "version": "16.0.0.5.0",
     "category": "Energy Management",
     "license": "AGPL-3",
-    "author": "Coopdevs Treball SCCL, Som Energia SCCL",
-    "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "maintainers": ["coopdevs", "som-energia"],
     # Technical information
     "installable": True,
