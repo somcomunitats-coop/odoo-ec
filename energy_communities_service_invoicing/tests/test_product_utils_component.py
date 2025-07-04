@@ -167,59 +167,89 @@ class TestProductUtilsComponent(TransactionCase):
             )
             self.assertEqual(contract_template.company_id.id, data.pack.company_id)
             self.assertEqual(
-                len(contract_template.contract_line_ids), len(data.new_services)
+                len(contract_template.contract_line_ids),
+                len(data.new_services) + len(data.existing_services),
             )
-            i = 0
-            for contract_line in contract_template.contract_line_ids:
-                if data.new_services[i].description_sale:
+            self._assert_pack_contract_lines_consistency(
+                0,
+                len(data.new_services),
+                data.pack,
+                data.new_services,
+                contract_template,
+                result.new_service_product_template_list,
+            )
+            # self._assert_pack_contract_lines_consistency(
+            #     len(data.new_services),
+            #     len(data.existing_services),
+            #     data.pack,
+            #     data.existing_services,
+            #     contract_template,
+            #     result.existing_service_product_template_list,
+            # )
+
+    def _assert_pack_contract_lines_consistency(
+        self,
+        offset,
+        limit,
+        pack,
+        services,
+        contract_template,
+        product_template_list,
+    ):
+        contract_line_pos = 0
+        service_pos = 0
+        for contract_line in contract_template.contract_line_ids:
+            if contract_line_pos >= offset and contract_line_pos < limit:
+                if services[service_pos].description_sale:
                     self.assertEqual(
-                        contract_line.name, data.new_services[i].description_sale
+                        contract_line.name, services[service_pos].description_sale
                     )
                 else:
-                    self.assertEqual(contract_line.name, data.new_services[i].name)
+                    self.assertEqual(contract_line.name, services[service_pos].name)
                 self.assertEqual(
                     contract_line.product_id,
-                    result.new_service_product_template_list[i].product_variant_id,
+                    product_template_list[service_pos].product_variant_id,
                 )
                 self.assertTrue(contract_line.automatic_price)
                 self.assertFalse(bool(contract_line.price_unit))
-                self.assertEqual(contract_line.qty_type, data.new_services[i].qty_type)
-                if data.new_services[i].quantity:
+                self.assertEqual(contract_line.qty_type, services[service_pos].qty_type)
+                if services[service_pos].quantity:
                     self.assertEqual(
-                        contract_line.quantity, data.new_services[i].quantity
+                        contract_line.quantity, services[service_pos].quantity
                     )
-                if data.new_services[i].qty_formula_id:
+                if services[service_pos].qty_formula_id:
                     self.assertEqual(
                         contract_line.qty_formula_id.id,
-                        data.new_services[i].qty_formula_id,
+                        services[service_pos].qty_formula_id,
                     )
                 self.assertEqual(
-                    contract_line.recurring_rule_mode, data.pack.recurring_rule_mode
+                    contract_line.recurring_rule_mode, pack.recurring_rule_mode
                 )
                 self.assertEqual(
                     contract_line.recurring_invoicing_type,
-                    data.pack.recurring_invoicing_type,
+                    pack.recurring_invoicing_type,
                 )
                 if contract_line.recurring_rule_mode == "fixed":
                     self.assertEqual(
                         contract_line.recurring_invoicing_fixed_type,
-                        data.pack.recurring_invoicing_fixed_type,
+                        pack.recurring_invoicing_fixed_type,
                     )
                     self.assertEqual(
-                        contract_line.fixed_invoicing_day, data.pack.fixed_invoicing_day
+                        contract_line.fixed_invoicing_day, pack.fixed_invoicing_day
                     )
                     self.assertEqual(
                         contract_line.fixed_invoicing_month,
-                        data.pack.fixed_invoicing_month,
+                        pack.fixed_invoicing_month,
                     )
                 if contract_line.recurring_rule_mode == "interval":
                     self.assertEqual(
-                        contract_line.recurring_interval, data.pack.recurring_interval
+                        contract_line.recurring_interval, pack.recurring_interval
                     )
                     self.assertEqual(
-                        contract_line.recurring_rule_type, data.pack.recurring_rule_type
+                        contract_line.recurring_rule_type, pack.recurring_rule_type
                     )
-                i += 1
+                service_pos += 1
+            contract_line_pos += 1
 
     def _assert_services_on_price_list(self, services):
         for service in services:
