@@ -54,16 +54,16 @@ class Contract(models.Model):
     )
 
     # Period tracking fields
-    last_period_date_start = fields.Date(
-        string="Last Period Start",
-        readonly=True,
-        help="Start date of the last invoiced period",
-    )
-    last_period_date_end = fields.Date(
-        string="Last Period End",
-        readonly=True,
-        help="End date of the last invoiced period",
-    )
+    # last_period_date_start = fields.Date(
+    #     string="Last Period Start",
+    #     readonly=True,
+    #     help="Start date of the last invoiced period",
+    # )
+    # last_period_date_end = fields.Date(
+    #     string="Last Period End",
+    #     readonly=True,
+    #     help="End date of the last invoiced period",
+    # )
 
     # Business logic methods
     def get_main_line(self):
@@ -91,16 +91,20 @@ class Contract(models.Model):
         invoicing_mode = False
         contracts = self.env["contract.contract"].search([("id", "in", self.ids)])
         if contracts:
-            invoicing_mode = contracts[0].project_id.selfconsumption_id.invoicing_mode or False
-        
+            invoicing_mode = (
+                contracts[0].project_id.selfconsumption_id.invoicing_mode or False
+            )
+
         # Create wizard with current contract
-        wizard_id = self.env["energy_selfconsumption.invoicing.wizard"].with_context(
-            active_ids=self.ids
-        ).create(
-            {
-                "contract_ids": [(6, 0, self.ids)],
-                "invoicing_mode": invoicing_mode,
-            }
+        wizard_id = (
+            self.env["energy_selfconsumption.invoicing.wizard"]
+            .with_context(active_ids=self.ids)
+            .create(
+                {
+                    "contract_ids": [(6, 0, self.ids)],
+                    "invoicing_mode": invoicing_mode,
+                }
+            )
         )
 
         # Get action reference and update with wizard ID
@@ -111,44 +115,38 @@ class Contract(models.Model):
 
         return action
 
-    def _recurring_create_invoice(self, date_ref=False):
-        """
-        Override recurring invoice creation to track periods
-
-        Extends the base method to store the last invoiced period dates
-        for tracking and reporting purposes.
-
-        Args:
-            date_ref: Reference date for invoice creation
-
-        Returns:
-            Created invoice records
-        """
-        # Store period dates before invoice creation
-        last_period_date_start = last_period_date_end = False
-
-        if len(self) > 1:
-            # For batch processing, use first contract's period dates
-            last_period_date_start = self[0].next_period_date_start
-            last_period_date_end = self[0].next_period_date_end
-
-        # Call parent method to create invoices
-        res = super()._recurring_create_invoice(date_ref=date_ref)
-
-        # Update period tracking if invoices were created
-        if res and last_period_date_start and last_period_date_end:
-            self.write(
-                {
-                    "last_period_date_start": last_period_date_start,
-                    "last_period_date_end": last_period_date_end,
-                }
-            )
-        res.write(
-            {
-                "energy_delivered": self.env.context.get("energy_delivered", 0),
-            }
-        )
-        return res
+    # def _recurring_create_invoice(self, date_ref=False):
+    #     """
+    #     Override recurring invoice creation to track periods
+    #     Extends the base method to store the last invoiced period dates
+    #     for tracking and reporting purposes.
+    #     Args:
+    #         date_ref: Reference date for invoice creation
+    #     Returns:
+    #         Created invoice records
+    #     """
+    #     # Store period dates before invoice creation
+    #     last_period_date_start = last_period_date_end = False
+    #     if len(self) > 1:
+    #         # For batch processing, use first contract's period dates
+    #         last_period_date_start = self[0].next_period_date_start
+    #         last_period_date_end = self[0].next_period_date_end
+    #     # Call parent method to create invoices
+    #     res = super()._recurring_create_invoice(date_ref=date_ref)
+    #     # Update period tracking if invoices were created
+    #     if res and last_period_date_start and last_period_date_end:
+    #         self.write(
+    #             {
+    #                 "last_period_date_start": last_period_date_start,
+    #                 "last_period_date_end": last_period_date_end,
+    #             }
+    #         )
+    #     res.write(
+    #         {
+    #             "energy_delivered": self.env.context.get("energy_delivered", 0),
+    #         }
+    #     )
+    #     return res
 
     def _get_contracts_to_invoice_domain(self, date_ref=None):
         """

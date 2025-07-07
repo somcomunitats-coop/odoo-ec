@@ -47,6 +47,10 @@
     })]"/>
   </record>
 
+  <record id="demo_service_invoicing_pricelist" model="product.pricelist">
+    <field name="name">Demo pricelist</field>
+  </record>
+
   # RECURRING FEE SERVICES
 
   <record id="demo_recurring_fee_service_product_template" model="product.template">
