@@ -38,6 +38,7 @@ class PartnerApiInfo(Component):
     ]
     _member_invoices = lambda _, partner: [
         ("partner_id", "=", partner.id),
+        ("state", "=", "posted"),
     ]
 
     def get_member_info(self, partner: Partner) -> MemberInfo:
@@ -149,11 +150,13 @@ class PartnerApiInfo(Component):
             InvoiceInfo(
                 id=invoice.id,
                 number=invoice.display_name,
-                service_type="other",
+                service_type=invoice.service_type,
                 state=invoice.payment_state_for_api,
                 amount_total=invoice.amount_total,
                 date=str(invoice.date),
-                pdf_url="https://localhost.bar",
+                pdf_url="{base_url}/me/invoices/{id}/download".format(
+                    base_url=self.env.company.get_base_url(), id=invoice.id
+                ),
             )
             for invoice in invoices
         ]

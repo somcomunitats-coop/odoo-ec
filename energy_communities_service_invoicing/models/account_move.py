@@ -124,3 +124,4 @@ class AccountMoveLine(models.Model):
         vals = super()._prepare_account_move_line(dest_move, dest_company)
         vals["name"] = self.name
         return vals
+
