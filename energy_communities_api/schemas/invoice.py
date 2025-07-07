@@ -3,22 +3,22 @@ from enum import Enum
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
 from odoo.addons.account.models.account_move import PAYMENT_STATE_SELECTION
+from odoo.addons.energy_communities_service_invoicing.utils import (
+    SERVICE_TYPE_SELECTION,
+)
 
 from .base import BaseResponse, NaiveOrmModel, PaginationLinks
 
 PaymentState = Enum(
     "PaymentState",
-    ((state.upper(), state) for state, _ in PAYMENT_STATE_SELECTION + [("draft", "_")]),
+    ((state.upper(), state) for state, _ in PAYMENT_STATE_SELECTION),
 )
 
 InvoiceType = Enum(
     "InvoiceType",
     (
-        [
-            ("SELFCONSUMPTION", "selfconsumption"),
-            ("MEMBERSHIP", "membership"),
-            ("OTHER", "other"),
-        ]
+        (service_type.upper(), service_type)
+        for service_type, _ in SERVICE_TYPE_SELECTION
     ),
 )
 

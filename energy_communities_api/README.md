@@ -1,6 +1,6 @@
-# Energy Communitiesi API
+# Energy Communities API
 
-<add description>
+HTTP API to request information about energy communities, members and projects
 
 ## Changelog
 
