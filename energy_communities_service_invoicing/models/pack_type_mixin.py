@@ -58,6 +58,7 @@ class PackTypeMixin(models.AbstractModel):
 
     # method to be overwriten on implementations
     def custom_compute_pack_type(self):
+        # TODO: add a rise to be implemented every time we inherit this mixin
         pass
 
     def _compute_pack_type(self):

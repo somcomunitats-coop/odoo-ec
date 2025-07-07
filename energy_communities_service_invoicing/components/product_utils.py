@@ -153,8 +153,6 @@ class ProductUtils(Component):
 
     def _create_pack_contract_template(
         self,
-        # pack_product_creation_data: PackProductCreationData,
-        # service_product_creation_data_list: List[ServiceProductCreationData] = False,
         product_creation_params: ProductCreationParams,
         pack_product: ProductTemplate,
         new_service_product_template_list: List[ProductTemplate] = False,
