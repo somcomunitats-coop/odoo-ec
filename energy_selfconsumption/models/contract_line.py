@@ -212,10 +212,11 @@ class ContractLine(models.Model):
         selfconsumption_id = (
             supply_point_assignation.distribution_table_id.selfconsumption_project_id
         )
-        name = name.replace("#code#", supply_point_assignation.supply_point_id.code)
-        name = name.replace(
-            "#owner_id#", supply_point_assignation.owner_id.display_name
-        )
+        if supply_point_assignation:
+            name = name.replace("#code#", supply_point_assignation.supply_point_id.code)
+            name = name.replace(
+                "#owner_id#", supply_point_assignation.owner_id.display_name
+            )
         # Each invoicing type has different data in the description column, so we need to check and modify
         if selfconsumption_id.invoicing_mode in ["energy_delivered", "power_acquired"]:
             name = name.replace("#cau#", selfconsumption_id.code)
