@@ -27,6 +27,7 @@ class PackProductCreatorWizard(models.TransientModel):
     pack_categ_id = fields.Many2one("product.category", string="Pack category")
     name = fields.Char(string="Pack name")
     description_sale = fields.Text(string="Sales description")
+    default_code = fields.Char(string="Internal Reference")
     list_price = fields.Float(
         "Pack activation price",
         digits="Product Price",
@@ -41,6 +42,14 @@ class PackProductCreatorWizard(models.TransientModel):
         "pack_product_creator_id",
         string="Included services",
     )
+    pack_categ_id_is_config_share = fields.Boolean(
+        compute="_compute_pack_categ_id_is_config_share", store=False
+    )
+
+    @api.depends("pack_categ_id")
+    def _compute_pack_categ_id_is_config_share(self):
+        for record in self:
+            record.pack_categ_id_is_config_share = record.pack_categ_id.is_config_share
 
     def execute_create(self):
         result = self._create_products()
@@ -68,7 +77,12 @@ class PackProductCreatorWizard(models.TransientModel):
                             ]
                         ).id,
                         name=service.name,
-                        description_sale=service.description_sale,
+                        description_sale=service.description_sale
+                        if service.description_sale
+                        else None,
+                        default_code=service.default_code
+                        if service.default_code
+                        else None,
                         list_price=service.list_price,
                         taxes_id=service.taxes_id.ids if service.taxes_id else [],
                         qty_type=service.qty_type,
@@ -95,7 +109,10 @@ class PackProductCreatorWizard(models.TransientModel):
                 company_id=self.company_id.id if self.company_id else None,
                 categ_id=self.pack_categ_id.id,
                 name=self.name,
-                description_sale=self.description_sale,
+                description_sale=self.description_sale
+                if self.description_sale
+                else None,
+                default_code=self.default_code if self.default_code else None,
                 list_price=self.list_price,
                 taxes_id=self.taxes_id.ids if self.taxes_id else [],
                 recurring_rule_mode=self.recurring_rule_mode,
