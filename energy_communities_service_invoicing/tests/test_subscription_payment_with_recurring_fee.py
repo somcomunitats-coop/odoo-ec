@@ -17,7 +17,7 @@ _TESTING_CASES = {
         date(
             datetime.now().year, _FIXED_RECURRENCY_MONTH - 1, _FIXED_RECURRENCY_DAY - 12
         ),
-        date(datetime.now().year, _FIXED_RECURRENCY_MONTH, _FIXED_RECURRENCY_DAY),
+        date(datetime.now().year + 1, _FIXED_RECURRENCY_MONTH, _FIXED_RECURRENCY_DAY),
     ),
     "payment_equal_fixed_day_recurrency": SubscriptionPaymentTestingCase(
         "energy_communities_cooperator.subscription_1_community_2_demo",

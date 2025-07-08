@@ -91,16 +91,18 @@ class AccountMove(models.Model):
                     # Note: On contract activation when invoice payment we assume first iteration of contract is payed with the invoice
                     # So, recurring_next_date must be based on this assumption.
                     # On fixed yearly basis we add 1 day in order to move invoicing date one year.
+                    fixed_invoicing_date_this_year = date(
+                        datetime.now().year,
+                        int(component.work.record.fixed_invoicing_month),
+                        int(component.work.record.fixed_invoicing_day),
+                    )
                     if (
                         component.work.record.recurring_rule_mode == "fixed"
-                        and activation_date
-                        == date(
-                            datetime.now().year,
-                            int(component.work.record.fixed_invoicing_month),
-                            int(component.work.record.fixed_invoicing_day),
-                        )
+                        and activation_date <= fixed_invoicing_date_this_year
                     ):
-                        activation_date = activation_date + relativedelta(days=+1)
+                        activation_date = (
+                            fixed_invoicing_date_this_year + relativedelta(days=+1)
+                        )
                     component.activate(activation_date)
                 # link contract to partners membership
                 related_membership = self.partner_id.get_partner_membership_for_company(
