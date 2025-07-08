@@ -13,6 +13,7 @@ class PackProductCreatorWizardServiceProduct(models.TransientModel):
     name = fields.Char(string="Name")
     pack_product_creator_id = fields.Many2one("pack.product.creator.wizard")
     description_sale = fields.Text(string="Sales description")
+    default_code = fields.Char(string="Internal Reference")
     list_price = fields.Float(
         "Service price",
         digits="Product Price",

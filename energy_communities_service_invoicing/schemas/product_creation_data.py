@@ -10,6 +10,7 @@ class BaseProductCreationData(BaseModel):
     categ_id: int
     name: str
     description_sale: Optional[str] = None
+    default_code: Optional[str] = None
     list_price: float = 0.0
     taxes_id: list
 

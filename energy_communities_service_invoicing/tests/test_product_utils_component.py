@@ -46,6 +46,7 @@ class TestProductUtilsComponent(TransactionCase):
                 "pack_categ_id": data.pack.categ_id,
                 "name": data.pack.name,
                 "description_sale": data.pack.description_sale,
+                "default_code": data.pack.default_code,
                 "list_price": data.pack.list_price,
                 "taxes_id": data.pack.taxes_id,
                 "recurring_rule_mode": data.pack.recurring_rule_mode,
@@ -77,6 +78,7 @@ class TestProductUtilsComponent(TransactionCase):
                     "type": "new",
                     "name": service_data.name,
                     "description_sale": service_data.description_sale,
+                    "default_code": service_data.default_code,
                     "list_price": service_data.list_price,
                     "quantity": service_data.quantity,
                     "qty_type": service_data.qty_type,
@@ -179,9 +181,13 @@ class TestProductUtilsComponent(TransactionCase):
                         product_tax_creation_dict, getattr(test_data, field)
                     )
                 else:
-                    self.assertEqual(
-                        getattr(product_template, field), getattr(test_data, field)
-                    )
+                    product_template_field = getattr(product_template, field)
+                    if not product_template_field:
+                        self.assertFalse(bool(product_template_field))
+                    else:
+                        self.assertEqual(
+                            product_template_field, getattr(test_data, field)
+                        )
 
     def _assert_pack_product_data(self, result, data):
         pack_product = result.pack_product_template
@@ -345,7 +351,8 @@ class TestProductUtilsComponent(TransactionCase):
                     elif field == "taxes_id":
                         params[field] = self._prepare_refs_data(data_val)
                     else:
-                        params[field] = data_val
+                        if data_val:
+                            params[field] = data_val
             return product_creation_data_class(**params)
         return False
 

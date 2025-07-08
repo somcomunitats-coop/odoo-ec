@@ -40,6 +40,7 @@ class ProductUtils(Component):
                             categ_id=service_product_creation_data.categ_id,
                             name=service_product_creation_data.name,
                             description_sale=service_product_creation_data.description_sale,
+                            default_code=service_product_creation_data.default_code,
                             list_price=service_product_creation_data.list_price,
                             taxes_id=service_product_creation_data.taxes_id,
                         )
@@ -116,6 +117,7 @@ class ProductUtils(Component):
                 categ_id=product_creation_params.pack.categ_id,
                 name=product_creation_params.pack.name,
                 description_sale=product_creation_params.pack.description_sale,
+                default_code=product_creation_params.pack.default_code,
                 list_price=product_creation_params.pack.list_price,
                 taxes_id=product_creation_params.pack.taxes_id,
             )
