@@ -73,6 +73,8 @@ class SaleOrderUtils(Component):
         payment_mode_id=False,
         metadata=False,
     ):
+        if not metadata:
+            metadata = {}
         self.create_service_invoicing_sale_order(
             partner_id,
             pack_id,

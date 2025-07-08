@@ -45,6 +45,9 @@ _SHARE_PRODUCTS_CATEG_REFS = [
     "energy_communities.product_category_company_voluntary_share",
     "energy_communities_cooperator.product_category_company_voluntary_share",
 ]
+_ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS = [
+    "energy_communities.product_category_recurring_fee_pack"
+]
 
 
 def service_invoicing_tree_view(env: Environment):

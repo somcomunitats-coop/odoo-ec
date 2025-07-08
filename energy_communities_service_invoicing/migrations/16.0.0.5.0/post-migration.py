@@ -13,3 +13,4 @@ def migrate(cr, version):
     for product_category in product_categories:
         product_category._compute_is_pack()
         product_category._compute_is_service()
+        product_category._compute_is_assignable_pack_to_partner()
