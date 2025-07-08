@@ -55,7 +55,7 @@ class PackProductCreatorWizard(models.TransientModel):
         result = self._create_products()
         return get_successful_popup_message(
             _("Pack product creation successful"),
-            _("Please visit the products view in orde to see the new items."),
+            _("Please visit the products view in order to see the new items."),
         )
 
     def _create_products(self):

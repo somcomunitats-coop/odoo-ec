@@ -1,6 +1,7 @@
 from odoo import _, api, fields, models
 
 from ..utils import (
+    _ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS,
     _PACK_PRODUCT_PARENT_CATEG_REF,
     _SERVICE_PRODUCT_PARENT_CATEG_REF,
     _SHARE_PRODUCTS_CATEG_REFS,
@@ -16,6 +17,11 @@ class ProductCategory(models.Model):
     )
     is_service = fields.Boolean(
         "Is a service category", compute="_compute_is_service", store=True
+    )
+    is_assignable_pack_to_partner = fields.Boolean(
+        "Is a pack assignable to partner (via wizard)",
+        compute="_compute_is_assignable_pack_to_partner",
+        store=True,
     )
     is_config_share = fields.Boolean(
         "Is a shared based on config", compute="_compute_is_config_share", store=False
@@ -61,3 +67,10 @@ class ProductCategory(models.Model):
             record.is_config_share = False
             if record.data_xml_id in _SHARE_PRODUCTS_CATEG_REFS:
                 record.is_config_share = True
+
+    @api.depends("data_xml_id")
+    def _compute_is_assignable_pack_to_partner(self):
+        for record in self:
+            record.is_assignable_pack_to_partner = False
+            if record.data_xml_id in _ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS:
+                record.is_assignable_pack_to_partner = True

@@ -17,6 +17,10 @@ class ProductTemplate(models.Model):
     is_config_share = fields.Boolean(
         "Is a shared based on config", compute="_compute_is_config_share", store=False
     )
+    is_assignable_pack_to_partner = fields.Boolean(
+        "Is a pack assignable to partner (via wizard)",
+        related="categ_id.is_assignable_pack_to_partner",
+    )
     is_pack = fields.Boolean("Is a pack", related="categ_id.is_pack")
     is_service = fields.Boolean("Is a service", related="categ_id.is_service")
 
