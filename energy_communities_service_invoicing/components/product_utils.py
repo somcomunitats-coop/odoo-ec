@@ -91,18 +91,19 @@ class ProductUtils(Component):
     def _apply_services_on_system_pricelist(
         self, service_product_template_list: List[ProductTemplate]
     ):
-        if service_product_template_list[0].company_id:
-            pricelist = service_product_template_list[0].company_id.pricelist_id
-        else:
-            pricelist = self.env.ref("product.list0")
-        for service_product_template in service_product_template_list:
-            self.env["product.pricelist.item"].create(
-                {
-                    "product_tmpl_id": service_product_template.id,
-                    "fixed_price": service_product_template.list_price,
-                    "pricelist_id": pricelist.id,
-                }
-            )
+        if service_product_template_list:
+            if service_product_template_list[0].company_id:
+                pricelist = service_product_template_list[0].company_id.pricelist_id
+            else:
+                pricelist = self.env.ref("product.list0")
+            for service_product_template in service_product_template_list:
+                self.env["product.pricelist.item"].create(
+                    {
+                        "product_tmpl_id": service_product_template.id,
+                        "fixed_price": service_product_template.list_price,
+                        "pricelist_id": pricelist.id,
+                    }
+                )
 
     def _create_pack_product(
         self,

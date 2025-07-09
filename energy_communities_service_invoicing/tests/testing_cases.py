@@ -134,6 +134,10 @@ _PRODUCT_UTILS_TESTING_CASES = {
         _PACK_PRODUCT_TESTING_CASES["fixed_prepaid_share_recurring_fee_pack"],
         _SERVICE_PRODUCT_TESTING_CASES["recurring_fee_services"],
     ),
+    "fixed_prepaid_recurring_fee_no_services": ProductUtilsTestingCase(
+        _PACK_PRODUCT_TESTING_CASES["fixed_prepaid_recurring_fee_pack"],
+        [],
+    ),
     "interval_prepaid_platform": ProductUtilsTestingCase(
         _PACK_PRODUCT_TESTING_CASES["interval_prepaid_platform_pack"],
         _SERVICE_PRODUCT_TESTING_CASES["platform_services"],
