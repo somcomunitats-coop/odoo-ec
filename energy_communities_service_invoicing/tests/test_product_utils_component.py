@@ -29,17 +29,22 @@ class TestProductUtilsComponent(TransactionCase):
 
     def test_pack_product_creator_wizard_case_1(self):
         self._pack_product_creator_wizard_case(
-            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_recurring_fee"]
+            _PRODUCT_UTILS_TESTING_CASES["interval_prepaid_platform"]
         )
 
     def test_pack_product_creator_wizard_case_2(self):
         self._pack_product_creator_wizard_case(
-            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_share_recurring_fee"]
+            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_recurring_fee"]
         )
 
     def test_pack_product_creator_wizard_case_3(self):
         self._pack_product_creator_wizard_case(
-            _PRODUCT_UTILS_TESTING_CASES["interval_prepaid_platform"]
+            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_share_recurring_fee"]
+        )
+
+    def test_pack_product_creator_wizard_case_4(self):
+        self._pack_product_creator_wizard_case(
+            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_recurring_fee_no_services"]
         )
 
     def _pack_product_creator_wizard_case(self, case):
@@ -107,17 +112,22 @@ class TestProductUtilsComponent(TransactionCase):
 
     def test_pack_product_creator_component_case_1(self):
         self._pack_product_creator_component_case(
-            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_recurring_fee"]
+            _PRODUCT_UTILS_TESTING_CASES["interval_prepaid_platform"]
         )
 
     def test_pack_product_creator_component_case_2(self):
         self._pack_product_creator_component_case(
-            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_share_recurring_fee"]
+            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_recurring_fee"]
         )
 
     def test_pack_product_creator_component_case_3(self):
         self._pack_product_creator_component_case(
-            _PRODUCT_UTILS_TESTING_CASES["interval_prepaid_platform"]
+            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_share_recurring_fee"]
+        )
+
+    def test_pack_product_creator_component_case_4(self):
+        self._pack_product_creator_component_case(
+            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_recurring_fee_no_services"]
         )
 
     def _pack_product_creator_component_case(self, case):
@@ -151,17 +161,20 @@ class TestProductUtilsComponent(TransactionCase):
         self._assert_base_product_data(result.pack_product_template, data.pack)
         self._assert_pack_product_data(result, data)
         # for services
-        self.assertTrue(bool(result.new_service_product_template_list))
-        i = 0
-        for service_product_template in result.new_service_product_template_list:
-            self._assert_base_product_data(
-                service_product_template, data.new_services[i]
+        if data.new_services:
+            self._assert_services_product_data(
+                result.new_service_product_template_list, data.new_services, data.pack
             )
-            i += 1
-        if data.pack:
-            self._assert_services_on_price_list(
-                result.new_service_product_template_list
+        else:
+            self.assertFalse(bool(data.new_services))
+        if data.existing_services:
+            self._assert_services_product_data(
+                result.existing_service_product_template_list,
+                data.existing_services,
+                data.pack,
             )
+        else:
+            self.assertFalse(bool(data.existing_services))
 
     def _assert_base_product_data(self, product_template, test_data):
         if product_template:
@@ -203,6 +216,24 @@ class TestProductUtilsComponent(TransactionCase):
                         self.assertEqual(
                             product_template_field, getattr(test_data, field)
                         )
+
+    def _assert_services_product_data(
+        self, service_product_template_list, data_services, data_pack
+    ):
+        self.assertTrue(bool(service_product_template_list))
+        i = 0
+        for service_product_template in service_product_template_list:
+            if isinstance(data_services[i], ServiceProductCreationData):
+                self._assert_base_product_data(
+                    service_product_template, data_services[i]
+                )
+            if isinstance(data_services[i], ServiceProductExistingData):
+                self.assertEqual(
+                    service_product_template.id, data_services[i].product_template_id
+                )
+            i += 1
+        if data_pack:
+            self._assert_services_on_price_list(service_product_template_list)
 
     def _assert_pack_product_data(self, result, data):
         pack_product = result.pack_product_template
