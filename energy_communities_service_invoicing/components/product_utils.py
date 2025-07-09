@@ -138,6 +138,7 @@ class ProductUtils(Component):
         creation_dict = product_creation_data.model_dump() | {
             "detailed_type": "service",
             "invoice_policy": "order",
+            "purchase_ok": False,
         }
         product = self.env["product.template"].create(creation_dict)
         self._apply_special_flags_to_product(product)
