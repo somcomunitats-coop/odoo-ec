@@ -146,6 +146,9 @@ class ProductUtils(Component):
         special_flags = {}
         if product.is_config_share:
             special_flags["is_share"] = True
+            special_flags["by_company"] = True
+            special_flags["by_individual"] = True
+            special_flags["short_name"] = product.name
         if product.is_pack:
             special_flags["is_contract"] = True
         if special_flags:

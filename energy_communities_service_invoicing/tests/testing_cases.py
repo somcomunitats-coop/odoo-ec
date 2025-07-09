@@ -41,12 +41,28 @@ _PACK_PRODUCT_TESTING_CASES = {
         "22",
         "03",
     ),
+    "fixed_prepaid_share_recurring_fee_pack": PackProductDataTestingCase(
+        "Community 2",
+        "energy_communities.product_category_share_recurring_fee_pack",
+        "Recurring fee share pack test 1",
+        "Recurring fee share pack test 1 long description",
+        "TP2",
+        11,
+        ["l10n_es.4_account_tax_template_s_iva21s"],
+        "fixed",
+        "pre-paid",
+        False,
+        False,
+        "yearly",
+        "22",
+        "03",
+    ),
     "interval_prepaid_platform_pack": PackProductDataTestingCase(
         "Platform Company",
         "energy_communities_service_invoicing.product_category_platform_pack",
         "Platform pack test 1",
         "Platform pack test 1 long description",
-        "TP2",
+        "TP3",
         0,
         ["l10n_es.4_account_tax_template_s_iva21s"],
         "interval",
@@ -112,6 +128,10 @@ _SERVICE_PRODUCT_TESTING_CASES = {
 _PRODUCT_UTILS_TESTING_CASES = {
     "fixed_prepaid_recurring_fee": ProductUtilsTestingCase(
         _PACK_PRODUCT_TESTING_CASES["fixed_prepaid_recurring_fee_pack"],
+        _SERVICE_PRODUCT_TESTING_CASES["recurring_fee_services"],
+    ),
+    "fixed_prepaid_share_recurring_fee": ProductUtilsTestingCase(
+        _PACK_PRODUCT_TESTING_CASES["fixed_prepaid_share_recurring_fee_pack"],
         _SERVICE_PRODUCT_TESTING_CASES["recurring_fee_services"],
     ),
     "interval_prepaid_platform": ProductUtilsTestingCase(

@@ -34,6 +34,11 @@ class TestProductUtilsComponent(TransactionCase):
 
     def test_pack_product_creator_wizard_case_2(self):
         self._pack_product_creator_wizard_case(
+            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_share_recurring_fee"]
+        )
+
+    def test_pack_product_creator_wizard_case_3(self):
+        self._pack_product_creator_wizard_case(
             _PRODUCT_UTILS_TESTING_CASES["interval_prepaid_platform"]
         )
 
@@ -107,6 +112,11 @@ class TestProductUtilsComponent(TransactionCase):
 
     def test_pack_product_creator_component_case_2(self):
         self._pack_product_creator_component_case(
+            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_share_recurring_fee"]
+        )
+
+    def test_pack_product_creator_component_case_3(self):
+        self._pack_product_creator_component_case(
             _PRODUCT_UTILS_TESTING_CASES["interval_prepaid_platform"]
         )
 
@@ -173,6 +183,11 @@ class TestProductUtilsComponent(TransactionCase):
                     )
                     if product_template_categ.data_xml_id in _SHARE_PRODUCTS_CATEG_REFS:
                         self.assertTrue(product_template.is_share)
+                        self.assertTrue(product_template.by_individual)
+                        self.assertTrue(product_template.by_company)
+                        self.assertEqual(
+                            product_template.short_name, product_template.name
+                        )
                 elif field == "taxes_id":
                     product_tax_creation_dict = []
                     for tax in getattr(product_template, field):
