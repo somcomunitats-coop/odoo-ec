@@ -22,7 +22,9 @@ class ProductTemplate(models.Model):
         related="categ_id.is_assignable_pack_to_partner",
     )
     is_pack = fields.Boolean("Is a pack", related="categ_id.is_pack")
-    is_service = fields.Boolean("Is a service", related="categ_id.is_service")
+    is_pack_service = fields.Boolean(
+        "Is a pack service", related="categ_id.is_pack_service"
+    )
 
     @api.depends("property_contract_template_id")
     def _compute_related_contract_product_ids(self):
