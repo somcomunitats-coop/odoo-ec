@@ -55,7 +55,7 @@
                   <field
                     name="existing_service_product_id"
                     attrs="{'invisible': [('type', '!=', 'existing')],'required': [('type','=','existing')]}"
-                    domain="[('is_service','=',True)]"
+                    domain="[('is_pack_service','=',True)]"
                   />
                   <field
                     name="name"

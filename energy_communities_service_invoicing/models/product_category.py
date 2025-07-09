@@ -12,11 +12,9 @@ class ProductCategory(models.Model):
     _name = "product.category"
     _inherit = "product.category"
 
-    is_pack = fields.Boolean(
-        "Is a pack category", compute="_compute_is_pack", store=True
-    )
-    is_service = fields.Boolean(
-        "Is a service category", compute="_compute_is_service", store=True
+    is_pack = fields.Boolean("Is a pack", compute="_compute_is_pack", store=True)
+    is_pack_service = fields.Boolean(
+        "Is a pack service", compute="_compute_is_pack_service", store=True
     )
     is_assignable_pack_to_partner = fields.Boolean(
         "Is a pack assignable to partner (via wizard)",
@@ -54,12 +52,12 @@ class ProductCategory(models.Model):
                     record.is_pack = True
 
     @api.depends("parent_id")
-    def _compute_is_service(self):
+    def _compute_is_pack_service(self):
         for record in self:
-            record.is_service = False
+            record.is_pack_service = False
             if record.parent_id:
                 if record.parent_id.data_xml_id == _SERVICE_PRODUCT_PARENT_CATEG_REF:
-                    record.is_service = True
+                    record.is_pack_service = True
 
     @api.depends("data_xml_id")
     def _compute_is_config_share(self):
