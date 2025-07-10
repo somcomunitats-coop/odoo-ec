@@ -132,12 +132,6 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
                     "community_company_id": community_company_id.id,
                     "discount": self.discount,
                 }
-                # config journal
-                sale_journal_id = self.platform_pack_id.categ_id.with_context(
-                    company_id=self.env.company.id
-                ).service_invoicing_sale_journal_id
-                if sale_journal_id:
-                    so_metadata["journal_id"] = sale_journal_id.id
                 service_invoicing_id = component.create_service_invoicing_initial(
                     company_id.partner_id,
                     self.platform_pack_id,

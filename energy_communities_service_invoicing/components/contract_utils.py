@@ -118,6 +118,7 @@ class ContractUtils(Component):
         )
         self._set_discount_if_needed(metadata_keys_arr)
         self._set_contract_recurrency(metadata_keys_arr)
+        self._set_config_journal()
         self.propagate_recurrency_values_to_contract()
         self._set_resting_metadata_in_contract(metadata_keys_arr)
 
@@ -166,6 +167,25 @@ class ContractUtils(Component):
             if line.recurring_rule_mode == "fixed":
                 self._recompute_fixed_recurrence_params(line)
 
+    def _set_config_journal(self):
+        # config journal
+        pack_product = self.env["product.template"].search(
+            [
+                (
+                    "property_contract_template_id",
+                    "=",
+                    self.work.record.contract_template_id.id,
+                )
+            ],
+            limit=1,
+        )
+        if pack_product:
+            sale_journal_id = pack_product.categ_id.with_context(
+                company_id=self.work.record.company_id.id
+            ).service_invoicing_sale_journal_id
+            if sale_journal_id:
+                self.work.record.write({"journal_id": sale_journal_id.id})
+
     def propagate_recurrency_values_to_contract(self, f_contract=False):
         if not f_contract:
             f_contract = self.work.record
@@ -198,8 +218,6 @@ class ContractUtils(Component):
 
     def _recompute_fixed_recurrence_params(self, line):
         line._compute_recurring_next_date()
-        # line._compute_next_period_date_start()
-        # line._compute_next_period_date_end()
 
     def _build_service_invoicing_params(
         self,

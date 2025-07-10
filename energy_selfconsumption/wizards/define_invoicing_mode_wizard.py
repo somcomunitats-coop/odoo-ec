@@ -302,11 +302,6 @@ class DefineInvoicingModeWizard(models.TransientModel):
         # Prepare sale order metadata
         so_metadata = self._prepare_sale_order_metadata(assignation)
 
-        # Configure journal if defined
-        sale_journal = self._get_sale_journal(pack_template)
-        if sale_journal:
-            so_metadata["journal_id"] = sale_journal.id
-
         # Create sale order using component
         with sale_order_utils(self.env) as component:
             return component.create_service_invoicing_sale_order(
@@ -340,23 +335,6 @@ class DefineInvoicingModeWizard(models.TransientModel):
             "project_id": self.selfconsumption_id.id,
             "company_id": self.selfconsumption_id.company_id.id,
         }
-
-    def _get_sale_journal(self, pack_template):
-        """
-        Get sale journal from pack template category
-
-        Args:
-            pack_template: Pack template record
-
-        Returns:
-            account.journal: Sale journal or False
-        """
-        try:
-            return pack_template.categ_id.with_context(
-                company_id=self.selfconsumption_id.company_id.id
-            ).service_invoicing_sale_journal_id
-        except Exception:
-            return False
 
     # Project update methods
     def _update_project_configuration(self, pack_template, pricelist):

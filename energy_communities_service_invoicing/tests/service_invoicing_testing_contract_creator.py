@@ -72,7 +72,7 @@ class ServiceInvoicingTestingContractCreator:
 
     def _get_community_1_company(self):
         return self.env["res.company"].search([("name", "=", "Community 1")], limit=1)
-    
+
     def _assert_recurrency_config_consistency_between_old_and_new(
         self,
         old_contract,
@@ -116,6 +116,7 @@ class ServiceInvoicingTestingContractCreator:
             old_contract.fixed_invoicing_month, new_contract_line.fixed_invoicing_month
         )
         # on contract
+        self.assertEqual(old_contract.journal_id, new_contract.journal_id)
         self.assertEqual(initial_recurring_next_date, new_contract.recurring_next_date)
         self.assertEqual(
             initial_next_period_date_start, new_contract.next_period_date_start
