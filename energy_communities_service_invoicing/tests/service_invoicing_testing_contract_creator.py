@@ -22,9 +22,7 @@ class ServiceInvoicingTestingContractCreator:
                 "platform_pack_id": self.env.ref(
                     "energy_communities_service_invoicing.demo_platform_pack_product_template"
                 ).product_variant_id.id,
-                "pricelist_id": self.env.ref(
-                    "energy_communities_service_invoicing.demo_service_invoicing_pricelist"
-                ).id,
+                "pricelist_id": self.env.ref("product.list0").id,
                 "payment_mode_id": self.env.ref(
                     "account_payment_mode.payment_mode_inbound_dd1"
                 ).id,
@@ -46,9 +44,7 @@ class ServiceInvoicingTestingContractCreator:
             execution_date = fields.Date.today()
         so_metadata = so_metadata | {
             "company_id": self.env.ref("energy_communities.coordinator_company_1").id,
-            "pricelist_id": self.env.ref(
-                "energy_communities_service_invoicing.demo_service_invoicing_pricelist"
-            ).id,
+            "pricelist_id": self.env.ref("product.list0").id,
         }
         # create service invoicing
         with sale_order_utils(self.env) as component:
@@ -57,9 +53,7 @@ class ServiceInvoicingTestingContractCreator:
                 self.env.ref(
                     "energy_communities_service_invoicing.demo_platform_pack_product_template"
                 ),
-                self.env.ref(
-                    "energy_communities_service_invoicing.demo_service_invoicing_pricelist"
-                ),
+                self.env.ref("product.list0"),
                 execution_date,
                 "activate",
                 "testing_contract",
