@@ -1,7 +1,8 @@
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 from odoo.addons.energy_communities.config import (
-    _PACK_PRODUCTS_RELATION_TO_SERVICES_REFS,
+    PACK_PRODUCTS_RELATION_TO_SERVICES_REFS,
 )
 from odoo.addons.energy_communities.utils import (
     get_successful_popup_message,
@@ -13,6 +14,13 @@ from ..schemas import (
     ProductCreationParams,
     ServiceProductCreationData,
     ServiceProductExistingData,
+)
+
+MISCONFIGURATION_ERROR_ON_CATEGS = ValidationError(
+    _("Misconfiguration between pack and service product categories")
+)
+MISCONFIGURATION_ERROR_ON_COMPANIES = ValidationError(
+    _("Misconfiguration between pack and service product companies")
 )
 
 
@@ -53,12 +61,51 @@ class PackProductCreatorWizard(models.TransientModel):
         for record in self:
             record.pack_categ_id_is_config_share = record.pack_categ_id.is_config_share
 
+    @api.onchange("company_id", "pack_categ_id")
+    def unling_existing_related_services(self):
+        for record in self:
+            for existing_service in record.service_product_ids.filtered(
+                lambda service_product: service_product.type == "existing"
+            ):
+                existing_service.unlink()
+
     def execute_create(self):
+        self._validate_creation()
         result = self._create_products()
         return get_successful_popup_message(
             _("Pack product creation successful"),
             _("Please visit the products view in order to see the new items."),
         )
+
+    def _validate_creation(self):
+        if not self.pack_categ_id:
+            raise MISCONFIGURATION_ERROR_ON_CATEGS
+        for existing_service in self.service_product_ids.filtered(
+            lambda service_product: service_product.type == "existing"
+        ):
+            if not existing_service.existing_service_product_id.categ_id:
+                raise MISCONFIGURATION_ERROR_ON_CATEGS
+            if (
+                existing_service.existing_service_product_id.categ_id.id
+                != self.env.ref(
+                    PACK_PRODUCTS_RELATION_TO_SERVICES_REFS[
+                        self.pack_categ_id.data_xml_id
+                    ]
+                ).id
+            ):
+                raise MISCONFIGURATION_ERROR_ON_CATEGS
+            if existing_service.existing_service_product_id.company_id:
+                if not self.company_id:
+                    raise MISCONFIGURATION_ERROR_ON_COMPANIES
+                else:
+                    if (
+                        existing_service.existing_service_product_id.company_id.id
+                        != self.company_id.id
+                    ):
+                        raise MISCONFIGURATION_ERROR_ON_COMPANIES
+            else:
+                if self.company_id:
+                    raise MISCONFIGURATION_ERROR_ON_COMPANIES
 
     def _create_products(self):
         creation_params = self._build_creation_params()
@@ -74,7 +121,7 @@ class PackProductCreatorWizard(models.TransientModel):
                     ServiceProductCreationData(
                         company_id=self.company_id.id if self.company_id else None,
                         categ_id=self.env.ref(
-                            _PACK_PRODUCTS_RELATION_TO_SERVICES_REFS[
+                            PACK_PRODUCTS_RELATION_TO_SERVICES_REFS[
                                 self.pack_categ_id.data_xml_id
                             ]
                         ).id,

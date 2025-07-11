@@ -1,5 +1,9 @@
 from odoo import _, api, fields, models
 
+from odoo.addons.energy_communities.config import (
+    PACK_PRODUCTS_RELATION_TO_SERVICES_REFS,
+)
+
 
 class PackProductCreatorWizardServiceProduct(models.TransientModel):
     _name = "pack.product.creator.wizard.service.product"
@@ -35,3 +39,56 @@ class PackProductCreatorWizardServiceProduct(models.TransientModel):
     existing_service_product_id = fields.Many2one(
         comodel_name="product.template", string="Existing service product"
     )
+    allowed_service_product_categ_id = fields.Integer(
+        string="Allowed service product categ id",
+        compute="_compute_allowed_service_product_categ_id",
+        store=False,
+    )
+    allowed_service_product_company_id = fields.Integer(
+        string="Allowed service product company id",
+        compute="_compute_allowed_service_product_company_id",
+        store=False,
+    )
+    allowed_service_product_ids = fields.Many2many(
+        "product.template",
+        string="Allowed service product domain",
+        compute="_compute_allowed_service_product_ids",
+        store=False,
+    )
+
+    @api.depends("pack_product_creator_id")
+    def _compute_allowed_service_product_categ_id(self):
+        for record in self:
+            record.allowed_service_product_categ_id = 0
+            if record.pack_product_creator_id.pack_categ_id:
+                record.allowed_service_product_categ_id = self.env.ref(
+                    PACK_PRODUCTS_RELATION_TO_SERVICES_REFS[
+                        record.pack_product_creator_id.pack_categ_id.data_xml_id
+                    ]
+                ).id
+
+    @api.depends("pack_product_creator_id")
+    def _compute_allowed_service_product_company_id(self):
+        for record in self:
+            record.allowed_service_product_company_id = False
+            if record.pack_product_creator_id.company_id:
+                record.allowed_service_product_company_id = (
+                    record.pack_product_creator_id.company_id.id
+                )
+
+    @api.depends("pack_product_creator_id")
+    def _compute_allowed_service_product_ids(self):
+        for record in self:
+            query = [
+                ("is_pack_service", "=", True),
+                ("categ_id", "=", self.allowed_service_product_categ_id),
+            ]
+            if bool(self.allowed_service_product_company_id):
+                query.append(
+                    ("company_id", "=", self.allowed_service_product_company_id)
+                )
+            else:
+                query.append(("company_id", "=", False))
+            record.allowed_service_product_ids = (
+                self.env["product.template"].search(query).ids
+            )

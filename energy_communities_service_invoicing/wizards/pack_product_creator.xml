@@ -14,21 +14,25 @@
               required="0"
               readonly="0"
               domain="[(1,'=',1)]"
-              options="{'no_open': True}"
+              options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
             />
             <field
               name="pack_categ_id"
               required="1"
               readonly="0"
               domain="[('parent_id','=', %(energy_communities.product_category_pack)d)]"
-              options="{'no_open': True}"
+              options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
             />
             <field name="name" required="1"/>
             <field name="description_sale" />
-            <field name="pack_categ_id_is_config_share" invisible="1" />
+            <field name="pack_categ_id_is_config_share" invisible="1"/>
             <field name="default_code" attrs="{'required': [('pack_categ_id_is_config_share','=',True)]}" />
             <field name="list_price" />
-            <field name="taxes_id" widget="many2many_tags" />
+            <field
+              name="taxes_id"
+              widget="many2many_tags"
+              options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+            />
             <field name="recurring_rule_mode" required="1" />
             <field name="recurring_invoicing_type" required="1" />
             <field name="recurring_interval" attrs="{'required': [('recurring_rule_mode','=','interval')],'invisible': [('recurring_rule_mode','!=','interval')]}" />
@@ -36,7 +40,7 @@
             <field name="recurring_invoicing_fixed_type" attrs="{'readonly': True, 'required': [('recurring_rule_mode','=','fixed')],'invisible': [('recurring_rule_mode','!=','fixed')]}" />
             <field name="fixed_invoicing_day" attrs="{'required': [('recurring_rule_mode','=','fixed')],'invisible': [('recurring_rule_mode','!=','fixed')]}" />
             <field name="fixed_invoicing_month" attrs="{'required': [('recurring_rule_mode','=','fixed')],'invisible': [('recurring_rule_mode','!=','fixed')]}" />
-            <field name="service_product_ids" widget="one2many">
+            <field name="service_product_ids" widget="one2many" attrs="{'invisible': [('pack_categ_id','=',False)]}">
               <tree>
                 <field name="type" />
                 <field name="existing_service_product_id" />
@@ -51,11 +55,13 @@
               </tree>
               <form>
                 <group>
+                  <field name="allowed_service_product_ids" invisible="1"/>
                   <field name="type" required="1" />
                   <field
                     name="existing_service_product_id"
                     attrs="{'invisible': [('type', '!=', 'existing')],'required': [('type','=','existing')]}"
-                    domain="[('is_pack_service','=',True)]"
+                    domain="[('id','in',allowed_service_product_ids)]"
+                    options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
                   />
                   <field
                     name="name"
@@ -83,6 +89,7 @@
                     name="taxes_id"
                     widget="many2many_tags"
                     attrs="{'invisible': [('type', '!=', 'new')]}"
+                    options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
                   />
                 </group>
               </form>

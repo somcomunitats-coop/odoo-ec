@@ -33,7 +33,7 @@ STATE_LABELS = {
 }
 
 # TODO: Review where to place and how to better do the mapping
-_PACK_PRODUCTS_RELATION_TO_SERVICES_REFS = {
+PACK_PRODUCTS_RELATION_TO_SERVICES_REFS = {
     "energy_communities.product_category_recurring_fee_pack": "energy_communities.product_category_recurring_fee_service",
     "energy_communities.product_category_share_recurring_fee_pack": "energy_communities.product_category_recurring_fee_service",
     "energy_communities_service_invoicing.product_category_platform_pack": "energy_communities_service_invoicing.product_category_platform_service",
