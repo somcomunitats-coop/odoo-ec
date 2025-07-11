@@ -8,46 +8,13 @@ from odoo.exceptions import ValidationError
 
 from odoo.addons.contract.models.contract import ContractContract
 
-PACK_VALUES = [
-    ("platform_pack", _("Platform Pack")),
-    ("none", _("None")),
-]
-PAUSED = "paused"
-IN_PROGRESS = "in_progress"
-CLOSED_PLANNED = "closed_planned"
-CLOSED = "closed"
-_CONTRACT_STATUS_VALUES = [
-    (PAUSED, _("Paused")),
-    (IN_PROGRESS, _("In progress")),
-    (CLOSED_PLANNED, _("Planned closure")),
-    (CLOSED, _("Closed")),
-]
-
-ACTIVATE = "activate"
-MODIFICATION = "modification"
-REOPEN = "reopen"
-CLOSE = "close"
-_SERVICE_INVOICING_EXECUTED_ACTION_VALUES = [
-    (ACTIVATE, _("Activate")),
-    (MODIFICATION, _("Modification")),
-    (REOPEN, _("Reopen")),
-    (CLOSE, _("Close")),
-]
-_SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES = [
-    ("none", _("None"))
-] + _SERVICE_INVOICING_EXECUTED_ACTION_VALUES[:-1]
-
-_PACK_PRODUCT_PARENT_CATEG_REF = "energy_communities.product_category_pack"
-_SERVICE_PRODUCT_PARENT_CATEG_REF = "energy_communities.product_category_service"
-_SHARE_PRODUCTS_CATEG_REFS = [
-    "energy_communities.product_category_share_recurring_fee_pack",
-    "cooperator.product_category_company_share",
-    "energy_communities.product_category_company_voluntary_share",
-    "energy_communities_cooperator.product_category_company_voluntary_share",
-]
-_ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS = [
-    "energy_communities.product_category_recurring_fee_pack"
-]
+from .config import (
+    CONTRACT_STATUS_CLOSED,
+    CONTRACT_STATUS_CLOSED_PLANNED,
+    CONTRACT_STATUS_IN_PROGRESS,
+    CONTRACT_STATUS_PAUSED,
+    PACK_TYPE_PLATFORM,
+)
 
 
 def service_invoicing_tree_view(env: Environment):
@@ -112,7 +79,7 @@ def get_existing_open_pack_contract(
     query = [
         ("partner_id", "=", partner_id.id),
         ("pack_type", "=", pack_type),
-        ("status", "in", [PAUSED, IN_PROGRESS]),
+        ("status", "in", [CONTRACT_STATUS_PAUSED, CONTRACT_STATUS_IN_PROGRESS]),
     ]
     if contract_id:
         query.append(("id", "!=", contract_id.id))
@@ -121,14 +88,14 @@ def get_existing_open_pack_contract(
     return env["contract.contract"].search(query, limit=1)
 
 
-def get_existing_last_closed_pack_contract(
+def get_existing_last_closed_platform_pack_contract(
     env, partner_id, community_company_id, contract_id=False
 ):
     query = [
         ("partner_id", "=", partner_id.id),
         ("community_company_id", "=", community_company_id.id),
-        ("pack_type", "=", "platform_pack"),
-        ("status", "in", ["closed_planned", "closed"]),
+        ("pack_type", "=", PACK_TYPE_PLATFORM),
+        ("status", "in", [CONTRACT_STATUS_CLOSED_PLANNED, CONTRACT_STATUS_CLOSED]),
         ("successor_contract_id", "=", False),
     ]
     if contract_id:

@@ -9,8 +9,6 @@ from odoo.addons.energy_communities.utils import (
     sale_order_utils,
 )
 
-from ..utils import PACK_VALUES
-
 
 class AccountMove(models.Model):
     _name = "account.move"

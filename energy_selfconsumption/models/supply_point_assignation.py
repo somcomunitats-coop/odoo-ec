@@ -1,7 +1,7 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from .config import DISTRIBUTION_STATE_ACTIVE, STATE_ACTIVE
+from ..config import DISTRIBUTION_STATE_ACTIVE
 
 # Constants for coefficient validation
 MIN_COEFFICIENT_VALUE = 0.0

@@ -1,8 +1,6 @@
 from odoo import _, api, fields, models
 
-from ..utils import _CONTRACT_STATUS_VALUES
-
-_PACK_CONTRACT_STATUS_VALUES = _CONTRACT_STATUS_VALUES + [("none", _("None"))]
+from ..config import PACK_CONTRACT_STATUS_VALUES, PACK_TYPE_PLATFORM
 
 
 class ResPartner(models.Model):
@@ -16,7 +14,7 @@ class ResPartner(models.Model):
         store=False,
     )
     platform_pack_contract_status = fields.Selection(
-        selection=_PACK_CONTRACT_STATUS_VALUES,
+        selection=PACK_CONTRACT_STATUS_VALUES,
         string="Platform Service Pack Status",
         compute="_compute_platform_pack_status",
         store=False,
@@ -41,7 +39,7 @@ class ResPartner(models.Model):
         return self.env["contract.contract"].search(
             [
                 ("community_company_id", "=", self.related_company_id.id),
-                ("pack_type", "=", "platform_pack"),
+                ("pack_type", "=", PACK_TYPE_PLATFORM),
             ],
             limit=1,
         )

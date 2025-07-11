@@ -5,16 +5,12 @@ from stdnum.exceptions import *
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
+from odoo.addons.energy_communities.config import STATE_ACTIVE, STATE_INACTIVE
+
+from ..config import TARIFF_2_0TD, TARIFF_3_0TD, TARIFF_6_1TD
 from ..utils.validation_utils import (
     validate_cadastral_reference,
     validate_cups_code,
-)
-from .config import (
-    STATE_ACTIVE,
-    STATE_INACTIVE,
-    TARIFF_2_0TD,
-    TARIFF_3_0TD,
-    TARIFF_6_1TD,
 )
 
 # Constants for tariff validation

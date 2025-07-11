@@ -1,6 +1,6 @@
 from odoo import fields, models
 
-from ..utils import PACK_VALUES
+from ..config import PACK_TYPE_VALUES
 
 
 class PackTypeMixin(models.AbstractModel):
@@ -8,7 +8,7 @@ class PackTypeMixin(models.AbstractModel):
     _description = "Add pack_type to any model"
 
     pack_type = fields.Selection(
-        PACK_VALUES,
+        PACK_TYPE_VALUES,
         compute="_compute_pack_type",
         compute_sudo=True,
         string="Pack Type",

@@ -1,11 +1,11 @@
 import base64
 import logging
 from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
 from io import StringIO
 
 import chardet
 import pandas as pd
+from dateutil.relativedelta import relativedelta
 from stdnum.es import cups, referenciacatastral
 from stdnum.exceptions import (
     InvalidChecksum,
@@ -24,42 +24,36 @@ from odoo.addons.energy_communities.utils import (
 from odoo.addons.energy_communities_service_invoicing.utils import (
     get_existing_pack_contract,
 )
+from odoo.addons.energy_project.config import (
+    PROJECT_STATE_ACTIVATION,
+    PROJECT_STATE_ACTIVE,
+    PROJECT_STATE_DRAFT,
+)
+
+from ..config import (
+    CAU_LENGTH_24,
+    CAU_LENGTH_26,
+    CAU_SEPARATOR,
+    CIL_LENGTH_23,
+    CIL_LENGTH_25,
+    CUPS_LENGTH_20,
+    CUPS_LENGTH_22,
+    DEFAULT_PARTICIPATIONS,
+    DISTRIBUTION_STATE_ACTIVE,
+    DISTRIBUTION_STATE_PROCESS,
+    DISTRIBUTION_STATE_VALIDATED,
+    INSCRIPTION_STATE_ACTIVE,
+    INSCRIPTION_STATE_CHANGE,
+    LAST_DIGITS_COUNT,
+    SELFCONSUMPTION_CONF_STATE_ACTIVE,
+    SELFCONSUMPTION_CONF_STATE_DEFAULT_VALUE,
+    SELFCONSUMPTION_CONF_STATE_INACTIVE,
+    SELFCONSUMPTION_CONF_STATE_VALUES,
+    SELFCONSUMPTION_DEFAULT_INVOICING_MODE,
+    SELFCONSUMPTION_INVOICING_MODE_VALUES,
+)
 
 _logger = logging.getLogger(__name__)
-
-# Constants for invoicing values
-INVOICING_VALUES = [
-    ("power_acquired", _("Power Acquired")),
-    ("energy_delivered", _("Energy Delivered")),
-    ("energy_custom", _("Energy Delivered Custom")),
-]
-
-# Constants for configuration states
-ACTIVE = "active"
-INACTIVE = "inactive"
-
-CONF_STATE_VALUES = [
-    (ACTIVE, _("Active")),
-    (INACTIVE, _("Inactive")),
-]
-
-# Constants for CAU and CIL validation
-CAU_LENGTH_24 = 24
-CAU_LENGTH_26 = 26
-CIL_LENGTH_23 = 23
-CIL_LENGTH_25 = 25
-CUPS_LENGTH_20 = 20
-CUPS_LENGTH_22 = 22
-CAU_SEPARATOR = "A"
-LAST_DIGITS_COUNT = 3
-
-# Constants for default participation values
-DEFAULT_PARTICIPATIONS = [
-    {"name": "0,5 kW", "quantity": 0.5},
-    {"name": "1,0 kW", "quantity": 1.0},
-    {"name": "1,5 kW", "quantity": 1.5},
-    {"name": "2,0 kW", "quantity": 2.0},
-]
 
 
 class Selfconsumption(models.Model):
@@ -118,7 +112,7 @@ class Selfconsumption(models.Model):
         """Get the currently active distribution table"""
         for record in self:
             table_in_active = record.distribution_table_ids.filtered_domain(
-                [("state", "=", "active")]
+                [("state", "=", DISTRIBUTION_STATE_ACTIVE)]
             )
             if table_in_active:
                 record.current_distribution_table = table_in_active
@@ -177,9 +171,10 @@ class Selfconsumption(models.Model):
         compute=_compute_sale_orders_count, help="Number of sale orders"
     )
     invoicing_mode = fields.Selection(
-        INVOICING_VALUES,
+        SELFCONSUMPTION_INVOICING_MODE_VALUES,
         string="Invoicing Mode",
         help="Method used for invoicing this project",
+        default=SELFCONSUMPTION_DEFAULT_INVOICING_MODE,
     )
     payment_mode_id = fields.Many2one(
         "account.payment.mode",
@@ -205,9 +200,9 @@ class Selfconsumption(models.Model):
         help="Official cadastral reference for the project location",
     )
     conf_state = fields.Selection(
-        CONF_STATE_VALUES,
+        SELFCONSUMPTION_CONF_STATE_VALUES,
         string="Activate Registration Form",
-        default=INACTIVE,
+        default=SELFCONSUMPTION_CONF_STATE_DEFAULT_VALUE,
         required=True,
         help="Controls whether the registration form is active",
     )
@@ -426,12 +421,14 @@ class Selfconsumption(models.Model):
     def set_inscription_activation(self):
         """Set project to inscription state and validate distribution table"""
         self.set_inscription()
-        self.distribution_table_state("process", "validated")
+        self.distribution_table_state(
+            DISTRIBUTION_STATE_PROCESS, DISTRIBUTION_STATE_VALIDATED
+        )
 
     def set_draft(self):
         """Set project state to draft"""
         for record in self:
-            record.write({"state": "draft"})
+            record.write({"state": PROJECT_STATE_DRAFT})
 
     def set_invoicing_mode(self):
         """Open wizard to define invoicing mode"""
@@ -448,17 +445,19 @@ class Selfconsumption(models.Model):
 
     def set_new_distribution_table(self):
         distribution_table_active = self.distribution_table_ids.filtered(
-            lambda table: table.state == ACTIVE
+            lambda table: table.state == DISTRIBUTION_STATE_ACTIVE
         )
         if not distribution_table_active:
             raise ValidationError(_("There is no active distribution table."))
         distribution_table_validated = self.distribution_table_ids.filtered(
-            lambda table: table.state == "validated"
+            lambda table: table.state == DISTRIBUTION_STATE_VALIDATED
         )
         if not distribution_table_validated:
             raise ValidationError(_("There is no validated distribution table."))
 
-        self.distribution_table_state("validated", ACTIVE)
+        self.distribution_table_state(
+            DISTRIBUTION_STATE_VALIDATED, DISTRIBUTION_STATE_ACTIVE
+        )
 
         # TODO:
         # Generate new sale orders
@@ -568,11 +567,13 @@ class Selfconsumption(models.Model):
             if not record.power or record.power <= 0:
                 raise ValidationError(_("Project must have a valid Rated Power."))
             if not record.distribution_table_ids.filtered_domain(
-                [("state", "=", "validated")]
+                [("state", "=", DISTRIBUTION_STATE_VALIDATED)]
             ):
                 raise ValidationError(_("Must have a valid Distribution Table."))
             record.write({"state": "activation"})
-        self.distribution_table_state("validated", "process")
+        self.distribution_table_state(
+            DISTRIBUTION_STATE_VALIDATED, DISTRIBUTION_STATE_PROCESS
+        )
 
     def activate(self):
         """
@@ -618,7 +619,7 @@ class Selfconsumption(models.Model):
 
     def activate_form(self):
         self.ensure_one()  # Ensures only one record is selected
-        if self.conf_state != ACTIVE:
+        if self.conf_state != SELFCONSUMPTION_CONF_STATE_ACTIVE:
             if not self.company_id.data_policy_approval_text:
                 raise ValidationError(
                     _(
@@ -626,7 +627,7 @@ class Selfconsumption(models.Model):
                         "To modify the privacy policy go to company settings."
                     )
                 )
-            self.conf_state = ACTIVE
+            self.conf_state = SELFCONSUMPTION_CONF_STATE_ACTIVE
             self.conf_url_form = (
                 "{base_url}/inscription-data?model_id={model_id}".format(
                     base_url=self.env["ir.config_parameter"]
@@ -638,9 +639,9 @@ class Selfconsumption(models.Model):
 
     def unactivate_form(self):
         self.ensure_one()  # Ensures only one record is selected
-        if self.conf_state == ACTIVE:
+        if self.conf_state == SELFCONSUMPTION_CONF_STATE_ACTIVE:
             self.conf_url_form = ""
-            self.conf_state = INACTIVE
+            self.conf_state = SELFCONSUMPTION_CONF_STATE_INACTIVE
 
     def action_redirect_to_page_form_inscription(self):
         self.ensure_one()  # Ensures only one record is selected
@@ -700,9 +701,11 @@ class Selfconsumption(models.Model):
     # TODO: Review if we need to use all contracts or only the active ones when this method is used
     def get_contracts(self):
         return self.env["contract.contract"].search([("project_id", "=", self.id)])
-    
+
     def get_active_contracts(self):
-        return self.env["contract.contract"].search([("project_id", "=", self.id), ("status", "=", "in_progress")])
+        return self.env["contract.contract"].search(
+            [("project_id", "=", self.id), ("status", "=", "in_progress")]
+        )
 
     def get_contracts_view(self):
         self.ensure_one()
@@ -742,16 +745,16 @@ class Selfconsumption(models.Model):
             lambda table: table.state == actual_state
         )
         # If the new state is active, we need to cancel the active distribution table
-        if new_state == ACTIVE:
+        if new_state == DISTRIBUTION_STATE_ACTIVE:
             distribution_table_active = self.distribution_table_ids.filtered(
-                lambda table: table.state == ACTIVE
+                lambda table: table.state == DISTRIBUTION_STATE_ACTIVE
             )
             if distribution_table_active:
                 distribution_table_active.write(
                     {"date_end": fields.Date.today(), "state": "cancelled"}
                 )
         distribution_table_to_activate.write({"state": new_state})
-        if new_state == ACTIVE:
+        if new_state == DISTRIBUTION_STATE_ACTIVE:
             # We need to update the start date of the distribution table
             distribution_table_to_activate.write({"date_start": fields.Date.today()})
             # If the new state is active, we need to update the inscriptions
@@ -762,11 +765,11 @@ class Selfconsumption(models.Model):
                 inscription.write(
                     {
                         "participation_real_quantity": supply_point_assignation.energy_shares,
-                        "state": ACTIVE,
+                        "state": INSCRIPTION_STATE_ACTIVE,
                     }
                 )
             inscriptions = self.inscription_ids.filtered_domain(
-                [("state", "=", "change")]
+                [("state", "=", INSCRIPTION_STATE_CHANGE)]
             )
             inscriptions.write({"state": "cancelled"})
             contracts = self.get_contracts()
@@ -776,7 +779,7 @@ class Selfconsumption(models.Model):
                         component.close(fields.Date.today())
 
     def validate_state(self, state):
-        if state not in ("activation", ACTIVE):
+        if state not in (PROJECT_STATE_ACTIVATION, PROJECT_STATE_ACTIVE):
             error_message = _(
                 "The report can be downloaded when the project is in activation or active status."
             )
@@ -810,10 +813,10 @@ class Selfconsumption(models.Model):
                 )
             else:
                 table_in_process = record.distribution_table_ids.filtered_domain(
-                    [("state", "=", "process")]
+                    [("state", "=", DISTRIBUTION_STATE_PROCESS)]
                 )
                 table_in_active = record.distribution_table_ids.filtered_domain(
-                    [("state", "=", ACTIVE)]
+                    [("state", "=", DISTRIBUTION_STATE_ACTIVE)]
                 )
                 if table_in_process:
                     record.report_distribution_table = table_in_process

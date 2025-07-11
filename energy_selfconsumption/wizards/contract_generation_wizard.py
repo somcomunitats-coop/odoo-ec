@@ -7,12 +7,9 @@ from odoo.addons.energy_communities.utils import (
     contract_utils,
     sale_order_utils,
 )
+from odoo.addons.energy_project.config import PROJECT_STATE_ACTIVE
 
-from ..models.config import (
-    DISTRIBUTION_STATE_ACTIVE,
-    DISTRIBUTION_STATE_PROCESS,
-    PROJECT_STATE_ACTIVE,
-)
+from ..config import DISTRIBUTION_STATE_ACTIVE, DISTRIBUTION_STATE_PROCESS
 
 # Constants for contract generation wizard
 SALE_ORDER_STATE_DRAFT = "draft"
@@ -332,7 +329,6 @@ class ContractGenerationWizard(models.TransientModel):
         return contract
 
     # def _setup_contract_line_description(self, contract, distribution_table):
-
 
     def _setup_main_contract_line(self, contract):
         """

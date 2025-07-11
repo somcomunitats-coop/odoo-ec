@@ -8,7 +8,7 @@ import pandas as pd
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from ..models.config import (
+from ..config import (
     CSV_DELIMITER,
     CSV_FILE_EXTENSION,
     CSV_QUOTE_CHAR,

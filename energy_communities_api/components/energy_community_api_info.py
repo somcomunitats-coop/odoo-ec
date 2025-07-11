@@ -4,8 +4,7 @@ from typing import List
 from odoo.exceptions import MissingError
 
 from odoo.addons.component.core import Component
-from odoo.addons.energy_project.models.project import DRAFT
-from odoo.addons.energy_selfconsumption.models.selfconsumption import ACTIVE
+from odoo.addons.energy_communities.config import STATE_ACTIVE, STATE_DRAFT
 
 from ..schemas import (
     Address,
@@ -23,13 +22,13 @@ class EnergyCommunityApiInfo(Component):
 
     _communities_services_domain = lambda _, community_id: [
         ("company_id", "=", community_id),
-        ("state", "!=", DRAFT),
+        ("state", "!=", STATE_DRAFT),
     ]
 
     _community_service_domain = lambda _, community_id, service_id: [
         ("company_id", "=", community_id),
         ("id", "=", service_id),
-        ("state", "!=", DRAFT),
+        ("state", "!=", STATE_DRAFT),
     ]
 
     def get_energy_community_info(self, community_id) -> EnergyCommunityInfo:
@@ -115,9 +114,9 @@ class EnergyCommunityApiInfo(Component):
             name=service.name,
             status=service.state,
             has_monitoring=service.project_id.monitoring_service() is not None,
-            open_inscriptions=service.conf_state == ACTIVE,
+            open_inscriptions=service.conf_state == STATE_ACTIVE,
             inscriptions=len(service.inscription_ids),
-            inscriptions_url_form=service.conf_state == ACTIVE
+            inscriptions_url_form=service.conf_state == STATE_ACTIVE
             and service.conf_url_form
             or "",
             address=Address(

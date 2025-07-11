@@ -1,5 +1,10 @@
 from odoo import _, api, fields, models
 
+from ..config import (
+    PACK_TYPE_PLATFORM,
+    PACK_TYPE_PLATFORM_PRODUCT_CATEG_XML_ID,
+)
+
 
 class ContractTemplate(models.Model):
     _name = "contract.template"
@@ -9,6 +14,6 @@ class ContractTemplate(models.Model):
 
     def custom_compute_pack_type(self):
         self._set_custom_pack_type_on_contract_template(
-            "platform_pack",
-            "energy_communities_service_invoicing.product_category_platform_pack",
+            PACK_TYPE_PLATFORM,
+            PACK_TYPE_PLATFORM_PRODUCT_CATEG_XML_ID,
         )

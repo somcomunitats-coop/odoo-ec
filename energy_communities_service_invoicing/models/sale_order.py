@@ -1,6 +1,9 @@
 from odoo import _, api, fields, models
 
-from ..utils import _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES
+from ..config import (
+    SALE_ORDER_SERVICE_INVOICING_ACTION_DEFAULT_VALUE,
+    SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES,
+)
 
 
 class SaleOrder(models.Model):
@@ -8,14 +11,14 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     service_invoicing_action = fields.Selection(
-        selection=_SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES,
+        selection=SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES,
         required=True,
         string="Service invoicing action",
-        default="none",
+        default=SALE_ORDER_SERVICE_INVOICING_ACTION_DEFAULT_VALUE,
     )
     service_invoicing_action_description = fields.Char(
         string="Service invoicing action description",
-        default="none",
+        default=SALE_ORDER_SERVICE_INVOICING_ACTION_DEFAULT_VALUE,
     )
     service_invoicing_id = fields.Many2one(
         "contract.contract",

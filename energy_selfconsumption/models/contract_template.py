@@ -1,6 +1,13 @@
 from odoo import _, api, fields, models
 
-from .config import PACK_TYPE_NONE, PACK_TYPE_SELFCONSUMPTION
+from odoo.addons.energy_communities_service_invoicing.config import (
+    PACK_TYPE_NONE,
+)
+
+from ..config import (
+    PACK_TYPE_SELFCONSUMPTION,
+    PACK_TYPE_SELFCONSUMPTION_PRODUCT_CATEG_XML_ID,
+)
 
 
 class ContractTemplate(models.Model):
@@ -32,7 +39,7 @@ class ContractTemplate(models.Model):
         if self.pack_type == PACK_TYPE_NONE:
             self._set_custom_pack_type_on_contract_template(
                 PACK_TYPE_SELFCONSUMPTION,
-                "energy_selfconsumption.product_category_selfconsumption_pack",
+                PACK_TYPE_SELFCONSUMPTION_PRODUCT_CATEG_XML_ID,
             )
 
     def is_selfconsumption_template(self):
@@ -59,7 +66,7 @@ class ContractTemplate(models.Model):
 
         # Get self-consumption product category
         category = self.env.ref(
-            "energy_selfconsumption.product_category_selfconsumption_pack",
+            PACK_TYPE_SELFCONSUMPTION_PRODUCT_CATEG_XML_ID,
             raise_if_not_found=False,
         )
 

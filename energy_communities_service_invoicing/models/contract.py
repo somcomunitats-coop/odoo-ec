@@ -6,16 +6,16 @@ from odoo import _, api, fields, models
 
 from odoo.addons.energy_communities.utils import contract_utils
 
+from ..config import (
+    CONTRACT_CLOSING_ACTION_DEFAULT_VALUE,
+    CONTRACT_CLOSING_ACTION_VALUES,
+    CONTRACT_STATUS_VALUES,
+    PACK_TYPE_PLATFORM,
+)
 from ..utils import (
-    _CONTRACT_STATUS_VALUES,
-    _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES,
     get_existing_open_pack_contract,
     raise_existing_same_open_platform_pack_contract_error,
 )
-
-_CLOSING_ACTION_VALUES = _SALE_ORDER_SERVICE_INVOICING_ACTION_VALUES + [
-    ("close", _("Close"))
-]
 
 
 class ContractContract(models.Model):
@@ -34,7 +34,7 @@ class ContractContract(models.Model):
         "contract.contract", string="Successor contract"
     )
     status = fields.Selection(
-        selection=_CONTRACT_STATUS_VALUES,
+        selection=CONTRACT_STATUS_VALUES,
         required=True,
         string="Status",
         default="in_progress",
@@ -48,10 +48,10 @@ class ContractContract(models.Model):
     pack_type = fields.Selection(related="contract_template_id.pack_type")
     is_free_pack = fields.Boolean(related="contract_template_id.is_free_pack")
     closing_action = fields.Selection(
-        selection=_CLOSING_ACTION_VALUES,
+        selection=CONTRACT_CLOSING_ACTION_VALUES,
         compute="_compute_closing_action",
         string="Closing reason",
-        default="none",
+        default=CONTRACT_CLOSING_ACTION_DEFAULT_VALUE,
         store=True,
     )
     closing_action_description = fields.Char(
@@ -293,7 +293,7 @@ class ContractContract(models.Model):
         return get_existing_open_pack_contract(
             self.env,
             self.partner_id,
-            "platform_pack",
+            PACK_TYPE_PLATFORM,
             contract_id=self,
             custom_query=[("community_company_id", "=", self.community_company_id.id)],
         )

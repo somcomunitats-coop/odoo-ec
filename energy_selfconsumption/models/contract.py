@@ -2,7 +2,7 @@ from collections import namedtuple
 
 from odoo import fields, models
 
-from .config import INVOICING_MODE_ENERGY_DELIVERED
+from ..config import SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED
 
 # Constants for contract management
 ARKENOVA_PROVIDER_PATTERN = "%Arkenova%"
@@ -169,7 +169,7 @@ class Contract(models.Model):
                 (
                     "project_id.selfconsumption_id.invoicing_mode",
                     "!=",
-                    INVOICING_MODE_ENERGY_DELIVERED,
+                    SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED,
                 )
             ]
         )

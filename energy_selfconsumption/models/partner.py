@@ -1,6 +1,6 @@
 from odoo import _, fields, models
 
-from .config import STATE_ACTIVE
+from odoo.addons.energy_communities.config import STATE_ACTIVE
 
 # Vulnerability situation constants
 VULNERABILITY_YES = "yes"

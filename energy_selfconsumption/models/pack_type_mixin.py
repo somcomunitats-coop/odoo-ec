@@ -1,11 +1,6 @@
 from odoo import _, fields, models
 
-from .config import PACK_TYPE_SELFCONSUMPTION
-
-# Pack type values for self-consumption
-PACK_VALUES = [
-    (PACK_TYPE_SELFCONSUMPTION, _("Selfconsumption Pack")),
-]
+from ..config import PACK_TYPE_SELFCONSUMPTION, PACK_TYPE_VALUES
 
 
 class PackTypeMixin(models.AbstractModel):
@@ -23,7 +18,7 @@ class PackTypeMixin(models.AbstractModel):
 
     # Extended pack type selection
     pack_type = fields.Selection(
-        selection_add=PACK_VALUES,
+        selection_add=PACK_TYPE_VALUES,
         help="Type of pack for contract and invoice processing",
     )
 

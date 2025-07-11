@@ -1,10 +1,10 @@
 from odoo import _, api, fields, models
 
-from ..utils import (
-    _ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS,
-    _PACK_PRODUCT_PARENT_CATEG_REF,
-    _SERVICE_PRODUCT_PARENT_CATEG_REF,
-    _SHARE_PRODUCTS_CATEG_REFS,
+from ..config import (
+    ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS,
+    PACK_PRODUCT_PARENT_CATEG_REF,
+    SERVICE_PRODUCT_PARENT_CATEG_REF,
+    SHARE_PRODUCTS_CATEG_REFS,
 )
 
 
@@ -48,7 +48,7 @@ class ProductCategory(models.Model):
         for record in self:
             record.is_pack = False
             if record.parent_id:
-                if record.parent_id.data_xml_id == _PACK_PRODUCT_PARENT_CATEG_REF:
+                if record.parent_id.data_xml_id == PACK_PRODUCT_PARENT_CATEG_REF:
                     record.is_pack = True
 
     @api.depends("parent_id")
@@ -56,19 +56,19 @@ class ProductCategory(models.Model):
         for record in self:
             record.is_pack_service = False
             if record.parent_id:
-                if record.parent_id.data_xml_id == _SERVICE_PRODUCT_PARENT_CATEG_REF:
+                if record.parent_id.data_xml_id == SERVICE_PRODUCT_PARENT_CATEG_REF:
                     record.is_pack_service = True
 
     @api.depends("data_xml_id")
     def _compute_is_config_share(self):
         for record in self:
             record.is_config_share = False
-            if record.data_xml_id in _SHARE_PRODUCTS_CATEG_REFS:
+            if record.data_xml_id in SHARE_PRODUCTS_CATEG_REFS:
                 record.is_config_share = True
 
     @api.depends("data_xml_id")
     def _compute_is_assignable_pack_to_partner(self):
         for record in self:
             record.is_assignable_pack_to_partner = False
-            if record.data_xml_id in _ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS:
+            if record.data_xml_id in ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS:
                 record.is_assignable_pack_to_partner = True
