@@ -8,20 +8,24 @@ import pandas as pd
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from ..models.config import (
+from odoo.addons.energy_communities.config import DISPLAY_DATE_FORMAT
+
+from ..config import (
     CSV_DELIMITER,
+    CSV_FILE_EXTENSION,
     CSV_QUOTE_CHAR,
-    DISPLAY_DATE_FORMAT,
-    INVOICING_MODE_ENERGY_CUSTOM,
-    INVOICING_MODE_ENERGY_DELIVERED,
-    INVOICING_VALUES,
+    DEFAULT_ENCODING,
     MIN_POWER_VALUE,
+    SELFCONSUMPTION_INVOICING_MODE_ENERGY_CUSTOM,
+    SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED,
+    SELFCONSUMPTION_INVOICING_MODE_VALUES,
 )
 
 # Constants for invoicing wizard
-DEFAULT_ENCODING = "utf-8"
-VALID_INVOICING_MODES = [INVOICING_MODE_ENERGY_DELIVERED, INVOICING_MODE_ENERGY_CUSTOM]
-CSV_FILE_EXTENSION = "csv"
+VALID_INVOICING_MODES = [
+    SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED,
+    SELFCONSUMPTION_INVOICING_MODE_ENERGY_CUSTOM,
+]
 ENERGY_DELIVERED_TEMPLATE = "Energy Delivered Custom: {energy_delivered} kWh"
 
 logger = logging.getLogger(__name__)
@@ -78,7 +82,7 @@ class InvoicingWizard(models.TransientModel):
         help="Number of contracts selected for invoicing",
     )
     invoicing_mode = fields.Selection(
-        INVOICING_VALUES,
+        SELFCONSUMPTION_INVOICING_MODE_VALUES,
         string="Invoicing Mode",
         default="_get_invoicing_mode",
         help="Invoicing mode of the selected contracts",

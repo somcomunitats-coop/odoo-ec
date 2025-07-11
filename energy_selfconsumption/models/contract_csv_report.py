@@ -3,9 +3,8 @@ from io import StringIO
 
 from odoo import models
 
-# Constants for CSV report generation
-CSV_DELIMITER = ","
-CSV_QUOTE_CHAR = '"'
+from ..config import CSV_DELIMITER, CSV_QUOTE_CHAR
+
 DEFAULT_ENERGY_VALUE = "0,02"  # Default energy value in kWh
 DATE_FORMAT = "%d/%m/%Y"
 

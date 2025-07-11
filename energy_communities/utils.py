@@ -10,14 +10,6 @@ from odoo.addons.contract.models.contract import ContractContract
 from odoo.addons.product.models.product_template import ProductTemplate
 from odoo.addons.sale.models.sale_order import SaleOrder
 
-# TODO: Review where to place and how to better do the mapping
-_PACK_PRODUCTS_RELATION_TO_SERVICES_REFS = {
-    "energy_communities.product_category_recurring_fee_pack": "energy_communities.product_category_recurring_fee_service",
-    "energy_communities.product_category_share_recurring_fee_pack": "energy_communities.product_category_recurring_fee_service",
-    "energy_communities_service_invoicing.product_category_platform_pack": "energy_communities_service_invoicing.product_category_platform_service",
-    "energy_selfconsumption.product_category_selfconsumption_pack": "energy_selfconsumption.product_category_selfconsumption_service",
-}
-
 
 def _get_component(
     env: Environment, model_name: str, usage: str, record: Any = None

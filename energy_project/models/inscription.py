@@ -1,7 +1,10 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
+from odoo.addons.energy_selfconsumption.config import DISTRIBUTION_STATE_DRAFT
 
+
+# TODO: This class has some methods applying selfconsumption logic that must be moved
 class Inscription(models.Model):
     _name = "energy_project.inscription"
     _description = "Inscriptions for a project"
@@ -74,7 +77,7 @@ class Inscription(models.Model):
             [
                 ("supply_point_id.partner_id", "=", self.partner_id.id),
                 ("selfconsumption_project_id", "=", self.project_id.id),
-                ("distribution_table_id.state", "=", "draft"),
+                ("distribution_table_id.state", "=", DISTRIBUTION_STATE_DRAFT),
             ]
         )
         return supply_point_assignations

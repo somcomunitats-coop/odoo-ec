@@ -4,6 +4,7 @@ from odoo.tests.common import TransactionCase
 from odoo.addons.energy_communities.utils import product_utils
 from odoo.addons.product.models.product_template import ProductTemplate
 
+from ..config import SHARE_PRODUCTS_CATEG_REFS
 from ..schemas import (
     BaseProductCreationData,
     PackProductCreationData,
@@ -12,7 +13,6 @@ from ..schemas import (
     ServiceProductCreationData,
     ServiceProductExistingData,
 )
-from ..utils import _SHARE_PRODUCTS_CATEG_REFS
 from .testing_cases import (
     _PRODUCT_UTILS_TESTING_CASES,
     PackProductDataTestingCase,
@@ -194,7 +194,7 @@ class TestProductUtilsComponent(TransactionCase):
                         product_template_categ,
                         self.env["product.category"].browse(getattr(test_data, field)),
                     )
-                    if product_template_categ.data_xml_id in _SHARE_PRODUCTS_CATEG_REFS:
+                    if product_template_categ.data_xml_id in SHARE_PRODUCTS_CATEG_REFS:
                         self.assertTrue(product_template.is_share)
                         self.assertTrue(product_template.by_individual)
                         self.assertTrue(product_template.by_company)

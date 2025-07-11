@@ -1,18 +1,7 @@
 from odoo import _, fields, models
 
+from ..config import PROJECT_STATE_DEFAULT_VALUE, PROJECT_STATE_VALUES
 from ..services.monitoring_service import MonitoringService
-
-DRAFT = "draft"
-INSCRIPTION = "inscription"
-ACTIVATION = "activation"
-ACTIVE = "active"
-
-STATE_VALUES = [
-    (DRAFT, _("Draft")),
-    (INSCRIPTION, _("In Inscription")),
-    (ACTIVATION, _("In Activation")),
-    (ACTIVE, _("Active")),
-]
 
 
 class Project(models.Model):
@@ -22,7 +11,9 @@ class Project(models.Model):
 
     name = fields.Char(required=True)
     type = fields.Many2one("energy_project.project_type", required=True, readonly=True)
-    state = fields.Selection(STATE_VALUES, default=DRAFT, required=True)
+    state = fields.Selection(
+        PROJECT_STATE_VALUES, default=PROJECT_STATE_DEFAULT_VALUE, required=True
+    )
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.company, readonly=True
     )

@@ -1,9 +1,9 @@
 from odoo import fields, models
 
 from odoo.addons.base.models.res_partner import Partner
-from odoo.addons.energy_communities_service_invoicing.utils import IN_PROGRESS
-
-from .config import CONTRACT_STATUS_IN_PROGRESS
+from odoo.addons.energy_communities_service_invoicing.config import (
+    CONTRACT_STATUS_IN_PROGRESS,
+)
 
 
 class EnergyProject(models.Model):
@@ -55,7 +55,7 @@ class EnergyProject(models.Model):
         # Filter contracts for the specific member with in-progress status
         member_contract = self.contract_ids.filtered(
             lambda contract: contract.partner_id == member
-            and contract.status == IN_PROGRESS
+            and contract.status == CONTRACT_STATUS_IN_PROGRESS
         )
 
         return member_contract
@@ -79,7 +79,7 @@ class EnergyProject(models.Model):
         """
         self.ensure_one()
         return self.contract_ids.filtered(
-            lambda contract: contract.status == IN_PROGRESS
+            lambda contract: contract.status == CONTRACT_STATUS_IN_PROGRESS
         )
 
     def get_contracts_by_status(self, status):

@@ -2,40 +2,21 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 from odoo.addons.energy_communities.utils import sale_order_utils
-
-from ..models.config import (
-    DISTRIBUTION_STATE_PROCESS,
-    INVOICING_MODE_ENERGY_CUSTOM,
-    INVOICING_MODE_ENERGY_DELIVERED,
-    INVOICING_MODE_POWER_ACQUIRED,
-    INVOICING_VALUES,
+from odoo.addons.energy_communities_service_invoicing.config import (
+    CONTRACT_ACTION_ACTIVATE,
+    DEFAULT_PRICELIST_BASE_PRICE,
+    DEFAULT_PRICELIST_COMPUTE_FIXED,
+    DEFAULT_PRICELIST_DISCOUNT_POLICY,
+    RECURRING_RULE_MONTHLY,
+    RECURRING_RULE_MONTHLY_LAST_DAY,
 )
 
-# Constants for contract generation
-DEFAULT_INVOICING_MODE = INVOICING_MODE_POWER_ACQUIRED
-RECURRING_RULE_MONTHLY = "monthly"
-RECURRING_RULE_MONTHLY_LAST_DAY = "monthlylastday"
-PRICELIST_DISCOUNT_POLICY = "without_discount"
-PRICELIST_BASE_PRICE = "standard_price"
-PRICELIST_COMPUTE_FIXED = "fixed"
-SALE_ORDER_ACTION_ACTIVATE = "activate"
-CONTRACT_TYPE_ACTIVE = "active_selfconsumption_contract"
-
-# Product template references
-PRODUCT_REFS = {
-    INVOICING_MODE_POWER_ACQUIRED: {
-        "template": "energy_selfconsumption.product_product_power_acquired_product_template",
-        "pack": "energy_selfconsumption.product_product_power_acquired_product_pack_template",
-    },
-    INVOICING_MODE_ENERGY_DELIVERED: {
-        "template": "energy_selfconsumption.product_product_energy_delivered_product_template",
-        "pack": "energy_selfconsumption.product_product_energy_delivered_product_pack_template",
-    },
-    INVOICING_MODE_ENERGY_CUSTOM: {
-        "template": "energy_selfconsumption.product_product_energy_custom_product_template",
-        "pack": "energy_selfconsumption.product_product_energy_custom_product_pack_template",
-    },
-}
+from ..config import (
+    DISTRIBUTION_STATE_PROCESS,
+    SELFCONSUMPTION_DEFAULT_INVOICING_MODE,
+    SELFCONSUMPTION_INVOICING_MODE_VALUES,
+    SELFCONSUMPTION_PRODUCT_REFS,
+)
 
 
 class DefineInvoicingModeWizard(models.TransientModel):
@@ -64,9 +45,9 @@ class DefineInvoicingModeWizard(models.TransientModel):
 
     # Invoicing configuration fields
     invoicing_mode = fields.Selection(
-        INVOICING_VALUES,
+        SELFCONSUMPTION_INVOICING_MODE_VALUES,
         string="Invoicing Mode",
-        default=DEFAULT_INVOICING_MODE,
+        default=SELFCONSUMPTION_DEFAULT_INVOICING_MODE,
         required=True,
         help="Mode of invoicing for the self-consumption project",
     )
@@ -112,7 +93,7 @@ class DefineInvoicingModeWizard(models.TransientModel):
         if self.price <= 0:
             raise ValidationError(_("Price must be greater than zero"))
 
-        if self.invoicing_mode not in dict(INVOICING_VALUES):
+        if self.invoicing_mode not in dict(SELFCONSUMPTION_INVOICING_MODE_VALUES):
             raise ValidationError(_("Invalid invoicing mode selected"))
 
     def _validate_distribution_table(self):
@@ -177,14 +158,14 @@ class DefineInvoicingModeWizard(models.TransientModel):
         Raises:
             ValidationError: If product references not found
         """
-        if self.invoicing_mode not in PRODUCT_REFS:
+        if self.invoicing_mode not in SELFCONSUMPTION_PRODUCT_REFS:
             raise ValidationError(
                 _("No product configuration found for invoicing mode '{mode}'").format(
                     mode=self.invoicing_mode
                 )
             )
 
-        refs = PRODUCT_REFS[self.invoicing_mode]
+        refs = SELFCONSUMPTION_PRODUCT_REFS[self.invoicing_mode]
 
         try:
             product_template = self.env.ref(refs["template"])
@@ -219,16 +200,16 @@ class DefineInvoicingModeWizard(models.TransientModel):
             "name": pricelist_name,
             "company_id": self.selfconsumption_id.company_id.id,
             "currency_id": self.selfconsumption_id.company_id.currency_id.id,
-            "discount_policy": PRICELIST_DISCOUNT_POLICY,
+            "discount_policy": DEFAULT_PRICELIST_DISCOUNT_POLICY,
             "item_ids": [
                 (
                     0,
                     0,
                     {
-                        "base": PRICELIST_BASE_PRICE,
+                        "base": DEFAULT_PRICELIST_BASE_PRICE,
                         "product_tmpl_id": product_template.id,
                         "product_id": product_template.product_variant_id.id,
-                        "compute_price": PRICELIST_COMPUTE_FIXED,
+                        "compute_price": DEFAULT_PRICELIST_COMPUTE_FIXED,
                         "fixed_price": self.price,
                         "categ_id": service_category.id,
                     },
@@ -310,8 +291,8 @@ class DefineInvoicingModeWizard(models.TransientModel):
                 pricelist,
                 False,  # No specific date
                 fields.Date.today(),
-                SALE_ORDER_ACTION_ACTIVATE,
-                CONTRACT_TYPE_ACTIVE,
+                CONTRACT_ACTION_ACTIVATE,
+                "active_selfconsumption_contract",
                 so_metadata,
             )
 
@@ -448,9 +429,9 @@ class DefineInvoicingModeWizard(models.TransientModel):
                 "valid_configuration": True,
                 "participant_count": participant_count,
                 "total_estimated_cost": self.price * participant_count,
-                "invoicing_mode_display": dict(INVOICING_VALUES).get(
-                    self.invoicing_mode
-                ),
+                "invoicing_mode_display": dict(
+                    SELFCONSUMPTION_INVOICING_MODE_VALUES
+                ).get(self.invoicing_mode),
                 "recurring_description": f"Every {self.recurring_interval} {self.recurring_rule_type}",
             }
         except ValidationError as e:

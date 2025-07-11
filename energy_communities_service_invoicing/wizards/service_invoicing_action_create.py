@@ -7,8 +7,9 @@ from odoo.addons.energy_communities.utils import (
     sale_order_utils,
 )
 
+from ..config import PACK_TYPE_PLATFORM
 from ..utils import (
-    get_existing_last_closed_pack_contract,
+    get_existing_last_closed_platform_pack_contract,
     get_existing_open_pack_contract,
     raise_existing_same_open_platform_pack_contract_error,
     service_invoicing_form_view_for_platform_admins,
@@ -112,7 +113,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
         self, community_company_id, company_id, payment_mode_id=False
     ):
         self._validate_service_invoicing_action_create([community_company_id.id])
-        existing_closed_contract = get_existing_last_closed_pack_contract(
+        existing_closed_contract = get_existing_last_closed_platform_pack_contract(
             self.env, company_id.partner_id, community_company_id
         )
         # If existing closed contract reopen it
@@ -189,7 +190,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
             existing_contract = get_existing_open_pack_contract(
                 self.env,
                 record.parent_id.partner_id,
-                "platform_pack",
+                PACK_TYPE_PLATFORM,
                 contract_id=False,
                 custom_query=[("community_company_id", "=", record.id)],
             )

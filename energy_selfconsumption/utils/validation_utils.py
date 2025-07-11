@@ -17,6 +17,17 @@ from stdnum.exceptions import (
 from odoo import _
 from odoo.exceptions import ValidationError
 
+from ..config import (
+    CAU_LENGTH_24,
+    CAU_LENGTH_26,
+    CAU_SEPARATOR,
+    CIL_LENGTH_23,
+    CIL_LENGTH_25,
+    CUPS_LENGTH_20,
+    CUPS_LENGTH_22,
+    LAST_DIGITS_COUNT,
+)
+
 
 def validate_cups_code(code, code_type, cups_length):
     """
@@ -73,13 +84,6 @@ def validate_cau_format(code):
         return
 
     # Constants for CAU validation
-    CAU_LENGTH_24 = 24
-    CAU_LENGTH_26 = 26
-    CUPS_LENGTH_20 = 20
-    CUPS_LENGTH_22 = 22
-    CAU_SEPARATOR = "A"
-    LAST_DIGITS_COUNT = 3
-
     code_length = len(code)
 
     # Determine CUPS length based on total code length
@@ -119,12 +123,6 @@ def validate_cil_format(code):
         return
 
     # Constants for CIL validation
-    CIL_LENGTH_23 = 23
-    CIL_LENGTH_25 = 25
-    CUPS_LENGTH_20 = 20
-    CUPS_LENGTH_22 = 22
-    LAST_DIGITS_COUNT = 3
-
     code_length = len(code)
 
     # Determine CUPS length based on total code length

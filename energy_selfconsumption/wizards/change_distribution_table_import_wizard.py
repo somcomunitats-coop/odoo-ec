@@ -3,11 +3,12 @@ import logging
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
-from ..models.config import (
+from ..config import (
     INSCRIPTION_STATE_ACTIVE,
     INSCRIPTION_STATE_CANCELLED,
     INSCRIPTION_STATE_CHANGE,
     INSCRIPTION_STATE_INACTIVE,
+    INSCRIPTION_STATE_VALUES,
 )
 
 # Constants for change distribution table wizard
@@ -15,14 +16,6 @@ WIZARD_STATE_OLD = "old"
 WIZARD_STATE_NEW = "new"
 WIZARD_STATE_DELETE = "delete"
 WIZARD_STATE_CHANGE = "change"
-
-# State selection values
-STATE_VALUES = [
-    (INSCRIPTION_STATE_ACTIVE, _("Active")),
-    (INSCRIPTION_STATE_INACTIVE, _("Inactive")),
-    (INSCRIPTION_STATE_CHANGE, _("Change")),
-    (INSCRIPTION_STATE_CANCELLED, _("Cancelled")),
-]
 
 WIZARD_STATE_VALUES = [
     (WIZARD_STATE_OLD, _("Old")),
@@ -480,7 +473,7 @@ class ChangeDistributionTableImportLineWizard(models.TransientModel):
     )
 
     state = fields.Selection(
-        STATE_VALUES,
+        INSCRIPTION_STATE_VALUES,
         required=True,
         string="Inscription State",
         help="Current state of the inscription",
@@ -524,5 +517,5 @@ class ChangeDistributionTableImportLineWizard(models.TransientModel):
             "partner_name": self.inscription_id.partner_id.name,
             "current_state": self.state,
             "participation_quantity": self.participation_real_quantity,
-            "state_display": dict(STATE_VALUES).get(self.state, "Unknown"),
+            "state_display": dict(INSCRIPTION_STATE_VALUES).get(self.state, "Unknown"),
         }

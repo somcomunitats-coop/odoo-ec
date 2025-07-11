@@ -1,7 +1,9 @@
 from odoo import _, api, fields, models
 
-from odoo.addons.energy_communities.utils import (
+from odoo.addons.energy_communities.config import (
     _PACK_PRODUCTS_RELATION_TO_SERVICES_REFS,
+)
+from odoo.addons.energy_communities.utils import (
     get_successful_popup_message,
     product_utils,
 )

@@ -3,26 +3,16 @@ import pandas as pd
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from .config import (
+from ..config import (
     DISTRIBUTION_STATE_ACTIVE,
+    DISTRIBUTION_STATE_DEFAULT_VALUE,
     DISTRIBUTION_STATE_DRAFT,
-    DISTRIBUTION_STATE_INACTIVE,
     DISTRIBUTION_STATE_PROCESS,
     DISTRIBUTION_STATE_VALIDATED,
-    STATE_ACTIVE,
+    DISTRIBUTION_STATE_VALUES,
+    DISTRIBUTION_TYPE_DEFAULT_VALUE,
+    DISTRIBUTION_TYPE_VALUES,
 )
-
-# Distribution table state values
-STATE_VALUES = [
-    (DISTRIBUTION_STATE_DRAFT, _("Draft")),
-    (DISTRIBUTION_STATE_VALIDATED, _("Validated")),
-    (DISTRIBUTION_STATE_PROCESS, _("In process")),
-    (DISTRIBUTION_STATE_ACTIVE, _("Active")),
-    ("cancelled", _("Cancelled")),
-]
-
-# Distribution table type values
-TYPE_VALUES = [("fixed", _("Fixed")), ("hourly", _("Variable hourly"))]
 
 # Constants for coefficient validation
 COEFFICIENT_PRECISION = 0.000001
@@ -60,15 +50,15 @@ class DistributionTable(models.Model):
 
     # Configuration fields
     type = fields.Selection(
-        TYPE_VALUES,
-        default="fixed",
+        DISTRIBUTION_TYPE_VALUES,
+        default=DISTRIBUTION_TYPE_DEFAULT_VALUE,
         required=True,
         string="Modality",
         help="Distribution type: Fixed coefficients or Variable hourly coefficients",
     )
     state = fields.Selection(
-        STATE_VALUES,
-        default=DISTRIBUTION_STATE_DRAFT,
+        DISTRIBUTION_STATE_VALUES,
+        default=DISTRIBUTION_STATE_DEFAULT_VALUE,
         required=True,
         help="Current state of the distribution table",
     )

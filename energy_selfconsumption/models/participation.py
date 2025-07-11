@@ -1,7 +1,7 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from .config import MAX_POWER_VALUE, MIN_POWER_VALUE
+from ..config import MAX_POWER_VALUE, MIN_POWER_VALUE
 
 
 class Participation(models.Model):

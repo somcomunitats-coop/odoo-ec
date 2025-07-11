@@ -3,7 +3,7 @@ import logging
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
-from ..models.config import (
+from ..config import (
     INSCRIPTION_STATE_ACTIVE,
     INSCRIPTION_STATE_CHANGE,
     INSCRIPTION_STATE_INACTIVE,
