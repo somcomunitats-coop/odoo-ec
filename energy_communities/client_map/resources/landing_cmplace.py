@@ -314,6 +314,7 @@ class LandingCmPlace:
                 existing_external_link.unlink()
 
     def _get_or_create_cooperator_button(self, cooperator_mode):
+        cooperator_button = False
         existing_cooperator_button = self.landing.env[
             "landing.cooperator.button"
         ].search(
@@ -321,39 +322,40 @@ class LandingCmPlace:
         )
         if existing_cooperator_button:
             cooperator_button = existing_cooperator_button[0]
+            update_create_dict = {}
         else:
-            cooperator_button = False
-            create_dict = {
+            update_create_dict = {
                 "landing_page_id": self.landing.id,
                 "mode": cooperator_mode,
                 "name": self.landing.company_id.get_become_cooperator_button_label(
                     cooperator_mode, "ca_ES"
                 ),
             }
-            if cooperator_mode in ["become_cooperator", "become_company_cooperator"]:
-                # become_cooperator scenario
-                create_dict[
+        if cooperator_mode in ["become_cooperator", "become_company_cooperator"]:
+            # become_cooperator scenario
+            update_create_dict[
+                "url"
+            ] = self.landing.company_id.get_become_cooperator_button_link(
+                cooperator_mode, "ca_ES"
+            )
+        else:
+            # contact_us scenario
+            if self.wp_landing_data["link"]:
+                update_create_dict[
                     "url"
-                ] = self.landing.company_id.get_become_cooperator_button_link(
-                    cooperator_mode, "ca_ES"
+                ] = LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG["contact"].format(
+                    landing_link=self.wp_landing_data["link"]
                 )
+        if "url" in update_create_dict.keys():
+            if cooperator_button and update_create_dict:
+                cooperator_button.write(update_create_dict)
             else:
-                # contact_us scenario
-                if self.wp_landing_data["link"]:
-                    create_dict[
-                        "url"
-                    ] = LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG[
-                        "contact"
-                    ].format(
-                        landing_link=self.wp_landing_data["link"]
-                    )
-            if "url" in create_dict.keys():
                 cooperator_button = self.landing.env[
                     "landing.cooperator.button"
-                ].create(create_dict)
-            # translations
-            if cooperator_button:
-                self._apply_cooperator_button_translations(cooperator_button)
+                ].create(update_create_dict)
+        # translations
+        if cooperator_button:
+            self._apply_cooperator_button_translations(cooperator_button)
         return cooperator_button
 
     def _apply_cooperator_button_translations(self, cooperator_button):

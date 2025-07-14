@@ -213,6 +213,10 @@ class LandingPage(models.Model):
             secondary_image_file = ""
             secondary_image_file_write_date = ""
         # place_reference
+        if "lang" in self.env.context.keys():
+            lang = self.env.context["lang"]
+        else:
+            lang = "ca_ES"
         return {
             "landing": {
                 "id": self.id,
@@ -227,7 +231,7 @@ class LandingPage(models.Model):
                 # TODO: review this weird way of getting a translation. Why not by API header context lang?
                 "legal_form": get_translation(
                     source=dict(_LEGAL_FORM_VALUES)[self.community_secondary_type],
-                    lang=self.env.context["lang"],
+                    lang=lang,
                     mods="energy_communities",
                 ),
                 "allow_new_members": self.allow_new_members,
@@ -323,7 +327,7 @@ class LandingPage(models.Model):
             ).update(landing_page_data)
 
     def update_map_place(self):
-        if self.map_place_ids:
+        if self.sudo().map_place_ids:
             self.sudo()._update_landing_place()
         if self.hierarchy_level == "coordinator":
             if self.status == "publish":
