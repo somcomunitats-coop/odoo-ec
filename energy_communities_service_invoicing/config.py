@@ -10,9 +10,6 @@ from odoo.addons.energy_communities.config import (
 )
 
 PACK_TYPE_NONE = STATE_NONE
-PACK_TYPE_PLATFORM_PRODUCT_CATEG_XML_ID = (
-    "energy_communities_service_invoicing.product_category_platform_pack"
-)
 PACK_TYPE_PLATFORM = "platform_pack"
 PACK_TYPE_VALUES = [
     (PACK_TYPE_PLATFORM, _("Platform Pack")),

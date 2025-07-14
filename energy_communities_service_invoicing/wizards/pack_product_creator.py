@@ -3,6 +3,7 @@ from odoo.exceptions import ValidationError
 
 from odoo.addons.energy_communities.config import (
     PACK_PRODUCTS_RELATION_TO_SERVICES_REFS,
+    PACK_TYPE_SHARE_RECURRING_FEE_PRODUCT_CATEG_XML_ID,
 )
 from odoo.addons.energy_communities.utils import (
     get_successful_popup_message,
@@ -55,19 +56,38 @@ class PackProductCreatorWizard(models.TransientModel):
     pack_categ_id_is_config_share = fields.Boolean(
         compute="_compute_pack_categ_id_is_config_share", store=False
     )
+    pack_categ_id_is_share_recurring_fee = fields.Boolean(
+        compute="_compute_pack_categ_id_is_share_recurring_fee", store=False
+    )
 
     @api.depends("pack_categ_id")
     def _compute_pack_categ_id_is_config_share(self):
         for record in self:
             record.pack_categ_id_is_config_share = record.pack_categ_id.is_config_share
 
+    @api.depends("pack_categ_id")
+    def _compute_pack_categ_id_is_share_recurring_fee(self):
+        for record in self:
+            record.pack_categ_id_is_share_recurring_fee = (
+                record.pack_categ_id.is_share_recurring_fee
+            )
+
     @api.onchange("company_id", "pack_categ_id")
-    def unling_existing_related_services(self):
+    def _unlink_existing_related_services(self):
         for record in self:
             for existing_service in record.service_product_ids.filtered(
                 lambda service_product: service_product.type == "existing"
             ):
                 existing_service.unlink()
+
+    @api.onchange("recurring_rule_mode", "pack_categ_id")
+    def _set_prepaid_recurring_invoicing_type(self):
+        for record in self:
+            if (
+                record.recurring_rule_mode == "fixed"
+                and record.pack_categ_id_is_share_recurring_fee
+            ):
+                record.recurring_invoicing_type = "pre-paid"
 
     def execute_create(self):
         self._validate_creation()

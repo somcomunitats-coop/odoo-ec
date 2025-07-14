@@ -1,5 +1,9 @@
 from odoo import _, api, fields, models
 
+from odoo.addons.energy_communities.config import (
+    PACK_TYPE_SHARE_RECURRING_FEE_PRODUCT_CATEG_XML_ID,
+)
+
 from ..config import (
     ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS,
     PACK_PRODUCT_PARENT_CATEG_REF,
@@ -22,7 +26,12 @@ class ProductCategory(models.Model):
         store=True,
     )
     is_config_share = fields.Boolean(
-        "Is a shared based on config", compute="_compute_is_config_share", store=False
+        "Is a share based on config", compute="_compute_is_config_share", store=False
+    )
+    is_share_recurring_fee = fields.Boolean(
+        "Is a share with recurring fee",
+        compute="_compute_is_share_recurring_fee",
+        store=False,
     )
     service_invoicing_sale_journal_id = fields.Many2one(
         comodel_name="account.journal",
@@ -65,6 +74,13 @@ class ProductCategory(models.Model):
             record.is_config_share = False
             if record.data_xml_id in SHARE_PRODUCTS_CATEG_REFS:
                 record.is_config_share = True
+
+    @api.depends("data_xml_id")
+    def _compute_is_share_recurring_fee(self):
+        for record in self:
+            record.is_share_recurring_fee = False
+            if record.data_xml_id == PACK_TYPE_SHARE_RECURRING_FEE_PRODUCT_CATEG_XML_ID:
+                record.is_share_recurring_fee = True
 
     @api.depends("data_xml_id")
     def _compute_is_assignable_pack_to_partner(self):
