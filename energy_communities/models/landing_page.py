@@ -300,25 +300,13 @@ class LandingPage(models.Model):
 
     def action_update_public_data(self):
         for record in self:
-            record._update_all_public_data()
+            record._update_wordpress()
+            record.update_map_place()
+            record.write({"publicdata_lastupdate_datetime": datetime.now()})
             return get_successful_popup_message(
                 _("Public data update successful"),
                 _("Wordpress landing and map place has been successfully updated."),
             )
-
-    def cron_update_communities_public_data(self):
-        landings = (
-            self.env["landing.page"]
-            .sudo()
-            .search([("hierarchy_level", "=", "community")])
-        )
-        for landing in landings:
-            landing._update_all_public_data()
-
-    def _update_all_public_data(self):
-        self._update_wordpress()
-        self.update_map_place()
-        self.write({"publicdata_lastupdate_datetime": datetime.now()})
 
     def _update_wordpress(self):
         instance_company = self.env["res.company"].search(

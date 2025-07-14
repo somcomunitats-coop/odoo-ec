@@ -322,13 +322,15 @@ class LandingCmPlace:
         )
         if existing_cooperator_button:
             cooperator_button = existing_cooperator_button[0]
-        update_create_dict = {
-            "landing_page_id": self.landing.id,
-            "mode": cooperator_mode,
-            "name": self.landing.company_id.get_become_cooperator_button_label(
-                cooperator_mode, "ca_ES"
-            ),
-        }
+            update_create_dict = {}
+        else:
+            update_create_dict = {
+                "landing_page_id": self.landing.id,
+                "mode": cooperator_mode,
+                "name": self.landing.company_id.get_become_cooperator_button_label(
+                    cooperator_mode, "ca_ES"
+                ),
+            }
         if cooperator_mode in ["become_cooperator", "become_company_cooperator"]:
             # become_cooperator scenario
             update_create_dict[
@@ -345,7 +347,7 @@ class LandingCmPlace:
                     landing_link=self.wp_landing_data["link"]
                 )
         if "url" in update_create_dict.keys():
-            if cooperator_button:
+            if cooperator_button and update_create_dict:
                 cooperator_button.write(update_create_dict)
             else:
                 cooperator_button = self.landing.env[
