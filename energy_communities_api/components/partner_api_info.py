@@ -36,6 +36,7 @@ class PartnerApiInfo(Component):
         ("id", "=", service_id),
         ("state", "=", "active"),
     ]
+
     _member_invoices = lambda _, partner: [
         ("partner_id", "=", partner.id),
         ("state", "=", "posted"),
@@ -137,12 +138,7 @@ class PartnerApiInfo(Component):
             return metrics_info
 
     def get_total_member_invoices(self, partner: Partner) -> int:
-        domain = self._member_invoices(partner)
-        return (
-            self.env["account.move"]
-            .search_count(domain)
-            .filtered(lambda record: record.company_id == partner.company_id)
-        )
+        return len(self._get_invoices(partner))
 
     def get_member_invoices(self, partner: Partner) -> List[InvoiceInfo]:
         invoices = self._get_invoices(partner)
