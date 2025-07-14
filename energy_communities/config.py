@@ -31,13 +31,25 @@ STATE_LABELS = {
     STATE_CLOSED_PLANNED: _("Planned closure"),
     STATE_CLOSED: _("Closed"),
 }
+PACK_TYPE_PLATFORM_PRODUCT_CATEG_XML_ID = (
+    "energy_communities_service_invoicing.product_category_platform_pack"
+)
+PACK_TYPE_RECURRING_FEE_PRODUCT_CATEG_XML_ID = (
+    "energy_communities.product_category_recurring_fee_pack"
+)
+PACK_TYPE_SHARE_RECURRING_FEE_PRODUCT_CATEG_XML_ID = (
+    "energy_communities.product_category_share_recurring_fee_pack"
+)
+PACK_TYPE_SELFCONSUMPTION_PRODUCT_CATEG_XML_ID = (
+    "energy_selfconsumption.product_category_selfconsumption_pack"
+)
 
 # TODO: Review where to place and how to better do the mapping
 PACK_PRODUCTS_RELATION_TO_SERVICES_REFS = {
-    "energy_communities.product_category_recurring_fee_pack": "energy_communities.product_category_recurring_fee_service",
-    "energy_communities.product_category_share_recurring_fee_pack": "energy_communities.product_category_recurring_fee_service",
-    "energy_communities_service_invoicing.product_category_platform_pack": "energy_communities_service_invoicing.product_category_platform_service",
-    "energy_selfconsumption.product_category_selfconsumption_pack": "energy_selfconsumption.product_category_selfconsumption_service",
+    PACK_TYPE_RECURRING_FEE_PRODUCT_CATEG_XML_ID: "energy_communities.product_category_recurring_fee_service",
+    PACK_TYPE_SHARE_RECURRING_FEE_PRODUCT_CATEG_XML_ID: "energy_communities.product_category_recurring_fee_service",
+    PACK_TYPE_PLATFORM_PRODUCT_CATEG_XML_ID: "energy_communities_service_invoicing.product_category_platform_service",
+    PACK_TYPE_SELFCONSUMPTION_PRODUCT_CATEG_XML_ID: "energy_selfconsumption.product_category_selfconsumption_service",
 }
 
 DISPLAY_DATE_FORMAT = "%d/%m/%Y"

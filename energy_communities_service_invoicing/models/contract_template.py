@@ -1,9 +1,10 @@
 from odoo import _, api, fields, models
 
-from ..config import (
-    PACK_TYPE_PLATFORM,
+from odoo.addons.energy_communities.config import (
     PACK_TYPE_PLATFORM_PRODUCT_CATEG_XML_ID,
 )
+
+from ..config import PACK_TYPE_PLATFORM
 
 
 class ContractTemplate(models.Model):
