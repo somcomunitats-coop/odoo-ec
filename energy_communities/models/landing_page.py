@@ -213,6 +213,10 @@ class LandingPage(models.Model):
             secondary_image_file = ""
             secondary_image_file_write_date = ""
         # place_reference
+        if "lang" in self.env.context.keys():
+            lang = self.env.context["lang"]
+        else:
+            lang = "ca_ES"
         return {
             "landing": {
                 "id": self.id,
@@ -227,7 +231,7 @@ class LandingPage(models.Model):
                 # TODO: review this weird way of getting a translation. Why not by API header context lang?
                 "legal_form": get_translation(
                     source=dict(_LEGAL_FORM_VALUES)[self.community_secondary_type],
-                    lang=self.env.context["lang"],
+                    lang=lang,
                     mods="energy_communities",
                 ),
                 "allow_new_members": self.allow_new_members,
@@ -296,13 +300,25 @@ class LandingPage(models.Model):
 
     def action_update_public_data(self):
         for record in self:
-            record._update_wordpress()
-            record.update_map_place()
-            record.write({"publicdata_lastupdate_datetime": datetime.now()})
+            record._update_all_public_data()
             return get_successful_popup_message(
                 _("Public data update successful"),
                 _("Wordpress landing and map place has been successfully updated."),
             )
+
+    def cron_update_communities_public_data(self):
+        landings = (
+            self.env["landing.page"]
+            .sudo()
+            .search([("hierarchy_level", "=", "community")])
+        )
+        for landing in landings:
+            landing._update_all_public_data()
+
+    def _update_all_public_data(self):
+        self._update_wordpress()
+        self.update_map_place()
+        self.write({"publicdata_lastupdate_datetime": datetime.now()})
 
     def _update_wordpress(self):
         instance_company = self.env["res.company"].search(
@@ -323,7 +339,7 @@ class LandingPage(models.Model):
             ).update(landing_page_data)
 
     def update_map_place(self):
-        if self.map_place_ids:
+        if self.sudo().map_place_ids:
             self.sudo()._update_landing_place()
         if self.hierarchy_level == "coordinator":
             if self.status == "publish":

@@ -15,4 +15,13 @@
             <field name="code">model.cron_update_company_ids_from_user()</field>
         </record>
     </data>
+    <data>
+        <record id="update_communities_public_data" model="ir.cron">
+            <field name="name">Update communities public data</field>
+            <field name="active" eval="False" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="model_id" ref="energy_communities.model_landing_page" />
+            <field name="code">model.cron_update_communities_public_data()</field>
+        </record>
+    </data>
 </odoo>
