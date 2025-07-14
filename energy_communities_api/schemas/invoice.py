@@ -1,26 +1,8 @@
-from enum import Enum
+from typing import List
 
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
-from odoo.addons.account.models.account_move import PAYMENT_STATE_SELECTION
-from odoo.addons.energy_communities_service_invoicing.utils import (
-    SERVICE_TYPE_SELECTION,
-)
-
-from .base import BaseResponse, NaiveOrmModel, PaginationLinks
-
-PaymentState = Enum(
-    "PaymentState",
-    ((state.upper(), state) for state, _ in PAYMENT_STATE_SELECTION),
-)
-
-InvoiceType = Enum(
-    "InvoiceType",
-    (
-        (service_type.upper(), service_type)
-        for service_type, _ in SERVICE_TYPE_SELECTION
-    ),
-)
+from .base import BaseListResponse, NaiveOrmModel, PaginationLinks
 
 
 class InvoiceInfo(BaseModel):
@@ -37,13 +19,13 @@ class InvoiceInfo(BaseModel):
 
     number: str = Field(..., title="Number", description="Unique numbre of the invoice")
 
-    service_type: InvoiceType = Field(
+    service_type: str = Field(
         ...,
         title="Service Type",
         description="Type of the service for this invoice, ex: selfconsumption, membership...",
     )
 
-    state: PaymentState = Field(
+    state: str = Field(
         ..., title="State", description="State of the invoice, paid, pending..."
     )
 
@@ -55,12 +37,13 @@ class InvoiceInfo(BaseModel):
         ..., title="Invoice date", description="Date when the invoice is created"
     )
 
-    pdf_url: HttpUrl = Field(..., title="PDF Url", description="Url for pdf download")
+    pdf_url: str = Field(..., title="PDF Url", description="Url for pdf download")
 
 
-class InvoiceInfoListResponse(BaseResponse):
+class InvoiceInfoListResponse(BaseListResponse):
     """
     Response for invoice requests
     """
 
-    ...
+    data: List[InvoiceInfo]
+    links: PaginationLinks
