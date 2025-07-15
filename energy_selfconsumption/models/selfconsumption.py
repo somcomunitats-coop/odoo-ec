@@ -38,7 +38,6 @@ from ..config import (
     CIL_LENGTH_25,
     CUPS_LENGTH_20,
     CUPS_LENGTH_22,
-    DEFAULT_PARTICIPATIONS,
     DISTRIBUTION_STATE_ACTIVE,
     DISTRIBUTION_STATE_PROCESS,
     DISTRIBUTION_STATE_VALIDATED,
@@ -50,6 +49,7 @@ from ..config import (
     SELFCONSUMPTION_CONF_STATE_INACTIVE,
     SELFCONSUMPTION_CONF_STATE_VALUES,
     SELFCONSUMPTION_DEFAULT_INVOICING_MODE,
+    SELFCONSUMPTION_DEFAULT_PARTICIPATIONS,
     SELFCONSUMPTION_INVOICING_MODE_VALUES,
 )
 
@@ -362,7 +362,7 @@ class Selfconsumption(models.Model):
     def _create_default_participations(self):
         """Create default participation options for the project"""
         participation_model = self.env["energy_selfconsumptions.participation"]
-        for participation_data in DEFAULT_PARTICIPATIONS:
+        for participation_data in SELFCONSUMPTION_DEFAULT_PARTICIPATIONS:
             participation_model.create(
                 {
                     **participation_data,
