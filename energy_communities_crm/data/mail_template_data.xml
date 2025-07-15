@@ -179,6 +179,7 @@
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="subject">Application for Recruitment Coordinator</field>
             <field name="email_to">{{ctx.get('email_to')}}</field>
+            <field name="email_cc">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
             <field name="lang">{{ctx.get('lang')}}</field>
@@ -201,6 +202,7 @@
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="subject">Contact request in relation to Coordinators</field>
             <field name="email_to">{{ctx.get('email_to')}}</field>
+            <field name="email_cc">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
             <field name="lang">{{ctx.get('lang')}}</field>
@@ -223,6 +225,7 @@
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="subject">Newsletter Subscription</field>
             <field name="email_to">{{object.email_from}}</field>
+            <field name="email_cc">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
             <field name="lang">{{object.company_id.partner_id.lang}}</field>
@@ -245,6 +248,7 @@
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="subject">Contact Form</field>
             <field name="email_to">{{object.email_from}}</field>
+            <field name="email_cc">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_crm_lead" />
             <field name="auto_delete" eval="False" />
             <field name="lang">{{object.company_id.partner_id.lang}}</field>

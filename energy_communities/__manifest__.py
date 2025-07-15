@@ -60,6 +60,7 @@
         "data/auth_oauth_provider_data.xml",
         "data/ir_cron.xml",
         "data/mail_templates_email_layouts.xml",
+        "data/mail_template_data.xml",
         "data/utm_data.xml",
         "data/energy_action.xml",
         "views/mail_template_views.xml",
