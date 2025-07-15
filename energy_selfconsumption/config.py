@@ -175,17 +175,15 @@ CSV_FILE_EXTENSION = "csv"
 DEFAULT_ENCODING = "utf-8"
 
 # Default participation options for new projects
-# TODO: DEFAULT_PARTICIPATIONS differ from selfconssumption and participation models can we unify this??
 DEFAULT_PARTICIPATIONS = [
     {"name": "1.0 kW", "quantity": 1.0},
     {"name": "2.0 kW", "quantity": 2.0},
     {"name": "3.0 kW", "quantity": 3.0},
     {"name": "5.0 kW", "quantity": 5.0},
 ]
-# Those are the ones previously defined on selfconsumption
-# DEFAULT_PARTICIPATIONS = [
-#     {"name": "0,5 kW", "quantity": 0.5},
-#     {"name": "1,0 kW", "quantity": 1.0},
-#     {"name": "1,5 kW", "quantity": 1.5},
-#     {"name": "2,0 kW", "quantity": 2.0},
-# ]
+SELFCONSUMPTION_DEFAULT_PARTICIPATIONS = [
+    {"name": "0,5 kW", "quantity": 0.5},
+    {"name": "1,0 kW", "quantity": 1.0},
+    {"name": "1,5 kW", "quantity": 1.5},
+    {"name": "2,0 kW", "quantity": 2.0},
+]
