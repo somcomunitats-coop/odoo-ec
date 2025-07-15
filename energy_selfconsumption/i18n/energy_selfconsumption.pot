@@ -5886,3 +5886,34 @@ msgstr ""
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__recurring_invoicing_type__post-paid
 msgid "Post-paid"
 msgstr ""
+
+#. module: energy_selfconsumption
+#: model:contract.template.line,name:energy_selfconsumption.contract_template_line_energy_custom_selfconsumption_pack
+msgid ""
+"CUPS: #code#\n"
+"Owner: #owner_id#\n"
+"Invoicing period: #START# - #END#"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:contract.template.line,name:energy_selfconsumption.contract_template_line_energy_delivered_selfconsumption_pack
+msgid ""
+"CUPS: #code#\n"
+"Owner: #owner_id#\n"
+"Invoicing period: #START# - #END#\n"
+"CAU: #cau#"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:contract.template.line,name:energy_selfconsumption.contract_template_line_power_acquired_selfconsumption_pack
+msgid ""
+"CUPS: #code#\n"
+"Owner: #owner_id#\n"
+"Invoicing period: #START# - #END#\n"
+"CAU: #cau#\n"
+"Total installed nominal power (kW): #power#\n"
+"Partition coefficient: #coefficient#\n"
+"Daily nominal power acquired: #power# kWn * #coefficient# = #power_acquired# kWn/day\n"
+"Days to be invoiced: #days_invoiced# days\n"
+"Total amount invoiced:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount#"
+msgstr ""

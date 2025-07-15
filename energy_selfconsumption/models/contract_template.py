@@ -94,3 +94,8 @@ class ContractTemplate(models.Model):
             raise ValidationError("\n".join(errors))
 
         return True
+    
+class ContractAbstractContractLine(models.AbstractModel):
+    _inherit = "contract.recurrency.basic.mixin"
+
+    name = fields.Text(string="Description", required=True, translate=True)
