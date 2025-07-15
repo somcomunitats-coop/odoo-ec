@@ -2,12 +2,12 @@ from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
+from odoo.addons.energy_communities.config import PACK_TYPE_PLATFORM
 from odoo.addons.energy_communities.utils import (
     contract_utils,
     sale_order_utils,
 )
 
-from ..config import PACK_TYPE_PLATFORM
 from ..utils import (
     get_existing_last_closed_platform_pack_contract,
     get_existing_open_pack_contract,

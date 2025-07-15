@@ -2,8 +2,8 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 from odoo.addons.energy_communities.config import (
-    PACK_PRODUCTS_RELATION_TO_SERVICES_REFS,
-    PACK_TYPE_SHARE_RECURRING_FEE_PRODUCT_CATEG_XML_ID,
+    PACK_PROD_CATEG_XMLID_REL_TO_SERVICE_PROD_CATEG_XMLID,
+    PACK_TYPE_SHARE_RECURRING_FEE_PROD_CATEG_XMLID,
 )
 from odoo.addons.energy_communities.utils import (
     get_successful_popup_message,
@@ -69,7 +69,7 @@ class PackProductCreatorWizard(models.TransientModel):
     def _compute_pack_categ_id_is_share_recurring_fee(self):
         for record in self:
             record.pack_categ_id_is_share_recurring_fee = (
-                record.pack_categ_id.is_share_recurring_fee
+                record.pack_categ_id.is_share_recurring_fee_pack
             )
 
     @api.onchange("company_id", "pack_categ_id")
@@ -108,7 +108,7 @@ class PackProductCreatorWizard(models.TransientModel):
             if (
                 existing_service.existing_service_product_id.categ_id.id
                 != self.env.ref(
-                    PACK_PRODUCTS_RELATION_TO_SERVICES_REFS[
+                    PACK_PROD_CATEG_XMLID_REL_TO_SERVICE_PROD_CATEG_XMLID[
                         self.pack_categ_id.data_xml_id
                     ]
                 ).id
@@ -141,7 +141,7 @@ class PackProductCreatorWizard(models.TransientModel):
                     ServiceProductCreationData(
                         company_id=self.company_id.id if self.company_id else None,
                         categ_id=self.env.ref(
-                            PACK_PRODUCTS_RELATION_TO_SERVICES_REFS[
+                            PACK_PROD_CATEG_XMLID_REL_TO_SERVICE_PROD_CATEG_XMLID[
                                 self.pack_categ_id.data_xml_id
                             ]
                         ).id,

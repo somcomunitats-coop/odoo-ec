@@ -271,14 +271,6 @@ class ContractUtils(Component):
 
     def _is_service_line(self, contract_line):
         return contract_line.product_id.is_pack_service
-        # if self.work.record.contract_template_id:
-        #     contract_template_services = (
-        #         self.work.record.contract_template_id.contract_line_ids.mapped(
-        #             "product_id"
-        #         )
-        #     )
-        #     return contract_line.product_id in contract_template_services
-        # return False
 
     def _setup_successors_and_predecessors(self, new_service_invoicing_id):
         self.work.record.write({"successor_contract_id": new_service_invoicing_id.id})
