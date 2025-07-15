@@ -1,12 +1,9 @@
 from odoo import _, api, fields, models
 
-from odoo.addons.energy_communities_service_invoicing.config import (
+from odoo.addons.energy_communities.config import (
     PACK_TYPE_NONE,
-)
-
-from ..config import (
     PACK_TYPE_SELFCONSUMPTION,
-    PACK_TYPE_SELFCONSUMPTION_PRODUCT_CATEG_XML_ID,
+    PACK_TYPE_SELFCONSUMPTION_PROD_CATEG_XMLID,
 )
 
 
@@ -22,25 +19,7 @@ class ContractTemplate(models.Model):
     """
 
     _name = "contract.template"
-    _inherit = ["contract.template", "pack.type.mixin"]
-
-    def custom_compute_pack_type(self):
-        """
-        Compute custom pack type for self-consumption templates
-
-        Extends the base pack type computation to handle self-consumption
-        specific pack types. If no pack type is detected, it checks for
-        self-consumption pack configuration.
-        """
-        # Call parent method first
-        super().custom_compute_pack_type()
-
-        # If no pack type detected, check for self-consumption pack
-        if self.pack_type == PACK_TYPE_NONE:
-            self._set_custom_pack_type_on_contract_template(
-                PACK_TYPE_SELFCONSUMPTION,
-                PACK_TYPE_SELFCONSUMPTION_PRODUCT_CATEG_XML_ID,
-            )
+    _inherit = ["contract.template"]
 
     def is_selfconsumption_template(self):
         """
@@ -66,7 +45,7 @@ class ContractTemplate(models.Model):
 
         # Get self-consumption product category
         category = self.env.ref(
-            PACK_TYPE_SELFCONSUMPTION_PRODUCT_CATEG_XML_ID,
+            PACK_TYPE_SELFCONSUMPTION_PROD_CATEG_XMLID,
             raise_if_not_found=False,
         )
 

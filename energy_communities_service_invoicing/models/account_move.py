@@ -4,6 +4,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
 
+from odoo.addons.energy_communities.config import PACK_TYPE_NONE
 from odoo.addons.energy_communities.utils import (
     contract_utils,
     sale_order_utils,
@@ -33,6 +34,14 @@ class AccountMove(models.Model):
         store=True,
     )
 
+    def get_pack_type(self):
+        if self.invoice_line_ids:
+            first_move_line = self.invoice_line_ids[0]
+            if first_move_line.contract_line_id:
+                rel_contract = first_move_line.contract_line_id.contract_id
+                return rel_contract.pack_type
+        return PACK_TYPE_NONE
+
     @api.depends("invoice_line_ids", "auto_invoice_id")
     def _compute_related_contract_id_is_contract(self):
         for record in self:
@@ -51,13 +60,6 @@ class AccountMove(models.Model):
                         rel_contract = first_move_line.contract_line_id.contract_id
                         record.related_contract_id = rel_contract.id
                         record.is_contract = True
-
-    @api.depends("invoice_line_ids", "auto_invoice_id")
-    def _compute_pack_type(self):
-        super()._compute_pack_type()
-
-    def custom_compute_pack_type(self):
-        self._set_custom_pack_type_on_invoice()
 
     # define configuration journal
     def _prepare_invoice_data(self, dest_company):

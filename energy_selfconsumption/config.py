@@ -155,15 +155,6 @@ TARIFF_POWER_LIMITS = {
     TARIFF_3_0TD: 300,  # kW
 }
 
-# Pack type constants
-PACK_TYPE_SELFCONSUMPTION = "selfconsumption_pack"
-PACK_TYPE_SELFCONSUMPTION_PRODUCT_CATEG_XML_ID = (
-    "energy_selfconsumption.product_category_selfconsumption_pack"
-)
-PACK_TYPE_VALUES = [
-    (PACK_TYPE_SELFCONSUMPTION, _("Selfconsumption Pack")),
-]
-
 # Power validation constants
 MIN_POWER_VALUE = 0.0
 MAX_POWER_VALUE = 10000.0  # 10 MW

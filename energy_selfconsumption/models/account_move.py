@@ -66,7 +66,7 @@ class AccountMove(models.Model):
     """
 
     _name = "account.move"
-    _inherit = ["account.move", "pack.type.mixin"]
+    _inherit = ["account.move"]
 
     # Self-consumption invoicing mode
     selfconsumption_invoicing_mode = fields.Selection(
