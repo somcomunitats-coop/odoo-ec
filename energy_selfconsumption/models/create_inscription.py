@@ -492,6 +492,10 @@ class CreateInscription(models.AbstractModel):
         project,
         partner,
     ):
+        # Check if the owner is the same as the partner
+        if values.get("inscription_partner_id_vat") == values.get("supplypoint_owner_id_vat", False):
+            values["supplypoint_owner_id_same"] = "yes"
+
         """Obtains or creates the owner of the supply."""
         if values.get("supplypoint_owner_id_same", "no") == "yes":
             if project.conf_vulnerability_situation:
