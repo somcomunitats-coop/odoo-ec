@@ -47,10 +47,12 @@ class ProductCategory(models.Model):
         help="This sale team will be used when creating service invoicing sale orders",
     )
 
-    def get_pack_type(self):
-        return PACK_PROD_CATEG_XMLID_REL_TO_PACK_TYPES.get(
-            self.data_xml_id, PACK_TYPE_NONE
-        )
+    @api.depends("data_xml_id")
+    def _compute_pack_type(self):
+        for record in self:
+            record.pack_type = PACK_PROD_CATEG_XMLID_REL_TO_PACK_TYPES.get(
+                record.data_xml_id, PACK_TYPE_NONE
+            )
 
     @api.depends("parent_id")
     def _compute_is_pack_service(self):

@@ -93,7 +93,7 @@
       </xpath>
       <xpath expr="//field[@name='pricelist_id']" position="after">
         <field name="pack_id" attrs="{'invisible': [('pack_type','=','none')]}" />
-        <field name="pack_type" attrs="{'invisible': [('pack_type','=','none')]}" />
+        <field name="pack_type" />
       </xpath>
       <xpath expr="//field[@name='user_id']" position="after">
         <field name="date_start" />

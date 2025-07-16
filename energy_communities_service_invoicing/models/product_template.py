@@ -27,8 +27,12 @@ class ProductTemplate(models.Model):
         "Is a pack service", related="categ_id.is_pack_service"
     )
 
-    def get_pack_type(self):
-        return self.categ_id.pack_type
+    @api.depends("categ_id")
+    def _compute_pack_type(self):
+        for record in self:
+            record.pack_type = PACK_TYPE_NONE
+            if record.categ_id:
+                record.pack_type = record.categ_id.pack_type
 
     @api.depends("property_contract_template_id")
     def _compute_related_contract_product_ids(self):

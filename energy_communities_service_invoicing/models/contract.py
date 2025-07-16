@@ -84,10 +84,12 @@ class ContractContract(models.Model):
     # On energy communities all contracts have company_id
     company_id = fields.Many2one(required=True)
 
-    def get_pack_type(self):
-        if self.contract_template_id:
-            return self.contract_template_id.pack_type
-        return PACK_TYPE_NONE
+    @api.depends("contract_template_id")
+    def _compute_pack_type(self):
+        for record in self:
+            record.pack_type = PACK_TYPE_NONE
+            if record.contract_template_id:
+                record.pack_type = record.contract_template_id.pack_type
 
     @api.depends("status", "successor_contract_id")
     def _compute_closing_action(self):
@@ -179,8 +181,10 @@ class ContractContract(models.Model):
 
     def _recurring_create_invoice(self, date_ref=False):
         moves = super()._recurring_create_invoice(date_ref)
-        # if invoice has no lines we delete it
         for move in moves:
+            # force pack type computation
+            # move._compute_pack_type()
+            # if invoice has no lines we delete it
             if not move.line_ids:
                 move.unlink()
         # once invoices have been generated we propagate recurrency to contract

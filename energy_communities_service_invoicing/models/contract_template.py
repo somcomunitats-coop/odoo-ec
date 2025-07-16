@@ -13,14 +13,15 @@ class ContractTemplate(models.Model):
 
     is_free_pack = fields.Boolean(string="Is a free pack")
 
-    def get_pack_type(self):
-        pack_product = self.env["product.template"].search(
-            [
-                ("property_contract_template_id", "=", self.id),
-                ("is_contract", "=", True),
-            ],
-            limit=1,
-        )
-        if pack_product:
-            return pack_product.pack_type
-        return PACK_TYPE_NONE
+    def _compute_pack_type(self):
+        for record in self:
+            record.pack_type = PACK_TYPE_NONE
+            pack_product = self.env["product.template"].search(
+                [
+                    ("property_contract_template_id", "=", record.id),
+                    ("is_contract", "=", True),
+                ],
+                limit=1,
+            )
+            if pack_product:
+                record.pack_type = pack_product.pack_type

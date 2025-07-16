@@ -3,6 +3,7 @@ from dateutil.relativedelta import relativedelta
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
+from odoo.addons.energy_communities.config import PACK_TYPE_PLATFORM
 from odoo.addons.energy_communities.utils import contract_utils
 
 from .service_invoicing_testing_contract_creator import (
@@ -36,6 +37,7 @@ class TestServiceInvoicingComponents(
         self.assertEqual(contract.payment_mode_id, creation_wizard.payment_mode_id)
         self.assertEqual(contract.discount, creation_wizard.discount)
         self.assertEqual(contract.recurring_next_date, creation_wizard.execution_date)
+        self.assertEqual(contract.pack_type, PACK_TYPE_PLATFORM)
 
     def test_service_invoicing_component_creation_metadata_ok(self):
         self._creation_workflow_meta_persistence_test(
