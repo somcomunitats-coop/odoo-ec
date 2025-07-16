@@ -34,13 +34,16 @@ class AccountMove(models.Model):
         store=True,
     )
 
-    def get_pack_type(self):
-        if self.invoice_line_ids:
-            first_move_line = self.invoice_line_ids[0]
-            if first_move_line.contract_line_id:
-                rel_contract = first_move_line.contract_line_id.contract_id
-                return rel_contract.pack_type
-        return PACK_TYPE_NONE
+    @api.depends("invoice_line_ids")
+    def _compute_pack_type(self):
+        for record in self:
+            record.pack_type = PACK_TYPE_NONE
+            if record.invoice_line_ids:
+                first_move_line = record.invoice_line_ids[0]
+                if first_move_line.contract_line_id:
+                    record.pack_type = (
+                        first_move_line.contract_line_id.contract_id.pack_type
+                    )
 
     @api.depends("invoice_line_ids", "auto_invoice_id")
     def _compute_related_contract_id_is_contract(self):

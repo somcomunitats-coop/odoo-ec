@@ -30,8 +30,9 @@ class PackTypeMixin(models.AbstractModel):
     )
 
     def _compute_pack_type(self):
-        for record in self:
-            record.pack_type = record.get_pack_type()
+        raise NotImplementedError(
+            "This method must be implemented when you inherit pack.type.mixin"
+        )
 
     @api.depends("pack_type")
     def _compute_is_pack(self):
@@ -44,10 +45,3 @@ class PackTypeMixin(models.AbstractModel):
             record.is_share_recurring_fee_pack = (
                 record.pack_type == PACK_TYPE_SHARE_RECURRING_FEE
             )
-
-    # method to be overwriten on implementations
-    def get_pack_type(self):
-        # TODO: add a rise to be implemented every time we inherit this mixin
-        raise NotImplementedError(
-            "This method must be implemented when you inherit pack.type.mixin"
-        )
