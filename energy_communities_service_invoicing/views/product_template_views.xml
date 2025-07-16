@@ -9,6 +9,7 @@
       </xpath>
       <field name="detailed_type" position="after">
         <field name="property_contract_template_id" attrs="{'invisible': [('is_contract', '=', False)],}" />
+        <field name="pack_type" attrs="{'invisible': [('is_contract', '=', False)],}" />
       </field>
     </field>
   </record>

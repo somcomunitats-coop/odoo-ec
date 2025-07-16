@@ -1,7 +1,8 @@
 from odoo import _, api, fields, models
 
 from odoo.addons.energy_communities.config import (
-    PACK_TYPE_SHARE_RECURRING_FEE_PRODUCT_CATEG_XML_ID,
+    PACK_PROD_CATEG_XMLID_REL_TO_PACK_TYPES,
+    PACK_TYPE_NONE,
 )
 
 from ..config import (
@@ -14,9 +15,8 @@ from ..config import (
 
 class ProductCategory(models.Model):
     _name = "product.category"
-    _inherit = "product.category"
+    _inherit = ["product.category", "pack.type.mixin"]
 
-    is_pack = fields.Boolean("Is a pack", compute="_compute_is_pack", store=True)
     is_pack_service = fields.Boolean(
         "Is a pack service", compute="_compute_is_pack_service", store=True
     )
@@ -27,11 +27,6 @@ class ProductCategory(models.Model):
     )
     is_config_share = fields.Boolean(
         "Is a share based on config", compute="_compute_is_config_share", store=False
-    )
-    is_share_recurring_fee = fields.Boolean(
-        "Is a share with recurring fee",
-        compute="_compute_is_share_recurring_fee",
-        store=False,
     )
     service_invoicing_sale_journal_id = fields.Many2one(
         comodel_name="account.journal",
@@ -52,13 +47,12 @@ class ProductCategory(models.Model):
         help="This sale team will be used when creating service invoicing sale orders",
     )
 
-    @api.depends("parent_id")
-    def _compute_is_pack(self):
+    @api.depends("data_xml_id")
+    def _compute_pack_type(self):
         for record in self:
-            record.is_pack = False
-            if record.parent_id:
-                if record.parent_id.data_xml_id == PACK_PRODUCT_PARENT_CATEG_REF:
-                    record.is_pack = True
+            record.pack_type = PACK_PROD_CATEG_XMLID_REL_TO_PACK_TYPES.get(
+                record.data_xml_id, PACK_TYPE_NONE
+            )
 
     @api.depends("parent_id")
     def _compute_is_pack_service(self):
@@ -74,13 +68,6 @@ class ProductCategory(models.Model):
             record.is_config_share = False
             if record.data_xml_id in SHARE_PRODUCTS_CATEG_REFS:
                 record.is_config_share = True
-
-    @api.depends("data_xml_id")
-    def _compute_is_share_recurring_fee(self):
-        for record in self:
-            record.is_share_recurring_fee = False
-            if record.data_xml_id == PACK_TYPE_SHARE_RECURRING_FEE_PRODUCT_CATEG_XML_ID:
-                record.is_share_recurring_fee = True
 
     @api.depends("data_xml_id")
     def _compute_is_assignable_pack_to_partner(self):

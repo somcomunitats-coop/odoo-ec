@@ -65,6 +65,10 @@ class AssignPackToPartnerWizard(models.TransientModel):
         created_contracts = []
         with sale_order_utils(self.env) as component:
             for partner in self.partner_mids:
+                if self.pack_id.company_id:
+                    so_metadata = {"company_id": self.pack_id.company_id.id}
+                else:
+                    so_metadata = {"company_id": self.env.ref("base.main_company").id}
                 created_contracts.append(
                     component.create_service_invoicing_initial(
                         partner,
@@ -74,6 +78,7 @@ class AssignPackToPartnerWizard(models.TransientModel):
                         "activate",
                         "assign_pack_to_partner",
                         self.payment_mode_id,
+                        so_metadata,
                     )
                 )
         for contract in created_contracts:

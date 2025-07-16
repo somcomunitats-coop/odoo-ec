@@ -73,6 +73,22 @@ _PACK_PRODUCT_TESTING_CASES = {
         False,
         False,
     ),
+    "interval_prepaid_selfconsumption_pack": PackProductDataTestingCase(
+        "Community 1",
+        "energy_selfconsumption.product_category_selfconsumption_pack",
+        "Selfconsumption pack test 1",
+        "Selfconsumption pack test 1 long description",
+        "TP4",
+        0,
+        ["l10n_es.4_account_tax_template_s_iva21s"],
+        "interval",
+        "pre-paid",
+        2,
+        "quarterly",
+        False,
+        False,
+        False,
+    ),
 }
 
 _SERVICE_PRODUCT_TESTING_CASES = {
@@ -123,6 +139,20 @@ _SERVICE_PRODUCT_TESTING_CASES = {
             False,
         ),
     ],
+    "selfconsumption_services": [
+        ServiceProductCreationDataTestingCase(
+            "Community 1",
+            "energy_selfconsumption.product_category_selfconsumption_service",
+            "Selfconsumption service test 1",
+            "Selfconsumption service test 1 long description",
+            "TS4",
+            8,
+            ["l10n_es.4_account_tax_template_s_iva21s"],
+            "fixed",
+            1,
+            False,
+        )
+    ],
 }
 
 _PRODUCT_UTILS_TESTING_CASES = {
@@ -141,5 +171,9 @@ _PRODUCT_UTILS_TESTING_CASES = {
     "interval_prepaid_platform": ProductUtilsTestingCase(
         _PACK_PRODUCT_TESTING_CASES["interval_prepaid_platform_pack"],
         _SERVICE_PRODUCT_TESTING_CASES["platform_services"],
+    ),
+    "interval_prepaid_selfconsumption": ProductUtilsTestingCase(
+        _PACK_PRODUCT_TESTING_CASES["interval_prepaid_selfconsumption_pack"],
+        _SERVICE_PRODUCT_TESTING_CASES["selfconsumption_services"],
     ),
 }

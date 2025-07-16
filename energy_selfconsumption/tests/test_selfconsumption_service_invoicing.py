@@ -4,6 +4,7 @@ from datetime import datetime
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
+from odoo.addons.energy_communities.config import PACK_TYPE_SELFCONSUMPTION
 from odoo.addons.energy_communities_service_invoicing.tests.service_invoicing_testing_contract_creator import (
     ServiceInvoicingTestingContractCreator,
 )
@@ -329,7 +330,7 @@ class TestSelfconsumptionServiceInvoicing(
             # ASSERT: contract has line recurrence
             self.assertEqual(contract.line_recurrence, True)
             # ASSERT: contract pack_type is selfconsumption
-            self.assertEqual(contract.pack_type, "selfconsumption_pack")
+            self.assertEqual(contract.pack_type, PACK_TYPE_SELFCONSUMPTION)
             # ASSERT: contract contract_template same as project contract_template
             self.assertEqual(
                 contract.contract_template_id.id,

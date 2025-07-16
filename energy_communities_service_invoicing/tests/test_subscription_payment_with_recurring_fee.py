@@ -3,6 +3,8 @@ from datetime import date, datetime
 
 from odoo.tests import common, tagged
 
+from odoo.addons.energy_communities.config import PACK_TYPE_SHARE_RECURRING_FEE
+
 SubscriptionPaymentTestingCase = namedtuple(
     "SubscriptionTestingCase",
     ["subscription_ref", "payment_date", "expected_recurring_next_date"],
@@ -102,6 +104,7 @@ class TestSubscriptionPaymentWithRecurringFee(common.TransactionCase):
         self.assertEqual(
             new_contract.recurring_next_date, case.expected_recurring_next_date
         )
+        self.assertEqual(new_contract.pack_type, PACK_TYPE_SHARE_RECURRING_FEE)
 
     def _pay_invoice(self, invoice, payment_date):
         self.env["account.payment.register"].with_context(

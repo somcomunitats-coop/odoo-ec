@@ -7,22 +7,18 @@ from odoo.addons.product.models.product_template import ProductTemplate
 from ..config import SHARE_PRODUCTS_CATEG_REFS
 from ..schemas import (
     BaseProductCreationData,
-    PackProductCreationData,
-    ProductCreationParams,
     ProductCreationResult,
     ServiceProductCreationData,
     ServiceProductExistingData,
 )
-from .testing_cases import (
-    _PRODUCT_UTILS_TESTING_CASES,
-    PackProductDataTestingCase,
-    ServiceProductCreationDataTestingCase,
-    ServiceProductExistingDataTestingCase,
+from .service_invoicing_testing_product_creator import (
+    ServiceInvoicingTestingProductCreator,
 )
+from .testing_cases import _PRODUCT_UTILS_TESTING_CASES
 
 
 @tagged("-at_install", "post_install")
-class TestProductUtilsComponent(TransactionCase):
+class TestProductUtilsComponent(TransactionCase, ServiceInvoicingTestingProductCreator):
     def setUp(self):
         super().setUp()
         self.maxDiff = None
@@ -345,65 +341,3 @@ class TestProductUtilsComponent(TransactionCase):
                 ]
             )
             self.assertTrue(bool(related_price_list_item))
-
-    def _prepare_all_case_data(self, case):
-        new_services = []
-        existing_services = []
-        for service_data in case.service_product_case:
-            if isinstance(service_data, ServiceProductCreationDataTestingCase):
-                new_services.append(
-                    self._prepare_one_case_data(
-                        service_data,
-                        ServiceProductCreationDataTestingCase,
-                        ServiceProductCreationData,
-                    )
-                )
-            if isinstance(service_data, ServiceProductExistingDataTestingCase):
-                existing_services.append(
-                    self._prepare_one_case_data(
-                        service_data,
-                        ServiceProductExistingDataTestingCase,
-                        ServiceProductExistingData,
-                    )
-                )
-        return ProductCreationParams(
-            pack=self._prepare_one_case_data(
-                case.pack_product_case,
-                PackProductDataTestingCase,
-                PackProductCreationData,
-            ),
-            new_services=new_services,
-            existing_services=existing_services,
-        )
-
-    def _prepare_one_case_data(
-        self, product_case, testing_case_class, product_creation_data_class
-    ):
-        if product_case:
-            params = {}
-            for field in testing_case_class._fields:
-                data_val = getattr(product_case, field)
-                if data_val:
-                    if field == "company_id":
-                        params[field] = (
-                            self.env["res.company"]
-                            .search([("name", "=", data_val)], limit=1)
-                            .id
-                            if data_val
-                            else None
-                        )
-                    elif field in ["categ_id", "product_template_id", "qty_formula_id"]:
-                        params[field] = self.env.ref(data_val).id
-                    elif field == "taxes_id":
-                        params[field] = self._prepare_refs_data(data_val)
-                    else:
-                        if data_val:
-                            params[field] = data_val
-            return product_creation_data_class(**params)
-        return False
-
-    def _prepare_refs_data(self, refs):
-        vals = []
-        for ref in refs:
-            vals.append((4, self.env.ref(ref).id))
-        return vals

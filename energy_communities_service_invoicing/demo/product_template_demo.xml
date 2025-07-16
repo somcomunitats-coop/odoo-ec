@@ -89,6 +89,23 @@
     })]"/>
   </record>
 
+  <record id="demo_fixed_share_recurring_fee_contract_template" model="contract.template">
+    <field name="name">Share Recurring fee contract template</field>
+    <field name="contract_type">sale</field>
+    <field name="contract_line_ids" model="product.template" eval="[(0,0,{
+      'product_id': obj(ref('demo_recurring_fee_service_product_template')).product_variant_id.id,
+      'automatic_price':True,
+      'qty_type': 'fixed',
+      'quantity': 1,
+      'name': 'Recurring fee service detailed description',
+      'recurring_rule_mode': 'fixed',
+      'recurring_invoicing_type': 'pre-paid',
+      'recurring_invoicing_fixed_type': 'yearly',
+      'fixed_invoicing_day': '22',
+      'fixed_invoicing_month': '03'
+    })]"/>
+  </record>
+
   <record id="demo_recurring_fee_pack_product_template" model="product.template">
     <field name="name">Company 2 Recurring fee Pack</field>
     <field name="detailed_type">service</field>
@@ -108,7 +125,7 @@
   <record id="cooperator.product_template_share_type_2_demo" model="product.template">
     <field name="is_contract" eval="True" />
     <field name="categ_id" ref="energy_communities.product_category_share_recurring_fee_pack"/>
-    <field name="property_contract_template_id" ref="demo_fixed_recurring_fee_contract_template" />
+    <field name="property_contract_template_id" ref="demo_fixed_share_recurring_fee_contract_template" />
   </record>
 
   <record id="demo_platform_company_pricelist" model="product.pricelist">

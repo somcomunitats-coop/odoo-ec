@@ -4,13 +4,16 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
 
+from odoo.addons.energy_communities.config import (
+    PACK_TYPE_NONE,
+    PACK_TYPE_PLATFORM,
+)
 from odoo.addons.energy_communities.utils import contract_utils
 
 from ..config import (
     CONTRACT_CLOSING_ACTION_DEFAULT_VALUE,
     CONTRACT_CLOSING_ACTION_VALUES,
     CONTRACT_STATUS_VALUES,
-    PACK_TYPE_PLATFORM,
 )
 from ..utils import (
     get_existing_open_pack_contract,
@@ -19,7 +22,8 @@ from ..utils import (
 
 
 class ContractContract(models.Model):
-    _inherit = "contract.contract"
+    _name = "contract.contract"
+    _inherit = ["contract.contract", "pack.type.mixin"]
     _order = "id desc"
 
     community_company_id = fields.Many2one(
@@ -45,7 +49,6 @@ class ContractContract(models.Model):
         compute="_compute_discount",
         store=False,
     )
-    pack_type = fields.Selection(related="contract_template_id.pack_type")
     is_free_pack = fields.Boolean(related="contract_template_id.is_free_pack")
     closing_action = fields.Selection(
         selection=CONTRACT_CLOSING_ACTION_VALUES,
@@ -80,6 +83,13 @@ class ContractContract(models.Model):
     skip_zero_qty = fields.Boolean(default=True)
     # On energy communities all contracts have company_id
     company_id = fields.Many2one(required=True)
+
+    @api.depends("contract_template_id")
+    def _compute_pack_type(self):
+        for record in self:
+            record.pack_type = PACK_TYPE_NONE
+            if record.contract_template_id:
+                record.pack_type = record.contract_template_id.pack_type
 
     @api.depends("status", "successor_contract_id")
     def _compute_closing_action(self):
@@ -152,6 +162,11 @@ class ContractContract(models.Model):
             if contract.recurring_rule_mode == "interval":
                 super()._compute_recurring_next_date()
 
+    @api.constrains("contract_template_id")
+    def _constraint_contract_template_pack_type(self):
+        for record in self:
+            record._compute_pack_type()
+
     @api.constrains("partner_id", "community_company_id")
     def _constrain_unique_contract(self):
         for record in self:
@@ -166,8 +181,10 @@ class ContractContract(models.Model):
 
     def _recurring_create_invoice(self, date_ref=False):
         moves = super()._recurring_create_invoice(date_ref)
-        # if invoice has no lines we delete it
         for move in moves:
+            # force pack type computation
+            # move._compute_pack_type()
+            # if invoice has no lines we delete it
             if not move.line_ids:
                 move.unlink()
         # once invoices have been generated we propagate recurrency to contract
