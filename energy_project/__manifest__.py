@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Customizations",
-    "version": "16.0.0.2.2",
+    "version": "16.0.0.2.3",
     "license": "AGPL-3",
     "depends": ["base", "mail", "cooperator", "account_banking_mandate"],
     "data": [
