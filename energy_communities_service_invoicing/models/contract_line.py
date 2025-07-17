@@ -24,3 +24,25 @@ class ContractLine(models.Model):
             if record.contract_id.status == "paused" or record.contract_id.is_free_pack:
                 return
         super()._update_recurring_next_date()
+
+    # overwritten method from original. We allow future invoice generation
+    @api.depends(
+        "display_type",
+        "is_recurring_note",
+        "recurring_next_date",
+        "date_start",
+        "date_end",
+    )
+    def _compute_create_invoice_visibility(self):
+        # TODO: depending on the lines, and their order, some sections
+        # have no meaning in certain invoices
+        today = fields.Date.context_today(self)
+        for rec in self:
+            if (
+                (not rec.display_type or rec.is_recurring_note)
+                and rec.date_start
+                # and today >= rec.date_start
+            ):
+                rec.create_invoice_visibility = bool(rec.recurring_next_date)
+            else:
+                rec.create_invoice_visibility = False

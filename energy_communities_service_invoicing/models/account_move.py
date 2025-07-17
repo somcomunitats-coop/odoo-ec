@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date
 
 from dateutil.relativedelta import relativedelta
 
@@ -94,17 +94,15 @@ class AccountMove(models.Model):
                     # Note: On contract activation when invoice payment we assume first iteration of contract is payed with the invoice
                     # So, recurring_next_date must be based on this assumption.
                     # On fixed yearly basis we add 1 year in order to move invoicing date one year.
-                    fixed_invoicing_date_this_year = date(
-                        datetime.now().year,
+                    fixed_invoicing_date_on_activation_date_year = date(
+                        activation_date.year,
                         int(component.work.record.fixed_invoicing_month),
                         int(component.work.record.fixed_invoicing_day),
                     )
-                    if (
-                        component.work.record.recurring_rule_mode == "fixed"
-                        and activation_date <= fixed_invoicing_date_this_year
-                    ):
+                    if component.work.record.recurring_rule_mode == "fixed":
                         activation_date = (
-                            fixed_invoicing_date_this_year + relativedelta(years=+1)
+                            fixed_invoicing_date_on_activation_date_year
+                            + relativedelta(years=+1)
                         )
                     component.activate(activation_date)
                 # link contract to partners membership

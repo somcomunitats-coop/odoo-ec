@@ -33,6 +33,24 @@ _TESTING_CASES = {
         ),
         date(datetime.now().year + 1, _FIXED_RECURRENCY_MONTH, _FIXED_RECURRENCY_DAY),
     ),
+    "payment_after_fixed_day_recurrency_last_year": SubscriptionPaymentTestingCase(
+        "energy_communities_cooperator.subscription_3_community_2_demo",
+        date(
+            datetime.now().year - 1,
+            _FIXED_RECURRENCY_MONTH + 4,
+            _FIXED_RECURRENCY_DAY + 2,
+        ),
+        date(datetime.now().year, _FIXED_RECURRENCY_MONTH, _FIXED_RECURRENCY_DAY),
+    ),
+    "payment_after_fixed_day_recurrency_next_year": SubscriptionPaymentTestingCase(
+        "energy_communities_cooperator.subscription_3_community_2_demo",
+        date(
+            datetime.now().year + 1,
+            _FIXED_RECURRENCY_MONTH + 4,
+            _FIXED_RECURRENCY_DAY + 2,
+        ),
+        date(datetime.now().year + 2, _FIXED_RECURRENCY_MONTH, _FIXED_RECURRENCY_DAY),
+    ),
 }
 
 
@@ -55,6 +73,16 @@ class TestSubscriptionPaymentWithRecurringFee(common.TransactionCase):
     def test_subscription_payment_with_recurring_fee_case_3(self):
         self._subscription_payment_with_recurring_fee_case(
             _TESTING_CASES["payment_after_fixed_day_recurrency"]
+        )
+
+    def test_subscription_payment_with_recurring_fee_case_4(self):
+        self._subscription_payment_with_recurring_fee_case(
+            _TESTING_CASES["payment_after_fixed_day_recurrency_last_year"]
+        )
+
+    def test_subscription_payment_with_recurring_fee_case_5(self):
+        self._subscription_payment_with_recurring_fee_case(
+            _TESTING_CASES["payment_after_fixed_day_recurrency_next_year"]
         )
 
     def _subscription_payment_with_recurring_fee_case(self, case):
@@ -101,6 +129,7 @@ class TestSubscriptionPaymentWithRecurringFee(common.TransactionCase):
         self.assertEqual(
             int(new_contract.fixed_invoicing_month), _FIXED_RECURRENCY_MONTH
         )
+        self.assertEqual(new_contract.date_start, case.expected_recurring_next_date)
         self.assertEqual(
             new_contract.recurring_next_date, case.expected_recurring_next_date
         )
