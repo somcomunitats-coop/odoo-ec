@@ -6,7 +6,9 @@ from . import contract
 from . import contract_line
 from . import contract_line_formula
 from . import contract_template
+from . import cooperative_membership
 from . import product_category
 from . import product_template
 from . import res_partner
 from . import sale_order
+from . import subscription_request

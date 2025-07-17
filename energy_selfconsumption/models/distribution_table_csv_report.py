@@ -4,11 +4,14 @@ from io import StringIO
 
 from odoo import models
 
-from .config import DISTRIBUTION_TYPE_FIXED, DISTRIBUTION_TYPE_HOURLY
+from ..config import (
+    CSV_DELIMITER,
+    CSV_QUOTE_CHAR,
+    DISTRIBUTION_TYPE_FIXED,
+    DISTRIBUTION_TYPE_HOURLY,
+)
 
 # Constants for CSV report generation
-CSV_DELIMITER = ","
-CSV_QUOTE_CHAR = '"'
 COEFFICIENT_DECIMAL_PLACES = 6
 HOURS_PER_YEAR = 8760
 COEFFICIENT_TOLERANCE = 0.000001

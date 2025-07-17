@@ -1,0 +1,12 @@
+<odoo>
+  <record model="ir.ui.view" id="subscription_request_view_form">
+    <field name="name">subscription.request.form (from service_invoicing)</field>
+    <field name="model">subscription.request</field>
+    <field name="inherit_id" ref="energy_communities_cooperator.subscription_request_view_form" />
+    <field name="arch" type="xml">
+      <field name="country_id" position="after">
+        <field name="service_invoicing_sale_order_id" />
+      </field>
+    </field>
+  </record>
+</odoo>

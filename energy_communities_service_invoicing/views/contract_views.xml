@@ -67,25 +67,25 @@
           name="action_activate_contract"
           type="object"
           string="Activate"
-          attrs="{'invisible':['|',('status','not in',['paused']),('pack_type','!=','platform_pack')]}"
+          attrs="{'invisible':[('status','not in',['paused'])]}"
         />
         <button
           name="action_modify_contract"
           type="object"
           string="Modify"
-          attrs="{'invisible':['|',('status','not in',['paused','in_progress']),('pack_type','!=','platform_pack')]}"
+          attrs="{'invisible':[('status','not in',['paused','in_progress'])]}"
         />
         <button
           name="action_close_contract"
           type="object"
           string="Close"
-          attrs="{'invisible':['|',('status','not in',['paused','in_progress']),('pack_type','!=','platform_pack')]}"
+          attrs="{'invisible':[('status','not in',['paused','in_progress'])]}"
         />
         <button
           name="action_reopen_contract"
           type="object"
           string="Reopen"
-          attrs="{'invisible':['|','|',('status','not in',['closed','closed_planned']),('successor_contract_id','!=',False),('pack_type','!=','platform_pack')]}"
+          attrs="{'invisible':['|',('status','not in',['closed','closed_planned']),('successor_contract_id','!=',False)]}"
         />
       </xpath>
       <xpath expr="//field[@name='partner_id']" position="after">
@@ -93,7 +93,7 @@
       </xpath>
       <xpath expr="//field[@name='pricelist_id']" position="after">
         <field name="pack_id" attrs="{'invisible': [('pack_type','=','none')]}" />
-        <field name="pack_type" attrs="{'invisible': [('pack_type','=','none')]}" />
+        <field name="pack_type" />
       </xpath>
       <xpath expr="//field[@name='user_id']" position="after">
         <field name="date_start" />

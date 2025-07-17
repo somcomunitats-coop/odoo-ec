@@ -1,0 +1,126 @@
+<odoo>
+  <record
+    id="view_pack_product_creator_wizard_form"
+    model="ir.ui.view"
+  >
+    <field name="name">pack.product.creator.wizard.form</field>
+    <field name="model">pack.product.creator.wizard</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field
+              name="company_id"
+              required="0"
+              readonly="0"
+              domain="[(1,'=',1)]"
+              options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+            />
+            <field
+              name="pack_categ_id"
+              required="1"
+              readonly="0"
+              domain="[('parent_id','=', %(energy_communities.product_category_pack)d)]"
+              options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+            />
+            <field name="name" required="1"/>
+            <field name="description_sale" />
+            <field name="pack_categ_id_is_config_share" invisible="1"/>
+            <field name="pack_categ_id_is_share_recurring_fee" invisible="1"/>
+            <field name="default_code" attrs="{'required': [('pack_categ_id_is_config_share','=',True)]}" />
+            <field name="list_price" />
+            <field
+              name="taxes_id"
+              widget="many2many_tags"
+              options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+            />
+            <field name="recurring_rule_mode" required="1" />
+            <field name="recurring_invoicing_type" attrs="{'required': True,'readonly': [('pack_categ_id_is_share_recurring_fee','=',True),('recurring_rule_mode','=','fixed')]}" />
+            <field name="recurring_interval" attrs="{'required': [('recurring_rule_mode','=','interval')],'invisible': [('recurring_rule_mode','!=','interval')]}" />
+            <field name="recurring_rule_type" attrs="{'required': [('recurring_rule_mode','=','interval')],'invisible': [('recurring_rule_mode','!=','interval')]}" />
+            <field name="recurring_invoicing_fixed_type" attrs="{'readonly': True, 'required': [('recurring_rule_mode','=','fixed')],'invisible': [('recurring_rule_mode','!=','fixed')]}" />
+            <field name="fixed_invoicing_day" attrs="{'required': [('recurring_rule_mode','=','fixed')],'invisible': [('recurring_rule_mode','!=','fixed')]}" />
+            <field name="fixed_invoicing_month" attrs="{'required': [('recurring_rule_mode','=','fixed')],'invisible': [('recurring_rule_mode','!=','fixed')]}" />
+            <field name="service_product_ids" widget="one2many" attrs="{'invisible': [('pack_categ_id','=',False)]}">
+              <tree>
+                <field name="type" />
+                <field name="existing_service_product_id" />
+                <field name="name" />
+                <field name="description_sale" />
+                <field name="default_code" />
+                <field name="list_price" />
+                <field name="qty_type" />
+                <field name="qty_formula_id" />
+                <field name="quantity" />
+                <field name="taxes_id" widget="many2many_tags" />
+              </tree>
+              <form>
+                <group>
+                  <field name="allowed_service_product_ids" invisible="1"/>
+                  <field name="type" required="1" />
+                  <field
+                    name="existing_service_product_id"
+                    attrs="{'invisible': [('type', '!=', 'existing')],'required': [('type','=','existing')]}"
+                    domain="[('id','in',allowed_service_product_ids)]"
+                    options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                  />
+                  <field
+                    name="name"
+                    attrs="{'invisible': [('type', '!=', 'new')],'required': [('type','=','new')]}"
+                  />
+                  <field
+                    name="description_sale"
+                    attrs="{'invisible': [('type', '!=', 'new')]}"
+                  />
+                  <field
+                    name="default_code"
+                    attrs="{'invisible': [('type', '!=', 'new')]}"
+                  />
+                  <field name="list_price" />
+                  <field name="qty_type" required="1" />
+                  <field
+                    name="qty_formula_id"
+                    attrs="{'invisible': [('qty_type', '!=', 'variable')],'required': [('qty_type','=','variable')]}"
+                  />
+                  <field
+                    name="quantity"
+                    attrs="{'invisible': [('qty_type', '!=', 'fixed')]}"
+                  />
+                  <field
+                    name="taxes_id"
+                    widget="many2many_tags"
+                    attrs="{'invisible': [('type', '!=', 'new')]}"
+                    options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                  />
+                </group>
+              </form>
+            </field>
+          </group>
+        </sheet>
+        <footer>
+          <button
+            name="execute_create"
+            string="Create Pack"
+            type="object"
+            class="btn-primary"
+          />
+          <button
+            special="cancel"
+            string="Cancelar"
+            class="btn-secondary"
+          />
+        </footer>
+      </form>
+    </field>
+  </record>
+  <record
+    model="ir.actions.act_window"
+    id="pack_product_creator_wizard_action"
+  >
+      <field name="name">Pack product creator</field>
+      <field name="res_model">pack.product.creator.wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+  </record>
+
+</odoo>

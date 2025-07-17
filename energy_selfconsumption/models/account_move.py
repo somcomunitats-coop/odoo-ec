@@ -1,10 +1,18 @@
-from odoo import fields, models
+from odoo import _, fields, models
 
-from .config import (
-    INVOICING_MODE_ENERGY_DELIVERED,
-    INVOICING_MODE_NONE,
-    INVOICING_MODE_POWER_ACQUIRED,
+from ..config import (
+    SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED,
+    SELFCONSUMPTION_INVOICING_MODE_LABELS,
+    SELFCONSUMPTION_INVOICING_MODE_NONE,
+    SELFCONSUMPTION_INVOICING_MODE_VALUES,
 )
+
+INVOICE_SELFCONSUMPTION_INVOICING_MODE_VALUES = [
+    (
+        SELFCONSUMPTION_INVOICING_MODE_NONE,
+        SELFCONSUMPTION_INVOICING_MODE_LABELS[SELFCONSUMPTION_INVOICING_MODE_NONE],
+    )
+] + SELFCONSUMPTION_INVOICING_MODE_VALUES
 
 
 class AccountMoveLine(models.Model):
@@ -58,15 +66,11 @@ class AccountMove(models.Model):
     """
 
     _name = "account.move"
-    _inherit = ["account.move", "pack.type.mixin"]
+    _inherit = ["account.move"]
 
     # Self-consumption invoicing mode
     selfconsumption_invoicing_mode = fields.Selection(
-        [
-            (INVOICING_MODE_NONE, "Empty"),
-            (INVOICING_MODE_POWER_ACQUIRED, "Power acquired"),
-            (INVOICING_MODE_ENERGY_DELIVERED, "Energy delivered"),
-        ],
+        INVOICE_SELFCONSUMPTION_INVOICING_MODE_VALUES,
         compute="_compute_selfconsumption_invoicing_mode",
         store=False,
         help="Invoicing mode of the associated self-consumption project",
@@ -87,7 +91,7 @@ class AccountMove(models.Model):
         """
         for record in self:
             # Default to none
-            record.selfconsumption_invoicing_mode = INVOICING_MODE_NONE
+            record.selfconsumption_invoicing_mode = SELFCONSUMPTION_INVOICING_MODE_NONE
 
             # Check if invoice has lines
             if not record.invoice_line_ids:
@@ -135,12 +139,9 @@ class AccountMove(models.Model):
             str: Invoicing mode display text
         """
         self.ensure_one()
-        mode_mapping = {
-            INVOICING_MODE_NONE: "No Self-consumption",
-            INVOICING_MODE_POWER_ACQUIRED: "Power Acquired",
-            INVOICING_MODE_ENERGY_DELIVERED: "Energy Delivered",
-        }
-        return mode_mapping.get(self.selfconsumption_invoicing_mode, "Unknown")
+        return SELFCONSUMPTION_INVOICING_MODE_LABELS.get(
+            self.selfconsumption_invoicing_mode, _("Unknown")
+        )
 
     def get_selfconsumption_summary(self):
         """

@@ -1,6 +1,20 @@
 <odoo>
+
+  # PLATFORM SERVICES
   <record id="demo_platform_service_product_template" model="product.template">
       <field name="name">Platform service product</field>
+      <field name="categ_id" ref="product_category_platform_service"/>
+      <field name="standard_price">0.0</field>
+      <field name="list_price">0.0</field>
+      <field name="sale_ok" eval="True"/>
+      <field name="purchase_ok" eval="False"/> 
+      <field name="detailed_type">service</field>
+      <field name="taxes_id" eval="[(5,0,0)]" />
+      <field name="company_id" model="res.company" eval="obj(ref('base.main_company')).id"/>
+  </record>
+
+  <record id="demo_global_platform_service_product_template" model="product.template">
+      <field name="name">Global platform service product</field>
       <field name="categ_id" ref="product_category_platform_service"/>
       <field name="standard_price">0.0</field>
       <field name="list_price">0.0</field>
@@ -12,10 +26,10 @@
   </record>
 
   <record id="demo_platform_pack_contract_template" model="contract.template">
-    <field name="name">Platform pack contract template</field>
+    <field name="name">Global Platform pack contract template</field>
     <field name="contract_type">sale</field>
     <field name="contract_line_ids" model="product.template" eval="[(0,0,{
-      'product_id': obj(ref('demo_platform_service_product_template')).product_variant_id.id,
+      'product_id': obj(ref('demo_global_platform_service_product_template')).product_variant_id.id,
       'automatic_price':True,
       'qty_type': 'variable',
       'qty_formula_id': ref('active_community_members_formula'),
@@ -24,7 +38,7 @@
   </record>
 
   <record id="demo_platform_pack_product_template" model="product.template">
-      <field name="name">Platform pack product</field>
+      <field name="name">Global Platform pack product</field>
       <field name="categ_id" ref="product_category_platform_pack"/>
       <field name="standard_price">0.0</field>
       <field name="list_price">0.0</field>
@@ -37,12 +51,138 @@
       <field name="company_id" eval="False" />
   </record>
 
-  <record id="demo_service_invoicing_pricelist" model="product.pricelist">
-    <field name="name">Service invoicing pricelist</field>
+  <record id="product.list0" model="product.pricelist">
     <field name="item_ids" model="product.template" eval="[(0,0,{
-      'product_tmpl_id': obj(ref('demo_platform_service_product_template')).id,
+      'product_tmpl_id': obj(ref('demo_global_platform_service_product_template')).id,
       'fixed_price': 0.62,
     })]"/>
   </record>
+
+  # RECURRING FEE SERVICES
+
+  <record id="demo_recurring_fee_service_product_template" model="product.template">
+      <field name="name">Recurring fee service product for community 2</field>
+      <field name="categ_id" ref="energy_communities.product_category_recurring_fee_service"/>
+      <field name="standard_price">0.0</field>
+      <field name="list_price">0.0</field>
+      <field name="sale_ok" eval="True"/>
+      <field name="purchase_ok" eval="False"/> 
+      <field name="detailed_type">service</field>
+      <field name="taxes_id" eval="[(5,0,0)]" />
+      <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_company_id.id" />
+  </record>
+
+  <record id="demo_fixed_recurring_fee_contract_template" model="contract.template">
+    <field name="name">Recurring fee contract template</field>
+    <field name="contract_type">sale</field>
+    <field name="contract_line_ids" model="product.template" eval="[(0,0,{
+      'product_id': obj(ref('demo_recurring_fee_service_product_template')).product_variant_id.id,
+      'automatic_price':True,
+      'qty_type': 'fixed',
+      'quantity': 1,
+      'name': 'Recurring fee service detailed description',
+      'recurring_rule_mode': 'fixed',
+      'recurring_invoicing_type': 'pre-paid',
+      'recurring_invoicing_fixed_type': 'yearly',
+      'fixed_invoicing_day': '22',
+      'fixed_invoicing_month': '03'
+    })]"/>
+  </record>
+
+  <record id="demo_fixed_share_recurring_fee_contract_template" model="contract.template">
+    <field name="name">Share Recurring fee contract template</field>
+    <field name="contract_type">sale</field>
+    <field name="contract_line_ids" model="product.template" eval="[(0,0,{
+      'product_id': obj(ref('demo_recurring_fee_service_product_template')).product_variant_id.id,
+      'automatic_price':True,
+      'qty_type': 'fixed',
+      'quantity': 1,
+      'name': 'Recurring fee service detailed description',
+      'recurring_rule_mode': 'fixed',
+      'recurring_invoicing_type': 'pre-paid',
+      'recurring_invoicing_fixed_type': 'yearly',
+      'fixed_invoicing_day': '22',
+      'fixed_invoicing_month': '03'
+    })]"/>
+  </record>
+
+  <record id="demo_recurring_fee_pack_product_template" model="product.template">
+    <field name="name">Company 2 Recurring fee Pack</field>
+    <field name="detailed_type">service</field>
+    <field name="is_contract" eval="True" />
+    <field name="is_share" eval="True"/>
+    <field name="standard_price">12.13</field>
+    <field name="list_price">12.13</field>
+    <field name="sale_ok" eval="True"/>
+    <field name="purchase_ok" eval="False"/>
+    <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_company_id.id"/>
+    <field name="categ_id" ref="energy_communities.product_category_recurring_fee_pack"/>
+    <field name="property_contract_template_id" ref="demo_fixed_recurring_fee_contract_template" />
+    <field name="taxes_id" eval="[(5,0,0)]" />
+  </record>
+  <!-- TODO: Payment mode for community 2 -->
+
+  <record id="cooperator.product_template_share_type_2_demo" model="product.template">
+    <field name="is_contract" eval="True" />
+    <field name="categ_id" ref="energy_communities.product_category_share_recurring_fee_pack"/>
+    <field name="property_contract_template_id" ref="demo_fixed_share_recurring_fee_contract_template" />
+  </record>
+
+  <record id="demo_platform_company_pricelist" model="product.pricelist">
+    <field name="name">Platform Company pricelist</field>
+    <field name="company_id" model="res.company" eval="obj(ref('base.main_company')).id"/>
+  </record>
+
+  <record id="demo_community_1_pricelist" model="product.pricelist">
+    <field name="name">Community 1 pricelist</field>
+    <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id.id"/>
+  </record>
+
+  <record id="demo_community_2_pricelist" model="product.pricelist">
+    <field name="name">Community 2 pricelist</field>
+    <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_company_id.id"/>
+    <field name="item_ids" model="product.template" eval="[(0,0,{
+      'product_tmpl_id': obj(ref('demo_recurring_fee_service_product_template')).id,
+      'fixed_price': 8.17,
+    })]"/>
+  </record>
+
+  # PRICELIST
+
+  <function name="write" model="res.company">
+    <value
+      model="res.company"
+      eval="[obj(ref('base.main_company')).id]"
+    />
+    <value
+      eval="{
+        'pricelist_id': ref('demo_platform_company_pricelist'),
+      }"
+    />
+  </function>
+
+  <function name="write" model="res.company">
+    <value
+      model="account.multicompany.easy.creation.wiz"
+      eval="[obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id.id]"
+    />
+    <value
+      eval="{
+        'pricelist_id': ref('demo_community_1_pricelist'),
+      }"
+    />
+  </function>
+
+  <function name="write" model="res.company">
+    <value
+      model="account.multicompany.easy.creation.wiz"
+      eval="[obj(ref('energy_communities.energy_community_company_2_wizard')).new_company_id.id]"
+    />
+    <value
+      eval="{
+        'pricelist_id': ref('demo_community_2_pricelist'),
+      }"
+    />
+  </function>
 
 </odoo>

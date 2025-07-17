@@ -23,11 +23,23 @@ Main components:
         <!-- Category: Self-consumption Packs -->
         <record id="product_category_selfconsumption_pack" model="product.category">
             <field name="name">Selfconsumption Pack</field>
+            <field
+              name="parent_id"
+              model="product.category"
+              eval="obj(ref('energy_communities.product_category_pack')).id"
+            />
+            <field name="data_xml_id">energy_selfconsumption.product_category_selfconsumption_pack</field>
         </record>
         
         <!-- Category: Self-consumption Services -->
         <record id="product_category_selfconsumption_service" model="product.category">
             <field name="name">Selfconsumption Service</field>
+            <field
+              name="parent_id"
+              model="product.category"
+              eval="obj(ref('energy_communities.product_category_service')).id"
+            />
+            <field name="data_xml_id">energy_selfconsumption.product_category_selfconsumption_service</field>
         </record>
 
         <!-- ========================================== -->

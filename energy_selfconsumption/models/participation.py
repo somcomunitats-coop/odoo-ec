@@ -1,7 +1,7 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from .config import MAX_POWER_VALUE, MIN_POWER_VALUE
+from ..config import DEFAULT_PARTICIPATIONS, MAX_POWER_VALUE, MIN_POWER_VALUE
 
 
 class Participation(models.Model):
@@ -253,8 +253,6 @@ class Participation(models.Model):
             recordset: Created participation records
         """
         if not participation_list:
-            from .config import DEFAULT_PARTICIPATIONS
-
             participation_list = DEFAULT_PARTICIPATIONS
 
         participations = []

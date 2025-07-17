@@ -18,11 +18,15 @@ from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
+from ..config import (
+    CSV_DELIMITER,
+    CSV_FILE_EXTENSION,
+    CSV_QUOTE_CHAR,
+    DEFAULT_ENCODING,
+)
+
 # Constants for file processing
-SUPPORTED_FILE_EXTENSIONS = [".csv"]
-DEFAULT_ENCODING = "utf-8"
-DEFAULT_DELIMITER = ","
-DEFAULT_QUOTECHAR = '"'
+SUPPORTED_FILE_EXTENSIONS = [".{}".format(CSV_FILE_EXTENSION)]
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
 
 
@@ -35,8 +39,8 @@ class CSVProcessor:
         self,
         file_data,
         encoding=DEFAULT_ENCODING,
-        delimiter=DEFAULT_DELIMITER,
-        quotechar=DEFAULT_QUOTECHAR,
+        delimiter=CSV_DELIMITER,
+        quotechar=CSV_QUOTE_CHAR,
     ):
         """
         Initialize CSV processor
@@ -242,8 +246,8 @@ def process_csv_file(
     file_binary,
     filename,
     encoding=DEFAULT_ENCODING,
-    delimiter=DEFAULT_DELIMITER,
-    quotechar=DEFAULT_QUOTECHAR,
+    delimiter=CSV_DELIMITER,
+    quotechar=CSV_QUOTE_CHAR,
 ):
     """
     High-level function to process a CSV file with validation

@@ -98,4 +98,22 @@
     />
   </menuitem>
 
+  <menuitem
+    id="pack_product_creator_wizard_menu"
+    name="Create product pack"
+    parent="energy_communities.ce_config_assistants_menu"
+    action="pack_product_creator_wizard_action"
+    groups="energy_communities.role_platform_admin_res_groups"
+    sequence="100"
+  />
+
+  <menuitem
+    id="assign_pack_to_partner_wizard_menu"
+    name="Assign pack to partner"
+    parent="energy_communities.ce_config_assistants_menu"
+    action="assign_pack_to_partner_wizard_action"
+    groups="energy_communities.role_platform_admin_res_groups"
+    sequence="200"
+  />
+
 </odoo>

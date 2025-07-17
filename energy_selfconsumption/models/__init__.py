@@ -1,5 +1,3 @@
-from . import config
-from . import pack_type_mixin
 from . import account_move
 from . import contract
 from . import contract_csv_report

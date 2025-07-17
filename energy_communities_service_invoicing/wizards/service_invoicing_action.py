@@ -4,10 +4,8 @@ from odoo.tools.translate import _
 
 from odoo.addons.energy_communities.utils import contract_utils
 
-from ..utils import (
-    _SERVICE_INVOICING_EXECUTED_ACTION_VALUES,
-    service_invoicing_form_view_for_platform_admins,
-)
+from ..config import SERVICE_INVOICING_EXECUTED_ACTION_VALUES
+from ..utils import service_invoicing_form_view_for_platform_admins
 
 
 class ServiceInvoicingActionWizard(models.TransientModel):
@@ -19,7 +17,7 @@ class ServiceInvoicingActionWizard(models.TransientModel):
     )
     execution_date = fields.Date(string="Execution date")
     executed_action = fields.Selection(
-        selection=_SERVICE_INVOICING_EXECUTED_ACTION_VALUES
+        selection=SERVICE_INVOICING_EXECUTED_ACTION_VALUES
     )
     pricelist_id = fields.Many2one("product.pricelist", string="Select pricelist")
     pack_id = fields.Many2one("product.product", string="Pack")

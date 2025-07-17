@@ -3,7 +3,7 @@ import logging
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from ..models.config import DISTRIBUTION_TYPE_FIXED, MIN_POWER_VALUE
+from ..config import DISTRIBUTION_TYPE_FIXED, MIN_POWER_VALUE
 
 # Constants for distribution table wizard
 DISTRIBUTE_EXCESS_YES = "yes"

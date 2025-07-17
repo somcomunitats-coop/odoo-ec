@@ -9,12 +9,13 @@ import chardet
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
-from ..models.config import (
+from odoo.addons.energy_communities.config import DISPLAY_DATE_FORMAT
+
+from ..config import (
     CSV_DELIMITER,
     CSV_FILE_EXTENSION,
     CSV_QUOTE_CHAR,
     DEFAULT_ENCODING,
-    DISPLAY_DATE_FORMAT,
     TARIFF_2_0TD,
     TARIFF_3_0TD,
     TARIFF_6_1TD,

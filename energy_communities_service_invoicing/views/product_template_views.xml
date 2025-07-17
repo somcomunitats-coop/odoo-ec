@@ -1,0 +1,16 @@
+<odoo>
+  <record id="product_template_form_contract_view" model="ir.ui.view">
+    <field name="name">product.template form (service invoicing)</field>
+    <field name="model">product.template</field>
+    <field name="inherit_id" ref="product_contract.product_template_form_contract_view"/>
+    <field name="arch" type="xml">
+      <xpath expr="//page[@name='contract']" position="attributes">
+        <attribute name="attrs">{'invisible': 1}</attribute>
+      </xpath>
+      <field name="detailed_type" position="after">
+        <field name="property_contract_template_id" attrs="{'invisible': [('is_contract', '=', False)],}" />
+        <field name="pack_type" attrs="{'invisible': [('is_contract', '=', False)],}" />
+      </field>
+    </field>
+  </record>
+</odoo>

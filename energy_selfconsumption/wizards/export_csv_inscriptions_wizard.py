@@ -6,11 +6,13 @@ from io import StringIO
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
 
-from ..models.config import DISPLAY_DATE_FORMAT
+from odoo.addons.energy_communities.config import DISPLAY_DATE_FORMAT
+
+from ..config import DEFAULT_ENCODING
 
 # Constants for CSV export
 CSV_EXPORT_DELIMITER = ";"
-CSV_EXPORT_ENCODING = "utf-8"
+CSV_EXPORT_ENCODING = DEFAULT_ENCODING
 DEFAULT_EXPORT_FILENAME = "export_inscriptions.csv"
 PRIVACY_ACCEPTANCE_VALUE = "yes"
 TERMS_ACCEPTANCE_VALUE = "yes"

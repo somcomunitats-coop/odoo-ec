@@ -212,21 +212,7 @@ class SubscriptionRequest(models.Model):
         """
         self = self.with_company(self.company_id)
         self.validate_subscription_request()
-        # self.pay_subscription_request_capital_release()
         return True
-
-    def pay_subscription_request_capital_release(self):
-        """
-        This method is used in data demo importation to be able to pay the capital release request.
-        :return:
-        """
-        invoice = self.capital_release_request[0]
-        invoice._invoice_paid_hook()
-        # payment_register = self.env['account.payment.register'].with_context(active_model='account.move', active_ids=invoice.ids).create({
-        #     'payment_date': invoice.date,
-        # })
-        # payment_register._create_payments()
-        # payment_register.unlink()
 
     # TODO: Is it necessary to specify tax_ids? Make some tests!
     def _prepare_invoice_line(self, move_id, product, partner, qty):

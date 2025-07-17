@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.4.11",
+    "version": "16.0.0.5.0",
     "depends": [
         "account",
         "account_banking_mandate",
@@ -29,6 +29,7 @@
         "metadata",
         "partner_firstname",
         "partner_multi_company",
+        "product",
         "purchase",
         "queue_job",
         "sale_management",

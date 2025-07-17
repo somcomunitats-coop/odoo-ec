@@ -12,7 +12,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Cooperative management",
-    "version": "16.0.0.3.0",
+    "version": "16.0.0.3.1",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
@@ -57,7 +57,6 @@
         "demo/product_template_demo.xml",
         "demo/res_user_demo.xml",
         "demo/subscription_request_demo.xml",
-        # "demo/subscription_request_payments_demo.xml",
     ],
     "assets": {
         "web.assets_common": [

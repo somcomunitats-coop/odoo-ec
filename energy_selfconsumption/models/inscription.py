@@ -1,20 +1,14 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from .config import STATE_ACTIVE, STATE_INACTIVE
-
-# Inscription state constants
-INSCRIPTION_STATE_ACTIVE = "active"
-INSCRIPTION_STATE_INACTIVE = "inactive"
-INSCRIPTION_STATE_CHANGE = "change"
-INSCRIPTION_STATE_CANCELLED = "cancelled"
-
-STATE_VALUES = [
-    (INSCRIPTION_STATE_ACTIVE, _("Active")),
-    (INSCRIPTION_STATE_INACTIVE, _("Inactive")),
-    (INSCRIPTION_STATE_CHANGE, _("Change")),
-    (INSCRIPTION_STATE_CANCELLED, _("Cancelled")),
-]
+from ..config import (
+    INSCRIPTION_STATE_ACTIVE,
+    INSCRIPTION_STATE_CANCELLED,
+    INSCRIPTION_STATE_CHANGE,
+    INSCRIPTION_STATE_DEFAULT_VALUE,
+    INSCRIPTION_STATE_INACTIVE,
+    INSCRIPTION_STATE_VALUES,
+)
 
 
 class Inscription(models.Model):
@@ -93,8 +87,8 @@ class Inscription(models.Model):
     # State and status management
     state = fields.Selection(
         string="Status",
-        selection=STATE_VALUES,
-        default=INSCRIPTION_STATE_INACTIVE,
+        selection=INSCRIPTION_STATE_VALUES,
+        default=INSCRIPTION_STATE_DEFAULT_VALUE,
         help="Current status of the inscription",
     )
     accept = fields.Boolean(string="I accept bank wire transfer")

@@ -19,25 +19,38 @@
       name="Source types"
       action="ce_utm_sources_action"
       groups="group_platform_manager"
+      sequence="100"
     />
     <menuitem
       id="energy_actions_menu"
       name="Energy actions"
       action="energy_action_views"
       groups="group_platform_manager"
+      sequence="200"
+
     />
     <menuitem
       name="Tariffs"
       id="view_service_tariffs_menu"
       action="product.product_pricelist_action2"
       groups="role_platform_admin_res_groups"
-    />
+      sequence="300"
 
+    />
     <menuitem
       name="Product Categories"
       id="view_product_categories_menu"
       action="product.product_category_action_form"
       groups="role_platform_admin_res_groups"
+      sequence="400"
+
+    />
+    <menuitem
+      name="Assistants"
+      id="ce_config_assistants_menu"
+      groups="role_platform_admin_res_groups"
+      sequence="999"
+
     />
   </menuitem>
 
