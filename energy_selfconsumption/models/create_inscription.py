@@ -617,7 +617,7 @@ class CreateInscription(models.AbstractModel):
     ):
         """Creates a new owner."""
         vals = {
-            "name": values["supplypoint_owner_id_name"],
+            "firstname": values["supplypoint_owner_id_name"],
             "lastname": values["supplypoint_owner_id_lastname"],
             "gender": values.get("supplypoint_owner_id_gender"),
             "birthdate_date": formatted_birthdate,
@@ -661,7 +661,7 @@ class CreateInscription(models.AbstractModel):
                 values.get("supplypoint_owner_id_name", False)
                 and values.get("supplypoint_owner_id_name", False) != ""
             ):
-                vals["name"] = values["supplypoint_owner_id_name"]
+                vals["firstname"] = values["supplypoint_owner_id_name"]
             if (
                 values.get("supplypoint_owner_id_lastname", False)
                 and values.get("supplypoint_owner_id_lastname", False) != ""
@@ -728,7 +728,7 @@ class CreateInscription(models.AbstractModel):
             return exists
 
         vals = {
-            "name": values["supplypoint_owner_id_name"],
+            "firstname": values["supplypoint_owner_id_name"],
             "lastname": values["supplypoint_owner_id_lastname"],
             "gender": values.get("supplypoint_owner_id_gender"),
             "birthdate_date": self._get_formatted_birthdate(values),
