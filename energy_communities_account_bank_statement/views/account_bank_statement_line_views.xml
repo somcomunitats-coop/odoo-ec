@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista tree hiding running_balance for new recordsNew control holder TIN same as partner TIN -->
+        <record id="account_bank_statement_line_tree_safe" model="ir.ui.view">
+            <field name="name">account.bank.statement.line.tree.safe</field>
+            <field name="model">account.bank.statement.line</field>
+            <field name="inherit_id" ref="account_statement_base.account_bank_statement_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="running_balance" position="replace">
+                    <field name="running_balance" 
+                           attrs="{'invisible': [('id', '=', False)]}"
+                           context="{'skip_running_balance_compute': True}"/>
+                </field>
+            </field>
+        </record>
+        
+        <!-- Customized action using the secure view -->
+        <record id="account_bank_statement_line_action_safe" model="ir.actions.act_window">
+            <field name="name">Bank Statement Lines (Safe)</field>
+            <field name="res_model">account.bank.statement.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="account_bank_statement_line_tree_safe"/>
+            <field name="context">{
+                'default_journal_id': active_id,
+                'search_default_not_reconciled': True,
+                'skip_running_balance_compute': True
+            }</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No bank statement lines to reconcile
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo> 
