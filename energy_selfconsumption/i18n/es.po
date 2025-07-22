@@ -2094,6 +2094,21 @@ msgid "Energy custom pack"
 msgstr "Paquete personalizado de energía"
 
 #. module: energy_selfconsumption
+#: model:contract.template,name:energy_selfconsumption.contract_template_energy_custom_selfconsumption_pack
+msgid "Energy custom selfconsumption pack"
+msgstr "Paquete personalizado de autoconsumo energético"
+
+#. module: energy_selfconsumption
+#: model:contract.template,name:energy_selfconsumption.contract_template_energy_delivered_selfconsumption_pack
+msgid "Energy delivered selfconsumption pack"
+msgstr "Paquete de autoconsumo de energía suministrada"
+
+#. module: energy_selfconsumption
+#: model:contract.template,name:energy_selfconsumption.contract_template_power_acquired_selfconsumption_pack
+msgid "Power acquired selfconsumption pack"
+msgstr "Paquete de autoconsumo con energía adquirida"
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__account_move__selfconsumption_invoicing_mode__energy_delivered
 #: model:product.template,name:energy_selfconsumption.product_product_energy_delivered_product_template
 msgid "Energy delivered"

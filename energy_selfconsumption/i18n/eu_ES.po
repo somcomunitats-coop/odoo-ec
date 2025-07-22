@@ -482,7 +482,7 @@ msgstr "<span>Zenbatekoa</span>"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
 msgid "<span>Partition coefficient</span>"
-msgstr "<span>Banaketa koefizientea</span>"
+msgstr "<span>Banaketa-koefizientea</span>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
@@ -497,12 +497,12 @@ msgstr "<span>Zergak</span>"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
 msgid "<span>Total amount invoiced</span>"
-msgstr "<span>Zenbateko osoa</span>"
+msgstr "<span>Fakturatutako zenbatekoa, guztira</span>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_invoice_template
 msgid "<span>Total installation generation</span>"
-msgstr "<span>Instalazioan guztira</span>"
+msgstr "<span>Instalazioan sortua, guztira</span>"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_headline_message_closed
@@ -2098,6 +2098,21 @@ msgstr "Energia pertsonalizatua"
 #: model:product.template,name:energy_selfconsumption.product_product_energy_custom_product_pack_template
 msgid "Energy custom pack"
 msgstr "Energia pakete pertsonalizatua"
+
+#. module: energy_selfconsumption
+#: model:contract.template,name:energy_selfconsumption.contract_template_energy_custom_selfconsumption_pack
+msgid "Energy custom selfconsumption pack"
+msgstr "Energia autokontsumo pakete pertsonalizatua"
+
+#. module: energy_selfconsumption
+#: model:contract.template,name:energy_selfconsumption.contract_template_energy_delivered_selfconsumption_pack
+msgid "Energy delivered selfconsumption pack"
+msgstr "Emandako energiaren fakturazio-kontratua"
+
+#. module: energy_selfconsumption
+#: model:contract.template,name:energy_selfconsumption.contract_template_power_acquired_selfconsumption_pack
+msgid "Power acquired selfconsumption pack"
+msgstr "Eskuratutako potentziaren fakturazio-kontratua"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__account_move__selfconsumption_invoicing_mode__energy_delivered
@@ -4485,7 +4500,7 @@ msgstr "Ordaintzeko modua"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__payment_mode_id
 msgid "Payment mode"
-msgstr "Ordainketa modu"
+msgstr "Ordaintzeko modua"
 
 #. module: energy_selfconsumption
 #. odoo-python
@@ -4754,7 +4769,7 @@ msgstr "Zerbitzu lerroetarako, errepikapen arau mota derrigorrezkoa da"
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_contract_contract__code
 msgid "Reference"
-msgstr "Kontsulta"
+msgstr "Erreferentzia"
 
 #. module: energy_selfconsumption
 #: model:mail.template,name:energy_selfconsumption.selfconsumption_insciption_form
@@ -6269,8 +6284,8 @@ msgstr ""
 "Titularra: #owner_id#\n"
 "Fakturatutako tartea: #START# - #END#\n"
 "CAU: #cau#\n"
-"Instalatutako potentzia nominal osoa (kW): #power#\n"
+"Instalazioaren potentzia izendatua (kW): #power#\n"
 "Banaketa-koefizientea: #coefficient#\n"
-"Eskuratutako eguneko potentzia nominala: #power# kWn * #coefficient# = #power_acquired# kWn/egun\n"
-"Fakturatu beharreko egunak: #days_invoiced# egun\n"
-"Fakturatutako zenbateko osoa:  #days_invoiced# egun * #power_acquired# kWn/egun = #total_amount#"
+"Eskuratutako eguneko potentzia izendatua: #power# kWn * #coefficient# = #power_acquired# kWn/egun\n"
+"Fakturatzeko egunak: #days_invoiced# egun\n"
+"Fakturatzeko zenbateko osoa:  #days_invoiced# egun * #power_acquired# kWn/egun = #total_amount#"

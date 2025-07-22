@@ -21,6 +21,8 @@ class ContractTemplate(models.Model):
     _name = "contract.template"
     _inherit = ["contract.template"]
 
+    name = fields.Char(required=True, translate=True)
+
     def is_selfconsumption_template(self):
         """
         Check if this template is for self-consumption
