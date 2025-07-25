@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-25 15:32+0000\n"
-"PO-Revision-Date: 2025-03-25 15:32+0000\n"
+"POT-Creation-Date: 2025-05-09 07:28+0000\n"
+"PO-Revision-Date: 2025-05-09 07:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -32,6 +32,15 @@ msgstr "Extracto de la línea de contrato recurrente"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
+#: code:addons/energy_communities_service_invoicing/models/service_invoicing_action_create.py:0
+#: code:addons/energy_communities_service_invoicing/models/service_invoicing_action_create.py:0
+#, python-format
+msgid "Accounting Journal not found."
+msgstr ""
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
 #: code:addons/energy_communities_service_invoicing/utils.py:0
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__closing_action__activate
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__sale_order__service_invoicing_action__activate
@@ -45,11 +54,6 @@ msgstr "Activar"
 #: model:contract.line.qty.formula,name:energy_communities_service_invoicing.active_community_members_formula
 msgid "Active community members"
 msgstr "Miembros activos de la Comunidad"
-
-#. module: energy_communities_service_invoicing
-#: model:contract.line.qty.formula,name:energy_communities_service_invoicing.active_monitoring_members_formula
-msgid "Active monitoring members"
-msgstr "Miembros activos de monitoreo"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoicing_activity_menu
@@ -89,14 +93,26 @@ msgid "Assistants"
 msgstr "Asistentes"
 
 #. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/models/service_invoicing_action_create.py:0
+#: code:addons/energy_communities_service_invoicing/models/service_invoicing_action_create.py:0
+#, python-format
+msgid ""
+"CUPS not found in contract line description. Company: %s, Proyect: %s, "
+"Contract: %s, Line: %s"
+msgstr ""
+
+#. module: energy_communities_service_invoicing
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_create_wizard_form
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_wizard_form
 msgid "Cancelar"
-msgstr "Cancelar"
+msgstr ""
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
 #: code:addons/energy_communities_service_invoicing/models/contract.py:0
+#: code:addons/energy_communities_service_invoicing/models/contract.py:0
+#: code:addons/energy_communities_service_invoicing/utils.py:0
 #: code:addons/energy_communities_service_invoicing/utils.py:0
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__closing_action__close
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__service_invoicing_action_wizard__executed_action__close
@@ -113,6 +129,7 @@ msgstr "Cerrar contratos planificados de cierre"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
 #: code:addons/energy_communities_service_invoicing/utils.py:0
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__status__closed
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__res_partner__platform_pack_contract_status__closed
@@ -139,10 +156,11 @@ msgstr "Comunidad"
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__community_company_mids
 msgid "Community Company Mids"
-msgstr "Community Company Mids"
+msgstr ""
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
+#: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action_create.py:0
 #: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action_create.py:0
 #, python-format
 msgid "Community {} must have a parent coordinator defined"
@@ -169,17 +187,17 @@ msgstr "Configuración"
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_res_partner
 msgid "Contact"
-msgstr "Contacto"
+msgstr "Kontaktua"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_contract_contract
 msgid "Contract"
-msgstr "Contrato"
+msgstr "Kontratu"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_contract_line
 msgid "Contract Line"
-msgstr "línea de contrato"
+msgstr "Kontratuaren lerro"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_contract_line_qty_formula
@@ -246,6 +264,7 @@ msgstr "Acción ejecutada"
 #. module: energy_communities_service_invoicing
 #. odoo-python
 #: code:addons/energy_communities_service_invoicing/models/contract.py:0
+#: code:addons/energy_communities_service_invoicing/models/contract.py:0
 #, python-format
 msgid "Executing: {}"
 msgstr "Ejecutando: {}"
@@ -260,7 +279,7 @@ msgstr "Fecha de inicio de contrato"
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__id
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,help:energy_communities_service_invoicing.field_contract_contract__skip_zero_qty
@@ -272,11 +291,20 @@ msgstr ""
 #. module: energy_communities_service_invoicing
 #. odoo-python
 #: code:addons/energy_communities_service_invoicing/utils.py:0
+#: code:addons/energy_communities_service_invoicing/utils.py:0
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__status__in_progress
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__res_partner__platform_pack_contract_status__in_progress
 #, python-format
 msgid "In progress"
 msgstr "En curso"
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/models/service_invoicing_action_create.py:0
+#: code:addons/energy_communities_service_invoicing/models/service_invoicing_action_create.py:0
+#, python-format
+msgid "Invalid invoicing mode"
+msgstr ""
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_bank_statement_line__is_contract
@@ -294,21 +322,23 @@ msgstr "Es una pack gratuito"
 #. module: energy_communities_service_invoicing
 #. odoo-python
 #: code:addons/energy_communities_service_invoicing/utils.py:0
+#: code:addons/energy_communities_service_invoicing/utils.py:0
 #, python-format
 msgid ""
 "It already exists an open contract ({}) with same company and community."
 msgstr ""
-"Ya existe un contrato en curso ({}) con la misma compañía y Comunidad definida."
+"Ya existe un contrato en curso ({}) con la misma compañía y Comunidad "
+"definida."
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_account_move
 msgid "Journal Entry"
-msgstr "Asiento contable"
+msgstr "Egunkari-sarrera"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_account_move_line
 msgid "Journal Item"
-msgstr "Apunte contable"
+msgstr "Aldizkariaren elementua"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__last_date_invoiced
@@ -336,6 +366,7 @@ msgstr "Última actualización el"
 #. module: energy_communities_service_invoicing
 #. odoo-python
 #: code:addons/energy_communities_service_invoicing/utils.py:0
+#: code:addons/energy_communities_service_invoicing/utils.py:0
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__closing_action__modification
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__sale_order__service_invoicing_action__modification
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__service_invoicing_action_wizard__executed_action__modification
@@ -349,6 +380,16 @@ msgid "Modify"
 msgstr "Modificar"
 
 #. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/models/service_invoicing_action_create.py:0
+#: code:addons/energy_communities_service_invoicing/models/service_invoicing_action_create.py:0
+#, python-format
+msgid ""
+"More than one supply point found. Company: %s, Proyect: %s, Contract: %s, "
+"Line: %s"
+msgstr ""
+
+#. module: energy_communities_service_invoicing
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__service_invoicing_action_create_wizard__creation_type__multiple
 msgid "Multiple"
 msgstr "Múltiple"
@@ -356,6 +397,9 @@ msgstr "Múltiple"
 #. module: energy_communities_service_invoicing
 #. odoo-python
 #: code:addons/energy_communities_service_invoicing/models/res_partner.py:0
+#: code:addons/energy_communities_service_invoicing/models/res_partner.py:0
+#: code:addons/energy_communities_service_invoicing/utils.py:0
+#: code:addons/energy_communities_service_invoicing/utils.py:0
 #: code:addons/energy_communities_service_invoicing/utils.py:0
 #: code:addons/energy_communities_service_invoicing/utils.py:0
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__account_move__pack_type__none
@@ -386,7 +430,7 @@ msgstr "Cantidad pedida"
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__pack_id
 msgid "Pack"
-msgstr "Pack"
+msgstr ""
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_bank_statement_line__pack_type
@@ -414,6 +458,7 @@ msgstr "Plantillas de Packs de servicios"
 #. module: energy_communities_service_invoicing
 #. odoo-python
 #: code:addons/energy_communities_service_invoicing/utils.py:0
+#: code:addons/energy_communities_service_invoicing/utils.py:0
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__status__paused
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__res_partner__platform_pack_contract_status__paused
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.contract_contract_search_view
@@ -430,6 +475,7 @@ msgstr "Ordaintzeko modua"
 #. module: energy_communities_service_invoicing
 #. odoo-python
 #: code:addons/energy_communities_service_invoicing/utils.py:0
+#: code:addons/energy_communities_service_invoicing/utils.py:0
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__status__closed_planned
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__res_partner__platform_pack_contract_status__closed_planned
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.contract_contract_search_view
@@ -439,6 +485,7 @@ msgstr "Cierre planificado"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
 #: code:addons/energy_communities_service_invoicing/utils.py:0
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__account_move__pack_type__platform_pack
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_template__pack_type__platform_pack
@@ -511,6 +558,11 @@ msgid "Related community"
 msgstr "Comunidad relacionada"
 
 #. module: energy_communities_service_invoicing
+#: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_sale_order__service_invoicing_id
+msgid "Related contract"
+msgstr ""
+
+#. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__related_contract_product_ids
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_product_product__related_contract_product_ids
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_product_template__related_contract_product_ids
@@ -519,6 +571,7 @@ msgstr "Servicios relacionados"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
 #: code:addons/energy_communities_service_invoicing/utils.py:0
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__contract_contract__closing_action__reopen
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__sale_order__service_invoicing_action__reopen
@@ -534,12 +587,21 @@ msgid "Sale Order (activation)"
 msgstr "Pedidos de Packs de plataforma"
 
 #. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/components/sale_order_utils.py:0
+#: code:addons/energy_communities_service_invoicing/components/sale_order_utils.py:0
+#, python-format
+msgid "Sale order must be defined in order to confirm it on component"
+msgstr ""
+
+#. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_sale_order
 msgid "Sales Order"
 msgstr "Pedido de venta"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
+#: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action.py:0
 #: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action.py:0
 #, python-format
 msgid "Select at least one value to modify"
@@ -562,6 +624,7 @@ msgstr "Contrato de servicios"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
+#: code:addons/energy_communities_service_invoicing/utils.py:0
 #: code:addons/energy_communities_service_invoicing/utils.py:0
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_invoicing_window_coord_admin
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_invoicing_window_platform_manager
@@ -644,13 +707,9 @@ msgstr "Equip de ventas para la facturación de servicios de plataforma"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_services_window
-msgid "Services"
-msgstr "Servicios"
-
-#. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.ce_service_invoicing_menu
 msgid "Services"
-msgstr "Servicios de Plataforma"
+msgstr "Servicios"
 
 #. module: energy_communities_service_invoicing
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invocing_company_form
@@ -686,10 +745,22 @@ msgstr "Contrato sucesor"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
+#: code:addons/energy_communities_service_invoicing/models/service_invoicing_action_create.py:0
+#: code:addons/energy_communities_service_invoicing/models/service_invoicing_action_create.py:0
+#, python-format
+msgid ""
+"Supply point not found. Company: %s, Proyect: %s, Contract: %s, Line: %s"
+msgstr ""
+
+#. module: energy_communities_service_invoicing
+#. odoo-python
+#: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action_create.py:0
 #: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action_create.py:0
 #, python-format
 msgid "This action is only allowed when you're on instance level."
-msgstr "Esta acción solo está permitida cuando nos encontramos en la companyía Plataforma"
+msgstr ""
+"Esta acción solo está permitida cuando nos encontramos en la companyía "
+"Plataforma"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_abstract_contract_line__price_unit
@@ -711,6 +782,7 @@ msgstr "Rol actual del usuario"
 #. module: energy_communities_service_invoicing
 #. odoo-python
 #: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action_create.py:0
+#: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action_create.py:0
 #, python-format
 msgid "You can only assign pack to communities"
 msgstr "Solo puedes asignar packs de servicios de plataforma a Comunidades"
@@ -729,6 +801,11 @@ msgstr "cerrar contrato"
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_create_wizard_form
 msgid "create"
 msgstr "crea"
+
+#. module: energy_communities_service_invoicing
+#: model:ir.model,name:energy_communities_service_invoicing.model_energy_communities_service_invoicing_action_create
+msgid "energy_communities_service_invoicing.action_create"
+msgstr ""
 
 #. module: energy_communities_service_invoicing
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_wizard_form
