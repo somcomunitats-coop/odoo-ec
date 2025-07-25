@@ -18,17 +18,17 @@ msgstr ""
 #. module: energy_communities_service_invoicing
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.report_invoice_document
 msgid "<strong>Community:</strong>"
-msgstr "Comunidad:"
+msgstr "<strong>Komunitatea:</strong>"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_contract_abstract_contract
 msgid "Abstract Recurring Contract"
-msgstr "Extracto Contrato recurrente"
+msgstr "Kontratu errepikariaren laburpena"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_contract_abstract_contract_line
 msgid "Abstract Recurring Contract Line"
-msgstr "Extracto de la línea de contrato recurrente"
+msgstr "Kontratu errepikariaren laburpeneko lerroa"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -36,7 +36,7 @@ msgstr "Extracto de la línea de contrato recurrente"
 #: code:addons/energy_communities_service_invoicing/models/service_invoicing_action_create.py:0
 #, python-format
 msgid "Accounting Journal not found."
-msgstr ""
+msgstr "Ez da kontabilitate-egunkaria aurkitu."
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -48,49 +48,49 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin
 #, python-format
 msgid "Activate"
-msgstr "Activar"
+msgstr "Aktibatu"
 
 #. module: energy_communities_service_invoicing
 #: model:contract.line.qty.formula,name:energy_communities_service_invoicing.active_community_members_formula
 msgid "Active community members"
-msgstr "Miembros activos de la Comunidad"
+msgstr "Komunitateko bazkide aktiboak"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoicing_activity_menu
 msgid "Activity"
-msgstr "Actividad"
+msgstr "Jarduera"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_pack_type_mixin
 msgid "Add pack_type to any model"
-msgstr "Añade tipo de pack a cualquier modelo"
+msgstr "Gehitu pack_type edozein modelori"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__allowed_community_company_ids
 msgid "Allowed Community Company"
-msgstr "Comunidad permitida"
+msgstr "Komunitate-enpresa onartua"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__allowed_companies
 msgid "Allowed Companies"
-msgstr "Compañías permitidas"
+msgstr "Onartutako enpresak"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__allowed_payment_mode_ids
 msgid "Allowed Payment Mode"
-msgstr "Modos de pago permitidos"
+msgstr "Onartutako ordaintzeko modua"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.service_invoicing_action_create_wizard_action
 #: model:ir.actions.server,name:energy_communities_service_invoicing.service_invoicing_action_create_wizard_from_company_action
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.service_invoicing_action_create_wizard_menu
 msgid "Assign pack to community"
-msgstr "Asignar Pack a Comunidad"
+msgstr "Esleitu paketea komunitateari"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoicing_assistants_menu
 msgid "Assistants"
-msgstr "Asistentes"
+msgstr "Laguntzaileak"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -101,12 +101,13 @@ msgid ""
 "CUPS not found in contract line description. Company: %s, Proyect: %s, "
 "Contract: %s, Line: %s"
 msgstr ""
+"Kontratu-lerroaren deskribapenean ez da HPKU koderik aurkitu. Enpresa: %s, Proiektua: %s, Kontratua: %s, Lerroa: %s"
 
 #. module: energy_communities_service_invoicing
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_create_wizard_form
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_wizard_form
 msgid "Cancelar"
-msgstr ""
+msgstr "Utzi"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -119,13 +120,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin
 #, python-format
 msgid "Close"
-msgstr "Cerrar"
+msgstr "Itxi"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.server,name:energy_communities_service_invoicing.contract_cron_for_invoice_closure_ir_actions_server
 #: model:ir.cron,cron_name:energy_communities_service_invoicing.contract_cron_for_invoice_closure
 msgid "Close today's (closed planned) Contracts "
-msgstr "Cerrar contratos planificados de cierre"
+msgstr "Itxi gaurko kontratuak (ixteko planifikatuak) "
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -136,27 +137,27 @@ msgstr "Cerrar contratos planificados de cierre"
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.contract_contract_search_view
 #, python-format
 msgid "Closed"
-msgstr "Cerrado"
+msgstr "Itxita"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__closing_action
 msgid "Closing reason"
-msgstr "Razón de cierre"
+msgstr "Ixteko arrazoia"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__closing_action_description
 msgid "Closing reason description"
-msgstr "Descripción de la razón de cierre"
+msgstr "Ixteko arrazoiaren azalpena"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__community_company_id
 msgid "Community"
-msgstr "Comunidad"
+msgstr "Komunitatea"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__community_company_mids
 msgid "Community Company Mids"
-msgstr ""
+msgstr "Mids komunitate-enpresa"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -164,12 +165,12 @@ msgstr ""
 #: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action_create.py:0
 #, python-format
 msgid "Community {} must have a parent coordinator defined"
-msgstr "La Comunidad {} debe tener una coordinadora definida"
+msgstr "{} komunitateak koordinatzaile guraso bat eduki behar du zehaztuta"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_res_company
 msgid "Companies"
-msgstr "Compañías"
+msgstr "Enpresak"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_abstract_contract__company_id
@@ -177,12 +178,12 @@ msgstr "Compañías"
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_line_qty_formula__company_id
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_template__company_id
 msgid "Company"
-msgstr "Compañía"
+msgstr "Enpresa"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoicing_configuration_menu
 msgid "Configuration"
-msgstr "Configuración"
+msgstr "Konfigurazioa"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_res_partner
@@ -192,74 +193,74 @@ msgstr "Kontaktua"
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_contract_contract
 msgid "Contract"
-msgstr "Kontratu"
+msgstr "Kontratua"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_contract_line
 msgid "Contract Line"
-msgstr "Kontratuaren lerro"
+msgstr "Kontratu-lerroa"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_contract_line_qty_formula
 msgid "Contract Line Formula"
-msgstr "Fórmula de la línea de contrato"
+msgstr "Kontratu-lerroko formula"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_contract_template
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_product_product__property_contract_template_id
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_product_template__property_contract_template_id
 msgid "Contract Template"
-msgstr "Plantilla de contrato"
+msgstr "Kontratuaren txantiloia"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__company_id
 msgid "Coordinator"
-msgstr "Coordinadora"
+msgstr "Koordinatzailea"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_service_invoicing_action_create_wizard
 msgid "Create service invoicing for an energy community"
-msgstr "Crea una facturación de servicio para una comnuidad"
+msgstr "Sortu zerbitzuaren faktura bat energia-komunitate baterako"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__create_uid
 msgid "Created by"
-msgstr "Creado por"
+msgstr "Nork sortua:"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__create_date
 msgid "Created on"
-msgstr "Creado el"
+msgstr "Sortze-data:"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__creation_type
 msgid "Creation Type"
-msgstr "Tipo de creación"
+msgstr "Sortze-mota"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__discount
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__discount
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__discount
 msgid "Discount (%)"
-msgstr "Descuento (%)"
+msgstr "Deskontua (%)"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__display_name
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__display_name
 msgid "Display Name"
-msgstr "Nombre"
+msgstr "Bistaratzeko izena"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_service_invoicing_action_wizard
 msgid "Execute actions on service invoicing"
-msgstr "Ejecuta acciones en una facturación de servicio"
+msgstr "Exekutatu ekintzak zerbitzua fakturatzean"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__executed_action
 msgid "Executed Action"
-msgstr "Acción ejecutada"
+msgstr "Exekutatutako ekintza"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -267,26 +268,24 @@ msgstr "Acción ejecutada"
 #: code:addons/energy_communities_service_invoicing/models/contract.py:0
 #, python-format
 msgid "Executing: {}"
-msgstr "Ejecutando: {}"
+msgstr "Exekutatzen: {}"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__execution_date
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__execution_date
 msgid "Execution date"
-msgstr "Fecha de inicio de contrato"
+msgstr "Exekuzio-data"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__id
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "Identifikatzailea"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,help:energy_communities_service_invoicing.field_contract_contract__skip_zero_qty
 msgid "If checked, contract lines with 0 qty don't create invoice line"
-msgstr ""
-"Si está marcado, las lineas de contrato con cantidad 0 no crearán líneas de "
-"factura"
+msgstr "Hautatuta badago, kopurua 0 duten kontratu-lerroek ez dute faktura-lerrorik sortzen"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -296,7 +295,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__res_partner__platform_pack_contract_status__in_progress
 #, python-format
 msgid "In progress"
-msgstr "En curso"
+msgstr "Abian"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -304,20 +303,20 @@ msgstr "En curso"
 #: code:addons/energy_communities_service_invoicing/models/service_invoicing_action_create.py:0
 #, python-format
 msgid "Invalid invoicing mode"
-msgstr ""
+msgstr "Fakturazio-modua ez da baliozkoa"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_bank_statement_line__is_contract
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_move__is_contract
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_payment__is_contract
 msgid "Is Contract"
-msgstr "Es un contrato"
+msgstr "Kontratua da"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__is_free_pack
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_template__is_free_pack
 msgid "Is a free pack"
-msgstr "Es una pack gratuito"
+msgstr "Doako pakete bat da"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -327,41 +326,40 @@ msgstr "Es una pack gratuito"
 msgid ""
 "It already exists an open contract ({}) with same company and community."
 msgstr ""
-"Ya existe un contrato en curso ({}) con la misma compañía y Comunidad "
-"definida."
+"Lehendik badago irekitako kontratu bat ({}) enpresa eta komunitate horiekin."
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_account_move
 msgid "Journal Entry"
-msgstr "Egunkari-sarrera"
+msgstr "Egunkariko idazpena"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_account_move_line
 msgid "Journal Item"
-msgstr "Aldizkariaren elementua"
+msgstr "Egunkariko elementua"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__last_date_invoiced
 msgid "Last Date Invoiced"
-msgstr "Última fecha facturada"
+msgstr "Fakturatutako azken data"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard____last_update
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard____last_update
 msgid "Last Modified on"
-msgstr "Última modificación el"
+msgstr "Azken aldatze-data:"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__write_uid
 msgid "Last Updated by"
-msgstr "Última actualización por"
+msgstr "Azken eguneratzearen egilea:"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__write_date
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__write_date
 msgid "Last Updated on"
-msgstr "Última actualización el"
+msgstr "Azken eguneratzearen data:"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -372,12 +370,12 @@ msgstr "Última actualización el"
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__service_invoicing_action_wizard__executed_action__modification
 #, python-format
 msgid "Modification"
-msgstr "Modificación"
+msgstr "Aldaketa"
 
 #. module: energy_communities_service_invoicing
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin
 msgid "Modify"
-msgstr "Modificar"
+msgstr "Aldatu"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -388,11 +386,12 @@ msgid ""
 "More than one supply point found. Company: %s, Proyect: %s, Contract: %s, "
 "Line: %s"
 msgstr ""
+"Hornidura-puntu bat baino gehiago aurkitu dira. Enpresa: %s, Proiektua: %s, Kontratua: %s, Lerroa: %s"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__service_invoicing_action_create_wizard__creation_type__multiple
 msgid "Multiple"
-msgstr "Múltiple"
+msgstr "Bat baino gehiago"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -410,27 +409,27 @@ msgstr "Múltiple"
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__sale_order__service_invoicing_action__none
 #, python-format
 msgid "None"
-msgstr "Ninguno"
+msgstr "Bat ere ez"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_line__ordered_qty_formula_id
 msgid "Ordered Qty Formula"
-msgstr "Formula de cantidad pedida"
+msgstr "Eskatutako kopuruaren formula"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_line__ordered_qty_type
 msgid "Ordered Qty Type"
-msgstr "Tipo de cantidad pedida"
+msgstr "Eskatutako kopuru-mota"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_line__ordered_quantity
 msgid "Ordered Quantity"
-msgstr "Cantidad pedida"
+msgstr "Eskatutako kopurua"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__pack_id
 msgid "Pack"
-msgstr ""
+msgstr "Paketea"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_bank_statement_line__pack_type
@@ -443,17 +442,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_product_template__pack_type
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__pack_type
 msgid "Pack Type"
-msgstr "Tipo de Pack"
+msgstr "Pakete-mota"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_packs_window
 msgid "Packs"
-msgstr "Packs de servicios"
+msgstr "Paketeak"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_contract_templates_window
 msgid "Packs contract templates"
-msgstr "Plantillas de Packs de servicios"
+msgstr "Kontratu-paketeen txantiloiak"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -464,7 +463,7 @@ msgstr "Plantillas de Packs de servicios"
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.contract_contract_search_view
 #, python-format
 msgid "Paused"
-msgstr "Pausado"
+msgstr "Pausarazita"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__payment_mode_id
@@ -481,7 +480,7 @@ msgstr "Ordaintzeko modua"
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.contract_contract_search_view
 #, python-format
 msgid "Planned closure"
-msgstr "Cierre planificado"
+msgstr "Itxiera planifikatua"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -492,61 +491,61 @@ msgstr "Cierre planificado"
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__pack_type_mixin__pack_type__platform_pack
 #, python-format
 msgid "Platform Pack"
-msgstr "Pack de plataforma"
+msgstr "Plataforma-paketea"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__platform_pack_product_categ_id
 msgid "Platform Pack Product Categ"
-msgstr "Categoría de producto de Pack de Plataforma"
+msgstr "Plataforma-paketeko produktuaren kategorria"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_partner__platform_pack_id
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_users__platform_pack_id
 msgid "Platform Service Pack"
-msgstr "Pack de servicios de Plataforma"
+msgstr "Plataformako zerbitzu-paketea"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_partner__platform_pack_contract_status
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_users__platform_pack_contract_status
 msgid "Platform Service Pack Status"
-msgstr "Estado del Pack de servicios de Plataforma"
+msgstr "Plataformako zerbitzu-paketearen egoera"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_services_menu
 msgid "Platform Services"
-msgstr "Servicios"
+msgstr "Plataformako zerbitzuak"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__platform_pack_id
 msgid "Platform service pack"
-msgstr "Pack de servisios de Plataforma"
+msgstr "Plataformako zerbitzu-paketea"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__predecessor_contract_id
 msgid "Predecessor contract"
-msgstr "Contrato predecesor"
+msgstr "Aurreko kontratua"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__pricelist_id
 msgid "PriceList"
-msgstr "Listado de precios"
+msgstr "Prezio-zerrenda"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_product_template
 msgid "Product"
-msgstr "Plantilla de producte"
+msgstr "Produktua"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__received_invoices_count
 msgid "Received Invoices Count"
-msgstr "Número de facturas recibidas"
+msgstr "Jasotako fakturen kopurua"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_bank_statement_line__related_contract_id
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_move__related_contract_id
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_payment__related_contract_id
 msgid "Related Contract"
-msgstr "Contrato relacionado"
+msgstr "Erlazionatutako kontratua"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_account_bank_statement_line__related_community_company_id
@@ -555,19 +554,19 @@ msgstr "Contrato relacionado"
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__community_company_id
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.account_move_search
 msgid "Related community"
-msgstr "Comunidad relacionada"
+msgstr "Erlazionatutako komunitatea"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_sale_order__service_invoicing_id
 msgid "Related contract"
-msgstr ""
+msgstr "Erlazionatutako kontratua"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__related_contract_product_ids
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_product_product__related_contract_product_ids
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_product_template__related_contract_product_ids
 msgid "Related services"
-msgstr "Servicios relacionados"
+msgstr "Erlazionatutako zerbitzuak"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -579,12 +578,12 @@ msgstr "Servicios relacionados"
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_contract_contract_customer_form_platform_admin
 #, python-format
 msgid "Reopen"
-msgstr "Reabrir"
+msgstr "Ireki berriro"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__sale_order_id
 msgid "Sale Order (activation)"
-msgstr "Pedidos de Packs de plataforma"
+msgstr "Salmenta-eskaera (aktibazioa)"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -592,12 +591,12 @@ msgstr "Pedidos de Packs de plataforma"
 #: code:addons/energy_communities_service_invoicing/components/sale_order_utils.py:0
 #, python-format
 msgid "Sale order must be defined in order to confirm it on component"
-msgstr ""
+msgstr "Salmenta-eskaera zehaztu behar da osagaian berresteko"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_sale_order
 msgid "Sales Order"
-msgstr "Pedido de venta"
+msgstr "Salmenta-eskaera"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -605,22 +604,22 @@ msgstr "Pedido de venta"
 #: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action.py:0
 #, python-format
 msgid "Select at least one value to modify"
-msgstr "Edita un mínimo de un valor"
+msgstr "Hautatu gutxienez aldatu beharreko balio bat"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__pricelist_id
 msgid "Select pricelist"
-msgstr "Listado de precios"
+msgstr "Hautatu prezio-zerrenda"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_wizard__service_invoicing_id
 msgid "Selected contract"
-msgstr "Contrato relacionado"
+msgstr "Hautatutako kontratua"
 
 #. module: energy_communities_service_invoicing
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_create_wizard_form
 msgid "Service Contract"
-msgstr "Contrato de servicios"
+msgstr "Zerbitzu-kontratua"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -632,116 +631,116 @@ msgstr "Contrato de servicios"
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoicing_menu_platform_manager
 #, python-format
 msgid "Service Contracts"
-msgstr "Contratos de servicios"
+msgstr "Zerbitzu-kontratuak"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__pack_id
 msgid "Service Pack"
-msgstr "Pack de servicios"
+msgstr "Zerbitzu-paketea"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_packs_menu
 msgid "Service Packs"
-msgstr "Packs de servicios"
+msgstr "Zerbitzu-paketeak"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_contract_templates_menu
 msgid "Service Packs templates"
-msgstr "Plantillas de Packs de servicios"
+msgstr "Zerbitzu-paketeen txantiloiak"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_sale_orders_window
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_sale_orders_menu
 msgid "Service actions (sale orders)"
-msgstr "Pedidos de Packs"
+msgstr "Zerbitzu-ekintzak (salmenta-eskaerak)"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_invoices_issued_act_window
 msgid "Service invoices (issued)"
-msgstr "Facturas de servicios (emitidas)"
+msgstr "Zerbitzuen fakturak (jaulkitakoak)"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_service_invoices_received_act_window
 msgid "Service invoices (received)"
-msgstr "Facturas de servicios (recibidas)"
+msgstr "Zerbitzuen fakturak (jasotakoak)"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoices_issued_menu
 msgid "Service invoices issued"
-msgstr "Facturas de servicio (emitidas)"
+msgstr "Jaulkitako zerbitzu-fakturak"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.view_service_invoices_received_menu
 msgid "Service invoices received"
-msgstr "Facturas de servicio (recibidas)"
+msgstr "Jasotako zerbitzu-fakturak"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_sale_order__service_invoicing_action
 msgid "Service invoicing action"
-msgstr "Acción en facturación de servicios"
+msgstr "Zerbitzuen fakturazioko ekintza"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_sale_order__service_invoicing_action_description
 msgid "Service invoicing action description"
-msgstr "Descripción de la acción en facturación de servicios"
+msgstr "Zerbitzuen fakturazioko ekintzaren deskribapena"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.service_invoicing_action_wizard_action
 msgid "Service invoicing actions"
-msgstr "Acciones de facturación del servicio"
+msgstr "Zerbitzuen fakturazioko ekintzak"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_company__service_invoicing_purchase_journal_id
 msgid "Service invoicing purchase journal"
-msgstr "Diario de facturas de servicios de plataforma recibidas"
+msgstr "Zerbitzuen fakturazioko erosketen egunkaria"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_company__service_invoicing_sale_journal_id
 msgid "Service invoicing sale journal"
-msgstr "Diario de facturas de servicios de plataforma emitidas"
+msgstr "Zerbitzuen fakturazioko salmenten egunkaria"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_res_company__service_invoicing_sale_team_id
 msgid "Service invoicing sales team"
-msgstr "Equip de ventas para la facturación de servicios de plataforma"
+msgstr "Zerbitzuen fakturazioko salmenten taldea"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.actions.act_window,name:energy_communities_service_invoicing.view_services_window
 #: model:ir.ui.menu,name:energy_communities_service_invoicing.ce_service_invoicing_menu
 msgid "Services"
-msgstr "Servicios"
+msgstr "Zerbitzuak"
 
 #. module: energy_communities_service_invoicing
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invocing_company_form
 msgid "Services Invoicing"
-msgstr "Facturación de servicios"
+msgstr "Zerbitzuen fakturazioa"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields.selection,name:energy_communities_service_invoicing.selection__service_invoicing_action_create_wizard__creation_type__single
 msgid "Single"
-msgstr "Individual"
+msgstr "Banakakoa"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__skip_zero_qty
 msgid "Skip Zero Qty Lines"
-msgstr "Saltar líneas con cantidad 0"
+msgstr "Saltatu kopurua 0 duten lerroak"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__status
 msgid "Status"
-msgstr "Estado"
+msgstr "Egoera"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_abstract_contract_line__price_subtotal
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_line__price_subtotal
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_template_line__price_subtotal
 msgid "Sub Total"
-msgstr "Subtotal"
+msgstr "Subtotala"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_contract__successor_contract_id
 msgid "Successor contract"
-msgstr "Contrato sucesor"
+msgstr "Kontratu oinordekoa"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -751,6 +750,7 @@ msgstr "Contrato sucesor"
 msgid ""
 "Supply point not found. Company: %s, Proyect: %s, Contract: %s, Line: %s"
 msgstr ""
+"Ez da hornidura-puntua aurkitu. Enpresa: %s, Proiektua: %s, Kontratua: %s, Lerroa: %s"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -758,26 +758,24 @@ msgstr ""
 #: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action_create.py:0
 #, python-format
 msgid "This action is only allowed when you're on instance level."
-msgstr ""
-"Esta acción solo está permitida cuando nos encontramos en la companyía "
-"Plataforma"
+msgstr "Ekintza hau instantzia mailan zaudenean bakarrik onartzen da."
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_abstract_contract_line__price_unit
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_line__price_unit
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_contract_template_line__price_unit
 msgid "Unit Price"
-msgstr "Precio unidad"
+msgstr "Aleko prezioa"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__user_current_company
 msgid "User Current Company"
-msgstr "Compañía actual del usuario"
+msgstr "Erabiltzailearen uneko enpresa"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model.fields,field_description:energy_communities_service_invoicing.field_service_invoicing_action_create_wizard__user_current_role
 msgid "User Current Role"
-msgstr "Rol actual del usuario"
+msgstr "Erabiltzailearen uneko rola"
 
 #. module: energy_communities_service_invoicing
 #. odoo-python
@@ -785,34 +783,34 @@ msgstr "Rol actual del usuario"
 #: code:addons/energy_communities_service_invoicing/wizards/service_invoicing_action_create.py:0
 #, python-format
 msgid "You can only assign pack to communities"
-msgstr "Solo puedes asignar packs de servicios de plataforma a Comunidades"
+msgstr "Paketea komunitateei bakarrik esleitu diezaiekezu"
 
 #. module: energy_communities_service_invoicing
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_wizard_form
 msgid "activate contract"
-msgstr "activar contrato"
+msgstr "aktibatu kontratua"
 
 #. module: energy_communities_service_invoicing
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_wizard_form
 msgid "close contract"
-msgstr "cerrar contrato"
+msgstr "itxi kontratua"
 
 #. module: energy_communities_service_invoicing
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_create_wizard_form
 msgid "create"
-msgstr "crea"
+msgstr "sortu"
 
 #. module: energy_communities_service_invoicing
 #: model:ir.model,name:energy_communities_service_invoicing.model_energy_communities_service_invoicing_action_create
 msgid "energy_communities_service_invoicing.action_create"
-msgstr ""
+msgstr "energy_communities_service_invoicing.action_create"
 
 #. module: energy_communities_service_invoicing
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_wizard_form
 msgid "modify"
-msgstr "modifica"
+msgstr "aldatu"
 
 #. module: energy_communities_service_invoicing
 #: model_terms:ir.ui.view,arch_db:energy_communities_service_invoicing.view_service_invoicing_action_wizard_form
 msgid "reopen contract"
-msgstr "reabrir contrato"
+msgstr "Ireki berriro kontratua"
