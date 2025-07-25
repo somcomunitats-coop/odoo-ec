@@ -1007,3 +1007,64 @@ msgstr "Ezin duzu bi motatako ekarpenetan harpidetu."
 #: model_terms:ir.ui.view,arch_db:l10n_es_cooperator.iban_template_es
 msgid "VAT"
 msgstr "BEZa"
+
+#. module: cooperator
+#: model:ir.actions.report,name:cooperator.action_cooperator_report_certificate
+msgid "Cooperator Certificate"
+msgstr "Kooperatibakidearen ziurtagiria"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+msgid "<span>Certificate generated on</span>"
+msgstr "<span>Ziurtagiriaren sorrera-data</span>"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+msgid "<span>Cooperator Certificate</span>"
+msgstr "<span>Kooperatibakidearen ziurtagiria</span>"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+msgid "is recorded in the register of cooperators under number"
+msgstr "se inscribe en el registro de cooperadores con el número"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__effective_date
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__effective_date
+#: model:ir.model.fields,field_description:cooperator.field_res_users__effective_date
+#: model:ir.model.fields,field_description:cooperator.field_share_line__effective_date
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_register
+msgid "Effective Date"
+msgstr "Eraginetarako data"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__share_product
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_register
+#: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_tree
+msgid "Share Type"
+msgstr "Ekarpen-mota"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_register
+#: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_tree
+msgid "Quantity"
+msgstr "Kopurua"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+msgid "Unit Price"
+msgstr "Prezioa unitateko"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+msgid "<strong>Total</strong>"
+msgstr "<strong>Guztira</strong>"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_register
+msgid "Total"
+msgstr "Guztira"
