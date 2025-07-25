@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-09 07:12+0000\n"
-"PO-Revision-Date: 2025-05-09 07:12+0000\n"
+"POT-Creation-Date: 2025-07-25 10:08+0000\n"
+"PO-Revision-Date: 2025-07-25 10:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -201,7 +201,7 @@ msgstr "<span>% </span>"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.theme_voluntary_share_interest_return_document
 msgid "<span> €</span>"
-msgstr "<span> €</span>"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.theme_voluntary_share_interest_return_document
@@ -261,7 +261,6 @@ msgstr "Aktiboa"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Address not found"
 msgstr "Ez da helbidea aurkitu"
@@ -297,7 +296,8 @@ msgstr "Egin zaitez honen kooperatibakide:"
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_voluntary_share_interest_return_wizard
 msgid "Calculate and prepare interests to be returned in voluntary shares"
-msgstr "Kalkulatu eta prestatu borondatezko ekarpenetan itzuli beharreko interesak"
+msgstr ""
+"Kalkulatu eta prestatu borondatezko ekarpenetan itzuli beharreko interesak"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.share_line_form
@@ -322,7 +322,6 @@ msgstr "Ziurtagiria {{ (object.cooperator_register_number or '') }}"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "City not found"
@@ -359,7 +358,9 @@ msgstr "Berretsi posta elektronikoa"
 #. module: energy_communities_cooperator
 #: model:mail.template,name:energy_communities_cooperator.email_template_confirmation_voluntary_share
 msgid "Confirmation Email for CE Voluntary Share Receipt"
-msgstr "Energia-komunitatearen borondatezko ekarpenaren ordainagiria berresteko mezua"
+msgstr ""
+"Energia-komunitatearen borondatezko ekarpenaren ordainagiria berresteko "
+"mezua"
 
 #. module: energy_communities_cooperator
 #: model:mail.template,name:energy_communities_cooperator.email_template_conditions_voluntary_share
@@ -377,7 +378,8 @@ msgid ""
 "Contribute to {{object.company_id.comercial_name or object.company_id.name}}"
 " Ref. ACSV{{object.id}}"
 msgstr ""
-"Egin ekarpena {{object.company_id.comercial_name or object.company_id.name}}(r)i. Erref.: ACSV{{object.id}}"
+"Egin ekarpena {{object.company_id.comercial_name or "
+"object.company_id.name}}(r)i. Erref.: ACSV{{object.id}}"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_move_line__voluntary_share_contribution
@@ -427,7 +429,6 @@ msgstr "Sortu"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/cooperative_membership.py:0
-#: code:addons/energy_communities_cooperator/models/cooperative_membership.py:0
 #, python-format
 msgid "Create a share line"
 msgstr "Sortu ekarpen-lerro bat"
@@ -474,7 +475,6 @@ msgstr "Bistaratzeko izena"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
-#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__voluntary_share_interest_return__state__draft
 #, python-format
 msgid "Draft"
@@ -483,56 +483,55 @@ msgstr "Zirriborroa"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
-#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #, python-format
 msgid "ERROR on Invoice {}. Related membership not in same company"
-msgstr "ERROREA faktura honetan: {}. Loturiko bazkidetza ez da enpresa berekoa"
+msgstr ""
+"ERROREA faktura honetan: {}. Loturiko bazkidetza ez da enpresa berekoa"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #, python-format
 msgid ""
 "ERROR on Membership {membership_id}. Inconstency between share {share_id} "
 "effective date and related invoice payment_date"
 msgstr ""
-"ERROREA bazkidetza honetan: {membership_id}. {Share_id} ekarpenaren data efektiboa eta loturiko fakturaren ordainketa-data ez datoz bat"
+"ERROREA bazkidetza honetan: {membership_id}. {Share_id} ekarpenaren data "
+"efektiboa eta loturiko fakturaren ordainketa-data ez datoz bat"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #, python-format
 msgid ""
 "ERROR on Membership {membership_id}. More than one related invoice line for "
 "voluntary share {share_id}"
 msgstr ""
-"ERROREA bazkidetza honetan: {membership_id}. Loturiko faktura-lerro bat baino gehiago daude borondatezko {share_id} ekarpenerako"
+"ERROREA bazkidetza honetan: {membership_id}. Loturiko faktura-lerro bat "
+"baino gehiago daude borondatezko {share_id} ekarpenerako"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #, python-format
 msgid ""
 "ERROR on Membership {membership_id}. No related invoice line for voluntary "
 "share {share_id}"
 msgstr ""
-"ERROREA {membership_id} bazkidetzan. Ez dago {share_id} borondatezko ekarpenari loturiko faktura-lerrorik"
+"ERROREA {membership_id} bazkidetzan. Ez dago {share_id} borondatezko "
+"ekarpenari loturiko faktura-lerrorik"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #, python-format
 msgid "ERROR on Membership {}. No related invoice for voluntary share"
-msgstr "ERROREA bazkidetza honetan: {}. Ez dago borondatezko ekarpenari loturiko fakturarik"
+msgstr ""
+"ERROREA bazkidetza honetan: {}. Ez dago borondatezko ekarpenari loturiko "
+"fakturarik"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
-#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #, python-format
@@ -548,8 +547,6 @@ msgstr "Helbide elektronikoa"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Email and confirmation email addresses don't match."
@@ -557,7 +554,6 @@ msgstr "Helbide elektronikoa eta berrestekoa ez datoz bat."
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Email not found"
@@ -570,7 +566,8 @@ msgid ""
 "Enable the contact to participate in Community Energy Actions despite not "
 "being an effective member of the Community."
 msgstr ""
-"Gaitu kontaktua energia-komunitateko ekintzetan parte hartzeko, komunitateko bazkide eraginkorra izan ez arren."
+"Gaitu kontaktua energia-komunitateko ekintzetan parte hartzeko, komunitateko"
+" bazkide eraginkorra izan ez arren."
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_wizard_form
@@ -595,12 +592,12 @@ msgstr "Jarraitzaileak (kontaktuak)"
 #. module: energy_communities_cooperator
 #: model:ir.ui.menu,name:energy_communities_cooperator.ec_formulas_menu
 msgid "Formulas"
-msgstr "Formulak"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.actions.act_window,name:energy_communities_cooperator.view_ec_formulas_window
 msgid "Formulas (quantity)"
-msgstr "Formulak (kopurua)"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_partner__gender
@@ -628,7 +625,9 @@ msgstr "Kaixo:"
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.iban_template_es_ccee
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_shares_template
 msgid "I accept that the entity issues direct debit receipts to this account."
-msgstr "Onartzen dut entitateak kontu honetan helbideratutako ordainagiriak jaulkitzea."
+msgstr ""
+"Onartzen dut entitateak kontu honetan helbideratutako ordainagiriak "
+"jaulkitzea."
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__res_partner__gender__not_share
@@ -650,8 +649,7 @@ msgstr "Identifikatzailea"
 msgid ""
 "INDIVIDUAL\n"
 "                PARTNER"
-msgstr ""
-"BANAKAKO KONTAKTUA"
+msgstr "BANAKAKO KONTAKTUA"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_voluntary_share_interest_return__message_needaction
@@ -668,7 +666,8 @@ msgstr "Hautatuta badago, errorea gertatu da mezuren bat banatzean."
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_template__mail_template
 #: model:ir.model.fields,help:energy_communities_cooperator.field_res_company__voluntary_share_email_template
 msgid "If left empty, the default global mail template will be used."
-msgstr "Hutsik uzten baduzu, mezu orokorretarako txantiloi lehenetsia erabiliko da."
+msgstr ""
+"Hutsik uzten baduzu, mezu orokorretarako txantiloi lehenetsia erabiliko da."
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__capital_share
@@ -694,14 +693,12 @@ msgstr "Fakturaren epemuga"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
-#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #, python-format
 msgid "Invoices successfully posted"
 msgstr "Fakturak ondo jaulki dira"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #, python-format
 msgid "Invoices successfully sent"
@@ -725,12 +722,12 @@ msgstr "Egunkaria"
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_account_move
 msgid "Journal Entry"
-msgstr "Egunkariko idazpena"
+msgstr "Egunkari-sarrera"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_account_move_line
 msgid "Journal Item"
-msgstr "Egunkariko elementua"
+msgstr "Aldizkariaren elementua"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
@@ -817,11 +814,6 @@ msgstr "Ez-bitarra"
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
@@ -834,7 +826,8 @@ msgid ""
 "Note: Please, if you are not yet a member, you must process it through\n"
 "            these forms:"
 msgstr ""
-"Oharra: Mesedez, oraindik bazkide ez bazara, formulario hauek erabili behar dituzu:"
+"Oharra: Mesedez, oraindik bazkide ez bazara, formulario hauek erabili behar "
+"dituzu:"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
@@ -877,7 +870,9 @@ msgid ""
 "Once you are a member you can enjoy the services available from the community and be part of a movement\n"
 "                of social and energy model transformation."
 msgstr ""
-"Bazkide zarenean, komunitate energetikoaren zerbitzuak erabili ahal izango dituzu, eta gizartea eta energia-eredua aldatzeko mugimenduaren parte izango zara."
+"Bazkide zarenean, komunitate energetikoaren zerbitzuak erabili ahal izango "
+"dituzu, eta gizartea eta energia-eredua aldatzeko mugimenduaren parte izango"
+" zara."
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share_text_template
@@ -885,7 +880,8 @@ msgid ""
 "Once your request is received, you will receive a confirmation email with "
 "the instructions to follow."
 msgstr ""
-"Zure eskaera jasotzen dugunean, berrespen-mezu bat jasoko duzu, jarraitu beharreko jarraibideekin."
+"Zure eskaera jasotzen dugunean, berrespen-mezu bat jasoko duzu, jarraitu "
+"beharreko jarraibideekin."
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__parent_id_id
@@ -899,11 +895,6 @@ msgstr "Kontaktua"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
@@ -926,7 +917,6 @@ msgstr "Ordainketa-agindua zuzena da"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
-#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__voluntary_share_interest_return__state__payment
 #, python-format
 msgid "Payment generated"
@@ -941,7 +931,6 @@ msgstr "Ordaintzeko modua"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
-#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__payment_order_id
 #, python-format
 msgid "Payment order"
@@ -949,7 +938,6 @@ msgstr "Ordainketa-agindua"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #, python-format
 msgid "Payment order generated"
@@ -978,7 +966,6 @@ msgstr "Telefonoa"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Please upload a scan of your ID card."
 msgstr "Mesedez, igo zure NANa eskaneatuta."
@@ -990,7 +977,6 @@ msgstr "Argitaratu"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__voluntary_share_interest_return__state__posted
 #, python-format
@@ -1010,8 +996,6 @@ msgstr "Produktuak partekatzeko txantiloia"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Provided IBAN is not valid."
@@ -1049,8 +1033,6 @@ msgstr "Itzulkin-lerroaren kontua"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/res_company.py:0
-#: code:addons/energy_communities_cooperator/models/res_company.py:0
-#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_wizard_form
 #, python-format
@@ -1068,14 +1050,16 @@ msgid ""
 "Sent to cooperators after its voluntary share have been received, with share"
 " voluntary conditions and certificate in attachment"
 msgstr ""
-"Kooperatibakideei bidaltzen zaie borondatezko ekarpena jaso ondoren. Ekarpenaren baldintzak eta ziurtagiria eranskin gisa bidaltzen dira."
+"Kooperatibakideei bidaltzen zaie borondatezko ekarpena jaso ondoren. "
+"Ekarpenaren baldintzak eta ziurtagiria eranskin gisa bidaltzen dira."
 
 #. module: energy_communities_cooperator
 #: model:mail.template,description:energy_communities_cooperator.email_template_confirmation_voluntary_share
 msgid ""
 "Sent to cooperators to confirm their voluntary share subscription request"
 msgstr ""
-"Kooperatibakideei bidaltzen zaie borondatezko ekarpenaren harpidetza-eskaera berresteko."
+"Kooperatibakideei bidaltzen zaie borondatezko ekarpenaren harpidetza-eskaera"
+" berresteko."
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_share_line
@@ -1101,7 +1085,6 @@ msgstr "Ekarpen-mota"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Some mandatory fields have not been filled."
 msgstr "Nahitaezko eremu batzuk ez dira bete."
@@ -1109,12 +1092,12 @@ msgstr "Nahitaezko eremu batzuk ez dira bete."
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/res_users.py:0
-#: code:addons/energy_communities_cooperator/models/res_users.py:0
 #, python-format
 msgid ""
 "Something went wrong. Probably there is no website defined for company: {}"
 msgstr ""
-"Arazoren bat izan da. Ziurrenik ez da egongo enpresarentzat definitutako web orririk: {}"
+"Arazoren bat izan da. Ziurrenik ez da egongo enpresarentzat definitutako web"
+" orririk: {}"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__state
@@ -1155,11 +1138,12 @@ msgid ""
 "country format. You can use '/' to indicate that the partner is not subject "
 "to tax."
 msgstr ""
-"Identifikazio fiskaleko zenbakia. Hemengo balioak herrialde-formatuaren arabera balioztatuko dira. '/' erabil dezakezu kontaktuari zergarik ez zaiola aplikatzen adierazteko."
+"Identifikazio fiskaleko zenbakia. Hemengo balioak herrialde-formatuaren "
+"arabera balioztatuko dira. '/' erabil dezakezu kontaktuari zergarik ez "
+"zaiola aplikatzen adierazteko."
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/models/subscription_request.py:0
 #: code:addons/energy_communities_cooperator/models/subscription_request.py:0
 #, python-format
 msgid "There is an existing account for this vat number on this community. "
@@ -1168,13 +1152,13 @@ msgstr "Lehendik ere badago kontu bat IFZ horrentzat komunitate honetan. "
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid ""
 "There is an existing account for this vat number on this community. Please "
 "contact with the community administrators."
 msgstr ""
-"Lehendik ere badago kontu bat IFZ horrentzat komunitate honetan. Jarri harremanetan komunitateko administratzaileekin."
+"Lehendik ere badago kontu bat IFZ horrentzat komunitate honetan. Jarri "
+"harremanetan komunitateko administratzaileekin."
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__property_cooperator_account
@@ -1187,7 +1171,6 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "This company doesn't have a voluntary product share selected."
 msgstr "Enpresa honek ez du borondatezko produktu-ekarpenik hautatuta."
@@ -1195,7 +1178,8 @@ msgstr "Enpresa honek ez du borondatezko produktu-ekarpenik hautatuta."
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.main_form_template_ccee
 msgid "This form allow you to request be member of the community:"
-msgstr "Formulario honen bidez, komunitateko bazkide izateko eskaera egin dezakezu:"
+msgstr ""
+"Formulario honen bidez, komunitateko bazkide izateko eskaera egin dezakezu:"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share_text_template
@@ -1203,7 +1187,8 @@ msgid ""
 "This is the form to be able to make Voluntary Contributions to the Social "
 "Capital by the members of"
 msgstr ""
-"Hau da hemengo bazkideek kapital sozialari borondatezko ekarpenak egiteko formularioa:"
+"Hau da hemengo bazkideek kapital sozialari borondatezko ekarpenak egiteko "
+"formularioa:"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.main_form_template_ccee
@@ -1211,7 +1196,8 @@ msgid ""
 "To be a member you must fulfill this form and lateron proceed to pay the "
 "initial share of"
 msgstr ""
-"Bazkide izateko, lehenbizi formulario hau bete behar duzu, eta, ondoren, honen hasierako ekarpena ordaindu:"
+"Bazkide izateko, lehenbizi formulario hau bete behar duzu, eta, ondoren, "
+"honen hasierako ekarpena ordaindu:"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.main_form_template_ccee
@@ -1220,7 +1206,9 @@ msgid ""
 "and authorization to issue a bank receipt to collect the initial mandatory "
 "financial contribution of"
 msgstr ""
-"Bazkide izateko, lehenbizi formulario hau bete behar duzu; bertan, bankuko ordainagiri bat igortzeko baimena eskatzen dizugu, honen nahitaezko hasierako ekarpena kobratzeko:"
+"Bazkide izateko, lehenbizi formulario hau bete behar duzu; bertan, bankuko "
+"ordainagiri bat igortzeko baimena eskatzen dizugu, honen nahitaezko "
+"hasierako ekarpena kobratzeko:"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
@@ -1238,24 +1226,25 @@ msgstr "Ekarpena, guztira"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/res_users.py:0
-#: code:addons/energy_communities_cooperator/models/res_users.py:0
 #, python-format
 msgid ""
 "Trying to create user from partner ID {partner_id} but user ID {user_id} is "
 "using the vat. Contact your system administrator if you have questions."
 msgstr ""
-"{partner_id} kontaktuaren IDtik erabiltzailea sortu nahian ari gara, baina {user_id} erabiltzailearen IDa BEZa erabiltzen ari da. Jarri harremanetan sistema-administratzailearekin galderarik baduzu."
+"{partner_id} kontaktuaren IDtik erabiltzailea sortu nahian ari gara, baina "
+"{user_id} erabiltzailearen IDa BEZa erabiltzen ari da. Jarri harremanetan "
+"sistema-administratzailearekin galderarik baduzu."
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/models/res_users.py:0
 #: code:addons/energy_communities_cooperator/models/res_users.py:0
 #, python-format
 msgid ""
 "Trying to create user from partner ID {} but the partner doesn't have VAT "
 "defined"
 msgstr ""
-"{} kontaktuaren IDtik erabiltzailea sortu nahian ari gara, baina kontaktuak ez du BEZa zehaztuta"
+"{} kontaktuaren IDtik erabiltzailea sortu nahian ari gara, baina kontaktuak "
+"ez du BEZa zehaztuta"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_res_users
@@ -1345,11 +1334,11 @@ msgid ""
 "{{object.company_id.comercial_name or object.company_id.name}} with Ref. "
 "ACSV{{object.id}}"
 msgstr ""
-"{{object.company_id.comercial_name or object.company_id.name}}(r)en kapital sozialera egindako borondatezko ekarpena (erref.: ACSV{{object.id}})"
+"{{object.company_id.comercial_name or object.company_id.name}}(r)en kapital "
+"sozialera egindako borondatezko ekarpena (erref.: ACSV{{object.id}})"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #, python-format
 msgid "We have generated the payment order in order to return the interests."
@@ -1358,21 +1347,22 @@ msgstr "Interesak itzultzeko sortu dugu ordainketa-agindua."
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
-#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #, python-format
 msgid "We have posted the voluntary share interest return invoice documents"
-msgstr "Borondatezko ekarpenaren interes-itzulkinen fakturen dokumentuak argitaratu ditugu."
+msgstr ""
+"Borondatezko ekarpenaren interes-itzulkinen fakturen dokumentuak argitaratu "
+"ditugu."
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #, python-format
 msgid ""
 "We have sent the voluntary share interest return document to related members"
 " via email."
 msgstr ""
-"Borondatezko ekarpenaren interes-itzulkinen dokumentua bidali diegu dagokien bazkideei posta elektroniko bidez."
+"Borondatezko ekarpenaren interes-itzulkinen dokumentua bidali diegu dagokien"
+" bazkideei posta elektroniko bidez."
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__website_message_ids
@@ -1392,24 +1382,22 @@ msgstr "Account Multi-company Easy Creation-eko morroia"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/subscription_request.py:0
-#: code:addons/energy_communities_cooperator/models/subscription_request.py:0
 #, python-format
 msgid "You can't create a voluntary subscription share for a new cooperator."
-msgstr "Ezin da borondatezko harpidetza-ekarpenik sortu kooperatibakide berri batentzat."
+msgstr ""
+"Ezin da borondatezko harpidetza-ekarpenik sortu kooperatibakide berri "
+"batentzat."
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid ""
 "You can't subscribe for an amount that exceeds {amount}{currency_symbol}."
-msgstr ""
-"Ezin duzu {amount}{currency_symbol}-tik gorako harpidetzarik egin."
+msgstr "Ezin duzu {amount}{currency_symbol}-tik gorako harpidetzarik egin."
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid "You can't subscribe to two different types of share."
@@ -1418,14 +1406,12 @@ msgstr "Ezin duzu bi motatako ekarpenetan harpidetu."
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "You must check the SEPA transference."
 msgstr "SEPA transferentzia hautatu behar duzu."
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "ZIP code not found"
@@ -1439,17 +1425,17 @@ msgstr "eta"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.main_form_template_ccee
 msgid "member_ccee_eu_ES."
-msgstr "member_ccee_eu_ES."
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.main_form_template_ccee
 msgid "member_eu_ES"
-msgstr "member_eu_ES"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.actions.report,print_report_name:energy_communities_cooperator.action_voluntary_share_interest_return_invoices
 msgid "object._get_report_base_filename()"
-msgstr "object._get_report_base_filename()"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.theme_voluntary_share_interest_return_document
@@ -1459,7 +1445,7 @@ msgstr "Non:"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share_text_template
 msgid "vol_share_eu_es"
-msgstr "vol_share_eu_es"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:mail.template,report_name:energy_communities_cooperator.email_template_voluntary_share_interest_return
@@ -1467,7 +1453,6 @@ msgid ""
 "{{(object.name or \"voluntary_share_interest_return\").replace(\"/\", "
 "\"_\")}}{{object.state == \"draft\" and \"_draft\" or \"\"}}"
 msgstr ""
-"{{(object.name or \"voluntary_share_interest_return\").replace(\"/\", \"_\")}}{{object.state == \"draft\" and \"_draft\" or \"\"}}"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.main_form_template_ccee
@@ -1477,4 +1462,4 @@ msgstr "Jarraitu posta elektronikoz bidaliko dizkizugun urratsei."
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.main_form_template_ccee
 msgid "€_eu_ES."
-msgstr "€_eu_ES."
+msgstr ""
