@@ -129,24 +129,24 @@ class ContractUtils(Component):
 
     def _set_lines_initial_values(self):
         for line in self.work.record.contract_line_ids:
-            # context language to be considered from community_company_id or partner_id
-            if self.work.record.community_company_id:
-                lang = self.work.record.community_company_id.partner_id.lang
-            else:
-                lang = self.work.record.partner_id.lang
-            line.write(
-                {
-                    "name": line.product_id.product_tmpl_id.with_context(
-                        lang=lang
-                    ).description_sale,
-                    "date_start": self.work.record.date_start,
-                    "ordered_qty_type": line.qty_type,
-                    "ordered_quantity": line.quantity,
-                    "ordered_qty_formula_id": line.qty_formula_id.id,
-                    "qty_type": "fixed",
-                    "quantity": 0,
-                }
-            )
+            line_params = {
+                "date_start": self.work.record.date_start,
+                "ordered_qty_type": line.qty_type,
+                "ordered_quantity": line.quantity,
+                "ordered_qty_formula_id": line.qty_formula_id.id,
+                "qty_type": "fixed",
+                "quantity": 0,
+            }
+            if line.product_id.product_tmpl_id.description_sale:
+                # context language to be considered from community_company_id or partner_id
+                if self.work.record.community_company_id:
+                    lang = self.work.record.community_company_id.partner_id.lang
+                else:
+                    lang = self.work.record.partner_id.lang
+                line_params["name"] = line.product_id.product_tmpl_id.with_context(
+                    lang=lang
+                ).description_sale
+            line.write(line_params)
 
     def _set_discount_if_needed(self, metadata_keys_arr):
         if "discount" in metadata_keys_arr:
