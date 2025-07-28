@@ -87,12 +87,6 @@ class ContractUtils(Component):
         self._setup_successors_and_predecessors(new_service_invoicing_id)
         return new_service_invoicing_id
 
-    # this method is meant to be used by sale_order_utils_component.
-    def initial_setup(self):
-        self._clean_non_service_lines()
-        self._setup_contract_values()
-        self._activate_contract_if_is_free()
-
     def _activate_contract_lines(self, execution_date):
         self.work.record.write({"date_start": execution_date})
         for line in self.work.record.contract_line_ids:
@@ -105,6 +99,12 @@ class ContractUtils(Component):
             line.write(line_dict)
             line._compute_state()
 
+    # this method is meant to be used by sale_order_utils_component on sale order confirmation (contract creation).
+    def initial_setup(self):
+        self._clean_non_service_lines()
+        self._setup_contract_values()
+        self._activate_contract_if_is_free()
+
     def _clean_non_service_lines(self):
         for line in self.work.record.contract_line_ids:
             if not self._is_service_line(line):
@@ -112,20 +112,33 @@ class ContractUtils(Component):
                 line.unlink()
 
     def _setup_contract_values(self):
-        self._set_lines_initial_values()
         metadata_keys_arr = self.work.record.sale_order_id.metadata_line_ids.mapped(
             "key"
         )
         self._set_discount_if_needed(metadata_keys_arr)
         self._set_contract_recurrency(metadata_keys_arr)
         self._set_config_journal()
-        self.propagate_recurrency_values_to_contract()
         self._set_resting_metadata_in_contract(metadata_keys_arr)
+        self._set_lines_initial_values()
+        self.propagate_recurrency_values_to_contract()
+
+    def _activate_contract_if_is_free(self):
+        # Important! We activate by default free packs
+        if self.work.record.is_free_pack:
+            self.activate(self.work.record.sale_order_id.commitment_date)
 
     def _set_lines_initial_values(self):
         for line in self.work.record.contract_line_ids:
+            # context language to be considered from community_company_id or partner_id
+            if self.work.record.community_company_id:
+                lang = self.work.record.community_company_id.partner_id.lang
+            else:
+                lang = self.work.record.partner_id.lang
             line.write(
                 {
+                    "name": line.product_id.product_tmpl_id.with_context(
+                        lang=lang
+                    ).description_sale,
                     "date_start": self.work.record.date_start,
                     "ordered_qty_type": line.qty_type,
                     "ordered_quantity": line.quantity,
@@ -134,11 +147,6 @@ class ContractUtils(Component):
                     "quantity": 0,
                 }
             )
-
-    def _activate_contract_if_is_free(self):
-        # Important! We activate by default free packs
-        if self.work.record.is_free_pack:
-            self.activate(self.work.record.sale_order_id.commitment_date)
 
     def _set_discount_if_needed(self, metadata_keys_arr):
         if "discount" in metadata_keys_arr:
