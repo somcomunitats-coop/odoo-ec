@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="account.email_template_edi_invoice" model="mail.template">
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+        </record>
+
+        <record id="account.email_template_edi_credit_note" model="mail.template">
+            <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
+        </record>
+
+    </data>
+</odoo>
