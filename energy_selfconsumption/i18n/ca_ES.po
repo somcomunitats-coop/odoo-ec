@@ -6120,6 +6120,17 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
+msgid ""
+"You have selected ‘No’ to the question ‘The holder is the same partner’, in "
+"this case the NIF/CIF of the Holder cannot coincide with that of the "
+"partner."
+msgstr "Has seleccionat 'No' a la pregunta 'El propietari és el mateix soci', "
+"i en consequència el NIF/CIF del Titular no pot coincidir amb el de la sòcia."
+
+#. module: energy_selfconsumption
+#. odoo-python
 #: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
 msgid "You have successfully registered."
