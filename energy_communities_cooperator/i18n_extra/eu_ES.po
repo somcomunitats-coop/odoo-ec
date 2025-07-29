@@ -20,7 +20,7 @@ msgstr ""
 #. module: cooperator
 #: model:ir.ui.menu,name:cooperator.menu_cooperator_main_subscription
 msgid "Share Management"
-msgstr "Gestión aportaciones"
+msgstr "Ekarpenen kudeaketa"
 
 #. module: cooperator
 #. odoo-python
@@ -28,7 +28,7 @@ msgstr "Gestión aportaciones"
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "%s is not available to companies"
-msgstr "%s no está disponible para empresas"
+msgstr "%s ez dago eskuragarri enpresetarako"
 
 #. module: cooperator
 #. odoo-python
@@ -36,7 +36,7 @@ msgstr "%s no está disponible para empresas"
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "%s is not available to individuals"
-msgstr "%s no está disponible para personas físicas"
+msgstr "%s ez dago eskuragarri pertsona fisikoentzako"
 
 #. module: cooperator
 #: model:mail.template,body_html:cooperator.email_template_confirmation
@@ -98,55 +98,55 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"    Hola <t t-out=\"object.firstname\"></t>,\n"
+"    Kaixo, <t t-out=\"object.firstname\"></t>:\n"
 "    <br><br>\n"
-"    Gracias por rellenar el formulario y solicitar la adhesión a <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t><t t-if=\"object.is_company\"> en representación de <t t-out=\"object.company_name\"></t></t>.\n"
+"    Eskerrik asko inprimakia betetzeagatik eta <t t-out=\"object.company_name\"></t> enpresaren izenean <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t><t t-if=\"object.is_company\"> komunitatean sartzeko eskaera egiteagatik </t>.\n"
 "    <br>\n"
-"    En las próximas semanas nos pondremos en contacto contigo para indicarte los siguientes pasos.\n"
+"    Datozen asteetan zurekin harremanetan jarriko gara hurrengo urratsak azaltzeko.\n"
 "    <br><br>\n"
-"    Aquí tienes una copia de los datos que hemos recibido:\n"
+"    Hona hemen jaso ditugun datuen kopia bat:\n"
 "    <br><br>\n"
 "    <ul>\n"
-"       <li><strong>Solicitud para la comunidad: <t t-out=\"object.company_id.name\"></t><br></li>\n"
+"       <li><strong>Komunitatean sartzeko eskaera: <t t-out=\"object.company_id.name\"></t><br></li>\n"
 "       <t t-if=\"object.is_company\">\n"
-"           <li><strong>Nombre empresa:</strong> <t t-out=\"object.company_name\"></t><br></li>\n"
-"           <li><strong>NIF/CIF empresa:</strong> <t t-out=\"object.vat\"></t><br></li>\n"
-"           <li><strong>Correo empresa:</strong> <t t-out=\"object.company_email\"></t><br></li>\n"
-"           <li><strong>Nombre representante:</strong> <t t-out=\"object.firstname\"></t><br></li>\n"
-"           <li><strong>Apellidos representante:</strong> <t t-out=\"object.lastname\"></t><br></li>\n"
-"           <li><strong>Cargo representante:</strong> <t t-out=\"object.contact_person_function\"></t><br></li>\n"
-"           <li><strong>Correo representante:</strong> <t t-out=\"object.email\"></t><br></li>\n"
-"           <li><strong>Teléfono representante:</strong> <t t-out=\"object.phone or ''\"></t><br></li>\n"
+"           <li><strong>Enpresaren izena:</strong> <t t-out=\"object.company_name\"></t><br></li>\n"
+"           <li><strong>Enpresaren IFZ/IFK:</strong> <t t-out=\"object.vat\"></t><br></li>\n"
+"           <li><strong>Enpresaren helbide elektronikoa:</strong> <t t-out=\"object.company_email\"></t><br></li>\n"
+"           <li><strong>Ordezkariaren izena:</strong> <t t-out=\"object.firstname\"></t><br></li>\n"
+"           <li><strong>Ordezkariaren abizenak:</strong> <t t-out=\"object.lastname\"></t><br></li>\n"
+"           <li><strong>Ordezkariaren kargua:</strong> <t t-out=\"object.contact_person_function\"></t><br></li>\n"
+"           <li><strong>Ordezkariaren helbide elektronikoa:</strong> <t t-out=\"object.email\"></t><br></li>\n"
+"           <li><strong>Ordezkariaren telefono-zenbakia:</strong> <t t-out=\"object.phone or ''\"></t><br></li>\n"
 "           <t t-if=\"object.gender\">\n"
-"               <li><strong>Género representante:</strong> <t t-out=\"dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]\"></t><br></li>\n"
+"               <li><strong>Ordezkariaren sexua:</strong> <t t-out=\"dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]\"></t><br></li>\n"
 "           </t>\n"
-"           <li><strong>Fecha nacimiento:</strong> <t t-out=\"object.birthdate\"></t><br></li>\n"
+"           <li><strong>Ordezkariaren jaiotza-data:</strong> <t t-out=\"object.birthdate\"></t><br></li>\n"
 "       </t>\n"
 "       <t t-else=\"\">\n"
-"           <li><strong>NIF/CIF:</strong> <t t-out=\"object.vat\"></t><br></li>\n"
-"           <li><strong>Nombre:</strong> <t t-out=\"object.firstname\"></t><br></li>\n"
-"           <li><strong>Apellidos:</strong> <t t-out=\"object.lastname\"></t><br></li>\n"
-"           <li><strong>Correo:</strong> <t t-out=\"object.email\"></t><br></li>\n"
-"           <li><strong>Teléfono:</strong> <t t-out=\"object.phone or ''\"></t><br></li>\n"
+"           <li><strong>IFZ/IFK:</strong> <t t-out=\"object.vat\"></t><br></li>\n"
+"           <li><strong>Izena:</strong> <t t-out=\"object.firstname\"></t><br></li>\n"
+"           <li><strong>Abizenak:</strong> <t t-out=\"object.lastname\"></t><br></li>\n"
+"           <li><strong>Helbide elektronikoa:</strong> <t t-out=\"object.email\"></t><br></li>\n"
+"           <li><strong>Telefono-zenbakia:</strong> <t t-out=\"object.phone or ''\"></t><br></li>\n"
 "           <t t-if=\"object.gender\">\n"
-"               <li><strong>Género:</strong> <t t-out=\"dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]\"></t><br></li>\n"
+"               <li><strong>Sexua:</strong> <t t-out=\"dict(object.fields_get(allfields=['gender'])['gender']['selection'])[object.gender]\"></t><br></li>\n"
 "           </t>\n"
-"           <li><strong>Fecha nacimiento:</strong> <t t-out=\"object.birthdate\"></t><br></li>\n"
+"           <li><strong>Jaiotza-data:</strong> <t t-out=\"object.birthdate\"></t><br></li>\n"
 "       </t>\n"
-"       <li><strong>Dirección:</strong> <t t-out=\"object.address\"></t><br></li>\n"
-"       <li><strong>Código postal:</strong> <t t-out=\"object.zip_code\"></t><br></li>\n"
-"       <li><strong>Ciudad:</strong> <t t-out=\"object.city\"></t><br></li>\n"
-"       <li><strong>País:</strong> <t t-out=\"object.country_id.name\"></t><br></li>\n"
-"       <li><strong>Idioma:</strong> <t t-out=\"dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]\"></t><br></li>\n"
-"       <li><strong>Importe aportación:</strong> <t t-out=\"object.subscription_amount\"></t><br></li>\n"
+"       <li><strong>Helbidea:</strong> <t t-out=\"object.address\"></t><br></li>\n"
+"       <li><strong>Posta-kodea:</strong> <t t-out=\"object.zip_code\"></t><br></li>\n"
+"       <li><strong>Herria:</strong> <t t-out=\"object.city\"></t><br></li>\n"
+"       <li><strong>Herrialdea:</strong> <t t-out=\"object.country_id.name\"></t><br></li>\n"
+"       <li><strong>Hizkuntza:</strong> <t t-out=\"dict(object.fields_get(allfields=['lang'])['lang']['selection'])[object.lang]\"></t><br></li>\n"
+"       <li><strong>Ekarpenaren zenbatekoa:</strong> <t t-out=\"object.subscription_amount\"></t><br></li>\n"
 "       <t t-if=\"object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit' and object.iban\">\n"
-"           <li><strong>Cuenta bancaria terminada en:</strong> <t t-out=\"object.iban[-4:]\"></t><br></li>\n"
-"           <li><strong>Autorizo giros bancarios a esta cuenta:</strong> <t t-out=\"object.mandate_approved and 'YES' or 'NOT'\"></t><br></li>\n"
+"           <li><strong>Bankuko kontuzenbakiaren amaiera:</strong> <t t-out=\"object.iban[-4:]\"></t><br></li>\n"
+"           <li><strong>Baimena ematen dut kontu honetara bankuko ordainagiriak igortzeko:</strong> <t t-out=\"object.mandate_approved and 'YES' or 'NOT'\"></t><br></li>\n"
 "       </t>\n"
 "    </ul>\n"
 "    <br>\n"
-"    Seguimos en contacto para cualquier duda.<br>\n"
-"    Atentamente,<br>\n"
+"    Zalantzarik baduzu, jarri gurekin harremanetan.<br>\n"
+"    Adeitasunez,<br>\n"
 "    </p>\n"
 "</div>\n"
 "        "
@@ -180,25 +180,25 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"    Hola <t t-out=\"object.subscription_request.firstname\"></t>,<br><br>\n"
+"    Kaixo, <t t-out=\"object.subscription_request.firstname\"></t><br><br>:\n"
 "    <t t-if=\"object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit'\">\n"
-"    ¡Tu petición de alta como persona socia en <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> está en trámite!<br><br>\n"
-"    En breve giraremos un recibo bancario a tu cuenta terminada en <t t-out=\"object.subscription_request.iban[-4:]\"></t> para el cobro de la aportación obligatoria inicial (<t t-out=\"object.amount_total\"></t> €).<br>\n"
-"    Una vez hayamos podido tramitar este cobro, recibirás un correo final de bienvenida donde ya te proporcionaremos tu número de socia que te vinculará con <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t>.<br><br>\n"
+"    <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> komunitateko bazkide izateko eskaera prozesatzen ari gara.<br><br>\n"
+"    Ordainagiri bat igorriko dugu berehala <t t-out=\"object.subscription_request.iban[-4:]\"></t> zenbakiekin amaitzen den banku-kontura, hasierako nahitaezko ekarpena (<t t-out=\"object.amount_total\"></t> €) kobratzeko.<br>\n"
+"    Ordainketa prozesatu ondoren, behin betiko ongietorri-mezu bat jasoko duzu posta elektronikoan, <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> komunitatearekin lotuko zaituen bazkide-zenbakiarekin batera.<br><br>\n"
 "    </t>\n"
 "    <t t-else=\"\">\n"
-"    Tu petición de alta como persona socia en <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> está en trámite!<br>\n"
-"    Para completar el proceso es necesario realizar el ingreso bancario del importe que te indicamos a continuación:<br><br>\n"
+"    <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> Komunitateko bazkide izateko eskaera prozesatzen ari gara.<br>\n"
+"    Prozesua osatzeko, zenbateko hau ordaindu beharko duzu jarraian adierazitako banku-kontuan:<br><br>\n"
 "    <ul>\n"
-"       <li><strong>Aportación inicial:</strong> <t t-out=\"object.amount_total\"></t> €<br></li>\n"
-"       <li><strong>Número de cuenta:</strong> <t t-out=\"( object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'\"></t><br></li>\n"
-"       <li><strong>Beneficiario:</strong> <t t-out=\"object.company_id.name\"></t><br></li>\n"
-"       <li><strong>Concepto:</strong> <i>--Zure izen-abizenak--</i><br><br></li>\n"
+"       <li><strong>Hasierako ekarpena:</strong> <t t-out=\"object.amount_total\"></t> €<br></li>\n"
+"       <li><strong>Kontu-zenbakia:</strong> <t t-out=\"( object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'\"></t><br></li>\n"
+"       <li><strong>Onuraduna:</strong> <t t-out=\"object.company_id.name\"></t><br></li>\n"
+"       <li><strong>Kontzeptua:</strong> Zure izen-abizenak<br><br></li>\n"
 "    </ul>\n"
-"    Una vez realizado el ingreso, puedes enviarnos el justificante de pago respondiendo este mismo correo electrónico o escribiendo a <t t-out=\"( object.company_id.coop_email_contact or object.company_id.email_formatted )\"></t><br><br>\n"
+"    Ordainketa egin ondoren, bidal iezaguzu ordainagiria mezu elektroniko bidez hona idatzita: <t t-out=\"( object.company_id.coop_email_contact or object.company_id.email_formatted )\"></t><br><br>\n"
 "    </t>\n"
-"    Seguimos en contacto para cualquier duda.<br>\n"
-"    Atentamente,\n"
+"    Zalantzarik baduzu, jarri gurekin harremanetan.<br>\n"
+"    Adeitasunez,\n"
 "    </p>\n"
 "</div>\n"
 
@@ -221,15 +221,15 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"    Hola\n"
+"    Kaixo:\n"
 "    <t t-if=\"object.is_company\" t-out=\"object.get_representative().firstname\"></t>\n"
-"    <t t-else=\"\" t-out=\"object.firstname\"></t>,<br><br>\n"
-"    Te damos la bienvenida a <t t-out=\"object.env.company.comercial_name or object.env.company.name\"></t>!<br>\n"
-"    ¡Has finalizado correctamente el proceso de alta y ya eres plenamente socio/a de nuestra comunidad!<br><br>\n"
-"    Tu número de socio/a es el: <strong><t t-out=\"(object.cooperator_register_number or 'XXX')\"></t></strong><br><br>\n"
-"    Te adjuntamos el correspondiente certificado de aportación al capital social de <t t-out=\"object.env.company.comercial_name or object.env.company.name\"></t><br><br>\n"
-"    Seguimos en contacto para cualquier duda.<br>\n"
-"    Atentamente,<br>\n"
+"    <t t-else=\"\" t-out=\"object.firstname\"></t>:<br><br>\n"
+"    Ongi etorri <t t-out=\"object.env.company.comercial_name or object.env.company.name\"></t>(e)ra!<br>\n"
+"    Osatu duzu alta emateko prozesua eta gure komunitateko kide zara orain.<br><br>\n"
+"    Hau da zure bazkide-zenbakia: <strong><t t-out=\"(object.cooperator_register_number or 'XXX')\"></t></strong><br><br>\n"
+"    Erantsita doakizu <t t-out=\"object.env.company.comercial_name or object.env.company.name\"></t> kooperatibakidearen ziurtagiria.<br><br>\n"
+"    Zalantzarik baduzu, jarri gurekin harremanetan.<br>\n"
+"    Adeitasunez,<br>\n"
 "    </p>\n"
 "</div>\n"
 
@@ -251,13 +251,13 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"        Hola\n"
+"        Kaixo:\n"
 "        <t t-if=\"object.is_company\" t-out=\"object.get_representative().firstname\"></t>\n"
-"        <t t-else=\"\" t-out=\"object.firstname\"></t>,<br><br>\n"
-"        Confirmamos que hemos recibido el pago de tu nueva aportación al capital social.<br><br>\n"
-"        Te adjuntamos el correspondiente certificado de aportación al capital social de <t t-out=\"object.env.company.comercial_name or object.env.company.name\"></t>.<br><br>\n"
-"    Seguimos en contacto para cualquier duda.<br>\n"
-"    Atentamente,<br>\n"
+"        <t t-else=\"\" t-out=\"object.firstname\"></t>:<br><br>\n"
+"        Jaso dugu egin duzun ekarpenaren ordainketa.<br><br>\n"
+"        Erantsita doakizu <t t-out=\"object.env.company.comercial_name or object.env.company.name\"></t>kooperatibakidearen ziurtagiria.<br><br>\n"
+"    Zalantzarik baduzu, jarri gurekin harremanetan.<br>\n"
+"    Adeitasunez,<br>\n"
 "    </p>\n"
 "</div>\n"
 "        "
@@ -265,12 +265,12 @@ msgstr ""
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.report_invoice_document
 msgid "<strong>Your Contact:</strong>"
-msgstr "<strong>Tu contacto:</strong>"
+msgstr "<strong>Zure kontaktua:</strong>"
 
 #. module: cooperator
 #: model:ir.model.constraint,message:cooperator.constraint_cooperative_membership_company_id_cooperator_register_numbe_key
 msgid "A cooperator register number must be unique (per company)"
-msgstr "Un registro de socia debe ser único por compañía"
+msgstr "Kooperatibakideek erregistro-zenbaki bakarra izan dezakete (enpresako)"
 
 #. module: cooperator
 #. odoo-python
@@ -278,39 +278,39 @@ msgstr "Un registro de socia debe ser único por compañía"
 #: code:addons/cooperator/wizard/partner_create_subscription.py:0
 #, python-format
 msgid "A person can't be representative of two different companies."
-msgstr "Una misma persona no puede representar 2 empresas distintas."
+msgstr "Pertsona berak ezin du bi enpresaren ordezkari izan."
 
 #. module: cooperator
 #: model:ir.model.fields.selection,name:cooperator.selection__operation_request__state__approved
 msgid "Approved"
-msgstr "Aprovado"
+msgstr "Onartuta"
 
 #. module: cooperator
 #: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__state__blocked
 msgid "Blocked"
-msgstr "Bloqueado"
+msgstr "Blokeatuta"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__cooperator_capital_release_mail_template
 msgid "Capital release email template"
-msgstr "Plantilla de correo electrónico para solicitud capital social"
+msgstr "Kapital soziala askatzeko mezu elektronikoaren txantiloia"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_product_product__mail_template
 #: model:ir.model.fields,field_description:cooperator.field_product_template__mail_template
 #: model:ir.model.fields,field_description:cooperator.field_res_company__cooperator_certificate_mail_template
 msgid "Certificate email template"
-msgstr "Plantilla de correo electrónico para certificado capital social"
+msgstr "Ziurtagiriaren mezu elektronikoaren txantiloia"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__cooperator_certificate_increase_mail_template
 msgid "Certificate increase email template"
-msgstr "Plantilla de correo electrónico para certificado incremento capital social"
+msgstr "Kapital soziala areagotzeko mezu elektronikoaren txantiloia"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
 msgid "<span>Certificate generated on</span>"
-msgstr "<span>Certificado generado el</span>"
+msgstr "<span>Ziurtagiriaren sorrera-data: </span>"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
@@ -320,7 +320,7 @@ msgstr "<span>ekarpena(k)</span>"
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
 msgid "For the board of"
-msgstr "Emitido por el Consejo Rector o la Junta Directiva de"
+msgstr "Kontseilu Errektoreak edo Zuzendaritza Batzordeak emandakoa:"
 
 #. module: cooperator
 #: model:mail.template,report_name:cooperator.email_template_certificate
@@ -328,28 +328,28 @@ msgstr "Emitido por el Consejo Rector o la Junta Directiva de"
 #: model:mail.template,report_name:cooperator.email_template_share_transfer
 #: model:mail.template,report_name:cooperator.email_template_share_update
 msgid "Certificate {{ (object.cooperator_register_number or '') }}"
-msgstr "Certificado {{(object.cooperator_register_number or '')}}"
+msgstr "Ziurtagiria {{ (object.cooperator_register_number or '') }}"
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_cooperative_membership__is_company
 msgid "Check if the contact is a company, otherwise it is a person"
-msgstr "Marcar si el contacto es una empresa, si no se considerará una persona física."
+msgstr "Markatu kontaktua enpresa bat bada, bestela pertsona fisikotzat joko da"
 
 #. module: cooperator
 #: model:mail.template,name:cooperator.email_template_confirmation
 msgid "Confirmation Email for CE Subscription Request Receipt"
-msgstr "Correo confirmación solicitud de adhesión a Comunidad Energética"
+msgstr "Energia-komunitatean sartzeko eskaera jaso dela jakinarazteko mezu elektronikoa"
 
 #. module: cooperator
 #: model:mail.template,name:cooperator.email_template_certificate
 msgid "Confirmation email for CE initial payment Received"
-msgstr "Correo confirmación de recepción pago inicial"
+msgstr "Energia-komunitatearen lehenengo ordainketa jaso dela jakinarazteko mezu elektronikoa"
 
 #. module: cooperator
 #: model:ir.model.fields.selection,name:cooperator.selection__operation_request__operation_type__convert
 #: model:ir.model.fields.selection,name:cooperator.selection__subscription_register__type__convert
 msgid "Conversion"
-msgstr "Conversión"
+msgstr "Bihurketa"
 
 #. module: cooperator
 #. odoo-python
@@ -359,19 +359,19 @@ msgstr "Conversión"
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "Converting just part of the shares is not yet implemented"
-msgstr "Convertir solo una parte de la aportación no está contemplado"
+msgstr "Oraingoz ezin da ekarpenaren zati bat bakarrik bihurtu"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_partner__cooperative_membership_id
 #: model:ir.model.fields,field_description:cooperator.field_res_users__cooperative_membership_id
 msgid "Cooperative Membership For Current Company"
-msgstr "Membresía de la compañía actual"
+msgstr "Uneko enpresaren kooperatibako bazkidetza"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_partner__cooperative_membership_ids
 #: model:ir.model.fields,field_description:cooperator.field_res_users__cooperative_membership_ids
 msgid "Cooperative Memberships"
-msgstr "Membresías"
+msgstr "Kooperatibako bazkidetzak"
 
 #. module: cooperator
 #. odoo-python
@@ -379,7 +379,7 @@ msgstr "Membresías"
 #: code:addons/cooperator/models/res_company.py:0
 #, python-format
 msgid "Cooperator number sequence"
-msgstr "Secuencia de número de socia"
+msgstr "Kooperatibakide-zenbakiaren sekuentzia"
 
 #. module: cooperator
 #. odoo-python
@@ -387,7 +387,7 @@ msgstr "Secuencia de número de socia"
 #: code:addons/cooperator/models/res_company.py:0
 #, python-format
 msgid "Cooperator register operation sequence"
-msgstr "Secuencia de registro de operación societaria"
+msgstr "Kooperatibakidearen erregistroaren eragiketa-sekuentzia"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__display_name
@@ -399,7 +399,7 @@ msgstr "Secuencia de registro de operación societaria"
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__display_name
 #: model:ir.model.fields,field_description:cooperator.field_validate_subscription_request__display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr "Bistaratze-izena"
 
 #. module: cooperator
 #. odoo-python
@@ -407,44 +407,44 @@ msgstr "Nombre a mostrar"
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Email and Company Email must be different."
-msgstr "El correo del representante y el de la empresa han de ser diferentes."
+msgstr "Ordezkariaren eta enpresaren helbide elektronikoak ezin dira berdinak izan."
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__has_message
 msgid "Has Message"
-msgstr "Tiene mensaje"
+msgstr "Mezu bat dauka"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__is_company
 msgid "Is a Company"
-msgstr "Es una empresa"
+msgstr "Enpresa bat da"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__lastname
 msgid "Last name"
-msgstr "Apellidos"
+msgstr "Abizenak"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr "Fecha límite actividad"
+msgstr "Nire jardueraren muga-eguna"
 
 #. module: cooperator
 #: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__type__new
 msgid "New Cooperator"
-msgstr "Nueva socia"
+msgstr "Kooperatibakide berria"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_subscription_request__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr "Siguiente actividad de evento de calendario"
+msgstr "Jardueren egutegiko hurrengo ekitaldia"
 
 #. module: cooperator
 #: model_terms:ir.actions.act_window,help:cooperator.action_company_representative_form
 #: model_terms:ir.actions.act_window,help:cooperator.action_partner_cooperator_candidate_form
 #: model_terms:ir.actions.act_window,help:cooperator.action_partner_cooperator_form
 msgid "No contacts found"
-msgstr "No se han encontrado contactos"
+msgstr "Ez da kontakturik aurkitu"
 
 #. module: cooperator
 #. odoo-python
@@ -452,12 +452,12 @@ msgstr "No se han encontrado contactos"
 #: code:addons/cooperator/wizard/partner_create_subscription.py:0
 #, python-format
 msgid "No default share product found for this type of partner."
-msgstr "No se ha encontrado ninguna aportación por defecto para este tipo de contacto."
+msgstr "Ez da kontaktu-mota honen ekarpen lehenetsirik aurkitu."
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.report_subscription_register
 msgid "Number of Shares"
-msgstr "Número Aportaciones"
+msgstr "Ekarpen-kopurua"
 
 #. module: cooperator
 #. odoo-python
@@ -465,7 +465,7 @@ msgstr "Número Aportaciones"
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Number of share must be greater than 0."
-msgstr "Número de aportaciones ha de ser superior a 0."
+msgstr "Ekarpen-kopuruak 0 baino handiagoa izan behar du."
 
 #. module: cooperator
 #. odoo-python
@@ -473,7 +473,7 @@ msgstr "Número de aportaciones ha de ser superior a 0."
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Only blocked requests can be unblocked."
-msgstr "Només sol·licituds bloquejades es poden desbloquejar."
+msgstr "Blokeatuta dauden ekarpenak soilik desblokea daitezke."
 
 #. module: cooperator
 #. odoo-python
@@ -481,7 +481,7 @@ msgstr "Només sol·licituds bloquejades es poden desbloquejar."
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Only draft request can be put on the waiting list."
-msgstr "Solamente solicitudes en borrador pueden ponerse en lista de espera."
+msgstr "Zirriborro egoeran dauden eskaerak soilik jar daitezke itxaron-zerrendan."
 
 #. module: cooperator
 #. odoo-python
@@ -489,13 +489,14 @@ msgstr "Solamente solicitudes en borrador pueden ponerse en lista de espera."
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Only draft requests can be blocked."
-msgstr "Solamente solicitudes en borrador pueden bloquearse."
+msgstr "Zirriborro egoeran dauden eskaerak soilik blokea daitezke."
 
 #. module: cooperator
 #: model:ir.model.constraint,message:cooperator.constraint_cooperative_membership_company_id_partner_id_key
 msgid ""
 "Only one cooperative membership record can exist per partner (per company)"
-msgstr "Solamente puede existir una membresía por contacto (partner) y compañía"
+msgstr ""
+"Kooperatibako bazkidetza bakarra egon daiteke kontaktu bakoitzeko (enpresa bakoitzeko) "
 
 #. module: cooperator
 #. odoo-python
@@ -504,17 +505,17 @@ msgstr "Solamente puede existir una membresía por contacto (partner) y compañ�
 #: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__gender__other
 #, python-format
 msgid "Other"
-msgstr "Otros"
+msgstr "Bestelakoa"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.report_subscription_register
 msgid "Operation Number"
-msgstr "Número de operación"
+msgstr "Eragiketa-zenbakia"
 
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_share_increase
 msgid "Payment Received Confirmation"
-msgstr "Confirmación recepción pago incremento capital social"
+msgstr "Ordainketa jaso dela jakinarazteko mezu elektronikoa"
 
 #. module: cooperator
 #. odoo-python
@@ -525,8 +526,7 @@ msgid ""
 "Please define income account for this product: \"{name}\" (id: {id}) - or "
 "for its category: \"{category}\"."
 msgstr ""
-"Por favor defina la cuenta de ingresos para este producto: \"{name}\" (id: {id}) - o "
-"para esta categoría: \"{category}\"."
+"Definitu produktu honen diru-sarreren kontua: \"{name}\" (id: {id}) - edo kategoria honena: \"{category}\"."
 
 #. module: cooperator
 #: model:ir.model.fields,help:cooperator.field_operation_request__share_to_unit_price
@@ -534,32 +534,32 @@ msgstr ""
 #: model:ir.model.fields,help:cooperator.field_partner_create_subscription__share_unit_price
 #: model:ir.model.fields,help:cooperator.field_subscription_request__share_unit_price
 msgid "Price at which the product is sold to customers."
-msgstr "Precio en que el producto es vendido a las socias"
+msgstr "Produktua bezeroei zein preziotan saltzen zaien."
 
 #. module: cooperator
 #: model:ir.ui.menu,name:cooperator.menu_move_out_invoice_type
 msgid "Register Payment"
-msgstr "Registro de pago"
+msgstr "Erregistratu ordainketa"
 
 #. module: cooperator
 #: model:ir.ui.menu,name:cooperator.menu_cooperator_main_register
 msgid "Registers"
-msgstr "Registros"
+msgstr "Erregistroak"
 
 #. module: cooperator
 #: model:ir.model.fields.selection,name:cooperator.selection__res_partner__type__representative
 msgid "Representative"
-msgstr "Representante"
+msgstr "Ordezkaria"
 
 #. module: cooperator
 #: model:mail.template,name:cooperator.email_template_release_capital
 msgid "Request email to Release Capital for CE"
-msgstr "Correo de solicitud de pago del capital social"
+msgstr "Energia-komunitatearen kapital soziala askatzeko mezu elektronikoa"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.report_invoice_document
 msgid "Request to Release Capital"
-msgstr "Soloicitud de pago del capital social"
+msgstr "Kapital soziala askatzeko eskaera"
 
 #. module: cooperator
 #: model:mail.template,description:cooperator.email_template_share_increase
@@ -567,8 +567,7 @@ msgid ""
 "Sent to cooperators in case of share increase with their cooperator "
 "certificate in attachment"
 msgstr ""
-"Correo que se envía a las socias en caso de recibir el pago de un incremento de aportación "
-"con certificado adjunto"
+"Ekarpenak areagotzen direnean kooperatibakideari bidaltzen zaion mezu elektronikoa, kooperatibakidearen ziurtagiria atxikita duela"
 
 #. module: cooperator
 #: model:mail.template,description:cooperator.email_template_share_transfer
@@ -576,8 +575,7 @@ msgid ""
 "Sent to cooperators in case of share transfer with their cooperator "
 "certificate in attachment"
 msgstr ""
-"Correo que se envía a las socias en caso de transferencia de aportación "
-"con certificado adjunto"
+"Ekarpenak transferitzen direnean kooperatibakideari bidaltzen zaion mezu elektronikoa, kooperatibakidearen ziurtagiria atxikita duela"
 
 #. module: cooperator
 #: model:mail.template,description:cooperator.email_template_share_update_no_shares
@@ -585,8 +583,7 @@ msgid ""
 "Sent to cooperators in case of share update and they have no remaining "
 "shares (ergo no attachment)"
 msgstr ""
-"Correo que se envía a las socias en caso de actualización de aportaciones quedando éstas a cero "
-"sin certificado adjunto"
+"Ekarpenak eguneratzen badira eta ekarpenik geratzen ez bada kooperatibakideari bidaltzen zaion mezu elektronikoa (eranskinik gabe)"
 
 #. module: cooperator
 #: model:mail.template,description:cooperator.email_template_share_update
@@ -594,14 +591,12 @@ msgid ""
 "Sent to cooperators in case of share update with their cooperator "
 "certificate in attachment"
 msgstr ""
-"Correo que se envía a las socias en caso de actualización de aportaciones "
-"con certificado adjunto"
+"Ekarpenak eguneratzen direnean kooperatibakideari bidaltzen zaion mezu elektronikoa, kooperatibakidearen ziurtagiria atxikita duela"
 
 #. module: cooperator
 #: model:mail.template,description:cooperator.email_template_confirmation
 msgid "Sent to cooperators to confirm their subscription request"
-msgstr ""
-"Correo que se envía a las personas para confirmar la recepción de su solicitud para ser socias"
+msgstr "Kooperatibakide izateko eskaera jaso dela jakinarazteko kooperatibakideari bidaltzen zaion mezu elektronikoa"
 
 #. module: cooperator
 #: model:mail.template,description:cooperator.email_template_waiting_list
@@ -609,67 +604,63 @@ msgid ""
 "Sent to cooperators when their subscription request is added to the waiting "
 "list"
 msgstr ""
-"Correo que se envía a las personas para informar que su solicitud está en lista de espera"
+"Bere eskaera itxaron-zerrendan dagoela jakinarazteko kooperatibakideari bidaltzen zaion mezu elektronikoa"
 
 #. module: cooperator
 #: model:mail.template,description:cooperator.email_template_release_capital
 msgid "Sent to cooperators with their capital release request in attachment"
-msgstr ""
-"Correo que se envía a las personas para solicitar el pago del capital social, con el documento de pago adjunto"
+msgstr "Kooperatibakideari bidaltzen zaion mezu elektronikoa, kapital soziala askatzeko eskaera atxikita duela"
 
 #. module: cooperator
 #: model:mail.template,description:cooperator.email_template_certificate
 msgid "Sent to cooperators with their cooperator certificate in attachment"
-msgstr ""
-"Correo que se envía a las personas una vez recibido el pago inicial, con certificado de socia adjunto"
+msgstr "Kooperatibakideari bidaltzen zaion mezu elektronikoa, kooperatibakidearen ziurtagiria atxikita duela"
 
 #. module: cooperator
 #: model:mail.template,name:cooperator.email_template_share_increase
 msgid "Share Increase: Payment Received Confirmation: Cooperator Certificate"
-msgstr "Pago de incremento de aportación recibido, con certificado adjunto"
+msgstr "Ekarpenak handitzea: ordainketa jaso dela jakinarazteko mezu elektronikoa: kooperatibakidearen ziurtagiria"
 
 #. module: cooperator
 #: model:mail.template,name:cooperator.email_template_share_transfer
 msgid "Share Transfer: Cooperator Certificate"
-msgstr "Transferencia de aportación hecha, con certificado adjunto"
+msgstr "Ekarpenen transferentzia: kooperatibakidearen ziurtagiria"
 
 #. module: cooperator
 #: model:mail.template,name:cooperator.email_template_share_update_no_shares
 msgid "Share Update (No Remaining Shares): Cooperator Certificate"
-msgstr ""
-"Actualización de aportación hecha, quedando éstas a cero"
+msgstr "Ekarpenen eguneratzea (ez da ekarpenik geratzen): kooperatibakidearen ziurtagiria"
 
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_share_update
 #: model:mail.template,subject:cooperator.email_template_share_update_no_shares
 msgid "Share Update Confirmation"
-msgstr "Actualitzacióo importe de aportación obligatoria"
+msgstr "Ekarpenak eguneratzearen berrespena"
 
 #. module: cooperator
 #: model:mail.template,name:cooperator.email_template_share_update
 msgid "Share Update: Cooperator Certificate"
-msgstr ""
-"Actualización de aportación hecha, con certificado adjunto"
+msgstr "Ekarpenen eguneratzea: kooperatibakidearen ziurtagiria"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__cooperator_confirmation_mail_template
 msgid "Share confirmation email template"
-msgstr "Plantilla correo confirmación recepción solicitud socia (suplantará la global)"
+msgstr "Ekarpenak berresteko mezu elektronikoaren txantiloia"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__cooperator_share_update_no_shares_mail_template
 msgid "Share transfer (no remaining shares) email template"
-msgstr "Plantilla correo actualización de aportaciones a cero (suplantará la global)"
+msgstr "Ekarpenak (ez da ekarpenik geratzen) transferitzeko mezu elektronikoaren txantiloia"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__cooperator_share_transfer_mail_template
 msgid "Share transfer email template"
-msgstr "Plantilla correo transferencia de aportaciones (suplantará la global)"
+msgstr "Ekarpenak transferitzeko mezu elektronikoaren txantiloia"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__cooperator_share_update_mail_template
 msgid "Share update email template"
-msgstr "Plantilla correo actualitzación de aportaciones (suplantará la global)"
+msgstr "Ekarpenak eguneratzeko mezu elektronikoaren txantiloia"
 
 #. module: cooperator
 #. odoo-python
@@ -678,17 +669,17 @@ msgstr "Plantilla correo actualitzación de aportaciones (suplantará la global)
 #: model:ir.model.fields,field_description:cooperator.field_res_company__subscription_journal_id
 #, python-format
 msgid "Subscription Journal"
-msgstr "Diario subscripciones"
+msgstr "Bazkidetzen egunkaria"
 
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_waiting_list
 msgid "Subscription Request Added to Waiting List"
-msgstr "Solicitud de subscripción añadida a la lista de espera"
+msgstr "Bazkidetza-eskaera itxaron-zerrendan gehitu da"
 
 #. module: cooperator
 #: model:mail.template,name:cooperator.email_template_waiting_list
 msgid "Subscription Request on Waiting List"
-msgstr "Solicitud de subscripción en lista de espera"
+msgstr "Bazkidetza-eskaera itxaron-zerrendan dago"
 
 #. module: cooperator
 #. odoo-python
@@ -696,7 +687,7 @@ msgstr "Solicitud de subscripción en lista de espera"
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "The checkbox already cooperator is checked please select a cooperator."
-msgstr "El campo que indica que ya es socia está marcado, hay que seleccionar una socia."
+msgstr "Kooperatibakide dela adierazten duen koadroa markatuta dago jada. Hautatu kooperatibakide bat."
 
 #. module: cooperator
 #. odoo-python
@@ -704,7 +695,7 @@ msgstr "El campo que indica que ya es socia está marcado, hay que seleccionar u
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "The cooperator can't hand over more shares that he/she owns."
-msgstr "La socia no puede actuar sobre aportaciones que no le corresponden."
+msgstr "Kooperatibakideak ezin ditu dauzkan ekarpenak baino gehiago eman."
 
 #. module: cooperator
 #. odoo-python
@@ -715,8 +706,7 @@ msgid ""
 "The cooperator doesn't own this share type. Please choose the appropriate "
 "share type."
 msgstr ""
-"La socia no se corresponde con el tipo de aportación. Por favor selecciona el tipo "
-"correcto."
+"Kooperatibakideak ez dauka mota horretako ekarpenik. Hautatu mota egokia."
 
 #. module: cooperator
 #. odoo-python
@@ -724,7 +714,7 @@ msgstr ""
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "The effective date can not be in the future."
-msgstr "La fecha efectiva no puede ser futura."
+msgstr "Eraginetarako data ezin da etorkizuneko data bat izan."
 
 #. module: cooperator
 #. odoo-python
@@ -735,8 +725,7 @@ msgid ""
 "The information of the receiver are not correct. Please correct the "
 "information before submitting"
 msgstr ""
-"La información del receptor no es correcta. Por favor corrige la "
-"información antes de enviar"
+"Hartzaileari buruzko informazioa ez da zuzena. Zuzendu informazioa bidali aurretik"
 
 #. module: cooperator
 #. odoo-python
@@ -744,12 +733,12 @@ msgstr ""
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "The is_operation field of the subscription request must be true"
-msgstr "El campo 'Es Operación' de la solicitud de subscripción ha de estar marcado a verdadero"
+msgstr "Bazkidetza-eskaerako is_operation eremuak egiazkoa izan behar du"
 
 #. module: cooperator
 #: model:ir.model.constraint,message:cooperator.constraint_share_line_share_number_is_positive
 msgid "The number of shares cannot be negative."
-msgstr "El número de aportaciones no puede ser negativo."
+msgstr "Ekarpen-kopurua ezin da negatiboa izan."
 
 #. module: cooperator
 #. odoo-python
@@ -757,7 +746,7 @@ msgstr "El número de aportaciones no puede ser negativo."
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "The request must be in draft or on waiting list to be validated"
-msgstr "La solicitud ha de estar en estado de borrador o en lista de espera para poder ser validada"
+msgstr "Eskaerak zirriborro egoeran edo itxaron-zerrendan egon behar du hura baliozkotu ahal izateko"
 
 #. module: cooperator
 #. odoo-python
@@ -770,8 +759,7 @@ msgid ""
 "There is two different persons with the same national register number. "
 "Please proceed to a merge before to continue"
 msgstr ""
-"Hay 2 persones distintas con el mismo número de registro nacional. Por favor "
-"procede con una fusión antes de continuar"
+"Erregistro-zenbaki nazional bera duten bi pertsona daude. Jarraitu aurretik, batera itzazu"
 
 #. module: cooperator
 #. odoo-python
@@ -781,8 +769,7 @@ msgid ""
 "This contact person is already defined for another company. Please select "
 "another contact"
 msgstr ""
-"Esta persona de contacto está ya definida para una otra compañía. Por "
-"favor selecciona otra"
+"Kontaktu hau beste enpresa batean definituta dago. Hautatu beste kontaktu bat"
 
 #. module: cooperator
 #. odoo-python
@@ -793,8 +780,7 @@ msgid ""
 "This operation can't be executed if the cooperator is not an effective "
 "member"
 msgstr ""
-"Esta operación no puede ser ejecutada si la socia no es aún socia "
-"efectiva"
+"Eragiketa hau ezin da egin kooperatibakidea bazkide eraginkorra ez bada"
 
 #. module: cooperator
 #. odoo-python
@@ -802,7 +788,7 @@ msgstr ""
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This operation is not yet implemented."
-msgstr "Esta operación no está aún implementada."
+msgstr "Eragiketa hau ez da inplementatu oraindik."
 
 #. module: cooperator
 #. odoo-python
@@ -810,7 +796,7 @@ msgstr "Esta operación no está aún implementada."
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This operation must be approved before to be executed"
-msgstr "Esta operación requiere ser aprobada antes de ser ejecutada"
+msgstr "Eragiketa hau onartu egin behar da exekutatu aurretik"
 
 #. module: cooperator
 #. odoo-python
@@ -818,7 +804,7 @@ msgstr "Esta operación requiere ser aprobada antes de ser ejecutada"
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share can not be subscribed an individual"
-msgstr "Esta aportación no puede ser subscrita por una persona física"
+msgstr "Pertsona fisikoek ezin dute ekarpen honen harpidetzarik egin"
 
 #. module: cooperator
 #. odoo-python
@@ -826,7 +812,7 @@ msgstr "Esta aportación no puede ser subscrita por una persona física"
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share can not be subscribed by a company"
-msgstr "Esta aportación no puede ser subscrita por una persona jurídica (empres)"
+msgstr "Pertsona juridikoek (enpresek) ezin dute ekarpen honen harpidetzarik egin"
 
 #. module: cooperator
 #. odoo-python
@@ -834,27 +820,27 @@ msgstr "Esta aportación no puede ser subscrita por una persona jurídica (empre
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share type could not be transfered to "
-msgstr "Esta aportación no puede ser transferida a "
+msgstr "Ekarpen hau ezin zaio honi transferitu:"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_res_company__cooperator_waiting_list_mail_template
 msgid "Waiting list email template"
-msgstr "Plantilla correo solicitud en lista espera (suplantará la global)"
+msgstr "Eskaera itxaron-zerrendan dagoela jakinarazteko mezu elektronikoaren txantiloia"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperative_membership_view_tree
 msgid "Total Shares"
-msgstr "Aportaciones totales"
+msgstr "Ekarpenak, guztira"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.cooperative_membership_view_tree
 msgid "Total Shares Value"
-msgstr "Valor total aportaciones"
+msgstr "Ekarpenen balioa, guztira"
 
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_certificate
 msgid "Wellcome to the Energy Community {{object.env.company.comercial_name or object.env.company.name}}!"
-msgstr "!Bienvenida a la Comunidad Energética!"
+msgstr "Ongi etorri {{object.env.company.comercial_name or object.env.company.name}} energia-komunitatera!"
 
 #. module: cooperator
 #. odoo-python
@@ -862,7 +848,7 @@ msgstr "!Bienvenida a la Comunidad Energética!"
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "You can't convert the share to the same share type."
-msgstr "No puedes convertir la aportación hacia el mismo tipo de aportación que ya tiene."
+msgstr "Ezin duzu ekarpena ekarpen-mota berera bihurtu."
 
 #. module: cooperator
 #. odoo-python
@@ -870,7 +856,7 @@ msgstr "No puedes convertir la aportación hacia el mismo tipo de aportación qu
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "You cannot cancel a request in this state."
-msgstr "No puedes cancelar una solicitud en este estado."
+msgstr "Ezin duzu egoera horretan dagoen eskaera bat ezeztatu."
 
 #. module: cooperator
 #. odoo-python
@@ -878,7 +864,7 @@ msgstr "No puedes cancelar una solicitud en este estado."
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "You must convert all the shares to the selected type."
-msgstr "Hay que convertir todas las aportaciones al tipo seleccionado."
+msgstr "Ekarpen guztiak hautatutako motara bihurtu behar dituzu."
 
 #. module: cooperator
 #. odoo-python
@@ -886,50 +872,50 @@ msgstr "Hay que convertir todas las aportaciones al tipo seleccionado."
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "You must set a cooperator account on your company."
-msgstr "Hay que definir una cuenta contable para las socias en tu compañía."
+msgstr "Ezarri kooperatibakide-kontu bat enpresan."
 
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_confirmation
 msgid ""
 "Application to become Community membership"
-msgstr  ""
-"Solicitud de adhesión a la Comunidad Energética"
+msgstr ""
+"Energia-komunitatean sartzeko eskaera"
 
 #. module: cooperator
 #: model:mail.template,subject:cooperator.email_template_release_capital
 msgid ""
 "Request to release capital for Energy Community"
 msgstr ""
-"Solicitud pago aportación obligatoria"
+"Energia-komunitatearen kapital soziala askatzeko eskaera"
 
 #. module: cooperator
 #: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
 msgid "is recorded in the register of cooperators under number"
-msgstr "está recogido en el registro socias con el número"
+msgstr "kooperatibakideen erregistroan jasota dago, zenbaki honekin:"
 
 #. module: cooperator
 #: model:ir.ui.menu,name:cooperator.menu_cooperator_cooperator
 #: model:ir.ui.menu,name:cooperator.menu_cooperator_main
 #: model_terms:ir.ui.view,arch_db:cooperator.view_res_partner_filter
 msgid "Cooperators"
-msgstr "Kideak"
+msgstr "Kooperatibakideak"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.contact_template
 msgid "+32 456 926 5059"
-msgstr "+34 610 525 499"
+msgstr "+32 456 926 5059"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.address_template
 msgid "<option value=\"\">Country...</option>"
-msgstr "<option value=\"\">País...</option>"
+msgstr "<option value=\"\">Herrialdea...</option>"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.cooperator_thanks
 msgid ""
 "<span>Your subscription has been <b>successfully</b> registered.</span>"
 msgstr ""
-"<span>Tu subscripción se ha registrado <b>correctamente</b>.</span>"
+"<span>Bazkidetza<b></b> ondo erregistratu da.</span>"
 
 #. module: cooperator_website
 #. odoo-python
@@ -940,23 +926,22 @@ msgid ""
 "An account already exists for this email address. Please log in before "
 "filling in the form."
 msgstr ""
-"Ya existe una cuenta para este correo electrónico. Por favor inicia "
-"sesión antes de rellenar el formulario."
+"Helbide elektroniko horri lotutako kontu bat badago lehendik ere. Hasi saioa inprimakia bete aurretik."
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.main_form_template
 msgid "Are you already a cooperator?"
-msgstr "¿Ya eres socia?"
+msgstr "Kooperatibakidea zara?"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.main_form_template
 msgid "Do you already have an account?"
-msgstr "¿Ya tienes una cuenta?"
+msgstr "Dagoeneko baduzu kontu bat?"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.main_form_template
 msgid "Do you want to modify your personal information first?"
-msgstr "¿Deseas primero cambiar tus datos personales?"
+msgstr "Lehenik zure datu pertsonalak aldatu nahi dituzu?"
 
 #. module: cooperator_website
 #. odoo-python
@@ -964,12 +949,12 @@ msgstr "¿Deseas primero cambiar tus datos personales?"
 #: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "Email and confirmation email addresses don't match."
-msgstr "El correo electrónico y el de confirmación no coinciden."
+msgstr "Helbide elektronikoa eta berrestekoa ez datoz bat."
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.main_form_template
 msgid "Logged"
-msgstr "Sesión iniciada"
+msgstr "Saioa hasita"
 
 #. module: cooperator_website
 #. odoo-python
@@ -977,7 +962,7 @@ msgstr "Sesión iniciada"
 #: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "Please upload a scan of your ID card."
-msgstr "Por favor sube una copia escaneada de tu documento de identitat."
+msgstr "Mesedez, igo zure NANa eskaneatuta."
 
 #. module: cooperator_website
 #. odoo-python
@@ -985,12 +970,12 @@ msgstr "Por favor sube una copia escaneada de tu documento de identitat."
 #: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "Provided IBAN is not valid."
-msgstr "El IBAN proporcionado no es válido."
+msgstr "Emandako IBANa ez da baliozkoa."
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.main_form_template
 msgid "Send"
-msgstr "Envía"
+msgstr "Bidali"
 
 #. module: cooperator_website
 #. odoo-python
@@ -998,7 +983,7 @@ msgstr "Envía"
 #: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "Some mandatory fields have not been filled."
-msgstr "Algunos campos obligatorios no se han rellenado."
+msgstr "Nahitaezko eremu batzuk ez dira bete."
 
 #. module: cooperator_website
 #. odoo-python
@@ -1008,7 +993,7 @@ msgstr "Algunos campos obligatorios no se han rellenado."
 msgid ""
 "You can't subscribe for an amount that exceeds {amount}{currency_symbol}."
 msgstr ""
-"No puedes subscribirte por un importe superior a {amount}{currency_symbol}."
+"Ezin duzu {amount}{currency_symbol}-tik gorako harpidetzarik egin."
 
 #. module: cooperator_website
 #. odoo-python
@@ -1016,9 +1001,70 @@ msgstr ""
 #: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "You can't subscribe to two different types of share."
-msgstr "No puedes subscribirte a dos tipos de aportaciones diferentes."
+msgstr "Ezin duzu bi motatako ekarpenetan harpidetu."
 
 #. module: l10n_es_cooperator
 #: model_terms:ir.ui.view,arch_db:l10n_es_cooperator.iban_template_es
 msgid "VAT"
-msgstr "NIF"
+msgstr "BEZa"
+
+#. module: cooperator
+#: model:ir.actions.report,name:cooperator.action_cooperator_report_certificate
+msgid "Cooperator Certificate"
+msgstr "Kooperatibakidearen ziurtagiria"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+msgid "<span>Certificate generated on</span>"
+msgstr "<span>Ziurtagiriaren sorrera-data</span>"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+msgid "<span>Cooperator Certificate</span>"
+msgstr "<span>Kooperatibakidearen ziurtagiria</span>"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+msgid "is recorded in the register of cooperators under number"
+msgstr "bazkideen erregistroan jasota dago, zenbaki honekin:"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__effective_date
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__effective_date
+#: model:ir.model.fields,field_description:cooperator.field_res_users__effective_date
+#: model:ir.model.fields,field_description:cooperator.field_share_line__effective_date
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_register
+msgid "Effective Date"
+msgstr "Eraginetarako data"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__share_product
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_register
+#: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_tree
+msgid "Share Type"
+msgstr "Ekarpen-mota"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_register
+#: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_tree
+msgid "Quantity"
+msgstr "Kopurua"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+msgid "Unit Price"
+msgstr "Prezioa unitateko"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+msgid "<strong>Total</strong>"
+msgstr "<strong>Guztira</strong>"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_register
+msgid "Total"
+msgstr "Guztira"
