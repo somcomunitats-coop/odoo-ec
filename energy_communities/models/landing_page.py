@@ -308,6 +308,11 @@ class LandingPage(models.Model):
                 _("Wordpress landing and map place has been successfully updated."),
             )
 
+    def peek_update_public_data(self):
+        self._update_wordpress()
+        self.update_map_place()
+        return True
+
     def _update_wordpress(self):
         instance_company = self.env["res.company"].search(
             [("hierarchy_level", "=", "instance")]

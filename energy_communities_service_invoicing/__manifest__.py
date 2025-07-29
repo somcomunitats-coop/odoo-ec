@@ -9,7 +9,7 @@
     "author": "Som comunitats",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Contract Management",
-    "version": "16.0.0.5.0",
+    "version": "16.0.0.5.3",
     # any module necessary for this one to work correctly
     "depends": [
         "base",

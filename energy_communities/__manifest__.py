@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.5.0",
+    "version": "16.0.0.5.2",
     "depends": [
         "account",
         "account_banking_mandate",
@@ -60,6 +60,7 @@
         "data/auth_oauth_provider_data.xml",
         "data/ir_cron.xml",
         "data/mail_templates_email_layouts.xml",
+        "data/mail_template_data.xml",
         "data/utm_data.xml",
         "data/energy_action.xml",
         "views/mail_template_views.xml",

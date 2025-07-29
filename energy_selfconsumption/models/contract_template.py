@@ -21,6 +21,8 @@ class ContractTemplate(models.Model):
     _name = "contract.template"
     _inherit = ["contract.template"]
 
+    name = fields.Char(required=True, translate=True)
+
     def is_selfconsumption_template(self):
         """
         Check if this template is for self-consumption
@@ -94,3 +96,8 @@ class ContractTemplate(models.Model):
             raise ValidationError("\n".join(errors))
 
         return True
+    
+class ContractAbstractContractLine(models.AbstractModel):
+    _inherit = "contract.recurrency.basic.mixin"
+
+    name = fields.Text(string="Description", required=True, translate=True)
