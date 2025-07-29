@@ -174,7 +174,6 @@ class Selfconsumption(models.Model):
         SELFCONSUMPTION_INVOICING_MODE_VALUES,
         string="Invoicing Mode",
         help="Method used for invoicing this project",
-        default=SELFCONSUMPTION_DEFAULT_INVOICING_MODE,
     )
     payment_mode_id = fields.Many2one(
         "account.payment.mode",

@@ -27,7 +27,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td valign="center">
-                                                        <img t-att-src="'/logo.png?company=%s' % (company.id or 0)" style="padding: 0px; margin: 0px; height: auto; max-width: 200px; max-height: 36px;" t-att-alt=""/>
+                                                        <img t-att-src="'/logo.png?company=%s' % (company.id or 0)" style="padding: 0px; margin: 0px; height: auto; max-width: 200px; max-height: 36px;" t-att-alt=""/><br/><br/>
                                                     </td>
                                                 </tr>
                                                 <tr>
