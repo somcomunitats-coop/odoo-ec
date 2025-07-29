@@ -16,6 +16,7 @@ from ..config import (
     SELFCONSUMPTION_DEFAULT_INVOICING_MODE,
     SELFCONSUMPTION_INVOICING_MODE_VALUES,
     SELFCONSUMPTION_PRODUCT_REFS,
+    SELFCONSUMPTION_INVOICING_MODE_ENERGY_CUSTOM,
 )
 
 
@@ -71,7 +72,7 @@ class DefineInvoicingModeWizard(models.TransientModel):
         Sets appropriate recurring rule type based on the selected
         invoicing mode to ensure proper billing cycles.
         """
-        if self.invoicing_mode == INVOICING_MODE_ENERGY_CUSTOM:
+        if self.invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_ENERGY_CUSTOM:
             self.recurring_rule_type = RECURRING_RULE_MONTHLY
         else:
             self.recurring_rule_type = RECURRING_RULE_MONTHLY_LAST_DAY
