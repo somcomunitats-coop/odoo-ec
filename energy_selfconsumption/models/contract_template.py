@@ -98,6 +98,6 @@ class ContractTemplate(models.Model):
         return True
     
 class ContractAbstractContractLine(models.AbstractModel):
-    _inherit = "contract.recurrency.basic.mixin"
+    _inherit = "contract.abstract.contract.line"
 
     name = fields.Text(string="Description", required=True, translate=True)
