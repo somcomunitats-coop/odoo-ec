@@ -345,7 +345,7 @@ class InvoicingWizard(models.TransientModel):
                 invoice = self._process_energy_delivered_contract(contract)
                 generated_invoices.append(invoice)
 
-            elif invoicing_mode == INVOICING_MODE_ENERGY_CUSTOM:
+            elif invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_ENERGY_CUSTOM:
                 if not csv_loaded:
                     raise ValidationError(
                         _("CSV file is required for energy custom mode")
@@ -365,7 +365,7 @@ class InvoicingWizard(models.TransientModel):
         # Check if any contract uses energy custom mode
         uses_custom_mode = any(
             contract.project_id.selfconsumption_id.invoicing_mode
-            == INVOICING_MODE_ENERGY_CUSTOM
+            == SELFCONSUMPTION_INVOICING_MODE_ENERGY_CUSTOM
             for contract in self.contract_ids
         )
 
