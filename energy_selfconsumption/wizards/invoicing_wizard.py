@@ -341,7 +341,7 @@ class InvoicingWizard(models.TransientModel):
         for contract in self.contract_ids:
             invoicing_mode = contract.project_id.selfconsumption_id.invoicing_mode
 
-            if invoicing_mode == INVOICING_MODE_ENERGY_DELIVERED:
+            if invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED:
                 invoice = self._process_energy_delivered_contract(contract)
                 generated_invoices.append(invoice)
 
