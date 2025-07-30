@@ -192,7 +192,10 @@ class AccountMove(models.Model):
             errors.append("Invoice contains lines with different invoicing modes")
 
         # Check if invoice has required information for energy delivered mode
-        if self.selfconsumption_invoicing_mode == INVOICING_MODE_ENERGY_DELIVERED:
+        if (
+            self.selfconsumption_invoicing_mode
+            == SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED
+        ):
             if not any(line.quantity > 0 for line in self.invoice_line_ids):
                 errors.append("Energy delivered invoices must have positive quantities")
 
