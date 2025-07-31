@@ -31,7 +31,6 @@ _LEGAL_FORM_VALUES = [
 _LEGAL_FORM_VALUES_DEFAULT = "undefined"
 _LEGAL_FORM_VALUES_NON_PROFIT = [
     "non_profit",
-    "non_profit_limited_company",
     "residents_association",
 ]
 
