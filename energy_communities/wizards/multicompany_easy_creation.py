@@ -62,13 +62,11 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         string="State",
     )
     legal_form = fields.Selection(
-        selection=_LEGAL_FORM_VALUES,
-        string="Legal form",
+        selection=_LEGAL_FORM_VALUES, string="Legal form", required=True
     )
     legal_name = fields.Char(string="Legal name", required=True)
     ce_status = fields.Selection(
-        selection=_CE_STATUS_VALUES,
-        string="Energy Community state",
+        selection=_CE_STATUS_VALUES, string="Energy Community state", required=True
     )
     # Used in demo data, so it can finish the process before continuing with the rest of the demo data.
     hook_cron = fields.Boolean(
