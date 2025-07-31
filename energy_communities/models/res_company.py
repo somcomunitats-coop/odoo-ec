@@ -25,6 +25,8 @@ _LEGAL_FORM_VALUES = [
     ("limited_partnership", _("Limited partnership")),
     ("stock_company", _("Stock company")),
     ("individual_entrepreneur", _("Individual entrepreneur")),
+    ("residents_association", _("Neighborhood community")),
+    ("non_profit_limited_company", _("Non profit limited company")),
 ]
 
 _CE_STATUS_VALUES = [
