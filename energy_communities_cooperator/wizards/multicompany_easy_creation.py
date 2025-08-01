@@ -28,3 +28,4 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     def thread_action_accept(self):
         super().thread_action_accept()
         self.new_company_id.write({"create_user": self.create_user})
+
