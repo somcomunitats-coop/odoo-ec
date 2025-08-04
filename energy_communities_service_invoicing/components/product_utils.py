@@ -13,7 +13,6 @@ from odoo.addons.energy_communities_cooperator.config import (
     COOP_SHARE_PRODUCT_CATEG_REF,
     COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
 )
-from odoo.addons.product.models.product_category import ProductCategory
 from odoo.addons.product.models.product_pricelist import Pricelist
 from odoo.addons.product.models.product_template import ProductTemplate
 
