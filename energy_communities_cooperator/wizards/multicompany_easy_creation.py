@@ -1,5 +1,9 @@
 from odoo import _, api, fields, models
 
+from odoo.addons.energy_communities.models.res_company import (
+    _LEGAL_FORM_VALUES_NON_PROFIT,
+)
+
 
 class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     _name = "account.multicompany.easy.creation.wiz"
@@ -25,6 +29,14 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     #     string="New Product Share Template",
     #     readonly=True,
     # )
+
+    @api.onchange("legal_form")
+    def _onchange_legal_form_trigger(self):
+        for record in self:
+            if record.legal_form in _LEGAL_FORM_VALUES_NON_PROFIT:
+                record.chart_template_id = self.env.ref(
+                    "l10n_es.account_chart_template_assoc"
+                ).id
 
     def thread_action_accept(self):
         super().thread_action_accept()

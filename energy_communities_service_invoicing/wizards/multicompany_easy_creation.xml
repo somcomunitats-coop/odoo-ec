@@ -1,0 +1,19 @@
+<odoo>
+  <record id="wizard_multicompany_easy_creation_form_inherit" model="ir.ui.view">
+    <field name="name">
+account_multicompany_easy_creation.wizard_multicompany_easy_creation_form_inherit (from service invoicing)
+    </field>
+    <field name="model">account.multicompany.easy.creation.wiz</field>
+    <field
+      name="inherit_id"
+      ref="energy_communities_cooperator.wizard_multicompany_easy_creation_form_inherit"
+    />
+    <field name="priority" eval="8" />
+    <field name="arch" type="xml">
+      <xpath expr="//group[@name='cooperator_group']" position="inside">
+        <field name="fixed_invoicing_day" attrs="{'invisible': [('legal_form','not in',['non_profit'])]}" />
+        <field name="fixed_invoicing_month" attrs="{'invisible': [('legal_form','not in',['non_profit'])]}" />
+      </xpath>
+    </field>
+  </record>
+</odoo>
