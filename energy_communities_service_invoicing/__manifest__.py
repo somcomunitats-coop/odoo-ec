@@ -48,6 +48,7 @@
         "views/service_invoicing_views.xml",
         "views/subscription_request_views.xml",
         "wizards/assign_pack_to_partner.xml",
+        "wizards/multicompany_easy_creation.xml",
         "wizards/pack_product_creator.xml",
         "wizards/service_invoicing_action.xml",
         "wizards/service_invoicing_action_create.xml",
