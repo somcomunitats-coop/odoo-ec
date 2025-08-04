@@ -11,14 +11,12 @@ faker = Faker(locale="es_ES")
 class TestMultiCompanyEasyCreation(common.TransactionCase):
     # TODO: Move to demo data
     def create_crm_lead(self):
-        # related_team = self.env["crm.team"].search([("company_id","=",self.coordinator_company.id)])
         return self.env["crm.lead"].create(
             {
                 "name": "Community 3",
                 "email_from": faker.email(),
                 "submission_type": "place_submission",
                 "company_id": self.coordinator_company.id,
-                # "team_id": related_team[0].id,
                 "source_id": self.env.ref(
                     "energy_communities.ce_source_creation_ce_proposal"
                 ).id,
@@ -99,12 +97,6 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
                 "default_purchase_tax_id": self.env.ref(
                     "l10n_es.account_tax_template_p_iva21_bc"
                 ).id,
-                "property_cooperator_account": self.env.ref(
-                    "l10n_es.{}_account_common_4400".format(
-                        str(self.coordinator_company.id)
-                    )
-                ).id,
-                "product_share_template": False,
                 "create_user": False,
                 "create_landing": True,
                 "create_place": True,

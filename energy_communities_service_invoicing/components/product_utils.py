@@ -3,8 +3,10 @@ from typing import List
 from odoo import _
 from odoo.exceptions import ValidationError
 
+from odoo.addons.base.models.res_company import Company
 from odoo.addons.component.core import Component
 from odoo.addons.contract.models.contract_template import ContractTemplate
+from odoo.addons.product.models.product_pricelist import Pricelist
 from odoo.addons.product.models.product_template import ProductTemplate
 
 from ..schemas import (
@@ -73,6 +75,21 @@ class ProductUtils(Component):
             new_service_product_template_list=new_service_product_template_list,
             existing_service_product_template_list=existing_service_product_template_list,
         )
+
+    def create_company_pricelist(self, company: Company) -> Pricelist:
+        # validate pricelist creation
+        if company.pricelist_id:
+            raise ValidationError("A company pricelist already exists")
+        # create company pricelist
+        company_pricelist = self.env["product.pricelist"].create(
+            {
+                "name": "{} pricelist".format(company.name),
+                "currency_id": self.env.ref("base.EUR").id,
+                "company_id": company.id,
+            }
+        )
+        company.write({"pricelist_id": company_pricelist.id})
+        return company_pricelist
 
     def _validate_service_configuration(
         self, service_product_creation_data: ServiceProductCreationData
