@@ -5,9 +5,11 @@ from odoo import _, api, fields, models
 from ..models.res_company import (
     _CE_MEMBER_STATUS_VALUES,
     _CE_STATUS_VALUES,
+    _CE_STATUS_VALUES_DEFAULT,
     _CE_TYPE,
     _HIERARCHY_LEVEL_BASE_VALUES,
     _LEGAL_FORM_VALUES,
+    _LEGAL_FORM_VALUES_DEFAULT,
 )
 from ..utils import get_successful_popup_message, user_role_utils
 
@@ -62,11 +64,17 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         string="State",
     )
     legal_form = fields.Selection(
-        selection=_LEGAL_FORM_VALUES, string="Legal form", required=True
+        selection=_LEGAL_FORM_VALUES,
+        string="Legal form",
+        required=True,
+        default=_LEGAL_FORM_VALUES_DEFAULT,
     )
     legal_name = fields.Char(string="Legal name", required=True)
     ce_status = fields.Selection(
-        selection=_CE_STATUS_VALUES, string="Energy Community state", required=True
+        selection=_CE_STATUS_VALUES,
+        string="Energy Community state",
+        required=True,
+        default=_CE_STATUS_VALUES_DEFAULT,
     )
     # Used in demo data, so it can finish the process before continuing with the rest of the demo data.
     hook_cron = fields.Boolean(
