@@ -1,6 +1,6 @@
 import logging
 
-from odoo import _, api, fields, models
+from odoo import models
 
 from odoo.addons.component.exception import RegistryNotReadyError
 from odoo.addons.energy_communities.utils import account_utils, product_utils
