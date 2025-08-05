@@ -157,6 +157,25 @@ class PartnerApiInfo(Component):
             for invoice in invoices
         ]
 
+    def get_member_invoice_by_id(
+        self, partner: Partner, invoice_id: int
+    ) -> InvoiceInfo:
+        invoices = self._get_invoices(partner, invoice_id)
+        if not invoices:
+            return None
+        invoice = invoices[0]
+        return InvoiceInfo(
+            id=invoice.id,
+            number=invoice.display_name,
+            service_type=invoice.service_type,
+            state=invoice.payment_state_for_api,
+            amount_total=invoice.amount_total,
+            date=str(invoice.date),
+            pdf_url="{base_url}/me/invoices/{id}/download".format(
+                base_url=self.env.company.get_base_url(), id=invoice.id
+            ),
+        )
+
     def _get_communities(self, partner: Partner):
         domain = self._communities_domain(partner)
         if self.work.paging:
@@ -173,8 +192,10 @@ class PartnerApiInfo(Component):
             .mapped(lambda record: record.company_id)
         )
 
-    def _get_invoices(self, partner: Partner):
+    def _get_invoices(self, partner: Partner, invoice_id: int = None):
         domain = self._member_invoices(partner)
+        if invoice_id:
+            domain += [("id", "=", invoice_id)]
         return (
             self.env["account.move"]
             .search(domain)
