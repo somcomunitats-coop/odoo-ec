@@ -10,6 +10,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     _inherit = "account.multicompany.easy.creation.wiz"
 
     create_user = fields.Boolean(string="Create user for cooperator", default=True)
+    capital_share = fields.Monetary(string="Initial capital share", default=100)
     # parent_id_id = fields.Integer(store=False, compute="_compute_parent_id_id")
     # property_cooperator_account = fields.Many2one(
     #     comodel_name="account.account",
@@ -19,7 +20,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     #     " receivable account for the"
     #     " cooperators",
     # )
-    # capital_share = fields.Monetary(string="Initial capital share", default=100)
     # product_share_template = fields.Many2one(
     #     comodel_name="product.template",
     #     string="Product Share Template",
