@@ -2,7 +2,12 @@ from typing import List
 
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
-from .base import BaseListResponse, NaiveOrmModel, PaginationLinks
+from .base import (
+    BaseListResponse,
+    BaseResponse,
+    NaiveOrmModel,
+    PaginationLinks,
+)
 
 
 class InvoiceInfo(BaseModel):
@@ -38,6 +43,15 @@ class InvoiceInfo(BaseModel):
     )
 
     pdf_url: str = Field(..., title="PDF Url", description="Url for pdf download")
+
+
+class InvoiceInfoResponse(BaseResponse):
+    data: InvoiceInfo = Field(
+        None,
+        title="Response data",
+        description="Data returned when asking for an invoice",
+    )
+    links: PaginationLinks
 
 
 class InvoiceInfoListResponse(BaseListResponse):
