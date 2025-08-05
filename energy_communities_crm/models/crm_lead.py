@@ -6,6 +6,10 @@ import requests
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+from odoo.addons.energy_communities.models.res_company import (
+    _LEGAL_FORM_VALUES_NON_PROFIT,
+)
+
 from .metadata_mapping_conf import (
     _LEAD_METADATA__DATE_FIELDS,
     _LEAD_METADATA__ENERGY_TAGS_FIELDS,
@@ -89,6 +93,7 @@ class CrmLead(models.Model):
         creation_partner = self._search_partner_for_company_wizard_creation(
             creation_dict
         )
+
         creation_dict.update(
             {
                 "parent_id": self.company_id.id,
@@ -96,9 +101,7 @@ class CrmLead(models.Model):
                 "user_ids": self.env[
                     "account.multicompany.easy.creation.wiz"
                 ]._get_company_creation_related_users_list(self.company_id),
-                "chart_template_id": self.env.ref(
-                    "l10n_es.account_chart_template_pymes"
-                ).id,
+                "chart_template_id": self._get_chart_template_id_from_meta(),
                 "update_default_taxes": True,
                 "default_sale_tax_id": self.env.ref(
                     "l10n_es.account_tax_template_s_iva21s"
@@ -113,6 +116,15 @@ class CrmLead(models.Model):
             }
         )
         return creation_dict
+
+    def _get_chart_template_id_from_meta(self):
+        meta_entry = self.metadata_line_ids.filtered(
+            lambda meta: meta.key == "ce_legal_form"
+        )
+        if meta_entry:
+            if meta_entry.value in _LEGAL_FORM_VALUES_NON_PROFIT:
+                return self.env.ref("l10n_es.account_chart_template_assoc").id
+        return self.env.ref("l10n_es.account_chart_template_pymes").id
 
     def _get_metadata_values(self):
         meta_dict = {}
