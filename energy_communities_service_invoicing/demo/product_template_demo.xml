@@ -128,9 +128,16 @@
     <field name="property_contract_template_id" ref="demo_fixed_share_recurring_fee_contract_template" />
   </record>
 
+  # PRICELIST
+
   <record id="demo_platform_company_pricelist" model="product.pricelist">
     <field name="name">Platform Company pricelist</field>
     <field name="company_id" model="res.company" eval="obj(ref('base.main_company')).id"/>
+  </record>
+
+  <record id="demo_coordinator_company_pricelist" model="product.pricelist">
+    <field name="name">Coordinator Company pricelist</field>
+    <field name="company_id" model="res.company" eval="obj(ref('energy_communities.coordinator_company_1')).id"/>
   </record>
 
   <record id="demo_community_1_pricelist" model="product.pricelist">
@@ -147,8 +154,6 @@
     })]"/>
   </record>
 
-  # PRICELIST
-
   <function name="write" model="res.company">
     <value
       model="res.company"
@@ -157,6 +162,18 @@
     <value
       eval="{
         'pricelist_id': ref('demo_platform_company_pricelist'),
+      }"
+    />
+  </function>
+
+  <function name="write" model="res.company">
+    <value
+      model="res.company"
+      eval="[obj(ref('energy_communities.coordinator_company_1')).id]"
+    />
+    <value
+      eval="{
+        'pricelist_id': ref('demo_coordinator_company_pricelist'),
       }"
     />
   </function>
