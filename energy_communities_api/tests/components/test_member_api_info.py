@@ -205,7 +205,7 @@ class TestMemberApiInfo(TransactionComponentCase):
         # then the number of total invoices
         self.assertGreater(total_invoices, 0)
 
-    def test__get_member_invoices(self):
+    def test__get_member_invoice_list(self):
         # given a energy community member
         # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
         member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
@@ -226,3 +226,25 @@ class TestMemberApiInfo(TransactionComponentCase):
         self.assertGreater(len(member_invoices), 0)
         for invoice in member_invoices:
             self.assertIsInstance(invoice, InvoiceInfo)
+
+    def test__get_member_invoice(self):
+        # given a energy community member
+        # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
+        member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
+        # and a invoice_id
+        invoice_id = 16601
+        # given a api info component
+        work = WorkContext(
+            "res.partner",
+            collection=self.backend,
+            schema_class=CommunityServiceInfo,
+            community_id=member.company_id,
+        )
+        api_info_component = work.component(usage="api.info")
+        self.assertIsInstance(api_info_component, PartnerApiInfo)
+
+        # when we ask for the invoices of that member
+        invoice = api_info_component.get_member_invoice_by_id(member, invoice_id)
+
+        # then we obtain that invoices
+        self.assertIsInstance(invoice, InvoiceInfo)
