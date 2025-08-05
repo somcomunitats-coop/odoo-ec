@@ -1,4 +1,3 @@
-
 from odoo.tests import common, tagged
 
 from odoo.addons.energy_communities.config import (
