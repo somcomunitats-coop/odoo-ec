@@ -12,10 +12,7 @@ from ..config import (
 
 _logger = logging.getLogger(__name__)
 
-from odoo.addons.energy_communities.utils import (
-    get_successful_popup_message,
-    product_utils,
-)
+from odoo.addons.energy_communities.utils import product_utils
 
 
 class AccountMulticompanyEasyCreationWiz(models.TransientModel):
