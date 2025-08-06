@@ -1,6 +1,7 @@
 import logging
 
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 from ..models.res_company import (
     _CE_MEMBER_STATUS_VALUES,
@@ -10,6 +11,7 @@ from ..models.res_company import (
     _HIERARCHY_LEVEL_BASE_VALUES,
     _LEGAL_FORM_VALUES,
     _LEGAL_FORM_VALUES_DEFAULT,
+    _LEGAL_FORM_VALUES_NON_PROFIT,
 )
 from ..utils import get_successful_popup_message, user_role_utils
 
@@ -32,6 +34,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         comodel_name="account.chart.template",
         string="Chart Template",
         domain=[("visible", "=", True)],
+        required=True,
     )
     default_lang_id = fields.Many2one(
         comodel_name="res.lang",
@@ -163,6 +166,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         )
 
     def action_accept(self):
+        self._validate_chart_of_accounts_configuration()
         self.create_company()
         self.apply_new_company_to_impacted_users()
         self.apply_new_company_partner_visibility()
@@ -180,6 +184,16 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             _("Company creation successful"),
             _("Community creation process has been started."),
         )
+
+    def _validate_chart_of_accounts_configuration(self):
+        if (
+            self.legal_form in _LEGAL_FORM_VALUES_NON_PROFIT
+            and self.chart_template_id.id
+            != self.env.ref("l10n_es.account_chart_template_assoc").id
+        ):
+            raise ValidationError(
+                "Misconfiguration between company legal form and selected chart of accounts"
+            )
 
     def create_company(self):
         allow_new_members = False
