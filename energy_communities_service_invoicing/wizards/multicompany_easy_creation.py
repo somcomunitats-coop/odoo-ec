@@ -1,9 +1,6 @@
 from odoo import _, api, fields, models
 
-from odoo.addons.energy_communities.utils import (
-    get_successful_popup_message,
-    product_utils,
-)
+from odoo.addons.energy_communities.utils import product_utils
 
 
 class AccountMulticompanyEasyCreationWiz(models.TransientModel):
