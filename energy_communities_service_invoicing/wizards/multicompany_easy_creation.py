@@ -12,6 +12,11 @@ from ..config import (
 
 _logger = logging.getLogger(__name__)
 
+from odoo.addons.energy_communities.utils import (
+    get_successful_popup_message,
+    product_utils,
+)
+
 
 class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     _name = "account.multicompany.easy.creation.wiz"
@@ -49,3 +54,4 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 )
             else:
                 raise (e)
+
