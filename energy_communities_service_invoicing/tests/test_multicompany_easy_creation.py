@@ -174,3 +174,54 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         )
         self.assertEqual(len(created_pricelist), 1)
         self.assertEqual(self.nonprofit_company.pricelist_id, created_pricelist)
+
+    def test__coop_journal_and_accounts_ok(self):
+        self._test__coop_journal_and_accounts_ok_case(
+            self.coop_company, "l10n_es.{}_account_pymes_100"
+        )
+        self._test__coop_journal_and_accounts_ok_case(
+            self.nonprofit_company, "l10n_es.{}_account_assoc_720"
+        )
+
+    def _test__coop_journal_and_accounts_ok_case(self, new_company, coop_account_ref):
+        coop_account = self.env.ref(coop_account_ref.format(new_company.id))
+        self.assertTrue(bool(new_company.property_cooperator_account))
+        self.assertTrue(bool(new_company.subscription_journal_id))
+        self.assertEqual(
+            new_company.subscription_journal_id.name, "Subscription Journal"
+        )
+        self.assertEqual(new_company.subscription_journal_id.type, "sale")
+        self.assertEqual(new_company.subscription_journal_id.company_id, new_company)
+        self.assertEqual(new_company.subscription_journal_id.code, "SUBJ")
+        self.assertEqual(
+            new_company.subscription_journal_id.default_account_id, coop_account
+        )
+        self.assertTrue(new_company.subscription_journal_id.refund_sequence)
+        self.assertEqual(
+            new_company.property_cooperator_account,
+            self.env.ref("l10n_es.{}_account_common_4400".format(new_company.id)),
+        )
+        self.assertEqual(
+            self.env.ref("cooperator.product_category_company_share")
+            .with_company(new_company)
+            .service_invoicing_sale_journal_id,
+            new_company.subscription_journal_id,
+        )
+        self.assertEqual(
+            self.env.ref("cooperator.product_category_company_share")
+            .with_company(new_company)
+            .service_invoicing_purchase_journal_id,
+            new_company.subscription_journal_id,
+        )
+        self.assertEqual(
+            self.env.ref("cooperator.product_category_company_share")
+            .with_company(new_company)
+            .property_account_income_categ_id,
+            coop_account,
+        )
+        self.assertEqual(
+            self.env.ref("cooperator.product_category_company_share")
+            .with_company(new_company)
+            .property_account_expense_categ_id,
+            coop_account,
+        )
