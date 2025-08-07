@@ -52,7 +52,7 @@
         "wizards/voluntary_share_interest_return.xml",
     ],
     # only loaded in demonstration mode
-    "demo": ["demo/res_company_demo.xml"],
+    "demo": [],
     "assets": {
         "web.assets_common": [
             "energy_communities_cooperator/static/src/js/cooperator.js",
