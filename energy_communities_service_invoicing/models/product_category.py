@@ -75,3 +75,7 @@ class ProductCategory(models.Model):
             record.is_assignable_pack_to_partner = False
             if record.data_xml_id in ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS:
                 record.is_assignable_pack_to_partner = True
+
+    # Used on demo data in order to setup company dependant fields
+    def write_with_company(self, company, w_dict):
+        self.with_company(company).write(w_dict)

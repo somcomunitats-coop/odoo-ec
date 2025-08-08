@@ -46,7 +46,7 @@ class TestSelfconsumptionServiceInvoicing(
             "energy_selfconsumption.inscription_selfconsumption_2_selfconsumption_1_demo"
         )
         self.subscription_5_inscription_5 = self.env.ref(
-            "energy_communities_cooperator.subscription_5_community_1_demo"
+            "energy_communities_service_invoicing.subscription_5_community_1_demo"
         )
         self.subscription_5_supply_point_5 = self.env.ref(
             "energy_selfconsumption.supply_point_5_selfconsumption_1_demo"

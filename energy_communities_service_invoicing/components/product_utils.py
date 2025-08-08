@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError
 from odoo.addons.base.models.res_company import Company
 from odoo.addons.component.core import Component
 from odoo.addons.contract.models.contract_template import ContractTemplate
+from odoo.addons.product.models.product_category import ProductCategory
 from odoo.addons.product.models.product_pricelist import Pricelist
 from odoo.addons.product.models.product_template import ProductTemplate
 

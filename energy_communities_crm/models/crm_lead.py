@@ -6,6 +6,10 @@ import requests
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+from odoo.addons.energy_communities.config import (
+    CHART_OF_ACCOUNTS_GENERAL_REF,
+    CHART_OF_ACCOUNTS_NON_PROFIT_REF,
+)
 from odoo.addons.energy_communities.models.res_company import (
     _LEGAL_FORM_VALUES_NON_PROFIT,
 )
@@ -123,8 +127,8 @@ class CrmLead(models.Model):
         )
         if meta_entry:
             if meta_entry.value in _LEGAL_FORM_VALUES_NON_PROFIT:
-                return self.env.ref("l10n_es.account_chart_template_assoc").id
-        return self.env.ref("l10n_es.account_chart_template_pymes").id
+                return self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF).id
+        return self.env.ref(CHART_OF_ACCOUNTS_GENERAL_REF).id
 
     def _get_metadata_values(self):
         meta_dict = {}

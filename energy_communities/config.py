@@ -36,6 +36,10 @@ STATE_LABELS = {
     STATE_CLOSED: _("Closed"),
 }
 
+# Accounting
+CHART_OF_ACCOUNTS_GENERAL_REF = "l10n_es.account_chart_template_pymes"
+CHART_OF_ACCOUNTS_NON_PROFIT_REF = "l10n_es.account_chart_template_assoc"
+
 # Packs
 PACK_TYPE_PLATFORM_PROD_CATEG_XMLID = (
     "energy_communities_service_invoicing.product_category_platform_pack"

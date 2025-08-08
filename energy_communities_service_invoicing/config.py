@@ -65,9 +65,10 @@ CONTRACT_CLOSING_ACTION_DEFAULT_VALUE = CONTRACT_ACTION_NONE
 
 PACK_PRODUCT_PARENT_CATEG_REF = "energy_communities.product_category_pack"
 SERVICE_PRODUCT_PARENT_CATEG_REF = "energy_communities.product_category_service"
+COOP_SHARE_PRODUCT_CATEG_REF = "cooperator.product_category_company_share"
 SHARE_PRODUCTS_CATEG_REFS = [
+    COOP_SHARE_PRODUCT_CATEG_REF,
     "energy_communities.product_category_share_recurring_fee_pack",
-    "cooperator.product_category_company_share",
     "energy_communities.product_category_company_voluntary_share",
     "energy_communities_cooperator.product_category_company_voluntary_share",
 ]
@@ -81,3 +82,8 @@ RECURRING_RULE_MONTHLY_LAST_DAY = "monthlylastday"
 DEFAULT_PRICELIST_BASE_PRICE = "standard_price"
 DEFAULT_PRICELIST_COMPUTE_FIXED = "fixed"
 DEFAULT_PRICELIST_DISCOUNT_POLICY = "without_discount"
+
+COOP_ACCOUNT_REF_GENERAL = "l10n_es.{}_account_pymes_100"
+COOP_ACCOUNT_REF_NONPROFIT = "l10n_es.{}_account_assoc_720"
+COOP_ACCOUNT_REF_IN_COMPANY = "l10n_es.{}_account_common_4400"
+SELFCONSUMPTION_ACCOUNT_REF = "l10n_es.{}_account_common_7050"

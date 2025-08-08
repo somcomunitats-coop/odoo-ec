@@ -3,6 +3,7 @@ import logging
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
+from ..config import CHART_OF_ACCOUNTS_NON_PROFIT_REF
 from ..models.res_company import (
     _CE_MEMBER_STATUS_VALUES,
     _CE_STATUS_VALUES,
@@ -189,7 +190,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         if (
             self.legal_form in _LEGAL_FORM_VALUES_NON_PROFIT
             and self.chart_template_id.id
-            != self.env.ref("l10n_es.account_chart_template_assoc").id
+            != self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF).id
         ):
             raise ValidationError(
                 "Misconfiguration between company legal form and selected chart of accounts"

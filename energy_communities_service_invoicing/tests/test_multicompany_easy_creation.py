@@ -1,5 +1,19 @@
 from odoo.tests import common, tagged
 
+from odoo.addons.energy_communities.config import (
+    CHART_OF_ACCOUNTS_GENERAL_REF,
+    CHART_OF_ACCOUNTS_NON_PROFIT_REF,
+    PACK_TYPE_SELFCONSUMPTION_PROD_CATEG_XMLID,
+)
+
+from ..config import (
+    COOP_ACCOUNT_REF_GENERAL,
+    COOP_ACCOUNT_REF_IN_COMPANY,
+    COOP_ACCOUNT_REF_NONPROFIT,
+    COOP_SHARE_PRODUCT_CATEG_REF,
+    SELFCONSUMPTION_ACCOUNT_REF,
+)
+
 
 @tagged("-at_install", "post_install")
 class TestMultiCompanyEasyCreation(common.TransactionCase):
@@ -25,6 +39,7 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         wizard_data_update = {
             "create_landing": False,
             "create_place": False,
+            "create_user": False,
             "hook_cron": False,
         }
         self.cooperative_creation_crm_lead = self.env.ref(
@@ -67,7 +82,7 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         )
         self.assertEqual(
             self.new_cooperative_wizard.chart_template_id,
-            self.env.ref("l10n_es.account_chart_template_pymes"),
+            self.env.ref(CHART_OF_ACCOUNTS_GENERAL_REF),
         )
         self.assertEqual(
             self.new_cooperative_wizard.default_sale_tax_id,
@@ -81,7 +96,7 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         self.assertFalse(self.new_cooperative_wizard.creation_partner)
         self.assertEqual(
             self.new_nonprofit_wizard.chart_template_id,
-            self.env.ref("l10n_es.account_chart_template_assoc"),
+            self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF),
         )
 
     def test__community_creation_ok(self):
@@ -177,10 +192,10 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
 
     def test__coop_journal_and_accounts_ok(self):
         self._test__coop_journal_and_accounts_ok_case(
-            self.coop_company, "l10n_es.{}_account_pymes_100"
+            self.coop_company, COOP_ACCOUNT_REF_GENERAL
         )
         self._test__coop_journal_and_accounts_ok_case(
-            self.nonprofit_company, "l10n_es.{}_account_assoc_720"
+            self.nonprofit_company, COOP_ACCOUNT_REF_NONPROFIT
         )
 
     def _test__coop_journal_and_accounts_ok_case(self, new_company, coop_account_ref):
@@ -199,29 +214,60 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         self.assertTrue(new_company.subscription_journal_id.refund_sequence)
         self.assertEqual(
             new_company.property_cooperator_account,
-            self.env.ref("l10n_es.{}_account_common_4400".format(new_company.id)),
+            self.env.ref(COOP_ACCOUNT_REF_IN_COMPANY.format(new_company.id)),
         )
         self.assertEqual(
-            self.env.ref("cooperator.product_category_company_share")
+            self.env.ref(COOP_SHARE_PRODUCT_CATEG_REF)
             .with_company(new_company)
             .service_invoicing_sale_journal_id,
             new_company.subscription_journal_id,
         )
         self.assertEqual(
-            self.env.ref("cooperator.product_category_company_share")
+            self.env.ref(COOP_SHARE_PRODUCT_CATEG_REF)
             .with_company(new_company)
             .service_invoicing_purchase_journal_id,
             new_company.subscription_journal_id,
         )
         self.assertEqual(
-            self.env.ref("cooperator.product_category_company_share")
+            self.env.ref(COOP_SHARE_PRODUCT_CATEG_REF)
             .with_company(new_company)
             .property_account_income_categ_id,
             coop_account,
         )
         self.assertEqual(
-            self.env.ref("cooperator.product_category_company_share")
+            self.env.ref(COOP_SHARE_PRODUCT_CATEG_REF)
             .with_company(new_company)
             .property_account_expense_categ_id,
             coop_account,
         )
+
+    def test__selfconsumption_journal_configuration_ok(self):
+        self._test__selfconsumption_journal_configuration_ok_case(self.coop_company)
+        self._test__selfconsumption_journal_configuration_ok_case(
+            self.nonprofit_company
+        )
+
+    def _test__selfconsumption_journal_configuration_ok_case(self, new_company):
+        selconsumption_pack_categ = self.env.ref(
+            PACK_TYPE_SELFCONSUMPTION_PROD_CATEG_XMLID
+        )
+        selfconsumption_sale_journal = selconsumption_pack_categ.with_company(
+            new_company
+        ).service_invoicing_sale_journal_id
+        selfconsumption_purchase_journal = selconsumption_pack_categ.with_company(
+            new_company
+        ).service_invoicing_purchase_journal_id
+        self.assertTrue(selfconsumption_sale_journal)
+        self.assertTrue(selfconsumption_purchase_journal)
+        self.assertEqual(selfconsumption_sale_journal, selfconsumption_purchase_journal)
+        self.assertEqual(
+            selfconsumption_sale_journal.name, "Autoconsumo Fotovoltaico Compartido"
+        )
+        self.assertEqual(selfconsumption_sale_journal.type, "sale")
+        self.assertEqual(selfconsumption_sale_journal.company_id, new_company)
+        self.assertEqual(selfconsumption_sale_journal.code, "AFC")
+        self.assertEqual(
+            selfconsumption_sale_journal.default_account_id,
+            self.env.ref(SELFCONSUMPTION_ACCOUNT_REF.format(new_company.id)),
+        )
+        self.assertTrue(selfconsumption_sale_journal.refund_sequence)

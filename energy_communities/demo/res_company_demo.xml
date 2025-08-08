@@ -46,6 +46,8 @@
     <field name="parent_id" ref="coordinator_company_1" />
     <field name="ce_status">active</field>
     <field name="legal_form">cooperative</field>
+    <field name="create_landing" eval="False"/>
+    <field name="create_place" eval="False"/>
     <field
       name="chart_template_id"
       ref="l10n_es.account_chart_template_pymes"
@@ -63,6 +65,8 @@
     <field name="parent_id" ref="coordinator_company_1" />
     <field name="ce_status">active</field>
     <field name="legal_form">non_profit</field>
+    <field name="create_landing" eval="False"/>
+    <field name="create_place" eval="False"/>
     <field
       name="chart_template_id"
       ref="l10n_es.account_chart_template_assoc"
