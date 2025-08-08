@@ -45,3 +45,4 @@ STATE_LABELS = {
 # Accounting
 CHART_OF_ACCOUNTS_GENERAL_REF = "l10n_es.account_chart_template_pymes"
 CHART_OF_ACCOUNTS_NON_PROFIT_REF = "l10n_es.account_chart_template_assoc"
+

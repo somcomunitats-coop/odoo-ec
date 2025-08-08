@@ -1,3 +1,4 @@
+
 # from typing import List
 # from odoo import _
 # from odoo.exceptions import ValidationError
@@ -31,7 +32,7 @@ class AccountUtils(Component):
         )
         # create cooperator voluntary account
         self.create_company_account(
-            company, "Capital social voluntario", "liability_non_current", "100100"
+            company, "Capital social voluntario", "equity", "100100"
         )
 
     def create_company_journal(
@@ -41,7 +42,6 @@ class AccountUtils(Component):
         type: str,
         code: str,
         account_ref: str,
-        product_categ_xml_id: str = False,
     ) -> AccountJournal:
         account = self.env.ref(account_ref.format(company.id))
         journal = self.env["account.journal"].create(
@@ -54,13 +54,6 @@ class AccountUtils(Component):
                 "code": code,
             }
         )
-        if product_categ_xml_id:
-            self.env.ref(product_categ_xml_id).with_company(company).write(
-                {
-                    "service_invoicing_sale_journal_id": journal.id,
-                    "service_invoicing_purchase_journal_id": journal.id,
-                }
-            )
         return journal
 
     def create_company_account(
@@ -78,3 +71,4 @@ class AccountUtils(Component):
                 "company_id": company.id,
             }
         )
+
