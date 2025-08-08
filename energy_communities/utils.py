@@ -32,6 +32,13 @@ def user_role_utils(env: Environment, user_id: Users) -> Component:
 
 
 @contextmanager
+def account_utils(
+    env: Environment,
+) -> Component:
+    yield _get_component(env, "account.chart.template", "account.utils")
+
+
+@contextmanager
 def contract_utils(
     env: Environment,
     contract_id: ContractContract,

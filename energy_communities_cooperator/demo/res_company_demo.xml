@@ -1,0 +1,20 @@
+<odoo>
+  <function name="write" model="account.multicompany.easy.creation.wiz">
+      <value
+        model="account.multicompany.easy.creation.wiz"
+        eval="ref('energy_communities.energy_community_company_1_wizard')"
+      />
+      <value
+      eval="{'create_user':False}"
+      />
+  </function>
+  <function name="write" model="account.multicompany.easy.creation.wiz">
+      <value
+        model="account.multicompany.easy.creation.wiz"
+        eval="ref('energy_communities.energy_community_company_2_wizard')"
+      />
+      <value
+        eval="{'create_user':False}"
+      />
+  </function>
+</odoo>
