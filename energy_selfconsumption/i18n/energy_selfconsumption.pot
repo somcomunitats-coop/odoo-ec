@@ -5942,3 +5942,37 @@ msgid ""
 "Days to be invoiced: #days_invoiced# days\n"
 "Total amount invoiced:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount#"
 msgstr ""
+
+#. module: energy_selfconsumption
+#: model:product.template,description_sale:energy_selfconsumption.product_product_energy_custom_product_template
+msgid ""
+"CUPS: #code#\n"
+"Owner: #owner_id#\n"
+"Invoicing period: #START# - #END#\n"
+"            "
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:product.template,description_sale:energy_selfconsumption.product_product_energy_delivered_product_template
+msgid ""
+"CUPS: #code#\n"
+"Owner: #owner_id#\n"
+"Invoicing period: #START# - #END#\n"
+"CAU: #cau\n"
+"            "
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:product.template,description_sale:energy_selfconsumption.product_product_power_acquired_product_template
+msgid ""
+"CUPS: #code#\n"
+"Owner: #owner_id#\n"
+"Invoicing period: #START# - #END#\n"
+"CAU: #cau#\n"
+"Total installed nominal power (kW): #power#\n"
+"Partition coefficient: #coefficient#\n"
+"Daily nominal power acquired: #power# kWn * #coefficient# = #power_acquired# kWn/day\n"
+"Days to be invoiced: #days_invoiced# days\n"
+"Total amount invoiced:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount#\n"
+"            "
+msgstr ""
