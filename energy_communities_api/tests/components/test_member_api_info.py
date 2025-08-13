@@ -232,7 +232,7 @@ class TestMemberApiInfo(TransactionComponentCase):
         # member = self.env.ref("cooperator.res_partner_cooperator_1_demo")
         member = self.env["res.partner"].search([("vat", "=", client_data["username"])])
         # and a invoice_id
-        invoice_id = 16601
+        invoice_id = 17865
         # given a api info component
         work = WorkContext(
             "res.partner",
