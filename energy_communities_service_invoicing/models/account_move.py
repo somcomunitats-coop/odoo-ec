@@ -10,6 +10,13 @@ from odoo.addons.energy_communities.utils import (
     sale_order_utils,
 )
 
+from ..config import (
+    INVOICE_MEMBERSHIP,
+    INVOICE_OTHER,
+    INVOICE_SELFCONSUMPTION,
+    INVOICE_SERVICETYPE_LABELS,
+)
+
 
 class AccountMove(models.Model):
     _name = "account.move"
@@ -33,6 +40,21 @@ class AccountMove(models.Model):
         domain="[('hierarchy_level','=','community')]",
         store=True,
     )
+    service_type = fields.Selection(
+        selection=INVOICE_SERVICETYPE_LABELS,
+        string="Service type of the invoice",
+        compute="_compute_invoice_service_type",
+        store=True,
+    )
+
+    @api.depends("pack_type", "company_id", "journal_id")
+    def _compute_invoice_service_type(self):
+        for record in self:
+            record.service_type = INVOICE_OTHER
+            if record.journal_id == record.company_id.subscription_journal_id:
+                record.service_type = INVOICE_MEMBERSHIP
+            if record.pack_type.lower() != "none":
+                record.service_type = INVOICE_SELFCONSUMPTION
 
     @api.depends("invoice_line_ids")
     def _compute_pack_type(self):
@@ -124,4 +146,3 @@ class AccountMoveLine(models.Model):
         vals = super()._prepare_account_move_line(dest_move, dest_company)
         vals["name"] = self.name
         return vals
-
