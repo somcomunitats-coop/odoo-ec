@@ -45,6 +45,32 @@ class InvoiceInfo(BaseModel):
     pdf_url: str = Field(..., title="PDF Url", description="Url for pdf download")
 
 
+class InvoicePDFInfo(BaseModel):
+    model_config = ConfigDict(title="Invoice Info")
+    """
+    Schema for invoice information
+    """
+    id_: int = Field(
+        ...,
+        alias="id",
+        title="Id",
+        description="Id of the Invoice",
+    )
+
+    content: str = Field(
+        ..., title="Content", description="Raw pdf content of the invoice"
+    )
+
+
+class InvoicePDFInfoResponse(BaseResponse):
+    data: InvoicePDFInfo = Field(
+        None,
+        title="Response data",
+        description="Data returned when asking for the pdf of an invoice",
+    )
+    links: PaginationLinks
+
+
 class InvoiceInfoResponse(BaseResponse):
     data: InvoiceInfo = Field(
         None,

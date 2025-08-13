@@ -18,6 +18,8 @@ from ..schemas import (
     InvoiceInfo,
     InvoiceInfoListResponse,
     InvoiceInfoResponse,
+    InvoicePDFInfo,
+    InvoicePDFInfoResponse,
     MemberInfo,
     MemberInfoResponse,
     ProjectEnergyConsumedInfoListResponse,
@@ -377,3 +379,16 @@ class MemberApiService(Component):
         if not invoice:
             raise MissingError(f"Invoice with id {invoice_id} not found")
         return single_response(request, InvoiceInfoResponse, invoice)
+
+    @restapi.method(
+        [(["/invoices/<int:invoice_id>/download"], "GET")],
+        output_param=PydanticModel(InvoicePDFInfoResponse),
+    )
+    def download_invoice(self, invoice_id: int):
+        with api_info(self.env, self._work_on_model, InvoicePDFInfo) as component:
+            invoice_pdf = component.get_member_invoice_pdf_by_id(
+                self.env.user.partner_id, invoice_id
+            )
+        if not invoice_pdf:
+            raise MissingError(f"Invoice with id {invoice_id} not found")
+        return single_response(request, InvoicePDFInfoResponse, invoice_pdf)
