@@ -9,6 +9,7 @@ from ..schemas import (
     CommunityServiceInfo,
     CommunityServiceMetricsInfo,
     InvoiceInfo,
+    InvoicePDFInfo,
     MemberInfo,
 )
 
@@ -175,6 +176,21 @@ class PartnerApiInfo(Component):
                 base_url=self.env.company.get_base_url(), id=invoice.id
             ),
         )
+
+    def get_member_invoice_pdf_by_id(
+        self, partner: Partner, invoice_id: int
+    ) -> InvoiceInfo:
+        invoices = self._get_invoices(partner, invoice_id)
+        if not invoices:
+            return None
+        invoice = invoices[0]
+        report = self.env["ir.actions.report"]._get_report_from_name(
+            "account.report_invoice_with_payments"
+        )
+        pdf_content, _ = self.env["ir.actions.report"]._render_qweb_pdf(
+            report.report_name, invoice.id
+        )
+        return InvoicePDFInfo(id=invoice.id, content=pdf_content)
 
     def _get_communities(self, partner: Partner):
         domain = self._communities_domain(partner)
