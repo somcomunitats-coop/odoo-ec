@@ -1,3 +1,4 @@
+import base64
 from datetime import date
 from typing import List
 
@@ -190,7 +191,7 @@ class PartnerApiInfo(Component):
         pdf_content, _ = self.env["ir.actions.report"]._render_qweb_pdf(
             report.report_name, invoice.id
         )
-        return InvoicePDFInfo(id=invoice.id, content=pdf_content)
+        return InvoicePDFInfo(id=invoice.id, content=base64.b64encode(pdf_content))
 
     def _get_communities(self, partner: Partner):
         domain = self._communities_domain(partner)
