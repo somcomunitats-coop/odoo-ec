@@ -4,7 +4,10 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
 
-from odoo.addons.energy_communities.config import PACK_TYPE_NONE
+from odoo.addons.energy_communities.config import (
+    PACK_TYPE_NONE,
+    PACK_TYPE_SELFCONSUMPTION,
+)
 from odoo.addons.energy_communities.utils import (
     contract_utils,
     sale_order_utils,
@@ -44,16 +47,24 @@ class AccountMove(models.Model):
         selection=INVOICE_SERVICETYPE_LABELS,
         string="Service type of the invoice",
         compute="_compute_invoice_service_type",
-        store=True,
+        store=False,
     )
 
     @api.depends("pack_type", "company_id", "journal_id")
     def _compute_invoice_service_type(self):
+        selfconsumption_journal = (
+            self.env.ref("energy_selfconsumption.product_category_selfconsumption_pack")
+            .with_company(self.company_id)
+            .service_invoicing_sale_journal_id
+        )
         for record in self:
             record.service_type = INVOICE_OTHER
             if record.journal_id == record.company_id.subscription_journal_id:
                 record.service_type = INVOICE_MEMBERSHIP
-            if record.pack_type.lower() != "none":
+            if (
+                record.pack_type.lower() == PACK_TYPE_SELFCONSUMPTION
+                or record.journal_id == selfconsumption_journal
+            ):
                 record.service_type = INVOICE_SELFCONSUMPTION
 
     @api.depends("invoice_line_ids")
