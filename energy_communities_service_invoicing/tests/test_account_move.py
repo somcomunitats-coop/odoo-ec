@@ -9,8 +9,8 @@ class TestAccountMove(TransactionCase):
     def test_invoice_service_type(self):
         # Given a set of invoices
         test_cases = {
-            "selfconsumption": 16601,
-            "membership": 16189,
+            "selfconsumption": 18212,
+            "other": 16189,
         }
         # When we calculate its service type
         for expect_value, invoice_id in test_cases.items():

@@ -42,6 +42,7 @@ class PartnerApiInfo(Component):
     _member_invoices = lambda _, partner: [
         ("partner_id", "=", partner.id),
         ("state", "=", "posted"),
+        ("journal_id.type", "=", "sale"),
     ]
 
     def get_member_info(self, partner: Partner) -> MemberInfo:
