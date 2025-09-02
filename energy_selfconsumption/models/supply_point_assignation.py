@@ -258,8 +258,9 @@ class SupplyPointAssignation(models.Model):
                 ]
             )
 
-            project_supply_points = project_inscriptions.mapped("partner_id.supply_ids")
-
+            project_supply_points = project_inscriptions.mapped(
+                "partner_id.supply_ids"
+            ) + project_inscriptions.mapped("partner_id.owner_supply_ids")
             if record.supply_point_id not in project_supply_points:
                 raise ValidationError(
                     _(

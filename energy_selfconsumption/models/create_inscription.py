@@ -493,7 +493,9 @@ class CreateInscription(models.AbstractModel):
         partner,
     ):
         # Check if the owner is the same as the partner
-        if values.get("inscription_partner_id_vat") == values.get("supplypoint_owner_id_vat", False):
+        if values.get("inscription_partner_id_vat") == values.get(
+            "supplypoint_owner_id_vat", False
+        ):
             values["supplypoint_owner_id_same"] = "yes"
 
         """Obtains or creates the owner of the supply."""
