@@ -116,10 +116,10 @@ class ContractUtils(Component):
             "key"
         )
         self._set_discount_if_needed(metadata_keys_arr)
+        self._set_lines_initial_values()
         self._set_contract_recurrency(metadata_keys_arr)
         self._set_config_journal()
         self._set_resting_metadata_in_contract(metadata_keys_arr)
-        self._set_lines_initial_values()
         self.propagate_recurrency_values_to_contract()
 
     def _activate_contract_if_is_free(self):
