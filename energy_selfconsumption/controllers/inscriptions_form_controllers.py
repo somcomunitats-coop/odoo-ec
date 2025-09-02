@@ -433,7 +433,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             language_validation = self._validate_language(values)
             if language_validation:
                 return language_validation
-            
+
             # Validate same partner as owner
             same_partner_validation = self._validate_same_partner_as_owner(values)
             if same_partner_validation:
@@ -496,15 +496,21 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 }
 
         return None
-    
+
     def _validate_same_partner_as_owner(self, values):
         """
         Validate same partner as owner
         """
         if values.get("supplypoint_owner_id_same") == OWNER_SAME_NO:
-            if values.get("inscription_partner_id_vat") == values.get("supplypoint_owner_id_vat"):
+            if values.get("inscription_partner_id_vat") == values.get(
+                "supplypoint_owner_id_vat"
+            ):
                 return {
-                    "error_msgs": [_("You have selected ‘No’ to the question ‘The holder is the same partner’, in this case the NIF/CIF of the Holder cannot coincide with that of the partner.")],
+                    "error_msgs": [
+                        _(
+                            "You have selected ‘No’ to the question ‘The holder is the same partner’, in this case the NIF/CIF of the Holder cannot coincide with that of the partner."
+                        )
+                    ],
                     "global_error": True,
                 }
         return None
