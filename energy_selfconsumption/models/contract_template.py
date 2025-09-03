@@ -96,7 +96,8 @@ class ContractTemplate(models.Model):
             raise ValidationError("\n".join(errors))
 
         return True
-    
+
+
 class ContractAbstractContractLine(models.AbstractModel):
     _inherit = "contract.abstract.contract.line"
 

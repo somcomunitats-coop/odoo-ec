@@ -24,12 +24,15 @@ Main functionalities:
                 <form string="Contract Generation">
                     <!-- Warning and Instructions -->
                     <p>
-                        <b>Attention!</b> You are activating a project and thus activating its recurring billing.
+                        <b>Attention!</b> You are activating a project and thus activating its recurring billing. This action cannot be undone.
                     </p>
                     <p>
-                        To activate the recurring invoicing process, define the date from which you want
-                        every supply point associated with this project to start invoicing according to the
-                        established recurrence.
+                        To activate the recurring billing process, define the date from which billing will begin for each supply point, 
+                        according to the chosen recurrence. Examples: If the selected recurrence is quarterly prepaid and you want the 
+                        first invoice to be generated on August 1 and cover the period from August 1 to October 31 (August - September - October), 
+                        you must indicate August 1, 2023 as the start date. If the selected frequency is quarterly post-payment and you want the 
+                        first bill to be generated on October 31 and cover the period from August 1 to October 31 (August - September - October), 
+                        you must indicate 1/8/2### as the start date.
                     </p>
 
                     <!-- Configuration Fields -->

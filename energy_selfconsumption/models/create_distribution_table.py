@@ -71,7 +71,7 @@ class CreateDistributionTable(models.AbstractModel):
                 distribution_table, "Unexpected Error", str(e)
             )
             return False
-        
+
     def create_energy_selfconsumption_supply_point_assignation(
         self, values_list, distribution_table
     ):
@@ -98,7 +98,9 @@ class CreateDistributionTable(models.AbstractModel):
 
         try:
             self._validate_assignation_values(values_list)
-            success = self._create_energy_selfconsumption_supply_point_assignation(values_list, distribution_table)
+            success = self._create_energy_selfconsumption_supply_point_assignation(
+                values_list, distribution_table
+            )
 
             if success:
                 self._send_success_notification(distribution_table, len(values_list))
@@ -253,8 +255,10 @@ class CreateDistributionTable(models.AbstractModel):
                 f"Query: {query}\nError: {str(e)}",
             )
             return False
-        
-    def _create_energy_selfconsumption_supply_point_assignation(self, values_list, distribution_table):
+
+    def _create_energy_selfconsumption_supply_point_assignation(
+        self, values_list, distribution_table
+    ):
         """
         Create supply point assignations using bulk SQL insert
 
@@ -267,13 +271,15 @@ class CreateDistributionTable(models.AbstractModel):
         """
         try:
             for values in values_list:
-                self.env["energy_selfconsumption.supply_point_assignation"].create({
-                    "distribution_table_id": distribution_table.id,
-                    "supply_point_id": values["supply_point_id"],
-                    "coefficient": float(values["coefficient"]),
-                    "energy_shares": float(values["energy_shares"]),
-                    "company_id": values["company_id"],
-                })
+                self.env["energy_selfconsumption.supply_point_assignation"].create(
+                    {
+                        "distribution_table_id": distribution_table.id,
+                        "supply_point_id": values["supply_point_id"],
+                        "coefficient": float(values["coefficient"]),
+                        "energy_shares": float(values["energy_shares"]),
+                        "company_id": values["company_id"],
+                    }
+                )
             return True
         except Exception as e:
             _logger.error(f"Error creating supply point assignations: {e}")

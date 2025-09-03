@@ -98,6 +98,11 @@ Main components:
             <field name="uom_id" ref="energy_project.kw_uom"/>
             <field name="uom_po_id" ref="energy_project.kw_uom"/>
             <field name="company_id" eval="False"/>
+            <field name="description_sale" >CUPS: #code#
+Owner: #owner_id#
+Invoicing period: #START# - #END#
+CAU: #cau
+            </field>
         </record>
 
         <!-- Service Product: Power Acquired -->
@@ -112,6 +117,16 @@ Main components:
             <field name="uom_id" ref="energy_project.kw_uom"/>
             <field name="uom_po_id" ref="energy_project.kw_uom"/>
             <field name="company_id" eval="False"/>
+            <field name="description_sale" >CUPS: #code#
+Owner: #owner_id#
+Invoicing period: #START# - #END#
+CAU: #cau#
+Total installed nominal power (kW): #power#
+Partition coefficient: #coefficient#
+Daily nominal power acquired: #power# kWn * #coefficient# = #power_acquired# kWn/day
+Days to be invoiced: #days_invoiced# days
+Total amount invoiced:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount#
+            </field>
         </record>
 
         <!-- Service Product: Energy Custom -->
@@ -126,6 +141,10 @@ Main components:
             <field name="uom_id" ref="energy_project.kw_uom"/>
             <field name="uom_po_id" ref="energy_project.kw_uom"/>
             <field name="company_id" eval="False"/>
+            <field name="description_sale" >CUPS: #code#
+Owner: #owner_id#
+Invoicing period: #START# - #END#
+            </field>
         </record>
         
     </data>
