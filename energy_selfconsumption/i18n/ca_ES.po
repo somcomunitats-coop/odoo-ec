@@ -172,10 +172,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
 msgid ""
 "<b>Attention!</b> You are activating a project and thus activating its "
-"recurring billing."
+"recurring billing. This action cannot be undone."
 msgstr ""
 "<b> Atenció! </b> Esteu activant un projecte i, per tant, activeu la seva "
-"facturació recurrent."
+"facturació recurrent. Aquesta acció no es podrà revertir."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
@@ -5791,13 +5791,19 @@ msgstr "Títol"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
 msgid ""
-"To activate the recurring invoicing process, define the date from which you want\n"
-"                        every supply point associated with this project to start invoicing according to the\n"
-"                        established recurrence."
+"To activate the recurring billing process, define the date from which billing will begin for each supply point, \n"
+"                        according to the chosen recurrence. Examples: If the selected recurrence is quarterly prepaid and you want the \n"
+"                        first invoice to be generated on August 1 and cover the period from August 1 to October 31 (August - September - October), \n"
+"                        you must indicate August 1, 2023 as the start date. If the selected frequency is quarterly post-payment and you want the \n"
+"                        first bill to be generated on October 31 and cover the period from August 1 to October 31 (August - September - October), \n"
+"                        you must indicate 1/8/2### as the start date."
 msgstr ""
-"Per activar el procés de facturació recurrent, definiu la data de la qual voleu\n"
-"                        cada punt de subministrament associat a aquest projecte per iniciar la facturació segons el\n"
-"                        recurrència establerta."
+"Per activar el procés de facturació recurrent, defineix la data a partir de la qual s'iniciarà la facturació per a cada punt de subministrament, \n"
+"                        segons la recurrència triada. Exemples: Si la recurrència seleccionada és trimestral pre-pagament i es desitja que la 1a \n"
+"                        factura es generi amb data de l'1 Agost i cobreixi el període d'1 d'Agost a 31 d'Octubre (Agost - Setembre - Ocubre ), \n"
+"                        ha d'indicar-se com a data d'inici el 1/8/2###. Si la periodicitat seleccionada és trimestral post-pago i es desitja que la 1a \n"
+"                        factura es generi amb data del 31 d'Octubre i cobreixi el període d'1 d'Agost a 31 d'Octubre (Agost - Setembre - Ocubre ), \n"
+"                        ha d'indicar-se com a data d'inici el 1/8/2###."
 
 #. module: energy_selfconsumption
 #. odoo-python
