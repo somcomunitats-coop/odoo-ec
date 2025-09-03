@@ -21,6 +21,34 @@ class TestServiceInvoicingComponents(
         self.maxDiff = None
 
     def test_service_invoicing_wizard_creation_ok(self):
+        print("Test service invoicing wizard creation ok")
+        company = self.env.ref("energy_communities.coordinator_company_1")
+        journal = self.env["account.journal"].search(
+            [
+                ("company_id", "=", company.id),
+                ("name", "=", "Miscellaneous Operations"),
+            ],
+            limit=1,
+        )
+        product_category_platform_pack = self.env.ref(
+            "energy_communities_service_invoicing.product_category_platform_pack"
+        ).with_company(company)
+        print("Product category platform pack:")
+        print(product_category_platform_pack.name)
+        print(product_category_platform_pack.id)
+        print("Journal:")
+        print(journal.id)
+        # product_category_platform_pack.write(
+        #     {
+        #         "service_invoicing_sale_journal_id": journal.id,
+        #     }
+        # )
+        print("Product category platform pack:")
+        print(product_category_platform_pack.service_invoicing_sale_journal_id.id)
+        self.assertEqual(
+            product_category_platform_pack.service_invoicing_sale_journal_id.id,
+            journal.id,
+        )
         # given a service invoicing contract created from wizard
         creation_wizard = self._get_service_invoicing_creation_wizard()
         contract_view = creation_wizard.execute_create()
@@ -38,6 +66,15 @@ class TestServiceInvoicingComponents(
         self.assertEqual(contract.discount, creation_wizard.discount)
         self.assertEqual(contract.recurring_next_date, creation_wizard.execution_date)
         self.assertEqual(contract.pack_type, PACK_TYPE_PLATFORM)
+
+        journal = self.env["account.journal"].search(
+            [
+                ("company_id", "=", creation_wizard.company_id.id),
+                ("name", "=", "Miscellaneous Operations"),
+            ],
+            limit=1,
+        )
+        self.assertEqual(contract.journal_id, journal)
 
     def test_service_invoicing_component_creation_metadata_ok(self):
         self._creation_workflow_meta_persistence_test(
