@@ -12,9 +12,26 @@
     <field name="email">oecoop@fake.com</field>
   </record>
 
+  <record id="coordinator_company_2" model="res.company">
+    <field name="name">Coordinator company 2</field>
+    <field name="hierarchy_level">coordinator</field>
+    <field name="parent_id" ref="base.main_company" />
+    <field name="email">somenergia@fake.com</field>
+  </record>
+
+  <function name="try_loading" model="account.chart.template">
+    <value eval="[ref('l10n_es.account_chart_template_pymes')]" />
+    <value eval="obj(ref('base.main_company'))" model="res.company" />
+  </function>
+
   <function name="try_loading" model="account.chart.template">
     <value eval="[ref('l10n_es.account_chart_template_pymes')]" />
     <value eval="obj(ref('coordinator_company_1'))" model="res.company" />
+  </function>
+
+  <function name="try_loading" model="account.chart.template">
+    <value eval="[ref('l10n_es.account_chart_template_pymes')]" />
+    <value eval="obj(ref('coordinator_company_2'))" model="res.company" />
   </function>
 
   <record

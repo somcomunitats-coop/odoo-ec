@@ -169,10 +169,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
 msgid ""
 "<b>Attention!</b> You are activating a project and thus activating its "
-"recurring billing."
+"recurring billing. This action cannot be undone."
 msgstr ""
 "<b>¡Atención!</b> Estás activando un proyecto y activando así su facturación"
-" recurrente."
+" recurrente. Esta acción no se podrá deshacer."
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.power_sharing_agreement_template
@@ -455,7 +455,7 @@ msgid ""
 "<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</span>\n"
 "                <span groups=\"account.group_show_line_subtotals_tax_included\">Total Price</span>"
 msgstr ""
-"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Cantidad</span>\n"
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Importe</span>\n"
 "                                    <span groups=\"account.group_show_line_subtotals_tax_included\">Precio Total</span>"
 
 #. module: energy_selfconsumption
@@ -2153,7 +2153,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_form_fields_template
 msgid "Enrollment in the shared self-consumption project of the"
-msgstr "Inscripción en el proyecto de autoconsumo compartido de"
+msgstr "Inscripción en el proyecto de autoconsumo compartido de la CE:"
 
 #. module: energy_selfconsumption
 #. odoo-python
@@ -5768,13 +5768,19 @@ msgstr "Título"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
 msgid ""
-"To activate the recurring invoicing process, define the date from which you want\n"
-"                        every supply point associated with this project to start invoicing according to the\n"
-"                        established recurrence."
+"To activate the recurring billing process, define the date from which billing will begin for each supply point, \n"
+"                        according to the chosen recurrence. Examples: If the selected recurrence is quarterly prepaid and you want the \n"
+"                        first invoice to be generated on August 1 and cover the period from August 1 to October 31 (August - September - October), \n"
+"                        you must indicate August 1, 2023 as the start date. If the selected frequency is quarterly post-payment and you want the \n"
+"                        first bill to be generated on October 31 and cover the period from August 1 to October 31 (August - September - October), \n"
+"                        you must indicate 1/8/2### as the start date."
 msgstr ""
-"Para activar el proceso de facturación recurrente, defina la fecha a partir de la cual desea\n"
-"                        cada punto de suministro asociado a este proyecto para iniciar la facturación de acuerdo con la\n"
-"                        recurrencia establecida."
+"Para activar el proceso de facturación recurrente, define la fecha a partir de la cual se iniciará la facturación para cada punto de suministro, \n"
+"                        según la recurrencia escogida. Ejemplos: Si la recurrencia seleccionada es trimestral pre-pago y se desea que la 1ª factura \n"
+"                        se genere con fecha del 1 Agosto y cubra el periodo de 1 de Agosto a 31 de Octubre (Agosto - Septiembre - Ocubre ), \n"
+"                        debe indicarse como fecha de inicio el 1/8/2###. Si la periodicidad seleccionada es trimestral post-pago y se desea que la \n"
+"                        1ª factura se genere con fecha del 31 de Octubre y cubra el periodo de 1 de Agosto a 31 de Octubre (Agosto - Septiembre - Ocubre ), \n"
+"                        debe indicarse como fecha de inicio el 1/8/2###."
 
 #. module: energy_selfconsumption
 #. odoo-python
@@ -6302,6 +6308,56 @@ msgid ""
 "Daily nominal power acquired: #power# kWn * #coefficient# = #power_acquired# kWn/day\n"
 "Days to be invoiced: #days_invoiced# days\n"
 "Total amount invoiced:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount#"
+msgstr ""
+"CUPS: #code#\n"
+"Propietario: #owner_id#\n"
+"Periodo de facturación: #START# - #END#\n"
+"CAU: #cau#\n"
+"Potencia nominal total instalada (kW): #power#\n"
+"Coeficiente de reparto: #coefficient#\n"
+"Potencia nominal diaria adquirida: #power# kWn * #coefficient# = #power_acquired# kWn/day\n"
+"Días a facturar: #days_invoiced# days\n"
+"Importe total facturado:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount#"
+
+#. module: energy_selfconsumption
+#: model:product.template,description_sale:energy_selfconsumption.product_product_energy_custom_product_template
+msgid ""
+"CUPS: #code#\n"
+"Owner: #owner_id#\n"
+"Invoicing period: #START# - #END#\n"
+"            "
+msgstr ""
+"CUPS: #code#\n"
+"Propietario: #owner_id#\n"
+"Periodo de facturación: #START# - #END#"
+
+#. module: energy_selfconsumption
+#: model:product.template,description_sale:energy_selfconsumption.product_product_energy_delivered_product_template
+msgid ""
+"CUPS: #code#\n"
+"Owner: #owner_id#\n"
+"Invoicing period: #START# - #END#\n"
+"CAU: #cau\n"
+"            "
+msgstr ""
+"CUPS: #code#\n"
+"Propietario: #owner_id#\n"
+"Periodo de facturación: #START# - #END#\n"
+"CAU: #cau#"
+
+#. module: energy_selfconsumption
+#: model:product.template,description_sale:energy_selfconsumption.product_product_power_acquired_product_template
+msgid ""
+"CUPS: #code#\n"
+"Owner: #owner_id#\n"
+"Invoicing period: #START# - #END#\n"
+"CAU: #cau#\n"
+"Total installed nominal power (kW): #power#\n"
+"Partition coefficient: #coefficient#\n"
+"Daily nominal power acquired: #power# kWn * #coefficient# = #power_acquired# kWn/day\n"
+"Days to be invoiced: #days_invoiced# days\n"
+"Total amount invoiced:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount#\n"
+"            "
 msgstr ""
 "CUPS: #code#\n"
 "Propietario: #owner_id#\n"

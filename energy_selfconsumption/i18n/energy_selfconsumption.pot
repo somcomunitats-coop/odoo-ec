@@ -160,7 +160,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
 msgid ""
 "<b>Attention!</b> You are activating a project and thus activating its "
-"recurring billing."
+"recurring billing. This action cannot be undone."
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -5437,9 +5437,12 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.contract_generation_wizard_form_view
 msgid ""
-"To activate the recurring invoicing process, define the date from which you want\n"
-"                        every supply point associated with this project to start invoicing according to the\n"
-"                        established recurrence."
+"To activate the recurring billing process, define the date from which billing will begin for each supply point, \n"
+"                        according to the chosen recurrence. Examples: If the selected recurrence is quarterly prepaid and you want the \n"
+"                        first invoice to be generated on August 1 and cover the period from August 1 to October 31 (August - September - October), \n"
+"                        you must indicate August 1, 2023 as the start date. If the selected frequency is quarterly post-payment and you want the \n"
+"                        first bill to be generated on October 31 and cover the period from August 1 to October 31 (August - September - October), \n"
+"                        you must indicate 1/8/2### as the start date."
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -5941,4 +5944,38 @@ msgid ""
 "Daily nominal power acquired: #power# kWn * #coefficient# = #power_acquired# kWn/day\n"
 "Days to be invoiced: #days_invoiced# days\n"
 "Total amount invoiced:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount#"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:product.template,description_sale:energy_selfconsumption.product_product_energy_custom_product_template
+msgid ""
+"CUPS: #code#\n"
+"Owner: #owner_id#\n"
+"Invoicing period: #START# - #END#\n"
+"            "
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:product.template,description_sale:energy_selfconsumption.product_product_energy_delivered_product_template
+msgid ""
+"CUPS: #code#\n"
+"Owner: #owner_id#\n"
+"Invoicing period: #START# - #END#\n"
+"CAU: #cau\n"
+"            "
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:product.template,description_sale:energy_selfconsumption.product_product_power_acquired_product_template
+msgid ""
+"CUPS: #code#\n"
+"Owner: #owner_id#\n"
+"Invoicing period: #START# - #END#\n"
+"CAU: #cau#\n"
+"Total installed nominal power (kW): #power#\n"
+"Partition coefficient: #coefficient#\n"
+"Daily nominal power acquired: #power# kWn * #coefficient# = #power_acquired# kWn/day\n"
+"Days to be invoiced: #days_invoiced# days\n"
+"Total amount invoiced:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount#\n"
+"            "
 msgstr ""
