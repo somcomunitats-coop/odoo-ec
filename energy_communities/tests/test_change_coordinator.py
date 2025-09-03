@@ -9,10 +9,13 @@ class TestChangeCoordinator(TransactionCase):
     def setUp(self):
         super().setUp()
         self.maxDiff = None
-        # TODO: We must start using demo data for the test
-        self.community = self.env["res.company"].browse(3)
+        self.community = self.env.ref(
+            "energy_communities.energy_community_company_2_wizard"
+        ).new_company_id
         self.origin_coordinator = self.community.parent_id
-        self.destination_coordinator = self.env["res.company"].browse(21)
+        self.destination_coordinator = self.env.ref(
+            "energy_communities.coordinator_company_2"
+        )
 
     # Test main method inside wizard
     def test_change_coordinator(self):

@@ -147,7 +147,7 @@ class TestSelfconsumptionServiceInvoicing(
             {
                 "selfconsumption_id": self.selfconsumption.id,
                 "payment_mode": self.ref(
-                    "account_banking_sepa_direct_debit.payment_mode_inbound_sepa_dd1"
+                    "energy_communities_cooperator.community_1_payment_mode"
                 ),
             }
         )
