@@ -176,7 +176,6 @@ class ContractUtils(Component):
                 self._recompute_fixed_recurrence_params(line)
 
     def _set_config_journal(self):
-        print("Set config journal")
         # config journal
         pack_product = self.env["product.template"].search(
             [
@@ -188,19 +187,10 @@ class ContractUtils(Component):
             ],
             limit=1,
         )
-        print("Pack product:")
-        print(pack_product.name)
-        print(pack_product.id)
         if pack_product:
             sale_journal_id = pack_product.categ_id.with_context(
                 company_id=self.work.record.company_id.id
             ).service_invoicing_sale_journal_id
-            print("Categ id:")
-            print(pack_product.categ_id.id)
-            print("Categ name:")
-            print(pack_product.categ_id.name)
-            print("Sale journal id:")
-            print(sale_journal_id.id)
             if sale_journal_id:
                 self.work.record.write({"journal_id": sale_journal_id.id})
 

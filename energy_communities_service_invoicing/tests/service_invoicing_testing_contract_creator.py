@@ -12,7 +12,6 @@ class ServiceInvoicingTestingContractCreator:
     _name = "energy_communities_service_invoicing.service_invoicing_testing_contract_creator"
 
     def _get_service_invoicing_creation_wizard(self):
-        print("Get service invoicing creation wizard")
         return self.env["service.invoicing.action.create.wizard"].create(
             {
                 "execution_date": datetime.now(),
