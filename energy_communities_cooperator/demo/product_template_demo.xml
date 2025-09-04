@@ -4,7 +4,7 @@
     <field name="name">Company 1 share</field>
     <field name="detailed_type">service</field>
     <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id.id"/>
-    <field name="payment_mode_id" ref="account_banking_sepa_direct_debit.payment_mode_inbound_sepa_dd1" />
+    <field name="payment_mode_id" ref="community_1_payment_mode" />
   </record>
 
   <record id="cooperator.product_template_share_type_2_demo" model="product.template">
