@@ -515,12 +515,6 @@ class Selfconsumption(models.Model):
                     "project_id": self.id,
                     "company_id": self.company_id.id,
                 }
-                # config journal if defined
-                sale_journal_id = pack.categ_id.with_context(
-                    company_id=self.company_id.id
-                ).service_invoicing_sale_journal_id
-                if sale_journal_id:
-                    so_metadata["journal_id"] = sale_journal_id.id
                 # create service invoicing
                 with sale_order_utils(self.env) as component:
                     service_invoicing_id = component.create_service_invoicing_initial(

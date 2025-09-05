@@ -4,10 +4,19 @@
     model="product.category"
   >
     <value model="product.category" eval="ref('energy_communities_service_invoicing.product_category_platform_pack')"/>
-    <value model="res.company" eval="obj(ref('energy_communities.coordinator_company_1'))"/>
-    <value eval="{'service_invoicing_sale_journal_id': 19}" />
+    <value model="res.company" eval="obj(ref('base.main_company'))"/>
+    <value eval="{'service_invoicing_sale_journal_id': 11}" />
   </function>
-  
+
+  <function
+    name="write_with_company"
+    model="product.category"
+  >
+    <value model="product.category" eval="ref('energy_communities_service_invoicing.product_category_platform_pack')"/>
+    <value model="res.company" eval="obj(ref('base.main_company'))"/>
+    <value eval="{'service_invoicing_sale_journal_id': 11}" />
+  </function>
+
   # PLATFORM SERVICES
   <record id="demo_platform_service_product_template" model="product.template">
       <field name="name">Platform service product</field>
