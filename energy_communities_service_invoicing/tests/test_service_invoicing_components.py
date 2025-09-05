@@ -21,18 +21,19 @@ class TestServiceInvoicingComponents(
         self.maxDiff = None
 
     def test_service_invoicing_wizard_creation_ok(self):
-        company = self.env.ref("energy_communities.coordinator_company_1")
+        company = self.env.ref("base.main_company")
         product_category_platform_pack = self.env.ref(
             "energy_communities_service_invoicing.product_category_platform_pack"
         ).with_company(company)
         self.assertEqual(
-            product_category_platform_pack.service_invoicing_sale_journal_id.id, 19
+            product_category_platform_pack.service_invoicing_sale_journal_id.id, 11
         )
         # given a service invoicing contract created from wizard
         creation_wizard = self._get_service_invoicing_creation_wizard()
         contract_view = creation_wizard.execute_create()
         contract = self.env["contract.contract"].browse(int(contract_view["res_id"]))
         # the contract is defined based on wizard values
+        self.assertTrue(contract.company_id, company)
         self.assertTrue(bool(contract))
         self.assertEqual(contract.status, "paused")
         self.assertEqual(contract.date_start, creation_wizard.execution_date)
@@ -45,7 +46,7 @@ class TestServiceInvoicingComponents(
         self.assertEqual(contract.discount, creation_wizard.discount)
         self.assertEqual(contract.recurring_next_date, creation_wizard.execution_date)
         self.assertEqual(contract.pack_type, PACK_TYPE_PLATFORM)
-        self.assertEqual(contract.journal_id.id, 19)
+        self.assertEqual(contract.journal_id.id, 11)
 
     def test_service_invoicing_component_creation_metadata_ok(self):
         self._creation_workflow_meta_persistence_test(

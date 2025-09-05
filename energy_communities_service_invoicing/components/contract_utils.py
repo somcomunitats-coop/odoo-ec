@@ -188,8 +188,8 @@ class ContractUtils(Component):
             limit=1,
         )
         if pack_product:
-            sale_journal_id = pack_product.categ_id.with_context(
-                company_id=self.work.record.company_id.id
+            sale_journal_id = pack_product.categ_id.with_company(
+                self.work.record.company_id
             ).service_invoicing_sale_journal_id
             if sale_journal_id:
                 self.work.record.write({"journal_id": sale_journal_id.id})
@@ -206,7 +206,8 @@ class ContractUtils(Component):
             f_contract.write(update_dict)
 
     def _set_resting_metadata_in_contract(self, metadata_keys_arr):
-        fields_to_ignore = list(_RECURRENCY_VALUES.keys()) + ["discount"]
+        # company_id will trigger journal_id recomputation so we must ignore it on any contract write method
+        fields_to_ignore = list(_RECURRENCY_VALUES.keys()) + ["discount", "company_id"]
         contract_update_dict = {"status": "paused"}
         for meta_key in metadata_keys_arr:
             if meta_key not in fields_to_ignore:
