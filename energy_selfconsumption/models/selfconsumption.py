@@ -514,6 +514,9 @@ class Selfconsumption(models.Model):
                     "recurring_invoicing_type": self.recurring_invoicing_type,
                     "project_id": self.id,
                     "company_id": self.company_id.id,
+                    "mandate_id": inscription_id.mandate_id.id
+                    if inscription.mandate_id
+                    else None,
                 }
                 # create service invoicing
                 with sale_order_utils(self.env) as component:
