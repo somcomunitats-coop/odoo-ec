@@ -27,10 +27,10 @@ Main demo data includes:
       eval="obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id"
       model="account.multicompany.easy.creation.wiz"
     />
-    <!-- Atention if community 1 id != 4 -->
+    <!-- Atention if community 1 id != 5 -->
     <field
       name="default_account_id"
-      eval="obj(ref('l10n_es.4_account_common_7050'))"
+      eval="obj(ref('l10n_es.5_account_common_7050'))"
       model="account.account"
     />
     <field name="refund_sequence" eval="True"/>
@@ -66,10 +66,10 @@ Main demo data includes:
       eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_company_id"
       model="account.multicompany.easy.creation.wiz"
     />
-    <!-- Atention if community 2 id != 5 -->
+    <!-- Atention if community 2 id != 6 -->
     <field
       name="default_account_id"
-      eval="obj(ref('l10n_es.5_account_common_7050'))"
+      eval="obj(ref('l10n_es.6_account_common_7050'))"
       model="account.account"
     />
     <field name="refund_sequence" eval="True"/>

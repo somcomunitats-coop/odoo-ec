@@ -147,7 +147,7 @@ class TestSelfconsumptionServiceInvoicing(
             {
                 "selfconsumption_id": self.selfconsumption.id,
                 "payment_mode": self.ref(
-                    "energy_communities_cooperator.community_1_payment_mode"
+                    "energy_communities_service_invoicing.community_1_payment_mode"
                 ),
             }
         )
