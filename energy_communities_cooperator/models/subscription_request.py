@@ -33,6 +33,23 @@ class SubscriptionRequest(models.Model):
         readonly=True,
         store=True,
     )
+    share_product_categ_id = fields.Many2one(
+        "product.category",
+        string="Share type category",
+        compute="_compute_share_product_categ_id",
+        store=True,
+    )
+
+    @api.depends("share_product_id")
+    def _compute_share_product_categ_id(self):
+        for record in self:
+            record.share_product_categ_id = False
+            if record.share_product_id.categ_id:
+                record.share_product_categ_id = record.share_product_id.categ_id.id
+
+    def compute_share_product_categ_id(self):
+        self._compute_share_product_categ_id()
+        return True
 
     @api.onchange("partner_id")
     def onchange_partner(self):
