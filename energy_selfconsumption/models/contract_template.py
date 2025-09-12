@@ -1,9 +1,8 @@
 from odoo import _, api, fields, models
 
-from odoo.addons.energy_communities.config import (
-    PACK_TYPE_NONE,
+from odoo.addons.energy_communities_service_invoicing.config import (
     PACK_TYPE_SELFCONSUMPTION,
-    PACK_TYPE_SELFCONSUMPTION_PROD_CATEG_XMLID,
+    SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF,
 )
 
 
@@ -47,7 +46,7 @@ class ContractTemplate(models.Model):
 
         # Get self-consumption product category
         category = self.env.ref(
-            PACK_TYPE_SELFCONSUMPTION_PROD_CATEG_XMLID,
+            SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF,
             raise_if_not_found=False,
         )
 

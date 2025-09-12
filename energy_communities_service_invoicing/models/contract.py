@@ -4,16 +4,14 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
 
-from odoo.addons.energy_communities.config import (
-    PACK_TYPE_NONE,
-    PACK_TYPE_PLATFORM,
-)
 from odoo.addons.energy_communities.utils import contract_utils
 
 from ..config import (
     CONTRACT_CLOSING_ACTION_DEFAULT_VALUE,
     CONTRACT_CLOSING_ACTION_VALUES,
     CONTRACT_STATUS_VALUES,
+    PACK_TYPE_NONE,
+    PACK_TYPE_PLATFORM,
 )
 from ..utils import (
     get_existing_open_pack_contract,

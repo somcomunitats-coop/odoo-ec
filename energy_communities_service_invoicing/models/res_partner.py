@@ -1,8 +1,6 @@
 from odoo import _, api, fields, models
 
-from odoo.addons.energy_communities.config import PACK_TYPE_PLATFORM
-
-from ..config import PACK_CONTRACT_STATUS_VALUES
+from ..config import PACK_CONTRACT_STATUS_VALUES, PACK_TYPE_PLATFORM
 
 
 class ResPartner(models.Model):

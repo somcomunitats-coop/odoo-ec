@@ -3,15 +3,17 @@ from odoo.tests import common, tagged
 from odoo.addons.energy_communities.config import (
     CHART_OF_ACCOUNTS_GENERAL_REF,
     CHART_OF_ACCOUNTS_NON_PROFIT_REF,
-    PACK_TYPE_SELFCONSUMPTION_PROD_CATEG_XMLID,
+)
+from odoo.addons.energy_communities_cooperator.config import (
+    COOP_SHARE_PRODUCT_CATEG_REF,
 )
 
 from ..config import (
-    COOP_ACCOUNT_REF_GENERAL,
+    COOP_ACCOUNT_REF,
     COOP_ACCOUNT_REF_IN_COMPANY,
     COOP_ACCOUNT_REF_NONPROFIT,
-    COOP_SHARE_PRODUCT_CATEG_REF,
     SELFCONSUMPTION_ACCOUNT_REF,
+    SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF,
 )
 
 
@@ -192,7 +194,7 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
 
     def test__coop_journal_and_accounts_ok(self):
         self._test__coop_journal_and_accounts_ok_case(
-            self.coop_company, COOP_ACCOUNT_REF_GENERAL
+            self.coop_company, COOP_ACCOUNT_REF
         )
         self._test__coop_journal_and_accounts_ok_case(
             self.nonprofit_company, COOP_ACCOUNT_REF_NONPROFIT
@@ -219,18 +221,6 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         self.assertEqual(
             self.env.ref(COOP_SHARE_PRODUCT_CATEG_REF)
             .with_company(new_company)
-            .service_invoicing_sale_journal_id,
-            new_company.subscription_journal_id,
-        )
-        self.assertEqual(
-            self.env.ref(COOP_SHARE_PRODUCT_CATEG_REF)
-            .with_company(new_company)
-            .service_invoicing_purchase_journal_id,
-            new_company.subscription_journal_id,
-        )
-        self.assertEqual(
-            self.env.ref(COOP_SHARE_PRODUCT_CATEG_REF)
-            .with_company(new_company)
             .property_account_income_categ_id,
             coop_account,
         )
@@ -248,9 +238,7 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         )
 
     def _test__selfconsumption_journal_configuration_ok_case(self, new_company):
-        selconsumption_pack_categ = self.env.ref(
-            PACK_TYPE_SELFCONSUMPTION_PROD_CATEG_XMLID
-        )
+        selconsumption_pack_categ = self.env.ref(SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF)
         selfconsumption_sale_journal = selconsumption_pack_categ.with_company(
             new_company
         ).service_invoicing_sale_journal_id
@@ -271,3 +259,9 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             self.env.ref(SELFCONSUMPTION_ACCOUNT_REF.format(new_company.id)),
         )
         self.assertTrue(selfconsumption_sale_journal.refund_sequence)
+
+    # def test__product_categs_configuration_ok(self):
+    #     self._test__product_categs_configuration_ok_case(self.coop_company)
+    #     self._test__product_categs_configuration_ok_case(self.nonprofit_company)
+
+    # def _test__product_categs_configuration_ok_case(self, new_company):

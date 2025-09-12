@@ -3,17 +3,11 @@ import logging
 from odoo import _, api, fields, models
 
 from odoo.addons.component.exception import RegistryNotReadyError
-from odoo.addons.energy_communities.config import (
-    PACK_TYPE_SELFCONSUMPTION_PROD_CATEG_XMLID,
-)
 from odoo.addons.energy_communities.utils import account_utils, product_utils
 
 from ..config import (
-    COOP_ACCOUNT_REF_GENERAL,
-    COOP_ACCOUNT_REF_IN_COMPANY,
-    COOP_ACCOUNT_REF_NONPROFIT,
-    COOP_SHARE_PRODUCT_CATEG_REF,
     SELFCONSUMPTION_ACCOUNT_REF,
+    SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF,
 )
 
 _logger = logging.getLogger(__name__)
@@ -42,11 +36,12 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "sale",
                     "AFC",
                     SELFCONSUMPTION_ACCOUNT_REF,
-                    PACK_TYPE_SELFCONSUMPTION_PROD_CATEG_XMLID,
+                    SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF,
                 )
             with product_utils(self.env) as product_component:
                 # create company pricelist
                 product_component.create_company_pricelist(self.new_company_id)
+                product_component.setup_company_product_categs(self.new_company_id)
         except Exception as e:
             if isinstance(e, RegistryNotReadyError):
                 _logger.warning(

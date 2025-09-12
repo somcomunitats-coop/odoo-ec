@@ -12,7 +12,12 @@ from odoo.addons.energy_communities.config import (
     STATE_NONE,
     STATE_PAUSED,
 )
+from odoo.addons.energy_communities_cooperator.config import (
+    COOP_SHARE_PRODUCT_CATEG_REF,
+    COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
+)
 
+# Service Invoicing
 CONTRACT_STATUS_PAUSED = STATE_PAUSED
 CONTRACT_STATUS_IN_PROGRESS = STATE_IN_PROGRESS
 CONTRACT_STATUS_CLOSED_PLANNED = STATE_CLOSED_PLANNED
@@ -67,19 +72,6 @@ CONTRACT_CLOSING_ACTION_VALUES = [
 
 CONTRACT_CLOSING_ACTION_DEFAULT_VALUE = CONTRACT_ACTION_NONE
 
-PACK_PRODUCT_PARENT_CATEG_REF = "energy_communities.product_category_pack"
-SERVICE_PRODUCT_PARENT_CATEG_REF = "energy_communities.product_category_service"
-COOP_SHARE_PRODUCT_CATEG_REF = "cooperator.product_category_company_share"
-SHARE_PRODUCTS_CATEG_REFS = [
-    COOP_SHARE_PRODUCT_CATEG_REF,
-    "energy_communities.product_category_share_recurring_fee_pack",
-    "energy_communities.product_category_company_voluntary_share",
-    "energy_communities_cooperator.product_category_company_voluntary_share",
-]
-ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS = [
-    "energy_communities.product_category_recurring_fee_pack"
-]
-
 RECURRING_RULE_MONTHLY = "monthly"
 RECURRING_RULE_MONTHLY_LAST_DAY = "monthlylastday"
 
@@ -87,6 +79,7 @@ DEFAULT_PRICELIST_BASE_PRICE = "standard_price"
 DEFAULT_PRICELIST_COMPUTE_FIXED = "fixed"
 DEFAULT_PRICELIST_DISCOUNT_POLICY = "without_discount"
 
+# Invoice values
 INVOICE_SELFCONSUMPTION = "selfconsumption"
 INVOICE_MEMBERSHIP = "membership"
 INVOICE_OTHER = "other"
@@ -96,6 +89,19 @@ INVOICE_SERVICETYPE_LABELS = [
     (INVOICE_OTHER, _("Other")),
 ]
 
+# Accounting
+COOP_ACCOUNT_REF = "l10n_es.{}_account_pymes_100"
+COOP_ACCOUNT_REF_NONPROFIT = "l10n_es.{}_account_assoc_720"
+COOP_ACCOUNT_REF_IN_COMPANY = "l10n_es.{}_account_common_4400"
+SELFCONSUMPTION_ACCOUNT_REF = "l10n_es.{}_account_common_7050"
+SELFCONSUMPTION_ACCOUNT_REF_EXPENSE = "l10n_es.{}_account_common_607"
+PLATFORM_ACCOUNT_REF = "l10n_es.{}_account_common_7050"
+PLATFORM_ACCOUNT_REF_EXPENSE = "l10n_es.{}_account_common_607"
+RECURRING_FEE_ACCOUNT_REF = "l10n_es.{}_account_common_7050"
+RECURRING_FEE_ACCOUNT_REF_EXPENSE = "l10n_es.{}_account_common_607"
+RECURRING_FEE_ACCOUNT_REF_NONPROFIT = "l10n_es.{}_account_assoc_720"
+
+# Packs & Services
 FEE_PACKS = [
     PACK_TYPE_RECURRING_FEE_PROD_CATEG_XMLID,
     PACK_TYPE_SHARE_RECURRING_FEE_PROD_CATEG_XMLID,
@@ -104,7 +110,77 @@ ALL_PACKS = FEE_PACKS + [
     PACK_TYPE_PLATFORM_PROD_CATEG_XMLID,
     PACK_TYPE_SELFCONSUMPTION_PROD_CATEG_XMLID,
 ]
-COOP_ACCOUNT_REF_GENERAL = "l10n_es.{}_account_pymes_100"
-COOP_ACCOUNT_REF_NONPROFIT = "l10n_es.{}_account_assoc_720"
-COOP_ACCOUNT_REF_IN_COMPANY = "l10n_es.{}_account_common_4400"
-SELFCONSUMPTION_ACCOUNT_REF = "l10n_es.{}_account_common_7050"
+
+PACK_TYPE_NONE = STATE_NONE
+PACK_TYPE_PLATFORM = "platform_pack"
+PACK_TYPE_RECURRING_FEE = "recurring_fee_pack"
+PACK_TYPE_SHARE_RECURRING_FEE = "share_recurring_fee_pack"
+PACK_TYPE_SELFCONSUMPTION = "selfconsumption_pack"
+
+PACK_TYPE_LABELS = {
+    PACK_TYPE_NONE: STATE_LABELS[PACK_TYPE_NONE],
+    PACK_TYPE_PLATFORM: _("Platform Pack"),
+    PACK_TYPE_RECURRING_FEE: _("Recurring fee Pack"),
+    PACK_TYPE_SHARE_RECURRING_FEE: _("Share with recurring fee pack"),
+    PACK_TYPE_SELFCONSUMPTION: _("Selfconsumption Pack"),
+}
+
+PACK_TYPE_VALUES = [
+    (PACK_TYPE_NONE, PACK_TYPE_LABELS[PACK_TYPE_NONE]),
+    (PACK_TYPE_PLATFORM, PACK_TYPE_LABELS[PACK_TYPE_PLATFORM]),
+    (PACK_TYPE_RECURRING_FEE, PACK_TYPE_LABELS[PACK_TYPE_RECURRING_FEE]),
+    (PACK_TYPE_SHARE_RECURRING_FEE, PACK_TYPE_LABELS[PACK_TYPE_SHARE_RECURRING_FEE]),
+    (PACK_TYPE_SELFCONSUMPTION, PACK_TYPE_LABELS[PACK_TYPE_SELFCONSUMPTION]),
+]
+
+PACK_TYPE_DEFAULT_VALUE = PACK_TYPE_NONE
+
+PACK_PRODUCT_PARENT_CATEG_REF = "energy_communities.product_category_pack"
+SERVICE_PRODUCT_PARENT_CATEG_REF = "energy_communities.product_category_service"
+
+COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF = (
+    "energy_communities.product_category_share_recurring_fee_pack"
+)
+PLATFORM_PACK_PRODUCT_CATEG_REF = (
+    "energy_communities_service_invoicing.product_category_platform_pack"
+)
+RECURRING_FEE_PACK_PRODUCT_CATEG_REF = (
+    "energy_communities.product_category_recurring_fee_pack"
+)
+SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF = (
+    "energy_selfconsumption.product_category_selfconsumption_pack"
+)
+
+PLATFORM_SERVICE_PRODUCT_CATEG_REF = (
+    "energy_communities_service_invoicing.product_category_platform_service"
+)
+RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF = (
+    "energy_communities.product_category_recurring_fee_service"
+)
+SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF = (
+    "energy_selfconsumption.product_category_selfconsumption_service"
+)
+
+SHARE_PRODUCTS_CATEG_REFS = [
+    COOP_SHARE_PRODUCT_CATEG_REF,
+    COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
+    COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF,
+    # TODO: remove this categ ref as it's going to be merged with the previous one
+    "energy_communities.product_category_company_voluntary_share",
+]
+
+ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS = [RECURRING_FEE_PACK_PRODUCT_CATEG_REF]
+
+PACK_PROD_CATEG_REF_REL_TO_SERVICE_PROD_CATEG_REF = {
+    RECURRING_FEE_PACK_PRODUCT_CATEG_REF: RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
+    COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF: RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
+    PLATFORM_PACK_PRODUCT_CATEG_REF: PLATFORM_SERVICE_PRODUCT_CATEG_REF,
+    SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF: SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF,
+}
+
+PACK_PROD_CATEG_REF_REL_TO_PACK_TYPES = {
+    RECURRING_FEE_PACK_PRODUCT_CATEG_REF: PACK_TYPE_RECURRING_FEE,
+    COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF: PACK_TYPE_SHARE_RECURRING_FEE,
+    PLATFORM_PACK_PRODUCT_CATEG_REF: PACK_TYPE_PLATFORM,
+    SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF: PACK_TYPE_SELFCONSUMPTION,
+}

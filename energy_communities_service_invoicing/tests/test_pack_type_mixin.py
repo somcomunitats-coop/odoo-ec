@@ -1,14 +1,13 @@
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
-from odoo.addons.energy_communities.config import (
+from ..config import (
     PACK_TYPE_NONE,
     PACK_TYPE_PLATFORM,
     PACK_TYPE_RECURRING_FEE,
     PACK_TYPE_SELFCONSUMPTION,
     PACK_TYPE_SHARE_RECURRING_FEE,
 )
-
 from .service_invoicing_testing_product_creator import (
     ServiceInvoicingTestingProductCreator,
 )

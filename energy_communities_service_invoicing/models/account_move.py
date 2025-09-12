@@ -4,10 +4,6 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
 
-from odoo.addons.energy_communities.config import (
-    PACK_TYPE_NONE,
-    PACK_TYPE_SELFCONSUMPTION,
-)
 from odoo.addons.energy_communities.utils import (
     contract_utils,
     sale_order_utils,
@@ -18,8 +14,9 @@ from ..config import (
     INVOICE_OTHER,
     INVOICE_SELFCONSUMPTION,
     INVOICE_SERVICETYPE_LABELS,
+    PACK_TYPE_NONE,
+    PACK_TYPE_SELFCONSUMPTION,
 )
-
 
 class AccountMove(models.Model):
     _name = "account.move"

@@ -1,8 +1,7 @@
 from odoo import api, fields, models
 
-from odoo.addons.energy_communities.config import (
+from ..config import (
     PACK_TYPE_DEFAULT_VALUE,
-    PACK_TYPE_LABELS,
     PACK_TYPE_NONE,
     PACK_TYPE_SHARE_RECURRING_FEE,
     PACK_TYPE_VALUES,
