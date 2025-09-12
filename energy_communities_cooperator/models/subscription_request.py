@@ -91,11 +91,11 @@ class SubscriptionRequest(models.Model):
                     )
         super().validate_subscription_request()
 
-    def _get_existing_rpb(self):
-        return self.partner_id.bank_ids.filtered(
-            lambda rpb: rpb.acc_number == self.iban
-            and rpb.company_id.id == self.company_id.id
-        )
+    # def _get_existing_rpb(self):
+    #     return self.partner_id.bank_ids.filtered(
+    #         lambda rpb: rpb.acc_number == self.iban
+    #         and rpb.company_id.id == self.company_id.id
+    #     )
 
     def get_partner_vals(self):
         vals = super().get_partner_vals()
