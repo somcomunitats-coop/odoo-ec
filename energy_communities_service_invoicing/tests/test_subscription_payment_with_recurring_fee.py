@@ -3,7 +3,7 @@ from datetime import date, datetime
 
 from odoo.tests import common, tagged
 
-from odoo.addons.energy_communities.config import PACK_TYPE_SHARE_RECURRING_FEE
+from ..config import PACK_TYPE_SHARE_RECURRING_FEE
 
 SubscriptionPaymentTestingCase = namedtuple(
     "SubscriptionTestingCase",

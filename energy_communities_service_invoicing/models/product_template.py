@@ -1,6 +1,6 @@
 from odoo import api, fields, models
 
-from odoo.addons.energy_communities.config import PACK_TYPE_NONE
+from ..config import PACK_TYPE_NONE
 
 
 class ProductTemplate(models.Model):

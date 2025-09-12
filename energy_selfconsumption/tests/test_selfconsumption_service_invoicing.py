@@ -4,7 +4,9 @@ from datetime import datetime
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
-from odoo.addons.energy_communities.config import PACK_TYPE_SELFCONSUMPTION
+from odoo.addons.energy_communities_service_invoicing.config import (
+    PACK_TYPE_SELFCONSUMPTION,
+)
 from odoo.addons.energy_communities_service_invoicing.tests.service_invoicing_testing_contract_creator import (
     ServiceInvoicingTestingContractCreator,
 )

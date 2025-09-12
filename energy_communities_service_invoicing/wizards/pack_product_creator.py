@@ -1,15 +1,12 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from odoo.addons.energy_communities.config import (
-    PACK_PROD_CATEG_XMLID_REL_TO_SERVICE_PROD_CATEG_XMLID,
-    PACK_TYPE_SHARE_RECURRING_FEE_PROD_CATEG_XMLID,
-)
 from odoo.addons.energy_communities.utils import (
     get_successful_popup_message,
     product_utils,
 )
 
+from ..config import PACK_PROD_CATEG_REF_REL_TO_SERVICE_PROD_CATEG_REF
 from ..schemas import (
     PackProductCreationData,
     ProductCreationParams,
@@ -108,7 +105,7 @@ class PackProductCreatorWizard(models.TransientModel):
             if (
                 existing_service.existing_service_product_id.categ_id.id
                 != self.env.ref(
-                    PACK_PROD_CATEG_XMLID_REL_TO_SERVICE_PROD_CATEG_XMLID[
+                    PACK_PROD_CATEG_REF_REL_TO_SERVICE_PROD_CATEG_REF[
                         self.pack_categ_id.data_xml_id
                     ]
                 ).id
@@ -141,7 +138,7 @@ class PackProductCreatorWizard(models.TransientModel):
                     ServiceProductCreationData(
                         company_id=self.company_id.id if self.company_id else None,
                         categ_id=self.env.ref(
-                            PACK_PROD_CATEG_XMLID_REL_TO_SERVICE_PROD_CATEG_XMLID[
+                            PACK_PROD_CATEG_REF_REL_TO_SERVICE_PROD_CATEG_REF[
                                 self.pack_categ_id.data_xml_id
                             ]
                         ).id,

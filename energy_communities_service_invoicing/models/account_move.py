@@ -4,11 +4,12 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
 
-from odoo.addons.energy_communities.config import PACK_TYPE_NONE
 from odoo.addons.energy_communities.utils import (
     contract_utils,
     sale_order_utils,
 )
+
+from ..config import PACK_TYPE_NONE
 
 
 class AccountMove(models.Model):
