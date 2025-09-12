@@ -1,4 +1,3 @@
-
 import logging
 
 from odoo import _, api, fields, models
@@ -64,7 +63,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                         {"voluntary_share_journal_account": vsir_journal.id}
                     )
             with product_utils(self.env) as product_component:
-                # create company pricelist
                 product_component.create_company_pricelist(self.new_company_id)
                 product_component.setup_company_product_categs(self.new_company_id)
                 if self.new_company_id.legal_form in ["cooperative", "undefined"]:
@@ -98,7 +96,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     vol_coop_product = product_component.create_product(
                         self._nonprofit_share_product_creation_params()
                     )
-
         except Exception as e:
             if isinstance(e, RegistryNotReadyError):
                 _logger.warning(
