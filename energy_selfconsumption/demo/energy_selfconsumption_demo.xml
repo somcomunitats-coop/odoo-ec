@@ -7,453 +7,559 @@ This file contains demo data for the energy self-consumption module that creates
 sample projects, inscriptions, supply points, and distribution tables for testing
 and demonstration purposes.
 
-Main demo data includes:
-- Two self-consumption projects (Barri Sants and Coòpolis)
-- Five inscriptions with associated partners
-- Five supply points with different locations
-- Distribution table with coefficient assignments
-- Complete workflow demonstration from draft to activation
 -->
 <odoo>
 
-    <!-- ========================================== -->
-    <!-- SELF-CONSUMPTION PROJECTS                 -->
-    <!-- ========================================== -->
+  <function
+    name="write_with_company"
+    model="product.category"
+  >
+    <value model="product.category" eval="ref('energy_selfconsumption.product_category_selfconsumption_pack')"/>
+    <value model="res.company" eval="obj(ref('energy_communities.coordinator_company_1'))"/>
+    <value eval="{'service_invoicing_sale_journal_id': 19}" />
+  </function>
 
-    <!-- Project 1: Autoconsum Barri Sants (Barcelona) -->
-    <record id="selfconsumption_1_community_1_demo" model="energy_selfconsumption.selfconsumption">
-        <field name="name">Autoconsum Barri Sants</field>
-        <field name="type" ref="energy_selfconsumption.selfconsumption_project_type" />
-        <field name="state">inscription</field>
-        <field name="power">127</field>
-        <field name="code">ES1234123456789012JY1FA000</field>
-        <field name="cil">ES1234123456789012JY1F123</field>
-        
-        <!-- Address information -->
-        <field name="street">Carrer de Sants, 79</field>
-        <field name="zip">08014</field>
-        <field name="city">Barcelona</field>
-        <field name="state_id" ref="base.state_es_b" />
-        <field name="country_id" ref="base.es" />
-        
-        <!-- Project ownership and company -->
-        <field name="owner_id" 
-               eval="obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id.partner_id"
-               model="account.multicompany.easy.creation.wiz" />
-        <field name="company_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-               model="subscription.request" />
-    </record>
+  <function
+    name="write_with_company"
+    model="product.category"
+  >
+    <value model="product.category" eval="ref('energy_selfconsumption.product_category_selfconsumption_pack')"/>
+    <value model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id" />
+    <value eval="{'service_invoicing_sale_journal_id': 35}" />
+  </function>
 
-    <!-- Project 2: Coòpolis, Ateneu Cooperatiu de Barcelona -->
-    <record id="selfconsumption_2_community_1_demo" model="energy_selfconsumption.selfconsumption">
-        <field name="name">Coòpolis, Ateneu Cooperatiu de Barcelona</field>
-        <field name="type" ref="energy_selfconsumption.selfconsumption_project_type" />
-        <field name="state">draft</field>
-        <field name="power">31</field>
-        <field name="code">ES0288529119082650SF1FA000</field>
-        <field name="cil">ES0288529119082650SF1F123</field>
-        
-        <!-- Address information -->
-        <field name="street">Carrer de la Constitució, 19</field>
-        <field name="zip">08014</field>
-        <field name="city">Barcelona</field>
-        <field name="state_id" ref="base.state_es_b" />
-        <field name="country_id" ref="base.es" />
-        
-        <!-- Project ownership and company -->
-        <field name="owner_id" 
-               eval="obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id.partner_id"
-               model="account.multicompany.easy.creation.wiz" />
-        <field name="company_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-               model="subscription.request" />
-    </record>
+  <!-- ========================================== -->
+  <!-- SELF-CONSUMPTION PROJECTS                 -->
+  <!-- ========================================== -->
 
-    <!-- ========================================== -->
-    <!-- PROJECT INSCRIPTIONS                      -->
-    <!-- ========================================== -->
+  <!-- Project 1: Autoconsum Barri Sants (Barcelona) -->
+  <record id="selfconsumption_1_community_1_demo" model="energy_selfconsumption.selfconsumption">
+    <field name="name">Autoconsum Barri Sants</field>
+    <field name="type" ref="energy_selfconsumption.selfconsumption_project_type" />
+    <field name="state">inscription</field>
+    <field name="power">127</field>
+    <field name="code">ES1234123456789012JY1FA000</field>
+    <field name="cil">ES1234123456789012JY1F123</field>
+    <!-- Address information -->
+    <field name="street">Carrer de Sants, 79</field>
+    <field name="zip">08014</field>
+    <field name="city">Barcelona</field>
+    <field name="state_id" ref="base.state_es_b" />
+    <field name="country_id" ref="base.es" />
+    <!-- Project ownership and company -->
+    <field
+      name="owner_id"
+      eval="obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id.partner_id"
+      model="account.multicompany.easy.creation.wiz"
+    />
+    <field
+      name="company_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
+      model="subscription.request"
+    />
+  </record>
 
-    <!-- Inscription 1: First cooperator -->
-    <record id="inscription_1_selfconsumption_1_demo" model="energy_project.inscription">
-        <field name="project_id" 
-               model="energy_selfconsumption.selfconsumption"
-               eval="obj(ref('selfconsumption_1_community_1_demo')).project_id" />
-        <field name="effective_date" eval="datetime.today()" />
-        <field name="partner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="company_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-               model="subscription.request" />
-        <field name="mandate_id" 
-               model="subscription.request"
-               search="[('partner_id', '=', obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).partner_id.id)]" />
-    </record>
+  <!-- Project 2: Coòpolis, Ateneu Cooperatiu de Barcelona -->
+  <record id="selfconsumption_2_community_1_demo" model="energy_selfconsumption.selfconsumption">
+    <field name="name">Coòpolis, Ateneu Cooperatiu de Barcelona</field>
+    <field name="type" ref="energy_selfconsumption.selfconsumption_project_type" />
+    <field name="state">draft</field>
+    <field name="power">31</field>
+    <field name="code">ES0288529119082650SF1FA000</field>
+    <field name="cil">ES0288529119082650SF1F123</field>
+    <!-- Address information -->
+    <field name="street">Carrer de la Constitució, 19</field>
+    <field name="zip">08014</field>
+    <field name="city">Barcelona</field>
+    <field name="state_id" ref="base.state_es_b" />
+    <field name="country_id" ref="base.es" />
+    <!-- Project ownership and company -->
+    <field
+      name="owner_id"
+      eval="obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id.partner_id"
+      model="account.multicompany.easy.creation.wiz"
+    />
+    <field
+      name="company_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
+      model="subscription.request"
+    />
+  </record>
 
-    <!-- Inscription 2: Second cooperator -->
-    <record id="inscription_2_selfconsumption_1_demo" model="energy_project.inscription">
-        <field name="project_id" 
-               model="energy_selfconsumption.selfconsumption"
-               eval="obj(ref('selfconsumption_1_community_1_demo')).project_id" />
-        <field name="effective_date" eval="datetime.today()" />
-        <field name="partner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="company_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).company_id"
-               model="subscription.request" />
-        <field name="mandate_id" 
-               model="subscription.request"
-               search="[('partner_id', '=', obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).partner_id.id)]" />
-    </record>
+  <!-- ========================================== -->
+  <!-- PROJECT INSCRIPTIONS                      -->
+  <!-- ========================================== -->
 
-    <!-- Inscription 3: Third cooperator -->
-    <record id="inscription_3_selfconsumption_1_demo" model="energy_project.inscription">
-        <field name="project_id" 
-               model="energy_selfconsumption.selfconsumption"
-               eval="obj(ref('selfconsumption_1_community_1_demo')).project_id" />
-        <field name="effective_date" eval="datetime.today()" />
-        <field name="partner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="company_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).company_id"
-               model="subscription.request" />
-        <field name="mandate_id" 
-               model="subscription.request"
-               search="[('partner_id', '=', obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).partner_id.id)]" />
-    </record>
+  <!-- Inscription 1: First cooperator -->
+  <record id="inscription_1_selfconsumption_1_demo" model="energy_project.inscription">
+    <field
+      name="project_id"
+      model="energy_selfconsumption.selfconsumption"
+      eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"
+    />
+    <field name="effective_date" eval="datetime.today()" />
+    <field
+      name="partner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="company_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
+      model="subscription.request"
+    />
+    <field
+      name="mandate_id" 
+      model="subscription.request"
+      search="[('partner_id', '=', obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).partner_id.id)]"
+    />
+  </record>
 
-    <!-- Inscription 4: Fourth cooperator -->
-    <record id="inscription_4_selfconsumption_1_demo" model="energy_project.inscription">
-        <field name="project_id" 
-               model="energy_selfconsumption.selfconsumption"
-               eval="obj(ref('selfconsumption_1_community_1_demo')).project_id" />
-        <field name="effective_date" eval="datetime.today()" />
-        <field name="partner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="company_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).company_id"
-               model="subscription.request" />
-        <field name="mandate_id" 
-               model="subscription.request"
-               search="[('partner_id', '=', obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).partner_id.id)]" />
-    </record>
+  <!-- Inscription 2: Second cooperator -->
+  <record id="inscription_2_selfconsumption_1_demo" model="energy_project.inscription">
+    <field
+      name="project_id"
+      model="energy_selfconsumption.selfconsumption"
+      eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"
+    />
+    <field name="effective_date" eval="datetime.today()" />
+    <field
+      name="partner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="company_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).company_id"
+      model="subscription.request"
+    />
+    <field
+      name="mandate_id"
+      model="subscription.request"
+      search="[('partner_id', '=', obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).partner_id.id)]"
+    />
+  </record>
 
-    <!-- Inscription 5: Fifth cooperator -->
-    <!-- <record id="inscription_5_selfconsumption_1_demo" model="energy_project.inscription">
-        <field name="project_id" 
-               model="energy_selfconsumption.selfconsumption"
-               eval="obj(ref('selfconsumption_1_community_1_demo')).project_id" />
-        <field name="effective_date" eval="datetime.today()" />
-        <field name="partner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="company_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).company_id"
-               model="subscription.request" />
-        <field name="mandate_id" 
-               model="subscription.request"
-               search="[('partner_id', '=', obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).partner_id.id)]" />
-    </record> -->
+  <!-- Inscription 3: Third cooperator -->
+  <record id="inscription_3_selfconsumption_1_demo" model="energy_project.inscription">
+    <field
+      name="project_id"
+      model="energy_selfconsumption.selfconsumption"
+      eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"
+    />
+    <field name="effective_date" eval="datetime.today()" />
+    <field
+      name="partner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="company_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).company_id"
+      model="subscription.request"
+    />
+    <field
+      name="mandate_id"
+      model="subscription.request"
+      search="[('partner_id', '=', obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).partner_id.id)]"
+    />
+  </record>
 
-    <!-- ========================================== -->
-    <!-- SUPPLY POINTS                             -->
-    <!-- ========================================== -->
+  <!-- Inscription 4: Fourth cooperator -->
+  <record id="inscription_4_selfconsumption_1_demo" model="energy_project.inscription">
+    <field
+      name="project_id"
+      model="energy_selfconsumption.selfconsumption"
+      eval="obj(ref('selfconsumption_1_community_1_demo')).project_id"
+    />
+    <field name="effective_date" eval="datetime.today()" />
+    <field
+      name="partner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="company_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).company_id"
+      model="subscription.request"
+    />
+    <field
+      name="mandate_id"
+      model="subscription.request"
+      search="[('partner_id', '=', obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).partner_id.id)]"
+    />
+  </record>
 
-    <!-- Supply Point 1: Casa Ignacio Mora (Barcelona) -->
-    <record id="supply_point_1_selfconsumption_1_demo" model="energy_selfconsumption.supply_point">
-        <field name="name">Casa Ignacio Mora</field>
-        <field name="code">ES0024608953382065ZD1F</field>
-        
-        <!-- Address information -->
-        <field name="street">C. de Sta. Catalina</field>
-        <field name="street2">55º B</field>
-        <field name="zip">08014</field>
-        <field name="city">Barcelona</field>
-        <field name="state_id" ref="base.state_es_b" />
-        <field name="country_id" ref="base.es" />
-        
-        <!-- Ownership and partnership -->
-        <field name="owner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="partner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="company_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-               model="subscription.request" />
-    </record>
-
-    <!-- Self-consumption Inscription 1: Link inscription to supply point -->
-    <record id="inscription_selfconsumption_1_selfconsumption_1_demo" model="energy_selfconsumption.inscription_selfconsumption">
-        <field name="selfconsumption_project_id" 
-               eval="ref('selfconsumption_1_community_1_demo')" 
-               model="energy_selfconsumption.selfconsumption" />
-        <field name="inscription_id" 
-               eval="ref('inscription_1_selfconsumption_1_demo')" 
-               model="energy_project.inscription" />
-        <field name="annual_electricity_use">1.00</field>
-        <field model="energy_selfconsumptions.participation"
-               name="participation_id"
-               search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]" />
-        <field name="participation_assigned_quantity" eval="0.5" />
-        <field name="accept" eval="True" />
-        <field name="member" eval="True" />
-        <field name="supply_point_id" ref="supply_point_1_selfconsumption_1_demo" />
-    </record>
-
-    <!-- Supply Point 2: Casa Jessica Tirado (Barcelona) -->
-    <record id="supply_point_2_selfconsumption_1_demo" model="energy_selfconsumption.supply_point">
-        <field name="name">Casa Jessica Tirado</field>
-        <field name="code">ES0023113487471897NJ1F</field>
-        
-        <!-- Address information -->
-        <field name="street">Carrer de Robrenyo, 9-1</field>
-        <field name="street2">45</field>
-        <field name="zip">08014</field>
-        <field name="city">Barcelona</field>
-        <field name="state_id" ref="base.state_es_b" />
-        <field name="country_id" ref="base.es" />
-        
-        <!-- Ownership and partnership -->
-        <field name="owner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="partner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="company_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-               model="subscription.request" />
-    </record>
-
-    <!-- Self-consumption Inscription 2: Link inscription to supply point -->
-    <record id="inscription_selfconsumption_2_selfconsumption_1_demo" model="energy_selfconsumption.inscription_selfconsumption">
-        <field name="selfconsumption_project_id" 
-               eval="ref('selfconsumption_1_community_1_demo')" 
-               model="energy_selfconsumption.selfconsumption" />
-        <field name="inscription_id" 
-               eval="ref('inscription_2_selfconsumption_1_demo')" 
-               model="energy_project.inscription" />
-        <field name="annual_electricity_use">1.00</field>
-        <field model="energy_selfconsumptions.participation"
-               name="participation_id"
-               search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]" />
-        <field name="participation_assigned_quantity" eval="0.5" />
-        <field name="accept" eval="True" />
-        <field name="member" eval="True" />
-        <field name="supply_point_id" ref="supply_point_2_selfconsumption_1_demo" />
-    </record>
-
-    <!-- Supply Point 3: Trabajo Ester - Antigua Fábrica de Juguetes Rico (Ibi) -->
-    <record id="supply_point_3_selfconsumption_1_demo" model="energy_selfconsumption.supply_point">
-        <field name="name">Trabajo Ester - Antigua Fábrica de Juguetes Rico</field>
-        <field name="code">ES0023497233071974KY1F</field>
-        
-        <!-- Address information -->
-        <field name="street">Carrer les Eres</field>
-        <field name="street2">74</field>
-        <field name="zip">03440</field>
-        <field name="city">Ibi</field>
-        <field name="state_id" ref="base.state_es_b" />
-        <field name="country_id" ref="base.es" />
-        
-        <!-- Ownership and partnership -->
-        <field name="owner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="partner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="company_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-               model="subscription.request" />
-    </record>
-
-    <!-- Self-consumption Inscription 3: Link inscription to supply point -->
-    <record id="inscription_selfconsumption_3_selfconsumption_1_demo" model="energy_selfconsumption.inscription_selfconsumption">
-        <field name="selfconsumption_project_id" 
-               eval="ref('selfconsumption_1_community_1_demo')" 
-               model="energy_selfconsumption.selfconsumption" />
-        <field name="inscription_id" 
-               eval="ref('inscription_3_selfconsumption_1_demo')" 
-               model="energy_project.inscription" />
-        <field name="annual_electricity_use">1.00</field>
-        <field model="energy_selfconsumptions.participation"
-               name="participation_id"
-               search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]" />
-        <field name="participation_assigned_quantity" eval="0.5" />
-        <field name="accept" eval="True" />
-        <field name="member" eval="True" />
-        <field name="supply_point_id" ref="supply_point_3_selfconsumption_1_demo" />
-    </record>
-
-    <!-- Supply Point 4: Casa Ester Ojeda (Barcelona) -->
-    <record id="supply_point_4_selfconsumption_1_demo" model="energy_selfconsumption.supply_point">
-        <field name="name">Casa Ester Ojeda</field>
-        <field name="code">ES0396148792876506WW1F</field>
-        
-        <!-- Address information -->
-        <field name="street">C/ de Salou, 8</field>
-        <field name="street2">78</field>
-        <field name="zip">08014</field>
-        <field name="city">Barcelona</field>
-        <field name="state_id" ref="base.state_es_b" />
-        <field name="country_id" ref="base.es" />
-        
-        <!-- Ownership and partnership -->
-        <field name="owner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="partner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="company_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-               model="subscription.request" />
-    </record>
-
-    <!-- Self-consumption Inscription 4: Link inscription to supply point -->
-    <record id="inscription_selfconsumption_4_selfconsumption_1_demo" model="energy_selfconsumption.inscription_selfconsumption">
-        <field name="selfconsumption_project_id" 
-               eval="ref('selfconsumption_1_community_1_demo')" 
-               model="energy_selfconsumption.selfconsumption" />
-        <field name="inscription_id" 
-               eval="ref('inscription_4_selfconsumption_1_demo')" 
-               model="energy_project.inscription" />
-        <field name="annual_electricity_use">1.00</field>
-        <field model="energy_selfconsumptions.participation"
-               name="participation_id"
-               search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',1.0)]" />
-        <field name="participation_assigned_quantity" eval="1.0" />
-        <field name="accept" eval="True" />
-        <field name="member" eval="True" />
-        <field name="supply_point_id" ref="supply_point_4_selfconsumption_1_demo" />
-    </record>
-
-    <!-- Supply Point 5: Casa Marc Ortiz (Barcelona) -->
-    <record id="supply_point_5_selfconsumption_1_demo" model="energy_selfconsumption.supply_point">
-        <field name="name">Casa Marc Ortiz</field>
-        <field name="code">ES0029746403052234TY1F</field>
-        
-        <!-- Address information -->
-        <field name="street">C/ de Cerdanyola</field>
-        <field name="street2">16</field>
-        <field name="zip">08028</field>
-        <field name="city">Barcelona</field>
-        <field name="state_id" ref="base.state_es_b" />
-        <field name="country_id" ref="base.es" />
-        
-        <!-- Ownership and partnership -->
-        <field name="owner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="partner_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).partner_id"
-               model="subscription.request" />
-        <field name="company_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-               model="subscription.request" />
-    </record>
-
-    <!-- Self-consumption Inscription 5: Link inscription to supply point -->
-    <!-- <record id="inscription_selfconsumption_5_selfconsumption_1_demo" model="energy_selfconsumption.inscription_selfconsumption">
-        <field name="selfconsumption_project_id" 
-               eval="ref('selfconsumption_1_community_1_demo')" 
-               model="energy_selfconsumption.selfconsumption" />
-        <field name="inscription_id" 
-               eval="ref('inscription_5_selfconsumption_1_demo')" 
-               model="energy_project.inscription" />
-        <field name="annual_electricity_use">1.00</field>
-        <field model="energy_selfconsumptions.participation"
-               name="participation_id"
-               search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]" />
-        <field name="accept" eval="True" />
-        <field name="member" eval="True" />
-        <field name="supply_point_id" ref="supply_point_5_selfconsumption_1_demo" />
-    </record> -->
-
-    <!-- ========================================== -->
-    <!-- DISTRIBUTION TABLE AND ASSIGNATIONS       -->
-    <!-- ========================================== -->
-
-    <!-- Distribution Table: Fixed coefficient distribution -->
-    <record id="distribution_table_1_selfconsumption_1_demo" model="energy_selfconsumption.distribution_table">
-        <field name="name">DT001</field>
-        <field name="selfconsumption_project_id" ref="selfconsumption_1_community_1_demo" />
-        <field name="type">fixed</field>
-        <field name="state">draft</field>
-        <field name="company_id" 
-               eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
-               model="subscription.request" />
-    </record>
-
-    <!-- Supply Point Assignation 1: Casa Ignacio Mora (13.2% coefficient) -->
-    <record id="supply_point_assignation_1_distribution_table_1_demo" model="energy_selfconsumption.supply_point_assignation">
-        <field name="distribution_table_id" ref="distribution_table_1_selfconsumption_1_demo" />
-        <field name="supply_point_id" ref="supply_point_1_selfconsumption_1_demo" />
-        <field name="coefficient">0.132</field>
-        <field name="company_id" 
-               eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
-               model="energy_selfconsumption.distribution_table" />
-    </record>
-
-    <!-- Supply Point Assignation 2: Casa Jessica Tirado (11.2% coefficient) -->
-    <record id="supply_point_assignation_2_distribution_table_1_demo" model="energy_selfconsumption.supply_point_assignation">
-        <field name="distribution_table_id" ref="distribution_table_1_selfconsumption_1_demo" />
-        <field name="supply_point_id" ref="supply_point_2_selfconsumption_1_demo" />
-        <field name="coefficient">0.112</field>
-        <field name="company_id" 
-               eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
-               model="energy_selfconsumption.distribution_table" />
-    </record>
-
-    <!-- Supply Point Assignation 3: Trabajo Ester (10.1% coefficient) -->
-    <record id="supply_point_assignation_3_distribution_table_1_demo" model="energy_selfconsumption.supply_point_assignation">
-        <field name="distribution_table_id" ref="distribution_table_1_selfconsumption_1_demo" />
-        <field name="supply_point_id" ref="supply_point_3_selfconsumption_1_demo" />
-        <field name="coefficient">0.101</field>
-        <field name="company_id" 
-               eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
-               model="energy_selfconsumption.distribution_table" />
-    </record>
-
-    <!-- Supply Point Assignation 4: Casa Ester Ojeda (9.8% coefficient) -->
-    <record id="supply_point_assignation_4_distribution_table_1_demo" model="energy_selfconsumption.supply_point_assignation">
-        <field name="distribution_table_id" ref="distribution_table_1_selfconsumption_1_demo" />
-        <field name="supply_point_id" ref="supply_point_4_selfconsumption_1_demo" />
-        <field name="coefficient">0.655</field>
-        <field name="company_id" 
-               eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
-               model="energy_selfconsumption.distribution_table" />
-    </record>
-
-    <!-- Supply Point Assignation 5: Casa Marc Ortiz (55.7% coefficient) -->
-    <!-- <record id="supply_point_assignation_5_distribution_table_1_demo" model="energy_selfconsumption.supply_point_assignation">
-        <field name="distribution_table_id" ref="distribution_table_1_selfconsumption_1_demo" />
-        <field name="supply_point_id" ref="supply_point_5_selfconsumption_1_demo" />
-        <field name="coefficient">0.557</field>
-        <field name="company_id" 
-               eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
-               model="energy_selfconsumption.distribution_table" />
-    </record> -->
-
-    <!-- ========================================== -->
-    <!-- WORKFLOW AUTOMATION                       -->
-    <!-- ========================================== -->
-
-    <!-- Validate the distribution table -->
-    <function name="button_validate"
-              model="energy_selfconsumption.distribution_table"
-              eval="[ref('distribution_table_1_selfconsumption_1_demo')]" />
-
-    <!-- Set self-consumption project to activation state -->
-    <function name="set_in_activation_state"
+  <!-- Inscription 5: Fifth cooperator -->
+  <!-- <record id="inscription_5_selfconsumption_1_demo" model="energy_project.inscription">
+      <field name="project_id" 
               model="energy_selfconsumption.selfconsumption"
-              eval="[ref('selfconsumption_1_community_1_demo')]" />
+              eval="obj(ref('selfconsumption_1_community_1_demo')).project_id" />
+      <field name="effective_date" eval="datetime.today()" />
+      <field name="partner_id" 
+              eval="obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).partner_id"
+              model="subscription.request" />
+      <field name="company_id" 
+              eval="obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).company_id"
+              model="subscription.request" />
+      <field name="mandate_id" 
+              model="subscription.request"
+              search="[('partner_id', '=', obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).partner_id.id)]" />
+  </record> -->
+
+  <!-- ========================================== -->
+  <!-- SUPPLY POINTS                             -->
+  <!-- ========================================== -->
+
+  <!-- Supply Point 1: Casa Ignacio Mora (Barcelona) -->
+  <record id="supply_point_1_selfconsumption_1_demo" model="energy_selfconsumption.supply_point">
+    <field name="name">Casa Ignacio Mora</field>
+    <field name="code">ES0024608953382065ZD1F</field>
+    <!-- Address information -->
+    <field name="street">C. de Sta. Catalina</field>
+    <field name="street2">55º B</field>
+    <field name="zip">08014</field>
+    <field name="city">Barcelona</field>
+    <field name="state_id" ref="base.state_es_b" />
+    <field name="country_id" ref="base.es" />
+    <!-- Ownership and partnership -->
+    <field
+      name="owner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="partner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="company_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
+      model="subscription.request"
+    />
+  </record>
+
+  <!-- Self-consumption Inscription 1: Link inscription to supply point -->
+  <record id="inscription_selfconsumption_1_selfconsumption_1_demo" model="energy_selfconsumption.inscription_selfconsumption">
+    <field
+      name="selfconsumption_project_id"
+      eval="ref('selfconsumption_1_community_1_demo')"
+      model="energy_selfconsumption.selfconsumption"
+    />
+    <field
+      name="inscription_id"
+      eval="ref('inscription_1_selfconsumption_1_demo')"
+      model="energy_project.inscription"
+    />
+    <field name="annual_electricity_use">1.00</field>
+    <field
+      model="energy_selfconsumptions.participation"
+      name="participation_id"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+    />
+    <field name="participation_assigned_quantity" eval="0.5" />
+    <field name="accept" eval="True" />
+    <field name="member" eval="True" />
+    <field name="supply_point_id" ref="supply_point_1_selfconsumption_1_demo" />
+  </record>
+
+  <!-- Supply Point 2: Casa Jessica Tirado (Barcelona) -->
+  <record id="supply_point_2_selfconsumption_1_demo" model="energy_selfconsumption.supply_point">
+    <field name="name">Casa Jessica Tirado</field>
+    <field name="code">ES0023113487471897NJ1F</field>
+    <!-- Address information -->
+    <field name="street">Carrer de Robrenyo, 9-1</field>
+    <field name="street2">45</field>
+    <field name="zip">08014</field>
+    <field name="city">Barcelona</field>
+    <field name="state_id" ref="base.state_es_b" />
+    <field name="country_id" ref="base.es" />
+    <!-- Ownership and partnership -->
+    <field
+      name="owner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="partner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_2_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="company_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
+      model="subscription.request"
+    />
+  </record>
+
+  <!-- Self-consumption Inscription 2: Link inscription to supply point -->
+  <record id="inscription_selfconsumption_2_selfconsumption_1_demo" model="energy_selfconsumption.inscription_selfconsumption">
+    <field
+      name="selfconsumption_project_id"
+      eval="ref('selfconsumption_1_community_1_demo')"
+      model="energy_selfconsumption.selfconsumption"
+    />
+    <field
+      name="inscription_id"
+      eval="ref('inscription_2_selfconsumption_1_demo')"
+      model="energy_project.inscription"
+    />
+    <field name="annual_electricity_use">1.00</field>
+    <field
+      model="energy_selfconsumptions.participation"
+      name="participation_id"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+    />
+    <field name="participation_assigned_quantity" eval="0.5" />
+    <field name="accept" eval="True" />
+    <field name="member" eval="True" />
+    <field name="supply_point_id" ref="supply_point_2_selfconsumption_1_demo" />
+  </record>
+
+  <!-- Supply Point 3: Trabajo Ester - Antigua Fábrica de Juguetes Rico (Ibi) -->
+  <record id="supply_point_3_selfconsumption_1_demo" model="energy_selfconsumption.supply_point">
+    <field name="name">Trabajo Ester - Antigua Fábrica de Juguetes Rico</field>
+    <field name="code">ES0023497233071974KY1F</field>
+    <!-- Address information -->
+    <field name="street">Carrer les Eres</field>
+    <field name="street2">74</field>
+    <field name="zip">03440</field>
+    <field name="city">Ibi</field>
+    <field name="state_id" ref="base.state_es_b" />
+    <field name="country_id" ref="base.es" />
+    <!-- Ownership and partnership -->
+    <field
+      name="owner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="partner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_3_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="company_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
+      model="subscription.request"
+    />
+  </record>
+
+  <!-- Self-consumption Inscription 3: Link inscription to supply point -->
+  <record id="inscription_selfconsumption_3_selfconsumption_1_demo" model="energy_selfconsumption.inscription_selfconsumption">
+    <field
+      name="selfconsumption_project_id"
+      eval="ref('selfconsumption_1_community_1_demo')"
+      model="energy_selfconsumption.selfconsumption"
+    />
+    <field
+      name="inscription_id"
+      eval="ref('inscription_3_selfconsumption_1_demo')"
+      model="energy_project.inscription"
+    />
+    <field name="annual_electricity_use">1.00</field>
+    <field
+      model="energy_selfconsumptions.participation"
+      name="participation_id"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]"
+    />
+    <field name="participation_assigned_quantity" eval="0.5" />
+    <field name="accept" eval="True" />
+    <field name="member" eval="True" />
+    <field name="supply_point_id" ref="supply_point_3_selfconsumption_1_demo" />
+  </record>
+
+  <!-- Supply Point 4: Casa Ester Ojeda (Barcelona) -->
+  <record id="supply_point_4_selfconsumption_1_demo" model="energy_selfconsumption.supply_point">
+    <field name="name">Casa Ester Ojeda</field>
+    <field name="code">ES0396148792876506WW1F</field>
+    <!-- Address information -->
+    <field name="street">C/ de Salou, 8</field>
+    <field name="street2">78</field>
+    <field name="zip">08014</field>
+    <field name="city">Barcelona</field>
+    <field name="state_id" ref="base.state_es_b" />
+    <field name="country_id" ref="base.es" />
+    <!-- Ownership and partnership -->
+    <field
+      name="owner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="partner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_4_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="company_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
+      model="subscription.request"
+    />
+  </record>
+
+  <!-- Self-consumption Inscription 4: Link inscription to supply point -->
+  <record id="inscription_selfconsumption_4_selfconsumption_1_demo" model="energy_selfconsumption.inscription_selfconsumption">
+    <field
+      name="selfconsumption_project_id"
+      eval="ref('selfconsumption_1_community_1_demo')"
+      model="energy_selfconsumption.selfconsumption"
+    />
+    <field
+      name="inscription_id"
+      eval="ref('inscription_4_selfconsumption_1_demo')"
+      model="energy_project.inscription"
+    />
+    <field name="annual_electricity_use">1.00</field>
+    <field
+      model="energy_selfconsumptions.participation"
+      name="participation_id"
+      search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',1.0)]"
+    />
+    <field name="participation_assigned_quantity" eval="1.0" />
+    <field name="accept" eval="True" />
+    <field name="member" eval="True" />
+    <field name="supply_point_id" ref="supply_point_4_selfconsumption_1_demo" />
+  </record>
+
+  <!-- Supply Point 5: Casa Marc Ortiz (Barcelona) -->
+  <record id="supply_point_5_selfconsumption_1_demo" model="energy_selfconsumption.supply_point">
+    <field name="name">Casa Marc Ortiz</field>
+    <field name="code">ES0029746403052234TY1F</field>
+    <!-- Address information -->
+    <field name="street">C/ de Cerdanyola</field>
+    <field name="street2">16</field>
+    <field name="zip">08028</field>
+    <field name="city">Barcelona</field>
+    <field name="state_id" ref="base.state_es_b" />
+    <field name="country_id" ref="base.es" />
+    <!-- Ownership and partnership -->
+    <field
+      name="owner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="partner_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_5_community_1_demo')).partner_id"
+      model="subscription.request"
+    />
+    <field
+      name="company_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
+      model="subscription.request"
+    />
+  </record>
+
+  <!-- Self-consumption Inscription 5: Link inscription to supply point -->
+  <!-- <record id="inscription_selfconsumption_5_selfconsumption_1_demo" model="energy_selfconsumption.inscription_selfconsumption">
+      <field name="selfconsumption_project_id" 
+              eval="ref('selfconsumption_1_community_1_demo')" 
+              model="energy_selfconsumption.selfconsumption" />
+      <field name="inscription_id" 
+              eval="ref('inscription_5_selfconsumption_1_demo')" 
+              model="energy_project.inscription" />
+      <field name="annual_electricity_use">1.00</field>
+      <field model="energy_selfconsumptions.participation"
+              name="participation_id"
+              search="[('project_id', '=', ref('selfconsumption_1_community_1_demo')),('quantity','=',0.5)]" />
+      <field name="accept" eval="True" />
+      <field name="member" eval="True" />
+      <field name="supply_point_id" ref="supply_point_5_selfconsumption_1_demo" />
+  </record> -->
+
+  <!-- ========================================== -->
+  <!-- DISTRIBUTION TABLE AND ASSIGNATIONS       -->
+  <!-- ========================================== -->
+
+  <!-- Distribution Table: Fixed coefficient distribution -->
+  <record id="distribution_table_1_selfconsumption_1_demo" model="energy_selfconsumption.distribution_table">
+    <field name="name">DT001</field>
+    <field name="selfconsumption_project_id" ref="selfconsumption_1_community_1_demo" />
+    <field name="type">fixed</field>
+    <field name="state">draft</field>
+    <field
+      name="company_id"
+      eval="obj(ref('energy_communities_cooperator.subscription_1_community_1_demo')).company_id"
+      model="subscription.request"
+    />
+  </record>
+
+  <!-- Supply Point Assignation 1: Casa Ignacio Mora (13.2% coefficient) -->
+  <record id="supply_point_assignation_1_distribution_table_1_demo" model="energy_selfconsumption.supply_point_assignation">
+    <field name="distribution_table_id" ref="distribution_table_1_selfconsumption_1_demo" />
+    <field name="supply_point_id" ref="supply_point_1_selfconsumption_1_demo" />
+    <field name="coefficient">0.132</field>
+    <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+  </record>
+
+  <!-- Supply Point Assignation 2: Casa Jessica Tirado (11.2% coefficient) -->
+  <record id="supply_point_assignation_2_distribution_table_1_demo" model="energy_selfconsumption.supply_point_assignation">
+    <field name="distribution_table_id" ref="distribution_table_1_selfconsumption_1_demo" />
+    <field name="supply_point_id" ref="supply_point_2_selfconsumption_1_demo" />
+    <field name="coefficient">0.112</field>
+    <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+  </record>
+
+  <!-- Supply Point Assignation 3: Trabajo Ester (10.1% coefficient) -->
+  <record id="supply_point_assignation_3_distribution_table_1_demo" model="energy_selfconsumption.supply_point_assignation">
+    <field name="distribution_table_id" ref="distribution_table_1_selfconsumption_1_demo" />
+    <field name="supply_point_id" ref="supply_point_3_selfconsumption_1_demo" />
+    <field name="coefficient">0.101</field>
+    <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+  </record>
+
+  <!-- Supply Point Assignation 4: Casa Ester Ojeda (9.8% coefficient) -->
+  <record id="supply_point_assignation_4_distribution_table_1_demo" model="energy_selfconsumption.supply_point_assignation">
+    <field name="distribution_table_id" ref="distribution_table_1_selfconsumption_1_demo" />
+    <field name="supply_point_id" ref="supply_point_4_selfconsumption_1_demo" />
+    <field name="coefficient">0.655</field>
+    <field
+      name="company_id"
+      eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+      model="energy_selfconsumption.distribution_table"
+    />
+  </record>
+
+  <!-- Supply Point Assignation 5: Casa Marc Ortiz (55.7% coefficient) -->
+  <!-- <record id="supply_point_assignation_5_distribution_table_1_demo" model="energy_selfconsumption.supply_point_assignation">
+      <field name="distribution_table_id" ref="distribution_table_1_selfconsumption_1_demo" />
+      <field name="supply_point_id" ref="supply_point_5_selfconsumption_1_demo" />
+      <field name="coefficient">0.557</field>
+      <field name="company_id" 
+              eval="obj(ref('distribution_table_1_selfconsumption_1_demo')).company_id"
+              model="energy_selfconsumption.distribution_table" />
+  </record> -->
+
+  <!-- ========================================== -->
+  <!-- WORKFLOW AUTOMATION                       -->
+  <!-- ========================================== -->
+
+  <!-- Validate the distribution table -->
+  <function
+    name="button_validate"
+    model="energy_selfconsumption.distribution_table"
+    eval="[ref('distribution_table_1_selfconsumption_1_demo')]"
+  />
+
+  <!-- Set self-consumption project to activation state -->
+  <function
+    name="set_in_activation_state"
+    model="energy_selfconsumption.selfconsumption"
+    eval="[ref('selfconsumption_1_community_1_demo')]"
+  />
 
 </odoo>
