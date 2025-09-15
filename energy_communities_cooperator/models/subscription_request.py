@@ -1,6 +1,8 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
+from ..config import COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF
+
 
 class SubscriptionRequest(models.Model):
     _name = "subscription.request"
@@ -10,7 +12,7 @@ class SubscriptionRequest(models.Model):
     @api.depends("share_product_id", "share_product_id.categ_id")
     def _compute_is_voluntary(self):
         product_category_voluntary_share = self.env.ref(
-            "energy_communities_cooperator.product_category_company_voluntary_share",
+            COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
             raise_if_not_found=False,
         )
         for record in self:
@@ -33,6 +35,23 @@ class SubscriptionRequest(models.Model):
         readonly=True,
         store=True,
     )
+    share_product_categ_id = fields.Many2one(
+        "product.category",
+        string="Share type category",
+        compute="_compute_share_product_categ_id",
+        store=True,
+    )
+
+    @api.depends("share_product_id")
+    def _compute_share_product_categ_id(self):
+        for record in self:
+            record.share_product_categ_id = False
+            if record.share_product_id.categ_id:
+                record.share_product_categ_id = record.share_product_id.categ_id.id
+
+    def compute_share_product_categ_id(self):
+        self._compute_share_product_categ_id()
+        return True
 
     @api.onchange("partner_id")
     def onchange_partner(self):

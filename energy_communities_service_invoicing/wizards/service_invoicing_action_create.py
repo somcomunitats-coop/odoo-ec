@@ -2,12 +2,12 @@ from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
-from odoo.addons.energy_communities.config import PACK_TYPE_PLATFORM
 from odoo.addons.energy_communities.utils import (
     contract_utils,
     sale_order_utils,
 )
 
+from ..config import PACK_TYPE_PLATFORM, PLATFORM_PACK_PRODUCT_CATEG_REF
 from ..utils import (
     get_existing_last_closed_platform_pack_contract,
     get_existing_open_pack_contract,
@@ -66,7 +66,7 @@ class ServiceInvoicingActionCreateWizard(models.TransientModel):
     def _compute_platform_pack_product_categ_id(self):
         for record in self:
             record.platform_pack_product_categ_id = self.env.ref(
-                "energy_communities_service_invoicing.product_category_platform_pack"
+                PLATFORM_PACK_PRODUCT_CATEG_REF
             ).id
 
     @api.depends("company_id", "community_company_mids")

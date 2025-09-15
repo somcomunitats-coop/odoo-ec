@@ -1,8 +1,6 @@
 from odoo import _, api, fields, models
 
-from odoo.addons.energy_communities.config import (
-    PACK_PROD_CATEG_XMLID_REL_TO_SERVICE_PROD_CATEG_XMLID,
-)
+from ..config import PACK_PROD_CATEG_REF_REL_TO_SERVICE_PROD_CATEG_REF
 
 
 class PackProductCreatorWizardServiceProduct(models.TransientModel):
@@ -62,7 +60,7 @@ class PackProductCreatorWizardServiceProduct(models.TransientModel):
             record.allowed_service_product_categ_id = 0
             if record.pack_product_creator_id.pack_categ_id:
                 record.allowed_service_product_categ_id = self.env.ref(
-                    PACK_PROD_CATEG_XMLID_REL_TO_SERVICE_PROD_CATEG_XMLID[
+                    PACK_PROD_CATEG_REF_REL_TO_SERVICE_PROD_CATEG_REF[
                         record.pack_product_creator_id.pack_categ_id.data_xml_id
                     ]
                 ).id

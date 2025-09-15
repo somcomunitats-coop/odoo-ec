@@ -25,12 +25,21 @@ _LEGAL_FORM_VALUES = [
     ("limited_partnership", _("Limited partnership")),
     ("stock_company", _("Stock company")),
     ("individual_entrepreneur", _("Individual entrepreneur")),
+    ("residents_association", _("Neighborhood community")),
+    ("non_profit_limited_company", _("Non profit limited company")),
+]
+_LEGAL_FORM_VALUES_DEFAULT = "undefined"
+_LEGAL_FORM_VALUES_NON_PROFIT = [
+    "non_profit",
+    "non_profit_limited_company",
+    "residents_association",
 ]
 
 _CE_STATUS_VALUES = [
     ("active", _("active")),
     ("building", _("building")),
 ]
+_CE_STATUS_VALUES_DEFAULT = "active"
 
 _CE_MEMBER_STATUS_VALUES = [
     ("open", _("Open")),
@@ -81,12 +90,16 @@ class ResCompany(models.Model):
     legal_form = fields.Selection(
         selection=_LEGAL_FORM_VALUES,
         string="Legal form",
+        required=True,
+        default=_LEGAL_FORM_VALUES_DEFAULT,
     )
-    comercial_name = fields.Char(string="Comercial name")
     ce_status = fields.Selection(
         selection=_CE_STATUS_VALUES,
         string="Energy Community state",
+        required=True,
+        default=_CE_STATUS_VALUES_DEFAULT,
     )
+    comercial_name = fields.Char(string="Comercial name")
     landing_page_id = fields.Many2one("landing.page", string=_("Landing Page"))
     website_id = fields.Many2one("website", store=False, compute="_compute_website_id")
     landing_page_status = fields.Selection(related="landing_page_id.status")

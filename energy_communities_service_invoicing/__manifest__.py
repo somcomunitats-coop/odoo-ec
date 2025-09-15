@@ -48,6 +48,7 @@
         "views/service_invoicing_views.xml",
         "views/subscription_request_views.xml",
         "wizards/assign_pack_to_partner.xml",
+        "wizards/multicompany_easy_creation.xml",
         "wizards/pack_product_creator.xml",
         "wizards/service_invoicing_action.xml",
         "wizards/service_invoicing_action_create.xml",
@@ -56,7 +57,9 @@
     "post_init_hook": "post_setup_intercompany_invoicing_config",
     # only loaded in demonstration mode
     "demo": [
+        "demo/res_company_demo.xml",
         "demo/product_template_demo.xml",
-        # "demo/subscription_request_demo.xml"
+        "demo/res_user_demo.xml",
+        "demo/subscription_request_demo.xml",
     ],
 }

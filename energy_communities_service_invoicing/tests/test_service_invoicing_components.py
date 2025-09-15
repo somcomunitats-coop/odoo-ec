@@ -3,9 +3,9 @@ from dateutil.relativedelta import relativedelta
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
-from odoo.addons.energy_communities.config import PACK_TYPE_PLATFORM
 from odoo.addons.energy_communities.utils import contract_utils
 
+from ..config import PACK_TYPE_PLATFORM
 from .service_invoicing_testing_contract_creator import (
     ServiceInvoicingTestingContractCreator,
 )

@@ -1,5 +1,14 @@
 from collections import namedtuple
 
+from ..config import (
+    COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF,
+    PLATFORM_PACK_PRODUCT_CATEG_REF,
+    PLATFORM_SERVICE_PRODUCT_CATEG_REF,
+    RECURRING_FEE_PACK_PRODUCT_CATEG_REF,
+    RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
+    SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF,
+    SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF,
+)
 from ..schemas import (
     PackProductCreationData,
     ServiceProductCreationData,
@@ -27,7 +36,7 @@ ProductUtilsTestingCase = namedtuple(
 _PACK_PRODUCT_TESTING_CASES = {
     "fixed_prepaid_recurring_fee_pack": PackProductDataTestingCase(
         "Community 2",
-        "energy_communities.product_category_recurring_fee_pack",
+        RECURRING_FEE_PACK_PRODUCT_CATEG_REF,
         "Recurring fee pack test 1",
         "Recurring fee pack test 1 long description",
         "TP1",
@@ -43,7 +52,7 @@ _PACK_PRODUCT_TESTING_CASES = {
     ),
     "fixed_prepaid_share_recurring_fee_pack": PackProductDataTestingCase(
         "Community 2",
-        "energy_communities.product_category_share_recurring_fee_pack",
+        COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF,
         "Recurring fee share pack test 1",
         "Recurring fee share pack test 1 long description",
         "TP2",
@@ -59,7 +68,7 @@ _PACK_PRODUCT_TESTING_CASES = {
     ),
     "interval_prepaid_platform_pack": PackProductDataTestingCase(
         "Platform Company",
-        "energy_communities_service_invoicing.product_category_platform_pack",
+        PLATFORM_PACK_PRODUCT_CATEG_REF,
         "Platform pack test 1",
         "Platform pack test 1 long description",
         "TP3",
@@ -75,7 +84,7 @@ _PACK_PRODUCT_TESTING_CASES = {
     ),
     "interval_prepaid_selfconsumption_pack": PackProductDataTestingCase(
         "Community 1",
-        "energy_selfconsumption.product_category_selfconsumption_pack",
+        SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF,
         "Selfconsumption pack test 1",
         "Selfconsumption pack test 1 long description",
         "TP4",
@@ -95,7 +104,7 @@ _SERVICE_PRODUCT_TESTING_CASES = {
     "recurring_fee_services": [
         ServiceProductCreationDataTestingCase(
             "Community 2",
-            "energy_communities.product_category_recurring_fee_service",
+            RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
             "Recurring fee service test 1",
             "Recurring fee service test 1 long description",
             "TS1",
@@ -107,7 +116,7 @@ _SERVICE_PRODUCT_TESTING_CASES = {
         ),
         ServiceProductCreationDataTestingCase(
             "Community 2",
-            "energy_communities.product_category_recurring_fee_service",
+            RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
             "Recurring fee service test 2",
             "Recurring fee service test 2 long description",
             False,
@@ -121,7 +130,7 @@ _SERVICE_PRODUCT_TESTING_CASES = {
     "platform_services": [
         ServiceProductCreationDataTestingCase(
             "Platform Company",
-            "energy_communities_service_invoicing.product_category_platform_service",
+            PLATFORM_SERVICE_PRODUCT_CATEG_REF,
             "Platform service test 1",
             "Platform service test 1 long description",
             "TS3",
@@ -142,7 +151,7 @@ _SERVICE_PRODUCT_TESTING_CASES = {
     "selfconsumption_services": [
         ServiceProductCreationDataTestingCase(
             "Community 1",
-            "energy_selfconsumption.product_category_selfconsumption_service",
+            SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF,
             "Selfconsumption service test 1",
             "Selfconsumption service test 1 long description",
             "TS4",

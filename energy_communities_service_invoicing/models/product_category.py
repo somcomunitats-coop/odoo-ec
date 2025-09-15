@@ -1,13 +1,9 @@
 from odoo import _, api, fields, models
 
-from odoo.addons.energy_communities.config import (
-    PACK_PROD_CATEG_XMLID_REL_TO_PACK_TYPES,
-    PACK_TYPE_NONE,
-)
-
 from ..config import (
     ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS,
-    PACK_PRODUCT_PARENT_CATEG_REF,
+    PACK_PROD_CATEG_REF_REL_TO_PACK_TYPES,
+    PACK_TYPE_NONE,
     SERVICE_PRODUCT_PARENT_CATEG_REF,
     SHARE_PRODUCTS_CATEG_REFS,
 )
@@ -50,7 +46,7 @@ class ProductCategory(models.Model):
     @api.depends("data_xml_id")
     def _compute_pack_type(self):
         for record in self:
-            record.pack_type = PACK_PROD_CATEG_XMLID_REL_TO_PACK_TYPES.get(
+            record.pack_type = PACK_PROD_CATEG_REF_REL_TO_PACK_TYPES.get(
                 record.data_xml_id, PACK_TYPE_NONE
             )
 
@@ -75,3 +71,7 @@ class ProductCategory(models.Model):
             record.is_assignable_pack_to_partner = False
             if record.data_xml_id in ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS:
                 record.is_assignable_pack_to_partner = True
+
+    # Used on demo data in order to setup company dependant fields
+    def write_with_company(self, company, w_dict):
+        self.with_company(company).write(w_dict)
