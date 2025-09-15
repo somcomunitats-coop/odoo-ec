@@ -15,6 +15,11 @@ from ..schemas import (
     CommunityServiceMetricsInfoListResponse,
     CommunityServiceMetricsInfoResponse,
     EnergyPoint,
+    InvoiceInfo,
+    InvoiceInfoListResponse,
+    InvoiceInfoResponse,
+    InvoicePDFInfo,
+    InvoicePDFInfoResponse,
     MemberInfo,
     MemberInfoResponse,
     ProjectEnergyConsumedInfoListResponse,
@@ -344,3 +349,46 @@ class MemberApiService(Component):
             len(daily_selfconsumption),
             paging,
         )
+
+    @restapi.method(
+        [(["/invoices"], "GET")],
+        output_param=PydanticModel(InvoiceInfoListResponse),
+    )
+    def invoice_list(self):
+        with api_info(self.env, self._work_on_model, InvoiceInfo) as component:
+            total_member_invoices = component.get_total_member_invoices(
+                self.env.user.partner_id
+            )
+            member_invoices = component.get_member_invoices(self.env.user.partner_id)
+        return list_response(
+            request,
+            InvoiceInfoListResponse,
+            member_invoices,
+            total_member_invoices,
+        )
+
+    @restapi.method(
+        [(["/invoices/<int:invoice_id>"], "GET")],
+        output_param=PydanticModel(InvoiceInfoResponse),
+    )
+    def invoice(self, invoice_id: int):
+        with api_info(self.env, self._work_on_model, InvoiceInfo) as component:
+            invoice = component.get_member_invoice_by_id(
+                self.env.user.partner_id, invoice_id
+            )
+        if not invoice:
+            raise MissingError(f"Invoice with id {invoice_id} not found")
+        return single_response(request, InvoiceInfoResponse, invoice)
+
+    @restapi.method(
+        [(["/invoices/<int:invoice_id>/download"], "GET")],
+        output_param=PydanticModel(InvoicePDFInfoResponse),
+    )
+    def download_invoice(self, invoice_id: int):
+        with api_info(self.env, self._work_on_model, InvoicePDFInfo) as component:
+            invoice_pdf = component.get_member_invoice_pdf_by_id(
+                self.env.user.partner_id, invoice_id
+            )
+        if not invoice_pdf:
+            raise MissingError(f"Invoice with id {invoice_id} not found")
+        return single_response(request, InvoicePDFInfoResponse, invoice_pdf)
