@@ -1,8 +1,10 @@
 # Energy Communities Service Invoicing
 
-<add description>
-
 ## Changelog
+
+### v16.0.0.5.5
+
+- Fix journal propagation
 
 ### 2025-05-21
 
