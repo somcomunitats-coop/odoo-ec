@@ -2,7 +2,7 @@
 
 ## Changelog
 
-### v16.0.0.5.5
+### v16.0.0.5.6
 
 - Fix journal propagation
 
