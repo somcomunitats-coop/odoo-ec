@@ -15,7 +15,7 @@ addon | version | maintainers | summary
 [energy_communities_mass_mailing](energy_communities_mass_mailing/) | 16.0.0.1.4 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Mass Mailing custumizations for energy communities management
 [energy_communities_service_invoicing](energy_communities_service_invoicing/) | 16.0.0.5.6 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Addon for implement Som Comunitats service invoicing model
 [energy_project](energy_project/) | 16.0.0.2.3 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Som Comunitats energy project model implementation
-[energy_selfconsumption](energy_selfconumption/) | 16.0.0.5.8 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Energy selfconsumption addon for manage selfconsumption installations in a energy community
+[energy_selfconsumption](energy_selfconumption/) | 16.0.0.5.9 | [dani-quilez](https://git.coopdevs.org/daniquilez) [alvaro-garcia](https://git.coopdevs.org/alvarog) [xavi-bonet](https://git.coopdevs.org/xavier.bonet) [juan-pe](https://git.coopdevs.org/juan-pe)| Energy selfconsumption addon for manage selfconsumption installations in a energy community
 
 
 ## Getting started

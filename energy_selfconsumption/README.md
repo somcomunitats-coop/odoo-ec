@@ -181,7 +181,7 @@ team or refer to the project documentation.
 
 ## Changes
 
-### v16.0.0.5.8
+### v16.0.0.5.9
 
 - Change email validation when a new request is created
 - Fix mandate propagation
