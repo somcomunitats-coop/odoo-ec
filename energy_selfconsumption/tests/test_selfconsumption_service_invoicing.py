@@ -122,7 +122,6 @@ class TestSelfconsumptionServiceInvoicing(
         contracts = self.selfconsumption.get_active_contracts()
         # ASSERT: only one generated contract
         self.assertEqual(len(contracts), 4)
-        # TODO: Assert Dates Match properly with expected
 
     def _workflow_project_invoicing_mode_definition(self, invoicing_mode):
         invoice_mode_wizard = self.env[
@@ -325,6 +324,14 @@ class TestSelfconsumptionServiceInvoicing(
         contracts = self.selfconsumption.get_active_contracts()
         # ASSERT: All contracts are active
         for contract in contracts:
+            # ASSERT mandate correctly propagated
+            inscription = contract.supply_point_assignation_id.get_inscription()
+            self.assertTrue(bool(inscription.mandate_id))
+            self.assertEqual(contract.mandate_id, inscription.mandate_id)
+            # ASSERT contract is on the correct company_id
+            self.assertEqual(contract.company_id, self.selfconsumption.company_id)
+            # ASSERT contract journal definition ok
+            self.assertEqual(contract.journal_id.id, 35)
             # ASSERT: sale order "confirmed"
             self.assertEqual(contract.sale_order_id.state, "sale")
             # ASSERT: contract has line recurrence

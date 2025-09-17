@@ -22,7 +22,6 @@ class CmPlace(models.Model):
                 "ca_ES": "Posa-t’hi en contacte",
                 "eu_ES": "Jarri harremanetan",
             }
-            # print(place.external_link_ids)
             if self.external_link_ids:
                 for lang in translations.keys():
                     self.external_link_ids[0].with_context({"lang": lang}).write(

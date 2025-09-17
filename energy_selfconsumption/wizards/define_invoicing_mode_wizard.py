@@ -282,7 +282,7 @@ class DefineInvoicingModeWizard(models.TransientModel):
             )
 
         # Prepare sale order metadata
-        so_metadata = self._prepare_sale_order_metadata(assignation)
+        so_metadata = self._prepare_sale_order_metadata(assignation, inscription)
 
         # Create sale order using component
         with sale_order_utils(self.env) as component:
@@ -297,7 +297,7 @@ class DefineInvoicingModeWizard(models.TransientModel):
                 so_metadata,
             )
 
-    def _prepare_sale_order_metadata(self, assignation):
+    def _prepare_sale_order_metadata(self, assignation, inscription):
         """
         Prepare metadata for sale order creation
 
@@ -316,6 +316,7 @@ class DefineInvoicingModeWizard(models.TransientModel):
             "recurring_invoicing_type": self.recurring_invoicing_type,
             "project_id": self.selfconsumption_id.id,
             "company_id": self.selfconsumption_id.company_id.id,
+            "mandate_id": inscription.mandate_id.id if inscription.mandate_id else None,
         }
 
     # Project update methods

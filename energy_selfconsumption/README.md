@@ -179,6 +179,13 @@ When contributing to this module, please follow these guidelines:
 For technical support or questions about this module, please contact the development
 team or refer to the project documentation.
 
+## Changes
+
+### v16.0.0.5.9
+
+- Change email validation when a new request is created
+- Fix mandate propagation
+
 ---
 
 **Version**: 16.0.0.4.2 **Authors**: Coopdevs Treball SCCL & Som Energia SCCL
