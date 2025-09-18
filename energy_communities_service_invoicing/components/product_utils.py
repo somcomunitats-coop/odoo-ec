@@ -31,6 +31,7 @@ from ..config import (
     SELFCONSUMPTION_ACCOUNT_REF_EXPENSE,
     SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF,
     SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF,
+    SHARE_RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
 )
 from ..schemas import (
     BaseProductCreationData,
@@ -145,6 +146,9 @@ class ProductUtils(Component):
             company, RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF
         )
         self._setup_company_product_categ_saleteam(
+            company, SHARE_RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF
+        )
+        self._setup_company_product_categ_saleteam(
             company, SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF
         )
 
@@ -166,6 +170,9 @@ class ProductUtils(Component):
             )
 
     def _setup_company_product_categs_journal(self, company: Company) -> None:
+        afc_journal = self.env["account.journal"].search(
+            [("company_id", "=", company.id), ("code", "=", "AFC")], limit=1
+        )
         self._setup_company_product_categ_journal(
             company, COOP_SHARE_PRODUCT_CATEG_REF, False
         )
@@ -182,7 +189,7 @@ class ProductUtils(Component):
             company, RECURRING_FEE_PACK_PRODUCT_CATEG_REF, False
         )
         self._setup_company_product_categ_journal(
-            company, SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF, "AFC"
+            company, SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF, afc_journal
         )
         self._setup_company_product_categ_journal(
             company, PLATFORM_SERVICE_PRODUCT_CATEG_REF, False
@@ -191,18 +198,19 @@ class ProductUtils(Component):
             company, RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF, False
         )
         self._setup_company_product_categ_journal(
-            company, SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF, "AFC"
+            company,
+            SHARE_RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
+            company.subscription_journal_id,
+        )
+        self._setup_company_product_categ_journal(
+            company, SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF, afc_journal
         )
 
-    def _setup_company_product_categ_journal(self, company, categ_ref, journal_code):
-        if journal_code:
-            journal = self.env["account.journal"].search(
-                [("company_id", "=", company.id), ("code", "=", journal_code)], limit=1
+    def _setup_company_product_categ_journal(self, company, categ_ref, journal):
+        if journal:
+            self.env.ref(categ_ref).with_company(company).write(
+                {"service_invoicing_sale_journal_id": journal.id}
             )
-            if journal:
-                self.env.ref(categ_ref).with_company(company).write(
-                    {"service_invoicing_sale_journal_id": journal.id}
-                )
 
     def _setup_company_product_categs_accounts(self, company: Company) -> None:
         # coop share product categ
@@ -264,13 +272,22 @@ class ProductUtils(Component):
             self.env.ref(PLATFORM_ACCOUNT_REF.format(company.id)),
             self.env.ref(PLATFORM_ACCOUNT_REF_EXPENSE.format(company.id)),
         )
+        # share recurring fee service
+        share_recurring_fee_account = (
+            company.get_company_share_recurring_fee_service_account()
+        )
+        self._setup_company_product_categ_accounts(
+            company,
+            SHARE_RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
+            share_recurring_fee_account,
+            share_recurring_fee_account,
+        )
         # recurring fee service
-        recurring_fee_account = company.get_company_recurring_fee_service_account()
         self._setup_company_product_categ_accounts(
             company,
             RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
-            recurring_fee_account,
-            recurring_fee_account,
+            self.env.ref(RECURRING_FEE_ACCOUNT_REF.format(company.id)),
+            self.env.ref(RECURRING_FEE_ACCOUNT_REF_EXPENSE.format(company.id)),
         )
         # selfconsumption service
         self._setup_company_product_categ_accounts(

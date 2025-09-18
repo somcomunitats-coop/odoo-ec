@@ -23,7 +23,7 @@ class ResCompany(models.Model):
 
         return self.env.ref(COOP_ACCOUNT_REF.format(self.id))
 
-    def get_company_recurring_fee_service_account(self):
+    def get_company_share_recurring_fee_service_account(self):
         if self.legal_form in _LEGAL_FORM_VALUES_NON_PROFIT:
             return self.env.ref(RECURRING_FEE_ACCOUNT_REF_NONPROFIT.format(self.id))
 

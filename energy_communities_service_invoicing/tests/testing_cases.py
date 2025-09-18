@@ -8,6 +8,7 @@ from ..config import (
     RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
     SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF,
     SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF,
+    SHARE_RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
 )
 from ..schemas import (
     PackProductCreationData,
@@ -127,6 +128,32 @@ _SERVICE_PRODUCT_TESTING_CASES = {
             False,
         ),
     ],
+    "share_recurring_fee_services": [
+        ServiceProductCreationDataTestingCase(
+            "Community 2",
+            SHARE_RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
+            "Share Recurring fee service test 1",
+            "Share Recurring fee service test 1 long description",
+            "TS1",
+            18,
+            ["l10n_es.4_account_tax_template_s_iva21s"],
+            "fixed",
+            1,
+            False,
+        ),
+        ServiceProductCreationDataTestingCase(
+            "Community 2",
+            SHARE_RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
+            "Recurring fee service test 2",
+            "Recurring fee service test 2 long description",
+            False,
+            17,
+            ["l10n_es.4_account_tax_template_s_iva21s"],
+            "fixed",
+            3,
+            False,
+        ),
+    ],
     "platform_services": [
         ServiceProductCreationDataTestingCase(
             "Platform Company",
@@ -171,7 +198,7 @@ _PRODUCT_UTILS_TESTING_CASES = {
     ),
     "fixed_prepaid_share_recurring_fee": ProductUtilsTestingCase(
         _PACK_PRODUCT_TESTING_CASES["fixed_prepaid_share_recurring_fee_pack"],
-        _SERVICE_PRODUCT_TESTING_CASES["recurring_fee_services"],
+        _SERVICE_PRODUCT_TESTING_CASES["share_recurring_fee_services"],
     ),
     "fixed_prepaid_recurring_fee_no_services": ProductUtilsTestingCase(
         _PACK_PRODUCT_TESTING_CASES["fixed_prepaid_recurring_fee_pack"],
