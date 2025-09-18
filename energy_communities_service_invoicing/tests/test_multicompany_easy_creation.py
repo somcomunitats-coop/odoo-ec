@@ -267,7 +267,6 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         )
         self.assertTrue(selfconsumption_sale_journal.refund_sequence)
 
-<<<<<<< HEAD
     def test__vsir_journal_configuration_ok_case(self):
         new_company = self.coop_company
         vsir_journal = new_company.voluntary_share_journal_account
@@ -666,3 +665,4 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             coop_contract_line_service.with_context(lang="eu_ES").description_sale,
             "Bazkide afiliazioaren urteko kuota",
         )
+
