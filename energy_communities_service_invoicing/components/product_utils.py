@@ -155,6 +155,16 @@ class ProductUtils(Component):
                     "property_account_expense_categ_id": cooperator_account.id,
                 }
             )
+        else:
+            self.env.ref(COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF).with_company(
+                company
+            ).write(
+                {
+                    "property_account_income_categ_id": False,
+                    "property_account_expense_categ_id": False,
+                }
+            )
+
         # recurring fee pack
         self.env.ref(RECURRING_FEE_PACK_PRODUCT_CATEG_REF).with_company(company).write(
             {
