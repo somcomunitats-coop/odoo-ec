@@ -3,6 +3,7 @@ from typing import List
 from odoo import _
 from odoo.exceptions import ValidationError
 
+from odoo.addons.account.models.account_account import AccountAccount
 from odoo.addons.base.models.res_company import Company
 from odoo.addons.component.core import Component
 from odoo.addons.contract.models.contract_template import ContractTemplate
@@ -114,113 +115,146 @@ class ProductUtils(Component):
         return company_pricelist
 
     def setup_company_product_categs(self, company: Company) -> None:
+        self._setup_company_product_categs_saleteam(company)
+        self._setup_company_product_categs_accounts(company)
+
+    def _setup_company_product_categs_saleteam(self, company: Company) -> None:
+        self._setup_company_product_categ_saleteam(
+            company, COOP_SHARE_PRODUCT_CATEG_REF
+        )
+        self._setup_company_product_categ_saleteam(
+            company, COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF
+        )
+        self._setup_company_product_categ_saleteam(
+            company, COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF
+        )
+        self._setup_company_product_categ_saleteam(
+            company, PLATFORM_PACK_PRODUCT_CATEG_REF
+        )
+        self._setup_company_product_categ_saleteam(
+            company, RECURRING_FEE_PACK_PRODUCT_CATEG_REF
+        )
+        self._setup_company_product_categ_saleteam(
+            company, SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF
+        )
+        self._setup_company_product_categ_saleteam(
+            company, PLATFORM_SERVICE_PRODUCT_CATEG_REF
+        )
+        self._setup_company_product_categ_saleteam(
+            company, RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF
+        )
+        self._setup_company_product_categ_saleteam(
+            company, SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF
+        )
+
+    def _setup_company_product_categ_saleteam(
+        self, company: Company, categ_ref: str
+    ) -> None:
+        default_sale_team = self.env["crm.team"].search(
+            [
+                ("company_id", "=", company.id),
+                ("is_default_team", "=", True),
+            ],
+            limit=1,
+        )
+        if default_sale_team:
+            self.env.ref(categ_ref).with_company(company).write(
+                {
+                    "service_invoicing_sale_team_id": default_sale_team.id,
+                }
+            )
+
+    def _setup_company_product_categs_accounts(self, company: Company) -> None:
         # coop share product categ
         cooperator_account = company.get_company_coop_account()
-        self.env.ref(COOP_SHARE_PRODUCT_CATEG_REF).with_company(company).write(
-            {
-                "property_account_income_categ_id": cooperator_account.id,
-                "property_account_expense_categ_id": cooperator_account.id,
-            }
+        self._setup_company_product_categ_accounts(
+            company,
+            COOP_SHARE_PRODUCT_CATEG_REF,
+            cooperator_account,
+            cooperator_account,
         )
         # voluntary share product categ
         coop_voluntary_account = self.env["account.account"].search(
             [("company_id", "=", company.id), ("code", "=", "100100")]
         )
-        self.env.ref(COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF).with_company(
-            company
-        ).write(
-            {
-                "property_account_income_categ_id": coop_voluntary_account.id,
-                "property_account_expense_categ_id": coop_voluntary_account.id,
-            }
+        self._setup_company_product_categ_accounts(
+            company,
+            COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
+            coop_voluntary_account,
+            coop_voluntary_account,
         )
         # platform pack product categ
-        self.env.ref(PLATFORM_PACK_PRODUCT_CATEG_REF).with_company(company).write(
-            {
-                "property_account_income_categ_id": self.env.ref(
-                    PLATFORM_ACCOUNT_REF.format(company.id)
-                ).id,
-                "property_account_expense_categ_id": self.env.ref(
-                    PLATFORM_ACCOUNT_REF_EXPENSE.format(company.id)
-                ).id,
-            }
+        self._setup_company_product_categ_accounts(
+            company,
+            PLATFORM_PACK_PRODUCT_CATEG_REF,
+            self.env.ref(PLATFORM_ACCOUNT_REF.format(company.id)),
+            self.env.ref(PLATFORM_ACCOUNT_REF_EXPENSE.format(company.id)),
         )
         # share recurring fee pack
         if company.legal_form in _LEGAL_FORM_VALUES_NON_PROFIT:
-            self.env.ref(COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF).with_company(
-                company
-            ).write(
-                {
-                    "property_account_income_categ_id": cooperator_account.id,
-                    "property_account_expense_categ_id": cooperator_account.id,
-                }
+            self._setup_company_product_categ_accounts(
+                company,
+                COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF,
+                cooperator_account,
+                cooperator_account,
             )
         else:
-            self.env.ref(COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF).with_company(
-                company
-            ).write(
-                {
-                    "property_account_income_categ_id": False,
-                    "property_account_expense_categ_id": False,
-                }
+            self._setup_company_product_categ_accounts(
+                company,
+                COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF,
             )
-
         # recurring fee pack
-        self.env.ref(RECURRING_FEE_PACK_PRODUCT_CATEG_REF).with_company(company).write(
-            {
-                "property_account_income_categ_id": self.env.ref(
-                    RECURRING_FEE_ACCOUNT_REF.format(company.id)
-                ).id,
-                "property_account_expense_categ_id": self.env.ref(
-                    RECURRING_FEE_ACCOUNT_REF_EXPENSE.format(company.id)
-                ).id,
-            }
+        self._setup_company_product_categ_accounts(
+            company,
+            RECURRING_FEE_PACK_PRODUCT_CATEG_REF,
+            self.env.ref(RECURRING_FEE_ACCOUNT_REF.format(company.id)),
+            self.env.ref(RECURRING_FEE_ACCOUNT_REF_EXPENSE.format(company.id)),
         )
         # selfconsumption pack
-        self.env.ref(SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF).with_company(
-            company
-        ).write(
-            {
-                "property_account_income_categ_id": self.env.ref(
-                    SELFCONSUMPTION_ACCOUNT_REF.format(company.id)
-                ).id,
-                "property_account_expense_categ_id": self.env.ref(
-                    SELFCONSUMPTION_ACCOUNT_REF_EXPENSE.format(company.id)
-                ).id,
-            }
+        self._setup_company_product_categ_accounts(
+            company,
+            SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF,
+            self.env.ref(SELFCONSUMPTION_ACCOUNT_REF.format(company.id)),
+            self.env.ref(SELFCONSUMPTION_ACCOUNT_REF_EXPENSE.format(company.id)),
         )
         # platform service product categ
-        self.env.ref(PLATFORM_SERVICE_PRODUCT_CATEG_REF).with_company(company).write(
-            {
-                "property_account_income_categ_id": self.env.ref(
-                    PLATFORM_ACCOUNT_REF.format(company.id)
-                ).id,
-                "property_account_expense_categ_id": self.env.ref(
-                    PLATFORM_ACCOUNT_REF_EXPENSE.format(company.id)
-                ).id,
-            }
+        self._setup_company_product_categ_accounts(
+            company,
+            PLATFORM_SERVICE_PRODUCT_CATEG_REF,
+            self.env.ref(PLATFORM_ACCOUNT_REF.format(company.id)),
+            self.env.ref(PLATFORM_ACCOUNT_REF_EXPENSE.format(company.id)),
         )
         # recurring fee service
         recurring_fee_account = company.get_company_recurring_fee_service_account()
-        self.env.ref(RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF).with_company(
-            company
-        ).write(
-            {
-                "property_account_income_categ_id": recurring_fee_account.id,
-                "property_account_expense_categ_id": recurring_fee_account.id,
-            }
+        self._setup_company_product_categ_accounts(
+            company,
+            RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF,
+            recurring_fee_account,
+            recurring_fee_account,
         )
         # selfconsumption service
-        self.env.ref(SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF).with_company(
-            company
-        ).write(
+        self._setup_company_product_categ_accounts(
+            company,
+            SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF,
+            self.env.ref(SELFCONSUMPTION_ACCOUNT_REF.format(company.id)),
+            self.env.ref(SELFCONSUMPTION_ACCOUNT_REF_EXPENSE.format(company.id)),
+        )
+
+    def _setup_company_product_categ_accounts(
+        self,
+        company: Company,
+        categ_ref: str,
+        income_account: AccountAccount = False,
+        expense_account: AccountAccount = False,
+    ) -> None:
+        self.env.ref(categ_ref).with_company(company).write(
             {
-                "property_account_income_categ_id": self.env.ref(
-                    SELFCONSUMPTION_ACCOUNT_REF.format(company.id)
-                ).id,
-                "property_account_expense_categ_id": self.env.ref(
-                    SELFCONSUMPTION_ACCOUNT_REF_EXPENSE.format(company.id)
-                ).id,
+                "property_account_income_categ_id": income_account.id
+                if income_account
+                else False,
+                "property_account_expense_categ_id": expense_account.id
+                if expense_account
+                else False,
             }
         )
 
