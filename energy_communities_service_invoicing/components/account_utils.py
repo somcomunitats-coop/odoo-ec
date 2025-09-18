@@ -62,7 +62,6 @@ class AccountUtils(Component):
         type: str,
         code: str,
         account_ref: str,
-        product_categ_xml_id: str = False,
     ) -> AccountJournal:
         account = self.env.ref(account_ref.format(company.id))
         journal = self.env["account.journal"].create(
@@ -75,13 +74,6 @@ class AccountUtils(Component):
                 "code": code,
             }
         )
-        if product_categ_xml_id:
-            self.env.ref(product_categ_xml_id).with_company(company).write(
-                {
-                    "service_invoicing_sale_journal_id": journal.id,
-                    "service_invoicing_purchase_journal_id": journal.id,
-                }
-            )
         return journal
 
     def create_company_account(

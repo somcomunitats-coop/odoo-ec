@@ -116,6 +116,7 @@ class ProductUtils(Component):
 
     def setup_company_product_categs(self, company: Company) -> None:
         self._setup_company_product_categs_saleteam(company)
+        self._setup_company_product_categs_journal(company)
         self._setup_company_product_categs_accounts(company)
 
     def _setup_company_product_categs_saleteam(self, company: Company) -> None:
@@ -163,6 +164,45 @@ class ProductUtils(Component):
                     "service_invoicing_sale_team_id": default_sale_team.id,
                 }
             )
+
+    def _setup_company_product_categs_journal(self, company: Company) -> None:
+        self._setup_company_product_categ_journal(
+            company, COOP_SHARE_PRODUCT_CATEG_REF, False
+        )
+        self._setup_company_product_categ_journal(
+            company, COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF, False
+        )
+        self._setup_company_product_categ_journal(
+            company, COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF, False
+        )
+        self._setup_company_product_categ_journal(
+            company, PLATFORM_PACK_PRODUCT_CATEG_REF, False
+        )
+        self._setup_company_product_categ_journal(
+            company, RECURRING_FEE_PACK_PRODUCT_CATEG_REF, False
+        )
+        self._setup_company_product_categ_journal(
+            company, SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF, "AFC"
+        )
+        self._setup_company_product_categ_journal(
+            company, PLATFORM_SERVICE_PRODUCT_CATEG_REF, False
+        )
+        self._setup_company_product_categ_journal(
+            company, RECURRING_FEE_SERVICE_PRODUCT_CATEG_REF, False
+        )
+        self._setup_company_product_categ_journal(
+            company, SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF, "AFC"
+        )
+
+    def _setup_company_product_categ_journal(self, company, categ_ref, journal_code):
+        if journal_code:
+            journal = self.env["account.journal"].search(
+                [("company_id", "=", company.id), ("code", "=", journal_code)], limit=1
+            )
+            if journal:
+                self.env.ref(categ_ref).with_company(company).write(
+                    {"service_invoicing_sale_journal_id": journal.id}
+                )
 
     def _setup_company_product_categs_accounts(self, company: Company) -> None:
         # coop share product categ
