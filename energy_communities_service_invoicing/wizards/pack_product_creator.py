@@ -120,13 +120,16 @@ class PackProductCreatorWizard(models.TransientModel):
             ):
                 record.recurring_invoicing_type = "pre-paid"
 
-    def execute_create(self):
-        self._validate_creation()
-        result = self._create_products()
+    def execute_create_action(self):
+        self.execute_create(self)
         return get_successful_popup_message(
             _("Pack product creation successful"),
             _("Please visit the products view in order to see the new items."),
         )
+
+    def execute_create(self):
+        self._validate_creation()
+        self._create_products()
 
     def _validate_creation(self):
         if not self.pack_categ_id:

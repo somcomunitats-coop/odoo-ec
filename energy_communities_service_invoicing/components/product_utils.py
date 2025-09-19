@@ -46,6 +46,32 @@ from ..schemas import (
 class ProductUtils(Component):
     _inherit = "product.utils"
 
+    def create_product(
+        self,
+        product_creation_params: ServiceProductCreationData,
+        apply_on_pricelist: bool = False,
+    ) -> ProductTemplate:
+        self._validate_service_configuration(product_creation_params)
+        new_product = self._create_base_product(
+            BaseProductCreationData(
+                company_id=product_creation_params.company_id,
+                categ_id=product_creation_params.categ_id,
+                name=product_creation_params.name,
+                description_sale=product_creation_params.description_sale,
+                default_code=product_creation_params.default_code,
+                list_price=product_creation_params.list_price,
+                taxes_id=product_creation_params.taxes_id,
+                short_name=product_creation_params.short_name,
+                sale_ok=product_creation_params.sale_ok,
+                purchase_ok=product_creation_params.purchase_ok,
+                display_on_website=product_creation_params.display_on_website,
+                default_share_product=product_creation_params.default_share_product,
+            )
+        )
+        if apply_on_pricelist:
+            self._apply_services_on_system_pricelist([new_product])
+        return new_product
+
     def create_products(
         self,
         product_creation_params: ProductCreationParams,
@@ -55,22 +81,9 @@ class ProductUtils(Component):
         existing_service_product_template_list = []
         # CREATE SERVICE PRODUCTS
         if product_creation_params.new_services:
-            self._validate_service_configuration(
-                product_creation_params.new_services[0]
-            )
             for service_product_creation_data in product_creation_params.new_services:
                 new_service_product_template_list.append(
-                    self._create_base_product(
-                        BaseProductCreationData(
-                            company_id=service_product_creation_data.company_id,
-                            categ_id=service_product_creation_data.categ_id,
-                            name=service_product_creation_data.name,
-                            description_sale=service_product_creation_data.description_sale,
-                            default_code=service_product_creation_data.default_code,
-                            list_price=service_product_creation_data.list_price,
-                            taxes_id=service_product_creation_data.taxes_id,
-                        )
-                    )
+                    self.create_product(service_product_creation_data)
                 )
         # EXISTING SERVICE PRODUCTS
         if product_creation_params.existing_services:
@@ -362,6 +375,11 @@ class ProductUtils(Component):
                 default_code=product_creation_params.pack.default_code,
                 list_price=product_creation_params.pack.list_price,
                 taxes_id=product_creation_params.pack.taxes_id,
+                short_name=product_creation_params.short_name,
+                sale_ok=product_creation_params.pack.sale_ok,
+                purchase_ok=product_creation_params.pack.purchase_ok,
+                display_on_website=product_creation_params.display_on_website,
+                default_share_product=product_creation_params.default_share_product,
             )
         )
         # CONTRACT TEMPLATE
@@ -379,8 +397,9 @@ class ProductUtils(Component):
         creation_dict = product_creation_data.model_dump() | {
             "detailed_type": "service",
             "invoice_policy": "order",
-            "purchase_ok": False,
         }
+        if not creation_dict["short_name"]:
+            creation_dict["short_name"] = creation_dict["name"]
         product = self.env["product.template"].create(creation_dict)
         self._apply_special_flags_to_product(product)
         return product
@@ -391,7 +410,6 @@ class ProductUtils(Component):
             special_flags["is_share"] = True
             special_flags["by_company"] = True
             special_flags["by_individual"] = True
-            special_flags["short_name"] = product.name
         if product.is_pack:
             special_flags["is_contract"] = True
         if special_flags:
