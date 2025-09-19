@@ -96,6 +96,21 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     vol_coop_product = product_component.create_product(
                         self._nonprofit_share_product_creation_params()
                     )
+                    vol_coop_product = product_component.create_product(
+                        self._vol_coop_product_creation_params()
+                    )
+                    self.new_company_id.write(
+                        {"voluntary_share_id": vol_coop_product.id}
+                    )
+                    vol_coop_product.with_context(lang="ca_ES").write(
+                        {"name": "Aportació voluntària al capital social"}
+                    )
+                    vol_coop_product.with_context(lang="es_ES").write(
+                        {"name": "Aportación voluntaria al capital social"}
+                    )
+                    vol_coop_product.with_context(lang="eu_ES").write(
+                        {"name": "Kapital sozialerako borondatezko ekarpena"}
+                    )
         except Exception as e:
             if isinstance(e, RegistryNotReadyError):
                 _logger.warning(
@@ -261,16 +276,5 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             purchase_ok=False,
             display_on_website=True,
             default_share_product=True,
-        )
-
-    def _coop_product_translations(self, coop_product):
-        coop_product.with_context(lang="ca_ES").write(
-            {"name": "Cuota inicial afiliació sòcia"}
-        )
-        coop_product.with_context(lang="es_ES").write(
-            {"name": "Cuota inicial afiliación socia"}
-        )
-        coop_product.with_context(lang="eu_ES").write(
-            {"name": "Bazkide afiliazioaren hasierako kuota"}
         )
 
