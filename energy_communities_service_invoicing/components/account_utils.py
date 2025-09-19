@@ -40,19 +40,7 @@ class AccountUtils(Component):
         )
         # create cooperator voluntary account
         self.create_company_account(
-            company, "Capital social voluntario", "liability_non_current", "100100"
-        # move to cooperator journal
-        company.subscription_journal_id.write(
-            {"default_account_id": cooperator_account.id}
-        )
-        # move to product category
-        self.env.ref(COOP_SHARE_PRODUCT_CATEG_REF).with_company(company).write(
-            {
-                "service_invoicing_sale_journal_id": company.subscription_journal_id.id,
-                "service_invoicing_purchase_journal_id": company.subscription_journal_id.id,
-                "property_account_income_categ_id": cooperator_account.id,
-                "property_account_expense_categ_id": cooperator_account.id,
-            }
+            company, "Capital social voluntario", "equity", "100100"
         )
 
     def create_company_journal(
