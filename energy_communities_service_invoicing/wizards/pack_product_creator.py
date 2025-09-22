@@ -35,7 +35,16 @@ class PackProductCreatorWizard(models.TransientModel):
         string="Company",
         default=lambda self: self.env.company,
     )
-    pack_categ_id = fields.Many2one("product.category", string="Pack category")
+    pack_categ_id = fields.Many2one(
+        "product.category",
+        string="Pack category",
+        domain="[('id', 'in', allowed_prod_categ_ids_by_user_role)]",
+    )
+    allowed_prod_categ_ids_by_user_role = fields.Many2many(
+        comodel_name="res.company",
+        compute="_compute_allowed_prod_categ_ids_by_user_role",
+        store=False,
+    )
     name = fields.Char(string="Pack name")
     description_sale = fields.Text(string="Sales description")
     default_code = fields.Char(string="Internal Reference")
@@ -59,6 +68,9 @@ class PackProductCreatorWizard(models.TransientModel):
     pack_categ_id_is_share_recurring_fee = fields.Boolean(
         compute="_compute_pack_categ_id_is_share_recurring_fee", store=False
     )
+
+    # def _compute_allowed_prod_categ_ids_by_user_role(self):
+    #     raise NotImplemented
 
     @api.depends("pack_categ_id")
     def _compute_pack_categ_id_is_config_share(self):
