@@ -13,7 +13,7 @@ class BaseProductCreationData(BaseModel):
     default_code: Optional[str] = None
     list_price: float = 0.0
     taxes_id: list
-    short_name: Optional[str] = False
+    short_name: Optional[str] = ""
     sale_ok: Optional[bool] = True
     purchase_ok: Optional[bool] = False
     display_on_website: Optional[bool] = False

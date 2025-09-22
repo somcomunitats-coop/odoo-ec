@@ -375,11 +375,11 @@ class ProductUtils(Component):
                 default_code=product_creation_params.pack.default_code,
                 list_price=product_creation_params.pack.list_price,
                 taxes_id=product_creation_params.pack.taxes_id,
-                short_name=product_creation_params.short_name,
+                short_name=product_creation_params.pack.short_name,
                 sale_ok=product_creation_params.pack.sale_ok,
                 purchase_ok=product_creation_params.pack.purchase_ok,
-                display_on_website=product_creation_params.display_on_website,
-                default_share_product=product_creation_params.default_share_product,
+                display_on_website=product_creation_params.pack.display_on_website,
+                default_share_product=product_creation_params.pack.default_share_product,
             )
         )
         # CONTRACT TEMPLATE
