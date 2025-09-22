@@ -35,7 +35,6 @@
       action="product.product_pricelist_action2"
       groups="role_platform_admin_res_groups"
       sequence="300"
-
     />
     <menuitem
       name="Product Categories"
@@ -43,16 +42,17 @@
       action="product.product_category_action_form"
       groups="role_platform_admin_res_groups"
       sequence="400"
-
-    />
-    <menuitem
-      name="Assistants"
-      id="ce_config_assistants_menu"
-      groups="role_platform_admin_res_groups"
-      sequence="999"
-
     />
   </menuitem>
+
+  <menuitem
+    name="Assistants"
+    id="ce_config_assistants_menu"
+    parent="ce_root_menu"
+    groups="role_platform_admin_res_groups,role_coord_admin_res_groups,role_ce_admin,role_ce_manager"
+    sequence="888"
+
+  />
 
   <!-- Hide menu items unless platform manager -->
   <record model="ir.ui.menu" id="mail.menu_root_discuss">
