@@ -1,3 +1,4 @@
+
 import logging
 
 from odoo import _, api, fields, models
@@ -63,6 +64,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                         {"voluntary_share_journal_account": vsir_journal.id}
                     )
             with product_utils(self.env) as product_component:
+                # create company pricelist
                 product_component.create_company_pricelist(self.new_company_id)
                 product_component.setup_company_product_categs(self.new_company_id)
                 if self.new_company_id.legal_form in ["cooperative", "undefined"]:
@@ -70,7 +72,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                         self._coop_product_creation_params()
                     )
                     self._coop_product_translations(coop_product)
-<<<<<<< HEAD
                     vol_coop_product = product_component.create_product(
                         self._vol_coop_product_creation_params()
                     )
@@ -96,27 +97,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 ):
                     vol_coop_product = product_component.create_product(
                         self._nonprofit_share_product_creation_params()
-                    )
-=======
->>>>>>> 996bc89f ([WIP] 🚧 Create share recurring fee pack on company creation)
-                    vol_coop_product = product_component.create_product(
-                        self._vol_coop_product_creation_params()
-                    )
-                    self._vol_coop_product_translations(vol_coop_product)
-                    self.new_company_id.write(
-                        {"voluntary_share_id": vol_coop_product.id}
-                    )
-
-                if (
-                    self.new_company_id.legal_form == "non_profit"
-                    and self.fixed_invoicing_day
-                    and self.fixed_invoicing_month
-                ):
-                    share_pack_creation_result = product_component.create_products(
-                        self._share_recurring_fee_pack_creation_params()
-                    )
-                    self._share_recurring_fee_pack_translations(
-                        share_pack_creation_result
                     )
 
         except Exception as e:
@@ -250,11 +230,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         ).write(
             {
                 "name": "Cuota annual afiliació sòcia",
-<<<<<<< HEAD
                 "description_sale": "Cuota annual afiliació sòcia",
-=======
-                "description_sale": "Cuota annual afiliació",
->>>>>>> 996bc89f ([WIP] 🚧 Create share recurring fee pack on company creation)
             }
         )
         creation_results.new_service_product_template_list[0].with_context(
@@ -262,11 +238,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         ).write(
             {
                 "name": "Cuota anual afiliación socia",
-<<<<<<< HEAD
                 "description_sale": "Cuota anual afiliación socia",
-=======
-                "description_sale": "Cuota anual afiliación",
->>>>>>> 996bc89f ([WIP] 🚧 Create share recurring fee pack on company creation)
             }
         )
         creation_results.new_service_product_template_list[0].with_context(
@@ -274,7 +246,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         ).write(
             {
                 "name": "Bazkide afiliazioaren urteko kuota",
-<<<<<<< HEAD
                 "description_sale": "Bazkide afiliazioaren urteko kuota",
             }
         )
@@ -295,8 +266,14 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             default_share_product=True,
         )
 
-=======
-                "description_sale": "Afiliazioaren urteko kuota",
-            }
+    def _coop_product_translations(self, coop_product):
+        coop_product.with_context(lang="ca_ES").write(
+            {"name": "Cuota inicial afiliació sòcia"}
         )
->>>>>>> 996bc89f ([WIP] 🚧 Create share recurring fee pack on company creation)
+        coop_product.with_context(lang="es_ES").write(
+            {"name": "Cuota inicial afiliación socia"}
+        )
+        coop_product.with_context(lang="eu_ES").write(
+            {"name": "Bazkide afiliazioaren hasierako kuota"}
+        )
+

@@ -17,8 +17,40 @@
     />
     <field name="data_xml_id">energy_communities_service_invoicing.product_category_platform_service</field>
   </record>
-
   <record id="product.list0" model="product.pricelist">
     <field name="name">Platform global pricelist</field>
   </record>
+
+  <function name="_compute_pack_type" model="product.category">
+    <value eval="ref('energy_communities.product_category_share_recurring_fee_pack')" model="product.category" />
+  </function>
+
+  <function name="_compute_pack_type" model="product.category">
+    <value eval="ref('energy_communities.product_category_share_recurring_fee_service')" model="product.category" />
+  </function>
+
+  <function name="_compute_pack_type" model="product.category">
+    <value eval="ref('energy_communities.product_category_recurring_fee_pack')" model="product.category" />
+  </function>
+
+  <function name="_compute_pack_type" model="product.category">
+    <value eval="ref('energy_communities.product_category_recurring_fee_service')" model="product.category" />
+  </function>
+
+  <function name="_compute_pack_type" model="product.category">
+    <value eval="ref('cooperator.product_category_company_share')" model="product.category" />
+  </function>
+
+  <function name="_compute_pack_type" model="product.category">
+    <value eval="ref('energy_communities_cooperator.product_category_company_voluntary_share')" model="product.category" />
+  </function>
+
+  <function name="_compute_pack_type" model="product.category">
+    <value eval="ref('energy_communities_service_invoicing.product_category_platform_pack')" model="product.category" />
+  </function>
+
+  <function name="_compute_pack_type" model="product.category">
+    <value eval="ref('energy_communities_service_invoicing.product_category_platform_service')" model="product.category" />
+  </function>
+
 </odoo>

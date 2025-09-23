@@ -1,20 +1,4 @@
 <odoo>
-    <record id="share_capital_product_template" model="product.template">
-        <field name="name">Contribution to Share Capital</field>
-        <field name="short_name">Share Capital</field>
-        <field name="sale_ok">False</field>
-        <field name="purchase_ok">False</field>
-        <field name="is_share">True</field>
-        <field name="display_on_website">True</field>
-        <field name="categ_id" ref="cooperator.product_category_company_share" />
-        <field name="type">service</field>
-        <field name="default_share_product">True</field>
-        <field name="list_price">0</field>
-        <field name="by_company">True</field>
-        <field name="by_individual">True</field>
-        <field name="active">False</field>
-    </record>
-
     <record id="cooperator.product_category_company_share" model="product.category">
       <field name="data_xml_id">cooperator.product_category_company_share</field>
     </record>
