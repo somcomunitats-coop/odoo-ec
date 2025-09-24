@@ -16,11 +16,11 @@
               domain="[(1,'=',1)]"
               options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
             />
+            <field name="allowed_prod_categ_ids_by_user_role" invisible="1"/>
             <field
               name="pack_categ_id"
               required="1"
               readonly="0"
-              domain="[('parent_id','=', %(energy_communities.product_category_pack)d)]"
               options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
             />
             <field name="name" required="1"/>

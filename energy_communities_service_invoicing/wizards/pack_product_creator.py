@@ -2,14 +2,20 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 from odoo.addons.energy_communities.config import (
+    CE_ADMIN,
+    CE_MANAGER,
+    COORD_ADMIN,
+    PACK_PROD_CATEG_XMLID_REL_TO_PACK_TYPES,
     PACK_PROD_CATEG_XMLID_REL_TO_SERVICE_PROD_CATEG_XMLID,
     PACK_TYPE_SHARE_RECURRING_FEE_PROD_CATEG_XMLID,
+    PLATFORM_ADMIN,
 )
 from odoo.addons.energy_communities.utils import (
     get_successful_popup_message,
     product_utils,
 )
 
+from ..config import ALL_PACKS, FEE_PACKS
 from ..schemas import (
     PackProductCreationData,
     ProductCreationParams,
@@ -35,7 +41,16 @@ class PackProductCreatorWizard(models.TransientModel):
         string="Company",
         default=lambda self: self.env.company,
     )
-    pack_categ_id = fields.Many2one("product.category", string="Pack category")
+    pack_categ_id = fields.Many2one(
+        "product.category",
+        string="Pack category",
+        domain="[('id', 'in', allowed_prod_categ_ids_by_user_role)]",
+    )
+    allowed_prod_categ_ids_by_user_role = fields.Many2many(
+        comodel_name="product.category",
+        compute="_compute_allowed_prod_categ_ids_by_user_role",
+        store=False,
+    )
     name = fields.Char(string="Pack name")
     description_sale = fields.Text(string="Sales description")
     default_code = fields.Char(string="Internal Reference")
@@ -59,6 +74,21 @@ class PackProductCreatorWizard(models.TransientModel):
     pack_categ_id_is_share_recurring_fee = fields.Boolean(
         compute="_compute_pack_categ_id_is_share_recurring_fee", store=False
     )
+
+    @api.depends("pack_categ_id")
+    def _compute_allowed_prod_categ_ids_by_user_role(self):
+        user_role = self.env.user.get_current_role()
+        admin_roles = [COORD_ADMIN, CE_MANAGER, CE_ADMIN]
+        for record in self:
+            record.allowed_prod_categ_ids_by_user_role = []
+            if user_role in admin_roles:
+                record.allowed_prod_categ_ids_by_user_role = [
+                    (4, self.env.ref(xml_id).id) for xml_id in FEE_PACKS
+                ]
+            if user_role == PLATFORM_ADMIN:
+                record.allowed_prod_categ_ids_by_user_role = [
+                    (4, self.env.ref(xml_id).id) for xml_id in ALL_PACKS
+                ]
 
     @api.depends("pack_categ_id")
     def _compute_pack_categ_id_is_config_share(self):
