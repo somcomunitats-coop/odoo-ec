@@ -181,6 +181,10 @@ team or refer to the project documentation.
 
 ## Changes
 
+### 2025-09-24 (v16.0.0.5.10)
+
+- Fix basque translations
+
 ### v16.0.0.5.9
 
 - Change email validation when a new request is created
