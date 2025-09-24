@@ -276,4 +276,3 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         coop_product.with_context(lang="eu_ES").write(
             {"name": "Bazkide afiliazioaren hasierako kuota"}
         )
-
