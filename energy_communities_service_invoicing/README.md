@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### 2025-09-24 (v16.0.0.5.8)
+
+- Make AssignPackToPartner and PackProductCreator wizards available for all admins
+
 ### 2025-09-24 (v16.0.0.5.7)
 
 - added field `service_type` in AccountMove model
