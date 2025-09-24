@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2025-09-24 (v16.0.0.5.6)
+
+- added roles ids to config
+
 ### 2025-09-17 (v16.0.0.5.5)
 
 - Clean commented code
