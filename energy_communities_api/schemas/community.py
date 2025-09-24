@@ -161,7 +161,7 @@ class CommunityServiceMetricsInfo(BaseModel):
     power: Optional[MetricInfo] = Field(
         None,
         title="Power",
-        descriptio="Power that has a service (if is a selfconumption installation)",
+        description="Power that has a service (if is a selfconumption installation)",
     )
 
     shares: Optional[MetricInfo] = Field(

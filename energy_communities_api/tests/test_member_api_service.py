@@ -631,3 +631,92 @@ class TestMemberApiService(HttpCase, RegistryMixin):
         # and the selfconsumed energy
         response = response.json()
         self.assertGreaterEqual(response["count"], 1)
+
+    def test__me_invoices_list_endpoint__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = self.community_id
+        # when we call for the list of invoices of that member
+        url = "/api/energy-communities/me/invoices"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and all invoices that belongs to that member
+        response = response.json()
+        self.assertGreaterEqual(response["count"], 1)
+        self.assertEqual(response["count"], len(response["data"]))
+
+    def test__me_invoice_endpoint__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = self.community_id
+        invoice_id = 17865
+        # when we call for an invoice of that member
+        url = f"/api/energy-communities/me/invoices/{invoice_id}"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and all invoices that belongs to that member
+        response = response.json()
+        self.assertNotEqual(response, {})
+
+    def test__me_invoice_endpoint__not_found(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = self.community_id
+        invoice_id = 16601
+        # when we call for an invoice of that member
+        url = f"/api/energy-communities/me/invoices/{invoice_id}"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 404)
+
+    def test__me_download_invoice_endpoint__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid personal token
+        # self.token
+        # a community id
+        communty_id = self.community_id
+        invoice_id = 17865
+        # when we call for an invoice of that member
+        url = f"/api/energy-communities/me/invoices/{invoice_id}/download"
+        response = self.client(
+            url,
+            headers={
+                "Authorization": self.token,
+                "CommunityId": communty_id,
+            },
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and all invoices that belongs to that member
+        response = response.json()
+        self.assertNotEqual(response, {})

@@ -81,3 +81,12 @@ RECURRING_RULE_MONTHLY_LAST_DAY = "monthlylastday"
 DEFAULT_PRICELIST_BASE_PRICE = "standard_price"
 DEFAULT_PRICELIST_COMPUTE_FIXED = "fixed"
 DEFAULT_PRICELIST_DISCOUNT_POLICY = "without_discount"
+
+INVOICE_SELFCONSUMPTION = "selfconsumption"
+INVOICE_MEMBERSHIP = "membership"
+INVOICE_OTHER = "other"
+INVOICE_SERVICETYPE_LABELS = [
+    (INVOICE_SELFCONSUMPTION, _("Selfconsumption")),
+    (INVOICE_MEMBERSHIP, _("Membership")),
+    (INVOICE_OTHER, _("Other")),
+]

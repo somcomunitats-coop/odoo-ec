@@ -1,3 +1,4 @@
+import base64
 from datetime import date
 from typing import List
 
@@ -8,6 +9,8 @@ from ..schemas import (
     CommunityInfo,
     CommunityServiceInfo,
     CommunityServiceMetricsInfo,
+    InvoiceInfo,
+    InvoicePDFInfo,
     MemberInfo,
 )
 
@@ -34,6 +37,12 @@ class PartnerApiInfo(Component):
     _active_community_services_domain = lambda _, service_id: [
         ("id", "=", service_id),
         ("state", "=", "active"),
+    ]
+
+    _member_invoices = lambda _, partner: [
+        ("partner_id", "=", partner.id),
+        ("state", "=", "posted"),
+        ("journal_id.type", "=", "sale"),
     ]
 
     def get_member_info(self, partner: Partner) -> MemberInfo:
@@ -131,6 +140,60 @@ class PartnerApiInfo(Component):
             )
             return metrics_info
 
+    def get_total_member_invoices(self, partner: Partner) -> int:
+        return len(self._get_invoices(partner))
+
+    def get_member_invoices(self, partner: Partner) -> List[InvoiceInfo]:
+        invoices = self._get_invoices(partner)
+        return [
+            InvoiceInfo(
+                id=invoice.id,
+                number=invoice.display_name,
+                service_type=invoice.service_type,
+                state=invoice.payment_state_for_api,
+                amount_total=invoice.amount_total,
+                date=str(invoice.date),
+                pdf_url="{base_url}/me/invoices/{id}/download".format(
+                    base_url=self.env.company.get_base_url(), id=invoice.id
+                ),
+            )
+            for invoice in invoices
+        ]
+
+    def get_member_invoice_by_id(
+        self, partner: Partner, invoice_id: int
+    ) -> InvoiceInfo:
+        invoices = self._get_invoices(partner, invoice_id)
+        if not invoices:
+            return None
+        invoice = invoices[0]
+        return InvoiceInfo(
+            id=invoice.id,
+            number=invoice.display_name,
+            service_type=invoice.service_type,
+            state=invoice.payment_state_for_api,
+            amount_total=invoice.amount_total,
+            date=str(invoice.date),
+            pdf_url="{base_url}/me/invoices/{id}/download".format(
+                base_url=self.env.company.get_base_url(), id=invoice.id
+            ),
+        )
+
+    def get_member_invoice_pdf_by_id(
+        self, partner: Partner, invoice_id: int
+    ) -> InvoiceInfo:
+        invoices = self._get_invoices(partner, invoice_id)
+        if not invoices:
+            return None
+        invoice = invoices[0]
+        report = self.env["ir.actions.report"]._get_report_from_name(
+            "account.report_invoice_with_payments"
+        )
+        pdf_content, _ = self.env["ir.actions.report"]._render_qweb_pdf(
+            report.report_name, invoice.id
+        )
+        return InvoicePDFInfo(id=invoice.id, content=base64.b64encode(pdf_content))
+
     def _get_communities(self, partner: Partner):
         domain = self._communities_domain(partner)
         if self.work.paging:
@@ -145,4 +208,14 @@ class PartnerApiInfo(Component):
             self.env["cooperative.membership"]
             .search(domain)
             .mapped(lambda record: record.company_id)
+        )
+
+    def _get_invoices(self, partner: Partner, invoice_id: int = None):
+        domain = self._member_invoices(partner)
+        if invoice_id:
+            domain += [("id", "=", invoice_id)]
+        return (
+            self.env["account.move"]
+            .search(domain)
+            .filtered(lambda record: record.company_id == partner.company_id)
         )
