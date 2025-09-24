@@ -15,7 +15,7 @@ from odoo.addons.energy_communities.utils import (
     product_utils,
 )
 
-from ..config import ALL_PACKS, FREE_PACKS
+from ..config import ALL_PACKS, FEE_PACKS
 from ..schemas import (
     PackProductCreationData,
     ProductCreationParams,
@@ -83,7 +83,7 @@ class PackProductCreatorWizard(models.TransientModel):
             record.allowed_prod_categ_ids_by_user_role = []
             if user_role in admin_roles:
                 record.allowed_prod_categ_ids_by_user_role = [
-                    (4, self.env.ref(xml_id).id) for xml_id in FREE_PACKS
+                    (4, self.env.ref(xml_id).id) for xml_id in FEE_PACKS
                 ]
             if user_role == PLATFORM_ADMIN:
                 record.allowed_prod_categ_ids_by_user_role = [

@@ -4,7 +4,7 @@ from odoo.tests.common import TransactionCase
 from odoo.addons.energy_communities.utils import product_utils
 from odoo.addons.product.models.product_template import ProductTemplate
 
-from ..config import ALL_PACKS, FREE_PACKS
+from ..config import ALL_PACKS, FEE_PACKS
 from ..schemas import (
     BaseProductCreationData,
     ProductCreationResult,
@@ -120,7 +120,7 @@ class TestPackProductCreatorWizzard(
                 (
                     "id",
                     "in",
-                    [self.env.ref(xml_id).id for xml_id in FREE_PACKS],
+                    [self.env.ref(xml_id).id for xml_id in FEE_PACKS],
                 )
             ]
         )
