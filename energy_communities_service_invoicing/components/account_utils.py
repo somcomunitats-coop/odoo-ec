@@ -7,16 +7,8 @@ from odoo.addons.account.models.account_account import AccountAccount
 from odoo.addons.account.models.account_journal import AccountJournal
 from odoo.addons.base.models.res_company import Company
 from odoo.addons.component.core import Component
-from odoo.addons.energy_communities.models.res_company import (
-    _LEGAL_FORM_VALUES_NON_PROFIT,
-)
 
-from ..config import (
-    COOP_ACCOUNT_REF_GENERAL,
-    COOP_ACCOUNT_REF_IN_COMPANY,
-    COOP_ACCOUNT_REF_NONPROFIT,
-    COOP_SHARE_PRODUCT_CATEG_REF,
-)
+from ..config import COOP_ACCOUNT_REF_IN_COMPANY
 
 
 class AccountUtils(Component):

@@ -1,4 +1,3 @@
-
 import logging
 
 from odoo import _, api, fields, models
@@ -264,15 +263,4 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             purchase_ok=False,
             display_on_website=True,
             default_share_product=True,
-        )
-
-    def _coop_product_translations(self, coop_product):
-        coop_product.with_context(lang="ca_ES").write(
-            {"name": "Cuota inicial afiliació sòcia"}
-        )
-        coop_product.with_context(lang="es_ES").write(
-            {"name": "Cuota inicial afiliación socia"}
-        )
-        coop_product.with_context(lang="eu_ES").write(
-            {"name": "Bazkide afiliazioaren hasierako kuota"}
         )
