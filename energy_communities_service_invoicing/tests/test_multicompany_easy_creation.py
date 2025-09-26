@@ -1,4 +1,3 @@
-
 from odoo.tests import common, tagged
 
 from odoo.addons.energy_communities.config import (
@@ -59,7 +58,7 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             "create_user": False,
             "hook_cron": False,
         }
-
+        # coop company
         self.cooperative_creation_crm_lead = self.env.ref(
             "energy_communities_crm.crm_lead_company_creation_demo_1"
         )
@@ -73,19 +72,36 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         self.new_cooperative_wizard.action_accept()
         self.coop_company = self.new_cooperative_wizard.new_company_id
 
-        self.nonprofit_creation_crm_lead = self.env.ref(
+        # non_profit company (without recurring share)
+        self.nonprofit_1_creation_crm_lead = self.env.ref(
             "energy_communities_crm.crm_lead_company_creation_demo_2"
         )
-        creation_data = self.nonprofit_creation_crm_lead._get_default_community_wizard()
+        creation_data = (
+            self.nonprofit_1_creation_crm_lead._get_default_community_wizard()
+        )
+        creation_data.update(wizard_data_update)
+        self.new_nonprofit_1_wizard = self.env[
+            "account.multicompany.easy.creation.wiz"
+        ].create(creation_data)
+        self.new_nonprofit_1_wizard.action_accept()
+        self.nonprofit_company_1 = self.new_nonprofit_1_wizard.new_company_id
+
+        # non_profit company (with recurring fee)
+        self.nonprofit_2_creation_crm_lead = self.env.ref(
+            "energy_communities_crm.crm_lead_company_creation_demo_3"
+        )
+        creation_data = (
+            self.nonprofit_2_creation_crm_lead._get_default_community_wizard()
+        )
         wizard_data_update.update(
             {"fixed_invoicing_day": "01", "fixed_invoicing_month": "01"}
         )
         creation_data.update(wizard_data_update)
-        self.new_nonprofit_wizard = self.env[
+        self.new_nonprofit_2_wizard = self.env[
             "account.multicompany.easy.creation.wiz"
         ].create(creation_data)
-        self.new_nonprofit_wizard.action_accept()
-        self.nonprofit_company = self.new_nonprofit_wizard.new_company_id
+        self.new_nonprofit_2_wizard.action_accept()
+        self.nonprofit_company_2 = self.new_nonprofit_2_wizard.new_company_id
 
     def test__company_creation_relation_users_list(self):
         self.assertEqual(
@@ -93,6 +109,22 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
                 self.env[
                     "account.multicompany.easy.creation.wiz"
                 ]._get_company_creation_related_users_list(self.coord_company)
+            ),
+            sorted([user.id for user in self.expected_users]),
+        )
+        self.assertEqual(
+            sorted(
+                self.env[
+                    "account.multicompany.easy.creation.wiz"
+                ]._get_company_creation_related_users_list(self.nonprofit_company_1)
+            ),
+            sorted([user.id for user in self.expected_users]),
+        )
+        self.assertEqual(
+            sorted(
+                self.env[
+                    "account.multicompany.easy.creation.wiz"
+                ]._get_company_creation_related_users_list(self.nonprofit_company_2)
             ),
             sorted([user.id for user in self.expected_users]),
         )
@@ -116,8 +148,13 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         )
         self.assertFalse(self.new_cooperative_wizard.create_user)
         self.assertFalse(self.new_cooperative_wizard.creation_partner)
+
         self.assertEqual(
-            self.new_nonprofit_wizard.chart_template_id,
+            self.new_nonprofit_1_wizard.chart_template_id,
+            self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF),
+        )
+        self.assertEqual(
+            self.new_nonprofit_2_wizard.chart_template_id,
             self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF),
         )
 
@@ -125,17 +162,19 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         companies = self.env["res.company"].search(
             [("parent_id", "=", self.coord_company.id)]
         )
-        # ASSERT: Now we have 4 communities
-        self.assertEqual(len(companies), 4)
+        # ASSERT: Now we have 5 communities
+        self.assertEqual(len(companies), 5)
         for company in companies:
             self.assertEqual(company.hierarchy_level, "community")
         # ASSERT: New companies has been created
         self.assertTrue(bool(self.coop_company))
-        self.assertTrue(bool(self.nonprofit_company))
+        self.assertTrue(bool(self.nonprofit_company_1))
+        self.assertTrue(bool(self.nonprofit_company_2))
 
     def test__users_and_partners_configuration_ok(self):
         self._test__users_and_partners_configuration_ok_case(self.coop_company)
-        self._test__users_and_partners_configuration_ok_case(self.nonprofit_company)
+        self._test__users_and_partners_configuration_ok_case(self.nonprofit_company_1)
+        self._test__users_and_partners_configuration_ok_case(self.nonprofit_company_2)
 
     def _test__users_and_partners_configuration_ok_case(self, new_company):
         for user in self.expected_users:
@@ -206,18 +245,28 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         )
         self.assertEqual(len(created_pricelist), 1)
         self.assertEqual(self.coop_company.pricelist_id, created_pricelist)
+
         created_pricelist = self.env["product.pricelist"].search(
-            [("company_id", "=", self.nonprofit_company.id)]
+            [("company_id", "=", self.nonprofit_company_1.id)]
         )
         self.assertEqual(len(created_pricelist), 1)
-        self.assertEqual(self.nonprofit_company.pricelist_id, created_pricelist)
+        self.assertEqual(self.nonprofit_company_1.pricelist_id, created_pricelist)
+
+        created_pricelist = self.env["product.pricelist"].search(
+            [("company_id", "=", self.nonprofit_company_2.id)]
+        )
+        self.assertEqual(len(created_pricelist), 1)
+        self.assertEqual(self.nonprofit_company_2.pricelist_id, created_pricelist)
 
     def test__coop_journal_and_accounts_ok(self):
         self._test__coop_journal_and_accounts_ok_case(
             self.coop_company, ACCOUNT_REF_100000
         )
         self._test__coop_journal_and_accounts_ok_case(
-            self.nonprofit_company, ACCOUNT_REF_720000
+            self.nonprofit_company_1, ACCOUNT_REF_720000
+        )
+        self._test__coop_journal_and_accounts_ok_case(
+            self.nonprofit_company_2, ACCOUNT_REF_720000
         )
 
     def _test__coop_journal_and_accounts_ok_case(self, new_company, account_ref):
@@ -242,7 +291,10 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
     def test__selfconsumption_journal_configuration_ok(self):
         self._test__selfconsumption_journal_configuration_ok_case(self.coop_company)
         self._test__selfconsumption_journal_configuration_ok_case(
-            self.nonprofit_company
+            self.nonprofit_company_1
+        )
+        self._test__selfconsumption_journal_configuration_ok_case(
+            self.nonprofit_company_2
         )
 
     def _test__selfconsumption_journal_configuration_ok_case(self, new_company):
@@ -284,13 +336,24 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
     def test__product_categs_configuration_ok(self):
         self._test__product_categs_saleteam_configuration_ok_case(self.coop_company)
         self._test__product_categs_saleteam_configuration_ok_case(
-            self.nonprofit_company
+            self.nonprofit_company_1
+        )
+        self._test__product_categs_saleteam_configuration_ok_case(
+            self.nonprofit_company_2
         )
         self._test__product_categs_journal_configuration_ok_case(self.coop_company)
-        self._test__product_categs_journal_configuration_ok_case(self.nonprofit_company)
+        self._test__product_categs_journal_configuration_ok_case(
+            self.nonprofit_company_1
+        )
+        self._test__product_categs_journal_configuration_ok_case(
+            self.nonprofit_company_2
+        )
         self._test__product_categs_accounts_configuration_ok_case(self.coop_company)
         self._test__product_categs_accounts_configuration_ok_case(
-            self.nonprofit_company
+            self.nonprofit_company_1
+        )
+        self._test__product_categs_accounts_configuration_ok_case(
+            self.nonprofit_company_2
         )
 
     def _test__product_categs_saleteam_configuration_ok_case(self, company):
@@ -476,8 +539,49 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         self._test__coop_product_configuration_ok()
         self._test__vol_coop_product_configuration_ok()
         self._test__share_recurring_fee_product_configuration_ok()
+        self._test__nonprofit_coop_product_configuration_ok()
 
     def _test__coop_product_configuration_ok(self):
+        self.assertTrue(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.coop_company.id),
+                        ("default_code", "=", "CSV"),
+                    ]
+                )
+            )
+        )
+        self.assertFalse(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.coop_company.id),
+                        ("default_code", "=", "CAAS"),
+                    ]
+                )
+            )
+        )
+        self.assertFalse(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.coop_company.id),
+                        ("default_code", "=", "CIAS"),
+                    ]
+                )
+            )
+        )
+        self.assertFalse(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.coop_company.id),
+                        ("default_code", "=", "CIA"),
+                    ]
+                )
+            )
+        )
         coop_product = self.env["product.template"].search(
             [("company_id", "=", self.coop_company.id), ("default_code", "=", "CS")]
         )
@@ -511,8 +615,49 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         self.assertTrue(coop_product.by_company)
         self.assertTrue(coop_product.by_individual)
         self.assertEqual(coop_product.payment_mode_id, self.env["account.payment.mode"])
+        self.assertFalse(coop_product.description_sale)
 
     def _test__vol_coop_product_configuration_ok(self):
+        self.assertTrue(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.coop_company.id),
+                        ("default_code", "=", "CS"),
+                    ]
+                )
+            )
+        )
+        self.assertFalse(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.coop_company.id),
+                        ("default_code", "=", "CAAS"),
+                    ]
+                )
+            )
+        )
+        self.assertFalse(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.coop_company.id),
+                        ("default_code", "=", "CIAS"),
+                    ]
+                )
+            )
+        )
+        self.assertFalse(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.coop_company.id),
+                        ("default_code", "=", "CIA"),
+                    ]
+                )
+            )
+        )
         coop_product = self.env["product.template"].search(
             [("company_id", "=", self.coop_company.id), ("default_code", "=", "CSV")]
         )
@@ -547,11 +692,42 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         self.assertTrue(coop_product.by_company)
         self.assertTrue(coop_product.by_individual)
         self.assertEqual(coop_product.payment_mode_id, self.env["account.payment.mode"])
+        self.assertFalse(coop_product.description_sale)
 
     def _test__share_recurring_fee_product_configuration_ok(self):
+        self.assertFalse(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.nonprofit_company_2.id),
+                        ("default_code", "=", "CSV"),
+                    ]
+                )
+            )
+        )
+        self.assertFalse(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.nonprofit_company_2.id),
+                        ("default_code", "=", "CS"),
+                    ]
+                )
+            )
+        )
+        self.assertFalse(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.nonprofit_company_2.id),
+                        ("default_code", "=", "CIA"),
+                    ]
+                )
+            )
+        )
         coop_product = self.env["product.template"].search(
             [
-                ("company_id", "=", self.nonprofit_company.id),
+                ("company_id", "=", self.nonprofit_company_2.id),
                 ("default_code", "=", "CIAS"),
             ]
         )
@@ -576,10 +752,10 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         self.assertTrue(coop_product.is_contract)
         self.assertEqual(coop_product.detailed_type, "service")
         self.assertEqual(coop_product.invoice_policy, "order")
-        self.assertEqual(coop_product.list_price, 90.0)
+        self.assertEqual(coop_product.list_price, 50.0)
         self.assertEqual(coop_product.taxes_id, self.env["account.tax"])
         self.assertEqual(coop_product.default_code, "CIAS")
-        self.assertEqual(coop_product.company_id, self.nonprofit_company)
+        self.assertEqual(coop_product.company_id, self.nonprofit_company_2)
         self.assertEqual(coop_product.short_name, "Cuota inicial afiliación")
         self.assertTrue(coop_product.default_share_product)
         self.assertTrue(coop_product.by_company)
@@ -600,19 +776,19 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             coop_product.with_context(lang="eu_ES").description_sale,
             "Bazkide afiliazioaren hasierako kuota",
         )
-        coop_product_conrtact_template = coop_product.property_contract_template_id
-        self.assertTrue(bool(coop_product_conrtact_template))
-        self.assertEqual(coop_product_conrtact_template.contract_type, "sale")
+        coop_product_contract_template = coop_product.property_contract_template_id
+        self.assertTrue(bool(coop_product_contract_template))
+        self.assertEqual(coop_product_contract_template.contract_type, "sale")
         self.assertEqual(
-            coop_product_conrtact_template.pack_type, "share_recurring_fee_pack"
+            coop_product_contract_template.pack_type, "share_recurring_fee_pack"
         )
-        self.assertFalse(coop_product_conrtact_template.is_free_pack)
+        self.assertFalse(coop_product_contract_template.is_free_pack)
         self.assertEqual(
-            coop_product_conrtact_template.company_id, self.nonprofit_company
+            coop_product_contract_template.company_id, self.nonprofit_company_2
         )
-        self.assertEqual(len(coop_product_conrtact_template.contract_line_ids), 1)
-        coop_contract_line = coop_product_conrtact_template.contract_line_ids[0]
-        coop_contract_line_service = coop_product_conrtact_template.contract_line_ids[
+        self.assertEqual(len(coop_product_contract_template.contract_line_ids), 1)
+        coop_contract_line = coop_product_contract_template.contract_line_ids[0]
+        coop_contract_line_service = coop_product_contract_template.contract_line_ids[
             0
         ].product_id
         self.assertEqual(
@@ -637,10 +813,12 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         self.assertFalse(coop_contract_line_service.is_contract)
         self.assertEqual(coop_contract_line_service.detailed_type, "service")
         self.assertEqual(coop_contract_line_service.invoice_policy, "order")
-        self.assertEqual(coop_contract_line_service.list_price, 90.0)
+        self.assertEqual(coop_contract_line_service.list_price, 50.0)
         self.assertEqual(coop_contract_line_service.taxes_id, self.env["account.tax"])
         self.assertEqual(coop_contract_line_service.default_code, "CAAS")
-        self.assertEqual(coop_contract_line_service.company_id, self.nonprofit_company)
+        self.assertEqual(
+            coop_contract_line_service.company_id, self.nonprofit_company_2
+        )
         self.assertEqual(
             coop_contract_line_service.short_name, "Cuota anual afiliación"
         )
@@ -666,3 +844,81 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             "Bazkide afiliazioaren urteko kuota",
         )
 
+    def _test__nonprofit_coop_product_configuration_ok(self):
+        self.assertFalse(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.nonprofit_company_1.id),
+                        ("default_code", "=", "CS"),
+                    ]
+                )
+            )
+        )
+        self.assertFalse(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.nonprofit_company_1.id),
+                        ("default_code", "=", "CSV"),
+                    ]
+                )
+            )
+        )
+        self.assertFalse(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.nonprofit_company_1.id),
+                        ("default_code", "=", "CAAS"),
+                    ]
+                )
+            )
+        )
+        self.assertFalse(
+            bool(
+                self.env["product.template"].search(
+                    [
+                        ("company_id", "=", self.nonprofit_company_1.id),
+                        ("default_code", "=", "CIAS"),
+                    ]
+                )
+            )
+        )
+        coop_product = self.env["product.template"].search(
+            [
+                ("company_id", "=", self.nonprofit_company_1.id),
+                ("default_code", "=", "CIA"),
+            ]
+        )
+        self.assertEqual(len(coop_product), 1)
+        self.assertEqual(coop_product.name, "Cuota inicial afiliación socia")
+        self.assertEqual(
+            coop_product.with_context(lang="ca_ES").name,
+            "Cuota inicial afiliació sòcia",
+        )
+        self.assertEqual(
+            coop_product.with_context(lang="es_ES").name,
+            "Cuota inicial afiliación socia",
+        )
+        self.assertEqual(
+            coop_product.with_context(lang="eu_ES").name,
+            "Bazkide afiliazioaren hasierako kuota",
+        )
+        self.assertFalse(coop_product.sale_ok)
+        self.assertFalse(coop_product.purchase_ok)
+        self.assertTrue(coop_product.is_share)
+        self.assertTrue(coop_product.display_on_website)
+        self.assertFalse(coop_product.is_contract)
+        self.assertEqual(coop_product.detailed_type, "service")
+        self.assertEqual(coop_product.invoice_policy, "order")
+        self.assertEqual(coop_product.list_price, 90.0)
+        self.assertEqual(coop_product.taxes_id, self.env["account.tax"])
+        self.assertEqual(coop_product.default_code, "CIA")
+        self.assertEqual(coop_product.company_id, self.nonprofit_company_1)
+        self.assertEqual(coop_product.short_name, "Cuota inicial afiliación")
+        self.assertTrue(coop_product.default_share_product)
+        self.assertTrue(coop_product.by_company)
+        self.assertTrue(coop_product.by_individual)
+        self.assertEqual(coop_product.payment_mode_id, self.env["account.payment.mode"])
+        self.assertFalse(coop_product.description_sale)

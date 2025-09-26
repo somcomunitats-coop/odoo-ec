@@ -66,6 +66,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 # create company pricelist
                 product_component.create_company_pricelist(self.new_company_id)
                 product_component.setup_company_product_categs(self.new_company_id)
+                # coop product
                 if self.new_company_id.legal_form in ["cooperative", "undefined"]:
                     coop_product = product_component.create_product(
                         self._coop_product_creation_params()
@@ -78,7 +79,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     self.new_company_id.write(
                         {"voluntary_share_id": vol_coop_product.id}
                     )
-
+                # nonprofit share recuring fee product
                 if (
                     self.new_company_id.legal_form == "non_profit"
                     and self.fixed_invoicing_day
@@ -90,14 +91,14 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     self._share_recurring_fee_pack_translations(
                         share_pack_creation_result
                     )
-
+                # non profit coop product
                 if self.new_company_id.legal_form == "non_profit" and (
                     not self.fixed_invoicing_day or not self.fixed_invoicing_month
                 ):
-                    vol_coop_product = product_component.create_product(
+                    coop_product = product_component.create_product(
                         self._nonprofit_share_product_creation_params()
                     )
-
+                    self._nonprofit_share_product_translations(coop_product)
         except Exception as e:
             if isinstance(e, RegistryNotReadyError):
                 _logger.warning(
@@ -263,4 +264,21 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             purchase_ok=False,
             display_on_website=True,
             default_share_product=True,
+        )
+
+    def _nonprofit_share_product_translations(self, coop_product):
+        coop_product.with_context(lang="ca_ES").write(
+            {
+                "name": "Cuota inicial afiliació sòcia",
+            }
+        )
+        coop_product.with_context(lang="es_ES").write(
+            {
+                "name": "Cuota inicial afiliación socia",
+            }
+        )
+        coop_product.with_context(lang="eu_ES").write(
+            {
+                "name": "Bazkide afiliazioaren hasierako kuota",
+            }
         )
