@@ -13,7 +13,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     _name = "account.multicompany.easy.creation.wiz"
     _inherit = "account.multicompany.easy.creation.wiz"
 
-    create_user = fields.Boolean(string="Create user for cooperator", default=True)
+    create_user = fields.Boolean(string="Create user for cooperator", default=False)
     capital_share = fields.Monetary(string="Initial capital share", default=100)
 
     @api.onchange("legal_form")
@@ -28,4 +28,3 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     def thread_action_accept(self):
         super().thread_action_accept()
         self.new_company_id.write({"create_user": self.create_user})
-
