@@ -72,6 +72,8 @@ class ResCompany(models.Model):
     )
     foundation_date = fields.Date("Foundation date")
     social_telegram = fields.Char("Telegram Account")
+    social_mastodon = fields.Char("Mastodon Account")
+    social_bluesky = fields.Char("Bluesky Account")
     allow_new_members = fields.Boolean(string="Allow new members", default=True)
     create_user_in_keycloak = fields.Boolean(
         "Create user for keycloak",

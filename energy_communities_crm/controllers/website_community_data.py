@@ -26,6 +26,9 @@ _COMMUNITY_DATA__GENERAL_FIELDS = {
     "current_lang": _(
         "Predefined language for the Community (communication will be used on this language.)"
     ),
+    "ce_known_coordinator": _("Do you know the coordinator of the Energy Community?"),
+    "ce_coordinator_name": _("Coordinator name"),
+    "ce_current_coordinator": _("Current coordinator"),
     "ce_services": _("Community active services"),
     "ce_number_of_members": _("Number of members"),
     "ce_status": _("Is the community open to accept new members or already closed?"),
@@ -39,20 +42,14 @@ _COMMUNITY_DATA__GENERAL_FIELDS = {
     "ce_member_mandatory_contribution": _(
         "What amount of mandatory contribution to the social capital do you ask for when a new member joins?"
     ),
-    "ce_registration_tool": _(
-        "Describe which system is currently used by the Register of members (historical register of additions/dismissals and official list of members)"
-    ),
-    "ce_account_management": _(
-        "Do you plan to use Odoo (management program) of the platform to keep the accounts of the Energy Community? or will an external management take it to you?"
-    ),
-    "ce_tax_management": _(
-        "Do you plan to use the platform's Odoo (management program) to carry out tax management: generation of tax reports from the Treasury (303, 390,...) or will it be carried out by an external management company?"
-    ),
     "ce_management_can_enter_platform": _(
         "Do you think that management could enter Odoo to generate the models from Odoo itself?"
     ),
-    "ce_manager": _(
-        "Who will do the day-to-day corporate management of the Energy Community? (person/s with user access to the Odoo corporate/accounting/tax management program of the Energy Community)"
+    "ce_date_fixed": _(
+        "(Associations) Fixed day of the year for collecting membership fees from members"
+    ),
+    "ce_ammount_fixed": _(
+        "(Associations) Amount of the fixed annual membership fee for members"
     ),
     "ce_manager_firstname": _("Name"),
     "ce_manager_surname": _("Surnames"),
@@ -62,23 +59,14 @@ _COMMUNITY_DATA__GENERAL_FIELDS = {
         "Which payment method will you use to collect the mandatory contributions to the share capital (registration of new partners)?"
     ),
     "ce_iban_1": _("IBAN (bank account) used by the Energy Community"),
-    "ce_iban_2": _(
-        "IBAN 2 (bank account) used by the Energy Community (only if you use more than one)"
-    ),
-    "ce_extra_charges": _(
-        "Are members charged any type of recurring fee? For what concepts? How are they charged? How often?"
-    ),
-    "ce_voluntary_contributions": _(
-        "Do the members currently make voluntary contributions to the social capital of the Energy Community? How it works?"
-    ),
-    "ce_other_comments": _(
-        "Do you want to comment on any other particular / important aspect of your corporate management?"
-    ),
     "ce_web_url": _("Web url"),
     "ce_twitter_url": _("Twitter url"),
     "ce_instagram_url": _("Instagram url"),
     "ce_facebook_url": _("Facebook url"),
     "ce_telegram_url": _("Telegram url"),
+    "ce_mastodon_url": _("Mastodon url"),
+    "ce_bluesky_url": _("Bluesky url"),
+    "comments": _("Comments"),
 }
 _COMMUNITY_DATA__LEGAL_DOC_FIELDS = {
     "ce_vat": _("VAT"),
@@ -105,6 +93,10 @@ _COMMUNITY_DATA__URL_PARAMS = {
 }
 _COMMUNITY_DATA__FIELDS.update(_COMMUNITY_DATA__URL_PARAMS)
 # OPTIONS
+_COMMUNITY_KNOWN_COORDINATOR_OPTIONS = [
+    {"id": "yes", "name": _("Yes")},
+    {"id": "not_yet", "name": _("No yet")},
+]
 _COMMUNITY_STATUS_OPTIONS = [
     {"id": "open", "name": _("Open")},
     {"id": "closed", "name": _("Closed")},
@@ -296,6 +288,22 @@ class WebsiteCommunityData(http.Controller):
             .mapped(lambda r: {"id": r.code, "name": r.name})
         )
 
+    def _get_coordinators(self):
+        company = request.website.company_id
+        return (
+            request.env["res.partner"]
+            .sudo()
+            .search(
+                [
+                    ("company_hierarchy_level", "=", "coordinator"),
+                    ("company_id", "=", company.id),
+                    ("name", "not ilike", "%[ON-HOLD]%"),
+                    ("name", "not ilike", "%[TO-DELETE]%"),
+                ]
+            )
+            .mapped(lambda r: {"id": r.id, "name": r.name})
+        )
+
     def _get_energy_actions(self):
         return (
             request.env["energy.action"]
@@ -427,6 +435,17 @@ class WebsiteCommunityData(http.Controller):
         )
         # community_legal_form selection
         values["community_legal_form_options"] = self._get_legal_forms()
+        # community_known_coordinator selection
+        values["community_known_coordinator_options"] = self._get_localized_options(
+            _COMMUNITY_KNOWN_COORDINATOR_OPTIONS
+        )
+        # coordinator_name selection
+        values["coordinator_name_options"] = self._get_coordinators()
+        if (
+            "ce_current_coordinator" not in values.keys()
+            or values["ce_current_coordinator"] == ""
+        ):
+            values["ce_current_coordinator"] = False
         # image preselection from db (if necessary)
         for image_field_key in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
             if image_field_key not in values.keys():

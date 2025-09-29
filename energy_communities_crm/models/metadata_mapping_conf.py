@@ -27,6 +27,9 @@ _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD = {
     "ce_instagram_url": "ce_instagram_url",
     "ce_facebook_url": "ce_facebook_url",
     "ce_telegram_url": "ce_telegram_url",
+    "ce_mastodon_url": "ce_mastodon_url",
+    "ce_bluesky_url": "ce_bluesky_url",
+    "comments": "comments",
 }
 _LEAD_METADATA__DATE_FIELDS = ["ce_creation_date"]
 _LEAD_METADATA__ENERGY_TAGS_FIELDS = ["ce_services"]

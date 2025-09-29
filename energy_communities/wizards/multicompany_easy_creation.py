@@ -234,6 +234,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "social_telegram": self.ce_telegram_url,
                     "social_instagram": self.ce_instagram_url,
                     "social_facebook": self.ce_facebook_url,
+                    "social_mastodon": self.ce_mastodon_url,
+                    "social_bluesky": self.ce_bluesky_url,
                     "logo": self.landing_logo_file,
                     "community_energy_action_ids": energy_action_ids,
                 }
