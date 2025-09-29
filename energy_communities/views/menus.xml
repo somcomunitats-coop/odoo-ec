@@ -7,12 +7,19 @@
     groups="role_platform_admin_res_groups,role_coord_admin_res_groups,role_ce_admin_res_groups,role_ce_manager_res_groups"
     web_icon="energy_communities,static/description/icon.png"
   />
-  <!--
-  <menuitem
-    id="ce_communities"
-    name="Communities"
-   parent=""
-  -->
+
+    <menuitem
+      id="ce_communities"
+      name="Communities"
+      parent="ce_root_menu"
+    />
+
+      <menuitem
+        id="ce_my_communities"
+        name="My Communities"
+        parent="ce_communities"
+        action="ce_my_communities_action"
+      />
 
   <menuitem
     id="ce_config_menu"
