@@ -135,11 +135,10 @@ class ResPartner(models.Model):
         return partner
 
     def action_my_community(self):
-        company_id = self.env.company
         return {
             "type": "ir.actions.act_window",
             "name": "My Community",
             "res_model": "res.partner",
             "view_mode": "form",
-            "res_id": company_id.partner_id.id,
+            "res_id": self.env.company.partner_id.id,
         }
