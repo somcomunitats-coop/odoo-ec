@@ -6,7 +6,7 @@ DISPLAY_DATE_FORMAT = "%d/%m/%Y"
 # Roles
 PLATFORM_ADMIN = "role_platform_admin"
 COORD_ADMIN = "role_coord_admin"
-CE_MANAGER = "role_ce_manger"
+CE_MANAGER = "role_ce_manager"
 CE_ADMIN = "role_ce_admin"
 
 # States
