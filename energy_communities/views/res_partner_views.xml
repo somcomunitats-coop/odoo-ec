@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
-        <!--
-        <record id="action_ce_my_communities" model="ir.actions.server">
+        
+        <record id="action_ce_my_community" model="ir.actions.server">
             <field name="name">My Community</field>
             <field name="model_id" ref="model_res_partner"/>
-            <field name="view_mode">form</field>
             <field name="state">code</field>
             <field name="code">
-                action = model.action_my community()
+                action = model.action_my_community()
             </field>
         </record>
-        -->
+        
 
         <record id="act_window_create_users_partner" model="ir.actions.act_window">
           <field name="name">Build platform users from partner members</field>

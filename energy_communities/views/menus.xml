@@ -9,10 +9,18 @@
   />
 
   <menuitem
-    id="ce_communities"
+    id="ce_communities_root_menu"
     name="Communities"
     parent="ce_root_menu"
-  />
+    sequence="100"
+  >
+    <menuitem
+      id="ce_my_community"
+      name="My Community"
+      action="action_ce_my_community"
+    />
+
+  </menuitem>
 
   <menuitem
     id="ce_config_menu"
