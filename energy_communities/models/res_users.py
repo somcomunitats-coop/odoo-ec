@@ -702,8 +702,8 @@ class ResUsers(models.Model):
                 response = requests.put(endpoint, headers=headers, json=data)
                 if response.status_code != 204:
                     raise exceptions.UserError(
-                        _("Something went wrong. More details: {}, {}").format(
-                            response.json(), response.status_code
+                        _("Something went wrong. More details: {}").format(
+                            response.json()
                         )
                     )
         else:
