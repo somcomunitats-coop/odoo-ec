@@ -57,7 +57,7 @@ class TestPackProductCreatorWizzard(
 
     def _pack_product_creator_wizard_params(self):
         data = self._prepare_all_case_data(
-            _PRODUCT_UTILS_TESTING_CASES["interval_prepaid_platform"]
+            _PRODUCT_UTILS_TESTING_CASES["fixed_prepaid_recurring_fee"]
         )
         wizard_params = {
             "company_id": data.pack.company_id,
@@ -76,8 +76,7 @@ class TestPackProductCreatorWizzard(
             "fixed_invoicing_month": data.pack.fixed_invoicing_month,
             "service_product_ids": self._get_wizard_lines_creation_data(
                 data.new_services
-            )
-            + self._get_wizard_lines_creation_data(data.existing_services),
+            ),
         }
         return wizard_params
 
@@ -138,3 +137,31 @@ class TestPackProductCreatorWizzard(
             pack_product_creator_wiz.allowed_prod_categ_ids_by_user_role,
             allowed_product_categories,
         )
+
+    def test__pack_creator_wizard_execute_create_ok_by_user_role__coordinator_admin(
+        self,
+    ):
+        # given a user with platform_admin_role
+        admin_coordinator = self.ref(
+            "energy_communities.res_users_admin_coordinator_1_demo"
+        )
+
+        # and the proper params for the PackProductCreatorWizard
+        wizard_params = self._pack_product_creator_wizard_params()
+
+        company = self.env["res.company"].browse(wizard_params["company_id"])
+
+        # when that user create a PackProductCreatorWizard
+        PackProductCreatorWizard = self.env["pack.product.creator.wizard"]
+        pack_product_creator_wiz = (
+            PackProductCreatorWizard.with_company(company)
+            .with_user(user=admin_coordinator)
+            .create(wizard_params)
+        )
+
+        # and execute create
+        result = pack_product_creator_wiz.with_company(company).execute_create()
+
+        # then the result is ok
+        self.assertEqual(result["type"], "ir.actions.client")
+        self.assertEqual(result["params"]["type"], "success")

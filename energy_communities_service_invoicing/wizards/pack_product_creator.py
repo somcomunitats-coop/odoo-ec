@@ -23,12 +23,13 @@ from ..schemas import (
     ServiceProductExistingData,
 )
 
-MISCONFIGURATION_ERROR_ON_CATEGS = ValidationError(
-    _("Misconfiguration between pack and service product categories")
-)
-MISCONFIGURATION_ERROR_ON_COMPANIES = ValidationError(
-    _("Misconfiguration between pack and service product companies")
-)
+
+class MisconfigurationOnCategsError(ValidationError):
+    message = _("Misconfiguration between pack and service product categories")
+
+
+class MisconfigurationOnCompaniesError(ValidationError):
+    message = _("Misconfiguration between pack and service product companies")
 
 
 class PackProductCreatorWizard(models.TransientModel):
@@ -129,12 +130,12 @@ class PackProductCreatorWizard(models.TransientModel):
 
     def _validate_creation(self):
         if not self.pack_categ_id:
-            raise MISCONFIGURATION_ERROR_ON_CATEGS
+            raise MisconfigurationOnCategsError()
         for existing_service in self.service_product_ids.filtered(
             lambda service_product: service_product.type == "existing"
         ):
             if not existing_service.existing_service_product_id.categ_id:
-                raise MISCONFIGURATION_ERROR_ON_CATEGS
+                raise MisconfigurationOnCategsError()
             if (
                 existing_service.existing_service_product_id.categ_id.id
                 != self.env.ref(
@@ -143,19 +144,19 @@ class PackProductCreatorWizard(models.TransientModel):
                     ]
                 ).id
             ):
-                raise MISCONFIGURATION_ERROR_ON_CATEGS
+                raise MisconfigurationOnCategsError()
             if existing_service.existing_service_product_id.company_id:
                 if not self.company_id:
-                    raise MISCONFIGURATION_ERROR_ON_COMPANIES
+                    raise MisconfigurationOnCompaniesError()
                 else:
                     if (
                         existing_service.existing_service_product_id.company_id.id
                         != self.company_id.id
                     ):
-                        raise MISCONFIGURATION_ERROR_ON_COMPANIES
+                        raise MisconfigurationOnCompaniesError()
             else:
                 if self.company_id:
-                    raise MISCONFIGURATION_ERROR_ON_COMPANIES
+                    raise MisconfigurationOnCompaniesError()
 
     def _create_products(self):
         creation_params = self._build_creation_params()
