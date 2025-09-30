@@ -191,7 +191,7 @@
     <field name="name">Contract template coordinator admins</field>
     <field name="model_id" ref="contract.model_contract_template"/>
     <field name="groups" eval="[(4, ref('energy_communities.role_coord_admin_res_groups'))]"/>
-    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="domain_force">['|', ('company_id', '=', False),('company_id', 'in', company_ids)]</field>
     <field name="perm_read" eval="False" />
     <field name="perm_write" eval="True" />
     <field name="perm_create" eval="True" />
@@ -213,7 +213,7 @@
     <field name="name">Contract template line coordinator admins</field>
     <field name="model_id" ref="contract.model_contract_template_line"/>
     <field name="groups" eval="[(4, ref('energy_communities.role_coord_admin_res_groups'))]"/>
-    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="domain_force">['|', ('company_id', '=', False),('company_id', 'in', company_ids)]</field>
     <field name="perm_read" eval="False" />
     <field name="perm_write" eval="True" />
     <field name="perm_create" eval="True" />
