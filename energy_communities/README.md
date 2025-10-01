@@ -4,6 +4,12 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2025-10-01 (v16.0.0.5.7)
+
+- fix typo in CE_MANAGER
+- add menu "my community"
+- fix demo data
+
 ### 2025-09-24 (v16.0.0.5.6)
 
 - added roles ids to config
