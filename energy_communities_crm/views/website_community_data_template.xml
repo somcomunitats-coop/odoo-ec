@@ -7,7 +7,9 @@
   >
       <div class="row">
         <div id="col-md-12">
-          <h3 class="d-flex align-items-center">General data <div class="flex-grow-1 border-bottom ms-2"></div></h3>
+          <t t-call="energy_communities.form_h3">
+            <t t-set="field_description" t-value="general_data_h3" />
+          </t>
         </div>
         <div class="col-md-12">
           <t t-call="energy_communities.form_field_text">
@@ -28,11 +30,14 @@
         </div>
         <div class="col-md-12">
           <t t-call="energy_communities.form_field_selection">
-            <t t-set="value" t-value="current_lang" />
-            <t t-set="key" t-value="current_lang_key" />
-            <t t-set="label" t-value="current_lang_label" />
+            <t t-set="value" t-value="ce_current_lang" />
+            <t t-set="key" t-value="ce_current_lang_key" />
+            <t t-set="label" t-value="ce_current_lang_label" />
             <t t-set="options" t-value="lang_options" />
             <t t-set="required" t-value="True" />
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="ce_current_lang_help" />
+            <t t-set="description" t-value="ce_current_lang_help" />
           </t>
         </div>
         <div class="col-md-6">
@@ -85,30 +90,41 @@
           </t>
         </div>
         <div id="col-md-12">
-          <h3 class="d-flex align-items-center">Coordinator <div class="flex-grow-1 border-bottom ms-2"></div></h3>
+          <t t-call="energy_communities.form_h3">
+            <t t-set="field_description" t-value="coordinator_h3" />
+          </t>
         </div>
         <div class="col-md-12">
           <t t-call="energy_communities.form_field_selection_radio">
-            <t t-set="value" t-value="ce_known_coordinator" />
-            <t t-set="key" t-value="ce_known_coordinator_key" />
-            <t t-set="label" t-value="ce_known_coordinator_label" />
+            <t t-set="value" t-value="known_coordinator" />
+            <t t-set="key" t-value="known_coordinator_key" />
+            <t t-set="label" t-value="known_coordinator_label" />
             <t t-set="options" t-value="community_known_coordinator_options" />
             <t t-set="required" t-value="True" />
+            <t t-set="trigger">coordinator_id</t>
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="coordinator_id_help" />
+            <t t-set="description" t-value="coordinator_id_help_html" />
           </t>
         </div>
         <div class="col-md-12">
           <t t-call="energy_communities.form_field_selection">
-            <t t-set="value" t-value="ce_current_coordinator" />
-            <t t-set="key" t-value="ce_current_coordinator_key" />
-            <t t-set="label" t-value="ce_current_coordinator_label" />
+            <t t-set="value" t-value="coordinator_id" />
+            <t t-set="key" t-value="coordinator_id_key" />
+            <t t-set="label" t-value="coordinator_id_label" />
             <t t-set="options" t-value="coordinator_name_options" />
-            <t t-set="showif">ce_known_coordinator:yes</t>
+            <t t-set="showif">known_coordinator:yes</t>
             <t t-set="required" t-value="True" />
-            <!-- <t t-set="disabled">True</t> -->
+            <t t-set="disabled">True</t>
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="coordinator_id_help" />
+            <t t-set="description" t-value="coordinator_id_help_html" />
           </t>
         </div>
         <div id="col-md-12">
-          <h3 class="d-flex align-items-center">Status <div class="flex-grow-1 border-bottom ms-2"></div></h3>
+          <t t-call="energy_communities.form_h3">
+            <t t-set="field_description" t-value="status_h3" />
+          </t>
         </div>
         <div class="col-md-12">
           <t t-call="energy_communities.form_field_selection_radio">
@@ -117,7 +133,7 @@
             <t t-set="label" t-value="ce_constitution_status_label" />
             <t t-set="options" t-value="community_constitution_status_options" />
             <t t-set="required" t-value="True" />
-            <t t-set="trigger">ce_constitution_status_other,ce_creation_date,ce_vat</t>
+            <t t-set="trigger">ce_constitution_status_other,ce_creation_date,ce_vat,ce_fiscal_name</t>
           </t>
         </div>
         <div class="col-md-12">
@@ -137,6 +153,10 @@
             <t t-set="label" t-value="ce_legal_form_label" />
             <t t-set="options" t-value="community_legal_form_options" />
             <t t-set="required" t-value="True" />
+            <t t-set="trigger">ce_member_recurrent_contribution,ce_member_recurrent_contribution_date</t>
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="ce_legal_form_help" />
+            <t t-set="description" t-value="ce_legal_form_help" />
           </t>
         </div>
         <div class="col-md-12">
@@ -165,10 +185,14 @@
             <t t-set="key" t-value="ce_fiscal_name_key" />
             <t t-set="label" t-value="ce_fiscal_name_label" />
             <t t-set="required" t-value="True" />
+            <t t-set="showif">ce_constitution_status:constituted</t>
+            <t t-set="disabled">True</t>
           </t>
         </div>
         <div id="col-md-12">
-          <h3 class="d-flex align-items-center">Activity <div class="flex-grow-1 border-bottom ms-2"></div></h3>
+          <t t-call="energy_communities.form_h3">
+            <t t-set="field_description" t-value="activity_h3" />
+          </t>
         </div>
         <div class="col-md-12">
           <t t-call="energy_communities.form_field_selection_checkbox">
@@ -185,6 +209,9 @@
             <t t-set="key" t-value="ce_number_of_members_key" />
             <t t-set="label" t-value="ce_number_of_members_label" />
             <t t-set="required" t-value="True" />
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="ce_number_of_members_help" />
+            <t t-set="description" t-value="ce_number_of_members_help" />
           </t>
         </div>
         <div class="col-md-12">
@@ -194,24 +221,35 @@
             <t t-set="label" t-value="ce_status_label" />
             <t t-set="options" t-value="community_status_options" />
             <t t-set="required" t-value="True" />
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="ce_status_help" />
+            <t t-set="description" t-value="ce_status_help_html" />
           </t>
         </div>
         <div id="col-md-12">
-          <h3 class="d-flex align-items-center">Corporate and administrative management <div class="flex-grow-1 border-bottom ms-2"></div></h3>
+          <t t-call="energy_communities.form_h3">
+            <t t-set="field_description" t-value="corporate_and_administrative_management_h3" />
+          </t>
         </div>
         <div class="col-md-12">
           <t t-call="energy_communities.form_field_number">
-            <t t-set="value" t-value="ce_member_mandatory_contribution" />
-            <t t-set="key" t-value="ce_member_mandatory_contribution_key" />
-            <t t-set="label" t-value="ce_member_mandatory_contribution_label" />
+            <t t-set="value" t-value="ce_member_recurrent_contribution" />
+            <t t-set="key" t-value="ce_member_recurrent_contribution_key" />
+            <t t-set="label" t-value="ce_member_recurrent_contribution_label" />
+            <t t-set="showif">ce_legal_form:non_profit,residents_association</t>
+            <t t-set="disabled">True</t>
           </t>
         </div>
         <div class="col-md-12">
           <t t-call="energy_communities.form_field_date_past">
-            <t t-set="value" t-value="ce_date_fixed" />
-            <t t-set="key" t-value="ce_date_fixed_key" />
-            <t t-set="label" t-value="ce_date_fixed_label" />
-            <t t-set="required" t-value="True" />
+            <t t-set="value" t-value="ce_member_recurrent_contribution_date" />
+            <t t-set="key" t-value="ce_member_recurrent_contribution_date_key" />
+            <t t-set="label" t-value="ce_member_recurrent_contribution_datelabel" />
+            <t t-set="showif">ce_legal_form:non_profit,residents_association</t>
+            <t t-set="disabled">True</t>
+            <t t-set="description" t-value="ce_member_recurrent_contribution_date_help" />
+            <t t-set="title" t-value="ce_member_recurrent_contribution_date_help" />
+            <t t-set="help" t-value="True" />
           </t>
         </div>
         <div class="col-md-12">
@@ -248,7 +286,9 @@
           </t>
         </div>
         <div id="col-md-12">
-          <h3 class="d-flex align-items-center">Website data and map <div class="flex-grow-1 border-bottom ms-2"></div></h3>
+          <t t-call="energy_communities.form_h3">
+            <t t-set="field_description" t-value="website_data_and_map_h3" />
+          </t>
         </div>
         <div class="col-md-12">
           <t t-call="energy_communities.form_field_textarea">
@@ -258,9 +298,9 @@
             <t t-set="required" t-value="True" />
             <t t-set="rows" t-value="10" />
             <t t-set="maxlength" t-value="1000" />
-            <t
-            t-set="description"
-          >Use a maximum of 1000 characters to write a summary of your Energy Community</t>
+            <t t-set="description" t-value="ce_description_help_html" />
+            <t t-set="title" t-value="ce_description_help" />
+            <t t-set="help" t-value="True" />
           </t>
         </div>
         <div class="col-md-12">
@@ -271,9 +311,9 @@
             <t t-set="required" t-value="True" />
             <t t-set="rows" t-value="10" />
             <t t-set="maxlength" t-value="1500" />
-            <t
-            t-set="description"
-          >Use a maximum of 1500 characters to explain your Energy Community</t>
+            <t t-set="description" t-value="ce_long_description_help_html" />
+            <t t-set="title" t-value="ce_long_description_help" />
+            <t t-set="help" t-value="True" />
           </t>
         </div>
         <div class="col-md-12">
@@ -283,9 +323,9 @@
             <t t-set="label" t-value="ce_why_become_cooperator_label" />
             <t t-set="rows" t-value="5" />
             <t t-set="maxlength" t-value="500" />
-            <t
-            t-set="description"
-          >In this section you can, with a maximum of 500 characters, explain the advantages of joining the community</t>
+            <t t-set="description" t-value="ce_why_become_cooperator_help" />
+            <t t-set="title" t-value="ce_why_become_cooperator_help" />
+            <t t-set="help" t-value="True" />
           </t>
         </div>
         <div class="col-md-12">
@@ -295,9 +335,9 @@
             <t t-set="label" t-value="ce_become_cooperator_process_label" />
             <t t-set="rows" t-value="5" />
             <t t-set="maxlength" t-value="500" />
-            <t
-            t-set="description"
-          >Explain, with a maximum of 500 characters, the process to become cooperator. Include payment information.</t>
+            <t t-set="description" t-value="ce_become_cooperator_process_help_html" />
+            <t t-set="title" t-value="ce_become_cooperator_process_help" />
+            <t t-set="help" t-value="True" />
           </t>
         </div>
         <div class="col-md-12">
@@ -306,7 +346,9 @@
               <t t-set="value" t-value="ce_primary_image_file" />
               <t t-set="key" t-value="ce_primary_image_file_key" />
               <t t-set="label" t-value="ce_primary_image_file_label" />
-              <t t-set="description">If possible upload a group image</t>
+              <t t-set="description" t-value="ce_primary_image_file_help" />
+              <t t-set="title" t-value="ce_primary_image_file_help_html" />
+              <t t-set="help" t-value="True" />
               <t t-set="required" t-value="True" />
             </t>
           </div>
@@ -331,13 +373,18 @@
           </div>
         </div>
         <div id="col-md-12">
-          <h3 class="d-flex align-items-center">Social media <div class="flex-grow-1 border-bottom ms-2"></div></h3>
+          <t t-call="energy_communities.form_h3">
+            <t t-set="field_description" t-value="social_media_h3" />
+          </t>
         </div>
         <div class="col-md-12">
           <t t-call="energy_communities.form_field_text">
             <t t-set="value" t-value="ce_web_url" />
             <t t-set="key" t-value="ce_web_url_key" />
             <t t-set="label" t-value="ce_web_url_label" />
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="ce_web_url_help" />
+            <t t-set="description" t-value="ce_web_url_help" />
           </t>
         </div>
         <div class="col-md-12">
@@ -345,6 +392,9 @@
             <t t-set="value" t-value="ce_twitter_url" />
             <t t-set="key" t-value="ce_twitter_url_key" />
             <t t-set="label" t-value="ce_twitter_url_label" />
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="ce_twitter_url_help" />
+            <t t-set="description" t-value="ce_twitter_url_help" />
           </t>
         </div>
         <div class="col-md-12">
@@ -352,6 +402,9 @@
             <t t-set="value" t-value="ce_instagram_url" />
             <t t-set="key" t-value="ce_instagram_url_key" />
             <t t-set="label" t-value="ce_instagram_url_label" />
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="ce_instagram_url_help" />
+            <t t-set="description" t-value="ce_instagram_url_help" />
           </t>
         </div>
         <div class="col-md-12">
@@ -359,6 +412,9 @@
             <t t-set="value" t-value="ce_facebook_url" />
             <t t-set="key" t-value="ce_facebook_url_key" />
             <t t-set="label" t-value="ce_facebook_url_label" />
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="ce_facebook_url_help" />
+            <t t-set="description" t-value="ce_facebook_url_help" />
           </t>
         </div>
         <div class="col-md-12">
@@ -366,6 +422,9 @@
             <t t-set="value" t-value="ce_telegram_url" />
             <t t-set="key" t-value="ce_telegram_url_key" />
             <t t-set="label" t-value="ce_telegram_url_label" />
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="ce_telegram_url_help" />
+            <t t-set="description" t-value="ce_telegram_url_help" />
           </t>
         </div>
         <div class="col-md-12">
@@ -373,6 +432,9 @@
             <t t-set="value" t-value="ce_mastodon_url" />
             <t t-set="key" t-value="ce_mastodon_url_key" />
             <t t-set="label" t-value="ce_mastodon_url_label" />
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="ce_mastodon_url_help" />
+            <t t-set="description" t-value="ce_mastodon_url_help" />
           </t>
         </div>
         <div class="col-md-12">
@@ -380,10 +442,15 @@
             <t t-set="value" t-value="ce_bluesky_url" />
             <t t-set="key" t-value="ce_bluesky_url_key" />
             <t t-set="label" t-value="ce_bluesky_url_label" />
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="ce_bluesky_url_help" />
+            <t t-set="description" t-value="ce_bluesky_url_help" />
           </t>
         </div>
         <div id="col-md-12">
-          <h3 class="d-flex align-items-center">Comments <div class="flex-grow-1 border-bottom ms-2"></div></h3>
+          <t t-call="energy_communities.form_h3">
+            <t t-set="field_description" t-value="comments_h3" />
+          </t>
         </div>
         <div class="col-md-12">
           <t t-call="energy_communities.form_field_textarea">
@@ -392,6 +459,9 @@
             <t t-set="label" t-value="comments_label" />
             <t t-set="rows" t-value="10" />
             <t t-set="maxlength" t-value="1000" />
+            <t t-set="help" t-value="True" />
+            <t t-set="title" t-value="comments_help" />
+            <t t-set="description" t-value="comments_help" />
           </t>
         </div>
         <div class="col-md-12">

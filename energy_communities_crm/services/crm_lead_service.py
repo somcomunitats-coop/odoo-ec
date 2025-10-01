@@ -1,6 +1,7 @@
 import ast
 import json
 import logging
+import re
 
 from odoo import _
 
@@ -25,6 +26,8 @@ class CRMLeadService(Component):
     #     [(["/"], "POST")],
     # )
     def create(self, **params):
+        # check if coordinator found
+        coordinator_found = self._check_coordinator_found(params)
         crm_lead_create_respose = super().create(params)
         target_source_xml_id = self._get_metadata_value(params, "source_xml_id")
         if target_source_xml_id:
@@ -32,6 +35,16 @@ class CRMLeadService(Component):
                 crm_lead_create_respose.response[0].decode("utf-8")
             )
             crm_lead = self.env["crm.lead"].browse(crm_lead_dict.get("id", False))
+
+            # if coordinator not found, post a message
+            if not coordinator_found and self._check_coordinator_know_value(params):
+                metadata = self._convert_params_metadata_to_dict(params)
+                crm_lead.message_post(
+                    body=f"""The coordinating entity corresponding to the metadata value
+                    coordinator_landing_id = {metadata.get("coordinator_landing_id")}
+                    and coordinator name {metadata.get("coordinator_name")} could not be identified."""
+                )
+
             # update some fields based on the selected xml source
             utm_source = self.env.ref("energy_communities." + target_source_xml_id)
             lead_update_dict = {
@@ -52,6 +65,33 @@ class CRMLeadService(Component):
                 crm_lead.id, target_source_xml_id, params
             )
         return crm_lead_create_respose
+
+    def _check_coordinator_know_value(self, params):
+        for metadata_line in params.get("metadata", []):
+            if metadata_line.get("key") == "known_coordinator":
+                return metadata_line.get("value") == "yes"
+        return False
+
+    def _check_coordinator_found(self, params):
+        if self._check_coordinator_know_value(params):
+            for metadata_line in params.get("metadata", []):
+                if metadata_line.get("key") == "coordinator_landing_id":
+                    coordinator_landing_id = int(metadata_line.get("value"))
+                    coordinator_landing = self.env["landing.page"].search(
+                        [("wp_landing_page_id", "=", coordinator_landing_id)]
+                    )
+                    company = coordinator_landing.company_id
+                    pattern = r"\[(ON-HOLD|TO-DELETE)\]"
+                    if (
+                        company
+                        and company.hierarchy_level == "coordinator"
+                        and not re.search(pattern, company.name)
+                    ):
+                        params["metadata"].append(
+                            {"key": "coordinator_id", "value": company.id}
+                        )
+                        return True
+        return False
 
     def _get_crm_lead_name(self, lead_id, params):
         source_xml_id = self._get_metadata_value(params, "source_xml_id")

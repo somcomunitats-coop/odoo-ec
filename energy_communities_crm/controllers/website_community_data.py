@@ -23,17 +23,14 @@ _COMMUNITY_DATA__GENERAL_FIELDS = {
     "ce_state": _("State"),
     "email_from": _("Community Email"),
     "contact_phone": _("Community Phone"),
-    "current_lang": _(
-        "Predefined language for the Community (communication will be used on this language.)"
-    ),
-    "ce_known_coordinator": _("Do you know the coordinator of the Energy Community?"),
-    "ce_coordinator_name": _("Coordinator name"),
-    "ce_current_coordinator": _("Current coordinator"),
+    "ce_current_lang": _("Default language of the Energy Community"),
+    "known_coordinator": _("Do you know the coordinator of the Energy Community?"),
+    "coordinator_id": _("Select a Coordinator"),
     "ce_services": _("Community active services"),
     "ce_number_of_members": _("Number of members"),
-    "ce_status": _("Is the community open to accept new members or already closed?"),
+    "ce_status": _("Is the Community open to accepting new members?"),
     "ce_why_become_cooperator": _("Why become cooperator"),
-    "ce_become_cooperator_process": _("Become cooperator process"),
+    "ce_become_cooperator_process": _("Process for becoming a member"),
     "ce_type": _("Community type"),
     "ce_creation_date": _("Constitution date"),
     "ce_constitution_status": _("Constitution status"),
@@ -82,6 +79,7 @@ _COMMUNITY_DATA__PAST_DATE_FIELDS = {
 _COMMUNITY_DATA__DATE_FIELDS = _COMMUNITY_DATA__PAST_DATE_FIELDS
 _COMMUNITY_DATA__GENERAL_FIELDS.update(_COMMUNITY_DATA__DATE_FIELDS)
 _COMMUNITY_DATA__FIELDS.update(_COMMUNITY_DATA__GENERAL_FIELDS)
+_COMMUNITY_DATA__FIELDS.update()
 _COMMUNITY_DATA__IMAGE_FIELDS = {
     "ce_primary_image_file": _("Primary Image"),
     "ce_secondary_image_file": _("Secondary Image"),
@@ -92,6 +90,106 @@ _COMMUNITY_DATA__URL_PARAMS = {
     "lead_id": _("lead_id on website url"),
 }
 _COMMUNITY_DATA__FIELDS.update(_COMMUNITY_DATA__URL_PARAMS)
+_COMMUNITY_DATA__STATIC_TEXTS = {}
+# H3 TEXTS
+_COMMUNITY_DATA__H3_TEXTS = {
+    "general_data_h3": _("General data"),
+    "coordinator_h3": _("Coordinator"),
+    "status_h3": _("Status"),
+    "activity_h3": _("Activity"),
+    "corporate_and_administrative_management_h3": _(
+        "Corporate and administrative management"
+    ),
+    "website_data_and_map_h3": _("Website data and map"),
+    "social_media_h3": _("Social media"),
+    "comments_h3": _("Comments"),
+}
+_COMMUNITY_DATA__STATIC_TEXTS.update(_COMMUNITY_DATA__H3_TEXTS)
+# HELPS TEXTS
+_COMMUNITY_DATA__HELPS_TEXTS = {
+    "known_coordinator_help": _(
+        "The Som Comunitats Platform requests that every Energy Community be supported by a Coordinating Entity. Here we explain what they are, and here is a list of available Coordinators."
+    ),
+    "known_coordinator_help_html": _(
+        "The Som Comunitats Platform requests that every Energy Community be supported by a Coordinating Entity. <a href='https://somcomunitats.coop/es/que-son-las-coordinadoras/' target='_blank'>Here</a> we explain what they are, and <a href='https://somcomunitats.coop/es/que-son-las-coordinadoras/#ce-coordinadores-members' target='_blank'>here</a> is a list of available Coordinators."
+    ),
+    "coordinator_id_help": _(
+        "Select which coordinating entity you would like to accompany and support you."
+    ),
+    "coordinator_id_help_html": _(
+        "Select which <a href='https://somcomunitats.coop/es/que-son-las-coordinadoras/#ce-coordinadores-members' target='_blank'>coordinating entity</a> you would like to accompany and support you."
+    ),
+    "comments_help": _(
+        "Please indicate if there is anything else you think we should consider."
+    ),
+    "ce_member_recurrent_contribution_date_help": _(
+        "Select it for the current year. Example: if it is 2025 and the annual fee is charged on March 1, select 03/01/2025."
+    ),
+    "ce_description_help": _(
+        "Use a maximum of 1000 characters to write a summary of your Energy Community. It will be published as a description of the Community at its map location and at the top of its own web page on the Platform."
+    ),
+    "ce_description_help_html": _(
+        "Use a maximum of 1000 characters to write a summary of your Energy Community. It will be published as a description of the Community at its <a href='https://somcomunitats.coop/es/#encuentra-tu-comunidad' target='_blank'>map</a> location and at the top of its <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' target='_blank'>own web page</a> on the Platform."
+    ),
+    "ce_long_description_help": _(
+        "Use a maximum of 1500 characters to explain your Energy Community. It will be published in the ‘About us’ section of your own page on the Platform."
+    ),
+    "ce_long_description_help_html": _(
+        "Use a maximum of 1500 characters to explain your Energy Community. It will be published in the ‘About us’ section of <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' target='_blank'>your own page</a> on the Platform."
+    ),
+    "ce_become_cooperator_process_help": _(
+        "Use a maximum of 500 characters to explain the process for joining the Community. If completed, it will be published in the ‘Registration Process’ section of your own website on the Platform."
+    ),
+    "ce_become_cooperator_process_help_html": _(
+        "Use a maximum of 500 characters to explain the process for joining the Community. If completed, it will be published in the ‘Registration Process’ section of <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' target='_blank'>your own website</a> on the Platform."
+    ),
+    "ce_number_of_members_help": _(
+        "Current participants in the Energy Community. If it has not yet been established, indicate the number of people interested in joining or those who make up the group promoting/driving the initiative (enter a value greater than or equal to 1)."
+    ),
+    "ce_status_help": _(
+        "If ‘Open’ is selected, buttons will be displayed that provide access to public forms for receiving applications from new members of the Community at your map location and at the top of your own website on the Platform. Otherwise, these buttons will be hidden and only a generic Contact the Community button will be displayed."
+    ),
+    "ce_status_help_html": _(
+        "If ‘Open’ is selected, buttons will be displayed that provide access to public forms for receiving applications from new members of the Community at your <a href='https://somcomunitats.coop/es/#encuentra-tu-comunidad' target='_blank'>map</a> location and at the top of your <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' target='_blank'>own website</a> on the Platform. Otherwise, these buttons will be hidden and only a generic Contact the Community button will be displayed."
+    ),
+    "ce_why_become_cooperator_help": _(
+        "In this section you can, with a maximum of 500 characters, explain the advantages of joining the community"
+    ),
+    "ce_current_lang_help": _(
+        "All communications from the Energy Community will be made in this language by default."
+    ),
+    "ce_legal_form_help": _(
+        "Indicate the legal form that the Community already has or that you know it will have. If you do not know yet, you can select: ‘To be defined’."
+    ),
+    "ce_primary_image_file_help": _(
+        "Preferably a group photo of the Energy Community. It will be published at the top of your own web page on the Platform."
+    ),
+    "ce_primary_image_file_help_html": _(
+        "Preferably a group photo of the Energy Community. It will be published at the top of your <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' target='_blank'>own web page</a> on the Platform."
+    ),
+    "ce_web_url_help": _(
+        "Link to the Energy Community website. Example: https://somcomunitats.coop"
+    ),
+    "ce_twitter_url_help": _(
+        "Link to the Energy Community's social network profile. Example: https://x.com/SomComunitats"
+    ),
+    "ce_instagram_url_help": _(
+        "Link to the Energy Community's social network profile. Example: https://www.instagram.com/SomComunitats/"
+    ),
+    "ce_facebook_url_help": _(
+        "Link to the Energy Community's social network profile. Example: https://www.facebook.com/SomComunitats/"
+    ),
+    "ce_telegram_url_help": _(
+        "Link to the Energy Community's social network profile. Example: https://t.me/SomComunitats"
+    ),
+    "ce_mastodon_url_help": _(
+        "Link to the Energy Community's social network profile. Example: https://mastodon.social/@SomComunitats"
+    ),
+    "ce_bluesky_url_help": _(
+        "Link to the Energy Community's social network profile. Example: https://bsky.app/profile/somcomunitats.coop"
+    ),
+}
+_COMMUNITY_DATA__STATIC_TEXTS.update(_COMMUNITY_DATA__HELPS_TEXTS)
 # OPTIONS
 _COMMUNITY_KNOWN_COORDINATOR_OPTIONS = [
     {"id": "yes", "name": _("Yes")},
@@ -289,20 +387,18 @@ class WebsiteCommunityData(http.Controller):
         )
 
     def _get_coordinators(self):
-        company = request.website.company_id
-        return (
-            request.env["res.partner"]
-            .sudo()
+        result = (
+            request.env["res.company"]
             .search(
                 [
-                    ("company_hierarchy_level", "=", "coordinator"),
-                    ("company_id", "=", company.id),
+                    ("hierarchy_level", "=", "coordinator"),
                     ("name", "not ilike", "%[ON-HOLD]%"),
                     ("name", "not ilike", "%[TO-DELETE]%"),
                 ]
             )
             .mapped(lambda r: {"id": r.id, "name": r.name})
         )
+        return result
 
     def _get_energy_actions(self):
         return (
@@ -343,7 +439,8 @@ class WebsiteCommunityData(http.Controller):
             lead = leads[0]
             if lead.probability >= 100 or lead.stage_id.is_won:
                 lead_values["closed_lead"] = True
-
+            for field_key in _COMMUNITY_DATA__STATIC_TEXTS.keys():
+                lead_values[field_key] = _COMMUNITY_DATA__STATIC_TEXTS[field_key]
             for field_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
                 meta_line = lead.metadata_line_ids.filtered(
                     lambda meta_data_line: meta_data_line.key == field_key
@@ -441,11 +538,8 @@ class WebsiteCommunityData(http.Controller):
         )
         # coordinator_name selection
         values["coordinator_name_options"] = self._get_coordinators()
-        if (
-            "ce_current_coordinator" not in values.keys()
-            or values["ce_current_coordinator"] == ""
-        ):
-            values["ce_current_coordinator"] = False
+        if "coordinator_id" not in values.keys() or values["coordinator_id"] == "":
+            values["coordinator_id"] = False
         # image preselection from db (if necessary)
         for image_field_key in _COMMUNITY_DATA__IMAGE_FIELDS.keys():
             if image_field_key not in values.keys():
