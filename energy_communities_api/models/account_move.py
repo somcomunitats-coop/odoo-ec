@@ -8,9 +8,10 @@ logger = logging.getLogger(__name__)
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    payment_state_for_api = fields.Char(compute="_compute_payment_state")
+    payment_state_for_api = fields.Char(compute="_compute_payment_state_for_api")
 
-    def _compute_payment_state(self):
+    @api.depends("state", "payment_state", "display_name")
+    def _compute_payment_state_for_api(self):
         for record in self:
             record.payment_state_for_api = (
                 record.state == "draft" and record.state or record.payment_state

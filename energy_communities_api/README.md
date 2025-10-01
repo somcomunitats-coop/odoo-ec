@@ -4,6 +4,10 @@ HTTP API to request information about energy communities, members and projects
 
 ## Changelog
 
+### 2025-09-024 (v16.0.0.4.1)
+
+- rename `_compute_payment_state` method to `_compute_payment_state_for_api`
+
 ### 2025-09-024 (v16.0.0.4.0)
 
 Added invoice endpoints:
