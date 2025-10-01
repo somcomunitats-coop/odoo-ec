@@ -16,6 +16,7 @@ class ContractTemplate(models.Model):
     def _compute_pack_type(self):
         for record in self:
             record.pack_type = PACK_TYPE_NONE
+
             pack_product = self.env["product.template"].search(
                 [
                     ("property_contract_template_id", "=", record.id),

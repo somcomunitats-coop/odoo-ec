@@ -55,10 +55,8 @@ class TestPackProductCreatorWizzard(
             services.append((0, 0, line_create_dict))
         return services
 
-    def _pack_product_creator_wizard_params(self):
-        data = self._prepare_all_case_data(
-            _PRODUCT_UTILS_TESTING_CASES["interval_prepaid_platform"]
-        )
+    def _pack_product_creator_wizard_params(self, test_case):
+        data = self._prepare_all_case_data(_PRODUCT_UTILS_TESTING_CASES[test_case])
         wizard_params = {
             "company_id": data.pack.company_id,
             "pack_categ_id": data.pack.categ_id,
@@ -76,16 +74,28 @@ class TestPackProductCreatorWizzard(
             "fixed_invoicing_month": data.pack.fixed_invoicing_month,
             "service_product_ids": self._get_wizard_lines_creation_data(
                 data.new_services
-            )
-            + self._get_wizard_lines_creation_data(data.existing_services),
+            ),
         }
         return wizard_params
 
+    fixed_prepaid_recurring_fee_params = (
+        lambda self: self._pack_product_creator_wizard_params(
+            "fixed_prepaid_recurring_fee"
+        )
+    )
+
     def test__compute_allowed_prod_categ_ids_by_user_role__platform_admin(self):
-        # given a user with platform_admin_role
-        platform_admin = self.ref("energy_communities.res_users_admin_plataforma_demo")
+        # given a platform_admin_role
+        platform_admin = self.browse_ref(
+            "energy_communities.res_users_admin_plataforma_demo"
+        )
+        # and the proper environment
+        self.env = self.env(
+            user=platform_admin.id,
+            context={"allowed_company_ids": platform_admin.company_ids.ids},
+        )
         # and all product category packs
-        all_product_categories = self.env["product.category"].search(
+        allowed_product_categories = self.env["product.category"].search(
             [
                 (
                     "id",
@@ -94,25 +104,26 @@ class TestPackProductCreatorWizzard(
                 )
             ]
         )
-        # and the proper params for the PackProductCreatorWizard
-        wizard_params = self._pack_product_creator_wizard_params()
-
-        # when that user create a PackProductCreatorWizard
         PackProductCreatorWizard = self.env["pack.product.creator.wizard"]
-        pack_product_creator_wiz = PackProductCreatorWizard.with_user(
-            user=platform_admin
-        ).create(wizard_params)
+        wizard = PackProductCreatorWizard.create(
+            self.fixed_prepaid_recurring_fee_params()
+        )
 
-        # then all packs are accesible
+        # then the allowed product categories are the expected
         self.assertEqual(
-            pack_product_creator_wiz.allowed_prod_categ_ids_by_user_role,
-            all_product_categories,
+            wizard.allowed_prod_categ_ids_by_user_role,
+            allowed_product_categories,
         )
 
     def test__compute_allowed_prod_categ_ids_by_user_role__coordinator_admin(self):
-        # given a user with platform_admin_role
-        admin_coordinator = self.ref(
+        # given a coordinator_admin
+        admin_coordinator = self.browse_ref(
             "energy_communities.res_users_admin_coordinator_1_demo"
+        )
+        # and the proper environment
+        self.env = self.env(
+            user=admin_coordinator.id,
+            context={"allowed_company_ids": admin_coordinator.company_ids.ids},
         )
         # and the allowed product category packs for that role
         allowed_product_categories = self.env["product.category"].search(
@@ -124,17 +135,40 @@ class TestPackProductCreatorWizzard(
                 )
             ]
         )
-        # and the proper params for the PackProductCreatorWizard
-        wizard_params = self._pack_product_creator_wizard_params()
 
-        # when that user create a PackProductCreatorWizard
+        # when we create a PackProductCreatorWizard
         PackProductCreatorWizard = self.env["pack.product.creator.wizard"]
-        pack_product_creator_wiz = PackProductCreatorWizard.with_user(
-            user=admin_coordinator
-        ).create(wizard_params)
+        wizard = PackProductCreatorWizard.create(
+            self.fixed_prepaid_recurring_fee_params()
+        )
 
-        # then all packs are accesible
+        # then the allowed product categories are the expected
         self.assertEqual(
-            pack_product_creator_wiz.allowed_prod_categ_ids_by_user_role,
+            wizard.allowed_prod_categ_ids_by_user_role,
             allowed_product_categories,
         )
+
+    def test__pack_creator_wizard_execute_create__coordinator_admin_ok(
+        self,
+    ):
+        # given a coordinator_admin
+        admin_coordinator = self.browse_ref(
+            "energy_communities.res_users_admin_coordinator_1_demo"
+        )
+        # and the proper environment
+        self.env = self.env(
+            user=admin_coordinator.id,
+            context={"allowed_company_ids": admin_coordinator.company_ids.ids},
+        )
+
+        # when we create a PackProductCreatorWizard
+        PackProductCreatorWizard = self.env["pack.product.creator.wizard"]
+        wizard = PackProductCreatorWizard.create(
+            self.fixed_prepaid_recurring_fee_params()
+        )
+        # and launch it
+        result = wizard.execute_create()
+
+        # then the result is ok
+        self.assertEqual(result["type"], "ir.actions.client")
+        self.assertEqual(result["params"]["type"], "success")

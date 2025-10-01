@@ -3,7 +3,7 @@
     id="ce_service_invoicing_menu"
     name="Services"
     parent="energy_communities.ce_root_menu"
-    sequence="1"
+    sequence="200"
     groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups"
   />
   
@@ -103,7 +103,7 @@
     name="Create product pack"
     parent="energy_communities.ce_config_assistants_menu"
     action="pack_product_creator_wizard_action"
-    groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups,energy_communities.role_ce_admin,energy_communities.role_ce_manager"
+    groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups,energy_communities.role_ce_admin_res_groups,energy_communities.role_ce_manager_res_groups"
     sequence="100"
   />
 
@@ -112,7 +112,7 @@
     name="Assign pack to partner"
     parent="energy_communities.ce_config_assistants_menu"
     action="assign_pack_to_partner_wizard_action"
-    groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups,energy_communities.role_ce_admin,energy_communities.role_ce_manager"
+    groups="energy_communities.role_platform_admin_res_groups,energy_communities.role_coord_admin_res_groups,energy_communities.role_ce_admin_res_groups,energy_communities.role_ce_manager_res_groups"
     sequence="200"
   />
 

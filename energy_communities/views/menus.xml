@@ -4,9 +4,24 @@
     id="ce_root_menu"
     name="Community Management"
     sequence="10"
-    groups="role_platform_admin_res_groups,role_coord_admin_res_groups,role_ce_admin,role_ce_manager"
+    groups="role_platform_admin_res_groups,role_coord_admin_res_groups,role_ce_admin_res_groups,role_ce_manager_res_groups"
     web_icon="energy_communities,static/description/icon.png"
   />
+
+  <menuitem
+    id="ce_communities_root_menu"
+    name="Communities"
+    parent="ce_root_menu"
+    sequence="100"
+  >
+    <menuitem
+      id="ce_my_community"
+      name="My Community"
+      action="action_ce_my_community"
+    />
+
+  </menuitem>
+
   <menuitem
     id="ce_config_menu"
     name="Configuration"
@@ -49,44 +64,44 @@
     name="Assistants"
     id="ce_config_assistants_menu"
     parent="ce_root_menu"
-    groups="role_platform_admin_res_groups,role_coord_admin_res_groups,role_ce_admin,role_ce_manager"
+    groups="role_platform_admin_res_groups,role_coord_admin_res_groups,role_ce_admin_res_groups,role_ce_manager_res_groups"
     sequence="888"
 
   />
 
   <!-- Hide menu items unless platform manager -->
   <record model="ir.ui.menu" id="mail.menu_root_discuss">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager'),ref('role_platform_admin_res_groups')])]" />
   </record>
   <record model="ir.ui.menu" id="calendar.mail_menu_calendar">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager'),ref('role_platform_admin_res_groups')])]" />
   </record>
   <record model="ir.ui.menu" id="base.menu_board_root">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager'),ref('role_platform_admin_res_groups')])]" />
   </record>
   <record model="ir.ui.menu" id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager'),ref('role_platform_admin_res_groups')])]" />
   </record>
   <record model="ir.ui.menu" id="website.menu_website_configuration">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager'),ref('role_platform_admin_res_groups')])]" />
   </record>
   <record model="ir.ui.menu" id="utm.menu_link_tracker_root">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager'),ref('role_platform_admin_res_groups')])]" />
   </record>
   <record model="ir.ui.menu" id="base.menu_board_root">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager'),ref('role_platform_admin_res_groups')])]" />
   </record>
   <record model="ir.ui.menu" id="base_rest.menu_rest_api_root">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager'),ref('role_platform_admin_res_groups')])]" />
   </record>
   <record model="ir.ui.menu" id="purchase.menu_purchase_root">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager'),ref('role_platform_admin_res_groups')])]" />
   </record>
   <record model="ir.ui.menu" id="sale.sale_menu_root">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager'),ref('role_platform_admin_res_groups')])]" />
   </record>
   <record model="ir.ui.menu" id="event.event_main_menu">
-    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager')])]" />
+    <field name="groups_id" eval="[(6,0,[ref('group_platform_manager'),ref('role_platform_admin_res_groups')])]" />
   </record>
 
 </odoo>

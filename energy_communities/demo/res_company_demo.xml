@@ -12,12 +12,26 @@
     <field name="email">oecoop@fake.com</field>
   </record>
 
+  <function name="write" model="res.partner">
+    <function name="search" model="res.partner">
+        <value eval="[('name', '=', 'Coordinator company 1')]" />
+    </function>
+    <value eval="{'company_ids': [(4, ref('coordinator_company_1'))], 'company_id': ref('coordinator_company_1')}" />
+  </function>
+
   <record id="coordinator_company_2" model="res.company">
     <field name="name">Coordinator company 2</field>
     <field name="hierarchy_level">coordinator</field>
     <field name="parent_id" ref="base.main_company" />
     <field name="email">somenergia@fake.com</field>
   </record>
+
+  <function name="write" model="res.partner">
+    <function name="search" model="res.partner">
+        <value eval="[('name', '=', 'Coordinator company 2')]" />
+    </function>
+    <value eval="{'company_ids': [(4, ref('coordinator_company_2'))], 'company_id': ref('coordinator_company_2')}" />
+  </function>
 
   <function name="try_loading" model="account.chart.template">
     <value eval="[ref('l10n_es.account_chart_template_pymes')]" />
