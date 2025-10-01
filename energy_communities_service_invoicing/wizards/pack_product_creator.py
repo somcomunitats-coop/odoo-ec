@@ -11,10 +11,11 @@ from odoo.addons.energy_communities.utils import (
     get_successful_popup_message,
     product_utils,
 )
+
 from ..config import (
     ALL_PACKS,
     FEE_PACKS,
-    PACK_PROD_CATEG_REF_REL_TO_SERVICE_PROD_CATEG_REF
+    PACK_PROD_CATEG_REF_REL_TO_SERVICE_PROD_CATEG_REF,
 )
 from ..schemas import (
     PackProductCreationData,
@@ -121,7 +122,7 @@ class PackProductCreatorWizard(models.TransientModel):
                 record.recurring_invoicing_type = "pre-paid"
 
     def execute_create_action(self):
-        self.execute_create(self)
+        self.execute_create()
         return get_successful_popup_message(
             _("Pack product creation successful"),
             _("Please visit the products view in order to see the new items."),
