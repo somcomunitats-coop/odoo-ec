@@ -760,6 +760,14 @@ msgid "The request must be in draft or on waiting list to be validated"
 msgstr "La solicitud ha de estar en estado de borrador o en lista de espera para poder ser validada"
 
 #. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__share_product
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_certificate_document
+#: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_register
+#: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_tree
+msgid "Share Type"
+msgstr "Tipo Aportación"
+
+#. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
