@@ -37,7 +37,7 @@ def _create_selfconsumption_journal(env, company):
             "energy_selfconsumption.product_category_selfconsumption_pack"
         )
         selfconsumption_journal = env["account.journal"].search(
-            [("code", "=", "AFC"), ("company_id", "=", company.id)]
+            [("code", "in", ["AFC", "AFCEL", "AFCES"]), ("company_id", "=", company.id)]
         )
         if not selfconsumption_journal:
             account_ref = "l10n_es.{}_account_common_7050"
@@ -109,7 +109,8 @@ def _setup_company_product_categ_saleteam(env, company, categ_ref):
 
 def _setup_company_product_categs_journal(env, company):
     afc_journal = env["account.journal"].search(
-        [("company_id", "=", company.id), ("code", "=", "AFC")], limit=1
+        [("code", "in", ["AFC", "AFCEL", "AFCES"]), ("company_id", "=", company.id)],
+        limit=1,
     )
     _setup_company_product_categ_journal(
         env, company, COOP_SHARE_PRODUCT_CATEG_REF, False
