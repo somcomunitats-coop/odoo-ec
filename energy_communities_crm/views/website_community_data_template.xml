@@ -244,7 +244,7 @@
           <t t-call="energy_communities.form_field_date_past">
             <t t-set="value" t-value="ce_member_recurrent_contribution_date" />
             <t t-set="key" t-value="ce_member_recurrent_contribution_date_key" />
-            <t t-set="label" t-value="ce_member_recurrent_contribution_datelabel" />
+            <t t-set="label" t-value="ce_member_recurrent_contribution_date_label" />
             <t t-set="showif">ce_legal_form:non_profit,residents_association</t>
             <t t-set="disabled">True</t>
             <t t-set="description" t-value="ce_member_recurrent_contribution_date_help" />

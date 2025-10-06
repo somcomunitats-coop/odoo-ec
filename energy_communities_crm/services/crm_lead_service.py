@@ -37,7 +37,7 @@ class CRMLeadService(Component):
             crm_lead = self.env["crm.lead"].browse(crm_lead_dict.get("id", False))
 
             # if coordinator not found, post a message
-            if not coordinator_found and self._check_coordinator_know_value(params):
+            if not coordinator_found and self._get_coordinator_know_value(params):
                 metadata = self._convert_params_metadata_to_dict(params)
                 crm_lead.message_post(
                     body=f"""The coordinating entity corresponding to the metadata value
@@ -66,14 +66,14 @@ class CRMLeadService(Component):
             )
         return crm_lead_create_respose
 
-    def _check_coordinator_know_value(self, params):
+    def _get_coordinator_know_value(self, params):
         for metadata_line in params.get("metadata", []):
             if metadata_line.get("key") == "known_coordinator":
                 return metadata_line.get("value") == "yes"
         return False
 
     def _check_coordinator_found(self, params):
-        if self._check_coordinator_know_value(params):
+        if self._get_coordinator_know_value(params):
             for metadata_line in params.get("metadata", []):
                 if metadata_line.get("key") == "coordinator_landing_id":
                     coordinator_landing_id = int(metadata_line.get("value"))
@@ -81,16 +81,19 @@ class CRMLeadService(Component):
                         [("wp_landing_page_id", "=", coordinator_landing_id)]
                     )
                     company = coordinator_landing.company_id
-                    pattern = r"\[(ON-HOLD|TO-DELETE)\]"
-                    if (
-                        company
-                        and company.hierarchy_level == "coordinator"
-                        and not re.search(pattern, company.name)
-                    ):
-                        params["metadata"].append(
-                            {"key": "coordinator_id", "value": company.id}
-                        )
-                        return True
+                    try:
+                        pattern = r"\[(ON-HOLD|TO-DELETE)\]"
+                        if (
+                            company
+                            and company.hierarchy_level == "coordinator"
+                            and not re.search(pattern, company.name)
+                        ):
+                            params["metadata"].append(
+                                {"key": "coordinator_id", "value": company.id}
+                            )
+                            return True
+                    except:
+                        _logger.error(f"Error checking coordinator found: {e}")
         return False
 
     def _get_crm_lead_name(self, lead_id, params):

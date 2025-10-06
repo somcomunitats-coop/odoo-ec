@@ -362,6 +362,9 @@
             <t t-set="field_help" t-value="help" />
             <t t-set="field_title" t-value="title" />
           </t>
+          <t t-call="energy_communities.form_field_part_description">
+            <t t-set="field_description" t-value="description" />
+          </t>
           <input
         t-attf-class="form-control form-control-sm o_website_form_date_past#{trigger and ' data-trigger'}"
         type="text"

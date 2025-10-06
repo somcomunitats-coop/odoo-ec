@@ -36,6 +36,12 @@ _COMMUNITY_DATA__GENERAL_FIELDS = {
     "ce_constitution_status": _("Constitution status"),
     "ce_constitution_status_other": _("Which one?"),
     "ce_legal_form": _("Community legal form"),
+    "ce_member_recurrent_contribution": _(
+        "(Associations) Amount of the annual membership fee charged to members."
+    ),
+    "ce_member_recurrent_contribution_date": _(
+        "(Associations) Fixed day of the year on which the annual membership fee is charged to members."
+    ),
     "ce_member_mandatory_contribution": _(
         "What amount of mandatory contribution to the social capital do you ask for when a new member joins?"
     ),
