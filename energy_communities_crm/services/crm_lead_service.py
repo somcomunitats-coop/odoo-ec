@@ -21,13 +21,11 @@ class CRMLeadService(Component):
     _collection = "crm.api.services"
     _usage = "crm-lead"
 
-    # TODO: Implement new API!
-    # @restapi.method(
-    #     [(["/"], "POST")],
-    # )
+    DISCARD_EC_NAMES_RE = re.compile(r"\[(ON-HOLD|TO-DELETE)\]?i")
+
     def create(self, **params):
         # check if coordinator found
-        coordinator_found = self._check_coordinator_found(params)
+        added_coordinator = self._add_coordinator_to_metadata(params)
         crm_lead_create_respose = super().create(params)
         target_source_xml_id = self._get_metadata_value(params, "source_xml_id")
         if target_source_xml_id:
@@ -37,7 +35,7 @@ class CRMLeadService(Component):
             crm_lead = self.env["crm.lead"].browse(crm_lead_dict.get("id", False))
 
             # if coordinator not found, post a message
-            if not coordinator_found and self._get_coordinator_know_value(params):
+            if not added_coordinator and self._get_coordinator_know_value(params):
                 metadata = self._convert_params_metadata_to_dict(params)
                 crm_lead.message_post(
                     body=f"""The coordinating entity corresponding to the metadata value
@@ -66,35 +64,48 @@ class CRMLeadService(Component):
             )
         return crm_lead_create_respose
 
+    def _get_company_in_coordinator_landing(self, coordinator_landing_id):
+        try:
+            coordinator_landing_id = int(coordinator_landing_id)
+        except ValueError:
+            _logger.error(
+                f"Error: coordinator_landing_id is not an integer: {coordinator_landing_id}"
+            )
+            return False
+        else:
+            coordinator_landing = self.env["landing.page"].search(
+                [("wp_landing_page_id", "=", coordinator_landing_id)]
+            )
+            return coordinator_landing.company_id if coordinator_landing else False
+
     def _get_coordinator_know_value(self, params):
         for metadata_line in params.get("metadata", []):
             if metadata_line.get("key") == "known_coordinator":
                 return metadata_line.get("value") == "yes"
         return False
 
-    def _check_coordinator_found(self, params):
-        if self._get_coordinator_know_value(params):
-            for metadata_line in params.get("metadata", []):
-                if metadata_line.get("key") == "coordinator_landing_id":
-                    coordinator_landing_id = int(metadata_line.get("value"))
-                    coordinator_landing = self.env["landing.page"].search(
-                        [("wp_landing_page_id", "=", coordinator_landing_id)]
-                    )
-                    company = coordinator_landing.company_id
-                    try:
-                        pattern = r"\[(ON-HOLD|TO-DELETE)\]"
-                        if (
-                            company
-                            and company.hierarchy_level == "coordinator"
-                            and not re.search(pattern, company.name)
-                        ):
-                            params["metadata"].append(
-                                {"key": "coordinator_id", "value": company.id}
-                            )
-                            return True
-                    except:
-                        _logger.error(f"Error checking coordinator found: {e}")
-        return False
+    def _add_coordinator_to_metadata(self, params):
+        if not self._get_coordinator_know_value(params):
+            return False
+        coordinator_landing_id = self._get_metadata_value(
+            params, "coordinator_landing_id"
+        )
+        if not coordinator_landing_id:
+            return False
+        company = self._get_company_in_coordinator_landing(coordinator_landing_id)
+        if not company:
+            return False
+        can_append_coordinator = all(
+            [
+                company,
+                company.hierarchy_level == "coordinator",
+                not self.DISCARD_EC_NAMES_RE.fullmatch(company.name),
+            ]
+        )
+        if not can_append_coordinator:
+            return False
+        params["metadata"].append({"key": "coordinator_id", "value": company.id})
+        return True
 
     def _get_crm_lead_name(self, lead_id, params):
         source_xml_id = self._get_metadata_value(params, "source_xml_id")
@@ -216,7 +227,7 @@ class CRMLeadService(Component):
 
     def _convert_params_metadata_to_dict(self, params):
         metadata_dict = {}
-        for metadata_item in params["metadata"]:
+        for metadata_item in params.get("metadata", []):
             metadata_dict[metadata_item["key"]] = metadata_item["value"]
         return metadata_dict
 
