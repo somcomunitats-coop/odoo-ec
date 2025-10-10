@@ -1,4 +1,5 @@
 from . import test_multicompany_easy_creation
+from . import test_multicompany_easy_creation_for_coordinators
 from . import test_pack_type_mixin
 from . import test_product_utils_component
 from . import test_service_invoicing_components

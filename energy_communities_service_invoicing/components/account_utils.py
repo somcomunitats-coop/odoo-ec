@@ -18,6 +18,8 @@ class AccountUtils(Component):
         self, company: Company
     ) -> None:
         # define company cooperator account
+        if self.work.use_sudo:
+            company = company.sudo()
         company.write(
             {
                 "property_cooperator_account": self.env.ref(
@@ -44,7 +46,10 @@ class AccountUtils(Component):
         account_ref: str,
     ) -> AccountJournal:
         account = self.env.ref(account_ref.format(company.id))
-        journal = self.env["account.journal"].create(
+        journal_recordset = self.env["account.journal"]
+        if self.work.use_sudo:
+            journal_recordset = journal_recordset.sudo()
+        journal = journal_recordset.create(
             {
                 "name": name,
                 "type": type,
@@ -63,7 +68,10 @@ class AccountUtils(Component):
         account_type: str,
         code: str,
     ) -> AccountAccount:
-        return self.env["account.account"].create(
+        account_recordset = self.env["account.account"]
+        if self.work.use_sudo:
+            account_recordset = account_recordset.sudo()
+        return account_recordset.create(
             {
                 "name": name,
                 "account_type": account_type,

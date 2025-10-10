@@ -38,6 +38,8 @@ class UserRoleUtils(Component):
                     },
                 )
             ]
+        if self.work.use_sudo:
+            self.work.record = self.work.record.sudo()
         self.work.record.write(update_dict)
 
     def apply_coordinator_role_in_company(self, company_id):

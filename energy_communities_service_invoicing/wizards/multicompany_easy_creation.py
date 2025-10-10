@@ -36,10 +36,10 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         super().thread_action_accept()
         # Using try exception to avoid component usage on demo data load
         try:
-            with account_utils(self.env) as account_component:
+            with account_utils(self.env, use_sudo=True) as account_component:
                 # setup company cooperator account
                 account_component.setup_company_cooperator_accounting_configuration(
-                    self.new_company_id
+                    company=self.new_company_id
                 )
                 # create company selfconsumption journal
                 if self.new_company_id.hierarchy_level == "community":
@@ -62,7 +62,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     self.new_company_id.write(
                         {"voluntary_share_journal_account": vsir_journal.id}
                     )
-            with product_utils(self.env) as product_component:
+            with product_utils(self.env, use_sudo=True) as product_component:
                 # create company pricelist
                 product_component.create_company_pricelist(self.new_company_id)
                 product_component.setup_company_product_categs(self.new_company_id)

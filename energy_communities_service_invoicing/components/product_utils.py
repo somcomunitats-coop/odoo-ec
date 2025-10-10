@@ -118,7 +118,11 @@ class ProductUtils(Component):
         if company.pricelist_id:
             raise ValidationError("A company pricelist already exists")
         # create company pricelist
-        company_pricelist = self.env["product.pricelist"].create(
+        pricelist_recordset = self.env["product.pricelist"]
+        if self.work.use_sudo:
+            pricelist_recordset = pricelist_recordset.sudo()
+            company = company.sudo()
+        company_pricelist = pricelist_recordset.create(
             {
                 "name": "{} pricelist".format(company.name),
                 "currency_id": self.env.ref("base.EUR").id,
@@ -176,7 +180,10 @@ class ProductUtils(Component):
             limit=1,
         )
         if default_sale_team:
-            self.env.ref(categ_ref).with_company(company).write(
+            categ_recordset = self.env.ref(categ_ref).with_company(company)
+            if self.work.use_sudo:
+                categ_recordset = categ_recordset.sudo()
+            categ_recordset.write(
                 {
                     "service_invoicing_sale_team_id": default_sale_team.id,
                 }
@@ -221,9 +228,10 @@ class ProductUtils(Component):
 
     def _setup_company_product_categ_journal(self, company, categ_ref, journal):
         if journal:
-            self.env.ref(categ_ref).with_company(company).write(
-                {"service_invoicing_sale_journal_id": journal.id}
-            )
+            categ_recordset = self.env.ref(categ_ref).with_company(company)
+            if self.work.use_sudo:
+                categ_recordset = categ_recordset.sudo()
+            categ_recordset.write({"service_invoicing_sale_journal_id": journal.id})
 
     def _setup_company_product_categs_accounts(self, company: Company) -> None:
         # coop share product categ
@@ -317,7 +325,10 @@ class ProductUtils(Component):
         income_account: AccountAccount = False,
         expense_account: AccountAccount = False,
     ) -> None:
-        self.env.ref(categ_ref).with_company(company).write(
+        categ_recordset = self.env.ref(categ_ref).with_company(company)
+        if self.work.use_sudo:
+            categ_recordset = categ_recordset.sudo()
+        categ_recordset.write(
             {
                 "property_account_income_categ_id": income_account.id
                 if income_account
@@ -351,7 +362,10 @@ class ProductUtils(Component):
             else:
                 pricelist = self.env.ref("product.list0")
             for service_product_template in service_product_template_list:
-                self.env["product.pricelist.item"].create(
+                pricelist_item_recordset = self.env["product.pricelist.item"]
+                if self.work.use_sudo:
+                    pricelist_item_recordset = pricelist_item_recordset.sudo()
+                pricelist_item_recordset.create(
                     {
                         "product_tmpl_id": service_product_template.id,
                         "fixed_price": service_product_template.list_price,
@@ -400,7 +414,10 @@ class ProductUtils(Component):
         }
         if not creation_dict["short_name"]:
             creation_dict["short_name"] = creation_dict["name"]
-        product = self.env["product.template"].create(creation_dict)
+        product_recordset = self.env["product.template"]
+        if self.work.use_sudo:
+            product_recordset = product_recordset.sudo()
+        product = product_recordset.create(creation_dict)
         self._apply_special_flags_to_product(product)
         return product
 
@@ -413,6 +430,8 @@ class ProductUtils(Component):
         if product.is_pack:
             special_flags["is_contract"] = True
         if special_flags:
+            if self.work.use_sudo:
+                product = product.sudo()
             product.write(special_flags)
             return True
         return False
@@ -445,7 +464,11 @@ class ProductUtils(Component):
             product_creation_params.existing_services,
             existing_service_product_template_list,
         )
-        contract_template = self.env["contract.template"].create(creation_data)
+        contract_template_recordset = self.env["contract.template"]
+        if self.work.use_sudo:
+            contract_template_recordset = contract_template_recordset.sudo()
+            pack_product = pack_product.sudo()
+        contract_template = contract_template_recordset.create(creation_data)
         pack_product.write({"property_contract_template_id": contract_template.id})
 
     def _build_contract_template_lines_creation_data(

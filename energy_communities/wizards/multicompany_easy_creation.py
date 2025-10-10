@@ -255,7 +255,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 user.write({"company_ids": [(4, self.new_company_id.id)]})
             else:
                 new_company_hierarchy_level = self.new_company_id.hierarchy_level
-                with user_role_utils(self.env, user) as component:
+                with user_role_utils(self.env, user, use_sudo=True) as component:
                     if new_company_hierarchy_level == "coordinator":
                         component.apply_coordinator_role_in_company(self.new_company_id)
                     if new_company_hierarchy_level == "community":
