@@ -23,6 +23,11 @@ class AssignCRMToCoordinatorCompanyWizard(models.TransientModel):
         self.ensure_one()
         # remove followers
         self.remove_follower()
+        # adjust partner company_ids
+        if self.crm_lead_id.partner_id:
+            self.crm_lead_id.partner_id.write(
+                {"company_ids": [(4, self.assigned_company_id.id)]}
+            )
         # make sure default stages and team exists for assigned company
         default_stages = self.env["crm.stage"].get_create_default_stages(
             self.assigned_company_id

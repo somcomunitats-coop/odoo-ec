@@ -104,6 +104,9 @@
       <value eval="{'noupdate': False}" />
   </function>
   <record model="ir.rule" id="product.product_comp_rule">
+    <field name="domain_force">
+['|','|',('company_id','=',False),('company_id', 'in', company_ids),('company_id.parent_id','in',company_ids)]
+    </field>
     <field name="perm_read" eval="True"/>
     <field name="perm_write" eval="False"/>
     <field name="perm_create" eval="False"/>
@@ -120,7 +123,7 @@
     <field name="name">Product - Coordinator admin</field>
     <field name="model_id" ref="product.model_product_template"/>
     <field name="groups" eval="[(4, ref('energy_communities.role_coord_admin_res_groups'))]"/>
-    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="domain_force">['|',('company_id', 'in', company_ids),('company_id.parent_id','in',company_ids)]</field>
     <field name="perm_read" eval="False" />
     <field name="perm_write" eval="True" />
     <field name="perm_create" eval="False" />
@@ -234,11 +237,31 @@
   <!-- PRODUCT PRICELIST -->
   <function name="write" model="ir.model.data">
       <function name="search" model="ir.model.data">
+          <value eval="[('module', '=', 'product'),('name', '=', 'product_pricelist_item_comp_rule')]"/>
+      </function>
+      <value eval="{'noupdate': False}" />
+  </function>
+  <record model="ir.rule" id="product.product_pricelist_item_comp_rule">
+    <field name="domain_force">
+['|','|', ('company_id', 'in', company_ids), ('company_id', '=', False),('company_id.parent_id','in',company_ids)]
+    </field>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'product'),('name', '=', 'product_pricelist_item_comp_rule')]"/>
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
+  <function name="write" model="ir.model.data">
+      <function name="search" model="ir.model.data">
           <value eval="[('module', '=', 'product'),('name', '=', 'product_pricelist_comp_rule')]"/>
       </function>
       <value eval="{'noupdate': False}" />
   </function>
   <record model="ir.rule" id="product.product_pricelist_comp_rule">
+    <field name="domain_force">
+['|','|', ('company_id', 'in', company_ids), ('company_id', '=', False),('company_id.parent_id','in',company_ids)]
+    </field>
     <field name="perm_read" eval="True"/>
     <field name="perm_write" eval="False"/>
     <field name="perm_create" eval="False"/>
@@ -255,7 +278,7 @@
     <field name="name">Pricelist - Coordinator admin</field>
     <field name="model_id" ref="product.model_product_pricelist"/>
     <field name="groups" eval="[(4, ref('energy_communities.role_coord_admin_res_groups'))]"/>
-    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="domain_force">['|',('company_id', 'in', company_ids),('company_id.parent_id','in',company_ids)]</field>
     <field name="perm_read" eval="False" />
     <field name="perm_write" eval="True" />
     <field name="perm_create" eval="False" />
@@ -272,5 +295,49 @@
     <field name="perm_create" eval="True" />
     <field name="perm_unlink" eval="True" />
   </record>
+
+  <!-- ACCOUNT JOURNAL -->
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+      <value
+        eval="[('module', '=', 'account'),('name', '=', 'journal_comp_rule')]"
+      />
+    </function>
+    <value eval="{'noupdate': False}" />
+  </function>
+  <record id="account.journal_comp_rule" model="ir.rule">
+    <field name="domain_force">
+['|','|',('company_id','=',False),('company_id', 'in', company_ids),('company_id.parent_id','in',company_ids)]
+    </field>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+      <value
+        eval="[('module', '=', 'account'),('name', '=', 'journal_comp_rule')]"
+      />
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+      <value
+        eval="[('module', '=', 'account'),('name', '=', 'account_comp_rule')]"
+      />
+    </function>
+    <value eval="{'noupdate': False}" />
+  </function>
+  <record id="account.account_comp_rule" model="ir.rule">
+    <field name="domain_force">
+['|','|',('company_id','=',False),('company_id', 'in', company_ids),('company_id.parent_id','in',company_ids)]
+    </field>
+  </record>
+  <function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+      <value
+        eval="[('module', '=', 'account'),('name', '=', 'account_comp_rule')]"
+      />
+    </function>
+    <value eval="{'noupdate': True}" />
+  </function>
 
 </odoo>
