@@ -56,4 +56,7 @@ class UserRoleUtils(Component):
         ]
         if company_id:
             query.append(("company_id", "=", company_id.id))
-        return self.env["res.users.role.line"].search(query)
+        role_line_model = self.env["res.users.role.line"]
+        if self.work.use_sudo:
+            role_line_model = role_line_model.sudo()
+        return role_line_model.search(query)

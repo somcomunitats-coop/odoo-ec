@@ -46,10 +46,10 @@ class AccountUtils(Component):
         account_ref: str,
     ) -> AccountJournal:
         account = self.env.ref(account_ref.format(company.id))
-        journal_recordset = self.env["account.journal"]
+        journal_model = self.env["account.journal"]
         if self.work.use_sudo:
-            journal_recordset = journal_recordset.sudo()
-        journal = journal_recordset.create(
+            journal_model = journal_model.sudo()
+        journal = journal_model.create(
             {
                 "name": name,
                 "type": type,
@@ -68,10 +68,10 @@ class AccountUtils(Component):
         account_type: str,
         code: str,
     ) -> AccountAccount:
-        account_recordset = self.env["account.account"]
+        account_model = self.env["account.account"]
         if self.work.use_sudo:
-            account_recordset = account_recordset.sudo()
-        return account_recordset.create(
+            account_model = account_model.sudo()
+        return account_model.create(
             {
                 "name": name,
                 "account_type": account_type,
