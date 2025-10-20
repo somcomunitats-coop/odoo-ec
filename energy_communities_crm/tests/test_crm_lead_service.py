@@ -13,6 +13,8 @@ try:
 except ImportError:
     pass
 
+from .testing_cases import _CE_CREATION_API_PAYLOAD
+
 HOST = "localhost"
 PORT = odoo.tools.config["http_port"]
 
@@ -187,3 +189,4 @@ class TestCRMLeadServiceRestCase(HttpCase, RegistryMixin):
         response = self.client("/api/crm/crm-lead/create", data=json.dumps(data))
         # then we obtain a 200 response code
         self.assertEqual(response.status_code, 400)
+
