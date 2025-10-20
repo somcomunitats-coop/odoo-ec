@@ -6,7 +6,7 @@ from odoo import _, http
 from odoo.http import request
 
 from odoo.addons.energy_communities.models.res_company import (
-    _LEGAL_FORM_VALUES,
+    _LEGAL_FORM_VALUES_WEBSITE,
 )
 from odoo.addons.energy_communities.utils import get_translation
 from odoo.addons.web.controllers.webclient import WebClient
@@ -36,9 +36,10 @@ _COMMUNITY_DATA__GENERAL_FIELDS = {
     "ce_constitution_status": _("Constitution status"),
     "ce_constitution_status_other": _("Which one?"),
     "ce_legal_form": _("Community legal form"),
-    "ce_member_recurrent_contribution": _(
-        "(Associations) Amount of the annual membership fee charged to members."
-    ),
+    "ce_legal_form_other": _("Which one?"),
+    # "ce_member_mandatory_contribution": _(
+    #    "What is the mandatory capital contribution required when a new member joins? (€)"
+    # ),
     "ce_member_recurrent_contribution_date": _(
         "(Associations) Fixed day of the year on which the annual membership fee is charged to members."
     ),
@@ -59,7 +60,7 @@ _COMMUNITY_DATA__GENERAL_FIELDS = {
     "ce_manager_email": _("Email"),
     "ce_manager_phone": _("Phone"),
     "ce_payment_method": _(
-        "Which payment method will you use to collect the mandatory contributions to the share capital (registration of new partners)?"
+        "Payment method to be used for collecting membership fees or contributions from members"
     ),
     "ce_iban_1": _("IBAN (bank account) used by the Energy Community"),
     "ce_web_url": _("Web url"),
@@ -76,7 +77,7 @@ _COMMUNITY_DATA__LEGAL_DOC_FIELDS = {
 }
 _COMMUNITY_DATA__GENERAL_FIELDS.update(_COMMUNITY_DATA__LEGAL_DOC_FIELDS)
 _COMMUNITY_DATA__BOOLEAN_FIELDS = {
-    "ce_privacy_policy": _("I have read and accept the privacy policy"),
+    "terms_conditions": _("I have read and accept the privacy policy"),
 }
 _COMMUNITY_DATA__GENERAL_FIELDS.update(_COMMUNITY_DATA__BOOLEAN_FIELDS)
 _COMMUNITY_DATA__PAST_DATE_FIELDS = {
@@ -113,14 +114,8 @@ _COMMUNITY_DATA__H3_TEXTS = {
 _COMMUNITY_DATA__STATIC_TEXTS.update(_COMMUNITY_DATA__H3_TEXTS)
 # HELPS TEXTS
 _COMMUNITY_DATA__HELPS_TEXTS = {
-    "known_coordinator_help": _(
-        "The Som Comunitats Platform requests that every Energy Community be supported by a Coordinating Entity. Here we explain what they are, and here is a list of available Coordinators."
-    ),
     "known_coordinator_help_html": _(
         "The Som Comunitats Platform requests that every Energy Community be supported by a Coordinating Entity. <a href='https://somcomunitats.coop/es/que-son-las-coordinadoras/' target='_blank'>Here</a> we explain what they are, and <a href='https://somcomunitats.coop/es/que-son-las-coordinadoras/#ce-coordinadores-members' target='_blank'>here</a> is a list of available Coordinators."
-    ),
-    "coordinator_id_help": _(
-        "Select which coordinating entity you would like to accompany and support you."
     ),
     "coordinator_id_help_html": _(
         "Select which <a href='https://somcomunitats.coop/es/que-son-las-coordinadoras/#ce-coordinadores-members' target='_blank'>coordinating entity</a> you would like to accompany and support you."
@@ -131,20 +126,11 @@ _COMMUNITY_DATA__HELPS_TEXTS = {
     "ce_member_recurrent_contribution_date_help": _(
         "Select it for the current year. Example: if it is 2025 and the annual fee is charged on March 1, select 03/01/2025."
     ),
-    "ce_description_help": _(
-        "Use a maximum of 1000 characters to write a summary of your Energy Community. It will be published as a description of the Community at its map location and at the top of its own web page on the Platform."
-    ),
     "ce_description_help_html": _(
         "Use a maximum of 1000 characters to write a summary of your Energy Community. It will be published as a description of the Community at its <a href='https://somcomunitats.coop/es/#encuentra-tu-comunidad' target='_blank'>map</a> location and at the top of its <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' target='_blank'>own web page</a> on the Platform."
     ),
-    "ce_long_description_help": _(
-        "Use a maximum of 1500 characters to explain your Energy Community. It will be published in the ‘About us’ section of your own page on the Platform."
-    ),
     "ce_long_description_help_html": _(
         "Use a maximum of 1500 characters to explain your Energy Community. It will be published in the ‘About us’ section of <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' target='_blank'>your own page</a> on the Platform."
-    ),
-    "ce_become_cooperator_process_help": _(
-        "Use a maximum of 500 characters to explain the process for joining the Community. If completed, it will be published in the ‘Registration Process’ section of your own website on the Platform."
     ),
     "ce_become_cooperator_process_help_html": _(
         "Use a maximum of 500 characters to explain the process for joining the Community. If completed, it will be published in the ‘Registration Process’ section of <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' target='_blank'>your own website</a> on the Platform."
@@ -152,14 +138,11 @@ _COMMUNITY_DATA__HELPS_TEXTS = {
     "ce_number_of_members_help": _(
         "Current participants in the Energy Community. If it has not yet been established, indicate the number of people interested in joining or those who make up the group promoting/driving the initiative (enter a value greater than or equal to 1)."
     ),
-    "ce_status_help": _(
-        "If ‘Open’ is selected, buttons will be displayed that provide access to public forms for receiving applications from new members of the Community at your map location and at the top of your own website on the Platform. Otherwise, these buttons will be hidden and only a generic Contact the Community button will be displayed."
-    ),
     "ce_status_help_html": _(
         "If ‘Open’ is selected, buttons will be displayed that provide access to public forms for receiving applications from new members of the Community at your <a href='https://somcomunitats.coop/es/#encuentra-tu-comunidad' target='_blank'>map</a> location and at the top of your <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' target='_blank'>own website</a> on the Platform. Otherwise, these buttons will be hidden and only a generic Contact the Community button will be displayed."
     ),
-    "ce_why_become_cooperator_help": _(
-        "In this section you can, with a maximum of 500 characters, explain the advantages of joining the community"
+    "ce_why_become_cooperator_help_html": _(
+        "Use a maximum of 500 characters to explain the advantages of joining the Community. If filled in, it will be published in the ‘Why become a member’ section of your <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' target='_blank'>own web page</a> on the Platform."
     ),
     "ce_current_lang_help": _(
         "All communications from the Energy Community will be made in this language by default."
@@ -167,11 +150,11 @@ _COMMUNITY_DATA__HELPS_TEXTS = {
     "ce_legal_form_help": _(
         "Indicate the legal form that the Community already has or that you know it will have. If you do not know yet, you can select: ‘To be defined’."
     ),
-    "ce_primary_image_file_help": _(
-        "Preferably a group photo of the Energy Community. It will be published at the top of your own web page on the Platform."
-    ),
     "ce_primary_image_file_help_html": _(
         "Preferably a group photo of the Energy Community. It will be published at the top of your <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' target='_blank'>own web page</a> on the Platform."
+    ),
+    "ce_secondary_image_file_help_html": _(
+        "It will be published in the Contact section of <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' target='_blank'>your own web page</a> on the Platform."
     ),
     "ce_web_url_help": _(
         "Link to the Energy Community website. Example: https://somcomunitats.coop"
@@ -429,11 +412,13 @@ class WebsiteCommunityData(http.Controller):
 
     def _get_legal_forms(self):
         legal_forms = []
-        for legal_form_id, legal_form_name in _LEGAL_FORM_VALUES:
+        for legal_form_id, legal_form_name in _LEGAL_FORM_VALUES_WEBSITE:
             legal_forms.append(
                 {
                     "id": legal_form_id,
-                    "name": self._get_translation(legal_form_name),
+                    "name": self._get_translation(
+                        legal_form_name, lang="en", mods="energy_communities"
+                    ),
                 }
             )
         return legal_forms
@@ -446,7 +431,9 @@ class WebsiteCommunityData(http.Controller):
             if lead.probability >= 100 or lead.stage_id.is_won:
                 lead_values["closed_lead"] = True
             for field_key in _COMMUNITY_DATA__STATIC_TEXTS.keys():
-                lead_values[field_key] = _COMMUNITY_DATA__STATIC_TEXTS[field_key]
+                lead_values[field_key] = self._get_translation(
+                    _COMMUNITY_DATA__STATIC_TEXTS[field_key]
+                )
             for field_key in _COMMUNITY_DATA__GENERAL_FIELDS.keys():
                 meta_line = lead.metadata_line_ids.filtered(
                     lambda meta_data_line: meta_data_line.key == field_key

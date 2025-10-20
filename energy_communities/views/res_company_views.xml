@@ -116,6 +116,8 @@
             </xpath>
             <xpath expr="//field[@name='social_instagram']" position="after">
                 <field name="social_telegram" />
+                <field name="social_mastodon" />
+                <field name="social_bluesky" />
             </xpath>
             <!-- <xpath expr="//form" position="inside">
                 <div class="oe_chatter">

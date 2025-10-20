@@ -34,6 +34,16 @@ _LEGAL_FORM_VALUES_NON_PROFIT = [
     "residents_association",
 ]
 
+_LEGAL_FORM_VALUES_WEBSITE = [
+    ("undefined", _("To be defined")),
+    ("cooperative", _("Cooperative")),
+    ("non_profit", _("Non profit association")),
+    ("residents_association", _("Neighborhood community")),
+    ("non_profit_limited_company", _("Non-profit SL")),
+    ("foundation", _("Foundation")),
+    ("other", _("Other")),
+]
+
 _CE_STATUS_VALUES = [
     ("active", _("active")),
     ("building", _("building")),

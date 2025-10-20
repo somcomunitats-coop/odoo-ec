@@ -35,8 +35,6 @@
             <t t-set="label" t-value="ce_current_lang_label" />
             <t t-set="options" t-value="lang_options" />
             <t t-set="required" t-value="True" />
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="ce_current_lang_help" />
             <t t-set="description" t-value="ce_current_lang_help" />
           </t>
         </div>
@@ -102,9 +100,7 @@
             <t t-set="options" t-value="community_known_coordinator_options" />
             <t t-set="required" t-value="True" />
             <t t-set="trigger">coordinator_id</t>
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="coordinator_id_help" />
-            <t t-set="description" t-value="coordinator_id_help_html" />
+            <t t-set="description" t-value="known_coordinator_help_html" />
           </t>
         </div>
         <div class="col-md-12">
@@ -116,8 +112,6 @@
             <t t-set="showif">known_coordinator:yes</t>
             <t t-set="required" t-value="True" />
             <t t-set="disabled">True</t>
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="coordinator_id_help" />
             <t t-set="description" t-value="coordinator_id_help_html" />
           </t>
         </div>
@@ -153,10 +147,18 @@
             <t t-set="label" t-value="ce_legal_form_label" />
             <t t-set="options" t-value="community_legal_form_options" />
             <t t-set="required" t-value="True" />
-            <t t-set="trigger">ce_member_recurrent_contribution,ce_member_recurrent_contribution_date</t>
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="ce_legal_form_help" />
+            <t t-set="trigger">ce_member_mandatory_contribution,ce_member_recurrent_contribution_date,ce_legal_form_other</t>
             <t t-set="description" t-value="ce_legal_form_help" />
+          </t>
+        </div>
+        <div class="col-md-12">
+          <t t-call="energy_communities.form_field_text">
+            <t t-set="value" t-value="ce_legal_form_other" />
+            <t t-set="key" t-value="ce_legal_form_other_key" />
+            <t t-set="label" t-value="ce_legal_form_other_label" />
+            <t t-set="required" t-value="True" />
+            <t t-set="showif">ce_legal_form:other</t>
+            <t t-set="disabled">True</t>
           </t>
         </div>
         <div class="col-md-12">
@@ -209,8 +211,6 @@
             <t t-set="key" t-value="ce_number_of_members_key" />
             <t t-set="label" t-value="ce_number_of_members_label" />
             <t t-set="required" t-value="True" />
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="ce_number_of_members_help" />
             <t t-set="description" t-value="ce_number_of_members_help" />
           </t>
         </div>
@@ -221,8 +221,6 @@
             <t t-set="label" t-value="ce_status_label" />
             <t t-set="options" t-value="community_status_options" />
             <t t-set="required" t-value="True" />
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="ce_status_help" />
             <t t-set="description" t-value="ce_status_help_html" />
           </t>
         </div>
@@ -233,9 +231,9 @@
         </div>
         <div class="col-md-12">
           <t t-call="energy_communities.form_field_number">
-            <t t-set="value" t-value="ce_member_recurrent_contribution" />
-            <t t-set="key" t-value="ce_member_recurrent_contribution_key" />
-            <t t-set="label" t-value="ce_member_recurrent_contribution_label" />
+            <t t-set="value" t-value="ce_member_mandatory_contribution" />
+            <t t-set="key" t-value="ce_member_mandatory_contribution_key" />
+            <t t-set="label" t-value="ce_member_mandatory_contribution_label" />
             <t t-set="showif">ce_legal_form:non_profit,residents_association</t>
             <t t-set="disabled">True</t>
           </t>
@@ -248,8 +246,6 @@
             <t t-set="showif">ce_legal_form:non_profit,residents_association</t>
             <t t-set="disabled">True</t>
             <t t-set="description" t-value="ce_member_recurrent_contribution_date_help" />
-            <t t-set="title" t-value="ce_member_recurrent_contribution_date_help" />
-            <t t-set="help" t-value="True" />
           </t>
         </div>
         <div class="col-md-12">
@@ -299,8 +295,6 @@
             <t t-set="rows" t-value="10" />
             <t t-set="maxlength" t-value="1000" />
             <t t-set="description" t-value="ce_description_help_html" />
-            <t t-set="title" t-value="ce_description_help" />
-            <t t-set="help" t-value="True" />
           </t>
         </div>
         <div class="col-md-12">
@@ -312,8 +306,6 @@
             <t t-set="rows" t-value="10" />
             <t t-set="maxlength" t-value="1500" />
             <t t-set="description" t-value="ce_long_description_help_html" />
-            <t t-set="title" t-value="ce_long_description_help" />
-            <t t-set="help" t-value="True" />
           </t>
         </div>
         <div class="col-md-12">
@@ -323,9 +315,7 @@
             <t t-set="label" t-value="ce_why_become_cooperator_label" />
             <t t-set="rows" t-value="5" />
             <t t-set="maxlength" t-value="500" />
-            <t t-set="description" t-value="ce_why_become_cooperator_help" />
-            <t t-set="title" t-value="ce_why_become_cooperator_help" />
-            <t t-set="help" t-value="True" />
+            <t t-set="description" t-value="ce_why_become_cooperator_help_html" />
           </t>
         </div>
         <div class="col-md-12">
@@ -336,8 +326,6 @@
             <t t-set="rows" t-value="5" />
             <t t-set="maxlength" t-value="500" />
             <t t-set="description" t-value="ce_become_cooperator_process_help_html" />
-            <t t-set="title" t-value="ce_become_cooperator_process_help" />
-            <t t-set="help" t-value="True" />
           </t>
         </div>
         <div class="col-md-12">
@@ -346,9 +334,7 @@
               <t t-set="value" t-value="ce_primary_image_file" />
               <t t-set="key" t-value="ce_primary_image_file_key" />
               <t t-set="label" t-value="ce_primary_image_file_label" />
-              <t t-set="description" t-value="ce_primary_image_file_help" />
-              <t t-set="title" t-value="ce_primary_image_file_help_html" />
-              <t t-set="help" t-value="True" />
+              <t t-set="description" t-value="ce_primary_image_file_help_html" />
               <t t-set="required" t-value="True" />
             </t>
           </div>
@@ -360,6 +346,7 @@
               <t t-set="key" t-value="ce_secondary_image_file_key" />
               <t t-set="label" t-value="ce_secondary_image_file_label" />
               <t t-set="required" t-value="True" />
+              <t t-set="description" t-value="ce_secondary_image_file_help_html" />
             </t>
           </div>
         </div>
@@ -382,8 +369,6 @@
             <t t-set="value" t-value="ce_web_url" />
             <t t-set="key" t-value="ce_web_url_key" />
             <t t-set="label" t-value="ce_web_url_label" />
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="ce_web_url_help" />
             <t t-set="description" t-value="ce_web_url_help" />
           </t>
         </div>
@@ -392,8 +377,6 @@
             <t t-set="value" t-value="ce_twitter_url" />
             <t t-set="key" t-value="ce_twitter_url_key" />
             <t t-set="label" t-value="ce_twitter_url_label" />
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="ce_twitter_url_help" />
             <t t-set="description" t-value="ce_twitter_url_help" />
           </t>
         </div>
@@ -402,8 +385,6 @@
             <t t-set="value" t-value="ce_instagram_url" />
             <t t-set="key" t-value="ce_instagram_url_key" />
             <t t-set="label" t-value="ce_instagram_url_label" />
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="ce_instagram_url_help" />
             <t t-set="description" t-value="ce_instagram_url_help" />
           </t>
         </div>
@@ -412,8 +393,6 @@
             <t t-set="value" t-value="ce_facebook_url" />
             <t t-set="key" t-value="ce_facebook_url_key" />
             <t t-set="label" t-value="ce_facebook_url_label" />
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="ce_facebook_url_help" />
             <t t-set="description" t-value="ce_facebook_url_help" />
           </t>
         </div>
@@ -422,8 +401,6 @@
             <t t-set="value" t-value="ce_telegram_url" />
             <t t-set="key" t-value="ce_telegram_url_key" />
             <t t-set="label" t-value="ce_telegram_url_label" />
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="ce_telegram_url_help" />
             <t t-set="description" t-value="ce_telegram_url_help" />
           </t>
         </div>
@@ -432,8 +409,6 @@
             <t t-set="value" t-value="ce_mastodon_url" />
             <t t-set="key" t-value="ce_mastodon_url_key" />
             <t t-set="label" t-value="ce_mastodon_url_label" />
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="ce_mastodon_url_help" />
             <t t-set="description" t-value="ce_mastodon_url_help" />
           </t>
         </div>
@@ -442,8 +417,6 @@
             <t t-set="value" t-value="ce_bluesky_url" />
             <t t-set="key" t-value="ce_bluesky_url_key" />
             <t t-set="label" t-value="ce_bluesky_url_label" />
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="ce_bluesky_url_help" />
             <t t-set="description" t-value="ce_bluesky_url_help" />
           </t>
         </div>
@@ -459,25 +432,23 @@
             <t t-set="label" t-value="comments_label" />
             <t t-set="rows" t-value="10" />
             <t t-set="maxlength" t-value="1000" />
-            <t t-set="help" t-value="True" />
-            <t t-set="title" t-value="comments_help" />
             <t t-set="description" t-value="comments_help" />
           </t>
         </div>
         <div class="col-md-12">
           <t t-call="energy_communities.form_field_checkbox">
-            <t t-set="value" t-value="ce_privacy_policy" />
-            <t t-set="key" t-value="ce_privacy_policy_key" />
-            <t t-set="label" t-value="ce_privacy_policy_label" />
+            <t t-set="value" t-value="terms_conditions" />
+            <t t-set="key" t-value="terms_conditions_key" />
+            <t t-set="label" t-value="terms_conditions_label" />
             <t t-set="required" t-value="True" />
           </t>
         </div>
         <!-- TODO: Make this description dynamic and db translatable -->
         <div class="col-md-12">
           <p
-        >DATA PROTECTION INFORMATION. Purposes: to respond to your requests. Rights: you can withdraw your consent at any time, as well as access, rectify and delete your data and other rights at <a
-            href="mailto:somenergia@delegado-datos.com"
-          >somenergia@delegado-datos.com</a>. Additional information: <a
+        ><b>SOM COMUNITATS DATA PROTECTION INFORMATION. Purposes:</b> To register the Energy Community on our platform and allow it access to the services reserved for Energy Communities registered on our website. To send you communications about our services and activities, including by electronic means. <b>Rights:</b> You can exercise your right to access, rectify, delete, oppose, limit, and transfer your data at  <a
+            href="mailto:info@somcomunitats.coop"
+          >info@somcomunitats.coop</a>. <b>Additional info:</b> <a
             href="https://somcomunitats.coop/politica-de-privacitat/"
             target="_blank"
           >Privacy policy</a>.</p>
