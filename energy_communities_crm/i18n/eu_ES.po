@@ -43,7 +43,7 @@ msgstr "(Elkarteak) Urteko egun finkoa bazkideengandik bazkidetza-kuotak kobratz
 msgid ""
 "(Associations) Fixed day of the year on which the annual membership fee is "
 "charged to members."
-msgstr "(Elkarteak) Urteko bazkidetza-kuota bazkideei kobratzen zaien urteko egun finkoa."
+msgstr "(Elkarteak) Bazkideei urtean kobratzen zaien afiliazio-kotaren zenbatekoa."
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
@@ -392,8 +392,7 @@ msgid ""
 "<strong>Alert!</strong> The content you enter in this form is what we will "
 "show directly on your page within Som Comunitats."
 msgstr ""
-"<strong>Alerta:</strong> Formulario honen edukiaren zati bat Som Comunitats "
-"webgunean agertuko da."
+"<strong>Alerta:</strong> Formulario honen edukiaren zati bat Som Comunitats webgunean agertuko da."
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_headline_message_closed
@@ -403,7 +402,7 @@ msgstr "<strong>Forma itxia</strong>"
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_headline_message_open
 msgid "<strong>Thank you so much!</strong>"
-msgstr "<strong>Mila esker!</strong>"
+msgstr "<strong>Eskerrik asko!</strong>"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -568,7 +567,7 @@ msgstr "Hiria"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Closed"
-msgstr "Itxita"
+msgstr "Itxia"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -702,7 +701,7 @@ msgstr "Konstituzio data"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Constitution in progress"
-msgstr "Konstituzioa martxan"
+msgstr "Legezko eratzea tramitatzen (oraindik IFKrik ez)"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -830,9 +829,9 @@ msgid ""
 "who make up the group promoting/driving the initiative (enter a value "
 "greater than or equal to 1)."
 msgstr ""
-"Energia Komunitatean parte hartzen duten uneko pertsonak. Oraindik ez bada sortu, "
-"adierazi batu nahi duten pertsona kopurua edo ekimena sustatzen/bultzatzen duen taldea osatzen dutenak "
-"(1 baino handiagoa edo berdina den balio bat sartu)."
+"Energia-komunitateko egungo parte-hartzaileak. Oraindik eratuta ez badago,"
+" adierazi zenbat pertsonak parte hartu nahi duten edo zeinek osatzen duten "
+"ekimenaren talde sustatzailea/eragilea (idatzi 1en balioa edo handiagoa)."
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_headline
@@ -844,14 +843,14 @@ msgstr "Formulario de recopilación de datos necesarios para la integración de"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Default language of the Energy Community"
-msgstr "Energia Komunitatearen hizkuntza lehenetsia"
+msgstr "Energia-komunitatearen hizkuntza lehenetsia"
 
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Definition in progress"
-msgstr "Definizioa martxan"
+msgstr "Proiektua definitzen"
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_assign_crm_to_coordinator_company_wizard__display_name
@@ -1065,8 +1064,8 @@ msgid ""
 "Indicate the legal form that the Community already has or that you know it "
 "will have. If you do not know yet, you can select: ‘To be defined’."
 msgstr ""
-"Adierazi Erkidegoak dagoeneko duen edo zuk ezagutzen duzun forma juridikoa "
-"izango du. Oraindik ez badakizu, hau hauta dezakezu: 'Definitzeke'."
+"Adierazi zer forma juridiko duen edo izango duen komunitateak. "
+"Oraindik ez badakizu, hau hauta dezakezu: 'Zehazteko dago'."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1107,7 +1106,7 @@ msgstr "Es el equipo por defecto"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Is the Community open to accepting new members?"
-msgstr "Elkartea zabalik dago kide berriak onartzeko?"
+msgstr "Erkidegoa bazkide berriak sartzeko prest dago?"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1170,7 +1169,7 @@ msgstr "Ekimena/Aukera"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Legally constituted"
-msgstr "Legez eratua"
+msgstr "Legez eratua (IFKrekin)"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1178,7 +1177,7 @@ msgstr "Legez eratua"
 #, python-format
 msgid ""
 "Link to the Energy Community website. Example: https://somcomunitats.coop"
-msgstr "Energia Komunitatearen webgunerako esteka. Adibidea: https://somcomunitats.coop"
+msgstr "Energia-komunitatearen webgunerako esteka. Adibidez: https://somcomunitats.coop"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1353,7 +1352,7 @@ msgstr "Oraindik ez"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Number of members"
-msgstr "Kide kopurua"
+msgstr "Bazkide kopurua"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1401,7 +1400,7 @@ msgstr "Etapa original"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Other"
-msgstr "Bestelakoak"
+msgstr "Beste bat"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.ce_view_crm_case_opportunities_filter
@@ -1438,8 +1437,7 @@ msgid ""
 "Please check the grammatical and spelling quality of the texts and "
 "translations before submitting."
 msgstr ""
-"Mesedez, egiaztatu testuen kalitate gramatikala eta ortografikoa eta "
-"aurkeztu aurreko itzulpenak"
+"Mesedez, berrikusi testuen eta itzulpenen kalitate gramatikala eta ortografikoa bidali aurretik."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1703,12 +1701,12 @@ msgid ""
 "href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
 "es.png' target='_blank'>own web page</a> on the Platform."
 msgstr ""
-"Erabili gehienez 1000 karaktere zure Energiaren laburpena idazteko "
-"Komunitatea. Komunitatearen deskribapen gisa argitaratuko da <a "
+"Erabili gehienez 1000 karaktere zuen energia-erkidegoaren laburpena idazteko."
+" Komunitatearen deskribapen gisa agertuko da argitaratuta bere <a "
 "href='https://somcomunitats.coop/eu/#encuentra-tu-comunidad' "
-"target='_blank'>mapa</a> kokalekua eta goiko aldean <a "
+"target='_blank'>mapa-puntuan</a> eta <a "
 "href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
-"eu.png' target='_blank'>web orri propioa</a> Plataforman."
+"eu.png' target='_blank'>bere web-orriaren</a> goiburuan, Plataforman."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1720,10 +1718,9 @@ msgid ""
 "href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
 "es.png' target='_blank'>your own page</a> on the Platform."
 msgstr ""
-"Erabili gehienez 1500 karaktere zure Energia Komunitatea azaltzeko. "
-"egingo da argitara bedi <a>ko ‘Guri buruz’ atalean <a "
+"Erabili gehienez 1500 karaktere zuen energia-komunitatea azaltzeko. Plataforman duen <a "
 "href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
-"eu.png' target='_blank'>zure orria</a> Plataforman."
+"eu.png' target='_blank'>web orriko</a> 'Nor gara' atalean agertuko da argitaratuta."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1738,8 +1735,8 @@ msgid ""
 msgstr ""
 "Gehienez 500 karaktere erabiltzen ditu Komunitatearekin bat egitearen abantailak"
 " azaltzeko. Betetzen bada, Plataforman duen <a href='https://somcomunitats.coop/wp--ren atala"
-"content/uploads/2025/09/landing-prova-eu.png' target='_blank'>web orriko</a> 'Zergatik "
-"egin bazkide' atalean agertuko da argitaratuta."
+"content/uploads/2025/09/landing-prova-eu.png' target='_blank'>web orriko</a> 'Zergatik"
+" egin bazkide' atalean agertuko da argitaratuta."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1752,11 +1749,10 @@ msgid ""
 "content/uploads/2025/09/landing-prova-es.png' target='_blank'>your own "
 "website</a> on the Platform."
 msgstr ""
-"Erabili gehienez 500 karaktere -rekin bat egiteko prozesua azaltzeko "
-"Komunitatea. Betetzen bada, ‘Erregistro-prozesuan’ argitaratuko da
-"sección de <a href='https://somcomunitats.coop/wp-"
-"content/uploads/2025/09/landing-prova-eu.png' target='_blank'>your own "
-"web orria</a> Plataforman."
+"Gehienez 500 karaktere erabiltzen ditu Komunitatearekin elkartzeko jarraitu "
+"beharreko prozesua azaltzeko. Betetzen bada, Plataformako zure <a href='https://somcomunitats.coop/wp-"
+"content/uploads/2025/09/landing-prova-eu.png' target='_blank'>web orriko</a> 'Alta emateko prozesua'"
+" atalean agertuko da argitaratuta."
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__user_current_company

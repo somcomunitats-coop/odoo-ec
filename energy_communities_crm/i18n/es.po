@@ -46,8 +46,7 @@ msgid ""
 "(Associations) Fixed day of the year on which the annual membership fee is "
 "charged to members."
 msgstr ""
-"(Asociaciones) Día fijo del año en el que se cobra la cuota anual de "
-"afiliación a los miembros."
+"(Asociaciones) Dia fijo del año en que se cobra la cuota de afiliación anual a las socias."
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
@@ -403,8 +402,7 @@ msgid ""
 "<strong>Alert!</strong> The content you enter in this form is what we will "
 "show directly on your page within Som Comunitats."
 msgstr ""
-"<strong>Alerta:</strong> Algún contenido registrado en este formulario se "
-"mostrará en la página pública de Som Comunitats."
+"<strong>Alerta:</strong> Parte del contenido de este formulario se mostrará en la web de Som Comunitats."
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_headline_message_closed
@@ -565,7 +563,7 @@ msgstr "Cancelar"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Citizen"
-msgstr "Ciudadano"
+msgstr "Ciudadana"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -579,7 +577,7 @@ msgstr "Ciudad"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Closed"
-msgstr "Cerrado"
+msgstr "Cerrada"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -713,7 +711,7 @@ msgstr "Fecha de constitución"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Constitution in progress"
-msgstr "Constitución legal en trámite"
+msgstr "Constitución legal en trámite (aún sin CIF)"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -843,10 +841,9 @@ msgid ""
 "who make up the group promoting/driving the initiative (enter a value "
 "greater than or equal to 1)."
 msgstr ""
-"Participantes actuales en la Comunidad de la Energía. Si aún no se ha "
-"constituido, indique el número de personas interesadas en adherirse o las que "
-"integran el grupo promotor/impulsor de la iniciativa (introduzca un valor "
-"mayor o igual a 1)."
+"Participantes actuales en la Comunidad Energética. Si todavía no está constituida"
+" indique el número de personas interesadas en formar parte o las que constituyen el "
+"grupo impulsor/motor de la iniciativa  (introduce un valor superior o igual a 1)."
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_headline
@@ -858,7 +855,7 @@ msgstr "Formulario de recopilación de datos necesarios para la integración de"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Default language of the Energy Community"
-msgstr "Idioma predeterminado de la Comunidad de la Energía"
+msgstr "Idioma predeterminado de la Comunidad Energética"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1087,8 +1084,8 @@ msgid ""
 "Indicate the legal form that the Community already has or that you know it "
 "will have. If you do not know yet, you can select: ‘To be defined’."
 msgstr ""
-"Indique la forma jurídica que la comunidad ya tiene o que sabe que tendrá."
-" Si aún no lo sabe, puede seleccionar: 'Por definir'."
+"Indique la forma jurídica que ya tiene o que sabe que tendrá La Comundad."
+" Si todavía no lo sabe puede seleccionar: 'Pendiente de definir'."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1129,7 +1126,7 @@ msgstr "Es el equipo por defecto"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Is the Community open to accepting new members?"
-msgstr "¿La comunidad está abierta a aceptar nuevos miembros?"
+msgstr "¿La Comunidad está abierta a incorporar nuevas socias?"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1191,7 +1188,7 @@ msgstr "Iniciativa/Oportunidad"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Legally constituted"
-msgstr "Legalmente constituida"
+msgstr "Legalmente constituida (con CIF)"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1199,7 +1196,7 @@ msgstr "Legalmente constituida"
 #, python-format
 msgid ""
 "Link to the Energy Community website. Example: https://somcomunitats.coop"
-msgstr "Enlace al sitio web de la Comunidad de la Energía. Ejemplo: https://somcomunitats.coop"
+msgstr "Enlace a la web de la Comunidad Energética. Ejemplo: https://somcomunitats.coop"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1209,7 +1206,7 @@ msgid ""
 "Link to the Energy Community's social network profile. Example: "
 "https://bsky.app/profile/somcomunitats.coop"
 msgstr ""
-"Enlace al perfil de la red social de la Comunidad de la Energía. Ejemplo:"
+"Enlace al perfil de la red social de la Comunidad Energética. Ejemplo:"
 "https://bsky.app/profile/somcomunitats.coop"
 
 #. module: energy_communities_crm
@@ -1220,7 +1217,7 @@ msgid ""
 "Link to the Energy Community's social network profile. Example: "
 "https://mastodon.social/@SomComunitats"
 msgstr ""
-"Enlace al perfil de la red social de la Comunidad de la Energía. Ejemplo: "
+"Enlace al perfil de la red social de la Comunidad Energética. Ejemplo: "
 "https://mastodon.social/@SomComunitats"
 
 #. module: energy_communities_crm
@@ -1231,7 +1228,7 @@ msgid ""
 "Link to the Energy Community's social network profile. Example: "
 "https://t.me/SomComunitats"
 msgstr ""
-"Enlace al perfil de la red social de la Comunidad de la Energía. Ejemplo: "
+"Enlace al perfil de la red social de la Comunidad Energética. Ejemplo: "
 "https://t.me/SomComunitats"
 
 #. module: energy_communities_crm
@@ -1242,7 +1239,7 @@ msgid ""
 "Link to the Energy Community's social network profile. Example: "
 "https://www.facebook.com/SomComunitats/"
 msgstr ""
-"Enlace al perfil de la red social de la Comunidad de la Energía. Ejemplo: "
+"Enlace al perfil de la red social de la Comunidad Energética. Ejemplo: "
 "https://www.facebook.com/SomComunitats/"
 
 #. module: energy_communities_crm
@@ -1253,7 +1250,7 @@ msgid ""
 "Link to the Energy Community's social network profile. Example: "
 "https://www.instagram.com/SomComunitats/"
 msgstr ""
-"Enlace al perfil de la red social de la Comunidad de la Energía. Ejemplo: "
+"Enlace al perfil de la red social de la Comunidad Energética. Ejemplo: "
 "https://www.instagram.com/SomComunitats/"
 
 #. module: energy_communities_crm
@@ -1264,7 +1261,7 @@ msgid ""
 "Link to the Energy Community's social network profile. Example: "
 "https://x.com/SomComunitats"
 msgstr ""
-"Enlace al perfil de la red social de la Comunidad de la Energía. Ejemplo: "
+"Enlace al perfil de la red social de la Comunidad Energética. Ejemplo: "
 "https://x.com/SomComunitats"
 
 #. module: energy_communities_crm
@@ -1376,7 +1373,7 @@ msgstr "Todavía no"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Number of members"
-msgstr "Número de miembros"
+msgstr "Número de personas socias"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1390,7 +1387,7 @@ msgstr "Una o más de una persona vinculada a la propia Comunidad Energética"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Open"
-msgstr "Abierto"
+msgstr "Abierta"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1729,11 +1726,11 @@ msgid ""
 "href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
 "es.png' target='_blank'>own web page</a> on the Platform."
 msgstr ""
-"Utilice un máximo de 1000 caracteres para escribir un resumen de su comunidad energética "
-"Se publicará como descripción de la comunidad en su ubicación <a "
-"href='https://somcomunitats.coop/es/#encuentra-tu-comunidad' target='_blank'>mapa</a> y en la parte superior de su <a "
+"Usa un màximo de 1000 carácteres para escribir un resumen de vuestra Comunidad"
+" Energética. Aparecerá publicado como descripción de la Comunidad en su punto de <a "
+"href='https://somcomunitats.coop/es/#encuentra-tu-comunidad' target='_blank'>mapa</a> y en la cabecera de <a "
 "href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
-"es.png' target='_blank'>propia página web</a> en la Plataforma."
+"es.png' target='_blank'>su propia página web</a> en la Plataforma."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1745,10 +1742,10 @@ msgid ""
 "href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
 "es.png' target='_blank'>your own page</a> on the Platform."
 msgstr ""
-"Utilice un máximo de 1500 caracteres para explicar su comunidad energética. Se "
-"publicará en la sección ‘Quiénes somos’ de <a "
+"Usa un máximo de 1500 carácteres para explicar vuestra Comunidad Energética."
+" Aparecerá publicado en la sección 'Quiénes somos' de <a "
 "href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
-"es.png' target='_blank'>su propia página</a> en la plataforma."
+"es.png' target='_blank'>su propia página web</a> en la Plataforma."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1761,8 +1758,8 @@ msgid ""
 "content/uploads/2025/09/landing-prova-es.png' target='_blank'>own web "
 "page</a> on the Platform."
 msgstr ""
-"Usa un máximo de 500 carácteres para explicar las ventajas de unirse a la Comunidad. "
-"Si se rellena, aparecerá publicado en la sección 'Por qué hacerse socio/a' de "
+"Usa un máximo de 500 carácteres para explicar las ventajas de unirse a la Comunidad."
+" Si se rellena, aparecerá publicado en la sección 'Por qué hacerse socio/a' de "
 "<a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png'"
 " target='_blank'>su propia página web</a> en la Plataforma."
 
@@ -1777,11 +1774,11 @@ msgid ""
 "content/uploads/2025/09/landing-prova-es.png' target='_blank'>your own "
 "website</a> on the Platform."
 msgstr ""
-"Utilice un máximo de 500 caracteres para explicar el proceso de adhesión a la "
-". Si lo completa, se publicará en la sección ‘Proceso de registro’ "
-"de <a href='https://somcomunitats.coop/wp-"
-"content/uploads/2025/09/landing-prova-es.png' target='_blank'>su propio "
-"sitio web</a> en la Plataforma."
+"Usa un máximo de 500 carácteres para explicar el proceso a seguir para asociarse "
+"a la Comunidad. Si se rellena, aparecerá publicado en la sección 'Proceso de alta'"
+" de <a href='https://somcomunitats.coop/wp-"
+"content/uploads/2025/09/landing-prova-es.png' target='_blank'>su propia "
+"página web</a> en la Plataforma."
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__user_current_company
