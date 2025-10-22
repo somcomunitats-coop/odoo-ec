@@ -148,8 +148,6 @@ SHARE_PRODUCTS_CATEG_REFS = [
     COOP_SHARE_PRODUCT_CATEG_REF,
     COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
     COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF,
-    # TODO: remove this categ ref as it's going to be merged with the previous one
-    "energy_communities.product_category_company_voluntary_share",
 ]
 
 ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS = [RECURRING_FEE_PACK_PRODUCT_CATEG_REF]
