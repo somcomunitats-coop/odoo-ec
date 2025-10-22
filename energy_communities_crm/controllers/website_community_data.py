@@ -44,7 +44,7 @@ _COMMUNITY_DATA__GENERAL_FIELDS = {
         "(Associations) Fixed day of the year on which the annual membership fee is charged to members."
     ),
     "ce_member_mandatory_contribution": _(
-        "What amount of mandatory contribution to the social capital do you ask for when a new member joins?"
+        "Amount of the mandatory initial contribution/fee required of new members"
     ),
     "ce_management_can_enter_platform": _(
         "Do you think that management could enter Odoo to generate the models from Odoo itself?"
@@ -52,7 +52,7 @@ _COMMUNITY_DATA__GENERAL_FIELDS = {
     "ce_date_fixed": _(
         "(Associations) Fixed day of the year for collecting membership fees from members"
     ),
-    "ce_ammount_fixed": _(
+    "ce_member_recurrent_contribution": _(
         "(Associations) Amount of the fixed annual membership fee for members"
     ),
     "ce_manager_firstname": _("Name"),
@@ -378,6 +378,7 @@ class WebsiteCommunityData(http.Controller):
     def _get_coordinators(self):
         result = (
             request.env["res.company"]
+            .sudo()
             .search(
                 [
                     ("hierarchy_level", "=", "coordinator"),

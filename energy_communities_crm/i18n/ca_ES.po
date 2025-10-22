@@ -25,7 +25,7 @@ msgstr ""
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "(Associations) Amount of the fixed annual membership fee for members"
-msgstr "(Associacions) Import de la quota anual fixa per als membres"
+msgstr "(Associacions) Import de la quota d'afiliació anual que es cobra a les sòcies."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -761,14 +761,14 @@ msgstr "Formulari de contacte"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Coordinator"
-msgstr "Coordinador"
+msgstr "Coordinadora"
 
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Corporate and administrative management"
-msgstr "Gestió corporativa i administrativa"
+msgstr "Gestió societària i administrativa"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -874,7 +874,7 @@ msgstr "Mostrar Nom"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Do you know the coordinator of the Energy Community?"
-msgstr "Coneixes el coordinador de la Comunitat Energètica?"
+msgstr "Sabeu quina Entitat Coordinadora voldríeu que us doni suport?"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1434,7 +1434,7 @@ msgid ""
 "Payment method to be used for collecting membership fees or contributions "
 "from members"
 msgstr ""
-"Mètode de pagament que s'utilitzarà per cobrar les quotes o contribucions dels membres"
+"Forma de pagament que es farà servir per al cobrament de les quotes o aportacions de les sòcies"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1574,7 +1574,7 @@ msgstr "Imatge secundària"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Select a Coordinator"
-msgstr "Seleccioneu un coordinador"
+msgstr "Trieu una Coordinadora"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1597,7 +1597,7 @@ msgid ""
 "entity</a> you would like to accompany and support you."
 msgstr ""
 "Seleccioneu quina <a href='https://somcomunitats.coop/que-son-las-"
-"coordinadoras/#ce-coordinadores-members' target='_blank'>entitat coordinadora</a> us agradaria que us acompanyés i us donés suport."
+"coordinadoras/#ce-coordinadores-members' target='_blank'>entitat coordinadora</a> voldríeu que us acompanyi i us doni suport."
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form
@@ -1672,13 +1672,13 @@ msgid ""
 "coordinadores-members' target='_blank'>here</a> is a list of available "
 "Coordinators."
 msgstr ""
-"La Plataforma Som Comunitats sol·licita que cada Comunitat Energètica "
-"estigui recolzada per una Entitat Coordinadora. <a "
+"La Plataforma de Som Comunitats demana que tota Comunitat Energètica compti"
+" amb l'acompanyament d'una Entitat Coordinadora. <a "
 "href='https://somcomunitats.coop/que-son-las-coordinadoras/' "
-"target='_blank'>Aquí</a> expliquem què són, i <a "
+"target='_blank'>Aquí</a> us expliquem què són i <a "
 "href='https://somcomunitats.coop/que-son-las-coordinadoras/#ce-"
-"coordinadores-members' target='_blank'>aquí</a> hi ha una llista de "
-"Coordinadors disponibles."
+"coordinadores-members' target='_blank'>aquí</a> teniu la llista "
+"de Coordinadores disponibles."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1749,10 +1749,10 @@ msgid ""
 "content/uploads/2025/09/landing-prova-es.png' target='_blank'>own web "
 "page</a> on the Platform."
 msgstr ""
-"Utilitzeu un màxim de 500 caràcters per explicar els avantatges d'unir-vos a la "
-"Comunitat. Si s'omple, es publicarà a la secció "
-"‘Per què fer-se membre’ de la vostra <a href='https://somcomunitats.coop/wp-"
-"content/uploads/2025/09/landing-prova-ca.png' target='_blank'>pròpia pàgina web</a> a la Plataforma."
+"Utilitza un màxim de 500 caràcters per explicar els avantatges d'unir-se a"
+" la Comunitat. Si s'omple, apareixerà publicat a la secció 'Perquè fer-se soci/a' "
+"de <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-ca.png'"
+" target='_blank'>la seva pròpia pàgina web</a> a la Plataforma."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1830,11 +1830,9 @@ msgstr ""
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid ""
-"What is the mandatory capital contribution required when a new member joins?"
-" (€)"
+"Amount of the mandatory initial contribution/fee required of new members"
 msgstr ""
-"Quina és l'aportació obligatòria de capital que es requereix quan s'incorpora un nou membre?"
-" (€)"
+"Import d'aportació/quota inicial obligatòria que es demana a les noves sòcies"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1848,7 +1846,7 @@ msgstr "Quin?"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Why become cooperator"
-msgstr "Per què fer-se soci"
+msgstr "Perquè associar-se?"
 
 #. module: energy_communities_crm
 #: model:ir.model,name:energy_communities_crm.model_account_multicompany_easy_creation_wiz
