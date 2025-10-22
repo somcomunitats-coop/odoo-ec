@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2025-10-22 (v16.0.0.6.1)
+
+- Remove duplicated Voluntary Share product category (from energy_communities)
+
 ### 2025-10-22 (v16.0.0.6.0)
 
 - Improved MulltiCompanyEasyCreationWizard
