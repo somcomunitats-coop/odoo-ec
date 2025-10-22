@@ -3,7 +3,7 @@ from datetime import date, datetime
 
 from odoo.tests import common, tagged
 
-from odoo.addons.energy_communities.config import PACK_TYPE_SHARE_RECURRING_FEE
+from ..config import PACK_TYPE_SHARE_RECURRING_FEE
 
 SubscriptionPaymentTestingCase = namedtuple(
     "SubscriptionTestingCase",
@@ -15,26 +15,26 @@ _FIXED_RECURRENCY_MONTH = 3
 
 _TESTING_CASES = {
     "payment_before_fixed_day_recurrency": SubscriptionPaymentTestingCase(
-        "energy_communities_cooperator.subscription_2_community_2_demo",
+        "energy_communities_service_invoicing.subscription_2_community_2_demo",
         date(
             datetime.now().year, _FIXED_RECURRENCY_MONTH - 1, _FIXED_RECURRENCY_DAY - 12
         ),
         date(datetime.now().year + 1, _FIXED_RECURRENCY_MONTH, _FIXED_RECURRENCY_DAY),
     ),
     "payment_equal_fixed_day_recurrency": SubscriptionPaymentTestingCase(
-        "energy_communities_cooperator.subscription_1_community_2_demo",
+        "energy_communities_service_invoicing.subscription_1_community_2_demo",
         date(datetime.now().year, _FIXED_RECURRENCY_MONTH, _FIXED_RECURRENCY_DAY),
         date(datetime.now().year + 1, _FIXED_RECURRENCY_MONTH, _FIXED_RECURRENCY_DAY),
     ),
     "payment_after_fixed_day_recurrency": SubscriptionPaymentTestingCase(
-        "energy_communities_cooperator.subscription_3_community_2_demo",
+        "energy_communities_service_invoicing.subscription_3_community_2_demo",
         date(
             datetime.now().year, _FIXED_RECURRENCY_MONTH + 4, _FIXED_RECURRENCY_DAY + 2
         ),
         date(datetime.now().year + 1, _FIXED_RECURRENCY_MONTH, _FIXED_RECURRENCY_DAY),
     ),
     "payment_after_fixed_day_recurrency_last_year": SubscriptionPaymentTestingCase(
-        "energy_communities_cooperator.subscription_3_community_2_demo",
+        "energy_communities_service_invoicing.subscription_3_community_2_demo",
         date(
             datetime.now().year - 1,
             _FIXED_RECURRENCY_MONTH + 4,
@@ -43,7 +43,7 @@ _TESTING_CASES = {
         date(datetime.now().year, _FIXED_RECURRENCY_MONTH, _FIXED_RECURRENCY_DAY),
     ),
     "payment_after_fixed_day_recurrency_next_year": SubscriptionPaymentTestingCase(
-        "energy_communities_cooperator.subscription_3_community_2_demo",
+        "energy_communities_service_invoicing.subscription_3_community_2_demo",
         date(
             datetime.now().year + 1,
             _FIXED_RECURRENCY_MONTH + 4,

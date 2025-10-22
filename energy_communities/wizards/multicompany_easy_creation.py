@@ -1,13 +1,18 @@
 import logging
 
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
+from ..config import CHART_OF_ACCOUNTS_NON_PROFIT_REF
 from ..models.res_company import (
     _CE_MEMBER_STATUS_VALUES,
     _CE_STATUS_VALUES,
+    _CE_STATUS_VALUES_DEFAULT,
     _CE_TYPE,
     _HIERARCHY_LEVEL_BASE_VALUES,
     _LEGAL_FORM_VALUES,
+    _LEGAL_FORM_VALUES_DEFAULT,
+    _LEGAL_FORM_VALUES_NON_PROFIT,
 )
 from ..utils import get_successful_popup_message, user_role_utils
 
@@ -30,6 +35,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         comodel_name="account.chart.template",
         string="Chart Template",
         domain=[("visible", "=", True)],
+        required=True,
     )
     default_lang_id = fields.Many2one(
         comodel_name="res.lang",
@@ -64,11 +70,15 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     legal_form = fields.Selection(
         selection=_LEGAL_FORM_VALUES,
         string="Legal form",
+        required=True,
+        default=_LEGAL_FORM_VALUES_DEFAULT,
     )
     legal_name = fields.Char(string="Legal name", required=True)
     ce_status = fields.Selection(
         selection=_CE_STATUS_VALUES,
         string="Energy Community state",
+        required=True,
+        default=_CE_STATUS_VALUES_DEFAULT,
     )
     # Used in demo data, so it can finish the process before continuing with the rest of the demo data.
     hook_cron = fields.Boolean(
@@ -157,6 +167,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         )
 
     def action_accept(self):
+        self._validate_chart_of_accounts_configuration()
         self.create_company()
         self.apply_new_company_to_impacted_users()
         self.apply_new_company_partner_visibility()
@@ -174,6 +185,16 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             _("Company creation successful"),
             _("Community creation process has been started."),
         )
+
+    def _validate_chart_of_accounts_configuration(self):
+        if (
+            self.legal_form in _LEGAL_FORM_VALUES_NON_PROFIT
+            and self.chart_template_id.id
+            != self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF).id
+        ):
+            raise ValidationError(
+                "Misconfiguration between company legal form and selected chart of accounts"
+            )
 
     def create_company(self):
         allow_new_members = False
@@ -234,7 +255,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 user.write({"company_ids": [(4, self.new_company_id.id)]})
             else:
                 new_company_hierarchy_level = self.new_company_id.hierarchy_level
-                with user_role_utils(self.env, user) as component:
+                with user_role_utils(self.env, user, use_sudo=True) as component:
                     if new_company_hierarchy_level == "coordinator":
                         component.apply_coordinator_role_in_company(self.new_company_id)
                     if new_company_hierarchy_level == "community":

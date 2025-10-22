@@ -4,7 +4,9 @@ from datetime import datetime
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
-from odoo.addons.energy_communities.config import PACK_TYPE_SELFCONSUMPTION
+from odoo.addons.energy_communities_service_invoicing.config import (
+    PACK_TYPE_SELFCONSUMPTION,
+)
 from odoo.addons.energy_communities_service_invoicing.tests.service_invoicing_testing_contract_creator import (
     ServiceInvoicingTestingContractCreator,
 )
@@ -46,7 +48,7 @@ class TestSelfconsumptionServiceInvoicing(
             "energy_selfconsumption.inscription_selfconsumption_2_selfconsumption_1_demo"
         )
         self.subscription_5_inscription_5 = self.env.ref(
-            "energy_communities_cooperator.subscription_5_community_1_demo"
+            "energy_communities_service_invoicing.subscription_5_community_1_demo"
         )
         self.subscription_5_supply_point_5 = self.env.ref(
             "energy_selfconsumption.supply_point_5_selfconsumption_1_demo"
@@ -146,7 +148,7 @@ class TestSelfconsumptionServiceInvoicing(
             {
                 "selfconsumption_id": self.selfconsumption.id,
                 "payment_mode": self.ref(
-                    "energy_communities_cooperator.community_1_payment_mode"
+                    "energy_communities_service_invoicing.community_1_payment_mode"
                 ),
             }
         )

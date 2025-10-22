@@ -50,3 +50,30 @@ class ResCompany(models.Model):
             return self.env.ref(
                 "energy_communities_cooperator.email_template_voluntary_share_interest_return"
             )
+
+    # TODO: This method has been overwritten from original method on cooperator.
+    # Find a better way of doing this using ACL and record rules
+    def _init_cooperator_demo_data(self):
+        if (
+            not self.env["ir.module.module"]
+            .sudo()
+            .search([("name", "=", "cooperator")])
+            .demo
+        ):
+            # demo data must not be loaded, nothing to do
+            return
+        account_account_model = self.env["account.account"].sudo()
+        for company in self:
+            if not company._accounting_data_initialized():
+                # same remark as in _init_cooperator_data()
+                continue
+            if not company.property_cooperator_account:
+                company.property_cooperator_account = account_account_model.create(
+                    {
+                        "code": "416101",
+                        "name": "Cooperators",
+                        "account_type": "asset_receivable",
+                        "reconcile": True,
+                        "company_id": company.id,
+                    }
+                )

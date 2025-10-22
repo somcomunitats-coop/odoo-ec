@@ -10,6 +10,8 @@
     <field name="hierarchy_level">coordinator</field>
     <field name="parent_id" ref="base.main_company" />
     <field name="email">oecoop@fake.com</field>
+    <field name="ce_status">active</field>
+    <field name="legal_form">cooperative</field>
   </record>
 
   <function name="write" model="res.partner">
@@ -56,6 +58,10 @@
     <field name="legal_name">Community 1</field>
     <field name="email">cesants@bar.fake</field>
     <field name="parent_id" ref="coordinator_company_1" />
+    <field name="ce_status">active</field>
+    <field name="legal_form">cooperative</field>
+    <field name="create_landing" eval="False"/>
+    <field name="create_place" eval="False"/>
     <field
       name="chart_template_id"
       ref="l10n_es.account_chart_template_pymes"
@@ -71,9 +77,13 @@
     <field name="legal_name">Community 2</field>
     <field name="email">cevillanoveta@foo.fake</field>
     <field name="parent_id" ref="coordinator_company_1" />
+    <field name="ce_status">active</field>
+    <field name="legal_form">non_profit</field>
+    <field name="create_landing" eval="False"/>
+    <field name="create_place" eval="False"/>
     <field
       name="chart_template_id"
-      ref="l10n_es.account_chart_template_pymes"
+      ref="l10n_es.account_chart_template_assoc"
     />
     <field name="hook_cron">False</field>
   </record>

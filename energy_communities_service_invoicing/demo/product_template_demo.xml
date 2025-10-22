@@ -17,6 +17,27 @@
     <value eval="{'service_invoicing_sale_journal_id': 11}" />
   </function>
 
+  # COMMUNITY SHARES
+  <record id="cooperator.product_template_share_type_1_demo" model="product.template">
+    <field name="name">Company 1 share</field>
+    <field name="detailed_type">service</field>
+    <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id.id"/>
+    <field name="payment_mode_id" ref="community_1_payment_mode" />
+  </record>
+
+  <record id="cooperator.product_template_share_type_2_demo" model="product.template">
+    <field name="name">company 2 share with recurring fee Pack</field>
+    <field name="detailed_type">service</field>
+    <field name="is_share" eval="True"/>
+    <field name="standard_price">10.11</field>
+    <field name="list_price">10.11</field>
+    <field name="sale_ok" eval="True"/>
+    <field name="purchase_ok" eval="False"/>
+    <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_company_id.id"/>
+    <field name="taxes_id" eval="[(5,0,0)]" />
+  </record>
+  <!-- TODO: Payment mode for community 2 -->
+
   # PLATFORM SERVICES
   <record id="demo_platform_service_product_template" model="product.template">
       <field name="name">Platform service product</field>
@@ -83,7 +104,7 @@
       <field name="standard_price">0.0</field>
       <field name="list_price">0.0</field>
       <field name="sale_ok" eval="True"/>
-      <field name="purchase_ok" eval="False"/> 
+      <field name="purchase_ok" eval="False"/>
       <field name="detailed_type">service</field>
       <field name="taxes_id" eval="[(5,0,0)]" />
       <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_company_id.id" />
@@ -106,11 +127,23 @@
     })]"/>
   </record>
 
+  <record id="demo_share_recurring_fee_service_product_template" model="product.template">
+      <field name="name">Share recurring fee service product for community 2</field>
+      <field name="categ_id" ref="energy_communities.product_category_share_recurring_fee_service"/>
+      <field name="standard_price">0.0</field>
+      <field name="list_price">0.0</field>
+      <field name="sale_ok" eval="True"/>
+      <field name="purchase_ok" eval="False"/>
+      <field name="detailed_type">service</field>
+      <field name="taxes_id" eval="[(5,0,0)]" />
+      <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_company_id.id" />
+  </record>
+
   <record id="demo_fixed_share_recurring_fee_contract_template" model="contract.template">
     <field name="name">Share Recurring fee contract template</field>
     <field name="contract_type">sale</field>
     <field name="contract_line_ids" model="product.template" eval="[(0,0,{
-      'product_id': obj(ref('demo_recurring_fee_service_product_template')).product_variant_id.id,
+      'product_id': obj(ref('demo_share_recurring_fee_service_product_template')).product_variant_id.id,
       'automatic_price':True,
       'qty_type': 'fixed',
       'quantity': 1,
@@ -145,9 +178,16 @@
     <field name="property_contract_template_id" ref="demo_fixed_share_recurring_fee_contract_template" />
   </record>
 
+  # PRICELIST
+
   <record id="demo_platform_company_pricelist" model="product.pricelist">
     <field name="name">Platform Company pricelist</field>
     <field name="company_id" model="res.company" eval="obj(ref('base.main_company')).id"/>
+  </record>
+
+  <record id="demo_coordinator_company_pricelist" model="product.pricelist">
+    <field name="name">Coordinator Company pricelist</field>
+    <field name="company_id" model="res.company" eval="obj(ref('energy_communities.coordinator_company_1')).id"/>
   </record>
 
   <record id="demo_community_1_pricelist" model="product.pricelist">
@@ -164,8 +204,6 @@
     })]"/>
   </record>
 
-  # PRICELIST
-
   <function name="write" model="res.company">
     <value
       model="res.company"
@@ -174,6 +212,18 @@
     <value
       eval="{
         'pricelist_id': ref('demo_platform_company_pricelist'),
+      }"
+    />
+  </function>
+
+  <function name="write" model="res.company">
+    <value
+      model="res.company"
+      eval="[obj(ref('energy_communities.coordinator_company_1')).id]"
+    />
+    <value
+      eval="{
+        'pricelist_id': ref('demo_coordinator_company_pricelist'),
       }"
     />
   </function>

@@ -181,6 +181,12 @@ team or refer to the project documentation.
 
 ## Changes
 
+## Changelog
+
+### 2025-10-22 (v16.0.0.5.11)
+
+- Use configuration xml references instead hardcoded on code
+
 ### 2025-09-24 (v16.0.0.5.10)
 
 - Fix basque translations

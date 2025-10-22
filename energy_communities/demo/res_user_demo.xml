@@ -1,6 +1,7 @@
 <odoo>
   <record id="res_users_user_ce_1_demo" model="res.users">
     <field name="name">CommunityUser: Community 1</field>
+    <field name="email">ce.user.1@fake.com</field>
     <field name="firstname">CommunityUser:</field>
     <field name="lastname">Community 1</field>
     <field name="login">92614895J</field>
@@ -8,6 +9,7 @@
   </record>
   <record id="res_users_admin_ce_1_demo" model="res.users">
     <field name="name">CommunityAdmin: Community 1</field>
+    <field name="email">ce.admin.1@fake.com</field>
     <field name="firstname">CommunityAdmin:</field>
     <field name="lastname">Community 1</field>
     <field name="login">20740340K</field>
@@ -16,6 +18,7 @@
 
   <record id="res_users_user_ce_2_demo" model="res.users">
     <field name="name">CommunityUser: Community 2</field>
+    <field name="email">ce.user.2@fake.com</field>
     <field name="firstname">CommunityUser:</field>
     <field name="lastname">Community 2</field>
     <field name="login">45951114N</field>
@@ -24,6 +27,7 @@
 
   <record id="res_users_admin_ce_2_demo" model="res.users">
     <field name="name">CommunityAdmin: Community 2</field>
+    <field name="email">ce.admin.2@fake.com</field>
     <field name="firstname">CommunityAdmin:</field>
     <field name="lastname">Community 2</field>
     <field name="login">05346012F</field>
@@ -32,6 +36,7 @@
 
   <record id="res_users_admin_coordinator_1_demo" model="res.users">
     <field name="name">CoordinatorAdmin: Coord 1</field>
+    <field name="email">coord.admin.1@fake.com</field>
     <field name="firstname">CoordinatorAdmin:</field>
     <field name="lastname">Coord 1</field>
     <field name="login">70305956Q</field>
@@ -52,6 +57,7 @@
 
   <record id="res_users_admin_plataforma_demo" model="res.users">
     <field name="name">PlatformAdmin 1</field>
+    <field name="email">platform.admin.1@fake.com</field>
     <field name="firstname">PlatformAdmin</field>
     <field name="lastname">1</field>
     <field name="login">33740605L</field>

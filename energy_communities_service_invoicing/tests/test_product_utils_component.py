@@ -74,7 +74,7 @@ class TestProductUtilsComponent(TransactionCase, ServiceInvoicingTestingProductC
         )
         result = wizard._create_products()
         # ASSERT CREATION WENT OK
-        self._assert_creation_ok(result, data)
+        self._assert_creation_ok(result, data, True)
 
     def _get_wizard_lines_creation_data(self, services_data):
         services = []
@@ -145,21 +145,25 @@ class TestProductUtilsComponent(TransactionCase, ServiceInvoicingTestingProductC
         # WORKFLOW: Create products
         with product_utils(self.env) as component:
             result = component.create_products(data)
-
         # ASSERT CREATION WENT OK
-        self._assert_creation_ok(result, data)
+        self._assert_creation_ok(result, data, False)
 
-    def _assert_creation_ok(self, result, data):
+    def _assert_creation_ok(self, result, data, from_wizard):
         # ASSERT: Creation returns a ProductCreationResult
         self.assertIsInstance(result, ProductCreationResult)
         # ASSERT: Product Creation OK
         # for pack
-        self._assert_base_product_data(result.pack_product_template, data.pack)
+        self._assert_base_product_data(
+            result.pack_product_template, data.pack, from_wizard
+        )
         self._assert_pack_product_data(result, data)
         # for services
         if data.new_services:
             self._assert_services_product_data(
-                result.new_service_product_template_list, data.new_services, data.pack
+                result.new_service_product_template_list,
+                data.new_services,
+                data.pack,
+                from_wizard,
             )
         else:
             self.assertFalse(bool(data.new_services))
@@ -168,11 +172,12 @@ class TestProductUtilsComponent(TransactionCase, ServiceInvoicingTestingProductC
                 result.existing_service_product_template_list,
                 data.existing_services,
                 data.pack,
+                from_wizard,
             )
         else:
             self.assertFalse(bool(data.existing_services))
 
-    def _assert_base_product_data(self, product_template, test_data):
+    def _assert_base_product_data(self, product_template, test_data, from_wizard):
         if product_template:
             self.assertTrue(bool(product_template))
             self.assertEqual(product_template.detailed_type, "service")
@@ -194,9 +199,6 @@ class TestProductUtilsComponent(TransactionCase, ServiceInvoicingTestingProductC
                         self.assertTrue(product_template.is_share)
                         self.assertTrue(product_template.by_individual)
                         self.assertTrue(product_template.by_company)
-                        self.assertEqual(
-                            product_template.short_name, product_template.name
-                        )
                 elif field == "taxes_id":
                     product_tax_creation_dict = []
                     for tax in getattr(product_template, field):
@@ -204,6 +206,17 @@ class TestProductUtilsComponent(TransactionCase, ServiceInvoicingTestingProductC
                     self.assertEqual(
                         product_tax_creation_dict, getattr(test_data, field)
                     )
+                elif field == "short_name":
+                    product_template_field = getattr(product_template, field)
+                    if from_wizard or not bool(getattr(test_data, field)):
+                        self.assertEqual(
+                            product_template_field, getattr(test_data, "name")
+                        )
+                    else:
+                        self.assertEqual(
+                            product_template_field, getattr(test_data, field)
+                        )
+
                 else:
                     product_template_field = getattr(product_template, field)
                     if not product_template_field:
@@ -214,14 +227,14 @@ class TestProductUtilsComponent(TransactionCase, ServiceInvoicingTestingProductC
                         )
 
     def _assert_services_product_data(
-        self, service_product_template_list, data_services, data_pack
+        self, service_product_template_list, data_services, data_pack, from_wizard
     ):
         self.assertTrue(bool(service_product_template_list))
         i = 0
         for service_product_template in service_product_template_list:
             if isinstance(data_services[i], ServiceProductCreationData):
                 self._assert_base_product_data(
-                    service_product_template, data_services[i]
+                    service_product_template, data_services[i], from_wizard
                 )
             if isinstance(data_services[i], ServiceProductExistingData):
                 self.assertEqual(

@@ -5,9 +5,6 @@ from odoo.addons.energy_communities.config import (
     CE_ADMIN,
     CE_MANAGER,
     COORD_ADMIN,
-    PACK_PROD_CATEG_XMLID_REL_TO_PACK_TYPES,
-    PACK_PROD_CATEG_XMLID_REL_TO_SERVICE_PROD_CATEG_XMLID,
-    PACK_TYPE_SHARE_RECURRING_FEE_PROD_CATEG_XMLID,
     PLATFORM_ADMIN,
 )
 from odoo.addons.energy_communities.utils import (
@@ -15,7 +12,11 @@ from odoo.addons.energy_communities.utils import (
     product_utils,
 )
 
-from ..config import ALL_PACKS, FEE_PACKS
+from ..config import (
+    ALL_PACKS,
+    FEE_PACKS,
+    PACK_PROD_CATEG_REF_REL_TO_SERVICE_PROD_CATEG_REF,
+)
 from ..schemas import (
     PackProductCreationData,
     ProductCreationParams,
@@ -120,13 +121,16 @@ class PackProductCreatorWizard(models.TransientModel):
             ):
                 record.recurring_invoicing_type = "pre-paid"
 
-    def execute_create(self):
-        self._validate_creation()
-        result = self._create_products()
+    def execute_create_action(self):
+        self.execute_create()
         return get_successful_popup_message(
             _("Pack product creation successful"),
             _("Please visit the products view in order to see the new items."),
         )
+
+    def execute_create(self):
+        self._validate_creation()
+        self._create_products()
 
     def _validate_creation(self):
         if not self.pack_categ_id:
@@ -139,7 +143,7 @@ class PackProductCreatorWizard(models.TransientModel):
             if (
                 existing_service.existing_service_product_id.categ_id.id
                 != self.env.ref(
-                    PACK_PROD_CATEG_XMLID_REL_TO_SERVICE_PROD_CATEG_XMLID[
+                    PACK_PROD_CATEG_REF_REL_TO_SERVICE_PROD_CATEG_REF[
                         self.pack_categ_id.data_xml_id
                     ]
                 ).id
@@ -172,7 +176,7 @@ class PackProductCreatorWizard(models.TransientModel):
                     ServiceProductCreationData(
                         company_id=self.company_id.id if self.company_id else None,
                         categ_id=self.env.ref(
-                            PACK_PROD_CATEG_XMLID_REL_TO_SERVICE_PROD_CATEG_XMLID[
+                            PACK_PROD_CATEG_REF_REL_TO_SERVICE_PROD_CATEG_REF[
                                 self.pack_categ_id.data_xml_id
                             ]
                         ).id,

@@ -1,5 +1,9 @@
 from odoo import fields, models
 
+from odoo.addons.energy_communities_service_invoicing.config import (
+    SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF,
+)
+
 
 class Product(models.Model):
     """
@@ -59,7 +63,7 @@ class Product(models.Model):
 
         # Check if product is in self-consumption category
         selfconsumption_category = self.env.ref(
-            "energy_selfconsumption.product_category_selfconsumption_pack",
+            SELFCONSUMPTION_PACK_PRODUCT_CATEG_REF,
             raise_if_not_found=False,
         )
 

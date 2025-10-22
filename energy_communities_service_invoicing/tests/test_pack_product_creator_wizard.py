@@ -167,8 +167,7 @@ class TestPackProductCreatorWizzard(
             self.fixed_prepaid_recurring_fee_params()
         )
         # and launch it
-        result = wizard.execute_create()
-
+        result = wizard.execute_create_action()
         # then the result is ok
         self.assertEqual(result["type"], "ir.actions.client")
         self.assertEqual(result["params"]["type"], "success")

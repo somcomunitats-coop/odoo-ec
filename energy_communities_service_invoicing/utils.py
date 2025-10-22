@@ -7,13 +7,13 @@ from odoo.api import Environment
 from odoo.exceptions import ValidationError
 
 from odoo.addons.contract.models.contract import ContractContract
-from odoo.addons.energy_communities.config import PACK_TYPE_PLATFORM
 
 from .config import (
     CONTRACT_STATUS_CLOSED,
     CONTRACT_STATUS_CLOSED_PLANNED,
     CONTRACT_STATUS_IN_PROGRESS,
     CONTRACT_STATUS_PAUSED,
+    PACK_TYPE_PLATFORM,
 )
 
 

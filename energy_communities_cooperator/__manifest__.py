@@ -12,7 +12,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Cooperative management",
-    "version": "16.0.0.3.7",
+    "version": "16.0.0.4.0",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
@@ -52,12 +52,7 @@
         "wizards/voluntary_share_interest_return.xml",
     ],
     # only loaded in demonstration mode
-    "demo": [
-        "demo/res_company_demo.xml",
-        "demo/product_template_demo.xml",
-        "demo/res_user_demo.xml",
-        "demo/subscription_request_demo.xml",
-    ],
+    "demo": ["demo/res_company_demo.xml"],
     "assets": {
         "web.assets_common": [
             "energy_communities_cooperator/static/src/js/cooperator.js",

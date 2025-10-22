@@ -9,7 +9,7 @@
     "author": "Som comunitats",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Contract Management",
-    "version": "16.0.0.5.9",
+    "version": "16.0.0.6.0",
     # any module necessary for this one to work correctly
     "depends": [
         "base",
@@ -21,7 +21,8 @@
         "product_contract",
         "contract_variable_quantity",
         "energy_communities",
-        "energy_communities_cooperator",  # TODO: This dependency is needed for active members formula. Need to refactor this.
+        "energy_communities_crm",
+        "energy_communities_cooperator",
         "account_invoice_inter_company",
     ],
     # always loaded
@@ -48,6 +49,7 @@
         "views/service_invoicing_views.xml",
         "views/subscription_request_views.xml",
         "wizards/assign_pack_to_partner.xml",
+        "wizards/multicompany_easy_creation.xml",
         "wizards/pack_product_creator.xml",
         "wizards/service_invoicing_action.xml",
         "wizards/service_invoicing_action_create.xml",
@@ -56,7 +58,9 @@
     "post_init_hook": "post_setup_intercompany_invoicing_config",
     # only loaded in demonstration mode
     "demo": [
+        "demo/res_company_demo.xml",
         "demo/product_template_demo.xml",
-        # "demo/subscription_request_demo.xml"
+        "demo/res_user_demo.xml",
+        "demo/subscription_request_demo.xml",
     ],
 }

@@ -1,0 +1,112 @@
+<odoo>
+  <record id="crm_team_coord_company_demo" model="crm.team">
+      <field name="name">Community 3</field>
+      <field name="use_opportunities" eval="True" />
+      <field name="is_default_team" eval="True" />
+      <field name="company_id" ref="energy_communities.coordinator_company_1" />
+  </record>
+
+  <record id="crm_stage_coord_company_demo" model="crm.stage">
+      <field name="name">New demo</field>
+      <field name="team_id" ref="crm_team_coord_company_demo" />
+  </record>
+
+  <record id="crm_lead_company_creation_demo_1" model="crm.lead">
+    <field name="name">Community 3</field>
+    <field name="email_from">community3@bar.fake</field>
+    <field name="submission_type">none</field>
+    <field name="company_id" ref="energy_communities.coordinator_company_1" />
+    <field name="source_id" ref="energy_communities.ce_source_creation_ce_proposal" />
+    <field name="team_id" ref="crm_team_coord_company_demo" />
+    <field name="stage_id" ref="crm_stage_coord_company_demo" />
+    <field name="metadata_line_ids" eval="[
+      (0, 0, {'key': 'source_xml_id', 'value': 'ce_source_creation_ce_proposal'}),
+      (0, 0, {'key': 'current_lang', 'value': 'es_ES'}),
+      (0, 0, {'key': 'ce_name', 'value': 'Community 3'}),
+      (0, 0, {'key': 'ce_description', 'value': 'Community 3 description'}),
+      (0, 0, {'key': 'ce_long_description', 'value': 'Community 3 long description'}),
+      (0, 0, {'key': 'ce_address', 'value': 'Av St Narcís'}),
+      (0, 0, {'key': 'ce_city', 'value': 'Girona'}),
+      (0, 0, {'key': 'ce_zip', 'value': '17005'}),
+      (0, 0, {'key': 'ce_number_of_members', 'value': '96'}),
+      (0, 0, {'key': 'ce_creation_date', 'value': '1994-09-01'}),
+      (0, 0, {'key': 'contact_phone', 'value': '666666666'}),
+      (0, 0, {'key': 'email_from', 'value': 'community3@bar.fake'}),
+      (0, 0, {'key': 'ce_vat', 'value': 'D48467799'}),
+      (0, 0, {'key': 'ce_fiscal_name', 'value': 'Community 3'}),
+      (0, 0, {'key': 'contact_person_name', 'value': 'Community 3 cp name'}),
+      (0, 0, {'key': 'contact_person_surname', 'value': 'Community 3 cp surname'}),
+      (0, 0, {'key': 'ce_status', 'value': 'open'}),
+      (0, 0, {'key': 'ce_type', 'value': 'citizen'}),
+      (0, 0, {'key': 'ce_constitution_status', 'value': 'constituted'}),
+      (0, 0, {'key': 'ce_legal_form', 'value': 'cooperative'}),
+      (0, 0, {'key': 'ce_member_mandatory_contribution', 'value': '130'}),
+    ]" />
+  </record>
+
+  <record id="crm_lead_company_creation_demo_2" model="crm.lead">
+    <field name="name">Community 4</field>
+    <field name="email_from">community4@bar.fake</field>
+    <field name="submission_type">none</field>
+    <field name="company_id" ref="energy_communities.coordinator_company_1" />
+    <field name="source_id" ref="energy_communities.ce_source_creation_ce_proposal" />
+    <field name="team_id" ref="crm_team_coord_company_demo" />
+    <field name="stage_id" ref="crm_stage_coord_company_demo" />
+    <field name="metadata_line_ids" eval="[
+      (0, 0, {'key': 'source_xml_id', 'value': 'ce_source_creation_ce_proposal'}),
+      (0, 0, {'key': 'current_lang', 'value': 'eu_ES'}),
+      (0, 0, {'key': 'ce_name', 'value': 'Community 4'}),
+      (0, 0, {'key': 'ce_description', 'value': 'Community 4 description'}),
+      (0, 0, {'key': 'ce_long_description', 'value': 'Community 4 long description'}),
+      (0, 0, {'key': 'ce_address', 'value': 'Cami Ral 190'}),
+      (0, 0, {'key': 'ce_city', 'value': 'Mataró'}),
+      (0, 0, {'key': 'ce_zip', 'value': '08301'}),
+      (0, 0, {'key': 'ce_number_of_members', 'value': '34'}),
+      (0, 0, {'key': 'ce_creation_date', 'value': '2020-07-01'}),
+      (0, 0, {'key': 'contact_phone', 'value': '777777777'}),
+      (0, 0, {'key': 'email_from', 'value': 'community4@bar.fake'}),
+      (0, 0, {'key': 'ce_vat', 'value': 'R7776930E'}),
+      (0, 0, {'key': 'ce_fiscal_name', 'value': 'Community 4'}),
+      (0, 0, {'key': 'contact_person_name', 'value': 'Community 4 cp name'}),
+      (0, 0, {'key': 'contact_person_surname', 'value': 'Community 4 cp surname'}),
+      (0, 0, {'key': 'ce_status', 'value': 'open'}),
+      (0, 0, {'key': 'ce_type', 'value': 'citizen'}),
+      (0, 0, {'key': 'ce_constitution_status', 'value': 'constituted'}),
+      (0, 0, {'key': 'ce_legal_form', 'value': 'non_profit'}),
+      (0, 0, {'key': 'ce_member_mandatory_contribution', 'value': '90'}),
+    ]" />
+  </record>
+
+  <record id="crm_lead_company_creation_demo_3" model="crm.lead">
+    <field name="name">Community 5</field>
+    <field name="email_from">community5@bar.fake</field>
+    <field name="submission_type">none</field>
+    <field name="company_id" ref="energy_communities.coordinator_company_1" />
+    <field name="source_id" ref="energy_communities.ce_source_creation_ce_proposal" />
+    <field name="team_id" ref="crm_team_coord_company_demo" />
+    <field name="stage_id" ref="crm_stage_coord_company_demo" />
+    <field name="metadata_line_ids" eval="[
+      (0, 0, {'key': 'source_xml_id', 'value': 'ce_source_creation_ce_proposal'}),
+      (0, 0, {'key': 'current_lang', 'value': 'es_ES'}),
+      (0, 0, {'key': 'ce_name', 'value': 'Community 5'}),
+      (0, 0, {'key': 'ce_description', 'value': 'Community 5 description'}),
+      (0, 0, {'key': 'ce_long_description', 'value': 'Community 5 long description'}),
+      (0, 0, {'key': 'ce_address', 'value': 'Carrer Trafalgar 22'}),
+      (0, 0, {'key': 'ce_city', 'value': 'Barcelona'}),
+      (0, 0, {'key': 'ce_zip', 'value': '08010'}),
+      (0, 0, {'key': 'ce_number_of_members', 'value': '85'}),
+      (0, 0, {'key': 'ce_creation_date', 'value': '2022-11-11'}),
+      (0, 0, {'key': 'contact_phone', 'value': '999999999'}),
+      (0, 0, {'key': 'email_from', 'value': 'community5@bar.fake'}),
+      (0, 0, {'key': 'ce_vat', 'value': 'J08366866'}),
+      (0, 0, {'key': 'ce_fiscal_name', 'value': 'Community 5'}),
+      (0, 0, {'key': 'contact_person_name', 'value': 'Community 5 cp name'}),
+      (0, 0, {'key': 'contact_person_surname', 'value': 'Community 5 cp surname'}),
+      (0, 0, {'key': 'ce_status', 'value': 'open'}),
+      (0, 0, {'key': 'ce_type', 'value': 'citizen'}),
+      (0, 0, {'key': 'ce_constitution_status', 'value': 'constituted'}),
+      (0, 0, {'key': 'ce_legal_form', 'value': 'non_profit'}),
+      (0, 0, {'key': 'ce_member_mandatory_contribution', 'value': '50'}),
+    ]" />
+  </record>
+</odoo>

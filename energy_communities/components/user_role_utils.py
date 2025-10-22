@@ -38,6 +38,8 @@ class UserRoleUtils(Component):
                     },
                 )
             ]
+        if self.work.use_sudo:
+            self.work.record = self.work.record.sudo()
         self.work.record.write(update_dict)
 
     def apply_coordinator_role_in_company(self, company_id):
@@ -54,4 +56,7 @@ class UserRoleUtils(Component):
         ]
         if company_id:
             query.append(("company_id", "=", company_id.id))
-        return self.env["res.users.role.line"].search(query)
+        role_line_model = self.env["res.users.role.line"]
+        if self.work.use_sudo:
+            role_line_model = role_line_model.sudo()
+        return role_line_model.search(query)

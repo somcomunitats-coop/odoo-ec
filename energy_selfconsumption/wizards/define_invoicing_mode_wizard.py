@@ -9,6 +9,7 @@ from odoo.addons.energy_communities_service_invoicing.config import (
     DEFAULT_PRICELIST_DISCOUNT_POLICY,
     RECURRING_RULE_MONTHLY,
     RECURRING_RULE_MONTHLY_LAST_DAY,
+    SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF,
 )
 
 from ..config import (
@@ -193,9 +194,7 @@ class DefineInvoicingModeWizard(models.TransientModel):
         pricelist_name = f"{self.selfconsumption_id.name} {self.invoicing_mode} Selfconsumption Pricelist"
 
         # Get service category
-        service_category = self.env.ref(
-            "energy_selfconsumption.product_category_selfconsumption_service"
-        )
+        service_category = self.env.ref(SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF)
 
         pricelist_data = {
             "name": pricelist_name,
