@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<!-- Inherit the SwitchCompanyMenu template to add Select All/Deselect All buttons -->
+<t t-name="web.SwitchCompanyMenu" t-inherit="web.SwitchCompanyMenu" t-inherit-mode="extension" owl="1">
+    <xpath expr="//t[@t-foreach]" position="before">
+        <!-- Add Select All/Deselect All buttons at the top -->
+        <t t-if="Object.keys(companyService.availableCompanies).length > 2">
+            <div class="border-bottom mb-2 pb-2">
+                <div class="d-flex justify-content-between px-3 py-1">
+                    <button 
+                        type="button"
+                        class="btn btn-sm btn-outline-primary"
+                        t-att-disabled="areAllCompaniesSelected()"
+                        t-on-click="() => this.toggleAllCompanies(true)"
+                        title="Select All Companies">
+                        <i class="fa fa-check-square me-1"/>
+                        Select All
+                    </button>
+                    <button 
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary"
+                        t-att-disabled="areNoCompaniesSelected()"
+                        t-on-click="() => this.toggleAllCompanies(false)"
+                        title="Deselect All Companies">
+                        <i class="fa fa-square-o me-1"/>
+                        Deselect All
+                    </button>
+                </div>
+            </div>
+        </t>
+    </xpath>
+</t>
+
+</templates>
