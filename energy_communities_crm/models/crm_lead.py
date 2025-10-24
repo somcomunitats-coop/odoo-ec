@@ -104,7 +104,14 @@ class CrmLead(models.Model):
         creation_dict = self._get_metadata_values()
         # Check metadata coordinator_id with context company_id
         if creation_dict.get("coordinator_id", False):
-            if int(creation_dict["coordinator_id"]) != self.env.company.id:
+            coordinator = self.env["res.company"].browse(
+                int(creation_dict["coordinator_id"])
+            )
+            if (
+                coordinator
+                and coordinator.hierarchy_level == "coordinator"
+                and coordinator.id != self.env.company.id
+            ):
                 raise ValidationError(
                     _(
                         f"""
