@@ -65,6 +65,13 @@
                             <field name="ce_telegram_url" />
                             <field name="ce_instagram_url" />
                             <field name="ce_facebook_url" />
+                            <field name="ce_mastodon_url" />
+                            <field name="ce_bluesky_url" />
+                        </group>
+                    </page>
+                    <page string="Comments">
+                        <group string="Comments">
+                            <field name="comments" />
                         </group>
                     </page>
                 </xpath>

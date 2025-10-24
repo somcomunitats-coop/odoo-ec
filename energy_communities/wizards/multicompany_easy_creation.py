@@ -115,6 +115,9 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     ce_telegram_url = fields.Char(string="Telegram link")
     ce_instagram_url = fields.Char(string="Instagram link")
     ce_facebook_url = fields.Char(string="Facebook link")
+    ce_mastodon_url = fields.Char(string="Mastodon link")
+    ce_bluesky_url = fields.Char(string="Bluesky link")
+    comments = fields.Text(string="Comments")
     # enable coordinator companies creation
     hierarchy_level = fields.Selection(
         selection=_HIERARCHY_LEVEL_BASE_VALUES,

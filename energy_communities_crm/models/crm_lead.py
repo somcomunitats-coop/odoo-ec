@@ -1,16 +1,23 @@
 import base64
+import logging
 from datetime import datetime
 
 import requests
+from stdnum.es import iban
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 from odoo.addons.energy_communities.config import (
+    CHART_OF_ACCOUNTS_GENERAL_CANARY_REF,
     CHART_OF_ACCOUNTS_GENERAL_REF,
+    CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF,
     CHART_OF_ACCOUNTS_NON_PROFIT_REF,
+    STATE_CANARY_GC,
+    STATE_CANARY_TF,
 )
 from odoo.addons.energy_communities.models.res_company import (
+    _LEGAL_FORM_VALUES_DEFAULT,
     _LEGAL_FORM_VALUES_NON_PROFIT,
 )
 
@@ -22,6 +29,8 @@ from .metadata_mapping_conf import (
     _LEAD_METADATA__LANG_FIELDS,
     _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class CrmLead(models.Model):
@@ -93,6 +102,21 @@ class CrmLead(models.Model):
         self.ensure_one()
         # form values from metadata
         creation_dict = self._get_metadata_values()
+        # Check metadata coordinator_id with context company_id
+        if creation_dict.get("coordinator_id", False):
+            if int(creation_dict["coordinator_id"]) != self.env.company.id:
+                raise ValidationError(
+                    _(
+                        f"""
+                    The lead metadata with key coordinator_id
+                    ({creation_dict.get("coordinator_id", False)}: {creation_dict.get("coordinator_name", False)})
+                    points to a coordinator other than the active one in the user's context
+                    ({self.env.company.id}: {self.env.company.name}).
+                    """
+                    )
+                )
+        del creation_dict["coordinator_id"]
+        del creation_dict["coordinator_name"]
         # all other populated form fields.
         creation_partner = self._search_partner_for_company_wizard_creation(
             creation_dict
@@ -117,14 +141,60 @@ class CrmLead(models.Model):
                 "create_landing": True,
                 "create_place": True,
                 "creation_partner": creation_partner.id if creation_partner else False,
+                "ce_member_status": creation_dict.get("ce_status", "open"),
+                "default_lang_id": self.lang_id.id,
             }
         )
+
+        if creation_dict.get("legal_form", "other") == "other":
+            creation_dict.update({"legal_form": _LEGAL_FORM_VALUES_DEFAULT})
+
+        ce_iban_1 = creation_dict.get("ce_iban_1", False)
+        if ce_iban_1:
+            try:
+                iban.validate(ce_iban_1)
+                creation_dict.update({"bank_ids": [(0, 0, {"acc_number": ce_iban_1})]})
+            except Exception as e:
+                logger.warning(
+                    _(
+                        f"""
+                    The lead metadata with key ce_iban_1
+                    ({ce_iban_1}) is invalid: {e}
+                    """
+                    )
+                )
+        del creation_dict["ce_iban_1"]
+
+        if creation_dict.get("legal_form", "other") == "non_profit":
+            if creation_dict.get("ce_member_recurrent_contribution_date", False):
+                creation_dict.update(
+                    {
+                        "fixed_invoicing_day": creation_dict.get(
+                            "ce_member_recurrent_contribution_date"
+                        ).strftime("%d"),
+                        "fixed_invoicing_month": creation_dict.get(
+                            "ce_member_recurrent_contribution_date"
+                        ).strftime("%m"),
+                    }
+                )
+        del creation_dict["ce_member_recurrent_contribution_date"]
+
         return creation_dict
 
     def _get_chart_template_id_from_meta(self):
         meta_entry = self.metadata_line_ids.filtered(
             lambda meta: meta.key == "ce_legal_form"
         )
+        state = self.metadata_line_ids.filtered(lambda meta: meta.key == "ce_state")
+        if state:
+            if int(state.value) in [
+                self.env.ref(STATE_CANARY_TF).id,
+                self.env.ref(STATE_CANARY_GC).id,
+            ]:
+                if meta_entry:
+                    if meta_entry.value in _LEGAL_FORM_VALUES_NON_PROFIT:
+                        return self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF).id
+                return self.env.ref(CHART_OF_ACCOUNTS_GENERAL_CANARY_REF).id
         if meta_entry:
             if meta_entry.value in _LEGAL_FORM_VALUES_NON_PROFIT:
                 return self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF).id

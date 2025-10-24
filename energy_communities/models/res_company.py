@@ -27,6 +27,7 @@ _LEGAL_FORM_VALUES = [
     ("individual_entrepreneur", _("Individual entrepreneur")),
     ("residents_association", _("Neighborhood community")),
     ("non_profit_limited_company", _("Non profit limited company")),
+    ("foundation", _("Foundation")),
 ]
 _LEGAL_FORM_VALUES_DEFAULT = "undefined"
 _LEGAL_FORM_VALUES_NON_PROFIT = [

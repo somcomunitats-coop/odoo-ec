@@ -45,3 +45,13 @@ STATE_LABELS = {
 # Accounting
 CHART_OF_ACCOUNTS_GENERAL_REF = "l10n_es.account_chart_template_pymes"
 CHART_OF_ACCOUNTS_NON_PROFIT_REF = "l10n_es.account_chart_template_assoc"
+CHART_OF_ACCOUNTS_GENERAL_CANARY_REF = (
+    "l10n_es_igic.account_chart_template_pymes_canary"
+)
+CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF = (
+    "l10n_es_igic.account_chart_template_assoc_canary"
+)
+
+# State
+STATE_CANARY_TF = "base.state_es_tf"
+STATE_CANARY_GC = "base.state_es_gc"

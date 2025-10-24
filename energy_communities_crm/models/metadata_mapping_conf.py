@@ -30,8 +30,15 @@ _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD = {
     "ce_mastodon_url": "ce_mastodon_url",
     "ce_bluesky_url": "ce_bluesky_url",
     "comments": "comments",
+    "coordinator_id": "coordinator_id",
+    "coordinator_name": "coordinator_name",
+    "ce_iban_1": "ce_iban_1",
+    "ce_member_recurrent_contribution_date": "ce_member_recurrent_contribution_date",
 }
-_LEAD_METADATA__DATE_FIELDS = ["ce_creation_date"]
+_LEAD_METADATA__DATE_FIELDS = [
+    "ce_creation_date",
+    "ce_member_recurrent_contribution_date",
+]
 _LEAD_METADATA__ENERGY_TAGS_FIELDS = ["ce_services"]
 _LEAD_METADATA__LANG_FIELDS = ["current_lang"]
 _LEAD_METADATA__EXTID_FIELDS = [
