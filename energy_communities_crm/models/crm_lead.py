@@ -115,8 +115,10 @@ class CrmLead(models.Model):
                     """
                     )
                 )
-        del creation_dict["coordinator_id"]
-        del creation_dict["coordinator_name"]
+        if creation_dict.get("coordinator_id", False):
+            del creation_dict["coordinator_id"]
+        if creation_dict.get("coordinator_name", False):
+            del creation_dict["coordinator_name"]
         # all other populated form fields.
         creation_partner = self._search_partner_for_company_wizard_creation(
             creation_dict
@@ -163,7 +165,8 @@ class CrmLead(models.Model):
                     """
                     )
                 )
-        del creation_dict["ce_iban_1"]
+        if creation_dict.get("ce_iban_1", False):
+            del creation_dict["ce_iban_1"]
 
         if creation_dict.get("legal_form", "other") == "non_profit":
             if creation_dict.get("ce_member_recurrent_contribution_date", False):
@@ -177,7 +180,8 @@ class CrmLead(models.Model):
                         ).strftime("%m"),
                     }
                 )
-        del creation_dict["ce_member_recurrent_contribution_date"]
+        if creation_dict.get("ce_member_recurrent_contribution_date", False):
+            del creation_dict["ce_member_recurrent_contribution_date"]
 
         return creation_dict
 
