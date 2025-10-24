@@ -28,7 +28,7 @@ class CrmLeadMetadataMappingField(models.Model):
         ondelete="cascade",
         required=True,
         domain=[("model", "in", MAPPING_BUSINESS_MODELS)],
-        default=lambda self: self.env.ref("mass_mailing.model_mailing_list").id,
+        default=lambda self: self.env.ref("base.model_res_lang").id,
     )
     mapping_model_name = fields.Char(
         string="Mapping Model Name",

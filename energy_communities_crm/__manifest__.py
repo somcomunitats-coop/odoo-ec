@@ -43,5 +43,5 @@
     ],
     "post_init_hook": "post_setup_multicompany_crm",
     # only loaded in demonstration mode
-    "demo": ["demo/crm_lead_demo.xml"],
+    "demo": ["demo/crm_lead_demo.xml", "demo/crm_lead_metadata_mapping_demo.xml"],
 }
