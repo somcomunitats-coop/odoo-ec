@@ -230,6 +230,13 @@ msgid "Application scope"
 msgstr ""
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
+msgid ""
+"Are you sure you want to run the wizard and proceed with creating the "
+"company?"
+msgstr "¿Seguro que quieres ejecutar el asistente y proceder con la creación de la compañía?"
+
+#. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_config_assistants_menu
 msgid "Assistants"
 msgstr ""
@@ -1431,9 +1438,32 @@ msgstr "Nombre"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__neighborhood_community
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__neighborhood_community
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__neighborhood_community
 #, python-format
 msgid "Neighborhood community"
-msgstr "Comunidad vecinal"
+msgstr "Comundad vecinal"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__non_profit_limited_company
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__non_profit_limited_company
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__non_profit_limited_company
+#, python-format
+msgid "Non profit limited company"
+msgstr "SL sin ánimo de lucro"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__foundation
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__foundation
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__foundation
+#, python-format
+msgid "Foundation"
+msgstr "Fundación"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__activity_calendar_event_id
@@ -2506,7 +2536,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__community_of_property
 #, python-format
 msgid "community of property"
-msgstr "comunidad de bienes"
+msgstr "Comunidad de bienes"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_date_past
