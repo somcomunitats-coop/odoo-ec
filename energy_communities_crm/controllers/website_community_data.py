@@ -37,9 +37,6 @@ _COMMUNITY_DATA__GENERAL_FIELDS = {
     "ce_constitution_status_other": _("Which one?"),
     "ce_legal_form": _("Community legal form"),
     "ce_legal_form_other": _("Which one?"),
-    # "ce_member_mandatory_contribution": _(
-    #    "What is the mandatory capital contribution required when a new member joins? (€)"
-    # ),
     "ce_member_recurrent_contribution_date": _(
         "(Associations) Fixed day of the year on which the annual membership fee is charged to members."
     ),
@@ -606,6 +603,13 @@ class WebsiteCommunityData(http.Controller):
             return request.render("energy_communities_crm.community_data_page", values)
         return True
 
+    def _check_url_validation(self, url):
+        if not url:
+            return True
+        if not url.startswith("https://"):
+            return False
+        return True
+
     def _form_submit_validation(self, values):
         error = []
         error_msgs = []
@@ -664,6 +668,70 @@ class WebsiteCommunityData(http.Controller):
         # TODO: legal docs validation
         # TODO: iban validator
         # TODO: url validator
+        if "ce_website" in values.keys():
+            if not self._check_url_validation(values["ce_website"]):
+                error.append("ce_website")
+                error_msgs.append(
+                    _("{} field must begin with https://").format(
+                        self._get_translation(_COMMUNITY_DATA__FIELDS["ce_website"])
+                    )
+                )
+        if "ce_twitter_url" in values.keys():
+            if not self._check_url_validation(values["ce_twitter_url"]):
+                error.append("ce_twitter_url")
+                error_msgs.append(
+                    _("{} field must begin with https://").format(
+                        self._get_translation(_COMMUNITY_DATA__FIELDS["ce_twitter_url"])
+                    )
+                )
+        if "ce_telegram_url" in values.keys():
+            if not self._check_url_validation(values["ce_telegram_url"]):
+                error.append("ce_telegram_url")
+                error_msgs.append(
+                    _("{} field must begin with https://").format(
+                        self._get_translation(
+                            _COMMUNITY_DATA__FIELDS["ce_telegram_url"]
+                        )
+                    )
+                )
+        if "ce_instagram_url" in values.keys():
+            if not self._check_url_validation(values["ce_instagram_url"]):
+                error.append("ce_instagram_url")
+                error_msgs.append(
+                    _("{} field must begin with https://").format(
+                        self._get_translation(
+                            _COMMUNITY_DATA__FIELDS["ce_instagram_url"]
+                        )
+                    )
+                )
+        if "ce_facebook_url" in values.keys():
+            if not self._check_url_validation(values["ce_facebook_url"]):
+                error.append("ce_facebook_url")
+                error_msgs.append(
+                    _("{} field must begin with https://").format(
+                        self._get_translation(
+                            _COMMUNITY_DATA__FIELDS["ce_facebook_url"]
+                        )
+                    )
+                )
+        if "ce_mastodon_url" in values.keys():
+            if not self._check_url_validation(values["ce_mastodon_url"]):
+                error.append("ce_mastodon_url")
+                error_msgs.append(
+                    _("{} field must begin with https://").format(
+                        self._get_translation(
+                            _COMMUNITY_DATA__FIELDS["ce_mastodon_url"]
+                        )
+                    )
+                )
+        if "ce_bluesky_url" in values.keys():
+            if not self._check_url_validation(values["ce_bluesky_url"]):
+                error.append("ce_bluesky_url")
+                error_msgs.append(
+                    _("{} field must begin with https://").format(
+                        self._get_translation(_COMMUNITY_DATA__FIELDS["ce_bluesky_url"])
+                    )
+                )
 
         if error_msgs:
             values["error"] = error

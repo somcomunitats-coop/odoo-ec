@@ -55,3 +55,6 @@ CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF = (
 # State
 STATE_CANARY_TF = "base.state_es_tf"
 STATE_CANARY_GC = "base.state_es_gc"
+
+# Rounding configuration
+ROUNDING_CONFIGURATION_DEFAULT = {"tax_calculation_rounding_method": "round_globally"}

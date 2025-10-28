@@ -3,7 +3,12 @@ import logging
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from ..config import CHART_OF_ACCOUNTS_NON_PROFIT_REF
+from odoo.addons.energy_communities.utils import account_utils
+
+from ..config import (
+    CHART_OF_ACCOUNTS_NON_PROFIT_REF,
+    ROUNDING_CONFIGURATION_DEFAULT,
+)
 from ..models.res_company import (
     _CE_MEMBER_STATUS_VALUES,
     _CE_STATUS_VALUES,
@@ -244,6 +249,11 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 }
             )
         )
+        self.new_company_id.partner_id.write(
+            {
+                "lang": self.default_lang_id.id,
+            }
+        )
 
     def apply_new_company_to_impacted_users(self):
         system_impacted_user_id_list = [
@@ -339,5 +349,52 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         self.with_context(
             allowed_company_ids=allowed_company_ids
         ).sudo().chart_template_id.try_loading(company=new_company)
-        self.create_bank_journals()
+        self.create_bank_journals_energy_communities()
         self.create_sequences()
+        self.apply_default_rounding_configuration()
+
+    def create_bank_journals_energy_communities(self):
+        AccountSetupBankManualConfig = self.env[
+            "account.setup.bank.manual.config"
+        ].sudo()
+        AccountJournal = self.env["account.journal"].sudo()
+        for i, bank_wiz in enumerate(self.bank_ids):
+            wizard = AccountSetupBankManualConfig.with_company(
+                self.new_company_id
+            ).create(
+                {
+                    "acc_number": bank_wiz.acc_number,
+                    "company_id": self.new_company_id.id,
+                    "bank_id": bank_wiz.bank_id.id if bank_wiz.bank_id else False,
+                    "bank_bic": bank_wiz.bank_id.bic if bank_wiz.bank_id else False,
+                }
+            )
+            wizard.validate()
+            bank_journals = AccountJournal.search(
+                [
+                    ("name", "=", bank_wiz.acc_number),
+                    ("company_id", "=", self.new_company_id.id),
+                ]
+            )
+            if bank_journals:
+                name = _("Bank") + " (" + bank_wiz.acc_number[-4:] + ")"
+                if bank_journals.bank_account_id.bank_id:
+                    name = (
+                        bank_journals.bank_account_id.bank_id.name
+                        + " ("
+                        + bank_wiz.acc_number[-4:]
+                        + ")"
+                    )
+                bank_journals.write(
+                    {
+                        "name": name,
+                    }
+                )
+                bank_journals.default_account_id.write(
+                    {
+                        "name": name,
+                    }
+                )
+
+    def apply_default_rounding_configuration(self):
+        self.new_company_id.write(ROUNDING_CONFIGURATION_DEFAULT)

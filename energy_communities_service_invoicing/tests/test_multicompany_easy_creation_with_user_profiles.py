@@ -1,3 +1,4 @@
+from odoo import _
 from odoo.tests import common, tagged
 
 from odoo.addons.energy_communities.config import (
@@ -161,6 +162,7 @@ class TestMultiCompanyEasyCreationWithUserProfiles(common.TransactionCase):
             expected_chart_of_accounts_ref,
         )
         self._assert__community_creation_ok(new_company)
+        self._assert__comunity_creation_social_ok(new_company, creation_wizard)
         self._assert__users_and_partners_configuration_ok(new_company)
         self._assert__pricelist_configuration_ok(new_company)
         self._assert__coop_journal_and_accounts_ok(new_company, expected_account)
@@ -177,6 +179,37 @@ class TestMultiCompanyEasyCreationWithUserProfiles(common.TransactionCase):
             self._assert__share_recurring_fee_product_configuration_ok(new_company)
         if scenario_type == "non_profit":
             self._assert__nonprofit_coop_product_configuration_ok(new_company)
+
+        self._assert__bank_journals_configuration_ok(new_company)
+
+    def _assert__bank_journals_configuration_ok(self, new_company):
+        bank_journals = self.env["account.journal"].search(
+            [("company_id", "=", new_company.id), ("type", "=", "bank")],
+            order="id desc",
+            limit=1,
+        )
+        self.assertEqual(len(bank_journals), 1)
+        if bank_journals:
+            name = (
+                _("Bank")
+                + " ("
+                + new_company.partner_id.bank_ids[
+                    len(new_company.partner_id.bank_ids) - 1
+                ].acc_number[-4:]
+                + ")"
+            )
+            if bank_journals.bank_account_id.bank_id:
+                name = (
+                    bank_journals.bank_account_id.bank_id.name
+                    + " ("
+                    + new_company.partner_id.bank_ids[
+                        len(new_company.partner_id.bank_ids) - 1
+                    ].acc_number[-4:]
+                    + ")"
+                )
+
+        self.assertEqual(bank_journals.name, name)
+        self.assertEqual(bank_journals.default_account_id.name, name)
 
     def _assert__company_creation_relation_users_list(self, new_company):
         self.assertEqual(
@@ -212,11 +245,57 @@ class TestMultiCompanyEasyCreationWithUserProfiles(common.TransactionCase):
         )
         self.assertFalse(creation_wizard.create_user)
         self.assertFalse(creation_wizard.creation_partner)
+        # ASSERT: community creation wizard social data is correctly set
+        self.assertEqual(
+            creation_wizard.ce_twitter_url,
+            creation_crm_lead.metadata_line_ids.filtered(
+                lambda meta: meta.key == "ce_twitter_url"
+            ).value,
+        )
+        self.assertEqual(
+            creation_wizard.ce_telegram_url,
+            creation_crm_lead.metadata_line_ids.filtered(
+                lambda meta: meta.key == "ce_telegram_url"
+            ).value,
+        )
+        self.assertEqual(
+            creation_wizard.ce_instagram_url,
+            creation_crm_lead.metadata_line_ids.filtered(
+                lambda meta: meta.key == "ce_instagram_url"
+            ).value,
+        )
+        self.assertEqual(
+            creation_wizard.ce_facebook_url,
+            creation_crm_lead.metadata_line_ids.filtered(
+                lambda meta: meta.key == "ce_facebook_url"
+            ).value,
+        )
+        self.assertEqual(
+            creation_wizard.ce_mastodon_url,
+            creation_crm_lead.metadata_line_ids.filtered(
+                lambda meta: meta.key == "ce_mastodon_url"
+            ).value,
+        )
+        self.assertEqual(
+            creation_wizard.ce_bluesky_url,
+            creation_crm_lead.metadata_line_ids.filtered(
+                lambda meta: meta.key == "ce_bluesky_url"
+            ).value,
+        )
 
     def _assert__community_creation_ok(self, new_company):
         self.assertEqual(new_company.hierarchy_level, "community")
         # ASSERT: New companies has been created
         self.assertTrue(bool(new_company))
+        self.assertEqual(new_company.tax_calculation_rounding_method, "round_globally")
+
+    def _assert__comunity_creation_social_ok(self, new_company, creation_wizard):
+        self.assertEqual(new_company.social_twitter, creation_wizard.ce_twitter_url)
+        self.assertEqual(new_company.social_telegram, creation_wizard.ce_telegram_url)
+        self.assertEqual(new_company.social_instagram, creation_wizard.ce_instagram_url)
+        self.assertEqual(new_company.social_facebook, creation_wizard.ce_facebook_url)
+        self.assertEqual(new_company.social_mastodon, creation_wizard.ce_mastodon_url)
+        self.assertEqual(new_company.social_bluesky, creation_wizard.ce_bluesky_url)
 
     def _assert__users_and_partners_configuration_ok(self, new_company):
         for user in self.expected_users:
