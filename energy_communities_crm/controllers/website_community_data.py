@@ -668,12 +668,12 @@ class WebsiteCommunityData(http.Controller):
         # TODO: legal docs validation
         # TODO: iban validator
         # TODO: url validator
-        if "ce_website" in values.keys():
-            if not self._check_url_validation(values["ce_website"]):
-                error.append("ce_website")
+        if "ce_web_url" in values.keys():
+            if not self._check_url_validation(values["ce_web_url"]):
+                error.append("ce_web_url")
                 error_msgs.append(
                     _("{} field must begin with https://").format(
-                        self._get_translation(_COMMUNITY_DATA__FIELDS["ce_website"])
+                        self._get_translation(_COMMUNITY_DATA__FIELDS["ce_web_url"])
                     )
                 )
         if "ce_twitter_url" in values.keys():
