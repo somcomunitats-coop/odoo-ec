@@ -130,6 +130,7 @@ class CrmLead(models.Model):
         creation_partner = self._search_partner_for_company_wizard_creation(
             creation_dict
         )
+        coa_prefix = "l10n_es" if not self._is_canary_state() else "l10n_es_igic"
 
         creation_dict.update(
             {
@@ -141,16 +142,15 @@ class CrmLead(models.Model):
                 "chart_template_id": self._get_chart_template_id_from_meta(),
                 "update_default_taxes": True,
                 "default_sale_tax_id": self.env.ref(
-                    "l10n_es.account_tax_template_s_iva21s"
+                    "{}.account_tax_template_s_iva21s".format(coa_prefix)
                 ).id,
                 "default_purchase_tax_id": self.env.ref(
-                    "l10n_es.account_tax_template_p_iva21_bc"
+                    "{}.account_tax_template_p_iva21_sc".format(coa_prefix)
                 ).id,
                 "create_user": False,
                 "create_landing": True,
                 "create_place": True,
                 "creation_partner": creation_partner.id if creation_partner else False,
-                "ce_member_status": creation_dict.get("ce_status", "open"),
                 "default_lang_id": self.lang_id.id,
             }
         )
@@ -196,20 +196,24 @@ class CrmLead(models.Model):
         meta_entry = self.metadata_line_ids.filtered(
             lambda meta: meta.key == "ce_legal_form"
         )
+        if self._is_canary_state() and meta_entry:
+            if meta_entry.value in _LEGAL_FORM_VALUES_NON_PROFIT:
+                return self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF).id
+            return self.env.ref(CHART_OF_ACCOUNTS_GENERAL_CANARY_REF).id
+        if meta_entry:
+            if meta_entry.value in _LEGAL_FORM_VALUES_NON_PROFIT:
+                return self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF).id
+        return self.env.ref(CHART_OF_ACCOUNTS_GENERAL_REF).id
+
+    def _is_canary_state(self):
         state = self.metadata_line_ids.filtered(lambda meta: meta.key == "ce_state")
         if state:
             if int(state.value) in [
                 self.env.ref(STATE_CANARY_TF).id,
                 self.env.ref(STATE_CANARY_GC).id,
             ]:
-                if meta_entry:
-                    if meta_entry.value in _LEGAL_FORM_VALUES_NON_PROFIT:
-                        return self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF).id
-                return self.env.ref(CHART_OF_ACCOUNTS_GENERAL_CANARY_REF).id
-        if meta_entry:
-            if meta_entry.value in _LEGAL_FORM_VALUES_NON_PROFIT:
-                return self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF).id
-        return self.env.ref(CHART_OF_ACCOUNTS_GENERAL_REF).id
+                return True
+        return False
 
     def _get_metadata_values(self):
         meta_dict = {}
@@ -219,8 +223,14 @@ class CrmLead(models.Model):
             )
             if meta_entry:
                 wizard_key = _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD[meta_key]
+                # ce_status meta
+                if meta_key == "ce_constitution_status":
+                    if meta_entry.value == "constituted":
+                        meta_dict[wizard_key] = "active"
+                    else:
+                        meta_dict[wizard_key] = "building"
                 # date meta
-                if meta_key in _LEAD_METADATA__DATE_FIELDS:
+                elif meta_key in _LEAD_METADATA__DATE_FIELDS:
                     format_date = self._format_date_for_company_wizard_creation(
                         meta_entry.value
                     )

@@ -13,6 +13,7 @@ _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD = {
     "ce_services": "energy_action_mids",
     "ce_number_of_members": "ce_number_of_members",
     "ce_status": "ce_member_status",
+    "ce_constitution_status": "ce_status",
     "ce_why_become_cooperator": "landing_why_become_cooperator",
     "ce_become_cooperator_process": "landing_become_cooperator_process",
     "ce_primary_image_file": "landing_primary_image_file",

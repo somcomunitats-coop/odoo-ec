@@ -249,11 +249,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 }
             )
         )
-        self.new_company_id.partner_id.write(
-            {
-                "lang": self.default_lang_id.id,
-            }
-        )
 
     def apply_new_company_to_impacted_users(self):
         system_impacted_user_id_list = [

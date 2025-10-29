@@ -125,11 +125,6 @@ class TestMultiCompanyEasyCreationWithUserProfiles(common.TransactionCase):
             expected_account = ACCOUNT_REF_720000
             expected_chart_of_accounts_ref = CHART_OF_ACCOUNTS_NON_PROFIT_REF
 
-        if scenario_type == "non_profit_recurring":
-            self.wizard_data_update.update(
-                {"fixed_invoicing_day": "01", "fixed_invoicing_month": "01"}
-            )
-
         # and setup the proper environment
         self.env = self.env(
             user=admin.id,
@@ -235,16 +230,41 @@ class TestMultiCompanyEasyCreationWithUserProfiles(common.TransactionCase):
             creation_wizard.chart_template_id,
             self.env.ref(expected_chart_of_accounts_ref),
         )
+        coa_prefix = (
+            "l10n_es" if not creation_crm_lead._is_canary_state() else "l10n_es_igic"
+        )
         self.assertEqual(
             creation_wizard.default_sale_tax_id,
-            self.env.ref("l10n_es.account_tax_template_s_iva21s"),
+            self.env.ref("{}.account_tax_template_s_iva21s".format(coa_prefix)),
         )
         self.assertEqual(
             creation_wizard.default_purchase_tax_id,
-            self.env.ref("l10n_es.account_tax_template_p_iva21_bc"),
+            self.env.ref("{}.account_tax_template_p_iva21_sc".format(coa_prefix)),
         )
         self.assertFalse(creation_wizard.create_user)
         self.assertFalse(creation_wizard.creation_partner)
+
+        self.assertEqual(
+            creation_wizard.ce_member_status,
+            creation_crm_lead.metadata_line_ids.filtered(
+                lambda meta: meta.key == "ce_status"
+            ).value,
+        )
+
+        ce_constitution_status = creation_crm_lead.metadata_line_ids.filtered(
+            lambda meta: meta.key == "ce_constitution_status"
+        ).value
+        if ce_constitution_status == "constituted":
+            self.assertEqual(
+                creation_wizard.ce_status,
+                "active",
+            )
+        else:
+            self.assertEqual(
+                creation_wizard.ce_status,
+                "building",
+            )
+
         # ASSERT: community creation wizard social data is correctly set
         self.assertEqual(
             creation_wizard.ce_twitter_url,
@@ -288,6 +308,7 @@ class TestMultiCompanyEasyCreationWithUserProfiles(common.TransactionCase):
         # ASSERT: New companies has been created
         self.assertTrue(bool(new_company))
         self.assertEqual(new_company.tax_calculation_rounding_method, "round_globally")
+        self.assertEqual(new_company.partner_id.lang, new_company.default_lang_id.code)
 
     def _assert__comunity_creation_social_ok(self, new_company, creation_wizard):
         self.assertEqual(new_company.social_twitter, creation_wizard.ce_twitter_url)

@@ -185,6 +185,11 @@ class ResCompany(models.Model):
         self.parent_id = False
 
     # CONSTRAINS
+    @api.constrains("default_lang_id")
+    def _propagate_default_lang_id_to_partner(self):
+        for rec in self:
+            rec.partner_id.write({"lang": rec.default_lang_id.code})
+
     @api.constrains("name", "vat")
     def _check_uniqueness(self):
         for rec in self:
