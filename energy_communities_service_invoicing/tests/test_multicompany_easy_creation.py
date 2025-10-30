@@ -225,21 +225,25 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             creation_wizard.chart_template_id,
             self.env.ref(expected_chart_of_accounts_ref),
         )
-        # TODO: change this default taxes to use the correct tax template
-        # coa_prefix = (
-        #     "l10n_es" if not creation_crm_lead._is_canary_state() else "l10n_es_igic"
-        # )
-        coa_prefix = "l10n_es"
-        self.assertEqual(
-            creation_wizard.default_sale_tax_id,
-            self.env.ref(
-                "{}.account_tax_template_s_iva21s".format(coa_prefix)
-            ),  # FAILED
-        )
-        self.assertEqual(
-            creation_wizard.default_purchase_tax_id,
-            self.env.ref("{}.account_tax_template_p_iva21_sc".format(coa_prefix)),
-        )
+
+        if creation_wizard.is_canary():
+            self.assertEqual(
+                creation_wizard.default_sale_tax_id,
+                self.env.ref("l10n_es_igic.account_tax_template_igic_r_7"),
+            )
+            self.assertEqual(
+                creation_wizard.default_purchase_tax_id,
+                self.env.ref("l10n_es_igic.account_tax_template_igic_sop_7"),
+            )
+        else:
+            self.assertEqual(
+                creation_wizard.default_sale_tax_id,
+                self.env.ref("l10n_es.account_tax_template_s_iva21s"),
+            )
+            self.assertEqual(
+                creation_wizard.default_purchase_tax_id,
+                self.env.ref("l10n_es.account_tax_template_p_iva21_sc"),
+            )
         self.assertFalse(creation_wizard.create_user)
         self.assertFalse(creation_wizard.creation_partner)
 

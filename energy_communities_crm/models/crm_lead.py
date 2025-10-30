@@ -21,13 +21,14 @@ from odoo.addons.energy_communities.models.res_company import (
     _LEGAL_FORM_VALUES_NON_PROFIT,
 )
 
-from .metadata_mapping_conf import (
+from ..config import (
     _LEAD_METADATA__DATE_FIELDS,
     _LEAD_METADATA__ENERGY_TAGS_FIELDS,
     _LEAD_METADATA__EXTID_FIELDS,
     _LEAD_METADATA__IMAGE_FIELDS,
     _LEAD_METADATA__LANG_FIELDS,
     _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD,
+    COMPANY_CREATION_WIZARD_DEFAULT_TAXES,
 )
 
 logger = logging.getLogger(__name__)
@@ -130,10 +131,6 @@ class CrmLead(models.Model):
         creation_partner = self._search_partner_for_company_wizard_creation(
             creation_dict
         )
-        # TODO: change this default taxes to use the correct tax template
-        # coa_prefix = "l10n_es" if not self._is_canary_state() else "l10n_es_igic"
-        coa_prefix = "l10n_es"
-
         creation_dict.update(
             {
                 "parent_id": self.company_id.id,
@@ -144,10 +141,14 @@ class CrmLead(models.Model):
                 "chart_template_id": self._get_chart_template_id_from_meta(),
                 "update_default_taxes": True,
                 "default_sale_tax_id": self.env.ref(
-                    "{}.account_tax_template_s_iva21s".format(coa_prefix)
+                    COMPANY_CREATION_WIZARD_DEFAULT_TAXES[
+                        "canary" if self._is_canary_state() else "general"
+                    ]["default_sale_tax_id"]
                 ).id,
                 "default_purchase_tax_id": self.env.ref(
-                    "{}.account_tax_template_p_iva21_sc".format(coa_prefix)
+                    COMPANY_CREATION_WIZARD_DEFAULT_TAXES[
+                        "canary" if self._is_canary_state() else "general"
+                    ]["default_purchase_tax_id"]
                 ).id,
                 "create_user": False,
                 "create_landing": True,

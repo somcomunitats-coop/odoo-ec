@@ -1,3 +1,13 @@
+COMPANY_CREATION_WIZARD_DEFAULT_TAXES = {
+    "general": {
+        "default_sale_tax_id": "l10n_es.account_tax_template_s_iva21s",
+        "default_purchase_tax_id": "l10n_es.account_tax_template_p_iva21_sc",
+    },
+    "canary": {
+        "default_sale_tax_id": "l10n_es_igic.account_tax_template_igic_r_7",
+        "default_purchase_tax_id": " l10n_es_igic.account_tax_template_igic_sop_7",
+    },
+}
 _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD = {
     "ce_name": "name",
     "ce_fiscal_name": "legal_name",

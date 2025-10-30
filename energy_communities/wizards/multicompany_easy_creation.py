@@ -6,6 +6,8 @@ from odoo.exceptions import ValidationError
 from odoo.addons.energy_communities.utils import account_utils
 
 from ..config import (
+    CHART_OF_ACCOUNTS_GENERAL_CANARY_REF,
+    CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF,
     CHART_OF_ACCOUNTS_NON_PROFIT_REF,
     ROUNDING_CONFIGURATION_DEFAULT,
 )
@@ -161,6 +163,11 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "domain": {"parent_id": [("hierarchy_level", "=", "instance")]},
                 }
 
+    def is_canary(self):
+        return self.chart_template_id == self.env.ref(
+            CHART_OF_ACCOUNTS_GENERAL_CANARY_REF
+        )
+
     def add_company_log(self):
         message = _(
             "Community created from: <a href='/web#id={id}&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
@@ -198,7 +205,10 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         if (
             self.legal_form in _LEGAL_FORM_VALUES_NON_PROFIT
             and self.chart_template_id.id
-            != self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF).id
+            not in [
+                self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF).id,
+                self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF).id,
+            ]
         ):
             raise ValidationError(
                 "Misconfiguration between company legal form and selected chart of accounts"
