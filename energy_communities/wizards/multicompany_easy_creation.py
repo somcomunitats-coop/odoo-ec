@@ -344,52 +344,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         self.with_context(
             allowed_company_ids=allowed_company_ids
         ).sudo().chart_template_id.try_loading(company=new_company)
-        self.create_bank_journals_energy_communities()
         self.create_sequences()
         self.apply_default_rounding_configuration()
-
-    def create_bank_journals_energy_communities(self):
-        AccountSetupBankManualConfig = self.env[
-            "account.setup.bank.manual.config"
-        ].sudo()
-        AccountJournal = self.env["account.journal"].sudo()
-        for i, bank_wiz in enumerate(self.bank_ids):
-            vals = {
-                "acc_number": bank_wiz.acc_number,
-                "company_id": self.new_company_id.id,
-                "bank_id": bank_wiz.bank_id.id if bank_wiz.bank_id else False,
-                "bank_bic": bank_wiz.bank_id.bic if bank_wiz.bank_id else False,
-            }
-            wizard = AccountSetupBankManualConfig.with_company(
-                self.new_company_id
-            ).create(vals)
-            # wizard._onchange_acc_number_base_bank_from_iban()
-            wizard.validate()
-            bank_journals = AccountJournal.search(
-                [
-                    ("name", "=", bank_wiz.acc_number),
-                    ("company_id", "=", self.new_company_id.id),
-                ]
-            )
-            if bank_journals:
-                name = _("Bank") + " (" + bank_wiz.acc_number[-4:] + ")"
-                if bank_journals.bank_account_id.bank_id:
-                    name = (
-                        bank_journals.bank_account_id.bank_id.name
-                        + " ("
-                        + bank_wiz.acc_number[-4:]
-                        + ")"
-                    )
-                bank_journals.write(
-                    {
-                        "name": name,
-                    }
-                )
-                bank_journals.default_account_id.write(
-                    {
-                        "name": name,
-                    }
-                )
 
     def apply_default_rounding_configuration(self):
         self.new_company_id.write(ROUNDING_CONFIGURATION_DEFAULT)

@@ -13,6 +13,9 @@
     # any module necessary for this one to work correctly
     "depends": [
         "base",
+        "base_bank_from_iban",
+        "l10n_es",
+        "l10n_es_igic",
         "contract",
         "sale",
         "sale_order_metadata",

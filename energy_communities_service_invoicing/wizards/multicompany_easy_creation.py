@@ -37,10 +37,34 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         # Using try exception to avoid component usage on demo data load
         try:
             with account_utils(self.env, use_sudo=True) as account_component:
-                # setup company cooperator account
-                account_component.setup_company_cooperator_accounting_configuration(
-                    company=self.new_company_id
+                # define company cooperator account
+                account_component.setup_company_cooperator_account(self.new_company_id)
+                # define cooperator account in subscription journal
+                cooperator_account = (
+                    self.new_company_id.sudo().get_company_coop_account()
                 )
+                account_component.setup_journal_default_account(
+                    self.new_company_id.sudo().subscription_journal_id,
+                    cooperator_account,
+                )
+                # create cooperator voluntary account
+                account_component.create_company_account(
+                    self.new_company_id, "Capital social voluntario", "equity", "100100"
+                )
+                # if bank defined on wizard create bank accouns and bank journals
+                if self.bank_ids:
+                    for w_bank in self.bank_ids:
+                        res_partner_bank = (
+                            account_component.create_company_res_partner_bank_account(
+                                self.new_company_id,
+                                w_bank.acc_number,
+                                w_bank.allow_out_payment,
+                            )
+                        )
+                        account_component.create_company_bank_journal(
+                            self.new_company_id, res_partner_bank
+                        )
+
                 # create company selfconsumption journal
                 if self.new_company_id.hierarchy_level == "community":
                     account_component.create_company_journal(
@@ -48,7 +72,9 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                         "Autoconsumo Fotovoltaico Compartido",
                         "sale",
                         "AFC",
-                        SELFCONSUMPTION_ACCOUNT_REF,
+                        self.env.ref(
+                            SELFCONSUMPTION_ACCOUNT_REF.format(self.new_company_id.id)
+                        ),
                     )
                 # create vsir journal for cooperatives
                 if self.new_company_id.legal_form == "cooperative":
@@ -57,7 +83,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                         "Intereses de aportaciones Voluntarias",
                         "purchase",
                         "VSIR",
-                        VSIR_ACCOUNT_REF,
+                        self.env.ref(VSIR_ACCOUNT_REF.format(self.new_company_id.id)),
                     )
                     self.new_company_id.write(
                         {"voluntary_share_journal_account": vsir_journal.id}

@@ -185,28 +185,21 @@ class TestMultiCompanyEasyCreationWithUserProfiles(common.TransactionCase):
         )
         self.assertEqual(len(bank_journals), 1)
         if bank_journals:
-            name = (
-                _("Bank")
-                + " ("
-                + new_company.partner_id.bank_ids[
-                    len(new_company.partner_id.bank_ids) - 1
-                ].acc_number[-4:]
-                + ")"
-            )
+            # TODO: Obtain this from a class method
+            name_prefix = _("Bank")
             if bank_journals.bank_account_id.bank_id:
-                name = (
-                    bank_journals.bank_account_id.bank_id.name
-                    + " ("
-                    + new_company.partner_id.bank_ids[
-                        len(new_company.partner_id.bank_ids) - 1
-                    ].acc_number[-4:]
-                    + ")"
-                )
+                name_prefix = bank_journals.bank_account_id.bank_id.name
+            models_name = "{name_prefix} ({acc_number_min})".format(
+                name_prefix=name_prefix,
+                acc_number_min=new_company.partner_id.bank_ids[
+                    len(new_company.partner_id.bank_ids) - 1
+                ].acc_number[-4:],
+            )
             self.assertEqual(
                 bank_journals.bank_account_id.partner_id.id, new_company.partner_id.id
             )
-        self.assertEqual(bank_journals.name, name)
-        self.assertEqual(bank_journals.default_account_id.name, name)
+        self.assertEqual(bank_journals.name, models_name)
+        self.assertEqual(bank_journals.default_account_id.name, models_name)
 
     def _assert__company_creation_relation_users_list(self, new_company):
         self.assertEqual(
