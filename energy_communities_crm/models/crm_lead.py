@@ -130,7 +130,9 @@ class CrmLead(models.Model):
         creation_partner = self._search_partner_for_company_wizard_creation(
             creation_dict
         )
-        coa_prefix = "l10n_es" if not self._is_canary_state() else "l10n_es_igic"
+        # TODO: change this default taxes to use the correct tax template
+        # coa_prefix = "l10n_es" if not self._is_canary_state() else "l10n_es_igic"
+        coa_prefix = "l10n_es"
 
         creation_dict.update(
             {

@@ -38,6 +38,36 @@ class AccountUtils(Component):
             company, "Capital social voluntario", "equity", "100100"
         )
 
+    def create_res_partner_bank_account(
+        self,
+        company: Company,
+        name: str,
+        code: str,
+        allow_out_payment: bool,
+        bank_id: int,
+    ) -> ResPartnerBank:
+        res_partner_bank_model = self.env["res.partner.bank"]
+        if self.work.use_sudo:
+            res_partner_bank_model = res_partner_bank_model.sudo()
+        bank = res_partner_bank_model.create(
+            {
+                "acc_number": code,
+                "bank_id": bank_id,
+                "partner_id": company.partner_id.id,
+                "company_id": company.id,
+                "allow_out_payment": allow_out_payment,
+                "name": name,
+                "bank_acc_number": code,
+            }
+        )
+        bank.write(
+            {
+                "name": bank.name + " (" + bank.code[:4] + ")",
+                "bank_acc_number": code,
+            }
+        )
+        return bank
+
     def create_company_journal(
         self,
         company: Company,
@@ -47,6 +77,29 @@ class AccountUtils(Component):
         account_ref: str,
     ) -> AccountJournal:
         account = self.env.ref(account_ref.format(company.id))
+        journal_model = self.env["account.journal"]
+        if self.work.use_sudo:
+            journal_model = journal_model.sudo()
+        journal = journal_model.create(
+            {
+                "name": name,
+                "type": type,
+                "company_id": company.id,
+                "default_account_id": account.id,
+                "refund_sequence": True,
+                "code": code,
+            }
+        )
+        return journal
+
+    def create_company_journal_with_new_account(
+        self,
+        company: Company,
+        name: str,
+        type: str,
+        code: str,
+        account: AccountAccount,
+    ) -> AccountJournal:
         journal_model = self.env["account.journal"]
         if self.work.use_sudo:
             journal_model = journal_model.sudo()

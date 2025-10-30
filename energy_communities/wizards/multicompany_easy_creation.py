@@ -354,16 +354,16 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         ].sudo()
         AccountJournal = self.env["account.journal"].sudo()
         for i, bank_wiz in enumerate(self.bank_ids):
+            vals = {
+                "acc_number": bank_wiz.acc_number,
+                "company_id": self.new_company_id.id,
+                "bank_id": bank_wiz.bank_id.id if bank_wiz.bank_id else False,
+                "bank_bic": bank_wiz.bank_id.bic if bank_wiz.bank_id else False,
+            }
             wizard = AccountSetupBankManualConfig.with_company(
                 self.new_company_id
-            ).create(
-                {
-                    "acc_number": bank_wiz.acc_number,
-                    "company_id": self.new_company_id.id,
-                    "bank_id": bank_wiz.bank_id.id if bank_wiz.bank_id else False,
-                    "bank_bic": bank_wiz.bank_id.bic if bank_wiz.bank_id else False,
-                }
-            )
+            ).create(vals)
+            # wizard._onchange_acc_number_base_bank_from_iban()
             wizard.validate()
             bank_journals = AccountJournal.search(
                 [
