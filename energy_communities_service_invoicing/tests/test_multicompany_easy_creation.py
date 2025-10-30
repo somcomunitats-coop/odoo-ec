@@ -391,12 +391,10 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         coop_account = self.env.ref(expected_account_ref.format(new_company.id))
         self.assertTrue(bool(new_company.property_cooperator_account))
         self.assertTrue(bool(new_company.subscription_journal_id))
-        self.assertEqual(
-            new_company.subscription_journal_id.name, "Subscription Journal"
-        )
+        self.assertEqual(new_company.subscription_journal_id.name, "Capital Social")
         self.assertEqual(new_company.subscription_journal_id.type, "sale")
         self.assertEqual(new_company.subscription_journal_id.company_id, new_company)
-        self.assertEqual(new_company.subscription_journal_id.code, "SUBJ")
+        self.assertEqual(new_company.subscription_journal_id.code, "CS")
         self.assertEqual(
             new_company.subscription_journal_id.default_account_id, coop_account
         )

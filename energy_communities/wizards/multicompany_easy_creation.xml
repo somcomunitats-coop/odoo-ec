@@ -1,88 +1,90 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
-        <record id="wizard_multicompany_easy_creation_form_inherit" model="ir.ui.view">
-            <field
-        name="name"
-      >account_multicompany_easy_creation.wizard_multicompany_easy_creation_form_inherit</field>
-            <field name="model">account.multicompany.easy.creation.wiz</field>
-            <field
+  <data>
+    <record id="wizard_multicompany_easy_creation_form_inherit" model="ir.ui.view">
+      <field name="name">account_multicompany_easy_creation.wizard_multicompany_easy_creation_form_inherit</field>
+      <field name="model">account.multicompany.easy.creation.wiz</field>
+      <field
         name="inherit_id"
         ref="account_multicompany_easy_creation.wizard_multicompany_easy_creation_view_form"
       />
-            <field name="priority" eval="8" />
-            <field name="arch" type="xml">
-                <xpath expr="//page" position="before">
-                    <page string="Energy Community">
-                        <group string="Energy Community">
-                            <field name="user_current_company" invisible="1" />
-                            <field name="hierarchy_level" required="1" />
-                            <field name="parent_id" required="1" />
-                            <field
+      <field name="priority" eval="8" />
+      <field name="arch" type="xml">
+        <xpath expr="//page" position="before">
+          <page string="Energy Community">
+            <group string="Energy Community">
+              <field name="user_current_company" invisible="1" />
+              <field name="hierarchy_level" required="1" />
+              <field name="parent_id" required="1" />
+              <field
                 name="creation_partner"
                 domain="[('company_id', '=', user_current_company)]"
               />
-                            <field name="vat" />
-                            <field name="state_id" required="1" />
-                            <field name="city" required="1" />
-                            <field name="street" required="1" />
-                            <field name="zip_code" required="1" />
-                            <field name="lat" required="1" />
-                            <field name="lng" required="1" />
-                            <field name="foundation_date" />
-                            <field name="email" required="1" />
-                            <field name="legal_form" required="1" />
-                            <field name="legal_name" required="1" />
-                            <field name="ce_status" />
-                            <field name="phone" />
-                            <field name="default_lang_id" required="1" />
-                        </group>
-                    </page>
-                </xpath>
-                <xpath expr="//page" position="after">
-                    <page string="Landing Page">
-                        <group string="Create Landing">
-                            <field name="create_landing" />
-                            <field name="create_place" />
-                        </group>
-                        <group
+              <field name="vat" />
+              <field name="state_id" required="1" />
+              <field name="city" required="1" />
+              <field name="street" required="1" />
+              <field name="zip_code" required="1" />
+              <field name="lat" required="1" />
+              <field name="lng" required="1" />
+              <field name="foundation_date" />
+              <field name="email" required="1" />
+              <field name="legal_form" required="1" />
+              <field name="legal_name" required="1" />
+              <field name="ce_status" />
+              <field name="phone" />
+              <field name="default_lang_id" required="1" />
+            </group>
+          </page>
+        </xpath>
+        <xpath expr="//page" position="after">
+          <page string="Landing Page">
+            <group string="Create Landing">
+              <field name="create_landing" />
+              <field name="create_place" />
+            </group>
+            <group
               string="Landing Page"
               attrs="{'invisible': [('create_landing','=', False)]}"
             >
-                            <field name="ce_number_of_members" />
-                            <field name="ce_member_status" />
-                            <field name="landing_community_type" />
-                            <field name="landing_short_description" />
-                            <field name="landing_long_description" />
-                            <field name="landing_why_become_cooperator" />
-                            <field name="landing_become_cooperator_process" />
-                            <field name="landing_primary_image_file" widget="image" />
-                            <field name="landing_secondary_image_file" widget="image" />
-                            <field name="landing_logo_file" widget="image" />
-                            <field name="energy_action_mids" widget="many2many_tags" />
-                            <field name="website" />
-                            <field name="ce_twitter_url" />
-                            <field name="ce_telegram_url" />
-                            <field name="ce_instagram_url" />
-                            <field name="ce_facebook_url" />
-                            <field name="ce_mastodon_url" />
-                            <field name="ce_bluesky_url" />
-                        </group>
-                    </page>
-                    <page string="Comments">
-                        <group string="Comments">
-                            <field name="comments" />
-                        </group>
-                    </page>
-                </xpath>
-                <button name="action_accept" position="replace">
-                    <button name="action_accept" type="object"
-                        string="Accept"
-                        class="oe_highlight"
-                        confirm="Are you sure you want to run the wizard and proceed with creating the company?"
-                    />
-                </button>
-            </field>
-        </record>
-    </data>
+              <field name="ce_number_of_members" />
+              <field name="ce_member_status" />
+              <field name="landing_community_type" />
+              <field name="landing_short_description" />
+              <field name="landing_long_description" />
+              <field name="landing_why_become_cooperator" />
+              <field name="landing_become_cooperator_process" />
+              <field name="landing_primary_image_file" widget="image" />
+              <field name="landing_secondary_image_file" widget="image" />
+              <field name="landing_logo_file" widget="image" />
+              <field name="energy_action_mids" widget="many2many_tags" />
+              <field name="website" />
+              <field name="ce_twitter_url" />
+              <field name="ce_telegram_url" />
+              <field name="ce_instagram_url" />
+              <field name="ce_facebook_url" />
+              <field name="ce_mastodon_url" />
+              <field name="ce_bluesky_url" />
+            </group>
+          </page>
+          <page string="Comments">
+            <group string="Comments">
+              <field name="comments" />
+            </group>
+          </page>
+        </xpath>
+        <xpath expr="//field[@name='bank_ids']//tree//field[@name='bank_id']" position="attributes">
+          <attribute name="invisible">True</attribute>
+        </xpath>
+        <button name="action_accept" position="replace">
+          <button
+            name="action_accept"
+            type="object"
+            string="Accept"
+            class="oe_highlight"
+            confirm="Are you sure you want to run the wizard and proceed with creating the company?"
+          />
+        </button>
+      </field>
+    </record>
+  </data>
 </odoo>

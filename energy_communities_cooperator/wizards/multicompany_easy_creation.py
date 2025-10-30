@@ -28,3 +28,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     def thread_action_accept(self):
         super().thread_action_accept()
         self.new_company_id.write({"create_user": self.create_user})
+        # rename SUBJ journal
+        self.new_company_id.subscription_journal_id.sudo().write(
+            {"code": "CS", "name": "Capital Social"}
+        )
