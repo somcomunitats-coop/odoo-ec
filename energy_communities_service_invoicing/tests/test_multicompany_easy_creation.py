@@ -34,6 +34,7 @@ ACCOUNT_REF_440000 = "l10n_es.{}_account_common_4400"
 ACCOUNT_REF_662400 = "l10n_es.{}_account_common_6624"
 
 CANARY_ACCOUNT_REF_100000 = "l10n_es_igic.{}_account_pymes_canary_100"
+CANARY_ACCOUNT_REF_720000 = "l10n_es_igic.{}_account_assoc_canary_720"
 
 
 @tagged("-at_install", "post_install")
@@ -209,10 +210,11 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
                 expected_account = ACCOUNT_REF_100000
                 expected_chart_of_accounts_ref = CHART_OF_ACCOUNTS_GENERAL_REF
         else:
-            expected_account = ACCOUNT_REF_720000
             if creation_wizard.is_canary():
+                expected_account = CANARY_ACCOUNT_REF_720000
                 expected_chart_of_accounts_ref = CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF
             else:
+                expected_account = ACCOUNT_REF_720000
                 expected_chart_of_accounts_ref = CHART_OF_ACCOUNTS_NON_PROFIT_REF
 
         result = creation_wizard.action_accept()
