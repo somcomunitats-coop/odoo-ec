@@ -66,7 +66,7 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             "energy_communities.res_users_admin_coordinator_1_demo"
         )
 
-    def test__company_cooperative_creation_ok_as_platform_admin(self):
+    def test__company_cooperative_creation_ok_as_platform_admin_no_canary(self):
         self._test_company_creation_ok_case(
             self.platform_admin,
             self.coord_company,
@@ -74,7 +74,9 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             "coop",
         )
 
-    def test__company_non_profit_without_recurring_creation_ok_as_platform_admin(self):
+    def test__company_non_profit_without_recurring_creation_ok_as_platform_admin_no_canary(
+        self,
+    ):
         self._test_company_creation_ok_case(
             self.platform_admin,
             self.coord_company,
@@ -82,7 +84,9 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             "non_profit",
         )
 
-    def test__company_non_profit_with_recurring_creation_ok_as_platform_admin(self):
+    def test__company_non_profit_with_recurring_creation_ok_as_platform_admin_no_canary(
+        self,
+    ):
         self._test_company_creation_ok_case(
             self.platform_admin,
             self.coord_company,
@@ -90,7 +94,35 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             "non_profit_recurring",
         )
 
-    def test__company_cooperative_creation_ok_as_coord_admin(self):
+    def test__company_cooperative_creation_ok_as_platform_admin_canary(self):
+        self._test_company_creation_ok_case(
+            self.platform_admin,
+            self.coord_company,
+            "energy_communities_crm.crm_lead_company_creation_demo_4",
+            "coop",
+        )
+
+    def test__company_non_profit_without_recurring_creation_ok_as_platform_admin_canary(
+        self,
+    ):
+        self._test_company_creation_ok_case(
+            self.platform_admin,
+            self.coord_company,
+            "energy_communities_crm.crm_lead_company_creation_demo_5",
+            "non_profit",
+        )
+
+    def test__company_non_profit_with_recurring_creation_ok_as_platform_admin_canary(
+        self,
+    ):
+        self._test_company_creation_ok_case(
+            self.platform_admin,
+            self.coord_company,
+            "energy_communities_crm.crm_lead_company_creation_demo_6",
+            "non_profit_recurring",
+        )
+
+    def test__company_cooperative_creation_ok_as_coord_admin_no_canary(self):
         self._test_company_creation_ok_case(
             self.coordinator_admin,
             self.coord_company,
@@ -98,7 +130,9 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             "coop",
         )
 
-    def test__company_non_profit_without_recurring_creation_ok_as_coord_admin(self):
+    def test__company_non_profit_without_recurring_creation_ok_as_coord_admin_no_canary(
+        self,
+    ):
         self._test_company_creation_ok_case(
             self.coordinator_admin,
             self.coord_company,
@@ -106,11 +140,39 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             "non_profit",
         )
 
-    def test__company_non_profit_with_recurring_creation_ok_as_coord_admin(self):
+    def test__company_non_profit_with_recurring_creation_ok_as_coord_admin_no_canary(
+        self,
+    ):
         self._test_company_creation_ok_case(
             self.coordinator_admin,
             self.coord_company,
             "energy_communities_crm.crm_lead_company_creation_demo_3",
+            "non_profit_recurring",
+        )
+
+    def test__company_cooperative_creation_ok_as_coord_admin_canary(self):
+        self._test_company_creation_ok_case(
+            self.coordinator_admin,
+            self.coord_company,
+            "energy_communities_crm.crm_lead_company_creation_demo_4",
+            "coop",
+        )
+
+    def test__company_non_profit_without_recurring_creation_ok_as_coord_admin_canary(
+        self,
+    ):
+        self._test_company_creation_ok_case(
+            self.coordinator_admin,
+            self.coord_company,
+            "energy_communities_crm.crm_lead_company_creation_demo_5",
+            "non_profit",
+        )
+
+    def test__company_non_profit_with_recurring_creation_ok_as_coord_admin_canary(self):
+        self._test_company_creation_ok_case(
+            self.coordinator_admin,
+            self.coord_company,
+            "energy_communities_crm.crm_lead_company_creation_demo_6",
             "non_profit_recurring",
         )
 
