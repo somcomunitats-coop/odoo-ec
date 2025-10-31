@@ -333,7 +333,14 @@ class TestSelfconsumptionServiceInvoicing(
             # ASSERT contract is on the correct company_id
             self.assertEqual(contract.company_id, self.selfconsumption.company_id)
             # ASSERT contract journal definition ok
-            self.assertEqual(contract.journal_id.id, 35)
+            self.assertEqual(
+                contract.journal_id.id,
+                self.env.ref(
+                    "energy_selfconsumption.product_category_selfconsumption_pack"
+                )
+                .with_company(contract.company_id)
+                .service_invoicing_sale_journal_id.id,
+            )
             # ASSERT: sale order "confirmed"
             self.assertEqual(contract.sale_order_id.state, "sale")
             # ASSERT: contract has line recurrence
