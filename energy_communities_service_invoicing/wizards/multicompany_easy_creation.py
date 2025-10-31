@@ -8,6 +8,9 @@ from odoo.addons.energy_communities_cooperator.config import (
     COOP_SHARE_PRODUCT_CATEG_REF,
     COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
 )
+from odoo.addons.energy_communities_crm.config import (
+    COMPANY_CREATION_WIZARD_DEFAULT_TAXES,
+)
 
 from ..config import (
     COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF,
@@ -31,6 +34,24 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         "account.multicompany.easy.creation.wiz",
         "contract.recurrency.basic.mixin",
     ]
+
+    @api.onchange("chart_template_id")
+    def _onchange_chart_template_id(self):
+        for record in self:
+            record.default_sale_tax_id = (
+                self.env.ref(
+                    COMPANY_CREATION_WIZARD_DEFAULT_TAXES[
+                        "canary" if record.is_canary() else "general"
+                    ]["default_sale_tax_id"]
+                ).id,
+            )
+            record.default_purchase_tax_id = (
+                self.env.ref(
+                    COMPANY_CREATION_WIZARD_DEFAULT_TAXES[
+                        "canary" if record.is_canary() else "general"
+                    ]["default_purchase_tax_id"]
+                ).id,
+            )
 
     def thread_action_accept(self):
         super().thread_action_accept()
