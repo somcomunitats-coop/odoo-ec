@@ -1456,9 +1456,10 @@ msgstr "Izena"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__neighborhood_community
-#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__neighborhood_community
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__neighborhood_community
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__residents_association
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__residents_association
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__residents_association
 #, python-format
 msgid "Neighborhood community"
 msgstr "Auzokideen erkidego"
