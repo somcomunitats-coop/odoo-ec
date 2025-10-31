@@ -2,7 +2,9 @@ from odoo import _
 from odoo.tests import common, tagged
 
 from odoo.addons.energy_communities.config import (
+    CHART_OF_ACCOUNTS_GENERAL_CANARY_REF,
     CHART_OF_ACCOUNTS_GENERAL_REF,
+    CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF,
     CHART_OF_ACCOUNTS_NON_PROFIT_REF,
 )
 from odoo.addons.energy_communities.models.res_company import (
@@ -30,6 +32,8 @@ ACCOUNT_REF_705000 = "l10n_es.{}_account_common_7050"
 ACCOUNT_REF_607000 = "l10n_es.{}_account_common_607"
 ACCOUNT_REF_440000 = "l10n_es.{}_account_common_4400"
 ACCOUNT_REF_662400 = "l10n_es.{}_account_common_6624"
+
+CANARY_ACCOUNT_REF_100000 = "l10n_es_igic.{}_account_pymes_canary_100"
 
 
 @tagged("-at_install", "post_install")
@@ -118,12 +122,6 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         scenario_type,
     ):
         # we setup expected results and creation data
-        if scenario_type == "coop":
-            expected_account = ACCOUNT_REF_100000
-            expected_chart_of_accounts_ref = CHART_OF_ACCOUNTS_GENERAL_REF
-        else:
-            expected_account = ACCOUNT_REF_720000
-            expected_chart_of_accounts_ref = CHART_OF_ACCOUNTS_NON_PROFIT_REF
 
         # and setup the proper environment
         self.env = self.env(
@@ -139,6 +137,22 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         creation_wizard = self.env["account.multicompany.easy.creation.wiz"].create(
             creation_data
         )
+
+        # setup some expected results
+        if scenario_type == "coop":
+            if creation_wizard.is_canary():
+                expected_account = CANARY_ACCOUNT_REF_100000
+                expected_chart_of_accounts_ref = CHART_OF_ACCOUNTS_GENERAL_CANARY_REF
+            else:
+                expected_account = ACCOUNT_REF_100000
+                expected_chart_of_accounts_ref = CHART_OF_ACCOUNTS_GENERAL_REF
+        else:
+            expected_account = ACCOUNT_REF_720000
+            if creation_wizard.is_canary():
+                expected_chart_of_accounts_ref = CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF
+            else:
+                expected_chart_of_accounts_ref = CHART_OF_ACCOUNTS_NON_PROFIT_REF
+
         result = creation_wizard.action_accept()
 
         # the wizard executes correctly

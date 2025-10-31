@@ -164,9 +164,10 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                 }
 
     def is_canary(self):
-        return self.chart_template_id == self.env.ref(
-            CHART_OF_ACCOUNTS_GENERAL_CANARY_REF
-        )
+        return self.chart_template_id.id in [
+            self.env.ref(CHART_OF_ACCOUNTS_GENERAL_CANARY_REF).id,
+            self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF).id,
+        ]
 
     def add_company_log(self):
         message = _(

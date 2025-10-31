@@ -4,6 +4,10 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 from ..client_map.config import LandingClientConfig
+from ..config import (
+    CHART_OF_ACCOUNTS_GENERAL_CANARY_REF,
+    CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF,
+)
 from ..pywordpress_client.resources.authenticate import Authenticate
 from ..pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
@@ -255,6 +259,12 @@ class ResCompany(models.Model):
                 )
 
     # GETTERS
+    def is_canary(self):
+        return self.chart_template_id.id in [
+            self.env.ref(CHART_OF_ACCOUNTS_GENERAL_CANARY_REF).id,
+            self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF).id,
+        ]
+
     def get_become_cooperator_button_label(self, mode, lang):
         return LandingClientConfig.COOPERATOR_BUTTON_LABEL_CONFIG[mode][lang]
 
