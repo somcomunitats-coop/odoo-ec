@@ -9,10 +9,13 @@
     "author": "Som comunitats",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Contract Management",
-    "version": "16.0.0.6.1",
+    "version": "16.0.0.7.0",
     # any module necessary for this one to work correctly
     "depends": [
         "base",
+        "base_bank_from_iban",
+        "l10n_es",
+        "l10n_es_igic",
         "contract",
         "sale",
         "sale_order_metadata",

@@ -12,7 +12,7 @@
   </record>
 
   <record id="crm_lead_company_creation_demo_1" model="crm.lead">
-    <field name="name">Community 3</field>
+    <field name="name">Community 3 cooperative (No canary)</field>
     <field name="email_from">community3@bar.fake</field>
     <field name="submission_type">none</field>
     <field name="company_id" ref="energy_communities.coordinator_company_1" />
@@ -21,31 +21,43 @@
     <field name="stage_id" ref="crm_stage_coord_company_demo" />
     <field name="metadata_line_ids" eval="[
       (0, 0, {'key': 'source_xml_id', 'value': 'ce_source_creation_ce_proposal'}),
-      (0, 0, {'key': 'current_lang', 'value': 'es_ES'}),
+      (0, 0, {'key': 'current_lang', 'value': 'eu_ES'}),
+      (0, 0, {'key': 'ce_current_lang', 'value': 'eu_ES'}),
       (0, 0, {'key': 'ce_name', 'value': 'Community 3'}),
       (0, 0, {'key': 'ce_description', 'value': 'Community 3 description'}),
       (0, 0, {'key': 'ce_long_description', 'value': 'Community 3 long description'}),
       (0, 0, {'key': 'ce_address', 'value': 'Av St Narcís'}),
       (0, 0, {'key': 'ce_city', 'value': 'Girona'}),
       (0, 0, {'key': 'ce_zip', 'value': '17005'}),
+      (0, 0, {'key': 'ce_state', 'value': '151'}),
       (0, 0, {'key': 'ce_number_of_members', 'value': '96'}),
       (0, 0, {'key': 'ce_creation_date', 'value': '1994-09-01'}),
       (0, 0, {'key': 'contact_phone', 'value': '666666666'}),
       (0, 0, {'key': 'email_from', 'value': 'community3@bar.fake'}),
-      (0, 0, {'key': 'ce_vat', 'value': 'D48467799'}),
+      (0, 0, {'key': 'ce_vat', 'value': 'F06545974'}),
       (0, 0, {'key': 'ce_fiscal_name', 'value': 'Community 3'}),
       (0, 0, {'key': 'contact_person_name', 'value': 'Community 3 cp name'}),
       (0, 0, {'key': 'contact_person_surname', 'value': 'Community 3 cp surname'}),
-      (0, 0, {'key': 'ce_status', 'value': 'open'}),
+      (0, 0, {'key': 'ce_status', 'value': 'closed'}),
+      (0, 0, {'key': 'ce_constitution_status', 'value': 'in_progress'}),
       (0, 0, {'key': 'ce_type', 'value': 'citizen'}),
-      (0, 0, {'key': 'ce_constitution_status', 'value': 'constituted'}),
       (0, 0, {'key': 'ce_legal_form', 'value': 'cooperative'}),
       (0, 0, {'key': 'ce_member_mandatory_contribution', 'value': '130'}),
+      (0, 0, {'key': 'website', 'value': 'https://community3.com'}),
+      (0, 0, {'key': 'ce_twitter_url', 'value': 'https://twitter.com/community3'}),
+      (0, 0, {'key': 'ce_telegram_url', 'value': 'https://telegram.com/community3'}),
+      (0, 0, {'key': 'ce_instagram_url', 'value': 'https://instagram.com/community3'}),
+      (0, 0, {'key': 'ce_facebook_url', 'value': 'https://facebook.com/community3'}),
+      (0, 0, {'key': 'ce_mastodon_url', 'value': 'https://mastodon.com/community3'}),
+      (0, 0, {'key': 'ce_bluesky_url', 'value': 'https://bluesky.com/community3'}),
+      (0, 0, {'key': 'ce_iban_1', 'value': 'ES5220959418153711391814'}),
+      (0, 0, {'key': 'comments', 'value': 'Community 3 comments'}),
+      (0, 0, {'key': 'known_coordinator', 'value': 'not_yet'}),
     ]" />
   </record>
 
   <record id="crm_lead_company_creation_demo_2" model="crm.lead">
-    <field name="name">Community 4</field>
+    <field name="name">Community 4 non-profit and ce_member_recurrent_contribution_date not set (No canary)</field>
     <field name="email_from">community4@bar.fake</field>
     <field name="submission_type">none</field>
     <field name="company_id" ref="energy_communities.coordinator_company_1" />
@@ -55,30 +67,43 @@
     <field name="metadata_line_ids" eval="[
       (0, 0, {'key': 'source_xml_id', 'value': 'ce_source_creation_ce_proposal'}),
       (0, 0, {'key': 'current_lang', 'value': 'eu_ES'}),
+      (0, 0, {'key': 'ce_current_lang', 'value': 'es_ES'}),
       (0, 0, {'key': 'ce_name', 'value': 'Community 4'}),
       (0, 0, {'key': 'ce_description', 'value': 'Community 4 description'}),
       (0, 0, {'key': 'ce_long_description', 'value': 'Community 4 long description'}),
       (0, 0, {'key': 'ce_address', 'value': 'Cami Ral 190'}),
       (0, 0, {'key': 'ce_city', 'value': 'Mataró'}),
       (0, 0, {'key': 'ce_zip', 'value': '08301'}),
+      (0, 0, {'key': 'ce_state', 'value': '151'}),
       (0, 0, {'key': 'ce_number_of_members', 'value': '34'}),
       (0, 0, {'key': 'ce_creation_date', 'value': '2020-07-01'}),
       (0, 0, {'key': 'contact_phone', 'value': '777777777'}),
       (0, 0, {'key': 'email_from', 'value': 'community4@bar.fake'}),
-      (0, 0, {'key': 'ce_vat', 'value': 'R7776930E'}),
+      (0, 0, {'key': 'ce_vat', 'value': 'F07742695'}),
       (0, 0, {'key': 'ce_fiscal_name', 'value': 'Community 4'}),
       (0, 0, {'key': 'contact_person_name', 'value': 'Community 4 cp name'}),
       (0, 0, {'key': 'contact_person_surname', 'value': 'Community 4 cp surname'}),
       (0, 0, {'key': 'ce_status', 'value': 'open'}),
-      (0, 0, {'key': 'ce_type', 'value': 'citizen'}),
       (0, 0, {'key': 'ce_constitution_status', 'value': 'constituted'}),
+      (0, 0, {'key': 'ce_type', 'value': 'citizen'}),
       (0, 0, {'key': 'ce_legal_form', 'value': 'non_profit'}),
+      (0, 0, {'key': 'ce_member_recurrent_contribution_container', 'value': '1'}),
       (0, 0, {'key': 'ce_member_mandatory_contribution', 'value': '90'}),
+      (0, 0, {'key': 'website', 'value': 'https://community4.com'}),
+      (0, 0, {'key': 'ce_twitter_url', 'value': 'https://twitter.com/community4'}),
+      (0, 0, {'key': 'ce_telegram_url', 'value': 'https://telegram.com/community4'}),
+      (0, 0, {'key': 'ce_instagram_url', 'value': 'https://instagram.com/community4'}),
+      (0, 0, {'key': 'ce_facebook_url', 'value': 'https://facebook.com/community4'}),
+      (0, 0, {'key': 'ce_mastodon_url', 'value': 'https://mastodon.com/community4'}),
+      (0, 0, {'key': 'ce_bluesky_url', 'value': 'https://bluesky.com/community4'}),
+      (0, 0, {'key': 'ce_iban_1', 'value': 'ES7401282337131934458338'}),
+      (0, 0, {'key': 'comments', 'value': 'Community 4 comments'}),
+      (0, 0, {'key': 'known_coordinator', 'value': 'not_yet'}),
     ]" />
   </record>
 
   <record id="crm_lead_company_creation_demo_3" model="crm.lead">
-    <field name="name">Community 5</field>
+    <field name="name">Community 5 non-profit and ce_member_recurrent_contribution_date set (No canary)</field>
     <field name="email_from">community5@bar.fake</field>
     <field name="submission_type">none</field>
     <field name="company_id" ref="energy_communities.coordinator_company_1" />
@@ -87,26 +112,179 @@
     <field name="stage_id" ref="crm_stage_coord_company_demo" />
     <field name="metadata_line_ids" eval="[
       (0, 0, {'key': 'source_xml_id', 'value': 'ce_source_creation_ce_proposal'}),
-      (0, 0, {'key': 'current_lang', 'value': 'es_ES'}),
+      (0, 0, {'key': 'current_lang', 'value': 'ca_ES'}),
+      (0, 0, {'key': 'ce_current_lang', 'value': 'ca_ES'}),
       (0, 0, {'key': 'ce_name', 'value': 'Community 5'}),
       (0, 0, {'key': 'ce_description', 'value': 'Community 5 description'}),
       (0, 0, {'key': 'ce_long_description', 'value': 'Community 5 long description'}),
       (0, 0, {'key': 'ce_address', 'value': 'Carrer Trafalgar 22'}),
       (0, 0, {'key': 'ce_city', 'value': 'Barcelona'}),
       (0, 0, {'key': 'ce_zip', 'value': '08010'}),
+      (0, 0, {'key': 'ce_state', 'value': '151'}),
       (0, 0, {'key': 'ce_number_of_members', 'value': '85'}),
       (0, 0, {'key': 'ce_creation_date', 'value': '2022-11-11'}),
       (0, 0, {'key': 'contact_phone', 'value': '999999999'}),
       (0, 0, {'key': 'email_from', 'value': 'community5@bar.fake'}),
-      (0, 0, {'key': 'ce_vat', 'value': 'J08366866'}),
+      (0, 0, {'key': 'ce_vat', 'value': 'F93944577'}),
       (0, 0, {'key': 'ce_fiscal_name', 'value': 'Community 5'}),
       (0, 0, {'key': 'contact_person_name', 'value': 'Community 5 cp name'}),
       (0, 0, {'key': 'contact_person_surname', 'value': 'Community 5 cp surname'}),
       (0, 0, {'key': 'ce_status', 'value': 'open'}),
+      (0, 0, {'key': 'ce_constitution_status', 'value': 'in_definition'}),
       (0, 0, {'key': 'ce_type', 'value': 'citizen'}),
-      (0, 0, {'key': 'ce_constitution_status', 'value': 'constituted'}),
       (0, 0, {'key': 'ce_legal_form', 'value': 'non_profit'}),
+      (0, 0, {'key': 'ce_member_recurrent_contribution_container', 'value': '1'}),
+      (0, 0, {'key': 'ce_member_recurrent_contribution_date', 'value': '27/10/2025'}),
       (0, 0, {'key': 'ce_member_mandatory_contribution', 'value': '50'}),
+      (0, 0, {'key': 'website', 'value': 'https://community5.com'}),
+      (0, 0, {'key': 'ce_twitter_url', 'value': 'https://twitter.com/community5'}),
+      (0, 0, {'key': 'ce_telegram_url', 'value': 'https://telegram.com/community5'}),
+      (0, 0, {'key': 'ce_instagram_url', 'value': 'https://instagram.com/community5'}),
+      (0, 0, {'key': 'ce_facebook_url', 'value': 'https://facebook.com/community5'}),
+      (0, 0, {'key': 'ce_mastodon_url', 'value': 'https://mastodon.com/community5'}),
+      (0, 0, {'key': 'ce_bluesky_url', 'value': 'https://bluesky.com/community5'}),
+      (0, 0, {'key': 'ce_iban_1', 'value': 'ES5221001267024176385362'}),
+      (0, 0, {'key': 'comments', 'value': 'Community 5 comments'}),
+      (0, 0, {'key': 'known_coordinator', 'value': 'not_yet'}),
+    ]" />
+  </record>
+
+  <!-- TODO: Adjust this demo data to canary --> 
+  <record id="crm_lead_company_creation_demo_4" model="crm.lead">
+   <field name="name">Community 6 cooperative (Canary)</field>
+   <field name="email_from">community6@bar.fake</field>
+   <field name="submission_type">none</field>
+   <field name="company_id" ref="energy_communities.coordinator_company_1" />
+   <field name="source_id" ref="energy_communities.ce_source_creation_ce_proposal" />
+   <field name="team_id" ref="crm_team_coord_company_demo" />
+   <field name="stage_id" ref="crm_stage_coord_company_demo" />
+   <field name="metadata_line_ids" eval="[
+      (0, 0, {'key': 'source_xml_id', 'value': 'ce_source_creation_ce_proposal'}),
+      (0, 0, {'key': 'current_lang', 'value': 'eu_ES'}),
+      (0, 0, {'key': 'ce_current_lang', 'value': 'eu_ES'}),
+      (0, 0, {'key': 'ce_name', 'value': 'Community 6'}),
+      (0, 0, {'key': 'ce_description', 'value': 'Community 6 description'}),
+      (0, 0, {'key': 'ce_long_description', 'value': 'Community 6 long description'}),
+      (0, 0, {'key': 'ce_address', 'value': 'Calle Castillo en Santa Cruz 6'}),
+      (0, 0, {'key': 'ce_city', 'value': 'Santa Cruz de Tenerife'}),
+      (0, 0, {'key': 'ce_zip', 'value': '38001'}),
+      (0, 0, {'key': 'ce_state', 'value': '457'}),
+      (0, 0, {'key': 'ce_number_of_members', 'value': '96'}),
+      (0, 0, {'key': 'ce_creation_date', 'value': '1994-09-01'}),
+      (0, 0, {'key': 'contact_phone', 'value': '666666666'}),
+      (0, 0, {'key': 'email_from', 'value': 'community6@bar.fake'}),
+      (0, 0, {'key': 'ce_vat', 'value': 'F22222798'}),
+      (0, 0, {'key': 'ce_fiscal_name', 'value': 'Community 6'}),
+      (0, 0, {'key': 'contact_person_name', 'value': 'Community 6 cp name'}),
+      (0, 0, {'key': 'contact_person_surname', 'value': 'Community 6 cp surname'}),
+      (0, 0, {'key': 'ce_status', 'value': 'closed'}),
+      (0, 0, {'key': 'ce_constitution_status', 'value': 'in_progress'}),
+      (0, 0, {'key': 'ce_type', 'value': 'citizen'}),
+      (0, 0, {'key': 'ce_legal_form', 'value': 'cooperative'}),
+      (0, 0, {'key': 'ce_member_mandatory_contribution', 'value': '130'}),
+      (0, 0, {'key': 'website', 'value': 'https://community6.com'}),
+      (0, 0, {'key': 'ce_twitter_url', 'value': 'https://twitter.com/community6'}),
+      (0, 0, {'key': 'ce_telegram_url', 'value': 'https://telegram.com/community6'}),
+      (0, 0, {'key': 'ce_instagram_url', 'value': 'https://instagram.com/community6'}),
+      (0, 0, {'key': 'ce_facebook_url', 'value': 'https://facebook.com/community6'}),
+      (0, 0, {'key': 'ce_mastodon_url', 'value': 'https://mastodon.com/community6'}),
+      (0, 0, {'key': 'ce_bluesky_url', 'value': 'https://bluesky.com/community6'}),
+      (0, 0, {'key': 'ce_iban_1', 'value': 'ES3830048386419662961587'}),
+      (0, 0, {'key': 'comments', 'value': 'Community 6 comments'}),
+      (0, 0, {'key': 'known_coordinator', 'value': 'not_yet'}),
+    ]" />
+  </record>
+
+  <record id="crm_lead_company_creation_demo_5" model="crm.lead">
+    <field name="name">Community 7 non-profit and ce_member_recurrent_contribution_date not set (Canary)</field>
+    <field name="email_from">community7@bar.fake</field>
+    <field name="submission_type">none</field>
+    <field name="company_id" ref="energy_communities.coordinator_company_1" />
+    <field name="source_id" ref="energy_communities.ce_source_creation_ce_proposal" />
+    <field name="team_id" ref="crm_team_coord_company_demo" />
+    <field name="stage_id" ref="crm_stage_coord_company_demo" />
+    <field name="metadata_line_ids" eval="[
+      (0, 0, {'key': 'source_xml_id', 'value': 'ce_source_creation_ce_proposal'}),
+      (0, 0, {'key': 'current_lang', 'value': 'eu_ES'}),
+      (0, 0, {'key': 'ce_current_lang', 'value': 'es_ES'}),
+      (0, 0, {'key': 'ce_name', 'value': 'Community 7'}),
+      (0, 0, {'key': 'ce_description', 'value': 'Community 7 description'}),
+      (0, 0, {'key': 'ce_long_description', 'value': 'Community 7 long description'}),
+      (0, 0, {'key': 'ce_address', 'value': 'Calle Castillo en Santa Cruz 7'}),
+      (0, 0, {'key': 'ce_city', 'value': 'Santa Cruz de Tenerife'}),
+      (0, 0, {'key': 'ce_zip', 'value': '38001'}),
+      (0, 0, {'key': 'ce_state', 'value': '457'}),
+      (0, 0, {'key': 'ce_number_of_members', 'value': '34'}),
+      (0, 0, {'key': 'ce_creation_date', 'value': '2020-07-01'}),
+      (0, 0, {'key': 'contact_phone', 'value': '777777777'}),
+      (0, 0, {'key': 'email_from', 'value': 'community7@bar.fake'}),
+      (0, 0, {'key': 'ce_vat', 'value': 'F40373177'}),
+      (0, 0, {'key': 'ce_fiscal_name', 'value': 'Community 7'}),
+      (0, 0, {'key': 'contact_person_name', 'value': 'Community 7 cp name'}),
+      (0, 0, {'key': 'contact_person_surname', 'value': 'Community 7 cp surname'}),
+      (0, 0, {'key': 'ce_status', 'value': 'open'}),
+      (0, 0, {'key': 'ce_constitution_status', 'value': 'constituted'}),
+      (0, 0, {'key': 'ce_type', 'value': 'citizen'}),
+      (0, 0, {'key': 'ce_legal_form', 'value': 'non_profit'}),
+      (0, 0, {'key': 'ce_member_recurrent_contribution_container', 'value': '1'}),
+      (0, 0, {'key': 'ce_member_mandatory_contribution', 'value': '90'}),
+      (0, 0, {'key': 'website', 'value': 'https://community7.com'}),
+      (0, 0, {'key': 'ce_twitter_url', 'value': 'https://twitter.com/community7'}),
+      (0, 0, {'key': 'ce_telegram_url', 'value': 'https://telegram.com/community7'}),
+      (0, 0, {'key': 'ce_instagram_url', 'value': 'https://instagram.com/community7'}),
+      (0, 0, {'key': 'ce_facebook_url', 'value': 'https://facebook.com/community7'}),
+      (0, 0, {'key': 'ce_mastodon_url', 'value': 'https://mastodon.com/community7'}),
+      (0, 0, {'key': 'ce_bluesky_url', 'value': 'https://bluesky.com/community7'}),
+      (0, 0, {'key': 'ce_iban_1', 'value': 'ES2900817743681389272652'}),
+      (0, 0, {'key': 'comments', 'value': 'Community 7 comments'}),
+      (0, 0, {'key': 'known_coordinator', 'value': 'not_yet'}),
+    ]" />
+  </record>
+
+  <record id="crm_lead_company_creation_demo_6" model="crm.lead">
+    <field name="name">Community 8 cooperative and ce_member_recurrent_contribution_date set (Canary)</field>
+    <field name="email_from">community8@bar.fake</field>
+    <field name="submission_type">none</field>
+    <field name="company_id" ref="energy_communities.coordinator_company_1" />
+    <field name="source_id" ref="energy_communities.ce_source_creation_ce_proposal" />
+    <field name="team_id" ref="crm_team_coord_company_demo" />
+    <field name="stage_id" ref="crm_stage_coord_company_demo" />
+    <field name="metadata_line_ids" eval="[
+      (0, 0, {'key': 'source_xml_id', 'value': 'ce_source_creation_ce_proposal'}),
+      (0, 0, {'key': 'current_lang', 'value': 'ca_ES'}),
+      (0, 0, {'key': 'ce_current_lang', 'value': 'ca_ES'}),
+      (0, 0, {'key': 'ce_name', 'value': 'Community 8'}),
+      (0, 0, {'key': 'ce_description', 'value': 'Community 8 description'}),
+      (0, 0, {'key': 'ce_long_description', 'value': 'Community 8 long description'}),
+      (0, 0, {'key': 'ce_address', 'value': 'Calle Castillo en Santa Cruz 8'}),
+      (0, 0, {'key': 'ce_city', 'value': 'Santa Cruz de Tenerife'}),
+      (0, 0, {'key': 'ce_zip', 'value': '38001'}),
+      (0, 0, {'key': 'ce_state', 'value': '457'}),
+      (0, 0, {'key': 'ce_number_of_members', 'value': '85'}),
+      (0, 0, {'key': 'ce_creation_date', 'value': '2022-11-11'}),
+      (0, 0, {'key': 'contact_phone', 'value': '999999999'}),
+      (0, 0, {'key': 'email_from', 'value': 'community8@bar.fake'}),
+      (0, 0, {'key': 'ce_vat', 'value': 'F60595634'}),
+      (0, 0, {'key': 'ce_fiscal_name', 'value': 'Community 8'}),
+      (0, 0, {'key': 'contact_person_name', 'value': 'Community 8 cp name'}),
+      (0, 0, {'key': 'contact_person_surname', 'value': 'Community 8 cp surname'}),
+      (0, 0, {'key': 'ce_status', 'value': 'open'}),
+      (0, 0, {'key': 'ce_constitution_status', 'value': 'in_definition'}),
+      (0, 0, {'key': 'ce_type', 'value': 'citizen'}),
+      (0, 0, {'key': 'ce_legal_form', 'value': 'non_profit'}),
+      (0, 0, {'key': 'ce_member_recurrent_contribution_container', 'value': '1'}),
+      (0, 0, {'key': 'ce_member_recurrent_contribution_date', 'value': '27/10/2025'}),
+      (0, 0, {'key': 'ce_member_mandatory_contribution', 'value': '50'}),
+      (0, 0, {'key': 'website', 'value': 'https://community8.com'}),
+      (0, 0, {'key': 'ce_twitter_url', 'value': 'https://twitter.com/community8'}),
+      (0, 0, {'key': 'ce_telegram_url', 'value': 'https://telegram.com/community8'}),
+      (0, 0, {'key': 'ce_instagram_url', 'value': 'https://instagram.com/community8'}),
+      (0, 0, {'key': 'ce_facebook_url', 'value': 'https://facebook.com/community8'}),
+      (0, 0, {'key': 'ce_mastodon_url', 'value': 'https://mastodon.com/community8'}),
+      (0, 0, {'key': 'ce_bluesky_url', 'value': 'https://bluesky.com/community8'}),
+      (0, 0, {'key': 'ce_iban_1', 'value': 'ES6131902147114832131113'}),
+      (0, 0, {'key': 'comments', 'value': 'Community 8 comments'}),
+      (0, 0, {'key': 'known_coordinator', 'value': 'not_yet'}),
     ]" />
   </record>
 </odoo>

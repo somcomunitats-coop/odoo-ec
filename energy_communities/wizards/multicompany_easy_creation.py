@@ -3,7 +3,14 @@ import logging
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from ..config import CHART_OF_ACCOUNTS_NON_PROFIT_REF
+from odoo.addons.energy_communities.utils import account_utils
+
+from ..config import (
+    CHART_OF_ACCOUNTS_GENERAL_CANARY_REF,
+    CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF,
+    CHART_OF_ACCOUNTS_NON_PROFIT_REF,
+    ROUNDING_CONFIGURATION_DEFAULT,
+)
 from ..models.res_company import (
     _CE_MEMBER_STATUS_VALUES,
     _CE_STATUS_VALUES,
@@ -115,6 +122,9 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     ce_telegram_url = fields.Char(string="Telegram link")
     ce_instagram_url = fields.Char(string="Instagram link")
     ce_facebook_url = fields.Char(string="Facebook link")
+    ce_mastodon_url = fields.Char(string="Mastodon link")
+    ce_bluesky_url = fields.Char(string="Bluesky link")
+    comments = fields.Text(string="Comments")
     # enable coordinator companies creation
     hierarchy_level = fields.Selection(
         selection=_HIERARCHY_LEVEL_BASE_VALUES,
@@ -153,6 +163,12 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "domain": {"parent_id": [("hierarchy_level", "=", "instance")]},
                 }
 
+    def is_canary(self):
+        return self.chart_template_id.id in [
+            self.env.ref(CHART_OF_ACCOUNTS_GENERAL_CANARY_REF).id,
+            self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF).id,
+        ]
+
     def add_company_log(self):
         message = _(
             "Community created from: <a href='/web#id={id}&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
@@ -190,7 +206,10 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         if (
             self.legal_form in _LEGAL_FORM_VALUES_NON_PROFIT
             and self.chart_template_id.id
-            != self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF).id
+            not in [
+                self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF).id,
+                self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF).id,
+            ]
         ):
             raise ValidationError(
                 "Misconfiguration between company legal form and selected chart of accounts"
@@ -234,6 +253,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     "social_telegram": self.ce_telegram_url,
                     "social_instagram": self.ce_instagram_url,
                     "social_facebook": self.ce_facebook_url,
+                    "social_mastodon": self.ce_mastodon_url,
+                    "social_bluesky": self.ce_bluesky_url,
                     "logo": self.landing_logo_file,
                     "community_energy_action_ids": energy_action_ids,
                 }
@@ -334,5 +355,8 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         self.with_context(
             allowed_company_ids=allowed_company_ids
         ).sudo().chart_template_id.try_loading(company=new_company)
-        self.create_bank_journals()
         self.create_sequences()
+        self.apply_default_rounding_configuration()
+
+    def apply_default_rounding_configuration(self):
+        self.new_company_id.write(ROUNDING_CONFIGURATION_DEFAULT)

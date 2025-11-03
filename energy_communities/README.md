@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2025-11-03 (v16.0.0.7.0)
+
+- Adjustments for new public form for new community creation
+
 ### 2025-10-22 (v16.0.0.6.1)
 
 - Remove duplicated Voluntary Share product category (from energy_communities)

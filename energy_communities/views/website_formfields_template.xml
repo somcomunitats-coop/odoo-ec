@@ -4,7 +4,7 @@
       <span
       style="display:block;font-size:13px;font-family:'Roboto',sans-serif;font-weight:300;"
       t-if="field_description"
-    ><t t-esc="field_description" /></span>
+    ><t t-raw="field_description" /></span>
     </template>
     <template id="form_field_part_label" name="form_field_part_label">
       <label t-att="{'for': field_key}"><t t-esc="field_label" /><span
@@ -28,6 +28,9 @@
         </svg>
       </span>
       </label>
+    </template>
+    <template id="form_h3" name="form_h3">
+      <h3 class="d-flex align-items-center mb-4 mt-4"><t t-raw="field_description" /><div class="flex-grow-1 border-bottom ms-2"></div></h3>
     </template>
     <template id="form_headline" name="form_headline">
       <div
@@ -358,6 +361,9 @@
             <t t-set="field_required" t-value="required" />
             <t t-set="field_help" t-value="help" />
             <t t-set="field_title" t-value="title" />
+          </t>
+          <t t-call="energy_communities.form_field_part_description">
+            <t t-set="field_description" t-value="description" />
           </t>
           <input
         t-attf-class="form-control form-control-sm o_website_form_date_past#{trigger and ' data-trigger'}"

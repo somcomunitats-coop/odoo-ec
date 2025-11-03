@@ -4,6 +4,10 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 from ..client_map.config import LandingClientConfig
+from ..config import (
+    CHART_OF_ACCOUNTS_GENERAL_CANARY_REF,
+    CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF,
+)
 from ..pywordpress_client.resources.authenticate import Authenticate
 from ..pywordpress_client.resources.landing_page import (
     LandingPage as LandingPageResource,
@@ -27,11 +31,22 @@ _LEGAL_FORM_VALUES = [
     ("individual_entrepreneur", _("Individual entrepreneur")),
     ("residents_association", _("Neighborhood community")),
     ("non_profit_limited_company", _("Non profit limited company")),
+    ("foundation", _("Foundation")),
 ]
 _LEGAL_FORM_VALUES_DEFAULT = "undefined"
 _LEGAL_FORM_VALUES_NON_PROFIT = [
     "non_profit",
     "residents_association",
+]
+
+_LEGAL_FORM_VALUES_WEBSITE = [
+    ("undefined", _("To be defined")),
+    ("cooperative", _("Cooperative")),
+    ("non_profit", _("Non profit association")),
+    ("residents_association", _("Neighborhood community")),
+    ("non_profit_limited_company", _("Non-profit SL")),
+    ("foundation", _("Foundation")),
+    ("other", _("Other")),
 ]
 
 _CE_STATUS_VALUES = [
@@ -72,6 +87,8 @@ class ResCompany(models.Model):
     )
     foundation_date = fields.Date("Foundation date")
     social_telegram = fields.Char("Telegram Account")
+    social_mastodon = fields.Char("Mastodon Account")
+    social_bluesky = fields.Char("Bluesky Account")
     allow_new_members = fields.Boolean(string="Allow new members", default=True)
     create_user_in_keycloak = fields.Boolean(
         "Create user for keycloak",
@@ -172,6 +189,11 @@ class ResCompany(models.Model):
         self.parent_id = False
 
     # CONSTRAINS
+    @api.constrains("default_lang_id")
+    def _propagate_default_lang_id_to_partner(self):
+        for rec in self:
+            rec.partner_id.write({"lang": rec.default_lang_id.code})
+
     @api.constrains("name", "vat")
     def _check_uniqueness(self):
         for rec in self:
@@ -237,6 +259,12 @@ class ResCompany(models.Model):
                 )
 
     # GETTERS
+    def is_canary(self):
+        return self.chart_template_id.id in [
+            self.env.ref(CHART_OF_ACCOUNTS_GENERAL_CANARY_REF).id,
+            self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF).id,
+        ]
+
     def get_become_cooperator_button_label(self, mode, lang):
         return LandingClientConfig.COOPERATOR_BUTTON_LABEL_CONFIG[mode][lang]
 

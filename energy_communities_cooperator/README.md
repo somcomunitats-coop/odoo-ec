@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2025-11-03 (v16.0.0.4.1)
+
+- Adjustments for new public form for new community creation
+
 ### 2025-10-22 (v16.0.0.4.0)
 
 - Improved MulltiCompanyEasyCreationWizard

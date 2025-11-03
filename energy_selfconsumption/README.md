@@ -183,6 +183,10 @@ team or refer to the project documentation.
 
 ## Changelog
 
+### 2025-11-03 (v16.0.0.5.12)
+
+- Improve testing for selfconsumption journal and bugfix on create distribuition table
+
 ### 2025-10-22 (v16.0.0.5.11)
 
 - Use configuration xml references instead hardcoded on code

@@ -1,27 +1,37 @@
 import base64
+import logging
 from datetime import datetime
 
 import requests
+from stdnum.es import iban
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 from odoo.addons.energy_communities.config import (
+    CHART_OF_ACCOUNTS_GENERAL_CANARY_REF,
     CHART_OF_ACCOUNTS_GENERAL_REF,
+    CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF,
     CHART_OF_ACCOUNTS_NON_PROFIT_REF,
+    STATE_CANARY_GC,
+    STATE_CANARY_TF,
 )
 from odoo.addons.energy_communities.models.res_company import (
+    _LEGAL_FORM_VALUES_DEFAULT,
     _LEGAL_FORM_VALUES_NON_PROFIT,
 )
 
-from .metadata_mapping_conf import (
+from ..config import (
     _LEAD_METADATA__DATE_FIELDS,
     _LEAD_METADATA__ENERGY_TAGS_FIELDS,
     _LEAD_METADATA__EXTID_FIELDS,
     _LEAD_METADATA__IMAGE_FIELDS,
     _LEAD_METADATA__LANG_FIELDS,
     _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD,
+    COMPANY_CREATION_WIZARD_DEFAULT_TAXES,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class CrmLead(models.Model):
@@ -93,11 +103,34 @@ class CrmLead(models.Model):
         self.ensure_one()
         # form values from metadata
         creation_dict = self._get_metadata_values()
+        # Check metadata coordinator_id with context company_id
+        if creation_dict.get("coordinator_id", False):
+            coordinator = self.env["res.company"].browse(
+                int(creation_dict["coordinator_id"])
+            )
+            if (
+                coordinator
+                and coordinator.hierarchy_level == "coordinator"
+                and coordinator.id != self.env.company.id
+            ):
+                raise ValidationError(
+                    _(
+                        f"""
+                    The lead metadata with key coordinator_id
+                    ({creation_dict.get("coordinator_id", False)}: {creation_dict.get("coordinator_name", False)})
+                    points to a coordinator other than the active one in the user's context
+                    ({self.env.company.id}: {self.env.company.name}).
+                    """
+                    )
+                )
+        if creation_dict.get("coordinator_id", False):
+            del creation_dict["coordinator_id"]
+        if creation_dict.get("coordinator_name", False):
+            del creation_dict["coordinator_name"]
         # all other populated form fields.
         creation_partner = self._search_partner_for_company_wizard_creation(
             creation_dict
         )
-
         creation_dict.update(
             {
                 "parent_id": self.company_id.id,
@@ -108,27 +141,82 @@ class CrmLead(models.Model):
                 "chart_template_id": self._get_chart_template_id_from_meta(),
                 "update_default_taxes": True,
                 "default_sale_tax_id": self.env.ref(
-                    "l10n_es.account_tax_template_s_iva21s"
+                    COMPANY_CREATION_WIZARD_DEFAULT_TAXES[
+                        "canary" if self._is_canary_state() else "general"
+                    ]["default_sale_tax_id"]
                 ).id,
                 "default_purchase_tax_id": self.env.ref(
-                    "l10n_es.account_tax_template_p_iva21_bc"
+                    COMPANY_CREATION_WIZARD_DEFAULT_TAXES[
+                        "canary" if self._is_canary_state() else "general"
+                    ]["default_purchase_tax_id"]
                 ).id,
                 "create_user": False,
                 "create_landing": True,
                 "create_place": True,
                 "creation_partner": creation_partner.id if creation_partner else False,
+                "default_lang_id": self.lang_id.id,
             }
         )
+
+        if creation_dict.get("legal_form", "other") == "other":
+            creation_dict.update({"legal_form": _LEGAL_FORM_VALUES_DEFAULT})
+
+        ce_iban_1 = creation_dict.get("ce_iban_1", False)
+        if ce_iban_1:
+            try:
+                iban.validate(ce_iban_1)
+                creation_dict.update({"bank_ids": [(0, 0, {"acc_number": ce_iban_1})]})
+            except Exception as e:
+                logger.warning(
+                    _(
+                        f"""
+                    The lead metadata with key ce_iban_1
+                    ({ce_iban_1}) is invalid: {e}
+                    """
+                    )
+                )
+        if creation_dict.get("ce_iban_1", False):
+            del creation_dict["ce_iban_1"]
+
+        if creation_dict.get("legal_form", "other") == "non_profit":
+            if creation_dict.get("ce_member_recurrent_contribution_date", False):
+                creation_dict.update(
+                    {
+                        "fixed_invoicing_day": creation_dict.get(
+                            "ce_member_recurrent_contribution_date"
+                        ).strftime("%d"),
+                        "fixed_invoicing_month": creation_dict.get(
+                            "ce_member_recurrent_contribution_date"
+                        ).strftime("%m"),
+                    }
+                )
+        if creation_dict.get("ce_member_recurrent_contribution_date", False):
+            del creation_dict["ce_member_recurrent_contribution_date"]
+
         return creation_dict
 
     def _get_chart_template_id_from_meta(self):
         meta_entry = self.metadata_line_ids.filtered(
             lambda meta: meta.key == "ce_legal_form"
         )
+        if self._is_canary_state() and meta_entry:
+            if meta_entry.value in _LEGAL_FORM_VALUES_NON_PROFIT:
+                return self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF).id
+            return self.env.ref(CHART_OF_ACCOUNTS_GENERAL_CANARY_REF).id
         if meta_entry:
             if meta_entry.value in _LEGAL_FORM_VALUES_NON_PROFIT:
                 return self.env.ref(CHART_OF_ACCOUNTS_NON_PROFIT_REF).id
         return self.env.ref(CHART_OF_ACCOUNTS_GENERAL_REF).id
+
+    def _is_canary_state(self):
+        state = self.metadata_line_ids.filtered(lambda meta: meta.key == "ce_state")
+        if state:
+            if int(state.value) in [
+                self.env.ref(STATE_CANARY_TF).id,
+                self.env.ref(STATE_CANARY_GC).id,
+            ]:
+                return True
+        return False
 
     def _get_metadata_values(self):
         meta_dict = {}
@@ -138,8 +226,14 @@ class CrmLead(models.Model):
             )
             if meta_entry:
                 wizard_key = _MAP__LEAD_METADATA__COMPANY_CREATION_WIZARD[meta_key]
+                # ce_status meta
+                if meta_key == "ce_constitution_status":
+                    if meta_entry.value == "constituted":
+                        meta_dict[wizard_key] = "active"
+                    else:
+                        meta_dict[wizard_key] = "building"
                 # date meta
-                if meta_key in _LEAD_METADATA__DATE_FIELDS:
+                elif meta_key in _LEAD_METADATA__DATE_FIELDS:
                     format_date = self._format_date_for_company_wizard_creation(
                         meta_entry.value
                     )

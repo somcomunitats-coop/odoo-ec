@@ -20,11 +20,21 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
     def _onchange_legal_form_trigger(self):
         for record in self:
             if record.legal_form in _LEGAL_FORM_VALUES_NON_PROFIT:
-                chart_of_account_ref = CHART_OF_ACCOUNTS_NON_PROFIT_REF
+                if self.is_canary():
+                    chart_of_account_ref = CHART_OF_ACCOUNTS_NON_PROFIT_CANARY_REF
+                else:
+                    chart_of_account_ref = CHART_OF_ACCOUNTS_NON_PROFIT_REF
             else:
-                chart_of_account_ref = CHART_OF_ACCOUNTS_GENERAL_REF
+                if self.is_canary():
+                    chart_of_account_ref = CHART_OF_ACCOUNTS_GENERAL_CANARY_REF
+                else:
+                    chart_of_account_ref = CHART_OF_ACCOUNTS_GENERAL_REF
             record.chart_template_id = self.env.ref(chart_of_account_ref).id
 
     def thread_action_accept(self):
         super().thread_action_accept()
         self.new_company_id.write({"create_user": self.create_user})
+        # rename SUBJ journal
+        self.new_company_id.subscription_journal_id.sudo().write(
+            {"code": "CS", "name": "Capital Social"}
+        )

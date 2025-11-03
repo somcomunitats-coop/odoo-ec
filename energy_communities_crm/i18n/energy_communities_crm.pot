@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-03 21:40+0000\n"
-"PO-Revision-Date: 2024-12-03 21:40+0000\n"
+"POT-Creation-Date: 2025-10-13 09:20+0000\n"
+"PO-Revision-Date: 2025-10-13 09:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,8 +21,44 @@ msgid "&amp;times;"
 msgstr ""
 
 #. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid "(Associations) Amount of the fixed annual membership fee for members"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"(Associations) Fixed day of the year for collecting membership fees from "
+"members"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"(Associations) Fixed day of the year on which the annual membership fee is "
+"charged to members."
+msgstr ""
+
+#. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid ". Additional information:"
+msgid ". <b>Additional info:</b>"
+msgstr ""
+
+#. module: energy_communities_crm
+#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
+msgid ""
+"<b>SOM COMUNITATS DATA PROTECTION INFORMATION. Purposes:</b> To register the"
+" Energy Community on our platform and allow it access to the services "
+"reserved for Energy Communities registered on our website. To send you "
+"communications about our services and activities, including by electronic "
+"means. <b>Rights:</b> You can exercise your right to access, rectify, "
+"delete, oppose, limit, and transfer your data at"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -232,7 +268,23 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
+msgid "Activity"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
 msgid "Address (Street, number, appartment)"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"All communications from the Energy Community will be made in this language "
+"by default."
 msgstr ""
 
 #. module: energy_communities_crm
@@ -244,15 +296,6 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:mail.template,subject:energy_communities_crm.email_templ_lead_ce_source_coord_web_hiring_id
 msgid "Application for Recruitment Coordinator"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
-msgid ""
-"Are members charged any type of recurring fee? For what concepts? How are "
-"they charged? How often?"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -317,7 +360,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
-msgid "Become cooperator process"
+msgid "Bluesky url"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -372,15 +415,18 @@ msgid "City"
 msgstr ""
 
 #. module: energy_communities_crm
-#: model_terms:ir.actions.act_window,help:energy_communities_crm.ce_crm_lead_tags_action
-msgid "Click to define a new tag."
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid "Closed"
 msgstr ""
 
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
-msgid "Closed"
+msgid "Comments"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -554,6 +600,20 @@ msgstr ""
 
 #. module: energy_communities_crm
 #. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid "Coordinator"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid "Corporate and administrative management"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
 #: code:addons/energy_communities_crm/models/crm_lead.py:0
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.ce_crm_lead_view_form
 #, python-format
@@ -612,11 +672,14 @@ msgid "CrmLead Metadata mapping"
 msgstr ""
 
 #. module: energy_communities_crm
-#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
 msgid ""
-"DATA PROTECTION INFORMATION. Purposes: to respond to your requests. Rights: "
-"you can withdraw your consent at any time, as well as access, rectify and "
-"delete your data and other rights at"
+"Current participants in the Energy Community. If it has not yet been "
+"established, indicate the number of people interested in joining or those "
+"who make up the group promoting/driving the initiative (enter a value "
+"greater than or equal to 1)."
 msgstr ""
 
 #. module: energy_communities_crm
@@ -628,16 +691,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
-msgid "Definition in progress"
+msgid "Default language of the Energy Community"
 msgstr ""
 
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
-msgid ""
-"Describe which system is currently used by the Register of members "
-"(historical register of additions/dismissals and official list of members)"
+msgid "Definition in progress"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -651,29 +712,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
-msgid ""
-"Do the members currently make voluntary contributions to the social capital "
-"of the Energy Community? How it works?"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
-msgid ""
-"Do you plan to use Odoo (management program) of the platform to keep the "
-"accounts of the Energy Community? or will an external management take it to "
-"you?"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
-msgid ""
-"Do you plan to use the platform's Odoo (management program) to carry out tax"
-" management: generation of tax reports from the Treasury (303, 390,...) or "
-"will it be carried out by an external management company?"
+msgid "Do you know the coordinator of the Energy Community?"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -683,15 +722,6 @@ msgstr ""
 msgid ""
 "Do you think that management could enter Odoo to generate the models from "
 "Odoo itself?"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
-msgid ""
-"Do you want to comment on any other particular / important aspect of your "
-"corporate management?"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -769,22 +799,10 @@ msgid "Email"
 msgstr ""
 
 #. module: energy_communities_crm
-#: model:ir.actions.act_window,name:energy_communities_crm.ce_crm_lead_tags_action
-msgid "Energy Actions"
-msgstr ""
-
-#. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Energy Community Name"
-msgstr ""
-
-#. module: energy_communities_crm
-#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid ""
-"Explain, with a maximum of 500 characters, the process to become cooperator."
-" Include payment information."
 msgstr ""
 
 #. module: energy_communities_crm
@@ -824,6 +842,13 @@ msgid "General"
 msgstr ""
 
 #. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid "General data"
+msgstr ""
+
+#. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__company_hierarchy_level
 msgid "Hierarchy level"
 msgstr ""
@@ -848,15 +873,6 @@ msgid "IBAN (bank account) used by the Energy Community"
 msgstr ""
 
 #. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
-msgid ""
-"IBAN 2 (bank account) used by the Energy Community (only if you use more "
-"than one)"
-msgstr ""
-
-#. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_assign_crm_to_coordinator_company_wizard__id
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping__id
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping_field__id
@@ -869,15 +885,27 @@ msgid "ID Ext tag"
 msgstr ""
 
 #. module: energy_communities_crm
-#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid "If possible upload a group image"
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"If ‘Open’ is selected, buttons will be displayed that provide access to "
+"public forms for receiving applications from new members of the Community at"
+" your <a href='https://somcomunitats.coop/es/#encuentra-tu-comunidad' "
+"target='_blank'>map</a> location and at the top of your <a "
+"href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
+"es.png' target='_blank'>own website</a> on the Platform. Otherwise, these "
+"buttons will be hidden and only a generic Contact the Community button will "
+"be displayed."
 msgstr ""
 
 #. module: energy_communities_crm
-#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
 msgid ""
-"In this section you can, with a maximum of 500 characters, explain the "
-"advantages of joining the community"
+"Indicate the legal form that the Community already has or that you know it "
+"will have. If you do not know yet, you can select: ‘To be defined’."
 msgstr ""
 
 #. module: energy_communities_crm
@@ -918,7 +946,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
-msgid "Is the community open to accept new members or already closed?"
+msgid "Is the Community open to accepting new members?"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -928,6 +956,16 @@ msgstr ""
 msgid ""
 "It will be delegated to people from the Coordinating entity that supports "
 "the Energy Community on the Platform"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"It will be published in the Contact section of <a "
+"href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
+"es.png' target='_blank'>your own web page</a> on the Platform."
 msgstr ""
 
 #. module: energy_communities_crm
@@ -969,6 +1007,68 @@ msgid "Legally constituted"
 msgstr ""
 
 #. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Link to the Energy Community website. Example: https://somcomunitats.coop"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Link to the Energy Community's social network profile. Example: "
+"https://bsky.app/profile/somcomunitats.coop"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Link to the Energy Community's social network profile. Example: "
+"https://mastodon.social/@SomComunitats"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Link to the Energy Community's social network profile. Example: "
+"https://t.me/SomComunitats"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Link to the Energy Community's social network profile. Example: "
+"https://www.facebook.com/SomComunitats/"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Link to the Energy Community's social network profile. Example: "
+"https://www.instagram.com/SomComunitats/"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Link to the Energy Community's social network profile. Example: "
+"https://x.com/SomComunitats"
+msgstr ""
+
+#. module: energy_communities_crm
 #: model:ir.model.fields.selection,name:energy_communities_crm.selection__crm_lead_metadata_mapping_field__type__many2one_relation_field
 msgid "Many2one relation field"
 msgstr ""
@@ -991,6 +1091,13 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping_field__mapping_model_real
 msgid "Mapping Real Model"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid "Mastodon url"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1057,8 +1164,10 @@ msgid "No web form origin"
 msgstr ""
 
 #. module: energy_communities_crm
-#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid "Non-computer support, Excels, computer program (which one?)"
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid "No yet"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1128,6 +1237,15 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
+msgid ""
+"Payment method to be used for collecting membership fees or contributions "
+"from members"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
 msgid "Phone"
 msgstr ""
 
@@ -1136,6 +1254,14 @@ msgstr ""
 msgid ""
 "Please check the grammatical and spelling quality of the texts and "
 "translations before submitting."
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Please indicate if there is anything else you think we should consider."
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1157,8 +1283,10 @@ msgstr ""
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid ""
-"Predefined language for the Community (communication will be used on this "
-"language.)"
+"Preferably a group photo of the Energy Community. It will be published at "
+"the top of your <a href='https://somcomunitats.coop/wp-"
+"content/uploads/2025/09/landing-prova-es.png' target='_blank'>own web "
+"page</a> on the Platform."
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1171,6 +1299,13 @@ msgstr ""
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
 msgid "Privacy policy"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid "Process for becoming a member"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1233,6 +1368,32 @@ msgid "Secondary Image"
 msgstr ""
 
 #. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid "Select a Coordinator"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Select it for the current year. Example: if it is 2025 and the annual fee is"
+" charged on March 1, select 03/01/2025."
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Select which <a href='https://somcomunitats.coop/es/que-son-las-"
+"coordinadoras/#ce-coordinadores-members' target='_blank'>coordinating "
+"entity</a> you would like to accompany and support you."
+msgstr ""
+
+#. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form
 msgid "Send"
 msgstr ""
@@ -1241,7 +1402,21 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
+msgid "Social media"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
 msgid "State"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid "Status"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1282,6 +1457,20 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
+msgid ""
+"The Som Comunitats Platform requests that every Energy Community be "
+"supported by a Coordinating Entity. <a "
+"href='https://somcomunitats.coop/es/que-son-las-coordinadoras/' "
+"target='_blank'>Here</a> we explain what they are, and <a "
+"href='https://somcomunitats.coop/es/que-son-las-coordinadoras/#ce-"
+"coordinadores-members' target='_blank'>here</a> is a list of available "
+"Coordinators."
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
 msgid "Transfer of the candidate to partner to the entity's account"
 msgstr ""
 
@@ -1303,14 +1492,51 @@ msgid "UTM Source"
 msgstr ""
 
 #. module: energy_communities_crm
-#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
 msgid ""
-"Use a maximum of 1000 characters to write a summary of your Energy Community"
+"Use a maximum of 1000 characters to write a summary of your Energy "
+"Community. It will be published as a description of the Community at its <a "
+"href='https://somcomunitats.coop/es/#encuentra-tu-comunidad' "
+"target='_blank'>map</a> location and at the top of its <a "
+"href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
+"es.png' target='_blank'>own web page</a> on the Platform."
 msgstr ""
 
 #. module: energy_communities_crm
-#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid "Use a maximum of 1500 characters to explain your Energy Community"
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Use a maximum of 1500 characters to explain your Energy Community. It will "
+"be published in the ‘About us’ section of <a "
+"href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
+"es.png' target='_blank'>your own page</a> on the Platform."
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Use a maximum of 500 characters to explain the advantages of joining the "
+"Community. If filled in, it will be published in the ‘Why become a member’ "
+"section of your <a href='https://somcomunitats.coop/wp-"
+"content/uploads/2025/09/landing-prova-es.png' target='_blank'>own web "
+"page</a> on the Platform."
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Use a maximum of 500 characters to explain the process for joining the "
+"Community. If completed, it will be published in the ‘Registration Process’ "
+"section of <a href='https://somcomunitats.coop/wp-"
+"content/uploads/2025/09/landing-prova-es.png' target='_blank'>your own "
+"website</a> on the Platform."
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1353,6 +1579,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
+msgid "Website data and map"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
 msgid ""
 "What amount of mandatory contribution to the social capital do you ask for "
 "when a new member joins?"
@@ -1362,26 +1595,15 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
+msgid ""
+"Amount of the mandatory initial contribution/fee required of new members"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
 msgid "Which one?"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
-msgid ""
-"Which payment method will you use to collect the mandatory contributions to "
-"the share capital (registration of new partners)?"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
-msgid ""
-"Who will do the day-to-day corporate management of the Energy Community? "
-"(person/s with user access to the Odoo corporate/accounting/tax management "
-"program of the Energy Community)"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1398,6 +1620,7 @@ msgstr ""
 
 #. module: energy_communities_crm
 #. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Yes"
@@ -1478,11 +1701,6 @@ msgstr ""
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid "ce_account_management,ce_tax_management:external_management"
-msgstr ""
-
-#. module: energy_communities_crm
-#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
 msgid "ce_constitution_status:constituted"
 msgstr ""
 
@@ -1493,12 +1711,12 @@ msgstr ""
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid "ce_constitution_status_other,ce_creation_date,ce_vat"
+msgid "ce_constitution_status_other,ce_creation_date,ce_vat,ce_fiscal_name"
 msgstr ""
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid "ce_management_can_enter_platform"
+msgid "ce_legal_form:non_profit,residents_association"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1513,8 +1731,12 @@ msgstr ""
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid ""
-"ce_manager_headline,ce_manager_firstname,ce_manager_surname,ce_manager_email,ce_manager_phone"
+msgid "ce_member_mandatory_contribution,ce_member_recurrent_contribution_date"
+msgstr ""
+
+#. module: energy_communities_crm
+#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
+msgid "coordinator_id"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1538,6 +1760,16 @@ msgid "for further assistance."
 msgstr ""
 
 #. module: energy_communities_crm
+#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
+msgid "info@somcomunitats.coop"
+msgstr ""
+
+#. module: energy_communities_crm
+#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
+msgid "known_coordinator:yes"
+msgstr ""
+
+#. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
@@ -1549,11 +1781,6 @@ msgstr ""
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "lead_id param must be defined on the url in order to use the form"
-msgstr ""
-
-#. module: energy_communities_crm
-#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid "somenergia@delegado-datos.com"
 msgstr ""
 
 #. module: energy_communities_crm
