@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<!-- Inherit the SwitchCompanyMenu template to add Select All/Deselect All buttons -->
+<t t-name="web.SwitchCompanyMenu" t-inherit="web.SwitchCompanyMenu" t-inherit-mode="extension" owl="1">
+    <xpath expr="//t[@t-foreach]" position="before">
+        <!-- Add Search field -->
+        <t t-if="Object.keys(companyService.availableCompanies).length > 2">
+            <div class="px-3 py-2 border-bottom">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text">
+                        <i class="fa fa-search"/>
+                    </span>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Search companies..."
+                        t-att-value="state.searchTerm"
+                        t-on-input="onSearchInput"
+                        autocomplete="off"/>
+                    <button 
+                        t-if="state.searchTerm"
+                        type="button" 
+                        class="btn btn-outline-secondary"
+                        t-on-click="clearSearch"
+                        title="Clear search">
+                        <i class="fa fa-times"/>
+                    </button>
+                </div>
+            </div>
+        </t>
+
+        <!-- Add Select All/Deselect All buttons -->
+        <t t-if="Object.keys(companyService.availableCompanies).length > 2">
+            <div class="border-bottom mb-2 pb-2">
+                <div class="d-flex justify-content-between px-3 py-1">
+                    <button 
+                        type="button"
+                        class="btn btn-sm btn-outline-primary"
+                        t-att-disabled="areAllCompaniesSelected()"
+                        t-on-click="() => this.toggleAllCompanies(true)"
+                        title="Select All Companies">
+                        <i class="fa fa-check-square me-1"/>
+                        Select All
+                    </button>
+                    <button 
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary"
+                        t-att-disabled="areNoCompaniesSelected()"
+                        t-on-click="() => this.toggleAllCompanies(false)"
+                        title="Deselect All Companies">
+                        <i class="fa fa-square-o me-1"/>
+                        Deselect All
+                    </button>
+                </div>
+            </div>
+        </t>
+    </xpath>
+
+    <!-- Replace the foreach to use filtered companies -->
+    <xpath expr="//t[@t-foreach='Object.values(companyService.availableCompanies).sort((c1, c2) => c1.sequence - c2.sequence)']" position="replace">
+        <t t-foreach="state.filteredCompanies" t-as="company" t-key="company.id">
+            <t t-call="web.SwitchCompanyItem">
+                <t t-set="company" t-value="company" />
+            </t>
+        </t>
+    </xpath>
+</t>
+
+</templates>
