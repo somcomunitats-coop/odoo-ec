@@ -10,9 +10,7 @@
     <field name="destination_field_key">lang_id</field>
     <field name="type">many2one_relation_field</field>
     <field name="mapping_model_id" eval="ref('base.model_res_lang')"/>
-    <field name="mapping_domain">
-[&quot;&amp;&quot;,[&quot;active&quot;,&quot;=&quot;,True],[&quot;code&quot;,&quot;=&quot;,&quot;{'metadata':'ce_current_lang'}&quot;]]
-    </field>
+    <field name="mapping_domain">[&quot;&amp;&quot;,[&quot;active&quot;,&quot;=&quot;,True],[&quot;code&quot;,&quot;=&quot;,&quot;{'metadata':'ce_current_lang'}&quot;]]</field>
     <field name="crm_lead_metadata_mapping_id" eval="ref('ce_creation_mapping_demo')"/>
   </record>
   <record id="ce_creation_street_mapping_field_demo" model="crm.lead.metadata.mapping.field">
@@ -45,9 +43,7 @@
     <field name="destination_field_key">lang_id</field>
     <field name="type">many2one_relation_field</field>
     <field name="mapping_model_id" eval="ref('base.model_res_lang')"/>
-    <field name="mapping_domain">
-[&quot;&amp;&quot;,[&quot;active&quot;,&quot;=&quot;,True],[&quot;code&quot;,&quot;=&quot;,&quot;{'metadata':'ce_current_lang'}&quot;]]
-    </field>
+    <field name="mapping_domain">[&quot;&amp;&quot;,[&quot;active&quot;,&quot;=&quot;,True],[&quot;code&quot;,&quot;=&quot;,&quot;{'metadata':'ce_current_lang'}&quot;]]</field>
     <field name="crm_lead_metadata_mapping_id" eval="ref('ce_info_newsletter_mapping_demo')"/>
   </record>
   <record id="ce_contact_mapping_demo" model="crm.lead.metadata.mapping">
@@ -62,9 +58,7 @@
     <field name="destination_field_key">lang_id</field>
     <field name="type">many2one_relation_field</field>
     <field name="mapping_model_id" eval="ref('base.model_res_lang')"/>
-    <field name="mapping_domain">
-[&quot;&amp;&quot;,[&quot;active&quot;,&quot;=&quot;,True],[&quot;code&quot;,&quot;=&quot;,&quot;{'metadata':'ce_current_lang'}&quot;]]
-    </field>
+    <field name="mapping_domain">[&quot;&amp;&quot;,[&quot;active&quot;,&quot;=&quot;,True],[&quot;code&quot;,&quot;=&quot;,&quot;{'metadata':'ce_current_lang'}&quot;]]</field>
     <field name="crm_lead_metadata_mapping_id" eval="ref('ce_contact_mapping_demo')"/>
   </record>
   <record id="ce_contact_city_mapping_field_demo" model="crm.lead.metadata.mapping.field">
@@ -87,9 +81,7 @@
     <field name="destination_field_key">lang_id</field>
     <field name="type">many2one_relation_field</field>
     <field name="mapping_model_id" eval="ref('base.model_res_lang')"/>
-    <field name="mapping_domain">
-[&quot;&amp;&quot;,[&quot;active&quot;,&quot;=&quot;,True],[&quot;code&quot;,&quot;=&quot;,&quot;{'metadata':'ce_current_lang'}&quot;]]
-    </field>
+    <field name="mapping_domain">[&quot;&amp;&quot;,[&quot;active&quot;,&quot;=&quot;,True],[&quot;code&quot;,&quot;=&quot;,&quot;{'metadata':'ce_current_lang'}&quot;]]</field>
     <field name="crm_lead_metadata_mapping_id" eval="ref('ce_coord_tariffs_mapping_demo')"/>
   </record>
   <record id="ce_coord_tariffs_description_mapping_field_demo" model="crm.lead.metadata.mapping.field">
