@@ -77,18 +77,24 @@ class AccountUtils(Component):
         )
         return journal
 
+    def get_bank_journal_name(
+        self,
+        res_partner_bank: AccountAccount,
+    ):
+        name_prefix = _("Bank")
+        if res_partner_bank.bank_id:
+            name_prefix = res_partner_bank.bank_id.name
+        return "{name_prefix} ({acc_number_min})".format(
+            name_prefix=name_prefix, acc_number_min=res_partner_bank.acc_number[-4:]
+        )
+
     def create_company_bank_journal(
         self,
         company: Company,
         res_partner_bank: AccountAccount,
     ) -> None:
         # define name to be used on models
-        name_prefix = _("Bank")
-        if res_partner_bank.bank_id:
-            name_prefix = res_partner_bank.bank_id.name
-        models_name = "{name_prefix} ({acc_number_min})".format(
-            name_prefix=name_prefix, acc_number_min=res_partner_bank.acc_number[-4:]
-        )
+        models_name = self.get_bank_journal_name(res_partner_bank)
         # use sudo if necessary
         account_model = self.env["account.account"]
         journal_model = self.env["account.journal"]

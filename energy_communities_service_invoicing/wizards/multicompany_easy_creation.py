@@ -60,6 +60,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             with account_utils(self.env, use_sudo=True) as account_component:
                 # define company cooperator account
                 account_component.setup_company_cooperator_account(self.new_company_id)
+
                 # define cooperator account in subscription journal
                 cooperator_account = (
                     self.new_company_id.sudo().get_company_coop_account()
@@ -68,13 +69,52 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     self.new_company_id.sudo().subscription_journal_id,
                     cooperator_account,
                 )
+
                 # create cooperator voluntary account
                 account_component.create_company_account(
                     self.new_company_id, "Capital social voluntario", "equity", "100100"
                 )
+
                 # if bank defined on wizard create bank accouns and bank journals
                 if self.bank_ids:
-                    for w_bank in self.bank_ids:
+                    # use existing bank journal for first bank
+                    res_partner_bank = (
+                        account_component.create_company_res_partner_bank_account(
+                            self.new_company_id,
+                            self.bank_ids[:1].acc_number,
+                            self.bank_ids[:1].allow_out_payment,
+                        )
+                    )
+                    existing_bank_journal = (
+                        self.env["account.journal"]
+                        .sudo()
+                        .search(
+                            [
+                                ("type", "=", "bank"),
+                                ("company_id", "=", self.new_company_id.id),
+                                ("bank_account_id", "=", False),
+                            ]
+                        )
+                    )
+                    if existing_bank_journal:
+                        models_name = account_component.get_bank_journal_name(
+                            res_partner_bank
+                        )
+                        existing_bank_journal.write(
+                            {
+                                "name": models_name,
+                                "bank_account_id": res_partner_bank.id,
+                            }
+                        )
+                        existing_bank_journal.default_account_id.write(
+                            {"name": models_name}
+                        )
+                    else:
+                        account_component.create_company_bank_journal(
+                            self.new_company_id, res_partner_bank
+                        )
+                    # create rest bank accounts and journals
+                    for w_bank in self.bank_ids[1:]:
                         res_partner_bank = (
                             account_component.create_company_res_partner_bank_account(
                                 self.new_company_id,
@@ -97,6 +137,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                             SELFCONSUMPTION_ACCOUNT_REF.format(self.new_company_id.id)
                         ),
                     )
+
                 # create vsir journal for cooperatives
                 if self.new_company_id.legal_form == "cooperative":
                     vsir_journal = account_component.create_company_journal(
@@ -109,10 +150,12 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     self.new_company_id.write(
                         {"voluntary_share_journal_account": vsir_journal.id}
                     )
+
             with product_utils(self.env, use_sudo=True) as product_component:
                 # create company pricelist
                 product_component.create_company_pricelist(self.new_company_id)
                 product_component.setup_company_product_categs(self.new_company_id)
+
                 # coop product
                 if self.new_company_id.legal_form in ["cooperative", "undefined"]:
                     coop_product = product_component.create_product(
@@ -126,6 +169,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     self.new_company_id.write(
                         {"voluntary_share_id": vol_coop_product.id}
                     )
+
                 # nonprofit share recuring fee product
                 if (
                     self.new_company_id.legal_form == "non_profit"
@@ -138,6 +182,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     self._share_recurring_fee_pack_translations(
                         share_pack_creation_result
                     )
+
                 # non profit coop product
                 if self.new_company_id.legal_form == "non_profit" and (
                     not self.fixed_invoicing_day or not self.fixed_invoicing_month

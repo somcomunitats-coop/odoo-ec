@@ -10,6 +10,7 @@ from odoo.addons.energy_communities.config import (
 from odoo.addons.energy_communities.models.res_company import (
     _LEGAL_FORM_VALUES_NON_PROFIT,
 )
+from odoo.addons.energy_communities.utils import account_utils
 from odoo.addons.energy_communities_cooperator.config import (
     COOP_SHARE_PRODUCT_CATEG_REF,
     COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
@@ -261,21 +262,17 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             order="id desc",
             limit=1,
         )
-        self.assertEqual(len(bank_journals), 1)
-        if bank_journals:
-            # TODO: Obtain this from a class method
-            name_prefix = _("Bank")
-            if bank_journals.bank_account_id.bank_id:
-                name_prefix = bank_journals.bank_account_id.bank_id.name
-            models_name = "{name_prefix} ({acc_number_min})".format(
-                name_prefix=name_prefix,
-                acc_number_min=new_company.partner_id.bank_ids[
+        with account_utils(self.env, use_sudo=True) as account_component:
+            models_name = account_component.get_bank_journal_name(
+                new_company.partner_id.bank_ids[
                     len(new_company.partner_id.bank_ids) - 1
-                ].acc_number[-4:],
+                ]
             )
-            self.assertEqual(
-                bank_journals.bank_account_id.partner_id.id, new_company.partner_id.id
-            )
+        self.assertEqual(len(bank_journals), 1)
+        self.assertEqual(bank_journals.code, "BNK1")
+        self.assertEqual(
+            bank_journals.bank_account_id.partner_id.id, new_company.partner_id.id
+        )
         self.assertEqual(bank_journals.name, models_name)
         self.assertEqual(bank_journals.default_account_id.name, models_name)
 
