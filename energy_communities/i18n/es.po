@@ -3566,3 +3566,45 @@ msgstr ""
 "\"po2_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</div>\",\n"
 "\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparte y haz crecer la Comunidad Energética</p></div>\"\n"
 "}"
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Search companies..."
+msgstr "Buscar empresas..."
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Clear search"
+msgstr "Borrar búsqueda"
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Select All"
+msgstr "Seleccionar todo"
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Select All Companies"
+msgstr "Seleccionar todas las empresas"
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Deselect All"
+msgstr "Deseleccionar todo"
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Deselect All Companies"
+msgstr "Deseleccionar todas las empresas"
