@@ -13,3 +13,16 @@ class MailComposeMessage(models.TransientModel):
     def _compute_user_current_company(self):
         for record in self:
             record.user_current_company = self.env.user.user_current_company
+
+    @api.onchange("template_id")
+    def _onchange_template_id_wrapper(self):
+        self.ensure_one()
+        if self.template_id.lang and "object.lang" in self.template_id.lang.lower():
+            lang = self.env[self.model].browse(self.res_id).lang
+            values = self.with_context(lang=lang)._onchange_template_id(
+                self.template_id.id, self.composition_mode, self.model, self.res_id
+            )["value"]
+            for fname, value in values.items():
+                setattr(self, fname, value)
+        else:
+            super()._onchange_template_id_wrapper()
