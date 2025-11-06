@@ -1,0 +1,94 @@
+<odoo>
+  <record id="ce_creation_mapping_demo" model="crm.lead.metadata.mapping">
+    <field name="utm_source_ids" eval="
+[
+(4, ref('energy_communities.ce_source_creation_ce_proposal'))
+]
+    "/>
+  </record>
+  <record id="ce_creation_lang_mapping_field_demo" model="crm.lead.metadata.mapping.field">
+    <field name="destination_field_key">lang_id</field>
+    <field name="type">many2one_relation_field</field>
+    <field name="mapping_model_id" eval="ref('base.model_res_lang')"/>
+    <field name="mapping_domain">[&quot;&amp;&quot;,[&quot;active&quot;,&quot;=&quot;,True],[&quot;code&quot;,&quot;=&quot;,&quot;{'metadata':'ce_current_lang'}&quot;]]</field>
+    <field name="crm_lead_metadata_mapping_id" eval="ref('ce_creation_mapping_demo')"/>
+  </record>
+  <record id="ce_creation_street_mapping_field_demo" model="crm.lead.metadata.mapping.field">
+    <field name="destination_field_key">street</field>
+    <field name="type">value_field</field>
+    <field name="metadata_key">ce_address</field>
+    <field name="crm_lead_metadata_mapping_id" eval="ref('ce_creation_mapping_demo')"/>
+  </record>
+  <record id="ce_creation_city_mapping_field_demo" model="crm.lead.metadata.mapping.field">
+    <field name="destination_field_key">city</field>
+    <field name="type">value_field</field>
+    <field name="metadata_key">ce_city</field>
+    <field name="crm_lead_metadata_mapping_id" eval="ref('ce_creation_mapping_demo')"/>
+  </record>
+  <record id="ce_creation_zip_mapping_field_demo" model="crm.lead.metadata.mapping.field">
+    <field name="destination_field_key">zip</field>
+    <field name="type">value_field</field>
+    <field name="metadata_key">ce_zip</field>
+    <field name="crm_lead_metadata_mapping_id" eval="ref('ce_creation_mapping_demo')"/>
+  </record>
+  <record id="ce_info_newsletter_mapping_demo" model="crm.lead.metadata.mapping">
+    <field name="utm_source_ids" eval="
+[
+(4, ref('energy_communities.ce_source_general_info')),
+(4, ref('energy_communities.ce_source_existing_ce_info'))
+]
+    "/>
+  </record>
+  <record id="ce_info_newsletter_lang_mapping_field_demo" model="crm.lead.metadata.mapping.field">
+    <field name="destination_field_key">lang_id</field>
+    <field name="type">many2one_relation_field</field>
+    <field name="mapping_model_id" eval="ref('base.model_res_lang')"/>
+    <field name="mapping_domain">[&quot;&amp;&quot;,[&quot;active&quot;,&quot;=&quot;,True],[&quot;code&quot;,&quot;=&quot;,&quot;{'metadata':'ce_current_lang'}&quot;]]</field>
+    <field name="crm_lead_metadata_mapping_id" eval="ref('ce_info_newsletter_mapping_demo')"/>
+  </record>
+  <record id="ce_contact_mapping_demo" model="crm.lead.metadata.mapping">
+    <field name="utm_source_ids" eval="
+[
+(4, ref('energy_communities.ce_source_existing_ce_contact')),
+(4, ref('energy_communities.ce_source_general_contact')),
+]
+    "/>
+  </record>
+  <record id="ce_contact_lang_mapping_field_demo" model="crm.lead.metadata.mapping.field">
+    <field name="destination_field_key">lang_id</field>
+    <field name="type">many2one_relation_field</field>
+    <field name="mapping_model_id" eval="ref('base.model_res_lang')"/>
+    <field name="mapping_domain">[&quot;&amp;&quot;,[&quot;active&quot;,&quot;=&quot;,True],[&quot;code&quot;,&quot;=&quot;,&quot;{'metadata':'ce_current_lang'}&quot;]]</field>
+    <field name="crm_lead_metadata_mapping_id" eval="ref('ce_contact_mapping_demo')"/>
+  </record>
+  <record id="ce_contact_city_mapping_field_demo" model="crm.lead.metadata.mapping.field">
+    <field name="destination_field_key">city</field>
+    <field name="type">value_field</field>
+    <field name="metadata_key">town</field>
+    <field name="crm_lead_metadata_mapping_id" eval="ref('ce_contact_mapping_demo')"/>
+  </record>
+  <record id="ce_coord_tariffs_mapping_demo" model="crm.lead.metadata.mapping">
+    <field name="utm_source_ids" eval="
+[
+(4, ref('energy_communities.ce_source_coord_web_hiring')),
+(4, ref('energy_communities.ce_source_coord_web_other')),
+(4, ref('energy_communities.ce_source_existing_coord_contact')),
+(4, ref('energy_communities.ce_source_existing_coord_info')),
+(4, ref('energy_communities.ce_source_tariffs_page_contact')),
+]
+    "/>
+  </record>
+  <record id="ce_coord_tariffs_lang_mapping_field_demo" model="crm.lead.metadata.mapping.field">
+    <field name="destination_field_key">lang_id</field>
+    <field name="type">many2one_relation_field</field>
+    <field name="mapping_model_id" eval="ref('base.model_res_lang')"/>
+    <field name="mapping_domain">[&quot;&amp;&quot;,[&quot;active&quot;,&quot;=&quot;,True],[&quot;code&quot;,&quot;=&quot;,&quot;{'metadata':'ce_current_lang'}&quot;]]</field>
+    <field name="crm_lead_metadata_mapping_id" eval="ref('ce_coord_tariffs_mapping_demo')"/>
+  </record>
+  <record id="ce_coord_tariffs_description_mapping_field_demo" model="crm.lead.metadata.mapping.field">
+    <field name="destination_field_key">description</field>
+    <field name="type">value_field</field>
+    <field name="metadata_key">message</field>
+    <field name="crm_lead_metadata_mapping_id" eval="ref('ce_coord_tariffs_mapping_demo')"/>
+  </record>
+</odoo>

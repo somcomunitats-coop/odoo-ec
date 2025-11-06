@@ -12,7 +12,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Sales/CRM",
-    "version": "16.0.0.3.0",
+    "version": "16.0.0.3.1",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
@@ -43,5 +43,5 @@
     ],
     "post_init_hook": "post_setup_multicompany_crm",
     # only loaded in demonstration mode
-    "demo": ["demo/crm_lead_demo.xml"],
+    "demo": ["demo/crm_lead_demo.xml", "demo/crm_lead_metadata_mapping_demo.xml"],
 }

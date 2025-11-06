@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.7.0",
+    "version": "16.0.0.7.1",
     "depends": [
         "account",
         "account_banking_mandate",
@@ -44,9 +44,11 @@
     """,
     "license": "AGPL-3",
     "demo": [
+        "demo/api_key_demo.xml",
         "demo/res_lang_demo.xml",
         "demo/res_company_demo.xml",
         "demo/res_user_demo.xml",
+        "demo/landing_page_demo.xml",
     ],
     "data": [
         "security/res_groups_roles_data.xml",

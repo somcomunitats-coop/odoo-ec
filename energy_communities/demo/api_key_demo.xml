@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <record id="apikey_web_demo" model="auth.api.key">
+            <field name="name">API key web demo</field>
+            <field name="key">12345</field>
+            <field name="user_id" ref="base.user_admin" />
+        </record>
+    </data>
+</odoo>

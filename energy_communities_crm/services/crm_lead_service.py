@@ -107,6 +107,7 @@ class CRMLeadService(Component):
         params["metadata"].append({"key": "coordinator_id", "value": company.id})
         return True
 
+    # TODO: Add contact coordinator source mapping
     def _get_crm_lead_name(self, lead_id, params):
         source_xml_id = self._get_metadata_value(params, "source_xml_id")
         email = params["email_from"]
@@ -246,10 +247,6 @@ class CRMLeadService(Component):
                 "metadata": self._convert_params_metadata_to_dict(params),
                 "email_to": params["email_from"],
             }
-            # get user lang from payload
-            lang = self._get_metadata_value(params, "current_lang")
-            if lang:
-                email_values["lang"] = lang
             template = self.env.ref(
                 "energy_communities_crm.{}".format(template_external_id)
             ).with_context(email_values)

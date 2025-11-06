@@ -8,10 +8,7 @@ from odoo.tests.common import HttpCase, tagged
 
 from odoo.addons.base_rest.tests.common import RegistryMixin
 
-try:
-    from .data import auth_token
-except ImportError:
-    pass
+from .testing_cases import _CE_CREATION_API_PAYLOAD
 
 HOST = "localhost"
 PORT = odoo.tools.config["http_port"]
@@ -28,10 +25,10 @@ class TestCRMLeadServiceRestCase(HttpCase, RegistryMixin):
         super().setUp()
         self.maxDiff = None
         self.timeout = 600
-        # self.auth_header = {'Content-Type': 'application/json', 'API-KEY': self.env.ref("ce.auth_api_key_platform_admin_demo").key}
+        self.auth_api_key = self.env.ref("energy_communities.apikey_web_demo")
         self.headers = {
             "Content-Type": "application/json",
-            "API-KEY": auth_token,
+            "API-KEY": self.auth_api_key.key,
         }
         self.client = partial(self.url_open, headers=self.headers, timeout=self.timeout)
         self.BASE_METADATA_FIXTURE = [
@@ -68,19 +65,19 @@ class TestCRMLeadServiceRestCase(HttpCase, RegistryMixin):
             {"key": "comments", "value": "test demo"},
         ]
         self.GOOD_METADATA_FIXTURE = [
-            {"key": "coordinator_landing_id", "value": "10639"},
+            {"key": "coordinator_landing_id", "value": "1234"},
             {"key": "known_coordinator", "value": "yes"},
-            {"key": "coordinator_name", "value": "PRUEBA DE QUE NO EXISTE"},
+            {"key": "coordinator_name", "value": "PRUEBA DE QUE EXISTE"},
         ]
 
         self.NO_COORDINATOR_METADATA_FIXTURE = [
-            {"key": "coordinator_landing_id", "value": "106390"},
+            {"key": "coordinator_landing_id", "value": "abc"},
             {"key": "known_coordinator", "value": "yes"},
             {"key": "coordinator_name", "value": "PRUEBA DE QUE NO EXISTE"},
         ]
 
         self.NO_COORDINATOR_KNOW_METADATA_FIXTURE = [
-            {"key": "coordinator_landing_id", "value": "106390"},
+            {"key": "coordinator_landing_id", "value": "abc"},
             {"key": "known_coordinator", "value": "no"},
             {"key": "coordinator_name", "value": "PRUEBA DE QUE NO EXISTE"},
         ]
@@ -177,7 +174,7 @@ class TestCRMLeadServiceRestCase(HttpCase, RegistryMixin):
     def test_create_crm_lead__bad_request(self):
         # given http_client
         # self.url_open
-        # and a valid data
+        # and non valid data
         data = {
             "name": "ce_source_creation_ce_proposal FULL",
             "email_from": "dani@daniquilez.com",
@@ -185,5 +182,5 @@ class TestCRMLeadServiceRestCase(HttpCase, RegistryMixin):
         }
         # when we call for the creation of the crm lead
         response = self.client("/api/crm/crm-lead/create", data=json.dumps(data))
-        # then we obtain a 200 response code
+        # then we obtain a 400 response code. Bad request.
         self.assertEqual(response.status_code, 400)

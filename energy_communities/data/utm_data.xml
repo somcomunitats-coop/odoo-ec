@@ -2,35 +2,46 @@
 <odoo>
     <record model="utm.source" id="ce_source_general_info">
         <field name="name">Information Newsletter (general)</field>
+        <field name="source_ext_id">energy_communities.ce_source_general_info</field>
     </record>
     <record model="utm.source" id="ce_source_future_location_ce_info">
         <field name="name">Information about future CE by location</field>
+        <field name="source_ext_id">energy_communities.ce_source_future_location_ce_info</field>
     </record>
     <record model="utm.source" id="ce_source_existing_ce_info">
         <field name="name">Information about existing CE</field>
+        <field name="source_ext_id">energy_communities.ce_source_existing_ce_info</field>
     </record>
     <record model="utm.source" id="ce_source_existing_ce_contact">
         <field name="name">Contact a existing CE</field>
+        <field name="source_ext_id">energy_communities.ce_source_existing_ce_contact</field>
     </record>
     <record model="utm.source" id="ce_source_general_contact">
         <field name="name">Contact to the Platform</field>
+        <field name="source_ext_id">energy_communities.ce_source_general_contact</field>
     </record>
     <record model="utm.source" id="ce_source_creation_ce_proposal">
         <field name="name">CE creation</field>
+        <field name="source_ext_id">energy_communities.ce_source_creation_ce_proposal</field>
     </record>
     <record model="utm.source" id="ce_source_coord_web_hiring">
         <field name="name">Contact a coordinator</field>
+        <field name="source_ext_id">energy_communities.ce_source_coord_web_hiring</field>
     </record>
     <record model="utm.source" id="ce_source_coord_web_other">
         <field name="name">Information about coordinators</field>
+        <field name="source_ext_id">energy_communities.ce_source_coord_web_other</field>
     </record>
     <record model="utm.source" id="ce_source_existing_coord_contact">
         <field name="name">Contact existing coordinator</field>
+        <field name="source_ext_id">energy_communities.ce_source_existing_coord_contact</field>
     </record>
     <record model="utm.source" id="ce_source_existing_coord_info">
         <field name="name">Information about existing coordinator</field>
+        <field name="source_ext_id">energy_communities.ce_source_existing_coord_info</field>
     </record>
     <record model="utm.source" id="ce_source_tariffs_page_contact">
         <field name="name">Tariffs page contact</field>
+        <field name="source_ext_id">energy_communities.ce_source_tariffs_page_contact</field>
     </record>
 </odoo>

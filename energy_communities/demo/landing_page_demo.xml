@@ -1,0 +1,21 @@
+<odoo>
+  <record id="landing_page_coordinator_company_demo_1" model="landing.page">
+    <field name="name">Coordinator company 1 landing demo</field>
+    <field name="hierarchy_level">coordinator</field>
+    <field name="company_id" ref="energy_communities.coordinator_company_1" />
+    <field name="wp_landing_page_id">1234</field>
+    <field name="slug_id">coordinator-company-1-landing-demo</field>
+  </record>
+
+  <function name="write" model="res.company">
+    <value
+      model="res.company"
+      eval="[obj(ref('energy_communities.coordinator_company_1')).id]"
+    />
+    <value
+      eval="{
+        'landing_page_id': ref('landing_page_coordinator_company_demo_1'),
+      }"
+    />
+  </function>
+</odoo>
