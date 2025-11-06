@@ -107,6 +107,7 @@ class CRMLeadService(Component):
         params["metadata"].append({"key": "coordinator_id", "value": company.id})
         return True
 
+    # TODO: Add contact coordinator source mapping
     def _get_crm_lead_name(self, lead_id, params):
         source_xml_id = self._get_metadata_value(params, "source_xml_id")
         email = params["email_from"]

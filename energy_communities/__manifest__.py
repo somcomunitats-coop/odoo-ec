@@ -48,6 +48,7 @@
         "demo/res_lang_demo.xml",
         "demo/res_company_demo.xml",
         "demo/res_user_demo.xml",
+        "demo/landing_page_demo.xml",
     ],
     "data": [
         "security/res_groups_roles_data.xml",
