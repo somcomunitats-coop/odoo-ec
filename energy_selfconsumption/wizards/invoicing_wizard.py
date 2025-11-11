@@ -343,6 +343,7 @@ class InvoicingWizard(models.TransientModel):
 
             if invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED:
                 invoice = self._process_energy_delivered_contract(contract)
+                invoice.write({"energy_delivered": self.power})
                 generated_invoices.append(invoice)
 
             elif invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_ENERGY_CUSTOM:
@@ -351,6 +352,7 @@ class InvoicingWizard(models.TransientModel):
                         _("CSV file is required for energy custom mode")
                     )
                 invoice = self._process_energy_custom_contract(df, contract)
+                invoice.write({"energy_delivered": contract_data["energy"]})
                 generated_invoices.append(invoice)
 
         return generated_invoices

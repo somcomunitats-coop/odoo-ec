@@ -101,7 +101,7 @@ Main components:
             <field name="description_sale" >CUPS: #code#
 Owner: #owner_id#
 Invoicing period: #START# - #END#
-CAU: #cau
+CAU: #cau#
             </field>
         </record>
 
@@ -125,7 +125,7 @@ Total installed nominal power (kW): #power#
 Partition coefficient: #coefficient#
 Daily nominal power acquired: #power# kWn * #coefficient# = #power_acquired# kWn/day
 Days to be invoiced: #days_invoiced# days
-Total amount invoiced:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount#
+Total amount invoiced:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount# kWn
             </field>
         </record>
 
