@@ -48,7 +48,7 @@
         "views/voluntary_share_interest_return_views.xml",
         "views/subscription_request_view.xml",
         "views/website_subscription_template.xml",
-        # "views/res_config_settings_view.xml",
+        "views/res_config_settings_view.xml",
         "wizards/multicompany_easy_creation.xml",
         "wizards/voluntary_share_interest_return.xml",
     ],
