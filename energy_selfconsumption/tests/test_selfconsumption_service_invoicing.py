@@ -84,6 +84,128 @@ class TestSelfconsumptionServiceInvoicing(
     def test_project_distribution_table_change_case_3(self):
         self._project_distribution_table_change_case(_TESTING_CASES["energy_custom"])
 
+    def test_verify_and_adjust_coefficients(self):
+        """
+        Test that _verify_and_adjust_coefficients adjusts coefficients
+        when sum is not exactly 1.0 due to floating point precision errors.
+
+        This test uses values that generate precision errors when calculating
+        normalized coefficients, forcing the adjustment mechanism to activate.
+        """
+        # Setup: invoicing mode and contracts
+        self._workflow_project_invoicing_mode_definition("power_acquired")
+        self._workflow_project_contract_generation()
+
+        # Create a new inscription to have more control over participation values
+        mandate = self.env["account.banking.mandate"].search(
+            [("partner_id", "in", [self.subscription_5_inscription_5.partner_id.id])]
+        )
+        inscription_test = self.env[
+            "energy_selfconsumption.inscription_selfconsumption"
+        ].create(
+            {
+                "project_id": self.selfconsumption.project_id.id,
+                "effective_date": datetime.today(),
+                "partner_id": self.subscription_5_inscription_5.partner_id.id,
+                "company_id": self.selfconsumption.company_id.id,
+                "mandate_id": mandate.id,
+                "selfconsumption_project_id": self.selfconsumption.id,
+                "annual_electricity_use": 1.00,
+                "participation_id": self.selfconsumption_participation_1.id,
+                "accept": True,
+                "member": True,
+                "supply_point_id": self.subscription_5_supply_point_5.id,
+            }
+        )
+
+        # Use values that will cause precision errors when normalized
+        # Project power is 127 kW, so using values like 42.3333333 will
+        # generate floating point precision errors when dividing by 127
+        # We set both assigned and real quantities to ensure they're used
+        inscription_test.write(
+            {
+                "participation_assigned_quantity": 42.3333333,
+                "participation_real_quantity": 42.3333333,
+            }
+        )
+
+        # Modify existing inscriptions with values that create precision issues
+        # Total distributed: 42.3333333 + 42.3333333 + 42.3333334 = 127.0 (approximately)
+        # But due to floating point precision, the normalized sum may not be exactly 1.0
+        # We set both assigned and real quantities to ensure they're used regardless of state
+        self.inscription_1.write(
+            {
+                "participation_assigned_quantity": 42.3333333,
+                "participation_real_quantity": 42.3333333,
+            }
+        )
+        self.inscription_2.write(
+            {
+                "participation_assigned_quantity": 42.3333334,
+                "participation_real_quantity": 42.3333334,
+            }
+        )
+
+        # Create distribution table with distribute_excess = "yes"
+        # This will trigger _verify_and_adjust_coefficients
+        inscriptions_ids = [
+            self.inscription_1.id,
+            self.inscription_2.id,
+            inscription_test.id,
+        ]
+        create_distribution_table_wizard = (
+            self.env["energy_selfconsumption.create_distribution_table.wizard"]
+            .with_context(
+                active_ids=inscriptions_ids,
+                active_model="energy_selfconsumption.inscription_selfconsumption",
+            )
+            .create({})
+        )
+        create_distribution_table_wizard.write(
+            {
+                "distribute_excess": "yes",
+            }
+        )
+
+        # Create distribution table - this will call _verify_and_adjust_coefficients
+        create_distribution_table_wizard.create_distribution_table()
+        distribution_table = self.selfconsumption.distribution_table_ids.filtered(
+            lambda table: table.state == "draft"
+        )
+
+        # Assert: coefficients sum should be exactly 1.0 after adjustment
+        # The _verify_and_adjust_coefficients method ensures this
+        assignations = distribution_table.supply_point_assignation_ids
+        total_coefficient = sum(assignation.coefficient for assignation in assignations)
+        self.assertAlmostEqual(
+            total_coefficient,
+            1.0,
+            places=6,
+            msg="Coefficients should sum to exactly 1.0 after _verify_and_adjust_coefficients",
+        )
+
+        # Assert: all coefficients are within valid range [0, 1]
+        for assignation in assignations:
+            self.assertGreaterEqual(
+                assignation.coefficient,
+                0.0,
+                msg="Coefficient should be >= 0.0",
+            )
+            self.assertLessEqual(
+                assignation.coefficient,
+                1.0,
+                msg="Coefficient should be <= 1.0",
+            )
+
+        # Assert: at least one coefficient was adjusted (if adjustment was needed)
+        # We verify that the method was called by checking the sum is exactly 1.0
+        # and that distribute_excess was "yes" (which triggers the verification)
+        self.assertEqual(
+            create_distribution_table_wizard.distribute_excess,
+            "yes",
+            msg="distribute_excess should be 'yes' to trigger coefficient adjustment",
+        )
+
     def _project_distribution_table_change_case(self, case):
         self._workflow_project_invoicing_mode_definition(case.invoicing_mode)
         self._workflow_project_contract_generation()

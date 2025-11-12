@@ -47,7 +47,7 @@ managing collective self-consumption projects under Spanish energy regulations.
     """,
     "author": "Som IT SCCL & Som Energia SCCL",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
-    "version": "16.0.0.5.13",
+    "version": "16.0.0.5.14",
     "category": "Energy Management",
     "license": "AGPL-3",
     "maintainers": ["coopdevs", "som-energia"],
@@ -80,7 +80,7 @@ managing collective self-consumption projects under Spanish energy regulations.
     ],
     # External Python dependencies
     "external_dependencies": {
-        "python": ["pandas>=2.0.3", "numpy>=1.24.4", "openupgradelib>=3.6.1"]
+        "python": ["pandas>=2.0.3", "numpy>=1.24.4", "openupgradelib>=3.12.0"]
     },
     # Data files
     "data": [
