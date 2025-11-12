@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2025-11-12 (v16.0.0.5.0)
+
+- Moves all new fields of res company model to res_config_setting
+
 ### 2025-11-03 (v16.0.0.4.1)
 
 - Adjustments for new public form for new community creation
