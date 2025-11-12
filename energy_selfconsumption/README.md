@@ -183,6 +183,13 @@ team or refer to the project documentation.
 
 ## Changelog
 
+### 2025-11-03 (v16.0.0.5.13)
+
+- Changes to translations of the power acquired product description.
+- Fixed error where the amount of energy was not correctly transferred to the invoice in
+  energy_delivery contracts.
+- The process of altering registrations is now more intuitive for the user.
+
 ### 2025-11-03 (v16.0.0.5.12)
 
 - Improve testing for selfconsumption journal and bugfix on create distribuition table

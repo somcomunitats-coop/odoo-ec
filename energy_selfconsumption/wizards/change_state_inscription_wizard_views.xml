@@ -26,12 +26,13 @@ Main functionalities:
                     <sheet>
                         <!-- Editable tree for inscription state changes -->
                         <field name="change_state_inscription_lines_wizard_ids" nolabel="1">
-                            <tree editable="bottom">
+                            <tree editable="bottom" create="0" delete="1" edit="1">
+                                <field name="change_state_inscription_wizard_id" invisible="1" />
                                 <!-- Inscription identification (readonly) -->
                                 <field name="inscription_id" readonly="1" force_save="1"/>
+                                <field name="state" readonly="1" force_save="1"/>
                                 
                                 <!-- Editable state and quantity fields -->
-                                <field name="state" />
                                 <field name="participation_real_quantity" />
                             </tree>
                         </field>

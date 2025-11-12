@@ -66,7 +66,7 @@ Total installed nominal power (kW): #power#
 Partition coefficient: #coefficient#
 Daily nominal power acquired: #power# kWn * #coefficient# = #power_acquired# kWn/day
 Days to be invoiced: #days_invoiced# days
-Total amount invoiced:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount#</field>
+Total amount invoiced:  #days_invoiced# days * #power_acquired# kWn/day = #total_amount# kWn</field>
             <field name="product_id" search="[('product_tmpl_id', '=', ref('product_product_power_acquired_product_template'))]" />
             <field name="automatic_price" eval="True" />
             <field name="qty_type">variable</field>
