@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.7.1",
+    "version": "16.0.0.7.2",
     "depends": [
         "account",
         "account_banking_mandate",
@@ -89,6 +89,12 @@
         "wizards/create_users_wizard.xml",
         "wizards/change_coordinator_wizard.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "energy_communities/static/src/js/switch_company_menu.js",
+            "energy_communities/static/src/xml/switch_company_menu.xml",
+        ],
+    },
     "installable": True,
     "application": True,
     "auto_install": False,
