@@ -347,6 +347,9 @@ class CreateDistributionTableWizard(models.TransientModel):
             assignation_values, distribution_table
         )
 
+        # Verify and adjust coefficients if needed
+        self._verify_and_adjust_coefficients(distribution_table)
+
     def _get_supply_point_assignation_values(
         self, inscription, distribution_table, inscription_count
     ):
@@ -457,6 +460,69 @@ class CreateDistributionTableWizard(models.TransientModel):
         else:
             # Linear distribution (equal shares)
             return excess_amount / inscription_count
+
+    def _verify_and_adjust_coefficients(self, distribution_table):
+        """
+        Verify and adjust coefficients to ensure sum equals 1.0
+
+        This method checks if percentage_of_distributed_power is 100% or
+        distribute_excess is 'yes', and if so, verifies that the sum of all
+        coefficients equals 1.0. If not, it adjusts the last assignation
+        to make the sum exactly 1.0.
+
+        Args:
+            distribution_table: Distribution table record
+        """
+        # Check if verification is needed
+        should_verify = (
+            self.percentage_of_distributed_power == PERCENTAGE_MULTIPLIER
+            or self.distribute_excess == DISTRIBUTE_EXCESS_YES
+        )
+
+        if not should_verify:
+            return
+
+        # Get all assignations for this distribution table
+        assignations = distribution_table.supply_point_assignation_ids
+        if not assignations:
+            return
+
+        # Calculate total coefficient sum
+        total_coefficient = sum(assignation.coefficient for assignation in assignations)
+
+        # Check if adjustment is needed (with tolerance for floating point precision)
+        tolerance = 0.000001
+        difference = 1.0 - total_coefficient
+
+        if abs(difference) > tolerance:
+            # Get the assignation with the highest participation (coefficient)
+            # If multiple have the same max value, get the first one found
+            max_assignation = max(assignations, key=lambda a: a.coefficient)
+
+            # Store old coefficient for logging
+            old_coefficient = max_assignation.coefficient
+
+            # Calculate new coefficient for the assignation with max participation
+            new_coefficient = old_coefficient + difference
+
+            # Ensure coefficient stays within valid range [0, 1]
+            new_coefficient = max(0.0, min(1.0, new_coefficient))
+
+            # Update assignation with max participation
+            max_assignation.write(
+                {
+                    "coefficient": new_coefficient,
+                    # Recalculate energy_shares will be done automatically by compute
+                }
+            )
+
+            logger.info(
+                "Adjusted coefficient for assignation %s (max participation): %.6f -> %.6f (difference: %.6f)",
+                max_assignation.id,
+                old_coefficient,
+                new_coefficient,
+                difference,
+            )
 
     # Utility methods
     def get_wizard_summary(self):

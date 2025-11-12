@@ -80,7 +80,7 @@ managing collective self-consumption projects under Spanish energy regulations.
     ],
     # External Python dependencies
     "external_dependencies": {
-        "python": ["pandas>=2.0.3", "numpy>=1.24.4", "openupgradelib>=3.6.1"]
+        "python": ["pandas>=2.0.3", "numpy>=1.24.4", "openupgradelib>=3.12.0"]
     },
     # Data files
     "data": [
