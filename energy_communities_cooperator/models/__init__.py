@@ -9,3 +9,4 @@ from . import res_company
 from . import res_users
 from . import subscription_request
 from . import voluntary_share_interest_return
+from . import res_config_settings
