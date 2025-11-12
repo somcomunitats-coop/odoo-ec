@@ -6,6 +6,11 @@
 
 ## Changelog
 
+### 2025-11-12 (v16.0.0.3.2)
+
+- Fixed translation from Catalan in the energy_communities_crm module that affects the
+  new community form.
+
 ### 2025-11-06 (v16.0.0.3.1)
 
 - Testing CRMLead mappers
