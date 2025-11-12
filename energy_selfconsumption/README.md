@@ -183,7 +183,7 @@ team or refer to the project documentation.
 
 ## Changelog
 
-### 2025-11-03 (v16.0.0.5.13)
+### 2025-11-12 (v16.0.0.5.13)
 
 - Changes to translations of the power acquired product description.
 - Fixed error where the amount of energy was not correctly transferred to the invoice in
