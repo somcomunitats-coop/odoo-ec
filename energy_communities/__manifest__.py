@@ -36,6 +36,12 @@
         "sales_team",
         "website_event",
     ],
+    "external_dependencies": {
+        "python": [
+            "odoo-test-helper==2.1.1",
+            "responses==0.25.8",
+        ]
+    },
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Cooperative management",
