@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <template
+        id="become_energy_communities_cooperator_es_share_div"
+        inherit_id="cooperator_website.shares_template"
+        name="Removing Share div"
+    >
+        <xpath expr="//div[@name='share_div']" position="attributes">
+            <attribute name="hidden" remove="1"/>
+        </xpath>
+
+    </template>
+
     <template id="main_form_template_ccee" inherit_id="cooperator_website.main_form_template">
       <xpath expr="//div[@id='wrap']//h1" position="replace">
             <h1 class="mt-4 text-center">
