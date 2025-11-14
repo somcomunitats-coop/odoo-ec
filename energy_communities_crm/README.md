@@ -6,6 +6,10 @@
 
 ## Changelog
 
+### 2025-11-14 (v16.0.0.3.3)
+
+- Fixed unitary tests
+
 ### 2025-11-12 (v16.0.0.3.2)
 
 - Fixed translation from Catalan in the energy_communities_crm module that affects the

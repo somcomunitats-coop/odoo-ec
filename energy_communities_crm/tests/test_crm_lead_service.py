@@ -71,13 +71,13 @@ class TestCRMLeadServiceRestCase(HttpCase, RegistryMixin):
         ]
 
         self.NO_COORDINATOR_METADATA_FIXTURE = [
-            {"key": "coordinator_landing_id", "value": "abc"},
+            {"key": "coordinator_landing_id", "value": "9999"},
             {"key": "known_coordinator", "value": "yes"},
             {"key": "coordinator_name", "value": "PRUEBA DE QUE NO EXISTE"},
         ]
 
         self.NO_COORDINATOR_KNOW_METADATA_FIXTURE = [
-            {"key": "coordinator_landing_id", "value": "abc"},
+            {"key": "coordinator_landing_id", "value": "9999"},
             {"key": "known_coordinator", "value": "no"},
             {"key": "coordinator_name", "value": "PRUEBA DE QUE NO EXISTE"},
         ]

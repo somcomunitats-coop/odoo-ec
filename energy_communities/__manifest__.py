@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.7.2",
+    "version": "16.0.0.7.3",
     "depends": [
         "account",
         "account_banking_mandate",
@@ -36,6 +36,16 @@
         "sales_team",
         "website_event",
     ],
+    "external_dependencies": {
+        "python": [
+            "odoo-test-helper==2.1.1",
+            "responses==0.25.8",
+            "Faker==38.0.0",
+            "python-keycloak==5.1.1",
+            "python-slugify==8.0.1",
+            "sentry-sdk==1.9.0",
+        ]
+    },
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Cooperative management",
