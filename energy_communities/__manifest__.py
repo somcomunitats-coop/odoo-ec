@@ -68,6 +68,7 @@
         "security/ir_rule_data_landing_page.xml",
         "security/ir_rule_data_mail.xml",
         "security/ir_rule_data_partner.xml",
+        "security/ir_rule_data_maps.xml",
         "data/product_data.xml",
         "data/auth_oauth_provider_data.xml",
         "data/ir_cron.xml",
