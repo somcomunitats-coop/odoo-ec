@@ -41,6 +41,9 @@
             "odoo-test-helper==2.1.1",
             "responses==0.25.8",
             "Faker==38.0.0",
+            "python-keycloak==5.1.1",
+            "python-slugify==8.0.1",
+            "sentry-sdk==1.9.0",
         ]
     },
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
