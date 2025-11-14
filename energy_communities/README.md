@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2025-11-14 (v16.0.0.7.3)
+
+- Add python dependecies
+
 ### 2025-11-12 (v16.0.0.7.2)
 
 - Now we have a input search for select companies and you can select all companies or
