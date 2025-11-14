@@ -42,6 +42,7 @@
         "views/share_line_views.xml",
         "views/cooperative_membership_views.xml",
         "views/operation_request_views.xml",
+        "views/product_views.xml",
         "views/res_company_views.xml",
         "views/res_partner_views.xml",
         "views/res_company_views.xml",
