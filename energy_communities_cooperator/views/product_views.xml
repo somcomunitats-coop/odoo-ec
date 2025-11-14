@@ -15,6 +15,10 @@
                         <field name="url_individual" attrs="{'invisible':['|',('display_on_website','=',False),('by_individual','=',False)]}"/><br/>
                         <field name="url_company" attrs="{'invisible':['|',('display_on_website','=',False),('by_company','=',False)]}"/>
                     </div>
+                    <div class="form-group">
+                        <field name="product_website" />
+                        <label for="Product selector in BASE form" />
+                    </div>
                 </xpath>
             </field>
         </record>
