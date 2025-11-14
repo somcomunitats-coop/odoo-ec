@@ -40,6 +40,7 @@
         "python": [
             "odoo-test-helper==2.1.1",
             "responses==0.25.8",
+            "Faker==38.0.0",
         ]
     },
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",
