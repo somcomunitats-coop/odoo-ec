@@ -5,14 +5,28 @@ from odoo.http import request
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
+    def _compute_url(self):
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        for record in self:
+            record.url_individual = (
+                f"{base_url}/become_cooperator?odoo_company_id={record.company_id.id}"
+            )
+            record.url_company = f"{base_url}/become_company_cooperator?odoo_company_id={record.company_id.id}"
+
     mail_template = fields.Many2one(
         comodel_name="mail.template",
         string="Certificate email template",
         domain=[("model", "=", "res.partner")],
         help="If left empty, the default global mail template will be used.",
     )
+    url_individual = fields.Char(
+        String="URL individual", compute="_compute_url", readonly=True
+    )
+    url_company = fields.Char(
+        String="URL company", compute="_compute_url", readonly=True
+    )
 
-    # TODO: This must be integrated on new coopeator version
+    # TODO: This must be interated on new coopeator version
     def get_web_share_products(self, is_company):
         """We are fully overriding this function in order to make it multi-company sensitive"""
 

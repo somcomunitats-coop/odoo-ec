@@ -10,6 +10,12 @@
                     <attribute name="string">Activate for the BASE form</attribute>
                     <attribute name="help">By checking this box, this product will be considered for display on the BASE form for its category.</attribute>
                 </field>
+                <xpath expr="//label[@for='display_on_website']" position="after">
+                    <div class="form-group">
+                        <field name="url_individual" attrs="{'invisible':['|',('display_on_website','=',False),('by_individual','=',False)]}"/><br/>
+                        <field name="url_company" attrs="{'invisible':['|',('display_on_website','=',False),('by_company','=',False)]}"/>
+                    </div>
+                </xpath>
             </field>
         </record>
     </data>
