@@ -10,16 +10,28 @@
                     <attribute name="string">Activate for the BASE form</attribute>
                     <attribute name="help">By checking this box, this product will be considered for display on the BASE form for its category.</attribute>
                 </field>
+                <field name="default_share_product" position="attributes">
+                    <attribute name="string">Default product in Base form</attribute>
+                </field>
                 <xpath expr="//label[@for='display_on_website']" position="after">
                     <div class="form-group">
-                        <field name="url_individual" attrs="{'invisible':['|',('display_on_website','=',False),('by_individual','=',False)]}"/><br/>
-                        <field name="url_company" attrs="{'invisible':['|',('display_on_website','=',False),('by_company','=',False)]}"/>
+                        <field name="url_individual" attrs="{'invisible':['|','|',('display_on_website','=',False),('by_individual','=',False),('activate_form_specific_products','=',True)]}"/><br/>
+                        <field name="url_company" attrs="{'invisible':['|','|',('display_on_website','=',False),('by_company','=',False),('activate_form_specific_products','=',True)]}"/>
+                    </div>
+                    <field name="activate_form_specific_products" />
+                    <label for="activate_form_specific_products" string="Activate form specific products" />
+                    <div class="form-group">
+                        <label for="product_external_id" string="External ID" />
+                        <field name="product_external_id" />
                     </div>
                     <div class="form-group">
-                        <field name="product_website" />
-                        <label for="product_website" string="Product selector in BASE form" />
+                        <field name="url_specific_individual" attrs="{'invisible':['|',('activate_form_specific_products','=',False),('by_individual','=',False)]}"/><br/>
+                        <field name="url_specific_company" attrs="{'invisible':['|',('activate_form_specific_products','=',False),('by_company','=',False)]}"/>
                     </div>
                 </xpath>
+                <field name="mail_template" position="after">
+                    <field name="html_specific_products" attrs="{'invisible':[('activate_form_specific_products','=',False)]}"/>
+                </field>
             </field>
         </record>
     </data>

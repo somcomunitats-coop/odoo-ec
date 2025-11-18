@@ -17,17 +17,23 @@
   </record>
 
   <record model="ir.ui.view" id="view_company_form">
-    <field name="name">res.company.form.easymy.coop</field>
-    <field name="inherit_id" ref="base.view_company_form" />
-    <field name="model">res.company</field>
-    <field name="arch" type="xml">
-      <xpath expr="//notebook" position="inside">
-        <page string="Cooperator shares">
-          <group string="Global cooperative settings">
-            <field name="subscription_journal_id" readonly="0" />
-          </group>
-        </page>
-      </xpath>
-    </field>
+        <field name="name">res.company.form.easymy.coop</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="model">res.company</field>
+        <field name="arch" type="xml">
+          <xpath expr="//div[@class='oe_title']/h1" position="after">
+            <h2>
+              <label for="company_external_id" string="External ID" />
+              <field name="company_external_id" />
+            </h2>
+          </xpath>
+          <xpath expr="//notebook" position="inside">
+            <page string="Cooperator shares">
+              <group string="Global cooperative settings">
+                <field name="subscription_journal_id" readonly="0" />
+              </group>
+            </page>
+        </xpath>
+      </field>
   </record>
 </odoo>
