@@ -13,9 +13,6 @@ class ProductTemplate(models.Model):
             )
             record.url_company = f"{base_url}/become_company_cooperator?odoo_company_id={record.company_id.id}"
 
-    def _domain_product_website(self):
-        return [("id", "in", self.get_web_share_products(True))]
-
     mail_template = fields.Many2one(
         comodel_name="mail.template",
         string="Certificate email template",
@@ -29,11 +26,7 @@ class ProductTemplate(models.Model):
         String="URL company", compute="_compute_url", readonly=True
     )
 
-    product_website = fields.Many2one(
-        domain=lambda self: self._domain_product_website(),
-        comodel_name="product.website",
-        string="Product selector in BASE form",
-    )
+    product_website = fields.Boolean(string="Product selector in BASE form")
 
     # TODO: This must be interated on new coopeator version
     def get_web_share_products(self, is_company):
