@@ -37,14 +37,40 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             except:
                 pass
 
-        if ("odoo_company_id" in kwargs) and (
-            not target_odoo_company_id
-            or not request.env["res.company"]
-            .sudo()
-            .search([("id", "=", target_odoo_company_id)])
+        if kwargs.get("external_company_id", False):
+            try:
+                target_odoo_company_id = (
+                    request.env["res.company"]
+                    .sudo()
+                    .search(
+                        [
+                            (
+                                "company_external_id",
+                                "=",
+                                kwargs.get("external_company_id"),
+                            )
+                        ]
+                    )
+                    .id
+                )
+            except:
+                pass
+
+        if (
+            ("odoo_company_id" in kwargs)
+            or ("external_company_id" in kwargs)
+            and (
+                not target_odoo_company_id
+                or not request.env["res.company"]
+                .sudo()
+                .search([("id", "=", target_odoo_company_id)])
+            )
         ):
             return http.Response(
-                _("Not valid parameter value [odoo_company_id]"), status=500
+                _(
+                    "Not valid parameter value [odoo_company_id] or [external_company_id]"
+                ),
+                status=500,
             )
 
         ctx = request.context.copy()

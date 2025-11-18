@@ -7,6 +7,7 @@
     >
         <xpath expr="//div[@name='share_div']" position="attributes">
             <attribute name="hidden" remove="1"/>
+            <attribute name="t-if">display_product_website</attribute>
         </xpath>
 
     </template>
