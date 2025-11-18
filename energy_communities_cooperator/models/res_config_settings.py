@@ -38,3 +38,8 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.voluntary_share_email_template",
         readonly=False,
     )
+    product_website = fields.Boolean(
+        string="Product selector in BASE form",
+        related="company_id.product_website",
+        readonly=False,
+    )

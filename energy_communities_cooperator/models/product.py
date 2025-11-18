@@ -1,3 +1,5 @@
+import hashlib
+
 from odoo import api, fields, models
 from odoo.http import request
 
@@ -8,10 +10,21 @@ class ProductTemplate(models.Model):
     def _compute_url(self):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for record in self:
-            record.url_individual = (
-                f"{base_url}/become_cooperator?odoo_company_id={record.company_id.id}"
-            )
-            record.url_company = f"{base_url}/become_company_cooperator?odoo_company_id={record.company_id.id}"
+            record.url_individual = f"{base_url}/become_cooperator?external_company_id={record.company_id.company_external_id}"
+            record.url_company = f"{base_url}/become_company_cooperator?external_company_id={record.company_id.company_external_id}"
+
+    def _compute_url_specific(self):
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        for record in self:
+            record.url_specific_individual = f"{base_url}/become_cooperator?external_company_id={record.company_id.company_external_id}&product_external_id={record.product_external_id}"
+            record.url_specific_company = f"{base_url}/become_company_cooperator?external_company_id={record.company_id.company_external_id}&product_external_id={record.product_external_id}"
+
+    @api.depends("name")
+    def _compute_external_id(self):
+        for record in self:
+            record.product_external_id = hashlib.sha1(
+                str(record.id).encode()
+            ).hexdigest()
 
     mail_template = fields.Many2one(
         comodel_name="mail.template",
@@ -26,7 +39,21 @@ class ProductTemplate(models.Model):
         String="URL company", compute="_compute_url", readonly=True
     )
 
-    product_website = fields.Boolean(string="Product selector in BASE form")
+    activate_form_specific_products = fields.Boolean(
+        string="Activate form specific products"
+    )
+
+    url_specific_individual = fields.Char(
+        String="URL individual", compute="_compute_url_specific", readonly=True
+    )
+    url_specific_company = fields.Char(
+        String="URL company", compute="_compute_url_specific", readonly=True
+    )
+    product_external_id = fields.Char(
+        string="External ID", compute="_compute_external_id", store=True, translate=True
+    )
+
+    html_specific_products = fields.Html(string="Custom paragraph in specific form")
 
     # TODO: This must be interated on new coopeator version
     def get_web_share_products(self, is_company):

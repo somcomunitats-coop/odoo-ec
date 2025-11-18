@@ -1,3 +1,5 @@
+import hashlib
+
 from odoo import fields, models
 from odoo.tools.translate import _
 
@@ -5,6 +7,12 @@ from odoo.tools.translate import _
 class ResCompany(models.Model):
     _name = "res.company"
     _inherit = "res.company"
+
+    def _compute_company_external_id(self):
+        for record in self:
+            record.company_external_id = hashlib.sha1(
+                str(record.id).encode()
+            ).hexdigest()
 
     voluntary_share_id = fields.Many2one(
         comodel_name="product.template",
@@ -83,6 +91,12 @@ class ResCompany(models.Model):
             record.numberof_effective_cooperators = (
                 record.numberof_effective_members + record.numberof_effective_inviteds
             )
+
+    product_website = fields.Boolean(string="Product selector in BASE form")
+
+    company_external_id = fields.Char(
+        string="External ID", compute="_compute_company_external_id", store=True
+    )
 
     def action_open_volutary_share_interest_return_wizard(self):
         wizard = self.env["voluntary.share.interest.return.wizard"].create(
