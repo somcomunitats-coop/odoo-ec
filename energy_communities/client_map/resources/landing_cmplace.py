@@ -276,9 +276,12 @@ class LandingCmPlace:
                 self._get_or_create_cooperator_button("become_company_cooperator").id
             )
         else:
-            cooperator_contact_button = self._get_or_create_cooperator_button("contact")
-            if cooperator_contact_button:
-                defined_cooperator_buttons_ids.append(cooperator_contact_button.id)
+            button = self._get_or_create_cooperator_button("contact")
+            if button:
+                defined_cooperator_buttons_ids.append(button.id)
+        button = self._get_or_create_cooperator_button("landing_page")
+        if button:
+            defined_cooperator_buttons_ids.append(button.id)
         # remove old external_links if needed
         for existing_cooperator_button in existing_cooperator_buttons:
             if (
@@ -294,20 +297,37 @@ class LandingCmPlace:
         )
         for cooperator_button in self.landing.cooperator_button_ids:
             if cooperator_button.visibility == "visible":
+                if cooperator_button.mode == "landing_page":
+                    ext_link_values = {
+                        "target": "_top",
+                        "color": self.button_configs["green"].id,
+                    }
+                    # setup place social shareable url from landing_page button
+                    place.write({"social_shareable_url": cooperator_button.url})
+                    for lang in LandingClientConfig.TRANSLATION_LANGS_MANAGED:
+                        place.with_context(lang=lang).write(
+                            {
+                                "social_shareable_url": cooperator_button.with_context(
+                                    lang=lang
+                                ).url
+                            }
+                        )
+                else:
+                    ext_link_values = {
+                        "target": "_blank",
+                        "color": self.button_configs["yellow"].id,
+                    }
                 new_external_links_ids.append(
                     self._get_or_create_external_link(
                         place.id,
                         cooperator_button.name,
                         cooperator_button.url,
-                        "_blank",
-                        self.button_configs["yellow"].id,
+                        ext_link_values["target"],
+                        ext_link_values["color"],
                         cooperator_button.sort_order,
                         cooperator_button,
                     ).id
                 )
-        new_external_links_ids.append(
-            self._landing_external_link(place, len(new_external_links_ids) - 1).id
-        )
         # remove old external_links if needed
         for existing_external_link in existing_external_links:
             if existing_external_link.id not in new_external_links_ids:
@@ -333,11 +353,15 @@ class LandingCmPlace:
             }
         if cooperator_mode in ["become_cooperator", "become_company_cooperator"]:
             # become_cooperator scenario
-            update_create_dict[
-                "url"
-            ] = self.landing.company_id.get_become_cooperator_button_link(
-                cooperator_mode, "ca_ES"
+            update_create_dict["url"] = (
+                self.landing.company_id.get_become_cooperator_button_link(
+                    cooperator_mode, "ca_ES"
+                ),
             )
+        elif cooperator_mode == "landing_page":
+            # landing page scenario
+            if self.wp_landing_data["link"]:
+                update_create_dict["url"] = self.wp_landing_data["link"]
         else:
             # contact_us scenario
             if self.wp_landing_data["link"]:
@@ -365,43 +389,40 @@ class LandingCmPlace:
 
     def _become_cooperator_button_translation(self, cooperator_button, lang):
         mode = cooperator_button.mode
+        cooperator_button.with_context(lang=lang).write(
+            {
+                "name": self.landing.company_id.get_become_cooperator_button_label(
+                    mode, lang
+                )
+            }
+        )
         if mode in ["become_cooperator", "become_company_cooperator"]:
             # become_cooperator scenario
             cooperator_button.with_context(lang=lang).write(
                 {
-                    "name": self.landing.company_id.get_become_cooperator_button_label(
-                        mode, lang
-                    ),
                     "url": self.landing.company_id.get_become_cooperator_button_link(
                         mode, lang
                     ),
                 }
             )
         else:
-            # contact_us scenario
-            cooperator_button.with_context(lang=lang).write(
-                {
-                    "name": self.landing.company_id.get_become_cooperator_button_label(
-                        mode, lang
-                    ),
-                }
-            )
+            # contact_us and landing_page scenario
             if self.wp_landing_data["translations"]:
                 lang_short = lang[:2]
                 if lang_short == "en":
                     lang_short = "ca"  # odoo default "en" is on website "ca"
                 if lang_short in self.wp_landing_data["translations"].keys():
-                    cooperator_button.with_context(lang=lang).write(
-                        {
-                            "url": LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG[
-                                "contact"
-                            ].format(
-                                landing_link=self.wp_landing_data["translations"][
-                                    lang_short
-                                ]
-                            ),
-                        }
-                    )
+                    if mode == "contact":
+                        url = LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG[
+                            "contact"
+                        ].format(
+                            landing_link=self.wp_landing_data["translations"][
+                                lang_short
+                            ]
+                        )
+                    if mode == "landing_page":
+                        url = self.wp_landing_data["translations"][lang_short]
+                    cooperator_button.with_context(lang=lang).write({"url": url})
 
     def _get_or_create_external_link(
         self,
@@ -444,41 +465,6 @@ class LandingCmPlace:
                         "url": cooperator_button.with_context(lang=lang).url,
                     }
                 )
-        return external_link
-
-    def _landing_external_link(self, place, sort_order):
-        external_link = self._get_or_create_external_link(
-            place.id,
-            MapClientConfig.MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL["ca_ES"],
-            self.wp_landing_data["link"],
-            "_top",
-            self.button_configs["green"].id,
-            sort_order,
-        )
-        # setup social sahreable url for better sharing
-        place.write({"social_shareable_url": self.wp_landing_data["link"]})
-        # Translations
-        for lang in LandingClientConfig.TRANSLATION_LANGS_MANAGED:
-            external_link.with_context(lang=lang).write(
-                {
-                    "name": MapClientConfig.MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL[
-                        lang
-                    ],
-                }
-            )
-            if self.wp_landing_data["translations"]:
-                lang_short = lang[:2]
-                if lang_short in self.wp_landing_data["translations"].keys():
-                    place.with_context(lang=lang).write(
-                        {
-                            "social_shareable_url": self.wp_landing_data[
-                                "translations"
-                            ][lang_short]
-                        }
-                    )
-                    external_link.with_context(lang=lang).write(
-                        {"url": self.wp_landing_data["translations"][lang_short]}
-                    )
         return external_link
 
     def _apply_place_metadatas_translations(self, place):

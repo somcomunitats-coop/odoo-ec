@@ -55,6 +55,7 @@
     "license": "AGPL-3",
     "demo": [
         "demo/api_key_demo.xml",
+        "demo/cm_maps_demo.xml",
         "demo/res_lang_demo.xml",
         "demo/res_company_demo.xml",
         "demo/res_user_demo.xml",
