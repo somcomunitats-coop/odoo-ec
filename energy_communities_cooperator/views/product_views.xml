@@ -14,7 +14,7 @@
                     <attribute name="string">Default product in Base form</attribute>
                 </field>
                 <field name="display_on_website" position="before">
-                    <div class="form-group">
+                    <div class="form-group" invisible="1">
                         <label for="product_external_id" string="External ID" />
                         <field name="product_external_id" />
                     </div>
