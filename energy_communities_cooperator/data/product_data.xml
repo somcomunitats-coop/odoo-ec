@@ -10,6 +10,9 @@
     <record id="cooperator.product_category_company_share" model="product.category">
       <field name="data_xml_id">cooperator.product_category_company_share</field>
     </record>
+    <record id="energy_communities_cooperator.product_category_company_invited_share" model="product.category">
+        <field name="name">Registration of invited person/entity</field>
+    </record>
     <function name="write" model="ir.model.data">
       <function name="search" model="ir.model.data">
         <value
