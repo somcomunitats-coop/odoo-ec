@@ -351,27 +351,43 @@ class LandingCmPlace:
                     cooperator_mode, "ca_ES"
                 ),
             }
-        if cooperator_mode in ["become_cooperator", "become_company_cooperator"]:
+        url = False
+        if cooperator_mode == "become_cooperator":
             # become_cooperator scenario
-            update_create_dict["url"] = (
+            sort_order = 0
+            url = (
                 self.landing.company_id.get_become_cooperator_button_link(
                     cooperator_mode, "ca_ES"
                 ),
             )
-        elif cooperator_mode == "landing_page":
+        if cooperator_mode == "become_company_cooperator":
+            # become_cooperator scenario
+            sort_order = 1
+            url = (
+                self.landing.company_id.get_become_cooperator_button_link(
+                    cooperator_mode, "ca_ES"
+                ),
+            )
+        if cooperator_mode == "contact":
+            # contact_us scenario
+            sort_order = 2
+            if self.wp_landing_data["link"]:
+                url = LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG[
+                    "contact"
+                ].format(landing_link=self.wp_landing_data["link"])
+
+        if cooperator_mode == "landing_page":
+            sort_order = 3
             # landing page scenario
             if self.wp_landing_data["link"]:
-                update_create_dict["url"] = self.wp_landing_data["link"]
-        else:
-            # contact_us scenario
-            if self.wp_landing_data["link"]:
-                update_create_dict[
-                    "url"
-                ] = LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG["contact"].format(
-                    landing_link=self.wp_landing_data["link"]
-                )
-        if "url" in update_create_dict.keys():
-            if cooperator_button and update_create_dict:
+                url = self.wp_landing_data["link"]
+
+        if url:
+            update_create_dict = update_create_dict | {
+                "url": url,
+                "sort_order": sort_order,
+            }
+            if cooperator_button:
                 cooperator_button.write(update_create_dict)
             else:
                 cooperator_button = self.landing.env[
