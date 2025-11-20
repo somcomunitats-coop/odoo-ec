@@ -842,12 +842,19 @@ class Selfconsumption(models.Model):
         self._set_report_distribution_table()
         self.validate_state(self.state)
         tables_to_use = self.report_distribution_table
-        file_content = ""
+        file_content = StringIO()
         if tables_to_use.type == "fixed":
             for table in tables_to_use:
-                for assignation in table.supply_point_assignation_ids:
+                for index, assignation in enumerate(table.supply_point_assignation_ids):
                     coefficient_format = f"{assignation.coefficient:.6f}"
-                    file_content += f"{assignation.supply_point_id.code};{coefficient_format.replace('.', ',')}\r\n"
+                    if index == len(table.supply_point_assignation_ids) - 1:
+                        file_content.write(
+                            f"{assignation.supply_point_id.code};{coefficient_format.replace('.', ',')}"
+                        )
+                    else:
+                        file_content.write(
+                            f"{assignation.supply_point_id.code};{coefficient_format.replace('.', ',')}\r\n"
+                        )
         else:
             file_data = base64.b64decode(
                 tables_to_use.hourly_coefficients_imported_file
@@ -875,21 +882,30 @@ class Selfconsumption(models.Model):
                     for index, row in df.iterrows():
                         hour = int(row["hour"])
                         hour_str = str(hour).zfill(4)
-                        for column in df.columns[1:]:
+                        for index, column in enumerate(df.columns[1:]):
                             coefficient_format = f"{row[column]:.6f}"
-                            file_content += f"{column};{hour_str};{coefficient_format.replace('.', ',')}\r\n"
+                            if index == len(df.columns[1:]) - 1:
+                                file_content.write(
+                                    f"{column};{hour_str};{coefficient_format.replace('.', ',')}"
+                                )
+                            else:
+                                file_content.write(
+                                    f"{column};{hour_str};{coefficient_format.replace('.', ',')}\r\n"
+                                )
                 except Exception:
                     raise ValidationError(_("Error reading file"))
             except Exception:
                 raise ValidationError(_("Error parsing the file"))
 
-        file_content = file_content.encode("utf-8")
-
         date = datetime.now()
         year = date.strftime("%Y")
         report = self.env["energy_selfconsumption.coefficient_report"].create(
-            {"report_data": file_content, "file_name": f"{self.code}_{year}.txt"}
+            {
+                "report_data": file_content.getvalue(),
+                "file_name": f"{self.code}_{year}.txt",
+            }
         )
+        file_content.close()
         url = "/energy_selfconsumption/download_report?id=%s" % report.id
         return {
             "type": "ir.actions.act_url",
