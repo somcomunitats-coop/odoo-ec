@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="member_data" name="member_data">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Member Subscription</h1>
+      </div>
+    </div>
+  </template>
+  <template id="invited_data" name="invited_data">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Invited Subscription</h1>
+      </div>
+    </div>
+  </template>
+  <template id="voluntary_data" name="voluntary_data">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Voluntary Subscription</h1>
+      </div>
+    </div>
+  </template>
+  <template id="companyMenber_data" name="companyMenber_data">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Company Menber Subscription</h1>
+      </div>
+    </div>
+  </template>
+  <template id="companyInvited_data" name="companyInvited_data">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Company Invited Subscription</h1>
+      </div>
+    </div>
+  </template>
+  <template id="companyVoluntary_data" name="companyVoluntary_data">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Company Voluntary Subscription</h1>
+      </div>
+    </div>
+  </template>
+  <template id="data_error_message_template" name="data_error_message_template">
+    <div class="row">
+      <div class="col-md-12">
+        <t t-foreach="error_msgs or []" t-as="error_msg">
+            <br />
+            <div class="alert alert-danger">
+            <t t-raw="error_msg" />
+            </div>
+        </t>
+      </div>
+    </div>
+  </template>
+  <template id="header_form_template" name="header_form_template">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"/>
+    <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css' rel='stylesheet'/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" />
+
+    <script type="text/javascript" src="/energy_communities_cooperator/static/src/js/share-subscription-website.js"/>
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Header Form</h1>
+      </div>
+    </div>
+  </template>
+  <template id="footer_form_template" name="footer_form_template">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Footer Form</h1>
+      </div>
+    </div>
+  </template>
+  <template id="subcription_data_page" name="subcription_data_page">
+      <t t-call="website.layout">
+        <t t-call="energy_communities_cooperator.header_form_template"/>
+
+        <div id="wrap" class="o_portal_wrap">
+          <div class="container oe_community_data">
+            <div class="row justify-content-center">
+              <div class="col-xs-12 col-sm-10  col-md-8 col-lg-8">
+                <t t-if="model == 'error'">
+                  <t t-call="energy_communities_cooperator.data_error_message_template"/>
+                </t>
+                <t t-if="model == 'member'">
+                  <t t-call="energy_communities_cooperator.member_data"/>
+                </t>
+                <t t-if="model == 'invited'">
+                  <t t-call="energy_communities_cooperator.invited_data"/>
+                </t>
+                <t t-if="model == 'voluntary'">
+                  <t t-call="energy_communities_cooperator.voluntary_data"/>
+                </t>
+                <t t-if="model == 'company_menber'">
+                  <t t-call="energy_communities_cooperator.companyMenber_data"/>
+                </t>
+                <t t-if="model == 'company_invited'">
+                  <t t-call="energy_communities_cooperator.companyInvited_data"/>
+                </t>
+                <t t-if="model == 'company_voluntary'">
+                  <t t-call="energy_communities_cooperator.companyVoluntary_data"/>
+                </t>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <t t-call="energy_communities_cooperator.footer_form_template"/>
+      </t>
+    </template>
+</odoo>
