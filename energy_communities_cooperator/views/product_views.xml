@@ -13,17 +13,20 @@
                 <field name="default_share_product" position="attributes">
                     <attribute name="string">Default product in Base form</attribute>
                 </field>
-                <xpath expr="//label[@for='display_on_website']" position="after">
-                    <div class="form-group">
-                        <field name="url_individual" attrs="{'invisible':['|','|',('display_on_website','=',False),('by_individual','=',False),('activate_form_specific_products','=',True)]}"/><br/>
-                        <field name="url_company" attrs="{'invisible':['|','|',('display_on_website','=',False),('by_company','=',False),('activate_form_specific_products','=',True)]}"/>
-                    </div>
-                    <field name="activate_form_specific_products" />
-                    <label for="activate_form_specific_products" string="Activate form specific products" />
+                <field name="display_on_website" position="before">
                     <div class="form-group">
                         <label for="product_external_id" string="External ID" />
                         <field name="product_external_id" />
                     </div>
+                </field>
+                <xpath expr="//label[@for='display_on_website']" position="after">
+                    <div class="form-group">
+                        <field name="url_individual" attrs="{'invisible':['|',('display_on_website','=',False),('by_individual','=',False)]}"/><br/>
+                        <field name="url_company" attrs="{'invisible':['|',('display_on_website','=',False),('by_company','=',False)]}"/>
+                    </div>
+                    <field name="activate_form_specific_products" />
+                    <label for="activate_form_specific_products" string="Activate form specific products" />
+                    
                     <div class="form-group">
                         <field name="url_specific_individual" attrs="{'invisible':['|',('activate_form_specific_products','=',False),('by_individual','=',False)]}"/><br/>
                         <field name="url_specific_company" attrs="{'invisible':['|',('activate_form_specific_products','=',False),('by_company','=',False)]}"/>
