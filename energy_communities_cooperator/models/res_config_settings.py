@@ -43,3 +43,20 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.product_website",
         readonly=False,
     )
+
+    voluntary_share_url_individual = fields.Char(
+        string="Voluntary share URL individual",
+        related="company_id.voluntary_share_url_individual",
+    )
+    voluntary_share_url_company = fields.Char(
+        string="Voluntary share URL company",
+        related="company_id.voluntary_share_url_company",
+    )
+    invitation_share_url_individual = fields.Char(
+        string="Invitation share URL individual",
+        related="company_id.invitation_share_url_individual",
+    )
+    invitation_share_url_company = fields.Char(
+        string="Invitation share URL company",
+        related="company_id.invitation_share_url_company",
+    )

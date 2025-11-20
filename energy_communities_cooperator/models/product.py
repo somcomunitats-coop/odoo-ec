@@ -50,10 +50,12 @@ class ProductTemplate(models.Model):
         String="URL company", compute="_compute_url_specific", readonly=True
     )
     product_external_id = fields.Char(
-        string="External ID", compute="_compute_external_id", store=True, translate=True
+        string="External ID", compute="_compute_external_id", store=True
     )
 
-    html_specific_products = fields.Html(string="Custom paragraph in specific form")
+    html_specific_products = fields.Html(
+        string="Custom paragraph in specific form", translate=True
+    )
 
     # TODO: This must be interated on new coopeator version
     def get_web_share_products(self, is_company):
