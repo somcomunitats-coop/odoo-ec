@@ -183,6 +183,10 @@ team or refer to the project documentation.
 
 ## Changelog
 
+### 2025-11-20 (v16.0.0.5.15)
+
+- Fixed error to download file txt in selfconsumption
+
 ### 2025-11-12 (v16.0.0.5.14)
 
 - Fixed error to create table distribution dont sum 1 all records
