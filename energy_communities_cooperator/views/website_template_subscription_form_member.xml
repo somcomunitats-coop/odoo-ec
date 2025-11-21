@@ -1,0 +1,12 @@
+<odoo>
+  <template id="template_subscription_form_member" name="template_subscription_form_member">
+    <div class="col-md-12">
+        <t t-call="energy_communities.form_field_text">
+          <t t-set="value" t-value="'test'" />
+          <t t-set="key" t-value="'content'" />
+          <t t-set="label" t-value="'AAA'" />
+          <t t-set="required" t-value="True" />
+        </t>
+    </div>
+  </template>
+</odoo>
