@@ -1,0 +1,38 @@
+<odoo>
+  <template id="template_subscription_form_base" name="template_subscription_form_member_container">
+    <form
+      t-attf-action="#{form_submit_url}"
+      method="post"
+      class="form-horizontal mt32 oe_subscription_request_form"
+      enctype="multipart/form-data"
+    >
+        <t t-call="energy_communities_cooperator.template_subscription_form_{{mode}}"/>
+        <div class="text-center">
+          <button class="btn btn-primary mt-3 mb-3 text-center">Send</button>
+        </div>
+      </form>
+  </template>
+  <template id="template_subscription_form_member" name="template_subscription_form_member">
+
+  </template>
+
+  <template id="template_subscription_form_company_member" name="template_subscription_form_company_member">
+
+  </template>
+
+  <template id="template_subscription_form_invited" name="template_subscription_form_invited">
+
+  </template>
+
+  <template id="template_subscription_form_company_invited" name="template_subscription_form_company_invited">
+
+  </template>
+  
+  <template id="template_subscription_form_voluntary" name="template_subscription_form_voluntary">
+
+  </template>
+
+  <template id="template_subscription_form_company_voluntary" name="template_subscription_form_company_voluntary">
+
+  </template>
+</odoo>

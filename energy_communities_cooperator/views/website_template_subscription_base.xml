@@ -1,9 +1,45 @@
-<!--
 <odoo>
-
   <template id="template_subscription_header" name="template_subscription_header">
     <t t-call="energy_communities.form_h1">
       <t t-set="field_description" t-value="page_title" />
+    </t>
+  </template>
+
+  <template id="template_subscription_error_message" name="template_subscription_error_message">
+    <t t-foreach="error_msgs or []" t-as="error_msg">
+        <br />
+        <div class="alert alert-danger">
+          <t t-raw="error_msg" />
+        </div>
+      </t>
+  </template>
+
+  <template id="template_subscription_form_successful_message" name="template_subscription_form_successful_message">
+    <div class="alert alert-success">
+        <p>
+          Your data has been successfully registered.
+        </p>
+        <a type="button" t-attf-href="#{page_url}" class="btn btn-light">
+          Submit more data
+        </a>
+      </div>
+  </template>
+
+  <template id="template_subscription_headline" name="template_subscription_headline">
+    <t t-call="energy_communities.form_p">
+      <t t-set="field_description" t-value="headline_text_1" />
+    </t>
+    <t t-call="energy_communities.form_p">
+      <t t-set="field_description" t-value="headline_text_2" />
+    </t>
+    <t t-call="energy_communities.form_p">
+      <t t-set="field_description" t-value="headline_text_3" />
+    </t>
+  </template>
+
+  <template id="template_subscription_footer" name="template_subscription_footer">
+    <t t-call="energy_communities.form_p">
+      <t t-set="field_description" t-value="footer_text" />
     </t>
   </template>
 
@@ -30,18 +66,18 @@
                   t-call="energy_communities_cooperator.template_subscription_error_message"
                 />
                 </t>
-                <t-else="">
+                <t t-else="">
                   <t t-if="form_submitted">
                     <t
                       t-call="energy_communities_cooperator.template_subscription_form_successful_message"
                     />
                   </t>
-                  <t-else="">
+                  <t t-else="">
                     <t t-call="energy_communities_cooperator.template_subscription_headline" />
-                    <t t-call="energy_communities_cooperator.template_subscription_form_error_message" />
-                    <t t-call="energy_communities_cooperator.template_subscription_form_{{template_mode}}"/>
-                  </t-else>
-                </t-else>
+                    <t t-call="energy_communities_cooperator.template_subscription_error_message" />
+                    <t t-call="energy_communities_cooperator.template_subscription_form_base"/>
+                  </t>
+                </t>
                 <t t-call="energy_communities_cooperator.template_subscription_footer"/>
               </div>
             </div>
@@ -50,4 +86,3 @@
       </t>
     </template>
 </odoo>
--->
