@@ -1,19 +1,24 @@
 <odoo>
+
+  <!-- CSRF Token Template -->
+  <template id="template_subscription_form_csrf" name="template_subscription_form_csrf">
+      <div name="csrf_token_container">
+          <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+      </div>
+  </template>
+
   <template id="template_subscription_form_base" name="template_subscription_form_member_container">
     <form
-      t-attf-action="#{form_submit_url}"
       method="post"
       class="form-horizontal mt32 oe_subscription_request_form"
       enctype="multipart/form-data"
     >
-        <t t-call="energy_communities_cooperator.template_subscription_form_{{mode}}"/>
-        <div class="text-center">
-          <button class="btn btn-primary mt-3 mb-3 text-center">Send</button>
-        </div>
-      </form>
-  </template>
-  <template id="template_subscription_form_member" name="template_subscription_form_member">
-
+      <t t-call="energy_communities_cooperator.template_subscription_form_csrf"/>
+      <t t-call="energy_communities_cooperator.template_subscription_form_{{mode}}"/>
+      <div class="text-center">
+        <button class="btn btn-primary mt-3 mb-3 text-center">Send</button>
+      </div>
+    </form>
   </template>
 
   <template id="template_subscription_form_company_member" name="template_subscription_form_company_member">

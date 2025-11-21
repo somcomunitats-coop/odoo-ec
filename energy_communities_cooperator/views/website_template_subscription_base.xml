@@ -9,80 +9,62 @@
     <t t-foreach="error_msgs or []" t-as="error_msg">
         <br />
         <div class="alert alert-danger">
-          <t t-raw="error_msg" />
+          <p><t t-raw="error_msg" /></p>
         </div>
       </t>
   </template>
 
   <template id="template_subscription_form_successful_message" name="template_subscription_form_successful_message">
     <div class="alert alert-success">
-        <p>
-          Your data has been successfully registered.
-        </p>
-        <a type="button" t-attf-href="#{page_url}" class="btn btn-light">
-          Submit more data
-        </a>
-      </div>
+      <p><t t-raw="success_msg" /></p>
+    </div>
   </template>
 
   <template id="template_subscription_headline" name="template_subscription_headline">
-    <t t-call="energy_communities.form_p">
-      <t t-set="field_description" t-value="headline_text_1" />
-    </t>
-    <t t-call="energy_communities.form_p">
-      <t t-set="field_description" t-value="headline_text_2" />
-    </t>
-    <t t-call="energy_communities.form_p">
-      <t t-set="field_description" t-value="headline_text_3" />
-    </t>
-  </template>
-
-  <template id="template_subscription_footer" name="template_subscription_footer">
-    <t t-call="energy_communities.form_p">
-      <t t-set="field_description" t-value="footer_text" />
-    </t>
+    <div><t t-raw="page_headline" /></div>
+    <div><t t-raw="page_headline_fixed_transfer" /></div>
+    <div><t t-raw="page_headline_fixed_sepa" /></div>
   </template>
 
   <template id="template_subscription_page" name="template_subscription_page">
-      <t t-call="website.layout">
-        <script
+    <t t-call="website.layout">
+      <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
       />
-        <link
+      <link
         href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
         rel='stylesheet'
       />
-        <script
+      <script
         src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
       />
       <script type="text/javascript" src="/energy_communities_cooperator/static/src/js/share-subscription-website.js"/>
-        <div id="wrap" class="o_portal_wrap">
-          <div class="container oe_community_data">
-            <div class="row justify-content-center">
-              <div class="col-xs-12 col-sm-10  col-md-8 col-lg-8">
+      <div id="wrap" class="o_portal_wrap">
+        <div class="container subscription_container">
+          <div class="row justify-content-center">
+            <div class="col-xs-12 col-sm-10  col-md-8 col-lg-8">
+              <t t-if="global_error">
+                <t
+                t-call="energy_communities_cooperator.template_subscription_error_message"
+              />
+              </t>
+              <t t-else="">
                 <t t-call="energy_communities_cooperator.template_subscription_header"/>
-                <t t-if="global_error">
+                <t t-if="form_submitted">
                   <t
-                  t-call="energy_communities_cooperator.template_subscription_error_message"
-                />
+                    t-call="energy_communities_cooperator.template_subscription_form_successful_message"
+                  />
                 </t>
                 <t t-else="">
-                  <t t-if="form_submitted">
-                    <t
-                      t-call="energy_communities_cooperator.template_subscription_form_successful_message"
-                    />
-                  </t>
-                  <t t-else="">
-                    <t t-call="energy_communities_cooperator.template_subscription_headline" />
-                    <t t-call="energy_communities_cooperator.template_subscription_error_message" />
-                    <t t-call="energy_communities_cooperator.template_subscription_form_base"/>
-                  </t>
+                  <t t-call="energy_communities_cooperator.template_subscription_headline" />
+                  <t t-call="energy_communities_cooperator.template_subscription_error_message" />
+                  <t t-call="energy_communities_cooperator.template_subscription_form_base"/>
                 </t>
-                <t t-call="energy_communities_cooperator.template_subscription_footer"/>
-              </div>
+              </t>
             </div>
           </div>
         </div>
-      </t>
-    </template>
+      </div>
+    </t>
+  </template>
 </odoo>
