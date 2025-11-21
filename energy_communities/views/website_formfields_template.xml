@@ -30,10 +30,13 @@
       </label>
     </template>
     <template id="form_h1" name="form_h1">
-      <h1 class="d-flex align-items-center mb-4 mt-4"><t t-raw="field_description" /><div class="flex-grow-1 border-bottom ms-2"></div></h1>
+      <h1 class="text-center"><t t-raw="field_description" /></h1>
     </template>
     <template id="form_h3" name="form_h3">
       <h3 class="d-flex align-items-center mb-4 mt-4"><t t-raw="field_description" /><div class="flex-grow-1 border-bottom ms-2"></div></h3>
+    </template>
+    <template id="form_p" name="form_p">
+      <p><t t-raw="field_description" /></p>
     </template>
     <template id="form_headline" name="form_headline">
       <div
