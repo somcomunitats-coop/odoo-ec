@@ -7,7 +7,7 @@
       </div>
   </template>
 
-  <template id="template_subscription_form_base" name="template_subscription_form_member_container">
+  <template id="template_subscription_form_base" name="template_subscription_form_base">
     <form
       method="post"
       class="form-horizontal mt32 oe_subscription_request_form"
@@ -21,7 +21,7 @@
     </form>
   </template>
 
-  <template id="template_subscription_form_global" name="template_subscription_form_company_member">
+  <template id="template_subscription_form_global" name="template_subscription_form_global">
     <div class="row">
       <div class="col-md-12">
         <t t-call="energy_communities.form_field_email">
