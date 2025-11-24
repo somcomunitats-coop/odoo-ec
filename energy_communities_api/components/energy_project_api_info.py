@@ -20,7 +20,7 @@ class ProjectMetricsApiInfo(Component):
     ) -> CommunityServiceMetricsInfo:
         monitoring_service = project.monitoring_service()
         member_contract = project.get_member_contract(partner)
-        if not monitoring_service and not member_contract:
+        if not monitoring_service or not member_contract:
             return None
         service_parameters = {
             "system_id": project.selfconsumption_id.code,
