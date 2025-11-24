@@ -40,9 +40,14 @@ class Backend:
             try:
                 response.raise_for_status()
             except requests.exceptions.HTTPError as e:
+                message = (
+                    e.response.content
+                    and e.response.json().get("error", str(e))
+                    or str(e)
+                )
                 raise RequestError(
                     error_code=e.response.status_code,
-                    message=e.response.json().get("error", str(e)),
+                    message=message,
                 )
             return BackendResponse(
                 response.json(), response.headers, response.status_code

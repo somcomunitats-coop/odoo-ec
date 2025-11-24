@@ -38,6 +38,7 @@ class ArkenovaBackend(Backend):
 
     _field_map = {
         "energy_consumption": EnergyPointAttributes.CONSUMPTION.value,
+        "energy_imported": EnergyPointAttributes.CONSUMPTION.value,
         "energy_exported": EnergyPointAttributes.GRIDINJECTION.value,
         "energy_production": EnergyPointAttributes.PRODUCTION.value,
         "selfconsumption": EnergyPointAttributes.SELFCONSUMPTION.value,
