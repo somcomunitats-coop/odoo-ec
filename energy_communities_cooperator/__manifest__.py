@@ -51,6 +51,11 @@
         "views/website_template_subscription_base.xml",
         "views/website_template_subscription_form.xml",
         "views/website_template_subscription_form_member.xml",
+        "views/website_template_subscription_form_company_member.xml",
+        "views/website_template_subscription_form_company_invited.xml",
+        "views/website_template_subscription_form_company_voluntary.xml",
+        "views/website_template_subscription_form_invited.xml",
+        "views/website_template_subscription_form_voluntary.xml",
         # "views/website__subscription_template.xml",
         "views/res_config_settings_view.xml",
         "wizards/multicompany_easy_creation.xml",
@@ -61,7 +66,8 @@
     "demo": ["demo/res_company_demo.xml"],
     "assets": {
         "web.assets_frontend": [
-            "energy_communities_cooperator/static/src/js/cooperator.js",
+            # "energy_communities_cooperator/static/src/js/cooperator.js",
+            "energy_communities_cooperator/static/src/js/share-subscription-website.js",
         ]
     },
 }

@@ -4,7 +4,7 @@
       <span
       style="display:block;font-size:13px;font-family:'Roboto',sans-serif;font-weight:300;"
       t-if="field_description"
-    ><t t-raw="field_description" /></span>
+    ><t t-out="field_description" /></span>
     </template>
     <template id="form_field_part_label" name="form_field_part_label">
       <label t-att="{'for': field_key}"><t t-esc="field_label" /><span
@@ -30,13 +30,13 @@
       </label>
     </template>
     <template id="form_h1" name="form_h1">
-      <h1 class="text-center"><t t-raw="field_description" /></h1>
+      <h1 class="text-center"><t t-out="field_description" /></h1>
     </template>
     <template id="form_h3" name="form_h3">
-      <h3 class="d-flex align-items-center mb-4 mt-4"><t t-raw="field_description" /><div class="flex-grow-1 border-bottom ms-2"></div></h3>
+      <h3 class="d-flex align-items-center mb-4 mt-4"><t t-out="field_description" /><div class="flex-grow-1 border-bottom ms-2"></div></h3>
     </template>
     <template id="form_p" name="form_p">
-      <p><t t-raw="field_description" /></p>
+      <p><t t-out="field_description" /></p>
     </template>
     <template id="form_headline" name="form_headline">
       <div
@@ -204,8 +204,9 @@
             <t t-foreach="options or []" t-as="option">
               <option
             t-att-value="option['id']"
-            t-att-selected="str(option['id']) == str(value)"
-          >
+              t-att-selected="str(option['id']) == str(value)"
+              t-att-data-extra="option.get('extra')"
+            >
                 <t t-esc="option['name']" />
               </option>
             </t>
