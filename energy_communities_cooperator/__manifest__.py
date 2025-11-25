@@ -53,7 +53,6 @@
         "views/website_template_subscription_form_member.xml",
         "views/website_template_subscription_form_company_member.xml",
         "views/website_template_subscription_form_company_invited.xml",
-        "views/website_template_subscription_form_company_voluntary.xml",
         "views/website_template_subscription_form_invited.xml",
         "views/website_template_subscription_form_voluntary.xml",
         # "views/website__subscription_template.xml",
