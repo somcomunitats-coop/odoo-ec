@@ -71,20 +71,6 @@ class WebsiteShareSubscriptionController(http.Controller):
             )
             if len(values["products"]) > 0:
                 values["product"] = values["products"][0]
-            else:
-                values.update(
-                    {
-                        "global_error": True,
-                        "error_msgs": [
-                            _(
-                                "Products of category {category_name} not found for company {company_name}"
-                            ).format(
-                                category_name=values["product_categ"].name,
-                                company_name=values["company"].comercial_name,
-                            )
-                        ],
-                    }
-                )
         return values
 
     def _validate_request(self, values):
@@ -97,6 +83,20 @@ class WebsiteShareSubscriptionController(http.Controller):
         if values["product_ext_id"] and not values["product"]:
             self.values.update(
                 {"global_error": True, "error_msgs": [_("Product not found")]}
+            )
+        if len(values["products"]) == 0:
+            values.update(
+                {
+                    "global_error": True,
+                    "error_msgs": [
+                        _(
+                            "Products of category {category_name} not found for company {company_name}"
+                        ).format(
+                            category_name=values["product_categ"].name,
+                            company_name=values["company"].comercial_name,
+                        )
+                    ],
+                }
             )
 
     def _render_page(self, values):
@@ -138,20 +138,22 @@ class WebsiteShareSubscriptionController(http.Controller):
             values["address_disabled"] = True
             values["phone_disabled"] = True
             values["birthdate_disabled"] = True
-            values["gender_disabled"] = True
+            # values["gender_disabled"] = True
             values["email_disabled"] = True
             values["firstname_disabled"] = True
             values["lastname_disabled"] = True
-            values["vat_disabled"] = True
+            # values["vat_disabled"] = True
             values["city_disabled"] = True
             values["zip_code_disabled"] = True
-            values["country_id_disabled"] = True
+            # values["country_id_disabled"] = True
 
     def _update_custom_options(self, values):
         if "country_id_options" in values:
             values["country_id_options"] = self._get_country_options()
         if "share_product_id_options" in values:
             values["share_product_id_options"] = self._get_share_product_options(values)
+        if "lang_options" in values:
+            values["lang_options"] = self._get_lang_options()
 
     def _update_custom_description(self, values):
         if values["company"].display_data_policy_approval:
@@ -253,6 +255,13 @@ class WebsiteShareSubscriptionController(http.Controller):
         return [{"id": "", "name": _("Select your country")}] + request.env[
             "res.country"
         ].sudo().search([], order="name").mapped(lambda x: {"id": x.id, "name": x.name})
+
+    def _get_lang_options(self):
+        return [{"id": "", "name": _("Select your language")}] + request.env[
+            "res.lang"
+        ].sudo().search([("active", "=", True)], order="name").mapped(
+            lambda x: {"id": x.id, "name": x.name}
+        )
 
     def _get_share_product_options(self, values):
         options = []
