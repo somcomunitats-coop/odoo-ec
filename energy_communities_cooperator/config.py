@@ -139,6 +139,13 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "required": True,
         "disabled": False,
     },
+    "lang": {
+        "value": "",
+        "label": _("Language"),
+        "required": True,
+        "disabled": False,
+        "options": [],
+    },
     "vat": {
         "value": "",
         "label": _("VAT"),
@@ -217,7 +224,9 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "label": _("Conditions Payment"),
         "required": True,
         "disabled": False,
-        "description": _("I agree to the terms and conditions of the company"),
+        "description": _(
+            "I confirm that the holder of the bank account, whether myself or another person, authorizes the direct debit of the bills."
+        ),
     },
 }
 

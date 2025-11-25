@@ -79,6 +79,16 @@
         </t>
       </div>
       <div class="col-md-12">
+        <t t-call="energy_communities.form_field_selection">
+          <t t-set="value" t-value="lang" />
+          <t t-set="key" t-value="lang_key" />
+          <t t-set="label" t-value="lang_label" />
+          <t t-set="options" t-value="lang_options" />
+          <t t-set="required" t-value="lang_required" />
+          <t t-set="disabled" t-value="lang_disabled" />
+        </t>
+      </div>
+      <div class="col-md-12">
         <t t-call="energy_communities.form_field_text">
           <t t-set="value" t-value="vat" />
           <t t-set="key" t-value="vat_key" />
