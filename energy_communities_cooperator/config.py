@@ -18,7 +18,6 @@ MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF = {
     "invited": COOP_SHARE_PRODUCT_CATEG_REF,
     "company_invited": COOP_SHARE_PRODUCT_CATEG_REF,
     "voluntary": COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
-    "company_voluntary": COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
 }
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE = {
     "member": _("Become Cooperator of {company_name} ") + _("member_eu_ES"),
@@ -26,7 +25,6 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE = {
     "invited": _("Become Invited of {company_name} ") + _("invited_eu_ES"),
     "company_invited": _("Become Invited of {company_name} ") + _("invited_eu_ES"),
     "voluntary": _("Voluntary Share of {company_name} ") + _("vol_share_eu_es"),
-    "company_voluntary": _("Voluntary Share of {company_name} ") + _("vol_share_eu_es"),
 }
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE = {
     "member": _("Become Cooperator Headline"),
@@ -34,7 +32,6 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE = {
     "invited": _("Become Invited Headline"),
     "company_invited": _("Become Company Invited Headline"),
     "voluntary": _("Become Voluntary Headline"),
-    "company_voluntary": _("Become Company Voluntary Headline"),
 }
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER = {
     "member": _(
@@ -52,9 +49,6 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER = {
     "voluntary": _(
         "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
     ),
-    "company_voluntary": _(
-        "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
-    ),
 }
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA = {
     "member": _(
@@ -70,9 +64,6 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA = {
         "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
     ),
     "voluntary": _(
-        "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
-    ),
-    "company_voluntary": _(
         "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
     ),
 }
@@ -214,7 +205,6 @@ MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = MAPPING__BASE__DEFAULT_FORM_FIELD
 MAPPING__INVITED__DEFAULT_FORM_FIELDS = MAPPING__BASE__DEFAULT_FORM_FIELDS
 MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = MAPPING__BASE__DEFAULT_FORM_FIELDS
 MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS = MAPPING__BASE__DEFAULT_FORM_FIELDS
-MAPPING__COMPANY_VOLUNTARY__DEFAULT_FORM_FIELDS = MAPPING__BASE__DEFAULT_FORM_FIELDS
 
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS = {
     "member": MAPPING__MEMBER__DEFAULT_FORM_FIELDS,
@@ -222,5 +212,4 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS = {
     "invited": MAPPING__INVITED__DEFAULT_FORM_FIELDS,
     "company_invited": MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS,
     "voluntary": MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS,
-    "company_voluntary": MAPPING__COMPANY_VOLUNTARY__DEFAULT_FORM_FIELDS,
 }
