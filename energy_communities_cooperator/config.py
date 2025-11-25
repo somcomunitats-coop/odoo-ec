@@ -27,11 +27,26 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE = {
     "voluntary": _("Voluntary Share of {company_name} ") + _("vol_share_eu_es"),
 }
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE = {
-    "member": _("Become Cooperator Headline"),
-    "company_member": _("Become Company Cooperator Headline"),
-    "invited": _("Become Invited Headline"),
-    "company_invited": _("Become Company Invited Headline"),
-    "voluntary": _("Become Voluntary Headline"),
+    "member": "<p>"
+    + _("This form allow you to request be member of the community: {company_name} ")
+    + _("member_ccee_eu_ES")
+    + ".</p>",
+    "company_member": "<p>"
+    + _("This form allow you to request be member of the community: {company_name} ")
+    + _("member_ccee_eu_ES")
+    + ".</p>",
+    "invited": "<p>"
+    + _("This form allow you to request be invited of the community: {company_name} ")
+    + _("invited_ccee_eu_ES")
+    + ".</p>",
+    "company_invited": "<p>"
+    + _("This form allow you to request be invited of the community: {company_name} ")
+    + _("invited_ccee_eu_ES")
+    + ".</p>",
+    "voluntary": "<p>"
+    + _("This form allow you to request be voluntary of the community: {company_name} ")
+    + _("vol_share_eu_es")
+    + ".</p>",
 }
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER = {
     "member": _(
@@ -67,6 +82,14 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA = {
         "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
     ),
 }
+
+SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT = (
+    "<p>"
+    + _(
+        "Once you are a member you can enjoy the services available from the community and be part of a movement of social and energy model transformation."
+    )
+    + "</p>"
+)
 
 GENDER_OPTIONS = [
     {"id": "", "name": _("Select your gender")},
@@ -164,7 +187,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "value": "",
         "label": _("Total Price"),
         "required": True,
-        "disabled": False,
+        "disabled": True,
     },
     "privacy_policy": {
         "value": False,
@@ -177,7 +200,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "value": "",
         "label": _("Payment Method"),
         "required": True,
-        "disabled": False,
+        "disabled": True,
         "options": [
             {"id": "sepa", "name": _("SEPA")},
             {"id": "transfer", "name": _("Transfer")},
@@ -194,9 +217,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "label": _("Conditions Payment"),
         "required": True,
         "disabled": False,
-        "description": _(
-            "I agree to the <a href='/privacy-policy' target='_blank'>privacy policy</a> and <a href='/terms-and-conditions' target='_blank'>terms and conditions</a>"
-        ),
+        "description": _("I agree to the terms and conditions of the company"),
     },
 }
 

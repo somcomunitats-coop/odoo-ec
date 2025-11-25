@@ -10,6 +10,7 @@ from ..config import (
     MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER,
     MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE,
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
+    SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
 )
 
 
@@ -104,65 +105,7 @@ class WebsiteShareSubscriptionController(http.Controller):
     def _process_form(self, values):
         pass
 
-    # getters
-    def _get_model_from_ext_id(self, model_name, field_name, ext_id):
-        if ext_id:
-            return request.env[model_name].sudo().search([(field_name, "=", ext_id)])
-        return False
-
-    def _get_products_from_category_and_company(self, product_categ_id, company_id):
-        return (
-            request.env["product.template"]
-            .sudo()
-            .search(
-                [
-                    ("categ_id", "=", product_categ_id),
-                    ("default_share_product", "=", True),
-                    ("company_id", "=", company_id),
-                ]
-            )
-        )
-
-    def _get_page_title(self, values):
-        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE[values["mode"]].format(
-            company_name=values["company"].comercial_name
-        )
-
-    def _get_page_headline(self, values):
-        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE[values["mode"]]
-
-    def _get_page_headline_fixed_transfer(self, values):
-        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER[
-            values["mode"]
-        ].format(
-            product_price=str(values["product"].list_price).replace(".", ","),
-            currency_symbol=values["currency_symbol"],
-        )
-
-    def _get_page_headline_fixed_sepa(self, values):
-        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA[
-            values["mode"]
-        ].format(
-            product_price=str(values["product"].list_price).replace(".", ","),
-            currency_symbol=values["currency_symbol"],
-        )
-
-    def _get_form_fields_values(self, data, path):
-        if isinstance(path, bool):
-            return path
-        keys = path.split(".")
-        current = data
-        for key in keys:
-            if not isinstance(current, dict):
-                try:
-                    current = current.read()[0]  # Convert the record to a dictionary
-                except:
-                    return ""  # Return an empty string if the record cannot be converted to a dictionary
-            if key not in current:
-                return ""  # Return an empty string if the field is not found
-            current = current[key]
-        return current
-
+    # updaters
     def _update_form_fields(self, values):
         form_fields = MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS[values["mode"]]
         for field in form_fields:
@@ -207,8 +150,84 @@ class WebsiteShareSubscriptionController(http.Controller):
                     values
                 ),
                 "page_headline_fixed_sepa": self._get_page_headline_fixed_sepa(values),
+                "page_headline_custom": self._get_page_headline_custom(values),
+                "page_headline_last_text": SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
+                "activate_form_specific_products": values[
+                    "product"
+                ].activate_form_specific_products,
             }
         )
+
+    # getters
+    def _get_model_from_ext_id(self, model_name, field_name, ext_id):
+        if ext_id:
+            return request.env[model_name].sudo().search([(field_name, "=", ext_id)])
+        return False
+
+    def _get_products_from_category_and_company(self, product_categ_id, company_id):
+        return (
+            request.env["product.template"]
+            .sudo()
+            .search(
+                [
+                    ("categ_id", "=", product_categ_id),
+                    ("default_share_product", "=", True),
+                    ("company_id", "=", company_id),
+                ]
+            )
+        )
+
+    def _get_page_title(self, values):
+        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE[values["mode"]].format(
+            company_name=values["company"].comercial_name
+        )
+
+    def _get_page_headline(self, values):
+        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE[values["mode"]].format(
+            company_name=values["company"].comercial_name
+        )
+
+    def _get_page_headline_fixed_transfer(self, values):
+        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER[
+            values["mode"]
+        ].format(
+            product_price=str(values["product"].list_price).replace(".", ","),
+            currency_symbol=values["currency_symbol"],
+        )
+
+    def _get_page_headline_fixed_sepa(self, values):
+        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA[
+            values["mode"]
+        ].format(
+            product_price=str(values["product"].list_price).replace(".", ","),
+            currency_symbol=values["currency_symbol"],
+        )
+
+    def _get_page_headline_custom(self, values):
+        text_custom = (
+            values["product"].html_especific_products
+            if values["product"].activate_form_specific_products
+            else values["company"].cooperator_share_form_header_text
+        )
+        if not text_custom:
+            return ""
+        return text_custom
+
+    def _get_form_fields_values(self, data, path):
+        if isinstance(path, bool):
+            return path
+        keys = path.split(".")
+        current = data
+        for key in keys:
+            if not isinstance(current, dict):
+                try:
+                    current = current.read()[0]  # Convert the record to a dictionary
+                except:
+                    return ""  # Return an empty string if the record cannot be converted to a dictionary
+            if key not in current:
+                return ""  # Return an empty string if the field is not found
+            current = current[key]
+        return current
 
     def _get_country_options(self):
         return [{"id": "", "name": _("Select your country")}] + request.env[
