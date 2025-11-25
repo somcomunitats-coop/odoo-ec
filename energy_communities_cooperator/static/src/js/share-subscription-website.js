@@ -18,6 +18,9 @@ odoo.define(
         var share_product_id_price = $("#share_product_id option:selected").data(
           "extra"
         );
+        if (!share_product_id_price) {
+          share_product_id_price = 0;
+        }
         $("#total_price").val(
           parseFloat(ordered_parts) * parseFloat(share_product_id_price)
         );

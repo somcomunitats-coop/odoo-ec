@@ -34,10 +34,13 @@ class WebsiteShareSubscriptionController(http.Controller):
         values = self._get_base_values(kwargs)
         if request.httprequest.method == "GET":
             self._validate_request(values)
+            if values.get("global_error", False):
+                return self._render_page(values)
             self._update_page_values(values)
             self._update_form_fields(values)
             self._update_custom_options(values)
             self._update_custom_description(values)
+            self._update_form_custom_fields(values)
             return self._render_page(values)
         self._process_form(values)
         return self._render_page(values)
@@ -69,7 +72,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             if len(values["products"]) > 0:
                 values["product"] = values["products"][0]
             else:
-                self.values.update(
+                values.update(
                     {
                         "global_error": True,
                         "error_msgs": [
@@ -126,6 +129,23 @@ class WebsiteShareSubscriptionController(http.Controller):
                 values[field + "_options"] = form_fields[field]["options"]
             if "description" in form_fields[field]:
                 values[field + "_description"] = form_fields[field]["description"]
+
+    def _update_form_custom_fields(self, values):
+        if len(values["products"]) == 1:
+            values["share_product_id_disabled"] = True
+            # values["ordered_parts_disabled"] = True
+        if values["mode"] == "voluntary":
+            values["address_disabled"] = True
+            values["phone_disabled"] = True
+            values["birthdate_disabled"] = True
+            values["gender_disabled"] = True
+            values["email_disabled"] = True
+            values["firstname_disabled"] = True
+            values["lastname_disabled"] = True
+            values["vat_disabled"] = True
+            values["city_disabled"] = True
+            values["zip_code_disabled"] = True
+            values["country_id_disabled"] = True
 
     def _update_custom_options(self, values):
         if "country_id_options" in values:
@@ -205,7 +225,7 @@ class WebsiteShareSubscriptionController(http.Controller):
 
     def _get_page_headline_custom(self, values):
         text_custom = (
-            values["product"].html_especific_products
+            values["product"].html_specific_products
             if values["product"].activate_form_specific_products
             else values["company"].cooperator_share_form_header_text
         )
