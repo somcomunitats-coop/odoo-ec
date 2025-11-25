@@ -17,7 +17,6 @@ from ..config import (
 # http://odoo-ce.local:8069/es/subscription/invited/356a192b7913b04c54574d18c28d46e6395428ab/ae7329c979b3cd96086c22cca6217764ab3e50ec
 # http://odoo-ce.local:8069/es/subscription/voluntary/356a192b7913b04c54574d18c28d46e6395428ab/ae7329c979b3cd96086c22cca6217764ab3e50ec
 # http://odoo-ce.local:8069/es/subscription/company_invited/356a192b7913b04c54574d18c28d46e6395428ab/ae7329c979b3cd96086c22cca6217764ab3e50ec
-# http://odoo-ce.local:8069/es/subscription/company_voluntary/356a192b7913b04c54574d18c28d46e6395428ab/ae7329c979b3cd96086c22cca6217764ab3e50ec
 # http://odoo-ce.local:8069/es/subscription/company_member/356a192b7913b04c54574d18c28d46e6395428ab/ae7329c979b3cd96086c22cca6217764ab3e50ec
 class WebsiteShareSubscriptionController(http.Controller):
     @http.route(
@@ -28,32 +27,18 @@ class WebsiteShareSubscriptionController(http.Controller):
         type="http",
         auth="public",
         website=True,
-        methods=["GET"],
+        methods=["GET", "POST"],
     )
-    def subscription_page(self, **kwargs):
+    def share_subscription_form(self, **kwargs):
         values = self._get_base_values(kwargs)
-        # Validate the request
-        self._validate_request(values)
-        if not "global_error" in values.keys():
-            self._get_page_values(values)
-            self._get_form_fields(values)
-            self._get_custom_options(values)
-            self._get_custom_description(values)
-        # Render the page
-        return self._render_page(values)
-
-    @http.route(
-        [
-            "/subscription/<string:mode>/<string:company_ext_id>",
-            "/subscription/<string:mode>/<string:company_ext_id>/<string:product_ext_id>",
-        ],
-        type="http",
-        auth="public",
-        website=True,
-        methods=["POST"],
-    )
-    def subscription_submission(self, **kwargs):
-        values = self._get_base_values(kwargs)
+        if request.httprequest.method == "GET":
+            self._validate_request(values)
+            self._update_page_values(values)
+            self._update_form_fields(values)
+            self._update_custom_options(values)
+            self._update_custom_description(values)
+            return self._render_page(values)
+        self._process_form(values)
         return self._render_page(values)
 
     def _get_base_values(self, kwargs):
@@ -116,6 +101,9 @@ class WebsiteShareSubscriptionController(http.Controller):
             values,
         )
 
+    def _process_form(self, values):
+        pass
+
     # getters
     def _get_model_from_ext_id(self, model_name, field_name, ext_id):
         if ext_id:
@@ -175,7 +163,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             current = current[key]
         return current
 
-    def _get_form_fields(self, values):
+    def _update_form_fields(self, values):
         form_fields = MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS[values["mode"]]
         for field in form_fields:
             values[field + "_key"] = field
@@ -196,13 +184,13 @@ class WebsiteShareSubscriptionController(http.Controller):
             if "description" in form_fields[field]:
                 values[field + "_description"] = form_fields[field]["description"]
 
-    def _get_custom_options(self, values):
+    def _update_custom_options(self, values):
         if "country_id_options" in values:
             values["country_id_options"] = self._get_country_options()
         if "share_product_id_options" in values:
             values["share_product_id_options"] = self._get_share_product_options(values)
 
-    def _get_custom_description(self, values):
+    def _update_custom_description(self, values):
         if values["company"].display_data_policy_approval:
             values["privacy_policy_description"] = values[
                 "company"
@@ -210,7 +198,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         else:
             values["privacy_policy_description"] = ""
 
-    def _get_page_values(self, values):
+    def _update_page_values(self, values):
         values.update(
             {
                 "page_title": self._get_page_title(values),

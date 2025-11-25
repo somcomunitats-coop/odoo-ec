@@ -15,11 +15,12 @@ class ResCompany(models.Model):
             ).hexdigest()
 
     def _compute_share_urls(self):
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for record in self:
-            record.voluntary_share_url_individual = f"{self.env['ir.config_parameter'].sudo().get_param('web.base.url')}/become_cooperator?external_company_id={record.company_external_id}"
-            record.voluntary_share_url_company = f"{self.env['ir.config_parameter'].sudo().get_param('web.base.url')}/become_company_cooperator?external_company_id={record.company_external_id}"
-            record.invitation_share_url_individual = f"{self.env['ir.config_parameter'].sudo().get_param('web.base.url')}/become_invited?external_company_id={record.company_external_id}"
-            record.invitation_share_url_company = f"{self.env['ir.config_parameter'].sudo().get_param('web.base.url')}/become_company_invited?external_company_id={record.company_external_id}"
+            record.voluntary_share_url_individual = f"{base_url}/become_cooperator?external_company_id={record.company_external_id}"
+            record.voluntary_share_url_company = f"{base_url}/become_company_cooperator?external_company_id={record.company_external_id}"
+            record.invitation_share_url_individual = f"{base_url}/become_invited?external_company_id={record.company_external_id}"
+            record.invitation_share_url_company = f"{base_url}/become_company_invited?external_company_id={record.company_external_id}"
 
     voluntary_share_id = fields.Many2one(
         comodel_name="product.template",
