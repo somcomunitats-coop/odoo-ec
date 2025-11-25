@@ -17,10 +17,15 @@ class ResCompany(models.Model):
     def _compute_share_urls(self):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for record in self:
-            record.voluntary_share_url_individual = f"{base_url}/become_cooperator?external_company_id={record.company_external_id}"
-            record.voluntary_share_url_company = f"{base_url}/become_company_cooperator?external_company_id={record.company_external_id}"
-            record.invitation_share_url_individual = f"{base_url}/become_invited?external_company_id={record.company_external_id}"
-            record.invitation_share_url_company = f"{base_url}/become_company_invited?external_company_id={record.company_external_id}"
+            record.voluntary_share_url_individual = (
+                f"{base_url}/subscription/voluntary/{record.company_external_id}"
+            )
+            record.invitation_share_url_individual = (
+                f"{base_url}/subscription/invited/{record.company_external_id}"
+            )
+            record.invitation_share_url_company = (
+                f"{base_url}/subscription/company_invited/{record.company_external_id}"
+            )
 
     voluntary_share_id = fields.Many2one(
         comodel_name="product.template",
@@ -111,12 +116,6 @@ class ResCompany(models.Model):
         compute="_compute_share_urls",
         readonly=True,
     )
-    voluntary_share_url_company = fields.Char(
-        string="Voluntary share URL company",
-        compute="_compute_share_urls",
-        readonly=True,
-    )
-
     invitation_share_url_individual = fields.Char(
         string="Invitation share URL individual",
         compute="_compute_share_urls",

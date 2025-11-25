@@ -10,14 +10,14 @@ class ProductTemplate(models.Model):
     def _compute_url(self):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for record in self:
-            record.url_individual = f"{base_url}/become_cooperator?external_company_id={record.company_id.company_external_id}"
-            record.url_company = f"{base_url}/become_company_cooperator?external_company_id={record.company_id.company_external_id}"
+            record.url_individual = f"{base_url}/subscription/member/{record.company_id.company_external_id}"
+            record.url_company = f"{base_url}/subscription/company_memeber/{record.company_id.company_external_id}"
 
     def _compute_url_specific(self):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for record in self:
-            record.url_specific_individual = f"{base_url}/become_cooperator?external_company_id={record.company_id.company_external_id}&product_external_id={record.product_external_id}"
-            record.url_specific_company = f"{base_url}/become_company_cooperator?external_company_id={record.company_id.company_external_id}&product_external_id={record.product_external_id}"
+            record.url_specific_individual = f"{base_url}/subscription/member/{record.company_id.company_external_id}/{record.product_external_id}"
+            record.url_specific_company = f"{base_url}/subscription/company_member/{record.company_id.company_external_id}/{record.product_external_id}"
 
     @api.depends("name")
     def _compute_external_id(self):
