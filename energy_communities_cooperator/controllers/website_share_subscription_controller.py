@@ -3,6 +3,7 @@ from odoo.http import request
 from odoo.tools.translate import _
 
 from ..config import (
+    MAPPING__PAYMENT_METHOD,
     MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS,
     MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE,
     MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA,
@@ -159,6 +160,8 @@ class WebsiteShareSubscriptionController(http.Controller):
         )
 
     def _get_form_fields_values(self, data, path):
+        if isinstance(path, bool):
+            return path
         keys = path.split(".")
         current = data
         for key in keys:
@@ -227,7 +230,27 @@ class WebsiteShareSubscriptionController(http.Controller):
     def _get_share_product_options(self, values):
         options = []
         for product in values["products"]:
+            payment_method = "transfer"
+            if (
+                product.payment_mode_id
+                and product.payment_mode_id.payment_method_id
+                and product.payment_mode_id.payment_method_id.id
+                == request.env.ref(MAPPING__PAYMENT_METHOD["sepa"]).id
+            ):
+                payment_method = "sepa"
+            elif (
+                product.payment_mode_id
+                and product.payment_mode_id.payment_method_id
+                and product.payment_mode_id.payment_method_id.id
+                == request.env.ref(MAPPING__PAYMENT_METHOD["transfer"]).id
+            ):
+                payment_method = "transfer"
             options.append(
-                {"id": product.id, "name": product.name, "extra": product.list_price}
+                {
+                    "id": product.id,
+                    "name": product.name,
+                    "extra": product.list_price,
+                    "extra_2": payment_method,
+                }
             )
         return options

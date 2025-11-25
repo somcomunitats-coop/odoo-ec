@@ -5,10 +5,11 @@ odoo.define(
     $(document).ready(function () {
       $("#share_product_id").change(function (event) {
         event.preventDefault();
-        // var target = $(event.target);
-        // var share_product_id_price = target.data("data-extra");
+        var payment_method = $("#share_product_id option:selected").data("extra_2");
+        $("#payment_method").val(payment_method);
         $("#ordered_parts").val(1);
         $("#ordered_parts").change();
+        $("#payment_method").change();
       });
       $("#ordered_parts").change(function (event) {
         event.preventDefault();
@@ -26,7 +27,30 @@ odoo.define(
         event.preventDefault();
         var target = $(event.target);
         var total_price = target.val();
-        $("#prodPrice").text(total_price);
+        if ($("#payment_method").val() == "sepa") {
+          $("#sepa_text>#prodPrice").text(total_price);
+        } else {
+          $("#transfer_text>#prodPrice").text(total_price);
+        }
+      });
+      $("#payment_method").change(function (event) {
+        event.preventDefault();
+        var target = $(event.target);
+        var payment_method = target.val();
+        if (payment_method == "sepa") {
+          $("#sepa_text").show();
+          $("#transfer_text").hide();
+          $("div[name='iban_container']").parent().show();
+          $("div[name='conditions_payment_container']").parent().show();
+        } else {
+          $("#sepa_text").hide();
+          $("#transfer_text").show();
+          $("div[name='iban_container']").parent().hide();
+          $("div[name='conditions_payment_container']").parent().hide();
+          $("#iban").val("");
+          $("#conditions_payment").val(false);
+        }
+        $("#ordered_parts").change();
       });
 
       $("#share_product_id").change();

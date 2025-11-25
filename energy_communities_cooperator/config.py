@@ -4,6 +4,14 @@ COOP_SHARE_PRODUCT_CATEG_REF = "cooperator.product_category_company_share"
 COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF = (
     "energy_communities_cooperator.product_category_company_voluntary_share"
 )
+PAYMENT_METHOD_SEPA = "account_banking_sepa_direct_debit.sepa_direct_debit"
+PAYMENT_METHOD_TRANSFER = "account.account_payment_method_manual_in"
+
+MAPPING__PAYMENT_METHOD = {
+    "sepa": PAYMENT_METHOD_SEPA,
+    "transfer": PAYMENT_METHOD_TRANSFER,
+}
+
 MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF = {
     "member": COOP_SHARE_PRODUCT_CATEG_REF,
     "company_member": COOP_SHARE_PRODUCT_CATEG_REF,
@@ -30,42 +38,42 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE = {
 }
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER = {
     "member": _(
-        "<p>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
+        "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
     ),
     "company_member": _(
-        "<p>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
+        "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
     ),
     "invited": _(
-        "<p>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
+        "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
     ),
     "company_invited": _(
-        "<p>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
+        "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
     ),
     "voluntary": _(
-        "<p>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
+        "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
     ),
     "company_voluntary": _(
-        "<p>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
+        "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
     ),
 }
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA = {
     "member": _(
-        "<p>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id=prodPrice'>{product_price}</span>{currency_symbol}</p>"
+        "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
     ),
     "company_member": _(
-        "<p>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id=prodPrice'>{product_price}</span>{currency_symbol}</p>"
+        "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
     ),
     "invited": _(
-        "<p>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id=prodPrice'>{product_price}</span>{currency_symbol}</p>"
+        "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
     ),
     "company_invited": _(
-        "<p>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id=prodPrice'>{product_price}</span>{currency_symbol}</p>"
+        "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
     ),
     "voluntary": _(
-        "<p>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id=prodPrice'>{product_price}</span>{currency_symbol}</p>"
+        "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
     ),
     "company_voluntary": _(
-        "<p>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id=prodPrice'>{product_price}</span>{currency_symbol}</p>"
+        "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
     ),
 }
 
@@ -168,11 +176,36 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "privacy_policy": {
-        "value": "",
+        "value": False,
         "label": _("Privacy Policy"),
         "required": True,
         "disabled": False,
         "description": "",
+    },
+    "payment_method": {
+        "value": "",
+        "label": _("Payment Method"),
+        "required": True,
+        "disabled": False,
+        "options": [
+            {"id": "sepa", "name": _("SEPA")},
+            {"id": "transfer", "name": _("Transfer")},
+        ],
+    },
+    "iban": {
+        "value": "",
+        "label": _("IBAN"),
+        "required": True,
+        "disabled": False,
+    },
+    "conditions_payment": {
+        "value": False,
+        "label": _("Conditions Payment"),
+        "required": True,
+        "disabled": False,
+        "description": _(
+            "I agree to the <a href='/privacy-policy' target='_blank'>privacy policy</a> and <a href='/terms-and-conditions' target='_blank'>terms and conditions</a>"
+        ),
     },
 }
 

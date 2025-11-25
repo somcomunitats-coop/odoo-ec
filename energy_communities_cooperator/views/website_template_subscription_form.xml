@@ -157,6 +157,35 @@
         <span class="font-weight-bold"><t t-out="currency_symbol" /></span>
       </div>
       <div class="col-md-12">
+        <t t-call="energy_communities.form_field_selection">
+          <t t-set="value" t-value="payment_method" />
+          <t t-set="key" t-value="payment_method_key" />
+          <t t-set="label" t-value="payment_method_label" />
+          <t t-set="options" t-value="payment_method_options" />
+          <t t-set="required" t-value="payment_method_required" />
+          <t t-set="disabled" t-value="payment_method_disabled" />
+        </t>
+      </div>
+      <div class="col-md-12">
+        <t t-call="energy_communities.form_field_text">
+          <t t-set="value" t-value="iban" />
+          <t t-set="key" t-value="iban_key" />
+          <t t-set="label" t-value="iban_label" />
+          <t t-set="required" t-value="iban_required" />
+          <t t-set="disabled" t-value="iban_disabled" />
+        </t>
+      </div>
+      <div class="col-md-12">
+        <t t-call="energy_communities.form_field_checkbox">
+          <t t-set="value" t-value="conditions_payment" />
+          <t t-set="key" t-value="conditions_payment_key" />
+          <t t-set="label" t-value="conditions_payment_label" />
+          <t t-set="description" t-value="conditions_payment_description" />
+          <t t-set="required" t-value="conditions_payment_required" />
+          <t t-set="disabled" t-value="conditions_payment_disabled" />
+        </t>
+      </div>
+      <div class="col-md-12">
         <t t-call="energy_communities.form_field_checkbox">
           <t t-set="value" t-value="privacy_policy" />
           <t t-set="key" t-value="privacy_policy_key" />
