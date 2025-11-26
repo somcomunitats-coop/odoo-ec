@@ -42,12 +42,14 @@ class WebsiteShareSubscriptionController(http.Controller):
     )
     def share_subscription_form(self, **kwargs):
         try:
-            self._validate_request(kwargs)
+            context = self._validate_request(kwargs)
         except Exception as e:
             _logger.error(f"Error validating request: {e}")
             return request.render(template="website.page_404", status=404)
+        else:
+            values = context.model_dump()
         if request.httprequest.method == "GET":
-            values = self._get_base_values(kwargs)
+            values = self._update_base_values(values)
             if values.get("global_error", False):
                 return self._render_page(values)
             self._update_page_values(values)
@@ -59,31 +61,11 @@ class WebsiteShareSubscriptionController(http.Controller):
         self._process_form(values)
         return self._render_page(values)
 
-    def _get_base_values(self, kwargs):
-        mode = kwargs.get("mode", "")
-        values = {
-            "mode": mode,
-            "membership_mode": MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(mode),
-            "membertype_mode": MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE.get(mode),
-            "company": self._get_model_from_ext_id(
-                "res.company", "company_external_id", kwargs.get("company_ext_id")
-            ),
-            "product_categ": request.env.ref(
-                MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.get(mode)
-            ),
-        }
+    def _update_base_values(self, values):
         values["currency_symbol"] = values["company"].currency_id.symbol
-        if "product_ext_id" in kwargs.keys():
-            values["form_mode"] = "global_form"
-            values["product_ext_id"] = kwargs.get("product_ext_id")
-            # Get the product from the external ID
-            values["product"] = self._get_model_from_ext_id(
-                "product.template", "product_external_id", values["product_ext_id"]
-            )
+        if values.get("product_ext_id"):
             values["products"] = [values["product"]]
         else:
-            values["form_mode"] = "single_form"
-            values["product_ext_id"] = False
             values["products"] = self._get_products_from_category_and_company(
                 values["product_categ"].id, values["company"].id
             )
@@ -102,15 +84,27 @@ class WebsiteShareSubscriptionController(http.Controller):
             membership_mode=MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(mode),
             membertype_mode=MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE.get(mode),
             formtype_mode=self._get_formtype_mode(kwargs),
-            company=self._get_model_from_ext_id(
-                "res.company", "company_external_id", kwargs.get("company_ext_id")
-            ),
+            company=request.env["res.company"]
+            .sudo()
+            .search([("company_external_id", "=", kwargs.get("company_ext_id"))]),
             product_categ=request.env.ref(
                 MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.get(mode)
             ),
-            product=self._get_model_from_ext_id(
-                "product.template", "product_external_id", kwargs.get("product_ext_id")
+            product=request.env["product.template"]
+            .sudo()
+            .search(
+                [
+                    ("product_external_id", "=", kwargs.get("product_ext_id")),
+                    (
+                        "product_category_id",
+                        "=",
+                        request.env.ref(
+                            MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.get(mode)
+                        ).id,
+                    ),
+                ]
             ),
+            product_ext_id=kwargs.get("product_ext_id"),
         )
 
         # mode = kwargs.get("mode","")
@@ -227,7 +221,7 @@ class WebsiteShareSubscriptionController(http.Controller):
     def _get_model_from_ext_id(self, model_name, field_name, ext_id):
         if ext_id:
             return request.env[model_name].sudo().search([(field_name, "=", ext_id)])
-        return False
+        return None
 
     def _get_products_from_category_and_company(self, product_categ_id, company_id):
         return (
