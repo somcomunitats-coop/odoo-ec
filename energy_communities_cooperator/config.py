@@ -243,3 +243,17 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS = {
     "company_invited": MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS,
     "voluntary": MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS,
 }
+MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE = {
+    "member": "cooperator",
+    "company_member": "cooperator",
+    "invited": "invited",
+    "company_invited": "invited",
+    "voluntary": "voluntary",
+}
+MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE = {
+    "member": "individual",
+    "company_member": "company",
+    "invited": "individual",
+    "company_invited": "company",
+    "voluntary": "individual_company",
+}

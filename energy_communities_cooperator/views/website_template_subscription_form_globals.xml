@@ -1,0 +1,188 @@
+<odoo>
+  <template id="template_subscription_form_global" name="template_subscription_form_global">
+    <div class="row">
+      <div class="col-md-12">
+        <t t-call="energy_communities.form_field_email">
+          <t t-set="value" t-value="email" />
+          <t t-set="key" t-value="email_key" />
+          <t t-set="label" t-value="email_label" />
+          <t t-set="required" t-value="email_required" />
+          <t t-set="disabled" t-value="email_disabled" />
+        </t>
+      </div>
+      <div class="col-md-6">
+        <t t-call="energy_communities.form_field_text">
+          <t t-set="value" t-value="firstname" />
+          <t t-set="key" t-value="firstname_key" />
+          <t t-set="label" t-value="firstname_label" />
+          <t t-set="required" t-value="firstname_required" />
+          <t t-set="disabled" t-value="firstname_disabled" />
+        </t>
+      </div>
+      <div class="col-md-6">
+        <t t-call="energy_communities.form_field_text">
+          <t t-set="value" t-value="lastname" />
+          <t t-set="key" t-value="lastname_key" />
+          <t t-set="label" t-value="lastname_label" />
+          <t t-set="required" t-value="lastname_required" />
+          <t t-set="disabled" t-value="lastname_disabled" />
+        </t>
+      </div>
+      <div class="col-md-6">
+        <t t-call="energy_communities.form_field_selection">
+          <t t-set="value" t-value="gender" />
+          <t t-set="key" t-value="gender_key" />
+          <t t-set="label" t-value="gender_label" />
+          <t t-set="options" t-value="gender_options" />
+          <t t-set="required" t-value="gender_required" />
+          <t t-set="disabled" t-value="gender_disabled" />
+        </t>
+      </div>
+      <div class="col-md-6">
+        <t t-call="energy_communities.form_field_date_past">
+          <t t-set="value" t-value="birthdate" />
+          <t t-set="key" t-value="birthdate_key" />
+          <t t-set="label" t-value="birthdate_label" />
+          <t t-set="required" t-value="birthdate_required" />
+          <t t-set="disabled" t-value="birthdate_disabled" />
+        </t>
+      </div>
+      <div class="col-md-12">
+        <t t-call="energy_communities.form_field_text">
+          <t t-set="value" t-value="phone" />
+          <t t-set="key" t-value="phone_key" />
+          <t t-set="label" t-value="phone_label" />
+          <t t-set="required" t-value="phone_required" />
+          <t t-set="disabled" t-value="phone_disabled" />
+        </t>
+      </div>
+      <div class="col-md-12">
+        <t t-call="energy_communities.form_field_selection">
+          <t t-set="value" t-value="lang" />
+          <t t-set="key" t-value="lang_key" />
+          <t t-set="label" t-value="lang_label" />
+          <t t-set="options" t-value="lang_options" />
+          <t t-set="required" t-value="lang_required" />
+          <t t-set="disabled" t-value="lang_disabled" />
+        </t>
+      </div>
+      <div class="col-md-12">
+        <t t-call="energy_communities.form_field_text">
+          <t t-set="value" t-value="vat" />
+          <t t-set="key" t-value="vat_key" />
+          <t t-set="label" t-value="vat_label" />
+          <t t-set="required" t-value="vat_required" />
+          <t t-set="disabled" t-value="vat_disabled" />
+        </t>
+      </div>
+      <div class="col-md-12">
+        <t t-call="energy_communities.form_field_text">
+          <t t-set="value" t-value="address" />
+          <t t-set="key" t-value="address_key" />
+          <t t-set="label" t-value="address_label" />
+          <t t-set="required" t-value="address_required" />
+          <t t-set="disabled" t-value="address_disabled" />
+        </t>
+      </div>
+      <div class="col-md-6">
+        <t t-call="energy_communities.form_field_text">
+          <t t-set="value" t-value="city" />
+          <t t-set="key" t-value="city_key" />
+          <t t-set="label" t-value="city_label" />
+          <t t-set="required" t-value="city_required" />
+          <t t-set="disabled" t-value="city_disabled" />
+        </t>
+      </div>
+      <div class="col-md-6">
+        <t t-call="energy_communities.form_field_text">
+          <t t-set="value" t-value="zip_code" />
+          <t t-set="key" t-value="zip_code_key" />
+          <t t-set="label" t-value="zip_code_label" />
+          <t t-set="required" t-value="zip_code_required" />
+          <t t-set="disabled" t-value="zip_code_disabled" />
+        </t>
+      </div>
+      <div class="col-md-12">
+        <t t-call="energy_communities.form_field_selection">
+          <t t-set="value" t-value="country_id" />
+          <t t-set="key" t-value="country_id_key" />
+          <t t-set="label" t-value="country_id_label" />
+          <t t-set="options" t-value="country_id_options" />
+          <t t-set="required" t-value="country_id_required" />
+          <t t-set="disabled" t-value="country_id_disabled" />
+        </t>
+      </div>
+      <div class="col-md-4">
+        <t t-call="energy_communities.form_field_selection">
+          <t t-set="value" t-value="share_product_id" />
+          <t t-set="key" t-value="share_product_id_key" />
+          <t t-set="label" t-value="share_product_id_label" />
+          <t t-set="options" t-value="share_product_id_options" />
+          <t t-set="required" t-value="share_product_id_required" />
+          <t t-set="disabled" t-value="share_product_id_disabled" />
+        </t>
+      </div>
+      <div class="col-md-3">
+        <t t-call="energy_communities.form_field_number">
+          <t t-set="value" t-value="ordered_parts" />
+          <t t-set="key" t-value="ordered_parts_key" />
+          <t t-set="label" t-value="ordered_parts_label" />
+          <t t-set="required" t-value="ordered_parts_required" />
+          <t t-set="disabled" t-value="ordered_parts_disabled" />
+        </t>
+      </div>
+      <div class="col-md-4">
+        <t t-call="energy_communities.form_field_text">
+          <t t-set="value" t-value="total_price" />
+          <t t-set="key" t-value="total_price_key" />
+          <t t-set="label" t-value="total_price_label" />
+          <t t-set="required" t-value="total_price_required" />
+          <t t-set="disabled" t-value="total_price_disabled" />
+        </t>
+      </div>
+      <div class="col-md-1">
+        <br />
+        <span class="font-weight-bold"><t t-out="currency_symbol" /></span>
+      </div>
+      <div class="col-md-12">
+        <t t-call="energy_communities.form_field_selection">
+          <t t-set="value" t-value="payment_method" />
+          <t t-set="key" t-value="payment_method_key" />
+          <t t-set="label" t-value="payment_method_label" />
+          <t t-set="options" t-value="payment_method_options" />
+          <t t-set="required" t-value="payment_method_required" />
+          <t t-set="disabled" t-value="payment_method_disabled" />
+        </t>
+      </div>
+      <div class="col-md-12">
+        <t t-call="energy_communities.form_field_text">
+          <t t-set="value" t-value="iban" />
+          <t t-set="key" t-value="iban_key" />
+          <t t-set="label" t-value="iban_label" />
+          <t t-set="required" t-value="iban_required" />
+          <t t-set="disabled" t-value="iban_disabled" />
+        </t>
+      </div>
+      <div class="col-md-12">
+        <t t-call="energy_communities.form_field_checkbox">
+          <t t-set="value" t-value="conditions_payment" />
+          <t t-set="key" t-value="conditions_payment_key" />
+          <t t-set="label" t-value="conditions_payment_label" />
+          <t t-set="description" t-value="conditions_payment_description" />
+          <t t-set="required" t-value="conditions_payment_required" />
+          <t t-set="disabled" t-value="conditions_payment_disabled" />
+        </t>
+      </div>
+      <div class="col-md-12">
+        <t t-call="energy_communities.form_field_checkbox">
+          <t t-set="value" t-value="privacy_policy" />
+          <t t-set="key" t-value="privacy_policy_key" />
+          <t t-set="label" t-value="privacy_policy_label" />
+          <t t-set="description" t-value="privacy_policy_description" />
+          <t t-set="required" t-value="privacy_policy_required" />
+          <t t-set="disabled" t-value="privacy_policy_disabled" />
+        </t>
+      </div>
+    </div>
+  </template>
+</odoo>
