@@ -1,7 +1,9 @@
+import logging
+
 from odoo import http
+from odoo.exceptions import MissingError
 from odoo.http import request
 from odoo.tools.translate import _
-from odoo.exceptions import MissingError
 
 from ..config import (
     MAPPING__PAYMENT_METHOD,
@@ -10,13 +12,16 @@ from ..config import (
     MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA,
     MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER,
     MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE,
+    MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE,
+    MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE,
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
     SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
-    MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE,
-    MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE
+)
+from ..schemas.website_share_subscription_schemas import (
+    WebsiteShareSubscriptionContext,
 )
 
-from ..schemas import WebsiteShareSubscriptionContext
+_logger = logging.getLogger(__name__)
 
 
 # http://odoo-ce.local:8069/es/subscription/member/356a192b7913b04c54574d18c28d46e6395428ab/ae7329c979b3cd96086c22cca6217764ab3e50ec
@@ -39,7 +44,8 @@ class WebsiteShareSubscriptionController(http.Controller):
         try:
             self._validate_request(kwargs)
         except Exception as e:
-             return request.render(template='website.page_404', status=404)
+            _logger.error(f"Error validating request: {e}")
+            return request.render(template="website.page_404", status=404)
         if request.httprequest.method == "GET":
             values = self._get_base_values(kwargs)
             if values.get("global_error", False):
@@ -54,7 +60,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         return self._render_page(values)
 
     def _get_base_values(self, kwargs):
-        mode = kwargs.get("mode","")
+        mode = kwargs.get("mode", "")
         values = {
             "mode": mode,
             "membership_mode": MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(mode),
@@ -64,8 +70,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             ),
             "product_categ": request.env.ref(
                 MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.get(mode)
-            )
-
+            ),
         }
         values["currency_symbol"] = values["company"].currency_id.symbol
         if "product_ext_id" in kwargs.keys():
@@ -86,17 +91,17 @@ class WebsiteShareSubscriptionController(http.Controller):
                 values["product"] = values["products"][0]
         return values
 
-    def _get_formtype_mode(self,kwargs):
+    def _get_formtype_mode(self, kwargs):
         if "product_external_id" in kwargs:
             return "single"
         return "global"
 
     def _validate_request(self, kwargs):
-        mode = kwargs.get("mode","")
+        mode = kwargs.get("mode", "")
         return WebsiteShareSubscriptionContext(
             membership_mode=MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(mode),
             membertype_mode=MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE.get(mode),
-            formtype_mode=self._get_formtype_mode(kwrags)
+            formtype_mode=self._get_formtype_mode(kwargs),
             company=self._get_model_from_ext_id(
                 "res.company", "company_external_id", kwargs.get("company_ext_id")
             ),
@@ -105,13 +110,12 @@ class WebsiteShareSubscriptionController(http.Controller):
             ),
             product=self._get_model_from_ext_id(
                 "product.template", "product_external_id", kwargs.get("product_ext_id")
-            )
+            ),
         )
 
         # mode = kwargs.get("mode","")
         # if not mode or mode not in MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE:
         #     raise MissingError(_("Membership mode not found"))
-
 
         # if not values["company"]:
         #     values.update(
