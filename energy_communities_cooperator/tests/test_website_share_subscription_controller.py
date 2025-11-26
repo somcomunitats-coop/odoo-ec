@@ -12,7 +12,7 @@ from odoo.addons.base_rest.tests.common import RegistryMixin
 
 
 @tagged("-at_install", "post_install")
-class TestCRMLeadServiceRestCase(HttpCase, RegistryMixin):
+class TestShareSubscriptionServiceRestCase(HttpCase, RegistryMixin):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -29,7 +29,9 @@ class TestCRMLeadServiceRestCase(HttpCase, RegistryMixin):
         # self.url_open
         # and a valid data
         # when we call for the global subscription form page
-        response = self.client("/subscription/member/ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4")
+        response = self.client(
+            "/subscription/member/ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4"
+        )
         # it correctly renders the page
         self.assertEqual(response.status_code, 200)
 
@@ -38,7 +40,9 @@ class TestCRMLeadServiceRestCase(HttpCase, RegistryMixin):
         # self.url_open
         # and a valid data
         # when we call for the global subscription form page
-        response = self.client("/subscription/aaaa/ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4")
+        response = self.client(
+            "/subscription/aaaa/ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4"
+        )
         # it correctly renders the page
         # __import__('ipdb').set_trace()
         self.assertEqual(response.status_code, 404)
