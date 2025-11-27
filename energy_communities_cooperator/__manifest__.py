@@ -50,6 +50,7 @@
         "views/subscription_request_view.xml",
         "views/website_template_subscription_base.xml",
         "views/website_template_subscription_form.xml",
+        "views/website_template_subscription_form_base.xml",
         "views/website_template_subscription_form_member.xml",
         "views/website_template_subscription_form_company_member.xml",
         "views/website_template_subscription_form_company_invited.xml",

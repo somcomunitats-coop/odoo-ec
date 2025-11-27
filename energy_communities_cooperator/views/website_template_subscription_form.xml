@@ -14,7 +14,7 @@
       enctype="multipart/form-data"
     >
       <t t-call="energy_communities_cooperator.template_subscription_form_csrf"/>
-      <t t-call="energy_communities_cooperator.template_subscription_form_{{mode}}"/>
+      <!--<t t-call="energy_communities_cooperator.template_subscription_form_{{subscription_mode}}"/>-->
       <div class="text-center">
         <button class="btn btn-primary mt-3 mb-3 text-center">Send</button>
       </div>

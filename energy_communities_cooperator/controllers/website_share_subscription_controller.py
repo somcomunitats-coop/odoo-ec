@@ -32,8 +32,8 @@ _logger = logging.getLogger(__name__)
 class WebsiteShareSubscriptionController(http.Controller):
     @http.route(
         [
-            "/subscription/<string:mode>/<string:company_ext_id>",
-            "/subscription/<string:mode>/<string:company_ext_id>/<string:product_ext_id>",
+            "/subscription/<string:subscription_mode>/<string:company_ext_id>",
+            "/subscription/<string:subscription_mode>/<string:company_ext_id>/<string:product_ext_id>",
         ],
         type="http",
         auth="public",
@@ -41,19 +41,19 @@ class WebsiteShareSubscriptionController(http.Controller):
         methods=["GET", "POST"],
     )
     def share_subscription_form(self, **kwargs):
+        # ctx = self._create_context(kwargs)
         try:
-            context = self._validate_request(kwargs)
+            ctx = self._create_context(kwargs)
         except Exception as e:
             _logger.error(f"Error validating request: {e}")
             return request.render(template="website.page_404", status=404)
-        else:
-            values = context.model_dump()
         if request.httprequest.method == "GET":
-            values = self._update_base_values(values)
-            if values.get("global_error", False):
-                return self._render_page(values)
-            self._update_page_values(values)
-            self._update_form_fields(values)
+            # values = self._update_base_values(values)
+            # if values.get("global_error", False):
+            #   return self._render_page(values)
+            values = self._get_page_values(ctx)
+            # self._update_form_fields(values)
+            # TODO: Move this methods inside _get_page_values
             self._update_custom_options(values)
             self._update_custom_description(values)
             self._update_form_custom_fields(values)
@@ -61,51 +61,79 @@ class WebsiteShareSubscriptionController(http.Controller):
         self._process_form(values)
         return self._render_page(values)
 
-    def _update_base_values(self, values):
-        values["currency_symbol"] = values["company"].currency_id.symbol
-        if values.get("product_ext_id"):
-            values["products"] = [values["product"]]
-        else:
-            values["products"] = self._get_products_from_category_and_company(
-                values["product_categ"].id, values["company"].id
+    def _create_context(self, kwargs):
+        subscription_mode = kwargs.get("subscription_mode")
+        company = self._get_model_from_ext_id(
+            "res.company", "company_external_id", kwargs.get("company_ext_id")
+        )
+        product_categ = self._get_product_categ(subscription_mode)
+        product = self._get_model_from_ext_id(
+            "product.template", "product_external_id", kwargs.get("product_ext_id")
+        )
+        products_config = self._get_page_products(company, product_categ, product)
+        return WebsiteShareSubscriptionContext(
+            subscription_mode=subscription_mode,
+            membership_mode=MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(
+                subscription_mode
+            ),
+            membertype_mode=MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE.get(
+                subscription_mode
+            ),
+            formtype_mode=self._get_formtype_mode(kwargs),
+            company=company,
+            product_categ=product_categ,
+            products=products_config["products"],
+            product=products_config["product"],
+            # product_ext_id=kwargs.get("product_ext_id",None),
+        )
+
+    def _get_page_values(self, ctx):
+        # TODO: Finish this moving values methods from main method here
+        values = (
+            ctx.model_dump() | self._get_base_values(ctx) | self._get_form_fields(ctx)
+        )
+
+    def _get_base_values(self, ctx):
+        return {
+            "currency_symbol": ctx.company.currency_id.symbol,
+            "page_title": self._get_page_title(ctx),
+            "page_headline": self._get_page_headline(ctx),
+            "page_headline_fixed_transfer": self._get_page_headline_fixed_transfer(ctx),
+            "page_headline_fixed_sepa": self._get_page_headline_fixed_sepa(ctx),
+            # "page_headline_custom": self._get_page_headline_custom(ctx),
+            # "page_headline_last_text": SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
+        }
+
+    def _get_page_products(self, company, product_categ, product):
+        if product:
+            return {"products": product, "product": product}
+        if product_categ and company:
+            products = self._get_products_from_category_and_company(
+                product_categ.id, company.id
             )
-            if len(values["products"]) > 0:
-                values["product"] = values["products"][0]
-        return values
+            return {"products": products, "product": products[0]}
+        else:
+            return {"products": None, "product": None}
 
     def _get_formtype_mode(self, kwargs):
         if "product_external_id" in kwargs:
             return "single"
         return "global"
 
-    def _validate_request(self, kwargs):
-        mode = kwargs.get("mode", "")
-        return WebsiteShareSubscriptionContext(
-            membership_mode=MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(mode),
-            membertype_mode=MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE.get(mode),
-            formtype_mode=self._get_formtype_mode(kwargs),
-            company=request.env["res.company"]
-            .sudo()
-            .search([("company_external_id", "=", kwargs.get("company_ext_id"))]),
-            product_categ=request.env.ref(
-                MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.get(mode)
-            ),
-            product=request.env["product.template"]
-            .sudo()
-            .search(
-                [
-                    ("product_external_id", "=", kwargs.get("product_ext_id")),
-                    (
-                        "categ_id",
-                        "=",
-                        request.env.ref(
-                            MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.get(mode)
-                        ).id,
-                    ),
-                ]
-            ),
-            product_ext_id=kwargs.get("product_ext_id"),
-        )
+    def _get_model_from_ext_id(self, model_name, field_name, ext_id):
+        if ext_id:
+            return request.env[model_name].sudo().search([(field_name, "=", ext_id)])
+        return False
+
+    def _get_product_categ(self, subscription_mode):
+        try:
+            categ = request.env.ref(
+                MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.get(subscription_mode)
+            )
+        except:
+            categ = None
+
+        return categ
 
     def _render_page(self, values):
         return request.render(
@@ -118,7 +146,9 @@ class WebsiteShareSubscriptionController(http.Controller):
 
     # updaters
     def _update_form_fields(self, values):
-        form_fields = MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS[values["mode"]]
+        form_fields = MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS[
+            values["subscription_mode"]
+        ]
         for field in form_fields:
             values[field + "_key"] = field
             values[field + "_label"] = form_fields[field]["label"]
@@ -142,7 +172,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         if len(values["products"]) == 1:
             values["share_product_id_disabled"] = True
             # values["ordered_parts_disabled"] = True
-        if values["mode"] == "voluntary":
+        if values["subscription_mode"] == "voluntary":
             values["address_disabled"] = True
             values["phone_disabled"] = True
             values["birthdate_disabled"] = True
@@ -171,23 +201,6 @@ class WebsiteShareSubscriptionController(http.Controller):
         else:
             values["privacy_policy_description"] = ""
 
-    def _update_page_values(self, values):
-        values.update(
-            {
-                "page_title": self._get_page_title(values),
-                "page_headline": self._get_page_headline(values),
-                "page_headline_fixed_transfer": self._get_page_headline_fixed_transfer(
-                    values
-                ),
-                "page_headline_fixed_sepa": self._get_page_headline_fixed_sepa(values),
-                "page_headline_custom": self._get_page_headline_custom(values),
-                "page_headline_last_text": SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
-                "activate_form_specific_products": values[
-                    "product"
-                ].activate_form_specific_products,
-            }
-        )
-
     # getters
     def _get_products_from_category_and_company(self, product_categ_id, company_id):
         return (
@@ -196,47 +209,47 @@ class WebsiteShareSubscriptionController(http.Controller):
             .search(
                 [
                     ("categ_id", "=", product_categ_id),
-                    ("default_share_product", "=", True),
                     ("company_id", "=", company_id),
-                ]
+                ],
+                order="default_share_product desc",
             )
         )
 
-    def _get_page_title(self, values):
-        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE[values["mode"]].format(
-            company_name=values["company"].comercial_name
-        )
+    def _get_page_title(self, ctx):
+        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE[
+            ctx.subscription_mode
+        ].format(company_name=ctx.company.comercial_name)
 
-    def _get_page_headline(self, values):
-        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE[values["mode"]].format(
-            company_name=values["company"].comercial_name
-        )
+    def _get_page_headline(self, ctx):
+        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE[
+            ctx.subscription_mode
+        ].format(company_name=ctx.company.comercial_name)
 
-    def _get_page_headline_fixed_transfer(self, values):
+    def _get_page_headline_fixed_transfer(self, ctx):
         return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER[
-            values["mode"]
+            ctx.subscription_mode
         ].format(
-            product_price=str(values["product"].list_price).replace(".", ","),
-            currency_symbol=values["currency_symbol"],
+            product_price=str(ctx.product.list_price).replace(".", ","),
+            currency_symbol=ctx.company.currency_id.symbol,
         )
 
-    def _get_page_headline_fixed_sepa(self, values):
+    def _get_page_headline_fixed_sepa(self, ctx):
         return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA[
-            values["mode"]
+            ctx.subscription_mode
         ].format(
-            product_price=str(values["product"].list_price).replace(".", ","),
-            currency_symbol=values["currency_symbol"],
+            product_price=str(ctx.product.list_price).replace(".", ","),
+            currency_symbol=ctx.company.currency_id.symbol,
         )
 
-    def _get_page_headline_custom(self, values):
-        text_custom = (
-            values["product"].html_specific_products
-            if values["product"].activate_form_specific_products
-            else values["company"].cooperator_share_form_header_text
-        )
-        if not text_custom:
-            return ""
-        return text_custom
+    # def _get_page_headline_custom(self, values):
+    #     text_custom = (
+    #         values["product"].html_specific_products
+    #         if values["product"].activate_form_specific_products
+    #         else values["company"].cooperator_share_form_header_text
+    #     )
+    #     if not text_custom:
+    #         return ""
+    #     return text_custom
 
     def _get_form_fields_values(self, data, path):
         if isinstance(path, bool):

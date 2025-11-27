@@ -12,7 +12,7 @@ from odoo.addons.base_rest.tests.common import RegistryMixin
 
 
 @tagged("-at_install", "post_install")
-class TestShareSubscriptionControllerCase(HttpCase, RegistryMixin):
+class TestShareSubscriptionController(HttpCase, RegistryMixin):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
