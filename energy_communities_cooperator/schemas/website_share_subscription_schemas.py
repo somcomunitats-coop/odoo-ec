@@ -1,8 +1,7 @@
 from enum import Enum
 from typing import Any, Optional
 
-from pydantic import BaseModel, field_validator, model_validator
-from pydantic.dataclasses import dataclass
+from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 
 from odoo.addons.base.models.res_company import Company
 from odoo.addons.product.models.product_category import ProductCategory
@@ -33,11 +32,8 @@ class FormTypeMode(str, Enum):
     single = "single"
 
 
-# TODO: pydantic dataclasses is not supported by models odoo, we can't use Company model,ProductCategory model and ProductTemplate model as a field in the dataclass
-
-
-@dataclass
 class WebsiteShareSubscriptionContext(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
     membership_mode: MembershipMode
     membertype_mode: MemberTypeMode
     formtype_mode: FormTypeMode
