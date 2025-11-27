@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, Optional
+from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 
@@ -34,24 +34,26 @@ class FormTypeMode(str, Enum):
 
 class WebsiteShareSubscriptionContext(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
+    subscription_mode: SubscriptionMode
     membership_mode: MembershipMode
     membertype_mode: MemberTypeMode
     formtype_mode: FormTypeMode
     company: Company
     product_categ: ProductCategory
-    product: Optional[ProductTemplate] = None
-    product_ext_id: Optional[str] = None
+    products: List[ProductTemplate]
+    product: Optional[ProductTemplate]
 
-    @model_validator(mode="before")
-    @classmethod
-    def check_mode(cls, data: Any) -> Any:
-        if not data.get("membership_mode") and not data.get("membertype_mode"):
-            raise ValueError("Membership mode or membertype mode is required")
-        return data
+    # product_ext_id: Optional[str] = None
+    # @model_validator(mode="before")
+    # @classmethod
+    # def check_mode(cls, data: Any) -> Any:
+    #     if not data.get("membership_mode") and not data.get("membertype_mode"):
+    #         raise ValueError("Membership mode or membertype mode is required")
+    #     return data
 
-    @field_validator("product_ext_id")
-    @classmethod
-    def check_product_ext_id(cls, data: Any) -> Any:
-        if data.get("product_ext_id") and not data.get("product"):
-            raise ValueError("Product must be provided if product_ext_id is provided")
-        return data
+    # @field_validator("product_ext_id")
+    # @classmethod
+    # def check_product_ext_id(cls, data: Any) -> Any:
+    #     if data.get("product_ext_id") and not data.get("product"):
+    #         raise ValueError("Product must be provided if product_ext_id is provided")
+    #     return data

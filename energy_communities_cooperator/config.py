@@ -26,27 +26,39 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE = {
     "company_invited": _("Become Invited of {company_name} ") + _("invited_eu_ES"),
     "voluntary": _("Voluntary Share of {company_name} ") + _("vol_share_eu_es"),
 }
+SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT = (
+    "<p>"
+    + _(
+        "Once you are a member you can enjoy the services available from the community and be part of a movement of social and energy model transformation."
+    )
+    + "</p>"
+)
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE = {
     "member": "<p>"
     + _("This form allow you to request be member of the community: {company_name} ")
     + _("member_ccee_eu_ES")
-    + ".</p>",
+    + ".</p>"
+    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
     "company_member": "<p>"
     + _("This form allow you to request be member of the community: {company_name} ")
     + _("member_ccee_eu_ES")
-    + ".</p>",
+    + ".</p>"
+    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
     "invited": "<p>"
     + _("This form allow you to request be invited of the community: {company_name} ")
     + _("invited_ccee_eu_ES")
-    + ".</p>",
+    + ".</p>"
+    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
     "company_invited": "<p>"
     + _("This form allow you to request be invited of the community: {company_name} ")
     + _("invited_ccee_eu_ES")
-    + ".</p>",
+    + ".</p>"
+    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
     "voluntary": "<p>"
     + _("This form allow you to request be voluntary of the community: {company_name} ")
     + _("vol_share_eu_es")
-    + ".</p>",
+    + ".</p>"
+    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
 }
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER = {
     "member": _(
@@ -83,13 +95,6 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA = {
     ),
 }
 
-SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT = (
-    "<p>"
-    + _(
-        "Once you are a member you can enjoy the services available from the community and be part of a movement of social and energy model transformation."
-    )
-    + "</p>"
-)
 
 GENDER_OPTIONS = [
     {"id": "", "name": _("Select your gender")},
@@ -244,8 +249,8 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS = {
     "voluntary": MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS,
 }
 MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE = {
-    "member": "cooperator",
-    "company_member": "cooperator",
+    "member": "member",
+    "company_member": "member",
     "invited": "invited",
     "company_invited": "invited",
     "voluntary": "voluntary",
