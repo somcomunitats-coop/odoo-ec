@@ -1,6 +1,6 @@
 import hashlib
 
-from odoo import fields, models
+from odoo import api, fields, models
 from odoo.tools.translate import _
 
 
@@ -8,12 +8,14 @@ class ResCompany(models.Model):
     _name = "res.company"
     _inherit = "res.company"
 
+    @api.depends("name")
     def _compute_company_external_id(self):
         for record in self:
             record.company_external_id = hashlib.sha1(
                 str(record.id).encode()
             ).hexdigest()
 
+    @api.depends("company_external_id")
     def _compute_share_urls(self):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for record in self:
