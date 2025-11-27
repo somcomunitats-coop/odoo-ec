@@ -1,7 +1,6 @@
 import logging
 
 from odoo import http
-from odoo.exceptions import MissingError
 from odoo.http import request
 from odoo.tools.translate import _
 
@@ -15,7 +14,6 @@ from ..config import (
     MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE,
     MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE,
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
-    SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
 )
 from ..schemas.website_share_subscription_schemas import (
     WebsiteShareSubscriptionContext,
@@ -41,19 +39,26 @@ class WebsiteShareSubscriptionController(http.Controller):
         methods=["GET", "POST"],
     )
     def share_subscription_form(self, **kwargs):
-        # ctx = self._create_context(kwargs)
+        (
+            subscription_mode,
+            formtype_mode,
+            company,
+            product_categ,
+            products_config,
+        ) = self._get_inicial_values(kwargs)
         try:
-            ctx = self._create_context(kwargs)
+            ctx = self._create_context(
+                subscription_mode,
+                formtype_mode,
+                company,
+                product_categ,
+                products_config,
+            )
         except Exception as e:
             _logger.error(f"Error validating request: {e}")
             return request.render(template="website.page_404", status=404)
         if request.httprequest.method == "GET":
-            # values = self._update_base_values(values)
-            # if values.get("global_error", False):
-            #   return self._render_page(values)
             values = self._get_page_values(ctx)
-            # self._update_form_fields(values)
-            # TODO: Move this methods inside _get_page_values
             self._update_custom_options(values)
             self._update_custom_description(values)
             self._update_form_custom_fields(values)
@@ -61,16 +66,19 @@ class WebsiteShareSubscriptionController(http.Controller):
         self._process_form(values)
         return self._render_page(values)
 
-    def _create_context(self, kwargs):
-        subscription_mode = kwargs.get("subscription_mode")
-        company = self._get_model_from_ext_id(
-            "res.company", "company_external_id", kwargs.get("company_ext_id")
+    def _render_page(self, values):
+        return request.render(
+            "energy_communities_cooperator.template_subscription_page",
+            values,
         )
-        product_categ = self._get_product_categ(subscription_mode)
-        product = self._get_model_from_ext_id(
-            "product.template", "product_external_id", kwargs.get("product_ext_id")
-        )
-        products_config = self._get_page_products(company, product_categ, product)
+
+    def _process_form(self, values):
+        pass
+
+    # creators
+    def _create_context(
+        self, subscription_mode, formtype_mode, company, product_categ, products_config
+    ):
         return WebsiteShareSubscriptionContext(
             subscription_mode=subscription_mode,
             membership_mode=MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(
@@ -79,19 +87,36 @@ class WebsiteShareSubscriptionController(http.Controller):
             membertype_mode=MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE.get(
                 subscription_mode
             ),
-            formtype_mode=self._get_formtype_mode(kwargs),
+            formtype_mode=formtype_mode,
             company=company,
             product_categ=product_categ,
             products=products_config["products"],
             product=products_config["product"],
-            # product_ext_id=kwargs.get("product_ext_id",None),
         )
 
+    # getters
+    def _get_inicial_values(self, kwargs):
+        subscription_mode = kwargs.get("subscription_mode")
+        formtype_mode = self._get_formtype_mode(kwargs)
+        company = self._get_model_from_ext_id(
+            "res.company", "company_external_id", kwargs.get("company_ext_id")
+        )
+        product_categ = self._get_product_categ(subscription_mode)
+        product = self._get_model_from_ext_id(
+            "product.template", "product_external_id", kwargs.get("product_ext_id")
+        )
+        products_config = self._get_page_products(company, product_categ, product)
+        return subscription_mode, formtype_mode, company, product_categ, products_config
+
     def _get_page_values(self, ctx):
-        # TODO: Finish this moving values methods from main method here
         values = (
             ctx.model_dump() | self._get_base_values(ctx) | self._get_form_fields(ctx)
         )
+        self._update_custom_options(values)
+        self._update_custom_description(values)
+        self._update_form_custom_fields(values)
+        values["subscription_mode"] = ctx.subscription_mode.value
+        return values
 
     def _get_base_values(self, ctx):
         return {
@@ -100,8 +125,6 @@ class WebsiteShareSubscriptionController(http.Controller):
             "page_headline": self._get_page_headline(ctx),
             "page_headline_fixed_transfer": self._get_page_headline_fixed_transfer(ctx),
             "page_headline_fixed_sepa": self._get_page_headline_fixed_sepa(ctx),
-            # "page_headline_custom": self._get_page_headline_custom(ctx),
-            # "page_headline_last_text": SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
         }
 
     def _get_page_products(self, company, product_categ, product):
@@ -135,20 +158,11 @@ class WebsiteShareSubscriptionController(http.Controller):
 
         return categ
 
-    def _render_page(self, values):
-        return request.render(
-            "energy_communities_cooperator.template_subscription_page",
-            values,
-        )
-
-    def _process_form(self, values):
-        pass
-
-    # updaters
-    def _update_form_fields(self, values):
+    def _get_form_fields(self, ctx):
         form_fields = MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS[
-            values["subscription_mode"]
+            ctx.subscription_mode
         ]
+        values = {}
         for field in form_fields:
             values[field + "_key"] = field
             values[field + "_label"] = form_fields[field]["label"]
@@ -167,41 +181,8 @@ class WebsiteShareSubscriptionController(http.Controller):
                 values[field + "_options"] = form_fields[field]["options"]
             if "description" in form_fields[field]:
                 values[field + "_description"] = form_fields[field]["description"]
+        return values
 
-    def _update_form_custom_fields(self, values):
-        if len(values["products"]) == 1:
-            values["share_product_id_disabled"] = True
-            # values["ordered_parts_disabled"] = True
-        if values["subscription_mode"] == "voluntary":
-            values["address_disabled"] = True
-            values["phone_disabled"] = True
-            values["birthdate_disabled"] = True
-            # values["gender_disabled"] = True
-            values["email_disabled"] = True
-            values["firstname_disabled"] = True
-            values["lastname_disabled"] = True
-            # values["vat_disabled"] = True
-            values["city_disabled"] = True
-            values["zip_code_disabled"] = True
-            # values["country_id_disabled"] = True
-
-    def _update_custom_options(self, values):
-        if "country_id_options" in values:
-            values["country_id_options"] = self._get_country_options()
-        if "share_product_id_options" in values:
-            values["share_product_id_options"] = self._get_share_product_options(values)
-        if "lang_options" in values:
-            values["lang_options"] = self._get_lang_options()
-
-    def _update_custom_description(self, values):
-        if values["company"].display_data_policy_approval:
-            values["privacy_policy_description"] = values[
-                "company"
-            ].data_policy_approval_text
-        else:
-            values["privacy_policy_description"] = ""
-
-    # getters
     def _get_products_from_category_and_company(self, product_categ_id, company_id):
         return (
             request.env["product.template"]
@@ -306,3 +287,37 @@ class WebsiteShareSubscriptionController(http.Controller):
                 }
             )
         return options
+
+    # updaters
+    def _update_form_custom_fields(self, values):
+        if len(values["products"]) == 1:
+            values["share_product_id_disabled"] = True
+            # values["ordered_parts_disabled"] = True
+        if values["subscription_mode"] == "voluntary":
+            values["address_disabled"] = True
+            values["phone_disabled"] = True
+            values["birthdate_disabled"] = True
+            # values["gender_disabled"] = True
+            values["email_disabled"] = True
+            values["firstname_disabled"] = True
+            values["lastname_disabled"] = True
+            # values["vat_disabled"] = True
+            values["city_disabled"] = True
+            values["zip_code_disabled"] = True
+            # values["country_id_disabled"] = True
+
+    def _update_custom_options(self, values):
+        if "country_id_options" in values:
+            values["country_id_options"] = self._get_country_options()
+        if "share_product_id_options" in values:
+            values["share_product_id_options"] = self._get_share_product_options(values)
+        if "lang_options" in values:
+            values["lang_options"] = self._get_lang_options()
+
+    def _update_custom_description(self, values):
+        if values["company"].display_data_policy_approval:
+            values["privacy_policy_description"] = values[
+                "company"
+            ].data_policy_approval_text
+        else:
+            values["privacy_policy_description"] = ""
