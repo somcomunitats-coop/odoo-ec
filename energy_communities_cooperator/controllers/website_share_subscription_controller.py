@@ -96,7 +96,7 @@ class WebsiteShareSubscriptionController(http.Controller):
                 [
                     ("product_external_id", "=", kwargs.get("product_ext_id")),
                     (
-                        "product_category_id",
+                        "categ_id",
                         "=",
                         request.env.ref(
                             MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.get(mode)
@@ -106,35 +106,6 @@ class WebsiteShareSubscriptionController(http.Controller):
             ),
             product_ext_id=kwargs.get("product_ext_id"),
         )
-
-        # mode = kwargs.get("mode","")
-        # if not mode or mode not in MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE:
-        #     raise MissingError(_("Membership mode not found"))
-
-        # if not values["company"]:
-        #     values.update(
-        #         {"global_error": True, "error_msgs": [_("Company not found")]}
-        #     )
-        # if not values["mode"]:
-        #     values.update({"global_error": True, "error_msgs": [_("Mode not found")]})
-        # if values["product_ext_id"] and not values["product"]:
-        #     self.values.update(
-        #         {"global_error": True, "error_msgs": [_("Product not found")]}
-        #     )
-        # if len(values["products"]) == 0:
-        #     values.update(
-        #         {
-        #             "global_error": True,
-        #             "error_msgs": [
-        #                 _(
-        #                     "Products of category {category_name} not found for company {company_name}"
-        #                 ).format(
-        #                     category_name=values["product_categ"].name,
-        #                     company_name=values["company"].comercial_name,
-        #                 )
-        #             ],
-        #         }
-        #     )
 
     def _render_page(self, values):
         return request.render(
@@ -218,11 +189,6 @@ class WebsiteShareSubscriptionController(http.Controller):
         )
 
     # getters
-    def _get_model_from_ext_id(self, model_name, field_name, ext_id):
-        if ext_id:
-            return request.env[model_name].sudo().search([(field_name, "=", ext_id)])
-        return None
-
     def _get_products_from_category_and_company(self, product_categ_id, company_id):
         return (
             request.env["product.template"]
