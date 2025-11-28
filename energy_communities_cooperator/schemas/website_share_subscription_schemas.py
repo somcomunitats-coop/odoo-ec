@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Optional
+from typing import Any, List, Optional
 
 from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 
@@ -8,6 +8,14 @@ from odoo.tools.translate import _
 from odoo.addons.base.models.res_company import Company
 from odoo.addons.product.models.product_category import ProductCategory
 from odoo.addons.product.models.product_template import ProductTemplate
+
+from ..config import (
+    CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+    CONTEXT_STATUS_CODE_NOT_FOUND_ERROR,
+    CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+    CONTEXT_VALIDATION_ERROR_TITLE,
+)
+from ..exceptions import ContextValidationError
 
 
 class SubscriptionMode(str, Enum):
@@ -45,20 +53,16 @@ class WebsiteShareSubscriptionContext(BaseModel):
     products: List[ProductTemplate]
     product: Optional[ProductTemplate]
 
-    # product_ext_id: Optional[str] = None
-    # @model_validator(mode="before")
-    # @classmethod
-    # def check_mode(cls, data: Any) -> Any:
-    #     if not data.get("membership_mode") and not data.get("membertype_mode"):
-    #         raise ValueError("Membership mode or membertype mode is required")
-    #     return data
-
     # Avoid empty recordsets
     @field_validator("company", mode="before")
     @classmethod
     def check_company_required(cls, company: Company) -> Company:
         if not company:
-            raise ValueError(_("Company must be defined"))
+            raise ContextValidationError(
+                CONTEXT_STATUS_CODE_NOT_FOUND_ERROR,
+                CONTEXT_VALIDATION_ERROR_TITLE,
+                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+            )
         return company
 
     @field_validator("product_categ", mode="before")
@@ -67,7 +71,11 @@ class WebsiteShareSubscriptionContext(BaseModel):
         cls, product_categ: ProductCategory
     ) -> ProductCategory:
         if not product_categ:
-            raise ValueError(_("Product category must be defined"))
+            raise ContextValidationError(
+                CONTEXT_STATUS_CODE_NOT_FOUND_ERROR,
+                CONTEXT_VALIDATION_ERROR_TITLE,
+                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+            )
         return product_categ
 
     @field_validator("products", mode="before")
@@ -76,12 +84,39 @@ class WebsiteShareSubscriptionContext(BaseModel):
         cls, products: List[ProductTemplate]
     ) -> List[ProductTemplate]:
         if not products:
-            raise ValueError(_("Products must be defined"))
+            raise ContextValidationError(
+                CONTEXT_STATUS_CODE_NOT_FOUND_ERROR,
+                CONTEXT_VALIDATION_ERROR_TITLE,
+                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+            )
         return products
 
     @field_validator("product", mode="before")
     @classmethod
     def check_product_required(cls, product: ProductTemplate) -> ProductTemplate:
         if not product:
-            raise ValueError(_("Product must be defined"))
+            raise ContextValidationError(
+                CONTEXT_STATUS_CODE_NOT_FOUND_ERROR,
+                CONTEXT_VALIDATION_ERROR_TITLE,
+                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+            )
         return product
+
+    @model_validator(mode="after")
+    @classmethod
+    def check_data_consistency(cls, data: Any) -> Any:
+        # Product must belong to defined company
+        if data.product.company_id.id != data.company.id:
+            raise ContextValidationError(
+                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+                CONTEXT_VALIDATION_ERROR_TITLE,
+                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+            )
+        # TODO: Missing validations
+        # Product doesn't belong to defined category
+        # Product is not a share
+        # Product is not for individuals request on member,invited subscription_mode
+        # Product is not for companies request on member_company,invited_company subscription_mode
+        # Product not available on generic form
+        # Product not available on single form
+        return data
