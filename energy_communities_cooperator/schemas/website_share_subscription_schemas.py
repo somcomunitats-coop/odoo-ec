@@ -3,6 +3,8 @@ from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 
+from odoo.tools.translate import _
+
 from odoo.addons.base.models.res_company import Company
 from odoo.addons.product.models.product_category import ProductCategory
 from odoo.addons.product.models.product_template import ProductTemplate
@@ -28,7 +30,7 @@ class MemberTypeMode(str, Enum):
 
 
 class FormTypeMode(str, Enum):
-    global_ = "global"
+    generic = "generic"
     single = "single"
 
 
@@ -51,9 +53,35 @@ class WebsiteShareSubscriptionContext(BaseModel):
     #         raise ValueError("Membership mode or membertype mode is required")
     #     return data
 
-    # @field_validator("product_ext_id")
-    # @classmethod
-    # def check_product_ext_id(cls, data: Any) -> Any:
-    #     if data.get("product_ext_id") and not data.get("product"):
-    #         raise ValueError("Product must be provided if product_ext_id is provided")
-    #     return data
+    # Avoid empty recordsets
+    @field_validator("company", mode="before")
+    @classmethod
+    def check_company_required(cls, company: Company) -> Company:
+        if not company:
+            raise ValueError(_("Company must be defined"))
+        return company
+
+    @field_validator("product_categ", mode="before")
+    @classmethod
+    def check_product_categ_required(
+        cls, product_categ: ProductCategory
+    ) -> ProductCategory:
+        if not product_categ:
+            raise ValueError(_("Product category must be defined"))
+        return product_categ
+
+    @field_validator("products", mode="before")
+    @classmethod
+    def check_products_required(
+        cls, products: List[ProductTemplate]
+    ) -> List[ProductTemplate]:
+        if not products:
+            raise ValueError(_("Products must be defined"))
+        return products
+
+    @field_validator("product", mode="before")
+    @classmethod
+    def check_product_required(cls, product: ProductTemplate) -> ProductTemplate:
+        if not product:
+            raise ValueError(_("Product must be defined"))
+        return product
