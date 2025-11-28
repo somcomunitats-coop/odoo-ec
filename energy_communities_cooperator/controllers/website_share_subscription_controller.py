@@ -40,6 +40,7 @@ class WebsiteShareSubscriptionController(http.Controller):
     )
     def share_subscription_form(self, **kwargs):
         context_creation_params_dict = self._get_context_creation_params_dict(kwargs)
+        # ctx = WebsiteShareSubscriptionContext(**context_creation_params_dict)
         try:
             ctx = WebsiteShareSubscriptionContext(**context_creation_params_dict)
         except Exception as e:
@@ -70,6 +71,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             "res.company", "company_external_id", kwargs.get("company_ext_id")
         )
         product_categ = self._get_product_categ(subscription_mode)
+        formtype_mode = self._get_formtype_mode(kwargs)
         return {
             "membership_mode": MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(
                 subscription_mode
@@ -78,10 +80,12 @@ class WebsiteShareSubscriptionController(http.Controller):
                 subscription_mode
             ),
             "subscription_mode": subscription_mode,
-            "formtype_mode": self._get_formtype_mode(kwargs),
+            "formtype_mode": formtype_mode,
             "company": company,
             "product_categ": product_categ,
-        } | self._get_page_products_dict(company, product_categ, query_product)
+        } | self._get_page_products_dict(
+            company, product_categ, query_product, formtype_mode
+        )
 
     def _get_page_values(self, ctx):
         values = (
@@ -104,8 +108,10 @@ class WebsiteShareSubscriptionController(http.Controller):
             "page_headline_fixed_sepa": self._get_page_headline_fixed_sepa(ctx),
         }
 
-    def _get_page_products_dict(self, company, product_categ, query_product):
-        if query_product:
+    def _get_page_products_dict(
+        self, company, product_categ, query_product, formtype_mode
+    ):
+        if formtype_mode == "single":
             return {"products": query_product, "product": query_product}
         if product_categ and company:
             products = (
@@ -123,9 +129,9 @@ class WebsiteShareSubscriptionController(http.Controller):
         return {"products": None, "product": None}
 
     def _get_formtype_mode(self, kwargs):
-        if "product_external_id" in kwargs:
+        if "product_ext_id" in kwargs:
             return "single"
-        return "global"
+        return "generic"
 
     def _get_model_from_ext_id(self, model_name, field_name, ext_id):
         if ext_id:
