@@ -262,3 +262,10 @@ MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE = {
     "company_invited": "company",
     "voluntary": "individual_company",
 }
+
+CONTEXT_VALIDATION_ERROR_TITLE = _("Form can't be loaded")
+CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE = _(
+    "There is a problem loading the form. Please contact your administrator for more details"
+)
+CONTEXT_STATUS_CODE_NOT_FOUND_ERROR = 404
+CONTEXT_STATUS_CODE_CONSISTENCY_ERROR = 406

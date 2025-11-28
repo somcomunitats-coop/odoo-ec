@@ -130,6 +130,17 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # it throws a 404 exception and renders 404 page
         self.assertEqual(response.status_code, 404)
 
+    def test_website_form_render_wrong_consistency_between_product_and_company(self):
+        # given http_client
+        # self.url_open
+        # and a valid data
+        # when we call for the global subscription form page
+        response = self.client(
+            "/subscription/member/ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4/"
+        )
+        # it throws a 404 exception and renders 404 page
+        self.assertEqual(response.status_code, 404)
+
     def test_website_form_render_member_ok(self):
         # given http_client
         # self.url_open

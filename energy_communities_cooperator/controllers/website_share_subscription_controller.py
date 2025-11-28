@@ -44,8 +44,16 @@ class WebsiteShareSubscriptionController(http.Controller):
         try:
             ctx = WebsiteShareSubscriptionContext(**context_creation_params_dict)
         except Exception as e:
-            _logger.error(f"Error validating request: {e}")
-            return request.render(template="website.page_404", status=404)
+            return request.render(
+                "http_routing.http_error",
+                {
+                    "status_code": e.http_error_code,
+                    "status_message": e.title,
+                    "error_message": e.message,
+                    "debug": [],
+                },
+                status=e.http_error_code,
+            )
         if request.httprequest.method == "GET":
             values = self._get_page_values(ctx)
             return self._render_page(values)
@@ -114,6 +122,9 @@ class WebsiteShareSubscriptionController(http.Controller):
         if formtype_mode == "single":
             return {"products": query_product, "product": query_product}
         if product_categ and company:
+            # TODO: adjust query fixing according to membertype_mode (individual,company)
+            # TODO: include is_share on query
+            # TODO: if formtype_mode is global (always happens) check display_on_website must be added to query
             products = (
                 request.env["product.template"]
                 .sudo()

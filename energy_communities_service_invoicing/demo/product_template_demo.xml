@@ -36,8 +36,20 @@
     <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_company_id.id"/>
     <field name="taxes_id" eval="[(5,0,0)]" />
   </record>
-  <!-- TODO: Payment mode for community 2 -->
 
+  <!--<record id="cooperator.product_template_share_type_3_demo" model="product.template">-->
+  <!--  <field name="name">company 2 cooperative share</field>-->
+  <!--  <field name="detailed_type">service</field>-->
+  <!--  <field name="is_share" eval="True"/>-->
+  <!--  <field name="standard_price">20</field>-->
+  <!--  <field name="list_price">20</field>-->
+  <!--  <field name="sale_ok" eval="True"/>-->
+  <!--  <field name="purchase_ok" eval="False"/>-->
+  <!--  <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_company_id.id"/>-->
+  <!--  <field name="taxes_id" eval="[(5,0,0)]" />-->
+  <!--  <field name="categ_id" ref="cooperator.product_category_company_share"/>-->
+  <!--</record>-->
+  <!-- TODO: Payment mode for community 2 -->
   # PLATFORM SERVICES
   <record id="demo_platform_service_product_template" model="product.template">
       <field name="name">Platform service product</field>
