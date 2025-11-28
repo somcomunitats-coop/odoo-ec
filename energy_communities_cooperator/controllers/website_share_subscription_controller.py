@@ -50,7 +50,7 @@ class WebsiteShareSubscriptionController(http.Controller):
                     "status_code": e.http_error_code,
                     "status_message": e.title,
                     "error_message": e.message,
-                    "debug": [],
+                    "debug": "debug",
                 },
                 status=e.http_error_code,
             )
@@ -72,8 +72,8 @@ class WebsiteShareSubscriptionController(http.Controller):
     # getters
     def _get_context_creation_params_dict(self, kwargs):
         subscription_mode = kwargs.get("subscription_mode")
-        membership_mode = (
-            MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(subscription_mode),
+        membership_mode = MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(
+            subscription_mode
         )
         membertype_mode = MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE.get(
             subscription_mode

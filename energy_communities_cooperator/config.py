@@ -267,5 +267,9 @@ CONTEXT_VALIDATION_ERROR_TITLE = _("Form can't be loaded")
 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE = _(
     "There is a problem loading the form. Please contact your administrator for more details"
 )
+CONTEXT_VALIDATION_ERROR_UNAVAILABLE_MESSAGE = _(
+    "The form is no longer available. Contact your coordinator for further information."
+)
 CONTEXT_STATUS_CODE_NOT_FOUND_ERROR = 404
 CONTEXT_STATUS_CODE_CONSISTENCY_ERROR = 406
+CONTEXT_STATUS_CODE_UNAVAILABLE_ERROR = 423  # locked
