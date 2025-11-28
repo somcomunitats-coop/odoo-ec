@@ -72,27 +72,29 @@ class WebsiteShareSubscriptionController(http.Controller):
     # getters
     def _get_context_creation_params_dict(self, kwargs):
         subscription_mode = kwargs.get("subscription_mode")
-        query_product = self._get_model_from_ext_id(
-            "product.template", "product_external_id", kwargs.get("product_ext_id")
+        membership_mode = (
+            MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(subscription_mode),
         )
+        membertype_mode = MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE.get(
+            subscription_mode
+        )
+        formtype_mode = self._get_formtype_mode(kwargs)
         company = self._get_model_from_ext_id(
             "res.company", "company_external_id", kwargs.get("company_ext_id")
         )
         product_categ = self._get_product_categ(subscription_mode)
-        formtype_mode = self._get_formtype_mode(kwargs)
+        query_product = self._get_model_from_ext_id(
+            "product.template", "product_external_id", kwargs.get("product_ext_id")
+        )
         return {
-            "membership_mode": MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(
-                subscription_mode
-            ),
-            "membertype_mode": MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE.get(
-                subscription_mode
-            ),
+            "membership_mode": membership_mode,
+            "membertype_mode": membertype_mode,
             "subscription_mode": subscription_mode,
             "formtype_mode": formtype_mode,
             "company": company,
             "product_categ": product_categ,
         } | self._get_page_products_dict(
-            company, product_categ, query_product, formtype_mode
+            company, product_categ, query_product, formtype_mode, membertype_mode
         )
 
     def _get_page_values(self, ctx):
@@ -117,7 +119,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         }
 
     def _get_page_products_dict(
-        self, company, product_categ, query_product, formtype_mode
+        self, company, product_categ, query_product, formtype_mode, membertype_mode
     ):
         if formtype_mode == "single":
             return {"products": query_product, "product": query_product}
@@ -125,16 +127,20 @@ class WebsiteShareSubscriptionController(http.Controller):
             # TODO: adjust query fixing according to membertype_mode (individual,company)
             # TODO: include is_share on query
             # TODO: if formtype_mode is global (always happens) check display_on_website must be added to query
+            domain = [
+                ("categ_id", "=", product_categ.id),
+                ("company_id", "=", company.id),
+                ("display_on_website", "=", True),
+                ("is_share", "=", True),
+            ]
+            if membertype_mode == "individual":
+                domain.append(("by_individual", "=", True))
+            elif membertype_mode == "company":
+                domain.append(("by_company", "=", True))
             products = (
                 request.env["product.template"]
                 .sudo()
-                .search(
-                    [
-                        ("categ_id", "=", product_categ.id),
-                        ("company_id", "=", company.id),
-                    ],
-                    order="default_share_product desc",
-                )
+                .search(domain, order="default_share_product desc")
             )
             return {"products": products, "product": products[0]}
         return {"products": None, "product": None}

@@ -114,9 +114,59 @@ class WebsiteShareSubscriptionContext(BaseModel):
             )
         # TODO: Missing validations
         # Product doesn't belong to defined category
+        if data.product.categ_id.id != data.product_categ.id:
+            raise ContextValidationError(
+                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+                CONTEXT_VALIDATION_ERROR_TITLE,
+                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+            )
         # Product is not a share
+        if not data.product.is_share:
+            raise ContextValidationError(
+                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+                CONTEXT_VALIDATION_ERROR_TITLE,
+                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+            )
         # Product is not for individuals request on member,invited subscription_mode
+        if (
+            data.subscription_mode
+            in [SubscriptionMode.member, SubscriptionMode.invited]
+            and data.membertype_mode != MemberTypeMode.individual
+        ):
+            raise ContextValidationError(
+                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+                CONTEXT_VALIDATION_ERROR_TITLE,
+                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+            )
         # Product is not for companies request on member_company,invited_company subscription_mode
+        if (
+            data.subscription_mode
+            in [SubscriptionMode.company_member, SubscriptionMode.company_invited]
+            and data.membertype_mode != MemberTypeMode.company
+        ):
+            raise ContextValidationError(
+                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+                CONTEXT_VALIDATION_ERROR_TITLE,
+                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+            )
         # Product not available on generic form
+        if (
+            data.formtype_mode == FormTypeMode.generic
+            and not data.product.display_on_website
+        ):
+            raise ContextValidationError(
+                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+                CONTEXT_VALIDATION_ERROR_TITLE,
+                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+            )
         # Product not available on single form
+        if (
+            data.formtype_mode == FormTypeMode.single
+            and not data.product.activate_form_specific_products
+        ):
+            raise ContextValidationError(
+                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+                CONTEXT_VALIDATION_ERROR_TITLE,
+                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+            )
         return data
