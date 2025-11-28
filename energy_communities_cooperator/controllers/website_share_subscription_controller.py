@@ -169,25 +169,39 @@ class WebsiteShareSubscriptionController(http.Controller):
         form_fields = MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS[
             ctx.subscription_mode
         ]
-        values = {}
+        values = {"form_fields": {}}
         for field in form_fields:
-            values[field + "_key"] = field
-            values[field + "_label"] = form_fields[field]["label"]
-            values[field] = self._get_form_field_value(
+            values = values["form_fields"][field] = {}
+            values["form_fields"][field]["key"] = field
+            values["form_fields"][field]["label"] = form_fields[field]["label"]
+            values["form_fields"][field]["value"] = self._get_form_field_value(
                 values, form_fields[field]["value"]
             )
+            values["form_fields"][field]["type"] = "energy_communities.{}".format(
+                form_fields[field]["type"]
+            )
             if "required" in form_fields[field]:
-                values[field + "_required"] = form_fields[field]["required"]
+                values["form_fields"][field]["required"] = form_fields[field][
+                    "required"
+                ]
             else:
-                values[field + "_required"] = False
+                values["form_fields"][field]["required"] = False
             if "disabled" in form_fields[field]:
-                values[field + "_disabled"] = form_fields[field]["disabled"]
+                values["form_fields"][field]["disabled"] = form_fields[field][
+                    "disabled"
+                ]
             else:
-                values[field + "_disabled"] = False
+                values["form_fields"][field]["disabled"] = False
             if "options" in form_fields[field]:
-                values[field + "_options"] = form_fields[field]["options"]
+                values["form_fields"][field]["options"] = form_fields[field]["options"]
+            else:
+                values["form_fields"][field]["options"] = False
             if "description" in form_fields[field]:
-                values[field + "_description"] = form_fields[field]["description"]
+                values["form_fields"][field]["description"] = form_fields[field][
+                    "description"
+                ]
+            else:
+                values["form_fields"][field]["description"] = False
         return values
 
     def _get_page_title(self, ctx):
@@ -216,6 +230,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             currency_symbol=ctx.company.currency_id.symbol,
         )
 
+    # TODO: Adjust all this methods to new "_get_page_form_fields_values" method
     def _get_form_field_value(self, data, path):
         if isinstance(path, bool):
             return path

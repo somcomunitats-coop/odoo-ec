@@ -265,11 +265,12 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         response = self.client("/subscription/member/{}".format(COMMUNITY_1_EXT_ID))
         # it correctly renders the page
         self.assertEqual(response.status_code, 200)
+        # TODO: there are 2 products defined bu Share A is the default one
 
     def test_website_form_render_member_with_product_ok(self):
         # given http_client
         # and a valid data
-        # when we call for the global subscription form page
+        # when we call for the single subscription form page
         response = self.client(
             "/subscription/member/{}/{}".format(
                 COMMUNITY_1_EXT_ID, COMMUNITY_1_SHARE_1_EXT_ID

@@ -107,6 +107,7 @@ GENDER_OPTIONS = [
 
 MAPPING__BASE__DEFAULT_FORM_FIELDS = {
     "email": {
+        "type": "form_field_email",
         "value": "",
         "key": "email",
         "label": _("Email"),
@@ -114,18 +115,21 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "firstname": {
+        "type": "form_field_text",
         "value": "",
         "label": _("Firstname"),
         "required": True,
         "disabled": False,
     },
     "lastname": {
+        "type": "form_field_text",
         "value": "",
         "label": _("Lastname"),
         "required": True,
         "disabled": False,
     },
     "gender": {
+        "type": "form_field_selection",
         "value": "",
         "label": _("Gender"),
         "required": True,
@@ -133,18 +137,21 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "birthdate": {
+        "type": "form_field_date_past",
         "value": "",
         "label": _("Birthdate"),
         "required": True,
         "disabled": False,
     },
     "phone": {
+        "type": "form_field_text",
         "value": "",
         "label": _("Phone"),
         "required": True,
         "disabled": False,
     },
     "lang": {
+        "type": "form_field_selection",
         "value": "",
         "label": _("Language"),
         "required": True,
@@ -152,30 +159,35 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "options": [],
     },
     "vat": {
+        "type": "form_field_text",
         "value": "",
         "label": _("VAT"),
         "required": True,
         "disabled": False,
     },
     "address": {
+        "type": "form_field_text",
         "value": "",
         "label": _("Address"),
         "required": True,
         "disabled": False,
     },
     "city": {
+        "type": "form_field_text",
         "value": "",
         "label": _("City"),
         "required": True,
         "disabled": False,
     },
     "zip_code": {
+        "type": "form_field_text",
         "value": "",
         "label": _("Postal Code"),
         "required": True,
         "disabled": False,
     },
     "country_id": {
+        "type": "form_field_selection",
         "value": "",
         "label": _("Country"),
         "required": True,
@@ -183,6 +195,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "options": [],
     },
     "share_product_id": {
+        "type": "form_field_selection",
         "value": "product.id",
         "label": _("Share Product"),
         "required": True,
@@ -190,18 +203,21 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "options": [],
     },
     "ordered_parts": {
+        "type": "form_field_number",
         "value": "",
         "label": _("Ordered Parts"),
         "required": True,
         "disabled": False,
     },
     "total_price": {
+        "type": "form_field_text",
         "value": "",
         "label": _("Total Price"),
         "required": True,
         "disabled": True,
     },
     "privacy_policy": {
+        "type": "form_field_checkbox",
         "value": False,
         "label": _("Privacy Policy"),
         "required": True,
@@ -209,6 +225,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "description": "",
     },
     "payment_method": {
+        "type": "form_field_selection",
         "value": "",
         "label": _("Payment Method"),
         "required": True,
@@ -219,12 +236,14 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         ],
     },
     "iban": {
+        "type": "form_field_text",
         "value": "",
         "label": _("IBAN"),
         "required": True,
         "disabled": False,
     },
     "conditions_payment": {
+        "type": "form_field_checkbox",
         "value": False,
         "label": _("Conditions Payment"),
         "required": True,
