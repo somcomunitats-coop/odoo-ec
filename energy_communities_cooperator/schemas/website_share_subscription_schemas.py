@@ -12,10 +12,8 @@ from odoo.addons.product.models.product_template import ProductTemplate
 from ..config import (
     CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
     CONTEXT_STATUS_CODE_NOT_FOUND_ERROR,
-    CONTEXT_STATUS_CODE_UNAVAILABLE_ERROR,
     CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
     CONTEXT_VALIDATION_ERROR_TITLE,
-    CONTEXT_VALIDATION_ERROR_UNAVAILABLE_MESSAGE,
 )
 from ..exceptions import ContextValidationError
 
@@ -104,7 +102,6 @@ class WebsiteShareSubscriptionContext(BaseModel):
             )
         return product
 
-    # consistency validation
     @model_validator(mode="after")
     @classmethod
     def check_data_consistency(cls, data: Any) -> Any:
@@ -115,6 +112,7 @@ class WebsiteShareSubscriptionContext(BaseModel):
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
+        # TODO: Missing validations
         # Product doesn't belong to defined category
         if data.product.categ_id.id != data.product_categ.id:
             raise ContextValidationError(
@@ -157,9 +155,9 @@ class WebsiteShareSubscriptionContext(BaseModel):
             and not data.product.display_on_website
         ):
             raise ContextValidationError(
-                CONTEXT_STATUS_CODE_UNAVAILABLE_ERROR,
+                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
-                CONTEXT_VALIDATION_ERROR_UNAVAILABLE_MESSAGE,
+                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
         # Product not available on single form
         if (
@@ -167,8 +165,8 @@ class WebsiteShareSubscriptionContext(BaseModel):
             and not data.product.activate_form_specific_products
         ):
             raise ContextValidationError(
-                CONTEXT_STATUS_CODE_UNAVAILABLE_ERROR,
+                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
-                CONTEXT_VALIDATION_ERROR_UNAVAILABLE_MESSAGE,
+                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
         return data

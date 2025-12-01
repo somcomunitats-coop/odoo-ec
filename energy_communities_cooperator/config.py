@@ -107,6 +107,7 @@ GENDER_OPTIONS = [
 
 MAPPING__BASE__DEFAULT_FORM_FIELDS = {
     "email": {
+        "class": "col-md-12",
         "type": "form_field_email",
         "value": "",
         "key": "email",
@@ -115,6 +116,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "firstname": {
+        "class": "col-md-6",
         "type": "form_field_text",
         "value": "",
         "label": _("Firstname"),
@@ -122,6 +124,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "lastname": {
+        "class": "col-md-6",
         "type": "form_field_text",
         "value": "",
         "label": _("Lastname"),
@@ -129,6 +132,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "gender": {
+        "class": "col-md-6",
         "type": "form_field_selection",
         "value": "",
         "label": _("Gender"),
@@ -137,6 +141,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "birthdate": {
+        "class": "col-md-6",
         "type": "form_field_date_past",
         "value": "",
         "label": _("Birthdate"),
@@ -144,6 +149,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "phone": {
+        "class": "col-md-12",
         "type": "form_field_text",
         "value": "",
         "label": _("Phone"),
@@ -151,6 +157,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "lang": {
+        "class": "col-md-12",
         "type": "form_field_selection",
         "value": "",
         "label": _("Language"),
@@ -159,6 +166,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "options": [],
     },
     "vat": {
+        "class": "col-md-12",
         "type": "form_field_text",
         "value": "",
         "label": _("VAT"),
@@ -166,6 +174,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "address": {
+        "class": "col-md-12",
         "type": "form_field_text",
         "value": "",
         "label": _("Address"),
@@ -173,6 +182,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "city": {
+        "class": "col-md-6",
         "type": "form_field_text",
         "value": "",
         "label": _("City"),
@@ -180,6 +190,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "zip_code": {
+        "class": "col-md-6",
         "type": "form_field_text",
         "value": "",
         "label": _("Postal Code"),
@@ -187,6 +198,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "country_id": {
+        "class": "col-md-12",
         "type": "form_field_selection",
         "value": "",
         "label": _("Country"),
@@ -195,6 +207,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "options": [],
     },
     "share_product_id": {
+        "class": "col-md-4",
         "type": "form_field_selection",
         "value": "product.id",
         "label": _("Share Product"),
@@ -203,6 +216,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "options": [],
     },
     "ordered_parts": {
+        "class": "col-md-3",
         "type": "form_field_number",
         "value": "",
         "label": _("Ordered Parts"),
@@ -210,13 +224,23 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "total_price": {
+        "class": "col-md-4",
         "type": "form_field_text",
         "value": "",
         "label": _("Total Price"),
         "required": True,
         "disabled": True,
     },
+    "currency_symbol": {
+        "class": "col-md-1",
+        "type": "form_field_text",
+        "value": "company.currency_id.symbol",
+        "label": "",
+        "required": False,
+        "disabled": True,
+    },
     "privacy_policy": {
+        "class": "col-md-12",
         "type": "form_field_checkbox",
         "value": False,
         "label": _("Privacy Policy"),
@@ -225,6 +249,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "description": "",
     },
     "payment_method": {
+        "class": "col-md-12",
         "type": "form_field_selection",
         "value": "",
         "label": _("Payment Method"),
@@ -236,6 +261,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         ],
     },
     "iban": {
+        "class": "col-md-12",
         "type": "form_field_text",
         "value": "",
         "label": _("IBAN"),
@@ -243,6 +269,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
     },
     "conditions_payment": {
+        "class": "col-md-12",
         "type": "form_field_checkbox",
         "value": False,
         "label": _("Conditions Payment"),
