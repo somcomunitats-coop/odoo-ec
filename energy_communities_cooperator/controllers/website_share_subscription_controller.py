@@ -103,15 +103,10 @@ class WebsiteShareSubscriptionController(http.Controller):
             | self._get_page_base_values(ctx)
             | self._get_page_form_fields_values(ctx)
         )
-        self._update_custom_options(values)
-        self._update_custom_description(values)
-        self._update_form_custom_fields(values)
-        values["subscription_mode"] = ctx.subscription_mode.value
         return values
 
     def _get_page_base_values(self, ctx):
         return {
-            "currency_symbol": ctx.company.currency_id.symbol,
             "page_title": self._get_page_title(ctx),
             "page_headline": self._get_page_headline(ctx),
             "page_headline_fixed_transfer": self._get_page_headline_fixed_transfer(ctx),
@@ -169,39 +164,23 @@ class WebsiteShareSubscriptionController(http.Controller):
         form_fields = MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS[
             ctx.subscription_mode
         ]
-        values = {"form_fields": {}}
+        values = {"form_fields": []}
         for field in form_fields:
-            values = values["form_fields"][field] = {}
-            values["form_fields"][field]["key"] = field
-            values["form_fields"][field]["label"] = form_fields[field]["label"]
-            values["form_fields"][field]["value"] = self._get_form_field_value(
-                values, form_fields[field]["value"]
-            )
-            values["form_fields"][field]["type"] = "energy_communities.{}".format(
-                form_fields[field]["type"]
-            )
-            if "required" in form_fields[field]:
-                values["form_fields"][field]["required"] = form_fields[field][
-                    "required"
-                ]
-            else:
-                values["form_fields"][field]["required"] = False
-            if "disabled" in form_fields[field]:
-                values["form_fields"][field]["disabled"] = form_fields[field][
-                    "disabled"
-                ]
-            else:
-                values["form_fields"][field]["disabled"] = False
-            if "options" in form_fields[field]:
-                values["form_fields"][field]["options"] = form_fields[field]["options"]
-            else:
-                values["form_fields"][field]["options"] = False
-            if "description" in form_fields[field]:
-                values["form_fields"][field]["description"] = form_fields[field][
-                    "description"
-                ]
-            else:
-                values["form_fields"][field]["description"] = False
+            values_field = {
+                "value": self._get_form_field_value(
+                    ctx.model_dump(), form_fields[field]["value"]
+                ),
+                "key": field,
+                "class": form_fields[field]["class"],
+                "label": form_fields[field]["label"],
+                "type": "energy_communities.{}".format(form_fields[field]["type"]),
+                "disabled": form_fields[field].get("disabled", False),
+                "required": form_fields[field].get("required", False),
+                "description": form_fields[field].get("description", False),
+                "options": form_fields[field].get("options", False),
+            }
+            self._update_form_custom_fields(ctx, values_field)
+            values["form_fields"].append(values_field)
         return values
 
     def _get_page_title(self, ctx):
@@ -235,8 +214,12 @@ class WebsiteShareSubscriptionController(http.Controller):
         if isinstance(path, bool):
             return path
         keys = path.split(".")
+        if len(keys) == 1:
+            return ""
         current = data
         for key in keys:
+            if isinstance(current, tuple):
+                return current[1]
             if not isinstance(current, dict):
                 try:
                     current = current.read()[0]  # Convert the record to a dictionary
@@ -259,9 +242,9 @@ class WebsiteShareSubscriptionController(http.Controller):
             lambda x: {"id": x.id, "name": x.name}
         )
 
-    def _get_share_product_options(self, values):
+    def _get_share_product_options(self, ctx):
         options = []
-        for product in values["products"]:
+        for product in ctx.products:
             payment_method = "transfer"
             if (
                 product.payment_mode_id
@@ -288,37 +271,46 @@ class WebsiteShareSubscriptionController(http.Controller):
         return options
 
     # updaters
-    # TODO: This method shouldn't be necessary if we control wich fields do we render on each subscription mode
     # We must used it to control share product selector behaviour
-    def _update_form_custom_fields(self, values):
-        if len(values["products"]) == 1:
-            values["share_product_id_disabled"] = True
-            # values["ordered_parts_disabled"] = True
-        if values["subscription_mode"] == "voluntary":
-            values["address_disabled"] = True
-            values["phone_disabled"] = True
-            values["birthdate_disabled"] = True
-            # values["gender_disabled"] = True
-            values["email_disabled"] = True
-            values["firstname_disabled"] = True
-            values["lastname_disabled"] = True
-            # values["vat_disabled"] = True
-            values["city_disabled"] = True
-            values["zip_code_disabled"] = True
-            # values["country_id_disabled"] = True
-
-    def _update_custom_options(self, values):
-        if "country_id_options" in values:
-            values["country_id_options"] = self._get_country_options()
-        if "share_product_id_options" in values:
-            values["share_product_id_options"] = self._get_share_product_options(values)
-        if "lang_options" in values:
-            values["lang_options"] = self._get_lang_options()
-
-    def _update_custom_description(self, values):
-        if values["company"].display_data_policy_approval:
-            values["privacy_policy_description"] = values[
-                "company"
-            ].data_policy_approval_text
-        else:
-            values["privacy_policy_description"] = ""
+    def _update_form_custom_fields(self, ctx, values_field):
+        if values_field["key"] == "currency_symbol":
+            values_field["value"] = ctx.company.currency_id.symbol
+        if values_field["key"] == "country_id":
+            values_field["options"] = self._get_country_options()
+        if values_field["key"] == "lang":
+            values_field["options"] = self._get_lang_options()
+        if values_field["key"] == "share_product_id":
+            values_field["options"] = self._get_share_product_options(ctx)
+            if len(ctx.products) == 1:
+                values_field["disabled"] = True
+        # if values_field["key"] == "ordered_parts" and len(values["products"]) == 1:
+        #     values_field["disabled"] = True
+        if values_field["key"] == "privacy_policy":
+            if ctx.company.display_data_policy_approval:
+                values_field["description"] = ctx.company.data_policy_approval_text
+            else:
+                values_field["description"] = ""
+        # TODO: This method shouldn't be necessary if we control wich fields do we render on each subscription mode
+        if ctx.subscription_mode.value == "voluntary":
+            if values_field["key"] == "address":
+                values_field["disabled"] = True
+            if values_field["key"] == "phone":
+                values_field["disabled"] = True
+            if values_field["key"] == "birthdate":
+                values_field["disabled"] = True
+            # if values_field["key"] == "gender":
+            #     values_field["disabled"] = True
+            if values_field["key"] == "email":
+                values_field["disabled"] = True
+            if values_field["key"] == "firstname":
+                values_field["disabled"] = True
+            if values_field["key"] == "lastname":
+                values_field["disabled"] = True
+            # if values_field["key"] == "vat":
+            #     values_field["disabled"] = True
+            if values_field["key"] == "city":
+                values_field["disabled"] = True
+            if values_field["key"] == "zip_code":
+                values_field["disabled"] = True
+            # if values_field["key"] == "country_id":
+            #     values_field["disabled"] = True
