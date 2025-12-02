@@ -205,8 +205,7 @@
               <option
             t-att-value="option['id']"
               t-att-selected="str(option['id']) == str(value)"
-              t-att-data-extra="option.get('extra')"
-              t-att-data-extra-2="option.get('extra_2')"
+              t-att="option.get('data_attrs', {})"
             >
                 <t t-esc="option['name']" />
               </option>
