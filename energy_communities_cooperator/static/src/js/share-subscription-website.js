@@ -5,7 +5,9 @@ odoo.define(
     $(document).ready(function () {
       $("#share_product_id").change(function (event) {
         event.preventDefault();
-        var payment_method = $("#share_product_id option:selected").data("extra-2");
+        var payment_method = $("#share_product_id option:selected").data(
+          "payment-method"
+        );
         $("#payment_method").val(payment_method);
         $("#ordered_parts").val(1);
         $("#ordered_parts").change();
@@ -16,8 +18,15 @@ odoo.define(
         var target = $(event.target);
         var ordered_parts = target.val();
         var share_product_id_price = $("#share_product_id option:selected").data(
-          "extra"
+          "list-price"
         );
+        var minimum_quantity = $("#share_product_id option:selected").data(
+          "minimum-quantity"
+        );
+        if (ordered_parts < minimum_quantity) {
+          ordered_parts = minimum_quantity;
+          $("#ordered_parts").val(minimum_quantity);
+        }
         if (!share_product_id_price) {
           share_product_id_price = 0;
         }
