@@ -15,6 +15,7 @@ from ..config import (
     MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE,
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
 )
+from ..exceptions import ContextValidationError
 from ..schemas.website_share_subscription_schemas import (
     WebsiteShareSubscriptionContext,
 )
@@ -75,14 +76,14 @@ class WebsiteShareSubscriptionController(http.Controller):
                 },
                 status=e.http_error_code,
             )
+        values = self._get_page_values(ctx)
 
         # Handle GET request: display form
         if request.httprequest.method == "GET":
-            values = self._get_page_values(ctx)
             return self._render_page(values)
 
         # Handle POST request: process form submission
-        self._process_form(values)
+        self._process_form(values, ctx)
         return self._render_page(values)
 
     def _render_page(self, values):
@@ -100,15 +101,102 @@ class WebsiteShareSubscriptionController(http.Controller):
             values,
         )
 
-    def _process_form(self, values):
+    def _process_form(self, values, ctx):
         """
-        Process form submission data.
+        Process form submission data using SubscriptionRequest component.
 
-        Currently not implemented - placeholder for future form processing logic.
+        Validates and creates subscription request from form data.
+        Modifies values dictionary in-place to add success/error messages
+        for template rendering.
 
         Args:
-            values: Dictionary containing form submission data
+            values: Dictionary containing form submission data and context
+                   (modified in-place with error_msgs or form_submitted/success_msg)
         """
+        # Extract form data from request
+        kwargs = dict(request.httprequest.form)
+        kwargs.update(request.httprequest.files)
+
+        # Get files from request
+        post_file = []
+        for field_name, field_value in request.httprequest.files.items():
+            if hasattr(field_value, "filename") and field_value:
+                post_file.append(field_value)
+
+        # Determine if user is logged in
+        logged = request.env.user.login != "public"
+
+        # Get company from context stored in values
+        if ctx and hasattr(ctx, "company"):
+            company_id = ctx.company.id
+            if "company_id" not in kwargs:
+                kwargs["company_id"] = company_id
+
+        # Use component to validate and create subscription request
+        try:
+            with request.env["utils.backend"].work_on("subscription.request") as work:
+                subscription_request_component = work.component(
+                    usage="subscription.request"
+                )
+
+                # Validate and create subscription request
+                subscription_request = (
+                    subscription_request_component.create_subscription_request(
+                        values=None,
+                        kwargs=kwargs,
+                        logged=logged,
+                        post_file=post_file if post_file else None,
+                    )
+                )
+
+                # Success: set success message
+                values["form_submitted"] = True
+                values["success_msg"] = _(
+                    "Your subscription request has been submitted successfully. "
+                    "You will receive a confirmation email shortly."
+                )
+
+        except ContextValidationError as e:
+            _logger.error(
+                "Context validation error processing subscription form: %s",
+                str(e),
+                exc_info=True,
+            )
+            # Use message from ContextValidationError
+            error_msg = e.message
+
+            # Set error messages (template expects a list)
+            values["error_msgs"] = [error_msg]
+
+            # Update form field values with submitted data for re-rendering
+            # This allows the form to show the data the user entered
+            if "form_fields" in values:
+                for field in values["form_fields"]:
+                    field_key = field.get("key")
+                    if field_key in kwargs:
+                        # Update field value with submitted data
+                        field["value"] = kwargs[field_key]
+
+        except Exception as e:
+            _logger.error(
+                "Error processing subscription form: %s", str(e), exc_info=True
+            )
+            error_msg = _(
+                "An error occurred while processing your subscription request. "
+                "Please check the form and try again."
+            )
+
+            # Set error messages (template expects a list)
+            values["error_msgs"] = [error_msg]
+
+            # Update form field values with submitted data for re-rendering
+            # This allows the form to show the data the user entered
+            if "form_fields" in values:
+                for field in values["form_fields"]:
+                    field_key = field.get("key")
+                    if field_key in kwargs:
+                        # Update field value with submitted data
+                        field["value"] = kwargs[field_key]
 
     # getters
     def _get_context_creation_params_dict(self, kwargs):
