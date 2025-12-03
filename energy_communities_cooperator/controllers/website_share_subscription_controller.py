@@ -59,32 +59,26 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Rendered template with form data or error page if validation fails
         """
-        # Build context creation parameters from URL kwargs
-        context_creation_params_dict = self._get_context_creation_params_dict(kwargs)
-
         # Create and validate context, handle validation errors
         try:
-            ctx = WebsiteShareSubscriptionContext(**context_creation_params_dict)
-        except Exception as e:
-            # Render error page if context validation fails
-            return request.render(
-                "http_routing.http_error",
-                {
-                    "status_code": e.http_error_code,
-                    "status_message": e.title,
-                    "error_message": e.message,
-                    "debug": "debug",
-                },
-                status=e.http_error_code,
+            # Build context creation parameters from URL kwargs
+            context_creation_params_dict = self._get_context_creation_params_dict(
+                kwargs
             )
-        values = self._get_page_values(ctx)
+            ctx = WebsiteShareSubscriptionContext(**context_creation_params_dict)
+        except ContextValidationError as e:
+            # Render error page if context validation fails
+            return _render_error_page(e)
 
-        # Handle GET request: display form
+        if request.httprequest.method == "POST":
+            try:
+                values = self._process_form(request, ctx)
+            except Exception as e:
+                values = e.values
+
         if request.httprequest.method == "GET":
-            return self._render_page(values)
+            values = self._get_page_values(ctx)
 
-        # Handle POST request: process form submission
-        self._process_form(values, ctx)
         return self._render_page(values)
 
     def _render_page(self, values):
@@ -102,6 +96,27 @@ class WebsiteShareSubscriptionController(http.Controller):
             values,
         )
 
+    def _render_error_page(self, error: Exception):
+        """
+        Render the subscription page template with provided values.
+
+        Args:
+            values: Dictionary containing all data needed for template rendering
+
+        Returns:
+            Rendered template response
+        """
+        return request.render(
+            "http_routing.http_error",
+            {
+                "status_code": error.http_error_code,
+                "status_message": error.title,
+                "error_message": error.message,
+                "debug": "debug",
+            },
+            status=error.http_error_code,
+        )
+
     def _process_form(self, values, ctx):
         """
         Process form submission data using SubscriptionRequest component.
@@ -114,49 +129,25 @@ class WebsiteShareSubscriptionController(http.Controller):
             values: Dictionary containing form submission data and context
                    (modified in-place with error_msgs or form_submitted/success_msg)
         """
-        # Extract form data from request
-        kwargs = dict(request.httprequest.form)
-        kwargs.update(request.httprequest.files)
-
-        # Get files from request
-        post_file = []
-        for field_name, field_value in request.httprequest.files.items():
-            if hasattr(field_value, "filename") and field_value:
-                post_file.append(field_value)
-
-        # Determine if user is logged in
-        logged = request.env.user.login != "public"
-
-        # Get company from context stored in values
-        if ctx and hasattr(ctx, "company"):
-            company_id = ctx.company.id
-            if "company_id" not in kwargs:
-                kwargs["company_id"] = company_id
-
-        # Use component to validate and create subscription request
         try:
-            with request.env["utils.backend"].work_on("subscription.request") as work:
-                subscription_request_component = work.component(
-                    usage="subscription.request"
-                )
+            # Extract form data from request
+            kwargs = dict(request.httprequest.form)
+            kwargs.update(request.httprequest.files)
 
-                # Validate and create subscription request
-                subscription_request = (
-                    subscription_request_component.create_subscription_request(
-                        values=None,
-                        kwargs=kwargs,
-                        logged=logged,
-                        post_file=post_file if post_file else None,
-                    )
-                )
+            # Get files from request
+            post_file = []
+            for field_name, field_value in request.httprequest.files.items():
+                if hasattr(field_value, "filename") and field_value:
+                    post_file.append(field_value)
 
-                # Success: set success message
-                values["form_submitted"] = True
-                values["success_msg"] = _(
-                    "Your subscription request has been submitted successfully. "
-                    "You will receive a confirmation email shortly."
-                )
+            # Determine if user is logged in
+            logged = request.env.user.login != "public"
 
+            # Get company from context stored in values
+            if ctx and hasattr(ctx, "company"):
+                company_id = ctx.company.id
+                if "company_id" not in kwargs:
+                    kwargs["company_id"] = company_id
         except ContextValidationError as e:
             _logger.error(
                 "Context validation error processing subscription form: %s",
