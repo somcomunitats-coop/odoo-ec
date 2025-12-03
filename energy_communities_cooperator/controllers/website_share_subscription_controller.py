@@ -19,6 +19,7 @@ from ..exceptions import ContextValidationError
 from ..schemas.website_share_subscription_schemas import (
     WebsiteShareSubscriptionContext,
 )
+from ..utils import subscription_request_utils
 
 _logger = logging.getLogger(__name__)
 
@@ -177,6 +178,22 @@ class WebsiteShareSubscriptionController(http.Controller):
                         # Update field value with submitted data
                         field["value"] = kwargs[field_key]
 
+        try:
+            # Use component to validate and create subscription request
+            with subscription_request_utils(request.env) as component:
+                subscription_request = component.create_subscription_request(
+                    values=None,
+                    kwargs=kwargs,
+                    logged=logged,
+                    post_file=post_file if post_file else None,
+                )
+
+                # Success: set success message
+                values["form_submitted"] = True
+                values["success_msg"] = _(
+                    "Your subscription request has been submitted successfully. "
+                    "You will receive a confirmation email shortly."
+                )
         except Exception as e:
             _logger.error(
                 "Error processing subscription form: %s", str(e), exc_info=True
