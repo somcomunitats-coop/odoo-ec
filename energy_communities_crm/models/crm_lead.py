@@ -54,23 +54,10 @@ class CrmLead(models.Model):
     )
     ce_child_lead_id = fields.Many2one(comodel_name="crm.lead", string="Crm lead child")
     team_id = fields.Many2one(
-        "crm.team",
-        string="Sales Team",
-        check_company=True,
-        index=True,
-        tracking=True,
-        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
-        compute="_compute_team_id",
-        ondelete="set null",
-        readonly=False,
-        store=True,
         precompute=False,
     )
     lead_properties = fields.Properties(
-        "Properties",
-        definition="team_id.lead_properties_definition",
         precompute=False,
-        copy=True,
     )
 
     @api.constrains("company_id")
