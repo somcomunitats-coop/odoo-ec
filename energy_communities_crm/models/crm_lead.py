@@ -53,6 +53,12 @@ class CrmLead(models.Model):
         store=False,
     )
     ce_child_lead_id = fields.Many2one(comodel_name="crm.lead", string="Crm lead child")
+    team_id = fields.Many2one(
+        precompute=False,
+    )
+    lead_properties = fields.Properties(
+        precompute=False,
+    )
 
     @api.constrains("company_id")
     def validate_lead_conf(self):
@@ -90,6 +96,7 @@ class CrmLead(models.Model):
     @api.depends("company_id")
     def _compute_team_id(self):
         for record in self:
+            record.team_id = False
             if (
                 not record.team_id
                 or record.team_id.company_id.id != record.company_id.id
