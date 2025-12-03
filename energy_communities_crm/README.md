@@ -6,6 +6,10 @@
 
 ## Changelog
 
+### 2025-12-03 (v16.0.0.3.4)
+
+- Fix precomputed warning for team_id and lead_properties attributes
+
 ### 2025-11-14 (v16.0.0.3.3)
 
 - Fixed unitary tests
