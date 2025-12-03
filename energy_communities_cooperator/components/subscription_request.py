@@ -14,9 +14,9 @@ from ..config import (
 from ..exceptions import ContextValidationError
 
 
-class SubscriptionRequest(Component):
-    _name = "subscription.request"
-    _usage = "subscription.request"
+class SubscriptionRequestUtils(Component):
+    _name = "subscription.request.utils"
+    _usage = "subscription.request.utils"
     _apply_on = "subscription.request"
     _collection = "utils.backend"
 

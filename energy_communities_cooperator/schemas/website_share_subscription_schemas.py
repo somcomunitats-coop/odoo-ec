@@ -112,7 +112,6 @@ class WebsiteShareSubscriptionContext(BaseModel):
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
-        # TODO: Missing validations
         # Product doesn't belong to defined category
         if data.product.categ_id.id != data.product_categ.id:
             raise ContextValidationError(
