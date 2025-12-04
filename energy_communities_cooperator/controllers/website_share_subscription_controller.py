@@ -17,7 +17,8 @@ from ..config import (
 from ..exceptions import ContextValidationError
 from ..schemas.website_share_subscription_schemas import (
     WebsiteShareSubscriptionContext,
-    WebsiteShareSubscriptionSubmissionBase
+    WebsiteShareSubscriptionSubmissionBase,
+    SubscriptionRequestCreationParams,
 )
 from ..utils import subscription_request_utils
 
@@ -70,7 +71,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             ctx = WebsiteShareSubscriptionContext(**context_creation_params_dict)
         except ContextValidationError as e:
             # Render error page if context validation fails
-            return _render_error_page(e)
+            return self._render_error_page(e)
         values = self._get_page_values(ctx)
         if request.httprequest.method == "POST":
             try:
@@ -150,18 +151,19 @@ class WebsiteShareSubscriptionController(http.Controller):
         except Exception as e:
             raise e
             # TODO: raise FormError
-
+        try:
+            subscription_request_creation_params = SubscriptionRequestCreationParams(
+                **self._get_subscription_request_creation_params_dict(form_submission,ctx)
+            )
+        except Exception as e:
+            raise e
+            # TODO: convert custom PydanticError in a FormError
         try:
             # Use component to validate and create subscription request
             # TODO: use form submission to create a SubscriptionRequestCreationParams to pass it to the component create method
             with subscription_request_utils(request.env) as component:
                 subscription_request = component.create_subscription_request(
-                    form_submission,
-                    # ctx
-                    # values=None,
-                    # kwargs=kwargs,
-                    # logged=logged,
-                    # post_file=post_file if post_file else None,
+                    subscription_request_creation_params
                 )
         except Exception as e:
             raise e
@@ -230,6 +232,14 @@ class WebsiteShareSubscriptionController(http.Controller):
         } | self._get_page_products_dict(
             company, product_categ, query_product, formtype_mode, membertype_mode
         )
+
+    def _get_subscription_request_creation_params_dict(form_submission,ctx):
+        creation_params = form_submission.model_dump()
+        creation_params["country_id"] = request.env["res.country"].browse(creation_params["country_id"])
+        creation_params["share_product_id"] = request.env["res.country"].browse(creation_params["share_product_id"])
+        creation_params["product_categ"] = ctx.product_categ
+        creation_params["company"] = ctx.company
+        return creation_params
 
     def _get_page_values(self, ctx):
         """
