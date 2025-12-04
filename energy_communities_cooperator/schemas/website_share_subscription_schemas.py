@@ -7,6 +7,7 @@ from odoo.tools.translate import _
 
 from odoo.addons.base.models.res_company import Company
 from odoo.addons.base.models.res_country import Country
+from odoo.addons.base_iban.models.res_partner_bank import validate_iban
 from odoo.addons.product.models.product_category import ProductCategory
 from odoo.addons.product.models.product_template import ProductTemplate
 
@@ -42,6 +43,7 @@ class FormTypeMode(str, Enum):
     generic = "generic"
     single = "single"
 
+
 class GenderOption(str, Enum):
     male = "male"
     female = "female"
@@ -49,9 +51,11 @@ class GenderOption(str, Enum):
     not_binary = "not_binary"
     not_share = "not_share"
 
+
 class PaymentMethodOption(str, Enum):
     sepa = "sepa"
     transefer = "transfer"
+
 
 class WebsiteShareSubscriptionSubmissionBase(BaseModel):
     email: str
@@ -60,7 +64,7 @@ class WebsiteShareSubscriptionSubmissionBase(BaseModel):
     gender: GenderOption
     birthdate: str
     phone: str
-    lang: str
+    lang: int
     vat: str
     address: str
     city: str
@@ -72,43 +76,46 @@ class WebsiteShareSubscriptionSubmissionBase(BaseModel):
     iban: str
     conditions_payment: bool
 
+    # TODO: Validate email has correct format
+
+
 # class WebsiteShareSubscriptionSubmissionMember(BaseModel):
-    # email: str
-    # firstname: str
-    # lastname: str
-    # gender: GenderOption
-    # birthdate: str
-    # phone: str
-    # lang: str
-    # vat: str
-    # address: str
-    # city: str
-    # zip_code: str
-    # country_id: int
-    # share_product_id: int
-    # ordered_parts: int
-    # privacy_policy: bool
-    # iban: str
-    # conditions_payment: bool
+# email: str
+# firstname: str
+# lastname: str
+# gender: GenderOption
+# birthdate: str
+# phone: str
+# lang: str
+# vat: str
+# address: str
+# city: str
+# zip_code: str
+# country_id: int
+# share_product_id: int
+# ordered_parts: int
+# privacy_policy: bool
+# iban: str
+# conditions_payment: bool
 
 
 # TODO: Create this schema for subscription request params creation
-class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase():
+class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
     model_config = ConfigDict(arbitrary_types_allowed=True)
     country_id: Country
     share_product_id: ProductTemplate
-    company: Company
+    company_id: Company
     product_categ: ProductCategory
+    membertype_mode: MemberTypeMode
+    lang: str
 
     # Avoid empty recordsets
-    @field_validator("company", mode="before")
+    @field_validator("company_id", mode="before")
     @classmethod
-    def check_company_required(cls, company: Company) -> Company:
-        if not company:
-            raise ValueError(
-                _("company_required")
-            )
-        return company
+    def check_company_id_required(cls, company_id: Company) -> Company:
+        if not company_id:
+            raise ValueError(_("company_id_required"))
+        return company_id
 
     @field_validator("product_categ", mode="before")
     @classmethod
@@ -116,9 +123,7 @@ class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase()
         cls, product_categ: ProductCategory
     ) -> ProductCategory:
         if not product_categ:
-            raise ValueError(
-                _("product_category_required")
-            )
+            raise ValueError(_("product_category_required"))
         return product_categ
 
     @field_validator("share_product_id", mode="before")
@@ -127,21 +132,24 @@ class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase()
         cls, product: ProductTemplate
     ) -> ProductTemplate:
         if not product:
-            raise ValueError(
-                _("product_required")
-            )
+            raise ValueError(_("product_required"))
         return product
 
     @field_validator("country_id", mode="before")
     @classmethod
-    def check_country_id_required(
-        cls, country: Country
-    ) -> Country:
-        if not contry:
-            raise ValueError(
-                _("country_required")
-            )
+    def check_country_id_required(cls, country: Country) -> Country:
+        if not country:
+            raise ValueError(_("country_required"))
         return country
+
+    @field_validator("iban", mode="before")
+    @classmethod
+    def check_iban_format(cls, iban: str) -> str:
+        try:
+            validate_iban(iban.replace(" ", ""))
+        except:
+            raise ValueError(_("Invalid format iban"))
+        return iban
 
 
 class WebsiteShareSubscriptionContext(BaseModel):
