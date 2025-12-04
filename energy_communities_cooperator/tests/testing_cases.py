@@ -1,0 +1,18 @@
+SUBSCRIPTION_FORM_SUBMISSION = {
+    'email': 'member_test@test.com',
+    'firstname': 'member name',
+    'lastname': 'member surname',
+    'gender': 'male',
+    'birthdate': '22/03/1983',
+    'phone': '1234',
+    'lang': '6',
+    'vat': '47731166W',
+    'address': 'address test',
+    'city': 'city test',
+    'zip_code': '08301',
+    'country_id': '68',
+    'ordered_parts': '2',
+    'privacy_policy': 'on',
+    'iban': 'ES0820385793089381465771',
+    'conditions_payment': 'on'
+}

@@ -110,7 +110,6 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "class": "col-md-12",
         "type": "form_field_email",
         "value": "",
-        "key": "email",
         "label": _("Email"),
         "required": True,
         "disabled": False,

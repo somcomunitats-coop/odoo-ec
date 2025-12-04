@@ -1,5 +1,7 @@
-from odoo.api import Environment
+from contextlib import contextmanager
 
+from odoo.api import Environment
+from odoo.addons.component.core import Component
 from odoo.addons.energy_communities.utils import _get_component
 
 

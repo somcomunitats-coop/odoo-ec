@@ -41,6 +41,39 @@ class FormTypeMode(str, Enum):
     generic = "generic"
     single = "single"
 
+class GenderOption(str, Enum):
+    male = "male"
+    female = "female"
+    other = "other"
+    not_binary = "not_binary"
+    not_share = "not_share"
+
+class PaymentMethodOption(str, Enum):
+    sepa = "sepa"
+    transefer = "transfer"
+
+class WebsiteShareSubscriptionSubmissionBase(BaseModel):
+    email: str
+    firstname: str
+    lastname: str
+    gender: GenderOption
+    birthdate: str
+    phone: str
+    lang: str
+    vat: str
+    address: str
+    city: str
+    zip_code: str
+    country_id: int
+    share_product_id: int
+    ordered_parts: int
+    privacy_policy: bool
+    iban: str
+    conditions_payment: bool
+
+# TODO: Create this schema for subscription request params creation
+# class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
+
 
 class WebsiteShareSubscriptionContext(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
