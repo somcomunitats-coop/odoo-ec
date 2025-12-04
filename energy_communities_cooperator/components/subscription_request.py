@@ -13,6 +13,8 @@ from ..config import (
 )
 from ..exceptions import ContextValidationError
 
+from .. schemas import SubscriptionRequestCreationParams
+
 
 class SubscriptionRequestUtils(Component):
     _name = "subscription.request.utils"
@@ -20,7 +22,11 @@ class SubscriptionRequestUtils(Component):
     _apply_on = "subscription.request"
     _collection = "utils.backend"
 
-    def validate_and_prepare_values(self, kwargs, logged=False, post_file=None):
+    def validate_and_prepare_values(
+            self,
+            creation_params: SubscriptionRequestCreationParam
+    ):
+        return True
         """
         Validate and prepare values for subscription request creation.
 
@@ -328,7 +334,7 @@ class SubscriptionRequestUtils(Component):
         return values
 
     def create_subscription_request(
-        self, values, kwargs=None, logged=False, post_file=None
+        self, creation_params: SubscriptionRequestCreationParam
     ):
         """
         Create subscription request with validation.
@@ -345,24 +351,12 @@ class SubscriptionRequestUtils(Component):
         Returns:
             Created subscription.request recordset
         """
-        # If kwargs provided, validate and prepare values
-        if kwargs is not None:
-            values = self.validate_and_prepare_values(kwargs, logged, post_file)
+        try:
+            self.validate_creation_params(creation_params)
+        except Exception as e:
+            raise e
 
         # Create subscription request
-        subscription_request = self.env["subscription.request"].sudo().create(values)
-
-        # Handle file attachments
-        if post_file and subscription_request:
-            attach_obj = self.env["ir.attachment"]
-
-            for field_value in post_file:
-                attachment_value = {
-                    "name": field_value.filename,
-                    "res_model": "subscription.request",
-                    "res_id": subscription_request.id,
-                    "datas": base64.encodebytes(field_value.read()),
-                }
-                attach_obj.sudo().create(attachment_value)
+        subscription_request = self.env["subscription.request"].sudo().create(creation_params.model_dump())
 
         return subscription_request

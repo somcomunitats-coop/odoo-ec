@@ -6,6 +6,7 @@ from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 from odoo.tools.translate import _
 
 from odoo.addons.base.models.res_company import Company
+from odoo.addons.base.models.res_country import Country
 from odoo.addons.product.models.product_category import ProductCategory
 from odoo.addons.product.models.product_template import ProductTemplate
 
@@ -71,8 +72,76 @@ class WebsiteShareSubscriptionSubmissionBase(BaseModel):
     iban: str
     conditions_payment: bool
 
+# class WebsiteShareSubscriptionSubmissionMember(BaseModel):
+    # email: str
+    # firstname: str
+    # lastname: str
+    # gender: GenderOption
+    # birthdate: str
+    # phone: str
+    # lang: str
+    # vat: str
+    # address: str
+    # city: str
+    # zip_code: str
+    # country_id: int
+    # share_product_id: int
+    # ordered_parts: int
+    # privacy_policy: bool
+    # iban: str
+    # conditions_payment: bool
+
+
 # TODO: Create this schema for subscription request params creation
-# class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
+class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase():
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+    country_id: Country
+    share_product_id: ProductTemplate
+    company: Company
+    product_categ: ProductCategory
+
+    # Avoid empty recordsets
+    @field_validator("company", mode="before")
+    @classmethod
+    def check_company_required(cls, company: Company) -> Company:
+        if not company:
+            raise ValueError(
+                _("company_required")
+            )
+        return company
+
+    @field_validator("product_categ", mode="before")
+    @classmethod
+    def check_product_categ_required(
+        cls, product_categ: ProductCategory
+    ) -> ProductCategory:
+        if not product_categ:
+            raise ValueError(
+                _("product_category_required")
+            )
+        return product_categ
+
+    @field_validator("share_product_id", mode="before")
+    @classmethod
+    def check_share_product_id_required(
+        cls, product: ProductTemplate
+    ) -> ProductTemplate:
+        if not product:
+            raise ValueError(
+                _("product_required")
+            )
+        return product
+
+    @field_validator("country_id", mode="before")
+    @classmethod
+    def check_country_id_required(
+        cls, country: Country
+    ) -> Country:
+        if not contry:
+            raise ValueError(
+                _("country_required")
+            )
+        return country
 
 
 class WebsiteShareSubscriptionContext(BaseModel):
