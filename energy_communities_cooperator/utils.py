@@ -1,15 +1,11 @@
 from contextlib import contextmanager
 
 from odoo.api import Environment
+
 from odoo.addons.component.core import Component
 from odoo.addons.energy_communities.utils import _get_component
 
 
 @contextmanager
-def subscription_request_utils(
-    env: Environment,
-    subscription_request: None,
-) -> Component:
-    yield _get_component(
-        env, "subscription.request", "subscription.request.utils", subscruption_request
-    )
+def subscription_request_utils(env: Environment) -> Component:
+    yield _get_component(env, "subscription.request", "subscription.request.utils")

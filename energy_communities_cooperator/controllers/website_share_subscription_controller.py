@@ -1,4 +1,5 @@
 import logging
+
 from odoo import http
 from odoo.http import request
 from odoo.tools.translate import _
@@ -15,10 +16,10 @@ from ..config import (
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
 )
 from ..exceptions import ContextValidationError
-from ..schemas.website_share_subscription_schemas import (
+from ..schemas import (
+    SubscriptionRequestCreationParams,
     WebsiteShareSubscriptionContext,
     WebsiteShareSubscriptionSubmissionBase,
-    SubscriptionRequestCreationParams,
 )
 from ..utils import subscription_request_utils
 
@@ -46,7 +47,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         auth="public",
         website=True,
         methods=["GET", "POST"],
-        csrf=False # TODO: this must be removed by correctly implementing test
+        csrf=False,  # TODO: this must be removed by correctly implementing test
     )
     def share_subscription_form(self, **kwargs):
         """
@@ -61,7 +62,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Rendered template with form data or error page if validation fails
         """
-        
+
         # Create and validate context, handle validation errors
         try:
             # Build context creation parameters from URL kwargs
@@ -74,19 +75,16 @@ class WebsiteShareSubscriptionController(http.Controller):
             return self._render_error_page(e)
         values = self._get_page_values(ctx)
         if request.httprequest.method == "POST":
-            try:
-                values = self._process_form(request, ctx)
-            except Exception as e:
-                #TODO: need to iterate trogh e.errors to modify  page error message and fields (mark in red), log message
-                error_msg = "Somethig went wrong"
-                _logger.error(
-                    error_msg,
-                    str(e),
-                    exc_info=True,
-                )
-                # now we return for with values pre-selected
-                values["error_msgs"] = [error_msg]
-                self._populate_form_values_from_submission(request,values)
+            values = self._process_form(request, ctx)
+            # try:
+            #     values = self._process_form(request, ctx)
+            # except Exception as e:
+            #     #TODO: need to iterate trogh e.errors to modify  page error message and fields (mark in red), log message
+            #     error_msg = "Somethig went wrong"
+            #     _logger.error(error_msg)
+            #     # now we return for with values pre-selected
+            #     values["error_msgs"] = [error_msg]
+            #     self._populate_form_values_from_submission(request,values)
 
         return self._render_page(values)
 
@@ -126,8 +124,8 @@ class WebsiteShareSubscriptionController(http.Controller):
             status=error.http_error_code,
         )
 
-    def _populate_form_values_from_submission(self,request, values):
-        form_submission = dict(requet.httprequest.form)
+    def _populate_form_values_from_submission(self, request, values):
+        form_submission = dict(request.httprequest.form)
         for field in values["form_fields"]:
             field_key = field.get("key")
             if field_key in form_submission:
@@ -153,7 +151,9 @@ class WebsiteShareSubscriptionController(http.Controller):
             # TODO: raise FormError
         try:
             subscription_request_creation_params = SubscriptionRequestCreationParams(
-                **self._get_subscription_request_creation_params_dict(form_submission,ctx)
+                **self._get_subscription_request_creation_params_dict(
+                    form_submission, ctx
+                )
             )
         except Exception as e:
             raise e
@@ -169,12 +169,12 @@ class WebsiteShareSubscriptionController(http.Controller):
             raise e
             # TODO: raise FormError
 
-        return self._get_page_base_values() | {
+        return self._get_page_base_values(ctx) | {
             "form_submitted": True,
             "success_msg": _(
                 "Your subscription request has been submitted successfully. "
                 "You will receive a confirmation email shortly."
-            )
+            ),
         }
 
     # getters
@@ -233,12 +233,22 @@ class WebsiteShareSubscriptionController(http.Controller):
             company, product_categ, query_product, formtype_mode, membertype_mode
         )
 
-    def _get_subscription_request_creation_params_dict(form_submission,ctx):
+    def _get_subscription_request_creation_params_dict(self, form_submission, ctx):
         creation_params = form_submission.model_dump()
-        creation_params["country_id"] = request.env["res.country"].browse(creation_params["country_id"])
-        creation_params["share_product_id"] = request.env["res.country"].browse(creation_params["share_product_id"])
+        creation_params["country_id"] = (
+            request.env["res.country"].sudo().browse(creation_params["country_id"])
+        )
+        creation_params["share_product_id"] = (
+            request.env["product.template"]
+            .sudo()
+            .browse(creation_params["share_product_id"])
+        )
+        creation_params["lang"] = (
+            request.env["res.lang"].sudo().browse(creation_params["lang"]).code
+        )
         creation_params["product_categ"] = ctx.product_categ
-        creation_params["company"] = ctx.company
+        creation_params["company_id"] = ctx.company
+        creation_params["membertype_mode"] = ctx.membertype_mode
         return creation_params
 
     def _get_page_values(self, ctx):
@@ -253,9 +263,8 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Dictionary with all values needed for template rendering
         """
-        values = (
-            self._get_page_base_values(ctx)
-            | self._get_page_form_fields_values(ctx)
+        values = self._get_page_base_values(ctx) | self._get_page_form_fields_values(
+            ctx
         )
         return values
 
