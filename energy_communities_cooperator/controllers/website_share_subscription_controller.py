@@ -75,16 +75,15 @@ class WebsiteShareSubscriptionController(http.Controller):
             return self._render_error_page(e)
         values = self._get_page_values(ctx)
         if request.httprequest.method == "POST":
-            values = self._process_form(request, ctx)
-            # try:
-            #     values = self._process_form(request, ctx)
-            # except Exception as e:
-            #     #TODO: need to iterate trogh e.errors to modify  page error message and fields (mark in red), log message
-            #     error_msg = "Somethig went wrong"
-            #     _logger.error(error_msg)
-            #     # now we return for with values pre-selected
-            #     values["error_msgs"] = [error_msg]
-            #     self._populate_form_values_from_submission(request,values)
+            try:
+                values = self._process_form(request, ctx)
+            except Exception as e:
+                # TODO: need to iterate trogh e.errors to modify  page error message and fields (mark in red), log message
+                error_msg = "Somethig went wrong"
+                _logger.error(error_msg)
+                # now we return for with values pre-selected
+                values["error_msgs"] = [error_msg]
+                self._populate_form_values_from_submission(request, values)
 
         return self._render_page(values)
 
