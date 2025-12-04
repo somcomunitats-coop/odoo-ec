@@ -1,5 +1,4 @@
 import logging
-
 from odoo import http
 from odoo.http import request
 from odoo.tools.translate import _
@@ -18,6 +17,7 @@ from ..config import (
 from ..exceptions import ContextValidationError
 from ..schemas.website_share_subscription_schemas import (
     WebsiteShareSubscriptionContext,
+    WebsiteShareSubscriptionSubmissionBase
 )
 from ..utils import subscription_request_utils
 
@@ -45,6 +45,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         auth="public",
         website=True,
         methods=["GET", "POST"],
+        csrf=False # TODO: this must be removed by correctly implementing test
     )
     def share_subscription_form(self, **kwargs):
         """
@@ -59,6 +60,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Rendered template with form data or error page if validation fails
         """
+        
         # Create and validate context, handle validation errors
         try:
             # Build context creation parameters from URL kwargs
@@ -69,15 +71,21 @@ class WebsiteShareSubscriptionController(http.Controller):
         except ContextValidationError as e:
             # Render error page if context validation fails
             return _render_error_page(e)
-
+        values = self._get_page_values(ctx)
         if request.httprequest.method == "POST":
             try:
                 values = self._process_form(request, ctx)
             except Exception as e:
-                values = e.values
-
-        if request.httprequest.method == "GET":
-            values = self._get_page_values(ctx)
+                #TODO: need to iterate trogh e.errors to modify  page error message and fields (mark in red), log message
+                error_msg = "Somethig went wrong"
+                _logger.error(
+                    error_msg,
+                    str(e),
+                    exc_info=True,
+                )
+                # now we return for with values pre-selected
+                values["error_msgs"] = [error_msg]
+                self._populate_form_values_from_submission(request,values)
 
         return self._render_page(values)
 
@@ -117,94 +125,55 @@ class WebsiteShareSubscriptionController(http.Controller):
             status=error.http_error_code,
         )
 
-    def _process_form(self, values, ctx):
+    def _populate_form_values_from_submission(self,request, values):
+        form_submission = dict(requet.httprequest.form)
+        for field in values["form_fields"]:
+            field_key = field.get("key")
+            if field_key in form_submission:
+                field["value"] = form_submission[field_key]
+
+    def _process_form(self, request, ctx):
         """
-        Process form submission data using SubscriptionRequest component.
+        Process form submission data using SubscriptionRequestUtils component.
 
         Validates and creates subscription request from form data.
-        Modifies values dictionary in-place to add success/error messages
-        for template rendering.
 
         Args:
-            values: Dictionary containing form submission data and context
-                   (modified in-place with error_msgs or form_submitted/success_msg)
+            request: Dictionary containing form submission data and context
+            ctx: WebsiteShareSubscriptionContext containig all context information
         """
         try:
             # Extract form data from request
-            kwargs = dict(request.httprequest.form)
-            kwargs.update(request.httprequest.files)
-
-            # Get files from request
-            post_file = []
-            for field_name, field_value in request.httprequest.files.items():
-                if hasattr(field_value, "filename") and field_value:
-                    post_file.append(field_value)
-
-            # Determine if user is logged in
-            logged = request.env.user.login != "public"
-
-            # Get company from context stored in values
-            if ctx and hasattr(ctx, "company"):
-                company_id = ctx.company.id
-                if "company_id" not in kwargs:
-                    kwargs["company_id"] = company_id
-        except ContextValidationError as e:
-            _logger.error(
-                "Context validation error processing subscription form: %s",
-                str(e),
-                exc_info=True,
+            form_submission = WebsiteShareSubscriptionSubmissionBase(
+                **dict(request.httprequest.form)
             )
-            # Use message from ContextValidationError
-            error_msg = e.message
-
-            # Set error messages (template expects a list)
-            values["error_msgs"] = [error_msg]
-
-            # Update form field values with submitted data for re-rendering
-            # This allows the form to show the data the user entered
-            if "form_fields" in values:
-                for field in values["form_fields"]:
-                    field_key = field.get("key")
-                    if field_key in kwargs:
-                        # Update field value with submitted data
-                        field["value"] = kwargs[field_key]
+        except Exception as e:
+            raise e
+            # TODO: raise FormError
 
         try:
             # Use component to validate and create subscription request
+            # TODO: use form submission to create a SubscriptionRequestCreationParams to pass it to the component create method
             with subscription_request_utils(request.env) as component:
                 subscription_request = component.create_subscription_request(
-                    values=None,
-                    kwargs=kwargs,
-                    logged=logged,
-                    post_file=post_file if post_file else None,
-                )
-
-                # Success: set success message
-                values["form_submitted"] = True
-                values["success_msg"] = _(
-                    "Your subscription request has been submitted successfully. "
-                    "You will receive a confirmation email shortly."
+                    form_submission,
+                    # ctx
+                    # values=None,
+                    # kwargs=kwargs,
+                    # logged=logged,
+                    # post_file=post_file if post_file else None,
                 )
         except Exception as e:
-            _logger.error(
-                "Error processing subscription form: %s", str(e), exc_info=True
-            )
-            error_msg = _(
-                "An error occurred while processing your subscription request. "
-                "Please check the form and try again."
-            )
+            raise e
+            # TODO: raise FormError
 
-            # Set error messages (template expects a list)
-            values["error_msgs"] = [error_msg]
-
-            # Update form field values with submitted data for re-rendering
-            # This allows the form to show the data the user entered
-            if "form_fields" in values:
-                for field in values["form_fields"]:
-                    field_key = field.get("key")
-                    if field_key in kwargs:
-                        # Update field value with submitted data
-                        field["value"] = kwargs[field_key]
+        return self._get_page_base_values() | {
+            "form_submitted": True,
+            "success_msg": _(
+                "Your subscription request has been submitted successfully. "
+                "You will receive a confirmation email shortly."
+            )
+        }
 
     # getters
     def _get_context_creation_params_dict(self, kwargs):
@@ -275,8 +244,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             Dictionary with all values needed for template rendering
         """
         values = (
-            ctx.model_dump()
-            | self._get_page_base_values(ctx)
+            self._get_page_base_values(ctx)
             | self._get_page_form_fields_values(ctx)
         )
         return values
@@ -291,7 +259,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Dictionary with page_title and page_headline values
         """
-        return {
+        return ctx.model_dump() | {
             "page_title": self._get_page_title(ctx),
             "page_headline": self._get_page_headline(ctx),
             "page_headline_fixed_transfer": self._get_page_headline_fixed_transfer(ctx),
