@@ -4,11 +4,11 @@
       <t t-foreach="form_fields" t-as="field">
         <div t-attf-class="{{field['class']}}">
           <t t-call="{{field['type']}}">
-            <t t-set="value" t-value="field['value']" />
-            <t t-set="key" t-value="field['key']" />
-            <t t-set="label" t-value="field['label']" />
-            <t t-set="required" t-value="field['required']" />
-            <t t-set="disabled" t-value="field['disabled']" />
+            <t t-if="field['value']" t-set="value" t-value="field['value']" />
+            <t t-if="field['key']" t-set="key" t-value="field['key']" />
+            <t t-if="field['label']" t-set="label" t-value="field['label']" />
+            <t t-if="field['required']" t-set="required" t-value="field['required']" />
+            <t t-if="field['disabled']" t-set="disabled" t-value="field['disabled']" />
             <t t-if="field['options']" t-set="options" t-value="field['options']" />
             <t t-if="field['description']" t-set="description" t-value="field['description']" />
           </t>

@@ -1,5 +1,4 @@
 import logging
-from datetime import datetime
 
 from pydantic import ValidationError as PydanticValidationError
 
@@ -17,26 +16,24 @@ from ..config import (
     MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE,
     MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE,
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
+    MAPPING_FORM_ERROR_TITLE,
+    MAPPING_FORM_SUCCESS,
+    STATUS_CODE_CONSISTENCY_ERROR,
 )
 from ..exceptions import (
+    ComponentValidationError,
     ControllerContextValidationError,
     FormValidationError,
-    ComponentValidationError,
 )
-
 from ..schemas import (
     SubscriptionRequestCreationParams,
     WebsiteShareSubscriptionContext,
     WebsiteShareSubscriptionSubmissionBase,
 )
 from ..utils import subscription_request_utils
-from .. config import (
-    STATUS_CODE_CONSISTENCY_ERROR,
-    MAPPING_FORM_SUCCESS,
-    MAPPING_FORM_ERROR_TITLE,
-)
 
 _logger = logging.getLogger(__name__)
+
 
 class WebsiteShareSubscriptionController(http.Controller):
     """
@@ -90,12 +87,9 @@ class WebsiteShareSubscriptionController(http.Controller):
                 if e.http_error_code == 500:
                     return self._render_error_page(e)
                 http_code = e.http_error_code
-                values["error"] = {
-                    "title": e.title,
-                    "messages": e.messages
-                }
+                values["error"] = {"title": e.title, "messages": e.messages}
                 self._populate_form_values_from_submission(request, values)
-        return self._render_page(values,http_code)
+        return self._render_page(values, http_code)
 
     def _render_page(self, values, status_code):
         """
@@ -123,10 +117,12 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Rendered template response
         """
-        if isinstance(error,ComponentValidationError) or isinstance(error,FormValidationError):
+        if isinstance(error, ComponentValidationError) or isinstance(
+            error, FormValidationError
+        ):
             error_message = ""
             for e in error.messages:
-                error_message += e +"\n"
+                error_message += e + "\n"
         else:
             error_message = error.message
         return request.render(
@@ -166,7 +162,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             raise FormValidationError(
                 STATUS_CODE_CONSISTENCY_ERROR,
                 MAPPING_FORM_ERROR_TITLE["general"],
-                self._get_errors_arr(e)
+                self._get_errors_arr(e),
             )
         try:
             subscription_request_creation_params = SubscriptionRequestCreationParams(
@@ -178,7 +174,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             raise FormValidationError(
                 STATUS_CODE_CONSISTENCY_ERROR,
                 MAPPING_FORM_ERROR_TITLE["general"],
-                self._get_errors_arr(e)
+                self._get_errors_arr(e),
             )
         try:
             # Use component to validate and create subscription request
@@ -187,20 +183,18 @@ class WebsiteShareSubscriptionController(http.Controller):
                     subscription_request_creation_params
                 )
         except ComponentValidationError as e:
-            raise FormValidationError(
-                e.http_error_code,
-                e.title,
-                e.messages
-            )
+            raise FormValidationError(e.http_error_code, e.title, e.messages)
         return self._get_page_base_values(ctx) | {
             "form_submitted": True,
             "success_msg": MAPPING_FORM_SUCCESS["general"],
         }
 
-    def _get_errors_arr(self,e):
+    def _get_errors_arr(self, e):
         e_msgs = []
         for error in e.errors():
-            e_msgs.append("{}: {} ({})".format(error['loc'][0],error['msg'],error['type']))
+            e_msgs.append(
+                "{}: {} ({})".format(error["loc"][0], error["msg"], error["type"])
+            )
         return e_msgs
 
     # getters
@@ -264,14 +258,18 @@ class WebsiteShareSubscriptionController(http.Controller):
         creation_params["country_id"] = (
             request.env["res.country"]
             .sudo()
-            .search([("id","=",creation_params["country_id"])])
+            .search([("id", "=", creation_params["country_id"])])
         )
         creation_params["share_product_id"] = (
             request.env["product.template"]
             .sudo()
-            .search([("id","=",creation_params["share_product_id"])])
+            .search([("id", "=", creation_params["share_product_id"])])
         )
-        lang_model = request.env["res.lang"].sudo().search([("id","=",creation_params["lang"])])
+        lang_model = (
+            request.env["res.lang"]
+            .sudo()
+            .search([("id", "=", creation_params["lang"])])
+        )
         if lang_model:
             creation_params["lang"] = lang_model.code
         else:
@@ -439,11 +437,11 @@ class WebsiteShareSubscriptionController(http.Controller):
         for field in form_fields:
             values_field = {
                 "value": self._get_form_field_value(
-                    ctx.model_dump(), form_fields[field]["value"]
+                    ctx.model_dump(), form_fields[field].get("value", False)
                 ),
-                "key": field,
+                "key": field if "h3" not in field else False,
                 "class": form_fields[field]["class"],
-                "label": form_fields[field]["label"],
+                "label": form_fields[field].get("label", False),
                 "type": "energy_communities.{}".format(form_fields[field]["type"]),
                 "disabled": form_fields[field].get("disabled", False),
                 "required": form_fields[field].get("required", False),
@@ -578,9 +576,12 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             List of dictionaries with "id" and "name" keys
         """
-        return request.env[
-            "res.country"
-        ].sudo().search([], order="name").mapped(lambda x: {"id": x.id, "name": x.name})
+        return (
+            request.env["res.country"]
+            .sudo()
+            .search([], order="name")
+            .mapped(lambda x: {"id": x.id, "name": x.name})
+        )
 
     def _get_lang_options(self):
         """
@@ -592,10 +593,11 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             List of dictionaries with "id" and "name" keys
         """
-        return request.env[
-            "res.lang"
-        ].sudo().search([("active", "=", True)], order="name").mapped(
-            lambda x: {"id": x.id, "name": x.name}
+        return (
+            request.env["res.lang"]
+            .sudo()
+            .search([("active", "=", True)], order="name")
+            .mapped(lambda x: {"id": x.id, "name": x.name})
         )
 
     def _get_share_product_options(self, ctx):
