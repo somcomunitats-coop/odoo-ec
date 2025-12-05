@@ -19,6 +19,7 @@ from ..config import (
     MAPPING_FORM_ERROR_TITLE,
     MAPPING_FORM_SUCCESS,
     STATUS_CODE_CONSISTENCY_ERROR,
+    STATUS_CODE_SERVER_ERROR,
 )
 from ..exceptions import (
     ComponentValidationError,
@@ -84,6 +85,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             try:
                 values = self._process_form(request, ctx)
             except FormValidationError as e:
+                __import__("ipdb").set_trace()
                 _logger.error(e.title)
                 # now we return form with values pre-selected and error message on top
                 if e.http_error_code == 500:
@@ -176,10 +178,23 @@ class WebsiteShareSubscriptionController(http.Controller):
                 self._get_errors_arr(e),
             )
         try:
+            creation_params = self._get_subscription_request_creation_params_dict(
+                form_submission, ctx
+            )
+        except FormValidationError as e:
+            raise e
+        except Exception as ge:
+            raise FormValidationError(
+                STATUS_CODE_SERVER_ERROR,
+                _("There is a problem preparing creation params for request."),
+                [
+                    ge.args[0],
+                    _("Please contact the platform administrator to fix the issue."),
+                ],
+            )
+        try:
             subscription_request_creation_params = SubscriptionRequestCreationParams(
-                **self._get_subscription_request_creation_params_dict(
-                    form_submission, ctx
-                )
+                **creation_params
             )
         except PydanticValidationError as e:
             raise FormValidationError(
@@ -281,23 +296,16 @@ class WebsiteShareSubscriptionController(http.Controller):
                 .sudo()
                 .get_cooperator_from_vat(creation_params["vat"], ctx.company.id)
             )
-            if partner:
-                creation_params["partner_id"] = partner.id
-                creation_params["already_cooperator"] = partner.member
-                creation_params["email"] = partner.email or _("Email not found")
-                creation_params["phone"] = partner.phone
-                creation_params["lastname"] = partner.lastname or ""
-                creation_params["firstname"] = partner.firstname or partner.name
-                creation_params["address"] = partner.street or _("Address not found")
-                creation_params["city"] = partner.city or _("City not found")
-                creation_params["zip_code"] = partner.zip or _("ZIP code not found")
-                creation_params["country_id"] = (
-                    partner.country_id.id or ctx.company.default_country_id.id
+            # TODO: Must the person be a effective cooperator???
+            if not partner:
+                raise FormValidationError(
+                    STATUS_CODE_CONSISTENCY_ERROR,
+                    MAPPING_FORM_ERROR_TITLE["general"],
+                    [_("We couldn't find a member for ")],
                 )
-                creation_params["lang"] = partner.lang or ctx.company.default_lang_id.id
-                creation_params["birthdate"] = partner.birthdate_date
-                creation_params["already_cooperator"] = True
-
+            creation_params |= (
+                self._get_subscription_request_creation_params_from_partner(partner)
+            )
         else:  # memeber or company_member or invited or company_invites
             creation_params["country_id"] = (
                 request.env["res.country"]
@@ -313,8 +321,24 @@ class WebsiteShareSubscriptionController(http.Controller):
                 creation_params["lang"] = lang_model.code
             else:
                 creation_params["lang"] = ""
-
         return creation_params
+
+    def _get_subscription_request_creation_params_from_partner(self, partner):
+        return {
+            "partner_id": partner.id,
+            "already_cooperator": partner.member,
+            "email": partner.email or _("Email not found"),
+            "phone": partner.phone or _("Phone not found"),
+            "gender": partner.gender or "not_share",
+            "lastname": partner.lastname or _("Lastname not found"),
+            "firstname": partner.firstname or partner.name,
+            "address": partner.street or _("Address not found"),
+            "city": partner.city or _("City not found"),
+            "zip_code": partner.zip or _("ZIP code not found"),
+            "country_id": (partner.country_id or ctx.company.default_country_id),
+            "lang": partner.lang or ctx.company.default_lang_id.id,
+            "birthdate": partner.birthdate_date or False,
+        }
 
     def _get_page_values(self, ctx):
         """

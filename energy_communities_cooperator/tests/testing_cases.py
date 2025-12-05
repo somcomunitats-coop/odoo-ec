@@ -6,7 +6,8 @@ SUBSCRIPTION_FORM_SUBMISSION = {
     "birthdate": "22/03/1983",
     "phone": "1234",
     "lang": "6",
-    "vat": "47731166W",
+    # "vat": "47731166W",
+    "vat": "43549978F",
     "address": "address test",
     "city": "city test",
     "zip_code": "08301",
@@ -40,7 +41,7 @@ SUBSCRIPTION_FORM_SUBMISSION_COMPANY_MEMBER = {
 }
 
 SUBSCRIPTION_FORM_SUBMISSION_VOLUNTARY = {
-    "vat": "47731166W",
+    "vat": "43549978F",
     "email": "voluntary_test@test.com",
     "phone": "1234",
     "share_product_id": "1",

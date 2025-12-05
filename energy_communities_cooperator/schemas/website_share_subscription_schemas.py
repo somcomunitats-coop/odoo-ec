@@ -44,6 +44,7 @@ class MembershipMode(str, Enum):
 class MemberTypeMode(str, Enum):
     individual = "individual"
     company = "company"
+    individual_company = "individual_company"
 
 
 class FormTypeMode(str, Enum):
