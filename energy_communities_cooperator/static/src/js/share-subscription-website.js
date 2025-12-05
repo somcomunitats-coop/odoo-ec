@@ -70,6 +70,13 @@ odoo.define(
       });
 
       $("#share_product_id").change();
+
+      // $('form').validate();
+      // $("form").on("submit", function (event) {
+      //   event.preventDefault();
+      //   var target = $(event.target);
+      //   target.validate();
+      // });
     });
   }
 );

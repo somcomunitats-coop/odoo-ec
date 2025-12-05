@@ -3,4 +3,5 @@ from .website_share_subscription_schemas import (
     WebsiteShareSubscriptionSubmissionBase,
     SubscriptionRequestCreationParams,
     WebsiteShareSubscriptionSubmissionCompanyMember,
+    WebsiteShareSubscriptionSubmissionVoluntary,
 )
