@@ -80,6 +80,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             # Render error page if context validation fails
             return self._render_error_page(e)
         values = self._get_page_values(ctx)
+        http_code = 200
         if request.httprequest.method == "POST":
             try:
                 values = self._process_form(request, ctx)
@@ -88,14 +89,15 @@ class WebsiteShareSubscriptionController(http.Controller):
                 # now we return form with values pre-selected and error message on top
                 if e.http_error_code == 500:
                     return self._render_error_page(e)
+                http_code = e.http_error_code
                 values["error"] = {
                     "title": e.title,
                     "messages": e.messages
                 }
                 self._populate_form_values_from_submission(request, values)
-        return self._render_page(values)
+        return self._render_page(values,http_code)
 
-    def _render_page(self, values):
+    def _render_page(self, values, status_code):
         """
         Render the subscription page template with provided values.
 
@@ -108,6 +110,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         return request.render(
             "energy_communities_cooperator.template_subscription_page",
             values,
+            status=status_code,
         )
 
     def _render_error_page(self, error: Exception):
@@ -575,7 +578,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             List of dictionaries with "id" and "name" keys
         """
-        return [{"id": "", "name": _("Select your country")}] + request.env[
+        return request.env[
             "res.country"
         ].sudo().search([], order="name").mapped(lambda x: {"id": x.id, "name": x.name})
 
@@ -589,7 +592,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             List of dictionaries with "id" and "name" keys
         """
-        return [{"id": "", "name": _("Select your language")}] + request.env[
+        return request.env[
             "res.lang"
         ].sudo().search([("active", "=", True)], order="name").mapped(
             lambda x: {"id": x.id, "name": x.name}

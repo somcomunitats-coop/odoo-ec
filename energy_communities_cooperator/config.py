@@ -97,7 +97,6 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA = {
 
 
 GENDER_OPTIONS = [
-    {"id": "", "name": _("Select your gender")},
     {"id": "male", "name": _("Male")},
     {"id": "female", "name": _("Female")},
     {"id": "other", "name": _("Other")},
