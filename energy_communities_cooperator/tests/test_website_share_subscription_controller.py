@@ -16,6 +16,7 @@ from ..config import (
 from .testing_cases import (
     SUBSCRIPTION_FORM_SUBMISSION,
     SUBSCRIPTION_FORM_SUBMISSION_COMPANY_MEMBER,
+    SUBSCRIPTION_FORM_SUBMISSION_VOLUNTARY,
 )
 
 COMMUNITY_1_EXT_ID = "ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4"
@@ -314,6 +315,19 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         ).id
         response = self.client(
             "/subscription/company_member/{}".format(COMMUNITY_1_EXT_ID),
+        )
+        # it correctly renders the page
+        self.assertEqual(response.status_code, 200)
+
+    def test_website_form_voluntary_submission_ok(self):
+        # given http_client
+        # and a valid data
+        # when we submit the form
+        SUBSCRIPTION_FORM_SUBMISSION_VOLUNTARY["share_product_id"] = self.env.ref(
+            COMMUNITY_1_SHARE_1_XML_ID
+        ).id
+        response = self.client(
+            "/subscription/voluntary/{}".format(COMMUNITY_1_EXT_ID),
         )
         # it correctly renders the page
         self.assertEqual(response.status_code, 200)

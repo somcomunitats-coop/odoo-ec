@@ -373,12 +373,69 @@ MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
 )
 MAPPING__INVITED__DEFAULT_FORM_FIELDS = (
     MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY
 )
 MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
-    MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
+    {
+        "h3_company_information": {
+            "class": "col-md-12",
+            "type": "form_h3",
+            "description": _("Company Information"),
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_COMPANY_CONTACT
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
+    | {
+        "h3_main_address": {
+            "class": "col-md-12",
+            "type": "form_h3",
+            "description": _("Main Address"),
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
+    | {
+        "h3_contact_person": {
+            "class": "col-md-12",
+            "type": "form_h3",
+            "description": _("Contact Person"),
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_CONTACT_PERSON_FUNCTION
+    | {
+        "h3_share_selection": {
+            "class": "col-md-12",
+            "type": "form_h3",
+            "description": _("Share Selection"),
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY
 )
 MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS = (
-    MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
+    MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
+    | {
+        "email": {
+            "class": "col-md-12",
+            "type": "form_field_email",
+            "value": "",
+            "label": _("Email"),
+            "required": True,
+            "disabled": False,
+        },
+        "phone": {
+            "class": "col-md-12",
+            "type": "form_field_text",
+            "value": "",
+            "label": _("Phone"),
+            "required": True,
+            "disabled": False,
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
 )
 
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS = {

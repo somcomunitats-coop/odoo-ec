@@ -30,6 +30,7 @@ from ..schemas import (
     WebsiteShareSubscriptionContext,
     WebsiteShareSubscriptionSubmissionBase,
     WebsiteShareSubscriptionSubmissionCompanyMember,
+    WebsiteShareSubscriptionSubmissionVoluntary,
 )
 from ..utils import subscription_request_utils
 
@@ -156,7 +157,11 @@ class WebsiteShareSubscriptionController(http.Controller):
         """
         try:
             # Extract form data from request
-            if ctx.subscription_mode.value == "company_member":
+            if ctx.subscription_mode.value == "voluntary":
+                form_submission = WebsiteShareSubscriptionSubmissionVoluntary(
+                    **dict(request.httprequest.form)
+                )
+            elif ctx.subscription_mode.value == "company_member":
                 form_submission = WebsiteShareSubscriptionSubmissionCompanyMember(
                     **dict(request.httprequest.form)
                 )
@@ -188,6 +193,21 @@ class WebsiteShareSubscriptionController(http.Controller):
                 subscription_request = component.create_subscription_request(
                     subscription_request_creation_params
                 )
+                if ctx.subscription_mode.value == "voluntary":
+                    if subscription_request.partner_id:
+                        subscription_request.message_post(
+                            **{
+                                "subject": "We found partner discrepancy in the form",
+                                "body": """The contact information received from the form <b>was diferent</b> from the one saved in the partner:
+                            <ul>
+                                <li>Email: {} </li>
+                                <li>Phone: {} </li>
+                            </ul>""".format(
+                                    subscription_request.partner_id.email,
+                                    subscription_request.partner_id.phone,
+                                ),
+                            }
+                        )
         except ComponentValidationError as e:
             raise FormValidationError(e.http_error_code, e.title, e.messages)
         return self._get_page_base_values(ctx) | {
@@ -261,28 +281,57 @@ class WebsiteShareSubscriptionController(http.Controller):
 
     def _get_subscription_request_creation_params_dict(self, form_submission, ctx):
         creation_params = form_submission.model_dump()
-        creation_params["country_id"] = (
-            request.env["res.country"]
-            .sudo()
-            .search([("id", "=", creation_params["country_id"])])
-        )
         creation_params["share_product_id"] = (
             request.env["product.template"]
             .sudo()
             .search([("id", "=", creation_params["share_product_id"])])
         )
-        lang_model = (
-            request.env["res.lang"]
-            .sudo()
-            .search([("id", "=", creation_params["lang"])])
-        )
-        if lang_model:
-            creation_params["lang"] = lang_model.code
-        else:
-            creation_params["lang"] = ""
         creation_params["product_categ"] = ctx.product_categ
         creation_params["company_id"] = ctx.company
         creation_params["membertype_mode"] = ctx.membertype_mode
+        if ctx.subscription_mode.value == "voluntary":
+            creation_params["vat"] = creation_params["vat"].strip().upper()
+            partner = (
+                request.env["res.partner"]
+                .sudo()
+                .get_cooperator_from_vat(creation_params["vat"], ctx.company.id)
+            )
+            if partner:
+                creation_params["partner_id"] = partner.id
+                creation_params["already_cooperator"] = partner.member
+                creation_params["email"] = partner.email or _("Email not found")
+                creation_params["phone"] = partner.phone
+                creation_params["lastname"] = partner.lastname or ""
+                creation_params["firstname"] = partner.firstname or partner.name
+                creation_params["address"] = partner.street or _("Address not found")
+                creation_params["city"] = partner.city or _("City not found")
+                creation_params["zip_code"] = partner.zip or _("ZIP code not found")
+                creation_params["country_id"] = (
+                    partner.country_id.id or ctx.company.default_country_id.id
+                )
+                creation_params["lang"] = partner.lang or ctx.company.default_lang_id.id
+                creation_params["birthdate"] = partner.birthdate_date
+            if creation_params["already_cooperator"] == "on":
+                creation_params["already_cooperator"] = True
+            else:
+                creation_params["already_cooperator"] = False
+        else:  # memeber or company_member
+            creation_params["country_id"] = (
+                request.env["res.country"]
+                .sudo()
+                .search([("id", "=", creation_params["country_id"])])
+            )
+
+            lang_model = (
+                request.env["res.lang"]
+                .sudo()
+                .search([("id", "=", creation_params["lang"])])
+            )
+            if lang_model:
+                creation_params["lang"] = lang_model.code
+            else:
+                creation_params["lang"] = ""
+
         return creation_params
 
     def _get_page_values(self, ctx):

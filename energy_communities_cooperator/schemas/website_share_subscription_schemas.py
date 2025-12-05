@@ -99,6 +99,17 @@ class WebsiteShareSubscriptionSubmissionCompanyMember(
     contact_person_function: str
 
 
+class WebsiteShareSubscriptionSubmissionVoluntary(BaseModel):
+    vat: str
+    email: EmailStr
+    phone: str
+    share_product_id: int
+    ordered_parts: int
+    iban: str
+    privacy_policy: bool
+    conditions_payment: bool
+
+
 # TODO: Create this schema for subscription request params creation
 class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
     model_config = ConfigDict(arbitrary_types_allowed=True)

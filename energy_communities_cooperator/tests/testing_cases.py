@@ -38,3 +38,14 @@ SUBSCRIPTION_FORM_SUBMISSION_COMPANY_MEMBER = {
     "company_email": "company_member_test@test.com",
     "contact_person_function": "contact person function",
 }
+
+SUBSCRIPTION_FORM_SUBMISSION_VOLUNTARY = {
+    "vat": "47731166W",
+    "email": "voluntary_test@test.com",
+    "phone": "1234",
+    "share_product_id": "1",
+    "ordered_parts": "2",
+    "privacy_policy": "on",
+    "iban": "ES0820385793089381465771",
+    "conditions_payment": "on",
+}
