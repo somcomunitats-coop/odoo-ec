@@ -111,10 +111,29 @@ MAPPING_FORM_SUCCESS = {
     )
 }
 
-MAPPING__BASE__DEFAULT_FORM_FIELDS = {
-    "email": {
+MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_COMPANY_CONTACT = {
+    "company_name": {
         "class": "col-md-12",
         "type": "form_field_text",
+        "value": "",
+        "label": _("Company Name"),
+        "required": True,
+        "disabled": False,
+    },
+    "company_email": {
+        "class": "col-md-12",
+        "type": "form_field_email",
+        "value": "",
+        "label": _("Company Email"),
+        "required": True,
+        "disabled": False,
+    },
+}
+
+MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
+    "email": {
+        "class": "col-md-12",
+        "type": "form_field_email",
         "value": "",
         "label": _("Email"),
         "required": True,
@@ -170,6 +189,9 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "disabled": False,
         "options": [],
     },
+}
+
+MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT = {
     "vat": {
         "class": "col-md-12",
         "type": "form_field_text",
@@ -178,6 +200,8 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "required": True,
         "disabled": False,
     },
+}
+MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS = {
     "address": {
         "class": "col-md-12",
         "type": "form_field_text",
@@ -210,6 +234,17 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "required": True,
         "disabled": False,
         "options": [],
+    },
+}
+
+MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
+    "iban": {
+        "class": "col-md-12",
+        "type": "form_field_text",
+        "value": "",
+        "label": _("IBAN"),
+        "required": True,
+        "disabled": False,
     },
     "share_product_id": {
         "class": "col-md-4",
@@ -244,15 +279,6 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
         "required": False,
         "disabled": True,
     },
-    "privacy_policy": {
-        "class": "col-md-12",
-        "type": "form_field_checkbox",
-        "value": False,
-        "label": _("Privacy Policy"),
-        "required": True,
-        "disabled": False,
-        "description": "",
-    },
     "payment_method": {
         "class": "col-md-12",
         "type": "form_field_selection",
@@ -264,14 +290,6 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
             {"id": "sepa", "name": _("SEPA")},
             {"id": "transfer", "name": _("Transfer")},
         ],
-    },
-    "iban": {
-        "class": "col-md-12",
-        "type": "form_field_text",
-        "value": "",
-        "label": _("IBAN"),
-        "required": True,
-        "disabled": False,
     },
     "conditions_payment": {
         "class": "col-md-12",
@@ -286,11 +304,82 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS = {
     },
 }
 
-MAPPING__MEMBER__DEFAULT_FORM_FIELDS = MAPPING__BASE__DEFAULT_FORM_FIELDS
-MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = MAPPING__BASE__DEFAULT_FORM_FIELDS
-MAPPING__INVITED__DEFAULT_FORM_FIELDS = MAPPING__BASE__DEFAULT_FORM_FIELDS
-MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = MAPPING__BASE__DEFAULT_FORM_FIELDS
-MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS = MAPPING__BASE__DEFAULT_FORM_FIELDS
+MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY = {
+    "privacy_policy": {
+        "class": "col-md-12",
+        "type": "form_field_checkbox",
+        "value": False,
+        "label": _("Privacy Policy"),
+        "required": True,
+        "disabled": False,
+        "description": "",
+    },
+}
+
+MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_CONTACT_PERSON_FUNCTION = {
+    "contact_person_function": {
+        "class": "col-md-12",
+        "type": "form_field_text",
+        "value": "",
+        "label": _("Function"),
+        "required": True,
+        "disabled": False,
+    },
+}
+
+MAPPING__MEMBER__DEFAULT_FORM_FIELDS = (
+    MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY
+)
+MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
+    {
+        "h3_company_information": {
+            "class": "col-md-12",
+            "type": "form_h3",
+            "description": _("Company Information"),
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_COMPANY_CONTACT
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
+    | {
+        "h3_main_address": {
+            "class": "col-md-12",
+            "type": "form_h3",
+            "description": _("Main Address"),
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
+    | {
+        "h3_contact_person": {
+            "class": "col-md-12",
+            "type": "form_h3",
+            "description": _("Contact Person"),
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_CONTACT_PERSON_FUNCTION
+    | {
+        "h3_share_selection": {
+            "class": "col-md-12",
+            "type": "form_h3",
+            "description": _("Share Selection"),
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY
+)
+MAPPING__INVITED__DEFAULT_FORM_FIELDS = (
+    MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
+)
+MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
+    MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
+)
+MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS = (
+    MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
+)
 
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS = {
     "member": MAPPING__MEMBER__DEFAULT_FORM_FIELDS,
@@ -314,14 +403,10 @@ MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE = {
     "voluntary": "individual_company",
 }
 MAPPING_FORM_ERROR_TITLE = {
-    "general": _(
-        "There is a problem with the data you submitted"
-    )
+    "general": _("There is a problem with the data you submitted")
 }
 MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE = {
-    "general": _(
-        "There is a problem validating the creation of the request"
-    )
+    "general": _("There is a problem validating the creation of the request")
 }
 CONTEXT_VALIDATION_ERROR_TITLE = _("Form can't be loaded")
 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE = _(
@@ -331,6 +416,6 @@ CONTEXT_VALIDATION_ERROR_UNAVAILABLE_MESSAGE = _(
     "The form is no longer available. Contact your coordinator for further information."
 )
 STATUS_CODE_NOT_FOUND_ERROR = 404
-STATUS_CODE_CONSISTENCY_ERROR = 406 # not acceptable
+STATUS_CODE_CONSISTENCY_ERROR = 406  # not acceptable
 STATUS_CODE_UNAVAILABLE_ERROR = 423  # locked
 STATUS_CODE_SERVER_ERROR = 500
