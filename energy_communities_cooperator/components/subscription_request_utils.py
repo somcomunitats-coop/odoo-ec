@@ -1,19 +1,19 @@
 from datetime import datetime
 
 from odoo import _
-from odoo.tools import date_type
 
 from odoo.addons.component.core import Component
 
 from ..config import (
-    CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
-    CONTEXT_STATUS_CODE_NOT_FOUND_ERROR,
-    CONTEXT_VALIDATION_ERROR_TITLE,
+    STATUS_CODE_CONSISTENCY_ERROR,
+    STATUS_CODE_NOT_FOUND_ERROR,
+    STATUS_CODE_SERVER_ERROR,
+    MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE,
 )
-from ..exceptions import ContextValidationError
 from ..schemas.website_share_subscription_schemas import (
     SubscriptionRequestCreationParams,
 )
+from ..exceptions import ComponentValidationError
 
 
 class SubscriptionRequestUtils(Component):
@@ -43,30 +43,47 @@ class SubscriptionRequestUtils(Component):
         """
         try:
             self._validate_creation_params(creation_params)
+        except ComponentValidationError as e:
+            raise e
+        try:
             creation_params = self._get_model_creation_params(creation_params)
         except Exception as e:
-            raise e
+            raise ComponentValidationError(
+                STATUS_CODE_SERVER_ERROR,
+                _("There is a problem on creating request params"),
+                [e.args[0], _("Please contact the platform administrator to fix the issue.")]
+            )
         # Create subscription request
         try:
             subscription_request = (
                 self.env["subscription.request"].sudo().create(creation_params)
             )
         except Exception as e:
+            raise ComponentValidationError(
+                STATUS_CODE_SERVER_ERROR,
+                _("There is a problem on creating request."),
+                [e.args[0], _("Please contact the platform administrator to fix the issue.")]
+            )
             raise e
         return subscription_request
 
     def _validate_creation_params(
         self, creation_params: SubscriptionRequestCreationParams
     ):
+        errors = []
         min_qty = creation_params.share_product_id.minimum_quantity
         if creation_params.ordered_parts < min_qty:
-            raise ValueError(
-                _(f"Oder part must be higher than product config {min_qty}")
-            )
+            errors.append(_(f"Oder part must be higher than product config {min_qty}"))
         # TODO: company.subscription_maximum_amount ??
         # Product must belong to company
         # Product must have correct subrciption context
         # TODO: Validate privacy_policy and conditions_payment must be marked
+        if errors:
+            raise ComponentValidationError(
+                STATUS_CODE_CONSISTENCY_ERROR,
+                MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE["general"],
+                errors
+            )
         return True
 
     def _get_model_creation_params(
@@ -100,9 +117,6 @@ class SubscriptionRequestUtils(Component):
                 "share_product_id"
             ].product_variant_id.id,
             "company_id": creation_params["company_id"].id,
-            "birthdate": datetime.strptime(
-                creation_params["birthdate"], "%d/%m/%Y"
-            ).date(),
         }
         # Delete not necesary params for creation
         del creation_params["product_categ"]

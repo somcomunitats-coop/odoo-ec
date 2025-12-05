@@ -1,4 +1,7 @@
 import logging
+from datetime import datetime
+
+from pydantic import ValidationError as PydanticValidationError
 
 from odoo import http
 from odoo.http import request
@@ -15,23 +18,26 @@ from ..config import (
     MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE,
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
 )
-from ..exceptions import ContextValidationError
+from ..exceptions import (
+    ControllerContextValidationError,
+    FormValidationError,
+    ComponentValidationError,
+)
+
 from ..schemas import (
     SubscriptionRequestCreationParams,
     WebsiteShareSubscriptionContext,
     WebsiteShareSubscriptionSubmissionBase,
 )
 from ..utils import subscription_request_utils
+from .. config import (
+    STATUS_CODE_CONSISTENCY_ERROR,
+    MAPPING_FORM_SUCCESS,
+    MAPPING_FORM_ERROR_TITLE,
+)
 
 _logger = logging.getLogger(__name__)
 
-
-# Example URLs for different subscription modes:
-# http://odoo-ce.local:8069/es/subscription/member/356a192b7913b04c54574d18c28d46e6395428ab/ae7329c979b3cd96086c22cca6217764ab3e50ec
-# http://odoo-ce.local:8069/es/subscription/invited/356a192b7913b04c54574d18c28d46e6395428ab/ae7329c979b3cd96086c22cca6217764ab3e50ec
-# http://odoo-ce.local:8069/es/subscription/voluntary/356a192b7913b04c54574d18c28d46e6395428ab/ae7329c979b3cd96086c22cca6217764ab3e50ec
-# http://odoo-ce.local:8069/es/subscription/company_invited/356a192b7913b04c54574d18c28d46e6395428ab/ae7329c979b3cd96086c22cca6217764ab3e50ec
-# http://odoo-ce.local:8069/es/subscription/company_member/356a192b7913b04c54574d18c28d46e6395428ab/ae7329c979b3cd96086c22cca6217764ab3e50ec
 class WebsiteShareSubscriptionController(http.Controller):
     """
     Controller for handling share subscription forms on the website.
@@ -70,21 +76,23 @@ class WebsiteShareSubscriptionController(http.Controller):
                 kwargs
             )
             ctx = WebsiteShareSubscriptionContext(**context_creation_params_dict)
-        except ContextValidationError as e:
+        except ControllerContextValidationError as e:
             # Render error page if context validation fails
             return self._render_error_page(e)
         values = self._get_page_values(ctx)
         if request.httprequest.method == "POST":
             try:
                 values = self._process_form(request, ctx)
-            except Exception as e:
-                # TODO: need to iterate trogh e.errors to modify  page error message and fields (mark in red), log message
-                error_msg = "Somethig went wrong"
-                _logger.error(error_msg)
-                # now we return for with values pre-selected
-                values["error_msgs"] = [error_msg]
+            except FormValidationError as e:
+                _logger.error(e.title)
+                # now we return form with values pre-selected and error message on top
+                if e.http_error_code == 500:
+                    return self._render_error_page(e)
+                values["error"] = {
+                    "title": e.title,
+                    "messages": e.messages
+                }
                 self._populate_form_values_from_submission(request, values)
-
         return self._render_page(values)
 
     def _render_page(self, values):
@@ -112,12 +120,18 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Rendered template response
         """
+        if isinstance(error,ComponentValidationError) or isinstance(error,FormValidationError):
+            error_message = ""
+            for e in error.messages:
+                error_message += e +"\n"
+        else:
+            error_message = error.message
         return request.render(
             "http_routing.http_error",
             {
                 "status_code": error.http_error_code,
                 "status_message": error.title,
-                "error_message": error.message,
+                "error_message": error_message,
                 "debug": "debug",
             },
             status=error.http_error_code,
@@ -145,36 +159,46 @@ class WebsiteShareSubscriptionController(http.Controller):
             form_submission = WebsiteShareSubscriptionSubmissionBase(
                 **dict(request.httprequest.form)
             )
-        except Exception as e:
-            raise e
-            # TODO: raise FormError
+        except PydanticValidationError as e:
+            raise FormValidationError(
+                STATUS_CODE_CONSISTENCY_ERROR,
+                MAPPING_FORM_ERROR_TITLE["general"],
+                self._get_errors_arr(e)
+            )
         try:
             subscription_request_creation_params = SubscriptionRequestCreationParams(
                 **self._get_subscription_request_creation_params_dict(
                     form_submission, ctx
                 )
             )
-        except Exception as e:
-            raise e
-            # TODO: convert custom PydanticError in a FormError
+        except PydanticValidationError as e:
+            raise FormValidationError(
+                STATUS_CODE_CONSISTENCY_ERROR,
+                MAPPING_FORM_ERROR_TITLE["general"],
+                self._get_errors_arr(e)
+            )
         try:
             # Use component to validate and create subscription request
-            # TODO: use form submission to create a SubscriptionRequestCreationParams to pass it to the component create method
             with subscription_request_utils(request.env) as component:
                 subscription_request = component.create_subscription_request(
                     subscription_request_creation_params
                 )
-        except Exception as e:
-            raise e
-            # TODO: raise FormError
-
+        except ComponentValidationError as e:
+            raise FormValidationError(
+                e.http_error_code,
+                e.title,
+                e.messages
+            )
         return self._get_page_base_values(ctx) | {
             "form_submitted": True,
-            "success_msg": _(
-                "Your subscription request has been submitted successfully. "
-                "You will receive a confirmation email shortly."
-            ),
+            "success_msg": MAPPING_FORM_SUCCESS["general"],
         }
+
+    def _get_errors_arr(self,e):
+        e_msgs = []
+        for error in e.errors():
+            e_msgs.append("{}: {} ({})".format(error['loc'][0],error['msg'],error['type']))
+        return e_msgs
 
     # getters
     def _get_context_creation_params_dict(self, kwargs):
@@ -235,16 +259,20 @@ class WebsiteShareSubscriptionController(http.Controller):
     def _get_subscription_request_creation_params_dict(self, form_submission, ctx):
         creation_params = form_submission.model_dump()
         creation_params["country_id"] = (
-            request.env["res.country"].sudo().browse(creation_params["country_id"])
+            request.env["res.country"]
+            .sudo()
+            .search([("id","=",creation_params["country_id"])])
         )
         creation_params["share_product_id"] = (
             request.env["product.template"]
             .sudo()
-            .browse(creation_params["share_product_id"])
+            .search([("id","=",creation_params["share_product_id"])])
         )
-        creation_params["lang"] = (
-            request.env["res.lang"].sudo().browse(creation_params["lang"]).code
-        )
+        lang_model = request.env["res.lang"].sudo().search([("id","=",creation_params["lang"])])
+        if lang_model:
+            creation_params["lang"] = lang_model.code
+        else:
+            creation_params["lang"] = ""
         creation_params["product_categ"] = ctx.product_categ
         creation_params["company_id"] = ctx.company
         creation_params["membertype_mode"] = ctx.membertype_mode
@@ -309,10 +337,6 @@ class WebsiteShareSubscriptionController(http.Controller):
 
         # Generic mode: search for available products
         if product_categ and company:
-            # TODO: adjust query fixing according to membertype_mode (individual,company)
-            # TODO: include is_share on query
-            # TODO: if formtype_mode is global (always happens) check display_on_website must be added to query
-
             # Build domain for product search
             domain = [
                 ("categ_id", "=", product_categ.id),

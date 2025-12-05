@@ -1,7 +1,8 @@
 from enum import Enum
 from typing import Any, List, Optional
+from datetime import date,datetime
 
-from pydantic import BaseModel, ConfigDict, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, field_validator, model_validator, EmailStr
 
 from odoo.tools.translate import _
 
@@ -12,12 +13,12 @@ from odoo.addons.product.models.product_category import ProductCategory
 from odoo.addons.product.models.product_template import ProductTemplate
 
 from ..config import (
-    CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
-    CONTEXT_STATUS_CODE_NOT_FOUND_ERROR,
+    STATUS_CODE_CONSISTENCY_ERROR,
+    STATUS_CODE_NOT_FOUND_ERROR,
     CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
     CONTEXT_VALIDATION_ERROR_TITLE,
 )
-from ..exceptions import ContextValidationError
+from ..exceptions import ControllerContextValidationError
 
 
 class SubscriptionMode(str, Enum):
@@ -58,7 +59,7 @@ class PaymentMethodOption(str, Enum):
 
 
 class WebsiteShareSubscriptionSubmissionBase(BaseModel):
-    email: str
+    email: EmailStr
     firstname: str
     lastname: str
     gender: GenderOption
@@ -76,7 +77,12 @@ class WebsiteShareSubscriptionSubmissionBase(BaseModel):
     iban: str
     conditions_payment: bool
 
-    # TODO: Validate email has correct format
+    @model_validator(mode="before")
+    def empty_strings_to_none(cls, data):
+        for k, v in data.items():
+            if v == "":
+                data[k] = None
+        return data
 
 
 # class WebsiteShareSubscriptionSubmissionMember(BaseModel):
@@ -102,6 +108,7 @@ class WebsiteShareSubscriptionSubmissionBase(BaseModel):
 # TODO: Create this schema for subscription request params creation
 class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
     model_config = ConfigDict(arbitrary_types_allowed=True)
+    birthdate: date
     country_id: Country
     share_product_id: ProductTemplate
     company_id: Company
@@ -110,37 +117,12 @@ class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
     lang: str
 
     # Avoid empty recordsets
-    @field_validator("company_id", mode="before")
+    @field_validator("company_id","product_categ","share_product_id","country_id", mode="before")
     @classmethod
-    def check_company_id_required(cls, company_id: Company) -> Company:
-        if not company_id:
-            raise ValueError(_("company_id_required"))
-        return company_id
-
-    @field_validator("product_categ", mode="before")
-    @classmethod
-    def check_product_categ_required(
-        cls, product_categ: ProductCategory
-    ) -> ProductCategory:
-        if not product_categ:
-            raise ValueError(_("product_category_required"))
-        return product_categ
-
-    @field_validator("share_product_id", mode="before")
-    @classmethod
-    def check_share_product_id_required(
-        cls, product: ProductTemplate
-    ) -> ProductTemplate:
-        if not product:
-            raise ValueError(_("product_required"))
-        return product
-
-    @field_validator("country_id", mode="before")
-    @classmethod
-    def check_country_id_required(cls, country: Country) -> Country:
-        if not country:
-            raise ValueError(_("country_required"))
-        return country
+    def check_records_required(cls, record: Any) -> Any:
+        if not record:
+            raise ValueError(_("records_required"))
+        return record
 
     @field_validator("iban", mode="before")
     @classmethod
@@ -148,8 +130,19 @@ class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
         try:
             validate_iban(iban.replace(" ", ""))
         except:
-            raise ValueError(_("Invalid format iban"))
+            raise ValueError(_("Invalid iban format"))
         return iban
+
+    @field_validator("birthdate", mode="before")
+    @classmethod
+    def check_date_format(cls, date_str: str) -> date:
+        try:
+            date_date = datetime.strptime(
+                date_str, "%d/%m/%Y"
+            ).date()
+        except:
+            raise ValueError(_("Invalid date format"))
+        return date_date
 
 
 class WebsiteShareSubscriptionContext(BaseModel):
@@ -168,21 +161,23 @@ class WebsiteShareSubscriptionContext(BaseModel):
     @classmethod
     def check_company_required(cls, company: Company) -> Company:
         if not company:
-            raise ContextValidationError(
-                CONTEXT_STATUS_CODE_NOT_FOUND_ERROR,
+            raise ControllerContextValidationError(
+                STATUS_CODE_NOT_FOUND_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
         return company
 
+    # TODO: Modify this validation use strategy of unify all empty record validations
+    # You must be able to pass a array of error to http_routing error template right now only accepts msg string
     @field_validator("product_categ", mode="before")
     @classmethod
     def check_product_categ_required(
         cls, product_categ: ProductCategory
     ) -> ProductCategory:
         if not product_categ:
-            raise ContextValidationError(
-                CONTEXT_STATUS_CODE_NOT_FOUND_ERROR,
+            raise ControllerContextValidationError(
+                STATUS_CODE_NOT_FOUND_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
@@ -194,8 +189,8 @@ class WebsiteShareSubscriptionContext(BaseModel):
         cls, products: List[ProductTemplate]
     ) -> List[ProductTemplate]:
         if not products:
-            raise ContextValidationError(
-                CONTEXT_STATUS_CODE_NOT_FOUND_ERROR,
+            raise ControllerContextValidationError(
+                STATUS_CODE_NOT_FOUND_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
@@ -205,8 +200,8 @@ class WebsiteShareSubscriptionContext(BaseModel):
     @classmethod
     def check_product_required(cls, product: ProductTemplate) -> ProductTemplate:
         if not product:
-            raise ContextValidationError(
-                CONTEXT_STATUS_CODE_NOT_FOUND_ERROR,
+            raise ControllerContextValidationError(
+                STATUS_CODE_NOT_FOUND_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
@@ -217,22 +212,22 @@ class WebsiteShareSubscriptionContext(BaseModel):
     def check_data_consistency(cls, data: Any) -> Any:
         # Product must belong to defined company
         if data.product.company_id.id != data.company.id:
-            raise ContextValidationError(
-                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+            raise ControllerContextValidationError(
+                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
         # Product doesn't belong to defined category
         if data.product.categ_id.id != data.product_categ.id:
-            raise ContextValidationError(
-                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+            raise ControllerContextValidationError(
+                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
         # Product is not a share
         if not data.product.is_share:
-            raise ContextValidationError(
-                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+            raise ControllerContextValidationError(
+                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
@@ -242,8 +237,8 @@ class WebsiteShareSubscriptionContext(BaseModel):
             in [SubscriptionMode.member, SubscriptionMode.invited]
             and not data.product.by_individual
         ):
-            raise ContextValidationError(
-                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+            raise ControllerContextValidationError(
+                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
@@ -253,8 +248,8 @@ class WebsiteShareSubscriptionContext(BaseModel):
             in [SubscriptionMode.company_member, SubscriptionMode.company_invited]
             and not data.product.by_company
         ):
-            raise ContextValidationError(
-                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+            raise ControllerContextValidationError(
+                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
@@ -263,8 +258,8 @@ class WebsiteShareSubscriptionContext(BaseModel):
             data.formtype_mode == FormTypeMode.generic
             and not data.product.display_on_website
         ):
-            raise ContextValidationError(
-                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+            raise ControllerContextValidationError(
+                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
@@ -273,8 +268,8 @@ class WebsiteShareSubscriptionContext(BaseModel):
             data.formtype_mode == FormTypeMode.single
             and not data.product.activate_form_specific_products
         ):
-            raise ContextValidationError(
-                CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
+            raise ControllerContextValidationError(
+                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
