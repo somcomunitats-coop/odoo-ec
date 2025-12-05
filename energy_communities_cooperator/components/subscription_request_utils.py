@@ -1,19 +1,17 @@
-from datetime import datetime
-
 from odoo import _
 
 from odoo.addons.component.core import Component
 
 from ..config import (
+    MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE,
     STATUS_CODE_CONSISTENCY_ERROR,
     STATUS_CODE_NOT_FOUND_ERROR,
     STATUS_CODE_SERVER_ERROR,
-    MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE,
 )
+from ..exceptions import ComponentValidationError
 from ..schemas.website_share_subscription_schemas import (
     SubscriptionRequestCreationParams,
 )
-from ..exceptions import ComponentValidationError
 
 
 class SubscriptionRequestUtils(Component):
@@ -51,7 +49,10 @@ class SubscriptionRequestUtils(Component):
             raise ComponentValidationError(
                 STATUS_CODE_SERVER_ERROR,
                 _("There is a problem on creating request params"),
-                [e.args[0], _("Please contact the platform administrator to fix the issue.")]
+                [
+                    e.args[0],
+                    _("Please contact the platform administrator to fix the issue."),
+                ],
             )
         # Create subscription request
         try:
@@ -62,9 +63,12 @@ class SubscriptionRequestUtils(Component):
             raise ComponentValidationError(
                 STATUS_CODE_SERVER_ERROR,
                 _("There is a problem on creating request."),
-                [e.args[0], _("Please contact the platform administrator to fix the issue.")]
+                [
+                    e.args[0],
+                    _("Please contact the platform administrator to fix the issue."),
+                ],
             )
-            raise e
+        self._validate_subscription_data_consistency(subscription_request)
         return subscription_request
 
     def _validate_creation_params(
@@ -82,9 +86,36 @@ class SubscriptionRequestUtils(Component):
             raise ComponentValidationError(
                 STATUS_CODE_CONSISTENCY_ERROR,
                 MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE["general"],
-                errors
+                errors,
             )
         return True
+
+    # TODO: Do we need to validate more fields that might change? Wich ones?
+    def _validate_subscription_data_consistency(self, subscription_request):
+        consistency_errors = []
+        subscription_partner = subscription_request.partner_id
+        if subscription_partner:
+            if subscription_partner.email != subscription_request.email:
+                consistency_errors.append(
+                    "Partner Email: {}".format(subscription_partner.email)
+                )
+            if subscription_partner.phone != subscription_request.phone:
+                consistency_errors.append(
+                    "Partner Phone: {}".format(subscription_partner.phone)
+                )
+        if consistency_errors:
+            error_html_list = "<ul>"
+            for error in consistency_errors:
+                error_html_list += "<li>{}</li>".format(error)
+            error_html_list += "</ul>"
+            subscription_request.message_post(
+                **{
+                    "subject": "We found partner discrepancy in the form",
+                    "body": "<p>The contact information received from the form <b>was diferent</b> from the one saved in the partner:</p><p>{}</p>".format(
+                        error_html_list
+                    ),
+                }
+            )
 
     def _get_model_creation_params(
         self, creation_params: SubscriptionRequestCreationParams
