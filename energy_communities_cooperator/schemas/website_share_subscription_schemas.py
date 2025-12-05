@@ -1,8 +1,14 @@
+from datetime import date, datetime
 from enum import Enum
 from typing import Any, List, Optional
-from datetime import date,datetime
 
-from pydantic import BaseModel, ConfigDict, field_validator, model_validator, EmailStr
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    EmailStr,
+    field_validator,
+    model_validator,
+)
 
 from odoo.tools.translate import _
 
@@ -13,10 +19,10 @@ from odoo.addons.product.models.product_category import ProductCategory
 from odoo.addons.product.models.product_template import ProductTemplate
 
 from ..config import (
-    STATUS_CODE_CONSISTENCY_ERROR,
-    STATUS_CODE_NOT_FOUND_ERROR,
     CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
     CONTEXT_VALIDATION_ERROR_TITLE,
+    STATUS_CODE_CONSISTENCY_ERROR,
+    STATUS_CODE_NOT_FOUND_ERROR,
 )
 from ..exceptions import ControllerContextValidationError
 
@@ -85,24 +91,12 @@ class WebsiteShareSubscriptionSubmissionBase(BaseModel):
         return data
 
 
-# class WebsiteShareSubscriptionSubmissionMember(BaseModel):
-# email: str
-# firstname: str
-# lastname: str
-# gender: GenderOption
-# birthdate: str
-# phone: str
-# lang: str
-# vat: str
-# address: str
-# city: str
-# zip_code: str
-# country_id: int
-# share_product_id: int
-# ordered_parts: int
-# privacy_policy: bool
-# iban: str
-# conditions_payment: bool
+class WebsiteShareSubscriptionSubmissionCompanyMember(
+    WebsiteShareSubscriptionSubmissionBase
+):
+    company_name: str
+    company_email: EmailStr
+    contact_person_function: str
 
 
 # TODO: Create this schema for subscription request params creation
@@ -115,9 +109,14 @@ class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
     product_categ: ProductCategory
     membertype_mode: MemberTypeMode
     lang: str
+    company_name: Optional[str]
+    company_email: Optional[EmailStr]
+    contact_person_function: Optional[str]
 
     # Avoid empty recordsets
-    @field_validator("company_id","product_categ","share_product_id","country_id", mode="before")
+    @field_validator(
+        "company_id", "product_categ", "share_product_id", "country_id", mode="before"
+    )
     @classmethod
     def check_records_required(cls, record: Any) -> Any:
         if not record:
@@ -137,9 +136,7 @@ class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
     @classmethod
     def check_date_format(cls, date_str: str) -> date:
         try:
-            date_date = datetime.strptime(
-                date_str, "%d/%m/%Y"
-            ).date()
+            date_date = datetime.strptime(date_str, "%d/%m/%Y").date()
         except:
             raise ValueError(_("Invalid date format"))
         return date_date
