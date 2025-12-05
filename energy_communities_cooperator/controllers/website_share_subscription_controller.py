@@ -193,21 +193,6 @@ class WebsiteShareSubscriptionController(http.Controller):
                 subscription_request = component.create_subscription_request(
                     subscription_request_creation_params
                 )
-                if ctx.subscription_mode.value == "voluntary":
-                    if subscription_request.partner_id:
-                        subscription_request.message_post(
-                            **{
-                                "subject": "We found partner discrepancy in the form",
-                                "body": """The contact information received from the form <b>was diferent</b> from the one saved in the partner:
-                            <ul>
-                                <li>Email: {} </li>
-                                <li>Phone: {} </li>
-                            </ul>""".format(
-                                    subscription_request.partner_id.email,
-                                    subscription_request.partner_id.phone,
-                                ),
-                            }
-                        )
         except ComponentValidationError as e:
             raise FormValidationError(e.http_error_code, e.title, e.messages)
         return self._get_page_base_values(ctx) | {
@@ -311,17 +296,14 @@ class WebsiteShareSubscriptionController(http.Controller):
                 )
                 creation_params["lang"] = partner.lang or ctx.company.default_lang_id.id
                 creation_params["birthdate"] = partner.birthdate_date
-            if creation_params["already_cooperator"] == "on":
                 creation_params["already_cooperator"] = True
-            else:
-                creation_params["already_cooperator"] = False
-        else:  # memeber or company_member
+
+        else:  # memeber or company_member or invited or company_invites
             creation_params["country_id"] = (
                 request.env["res.country"]
                 .sudo()
                 .search([("id", "=", creation_params["country_id"])])
             )
-
             lang_model = (
                 request.env["res.lang"]
                 .sudo()

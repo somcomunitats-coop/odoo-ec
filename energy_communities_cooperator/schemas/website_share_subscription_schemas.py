@@ -109,6 +109,13 @@ class WebsiteShareSubscriptionSubmissionVoluntary(BaseModel):
     privacy_policy: bool
     conditions_payment: bool
 
+    @model_validator(mode="before")
+    def empty_strings_to_none(cls, data):
+        for k, v in data.items():
+            if v == "":
+                data[k] = None
+        return data
+
 
 # TODO: Create this schema for subscription request params creation
 class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
