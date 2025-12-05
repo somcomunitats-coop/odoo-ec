@@ -128,9 +128,9 @@ class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
     product_categ: ProductCategory
     membertype_mode: MemberTypeMode
     lang: str
-    company_name: Optional[str]
-    company_email: Optional[EmailStr]
-    contact_person_function: Optional[str]
+    company_name: Optional[str] = None
+    company_email: Optional[EmailStr] = None
+    contact_person_function: Optional[str] = None
 
     # Avoid empty recordsets
     @field_validator(
