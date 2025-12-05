@@ -58,7 +58,9 @@
         "wizards/email_sending_assistant.xml",
     ],
     # only loaded in demonstration mode
-    "demo": ["demo/res_company_demo.xml"],
+    "demo": [
+        "demo/res_company_demo.xml",
+    ],
     "assets": {
         "web.assets_frontend": [
             # "energy_communities_cooperator/static/src/js/cooperator.js",

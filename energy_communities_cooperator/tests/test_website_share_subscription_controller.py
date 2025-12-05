@@ -27,6 +27,10 @@ COMMUNITY_1_SHARE_2_EXT_ID = "fc074d501302eb2b93e2554793fcaf50b3bf7291"
 COMMUNITY_1_SHARE_2_XML_ID = (
     "energy_communities_service_invoicing.product_template_share_type_3_demo"
 )
+COMMUNITY_1_SHARE_VOL_EXT_ID = "cb7a1d775e800fd1ee4049f7dca9e041eb9ba083"
+COMMUNITY_1_SHARE_VOL_XML_ID = (
+    "energy_communities_service_invoicing.product_template_voluntary_demo"
+)
 
 
 @tagged("-at_install", "post_install")
@@ -295,7 +299,6 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         SUBSCRIPTION_FORM_SUBMISSION["share_product_id"] = self.env.ref(
             COMMUNITY_1_SHARE_1_XML_ID
         ).id
-        # SUBSCRIPTION_FORM_SUBMISSION["csrf_token"] = Request.csrf_token(Request._get_session_and_dname())
         response = self.client(
             "/subscription/member/{}".format(COMMUNITY_1_EXT_ID),
             headers={
@@ -310,11 +313,15 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # given http_client
         # and a valid data
         # when we submit the form
-        SUBSCRIPTION_FORM_SUBMISSION_COMPANY_MEMBER["share_product_id"] = self.env.ref(
+        SUBSCRIPTION_FORM_SUBMISSION["share_product_id"] = self.env.ref(
             COMMUNITY_1_SHARE_1_XML_ID
         ).id
         response = self.client(
             "/subscription/company_member/{}".format(COMMUNITY_1_EXT_ID),
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            data=SUBSCRIPTION_FORM_SUBMISSION_COMPANY_MEMBER,
         )
         # it correctly renders the page
         self.assertEqual(response.status_code, 200)
@@ -323,11 +330,15 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # given http_client
         # and a valid data
         # when we submit the form
-        SUBSCRIPTION_FORM_SUBMISSION_VOLUNTARY["share_product_id"] = self.env.ref(
-            COMMUNITY_1_SHARE_1_XML_ID
+        SUBSCRIPTION_FORM_SUBMISSION["share_product_id"] = self.env.ref(
+            COMMUNITY_1_SHARE_VOL_XML_ID
         ).id
         response = self.client(
             "/subscription/voluntary/{}".format(COMMUNITY_1_EXT_ID),
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            data=SUBSCRIPTION_FORM_SUBMISSION_VOLUNTARY,
         )
         # it correctly renders the page
         self.assertEqual(response.status_code, 200)
