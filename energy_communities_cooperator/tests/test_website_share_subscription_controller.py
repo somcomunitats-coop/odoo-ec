@@ -1,6 +1,6 @@
 from functools import partial
 from unittest.mock import patch
-import json
+
 import requests
 
 from odoo.http import Request
@@ -13,7 +13,10 @@ from ..config import (
     STATUS_CODE_NOT_FOUND_ERROR,
     STATUS_CODE_UNAVAILABLE_ERROR,
 )
-from .testing_cases import SUBSCRIPTION_FORM_SUBMISSION
+from .testing_cases import (
+    SUBSCRIPTION_FORM_SUBMISSION,
+    SUBSCRIPTION_FORM_SUBMISSION_COMPANY_MEMBER,
+)
 
 COMMUNITY_1_EXT_ID = "ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4"
 COMMUNITY_2_EXT_ID = "c1dfd96eea8cc2b62785275bca38ac261256e278"
@@ -23,7 +26,6 @@ COMMUNITY_1_SHARE_2_EXT_ID = "fc074d501302eb2b93e2554793fcaf50b3bf7291"
 COMMUNITY_1_SHARE_2_XML_ID = (
     "energy_communities_service_invoicing.product_template_share_type_3_demo"
 )
-
 
 
 @tagged("-at_install", "post_install")
@@ -289,16 +291,29 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # given http_client
         # and a valid data
         # when we submit the form
-        SUBSCRIPTION_FORM_SUBMISSION["share_product_id"] = self.env.ref(COMMUNITY_1_SHARE_1_XML_ID).id
+        SUBSCRIPTION_FORM_SUBMISSION["share_product_id"] = self.env.ref(
+            COMMUNITY_1_SHARE_1_XML_ID
+        ).id
         # SUBSCRIPTION_FORM_SUBMISSION["csrf_token"] = Request.csrf_token(Request._get_session_and_dname())
         response = self.client(
-            "/subscription/member/{}".format(
-                COMMUNITY_1_EXT_ID
-            ),
+            "/subscription/member/{}".format(COMMUNITY_1_EXT_ID),
             headers={
                 "Content-Type": "application/x-www-form-urlencoded",
             },
             data=SUBSCRIPTION_FORM_SUBMISSION,
+        )
+        # it correctly renders the page
+        self.assertEqual(response.status_code, 200)
+
+    def test_website_form_company_member_submission_ok(self):
+        # given http_client
+        # and a valid data
+        # when we submit the form
+        SUBSCRIPTION_FORM_SUBMISSION_COMPANY_MEMBER["share_product_id"] = self.env.ref(
+            COMMUNITY_1_SHARE_1_XML_ID
+        ).id
+        response = self.client(
+            "/subscription/company_member/{}".format(COMMUNITY_1_EXT_ID),
         )
         # it correctly renders the page
         self.assertEqual(response.status_code, 200)

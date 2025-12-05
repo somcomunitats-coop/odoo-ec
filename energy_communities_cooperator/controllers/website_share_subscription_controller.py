@@ -29,6 +29,7 @@ from ..schemas import (
     SubscriptionRequestCreationParams,
     WebsiteShareSubscriptionContext,
     WebsiteShareSubscriptionSubmissionBase,
+    WebsiteShareSubscriptionSubmissionCompanyMember,
 )
 from ..utils import subscription_request_utils
 
@@ -155,9 +156,14 @@ class WebsiteShareSubscriptionController(http.Controller):
         """
         try:
             # Extract form data from request
-            form_submission = WebsiteShareSubscriptionSubmissionBase(
-                **dict(request.httprequest.form)
-            )
+            if ctx.subscription_mode.value == "company_member":
+                form_submission = WebsiteShareSubscriptionSubmissionCompanyMember(
+                    **dict(request.httprequest.form)
+                )
+            else:
+                form_submission = WebsiteShareSubscriptionSubmissionBase(
+                    **dict(request.httprequest.form)
+                )
         except PydanticValidationError as e:
             raise FormValidationError(
                 STATUS_CODE_CONSISTENCY_ERROR,
