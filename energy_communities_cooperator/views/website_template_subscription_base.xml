@@ -6,12 +6,16 @@
   </template>
 
   <template id="template_subscription_error_message" name="template_subscription_error_message">
-    <t t-foreach="error_msgs or []" t-as="error_msg">
-        <br />
-        <div class="alert alert-danger">
-          <p><t t-raw="error_msg" /></p>
-        </div>
-      </t>
+    <br />
+    <div class="alert alert-danger">
+      <t t-set="error_title" t-value="error['title']" />
+      <h5><t t-raw="error_title" /></h5>
+      <ul>
+        <t t-foreach="error['messages'] or []" t-as="error_msg">
+          <li><t t-raw="error_msg" /></li>
+        </t>
+      </ul>
+    </div>
   </template>
 
   <template id="template_subscription_form_successful_message" name="template_subscription_form_successful_message">
@@ -42,24 +46,19 @@
         <div class="container subscription_container">
           <div class="row justify-content-center">
             <div class="col-xs-12 col-sm-10  col-md-8 col-lg-8">
-              <t t-if="global_error">
-                <t
-                t-call="energy_communities_cooperator.template_subscription_error_message"
-              />
-              </t>
-              <t t-else="">
                 <t t-call="energy_communities_cooperator.template_subscription_header"/>
+                <t t-call="energy_communities_cooperator.template_subscription_headline" />
                 <t t-if="form_submitted">
                   <t
                     t-call="energy_communities_cooperator.template_subscription_form_successful_message"
                   />
                 </t>
                 <t t-else="">
-                  <t t-call="energy_communities_cooperator.template_subscription_headline" />
-                  <t t-call="energy_communities_cooperator.template_subscription_error_message" />
+                  <t t-if="error">
+                    <t t-call="energy_communities_cooperator.template_subscription_error_message" />
+                  </t>
                   <t t-call="energy_communities_cooperator.template_subscription_form_base"/>
                 </t>
-              </t>
             </div>
           </div>
         </div>

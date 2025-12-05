@@ -9,9 +9,9 @@ from odoo.tests.common import HttpCase, tagged
 from odoo.addons.base_rest.tests.common import RegistryMixin
 
 from ..config import (
-    CONTEXT_STATUS_CODE_CONSISTENCY_ERROR,
-    CONTEXT_STATUS_CODE_NOT_FOUND_ERROR,
-    CONTEXT_STATUS_CODE_UNAVAILABLE_ERROR,
+    STATUS_CODE_CONSISTENCY_ERROR,
+    STATUS_CODE_NOT_FOUND_ERROR,
+    STATUS_CODE_UNAVAILABLE_ERROR,
 )
 from .testing_cases import SUBSCRIPTION_FORM_SUBMISSION
 
@@ -48,7 +48,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # with wrong subscription_mode
         response = self.client("/subscription/aaaa/{}".format(COMMUNITY_1_EXT_ID))
         # it throws a NotFound error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
 
     def test_website_form_render__wrong_company(self):
         # given http_client
@@ -56,7 +56,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # with wrong company_ext_id
         response = self.client("/subscription/member/1234")
         # it throws a NotFound error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
 
     def test_website_form_render__wrong_subscription_mode_and_company(self):
         # given http_client
@@ -64,7 +64,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # with wrong subscription_mode and company_ext_id
         response = self.client("/subscription/aaaa/1234")
         # it throws a NotFound error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
 
     def test_website_form_render__with_product_wrong_subscription_mode_and_company(
         self,
@@ -76,7 +76,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             "/subscription/aaaa/1234/{}".format(COMMUNITY_1_SHARE_1_EXT_ID)
         )
         # it throws a NotFound error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
 
     def test_website_form_render__with_product_wrong_company(self):
         # given http_client
@@ -86,7 +86,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             "/subscription/member/1234/{}".format(COMMUNITY_1_SHARE_1_EXT_ID)
         )
         # it throws a NotFound error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
 
     def test_website_form_render__with_product_wrong_subscription_mode(self):
         # given http_client
@@ -98,7 +98,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             )
         )
         # it throws a NotFound error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
 
     def test_website_form_render__with_wrong_product_wrong_company_and_subscription_mode(
         self,
@@ -108,7 +108,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # with wrong subscription_mode, company_ext_id and product_ext_id
         response = self.client("/subscription/aaaa/1234/5678")
         # it throws a NotFound error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
 
     def test_website_form_render__with_wrong_product_wrong_subscription_mode(self):
         # given http_client
@@ -116,7 +116,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # with wrong subscription_mode and product_ext_id
         response = self.client("/subscription/aaa/{}/5678".format(COMMUNITY_1_EXT_ID))
         # it throws a NotFound error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
 
     def test_website_form_render__with_wrong_product_wrong_company(self):
         # given http_client
@@ -124,7 +124,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # with wrong company_ext_id and product_ext_id
         response = self.client("/subscription/member/1234/5678")
         # it throws a NotFound error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
 
     def test_website_form_render__with_wrong_product(self):
         # given http_client
@@ -134,7 +134,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             "/subscription/member/{}/5678".format(COMMUNITY_1_EXT_ID)
         )
         # it throws a NotFound error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
 
     # Product must belong to defined company
     def test_website_form_render_wrong_consistency_between_product_and_company(self):
@@ -147,7 +147,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             )
         )
         # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_CONSISTENCY_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
 
     # Product doesn't belong to defined category
     def test_website_form_render_wrong_consistency_between_product_and_category(self):
@@ -167,7 +167,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             )
         )
         # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_CONSISTENCY_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
 
     # Product is not for individuals request on member,invited subscription_mode
     def test_website_form_render_wrong_consistency_with_product_by_individual(self):
@@ -182,7 +182,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             )
         )
         # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_CONSISTENCY_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
         # case invited
         response = self.client(
             "/subscription/invited/{}/{}".format(
@@ -190,7 +190,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             )
         )
         # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_CONSISTENCY_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
 
     # Product is not for companies request on member_company,invited_company subscription_mode
     def test_website_form_render_wrong_consistency_with_product_by_company(self):
@@ -205,7 +205,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             )
         )
         # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_CONSISTENCY_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
         # case invited
         response = self.client(
             "/subscription/company_invited/{}/{}".format(
@@ -213,7 +213,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             )
         )
         # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_CONSISTENCY_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
 
     # Product is not a share
     def test_website_form_render_wrong_consistency_with_product_is_share(self):
@@ -227,7 +227,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             )
         )
         # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_CONSISTENCY_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
 
     # Product not available on single form
     def test_website_form_render_single_wrong_consistency_with_product_not_available(
@@ -245,7 +245,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             )
         )
         # it throws a Locked error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_UNAVAILABLE_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_UNAVAILABLE_ERROR)
 
     # Product not available on generic form
     @patch(
@@ -262,7 +262,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         patcher.return_value = {"products": test_product, "product": test_product}
         response = self.client("/subscription/member/{}".format(COMMUNITY_1_EXT_ID))
         # it throws a Locked error
-        self.assertEqual(response.status_code, CONTEXT_STATUS_CODE_UNAVAILABLE_ERROR)
+        self.assertEqual(response.status_code, STATUS_CODE_UNAVAILABLE_ERROR)
 
     def test_website_form_render_member_ok(self):
         # given http_client

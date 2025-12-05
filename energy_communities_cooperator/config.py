@@ -105,10 +105,17 @@ GENDER_OPTIONS = [
     {"id": "not_share", "name": _("I prefer to not share it")},
 ]
 
+MAPPING_FORM_SUCCESS = {
+    "general": _(
+        "Your subscription request has been submitted successfully. "
+        "You will receive a confirmation email shortly."
+    )
+}
+
 MAPPING__BASE__DEFAULT_FORM_FIELDS = {
     "email": {
         "class": "col-md-12",
-        "type": "form_field_email",
+        "type": "form_field_text",
         "value": "",
         "label": _("Email"),
         "required": True,
@@ -307,7 +314,16 @@ MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE = {
     "company_invited": "company",
     "voluntary": "individual_company",
 }
-
+MAPPING_FORM_ERROR_TITLE = {
+    "general": _(
+        "There is a problem with the data you submitted"
+    )
+}
+MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE = {
+    "general": _(
+        "There is a problem validating the creation of the request"
+    )
+}
 CONTEXT_VALIDATION_ERROR_TITLE = _("Form can't be loaded")
 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE = _(
     "There is a problem loading the form. Please contact your administrator for more details"
@@ -315,6 +331,7 @@ CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE = _(
 CONTEXT_VALIDATION_ERROR_UNAVAILABLE_MESSAGE = _(
     "The form is no longer available. Contact your coordinator for further information."
 )
-CONTEXT_STATUS_CODE_NOT_FOUND_ERROR = 404
-CONTEXT_STATUS_CODE_CONSISTENCY_ERROR = 406
-CONTEXT_STATUS_CODE_UNAVAILABLE_ERROR = 423  # locked
+STATUS_CODE_NOT_FOUND_ERROR = 404
+STATUS_CODE_CONSISTENCY_ERROR = 406 # not acceptable
+STATUS_CODE_UNAVAILABLE_ERROR = 423  # locked
+STATUS_CODE_SERVER_ERROR = 500
