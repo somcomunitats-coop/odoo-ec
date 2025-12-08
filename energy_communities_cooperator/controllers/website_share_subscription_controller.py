@@ -85,7 +85,6 @@ class WebsiteShareSubscriptionController(http.Controller):
             try:
                 values = self._process_form(request, ctx)
             except FormValidationError as e:
-                __import__("ipdb").set_trace()
                 _logger.error(e.title)
                 # now we return form with values pre-selected and error message on top
                 if e.http_error_code == 500:
@@ -337,7 +336,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             "zip_code": partner.zip or _("ZIP code not found"),
             "country_id": (partner.country_id or ctx.company.default_country_id),
             "lang": partner.lang or ctx.company.default_lang_id.id,
-            "birthdate": partner.birthdate_date or False,
+            "birthdate": partner.birthdate_date.strftime("%d/%m/%Y") or False,
         }
 
     def _get_page_values(self, ctx):
