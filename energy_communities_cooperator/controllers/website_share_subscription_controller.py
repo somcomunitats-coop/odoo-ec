@@ -756,26 +756,3 @@ class WebsiteShareSubscriptionController(http.Controller):
                 values_field["description"] = ctx.company.data_policy_approval_text
             else:
                 values_field["description"] = ""
-
-        # TODO: This method shouldn't be necessary if we control which fields
-        # do we render on each subscription mode
-        # Apply subscription mode specific rules for voluntary subscription mode
-        if ctx.subscription_mode.value == "voluntary":
-            # Disable personal information fields in voluntary mode
-            # These fields are not required for voluntary subscriptions
-            if values_field["key"] == "address":
-                values_field["disabled"] = True
-            if values_field["key"] == "phone":
-                values_field["disabled"] = True
-            if values_field["key"] == "birthdate":
-                values_field["disabled"] = True
-            if values_field["key"] == "email":
-                values_field["disabled"] = True
-            if values_field["key"] == "firstname":
-                values_field["disabled"] = True
-            if values_field["key"] == "lastname":
-                values_field["disabled"] = True
-            if values_field["key"] == "city":
-                values_field["disabled"] = True
-            if values_field["key"] == "zip_code":
-                values_field["disabled"] = True
