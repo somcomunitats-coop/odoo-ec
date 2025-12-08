@@ -44,7 +44,7 @@ SUBSCRIPTION_FORM_SUBMISSION_VOLUNTARY = {
     "vat": "43549978F",
     "email": "voluntary_test@test.com",
     "phone": "1234",
-    "share_product_id": "1",
+    "share_product_id": "37",
     "ordered_parts": "2",
     "privacy_policy": "on",
     "iban": "ES0820385793089381465771",
