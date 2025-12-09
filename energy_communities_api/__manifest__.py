@@ -25,7 +25,7 @@
         "python": [
             "pydantic==2.9.2",
             "extendable-pydantic==1.3.2",
-            "email_validator==2.2.0",
+            "email_validator==2.3.0",
         ]
     },
     "data": [
