@@ -21,15 +21,15 @@
                 </field>
                 <xpath expr="//label[@for='display_on_website']" position="after">
                     <div class="form-group">
-                        <field name="url_individual" attrs="{'invisible':['|',('display_on_website','=',False),('by_individual','=',False)]}"/><br/>
-                        <field name="url_company" attrs="{'invisible':['|',('display_on_website','=',False),('by_company','=',False)]}"/>
+                        <field name="url_individual" attrs="{'invisible':['|','|',('display_on_website','=',False),('by_individual','=',False),('url_individual','=',False)]}"/><br/>
+                        <field name="url_company" attrs="{'invisible':['|','|',('display_on_website','=',False),('by_company','=',False),('url_company','=',False)]}"/>
                     </div>
                     <field name="activate_form_specific_products" />
                     <label for="activate_form_specific_products" string="Activate form specific products" />
                     
                     <div class="form-group">
-                        <field name="url_specific_individual" attrs="{'invisible':['|',('activate_form_specific_products','=',False),('by_individual','=',False)]}"/><br/>
-                        <field name="url_specific_company" attrs="{'invisible':['|',('activate_form_specific_products','=',False),('by_company','=',False)]}"/>
+                        <field name="url_specific_individual" attrs="{'invisible':['|','|',('activate_form_specific_products','=',False),('by_individual','=',False),('url_specific_individual','=',False)]}"/><br/>
+                        <field name="url_specific_company" attrs="{'invisible':['|','|',('activate_form_specific_products','=',False),('by_company','=',False),('url_specific_company','=',False)]}"/>
                     </div>
                 </xpath>
                 <field name="mail_template" position="after">

@@ -3,23 +3,70 @@ import hashlib
 from odoo import api, fields, models
 from odoo.http import request
 
+from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
+
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
+    def get_mapping_product_category_id_subscription_mode(self):
+        return {
+            self.env.ref(
+                MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["member"]
+            ).id: "member",
+            self.env.ref(
+                MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["invited"]
+            ).id: "invited",
+            self.env.ref(
+                MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["voluntary"]
+            ).id: "voluntary",
+        }
+
     @api.depends("company_id")
     def _compute_url(self):
+        MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
+            self.get_mapping_product_category_id_subscription_mode()
+        )
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for record in self:
-            record.url_individual = f"{base_url}/subscription/member/{record.company_id.company_external_id}"
-            record.url_company = f"{base_url}/subscription/company_memeber/{record.company_id.company_external_id}"
+            if (
+                record.categ_id.id
+                in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys()
+            ):
+                record.url_individual = f"{base_url}/subscription/{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}"
+                if (
+                    MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]
+                    != "voluntary"
+                ):
+                    record.url_company = f"{base_url}/subscription/company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}"
+                else:
+                    record.url_company = None
+            else:
+                record.url_individual = None
+                record.url_company = None
 
     @api.depends("company_id", "product_external_id")
     def _compute_url_specific(self):
+        MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
+            self.get_mapping_product_category_id_subscription_mode()
+        )
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for record in self:
-            record.url_specific_individual = f"{base_url}/subscription/member/{record.company_id.company_external_id}/{record.product_external_id}"
-            record.url_specific_company = f"{base_url}/subscription/company_member/{record.company_id.company_external_id}/{record.product_external_id}"
+            if (
+                record.categ_id.id
+                in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys()
+            ):
+                record.url_specific_individual = f"{base_url}/subscription/{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}/{record.product_external_id}"
+                if (
+                    MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]
+                    != "voluntary"
+                ):
+                    record.url_specific_company = f"{base_url}/subscription/company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}/{record.product_external_id}"
+                else:
+                    record.url_specific_company = None
+            else:
+                record.url_specific_individual = None
+                record.url_specific_company = None
 
     @api.depends("name")
     def _compute_external_id(self):

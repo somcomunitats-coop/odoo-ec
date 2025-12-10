@@ -1,6 +1,9 @@
 from odoo.tools.translate import _
 
 COOP_SHARE_PRODUCT_CATEG_REF = "cooperator.product_category_company_share"
+COOP_SHARE_INVITED_PRODUCT_CATEG_REF = (
+    "energy_communities_cooperator.product_category_company_invited_share"
+)
 COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF = (
     "energy_communities_cooperator.product_category_company_voluntary_share"
 )
@@ -15,10 +18,11 @@ MAPPING__PAYMENT_METHOD = {
 MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF = {
     "member": COOP_SHARE_PRODUCT_CATEG_REF,
     "company_member": COOP_SHARE_PRODUCT_CATEG_REF,
-    "invited": COOP_SHARE_PRODUCT_CATEG_REF,
-    "company_invited": COOP_SHARE_PRODUCT_CATEG_REF,
+    "invited": COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
+    "company_invited": COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
     "voluntary": COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
 }
+
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE = {
     "member": _("Become Cooperator of {company_name} ") + _("member_eu_ES"),
     "company_member": _("Become Cooperator of {company_name} ") + _("member_eu_ES"),

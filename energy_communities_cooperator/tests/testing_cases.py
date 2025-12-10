@@ -42,9 +42,8 @@ SUBSCRIPTION_FORM_SUBMISSION_COMPANY_MEMBER = {
 
 SUBSCRIPTION_FORM_SUBMISSION_VOLUNTARY = {
     "vat": "43549978F",
-    "email": "voluntary_test@test.com",
-    "phone": "1234",
-    "share_product_id": "37",
+    "email": "ignacio@fake.com",
+    "phone": "603903268",
     "ordered_parts": "2",
     "privacy_policy": "on",
     "iban": "ES0820385793089381465771",

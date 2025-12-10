@@ -25,18 +25,6 @@
     <field name="payment_mode_id" ref="community_1_payment_mode" />
   </record>
 
-  <record id="cooperator.product_template_share_type_2_demo" model="product.template">
-    <field name="name">company 2 share with recurring fee Pack</field>
-    <field name="detailed_type">service</field>
-    <field name="is_share" eval="True"/>
-    <field name="standard_price">10.11</field>
-    <field name="list_price">10.11</field>
-    <field name="sale_ok" eval="True"/>
-    <field name="purchase_ok" eval="False"/>
-    <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_company_id.id"/>
-    <field name="taxes_id" eval="[(5,0,0)]" />
-  </record>
-
   <record id="product_template_share_type_3_demo" model="product.template">
     <field name="name">Company 1 share 2</field>
     <field name="short_name">Share B</field>
@@ -55,6 +43,24 @@
     <field name="categ_id" ref="cooperator.product_category_company_share"/>
   </record>
 
+  <record id="product_template_share_type_4_demo" model="product.template">
+    <field name="name">Company 1 share invited 3</field>
+    <field name="short_name">Share Invited 3</field>
+    <field name="default_code">share_invited_3</field>
+    <field name="detailed_type">service</field>
+    <field name="is_share" eval="True"/>
+    <field name="display_on_website" eval="True"/>
+    <field name="activate_form_specific_products" eval="True"/>
+    <field name="by_company" eval="True"/>
+    <field name="by_individual" eval="True"/>
+    <field name="standard_price">5.0</field>
+    <field name="list_price">5.0</field>
+    <field name="force_min_qty" eval="True" />
+    <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id.id"/>
+    <field name="payment_mode_id" ref="community_1_payment_mode" />
+    <field name="categ_id" ref="energy_communities_cooperator.product_category_company_invited_share"/>
+  </record>
+
   <record id="product_template_voluntary_demo" model="product.template">
     <field name="name">Company 1 voluntary share</field>
     <field name="short_name">Share Vol</field>
@@ -71,6 +77,18 @@
     <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_1_wizard')).new_company_id.id"/>
     <field name="payment_mode_id" ref="community_1_payment_mode" />
     <field name="categ_id" ref="energy_communities_cooperator.product_category_company_voluntary_share"/>
+  </record>
+
+  <record id="cooperator.product_template_share_type_2_demo" model="product.template">
+    <field name="name">company 2 share with recurring fee Pack</field>
+    <field name="detailed_type">service</field>
+    <field name="is_share" eval="True"/>
+    <field name="standard_price">10.11</field>
+    <field name="list_price">10.11</field>
+    <field name="sale_ok" eval="True"/>
+    <field name="purchase_ok" eval="False"/>
+    <field name="company_id" model="account.multicompany.easy.creation.wiz" eval="obj(ref('energy_communities.energy_community_company_2_wizard')).new_company_id.id"/>
+    <field name="taxes_id" eval="[(5,0,0)]" />
   </record>
 
   # PLATFORM SERVICES

@@ -1,0 +1,16 @@
+<odoo>
+  <record id="view_category_property_form" model="ir.ui.view">
+    <field name="name">product.category.property.form.inherit (cooperator)</field>
+    <field name="model">product.category</field>
+    <field name="inherit_id" ref="product.product_category_form_view"/>
+    <field name="arch" type="xml">
+      <group name="first" position="after">
+        <group string="URLs">
+          <field name="type_url" attrs="{'invisible': [('type_url', '=', False)]}" />
+          <field name="url_individual" attrs="{'invisible': [('url_individual', '=', False)]}" />
+          <field name="url_company" attrs="{'invisible': [('url_company', '=', False)]}" />
+        </group>
+      </group>
+    </field>
+  </record>
+</odoo>
