@@ -80,7 +80,19 @@ class SubscriptionRequestUtils(Component):
             errors.append(_(f"Oder part must be higher than product config {min_qty}"))
         # TODO: company.subscription_maximum_amount ??
         # Product must belong to company
+        if creation_params.company_id != creation_params.share_product_id.company_id:
+            errors.append(
+                _(
+                    f"Product {creation_params.share_product_id.name} must belong to company {creation_params.company_id.name}"
+                )
+            )
         # Product must have correct subrciption context
+        if creation_params.share_product_id.categ_id != creation_params.product_categ:
+            errors.append(
+                _(
+                    f"Product {creation_params.share_product_id.name} must have correct subscription context"
+                )
+            )
         # TODO: Validate privacy_policy and conditions_payment must be marked
         if errors:
             raise ComponentValidationError(
