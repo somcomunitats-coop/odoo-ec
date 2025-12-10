@@ -29,13 +29,6 @@
       </xpath>
       <xpath expr="//notebook" position="inside">
         <page string="Cooperator shares">
-          <group string="Voluntary share settings">
-            <field name="voluntary_share_url_individual" />
-          </group>
-          <group string="Invitation share settings">
-            <field name="invitation_share_url_individual" />
-            <field name="invitation_share_url_company" />
-          </group>
           <group string="Global cooperative settings">
             <field name="subscription_journal_id" readonly="0" />
           </group>
