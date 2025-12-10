@@ -4,7 +4,7 @@ from odoo import _
 from odoo.exceptions import ValidationError
 from odoo.tests import common
 
-from odoo.addons.account.models import AccountMove
+from odoo.addons.account.models.account_move import AccountMove
 
 from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
 
@@ -13,7 +13,6 @@ class TestSubscriptionRequest(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.setUpRegistry()
 
     def setUp(self):
         super().setUp()
@@ -21,7 +20,7 @@ class TestSubscriptionRequest(common.TransactionCase):
 
         # Subscription request
         self.base_subscription = self.env.ref(
-            "energy_communities_service_invoicingse.subscription_6_community_1_demo"
+            "energy_communities_service_invoicing.subscription_6_community_1_demo"
         )
 
     def _get_subscription_request(self, subscription_mode):
@@ -35,8 +34,8 @@ class TestSubscriptionRequest(common.TransactionCase):
             ],
             limit=1,
         )
-        subscription_request = self.base_susbscription.copy(
-            {"share_product_id": product.id}
+        subscription_request = self.base_subscription.copy(
+            {"share_product_id": product.product_variant_id.id}
         )
 
         assert (
@@ -49,10 +48,12 @@ class TestSubscriptionRequest(common.TransactionCase):
 
     def test__validate_subscription_request__member_ok(self):
         # given a member subscription request
-        member_subscription_request = self._get_member_subscription_request()
+        member_subscription_request = self._get_subscription_request("member")
 
         # when we validate that subscription_request
         invoice = member_subscription_request.validate_subscription_request()
+
+        print(invoice)
 
         self.assertIsInstance(invoice, AccountMove)
         # a correct invoice has been created
@@ -65,12 +66,12 @@ class TestSubscriptionRequest(common.TransactionCase):
 
     def test__validate_subscription_request__member_already_exists(self):
         # given a member subscription request
-        member_subscription_request = self._get_member_subscription_request()
+        member_subscription_request = self._get_subscription_request("member")
 
         # if we validate that subscrition request
         member_subscription_request.validate_subscription_request()
         # and we create another subscription request for the same member
-        duplicate_subscription = self._get_member_subscription_request()
+        duplicate_subscription = self._get_subscription_request("member")
         # when we validate this subscription, then a validationerror is raised
 
         with self.assertRaises(ValidationError) as excp_manager:
