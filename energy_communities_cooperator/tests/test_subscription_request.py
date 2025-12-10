@@ -52,7 +52,43 @@ class TestSubscriptionRequest(common.TransactionCase):
 
         # when we validate that subscription_request
         invoice = member_subscription_request.validate_subscription_request()
+        # TODO: review this, this should be a invoice object but is a None
+        print(invoice)
 
+        self.assertIsInstance(invoice, AccountMove)
+        # a correct invoice has been created
+
+        # and a new partner has been linked to the subscription request
+
+        # and a candidate membership is also linked to the partner
+
+        # and subscription request is done
+
+    def test__validate_subscription_request__invited_ok(self):
+        # given a invited subscription request
+        invited_subscription_request = self._get_subscription_request("invited")
+
+        # when we validate that subscription_request
+        invoice = invited_subscription_request.validate_subscription_request()
+        # TODO: review this, this should be a invoice object but is a None
+        print(invoice)
+
+        self.assertIsInstance(invoice, AccountMove)
+        # a correct invoice has been created
+
+        # and a new partner has been linked to the subscription request
+
+        # and a candidate membership is also linked to the partner
+
+        # and subscription request is done
+
+    def test__validate_subscription_request__voluntary_ok(self):
+        # given a voluntary subscription request
+        voluntary_subscription_request = self._get_subscription_request("voluntary")
+
+        # when we validate that subscription_request
+        invoice = voluntary_subscription_request.validate_subscription_request()
+        # TODO: review this, this should be a invoice object but is a None
         print(invoice)
 
         self.assertIsInstance(invoice, AccountMove)
@@ -80,4 +116,17 @@ class TestSubscriptionRequest(common.TransactionCase):
         self.assertEqual(
             str(excp_manager.exception),
             _("There is an existing account for this vat number on this community. "),
+        )
+
+    def test__validate_subscription_request__voluntary_no_partner(self):
+        # given a voluntary subscription request
+        voluntary_subscription_request = self._get_subscription_request("voluntary")
+
+        # when we validate that subscription_request
+        with self.assertRaises(ValidationError) as excp_manager:
+            voluntary_subscription_request.validate_subscription_request()
+
+        self.assertEqual(
+            str(excp_manager.exception),
+            _("You can't create a voluntary subscription share for a new cooperator."),
         )
