@@ -1,32 +1,5 @@
 <odoo>
-  <record model="ir.rule" id="cm_place_global_rule">
-    <field name="name">Place global rule</field>
-    <field name="model_id" ref="community_maps.model_cm_place"/>
-    <field name="global" eval="True"/>
-    <field name="domain_force">[(1, '=', 1)]</field>
-    <field name="perm_read" eval="True"/>
-    <field name="perm_write" eval="False"/>
-    <field name="perm_create" eval="False"/>
-    <field name="perm_unlink" eval="False"/>
-  </record>
-  <record model="ir.rule" id="cm_place_platform_admin_rule">
-    <field name="name">Place platform admin rule</field>
-    <field name="model_id" ref="community_maps.model_cm_place"/>
-    <field name="groups" eval="[(4, ref('energy_communities.role_platform_admin_res_groups'))]"/>
-    <field name="domain_force">[(1, '=', 1)]</field>
-    <field name="perm_read" eval="False"/>
-    <field name="perm_write" eval="True"/>
-    <field name="perm_create" eval="True"/>
-    <field name="perm_unlink" eval="True"/>
-  </record>
-  <record model="ir.rule" id="cm_place_admins_rule">
-    <field name="name">Place admins rule</field>
-    <field name="model_id" ref="community_maps.model_cm_place"/>
-    <field name="groups" eval="[(4, ref('energy_communities.role_coord_admin_res_groups')),(4, ref('energy_communities.role_ce_manager_res_groups')),(4, ref('energy_communities.role_ce_admin_res_groups')),(4, ref('energy_communities.role_ce_member_res_groups'))]"/>
-    <field name="domain_force">[('landing_id', '!=', False)]</field>
-    <field name="perm_read" eval="False"/>
-    <field name="perm_write" eval="True"/>
-    <field name="perm_create" eval="True"/>
-    <field name="perm_unlink" eval="True"/>
+  <record model="ir.rule" id="community_maps.cm_place_manager_company_rule">
+    <field name="domain_force">[('company_id', 'in', company_ids),('landing_id', '=', False)]</field>
   </record>
 </odoo>
