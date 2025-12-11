@@ -308,13 +308,49 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
     },
 }
 
+MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK = {
+    "financial_risk": {
+        "class": "col-md-12",
+        "type": "form_field_checkbox",
+        "value": False,
+        "label": _("Financial Risk"),
+        "required": False,
+        "disabled": False,
+        "description": "",
+    },
+}
+
+MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES = {
+    "internal_rules": {
+        "class": "col-md-12",
+        "type": "form_field_richtext",
+        "value": "",
+        "label": _("Internal Rules"),
+        "required": False,
+        "disabled": False,
+        "description": "",
+    },
+}
+
+MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES = {
+    "generic_rules": {
+        "class": "col-md-12",
+        "type": "form_field_checkbox",
+        "value": False,
+        "label": _("Generic Rules"),
+        "required": False,
+        "disabled": False,
+        "description": "",
+    },
+}
+
 MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY = {
     "privacy_policy": {
         "class": "col-md-12",
         "type": "form_field_checkbox",
         "value": False,
         "label": _("Privacy Policy"),
-        "required": True,
+        "required": False,
         "disabled": False,
         "description": "",
     },
@@ -336,7 +372,6 @@ MAPPING__MEMBER__DEFAULT_FORM_FIELDS = (
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
-    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY
 )
 MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
     {
@@ -373,14 +408,12 @@ MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
-    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY
 )
 MAPPING__INVITED__DEFAULT_FORM_FIELDS = (
     MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
-    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY
 )
 MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
     {
@@ -417,7 +450,6 @@ MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
-    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY
 )
 MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS = (
     MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT

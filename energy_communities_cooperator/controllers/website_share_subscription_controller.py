@@ -7,6 +7,10 @@ from odoo.http import request
 from odoo.tools.translate import _
 
 from ..config import (
+    MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK,
+    MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES,
+    MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES,
+    MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY,
     MAPPING__PAYMENT_METHOD,
     MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS,
     MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE,
@@ -491,6 +495,39 @@ class WebsiteShareSubscriptionController(http.Controller):
         form_fields = MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS[
             ctx.subscription_mode
         ]
+        # TODO: Add id card upload field if ctx.company.allow_id_card_upload is True
+        if ctx.company.display_generic_rules_approval:
+            MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES["generic_rules"][
+                "description"
+            ] = ctx.company.generic_rules_approval_text
+            MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES["generic_rules"][
+                "required"
+            ] = ctx.company.generic_rules_approval_required
+            form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES
+        if ctx.company.display_internal_rules_approval:
+            MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES["internal_rules"][
+                "description"
+            ] = ctx.company.internal_rules_approval_text
+            MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES["internal_rules"][
+                "required"
+            ] = ctx.company.internal_rules_approval_required
+            form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES
+        if ctx.company.display_financial_risk_approval:
+            MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK["financial_rules"][
+                "description"
+            ] = ctx.company.financial_risk_approval_text
+            MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK["financial_rules"][
+                "required"
+            ] = ctx.company.financial_risk_approval_required
+            form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK
+        if ctx.company.display_data_policy_approval:
+            MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY["privacy_policy"][
+                "description"
+            ] = ctx.company.data_policy_approval_text
+            MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY["privacy_policy"][
+                "required"
+            ] = ctx.company.data_policy_approval_required
+            form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY
         values = {"form_fields": []}
 
         # Build field dictionary for each configured field
@@ -537,6 +574,21 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Formatted headline string
         """
+
+        if ctx.formtype_mode.value == "single" and ctx.product.html_specific_products:
+            return ctx.share_product_id.html_specific_products
+        if (
+            ctx.subscription_mode.value == "voluntary"
+            and ctx.formtype_mode.value == "generic"
+            and ctx.company.voluntary_share_form_header_text
+        ):
+            return ctx.company.voluntary_share_form_header_text
+        if (
+            ctx.subscription_mode.value != "voluntary"
+            and ctx.formtype_mode.value == "generic"
+            and ctx.company.cooperator_share_form_header_text
+        ):
+            return ctx.company.cooperator_share_form_header_text
         return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE[
             ctx.subscription_mode
         ].format(company_name=ctx.company.comercial_name)
@@ -748,11 +800,5 @@ class WebsiteShareSubscriptionController(http.Controller):
             # Disable selector when only one product is available (no choice needed)
             if len(ctx.products) == 1:
                 values_field["disabled"] = True
-
-        # Update privacy policy field description based on company settings
-        if values_field["key"] == "privacy_policy":
-            # Show data policy approval text if company requires it, otherwise empty
-            if ctx.company.display_data_policy_approval:
-                values_field["description"] = ctx.company.data_policy_approval_text
-            else:
-                values_field["description"] = ""
+            if ctx.company.product_website:
+                values_field["disabled"] = True

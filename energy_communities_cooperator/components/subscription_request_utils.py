@@ -79,6 +79,34 @@ class SubscriptionRequestUtils(Component):
         if creation_params.ordered_parts < min_qty:
             errors.append(_(f"Oder part must be higher than product config {min_qty}"))
         # TODO: company.subscription_maximum_amount ??
+        # Validate data policy approval
+        if creation_params.company_id.data_policy_approval_required:
+            if (
+                "privacy_policy" not in creation_params
+                or creation_params.privacy_policy != "on"
+            ):
+                errors.append(_("Privacy policy must be approved"))
+        # Validate internal rules approval
+        if creation_params.company_id.internal_rules_approval_required:
+            if (
+                "internal_rules" not in creation_params
+                or creation_params.internal_rules != "on"
+            ):
+                errors.append(_("Internal rules must be approved"))
+        # Validate financial risk approval
+        if creation_params.company_id.financial_risk_approval_required:
+            if (
+                "financial_risk" not in creation_params
+                or creation_params.financial_risk != "on"
+            ):
+                errors.append(_("Financial risk must be approved"))
+        # Validate generic rules approval
+        if creation_params.company_id.generic_rules_approval_required:
+            if (
+                "generic_rules" not in creation_params
+                or creation_params.generic_rules != "on"
+            ):
+                errors.append(_("Generic rules must be approved"))
         # Product must belong to company
         if creation_params.company_id != creation_params.share_product_id.company_id:
             errors.append(
@@ -135,26 +163,33 @@ class SubscriptionRequestUtils(Component):
         creation_params = creation_params.model_dump()
         if creation_params["membertype_mode"].value == "company":
             creation_params["is_company"] = "on"
+        data_policy_approved = False
+        if creation_params["company_id"].display_data_policy_approval:
+            data_policy_approved = (
+                True if creation_params["privacy_policy"] == "on" else False
+            )
+        internal_rules_approved = False
+        if creation_params["company_id"].display_internal_rules_approval:
+            internal_rules_approved = (
+                True if creation_params["internal_rules"] == "on" else False
+            )
+        financial_risk_approved = False
+        if creation_params["company_id"].display_financial_risk_approval:
+            financial_risk_approved = (
+                True if creation_params["financial_risk"] == "on" else False
+            )
+        generic_rules_approved = False
+        if creation_params["company_id"].display_generic_rules_approval:
+            generic_rules_approved = (
+                True if creation_params["generic_rules"] == "on" else False
+            )
         creation_params |= {
-            # TODO: Check this config
-            # "display_data_policy": creation_params["company_id"].display_data_policy_approval,
-            # "data_policy_required": creation_params["company_id"].data_policy_approval_required,
-            # "data_policy_text": creation_params["company_id"].data_policy_approval_text,
-            # "display_internal_rules": creation_params["company_id"].display_internal_rules_approval,
-            # "internal_rules_required": creation_params["company_id"].internal_rules_approval_required,
-            # "internal_rules_text": creation_params["company_id"].internal_rules_approval_text,
-            # "display_financial_risk": creation_params["company_id"].display_financial_risk_approval,
-            # "financial_risk_required": creation_params["company_id"].financial_risk_approval_required,
-            # "financial_risk_text": creation_params["company_id"].financial_risk_approval_text,
-            # "display_generic_rules": creation_params["company_id"].display_generic_rules_approval,
-            # "generic_rules_required": creation_params["company_id"].generic_rules_approval_required,
-            # "generic_rules_text": creation_params["company_id"].generic_rules_approval_text,
             "source": "website",  # TODO review diferent type of creation
             "gender": creation_params["gender"].value,
-            "data_policy_approved": True,
-            "internal_rules_approved": True,
-            "financial_risk_approved": True,
-            "generic_rules_approved": True,
+            "data_policy_approved": data_policy_approved,
+            "internal_rules_approved": internal_rules_approved,
+            "financial_risk_approved": financial_risk_approved,
+            "generic_rules_approved": generic_rules_approved,
             "country_id": creation_params["country_id"].id,
             "share_product_id": creation_params[
                 "share_product_id"
