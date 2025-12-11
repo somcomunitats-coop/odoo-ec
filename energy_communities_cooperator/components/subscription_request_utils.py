@@ -78,7 +78,18 @@ class SubscriptionRequestUtils(Component):
         min_qty = creation_params.share_product_id.minimum_quantity
         if creation_params.ordered_parts < min_qty:
             errors.append(_(f"Oder part must be higher than product config {min_qty}"))
-        # TODO: company.subscription_maximum_amount ??
+        # Validate subscription maximum amount
+        if creation_params.company_id.subscription_maximum_amount != 0.0:
+            if (
+                creation_params.share_product_id.list_price
+                * creation_params.ordered_parts
+                > creation_params.company_id.subscription_maximum_amount
+            ):
+                errors.append(
+                    _(
+                        f"Subscription maximum amount is {creation_params.share_product_id.list_price * creation_params.ordered_parts} but the maximum amount is {creation_params.company_id.subscription_maximum_amount}"
+                    )
+                )
         # Validate data policy approval
         if creation_params.company_id.data_policy_approval_required:
             if (
