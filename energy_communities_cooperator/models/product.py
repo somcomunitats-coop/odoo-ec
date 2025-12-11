@@ -22,7 +22,9 @@ class ProductTemplate(models.Model):
             ).id: "voluntary",
         }
 
-    @api.depends("company_id", "categ_id")
+    @api.depends(
+        "company_id", "categ_id", "display_on_website", "is_share", "by_company"
+    )
     def _compute_url(self):
         MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
             self.get_mapping_product_category_id_subscription_mode()
@@ -45,7 +47,14 @@ class ProductTemplate(models.Model):
                 record.url_individual = None
                 record.url_company = None
 
-    @api.depends("company_id", "product_external_id", "categ_id")
+    @api.depends(
+        "company_id",
+        "product_external_id",
+        "categ_id",
+        "activate_form_specific_products",
+        "is_share",
+        "by_individual",
+    )
     def _compute_url_specific(self):
         MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
             self.get_mapping_product_category_id_subscription_mode()
