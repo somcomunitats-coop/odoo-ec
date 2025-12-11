@@ -30,17 +30,20 @@ class ProductTemplate(models.Model):
             self.get_mapping_product_category_id_subscription_mode()
         )
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        code_lang_default = (
+            self.env.company.default_lang_id.code or self.env.user.lang.code or "es"
+        )
         for record in self:
             if (
                 record.categ_id.id
                 in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys()
             ):
-                record.url_individual = f"{base_url}/subscription/{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}"
+                record.url_individual = f"{base_url}/{code_lang_default}/subscription/{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}"
                 if (
                     MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]
                     != "voluntary"
                 ):
-                    record.url_company = f"{base_url}/subscription/company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}"
+                    record.url_company = f"{base_url}/{code_lang_default}/subscription/company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}"
                 else:
                     record.url_company = None
             else:
@@ -60,17 +63,20 @@ class ProductTemplate(models.Model):
             self.get_mapping_product_category_id_subscription_mode()
         )
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        code_lang_default = (
+            self.env.company.default_lang_id.code or self.env.user.lang.code or "es"
+        )
         for record in self:
             if (
                 record.categ_id.id
                 in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys()
             ):
-                record.url_specific_individual = f"{base_url}/subscription/{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}/{record.product_external_id}"
+                record.url_specific_individual = f"{base_url}/{code_lang_default}/subscription/{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}/{record.product_external_id}"
                 if (
                     MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]
                     != "voluntary"
                 ):
-                    record.url_specific_company = f"{base_url}/subscription/company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}/{record.product_external_id}"
+                    record.url_specific_company = f"{base_url}/{code_lang_default}/subscription/company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}/{record.product_external_id}"
                 else:
                     record.url_specific_company = None
             else:

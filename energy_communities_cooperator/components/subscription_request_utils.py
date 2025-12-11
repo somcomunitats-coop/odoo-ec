@@ -5,7 +5,6 @@ from odoo.addons.component.core import Component
 from ..config import (
     MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE,
     STATUS_CODE_CONSISTENCY_ERROR,
-    STATUS_CODE_NOT_FOUND_ERROR,
     STATUS_CODE_SERVER_ERROR,
 )
 from ..exceptions import ComponentValidationError
