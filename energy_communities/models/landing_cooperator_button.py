@@ -18,6 +18,7 @@ class LandingCooperatorButton(models.Model):
             ("contact", _("Contact")),
             ("become_cooperator", _("Become Cooperator")),
             ("become_company_cooperator", _("Become company cooperator")),
+            ("landing_page", _("Landing page")),
         ],
         string="Mode",
         default="custom",

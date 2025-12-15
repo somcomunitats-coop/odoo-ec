@@ -1,0 +1,120 @@
+<odoo>
+  <record id="map_color_config_demo_1" model="cm.button.color.config">
+    <field name="name">Coorporate green dark button</field>
+    <field name="bg_color">#153f2e</field>
+    <field name="text_color">#fff</field>
+    <field name="border_color">transparent</field>
+    <field name="bg_hover_color">#153f2e</field>
+    <field name="text_hover_color">#fcce34</field>
+    <field name="border_hover_color">#fcce34</field>
+  </record>
+  <record id="map_color_config_demo_2" model="cm.button.color.config">
+    <field name="name">Coorporate yellow button</field>
+    <field name="bg_color">#fcce34</field>
+    <field name="text_color">#153f2d</field>
+    <field name="border_color">transparent</field>
+    <field name="bg_hover_color">#153f2d</field>
+    <field name="text_hover_color">#fcce34</field>
+    <field name="border_hover_color">transparent</field>
+  </record>
+
+  <function name="write" model="cm.presenter.model">
+    <value
+      model="cm.presenter.model"
+      eval="[obj(ref('energy_communities.map_presenter_model_open')).id]"
+    />
+    <value
+      eval="{
+        'json_dataschema': '{
+&quot;po2_title&quot;: &quot;title&quot;,
+&quot;po2_filter_state&quot;: &quot;&lt;div&gt;&lt;i&gt;&lt;/i&gt;&lt;div&gt;filter_state&lt;/div&gt;&lt;/div&gt;&quot;,
+&quot;po2_category&quot;: &quot;&lt;div&gt;&lt;i>&lt;/i&gt;&lt;div&gt;category&lt;/div&gt;&lt;/div&gt;&quot;,
+&quot;po2_filter_energy_actions&quot;: &quot;&lt;div&gt;&lt;i&gt;&lt;/i&gt;&lt;div&gt;category&lt;/div&gt;&lt;/div&gt;&quot;,
+&quot;po2_social_headline&quot;: &quot;&lt;div&gt;&lt;i&gt;&lt;/i&gt;&lt;div&gt;category&lt;/div&gt;&lt;/div&gt;&quot;
+}',
+        'json_schema': '{
+&quot;type&quot;:&quot;object&quot;,
+  &quot;properties&quot;:{
+    &quot;po2_title&quot;: {&quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;headline&quot;},
+    &quot;po2_filter_state&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;markdown&quot; },
+    &quot;po2_category&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;markdown&quot; },
+    &quot;po2_filter_energy_actions&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;markdown&quot; },
+    &quot;po2_description&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;markdown&quot; },
+    &quot;po2_social_headline&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;markdown&quot; }
+  }
+}',
+        'json_uischema' : '{
+&quot;type&quot;:&quot;VerticalLayout&quot;,
+  &quot;elements&quot;: [
+    {
+      &quot;type&quot;: &quot;HorizontalLayout&quot;,
+      &quot;elements&quot;: [
+        {
+          &quot;type&quot;: &quot;Container&quot;,
+          &quot;scope&quot;: &quot;#/properties/po2_filter_state&quot;,
+          &quot;backgroundColor&quot;: &quot;#8ec23a&quot;,
+          &quot;textColor&quot;: &quot;#fff&quot;
+        },
+        {
+          &quot;type&quot;: &quot;Container&quot;,
+          &quot;scope&quot;: &quot;#/properties/po2_category&quot;,
+          &quot;backgroundColor&quot;: &quot;#e8f3ec&quot;,
+          &quot;textColor&quot;: &quot;#153f2d&quot;
+        }
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;Display&quot;,
+      &quot;scope&quot;: &quot;#/properties/po2_title&quot;
+    },
+    {
+      &quot;type&quot;: &quot;Display&quot;,
+      &quot;scope&quot;: &quot;#/properties/po2_description&quot;
+    },
+    {
+      &quot;type&quot;: &quot;EnergyActions&quot;,
+      &quot;scope&quot;: &quot;#/properties/po2_filter_energy_actions&quot;,
+      &quot;backgroundColor&quot;: &quot;#51ab50&quot;,
+      &quot;textColor&quot;: &quot;#fff&quot;
+    },
+    {
+      &quot;type&quot;: &quot;Group&quot;,
+      &quot;border&quot;: true,
+      &quot;borderColor&quot;: &quot;#c5e2d0&quot;,
+      &quot;backgroundColor&quot;: &quot;#FFFFFF&quot;,
+      &quot;textColor&quot;: &quot;#000000&quot;,
+      &quot;elements&quot;: [
+        {
+          &quot;type&quot;: &quot;InteractionButtons&quot;
+        }
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;Group&quot;,
+      &quot;center&quot;: true,
+      &quot;border&quot;: true,
+      &quot;borderColor&quot;: &quot;transparent&quot;,
+      &quot;backgroundColor&quot;: &quot;#153f2d&quot;,
+      &quot;textColor&quot;: &quot;#FFFFFF&quot;,
+      &quot;showInResult&quot;: true,
+      &quot;elements&quot;: [
+        {
+          &quot;type&quot;: &quot;Display&quot;,
+          &quot;scope&quot;: &quot;#/properties/po2_social_headline&quot;
+        },
+        {
+          &quot;type&quot;: &quot;InteractionSocial&quot;,
+          &quot;IconColor&quot;: &quot;#153f2d&quot;,
+          &quot;IconBackgroundColor&quot;: &quot;#fff&quot;
+        }
+      ]
+    }
+  ]
+}'
+      }"
+    />
+  </function>
+</odoo>
+
+
+
