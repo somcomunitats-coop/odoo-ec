@@ -1,7 +1,7 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from ..config import COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF
+from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
 
 
 class SubscriptionRequest(models.Model):
@@ -9,16 +9,42 @@ class SubscriptionRequest(models.Model):
     _inherit = "subscription.request"
     _description = "Subscription request"
 
+    def get_mapping_product_category_id_subscription_mode(self):
+        return {
+            self.env.ref(
+                MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["member"]
+            ).id: "member",
+            self.env.ref(
+                MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["invited"]
+            ).id: "invited",
+            self.env.ref(
+                MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["voluntary"]
+            ).id: "voluntary",
+        }
+
     @api.depends("share_product_id", "share_product_id.categ_id")
-    def _compute_is_voluntary(self):
-        product_category_voluntary_share = self.env.ref(
-            COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
-            raise_if_not_found=False,
+    def _compute_subscription_mode(self):
+        MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
+            self.get_mapping_product_category_id_subscription_mode()
         )
         for record in self:
-            record.is_voluntary = (
-                record.share_product_id.categ_id == product_category_voluntary_share
-            )
+            if (
+                record.share_product_id.categ_id.id
+                in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys()
+            ):
+                record.subscription_mode = MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[
+                    record.share_product_id.categ_id.id
+                ]
+            else:
+                record.subscription_mode = "generic"
+
+    def get_subscription_mode_selection(self):
+        return [
+            ("generic", "Generic"),
+            ("member", "Member"),
+            ("invited", "Invited"),
+            ("voluntary", "Voluntary"),
+        ]
 
     gender = fields.Selection(
         selection_add=[
@@ -29,11 +55,13 @@ class SubscriptionRequest(models.Model):
     vat = fields.Char(
         required=True, readonly=True, states={"draft": [("readonly", False)]}
     )
-    is_voluntary = fields.Boolean(
-        compute=_compute_is_voluntary,
-        string="Is voluntary contribution",
-        readonly=True,
+    subscription_mode = fields.Selection(
+        string="Subscription mode",
+        selection=lambda self: self.get_subscription_mode_selection(),
+        compute="_compute_subscription_mode",
+        default="generic",
         store=True,
+        readonly=True,
     )
     share_product_categ_id = fields.Many2one(
         "product.category",
@@ -88,13 +116,13 @@ class SubscriptionRequest(models.Model):
         return subscription_request
 
     def validate_subscription_request(self):
-        if self.is_voluntary and not self.partner_id:
+        if self.subscription_mode == "voluntary" and not self.partner_id:
             raise ValidationError(
                 _(
                     "You can't create a voluntary subscription share for a new cooperator."
                 )
             )
-        if not self.is_voluntary and self.type == "new" and self.vat:
+        if self.subscription_mode != "voluntary" and self.type == "new" and self.vat:
             partners = self.env["res.partner"].search([("vat", "ilike", self.vat)])
             if partners:
                 partner = partners[0]
@@ -158,7 +186,7 @@ class SubscriptionRequest(models.Model):
         return None
 
     def _find_or_create_partner(self):
-        if self.is_voluntary:
+        if self.subscription_mode == "voluntary":
             super_model = super()
         else:
             super_model = super(SubscriptionRequest, self.sudo())
@@ -203,7 +231,7 @@ class SubscriptionRequest(models.Model):
             mail_template_notif = (
                 self.company_id.get_cooperator_confirmation_mail_template()
             )
-            if self.is_voluntary:
+            if self.subscription_mode == "voluntary":
                 mail_template_notif = self.env.ref(
                     "energy_communities_cooperator.email_template_confirmation_voluntary_share"
                 )
