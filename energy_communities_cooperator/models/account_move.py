@@ -41,7 +41,7 @@ class AccountMove(models.Model):
         # temporal fix por Gares Bide needs
         # capital_release_mail only must be sent when is a mandatory share
         # TODO Remove it and implement a configuration
-        if not self.subscription_request.is_voluntary:
+        if not self.subscription_request.subscription_mode != "voluntary":
             return super().send_capital_release_request_mail()
 
     def _get_starting_sequence(self):
@@ -64,7 +64,7 @@ class AccountMove(models.Model):
         # "cooperator.email_template_certificate" in else case
         mail_template_obj = super().get_mail_template_certificate()
 
-        if self.subscription_request.is_voluntary:
+        if self.subscription_request.subscription_mode == "voluntary":
             mail_template_obj = self.env.ref(
                 "energy_communities_cooperator.email_template_conditions_voluntary_share"
             )
