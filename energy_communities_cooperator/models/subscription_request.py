@@ -140,6 +140,7 @@ class SubscriptionRequest(models.Model):
 
     def get_partner_vals(self):
         vals = super().get_partner_vals()
+        vals["gender"] = self.gender
         # vals["company_id"] = self.company_id.id
         return vals
 
@@ -148,6 +149,7 @@ class SubscriptionRequest(models.Model):
         # vals["company_id"] = self.company_id.id
         # This propagates vat from SR to res.partner
         vals["vat"] = self.vat
+        vals["gender"] = self.gender
         return vals
 
     def get_representative_vals(self):
