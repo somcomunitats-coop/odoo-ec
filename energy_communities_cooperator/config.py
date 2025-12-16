@@ -323,7 +323,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK = {
 MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES = {
     "internal_rules": {
         "class": "col-md-12",
-        "type": "form_field_richtext",
+        "type": "form_field_checkbox",
         "value": "",
         "label": _("Internal Rules"),
         "required": False,
