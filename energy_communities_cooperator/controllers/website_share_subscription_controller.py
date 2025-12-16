@@ -513,10 +513,10 @@ class WebsiteShareSubscriptionController(http.Controller):
             ] = ctx.company.internal_rules_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES
         if ctx.company.display_financial_risk_approval:
-            MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK["financial_rules"][
+            MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK["financial_risk"][
                 "description"
             ] = ctx.company.financial_risk_approval_text
-            MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK["financial_rules"][
+            MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK["financial_risk"][
                 "required"
             ] = ctx.company.financial_risk_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK
