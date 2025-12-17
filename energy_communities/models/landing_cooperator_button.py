@@ -33,14 +33,5 @@ class LandingCooperatorButton(models.Model):
 
     _order = "sort_order asc"
 
-    def action_restore_defaults(self):
-        LandingCmPlaceResource(self.landing_page_id).restore_cooperator_button_defaults(
-            self
-        )
-        return get_successful_popup_message(
-            _("Cooperator button restore successful"),
-            _("Label and url restored to defaults."),
-        )
-
     def to_dict(self):
         return {"name": self.name, "url": self.url}

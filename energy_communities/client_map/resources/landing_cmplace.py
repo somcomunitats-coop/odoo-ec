@@ -32,10 +32,6 @@ class LandingCmPlace:
         """
         self._create_update_place("update")
 
-    def restore_cooperator_button_defaults(self, cooperator_button):
-        self._apply_cooperator_button_translations(cooperator_button)
-        self._create_update_place("update")
-
     def _create_update_place(self, mode):
         self._setup_landing_cooperator_buttons()
         if mode == "create":
