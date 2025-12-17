@@ -48,6 +48,32 @@ class TestResUsers(common.TransactionCase):
         self.assertEqual(new_user.login, user.login)
         self.assertEqual(new_user.company_id, user.company_id)
 
+    def test__send_kc_reset_password_mail(self):
+        # given a new user platform user
+        new_user = self._create_platform_user()
+
+        # when we send the reset password mail
+        res = new_user._send_kc_reset_password_mail()
+
+        # then, everything work as expected
+        self.assertIsNone(res)
+
+    def _create_platform_user(self):
+        partner = self.env["res.partner"].search(
+            [("vat", "=", self.partner_vat)], limit=1
+        )[0]
+        company = self.env["res.company"].search(
+            [("name", "=", "Community 1")], limit=1
+        )[0]
+        assert partner.company_id.id == company.id, (
+            f"Please provide the same energy community "
+            f"for {partner.name}, {partner.company_id} != {company}"
+        )
+        new_user = self.env["res.users"].build_platform_user(
+            company, partner, self.role_id, "create_kc_user", False, {}
+        )
+        return new_user
+
 
 @unittest.skip("deprecated")
 class TestResUsersDEPRECATED(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
