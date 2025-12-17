@@ -58,6 +58,32 @@ class TestResUsers(common.TransactionCase):
         # then, everything work as expected
         self.assertIsNone(res)
 
+    def test_build_platform_user__invite_user_through_kc_ok(self):
+        # given a partner that is a effective cooperator
+        partner = self.env["res.partner"].search(
+            [("vat", "=", self.partner_vat)], limit=1
+        )[0]
+        # and the energy community that belongs that partner
+        company = self.env["res.company"].search(
+            [("name", "=", "Community 1")], limit=1
+        )[0]
+        assert partner.company_id.id == company.id, (
+            f"Please provide the same energy community "
+            f"for {partner.name}, {partner.company_id} != {company}"
+        )
+
+        # when whe build a new platform user for that partner
+        new_user = self.env["res.users"].build_platform_user(
+            company, partner, self.role_id, "invite_user_through_kc", True, {}
+        )
+
+        # then a new user is created
+        user = self.env["res.users"].search(
+            [("login", "=", self.partner_vat)], limit=1
+        )[0]
+        self.assertEqual(new_user.login, user.login)
+        self.assertEqual(new_user.company_id, user.company_id)
+
     def _create_platform_user(self):
         partner = self.env["res.partner"].search(
             [("vat", "=", self.partner_vat)], limit=1
