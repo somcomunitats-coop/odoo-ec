@@ -292,7 +292,7 @@ class LandingCmPlace:
             [("place_id", "=", place.id)]
         )
         for cooperator_button in self.landing.cooperator_button_ids:
-            if cooperator_button.visibility == "visible":
+            if cooperator_button.visibility in ["map_landing", "map"]:
                 if cooperator_button.mode == "landing_page":
                     ext_link_values = {
                         "target": "_top",
@@ -373,8 +373,9 @@ class LandingCmPlace:
                 ].format(landing_link=self.wp_landing_data["link"])
 
         if cooperator_mode == "landing_page":
-            sort_order = 3
             # landing page scenario
+            update_create_dict = update_create_dict | {"visibility": "map"}
+            sort_order = 3
             if self.wp_landing_data["link"]:
                 url = self.wp_landing_data["link"]
 

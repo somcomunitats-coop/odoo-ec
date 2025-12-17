@@ -24,9 +24,14 @@ class LandingCooperatorButton(models.Model):
         default="custom",
     )
     visibility = fields.Selection(
-        [("hidden", _("Hidden")), ("visible", _("Visible"))],
+        [
+            ("hidden", _("Hidden")),
+            ("map_landing", _("Map/Landing")),
+            ("map", _("Map")),
+            ("landing", _("Landing")),
+        ],
         string="Visibility",
-        default="visible",
+        default="map_landing",
     )
     landing_page_id = fields.Many2one("landing.page", string="Landing Page")
     sort_order = fields.Integer(string=_("Sort order"))

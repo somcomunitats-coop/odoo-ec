@@ -95,7 +95,7 @@ class TestLandingPlace(common.TransactionCase):
             ]
         )
         self.assertEqual(len(button), 1)
-        self._assert_button_data(button)
+        self._assert_button_data(button, "map_landing")
         # become company cooperator
         button = self.env["landing.cooperator.button"].search(
             [
@@ -104,13 +104,13 @@ class TestLandingPlace(common.TransactionCase):
             ]
         )
         self.assertEqual(len(button), 1)
-        self._assert_button_data(button)
+        self._assert_button_data(button, "map_landing")
         # landing_page
         button = self.env["landing.cooperator.button"].search(
             [("mode", "=", "landing_page"), ("landing_page_id", "=", self.landing.id)]
         )
         self.assertEqual(len(button), 1)
-        self._assert_button_data(button)
+        self._assert_button_data(button, "map")
 
     @patch(
         "odoo.addons.energy_communities.client_map.resources.landing_cmplace.LandingCmPlace._get_wp_landing_data"
@@ -129,13 +129,13 @@ class TestLandingPlace(common.TransactionCase):
             [("mode", "=", "contact"), ("landing_page_id", "=", self.landing.id)]
         )
         self.assertEqual(len(button), 1)
-        self._assert_button_data(button)
+        self._assert_button_data(button, "map_landing")
         # landing_page
         button = self.env["landing.cooperator.button"].search(
             [("mode", "=", "landing_page"), ("landing_page_id", "=", self.landing.id)]
         )
         self.assertEqual(len(button), 1)
-        self._assert_button_data(button)
+        self._assert_button_data(button, "map")
 
     @patch(
         "odoo.addons.energy_communities.client_map.resources.landing_cmplace.LandingCmPlace._get_wp_landing_data"
@@ -204,8 +204,14 @@ class TestLandingPlace(common.TransactionCase):
         # if we update map place
         self.landing.action_update_public_data()
         # buttons remain as default ones
-        for coop_button in self.landing.cooperator_button_ids:
-            self._assert_button_data(coop_button)
+        for coop_button in self.landing.cooperator_button_ids.filtered(
+            lambda record: record.mode != "landing_page"
+        ):
+            self._assert_button_data(coop_button, "map_landing")
+        for coop_button in self.landing.cooperator_button_ids.filtered(
+            lambda record: record.mode == "landing_page"
+        ):
+            self._assert_button_data(coop_button, "map")
         # and buttons are properly propagated
         places = self.env["cm.place"].search([("landing_id", "=", self.landing.id)])
         for place in places:
@@ -227,8 +233,14 @@ class TestLandingPlace(common.TransactionCase):
         self.landing.action_create_landing_place()
         # we have only default coop buttons
         self.assertEqual(len(self.landing.cooperator_button_ids), 3)
-        for coop_button in self.landing.cooperator_button_ids:
-            self._assert_button_data(coop_button)
+        for coop_button in self.landing.cooperator_button_ids.filtered(
+            lambda record: record.mode != "landing_page"
+        ):
+            self._assert_button_data(coop_button, "map_landing")
+        for coop_button in self.landing.cooperator_button_ids.filtered(
+            lambda record: record.mode == "landing_page"
+        ):
+            self._assert_button_data(coop_button, "map")
         # if we create a custom button
         custom_button = self.env["landing.cooperator.button"].create(
             {
@@ -246,7 +258,7 @@ class TestLandingPlace(common.TransactionCase):
                 }
             )
         self.assertEqual(custom_button.mode, "custom")
-        self.assertEqual(custom_button.visibility, "visible")
+        self.assertEqual(custom_button.visibility, "map_landing")
         self.assertEqual(len(self.landing.cooperator_button_ids), 4)
         # if we update map place
         self.landing.action_update_public_data()
@@ -272,8 +284,14 @@ class TestLandingPlace(common.TransactionCase):
         self.landing.action_create_landing_place()
         # we have only default coop buttons
         self.assertEqual(len(self.landing.cooperator_button_ids), 3)
-        for coop_button in self.landing.cooperator_button_ids:
-            self._assert_button_data(coop_button)
+        for coop_button in self.landing.cooperator_button_ids.filtered(
+            lambda record: record.mode != "landing_page"
+        ):
+            self._assert_button_data(coop_button, "map_landing")
+        for coop_button in self.landing.cooperator_button_ids.filtered(
+            lambda record: record.mode == "landing_page"
+        ):
+            self._assert_button_data(coop_button, "map")
         # if we hide a button
         self.landing.cooperator_button_ids[0].write({"visibility": "hidden"})
         # and we update map place
@@ -335,9 +353,9 @@ class TestLandingPlace(common.TransactionCase):
                         .url,
                     )
 
-    def _assert_button_data(self, button):
+    def _assert_button_data(self, button, expected_visibility):
         # visibility
-        self.assertEqual(button.visibility, "visible")
+        self.assertEqual(button.visibility, expected_visibility)
         # base name
         self.assertEqual(
             button.name,

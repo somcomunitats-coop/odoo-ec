@@ -285,7 +285,7 @@ class LandingPage(models.Model):
     def _get_become_cooperator_button_list(self):
         button_list = []
         for coop_button in self.cooperator_button_ids.filtered(
-            lambda button: button.visibility == "visible"
+            lambda button: button.visibility in ["map_landing", "landing"]
         ):
             button_list.append(coop_button.to_dict())
         return button_list
