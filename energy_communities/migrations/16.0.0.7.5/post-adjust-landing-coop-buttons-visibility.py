@@ -11,5 +11,5 @@ def migrate(cr, version):
     # equalize company_ids
     coop_buttons = env["landing.cooperator.button"].search([])
     for coop_button in coop_buttons:
-        if coop_button.visibility != "hidden":
+        if coop_button.visibility != "hidden" and coop_button.mode != "landing_page":
             coop_button.write({"visibility": "map_landing"})

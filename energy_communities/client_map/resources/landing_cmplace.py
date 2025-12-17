@@ -347,6 +347,8 @@ class LandingCmPlace:
                     cooperator_mode, "ca_ES"
                 ),
             }
+            if cooperator_mode == "landing_page":
+                update_create_dict["visibility"] = "map"
         url = False
         if cooperator_mode == "become_cooperator":
             # become_cooperator scenario
@@ -374,7 +376,6 @@ class LandingCmPlace:
 
         if cooperator_mode == "landing_page":
             # landing page scenario
-            update_create_dict = update_create_dict | {"visibility": "map"}
             sort_order = 3
             if self.wp_landing_data["link"]:
                 url = self.wp_landing_data["link"]
