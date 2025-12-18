@@ -619,7 +619,7 @@ class ResUsers(models.Model):
         values = {
             "username": odoo_user.login,
             "email": odoo_user.partner_id.email,
-            "attributes": {"lang": [odoo_user.lang]},
+            "attributes": {"locale": [odoo_user.lang[:2]]},
             "enabled": True,
         }
         if "firstname" in odoo_user.partner_id:

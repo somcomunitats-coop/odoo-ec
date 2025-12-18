@@ -21,12 +21,12 @@ class TestUserCreator(TransactionComponentCase):
         ), "self.user_creator_component hast to be an instance of UserCreator component"
 
         self.role_id = self.env.ref("energy_communities.role_ce_member")
+        self.vat = "43549978F"
+        # self.vat = "26309903L"
 
     def test_create_users_from_cooperator_partners__ok(self):
         # given a partner that is an efective cooperator
-        partner = self.env["res.partner"].search([("vat", "=", "26309903L")], limit=1)[
-            0
-        ]
+        partner = self.env["res.partner"].search([("vat", "=", self.vat)], limit=1)[0]
 
         # when we create the user in kc related with that partner
         self.user_creator_component.create_users_from_cooperator_partners(
