@@ -619,7 +619,15 @@ class ResUsers(models.Model):
         values = {
             "username": odoo_user.login,
             "email": odoo_user.partner_id.email,
-            "attributes": {"locale": [odoo_user.lang[:2]]},
+            "attributes": {
+                "lang": [odoo_user.lang],
+                "locale": [odoo_user.lang[:2]],
+                "energy_community": [odoo_user.partner_id.company_id.name],
+                "energy_community_email": [
+                    odoo_user.partner_id.company_id.email
+                    or "soporte@somcomunitats.coop"
+                ],
+            },
             "enabled": True,
         }
         if "firstname" in odoo_user.partner_id:
