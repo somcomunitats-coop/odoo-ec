@@ -318,3 +318,10 @@ class ContractContract(models.Model):
             self.write({"status": "closed"})
         else:
             self.write({"status": "closed_planned"})
+
+    def get_numberof_effective_cooperators_range(self):
+        return (
+            0.5
+            if self.community_company_id.numberof_effective_cooperators <= 100
+            else 1
+        )
