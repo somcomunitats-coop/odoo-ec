@@ -34,14 +34,14 @@ class ResCompany(models.Model):
         compute="_compute_numberof_effective_inviteds",
         store=False,
     )
-    numberof_effective_cooperators = fields.Integer(
-        string="Number of effective cooperators",
-        compute="_compute_numberof_effective_cooperators",
-        store=False,
-    )
     numberof_effective_members = fields.Integer(
         string="Number of effective cooperators",
         compute="_compute_numberof_effective_members",
+        store=False,
+    )
+    numberof_effective_cooperators = fields.Integer(
+        string="Number of effective cooperators",
+        compute="_compute_numberof_effective_cooperators",
         store=False,
     )
 
@@ -66,18 +66,20 @@ class ResCompany(models.Model):
                     numberof_effective_inviteds += 1
             record.numberof_effective_inviteds = numberof_effective_inviteds
 
-    def _compute_numberof_effective_cooperators(self):
+    def _compute_numberof_effective_members(self):
         for record in self:
-            record.numberof_effective_cooperators = self.env[
+            record.numberof_effective_members = self.env[
                 "cooperative.membership"
             ].search_count([("company_id", "=", record.id), ("member", "=", True)])
 
-    def _compute_numberof_effective_members(self):
+    def _compute_numberof_effective_cooperators(self):
         for record in self:
-            record.numberof_effective_members = (
-                record.numberof_effective_cooperators
-                + record.numberof_effective_inviteds
+            record.numberof_effective_cooperators = (
+                record.numberof_effective_members + record.numberof_effective_inviteds
             )
+
+    def get_numberof_effective_cooperators_range(self):
+        return 0.5 if self.numberof_effective_cooperators <= 100 else 1
 
     def action_open_volutary_share_interest_return_wizard(self):
         wizard = self.env["voluntary.share.interest.return.wizard"].create(
