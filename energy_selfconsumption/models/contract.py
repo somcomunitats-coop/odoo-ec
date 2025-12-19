@@ -180,6 +180,37 @@ class Contract(models.Model):
         members = QueryResult._make(self.env.cr.fetchone())
         return members.total
 
+    def get_effective_members_with_selfconsumption(self):
+        # Define named tuple for query result
+        QueryResult = namedtuple("QueryResult", ["total"])
+
+        # Build SQL query for effective members with selfconsumption
+        query = """
+            SELECT count(energy_selfconsumption_supply_point.code)
+            FROM energy_project_project
+            INNER JOIN energy_selfconsumption_selfconsumption ON
+                energy_selfconsumption_selfconsumption.project_id = energy_project_project.id
+            INNER JOIN energy_selfconsumption_distribution_table ON
+                energy_selfconsumption_distribution_table.selfconsumption_project_id = energy_selfconsumption_selfconsumption.id
+            INNER JOIN energy_selfconsumption_supply_point_assignation ON
+                energy_selfconsumption_supply_point_assignation.distribution_table_id = energy_selfconsumption_distribution_table.id
+            INNER JOIN energy_selfconsumption_supply_point ON
+                energy_selfconsumption_supply_point.id = energy_selfconsumption_supply_point_assignation.supply_point_id
+            WHERE energy_project_project.company_id = %s
+            and energy_selfconsumption_distribution_table.state = 'active'
+        """
+        # Execute query with parameters
+        self.env.cr.execute(
+            query,
+            [
+                int(self.community_company_id.id),
+            ],
+        )
+
+        # Return count result
+        members = QueryResult._make(self.env.cr.fetchone())
+        return members.total
+
     # Utility methods
     def is_selfconsumption_contract(self):
         """
