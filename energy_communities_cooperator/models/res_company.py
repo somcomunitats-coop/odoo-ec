@@ -29,6 +29,56 @@ class ResCompany(models.Model):
         help="If left empty, the default global mail template will be used.",
     )
 
+    numberof_effective_inviteds = fields.Integer(
+        string="Number of effective inviteds",
+        compute="_compute_numberof_effective_inviteds",
+        store=False,
+    )
+    numberof_effective_cooperators = fields.Integer(
+        string="Number of effective cooperators",
+        compute="_compute_numberof_effective_cooperators",
+        store=False,
+    )
+    numberof_effective_members = fields.Integer(
+        string="Number of effective cooperators",
+        compute="_compute_numberof_effective_members",
+        store=False,
+    )
+
+    def _compute_numberof_effective_inviteds(self):
+        for record in self:
+            numberof_effective_inviteds = 0
+            effective_inviteds = (
+                self.env["res.partner"]
+                .with_company(record)
+                .search([("no_member_autorized_in_energy_actions", "=", True)])
+            )
+            # We check the invited is not considered effective cooperator to increase the value
+            for effective_invited in effective_inviteds:
+                if not self.env["cooperative.membership"].search(
+                    [
+                        ("partner_id", "=", effective_invited.id),
+                        ("company_id", "=", record.id),
+                        ("member", "=", True),
+                    ]
+                ):
+                    # if non_cooperator.with_company(record).no_member_autorized_in_energy_actions:
+                    numberof_effective_inviteds += 1
+            record.numberof_effective_inviteds = numberof_effective_inviteds
+
+    def _compute_numberof_effective_cooperators(self):
+        for record in self:
+            record.numberof_effective_cooperators = self.env[
+                "cooperative.membership"
+            ].search_count([("company_id", "=", record.id), ("member", "=", True)])
+
+    def _compute_numberof_effective_members(self):
+        for record in self:
+            record.numberof_effective_members = (
+                record.numberof_effective_cooperators
+                + record.numberof_effective_inviteds
+            )
+
     def action_open_volutary_share_interest_return_wizard(self):
         wizard = self.env["voluntary.share.interest.return.wizard"].create(
             {"company_id": self.id}
