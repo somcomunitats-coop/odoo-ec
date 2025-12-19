@@ -6,8 +6,7 @@
     >
       <field name="name">Effective cooperators range</field>
       <field name="code">
-company = env['res.company'].sudo().search([('id','=',contract.community_company_id.id)])
-result = company.sudo().get_numberof_effective_cooperators_range()
+result = contract.get_numberof_effective_cooperators_range()
       </field>
       <field name="company_id" eval="ref('base.main_company')" />
     </record>
