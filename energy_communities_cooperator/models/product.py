@@ -31,7 +31,7 @@ class ProductTemplate(models.Model):
         )
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         code_lang_default = (
-            self.env.company.default_lang_id.code or self.env.user.lang.code or "es"
+            self.env.company.default_lang_id.code or self.env.user.lang or "es"
         )
         for record in self:
             if (
@@ -64,7 +64,7 @@ class ProductTemplate(models.Model):
         )
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         code_lang_default = (
-            self.env.company.default_lang_id.code or self.env.user.lang.code or "es"
+            self.env.company.default_lang_id.code or self.env.user.lang or "es"
         )
         for record in self:
             if (

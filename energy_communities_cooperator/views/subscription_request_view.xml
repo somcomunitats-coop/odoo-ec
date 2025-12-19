@@ -43,7 +43,7 @@
         <filter
           string="Mandatory Shares"
           name="mandatory_share"
-          domain="[('subscription_mode','=', 'generic')]"
+          domain="['|',('subscription_mode','=', 'generic'), ('subscription_mode','=', 'member')]"
         />
         <filter
           string="Voluntary Shares"
@@ -55,11 +55,6 @@
           string="Invited Shares"
           name="invited_share"
           domain="[('subscription_mode','=', 'invited')]"
-        />
-        <filter
-          string="Member Shares"
-          name="member_share"
-          domain="[('subscription_mode','=', 'member')]"
         />
       </xpath>
     </field>

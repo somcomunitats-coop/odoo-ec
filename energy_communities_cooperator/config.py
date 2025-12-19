@@ -242,14 +242,6 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS = {
 }
 
 MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
-    "iban": {
-        "class": "col-md-12",
-        "type": "form_field_text",
-        "value": "",
-        "label": _("IBAN"),
-        "required": True,
-        "disabled": False,
-    },
     "share_product_id": {
         "class": "col-md-4",
         "type": "form_field_selection",
@@ -294,6 +286,14 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
             {"id": "sepa", "name": _("SEPA")},
             {"id": "transfer", "name": _("Transfer")},
         ],
+    },
+    "iban": {
+        "class": "col-md-12",
+        "type": "form_field_text",
+        "value": "",
+        "label": _("IBAN"),
+        "required": True,
+        "disabled": False,
     },
     "conditions_payment": {
         "class": "col-md-12",

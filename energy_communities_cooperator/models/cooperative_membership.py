@@ -3,10 +3,26 @@ from datetime import datetime
 from odoo import api, fields, models
 from odoo.tools.translate import _
 
+from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
+
 
 class CooperativeMembership(models.Model):
     _name = "cooperative.membership"
     _inherit = ["cooperative.membership", "user.currentcompany.mixin"]
+
+    @api.depends(
+        "partner_id.share_ids",
+        "partner_id.share_ids.share_product_id",
+        "partner_id.share_ids.share_product_id.categ_id",
+    )
+    def _compute_membership_type(self):
+        for record in self:
+            membership_type = ""
+            for line in record.share_ids:
+                if line.share_number > 0:
+                    membership_type = line.share_product_id.categ_id.type_url
+                    break
+            record.membership_type = membership_type
 
     active = fields.Boolean(string="Active", default=True)
     representative = fields.Boolean(
@@ -34,6 +50,40 @@ class CooperativeMembership(models.Model):
     partner_phone = fields.Char(related="partner_id.phone", store=True)
     partner_email = fields.Char(related="partner_id.email", store=True)
     partner_vat = fields.Char(related="partner_id.vat", store=True)
+    effective_invited = fields.Boolean(
+        string="Effective Invited", related="partner_id.effective_invited", store=True
+    )
+    membership_type = fields.Char(
+        string="Membership Type",
+        compute="_compute_membership_type",
+        store=True,
+        readonly=True,
+    )
+
+    def _get_share_type(self):
+        categ_ids = [
+            self.env.ref(MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["member"]).id,
+            self.env.ref(MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["invited"]).id,
+            # self.env.ref(MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["voluntary"]).id,
+        ]
+        shares = self.env["product.product"].search(
+            [("is_share", "=", True), ("categ_id", "in", categ_ids)]
+        )
+        return [(s.default_code, s.short_name) for s in shares]
+
+    # @api.depends(
+    #     "partner_id.share_ids",
+    #     "partner_id.share_ids.share_product_id.default_code",
+    #     "partner_id.share_ids.share_number",
+    # )
+    # def _compute_cooperator_type(self):
+    #     for record in self:
+    #         share_type = ""
+    #         for line in record.share_ids:
+    #             if line.share_number > 0:
+    #                 share_type = line.share_product_id.default_code
+    #                 break
+    #         record.cooperator_type = share_type
 
     @api.depends("subscription_request_ids")
     def _compute_subscription_invoice_ids(self):

@@ -22,6 +22,7 @@ class ResPartner(models.Model):
         company_dependent=True,
         help="Enable the contact to participate in Community Energy Actions despite not being an effective member of the Community.",
     )
+    effective_invited = fields.Boolean(string="Effective Invited", default=False)
 
     @api.depends("vat")
     def _compute_company_register_number(self):
