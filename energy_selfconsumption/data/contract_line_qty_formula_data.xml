@@ -62,6 +62,15 @@ result = contract.get_active_monitoring_members()
             </field>
             <field name="company_id" ref="base.main_company" />
         </record>
+
+        <!-- Formula: Effective member with selfconsumption Count -->
+        <record id="effective_members_with_selfconsumption" model="contract.line.qty.formula">
+            <field name="name">Effective members with selfconsumption</field>
+            <field name="code">
+result = contract.get_effective_members_with_selfconsumption()
+            </field>
+            <field name="company_id" ref="base.main_company" />
+        </record>
         
     </data>
 </odoo>
