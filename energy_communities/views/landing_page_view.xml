@@ -91,12 +91,6 @@
             </field>
             <field name="cooperator_button_ids" options="{'widget': 'one2many_list'}">
               <tree editable="bottom">
-                <button
-                  string="Restore defaults"
-                  name="action_restore_defaults"
-                  type="object"
-                  class="btn-primary"
-                />
                 <field name="name" />
                 <field name="url" />
                 <field name="mode" readonly="true" />

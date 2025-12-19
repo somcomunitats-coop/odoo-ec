@@ -225,6 +225,7 @@ class LandingPage(models.Model):
                 "odoo_company_id": self.company_id.id,
                 "company_id": self.company_id.id,
                 "wp_landing_page_id": self.wp_landing_page_id,
+                "wp_coordinator_landing_page_id": self.sudo()._get_wp_coordinator_landing_page_id(),
                 "status": self.status,
                 "community_type": self.community_type,
                 "community_secondary_type": self.community_secondary_type,
@@ -272,10 +273,19 @@ class LandingPage(models.Model):
             }
         }
 
+    def _get_wp_coordinator_landing_page_id(self):
+        if self.company_id.hierarchy_level != "community":
+            return False
+        if not self.company_id.parent_id:
+            return False
+        if not self.company_id.parent_id.landing_page_id:
+            return False
+        return self.company_id.parent_id.landing_page_id.wp_landing_page_id
+
     def _get_become_cooperator_button_list(self):
         button_list = []
         for coop_button in self.cooperator_button_ids.filtered(
-            lambda button: button.visibility == "visible"
+            lambda button: button.visibility in ["map_landing", "landing"]
         ):
             button_list.append(coop_button.to_dict())
         return button_list

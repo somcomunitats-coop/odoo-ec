@@ -24,6 +24,12 @@ class LandingClientConfig:
             "es_ES": "Ponte en contacto",
             "eu_ES": "Jarri harremanetan",
         },
+        "landing_page": {
+            "en_US": "Veure pàgina de la Comunitat",
+            "ca_ES": "Veure pàgina de la Comunitat",
+            "es_ES": "Ver página de la Comunidad",
+            "eu_ES": "Ikus Komunitatearen orria",
+        },
     }
 
 
@@ -60,24 +66,6 @@ class MapClientConfig:
         "ca_ES": "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></div>",
         "es_ES": "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparte y hagamos crecer la Comunidad Energética</p></div>",
         "eu_ES": "<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Partekatu eta lagundu hazten energia-komunitateari</p></div>",
-    }
-    MAPPING__EXTERNAL_LINK__BECOME_COOPERATOR__LINK_LABEL = {
-        "en_US": "Fes-te'n soci/a",
-        "ca_ES": "Fes-te'n soci/a",
-        "es_ES": "Hazte socio/a",
-        "eu_ES": "Bazkide bihurtu",
-    }
-    MAPPING__EXTERNAL_LINK__CONTACT__LINK_LABEL = {
-        "en_US": "Posa-t'hi en contacte",
-        "ca_ES": "Posa-t'hi en contacte",
-        "es_ES": "Ponte en contacto",
-        "eu_ES": "Jarri harremanetan",
-    }
-    MAPPING__EXTERNAL_LINK__LANDING__LINK_LABEL = {
-        "en_US": "Veure pàgina de la Comunitat",
-        "ca_ES": "Veure pàgina de la Comunitat",
-        "es_ES": "Ver página de la Comunidad",
-        "eu_ES": "Ikus Komunitatearen orria",
     }
     MAPPING__BUTTON_COLOR_CONFIG_NAME = {
         "green": "Coorporate green dark button",
