@@ -78,9 +78,6 @@ class ResCompany(models.Model):
                 record.numberof_effective_members + record.numberof_effective_inviteds
             )
 
-    def get_numberof_effective_cooperators_range(self):
-        return 0.5 if self.numberof_effective_cooperators <= 100 else 1
-
     def action_open_volutary_share_interest_return_wizard(self):
         wizard = self.env["voluntary.share.interest.return.wizard"].create(
             {"company_id": self.id}
