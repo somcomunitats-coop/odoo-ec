@@ -25,7 +25,7 @@ class ProductCategory(models.Model):
         )
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         code_lang_default = (
-            self.env.company.default_lang_id.code or self.env.user.lang.code or "es"
+            self.env.company.default_lang_id.code or self.env.user.lang or "es"
         )
         for record in self:
             if record.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys():

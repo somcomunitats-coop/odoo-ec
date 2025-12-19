@@ -1,4 +1,18 @@
 <odoo>
+  <record id="view_res_partner_filter_invited" model="ir.ui.view">
+      <field name="name">res.partner.select</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="cooperator.view_res_partner_filter" />
+      <field name="arch" type="xml">
+          <filter name="cooperator_company_representative" position='after'>
+              <filter
+                  string="Invited"
+                  name="invited"
+                  domain="[('effective_invited', '=', True)]"
+              />
+          </filter>
+      </field>
+  </record>
   <record id="cooperator_view_partner_form" model="ir.ui.view">
     <field name="name">view_company_form.inherit</field>
     <field name="model">res.partner</field>
@@ -37,6 +51,7 @@
       <field name="legal_form" position="after">
         <field name="user_current_role" invisible="1" />
         <field name="cooperator" readonly="1" />
+        <field name="effective_invited" readonly="1" />
         <field name="no_member_autorized_in_energy_actions" />
         
         <field
