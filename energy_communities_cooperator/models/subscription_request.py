@@ -227,9 +227,7 @@ class SubscriptionRequest(models.Model):
         self.validate_subscription_request()
         return True
 
-    # TODO: Is it necessary to specify tax_ids? Make some tests!
     def _prepare_invoice_line(self, move_id, product, partner, qty):
         res = super()._prepare_invoice_line(move_id, product, partner, qty)
         res["tax_ids"] = product.taxes_id
-
         return res

@@ -85,6 +85,77 @@ class TestSubscriptionPaymentWithRecurringFee(common.TransactionCase):
             _TESTING_CASES["payment_after_fixed_day_recurrency_next_year"]
         )
 
+    def test_subscription_payment_with_recurring_fee_invoice_taxes(self):
+        case = _TESTING_CASES["payment_after_fixed_day_recurrency_next_year"]
+        # GIVEN a draft subscription request
+        subscription_request = self.env.ref(case.subscription_ref)
+        # WORKFLOW: we validate the subscription request
+        subscription_request.validate_subscription_request_with_company()
+        partner = subscription_request.partner_id
+        # GIVEN the invoice generated validating the SR
+        sr_invoice = subscription_request.capital_release_request[0]
+        # Taxes are correctly defined
+        self.assertFalse(bool(sr_invoice.invoice_line_ids[0].product_id.taxes_id))
+        self.assertEqual(
+            sr_invoice.invoice_line_ids[0].tax_ids,
+            sr_invoice.invoice_line_ids[0].product_id.taxes_id,
+        )
+        # When we pay the invoice
+        self._pay_invoice(sr_invoice, case.payment_date)
+        # it generates a contract
+        new_contract = self._get_partner_contract(partner)
+        # when the contract generate invoices
+        contract_invoice = new_contract._recurring_create_invoice()
+        # Taxes are correctly defined
+        self.assertFalse(bool(contract_invoice.invoice_line_ids[0].product_id.taxes_id))
+        self.assertEqual(
+            contract_invoice.invoice_line_ids[0].tax_ids,
+            contract_invoice.invoice_line_ids[0].product_id.taxes_id,
+        )
+
+    def test_subscription_payment_with_recurring_fee_invoice_taxes_with_taxes(self):
+        case = _TESTING_CASES["payment_after_fixed_day_recurrency_next_year"]
+        # GIVEN a draft subscription request
+        subscription_request = self.env.ref(case.subscription_ref)
+        # WORKFLOW: we validate the subscription request
+        subscription_request.validate_subscription_request_with_company()
+        partner = subscription_request.partner_id
+        # GIVEN the invoice generated validating the SR
+        sr_invoice = subscription_request.capital_release_request[0]
+        # Taxes are correctly defined
+        self.assertFalse(bool(sr_invoice.invoice_line_ids[0].product_id.taxes_id))
+        self.assertEqual(
+            sr_invoice.invoice_line_ids[0].tax_ids,
+            sr_invoice.invoice_line_ids[0].product_id.taxes_id,
+        )
+        # When we pay the invoice
+        self._pay_invoice(sr_invoice, case.payment_date)
+        # it generates a contract
+        new_contract = self._get_partner_contract(partner)
+        # we modify related product taxes (add some)
+        new_contract.contract_line_ids[0].product_id.write(
+            {
+                "taxes_id": [
+                    (
+                        4,
+                        self.env.ref(
+                            "l10n_es.{}_account_tax_template_s_irpf15".format(
+                                new_contract.company_id.id
+                            )
+                        ).id,
+                    )
+                ]
+            }
+        )
+        # when the contract generate invoices
+        contract_invoice = new_contract._recurring_create_invoice()
+        # Taxes are correctly defined
+        self.assertTrue(bool(contract_invoice.invoice_line_ids[0].product_id.taxes_id))
+        self.assertEqual(
+            contract_invoice.invoice_line_ids[0].tax_ids,
+            contract_invoice.invoice_line_ids[0].product_id.taxes_id,
+        )
+
     def _subscription_payment_with_recurring_fee_case(self, case):
         # GIVEN a draft subscription request
         subscription_request = self.env.ref(case.subscription_ref)
