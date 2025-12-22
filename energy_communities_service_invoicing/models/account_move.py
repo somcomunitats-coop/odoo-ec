@@ -18,6 +18,7 @@ from ..config import (
     PACK_TYPE_SELFCONSUMPTION,
 )
 
+
 class AccountMove(models.Model):
     _name = "account.move"
     _inherit = ["account.move", "pack.type.mixin"]
@@ -74,6 +75,8 @@ class AccountMove(models.Model):
                     record.pack_type = (
                         first_move_line.contract_line_id.contract_id.pack_type
                     )
+                elif first_move_line.product_id:
+                    record.pack_type = first_move_line.product_id.pack_type
 
     @api.depends("invoice_line_ids", "auto_invoice_id")
     def _compute_related_contract_id_is_contract(self):
