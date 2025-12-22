@@ -302,16 +302,6 @@ def _setup_company_product_categ_accounts(
         categ_w_c.write(w_dict)
 
 
-# def _validate_migration(env,company):
-#     try:
-#         account_ref = "l10n_es.{}_account_common_7050"
-#         account = env.ref(account_ref.format(company.id))
-#     except Exception:
-#         _logger.warning("7050 account doesn't exists for company: {}".format(company.name))
-#         __import__('ipdb').set_trace()
-#         raise e.message
-
-
 def migrate(cr, version):
     env = api.Environment(cr, SUPERUSER_ID, {})
     _logger.info("Starting 6.0 migration")
