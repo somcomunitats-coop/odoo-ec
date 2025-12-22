@@ -36,6 +36,7 @@ class TestPackTypeMixin(TransactionCase, ServiceInvoicingTestingProductCreator):
         )
         self.assertEqual(new_contract.pack_type, PACK_TYPE_NONE)
 
+    # TODO: This test is not passing!!
     def test_pack_type_case_1(self):
         pack_product = self._create_pack_product(
             _PRODUCT_UTILS_TESTING_CASES["interval_prepaid_platform"]
