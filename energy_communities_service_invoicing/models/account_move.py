@@ -70,13 +70,12 @@ class AccountMove(models.Model):
         for record in self:
             record.pack_type = PACK_TYPE_NONE
             if record.invoice_line_ids:
-                first_move_line = record.invoice_line_ids[0]
-                if first_move_line.contract_line_id:
-                    record.pack_type = (
-                        first_move_line.contract_line_id.contract_id.pack_type
-                    )
-                elif first_move_line.product_id:
-                    record.pack_type = first_move_line.product_id.pack_type
+                for invoice_line in record.invoice_line_ids:
+                    if invoice_line.contract_line_id:
+                        record.pack_type = (
+                            invoice_line.contract_line_id.contract_id.pack_type
+                        )
+                        break
 
     @api.depends("invoice_line_ids", "auto_invoice_id")
     def _compute_related_contract_id_is_contract(self):
