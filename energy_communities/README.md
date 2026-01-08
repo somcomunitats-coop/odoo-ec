@@ -4,6 +4,11 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2025-12-19 (v16.0.0.7.5)
+
+- Better cooperator buttons on landing
+- Map place usability improvements
+
 ### 2025-11-14 (v16.0.0.7.3)
 
 - Add python dependecies
