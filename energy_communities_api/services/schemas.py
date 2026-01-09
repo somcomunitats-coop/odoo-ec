@@ -19,6 +19,7 @@ S_LANDING_PAGE_GET_RETURN = {
             "company_id": {"type": "integer"},
             "odoo_company_id": {"type": "integer"},
             "wp_landing_page_id": {"type": "integer"},
+            "wp_coordinator_landing_page_id": {"type": "integer"},
             "status": {"type": "string"},
             "community_type": {"type": "string"},
             "community_secondary_type": {"type": "string"},
