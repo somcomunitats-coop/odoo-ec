@@ -120,7 +120,7 @@ class ProductTemplate(models.Model):
             url_specific_company += f"company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]}/{self.company_id.company_external_id}/{self.product_external_id}"
         return {
             "type": "ir.actions.act_url",
-            "url": self.url_specific_company,
+            "url": url_specific_company,
             "target": "new",
         }
 

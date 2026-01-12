@@ -20,8 +20,8 @@
                     </div>
                 </field>
                 <xpath expr="//label[@for='display_on_website']" position="after">
-                    <button name="url_individual_button" class="btn btn-primary m-2" string="URL individual" groups="cooperator.cooperator_group_user" attrs="{'invisible':['|',('display_on_website','=',False),('by_individual','=',False)]}"  />
-                    <button name="url_company_button" class="btn btn-primary" string="URL company" groups="cooperator.cooperator_group_user" attrs="{'invisible':['|',('display_on_website','=',False),('by_company','=',False)]}"  />         
+                    <button name="url_individual_button" type="object" class="btn btn-primary m-2" string="URL individual" groups="cooperator.cooperator_group_user" attrs="{'invisible':['|',('display_on_website','=',False),('by_individual','=',False)]}"  />
+                    <button name="url_company_button" type="object" class="btn btn-primary" string="URL company" groups="cooperator.cooperator_group_user" attrs="{'invisible':['|',('display_on_website','=',False),('by_company','=',False)]}"  />         
                 </xpath>
                 <field name="mail_template" position="after">
                     <field name="html_specific_products" attrs="{'invisible':[('activate_form_specific_products','=',False)]}"/>
@@ -30,8 +30,8 @@
                     <page string="Custom form specific products" groups="cooperator.cooperator_group_user">
                         <group string="Custom form specific products">
                             <field name="activate_form_specific_products" />  
-                            <button name="url_specific_individual_button" class="btn btn-primary" string="URL individual" attrs="{'invisible':['|',('activate_form_specific_products','=',False),('by_individual','=',False)]}"/>
-                            <button name="url_specific_company_button" class="btn btn-primary" string="URL company" attrs="{'invisible':['|',('activate_form_specific_products','=',False),('by_company','=',False)]}"/>             
+                            <button name="url_specific_individual_button" type="object" class="btn btn-primary" string="URL individual" attrs="{'invisible':['|',('activate_form_specific_products','=',False),('by_individual','=',False)]}"/>
+                            <button name="url_specific_company_button" type="object" class="btn btn-primary" string="URL company" attrs="{'invisible':['|',('activate_form_specific_products','=',False),('by_company','=',False)]}"/>             
                         </group>
                     </page>
                 </xpath>

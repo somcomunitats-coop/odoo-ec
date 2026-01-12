@@ -7,8 +7,8 @@
       <group name="first" position="after">
         <group string="URLs">
           <field name="type_url" attrs="{'invisible': [('type_url', '=', False)]}" />
-          <button name="url_individual_button" class="btn btn-primary" string="URL individual" attrs="{'invisible': [('type_url', '=', False)]}" />
-          <button name="url_company_button" class="btn btn-primary" string="URL company" attrs="{'invisible': [('type_url', '=', False)]}" />
+          <button name="url_individual_button" type="object" class="btn btn-primary" string="URL individual" attrs="{'invisible': [('type_url', '=', False)]}" />
+          <button name="url_company_button" type="object" class="btn btn-primary" string="URL company" attrs="{'invisible': [('type_url', '=', False)]}" />
         </group>
         <group string="Product Website">
           <field name="product_website" />

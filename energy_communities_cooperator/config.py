@@ -143,6 +143,14 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "required": True,
         "disabled": False,
     },
+    "email_confirmation": {
+        "class": "col-md-12 d-none",
+        "type": "form_field_email",
+        "value": "",
+        "label": _("Email Confirmation"),
+        "required": True,
+        "disabled": False,
+    },
     "firstname": {
         "class": "col-md-6",
         "type": "form_field_text",
