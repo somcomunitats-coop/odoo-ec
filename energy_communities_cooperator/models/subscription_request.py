@@ -10,23 +10,31 @@ class SubscriptionRequest(models.Model):
     _description = "Subscription request"
 
     def get_mapping_product_category_id_subscription_mode(self):
-        return {
-            self.env.ref(
-                MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["member"]
-            ).id: "member",
-            self.env.ref(
-                MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["invited"]
-            ).id: "invited",
-            self.env.ref(
-                MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["voluntary"]
-            ).id: "voluntary",
-        }
+        mapping = {}
+        for mode, xmlid in MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.items():
+            if mode in ("member", "invited", "voluntary"):
+                try:
+                    category = self.env.ref(xmlid, raise_if_not_found=False)
+                    if category:
+                        mapping[category.id] = mode
+                except ValueError:
+                    # XML ID not yet loaded during module initialization
+                    pass
+        return mapping
 
-    @api.depends("share_product_id", "share_product_id.categ_id")
+    @api.depends(
+        "share_product_id",
+        "share_product_id.categ_id",
+        "share_product_id.categ_id.type_url",
+    )
     def _compute_subscription_mode(self):
         MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
             self.get_mapping_product_category_id_subscription_mode()
         )
+        if not MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE:
+            for record in self:
+                record.subscription_mode = "generic"
+            return
         for record in self:
             if (
                 record.share_product_id.categ_id.id

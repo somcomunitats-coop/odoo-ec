@@ -22,67 +22,6 @@ class ProductTemplate(models.Model):
             ).id: "voluntary",
         }
 
-    @api.depends(
-        "company_id", "categ_id", "display_on_website", "is_share", "by_company"
-    )
-    def _compute_url(self):
-        MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
-            self.get_mapping_product_category_id_subscription_mode()
-        )
-        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
-        code_lang_default = (
-            self.env.company.default_lang_id.code or self.env.user.lang or "es"
-        )
-        for record in self:
-            if (
-                record.categ_id.id
-                in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys()
-            ):
-                record.url_individual = f"{base_url}/{code_lang_default}/subscription/{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}"
-                if (
-                    MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]
-                    != "voluntary"
-                ):
-                    record.url_company = f"{base_url}/{code_lang_default}/subscription/company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}"
-                else:
-                    record.url_company = None
-            else:
-                record.url_individual = None
-                record.url_company = None
-
-    @api.depends(
-        "company_id",
-        "product_external_id",
-        "categ_id",
-        "activate_form_specific_products",
-        "is_share",
-        "by_individual",
-    )
-    def _compute_url_specific(self):
-        MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
-            self.get_mapping_product_category_id_subscription_mode()
-        )
-        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
-        code_lang_default = (
-            self.env.company.default_lang_id.code or self.env.user.lang or "es"
-        )
-        for record in self:
-            if (
-                record.categ_id.id
-                in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys()
-            ):
-                record.url_specific_individual = f"{base_url}/{code_lang_default}/subscription/{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}/{record.product_external_id}"
-                if (
-                    MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]
-                    != "voluntary"
-                ):
-                    record.url_specific_company = f"{base_url}/{code_lang_default}/subscription/company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.categ_id.id]}/{record.company_id.company_external_id}/{record.product_external_id}"
-                else:
-                    record.url_specific_company = None
-            else:
-                record.url_specific_individual = None
-                record.url_specific_company = None
-
     @api.depends("name")
     def _compute_external_id(self):
         for record in self:
@@ -96,23 +35,11 @@ class ProductTemplate(models.Model):
         domain=[("model", "=", "res.partner")],
         help="If left empty, the default global mail template will be used.",
     )
-    url_individual = fields.Char(
-        String="URL individual", compute="_compute_url", readonly=True
-    )
-    url_company = fields.Char(
-        String="URL company", compute="_compute_url", readonly=True
-    )
 
     activate_form_specific_products = fields.Boolean(
         string="Activate form specific products"
     )
 
-    url_specific_individual = fields.Char(
-        String="URL individual", compute="_compute_url_specific", readonly=True
-    )
-    url_specific_company = fields.Char(
-        String="URL company", compute="_compute_url_specific", readonly=True
-    )
     product_external_id = fields.Char(
         string="External ID", compute="_compute_external_id", store=True
     )
@@ -120,6 +47,82 @@ class ProductTemplate(models.Model):
     html_specific_products = fields.Html(
         string="Custom paragraph in specific form", translate=True
     )
+
+    def url_individual_button(self):
+        MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
+            self.get_mapping_product_category_id_subscription_mode()
+        )
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        code_lang_default = (
+            self.env.company.default_lang_id.code or self.env.user.lang or "es"
+        )
+        url_individual = f"{base_url}/{code_lang_default}/subscription/"
+        if self.categ_id.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys():
+            url_individual += f"{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]}/{self.company_id.company_external_id}"
+        return {
+            "type": "ir.actions.act_url",
+            "url": url_individual,
+            "target": "new",
+        }
+
+    def url_company_button(self):
+        MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
+            self.get_mapping_product_category_id_subscription_mode()
+        )
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        code_lang_default = (
+            self.env.company.default_lang_id.code or self.env.user.lang or "es"
+        )
+        url_company = f"{base_url}/{code_lang_default}/subscription/"
+        if (
+            self.categ_id.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys()
+            and MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]
+            != "voluntary"
+        ):
+            url_company += f"company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]}/{self.company_id.company_external_id}"
+        return {
+            "type": "ir.actions.act_url",
+            "url": url_company,
+            "target": "new",
+        }
+
+    def url_specific_individual_button(self):
+        MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
+            self.get_mapping_product_category_id_subscription_mode()
+        )
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        code_lang_default = (
+            self.env.company.default_lang_id.code or self.env.user.lang or "es"
+        )
+        url_specific_individual = f"{base_url}/{code_lang_default}/subscription/"
+        if self.categ_id.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys():
+            url_specific_individual += f"{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]}/{self.company_id.company_external_id}/{self.product_external_id}"
+        return {
+            "type": "ir.actions.act_url",
+            "url": url_specific_individual,
+            "target": "new",
+        }
+
+    def url_specific_company_button(self):
+        MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
+            self.get_mapping_product_category_id_subscription_mode()
+        )
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        code_lang_default = (
+            self.env.company.default_lang_id.code or self.env.user.lang or "es"
+        )
+        url_specific_company = f"{base_url}/{code_lang_default}/subscription/"
+        if (
+            self.categ_id.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys()
+            and MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]
+            != "voluntary"
+        ):
+            url_specific_company += f"company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]}/{self.company_id.company_external_id}/{self.product_external_id}"
+        return {
+            "type": "ir.actions.act_url",
+            "url": self.url_specific_company,
+            "target": "new",
+        }
 
     # TODO: This must be interated on new coopeator version
     def get_web_share_products(self, is_company):

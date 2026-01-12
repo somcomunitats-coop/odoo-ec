@@ -276,7 +276,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
         "disabled": True,
     },
     "payment_method": {
-        "class": "col-md-12",
+        "class": "col-md-12 d-none",
         "type": "form_field_selection",
         "value": "",
         "label": _("Payment Method"),
@@ -299,12 +299,12 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
         "class": "col-md-12",
         "type": "form_field_checkbox",
         "value": False,
-        "label": _("Conditions Payment"),
-        "required": True,
-        "disabled": False,
-        "description": _(
+        "label": _(
             "I confirm that the holder of the bank account, whether myself or another person, authorizes the direct debit of the bills."
         ),
+        "required": True,
+        "disabled": False,
+        "description": "",
     },
 }
 

@@ -7,8 +7,13 @@
       <group name="first" position="after">
         <group string="URLs">
           <field name="type_url" attrs="{'invisible': [('type_url', '=', False)]}" />
-          <field name="url_individual" attrs="{'invisible': [('url_individual', '=', False)]}" />
-          <field name="url_company" attrs="{'invisible': [('url_company', '=', False)]}" />
+          <button name="url_individual_button" string="URL individual" attrs="{'invisible': [('type_url', '=', False)]}" />
+          <button name="url_company_button" string="URL company" attrs="{'invisible': [('type_url', '=', False)]}" />
+        </group>
+        <group string="Product Website">
+          <field name="product_website" />
+          <field name="assume_already_member" />
+          <field name="product_qty_must_be_read_only" />
         </group>
       </group>
     </field>
