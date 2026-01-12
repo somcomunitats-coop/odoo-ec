@@ -80,6 +80,8 @@ class ProductTemplate(models.Model):
             != "voluntary"
         ):
             url_company += f"company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]}/{self.company_id.company_external_id}"
+        elif self.categ_id.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys():
+            url_company += f"{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]}/{self.company_id.company_external_id}"
         return {
             "type": "ir.actions.act_url",
             "url": url_company,
@@ -118,6 +120,8 @@ class ProductTemplate(models.Model):
             != "voluntary"
         ):
             url_specific_company += f"company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]}/{self.company_id.company_external_id}/{self.product_external_id}"
+        elif self.categ_id.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys():
+            url_specific_company += f"{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]}/{self.company_id.company_external_id}/{self.product_external_id}"
         return {
             "type": "ir.actions.act_url",
             "url": url_specific_company,
