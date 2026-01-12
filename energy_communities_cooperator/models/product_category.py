@@ -68,7 +68,7 @@ class ProductCategory(models.Model):
             url_individual += f"{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.id]}/{self.env.company.company_external_id}"
         return {
             "type": "ir.actions.act_url",
-            "url": self.url_individual,
+            "url": url_individual,
             "target": "new",
         }
 
@@ -88,6 +88,6 @@ class ProductCategory(models.Model):
             url_company += f"company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.id]}/{self.env.company.company_external_id}"
         return {
             "type": "ir.actions.act_url",
-            "url": self.url_company,
+            "url": url_company,
             "target": "new",
         }
