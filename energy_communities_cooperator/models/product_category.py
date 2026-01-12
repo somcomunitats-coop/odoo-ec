@@ -86,6 +86,8 @@ class ProductCategory(models.Model):
             and MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.id] != "voluntary"
         ):
             url_company += f"company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.id]}/{self.env.company.company_external_id}"
+        elif self.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys():
+            url_company += f"{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.id]}/{self.env.company.company_external_id}"
         return {
             "type": "ir.actions.act_url",
             "url": url_company,
