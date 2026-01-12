@@ -14,13 +14,23 @@ class CooperativeMembership(models.Model):
         "partner_id.share_ids",
         "partner_id.share_ids.share_product_id",
         "partner_id.share_ids.share_product_id.categ_id",
+        "partner_id.share_ids.share_product_id.categ_id.type_url",
     )
     def _compute_membership_type(self):
+        # Get mapping directly to avoid dependency on type_url during initialization
+        mapping = self.env[
+            "product.category"
+        ].get_mapping_product_category_id_subscription_mode()
         for record in self:
             membership_type = ""
             for line in record.share_ids:
                 if line.share_number > 0:
-                    membership_type = line.share_product_id.categ_id.type_url
+                    categ_id = line.share_product_id.categ_id.id
+                    # Use mapping if available, otherwise fallback to type_url
+                    if mapping and categ_id in mapping:
+                        membership_type = mapping[categ_id]
+                    elif line.share_product_id.categ_id.type_url:
+                        membership_type = line.share_product_id.categ_id.type_url
                     break
             record.membership_type = membership_type
 

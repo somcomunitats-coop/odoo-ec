@@ -575,18 +575,26 @@ class WebsiteShareSubscriptionController(http.Controller):
             Formatted headline string
         """
 
-        if ctx.formtype_mode.value == "single" and ctx.product.html_specific_products:
+        empty_headline = "<p><br></p>"
+
+        if (
+            ctx.formtype_mode.value == "single"
+            and ctx.product.html_specific_products
+            and ctx.product.html_specific_products != empty_headline
+        ):
             return ctx.share_product_id.html_specific_products
         if (
             ctx.subscription_mode.value == "voluntary"
             and ctx.formtype_mode.value == "generic"
             and ctx.company.voluntary_share_form_header_text
+            and ctx.company.voluntary_share_form_header_text != empty_headline
         ):
             return ctx.company.voluntary_share_form_header_text
         if (
             ctx.subscription_mode.value != "voluntary"
             and ctx.formtype_mode.value == "generic"
             and ctx.company.cooperator_share_form_header_text
+            and ctx.company.cooperator_share_form_header_text != empty_headline
         ):
             return ctx.company.cooperator_share_form_header_text
         return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE[
@@ -800,5 +808,73 @@ class WebsiteShareSubscriptionController(http.Controller):
             # Disable selector when only one product is available (no choice needed)
             if len(ctx.products) == 1:
                 values_field["disabled"] = True
-            if ctx.company.product_website:
+            # if ctx.company.product_website:
+            #     values_field["disabled"] = True
+
+        if not ctx.product_categ.product_website:
+            if values_field["key"] == "share_product_id":
+                values_field["class"] = "col-md-4 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+            if values_field["key"] == "ordered_parts":
+                values_field["class"] = "col-md-3 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+            if values_field["key"] == "total_price":
+                values_field["class"] = "col-md-4 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+            if values_field["key"] == "currency_symbol":
+                values_field["class"] = "col-md-1 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+
+        if ctx.product_categ.assume_already_member:
+            if values_field["key"] == "email":
+                values_field["class"] = "col-md-12 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+            if values_field["key"] == "firstname":
+                values_field["class"] = "col-md-6 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+            if values_field["key"] == "lastname":
+                values_field["class"] = "col-md-6 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+            if values_field["key"] == "gender":
+                values_field["class"] = "col-md-6 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+            if values_field["key"] == "birthdate":
+                values_field["class"] = "col-md-6 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+            if values_field["key"] == "phone":
+                values_field["class"] = "col-md-12 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+            if values_field["key"] == "lang":
+                values_field["class"] = "col-md-12 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+            if values_field["key"] == "address":
+                values_field["class"] = "col-md-12 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+            if values_field["key"] == "zip_code":
+                values_field["class"] = "col-md-6 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+            if values_field["key"] == "city":
+                values_field["class"] = "col-md-6 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+            if values_field["key"] == "country_id":
+                values_field["class"] = "col-md-12 d-none"
+                values_field["required"] = False
+                values_field["disabled"] = True
+
+        if ctx.product_categ.product_qty_must_be_read_only:
+            if values_field["key"] == "ordered_parts":
                 values_field["disabled"] = True
