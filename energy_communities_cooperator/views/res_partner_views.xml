@@ -82,6 +82,9 @@
         <!--  attrs="{'invisible': [('member', '=', False)], 'readonly': True}"-->
         <!--/>-->
       </field>
+      <field name="title" position="after">
+        <field name="gender" />
+      </field>
     </field>
   </record>
   <record model="ir.ui.menu" id="cooperator.menu_cooperator_cooperator">
