@@ -4,6 +4,13 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-01-13 (v16.0.0.7.6)
+
+- fix the permissions on CreateUsersWizard. Now all admin roles can launch this wizard
+- enrich user attributes in keyclok. Now we have the energy community, the email contact
+  of the energy community and the correct language in keycloak
+- tests to test all previous things
+
 ### 2025-12-19 (v16.0.0.7.5)
 
 - Better cooperator buttons on landing

@@ -619,7 +619,15 @@ class ResUsers(models.Model):
         values = {
             "username": odoo_user.login,
             "email": odoo_user.partner_id.email,
-            "attributes": {"lang": [odoo_user.lang]},
+            "attributes": {
+                "lang": [odoo_user.lang],
+                "locale": [odoo_user.lang[:2]],
+                "energy_community": [odoo_user.partner_id.company_id.name],
+                "energy_community_email": [
+                    odoo_user.partner_id.company_id.email
+                    or "soporte@somcomunitats.coop"
+                ],
+            },
             "enabled": True,
         }
         if "firstname" in odoo_user.partner_id:
@@ -669,10 +677,14 @@ class ResUsers(models.Model):
     def _send_kc_reset_password_mail(self):
         provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
         provider_id.validate_admin_provider()
+        lang = self.partner_id.lang and self.partner_id.lang[:2] or "es"
+        lang = lang != "ca" and lang or ""
         headers = {"Authorization": "Bearer %s" % self._get_admin_token(provider_id)}
         headers["Content-Type"] = "application/json"
         if provider_id.reset_password_endpoint:
-            endpoint = provider_id.reset_password_endpoint.format(kc_uid=self.oauth_uid)
+            endpoint = provider_id.reset_password_endpoint.format(
+                kc_uid=self.oauth_uid, lang=lang
+            )
             response = requests.put(
                 endpoint, headers=headers, data='["UPDATE_PASSWORD", "VERIFY_EMAIL"]'
             )

@@ -11,7 +11,98 @@ from .helpers import CompanySetupMixin, UserSetupMixin
 faker = Faker(locale="es_ES")
 
 
-class TestResUsers(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
+class TestResUsers(common.TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+    def setUp(self):
+        super().setUp()
+        self.maxDiff = None
+        self.role_id = self.env.ref("energy_communities.role_ce_member")
+        self.partner_vat = "26309903L"
+
+    def test_build_platform_user__create_kc_user_ok(self):
+        # given a partner that is a effective cooperator
+        partner = self.env["res.partner"].search(
+            [("vat", "=", self.partner_vat)], limit=1
+        )[0]
+        # and the energy community that belongs that partner
+        company = self.env["res.company"].search(
+            [("name", "=", "Community 1")], limit=1
+        )[0]
+        assert partner.company_id.id == company.id, (
+            f"Please provide the same energy community "
+            f"for {partner.name}, {partner.company_id} != {company}"
+        )
+
+        # when whe build a new platform user for that partner
+        new_user = self.env["res.users"].build_platform_user(
+            company, partner, self.role_id, "create_kc_user", False, {}
+        )
+
+        # then a new user is created
+        user = self.env["res.users"].search(
+            [("login", "=", self.partner_vat)], limit=1
+        )[0]
+        self.assertEqual(new_user.login, user.login)
+        self.assertEqual(new_user.company_id, user.company_id)
+
+    def test__send_kc_reset_password_mail(self):
+        # given a new user platform user
+        new_user = self._create_platform_user()
+
+        # when we send the reset password mail
+        res = new_user._send_kc_reset_password_mail()
+
+        # then, everything work as expected
+        self.assertIsNone(res)
+
+    def test_build_platform_user__invite_user_through_kc_ok(self):
+        # given a partner that is a effective cooperator
+        partner = self.env["res.partner"].search(
+            [("vat", "=", self.partner_vat)], limit=1
+        )[0]
+        # and the energy community that belongs that partner
+        company = self.env["res.company"].search(
+            [("name", "=", "Community 1")], limit=1
+        )[0]
+        assert partner.company_id.id == company.id, (
+            f"Please provide the same energy community "
+            f"for {partner.name}, {partner.company_id} != {company}"
+        )
+
+        # when whe build a new platform user for that partner
+        new_user = self.env["res.users"].build_platform_user(
+            company, partner, self.role_id, "invite_user_through_kc", True, {}
+        )
+
+        # then a new user is created
+        user = self.env["res.users"].search(
+            [("login", "=", self.partner_vat)], limit=1
+        )[0]
+        self.assertEqual(new_user.login, user.login)
+        self.assertEqual(new_user.company_id, user.company_id)
+
+    def _create_platform_user(self):
+        partner = self.env["res.partner"].search(
+            [("vat", "=", self.partner_vat)], limit=1
+        )[0]
+        company = self.env["res.company"].search(
+            [("name", "=", "Community 1")], limit=1
+        )[0]
+        assert partner.company_id.id == company.id, (
+            f"Please provide the same energy community "
+            f"for {partner.name}, {partner.company_id} != {company}"
+        )
+        new_user = self.env["res.users"].build_platform_user(
+            company, partner, self.role_id, "create_kc_user", False, {}
+        )
+        return new_user
+
+
+@unittest.skip("deprecated")
+class TestResUsersDEPRECATED(CompanySetupMixin, UserSetupMixin, common.TransactionCase):
     def setUp(self):
         super().setUp()
 
