@@ -60,9 +60,7 @@ class CooperativeMembership(models.Model):
     partner_phone = fields.Char(related="partner_id.phone", store=True)
     partner_email = fields.Char(related="partner_id.email", store=True)
     partner_vat = fields.Char(related="partner_id.vat", store=True)
-    effective_invited = fields.Boolean(
-        string="Effective Invited", related="partner_id.effective_invited", store=True
-    )
+    effective_invited = fields.Boolean(string="Effective Invited", default=False)
     membership_type = fields.Char(
         string="Membership Type",
         compute="_compute_membership_type",
@@ -81,19 +79,16 @@ class CooperativeMembership(models.Model):
         )
         return [(s.default_code, s.short_name) for s in shares]
 
-    # @api.depends(
-    #     "partner_id.share_ids",
-    #     "partner_id.share_ids.share_product_id.default_code",
-    #     "partner_id.share_ids.share_number",
-    # )
-    # def _compute_cooperator_type(self):
-    #     for record in self:
-    #         share_type = ""
-    #         for line in record.share_ids:
-    #             if line.share_number > 0:
-    #                 share_type = line.share_product_id.default_code
-    #                 break
-    #         record.cooperator_type = share_type
+    def assign_cooperator_register_number(self):
+        """Set a new cooperator register number on the memberships if one is not
+        already assigned.
+        If the membership type is invited, the cooperator register number is set to 0.
+        """
+        for membership in self:
+            if membership.membership_type == "invited":
+                membership.cooperator_register_number = 0
+        if membership.cooperator_register_number != 0:
+            super().assign_cooperator_register_number()
 
     @api.depends("subscription_request_ids")
     def _compute_subscription_invoice_ids(self):
