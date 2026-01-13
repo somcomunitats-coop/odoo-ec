@@ -6,7 +6,7 @@
 {
     "name": "Energy Import Statement Files",
     "category": "Accounting",
-    "version": "16.0.0.1.0",
+    "version": "16.0.0.1.1",
     "description": """
     Energy Communities fix for account_statement_import_file.
     """,
