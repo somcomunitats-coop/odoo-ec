@@ -55,12 +55,16 @@ class ResCompany(models.Model):
             )
             # We check the invited is not considered effective cooperator to increase the value
             for effective_invited in effective_inviteds:
-                if not self.env["cooperative.membership"].search(
-                    [
-                        ("partner_id", "=", effective_invited.id),
-                        ("company_id", "=", record.id),
-                        ("member", "=", True),
-                    ]
+                if (
+                    not self.env["cooperative.membership"]
+                    .with_company(record)
+                    .search(
+                        [
+                            ("partner_id", "=", effective_invited.id),
+                            ("company_id", "=", record.id),
+                            ("member", "=", True),
+                        ]
+                    )
                 ):
                     # if non_cooperator.with_company(record).no_member_autorized_in_energy_actions:
                     numberof_effective_inviteds += 1
@@ -68,9 +72,11 @@ class ResCompany(models.Model):
 
     def _compute_numberof_effective_members(self):
         for record in self:
-            record.numberof_effective_members = self.env[
-                "cooperative.membership"
-            ].search_count([("company_id", "=", record.id), ("member", "=", True)])
+            record.numberof_effective_members = (
+                self.env["cooperative.membership"]
+                .with_company(record)
+                .search_count([("company_id", "=", record.id), ("member", "=", True)])
+            )
 
     def _compute_numberof_effective_cooperators(self):
         for record in self:
