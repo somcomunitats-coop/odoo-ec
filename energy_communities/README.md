@@ -4,6 +4,11 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-01-13 (v16.0.0.7.7)
+
+- log warning message in logfile and chatter instead of raise an exception when
+  validating role assignation in user creation
+
 ### 2026-01-13 (v16.0.0.7.6)
 
 - fix the permissions on CreateUsersWizard. Now all admin roles can launch this wizard
