@@ -47,6 +47,13 @@ class TestServiceInvoicingComponents(
         self.assertEqual(contract.recurring_next_date, creation_wizard.execution_date)
         self.assertEqual(contract.pack_type, PACK_TYPE_PLATFORM)
         self.assertEqual(contract.journal_id.id, 11)
+        # and the type of the contract must be the same as the template
+        self.assertEqual(
+            contract.contract_line_ids[0].qty_type,
+            creation_wizard.platform_pack_id.property_contract_template_id.contract_line_ids[
+                0
+            ].qty_type,
+        )
 
     def test_service_invoicing_component_creation_metadata_ok(self):
         self._creation_workflow_meta_persistence_test(
