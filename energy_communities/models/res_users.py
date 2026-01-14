@@ -195,10 +195,11 @@ class ResUsers(models.Model):
                 )
 
                 if user_has_role_in_company:
-                    error = _(
+                    message = _(
                         "User with vat {} is already {} for the company {}"
                     ).format(self.login, user_role.code, company_id.name)
-                    raise ValidationError(error)
+                    logger.warning(message)
+                    self.partner_id.message_post(subject="[Warning]", body=message)
                 if role_is_not_available_for_user:
                     error = _(
                         "Role {} is not available for user with {} role. This role only allows {}"
