@@ -11,18 +11,6 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.voluntary_share_id",
         readonly=False,
     )
-    cooperator_share_form_header_text = fields.Html(
-        string="Cooperator share form header text",
-        translate=True,
-        related="company_id.cooperator_share_form_header_text",
-        readonly=False,
-    )
-    voluntary_share_form_header_text = fields.Html(
-        string="Voluntary share form header text",
-        translate=True,
-        related="company_id.voluntary_share_form_header_text",
-        readonly=False,
-    )
     voluntary_share_journal_account = fields.Many2one(
         "account.journal",
         "Voluntary shares journal",

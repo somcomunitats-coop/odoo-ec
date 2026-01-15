@@ -34,12 +34,6 @@ class ResCompany(models.Model):
         domain=[("is_share", "=", True)],
         string="Voluntary share to show on website",
     )
-    cooperator_share_form_header_text = fields.Html(
-        string="Cooperator share form header text", translate=True
-    )
-    voluntary_share_form_header_text = fields.Html(
-        string="Voluntary share form header text", translate=True
-    )
     voluntary_share_journal_account = fields.Many2one(
         "account.journal",
         "Voluntary shares journal",

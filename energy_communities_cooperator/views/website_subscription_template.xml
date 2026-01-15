@@ -42,7 +42,7 @@
                 </t>
               </t>
             </t>
-            <p><t t-raw="company.cooperator_share_form_header_text" /></p>
+            <!-- <p><t t-raw="company.cooperator_share_form_header_text" /></p> -->
             <p
       >Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
@@ -391,11 +391,11 @@
                     t-attf-value="#{company_id or ''}"
                   />
                                 </div>
-                                <div name="voluntary_share_form_header_text_container">
+                                <!-- <div name="voluntary_share_form_header_text_container">
                                     <p><t
                       t-out="company.voluntary_share_form_header_text"
                     /></p>
-                                </div>
+                                </div> -->
                 <div name="become_cooperator_terms">
                             <p
                   >Note: Please, if you are not yet a member, you must process it through

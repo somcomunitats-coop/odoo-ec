@@ -593,19 +593,11 @@ class WebsiteShareSubscriptionController(http.Controller):
         ):
             return ctx.share_product_id.html_specific_products
         if (
-            ctx.subscription_mode.value == "voluntary"
-            and ctx.formtype_mode.value == "generic"
-            and ctx.company.voluntary_share_form_header_text
-            and ctx.company.voluntary_share_form_header_text != empty_headline
+            ctx.formtype_mode.value == "generic"
+            and ctx.product_categ.share_form_header_text
+            and ctx.product_categ.share_form_header_text != empty_headline
         ):
-            return ctx.company.voluntary_share_form_header_text
-        if (
-            ctx.subscription_mode.value != "voluntary"
-            and ctx.formtype_mode.value == "generic"
-            and ctx.company.cooperator_share_form_header_text
-            and ctx.company.cooperator_share_form_header_text != empty_headline
-        ):
-            return ctx.company.cooperator_share_form_header_text
+            return ctx.product_categ.share_form_header_text
         return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE[
             ctx.subscription_mode
         ].format(
