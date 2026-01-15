@@ -52,6 +52,9 @@ class ProductCategory(models.Model):
         default=False,
         company_dependent=True,
     )
+    share_form_header_text = fields.Html(
+        string="Customizable paragraph in the header text of the form", translate=True
+    )
 
     def url_individual_button(self):
         MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
