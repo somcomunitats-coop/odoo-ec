@@ -33,7 +33,7 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE = {
 SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT = (
     "<p>"
     + _(
-        "Once you are a member you can enjoy the services available from the community and be part of a movement of social and energy model transformation."
+        "Once your request has been received, you will receive a confirmation email with instructions to follow."
     )
     + "</p>"
 )
@@ -59,10 +59,21 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE = {
     + ".</p>"
     + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
     "voluntary": "<p>"
-    + _("This form allow you to request be voluntary of the community: {company_name} ")
-    + _("vol_share_eu_es")
+    + _(
+        "This is the form for members of {company_name} to make voluntary contributions to the share capital"
+    )
     + ".</p>"
-    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
+    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT
+    + "<p>"
+    + _("Note: If you are not yet a member, please complete the following forms:")
+    + "<a href='/subscription/member/{external_id}'>"
+    + _("INDIVIDUAL MEMBERSHIP REGISTRATION")
+    + "</a>"
+    + _(" and ")
+    + "<a href='/subscription/company_member/{external_id}'>"
+    + _("LEGAL ENTITY MEMBERSHIP REGISTRATION")
+    + "</a>"
+    + "</p>",
 }
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER = {
     "member": _(
