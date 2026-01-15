@@ -504,6 +504,8 @@ class WebsiteShareSubscriptionController(http.Controller):
                 "required"
             ] = ctx.company.generic_rules_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES
+        elif "generic_rules" in form_fields:
+            del form_fields["generic_rules"]
         if ctx.company.display_internal_rules_approval:
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES["internal_rules"][
                 "description"
@@ -512,6 +514,8 @@ class WebsiteShareSubscriptionController(http.Controller):
                 "required"
             ] = ctx.company.internal_rules_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES
+        elif "internal_rules" in form_fields:
+            del form_fields["internal_rules"]
         if ctx.company.display_financial_risk_approval:
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK["financial_risk"][
                 "description"
@@ -520,6 +524,8 @@ class WebsiteShareSubscriptionController(http.Controller):
                 "required"
             ] = ctx.company.financial_risk_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK
+        elif "financial_risk" in form_fields:
+            del form_fields["financial_risk"]
         if ctx.company.display_data_policy_approval:
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY["privacy_policy"][
                 "description"
@@ -528,6 +534,8 @@ class WebsiteShareSubscriptionController(http.Controller):
                 "required"
             ] = ctx.company.data_policy_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY
+        elif "privacy_policy" in form_fields:
+            del form_fields["privacy_policy"]
         values = {"form_fields": []}
 
         # Build field dictionary for each configured field
