@@ -45,14 +45,12 @@ class ProductCategory(models.Model):
     product_website = fields.Boolean(
         string="Product Website",
         default=False,
-    )
-    assume_already_member = fields.Boolean(
-        string="Assume Already Member",
-        default=False,
+        company_dependent=True,
     )
     product_qty_must_be_read_only = fields.Boolean(
         string="Product Qty Must Be Read Only",
         default=False,
+        company_dependent=True,
     )
 
     def url_individual_button(self):
