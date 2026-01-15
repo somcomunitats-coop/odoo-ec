@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2026-01-15 (v16.0.0.7.1)
+
+- Apply new formula for count members
+
 ### 2025-11-03 (v16.0.0.7.0)
 
 - Adjustments for new public form for new community creation: Create bank accounts and

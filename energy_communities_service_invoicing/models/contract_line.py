@@ -46,3 +46,8 @@ class ContractLine(models.Model):
                 rec.create_invoice_visibility = bool(rec.recurring_next_date)
             else:
                 rec.create_invoice_visibility = False
+
+    def _prepare_invoice_line(self):
+        res = super()._prepare_invoice_line()
+        res["tax_ids"] = self.product_id.taxes_id
+        return res

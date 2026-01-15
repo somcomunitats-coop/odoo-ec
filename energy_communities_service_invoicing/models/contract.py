@@ -180,14 +180,11 @@ class ContractContract(models.Model):
     def _recurring_create_invoice(self, date_ref=False):
         moves = super()._recurring_create_invoice(date_ref)
         for move in moves:
-            # force pack type computation
-            # move._compute_pack_type()
             # if invoice has no lines we delete it
             if not move.line_ids:
                 move.unlink()
         # once invoices have been generated we propagate recurrency to contract
-        with contract_utils(self.env, self) as component:
-            component.propagate_recurrency_values_to_contract()
+        self.propagate_recurrency_values_to_contract()
         return moves
 
     def propagate_recurrency_values_to_contract(self):
@@ -318,3 +315,10 @@ class ContractContract(models.Model):
             self.write({"status": "closed"})
         else:
             self.write({"status": "closed_planned"})
+
+    def get_numberof_effective_cooperators_range(self):
+        return (
+            0.5
+            if self.community_company_id.numberof_effective_cooperators <= 100
+            else 1
+        )

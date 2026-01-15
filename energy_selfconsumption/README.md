@@ -183,6 +183,10 @@ team or refer to the project documentation.
 
 ## Changelog
 
+### 2026-01-15 (v16.0.0.5.16)
+
+- Apply new formula for count members
+
 ### 2025-11-20 (v16.0.0.5.15)
 
 - Fixed error to download file txt in selfconsumption

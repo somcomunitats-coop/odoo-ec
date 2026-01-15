@@ -111,6 +111,6 @@ class TestPackTypeMixin(TransactionCase, ServiceInvoicingTestingProductCreator):
         self, related_contract, expected_pack_type
     ):
         self.assertEqual(related_contract.pack_type, expected_pack_type)
-        related_contract.recurring_create_invoice()
+        related_contract._recurring_create_invoice()
         new_invoice = related_contract._get_related_invoices()
         self.assertEqual(new_invoice.pack_type, expected_pack_type)

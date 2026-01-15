@@ -134,8 +134,6 @@ class ContractUtils(Component):
                 "ordered_qty_type": line.qty_type,
                 "ordered_quantity": line.quantity,
                 "ordered_qty_formula_id": line.qty_formula_id.id,
-                "qty_type": "fixed",
-                "quantity": 0,
             }
             if line.product_id.product_tmpl_id.description_sale:
                 # context language to be considered from community_company_id or partner_id

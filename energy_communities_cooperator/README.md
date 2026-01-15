@@ -4,6 +4,11 @@
 
 ## Changelog
 
+### 2026-01-15 (v16.0.0.5.0)
+
+- numberof_effective_inviteds,numberof_effective_members and
+  numberof_effective_cooperators are fixed
+
 ### 2025-11-12 (v16.0.0.5.0)
 
 - Moves all new fields of res company model to res_config_setting
