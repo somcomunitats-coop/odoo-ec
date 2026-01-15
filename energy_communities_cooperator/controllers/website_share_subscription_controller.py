@@ -475,7 +475,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         except:
             categ = None
 
-        return categ
+        return categ.sudo()
 
     def _get_page_form_fields_values(self, ctx):
         """
