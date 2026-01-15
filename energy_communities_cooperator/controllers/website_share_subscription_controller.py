@@ -608,7 +608,10 @@ class WebsiteShareSubscriptionController(http.Controller):
             return ctx.company.cooperator_share_form_header_text
         return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE[
             ctx.subscription_mode
-        ].format(company_name=ctx.company.comercial_name)
+        ].format(
+            company_name=ctx.company.comercial_name,
+            external_id=ctx.company.company_external_id,
+        )
 
     def _get_page_headline_fixed_transfer(self, ctx):
         """
