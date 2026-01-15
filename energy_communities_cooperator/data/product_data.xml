@@ -12,12 +12,14 @@
       <field name="product_website" eval="True" />
       <field name="assume_already_member" eval="False" />
       <field name="product_qty_must_be_read_only" eval="False" />
+      <field name="data_xml_id">cooperator.product_category_company_share</field>
     </record>
     <record id="energy_communities_cooperator.product_category_company_invited_share" model="product.category">
       <field name="name">Registration of invited person/entity</field>
       <field name="product_website" eval="True" />
       <field name="assume_already_member" eval="False" />
       <field name="product_qty_must_be_read_only" eval="False" />
+      <field name="data_xml_id">energy_communities_cooperator.product_category_company_invited_share</field>
     </record>
     <function name="write" model="ir.model.data">
       <function name="search" model="ir.model.data">
@@ -42,6 +44,7 @@
       <field name="product_website" eval="True" />
       <field name="assume_already_member" eval="True" />
       <field name="product_qty_must_be_read_only" eval="False" />
+      <field name="data_xml_id">energy_communities_cooperator.product_category_company_voluntary_share</field>
     </record>
     <function name="write" model="ir.model.data">
       <function name="search" model="ir.model.data">

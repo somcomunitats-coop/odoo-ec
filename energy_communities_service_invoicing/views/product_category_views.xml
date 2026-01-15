@@ -6,7 +6,7 @@
     <field name="arch" type="xml">
       <group name="first" position="after">
         <group name="internal_ref">
-          <field name="data_xml_id" />
+          <field name="data_xml_id" readonly="1" invisible="1" />
           <field name="pack_type" />
           <field name="is_pack_service" />
         </group>
