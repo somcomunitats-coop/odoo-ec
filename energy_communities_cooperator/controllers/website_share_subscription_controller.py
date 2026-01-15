@@ -544,7 +544,7 @@ class WebsiteShareSubscriptionController(http.Controller):
                 "value": self._get_form_field_value(
                     ctx.model_dump(), form_fields[field].get("value", False)
                 ),
-                "key": field if "h3" not in field else False,
+                "key": field,
                 "class": form_fields[field]["class"],
                 "label": form_fields[field].get("label", False),
                 "type": "energy_communities.{}".format(form_fields[field]["type"]),
