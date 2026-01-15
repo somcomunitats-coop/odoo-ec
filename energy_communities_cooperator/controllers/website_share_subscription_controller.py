@@ -829,52 +829,6 @@ class WebsiteShareSubscriptionController(http.Controller):
                 values_field["required"] = False
                 values_field["disabled"] = True
 
-        if ctx.product_categ.assume_already_member:
-            if values_field["key"] == "email":
-                values_field["class"] = "col-md-12 d-none"
-                values_field["required"] = False
-                values_field["disabled"] = True
-            if values_field["key"] == "firstname":
-                values_field["class"] = "col-md-6 d-none"
-                values_field["required"] = False
-                values_field["disabled"] = True
-            if values_field["key"] == "lastname":
-                values_field["class"] = "col-md-6 d-none"
-                values_field["required"] = False
-                values_field["disabled"] = True
-            if values_field["key"] == "gender":
-                values_field["class"] = "col-md-6 d-none"
-                values_field["required"] = False
-                values_field["disabled"] = True
-            if values_field["key"] == "birthdate":
-                values_field["class"] = "col-md-6 d-none"
-                values_field["required"] = False
-                values_field["disabled"] = True
-            if values_field["key"] == "phone":
-                values_field["class"] = "col-md-12 d-none"
-                values_field["required"] = False
-                values_field["disabled"] = True
-            if values_field["key"] == "lang":
-                values_field["class"] = "col-md-12 d-none"
-                values_field["required"] = False
-                values_field["disabled"] = True
-            if values_field["key"] == "address":
-                values_field["class"] = "col-md-12 d-none"
-                values_field["required"] = False
-                values_field["disabled"] = True
-            if values_field["key"] == "zip_code":
-                values_field["class"] = "col-md-6 d-none"
-                values_field["required"] = False
-                values_field["disabled"] = True
-            if values_field["key"] == "city":
-                values_field["class"] = "col-md-6 d-none"
-                values_field["required"] = False
-                values_field["disabled"] = True
-            if values_field["key"] == "country_id":
-                values_field["class"] = "col-md-12 d-none"
-                values_field["required"] = False
-                values_field["disabled"] = True
-
         if ctx.product_categ.product_qty_must_be_read_only:
             if values_field["key"] == "ordered_parts":
                 values_field["disabled"] = True
