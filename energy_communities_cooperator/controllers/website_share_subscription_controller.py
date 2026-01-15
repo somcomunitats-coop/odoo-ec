@@ -544,6 +544,7 @@ class WebsiteShareSubscriptionController(http.Controller):
                 "required": form_fields[field].get("required", False),
                 "description": form_fields[field].get("description", False),
                 "options": form_fields[field].get("options", False),
+                "readonly": form_fields[field].get("readonly", False),
             }
             # Apply custom field updates based on context
             self._update_form_custom_fields(ctx, values_field)
@@ -807,28 +808,30 @@ class WebsiteShareSubscriptionController(http.Controller):
             values_field["options"] = self._get_share_product_options(ctx)
             # Disable selector when only one product is available (no choice needed)
             if len(ctx.products) == 1:
-                values_field["disabled"] = True
+                values_field["readonly"] = True
             # if ctx.company.product_website:
-            #     values_field["disabled"] = True
+            #     values_field["readonly"] = True
 
         if not ctx.product_categ.product_website:
             if values_field["key"] == "share_product_id":
                 values_field["class"] = "col-md-4 d-none"
                 values_field["required"] = False
-                values_field["disabled"] = True
+                values_field["readonly"] = True
             if values_field["key"] == "ordered_parts":
                 values_field["class"] = "col-md-3 d-none"
                 values_field["required"] = False
-                values_field["disabled"] = True
+                values_field["readonly"] = True
             if values_field["key"] == "total_price":
                 values_field["class"] = "col-md-4 d-none"
                 values_field["required"] = False
-                values_field["disabled"] = True
+                values_field["readonly"] = True
             if values_field["key"] == "currency_symbol":
                 values_field["class"] = "col-md-1 d-none"
                 values_field["required"] = False
-                values_field["disabled"] = True
+                values_field["readonly"] = True
+            if values_field["key"] == "h3_share_selection":
+                values_field["class"] = "col-md-12 d-none"
 
         if ctx.product_categ.product_qty_must_be_read_only:
             if values_field["key"] == "ordered_parts":
-                values_field["disabled"] = True
+                values_field["readonly"] = True

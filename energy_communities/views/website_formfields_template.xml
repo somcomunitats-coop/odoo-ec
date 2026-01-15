@@ -71,6 +71,7 @@
         t-attf-value="#{value or ''}"
         t-att-required="required"
         t-att-disabled="disabled"
+        t-att-readonly="readonly"
         t-att-data-trigger="trigger"
       />
       </div>
@@ -115,6 +116,7 @@
         t-attf-value="#{value or ''}"
         t-att-required="required"
         t-att-disabled="disabled"
+        t-att-readonly="readonly"
         t-att-data-trigger="trigger"
       />
       </div>
@@ -144,6 +146,7 @@
         t-attf-value="#{value or ''}"
         t-att-required="required"
         t-att-disabled="disabled"
+        t-att-readonly="readonly"
         t-att-data-trigger="trigger"
       />
       </div>
@@ -172,6 +175,7 @@
         t-attf-maxlength="#{maxlength}"
         t-att-required="required"
         t-att-disabled="disabled"
+        t-att-readonly="readonly"
         t-att-data-trigger="trigger"
       ><t t-esc="value or ''" /></textarea>
       </div>
@@ -198,6 +202,7 @@
         t-attf-name="#{key}"
         t-att-required="required"
         t-att-disabled="disabled"
+        t-att-readonly="readonly"
         t-att-data-trigger="trigger"
       >
             <option value="">Please choose an option</option>
@@ -243,6 +248,7 @@
               t-att-name="option['id']"
               t-att-checked="option['id'] in value"
               t-att-disabled="disabled"
+              t-att-readonly="readonly"
             />
             <span><t t-esc="option['name']" /></span>
           </div>
@@ -266,6 +272,7 @@
           t-att-checked="value=='on'"
           t-att-required="required"
           t-att-disabled="disabled"
+          t-att-readonly="readonly"
         />
           <t t-call="energy_communities.form_field_part_label">
             <t t-set="field_key" t-value="key" />
@@ -310,6 +317,7 @@
               t-att-checked="option['id'] == value"
               t-att-required="required"
               t-att-disabled="disabled"
+              t-att-readonly="readonly"
             />
             <span><t t-esc="option['name']" /></span>
           </div>
@@ -346,6 +354,7 @@
           t-attf-name="#{key}"
           t-att-required="required and not value"
           t-att-disabled="disabled"
+          t-att-readonly="readonly"
           t-att-data-trigger="trigger"
         />
         </div>
@@ -374,7 +383,7 @@
           </t>
           <input
         t-attf-class="form-control form-control-sm o_website_form_date_past#{trigger and ' data-trigger'}"
-        type="text"
+        type="date"
         t-attf-id="#{key}"
         t-attf-name="#{key}"
         t-attf-value="#{value or ''}"
@@ -382,6 +391,7 @@
         t-attf-placeholder="#{date_placeholder}"
         t-att-required="required"
         t-att-disabled="disabled"
+        t-att-readonly="readonly"
         t-att-data-trigger="trigger"
       />
         </div>

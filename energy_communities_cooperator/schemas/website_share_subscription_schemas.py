@@ -80,9 +80,9 @@ class WebsiteShareSubscriptionSubmissionBase(BaseModel):
     country_id: int
     share_product_id: int
     ordered_parts: int
-    privacy_policy: bool
     iban: str
     conditions_payment: bool
+    privacy_policy: Optional[bool] = None
 
     @model_validator(mode="before")
     def empty_strings_to_none(cls, data):
@@ -107,8 +107,8 @@ class WebsiteShareSubscriptionSubmissionVoluntary(BaseModel):
     share_product_id: int
     ordered_parts: int
     iban: str
-    privacy_policy: bool
     conditions_payment: bool
+    privacy_policy: Optional[bool] = None
 
     @model_validator(mode="before")
     def empty_strings_to_none(cls, data):
@@ -157,7 +157,10 @@ class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
         try:
             date_date = datetime.strptime(date_str, "%d/%m/%Y").date()
         except:
-            raise ValueError(_("Invalid date format"))
+            try:
+                date_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+            except:
+                raise ValueError(_("Invalid date format"))
         return date_date
 
 
