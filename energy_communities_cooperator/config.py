@@ -392,6 +392,7 @@ MAPPING__MEMBER__DEFAULT_FORM_FIELDS = (
 MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
     {
         "h3_company_information": {
+            "key": "h3_company_information",
             "class": "col-md-12",
             "type": "form_h3",
             "description": _("Company Information"),
@@ -401,6 +402,7 @@ MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
     | {
         "h3_main_address": {
+            "key": "h3_main_address",
             "class": "col-md-12",
             "type": "form_h3",
             "description": _("Main Address"),
@@ -409,6 +411,7 @@ MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
     | {
         "h3_contact_person": {
+            "key": "h3_contact_person",
             "class": "col-md-12",
             "type": "form_h3",
             "description": _("Contact Person"),
@@ -418,6 +421,7 @@ MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_CONTACT_PERSON_FUNCTION
     | {
         "h3_share_selection": {
+            "key": "h3_share_selection",
             "class": "col-md-12",
             "type": "form_h3",
             "description": _("Share Selection"),
@@ -434,6 +438,7 @@ MAPPING__INVITED__DEFAULT_FORM_FIELDS = (
 MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
     {
         "h3_company_information": {
+            "key": "h3_company_information",
             "class": "col-md-12",
             "type": "form_h3",
             "description": _("Company Information"),
@@ -443,6 +448,7 @@ MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
     | {
         "h3_main_address": {
+            "key": "h3_main_address",
             "class": "col-md-12",
             "type": "form_h3",
             "description": _("Main Address"),
@@ -451,6 +457,7 @@ MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
     | {
         "h3_contact_person": {
+            "key": "h3_contact_person",
             "class": "col-md-12",
             "type": "form_h3",
             "description": _("Contact Person"),
@@ -460,6 +467,7 @@ MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_CONTACT_PERSON_FUNCTION
     | {
         "h3_share_selection": {
+            "key": "h3_share_selection",
             "class": "col-md-12",
             "type": "form_h3",
             "description": _("Share Selection"),
