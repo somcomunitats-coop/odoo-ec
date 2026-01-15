@@ -122,7 +122,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_COMPANY_CONTACT = {
         "value": "",
         "label": _("Company Name"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
     "company_email": {
         "class": "col-md-12",
@@ -130,7 +130,15 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_COMPANY_CONTACT = {
         "value": "",
         "label": _("Company Email"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
+    },
+    "company_email_confirmation": {
+        "class": "col-md-12",
+        "type": "form_field_email",
+        "value": "",
+        "label": _("CompanyEmail Confirmation"),
+        "required": True,
+        "readonly": False,
     },
 }
 
@@ -141,15 +149,15 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "value": "",
         "label": _("Email"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
     "email_confirmation": {
-        "class": "col-md-12 d-none",
+        "class": "col-md-12",
         "type": "form_field_email",
         "value": "",
         "label": _("Email Confirmation"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
     "firstname": {
         "class": "col-md-6",
@@ -157,7 +165,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "value": "",
         "label": _("Firstname"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
     "lastname": {
         "class": "col-md-6",
@@ -165,7 +173,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "value": "",
         "label": _("Lastname"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
     "gender": {
         "class": "col-md-6",
@@ -174,7 +182,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "label": _("Gender"),
         "required": True,
         "options": GENDER_OPTIONS,
-        "disabled": False,
+        "readonly": False,
     },
     "birthdate": {
         "class": "col-md-6",
@@ -182,7 +190,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "value": "",
         "label": _("Birthdate"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
     "phone": {
         "class": "col-md-12",
@@ -190,7 +198,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "value": "",
         "label": _("Phone"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
     "lang": {
         "class": "col-md-12",
@@ -198,7 +206,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "value": "",
         "label": _("Language"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
         "options": [],
     },
 }
@@ -210,7 +218,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT = {
         "value": "",
         "label": _("VAT"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
 }
 MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS = {
@@ -220,7 +228,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS = {
         "value": "",
         "label": _("Address"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
     "city": {
         "class": "col-md-6",
@@ -228,7 +236,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS = {
         "value": "",
         "label": _("City"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
     "zip_code": {
         "class": "col-md-6",
@@ -236,7 +244,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS = {
         "value": "",
         "label": _("Postal Code"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
     "country_id": {
         "class": "col-md-12",
@@ -244,7 +252,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS = {
         "value": "",
         "label": _("Country"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
         "options": [],
     },
 }
@@ -256,7 +264,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
         "value": "product.id",
         "label": _("Share Product"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
         "options": [],
     },
     "ordered_parts": {
@@ -265,7 +273,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
         "value": "",
         "label": _("Ordered Parts"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
     "total_price": {
         "class": "col-md-4",
@@ -273,7 +281,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
         "value": "",
         "label": _("Total Price"),
         "required": True,
-        "disabled": True,
+        "readonly": True,
     },
     "currency_symbol": {
         "class": "col-md-1",
@@ -281,7 +289,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
         "value": "company.currency_id.symbol",
         "label": "",
         "required": False,
-        "disabled": True,
+        "readonly": True,
     },
     "payment_method": {
         "class": "col-md-12 d-none",
@@ -289,7 +297,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
         "value": "",
         "label": _("Payment Method"),
         "required": True,
-        "disabled": True,
+        "readonly": True,
         "options": [
             {"id": "sepa", "name": _("SEPA")},
             {"id": "transfer", "name": _("Transfer")},
@@ -301,7 +309,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
         "value": "",
         "label": _("IBAN"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
     "conditions_payment": {
         "class": "col-md-12",
@@ -311,7 +319,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
             "I confirm that the holder of the bank account, whether myself or another person, authorizes the direct debit of the bills."
         ),
         "required": True,
-        "disabled": False,
+        "readonly": False,
         "description": "",
     },
 }
@@ -323,7 +331,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK = {
         "value": False,
         "label": _("Financial Risk"),
         "required": False,
-        "disabled": False,
+        "readonly": False,
         "description": "",
     },
 }
@@ -335,7 +343,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES = {
         "value": "",
         "label": _("Internal Rules"),
         "required": False,
-        "disabled": False,
+        "readonly": False,
         "description": "",
     },
 }
@@ -347,7 +355,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES = {
         "value": False,
         "label": _("Generic Rules"),
         "required": False,
-        "disabled": False,
+        "readonly": False,
         "description": "",
     },
 }
@@ -359,7 +367,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY = {
         "value": False,
         "label": _("Privacy Policy"),
         "required": False,
-        "disabled": False,
+        "readonly": False,
         "description": "",
     },
 }
@@ -371,7 +379,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_CONTACT_PERSON_FUNCTION = {
         "value": "",
         "label": _("Function"),
         "required": True,
-        "disabled": False,
+        "readonly": False,
     },
 }
 
@@ -467,6 +475,14 @@ MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS = (
             "type": "form_field_email",
             "value": "",
             "label": _("Email"),
+            "required": True,
+            "disabled": False,
+        },
+        "email_confirmation": {
+            "class": "col-md-12",
+            "type": "form_field_email",
+            "value": "",
+            "label": _("Email Confirmation"),
             "required": True,
             "disabled": False,
         },

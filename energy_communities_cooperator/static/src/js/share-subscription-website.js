@@ -71,12 +71,70 @@ odoo.define(
 
       $("#share_product_id").change();
 
-      // $('form').validate();
-      // $("form").on("submit", function (event) {
-      //   event.preventDefault();
-      //   var target = $(event.target);
-      //   target.validate();
-      // });
+      $("form").on("submit", function (event) {
+        event.preventDefault();
+        var form = $(this);
+
+        // Helper function to validate email confirmation
+        function validateEmailConfirmation(
+          emailField,
+          confirmationField,
+          errorMessage
+        ) {
+          var email = emailField.val();
+          var emailConfirmation = confirmationField.val();
+
+          // If both fields have values, they must match
+          if (email && emailConfirmation) {
+            if (email !== emailConfirmation) {
+              alert(errorMessage);
+              return false;
+            }
+          }
+          // If one field has value but the other doesn't, it's an error
+          else if ((email && !emailConfirmation) || (!email && emailConfirmation)) {
+            alert(errorMessage);
+            return false;
+          }
+
+          const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (email && !regex.test(email)) {
+            alert("Email is not valid");
+            return false;
+          }
+          if (emailConfirmation && !regex.test(emailConfirmation)) {
+            alert("Email confirmation is not valid");
+            return false;
+          }
+
+          return true;
+        }
+
+        // Validate email fields
+        if (
+          !validateEmailConfirmation(
+            $("#email"),
+            $("#email_confirmation"),
+            "Email and email confirmation do not match"
+          )
+        ) {
+          return false;
+        }
+
+        // Validate company email fields
+        if (
+          !validateEmailConfirmation(
+            $("#company_email"),
+            $("#company_email_confirmation"),
+            "Company email and company email confirmation do not match"
+          )
+        ) {
+          return false;
+        }
+
+        // If all validations pass, submit the form
+        form.off("submit").submit();
+      });
     });
   }
 );
