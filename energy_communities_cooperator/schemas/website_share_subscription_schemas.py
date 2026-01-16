@@ -29,6 +29,7 @@ from ..exceptions import ControllerContextValidationError
 
 class SubscriptionMode(str, Enum):
     member = "member"
+    member_associations = "member_associations"
     company_member = "company_member"
     invited = "invited"
     company_invited = "company_invited"

@@ -15,6 +15,9 @@ class ProductTemplate(models.Model):
                 MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["member"]
             ).id: "member",
             self.env.ref(
+                MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["member_associations"]
+            ).id: "member_associations",
+            self.env.ref(
                 MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["invited"]
             ).id: "invited",
             self.env.ref(

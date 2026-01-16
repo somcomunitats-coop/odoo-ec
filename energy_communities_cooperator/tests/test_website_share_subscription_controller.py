@@ -29,6 +29,10 @@ COMMUNITY_1_SHARE_VOL_EXT_ID = "cb7a1d775e800fd1ee4049f7dca9e041eb9ba083"
 COMMUNITY_1_SHARE_VOL_XML_ID = (
     "energy_communities_service_invoicing.product_template_voluntary_demo"
 )
+COMMUNITY_1_SHARE_ASSOCIATIONS_EXT_ID = "5b384ce32d8cdef02bc3a139d4cac0a22bb029e8"
+COMMUNITY_1_SHARE_ASSOCIATIONS_XML_ID = (
+    "energy_communities_service_invoicing.product_template_share_type_5_demo"
+)
 
 
 @tagged("-at_install", "post_install")
@@ -290,6 +294,28 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # it correctly renders the page
         self.assertEqual(response.status_code, 200)
 
+    def test_website_form_render_member_associations_ok(self):
+        # given http_client
+        # when we call for the global subscription form page
+        response = self.client(
+            "/subscription/member_associations/{}".format(COMMUNITY_1_EXT_ID)
+        )
+        # it correctly renders the page
+        self.assertEqual(response.status_code, 200)
+        # TODO: there are 2 products defined bu Share A is the default one
+
+    def test_website_form_render_member_associations_with_product_ok(self):
+        # given http_client
+        # and a valid data
+        # when we call for the single subscription form page
+        response = self.client(
+            "/subscription/member_associations/{}/{}".format(
+                COMMUNITY_1_EXT_ID, COMMUNITY_1_SHARE_ASSOCIATIONS_EXT_ID
+            )
+        )
+        # it correctly renders the page
+        self.assertEqual(response.status_code, 200)
+
     def test_website_form_member_submission_ok(self):
         # given the company
         company = self.env["res.company"].search(
@@ -306,6 +332,91 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         SUBSCRIPTION_FORM_SUBMISSION["share_product_id"] = share_product.id
         response = self.client(
             "/subscription/member/{}".format(COMMUNITY_1_EXT_ID),
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            data=SUBSCRIPTION_FORM_SUBMISSION,
+        )
+        # it correctly renders the page
+        self.assertEqual(response.status_code, 200)
+        # it creates a new subscription request
+        subscription_request = self.env["subscription.request"].search(
+            [
+                ("company_id", "=", company.id),
+                ("id", "not in", subscriptions_requests_old.ids),
+            ]
+        )
+        self.assertEqual(len(subscription_request), 1)
+        # it has the correct values
+        self.assertEqual(
+            subscription_request.share_product_id.product_variant_id.id,
+            share_product.product_variant_id.id,
+        )
+        self.assertEqual(
+            subscription_request.email, SUBSCRIPTION_FORM_SUBMISSION["email"]
+        )
+        self.assertEqual(
+            subscription_request.firstname, SUBSCRIPTION_FORM_SUBMISSION["firstname"]
+        )
+        self.assertEqual(
+            subscription_request.lastname, SUBSCRIPTION_FORM_SUBMISSION["lastname"]
+        )
+        self.assertEqual(
+            subscription_request.gender, SUBSCRIPTION_FORM_SUBMISSION["gender"]
+        )
+        self.assertEqual(
+            subscription_request.birthdate,
+            datetime.strptime(
+                SUBSCRIPTION_FORM_SUBMISSION["birthdate"], "%d/%m/%Y"
+            ).date(),
+        )
+        self.assertEqual(
+            subscription_request.phone, SUBSCRIPTION_FORM_SUBMISSION["phone"]
+        )
+        lang = self.env["res.lang"].search(
+            [("id", "=", SUBSCRIPTION_FORM_SUBMISSION["lang"])], limit=1
+        )
+        self.assertEqual(subscription_request.lang, lang.code)
+        self.assertEqual(subscription_request.vat, SUBSCRIPTION_FORM_SUBMISSION["vat"])
+        self.assertEqual(
+            subscription_request.address, SUBSCRIPTION_FORM_SUBMISSION["address"]
+        )
+        self.assertEqual(
+            subscription_request.city, SUBSCRIPTION_FORM_SUBMISSION["city"]
+        )
+        self.assertEqual(
+            subscription_request.zip_code, SUBSCRIPTION_FORM_SUBMISSION["zip_code"]
+        )
+        country = self.env["res.country"].search(
+            [("id", "=", SUBSCRIPTION_FORM_SUBMISSION["country_id"])], limit=1
+        )
+        self.assertEqual(subscription_request.country_id.id, country.id)
+        self.assertEqual(
+            subscription_request.ordered_parts,
+            int(SUBSCRIPTION_FORM_SUBMISSION["ordered_parts"]),
+        )
+        # self.assertEqual(subscription_request.privacy_policy, SUBSCRIPTION_FORM_SUBMISSION["privacy_policy"])
+        self.assertEqual(
+            subscription_request.iban, SUBSCRIPTION_FORM_SUBMISSION["iban"]
+        )
+        # self.assertEqual(subscription_request.conditions_payment, SUBSCRIPTION_FORM_SUBMISSION["conditions_payment"])
+
+    def test_website_form_member_associations_submission_ok(self):
+        # given the company
+        company = self.env["res.company"].search(
+            [("company_external_id", "=", COMMUNITY_1_EXT_ID)], limit=1
+        )
+        # given the old subscription requests
+        subscriptions_requests_old = self.env["subscription.request"].search(
+            [("company_id", "=", company.id)]
+        )
+        # given http_client
+        # and a valid data
+        # when we submit the form
+        share_product = self.env.ref(COMMUNITY_1_SHARE_ASSOCIATIONS_XML_ID)
+        SUBSCRIPTION_FORM_SUBMISSION["share_product_id"] = share_product.id
+        response = self.client(
+            "/subscription/member_associations/{}".format(COMMUNITY_1_EXT_ID),
             headers={
                 "Content-Type": "application/x-www-form-urlencoded",
             },
