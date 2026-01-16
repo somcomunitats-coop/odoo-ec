@@ -28,19 +28,41 @@ MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF = {
 }
 
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE = {
-    "member": _("Become Cooperator of {company_name} ") + _("member_eu_ES"),
-    "member_associations": _("Become Cooperator of {company_name} ")
-    + _("member_eu_ES"),
-    "company_member": _("Become Cooperator of {company_name} ") + _("member_eu_ES"),
-    "invited": _("Become Invited of {company_name} ") + _("invited_eu_ES"),
-    "company_invited": _("Become Invited of {company_name} ") + _("invited_eu_ES"),
+    "member": _("Become a member of {company_name} ") + _("member_eu_ES"),
+    "member_associations": _("Become a member of {company_name} ") + _("member_eu_ES"),
+    "company_member": _("Become a member of {company_name} ") + _("member_eu_ES"),
+    "invited": _(
+        "Register to participate in the projects and initiatives of {company_name} "
+    )
+    + _("invited_eu_ES"),
+    "company_invited": _(
+        "Register to participate in the projects and initiatives of {company_name} "
+    )
+    + _("invited_eu_ES"),
     "voluntary": _("Voluntary Share of {company_name} ") + _("vol_share_eu_es"),
 }
 SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT = (
     "<p>"
     + _(
+        "Once you become a member, you will be able to use the services available to the energy community and, at the same time, be part of a movement for social transformation and a new energy model"
+    )
+    + "</p>"
+)
+SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT_VOLUNTARY = (
+    "<p>"
+    + _(
         "Once your request has been received, you will receive a confirmation email with instructions to follow."
     )
+    + "</p>"
+    + "<p>"
+    + _("Note: If you are not yet a member, please complete the following forms:")
+    + "<a href='/subscription/member/{external_id}'>"
+    + _("INDIVIDUAL MEMBERSHIP REGISTRATION")
+    + "</a>"
+    + _(" and ")
+    + "<a href='/subscription/company_member/{external_id}'>"
+    + _("LEGAL ENTITY MEMBERSHIP REGISTRATION")
+    + "</a>"
     + "</p>"
 )
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE = {
@@ -60,12 +82,16 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE = {
     + ".</p>"
     + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
     "invited": "<p>"
-    + _("This form allow you to request be invited of the community: {company_name} ")
+    + _(
+        "This is the form to register as a person/entity invited to participate in the Energy Community's projects and initiatives: {company_name} "
+    )
     + _("invited_ccee_eu_ES")
     + ".</p>"
     + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
     "company_invited": "<p>"
-    + _("This form allow you to request be invited of the community: {company_name} ")
+    + _(
+        "This is the form to register as a person/entity invited to participate in the Energy Community's projects and initiatives: {company_name} "
+    )
     + _("invited_ccee_eu_ES")
     + ".</p>"
     + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
@@ -74,24 +100,14 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE = {
         "This is the form for members of {company_name} to make voluntary contributions to the share capital"
     )
     + ".</p>"
-    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT
-    + "<p>"
-    + _("Note: If you are not yet a member, please complete the following forms:")
-    + "<a href='/subscription/member/{external_id}'>"
-    + _("INDIVIDUAL MEMBERSHIP REGISTRATION")
-    + "</a>"
-    + _(" and ")
-    + "<a href='/subscription/company_member/{external_id}'>"
-    + _("LEGAL ENTITY MEMBERSHIP REGISTRATION")
-    + "</a>"
-    + "</p>",
+    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT_VOLUNTARY,
 }
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER = {
     "member": _(
         "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
     ),
     "member_associations": _(
-        "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
+        "<p id='transfer_text'>To become a member, you must first fill out this questionnaire and then make the initial financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol} by following the steps we will send you by email once we have received your request.</p>"
     ),
     "company_member": _(
         "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
@@ -111,7 +127,7 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA = {
         "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
     ),
     "member_associations": _(
-        "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
+        "<p id='sepa_text'>To become a member, you must first fill out this form, where we ask you for your bank account details and authorization to issue a direct debit to collect the initial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
     ),
     "company_member": _(
         "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
