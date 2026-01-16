@@ -12,7 +12,7 @@ class SubscriptionRequest(models.Model):
     def get_mapping_product_category_id_subscription_mode(self):
         mapping = {}
         for mode, xmlid in MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.items():
-            if mode in ("member", "invited", "voluntary"):
+            if mode in ("member", "invited", "voluntary", "member_associations"):
                 try:
                     category = self.env.ref(xmlid, raise_if_not_found=False)
                     if category:
@@ -50,6 +50,7 @@ class SubscriptionRequest(models.Model):
         return [
             ("generic", "Generic"),
             ("member", "Member"),
+            ("member_associations", "Member Associations"),
             ("invited", "Invited"),
             ("voluntary", "Voluntary"),
         ]
