@@ -31,10 +31,10 @@ class EnergyPoint(
             EnergyPointAttributes.GRIDINJECTION.value,
             EnergyPointAttributes.PRODUCTION.value,
         ]
-
+        value = super().__getattribute__(name)
         if name in __float_attrs:
-            return float(super().__getattribute__(name))
-        return super().__getattribute__(name)
+            return float(value) if value is not None else 0
+        return value
 
     @property
     def gridinjection_measure(self) -> MeasurePoint:
