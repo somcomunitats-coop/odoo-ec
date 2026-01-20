@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-20 10:28+0000\n"
-"PO-Revision-Date: 2026-01-20 12:52+0100\n"
+"PO-Revision-Date: 2026-01-20 13:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -313,11 +313,10 @@ msgid ""
 "direct debit to collect the initial contribution of <span "
 "id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>"
 msgstr ""
-"<p id='sepa_text'>Para hacerte socio, primero debes rellenar este "
-"formulario, donde te pedimos los datos de tu cuenta bancaria y la "
-"autorización para emitir una orden de domiciliación bancaria para cobrar la "
-"cuota inicial de <span id='prodPrice'>%(product_price)s</"
-"span>%(currency_symbol)s.</p>"
+"<p id='sepa_text'>Para ser socio/a, primero debes rellenar este formulario "
+"donde te pedimos una cuenta bancaria y la autorización para girar un recibo "
+"bancario para cobrar la aportación inicial de <span "
+"id='prodPrice'>%(product_price)s</span>%(currency_symbol)s.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -329,10 +328,10 @@ msgid ""
 "initial mandatory financial contribution of <span "
 "id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>"
 msgstr ""
-"<p id='sepa_text'>Para afiliarse, primero debe rellenar este formulario en "
-"el que le pedimos una cuenta bancaria y la autorización para emitir un "
-"recibo bancario para cobrar la contribución financiera inicial obligatoria "
-"de <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s.</p>"
+"<p id='sepa_text'>Para ser socio/a, primero debes rellenar este formulario "
+"donde te pedimos una cuenta bancaria y la autorización para girar un recibo "
+"bancario para cobrar la aportación económica obligatoria inicial de <span "
+"id='prodPrice'>%(product_price)s</span>%(currency_symbol)s.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -343,10 +342,11 @@ msgid ""
 "proceed to pay the initial share of <span id='prodPrice'>%(product_price)s</"
 "span>%(currency_symbol)s by follow the steps you will receive by email.</p>"
 msgstr ""
-"<p id='transfer_text'>Para ser miembro, debe completar este formulario y "
-"luego proceder al pago de la cuota inicial de <span "
+"<p id='transfer_text'>Para ser socio/a primero debes rellenar este "
+"cuestionario y después formalizar la aportación económica inicial de <span "
 "id='prodPrice'>%(product_price)s</span>%(currency_symbol)s siguiendo los "
-"pasos que recibirá por correo electrónico.</p>"
+"pasos que te indicaremos por correo electrónico una vez hayamos recibido tu "
+"petición.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -358,11 +358,11 @@ msgid ""
 "id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by following the "
 "steps we will send you by email once we have received your request.</p>"
 msgstr ""
-"<p id='transfer_text'>Para hacerte miembro, primero debes rellenar este "
-"cuestionario y luego realizar la contribución económica inicial de <span "
+"<p id='transfer_text'>Para ser socio/a primero debes rellenar este "
+"cuestionario y después formalizar la aportación económica inicial de <span "
 "id='prodPrice'>%(product_price)s</span>%(currency_symbol)s siguiendo los "
-"pasos que te enviaremos por correo electrónico una vez hayamos recibido tu "
-"solicitud.</p>"
+"pasos que te indicaremos por correo electrónico una vez hayamos recibido tu "
+"petición.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -373,10 +373,9 @@ msgid ""
 "to the energy community and, at the same time, be part of a movement for "
 "social transformation and a new energy model</p>"
 msgstr ""
-"<p>Una vez que te conviertas en miembro, podrás utilizar los servicios "
-"disponibles para la comunidad energética y, al mismo tiempo, formar parte "
-"de un movimiento para la transformación social y un nuevo modelo energético."
-"</p>"
+"<p>Una vez ya seas socio/a podrás utilizar los servicios disponibles de la "
+"comunidad energética y, al mismo tiempo, formar parte de un movimiento de "
+"transformación social y de modelo energético.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -390,12 +389,11 @@ msgid ""
 "subscription/company_member/%(external_id)s'>LEGAL ENTITY MEMBERSHIP "
 "REGISTRATION</a></p>"
 msgstr ""
-"<p>Una vez recibida su solicitud, recibirá un correo electrónico de "
-"confirmación con las instrucciones a seguir.</p><p>Nota: Si aún no es "
-"miembro, rellene los siguientes formularios: <a href='/subscription/member/"
-"%(external_id)s'>REGISTRO DE MIEMBRO INDIVIDUAL</a> y <a href='/"
-"subscription/company_member/%(external_id)s'>REGISTRO DE MIEMBRO DE ENTIDAD "
-"JURÍDICA.</a></p>"
+"<p>Una vez recibida tu petición recibirás un correo de confirmación con las "
+"instrucciones a seguir.</p><p>Nota: Por favor, si aún no eres socia, debes "
+"tramitarlo a través de estos formularios: <a href='/subscription/member/"
+"%(external_id)s'>ALTA SOCIA PERSONA FÍSICA</a> y <a href='/subscription/"
+"company_member/%(external_id)s'>ALTA SOCIA PERSONA JURÍDICA</a>.</p>"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
@@ -533,7 +531,7 @@ msgstr "Invitado autorizado"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Become a member of %(company_name)s "
-msgstr "Hazte miembro de %(company_name)s "
+msgstr "Conviértete en miembro de %(company_name)s "
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1550,7 +1548,7 @@ msgstr "El IBAN proporcionado no es válido."
 msgid ""
 "Register to participate in the projects and initiatives of %(company_name)s "
 msgstr ""
-"Regístrese para participar en los proyectos e iniciativas de "
+"Regístrate para poder participar en los proyectos e iniciativas de "
 "%(company_name)s. "
 
 #. module: energy_communities_cooperator
@@ -1825,8 +1823,8 @@ msgstr ""
 msgid ""
 "This form allow you to request be member of the community: %(company_name)s "
 msgstr ""
-"Este formulario le permite solicitar ser miembro de la comunidad: "
-"%(company_name)s "
+"Este es el formulario para solicitar ser socio/a de la comunidad "
+"energética: %(company_name)s "
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1848,7 +1846,7 @@ msgid ""
 "the Energy Community's projects and initiatives: %(company_name)s "
 msgstr ""
 "Este es el formulario para registrarse como persona/entidad invitada a "
-"participar en los proyectos e iniciativas de la Comunidad de la Energía: "
+"participar en los proyectos e iniciativas de la Comunidad Energética: "
 "%(company_name)s "
 
 #. module: energy_communities_cooperator

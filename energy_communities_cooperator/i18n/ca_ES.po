@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-20 10:28+0000\n"
-"PO-Revision-Date: 2026-01-20 12:50+0100\n"
+"PO-Revision-Date: 2026-01-20 14:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ca_ES\n"
@@ -307,10 +307,9 @@ msgid ""
 "direct debit to collect the initial contribution of <span "
 "id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>"
 msgstr ""
-"<p id='sepa_text'>Per fer-vos socis, primer heu d'emplenar aquest "
-"formulari, on us demanem les dades del vostre compte bancari i "
-"l'autorització per emetre una domiciliació bancària per cobrar la "
-"contribució inicial de <span id='prodPrice'>%(product_price)s</span> "
+"<p id='sepa_text'>Per unir-te primer has d'emplenar el formulari a on "
+"preguntem per un número de compte i una autorització per carregar-te "
+"l'aportació de <span id='prodPrice'>%(product_price)s</span> "
 "%(currency_symbol)s</p>"
 
 #. module: energy_communities_cooperator
@@ -323,9 +322,9 @@ msgid ""
 "initial mandatory financial contribution of <span "
 "id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>"
 msgstr ""
-"<p id='sepa_text'>Per unir-vos-hi, primer heu d'emplenar aquest formulari "
-"on us demanem un compte bancari i una autorització per emetre un rebut "
-"bancari per cobrar la contribució financera obligatòria inicial de <span "
+"<p id='sepa_text'>Per unir-te primer has d'emplenar el formulari a on "
+"preguntem per un número de compte i una autorització per carregar-te "
+"l'aportació obligatòria al capital social de <span "
 "id='prodPrice'>%(product_price)s</span> %(currency_symbol)s</p>"
 
 #. module: energy_communities_cooperator
@@ -337,10 +336,10 @@ msgid ""
 "proceed to pay the initial share of <span id='prodPrice'>%(product_price)s</"
 "span>%(currency_symbol)s by follow the steps you will receive by email.</p>"
 msgstr ""
-"<p id='transfer_text'>Per ser membre, heu d'emplenar aquest formulari i, "
-"posteriorment, procedir a pagar la quota inicial de <span "
+"<p id='transfer_text'>Per a associar-t’hi primer cal omplir aquest "
+"qüestionari i després formalitzar l’aportació econòmica d’entrada de <span "
 "id='prodPrice'>%(product_price)s</span> %(currency_symbol)s seguint els "
-"passos que rebreu per correu electrònic.</p>"
+"passos que rebràs al teu correu.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -352,11 +351,10 @@ msgid ""
 "id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by following the "
 "steps we will send you by email once we have received your request.</p>"
 msgstr ""
-"<p id='transfer_text'>Per fer-vos socis, primer heu d'emplenar aquest "
-"qüestionari i després fer la contribució econòmica inicial de <span "
+"<p id='transfer_text'>Per a associar-t’hi primer cal omplir aquest "
+"qüestionari i després formalitzar l’aportació econòmica d’entrada de <span "
 "id='prodPrice'>%(product_price)s</span> %(currency_symbol)s seguint els "
-"passos que us enviarem per correu electrònic un cop hàgim rebut la vostra "
-"sol·licitud.</p>"
+"passos que rebràs al teu correu.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -367,9 +365,9 @@ msgid ""
 "to the energy community and, at the same time, be part of a movement for "
 "social transformation and a new energy model</p>"
 msgstr ""
-"<p>Un cop et facis soci, podràs utilitzar els serveis disponibles per a la "
-"comunitat energètica i, alhora, formar part d'un moviment per a la "
-"transformació social i un nou model energètic.</p>"
+"<p>Una vegada siguis soci/a podràs gaudir dels serveis disponibles de la "
+"comunitat energètica i, alhora, formar part d'un moviment de transformació "
+"social i de model energètic.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -383,11 +381,11 @@ msgid ""
 "subscription/company_member/%(external_id)s'>LEGAL ENTITY MEMBERSHIP "
 "REGISTRATION</a></p>"
 msgstr ""
-"<p>Un cop rebuda la vostra sol·licitud, rebreu un correu electrònic de "
-"confirmació amb les instruccions a seguir.</p><p> Nota: Si encara no sou "
-"soci, ompliu els formularis següents: <a href='/subscription/member/"
-"%(external_id)s'>REGISTRE DE SOCI INDIVIDUAL</a> i <a href='/subscription/"
-"company_member/%(external_id)s'>REGISTRE DE SOCI LEGAL</a></p>"
+"<p>Un cop rebuda la teva sol·licitud, rebràs un correu electrònic de "
+"confirmació amb les instruccions a seguir.</p><p> Nota: si encara no ets "
+"sòcia, has de tramitar-ho a través d' aquests formularis:<a href='/"
+"subscription/member/%(external_id)s'>SOCI FÍSIC</a> i <a href='/"
+"subscription/company_member/%(external_id)s'>ENTITAT JURÍDICA SOCIA</a>.</p>"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
@@ -525,7 +523,7 @@ msgstr "Convidat autoritzat"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Become a member of %(company_name)s "
-msgstr "Fes-te membre de %(company_name)s"
+msgstr "Esdevé membre de %(company_name)s "
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1538,7 +1536,8 @@ msgstr "L'IBAN proporcionat no és vàlid."
 msgid ""
 "Register to participate in the projects and initiatives of %(company_name)s "
 msgstr ""
-"Registra't per participar en els projectes i iniciatives de %(company_name)s"
+"Registra't per poder participar en els projectes e iniciatives de "
+"%(company_name)s "
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__related_invoice_line
@@ -1817,8 +1816,8 @@ msgstr ""
 msgid ""
 "This form allow you to request be member of the community: %(company_name)s "
 msgstr ""
-"Aquest formulari et permet sol·licitar ser membre de la comunitat: "
-"%(company_name)s"
+"Aquest és el formulari per a sol·licitar adherir-te com a soci/a a la "
+"comunitat energètica: %(company_name)s "
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1829,7 +1828,7 @@ msgid ""
 "contributions to the share capital"
 msgstr ""
 "Aquest és el formulari perquè els membres de %(company_name)s facin "
-"aportacions voluntàries al capital social."
+"aportacions voluntàries al capital social"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1839,9 +1838,9 @@ msgid ""
 "This is the form to register as a person/entity invited to participate in "
 "the Energy Community's projects and initiatives: %(company_name)s "
 msgstr ""
-"Aquest és el formulari per registrar-se com a persona/entitat convidada a "
+"Aquest és el formulari per a registrar-se com a persona/entitat convidada a "
 "participar en els projectes i iniciatives de la Comunitat Energètica: "
-"%(company_name)s"
+"%(company_name)s "
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
@@ -1948,7 +1947,7 @@ msgstr "Proveïdor"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Voluntary Share of %(company_name)s "
-msgstr "Participació voluntària de %(company_name)s"
+msgstr "Participació voluntària de %(company_name)s "
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_subscription_request_filter_inherit
