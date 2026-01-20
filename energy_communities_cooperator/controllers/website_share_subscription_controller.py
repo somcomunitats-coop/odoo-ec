@@ -498,7 +498,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         # TODO: Add id card upload field if ctx.company.allow_id_card_upload is True
         if ctx.company.display_generic_rules_approval:
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES["generic_rules"][
-                "description"
+                "label"
             ] = ctx.company.generic_rules_approval_text
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES["generic_rules"][
                 "required"
@@ -506,7 +506,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES
         if ctx.company.display_internal_rules_approval:
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES["internal_rules"][
-                "description"
+                "label"
             ] = ctx.company.internal_rules_approval_text
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES["internal_rules"][
                 "required"
@@ -514,7 +514,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES
         if ctx.company.display_financial_risk_approval:
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK["financial_risk"][
-                "description"
+                "label"
             ] = ctx.company.financial_risk_approval_text
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK["financial_risk"][
                 "required"
@@ -522,7 +522,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK
         if ctx.company.display_data_policy_approval:
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY["privacy_policy"][
-                "description"
+                "label"
             ] = ctx.company.data_policy_approval_text
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY["privacy_policy"][
                 "required"

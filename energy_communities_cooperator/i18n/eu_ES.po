@@ -7,24 +7,28 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-20 10:27+0000\n"
-"PO-Revision-Date: 2026-01-20 10:27+0000\n"
+"PO-Revision-Date: 2026-01-20 12:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: eu_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.8\n"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_subscription_request__vat
 msgid ""
 "\n"
-"        The Tax Identification Number. Complete it if the contact is subjected to\n"
+"        The Tax Identification Number. Complete it if the contact is "
+"subjected to\n"
 "        government taxes. Used in some legal statements.\"\n"
 "        "
 msgstr ""
 "\n"
-"Identifikazio Fiskal Zenbakia. Bete ezazu kontaktua gobernu-zergen menpe badago.\n"
+"Identifikazio Fiskal Zenbakia. Bete ezazu kontaktua gobernu-zergen menpe "
+"badago.\n"
 "\n"
 "Adierazpen juridiko batzuetan erabiltzen da."
 
@@ -32,29 +36,45 @@ msgstr ""
 #: model:mail.template,body_html:energy_communities_cooperator.email_template_confirmation_voluntary_share
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
+"\">\n"
 "                        Dear <t t-out=\"object.firstname\"></t>,<br><br>\n"
-"                        We confirm that we have correctly received your request to make a voluntary contribution to the capital social of <b><t t-out=\"object.company_id.name\"></t></b>, with the following data:<br><br>\n"
+"                        We confirm that we have correctly received your "
+"request to make a voluntary contribution to the capital social of <b><t t-"
+"out=\"object.company_id.name\"></t></b>, with the following data:<br><br>\n"
 "                        <ul>\n"
-"                            <li>Partner VAT: <b><t t-out=\"object.vat\"></t></b></li>\n"
-"                            <li>Partner name: <b><t t-out=\"object.firstname\"></t> <t t-out=\"object.lastname\"></t></b></li>\n"
-"                            <li>Charging account finished on: <b><t t-out=\"object.iban[-4:]\"></t></b></li>\n"
-"                            <li>Subscription amount: <b><t t-out=\"object.subscription_amount\"></t> €</b></li>\n"
+"                            <li>Partner VAT: <b><t t-out=\"object.vat\"></"
+"t></b></li>\n"
+"                            <li>Partner name: <b><t t-"
+"out=\"object.firstname\"></t> <t t-out=\"object.lastname\"></t></b></li>\n"
+"                            <li>Charging account finished on: <b><t t-"
+"out=\"object.iban[-4:]\"></t></b></li>\n"
+"                            <li>Subscription amount: <b><t t-"
+"out=\"object.subscription_amount\"></t> €</b></li>\n"
 "                        </ul>\n"
 "                        <br>\n"
-"                        In the next few days you will receive the bank charge in this account, please verify that all the data\n"
-"                        provided is correct and you have the money you want to invest, to avoid any incident in the\n"
+"                        In the next few days you will receive the bank "
+"charge in this account, please verify that all the data\n"
+"                        provided is correct and you have the money you want "
+"to invest, to avoid any incident in the\n"
 "                        draft of the receipt.\n"
 "                        <br><br>\n"
-"                        Once the validity of the payment has been verified, you will receive a new notification confirming the contribution made.\n"
+"                        Once the validity of the payment has been verified, "
+"you will receive a new notification confirming the contribution made.\n"
 "                        <br><br>\n"
-"                        Thank you for your involvement and we inform you that for any doubt or clarification you can\n"
+"                        Thank you for your involvement and we inform you "
+"that for any doubt or clarification you can\n"
 "                        <t t-if=\"object.company_id.website\">\n"
-"                        consult our website: <a t-if=\"object.company_id.website\" t-att-href=\"object.company_id.website\"><t t-out=\"object.company_id.website\"></t></a>\n"
+"                        consult our website: <a t-"
+"if=\"object.company_id.website\" t-att-"
+"href=\"object.company_id.website\"><t t-out=\"object.company_id.website\"></"
+"t></a>\n"
 "                        or\n"
-"                        </t> send us an email to <t t-out=\"object.company_id.email\"></t>.\n"
+"                        </t> send us an email to <t t-"
+"out=\"object.company_id.email\"></t>.\n"
 "                        <br><br>\n"
-"                        Get the word out by explaining the project to family and friends. The more we are, the further we will go!\n"
+"                        Get the word out by explaining the project to "
+"family and friends. The more we are, the further we will go!\n"
 "                        <br>\n"
 "                        Thank you very much and good energy!\n"
 "                        <br><br>\n"
@@ -64,60 +84,150 @@ msgid ""
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"margin: 0px; padding: 0px;\"><p style=\"margin: 0px; padding: 0px; font-size: 13px;\">Maitea<t t-out=\"object.firstname\"></t> ,<br><br> Gizarte-kapitalera borondatezko ekarpena egiteko zure eskaera behar bezala jaso dugula baieztatzen dugu.<b><t t-out=\"object.company_id.name\"></t></b> , datu hauekin:<br><br><ul><li> Bazkidearen BEZa:<b><t t-out=\"object.vat\"></t></b></li><li> Bazkidearen izena:<b><t t-out=\"object.firstname\"></t><t t-out=\"object.lastname\"></t></b></li><li> Kontua kargatzen amaitu da:<b><t t-out=\"object.iban[-4:]\"></t></b></li><li> Harpidetza zenbatekoa: <b><t t-out=\"object.subscription_amount\"></t>€</b></li></ul><br> Hurrengo egunetan bankuko kargua jasoko duzu kontu honetan, mesedez egiaztatu emandako datu guztiak zuzenak direla eta inbertitu nahi duzun dirua duzula, ordainagiriaren zirriborroan gorabeherarik ekiditeko.<br><br> Ordainketaren baliozkotasuna egiaztatu ondoren, egindako ekarpena berresten duen jakinarazpen berri bat jasoko duzu.<br><br> Eskerrik asko zuen parte-hartzeagatik eta jakinarazten dizuegu edozein zalantza edo argibide izanez gero,<t t-if=\"object.company_id.website\"> kontsultatu gure webgunea:<a t-if=\"object.company_id.website\" t-att-href=\"object.company_id.website\"><t t-out=\"object.company_id.website\"></t></a> edo</t> bidali mezu elektroniko bat helbide honetara<t t-out=\"object.company_id.email\"></t> .<br><br> Zabaldu berria proiektua familiari eta lagunei azalduz. Zenbat eta gehiago izan, orduan eta urrunago iritsiko gara!<br> Mila esker eta energia ona!<br><br> Edozein zalantza argitzeko harremanetan jarraitzen dugu.<br> Zurekin adeitasunez,<br></p></div>\n"
+"<div style=\"margin: 0px; padding: 0px;\"><p style=\"margin: 0px; padding: "
+"0px; font-size: 13px;\">Maitea<t t-out=\"object.firstname\"></t> ,<br><br> "
+"Gizarte-kapitalera borondatezko ekarpena egiteko zure eskaera behar bezala "
+"jaso dugula baieztatzen dugu.<b><t t-out=\"object.company_id.name\"></t></"
+"b> , datu hauekin:<br><br><ul><li> Bazkidearen BEZa:<b><t t-"
+"out=\"object.vat\"></t></b></li><li> Bazkidearen izena:<b><t t-"
+"out=\"object.firstname\"></t><t t-out=\"object.lastname\"></t></b></li><li> "
+"Kontua kargatzen amaitu da:<b><t t-out=\"object.iban[-4:]\"></t></b></"
+"li><li> Harpidetza zenbatekoa: <b><t t-out=\"object.subscription_amount\"></"
+"t>€</b></li></ul><br> Hurrengo egunetan bankuko kargua jasoko duzu kontu "
+"honetan, mesedez egiaztatu emandako datu guztiak zuzenak direla eta "
+"inbertitu nahi duzun dirua duzula, ordainagiriaren zirriborroan "
+"gorabeherarik ekiditeko.<br><br> Ordainketaren baliozkotasuna egiaztatu "
+"ondoren, egindako ekarpena berresten duen jakinarazpen berri bat jasoko "
+"duzu.<br><br> Eskerrik asko zuen parte-hartzeagatik eta jakinarazten "
+"dizuegu edozein zalantza edo argibide izanez gero,<t t-"
+"if=\"object.company_id.website\"> kontsultatu gure webgunea:<a t-"
+"if=\"object.company_id.website\" t-att-"
+"href=\"object.company_id.website\"><t t-out=\"object.company_id.website\"></"
+"t></a> edo</t> bidali mezu elektroniko bat helbide honetara<t t-"
+"out=\"object.company_id.email\"></t> .<br><br> Zabaldu berria proiektua "
+"familiari eta lagunei azalduz. Zenbat eta gehiago izan, orduan eta urrunago "
+"iritsiko gara!<br> Mila esker eta energia ona!<br><br> Edozein zalantza "
+"argitzeko harremanetan jarraitzen dugu.<br> Zurekin adeitasunez,<br></p></"
+"div>\n"
 "            "
 
 #. module: energy_communities_cooperator
 #: model:mail.template,body_html:energy_communities_cooperator.email_template_conditions_voluntary_share
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
+"\">\n"
 "                    Hello <t t-out=\"object.name\"></t>,<br><br>\n"
-"                    Recently we have allready charged your account the amount corresponding to your voluntary contribution to the share capital of <b><t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t></b>.<br><br>\n"
-"                    We take this opportunity to <b>thank you</b>, once again, for your involvement with the objective to promote actions and projects that contribute to an energy and social transition.<br><br>\n"
-"                    Please find in attachment your <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> cooperator certificate.<br><br>\n"
-"                    Get the word out by explaining the project to family and friends. The more we are, the further we will go!<br><br>\n"
+"                    Recently we have allready charged your account the "
+"amount corresponding to your voluntary contribution to the share capital of "
+"<b><t t-out=\"object.company_id.comercial_name or "
+"object.company_id.name\"></t></b>.<br><br>\n"
+"                    We take this opportunity to <b>thank you</b>, once "
+"again, for your involvement with the objective to promote actions and "
+"projects that contribute to an energy and social transition.<br><br>\n"
+"                    Please find in attachment your <t t-"
+"out=\"object.company_id.comercial_name or object.company_id.name\"></t> "
+"cooperator certificate.<br><br>\n"
+"                    Get the word out by explaining the project to family "
+"and friends. The more we are, the further we will go!<br><br>\n"
 "                    We keep in touch for any questions.<br><br>\n"
 "                    Yours faithfully,<br>\n"
 "                </p>\n"
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"margin: 0px; padding: 0px;\"><p style=\"margin: 0px; padding: 0px; font-size: 13px;\">Kaixo<t t-out=\"object.name\"></t> ,<br><br> Duela gutxi, zure kontuan kargatu dugu zure kapital sozialean egindako borondatezko ekarpenari dagokion zenbatekoa.<b><t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t></b> .<br><br> Aukera hau baliatzen dugu berriro ere <b>eskerrak emateko</b> energia eta gizarte trantsizioan laguntzen duten ekintzak eta proiektuak sustatzeko helburuarekin egindako inplikazioagatik.<br><br> Mesedez, erantsian aurkituko duzu zure<t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> lankidetza-ziurtagiria.<br><br> Zabaldu berria proiektua familiari eta lagunei azalduz. Zenbat eta gehiago izan, orduan eta urrunago iritsiko gara!<br><br> Edozein zalantza argitzeko harremanetan jarraitzen dugu.<br><br> Zurekin adeitasunez,<br></p></div>\n"
+"<div style=\"margin: 0px; padding: 0px;\"><p style=\"margin: 0px; padding: "
+"0px; font-size: 13px;\">Kaixo<t t-out=\"object.name\"></t> ,<br><br> Duela "
+"gutxi, zure kontuan kargatu dugu zure kapital sozialean egindako "
+"borondatezko ekarpenari dagokion zenbatekoa.<b><t t-"
+"out=\"object.company_id.comercial_name or object.company_id.name\"></t></"
+"b> .<br><br> Aukera hau baliatzen dugu berriro ere <b>eskerrak emateko</b> "
+"energia eta gizarte trantsizioan laguntzen duten ekintzak eta proiektuak "
+"sustatzeko helburuarekin egindako inplikazioagatik.<br><br> Mesedez, "
+"erantsian aurkituko duzu zure<t t-out=\"object.company_id.comercial_name or "
+"object.company_id.name\"></t> lankidetza-ziurtagiria.<br><br> Zabaldu "
+"berria proiektua familiari eta lagunei azalduz. Zenbat eta gehiago izan, "
+"orduan eta urrunago iritsiko gara!<br><br> Edozein zalantza argitzeko "
+"harremanetan jarraitzen dugu.<br><br> Zurekin adeitasunez,<br></p></div>\n"
 "            "
 
 #. module: energy_communities_cooperator
 #: model:mail.template,body_html:energy_communities_cooperator.email_template_voluntary_share_interest_return
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"                    Hello <t t-out=\"object.partner_id.firstname\"></t>,<br><br>\n"
-"                    We have generated the yearly interest return of your voluntary shares contribution.<br>\n"
+"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
+"\">\n"
+"                    Hello <t t-out=\"object.partner_id.firstname\"></t>,"
+"<br><br>\n"
+"                    We have generated the yearly interest return of your "
+"voluntary shares contribution.<br>\n"
 "                    <t t-if=\"object.partner_bank_id.acc_number\">\n"
-"                    Soon you'll receive a transfer on your IBAN account finished on: <t t-out=\"object.partner_bank_id.acc_number[-4:]\"></t><br><br>.\n"
+"                    Soon you'll receive a transfer on your IBAN account "
+"finished on: <t t-out=\"object.partner_bank_id.acc_number[-4:]\"></"
+"t><br><br>.\n"
 "                    </t>\n"
 "                    <t t-else=\"\">\n"
-"                    Soon you'll receive a transfer on your IBAN account.<br><br>\n"
+"                    Soon you'll receive a transfer on your IBAN account."
+"<br><br>\n"
 "                    </t>\n"
 "                    The summary of the transaction:<br>\n"
 "                    <ul>\n"
-"                        <t t-if=\"object.voluntary_share_interest_return_id\">\n"
-"                            <li><strong>Period:</strong> from <t t-out=\"object.voluntary_share_interest_return_id.start_date_period.strftime('%d/%m/%Y')\"></t> to <t t-out=\"object.voluntary_share_interest_return_id.end_date_period.strftime('%d/%m/%Y')\"></t></li>\n"
+"                        <t t-"
+"if=\"object.voluntary_share_interest_return_id\">\n"
+"                            <li><strong>Period:</strong> from <t t-"
+"out=\"object.voluntary_share_interest_return_id.start_date_period.strftime('%d/"
+"%m/%Y')\"></t> to <t t-"
+"out=\"object.voluntary_share_interest_return_id.end_date_period.strftime('%d/"
+"%m/%Y')\"></t></li>\n"
 "                        </t>\n"
-"                        <li><strong>Total contribution:</strong> <t t-out=\"('%.2f'% object.voluntary_share_total_contribution).replace('.',',')\"></t>€</li>\n"
-"                        <li><strong>Total interest:</strong> <t t-out=\"('%.2f'% object.amount_untaxed).replace('.',',')\"></t>€</li>\n"
-"                        <li><strong>Taxes:</strong> <t t-out=\"('%.2f'% object.amount_tax).replace('.',',')\"></t>€</li>\n"
-"                        <li><strong>Total to receive:</strong> <t t-out=\"('%.2f'% object.amount_total).replace('.',',')\"></t>€</li>\n"
+"                        <li><strong>Total contribution:</strong> <t t-"
+"out=\"('%.2f'% object.voluntary_share_total_contribution).replace('.',',')"
+"\"></t>€</li>\n"
+"                        <li><strong>Total interest:</strong> <t t-"
+"out=\"('%.2f'% object.amount_untaxed).replace('.',',')\"></t>€</li>\n"
+"                        <li><strong>Taxes:</strong> <t t-out=\"('%.2f'% "
+"object.amount_tax).replace('.',',')\"></t>€</li>\n"
+"                        <li><strong>Total to receive:</strong> <t t-"
+"out=\"('%.2f'% object.amount_total).replace('.',',')\"></t>€</li>\n"
 "                    </ul>\n"
 "                    <br>\n"
-"                    Don't hesitate to contact us at <a t-if=\"object.company_id.email\" t-att-href=\"object.company_id.email\"><t t-out=\"object.company_id.email\"></t></a> for any question you might have using the code: <t t-out=\"object.name\"></t><br>\n"
-"                    Thanks for your contribution helping generate our green energy.<br><br>\n"
+"                    Don't hesitate to contact us at <a t-"
+"if=\"object.company_id.email\" t-att-href=\"object.company_id.email\"><t t-"
+"out=\"object.company_id.email\"></t></a> for any question you might have "
+"using the code: <t t-out=\"object.name\"></t><br>\n"
+"                    Thanks for your contribution helping generate our green "
+"energy.<br><br>\n"
 "                    Yours faithfully,<br>\n"
 "                    </p>\n"
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"margin: 0px; padding: 0px;\"><p style=\"margin: 0px; padding: 0px; font-size: 13px;\">Kaixo<t t-out=\"object.partner_id.firstname\"></t> ,<br><br> Zure borondatezko akzioen ekarpenaren urteko interes-itzulera sortu dugu.<br><t t-if=\"object.partner_bank_id.acc_number\"> Laster zure IBAN kontuan transferentzia bat jasoko duzu, honako datarekin amaituta:<t t-out=\"object.partner_bank_id.acc_number[-4:]\"></t><br><br> .</t><t t-else=\"\"> Laster transferentzia bat jasoko duzu zure IBAN kontuan.<br><br></t> Transakzioaren laburpena:<br><ul><t t-if=\"object.voluntary_share_interest_return_id\"><li> <strong>Aldia:</strong> -tik<t t-out=\"object.voluntary_share_interest_return_id.start_date_period.strftime('%d/%m/%Y')\"></t> ra<t t-out=\"object.voluntary_share_interest_return_id.end_date_period.strftime('%d/%m/%Y')\"></t></li></t><li> <strong>Ekarpen osoa:</strong><t t-out=\"('%.2f'% object.voluntary_share_total_contribution).replace('.',',')\"></t> €</li><li> <strong>Interes totala:</strong><t t-out=\"('%.2f'% object.amount_untaxed).replace('.',',')\"></t> €</li><li> <strong>Zergak:</strong><t t-out=\"('%.2f'% object.amount_tax).replace('.',',')\"></t> €</li><li> <strong>Jasotzeko guztira:</strong><t t-out=\"('%.2f'% object.amount_total).replace('.',',')\"></t> €</li></ul><br> Ez izan zalantzarik gurekin harremanetan jartzeko helbidean.<a t-if=\"object.company_id.email\" t-att-href=\"object.company_id.email\"><t t-out=\"object.company_id.email\"></t></a> Kodea erabiliz edozein zalantza izanez gero:<t t-out=\"object.name\"></t><br> Eskerrik asko gure energia berdea sortzen laguntzeko zure ekarpenagatik.<br><br> Zurekin adeitasunez,<br></p></div>\n"
+"<div style=\"margin: 0px; padding: 0px;\"><p style=\"margin: 0px; padding: "
+"0px; font-size: 13px;\">Kaixo<t t-out=\"object.partner_id.firstname\"></t> ,"
+"<br><br> Zure borondatezko akzioen ekarpenaren urteko interes-itzulera "
+"sortu dugu.<br><t t-if=\"object.partner_bank_id.acc_number\"> Laster zure "
+"IBAN kontuan transferentzia bat jasoko duzu, honako datarekin amaituta:<t t-"
+"out=\"object.partner_bank_id.acc_number[-4:]\"></t><br><br> .</t><t t-"
+"else=\"\"> Laster transferentzia bat jasoko duzu zure IBAN kontuan."
+"<br><br></t> Transakzioaren laburpena:<br><ul><t t-"
+"if=\"object.voluntary_share_interest_return_id\"><li> <strong>Aldia:</"
+"strong> -tik<t t-"
+"out=\"object.voluntary_share_interest_return_id.start_date_period.strftime('%d/"
+"%m/%Y')\"></t> ra<t t-"
+"out=\"object.voluntary_share_interest_return_id.end_date_period.strftime('%d/"
+"%m/%Y')\"></t></li></t><li> <strong>Ekarpen osoa:</strong><t t-"
+"out=\"('%.2f'% object.voluntary_share_total_contribution).replace('.',',')"
+"\"></t> €</li><li> <strong>Interes totala:</strong><t t-out=\"('%.2f'% "
+"object.amount_untaxed).replace('.',',')\"></t> €</li><li> <strong>Zergak:</"
+"strong><t t-out=\"('%.2f'% object.amount_tax).replace('.',',')\"></t> €</"
+"li><li> <strong>Jasotzeko guztira:</strong><t t-out=\"('%.2f'% "
+"object.amount_total).replace('.',',')\"></t> €</li></ul><br> Ez izan "
+"zalantzarik gurekin harremanetan jartzeko helbidean.<a t-"
+"if=\"object.company_id.email\" t-att-href=\"object.company_id.email\"><t t-"
+"out=\"object.company_id.email\"></t></a> Kodea erabiliz edozein zalantza "
+"izanez gero:<t t-out=\"object.name\"></t><br> Eskerrik asko gure energia "
+"berdea sortzen laguntzeko zure ekarpenagatik.<br><br> Zurekin adeitasunez,"
+"<br></p></div>\n"
 "            "
 
 #. module: energy_communities_cooperator
@@ -130,13 +240,13 @@ msgid ""
 "direct debit to collect the initial contribution of <span "
 "id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>"
 msgstr ""
+"<p id='sepa_text'>Bazkide izateko, lehenik formulario hau bete behar duzu, "
+"non zure banku-kontuaren datuak eta hasierako ekarpena ( <span "
+"id='prodPrice'>%(product_price)s</span> %(currency_symbol)s) jasotzeko "
+"zordunketa zuzena egiteko baimena eskatzen dizkizugun.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
@@ -145,21 +255,24 @@ msgid ""
 "initial mandatory financial contribution of <span "
 "id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>"
 msgstr ""
+"<p id='sepa_text'>Bazkide egiteko, lehenik formulario hau bete behar duzu, "
+"non banku-kontu bat eta hasierako derrigorrezko ekarpen ekonomikoa ( <span "
+"id='prodPrice'>%(product_price)s</span> %(currency_symbol)s) jasotzeko "
+"banku-agiria jaulkitzeko baimena eskatzen dizugun.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
 "<p id='transfer_text'>To be a member you must fulfill this form and lateron "
-"proceed to pay the initial share of <span "
-"id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by follow the "
-"steps you will receive by email.</p>"
+"proceed to pay the initial share of <span id='prodPrice'>%(product_price)s</"
+"span>%(currency_symbol)s by follow the steps you will receive by email.</p>"
 msgstr ""
+"<p id='transfer_text'>Bazkide izateko formulario hau bete behar duzu eta "
+"gero <span id='prodPrice'>%(product_price)s</span> %(currency_symbol)s-ren "
+"hasierako kuota ordaindu behar duzu posta elektronikoz jasoko dituzun "
+"urratsak jarraituz.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -171,6 +284,11 @@ msgid ""
 "id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by following the "
 "steps we will send you by email once we have received your request.</p>"
 msgstr ""
+"<p id='transfer_text'>Bazkide izateko, lehenik galdetegi hau bete behar "
+"duzu eta ondoren hasierako ekarpen ekonomikoa egin behar duzu, <span "
+"id='prodPrice'>%(product_price)s</span> %(currency_symbol)s-koa, zure "
+"eskaera jaso ondoren posta elektronikoz bidaliko dizkizugun urratsak "
+"jarraituz.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -181,6 +299,10 @@ msgid ""
 "to the energy community and, at the same time, be part of a movement for "
 "social transformation and a new energy model</p>"
 msgstr ""
+"<p>Behin kide egiten zarenean, energia komunitatearentzat eskuragarri "
+"dauden zerbitzuak erabili ahal izango dituzu eta, aldi berean, gizarte "
+"eraldaketarako eta energia eredu berri baten aldeko mugimendu baten parte "
+"izan.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -189,12 +311,17 @@ msgstr ""
 msgid ""
 "<p>Once your request has been received, you will receive a confirmation "
 "email with instructions to follow.</p><p>Note: If you are not yet a member, "
-"please complete the following forms: <a "
-"href='/subscription/member/%(external_id)s'>INDIVIDUAL MEMBERSHIP "
-"REGISTRATION</a> and <a "
-"href='/subscription/company_member/%(external_id)s'>LEGAL ENTITY MEMBERSHIP "
+"please complete the following forms: <a href='/subscription/member/"
+"%(external_id)s'>INDIVIDUAL MEMBERSHIP REGISTRATION</a> and <a href='/"
+"subscription/company_member/%(external_id)s'>LEGAL ENTITY MEMBERSHIP "
 "REGISTRATION</a></p>"
 msgstr ""
+"<p>Zure eskaera jaso ondoren, jarraitu beharreko argibideekin baieztapen-"
+"mezu elektroniko bat jasoko duzu.</p><p> Oharra: Oraindik bazkide ez "
+"bazara, bete formulario hauek: <a href='/subscription/member/"
+"%(external_id)s'>BANAKAKO BAZKIDE IZEN-EMATEA</a> eta <a href='/"
+"subscription/company_member/%(external_id)s'>ERAKUNDE JURIDIKOAREN BAZKIDE "
+"IZEN-EMATEA</a></p>"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
@@ -203,6 +330,9 @@ msgid ""
 "specific.\" aria-label=\"Values set here are company-specific.\" "
 "groups=\"base.group_multi_company\" role=\"img\"/>"
 msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" aria-label=\"Values set here are company-specific.\" "
+"groups=\"base.group_multi_company\" role=\"img\"/>"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.theme_voluntary_share_interest_return_document
@@ -324,11 +454,9 @@ msgstr "Baimendutako gonbidatua"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Become a member of %(company_name)s "
-msgstr ""
+msgstr "Egin zaitez %(company_name)s-ko kide"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -410,7 +538,6 @@ msgstr "Enpresaren posta elektronikoa"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Company Information"
 msgstr "Enpresaren informazioa"
@@ -464,7 +591,6 @@ msgstr "Kontaktua"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Contact Person"
 msgstr "Harremanetarako pertsona"
@@ -477,8 +603,8 @@ msgstr "Kontaktuak"
 #. module: energy_communities_cooperator
 #: model:mail.template,subject:energy_communities_cooperator.email_template_confirmation_voluntary_share
 msgid ""
-"Contribute to {{object.company_id.comercial_name or object.company_id.name}}"
-" Ref. ACSV{{object.id}}"
+"Contribute to {{object.company_id.comercial_name or "
+"object.company_id.name}} Ref. ACSV{{object.id}}"
 msgstr ""
 "Lagundu {{object.company_id.comercial_name or object.company_id.name}}-ri. "
 "Erref. ACSV{{object.id}}"
@@ -661,7 +787,6 @@ msgstr "ERROREA {} kidetzan. Ez dago fakturarik borondatezko partekatzerako."
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
-#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #, python-format
 msgid "ERROR on partner {}. Related membership not found"
 msgstr "ERROREA {} bazkidean. Ez da aurkitu erlazionatutako kidetzarik"
@@ -677,7 +802,6 @@ msgstr "Gonbidatu eraginkorra"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__partner_email
 #, python-format
 msgid "Email"
@@ -685,7 +809,6 @@ msgstr "Emaila"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Email Confirmation"
@@ -843,7 +966,7 @@ msgstr "Nahiago dut ez partekatu"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "IBAN"
-msgstr ""
+msgstr "IBAN"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__company_id_id
@@ -852,7 +975,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_voluntary_share_interest_return__message_needaction
@@ -1031,7 +1154,6 @@ msgstr "Legezko ordezkaria"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Main Address"
 msgstr "Helbide nagusia"
@@ -1118,8 +1240,6 @@ msgstr "Parametroaren balio baliogabea [odoo_company_id]"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Not valid parameter value [odoo_company_id] or [external_company_id]"
@@ -1129,7 +1249,6 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Not valid parameter value [product_external_id]"
@@ -1209,10 +1328,6 @@ msgstr "Enpresa"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Partner not found"
 msgstr "Bikotekidea ez da aurkitu"
@@ -1280,7 +1395,6 @@ msgstr "Aldiaren hasiera data"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__partner_phone
 #, python-format
 msgid "Phone"
@@ -1295,7 +1409,6 @@ msgstr "Telefonoa ez da aurkitu"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
 #: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
 #, python-format
@@ -1374,11 +1487,11 @@ msgstr "Emandako IBANa ez da baliozkoa."
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
 "Register to participate in the projects and initiatives of %(company_name)s "
 msgstr ""
+"Eman izena %(company_name)s-ren proiektu eta ekimenetan parte hartzeko"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__related_invoice_line
@@ -1423,7 +1536,7 @@ msgstr "Borondatezko akzioen interesa itzuli"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "SEPA"
-msgstr ""
+msgstr "SEPA"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
@@ -1473,8 +1586,8 @@ msgstr "Bidali mezua lehendik dagoen txantiloia erabiliz"
 #. module: energy_communities_cooperator
 #: model:mail.template,description:energy_communities_cooperator.email_template_conditions_voluntary_share
 msgid ""
-"Sent to cooperators after its voluntary share have been received, with share"
-" voluntary conditions and certificate in attachment"
+"Sent to cooperators after its voluntary share have been received, with "
+"share voluntary conditions and certificate in attachment"
 msgstr ""
 "Borondatezko partaidetza jaso ondoren, lankidetza-emaileei bidalia, "
 "borondatezko partaidetzaren baldintzak eta ziurtagiria erantsita"
@@ -1495,7 +1608,6 @@ msgstr "Produktua partekatu"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Share Selection"
@@ -1589,8 +1701,8 @@ msgid ""
 "The form is no longer available. Contact your coordinator for further "
 "information."
 msgstr ""
-"Inprimakia ez dago eskuragarri. Jarri harremanetan zure koordinatzailearekin"
-" informazio gehiago lortzeko."
+"Inprimakia ez dago eskuragarri. Jarri harremanetan zure "
+"koordinatzailearekin informazio gehiago lortzeko."
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1654,8 +1766,8 @@ msgid ""
 "There is an existing account for this vat number on this community. Please "
 "contact with the community administrators."
 msgstr ""
-"Komunitate honetan BEZ zenbaki honetarako kontu bat dago. Jarri harremanetan"
-" komunitateko administratzaileekin."
+"Komunitate honetan BEZ zenbaki honetarako kontu bat dago. Jarri "
+"harremanetan komunitateko administratzaileekin."
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1667,12 +1779,12 @@ msgstr "Enpresa honek ez du borondatezko produktuen partekatzerik hautatuta."
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
 "This form allow you to request be member of the community: %(company_name)s "
 msgstr ""
+"Inprimaki honek komunitateko kide izateko eskaera egiteko aukera ematen "
+"dizu: %(company_name)s"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1682,16 +1794,19 @@ msgid ""
 "This is the form for members of %(company_name)s to make voluntary "
 "contributions to the share capital"
 msgstr ""
+"Hau da %(company_name)sko kideek kapital sozialera borondatez egindako "
+"ekarpenak egiteko formularioa"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
 "This is the form to register as a person/entity invited to participate in "
 "the Energy Community's projects and initiatives: %(company_name)s "
 msgstr ""
+"Energia Komunitatearen proiektu eta ekimenetan parte hartzeko gonbidatutako "
+"pertsona/erakunde gisa izena emateko formularioa hau da: %(company_name)s"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
@@ -1739,8 +1854,8 @@ msgid ""
 "Trying to create user from partner ID {} but the partner doesn't have VAT "
 "defined"
 msgstr ""
-"Erabiltzailea {} bazkide IDtik sortzen saiatzen ari naiz, baina bazkideak ez"
-" du BEZa definituta."
+"Erabiltzailea {} bazkide IDtik sortzen saiatzen ari naiz, baina bazkideak "
+"ez du BEZa definituta."
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__type_url
@@ -1798,7 +1913,7 @@ msgstr "Saltzaile"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Voluntary Share of %(company_name)s "
-msgstr ""
+msgstr "%(company_name)s-ren borondatezko partaidetza"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_subscription_request_filter_inherit
@@ -1894,8 +2009,8 @@ msgstr ""
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #, python-format
 msgid ""
-"We have sent the voluntary share interest return document to related members"
-" via email."
+"We have sent the voluntary share interest return document to related "
+"members via email."
 msgstr ""
 "Borondatezko akzioen interes-itzulketaren dokumentua bidali diegu "
 "erlazionatutako kideei posta elektronikoz."
@@ -1984,14 +2099,12 @@ msgstr "Posta kodea ez da aurkitu"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "invited_ccee_eu_ES"
 msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "invited_eu_ES"
@@ -2000,16 +2113,12 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "member_ccee_eu_ES"
 msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
-#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "member_eu_ES"
