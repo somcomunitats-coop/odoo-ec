@@ -13,10 +13,6 @@ from ..config import (
     MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY,
     MAPPING__PAYMENT_METHOD,
     MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS,
-    MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE,
-    MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA,
-    MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER,
-    MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE,
     MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE,
     MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE,
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
@@ -24,6 +20,10 @@ from ..config import (
     MAPPING_FORM_SUCCESS,
     STATUS_CODE_CONSISTENCY_ERROR,
     STATUS_CODE_SERVER_ERROR,
+    _get_headline_fixed_sepa_message,
+    _get_headline_fixed_transfer_message,
+    _get_subscription_mode_headline_message,
+    _get_subscription_mode_page_title_message,
 )
 from ..exceptions import (
     ComponentValidationError,
@@ -72,7 +72,6 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Rendered template with form data or error page if validation fails
         """
-
         # Create and validate context, handle validation errors
         try:
             # Build context creation parameters from URL kwargs
@@ -263,7 +262,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         )
 
         # Get product category for this subscription mode
-        product_categ = self._get_product_categ(subscription_mode)
+        product_categ = self._get_product_categ(subscription_mode, company)
 
         # Retrieve specific product if product_ext_id is provided
         query_product = self._get_model_from_ext_id(
@@ -458,7 +457,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             return request.env[model_name].sudo().search([(field_name, "=", ext_id)])
         return False
 
-    def _get_product_categ(self, subscription_mode):
+    def _get_product_categ(self, subscription_mode, company):
         """
         Get product category for given subscription mode.
 
@@ -475,7 +474,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         except:
             categ = None
         if categ:
-            return categ.sudo()
+            return categ.sudo().with_company(company)
         return categ
 
     def _get_page_form_fields_values(self, ctx):
@@ -495,7 +494,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         # Get form fields configuration for this subscription mode
         form_fields = MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS[
             ctx.subscription_mode
-        ]
+        ].copy()
         # TODO: Add id card upload field if ctx.company.allow_id_card_upload is True
         if ctx.company.display_generic_rules_approval:
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES["generic_rules"][
@@ -505,8 +504,6 @@ class WebsiteShareSubscriptionController(http.Controller):
                 "required"
             ] = ctx.company.generic_rules_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES
-        elif "generic_rules" in form_fields:
-            del form_fields["generic_rules"]
         if ctx.company.display_internal_rules_approval:
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES["internal_rules"][
                 "description"
@@ -515,8 +512,6 @@ class WebsiteShareSubscriptionController(http.Controller):
                 "required"
             ] = ctx.company.internal_rules_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES
-        elif "internal_rules" in form_fields:
-            del form_fields["internal_rules"]
         if ctx.company.display_financial_risk_approval:
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK["financial_risk"][
                 "description"
@@ -525,8 +520,6 @@ class WebsiteShareSubscriptionController(http.Controller):
                 "required"
             ] = ctx.company.financial_risk_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK
-        elif "financial_risk" in form_fields:
-            del form_fields["financial_risk"]
         if ctx.company.display_data_policy_approval:
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY["privacy_policy"][
                 "description"
@@ -535,8 +528,6 @@ class WebsiteShareSubscriptionController(http.Controller):
                 "required"
             ] = ctx.company.data_policy_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY
-        elif "privacy_policy" in form_fields:
-            del form_fields["privacy_policy"]
         values = {"form_fields": []}
 
         # Build field dictionary for each configured field
@@ -570,9 +561,9 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Formatted page title string
         """
-        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE[
-            ctx.subscription_mode
-        ].format(company_name=ctx.company.comercial_name)
+        return _get_subscription_mode_page_title_message(
+            ctx.subscription_mode, ctx.company.comercial_name
+        )
 
     def _get_page_headline(self, ctx):
         """
@@ -599,11 +590,10 @@ class WebsiteShareSubscriptionController(http.Controller):
             and ctx.product_categ.share_form_header_text != empty_headline
         ):
             return ctx.product_categ.share_form_header_text
-        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE[
-            ctx.subscription_mode
-        ].format(
-            company_name=ctx.company.comercial_name,
-            external_id=ctx.company.company_external_id,
+        return _get_subscription_mode_headline_message(
+            ctx.subscription_mode,
+            ctx.company.comercial_name,
+            ctx.company.company_external_id,
         )
 
     def _get_page_headline_fixed_transfer(self, ctx):
@@ -618,11 +608,10 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Formatted headline string with price and currency
         """
-        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER[
-            ctx.subscription_mode
-        ].format(
-            product_price=str(ctx.product.list_price).replace(".", ","),
-            currency_symbol=ctx.company.currency_id.symbol,
+        return _get_headline_fixed_transfer_message(
+            ctx.subscription_mode,
+            str(ctx.product.list_price).replace(".", ","),
+            ctx.company.currency_id.symbol,
         )
 
     def _get_page_headline_fixed_sepa(self, ctx):
@@ -637,11 +626,10 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Formatted headline string with price and currency
         """
-        return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA[
-            ctx.subscription_mode
-        ].format(
-            product_price=str(ctx.product.list_price).replace(".", ","),
-            currency_symbol=ctx.company.currency_id.symbol,
+        return _get_headline_fixed_sepa_message(
+            ctx.subscription_mode,
+            str(ctx.product.list_price).replace(".", ","),
+            ctx.company.currency_id.symbol,
         )
 
     # TODO: Adjust all this methods to new "_get_page_form_fields_values" method
@@ -813,8 +801,6 @@ class WebsiteShareSubscriptionController(http.Controller):
             # Disable selector when only one product is available (no choice needed)
             if len(ctx.products) == 1:
                 values_field["readonly"] = True
-            # if ctx.company.product_website:
-            #     values_field["readonly"] = True
 
         if not ctx.product_categ.product_website:
             if values_field["key"] == "share_product_id":

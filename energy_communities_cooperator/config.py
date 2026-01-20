@@ -1,4 +1,4 @@
-from odoo.tools.translate import _
+from odoo.tools.translate import _, _lt
 
 COOP_SHARE_PRODUCT_CATEG_REF = "cooperator.product_category_company_share"
 COOP_SHARE_PRODUCT_CATEG_REF_ASSOCIATIONS = (
@@ -27,133 +27,202 @@ MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF = {
     "voluntary": COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
 }
 
-MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE = {
-    "member": _("Become a member of {company_name} ") + _("member_eu_ES"),
-    "member_associations": _("Become a member of {company_name} ") + _("member_eu_ES"),
-    "company_member": _("Become a member of {company_name} ") + _("member_eu_ES"),
-    "invited": _(
-        "Register to participate in the projects and initiatives of {company_name} "
-    )
-    + _("invited_eu_ES"),
-    "company_invited": _(
-        "Register to participate in the projects and initiatives of {company_name} "
-    )
-    + _("invited_eu_ES"),
-    "voluntary": _("Voluntary Share of {company_name} ") + _("vol_share_eu_es"),
-}
-SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT = (
-    "<p>"
-    + _(
-        "Once you become a member, you will be able to use the services available to the energy community and, at the same time, be part of a movement for social transformation and a new energy model"
-    )
-    + "</p>"
+
+def _get_subscription_mode_page_title_message(subscription_mode, company_name):
+    MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE = {
+        "member": _("Become a member of %(company_name)s ", company_name=company_name)
+        + _("member_eu_ES"),
+        "member_associations": _(
+            "Become a member of %(company_name)s ", company_name=company_name
+        )
+        + _("member_eu_ES"),
+        "company_member": _(
+            "Become a member of %(company_name)s ", company_name=company_name
+        )
+        + _("member_eu_ES"),
+        "invited": _(
+            "Register to participate in the projects and initiatives of %(company_name)s ",
+            company_name=company_name,
+        )
+        + _("invited_eu_ES"),
+        "company_invited": _(
+            "Register to participate in the projects and initiatives of %(company_name)s ",
+            company_name=company_name,
+        )
+        + _("invited_eu_ES"),
+        "voluntary": _(
+            "Voluntary Share of %(company_name)s ", company_name=company_name
+        )
+        + _("vol_share_eu_es"),
+    }
+    return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE[subscription_mode]
+
+
+SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT = _lt(
+    "<p>Once you become a member, you will be able to use the services available to the energy community and,"
+    + " at the same time, be part of a movement for social transformation and a new energy model</p>"
 )
-SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT_VOLUNTARY = (
-    "<p>"
-    + _(
-        "Once your request has been received, you will receive a confirmation email with instructions to follow."
+
+
+def _get_subscription_mode_headline_last_text_voluntary_message(external_id):
+    SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT_VOLUNTARY = _(
+        "<p>"
+        + "Once your request has been received, you will receive a confirmation email with instructions to follow."
+        + "</p>"
+        + "<p>"
+        + "Note: If you are not yet a member, please complete the following forms: "
+        + "<a href='/subscription/member/%(external_id)s'>INDIVIDUAL MEMBERSHIP REGISTRATION</a>"
+        + " and "
+        + "<a href='/subscription/company_member/%(external_id)s'>LEGAL ENTITY MEMBERSHIP REGISTRATION</a>"
+        + "</p>",
+        external_id=external_id,
     )
-    + "</p>"
-    + "<p>"
-    + _("Note: If you are not yet a member, please complete the following forms:")
-    + "<a href='/subscription/member/{external_id}'>"
-    + _("INDIVIDUAL MEMBERSHIP REGISTRATION")
-    + "</a>"
-    + _(" and ")
-    + "<a href='/subscription/company_member/{external_id}'>"
-    + _("LEGAL ENTITY MEMBERSHIP REGISTRATION")
-    + "</a>"
-    + "</p>"
-)
-MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE = {
-    "member": "<p>"
-    + _("This form allow you to request be member of the community: {company_name} ")
-    + _("member_ccee_eu_ES")
-    + ".</p>"
-    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
-    "member_associations": "<p>"
-    + _("This form allow you to request be member of the community: {company_name} ")
-    + _("member_ccee_eu_ES")
-    + ".</p>"
-    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
-    "company_member": "<p>"
-    + _("This form allow you to request be member of the community: {company_name} ")
-    + _("member_ccee_eu_ES")
-    + ".</p>"
-    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
-    "invited": "<p>"
-    + _(
-        "This is the form to register as a person/entity invited to participate in the Energy Community's projects and initiatives: {company_name} "
-    )
-    + _("invited_ccee_eu_ES")
-    + ".</p>"
-    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
-    "company_invited": "<p>"
-    + _(
-        "This is the form to register as a person/entity invited to participate in the Energy Community's projects and initiatives: {company_name} "
-    )
-    + _("invited_ccee_eu_ES")
-    + ".</p>"
-    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
-    "voluntary": "<p>"
-    + _(
-        "This is the form for members of {company_name} to make voluntary contributions to the share capital"
-    )
-    + ".</p>"
-    + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT_VOLUNTARY,
-}
-MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER = {
-    "member": _(
-        "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
-    ),
-    "member_associations": _(
-        "<p id='transfer_text'>To become a member, you must first fill out this questionnaire and then make the initial financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol} by following the steps we will send you by email once we have received your request.</p>"
-    ),
-    "company_member": _(
-        "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
-    ),
-    "invited": _(
-        "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
-    ),
-    "company_invited": _(
-        "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
-    ),
-    "voluntary": _(
-        "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>{product_price}</span>{currency_symbol} by follow the steps you will receive by email.</p>"
-    ),
-}
-MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA = {
-    "member": _(
-        "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
-    ),
-    "member_associations": _(
-        "<p id='sepa_text'>To become a member, you must first fill out this form, where we ask you for your bank account details and authorization to issue a direct debit to collect the initial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
-    ),
-    "company_member": _(
-        "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
-    ),
-    "invited": _(
-        "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
-    ),
-    "company_invited": _(
-        "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
-    ),
-    "voluntary": _(
-        "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>{product_price}</span>{currency_symbol}</p>"
-    ),
-}
+    return SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT_VOLUNTARY
+
+
+def _get_subscription_mode_headline_message(
+    subscription_mode, company_name, external_id
+):
+    MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE = {
+        "member": "<p>"
+        + _(
+            "This form allow you to request be member of the community: %(company_name)s ",
+            company_name=company_name,
+        )
+        + _("member_ccee_eu_ES")
+        + ".</p>"
+        + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
+        "member_associations": "<p>"
+        + _(
+            "This form allow you to request be member of the community: %(company_name)s ",
+            company_name=company_name,
+        )
+        + _("member_ccee_eu_ES")
+        + ".</p>"
+        + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
+        "company_member": "<p>"
+        + _(
+            "This form allow you to request be member of the community: %(company_name)s ",
+            company_name=company_name,
+        )
+        + _("member_ccee_eu_ES")
+        + ".</p>"
+        + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
+        "invited": "<p>"
+        + _(
+            "This is the form to register as a person/entity invited to participate in the Energy Community's projects and initiatives: %(company_name)s ",
+            company_name=company_name,
+        )
+        + _("invited_ccee_eu_ES")
+        + ".</p>"
+        + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
+        "company_invited": "<p>"
+        + _(
+            "This is the form to register as a person/entity invited to participate in the Energy Community's projects and initiatives: %(company_name)s ",
+            company_name=company_name,
+        )
+        + _("invited_ccee_eu_ES")
+        + ".</p>"
+        + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
+        "voluntary": "<p>"
+        + _(
+            "This is the form for members of %(company_name)s to make voluntary contributions to the share capital",
+            company_name=company_name,
+        )
+        + ".</p>"
+        + _get_subscription_mode_headline_last_text_voluntary_message(external_id),
+    }
+    return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE[subscription_mode]
+
+
+def _get_headline_fixed_transfer_message(
+    subscription_mode, product_price, currency_symbol
+):
+    MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER = {
+        "member": _(
+            "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by follow the steps you will receive by email.</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+        "member_associations": _(
+            "<p id='transfer_text'>To become a member, you must first fill out this questionnaire and then make the initial financial contribution of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by following the steps we will send you by email once we have received your request.</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+        "company_member": _(
+            "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by follow the steps you will receive by email.</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+        "invited": _(
+            "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by follow the steps you will receive by email.</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+        "company_invited": _(
+            "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by follow the steps you will receive by email.</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+        "voluntary": _(
+            "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by follow the steps you will receive by email.</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+    }
+    return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_TRANSFER[
+        subscription_mode
+    ]
+
+
+def _get_headline_fixed_sepa_message(subscription_mode, product_price, currency_symbol):
+    MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA = {
+        "member": _(
+            "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+        "member_associations": _(
+            "<p id='sepa_text'>To become a member, you must first fill out this form, where we ask you for your bank account details and authorization to issue a direct debit to collect the initial contribution of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+        "company_member": _(
+            "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+        "invited": _(
+            "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+        "company_invited": _(
+            "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+        "voluntary": _(
+            "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+    }
+    return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_FIXED_SEPA[
+        subscription_mode
+    ]
 
 
 GENDER_OPTIONS = [
-    {"id": "male", "name": _("Male")},
-    {"id": "female", "name": _("Female")},
-    {"id": "other", "name": _("Other")},
-    {"id": "not_binary", "name": _("Not binary")},
-    {"id": "not_share", "name": _("I prefer to not share it")},
+    {"id": "male", "name": _lt("Male")},
+    {"id": "female", "name": _lt("Female")},
+    {"id": "other", "name": _lt("Other")},
+    {"id": "not_binary", "name": _lt("Not binary")},
+    {"id": "not_share", "name": _lt("I prefer to not share it")},
 ]
 
 MAPPING_FORM_SUCCESS = {
-    "general": _(
+    "general": _lt(
         "Your subscription request has been submitted successfully. "
         "You will receive a confirmation email shortly."
     )
@@ -164,7 +233,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_COMPANY_CONTACT = {
         "class": "col-md-12",
         "type": "form_field_text",
         "value": "",
-        "label": _("Company Name"),
+        "label": _lt("Company Name"),
         "required": True,
         "readonly": False,
     },
@@ -172,7 +241,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_COMPANY_CONTACT = {
         "class": "col-md-12",
         "type": "form_field_email",
         "value": "",
-        "label": _("Company Email"),
+        "label": _lt("Company Email"),
         "required": True,
         "readonly": False,
     },
@@ -180,7 +249,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_COMPANY_CONTACT = {
         "class": "col-md-12",
         "type": "form_field_email",
         "value": "",
-        "label": _("CompanyEmail Confirmation"),
+        "label": _lt("CompanyEmail Confirmation"),
         "required": True,
         "readonly": False,
     },
@@ -191,7 +260,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "class": "col-md-12",
         "type": "form_field_email",
         "value": "",
-        "label": _("Email"),
+        "label": _lt("Email"),
         "required": True,
         "readonly": False,
     },
@@ -199,7 +268,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "class": "col-md-12",
         "type": "form_field_email",
         "value": "",
-        "label": _("Email Confirmation"),
+        "label": _lt("Email Confirmation"),
         "required": True,
         "readonly": False,
     },
@@ -207,7 +276,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "class": "col-md-6",
         "type": "form_field_text",
         "value": "",
-        "label": _("Firstname"),
+        "label": _lt("Firstname"),
         "required": True,
         "readonly": False,
     },
@@ -215,7 +284,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "class": "col-md-6",
         "type": "form_field_text",
         "value": "",
-        "label": _("Lastname"),
+        "label": _lt("Lastname"),
         "required": True,
         "readonly": False,
     },
@@ -223,7 +292,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "class": "col-md-6",
         "type": "form_field_selection",
         "value": "",
-        "label": _("Gender"),
+        "label": _lt("Gender"),
         "required": True,
         "options": GENDER_OPTIONS,
         "readonly": False,
@@ -232,7 +301,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "class": "col-md-6",
         "type": "form_field_date_past",
         "value": "",
-        "label": _("Birthdate"),
+        "label": _lt("Birthdate"),
         "required": True,
         "readonly": False,
     },
@@ -240,7 +309,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "class": "col-md-12",
         "type": "form_field_text",
         "value": "",
-        "label": _("Phone"),
+        "label": _lt("Phone"),
         "required": True,
         "readonly": False,
     },
@@ -248,7 +317,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT = {
         "class": "col-md-12",
         "type": "form_field_selection",
         "value": "",
-        "label": _("Language"),
+        "label": _lt("Language"),
         "required": True,
         "readonly": False,
         "options": [],
@@ -260,7 +329,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT = {
         "class": "col-md-12",
         "type": "form_field_text",
         "value": "",
-        "label": _("VAT"),
+        "label": _lt("VAT"),
         "required": True,
         "readonly": False,
     },
@@ -270,7 +339,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS = {
         "class": "col-md-12",
         "type": "form_field_text",
         "value": "",
-        "label": _("Address"),
+        "label": _lt("Address"),
         "required": True,
         "readonly": False,
     },
@@ -278,7 +347,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS = {
         "class": "col-md-6",
         "type": "form_field_text",
         "value": "",
-        "label": _("City"),
+        "label": _lt("City"),
         "required": True,
         "readonly": False,
     },
@@ -286,7 +355,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS = {
         "class": "col-md-6",
         "type": "form_field_text",
         "value": "",
-        "label": _("Postal Code"),
+        "label": _lt("Postal Code"),
         "required": True,
         "readonly": False,
     },
@@ -294,7 +363,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS = {
         "class": "col-md-12",
         "type": "form_field_selection",
         "value": "",
-        "label": _("Country"),
+        "label": _lt("Country"),
         "required": True,
         "readonly": False,
         "options": [],
@@ -306,7 +375,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
         "class": "col-md-4",
         "type": "form_field_selection",
         "value": "product.id",
-        "label": _("Share Product"),
+        "label": _lt("Share Product"),
         "required": True,
         "readonly": False,
         "options": [],
@@ -315,7 +384,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
         "class": "col-md-3",
         "type": "form_field_number",
         "value": "",
-        "label": _("Ordered Parts"),
+        "label": _lt("Ordered Parts"),
         "required": True,
         "readonly": False,
     },
@@ -323,7 +392,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
         "class": "col-md-4",
         "type": "form_field_text",
         "value": "",
-        "label": _("Total Price"),
+        "label": _lt("Total Price"),
         "required": True,
         "readonly": True,
     },
@@ -343,15 +412,15 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
         "required": True,
         "readonly": True,
         "options": [
-            {"id": "sepa", "name": _("SEPA")},
-            {"id": "transfer", "name": _("Transfer")},
+            {"id": "sepa", "name": _lt("SEPA")},
+            {"id": "transfer", "name": _lt("Transfer")},
         ],
     },
     "iban": {
         "class": "col-md-12",
         "type": "form_field_text",
         "value": "",
-        "label": _("IBAN"),
+        "label": _lt("IBAN"),
         "required": True,
         "readonly": False,
     },
@@ -359,7 +428,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
         "class": "col-md-12",
         "type": "form_field_checkbox",
         "value": False,
-        "label": _(
+        "label": _lt(
             "I confirm that the holder of the bank account, whether myself or another person, authorizes the direct debit of the bills."
         ),
         "required": True,
@@ -373,7 +442,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK = {
         "class": "col-md-12",
         "type": "form_field_checkbox",
         "value": False,
-        "label": _("Financial Risk"),
+        "label": _lt("Financial Risk"),
         "required": False,
         "readonly": False,
         "description": "",
@@ -385,7 +454,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES = {
         "class": "col-md-12",
         "type": "form_field_checkbox",
         "value": "",
-        "label": _("Internal Rules"),
+        "label": _lt("Internal Rules"),
         "required": False,
         "readonly": False,
         "description": "",
@@ -397,7 +466,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES = {
         "class": "col-md-12",
         "type": "form_field_checkbox",
         "value": False,
-        "label": _("Generic Rules"),
+        "label": _lt("Generic Rules"),
         "required": False,
         "readonly": False,
         "description": "",
@@ -409,7 +478,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY = {
         "class": "col-md-12",
         "type": "form_field_checkbox",
         "value": False,
-        "label": _("Privacy Policy"),
+        "label": _lt("Privacy Policy"),
         "required": False,
         "readonly": False,
         "description": "",
@@ -421,7 +490,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_CONTACT_PERSON_FUNCTION = {
         "class": "col-md-12",
         "type": "form_field_text",
         "value": "",
-        "label": _("Function"),
+        "label": _lt("Function"),
         "required": True,
         "readonly": False,
     },
@@ -439,7 +508,7 @@ MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
             "key": "h3_company_information",
             "class": "col-md-12",
             "type": "form_h3",
-            "description": _("Company Information"),
+            "description": _lt("Company Information"),
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_COMPANY_CONTACT
@@ -449,7 +518,7 @@ MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
             "key": "h3_main_address",
             "class": "col-md-12",
             "type": "form_h3",
-            "description": _("Main Address"),
+            "description": _lt("Main Address"),
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
@@ -458,7 +527,7 @@ MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
             "key": "h3_contact_person",
             "class": "col-md-12",
             "type": "form_h3",
-            "description": _("Contact Person"),
+            "description": _lt("Contact Person"),
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
@@ -468,7 +537,7 @@ MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
             "key": "h3_share_selection",
             "class": "col-md-12",
             "type": "form_h3",
-            "description": _("Share Selection"),
+            "description": _lt("Share Selection"),
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
@@ -485,7 +554,7 @@ MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
             "key": "h3_company_information",
             "class": "col-md-12",
             "type": "form_h3",
-            "description": _("Company Information"),
+            "description": _lt("Company Information"),
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_COMPANY_CONTACT
@@ -495,7 +564,7 @@ MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
             "key": "h3_main_address",
             "class": "col-md-12",
             "type": "form_h3",
-            "description": _("Main Address"),
+            "description": _lt("Main Address"),
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
@@ -504,7 +573,7 @@ MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
             "key": "h3_contact_person",
             "class": "col-md-12",
             "type": "form_h3",
-            "description": _("Contact Person"),
+            "description": _lt("Contact Person"),
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
@@ -514,7 +583,7 @@ MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
             "key": "h3_share_selection",
             "class": "col-md-12",
             "type": "form_h3",
-            "description": _("Share Selection"),
+            "description": _lt("Share Selection"),
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
@@ -526,7 +595,7 @@ MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS = (
             "class": "col-md-12",
             "type": "form_field_email",
             "value": "",
-            "label": _("Email"),
+            "label": _lt("Email"),
             "required": True,
             "disabled": False,
         },
@@ -534,7 +603,7 @@ MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS = (
             "class": "col-md-12",
             "type": "form_field_email",
             "value": "",
-            "label": _("Email Confirmation"),
+            "label": _lt("Email Confirmation"),
             "required": True,
             "disabled": False,
         },
@@ -542,7 +611,7 @@ MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS = (
             "class": "col-md-12",
             "type": "form_field_text",
             "value": "",
-            "label": _("Phone"),
+            "label": _lt("Phone"),
             "required": True,
             "disabled": False,
         },
@@ -575,16 +644,16 @@ MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE = {
     "voluntary": "individual_company",
 }
 MAPPING_FORM_ERROR_TITLE = {
-    "general": _("There is a problem with the data you submitted")
+    "general": _lt("There is a problem with the data you submitted")
 }
 MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE = {
-    "general": _("There is a problem validating the creation of the request")
+    "general": _lt("There is a problem validating the creation of the request")
 }
-CONTEXT_VALIDATION_ERROR_TITLE = _("Form can't be loaded")
-CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE = _(
+CONTEXT_VALIDATION_ERROR_TITLE = _lt("Form can't be loaded")
+CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE = _lt(
     "There is a problem loading the form. Please contact your administrator for more details"
 )
-CONTEXT_VALIDATION_ERROR_UNAVAILABLE_MESSAGE = _(
+CONTEXT_VALIDATION_ERROR_UNAVAILABLE_MESSAGE = _lt(
     "The form is no longer available. Contact your coordinator for further information."
 )
 STATUS_CODE_NOT_FOUND_ERROR = 404
