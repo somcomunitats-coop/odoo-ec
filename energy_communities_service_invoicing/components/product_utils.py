@@ -168,6 +168,7 @@ class ProductUtils(Component):
         self._setup_company_product_categ_saleteam(
             company, SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF
         )
+        # TODO: Add sale team configuration for new invited category
 
     def _setup_company_product_categ_saleteam(
         self, company: Company, categ_ref: str
@@ -231,6 +232,7 @@ class ProductUtils(Component):
         self._setup_company_product_categ_journal(
             company, SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF, afc_journal
         )
+        # TODO: Add journal configuration for new invited category
 
     def _setup_company_product_categ_journal(self, company, categ_ref, journal) -> None:
         if journal:
@@ -328,6 +330,7 @@ class ProductUtils(Component):
             self.env.ref(SELFCONSUMPTION_ACCOUNT_REF.format(company.id)),
             self.env.ref(SELFCONSUMPTION_ACCOUNT_REF_EXPENSE.format(company.id)),
         )
+        # TODO: Add accounts configuration for new invited category
 
     def _setup_company_product_categ_accounts(
         self,

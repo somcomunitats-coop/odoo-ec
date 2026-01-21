@@ -191,6 +191,9 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                         self._nonprofit_share_product_creation_params()
                     )
                     self._nonprofit_share_product_translations(coop_product)
+
+                # TODO: Created invited product
+
         except Exception as e:
             if isinstance(e, RegistryNotReadyError):
                 _logger.warning(
