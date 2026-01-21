@@ -12,6 +12,7 @@ from odoo.addons.energy_communities.models.res_company import (
 )
 from odoo.addons.energy_communities.utils import account_utils
 from odoo.addons.energy_communities_cooperator.config import (
+    COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
     COOP_SHARE_PRODUCT_CATEG_REF,
     COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
 )
@@ -29,6 +30,8 @@ from ..config import (
 
 ACCOUNT_REF_100000 = "l10n_es.{}_account_pymes_100"
 ACCOUNT_REF_720000 = "l10n_es.{}_account_assoc_720"
+ACCOUNT_REF_100000_CANARY = "l10n_es_igic.{}_account_pymes_canary_100"
+ACCOUNT_REF_720000_CANARY = "l10n_es_igic.{}_account_assoc_canary_720"
 ACCOUNT_REF_705000 = "l10n_es.{}_account_common_7050"
 ACCOUNT_REF_607000 = "l10n_es.{}_account_common_607"
 ACCOUNT_REF_440000 = "l10n_es.{}_account_common_4400"
@@ -244,6 +247,7 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
 
         self._assert__product_categs_saleteam_configuration_ok(new_company)
         self._assert__product_categs_journal_configuration_ok(new_company)
+        self._assert__product_categs_accounts_configuration_ok_case(new_company)
 
         if scenario_type == "coop":
             self._assert__vsir_journal_configuration_ok(new_company)
@@ -253,6 +257,7 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             self._assert__share_recurring_fee_product_configuration_ok(new_company)
         if scenario_type == "non_profit":
             self._assert__nonprofit_coop_product_configuration_ok(new_company)
+        self._assert__invited_product_configuration_ok(new_company)
 
         self._assert__bank_journals_configuration_ok(new_company)
 
@@ -543,6 +548,9 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         self._assert_category_saleteam(
             new_company, SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF
         )
+        self._assert_category_saleteam(
+            new_company, COOP_SHARE_INVITED_PRODUCT_CATEG_REF
+        )
 
     def _assert_category_saleteam(self, new_company, categ_ref):
         sale_team = (
@@ -560,6 +568,7 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             [("company_id", "=", new_company.id), ("code", "=", "AFC")], limit=1
         )
         self._assert_category_journal(new_company, COOP_SHARE_PRODUCT_CATEG_REF)
+        self._assert_category_journal(new_company, COOP_SHARE_INVITED_PRODUCT_CATEG_REF)
         self._assert_category_journal(
             new_company, COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF
         )
@@ -604,9 +613,19 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         )
         if new_company.legal_form in _LEGAL_FORM_VALUES_NON_PROFIT:
             account_100000 = account_empty
-            account_720000 = self.env.ref(ACCOUNT_REF_720000.format(new_company.id))
+            if new_company.is_canary():
+                account_720000 = self.env.ref(
+                    ACCOUNT_REF_720000_CANARY.format(new_company.id)
+                )
+            else:
+                account_720000 = self.env.ref(ACCOUNT_REF_720000.format(new_company.id))
         else:
-            account_100000 = self.env.ref(ACCOUNT_REF_100000.format(new_company.id))
+            if new_company.is_canary():
+                account_100000 = self.env.ref(
+                    ACCOUNT_REF_100000_CANARY.format(new_company.id)
+                )
+            else:
+                account_100000 = self.env.ref(ACCOUNT_REF_100000.format(new_company.id))
             account_720000 = account_empty
         account_705000 = self.env.ref(ACCOUNT_REF_705000.format(new_company.id))
         account_607000 = self.env.ref(ACCOUNT_REF_607000.format(new_company.id))
@@ -623,6 +642,21 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             self._assert_category_accounts(
                 new_company,
                 COOP_SHARE_PRODUCT_CATEG_REF,
+                account_100000,
+                account_100000,
+            )
+        # invited share
+        if new_company.legal_form in _LEGAL_FORM_VALUES_NON_PROFIT:
+            self._assert_category_accounts(
+                new_company,
+                COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
+                account_720000,
+                account_720000,
+            )
+        else:
+            self._assert_category_accounts(
+                new_company,
+                COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
                 account_100000,
                 account_100000,
             )
@@ -790,6 +824,42 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         self.assertEqual(coop_product.default_code, "CS")
         self.assertEqual(coop_product.company_id, new_company)
         self.assertEqual(coop_product.short_name, "Capital social")
+        self.assertTrue(coop_product.default_share_product)
+        self.assertTrue(coop_product.by_company)
+        self.assertTrue(coop_product.by_individual)
+        self.assertEqual(coop_product.payment_mode_id, self.env["account.payment.mode"])
+        self.assertFalse(coop_product.description_sale)
+
+    def _assert__invited_product_configuration_ok(self, new_company):
+        coop_product = self.env["product.template"].search(
+            [("company_id", "=", new_company.id), ("default_code", "=", "RI")]
+        )
+        self.assertEqual(len(coop_product), 1)
+        self.assertEqual(coop_product.name, "Registro persona/entidad invitada")
+        self.assertEqual(
+            coop_product.with_context(lang="ca_ES").name,
+            "Registre persona/entitat convidada",
+        )
+        self.assertEqual(
+            coop_product.with_context(lang="es_ES").name,
+            "Registro persona/entidad invitada",
+        )
+        self.assertEqual(
+            coop_product.with_context(lang="eu_ES").name,
+            "Parte hartzen duen pertsonaren/erakundearen erregistroa",
+        )
+        self.assertFalse(coop_product.sale_ok)
+        self.assertFalse(coop_product.purchase_ok)
+        self.assertTrue(coop_product.is_share)
+        self.assertTrue(coop_product.display_on_website)
+        self.assertFalse(coop_product.is_contract)
+        self.assertEqual(coop_product.detailed_type, "service")
+        self.assertEqual(coop_product.invoice_policy, "order")
+        self.assertEqual(coop_product.list_price, 0)
+        self.assertEqual(coop_product.taxes_id, self.env["account.tax"])
+        self.assertEqual(coop_product.default_code, "RI")
+        self.assertEqual(coop_product.company_id, new_company)
+        self.assertEqual(coop_product.short_name, "Registro/e invitada/convidada")
         self.assertTrue(coop_product.default_share_product)
         self.assertTrue(coop_product.by_company)
         self.assertTrue(coop_product.by_individual)

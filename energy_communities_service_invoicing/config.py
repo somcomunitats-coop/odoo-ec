@@ -9,6 +9,7 @@ from odoo.addons.energy_communities.config import (
     STATE_PAUSED,
 )
 from odoo.addons.energy_communities_cooperator.config import (
+    COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
     COOP_SHARE_PRODUCT_CATEG_REF,
     COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
 )
@@ -80,6 +81,8 @@ DEFAULT_PRICELIST_DISCOUNT_POLICY = "without_discount"
 COOP_ACCOUNT_REF = "l10n_es.{}_account_pymes_100"
 COOP_ACCOUNT_REF_NONPROFIT = "l10n_es.{}_account_assoc_720"
 COOP_ACCOUNT_REF_IN_COMPANY = "l10n_es.{}_account_common_4400"
+INVITED_ACCOUNT_REF = "l10n_es.{}_account_pymes_100"
+INVITED_ACCOUNT_REF_NONPROFIT = "l10n_es.{}_account_assoc_720"
 SELFCONSUMPTION_ACCOUNT_REF = "l10n_es.{}_account_common_7050"
 SELFCONSUMPTION_ACCOUNT_REF_EXPENSE = "l10n_es.{}_account_common_607"
 PLATFORM_ACCOUNT_REF = "l10n_es.{}_account_common_7050"
@@ -91,6 +94,8 @@ VSIR_ACCOUNT_REF = "l10n_es.{}_account_common_6624"
 
 CANARY_COOP_ACCOUNT_REF = "l10n_es_igic.{}_account_pymes_canary_100"
 CANARY_COOP_ACCOUNT_REF_NONPROFIT = "l10n_es_igic.{}_account_assoc_canary_720"
+CANARY_INVITED_ACCOUNT_REF = "l10n_es_igic.{}_account_pymes_canary_100"
+CANARY_INVITED_ACCOUNT_REF_NONPROFIT = "l10n_es_igic.{}_account_assoc_canary_720"
 CANARY_RECURRING_FEE_ACCOUNT_REF_NONPROFIT = "l10n_es_igic.{}_account_assoc_canary_720"
 
 # Packs & Services
@@ -151,6 +156,7 @@ SHARE_PRODUCTS_CATEG_REFS = [
     COOP_SHARE_PRODUCT_CATEG_REF,
     COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
     COOP_SHARE_RECURRING_FEE_PACK_PRODUCT_CATEG_REF,
+    COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
 ]
 
 ASSIGNABLE_PACKS_TO_PARTNER_CATEG_REFS = [RECURRING_FEE_PACK_PRODUCT_CATEG_REF]

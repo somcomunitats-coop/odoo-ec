@@ -5,6 +5,7 @@ from odoo import _, api, fields, models
 from odoo.addons.component.exception import RegistryNotReadyError
 from odoo.addons.energy_communities.utils import account_utils, product_utils
 from odoo.addons.energy_communities_cooperator.config import (
+    COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
     COOP_SHARE_PRODUCT_CATEG_REF,
     COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
 )
@@ -192,7 +193,11 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                     )
                     self._nonprofit_share_product_translations(coop_product)
 
-                # TODO: Created invited product
+                # invited product
+                coop_product = product_component.create_product(
+                    self._invited_product_creation_params()
+                )
+                self._invited_product_translations(coop_product)
 
         except Exception as e:
             if isinstance(e, RegistryNotReadyError):
@@ -226,6 +231,32 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         )
         coop_product.with_context(lang="eu_ES").write(
             {"name": "Kapital sozialerako nahitaezko ekarpena"}
+        )
+
+    def _invited_product_creation_params(self):
+        return ServiceProductCreationData(
+            company_id=self.new_company_id.id,
+            categ_id=self.env.ref(COOP_SHARE_INVITED_PRODUCT_CATEG_REF).id,
+            name="Registro persona/entidad invitada",
+            description_sale=None,
+            default_code="RI",
+            list_price=0,
+            taxes_id=[],
+            short_name="Registro/e invitada/convidada",
+            sale_ok=False,
+            display_on_website=True,
+            default_share_product=True,
+        )
+
+    def _invited_product_translations(self, invited_product):
+        invited_product.with_context(lang="ca_ES").write(
+            {"name": "Registre persona/entitat convidada"}
+        )
+        invited_product.with_context(lang="es_ES").write(
+            {"name": "Registro persona/entidad invitada"}
+        )
+        invited_product.with_context(lang="eu_ES").write(
+            {"name": "Parte hartzen duen pertsonaren/erakundearen erregistroa"}
         )
 
     def _vol_coop_product_creation_params(self):

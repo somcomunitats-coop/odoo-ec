@@ -11,6 +11,7 @@ from odoo.addons.energy_communities.models.res_company import (
     _LEGAL_FORM_VALUES_NON_PROFIT,
 )
 from odoo.addons.energy_communities_cooperator.config import (
+    COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
     COOP_SHARE_PRODUCT_CATEG_REF,
     COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
 )
@@ -168,7 +169,9 @@ class ProductUtils(Component):
         self._setup_company_product_categ_saleteam(
             company, SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF
         )
-        # TODO: Add sale team configuration for new invited category
+        self._setup_company_product_categ_saleteam(
+            company, COOP_SHARE_INVITED_PRODUCT_CATEG_REF
+        )
 
     def _setup_company_product_categ_saleteam(
         self, company: Company, categ_ref: str
@@ -204,6 +207,9 @@ class ProductUtils(Component):
             company, COOP_SHARE_PRODUCT_CATEG_REF, False
         )
         self._setup_company_product_categ_journal(
+            company, COOP_SHARE_INVITED_PRODUCT_CATEG_REF, False
+        )
+        self._setup_company_product_categ_journal(
             company, COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF, False
         )
         self._setup_company_product_categ_journal(
@@ -232,7 +238,6 @@ class ProductUtils(Component):
         self._setup_company_product_categ_journal(
             company, SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF, afc_journal
         )
-        # TODO: Add journal configuration for new invited category
 
     def _setup_company_product_categ_journal(self, company, categ_ref, journal) -> None:
         if journal:
@@ -330,7 +335,14 @@ class ProductUtils(Component):
             self.env.ref(SELFCONSUMPTION_ACCOUNT_REF.format(company.id)),
             self.env.ref(SELFCONSUMPTION_ACCOUNT_REF_EXPENSE.format(company.id)),
         )
-        # TODO: Add accounts configuration for new invited category
+        # invited share product categ
+        invited_account = company.get_company_invited_account()
+        self._setup_company_product_categ_accounts(
+            company,
+            COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
+            invited_account,
+            invited_account,
+        )
 
     def _setup_company_product_categ_accounts(
         self,
