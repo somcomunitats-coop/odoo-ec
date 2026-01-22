@@ -40,7 +40,8 @@ class ProductTemplate(models.Model):
     )
 
     activate_form_specific_products = fields.Boolean(
-        string="Activate form specific products"
+        string="Activate form specific products",
+        help="If checked, a public link will be activated to provide a new web form that is uniquely and specifically linked to this product (with the 2 variants of person/company). This link can be freely shared to offer registrations that directly use this product: by sending the link by email to candidates, embedding it in external web pages, or adding additional custom buttons on the Community's own website to the Platform.",
     )
 
     product_external_id = fields.Char(

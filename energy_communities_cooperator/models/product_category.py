@@ -46,11 +46,13 @@ class ProductCategory(models.Model):
         string="Product Website",
         default=False,
         company_dependent=True,
+        help="If checked, the group of fields in the generic form will be hidden so that you can choose the product from the list of those included. The product that will be linked to the form by default will be the one marked in the ‘Default product in the generic form’ field.",
     )
     product_qty_must_be_read_only = fields.Boolean(
         string="Product Qty Must Be Read Only",
         default=False,
         company_dependent=True,
+        help="If checked, the generic and specific web forms for products in this category are configured to allow the product quantity field to the right of the drop-down menu for selecting the product to be modified.",
     )
     share_form_header_text = fields.Html(
         string="Customizable paragraph in the header text of the form", translate=True

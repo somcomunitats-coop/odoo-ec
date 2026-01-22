@@ -1004,3 +1004,9 @@ msgstr "No puedes subscribirte a dos tipos de aportaciones diferentes."
 #: model_terms:ir.ui.view,arch_db:l10n_es_cooperator.iban_template_es
 msgid "VAT"
 msgstr "NIF"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_product_product__is_share
+#: model:ir.model.fields,field_description:cooperator.field_product_template__is_share
+msgid "Is share?"
+msgstr "Producto de gestión societaria (aportación o cuota)"

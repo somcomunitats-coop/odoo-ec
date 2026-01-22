@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-20 10:28+0000\n"
-"PO-Revision-Date: 2026-01-20 14:00+0100\n"
+"PO-Revision-Date: 2026-01-22 10:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ca_ES\n"
@@ -472,14 +472,14 @@ msgstr "Acció requerida"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 msgid "Activate for the BASE form"
-msgstr "Activar per al formulari BASE"
+msgstr "Enviar al formulari web genèric"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_product__activate_form_specific_products
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_template__activate_form_specific_products
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 msgid "Activate form specific products"
-msgstr "Activa productes específics del formulari"
+msgstr "Activar formulari web específic"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__active
@@ -543,8 +543,13 @@ msgid ""
 "By checking this box, this product will be considered for display on the "
 "BASE form for its category."
 msgstr ""
-"En marcar aquest camp aquest producte serà considerat per mostrar-se al "
-"formulari BASE de la seva categoria."
+"Si es marca, el producte serà considerat per poder-lo mostrar i ser "
+"seleccionable al formulari web genèric de captura de sol·licituds "
+"d’inscripcions a la Comunitat (amb les 2 variants de persona/empresa). El "
+"formulari genèric es pot configurar perquè consideri un únic producte, o "
+"perquè mostri una llista de productes perquè la persona en triï un. Aquest "
+"formulari és el que apareix per defecte enllaçat des dels botons d’alta de "
+"sòcies a la pàgina web pròpia de la Comunitat a la Plataforma."
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_voluntary_share_interest_return_wizard
@@ -779,7 +784,7 @@ msgstr "Paràgraf personalitzable al text de la capçalera del formulari"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 msgid "Default product in Base form"
-msgstr "Producte per defecte en el formulari base"
+msgstr "Producte per defecte al formulari genèric"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__display_name
@@ -1544,13 +1549,13 @@ msgstr "Categoria del producte"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__product_qty_must_be_read_only
 msgid "Product Qty Must Be Read Only"
-msgstr "La quantitat de producte ha de ser de només lectura"
+msgstr "Quantitat de producte modificable"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__product_website
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "Product Website"
-msgstr "Lloc web del producte"
+msgstr "Ocultar selector de productes al formulari genèric"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__product_website

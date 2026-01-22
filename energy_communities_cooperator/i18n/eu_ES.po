@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-20 10:27+0000\n"
-"PO-Revision-Date: 2026-01-20 14:12+0100\n"
+"PO-Revision-Date: 2026-01-22 10:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: eu_ES\n"
@@ -404,14 +404,14 @@ msgstr "Ekinzak hartu behar dira"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 msgid "Activate for the BASE form"
-msgstr "Aktibatu BASE formulariorako"
+msgstr "Bidali web formulario orokorrera"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_product__activate_form_specific_products
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_template__activate_form_specific_products
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 msgid "Activate form specific products"
-msgstr "Aktibatu produktu espezifikoak formularioan"
+msgstr "Aktibatu web formulari espezifikoa"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__active
@@ -470,8 +470,13 @@ msgid ""
 "By checking this box, this product will be considered for display on the "
 "BASE form for its category."
 msgstr ""
-"Laukitxo hau markatuz gero, produktu hau bere kategoriako BASE formularioan "
-"bistaratzeko kontuan hartuko da."
+"Markatzen bada, produktua kontuan hartuko da Erkidegoko izen-emateen "
+"eskaerak hartzeko web-formulario orokorrean erakusteko eta hautatzeko "
+"(pertsona/hasi motako bi aldaerekin). Formulario orokorra konfigura daiteke "
+"produktu bakar bat kontuan hartzeko, edo produktu-zerrenda bat erakusteko, "
+"pertsonak produktu bat aukeratu duelako. Formulario hau da, lehenespenez, "
+"bazkideei alta emateko botoietatik Erkidegoaren web orrira Plataformara "
+"estekatuta agertzen dena."
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_voluntary_share_interest_return_wizard
@@ -706,7 +711,7 @@ msgstr "Formularioaren goiburuko testuan pertsonaliza daitekeen paragrafoa"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 msgid "Default product in Base form"
-msgstr "Produktu lehenetsia oinarrizko formularioan"
+msgstr "Formulario orokorraren lehenespenezko produktua"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__display_name
@@ -1462,13 +1467,13 @@ msgstr "Produktu Kategoria"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__product_qty_must_be_read_only
 msgid "Product Qty Must Be Read Only"
-msgstr "Produktuaren kantitatea irakurtzeko soilik izan behar da"
+msgstr "Produktu-kantitate aldagarria"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__product_website
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "Product Website"
-msgstr "Produktuaren webgunea"
+msgstr "Ezkutatu produktu-hautagailua inprimaki orokorrean"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__product_website

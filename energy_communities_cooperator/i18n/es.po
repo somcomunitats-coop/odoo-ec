@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-20 10:28+0000\n"
-"PO-Revision-Date: 2026-01-20 13:58+0100\n"
+"PO-Revision-Date: 2026-01-22 10:14+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -480,14 +480,14 @@ msgstr "Acción requerida"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 msgid "Activate for the BASE form"
-msgstr "Activar para el formulario BASE"
+msgstr "Enviar al formulario web genérico"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_product__activate_form_specific_products
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_template__activate_form_specific_products
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 msgid "Activate form specific products"
-msgstr "Activar productos específicos del formulario"
+msgstr "Activar formulario web específico"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__active
@@ -551,8 +551,14 @@ msgid ""
 "By checking this box, this product will be considered for display on the "
 "BASE form for its category."
 msgstr ""
-"Al marcar esta casilla, este producto se tendrá en cuenta para su "
-"visualización en el formulario BASE de su categoría."
+"Si se marca, el producto será considerado para poder mostrarlo y ser "
+"seleccionable en el formulario web genérico de captura de solicitudes de "
+"inscripciones en la Comunidad (con las 2 variantes de persona/empresa). El "
+"formulario genérico se puede configurar para que considere un único "
+"producto, o para que muestre una lista de productos para que la persona "
+"elija uno. Este formulario es el que aparece por defecto enlazado desde los "
+"botones de alta de socias en la página web propia de la Comunidad en la "
+"Plataforma."
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_voluntary_share_interest_return_wizard
@@ -791,7 +797,7 @@ msgstr "Párrafo personalizable en el texto del encabezado del formulario"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 msgid "Default product in Base form"
-msgstr "Producto predeterminado en forma base"
+msgstr "Producto por defecto en el formulario genérico"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__display_name
@@ -1557,13 +1563,13 @@ msgstr "Categoría de producto"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__product_qty_must_be_read_only
 msgid "Product Qty Must Be Read Only"
-msgstr "La cantidad del producto debe ser de solo lectura"
+msgstr "Cantidad de producto modificable"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__product_website
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "Product Website"
-msgstr "Sitio web del producto"
+msgstr "Ocultar selector de productos en el formulario genérico"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__product_website

@@ -101,8 +101,6 @@ class ResCompany(models.Model):
                 record.numberof_effective_members + record.numberof_effective_inviteds
             )
 
-    product_website = fields.Boolean(string="Product selector in BASE form")
-
     company_external_id = fields.Char(
         string="External ID", compute="_compute_company_external_id", store=True
     )

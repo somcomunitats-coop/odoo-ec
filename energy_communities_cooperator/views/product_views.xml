@@ -12,6 +12,7 @@
                 </field>
                 <field name="default_share_product" position="attributes">
                     <attribute name="string">Default product in Base form</attribute>
+                    <attribute name="help">If checked, the product will be preselected by default in the drop-down field of the form to choose from the list of products that have been sent/added to the generic form.</attribute>
                 </field>
                 <field name="display_on_website" position="before">
                     <div class="form-group" invisible="1">
