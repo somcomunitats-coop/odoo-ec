@@ -51,6 +51,7 @@
         "views/res_config_settings_view.xml",
         "wizards/multicompany_easy_creation.xml",
         "wizards/voluntary_share_interest_return.xml",
+        "wizards/email_sending_assistant.xml",
     ],
     # only loaded in demonstration mode
     "demo": ["demo/res_company_demo.xml"],

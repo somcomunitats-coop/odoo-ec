@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 10:08+0000\n"
-"PO-Revision-Date: 2025-07-25 10:08+0000\n"
+"POT-Creation-Date: 2026-01-22 15:20+0000\n"
+"PO-Revision-Date: 2026-01-22 15:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -111,6 +111,14 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" aria-label=\"Values set here are company-specific.\" "
+"groups=\"base.group_multi_company\" role=\"img\"/>"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.theme_voluntary_share_interest_return_document
 msgid ""
 "<span>\n"
@@ -197,6 +205,11 @@ msgid "Allowed Companies"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
+msgid "Are you sure you want to send the email?"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
@@ -219,11 +232,20 @@ msgid "Become Cooperator of"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
+msgid ""
+"Before executing the mass mailing, you can do a ‘Test mailing’ to a specific"
+" email address that the wizard will ask you for when you click the ‘Test "
+"mailing’ button."
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_voluntary_share_interest_return_wizard
 msgid "Calculate and prepare interests to be returned in voluntary shares"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.share_line_form
 msgid "Cancel"
 msgstr ""
@@ -275,6 +297,11 @@ msgid "Company Register Number"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model:ir.model,name:energy_communities_cooperator.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
 msgid "Confirm Email"
 msgstr ""
@@ -307,11 +334,6 @@ msgid "Contribution"
 msgstr ""
 
 #. module: energy_communities_cooperator
-#: model:product.template,name:energy_communities_cooperator.share_capital_product_template
-msgid "Contribution to Share Capital"
-msgstr ""
-
-#. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_cooperative_membership
 msgid "Cooperative Membership"
 msgstr ""
@@ -322,18 +344,14 @@ msgid "Cooperator"
 msgstr ""
 
 #. module: energy_communities_cooperator
-#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__property_cooperator_account
-msgid "Cooperator Account"
-msgstr ""
-
-#. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__cooperator_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__cooperator_share_form_header_text
 msgid "Cooperator share form header text"
 msgstr ""
 
 #. module: energy_communities_cooperator
-#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_cooperator_company_form
-msgid "Cooperator voluntary shares"
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_company_form
+msgid "Cooperator shares"
 msgstr ""
 
 #. module: energy_communities_cooperator
@@ -375,26 +393,48 @@ msgid "Create voluntary share interest return"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__create_uid
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__create_uid
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__create_date
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__create_date
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__create_date
 msgid "Created on"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid "Customizable paragraph in the header text of the form"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__display_name
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__display_name
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid ""
+"Display the customizable paragraph in the header text of the form on the "
+"cooperator website form"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid ""
+"Display the voluntary share form header text on the cooperator website form"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
+#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__email_sending_assistant_wiz__state__draft
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__voluntary_share_interest_return__state__draft
 #, python-format
 msgid "Draft"
@@ -456,6 +496,22 @@ msgid "Email"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model:ir.model,name:energy_communities_cooperator.model_email_sending_assistant_wiz
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
+msgid "Email Sending Assistant"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__email_template_id
+msgid "Email Template"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__recipient_email_address_for_test
+msgid "Email address to receive the test email"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
@@ -468,6 +524,11 @@ msgstr ""
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Email not found"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__email_template_id
+msgid "Email template to send"
 msgstr ""
 
 #. module: energy_communities_cooperator
@@ -499,6 +560,11 @@ msgid "Followers (Partners)"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__force_language
+msgid "Force language"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model:ir.ui.menu,name:energy_communities_cooperator.ec_formulas_menu
 msgid "Formulas"
 msgstr ""
@@ -518,6 +584,11 @@ msgstr ""
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
 msgid "General"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_company_form
+msgid "Global cooperative settings"
 msgstr ""
 
 #. module: energy_communities_cooperator
@@ -543,6 +614,7 @@ msgid "I prefer to not share it"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__company_id_id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__partner_id_id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__share_product_id_id
@@ -572,6 +644,7 @@ msgstr ""
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_product__mail_template
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_template__mail_template
 #: model:ir.model.fields,help:energy_communities_cooperator.field_res_company__voluntary_share_email_template
+#: model:ir.model.fields,help:energy_communities_cooperator.field_res_config_settings__voluntary_share_email_template
 msgid "If left empty, the default global mail template will be used."
 msgstr ""
 
@@ -641,18 +714,26 @@ msgid "LEGAL ENTITY PARTNER"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__force_language
+msgid "Language to send the email in"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz____last_update
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return____last_update
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__write_uid
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__write_uid
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__write_date
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__write_date
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__write_date
 msgid "Last Updated on"
@@ -705,11 +786,6 @@ msgid "Name"
 msgstr ""
 
 #. module: energy_communities_cooperator
-#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__new_product_share_template
-msgid "New Product Share Template"
-msgstr ""
-
-#. module: energy_communities_cooperator
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__res_partner__gender__not_binary
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__subscription_request__gender__not_binary
 msgid "Not binary"
@@ -744,6 +820,17 @@ msgid "Number of Actions"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__numberof_effective_cooperators
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__numberof_effective_members
+msgid "Number of effective cooperators"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__numberof_effective_inviteds
+msgid "Number of effective inviteds"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__message_has_error_counter
 msgid "Number of errors"
 msgstr ""
@@ -756,6 +843,12 @@ msgstr ""
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_voluntary_share_interest_return__message_has_error_counter
 msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__num_selected_records
+#: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__num_selected_records
+msgid "Number of selected records"
 msgstr ""
 
 #. module: energy_communities_cooperator
@@ -780,11 +873,6 @@ msgstr ""
 msgid ""
 "Once your request is received, you will receive a confirmation email with "
 "the instructions to follow."
-msgstr ""
-
-#. module: energy_communities_cooperator
-#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__parent_id_id
-msgid "Parent Id"
 msgstr ""
 
 #. module: energy_communities_cooperator
@@ -888,16 +976,16 @@ msgid "Product"
 msgstr ""
 
 #. module: energy_communities_cooperator
-#: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__product_share_template
-msgid "Product Share Template"
-msgstr ""
-
-#. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Provided IBAN is not valid."
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__recipient_email_address_for_test
+msgid "Recipient email address for test"
 msgstr ""
 
 #. module: energy_communities_cooperator
@@ -939,8 +1027,45 @@ msgid "Return voluntary shares interest"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid "Select the email template to use for the voluntary shares return email"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid "Select the journal to use for the voluntary shares"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid "Select the voluntary share to show on the cooperator website form"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.voluntary_share
 msgid "Send"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
+#, python-format
+msgid "Send a test email"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
+msgid "Send email"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
+#: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
+#: model:ir.actions.act_window,name:energy_communities_cooperator.action_send_email_wizard_partner
+#: model:ir.actions.act_window,name:energy_communities_cooperator.action_send_email_wizard_subscription_request
+#, python-format
+msgid "Send email using existing template"
 msgstr ""
 
 #. module: energy_communities_cooperator
@@ -978,6 +1103,11 @@ msgid "Share type"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__share_product_categ_id
+msgid "Share type category"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
@@ -993,6 +1123,7 @@ msgid ""
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__state
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__state
 msgid "State"
 msgstr ""
@@ -1025,11 +1156,28 @@ msgid "Tax ID"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__email_sending_assistant_wiz__state__test
+msgid "Test"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
+msgid "Test mailing"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_cooperative_membership__partner_vat
 msgid ""
 "The Tax Identification Number. Values here will be validated based on the "
 "country format. You can use '/' to indicate that the partner is not subject "
 "to tax."
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
+msgid ""
+"The sender will be defined in the template (Configuration tab field). "
+"Otherwise, it will be the email address of the user executing the sending."
 msgstr ""
 
 #. module: energy_communities_cooperator
@@ -1046,13 +1194,6 @@ msgstr ""
 msgid ""
 "There is an existing account for this vat number on this community. Please "
 "contact with the community administrators."
-msgstr ""
-
-#. module: energy_communities_cooperator
-#: model:ir.model.fields,help:energy_communities_cooperator.field_account_multicompany_easy_creation_wiz__property_cooperator_account
-msgid ""
-"This account will be the default one as the receivable account for the "
-"cooperators"
 msgstr ""
 
 #. module: energy_communities_cooperator
@@ -1148,8 +1289,8 @@ msgid "Vendor"
 msgstr ""
 
 #. module: energy_communities_cooperator
-#: model:product.template,name:energy_communities_cooperator.voluntary_share_capital_product_template
-msgid "Voluntary Contribution to Share Capital"
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid "Voluntary Share Form Header Text"
 msgstr ""
 
 #. module: energy_communities_cooperator
@@ -1164,6 +1305,7 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_form_header_text
 msgid "Voluntary share form header text"
 msgstr ""
 
@@ -1183,12 +1325,21 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_email_template
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_email_template
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "Voluntary share return email template"
 msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_id
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "Voluntary share to show on website"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid "Voluntary shares"
 msgstr ""
 
 #. module: energy_communities_cooperator
@@ -1198,6 +1349,8 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_journal_account
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_journal_account
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "Voluntary shares journal"
 msgstr ""
 
@@ -1243,8 +1396,25 @@ msgid "Website communication history"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
+msgid ""
+"When executed, an email with the selected email template will be sent to all"
+" underlying records."
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_account_multicompany_easy_creation_wiz
 msgid "Wizard Account Multi-company Easy Creation"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
+msgid ""
+"You can set the language in which recipients will receive the email using "
+"the (optional) ‘Force language’ field. Otherwise, the language will depend "
+"on the settings defined in the template (Language field in the Settings "
+"tab). If not defined in the template, it will be sent in the language of the"
+" user context sending the email."
 msgstr ""
 
 #. module: energy_communities_cooperator
