@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-20 10:28+0000\n"
-"PO-Revision-Date: 2026-01-22 10:15+0100\n"
+"POT-Creation-Date: 2026-01-22 09:48+0000\n"
+"PO-Revision-Date: 2026-01-22 10:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ca_ES\n"
@@ -394,9 +394,10 @@ msgid ""
 "specific.\" aria-label=\"Values set here are company-specific.\" "
 "groups=\"base.group_multi_company\" role=\"img\"/>"
 msgstr ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" aria-label=\"Values set here are company-specific.\" "
-"groups=\"base.group_multi_company\" role=\"img\"/>"
+"<span class=\"fa fa-lg fa-building-o\" title=\"Els valors establerts aquí "
+"són específics de l'empresa.\" aria-label=\"Els valors establerts aquí són "
+"específics de l'empresa.\" groups=\"base.group_multi_company\" role=\"img\"/"
+">"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.theme_voluntary_share_interest_return_document
@@ -1018,6 +1019,11 @@ msgid "Generic Rules"
 msgstr "Regles genèriques"
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
+msgid "Generic form options"
+msgstr "Opcions de formulari genèriques"
+
+#. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_company_form
 msgid "Global cooperative settings"
 msgstr "Configuracions cooperatives globals"
@@ -1064,6 +1070,25 @@ msgid "ID"
 msgstr "ID"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_product__activate_form_specific_products
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_template__activate_form_specific_products
+msgid ""
+"If checked, a public link will be activated to provide a new web form that "
+"is uniquely and specifically linked to this product (with the 2 variants of "
+"person/company). This link can be freely shared to offer registrations that "
+"directly use this product: by sending the link by email to candidates, "
+"embedding it in external web pages, or adding additional custom buttons on "
+"the Community's own website to the Platform."
+msgstr ""
+"Si es marca, s’activarà un enllaç públic per disposar d’un nou formulari "
+"web que està vinculat de forma única i específica amb aquest producte (amb "
+"les 2 variants de persona/empresa). Aquest enllaç es pot compartir "
+"lliurement per oferir inscripcions que usen directament aquest producte: "
+"enviant l’enllaç per correu a les persones candidates, incrustant-lo en "
+"pàgines web externes, o afegint botons addicionals personalitzats a la "
+"pàgina web pròpia de la Comunitat a la Plataforma."
+
+#. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_voluntary_share_interest_return__message_needaction
 msgid "If checked, new messages require your attention."
 msgstr "Si està marcat, els missatges nous requereixen la teva atenció."
@@ -1072,6 +1097,42 @@ msgstr "Si està marcat, els missatges nous requereixen la teva atenció."
 #: model:ir.model.fields,help:energy_communities_cooperator.field_voluntary_share_interest_return__message_has_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si està marcat, alguns missatges tenen errors d'entrega."
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_category__product_qty_must_be_read_only
+msgid ""
+"If checked, the generic and specific web forms for products in this "
+"category are configured to allow the product quantity field to the right of "
+"the drop-down menu for selecting the product to be modified."
+msgstr ""
+"Si es marca, els formularis web genèric i específic dels productes "
+"d’aquesta categoria es configuren per permetre que es pugui modificar el "
+"camp de la quantitat de producte que apareix a la dreta del desplegable per "
+"triar el producte."
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_category__product_website
+msgid ""
+"If checked, the group of fields in the generic form will be hidden so that "
+"you can choose the product from the list of those included. The product "
+"that will be linked to the form by default will be the one marked in the "
+"‘Default product in the generic form’ field."
+msgstr ""
+"Si es marca, quedarà ocult el grup de camps que hi ha al formulari genèric "
+"per poder triar el producte entre la llista dels que s’hi han incorporat. "
+"El producte que quedarà per defecte vinculat al formulari serà el que "
+"tingui marcat al camp ‘Producte per defecte al formulari genèric’."
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
+msgid ""
+"If checked, the product will be preselected by default in the drop-down "
+"field of the form to choose from the list of products that have been sent/"
+"added to the generic form."
+msgstr ""
+"Si es marca, el producte serà el pre-seleccionat per defecte al camp "
+"desplegable del formulari per triar entre la llista de productes que s’han "
+"enviat/incorporat al formulari genèric."
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_product__mail_template
@@ -1553,14 +1614,8 @@ msgstr "Quantitat de producte modificable"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__product_website
-#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "Product Website"
 msgstr "Ocultar selector de productes al formulari genèric"
-
-#. module: energy_communities_cooperator
-#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__product_website
-msgid "Product selector in BASE form"
-msgstr "Selector de productes en formulari BASE"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1984,7 +2039,7 @@ msgstr "URL individual"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "URLs"
-msgstr "URLs"
+msgstr "Enllaços dels formularis"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_res_users

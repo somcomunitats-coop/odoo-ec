@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-20 10:28+0000\n"
-"PO-Revision-Date: 2026-01-22 10:14+0100\n"
+"POT-Creation-Date: 2026-01-22 09:49+0000\n"
+"PO-Revision-Date: 2026-01-22 10:50+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -1034,6 +1034,11 @@ msgid "Generic Rules"
 msgstr "Reglas genéricas"
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
+msgid "Generic form options"
+msgstr "Opciones de formulario genérico"
+
+#. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_company_form
 msgid "Global cooperative settings"
 msgstr "Configuración de cooperativas globales"
@@ -1080,6 +1085,25 @@ msgid "ID"
 msgstr "Identificador"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_product__activate_form_specific_products
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_template__activate_form_specific_products
+msgid ""
+"If checked, a public link will be activated to provide a new web form that "
+"is uniquely and specifically linked to this product (with the 2 variants of "
+"person/company). This link can be freely shared to offer registrations that "
+"directly use this product: by sending the link by email to candidates, "
+"embedding it in external web pages, or adding additional custom buttons on "
+"the Community's own website to the Platform."
+msgstr ""
+"Si se marca, se activará un enlace público para disponer de un nuevo "
+"formulario web que está vinculado de forma única y específica a este "
+"producto (con las 2 variantes de persona/empresa). Este enlace se puede "
+"compartir libremente para ofrecer inscripciones que usen directamente este "
+"producto: enviando el enlace por correo a las personas candidatas, "
+"incrustándolo en páginas web externas, o añadiendo botones adicionales "
+"personalizados en la página web propia de la Comunidad a la Plataforma."
+
+#. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_voluntary_share_interest_return__message_needaction
 msgid "If checked, new messages require your attention."
 msgstr "Si está seleccionado los nuevos mensajes requieren de tu atención."
@@ -1088,6 +1112,42 @@ msgstr "Si está seleccionado los nuevos mensajes requieren de tu atención."
 #: model:ir.model.fields,help:energy_communities_cooperator.field_voluntary_share_interest_return__message_has_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si está seleccionado algunos mensajes tienen errores de envío."
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_category__product_qty_must_be_read_only
+msgid ""
+"If checked, the generic and specific web forms for products in this "
+"category are configured to allow the product quantity field to the right of "
+"the drop-down menu for selecting the product to be modified."
+msgstr ""
+"Si se marca, los formularios web genérico y específico de los productos de "
+"esta categoría se configuran para permitir que pueda modificarse el campo "
+"de la cantidad de producto que aparece a la derecha del desplegable para "
+"elegir el producto."
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_category__product_website
+msgid ""
+"If checked, the group of fields in the generic form will be hidden so that "
+"you can choose the product from the list of those included. The product "
+"that will be linked to the form by default will be the one marked in the "
+"‘Default product in the generic form’ field."
+msgstr ""
+"Si se marca, quedará oculto el grupo de campos que hay en el formulario "
+"genérico para poder elegir el producto entre la lista de los incorporados. "
+"El producto que quedará por defecto vinculado al formulario será el que "
+"tenga marcado en el campo ‘Producto por defecto en el formulario genérico."
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
+msgid ""
+"If checked, the product will be preselected by default in the drop-down "
+"field of the form to choose from the list of products that have been sent/"
+"added to the generic form."
+msgstr ""
+"Si se marca, el producto será el preseleccionado por defecto en el campo "
+"desplegable del formulario para elegir entre la lista de productos que se "
+"han enviado/incorporado al formulario genérico."
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_product__mail_template
@@ -1567,14 +1627,8 @@ msgstr "Cantidad de producto modificable"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__product_website
-#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "Product Website"
 msgstr "Ocultar selector de productos en el formulario genérico"
-
-#. module: energy_communities_cooperator
-#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__product_website
-msgid "Product selector in BASE form"
-msgstr "Selector de productos en formato BASE"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1993,7 +2047,7 @@ msgstr "URL individual"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "URLs"
-msgstr "URLs"
+msgstr "Enlaces de los formularios"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_res_users

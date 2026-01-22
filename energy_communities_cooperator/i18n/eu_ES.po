@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-20 10:27+0000\n"
-"PO-Revision-Date: 2026-01-22 10:15+0100\n"
+"POT-Creation-Date: 2026-01-22 09:48+0000\n"
+"PO-Revision-Date: 2026-01-22 10:53+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: eu_ES\n"
@@ -329,9 +329,10 @@ msgid ""
 "specific.\" aria-label=\"Values set here are company-specific.\" "
 "groups=\"base.group_multi_company\" role=\"img\"/>"
 msgstr ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" aria-label=\"Values set here are company-specific.\" "
-"groups=\"base.group_multi_company\" role=\"img\"/>"
+"<span class=\"fa fa-lg fa-building-o\" title=\"Hemen zehaztutako balioak "
+"enpresaren araberakoak dira.\" aria-label=\"Hemen zehaztutako balioak "
+"enpresaren araberakoak dira.\" groups=\"base.group_multi_company\" "
+"role=\"img\"/>"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.theme_voluntary_share_interest_return_document
@@ -936,6 +937,11 @@ msgid "Generic Rules"
 msgstr "Arau Orokorrak"
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
+msgid "Generic form options"
+msgstr "Inprimaki generikoen aukerak"
+
+#. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_company_form
 msgid "Global cooperative settings"
 msgstr "Kooperatiba globalaren ezarpenak"
@@ -982,6 +988,25 @@ msgid "ID"
 msgstr "ID"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_product__activate_form_specific_products
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_template__activate_form_specific_products
+msgid ""
+"If checked, a public link will be activated to provide a new web form that "
+"is uniquely and specifically linked to this product (with the 2 variants of "
+"person/company). This link can be freely shared to offer registrations that "
+"directly use this product: by sending the link by email to candidates, "
+"embedding it in external web pages, or adding additional custom buttons on "
+"the Community's own website to the Platform."
+msgstr ""
+"Markatuta badago, esteka publiko bat aktibatuko da produktu honekin modu "
+"bakarrean eta espezifikoan lotutako web formulario berri bat eskaintzeko "
+"(pertsona/enpresa 2 aldaerekin). Esteka hau libreki parteka daiteke "
+"produktu hau zuzenean erabiltzen duten izen-emateak eskaintzeko: esteka "
+"hautagaiei posta elektronikoz bidaliz, kanpoko web orrialdeetan txertatuz "
+"edo Komunitatearen webgunean Plataformari botoi pertsonalizatu gehigarriak "
+"gehituz."
+
+#. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_voluntary_share_interest_return__message_needaction
 msgid "If checked, new messages require your attention."
 msgstr "Markatuta badago, mezu berriek zure arreta behar dute."
@@ -990,6 +1015,42 @@ msgstr "Markatuta badago, mezu berriek zure arreta behar dute."
 #: model:ir.model.fields,help:energy_communities_cooperator.field_voluntary_share_interest_return__message_has_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Markatuta badago, mezu batzuek bidalketa-errorea izango dute."
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_category__product_qty_must_be_read_only
+msgid ""
+"If checked, the generic and specific web forms for products in this "
+"category are configured to allow the product quantity field to the right of "
+"the drop-down menu for selecting the product to be modified."
+msgstr ""
+"Markatuta badago, kategoria honetako produktuen web formulario generikoak "
+"eta espezifikoak konfiguratuta daude goitibeherako menuaren eskuinaldean "
+"dagoen produktuaren kantitatearen eremua aldatzeko produktua hautatzeko "
+"aukera emateko."
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_product_category__product_website
+msgid ""
+"If checked, the group of fields in the generic form will be hidden so that "
+"you can choose the product from the list of those included. The product "
+"that will be linked to the form by default will be the one marked in the "
+"‘Default product in the generic form’ field."
+msgstr ""
+"Markatuta badago, formulario generikoko eremuen multzoa ezkutatuko da, "
+"produktua sartutakoen zerrendatik aukeratu ahal izateko. Formularioari "
+"lehenespenez lotuko zaion produktua 'Formulario generikoko produktu "
+"lehenetsia' eremuan markatuta dagoena izango da."
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
+msgid ""
+"If checked, the product will be preselected by default in the drop-down "
+"field of the form to choose from the list of products that have been sent/"
+"added to the generic form."
+msgstr ""
+"Markatuta badago, produktua lehenespenez aurrez hautatuko da formularioaren "
+"goitibeherako eremuan, formulario generikora bidali/gehitu diren produktuen "
+"zerrendatik aukeratzeko."
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_product__mail_template
@@ -1471,14 +1532,8 @@ msgstr "Produktu-kantitate aldagarria"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__product_website
-#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "Product Website"
 msgstr "Ezkutatu produktu-hautagailua inprimaki orokorrean"
-
-#. module: energy_communities_cooperator
-#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__product_website
-msgid "Product selector in BASE form"
-msgstr "Produktu hautatzailea BASE formularioan"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1882,7 +1937,7 @@ msgstr "URL indibiduala"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "URLs"
-msgstr "URLak"
+msgstr "Formularioen estekak"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_res_users

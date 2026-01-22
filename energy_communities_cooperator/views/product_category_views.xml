@@ -10,7 +10,7 @@
           <button name="url_individual_button" type="object" class="btn btn-primary" string="URL individual" attrs="{'invisible': [('type_url', '=', False)]}" />
           <button name="url_company_button" type="object" class="btn btn-primary" string="URL company" attrs="{'invisible': [('type_url', '=', False)]}" />
         </group>
-        <group string="Product Website">
+        <group string="Generic form options">
           <field name="product_website" />
           <field name="product_qty_must_be_read_only" />
           <field name="share_form_header_text" />
