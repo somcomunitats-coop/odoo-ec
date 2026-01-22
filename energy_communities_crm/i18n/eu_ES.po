@@ -6,26 +6,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 09:25+0000\n"
-"PO-Revision-Date: 2025-10-13 09:25+0000\n"
+"POT-Creation-Date: 2026-01-22 10:26+0000\n"
+"PO-Revision-Date: 2026-01-22 11:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: eu_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.8\n"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_close_message_template
+#, fuzzy
 msgid "&amp;times;"
-msgstr ""
+msgstr "eta aldiz"
 
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "(Associations) Amount of the fixed annual membership fee for members"
-msgstr "(Elkarteak) Bazkideei urtean kobratzen zaien afiliazio-kotaren zenbatekoa."
+msgstr ""
+"(Elkarteak) Bazkideei urtean kobratzen zaien afiliazio-kotaren zenbatekoa."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -34,7 +38,8 @@ msgstr "(Elkarteak) Bazkideei urtean kobratzen zaien afiliazio-kotaren zenbateko
 msgid ""
 "(Associations) Fixed day of the year for collecting membership fees from "
 "members"
-msgstr "(Elkarteak) Urteko egun finkoa bazkideengandik bazkidetza-kuotak kobratzeko"
+msgstr ""
+"(Elkarteak) Urteko egun finkoa bazkideengandik bazkidetza-kuotak kobratzeko"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -43,7 +48,8 @@ msgstr "(Elkarteak) Urteko egun finkoa bazkideengandik bazkidetza-kuotak kobratz
 msgid ""
 "(Associations) Fixed day of the year on which the annual membership fee is "
 "charged to members."
-msgstr "(Elkarteak) Bazkideei urtean kobratzen zaien afiliazio-kotaren zenbatekoa."
+msgstr ""
+"(Elkarteak) Bazkideei urtean kobratzen zaien afiliazio-kotaren zenbatekoa."
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
@@ -53,74 +59,98 @@ msgstr ". <b>Informazio gehigarria:</b>"
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
 msgid ""
-"<b>SOM COMUNITATS DATA PROTECTION INFORMATION. Purposes:</b> To register the"
-" Energy Community on our platform and allow it access to the services "
+"<b>SOM COMUNITATS DATA PROTECTION INFORMATION. Purposes:</b> To register "
+"the Energy Community on our platform and allow it access to the services "
 "reserved for Energy Communities registered on our website. To send you "
 "communications about our services and activities, including by electronic "
 "means. <b>Rights:</b> You can exercise your right to access, rectify, "
 "delete, oppose, limit, and transfer your data at"
 msgstr ""
-"<b>SOM COMUNITATS DATUEN BABESAREN INFORMAZIOA. Helburuak:</b> Energia Komunitatea gure plataforman erregistratzea eta gure webgunean erregistratutako Energia Komunitateentzat gordetako zerbitzuetara sarbidea "
-"baimentzea. Gure zerbitzuei eta jarduerei buruzko komunikazioak bidaltzea, bide elektronikoen bidez barne. "
-"Eskubideak:</b> Zure datuak atzitzeko, zuzentzeko, ezabatzeko, aurka egiteko, mugatzeko eta transferitzeko eskubidea erabil dezakezu hemen:"
+"<b>SOM COMUNITATS DATUEN BABESAREN INFORMAZIOA. Helburuak:</b> Energia "
+"Komunitatea gure plataforman erregistratzea eta gure webgunean "
+"erregistratutako Energia Komunitateentzat gordetako zerbitzuetara sarbidea "
+"baimentzea. Gure zerbitzuei eta jarduerei buruzko komunikazioak bidaltzea, "
+"bide elektronikoen bidez barne. Eskubideak: Zure datuak atzitzeko, "
+"zuzentzeko, ezabatzeko, aurka egiteko, mugatzeko eta transferitzeko "
+"eskubidea erabil dezakezu hemen:"
 
 #. module: energy_communities_crm
 #: model:mail.template,body_html:energy_communities_crm.email_templ_lead_request_contact_confirm_id
 msgid ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hello,</p>\n"
 "                    <p>Thank you for contact.</p>\n"
-"                    <p>We have received your email and we have we have forwarded it to the Community so that they can contact you as soon as possible.</p>\n"
+"                    <p>We have received your email and we have we have "
+"forwarded it to the Community so that they can contact you as soon as "
+"possible.</p>\n"
 "                    <br>\n"
 "                    <p>Received data on your contact request:</p>\n"
 "                    <ul>\n"
-"                      <t t-set=\"metadata\" t-value=\"ctx.get('metadata')\"></t>\n"
+"                      <t t-set=\"metadata\" t-value=\"ctx.get('metadata')"
+"\"></t>\n"
 "                      <t t-if=\"metadata.get('name')\">\n"
-"                      <li><strong>Name:</strong> <t t-out=\"metadata.get('name')\"></t></li>\n"
+"                      <li><strong>Name:</strong> <t t-"
+"out=\"metadata.get('name')\"></t></li>\n"
 "                      </t>\n"
 "                      <t t-if=\"metadata.get('email_from')\">\n"
-"                      <li><strong>Email:</strong> <t t-out=\"metadata.get('email_from')\"></t></li>\n"
+"                      <li><strong>Email:</strong> <t t-"
+"out=\"metadata.get('email_from')\"></t></li>\n"
 "                      </t>\n"
 "                      <t t-if=\"metadata.get('phone')\">\n"
-"                      <li><strong>Phone:</strong> <t t-out=\"metadata.get('phone')\"></t></li>\n"
+"                      <li><strong>Phone:</strong> <t t-"
+"out=\"metadata.get('phone')\"></t></li>\n"
 "                      </t>\n"
 "                      <t t-if=\"metadata.get('town')\">\n"
-"                      <li><strong>City:</strong> <t t-out=\"metadata.get('town')\"></t></li>\n"
+"                      <li><strong>City:</strong> <t t-"
+"out=\"metadata.get('town')\"></t></li>\n"
 "                      </t>\n"
 "                      <t t-if=\"metadata.get('message')\">\n"
-"                      <li><strong>Message:</strong> <t t-out=\"metadata.get('message')\"></t></li>\n"
+"                      <li><strong>Message:</strong> <t t-"
+"out=\"metadata.get('message')\"></t></li>\n"
 "                      </t>\n"
 "                    </ul>\n"
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Kaixo,</p>\n"
 "                    <p>Eskerrik asko harremanetan jartzeagatik.</p>\n"
 "                    <br />\n"
-"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara.</p>\n"
+"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara."
+"</p>\n"
 "                    <br />\n"
 "                    <p>Harremanetarako eskaeran jasotako datuak</p>\n"
 "                    <ul>\n"
-"                      <t t-set=\"metadata\" t-value=\"ctx.get('metadata')\"></t>\n"
+"                      <t t-set=\"metadata\" t-value=\"ctx.get('metadata')"
+"\"></t>\n"
 "                      <t t-if=\"metadata.get('name')\">\n"
-"                      <li><strong>Izena:</strong> <t t-out=\"metadata.get('name')\"></t></li>\n"
+"                      <li><strong>Izena:</strong> <t t-"
+"out=\"metadata.get('name')\"></t></li>\n"
 "                      </t>\n"
 "                      <t t-if=\"metadata.get('email_from')\">\n"
-"                      <li><strong>Posta elektronikoa:</strong> <t t-out=\"metadata.get('email_from')\"></t></li>\n"
+"                      <li><strong>Posta elektronikoa:</strong> <t t-"
+"out=\"metadata.get('email_from')\"></t></li>\n"
 "                      </t>\n"
 "                      <t t-if=\"metadata.get('phone')\">\n"
-"                      <li><strong>Telefonoa:</strong> <t t-out=\"metadata.get('phone')\"></t></li>\n"
+"                      <li><strong>Telefonoa:</strong> <t t-"
+"out=\"metadata.get('phone')\"></t></li>\n"
 "                      </t>\n"
 "                      <t t-if=\"metadata.get('town')\">\n"
-"                      <li><strong>Udalerria:</strong> <t t-out=\"metadata.get('town')\"></t></li>\n"
+"                      <li><strong>Udalerria:</strong> <t t-"
+"out=\"metadata.get('town')\"></t></li>\n"
 "                      </t>\n"
 "                      <t t-if=\"metadata.get('message')\">\n"
-"                      <li><strong>Mezua:</strong> <t t-out=\"metadata.get('message')\"></t></li>\n"
+"                      <li><strong>Mezua:</strong> <t t-"
+"out=\"metadata.get('message')\"></t></li>\n"
 "                      </t>\n"
 "                    </ul>\n"
 "                    <br />\n"
-"                    <p>Zure e-posta jaso dugu eta Komunitateari birbidali diogu, ahalik eta azkarren zurekin harremanetan jartzeko.</p>\n"
+"                    <p>Zure e-posta jaso dugu eta Komunitateari birbidali "
+"diogu, ahalik eta azkarren zurekin harremanetan jartzeko.</p>\n"
 "                    <p>Zinez,</p>\n"
 "                </div>\n"
 "            "
@@ -128,26 +158,41 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:mail.template,body_html:energy_communities_crm.email_templ_lead_ce_creation_receipt_confirm_id
 msgid ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hello,</p>\n"
-"                    <p>Thank you for filling out the form and requesting the membership of your Energy Community on the Somcomunitats.coop platform.</p>\n"
-"                    <p>In the coming weeks we will study the application and contact you to indicate the steps and the information necessary to complete the registration process for the Community and the people who are part of it.</p>\n"
+"                    <p>Thank you for filling out the form and requesting "
+"the membership of your Energy Community on the Somcomunitats.coop platform."
+"</p>\n"
+"                    <p>In the coming weeks we will study the application "
+"and contact you to indicate the steps and the information necessary to "
+"complete the registration process for the Community and the people who are "
+"part of it.</p>\n"
 "                    <br>\n"
 "                    <p>We keep in touch for any questions.</p>\n"
 "                    <p>Yours faithfully,</p>\n"
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "                    <p>Kaixo,</p>\n"
 "\n"
-"                    <p>Eskerrik asko formularioa bete eta Somcomunitats.coop plataforman zure Energia Komunitatearen kide izatea eskatzeagatik.</p>\n"
+"                    <p>Eskerrik asko formularioa bete eta "
+"Somcomunitats.coop plataforman zure Energia Komunitatearen kide izatea "
+"eskatzeagatik.</p>\n"
 "\n"
-"                    <p>Datozen asteetan aplikazioa aztertuko dugu eta zurekin harremanetan jarriko gara Komunitatearen eta bertan dauden pertsonen erregistro-prozesua burutzeko beharrezkoak diren urratsak eta informazioa adierazteko.</p>\n"
+"                    <p>Datozen asteetan aplikazioa aztertuko dugu eta "
+"zurekin harremanetan jarriko gara Komunitatearen eta bertan dauden "
+"pertsonen erregistro-prozesua burutzeko beharrezkoak diren urratsak eta "
+"informazioa adierazteko.</p>\n"
 "\n"
 "                    <br />\n"
-"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara.</p>\n"
+"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara."
+"</p>\n"
 "                    <p>Zinez,</p>\n"
 "                </div>\n"
 "            "
@@ -155,24 +200,33 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:mail.template,body_html:energy_communities_crm.email_templ_lead_ce_source_coord_web_other_id
 msgid ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hello,</p>\n"
-"                    <p>Thank you for filling out the form to request contact regarding the Coordinators.</p>\n"
+"                    <p>Thank you for filling out the form to request "
+"contact regarding the Coordinators.</p>\n"
 "                    <p>We have successfully received your details.</p>\n"
-"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
+"                    <p>Over the next few days we will study the request and "
+"get in touch with you.</p>\n"
 "                    <br>\n"
 "                    <p>We keep in touch for any questions.</p>\n"
 "                    <p>Yours faithfully,</p>\n"
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Kaixo,</p>\n"
-"                    <p>Eskerrik asko formularioa betetzeagatik, Koordinatzaileekin harremanetan jartzeko.</p>\n"
+"                    <p>Eskerrik asko formularioa betetzeagatik, "
+"Koordinatzaileekin harremanetan jartzeko.</p>\n"
 "                    <p>Zuzen jaso ditugu zure datuak</p>\n"
-"                    <p>Hurrengo egunetan eskaera aztertuko dugu eta zurekin harremanetan jarriko gara.</p>\n"
+"                    <p>Hurrengo egunetan eskaera aztertuko dugu eta zurekin "
+"harremanetan jarriko gara.</p>\n"
 "                    <br />\n"
-"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara.</p>\n"
+"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara."
+"</p>\n"
 "                    <p>Zinez,</p>\n"
 "                </div>\n"
 "            "
@@ -180,24 +234,33 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:mail.template,body_html:energy_communities_crm.email_templ_lead_ce_source_coord_web_hiring_id
 msgid ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hello,</p>\n"
-"                    <p>Thank you for filling out the form to request the hiring of a Coordinator.</p>\n"
+"                    <p>Thank you for filling out the form to request the "
+"hiring of a Coordinator.</p>\n"
 "                    <p>We have successfully received your details</p>\n"
-"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
+"                    <p>Over the next few days we will study the request and "
+"get in touch with you.</p>\n"
 "                    <br>\n"
 "                    <p>We keep in touch for any questions.</p>\n"
 "                    <p>Yours faithfully,</p>\n"
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Kaixo,</p>\n"
-"                    <p>Eskerrik asko Koordinatzaile baten kontratazioa eskatzeko formularioa betetzeagatik.</p>\n"
+"                    <p>Eskerrik asko Koordinatzaile baten kontratazioa "
+"eskatzeko formularioa betetzeagatik.</p>\n"
 "                    <p>Zuzen jaso ditugu zure datuak</p>\n"
-"                    <p>Hurrengo egunetan eskaera aztertuko dugu eta zurekin harremanetan jarriko gara.</p>\n"
+"                    <p>Hurrengo egunetan eskaera aztertuko dugu eta zurekin "
+"harremanetan jarriko gara.</p>\n"
 "                    <br />\n"
-"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara.</p>\n"
+"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara."
+"</p>\n"
 "                    <p>Zinez,</p>\n"
 "                </div>\n"
 "            "
@@ -205,22 +268,35 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:mail.template,body_html:energy_communities_crm.email_templ_lead_request_advise_future_ce_confirm_id
 msgid ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hello,</p>\n"
 "                    <p>Thank you for filling out the form.</p>\n"
-"                    <p>In case an Energy Community is activated in your neighborhood or municipality, they can consult the existing requests and contact you. Without any commitment on your part beyond having shown interest in promoting a movement of social transformation and an energy model.</p>\n"
+"                    <p>In case an Energy Community is activated in your "
+"neighborhood or municipality, they can consult the existing requests and "
+"contact you. Without any commitment on your part beyond having shown "
+"interest in promoting a movement of social transformation and an energy "
+"model.</p>\n"
 "                    <br>\n"
 "                    <p>We keep in touch for any questions.</p>\n"
 "                    <p>Yours faithfully,</p>\n"
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Kaixo,</p>\n"
 "                    <p>Eskerrik asko formularioa betetzeagatik.</p>\n"
-"                    <p>Zure auzoan edo udalerrian Energia Komunitate bat aktibatzen bada, dauden eskaerak kontsultatu eta zurekin harremanetan jartzeko aukera izango dute. Gizarte eraldaketarako mugimendua eta eredu energetikoa sustatzeko interesa agertu izanaz haratago euren aldetik inolako konpromisorik gabe.</p>\n"
+"                    <p>Zure auzoan edo udalerrian Energia Komunitate bat "
+"aktibatzen bada, dauden eskaerak kontsultatu eta zurekin harremanetan "
+"jartzeko aukera izango dute. Gizarte eraldaketarako mugimendua eta eredu "
+"energetikoa sustatzeko interesa agertu izanaz haratago euren aldetik "
+"inolako konpromisorik gabe.</p>\n"
 "                    <br />\n"
-"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara.</p>\n"
+"                    <p>Edozein zalantza argitzeko harremanetan jartzen gara."
+"</p>\n"
 "                    <p>Zinez,</p>\n"
 "                </div>\n"
 "            "
@@ -228,21 +304,28 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:mail.template,body_html:energy_communities_crm.email_templ_landing_coord_newsletter
 msgid ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hello,</p>\n"
 "                    <p>Thank you for filling out the form.</p>\n"
-"                    <p>We confirm that you have successfully subscribed to the newsletter.</p>\n"
-"                    <p>Over the next few days we will study the request and get in touch with you.</p>\n"
+"                    <p>We confirm that you have successfully subscribed to "
+"the newsletter.</p>\n"
+"                    <p>Over the next few days we will study the request and "
+"get in touch with you.</p>\n"
 "                    <br>\n"
 "                    <p>We keep in touch for any questions.</p>\n"
 "                    <p>Yours faithfully,</p>\n"
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hola,</p>\n"
 "                    <p>Gracias por rellenar el formulario.</p>\n"
-"                    <p>Te confirmamos que el registro a la Newsletter se ha efectuado con éxito.</p>\n"
+"                    <p>Te confirmamos que el registro a la Newsletter se ha "
+"efectuado con éxito.</p>\n"
 "                    <p>En los próximos dias nos pondremos en contacto.</p>\n"
 "                    <br />\n"
 "                    <p>Restamos en contacto para cualquier consulta.</p>\n"
@@ -253,11 +336,15 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:mail.template,body_html:energy_communities_crm.email_templ_lead_request_ce_news_confirm_id
 msgid ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hello,</p>\n"
 "                    <p>Thank you for filling out the form.</p>\n"
-"                    <p>You have been subscribed correctly to the Community Newsletter.</p>\n"
-"                    <p>We will notify you if there is anything new in this community.</p>\n"
+"                    <p>You have been subscribed correctly to the Community "
+"Newsletter.</p>\n"
+"                    <p>We will notify you if there is anything new in this "
+"community.</p>\n"
 "                    <br>\n"
 "                    <p>We remain in contact for any questions.</p>\n"
 "                    <br>\n"
@@ -265,10 +352,13 @@ msgid ""
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Kaixo,</p>\n"
 "                    <p>Eskerrik asko formularioa betetzeagatik.</p>\n"
-"                    <p>Behar bezala harpidetu zara Komunitatearen buletinera.</p>\n"
+"                    <p>Behar bezala harpidetu zara Komunitatearen "
+"buletinera.</p>\n"
 "                    <br />\n"
 "                    <p>Zinez,</p>\n"
 "                </div>\n"
@@ -277,21 +367,28 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:mail.template,body_html:energy_communities_crm.email_templ_lead_request_platform_news_confirm_id
 msgid ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hello,</p>\n"
 "                    <p>Thank you for filling out the form.</p>\n"
-"                    <p>You have been subscribed correctly to the Platform Newsletter.</p>\n"
-"                    <p>We'll let you know if there's any news about the project.</p>\n"
+"                    <p>You have been subscribed correctly to the Platform "
+"Newsletter.</p>\n"
+"                    <p>We'll let you know if there's any news about the "
+"project.</p>\n"
 "                    <br>\n"
 "                    <p>Yours faithfully,</p>\n"
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Kaixo,</p>\n"
 "                    <p>Eskerrik asko formularioa betetzeagatik.</p>\n"
 "                    <p>Buletinera ondo harpidetu zara.</p>\n"
-"                    <p>Proiektuari buruzko edozein berriren berri emango dizuegu.</p>\n"
+"                    <p>Proiektuari buruzko edozein berriren berri emango "
+"dizuegu.</p>\n"
 "                    <br />\n"
 "                    <p>Zinez,</p>\n"
 "                </div>\n"
@@ -300,19 +397,25 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:mail.template,body_html:energy_communities_crm.email_templ_contact_platform_confirm_id
 msgid ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hello,</p>\n"
 "                    <p>Thank you for getting in touch.</p>\n"
-"                    <p>We have received your email. We will contact you as soon as possible.</p>\n"
+"                    <p>We have received your email. We will contact you as "
+"soon as possible.</p>\n"
 "                    <br>\n"
 "                    <p>Yours faithfully,</p>\n"
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Kaixo,</p>\n"
 "                    <p>Eskerrik asko harremanetan jartzeagatik.</p>\n"
-"                    <p>Zure emaila jaso dugu. Ahalik eta azkarren zurekin harremanetan jarriko gara.</p>\n"
+"                    <p>Zure emaila jaso dugu. Ahalik eta azkarren zurekin "
+"harremanetan jarriko gara.</p>\n"
 "                    <br />\n"
 "                    <p>Zinez,</p>\n"
 "                </div>\n"
@@ -321,20 +424,26 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:mail.template,body_html:energy_communities_crm.email_templ_lead_ce_source_tariffs_page_contact
 msgid ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hello,</p>\n"
 "                    <p>Thanks for getting in touch.</p>\n"
-"                    <p>We have received your email related to Som Comunitats tariffs.</p>\n"
+"                    <p>We have received your email related to Som "
+"Comunitats tariffs.</p>\n"
 "                    <p>We will contact you as soon as possible.</p>\n"
 "                    <br>\n"
 "                    <p>Yours faithfully,</p>\n"
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hola,</p>\n"
 "                    <p>Gracias por ponerte en contacto.</p>\n"
-"                    <p>Hemos recibido tu correo electrónico en relación a información sobre la página de tarifas.</p>\n"
+"                    <p>Hemos recibido tu correo electrónico en relación a "
+"información sobre la página de tarifas.</p>\n"
 "                    <p>Intentaremos darte respuesta lo antes posible.</p>\n"
 "                    <br />\n"
 "                    <p>Atentamente,</p>\n"
@@ -344,19 +453,25 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:mail.template,body_html:energy_communities_crm.email_templ_landing_coord_contact
 msgid ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hello,</p>\n"
 "                    <p>Thanks for getting in touch.</p>\n"
-"                    <p>We have received your email. We will contact you as soon as possible.</p>\n"
+"                    <p>We have received your email. We will contact you as "
+"soon as possible.</p>\n"
 "                    <br>\n"
 "                    <p>Yours faithfully,</p>\n"
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hola,</p>\n"
 "                    <p>Gracias por ponerte en contacto.</p>\n"
-"                    <p>Hemos recibido tu correo electrónico. Nos pondremos en contacto contigo lo antes possible.</p>\n"
+"                    <p>Hemos recibido tu correo electrónico. Nos pondremos "
+"en contacto contigo lo antes possible.</p>\n"
 "                    <br />\n"
 "                    <p>Atentamente,</p>\n"
 "                </div>\n"
@@ -365,21 +480,28 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:mail.template,body_html:energy_communities_crm.email_templ_lead_assigned_to_coordinator_id
 msgid ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "                    <p>Hello,</p><br>\n"
-"                    <p>There is a new Energy Community registration request.</p>\n"
+"                    <p>There is a new Energy Community registration request."
+"</p>\n"
 "                    <p>Go to Odoo to track this registration.</p><br>\n"
 "                    <p>Yours faithfully,</p>\n"
 "                </div>\n"
 "            "
 msgstr ""
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
+"\">\n"
 "\n"
 "                        <p>Kaixo,</p>\n"
 "\n"
-"                        <p>Comunidad Energétican izena emateko eskaera berri bat dago.</p>\n"
+"                        <p>Comunidad Energétican izena emateko eskaera "
+"berri bat dago.</p>\n"
 "\n"
-"                        <p>Zoaz Odoo erregistro honi jarraipena emateko.</p>\n"
+"                        <p>Zoaz Odoo erregistro honi jarraipena emateko.</"
+"p>\n"
 "\n"
 "                        <p>Zinez,</p>\n"
 "                    </div>\n"
@@ -392,7 +514,8 @@ msgid ""
 "<strong>Alert!</strong> The content you enter in this form is what we will "
 "show directly on your page within Som Comunitats."
 msgstr ""
-"<strong>Alerta:</strong> Formulario honen edukiaren zati bat Som Comunitats webgunean agertuko da."
+"<strong>Alerta:</strong> Formulario honen edukiaren zati bat Som Comunitats "
+"webgunean agertuko da."
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_headline_message_closed
@@ -426,14 +549,24 @@ msgid ""
 "All communications from the Energy Community will be made in this language "
 "by default."
 msgstr ""
-"Energia Komunitatearen komunikazio guztiak hizkuntza honetan egingo dira"
-"lehenespenez."
+"Energia Komunitatearen komunikazio guztiak hizkuntza honetan egingo "
+"diralehenespenez."
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__allowed_companies
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_tag__allowed_companies
 msgid "Allowed Companies"
 msgstr "Compañías autorizadas"
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Amount of the mandatory initial contribution/fee required of new members"
+msgstr ""
+"Bazkide berriei eskatzen zaien nahitaezko ekarpenaren/hasierako kuotaren "
+"zenbatekoa"
 
 #. module: energy_communities_crm
 #: model:mail.template,subject:energy_communities_crm.email_templ_lead_ce_source_coord_web_hiring_id
@@ -448,13 +581,6 @@ msgstr "Esleitu"
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.view_assign_crm_to_coordinator_wizard_form
 msgid "Assign CRM to Coordinator Company Wizard"
-msgstr "Esleitu CRM enpresa koordinatzaileari"
-
-#. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/models/crm_lead.py:0
-#, python-format
-msgid "Assign CRM to coordinator company"
 msgstr "Esleitu CRM enpresa koordinatzaileari"
 
 #. module: energy_communities_crm
@@ -494,8 +620,8 @@ msgstr ""
 msgid ""
 "Auto-reply email when receiving a request for information from a Coordinator"
 msgstr ""
-"Koordinatzaile baten informazio eskaera jasotzean erantzun automatikoko mezu"
-" elektronikoa"
+"Koordinatzaile baten informazio eskaera jasotzean erantzun automatikoko "
+"mezu elektronikoa"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -507,9 +633,9 @@ msgstr "Kide izateko hautagaiaren kontura banku-transferentzia"
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Bluesky url"
-msgstr ""
+msgstr "Bluesky URL-a"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -572,10 +698,15 @@ msgstr "Itxia"
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Comments"
 msgstr "Iruzkinak"
+
+#. module: energy_communities_crm
+#: model:crm.team,name:energy_communities_crm.crm_team_coord_company_demo
+#, fuzzy
+msgid "Community 3"
+msgstr "Komunitate 3"
 
 #. module: energy_communities_crm
 #: model:mail.template,subject:energy_communities_crm.email_templ_lead_request_contact_confirm_id
@@ -651,7 +782,8 @@ msgstr "Compañía"
 #. module: energy_communities_crm
 #: model:mail.template,name:energy_communities_crm.email_templ_contact_platform_confirm_id
 msgid "Confirmation Email Contact Platform Receipt"
-msgstr "Baieztapen-mezu elektronikoa Jarri harremanetan plataformaren ordainagiria"
+msgstr ""
+"Baieztapen-mezu elektronikoa Jarri harremanetan plataformaren ordainagiria"
 
 #. module: energy_communities_crm
 #: model:mail.template,name:energy_communities_crm.email_templ_lead_request_contact_confirm_id
@@ -666,31 +798,38 @@ msgstr "CE Koordinatzailearen Kontrataziorako Baieztapen Mezu Elektronikoa"
 #. module: energy_communities_crm
 #: model:mail.template,name:energy_communities_crm.email_templ_lead_ce_creation_receipt_confirm_id
 msgid "Confirmation Email for CE Creation Lead Receipt"
-msgstr "CE Sorkuntzako Kontaktuaren Jasotze-agiria Berresteko Mezu Elektronikoa"
+msgstr ""
+"CE Sorkuntzako Kontaktuaren Jasotze-agiria Berresteko Mezu Elektronikoa"
 
 #. module: energy_communities_crm
 #: model:mail.template,name:energy_communities_crm.email_templ_lead_request_ce_news_confirm_id
 msgid "Confirmation Email for CE News Request Lead Receipt"
-msgstr "CE News eskaeraren bezero potentzialaren agiriaren baieztapen-mezu elektronikoa"
+msgstr ""
+"CE News eskaeraren bezero potentzialaren agiriaren baieztapen-mezu "
+"elektronikoa"
 
 #. module: energy_communities_crm
 #: model:mail.template,name:energy_communities_crm.email_templ_lead_ce_source_coord_web_other_id
 msgid "Confirmation Email for CE info about Coordinators"
-msgstr "Koordinatzaileei buruzko CE informaziorako baieztapen-mezu elektronikoa"
+msgstr ""
+"Koordinatzaileei buruzko CE informaziorako baieztapen-mezu elektronikoa"
 
 #. module: energy_communities_crm
 #: model:mail.template,name:energy_communities_crm.email_templ_lead_request_platform_news_confirm_id
 msgid "Confirmation Email for Platform News Request Lead Receipt"
-msgstr "Plataformako Berrien Eskaeraren Kontsulta Jasotzeko Baieztapen-mezu Elektronikoa"
+msgstr ""
+"Plataformako Berrien Eskaeraren Kontsulta Jasotzeko Baieztapen-mezu "
+"Elektronikoa"
 
 #. module: energy_communities_crm
 #: model:mail.template,name:energy_communities_crm.email_templ_lead_request_advise_future_ce_confirm_id
 msgid "Confirmation Email for furture CE Contact Request Lead Receipt"
-msgstr "Etorkizuneko CE Kontaktu Eskaerarako Berandutza Jasotzeko Baieztapen Mezu Elektronikoa"
+msgstr ""
+"Etorkizuneko CE Kontaktu Eskaerarako Berandutza Jasotzeko Baieztapen Mezu "
+"Elektronikoa"
 
 #. module: energy_communities_crm
 #. odoo-python
-#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Constitution date"
@@ -751,7 +890,7 @@ msgstr "Harremanetarako formularioa"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Coordinator"
-msgstr "koordinatzaile"
+msgstr "Koordinatzaile"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -761,10 +900,7 @@ msgid "Corporate and administrative management"
 msgstr "Sozietatearen eta administrazioaren kudeaketa"
 
 #. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/models/crm_lead.py:0
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.ce_crm_lead_view_form
-#, python-format
 msgid "Create community"
 msgstr "Crear comunidad"
 
@@ -798,14 +934,18 @@ msgstr "Mapping de metadatos en CRM Lead"
 #: code:addons/energy_communities_crm/models/crm_lead.py:0
 #, python-format
 msgid "Crm Lead stage {stage_name} doesn't match it's company {company_name}"
-msgstr "CRM Lead-aren {stage_name} fasea ez dator bat bere {company_name} enpresarekin"
+msgstr ""
+"CRM Lead-aren {stage_name} fasea ez dator bat bere {company_name} "
+"enpresarekin"
 
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/models/crm_lead.py:0
 #, python-format
 msgid "Crm Lead team {team_name} doesn't match it's company {company_name}"
-msgstr "{team_name} CRM arduradun taldea ez dator bat bere {company_name} enpresarekin"
+msgstr ""
+"{team_name} CRM arduradun taldea ez dator bat bere {company_name} "
+"enpresarekin"
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__ce_child_lead_id
@@ -829,8 +969,8 @@ msgid ""
 "who make up the group promoting/driving the initiative (enter a value "
 "greater than or equal to 1)."
 msgstr ""
-"Energia-komunitateko egungo parte-hartzaileak. Oraindik eratuta ez badago,"
-" adierazi zenbat pertsonak parte hartu nahi duten edo zeinek osatzen duten "
+"Energia-komunitateko egungo parte-hartzaileak. Oraindik eratuta ez badago, "
+"adierazi zenbat pertsonak parte hartu nahi duten edo zeinek osatzen duten "
 "ekimenaren talde sustatzailea/eragilea (idatzi 1en balioa edo handiagoa)."
 
 #. module: energy_communities_crm
@@ -873,7 +1013,9 @@ msgstr "Ba al dakizue zein Erakunde Koordinatzailek laguntzea nahi duzuen?"
 msgid ""
 "Do you think that management could enter Odoo to generate the models from "
 "Odoo itself?"
-msgstr "Uste duzu zuzendaritzak Odoo erabil dezakeela modeloak Odootik bertatik sortzeko?"
+msgstr ""
+"Uste duzu zuzendaritzak Odoo erabil dezakeela modeloak Odootik bertatik "
+"sortzeko?"
 
 #. module: energy_communities_crm
 #: model:mail.template,description:energy_communities_crm.email_templ_landing_coord_newsletter
@@ -881,21 +1023,26 @@ msgid ""
 "E-mail of auto-reply upon receiving a subscription request for a "
 "Coordinator's Newsletter"
 msgstr ""
-"Koordinatzailearen buletinaren harpidetza eskaera jasotzean erantzun automatikoaren posta elektronikoa"
+"Koordinatzailearen buletinaren harpidetza eskaera jasotzean erantzun "
+"automatikoaren posta elektronikoa"
 
 #. module: energy_communities_crm
 #: model:mail.template,description:energy_communities_crm.email_templ_lead_ce_source_tariffs_page_contact
 msgid ""
 "E-mail of auto-reply when receiving a request for information from Tariffs "
 "page"
-msgstr "Tarifak orrialdetik informazio eskaera bat jasotzean erantzun automatikoaren posta elektronikoa"
+msgstr ""
+"Tarifak orrialdetik informazio eskaera bat jasotzean erantzun "
+"automatikoaren posta elektronikoa"
 
 #. module: energy_communities_crm
 #: model:mail.template,description:energy_communities_crm.email_templ_landing_coord_contact
 msgid ""
 "E-mail of auto-reply when receiving a request for information from a "
 "Coordinator"
-msgstr "Koordinatzaile batetik informazio eskaera bat jasotzean erantzun automatikoaren posta elektronikoa"
+msgstr ""
+"Koordinatzaile batetik informazio eskaera bat jasotzean erantzun "
+"automatikoaren posta elektronikoa"
 
 #. module: energy_communities_crm
 #: model:mail.template,description:energy_communities_crm.email_templ_lead_request_contact_confirm_id
@@ -925,23 +1072,30 @@ msgstr "Koordinatzaileei buruzko CE informazioa berresteko mezu elektronikoa"
 #. module: energy_communities_crm
 #: model:mail.template,description:energy_communities_crm.email_templ_contact_platform_confirm_id
 msgid "E-mail of confirmation for Contact Platform Receipt"
-msgstr "Harremanetarako plataformaren hartu-agiria berresteko mezu elektronikoa"
+msgstr ""
+"Harremanetarako plataformaren hartu-agiria berresteko mezu elektronikoa"
 
 #. module: energy_communities_crm
 #: model:mail.template,description:energy_communities_crm.email_templ_lead_request_platform_news_confirm_id
 msgid "E-mail of confirmation for Platform News Request Lead Receipt"
-msgstr "Plataformako albisteen eskaerarako berrespen-mezu elektronikoa Lead-aren ordainagiria"
+msgstr ""
+"Plataformako albisteen eskaerarako berrespen-mezu elektronikoa Lead-aren "
+"ordainagiria"
 
 #. module: energy_communities_crm
 #: model:mail.template,description:energy_communities_crm.email_templ_lead_request_advise_future_ce_confirm_id
 msgid "E-mail of confirmation for furture CE Contact Request Lead Receipt"
-msgstr "furture CE konfirmazio mezu elektronikoa Kontaktua Eskaera Beruna Ordainagiria"
+msgstr ""
+"furture CE konfirmazio mezu elektronikoa Kontaktua Eskaera Beruna "
+"Ordainagiria"
 
 #. module: energy_communities_crm
 #: model:mail.template,description:energy_communities_crm.email_templ_lead_assigned_to_coordinator_id
 msgid ""
 "E-mail request for registration of the Energy Community in the platform"
-msgstr "Energia Komunitatea plataforman erregistratzeko posta elektronikoaren eskaera"
+msgstr ""
+"Energia Komunitatea plataforman erregistratzeko posta elektronikoaren "
+"eskaera"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1042,19 +1196,22 @@ msgstr "ID externo de etiqueta"
 #, python-format
 msgid ""
 "If ‘Open’ is selected, buttons will be displayed that provide access to "
-"public forms for receiving applications from new members of the Community at"
-" your <a href='https://somcomunitats.coop/es/#encuentra-tu-comunidad' "
-"target='_blank'>map</a> location and at the top of your <a "
-"href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
-"es.png' target='_blank'>own website</a> on the Platform. Otherwise, these "
-"buttons will be hidden and only a generic Contact the Community button will "
-"be displayed."
+"public forms for receiving applications from new members of the Community "
+"at your <a href='https://somcomunitats.coop/es/#encuentra-tu-comunidad' "
+"target='_blank'>map</a> location and at the top of your <a href='https://"
+"somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' "
+"target='_blank'>own website</a> on the Platform. Otherwise, these buttons "
+"will be hidden and only a generic Contact the Community button will be "
+"displayed."
 msgstr ""
-"Irekia' hautatuz gero, Erkidegoko bazkide berrien eskaerak jasotzeko inprimaki "
-"publikoetara sartzeko botoiak agertuko dira haren <a href='https://somcomunitats.coop/eu/#encuentra-tu-comunidad' "
-"target='_blank'>mapan</a> eta plataformako <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-eu.png'"
-" target='_blank'>web-orriaren</a> goiburuan. Bestela, botoi horiek ezkutatu egingo dira, eta Jarri harremanetan"
-" Komunitatearekin botoi generiko bat bakarrik bistaratuko da."
+"Irekia' hautatuz gero, Erkidegoko bazkide berrien eskaerak jasotzeko "
+"inprimaki publikoetara sartzeko botoiak agertuko dira haren <a "
+"href='https://somcomunitats.coop/eu/#encuentra-tu-comunidad' "
+"target='_blank'>mapan</a> eta plataformako <a href='https://"
+"somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-eu.png' "
+"target='_blank'>web-orriaren</a> goiburuan. Bestela, botoi horiek ezkutatu "
+"egingo dira, eta Jarri harremanetan Komunitatearekin botoi generiko bat "
+"bakarrik bistaratuko da."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1064,8 +1221,8 @@ msgid ""
 "Indicate the legal form that the Community already has or that you know it "
 "will have. If you do not know yet, you can select: ‘To be defined’."
 msgstr ""
-"Adierazi zer forma juridiko duen edo izango duen komunitateak. "
-"Oraindik ez badakizu, hau hauta dezakezu: 'Zehazteko dago'."
+"Adierazi zer forma juridiko duen edo izango duen komunitateak. Oraindik ez "
+"badakizu, hau hauta dezakezu: 'Zehazteko dago'."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1116,22 +1273,21 @@ msgid ""
 "It will be delegated to people from the Coordinating entity that supports "
 "the Energy Community on the Platform"
 msgstr ""
-"Laguntzen duen erakunde koordinatzaileko pertsonen esku utziko da "
-"Energia komunitatea plataforman"
+"Laguntzen duen erakunde koordinatzaileko pertsonen esku utziko da Energia "
+"komunitatea plataforman"
 
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid ""
-"It will be published in the Contact section of <a "
-"href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
-"es.png' target='_blank'>your own web page</a> on the Platform."
+"It will be published in the Contact section of <a href='https://"
+"somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' "
+"target='_blank'>your own web page</a> on the Platform."
 msgstr ""
-"Plataforman zure <a "
-"href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
-"eu.png' target='_blank'>web orriko</a> Harremanetarako atalean argitaratuta agertuko da."
-
+"Plataforman zure <a href='https://somcomunitats.coop/wp-content/uploads/"
+"2025/09/landing-prova-eu.png' target='_blank'>web orriko</a> "
+"Harremanetarako atalean argitaratuta agertuko da."
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__lang
@@ -1177,15 +1333,17 @@ msgstr "Legez eratua (IFKrekin)"
 #, python-format
 msgid ""
 "Link to the Energy Community website. Example: https://somcomunitats.coop"
-msgstr "Energia-komunitatearen webgunerako esteka. Adibidez: https://somcomunitats.coop"
+msgstr ""
+"Energia-komunitatearen webgunerako esteka. Adibidez: https://"
+"somcomunitats.coop"
 
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid ""
-"Link to the Energy Community's social network profile. Example: "
-"https://bsky.app/profile/somcomunitats.coop"
+"Link to the Energy Community's social network profile. Example: https://"
+"bsky.app/profile/somcomunitats.coop"
 msgstr ""
 "Energia Komunitatearen sare sozialaren profilerako esteka. Adibidea: "
 "https://bsky.app/profile/somcomunitats.coop"
@@ -1195,8 +1353,8 @@ msgstr ""
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid ""
-"Link to the Energy Community's social network profile. Example: "
-"https://mastodon.social/@SomComunitats"
+"Link to the Energy Community's social network profile. Example: https://"
+"mastodon.social/@SomComunitats"
 msgstr ""
 "Energia Komunitatearen sare sozialaren profilerako esteka. Adibidea: "
 "https://mastodon.social/@SomComunitats"
@@ -1206,8 +1364,8 @@ msgstr ""
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid ""
-"Link to the Energy Community's social network profile. Example: "
-"https://t.me/SomComunitats"
+"Link to the Energy Community's social network profile. Example: https://"
+"t.me/SomComunitats"
 msgstr ""
 "Energia Komunitatearen sare sozialaren profilerako esteka. Adibidea: "
 "https://t.me/SomComunitats"
@@ -1217,8 +1375,8 @@ msgstr ""
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid ""
-"Link to the Energy Community's social network profile. Example: "
-"https://www.facebook.com/SomComunitats/"
+"Link to the Energy Community's social network profile. Example: https://"
+"www.facebook.com/SomComunitats/"
 msgstr ""
 "Energia Komunitatearen sare sozialaren profilerako esteka. Adibidea: "
 "https://www.facebook.com/SomComunitats/"
@@ -1228,8 +1386,8 @@ msgstr ""
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid ""
-"Link to the Energy Community's social network profile. Example: "
-"https://www.instagram.com/SomComunitats/"
+"Link to the Energy Community's social network profile. Example: https://"
+"www.instagram.com/SomComunitats/"
 msgstr ""
 "Energia Komunitatearen sare sozialaren profilerako esteka. Adibidea: "
 "https://www.facebook.com/SomComunitats/"
@@ -1239,8 +1397,8 @@ msgstr ""
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid ""
-"Link to the Energy Community's social network profile. Example: "
-"https://x.com/SomComunitats"
+"Link to the Energy Community's social network profile. Example: https://"
+"x.com/SomComunitats"
 msgstr ""
 "Energia Komunitatearen sare sozialaren profilerako esteka. Adibidea: "
 "https://x.com/SomComunitats"
@@ -1273,16 +1431,9 @@ msgstr "Nombre real de modelo"
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Mastodon url"
-msgstr "Mastodon url"
-
-#. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/models/crm_lead.py:0
-#, python-format
-msgid "Metadata 'ce_name' must be defined for creating a company"
-msgstr "'ce_name' metadatuak definitu behar dira enpresa bat sortzeko"
+msgstr "Mastodon URL-a"
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping_field__metadata_key
@@ -1307,6 +1458,12 @@ msgstr "Datos necesarios para la integración de la Comunidad:"
 #: model:mail.template,subject:energy_communities_crm.email_templ_lead_ce_creation_receipt_confirm_id
 msgid "New Community Creation Request"
 msgstr "Energia Erkidegoa inskribatzeko eskaera plataforma"
+
+#. module: energy_communities_crm
+#: model:crm.stage,name:energy_communities_crm.crm_stage_coord_company_demo
+#, fuzzy
+msgid "New demo"
+msgstr "Demo berria"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.ce_view_crm_case_opportunities_filter
@@ -1377,17 +1534,17 @@ msgid ""
 "original instance-level record."
 msgstr ""
 "%s koordinatzaileari esleitutako aukera (IDa: %s), non %s -ren IDa den "
-"jatorrizko instantzia-mailako erregistroa"
+"jatorrizko instantzia-mailako erregistroa."
 
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/wizards/assign_crm_to_coordinator_company.py:0
 #, python-format
 msgid ""
-"Opportunity created from Instance opportunity with ID %s, where %s is the id"
-" of the new record generated at the Coordinator level"
+"Opportunity created from Instance opportunity with ID %s, where %s is the "
+"id of the new record generated at the Coordinator level"
 msgstr ""
-"% s IDa duen instantzia-aukeratik sortutako aukera, non% s IDa baita "
+"%s IDa duen instantzia-aukeratik sortutako aukera, non%s IDa baita "
 "koordinatzailearen mailan sortutako erregistro berriarena"
 
 #. module: energy_communities_crm
@@ -1437,7 +1594,8 @@ msgid ""
 "Please check the grammatical and spelling quality of the texts and "
 "translations before submitting."
 msgstr ""
-"Mesedez, berrikusi testuen eta itzulpenen kalitate gramatikala eta ortografikoa bidali aurretik."
+"Mesedez, berrikusi testuen eta itzulpenen kalitate gramatikala eta "
+"ortografikoa bidali aurretik."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1446,14 +1604,15 @@ msgstr ""
 msgid ""
 "Please indicate if there is anything else you think we should consider."
 msgstr ""
-"Adierazi kontuan hartu beharko genukeela uste duzun beste zerbait dagoen"
+"Adierazi kontuan hartu beharko genukeela uste duzun beste zerbait dagoen."
 
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Please select at least one Energy service in order to submit the form"
-msgstr "Mesedez, hautatu gutxienez energia-zerbitzu bat formularioa bidaltzeko"
+msgstr ""
+"Mesedez, hautatu gutxienez energia-zerbitzu bat formularioa bidaltzeko"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1468,12 +1627,13 @@ msgstr "Posta-kodea"
 #, python-format
 msgid ""
 "Preferably a group photo of the Energy Community. It will be published at "
-"the top of your <a href='https://somcomunitats.coop/wp-"
-"content/uploads/2025/09/landing-prova-es.png' target='_blank'>own web "
-"page</a> on the Platform."
+"the top of your <a href='https://somcomunitats.coop/wp-content/uploads/"
+"2025/09/landing-prova-es.png' target='_blank'>own web page</a> on the "
+"Platform."
 msgstr ""
-"Hobe Komunitate Energetikoaren talde-argazkia. Plataformako <a href='https://somcomunitats.coop/wp-"
-"content/uploads/2025/09/landing-prova-eu.png' target='_blank'>web orriaren</a> goiburuan agertuko da argitaratuta."
+"Hobe Komunitate Energetikoaren talde-argazkia. Plataformako <a "
+"href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
+"eu.png' target='_blank'>web orriaren</a> goiburuan agertuko da argitaratuta."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1493,6 +1653,12 @@ msgstr "Política de privacidad"
 #, python-format
 msgid "Process for becoming a member"
 msgstr "Bazkide izateko prozesua"
+
+#. module: energy_communities_crm
+#: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__lead_properties
+#, fuzzy
+msgid "Properties"
+msgstr "Ezaugarriak"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1518,7 +1684,9 @@ msgstr "Berun erlazionatua itxita."
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Related Lead not found. The url is not correct. lead_id param invalid."
-msgstr "Ez da aurkitu erlazionatutako berunik. URL helbidea ez da zuzena. lead_id param baliogabea."
+msgstr ""
+"Ez da aurkitu erlazionatutako berunik. URL helbidea ez da zuzena. lead_id "
+"param baliogabea."
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping__metadata_mapping_field_ids
@@ -1538,6 +1706,7 @@ msgstr "Solicitud de alta de Comunidad Energética en la plataforma"
 
 #. module: energy_communities_crm
 #: model:ir.model,name:energy_communities_crm.model_crm_team
+#: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__team_id
 msgid "Sales Team"
 msgstr "Salmenta taldea"
 
@@ -1565,11 +1734,11 @@ msgstr "Hautatu koordinatzaile bat"
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid ""
-"Select it for the current year. Example: if it is 2025 and the annual fee is"
-" charged on March 1, select 03/01/2025."
+"Select it for the current year. Example: if it is 2025 and the annual fee "
+"is charged on March 1, select 03/01/2025."
 msgstr ""
-"Hautatu uneko urterako. Adibidea: 2025 bada eta urteko kuota bai"
-" martxoaren 1ean kobratuta, hautatu 2025/01/03"
+"Hautatu uneko urterako. Adibidea: 2025 bada eta urteko kuota bai martxoaren "
+"1ean kobratuta, hautatu 2025/01/03."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1581,8 +1750,8 @@ msgid ""
 "entity</a> you would like to accompany and support you."
 msgstr ""
 "Aukeratu zein <a href='https://somcomunitats.coop/eu/que-son-las-"
-"coordinadoras/#ce-coordinadores-members' target='_blank'>Erakunde Koordinatzailek"
-"</a> laguntzea nahiko zenuketen"
+"coordinadoras/#ce-coordinadores-members' target='_blank'>Erakunde "
+"Koordinatzailek</a> laguntzea nahiko zenuketen."
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form
@@ -1640,9 +1809,9 @@ msgstr "Información sobre tarifas"
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Telegram url"
-msgstr ""
+msgstr "Telegramen URL-a"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1650,20 +1819,18 @@ msgstr ""
 #, python-format
 msgid ""
 "The Som Comunitats Platform requests that every Energy Community be "
-"supported by a Coordinating Entity. <a "
-"href='https://somcomunitats.coop/es/que-son-las-coordinadoras/' "
-"target='_blank'>Here</a> we explain what they are, and <a "
-"href='https://somcomunitats.coop/es/que-son-las-coordinadoras/#ce-"
-"coordinadores-members' target='_blank'>here</a> is a list of available "
+"supported by a Coordinating Entity. <a href='https://somcomunitats.coop/es/"
+"que-son-las-coordinadoras/' target='_blank'>Here</a> we explain what they "
+"are, and <a href='https://somcomunitats.coop/es/que-son-las-coordinadoras/"
+"#ce-coordinadores-members' target='_blank'>here</a> is a list of available "
 "Coordinators."
 msgstr ""
 "Som Comunitats Plataformak eskatu du energia-komunitate orok erakunde "
-"koordinatzaile baten laguntza izatea. <a "
-"href='https://somcomunitats.coop/eu/que-son-las-coordinadoras/' "
-"target='_blank'>Hemen</a> azaltzen dizuegu zer diren, eta <a "
-"href='https://somcomunitats.coop/eu/que-son-las-coordinadoras/#ce-"
-"coordinadores-miembros' target='_blank'>hemen</a> duzue eskuragarri "
-"dauden koordinatzaileen zerrenda."
+"koordinatzaile baten laguntza izatea. <a href='https://somcomunitats.coop/"
+"eu/que-son-las-coordinadoras/' target='_blank'>Hemen</a> azaltzen dizuegu "
+"zer diren, eta <a href='https://somcomunitats.coop/eu/que-son-las-"
+"coordinadoras/#ce-coordinadores-miembros' target='_blank'>hemen</a> duzue "
+"eskuragarri dauden koordinatzaileen zerrenda."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1680,9 +1847,9 @@ msgstr "Egiazkoa"
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Twitter url"
-msgstr ""
+msgstr "Twitteren URL-a"
 
 #. module: energy_communities_crm
 #: model:ir.model,name:energy_communities_crm.model_utm_source
@@ -1697,16 +1864,16 @@ msgid ""
 "Use a maximum of 1000 characters to write a summary of your Energy "
 "Community. It will be published as a description of the Community at its <a "
 "href='https://somcomunitats.coop/es/#encuentra-tu-comunidad' "
-"target='_blank'>map</a> location and at the top of its <a "
-"href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
-"es.png' target='_blank'>own web page</a> on the Platform."
+"target='_blank'>map</a> location and at the top of its <a href='https://"
+"somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' "
+"target='_blank'>own web page</a> on the Platform."
 msgstr ""
-"Erabili gehienez 1000 karaktere zuen energia-erkidegoaren laburpena idazteko."
-" Komunitatearen deskribapen gisa agertuko da argitaratuta bere <a "
+"Erabili gehienez 1000 karaktere zuen energia-erkidegoaren laburpena "
+"idazteko. Komunitatearen deskribapen gisa agertuko da argitaratuta bere <a "
 "href='https://somcomunitats.coop/eu/#encuentra-tu-comunidad' "
-"target='_blank'>mapa-puntuan</a> eta <a "
-"href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
-"eu.png' target='_blank'>bere web-orriaren</a> goiburuan, Plataforman."
+"target='_blank'>mapa-puntuan</a> eta <a href='https://somcomunitats.coop/wp-"
+"content/uploads/2025/09/landing-prova-eu.png' target='_blank'>bere web-"
+"orriaren</a> goiburuan, Plataforman."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1714,13 +1881,14 @@ msgstr ""
 #, python-format
 msgid ""
 "Use a maximum of 1500 characters to explain your Energy Community. It will "
-"be published in the ‘About us’ section of <a "
-"href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
-"es.png' target='_blank'>your own page</a> on the Platform."
+"be published in the ‘About us’ section of <a href='https://"
+"somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-es.png' "
+"target='_blank'>your own page</a> on the Platform."
 msgstr ""
-"Erabili gehienez 1500 karaktere zuen energia-komunitatea azaltzeko. Plataforman duen <a "
-"href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
-"eu.png' target='_blank'>web orriko</a> 'Nor gara' atalean agertuko da argitaratuta."
+"Erabili gehienez 1500 karaktere zuen energia-komunitatea azaltzeko. "
+"Plataforman duen <a href='https://somcomunitats.coop/wp-content/uploads/"
+"2025/09/landing-prova-eu.png' target='_blank'>web orriko</a> 'Nor gara' "
+"atalean agertuko da argitaratuta."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1729,14 +1897,15 @@ msgstr ""
 msgid ""
 "Use a maximum of 500 characters to explain the advantages of joining the "
 "Community. If filled in, it will be published in the ‘Why become a member’ "
-"section of your <a href='https://somcomunitats.coop/wp-"
-"content/uploads/2025/09/landing-prova-es.png' target='_blank'>own web "
-"page</a> on the Platform."
+"section of your <a href='https://somcomunitats.coop/wp-content/uploads/"
+"2025/09/landing-prova-es.png' target='_blank'>own web page</a> on the "
+"Platform."
 msgstr ""
-"Gehienez 500 karaktere erabiltzen ditu Komunitatearekin bat egitearen abantailak"
-" azaltzeko. Betetzen bada, Plataforman duen <a href='https://somcomunitats.coop/wp--ren atala"
-"content/uploads/2025/09/landing-prova-eu.png' target='_blank'>web orriko</a> 'Zergatik"
-" egin bazkide' atalean agertuko da argitaratuta."
+"Gehienez 500 karaktere erabiltzen ditu Komunitatearekin bat egitearen "
+"abantailak azaltzeko. Betetzen bada, Plataforman duen <a href='https://"
+"somcomunitats.coop/wp--ren atalacontent/uploads/2025/09/landing-prova-"
+"eu.png' target='_blank'>web orriko</a> 'Zergatik egin bazkide' atalean "
+"agertuko da argitaratuta."
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -1745,14 +1914,14 @@ msgstr ""
 msgid ""
 "Use a maximum of 500 characters to explain the process for joining the "
 "Community. If completed, it will be published in the ‘Registration Process’ "
-"section of <a href='https://somcomunitats.coop/wp-"
-"content/uploads/2025/09/landing-prova-es.png' target='_blank'>your own "
-"website</a> on the Platform."
+"section of <a href='https://somcomunitats.coop/wp-content/uploads/2025/09/"
+"landing-prova-es.png' target='_blank'>your own website</a> on the Platform."
 msgstr ""
 "Gehienez 500 karaktere erabiltzen ditu Komunitatearekin elkartzeko jarraitu "
-"beharreko prozesua azaltzeko. Betetzen bada, Plataformako zure <a href='https://somcomunitats.coop/wp-"
-"content/uploads/2025/09/landing-prova-eu.png' target='_blank'>web orriko</a> 'Alta emateko prozesua'"
-" atalean agertuko da argitaratuta."
+"beharreko prozesua azaltzeko. Betetzen bada, Plataformako zure <a "
+"href='https://somcomunitats.coop/wp-content/uploads/2025/09/landing-prova-"
+"eu.png' target='_blank'>web orriko</a> 'Alta emateko prozesua' atalean "
+"agertuko da argitaratuta."
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__user_current_company
@@ -1769,9 +1938,9 @@ msgstr "Rol actual del usuario"
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "VAT"
-msgstr ""
+msgstr "BEZa"
 
 #. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_line__value
@@ -1801,24 +1970,6 @@ msgstr "Webguneko datuak eta mapa"
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
-msgid ""
-"What amount of mandatory contribution to the social capital do you ask for "
-"when a new member joins?"
-msgstr ""
-"Kapital sozialari nahitaez egin beharreko ekarpenaren zenbatekoa eskatzen duzu "
-"kide berri bat sartzen denean?"
-
-#. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
-msgid "Amount of the mandatory initial contribution/fee required of new members"
-msgstr "Bazkide berriei eskatzen zaien nahitaezko ekarpenaren/hasierako kuotaren zenbatekoa"
-
-#. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
 msgid "Which one?"
 msgstr "Zein?"
 
@@ -1836,7 +1987,6 @@ msgstr "Account Multi-company Easy Creation-eko morroia"
 
 #. module: energy_communities_crm
 #. odoo-python
-#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Yes"
@@ -1914,63 +2064,68 @@ msgid ""
 "and to our <strong>administrative management space</strong> (Odoo program "
 "for corporate, accounting and financial management)"
 msgstr ""
-"y en <strong>el espacio de gestión administrativa</strong> (programa Odoo de"
-" gestión societaria, contable y financiera)."
+"y en <strong>el espacio de gestión administrativa</strong> (programa Odoo "
+"de gestión societaria, contable y financiera)."
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
 msgid "ce_constitution_status:constituted"
-msgstr ""
+msgstr "ce_constitution_status:constituted"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
 msgid "ce_constitution_status:other"
-msgstr ""
+msgstr "ce_constitution_status:other"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
 msgid "ce_constitution_status_other,ce_creation_date,ce_vat,ce_fiscal_name"
-msgstr ""
+msgstr "ce_constitution_status_other,ce_creation_date,ce_vat,ce_fiscal_name"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid "ce_legal_form:non_profit,residents_association"
-msgstr ""
+msgid "ce_legal_form:non_profit"
+msgstr "ce_legal_form:non_profit"
+
+#. module: energy_communities_crm
+#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
+msgid "ce_legal_form:other"
+msgstr "ce_legal_form:other"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
 msgid "ce_manager:member_admin,both"
-msgstr ""
+msgstr "ce_manager:member_admin,both"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
 msgid "ce_manager_headline"
-msgstr ""
+msgstr "ce_manager_headline"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid "ce_member_mandatory_contribution,ce_member_recurrent_contribution_date"
-msgstr ""
+msgid "ce_member_recurrent_contribution,ce_member_recurrent_contribution_date,ce_legal_form_other"
+msgstr "ce_member_recurrent_contribution,ce_member_recurrent_contribution_date,ce_legal_form_other"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
 msgid "coordinator_id"
-msgstr ""
+msgstr "coordinator_id"
 
 #. module: energy_communities_crm
 #: model:ir.model,name:energy_communities_crm.model_crm_lead_metadata_line
 msgid "crm.lead.metadata.line"
-msgstr ""
+msgstr "crm.lead.metadata.line"
 
 #. module: energy_communities_crm
 #: model:ir.model,name:energy_communities_crm.model_crm_lead_metadata_mapping
 msgid "crm.lead.metadata.mapping"
-msgstr ""
+msgstr "crm.lead.metadata.mapping"
 
 #. module: energy_communities_crm
 #: model:ir.model,name:energy_communities_crm.model_crm_lead_metadata_mapping_field
 msgid "crm.lead.metadata.mapping.field"
-msgstr ""
+msgstr "crm.lead.metadata.mapping.field"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_headline_message_closed
@@ -1979,13 +2134,14 @@ msgstr "laguntza gehiagorako."
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
+#, fuzzy
 msgid "info@somcomunitats.coop"
-msgstr ""
+msgstr "info@somcomunitats.coop"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
 msgid "known_coordinator:yes"
-msgstr ""
+msgstr "known_coordinator:yes"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -2003,8 +2159,9 @@ msgstr "lead_id param URLan definitu behar da formularioa erabiltzeko"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_headline_message_closed
+#, fuzzy
 msgid "suport@somcomunitats.coop"
-msgstr ""
+msgstr "suport@somcomunitats.coop"
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_headline
@@ -2015,13 +2172,13 @@ msgstr "en los <strong>espacios públicos</strong> de la"
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_headline_message_closed
 msgid ""
 "to the technology platform Som Comunitats has been successfully submitted."
-msgstr ""
-"som Comunitarios plataforma teknologikoari arrakastaz aurkeztu zaio."
+msgstr "som Comunitarios plataforma teknologikoari arrakastaz aurkeztu zaio."
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_headline
+#, fuzzy
 msgid "web"
-msgstr ""
+msgstr "sarea"
 
 #. module: energy_communities_crm
 #. odoo-python
@@ -2029,6 +2186,13 @@ msgstr ""
 #, python-format
 msgid "{} field must be a past date"
 msgstr "{} eremuak iraganeko data izan behar du"
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid "{} field must begin with https://"
+msgstr "{} eremua 'https://'rekin hasi behar da"
 
 #. module: energy_communities_crm
 #. odoo-python
