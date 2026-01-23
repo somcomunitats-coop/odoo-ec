@@ -1,4 +1,5 @@
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class EmailsendingassistantWiz(models.TransientModel):
@@ -64,19 +65,27 @@ class EmailsendingassistantWiz(models.TransientModel):
             template_force_language = self.email_template_id.copy(
                 {"lang": self.force_language}
             )
-        if self.state == "test":
+        if (
+            self.state == "test"
+            and ctx.get("active_ids")
+            and len(ctx.get("active_ids")) > 0
+        ):
+            if not self.recipient_email_address_for_test:
+                raise ValidationError(
+                    _("You must specify a recipient email address for test")
+                )
             email_values = {
                 "email_to": self.recipient_email_address_for_test,
             }
             if self.force_language:
                 template_force_language.with_context(ctx).sudo().send_mail(
-                    self.env.user.partner_id.id,
+                    ctx.get("active_ids")[0],
                     email_values=email_values,
                 )
                 template_force_language.unlink()
             else:
                 self.email_template_id.with_context(ctx).sudo().send_mail(
-                    self.env.user.partner_id.id,
+                    ctx.get("active_ids")[0],
                     email_values=email_values,
                 )
             self.state = "draft"

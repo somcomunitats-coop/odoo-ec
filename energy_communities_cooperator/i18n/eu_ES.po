@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 15:22+0000\n"
-"PO-Revision-Date: 2026-01-22 16:46+0100\n"
+"POT-Creation-Date: 2026-01-23 09:06+0000\n"
+"PO-Revision-Date: 2026-01-23 10:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: eu_ES\n"
@@ -689,7 +689,6 @@ msgstr "Helbide elektronikoa"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_email_sending_assistant_wiz
-#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
 msgid "Email Sending Assistant"
 msgstr ""
 
@@ -701,7 +700,7 @@ msgstr "Mezu elektronikoaren txantiloia"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__recipient_email_address_for_test
 msgid "Email address to receive the test email"
-msgstr ""
+msgstr "Proba-mezu elektronikoa jasotzeko helbide elektronikoa"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -721,7 +720,7 @@ msgstr "Helbide elektroniko hori ez da aurkitu"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__email_template_id
 msgid "Email template to send"
-msgstr ""
+msgstr "Bidaltzeko mezu elektronikoaren txantiloia"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_res_partner__no_member_autorized_in_energy_actions
@@ -913,7 +912,7 @@ msgstr "PERTSONA JURIDIKOA DEN KONTAKTUA"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__force_language
 msgid "Language to send the email in"
-msgstr ""
+msgstr "Mezu elektronikoa bidaltzeko hizkuntza"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz____last_update
@@ -1628,6 +1627,16 @@ msgstr "Webguneko komunikazioaren historia"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
 msgid ""
+"When executed, a test email will be sent using the data from the first of "
+"the selected records but using the specified address as the recipient."
+msgstr ""
+"Exekutatzean, proba-mezu elektroniko bat bidaliko da hautatutako lehenengo "
+"erregistroetako datuak erabiliz, baina zehaztutako helbidea hartzaile gisa "
+"erabiliz."
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
+msgid ""
 "When executed, an email with the selected email template will be sent to "
 "all underlying records."
 msgstr ""
@@ -1684,6 +1693,13 @@ msgstr "Ezin duzu bi motatako ekarpenetan harpidetu."
 #, python-format
 msgid "You must check the SEPA transference."
 msgstr "SEPA transferentzia hautatu behar duzu."
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
+#, python-format
+msgid "You must specify a recipient email address for test"
+msgstr "Probaren hartzailearen helbide elektronikoa zehaztu behar duzu"
 
 #. module: energy_communities_cooperator
 #. odoo-python

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 15:21+0000\n"
-"PO-Revision-Date: 2026-01-22 16:45+0100\n"
+"POT-Creation-Date: 2026-01-23 09:07+0000\n"
+"PO-Revision-Date: 2026-01-23 10:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -708,7 +708,6 @@ msgstr "Correo electrónico"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_email_sending_assistant_wiz
-#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
 msgid "Email Sending Assistant"
 msgstr ""
 
@@ -721,6 +720,7 @@ msgstr "Plantilla de correo electrónico"
 #: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__recipient_email_address_for_test
 msgid "Email address to receive the test email"
 msgstr ""
+"Dirección de correo electrónico para recibir el correo electrónico de prueba"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -740,7 +740,7 @@ msgstr "Email no encontrado"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__email_template_id
 msgid "Email template to send"
-msgstr ""
+msgstr "Plantilla de correo electrónico para enviar"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_res_partner__no_member_autorized_in_energy_actions
@@ -932,7 +932,7 @@ msgstr "ALTA SOCIA PERSONA JURÍDICA"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__force_language
 msgid "Language to send the email in"
-msgstr ""
+msgstr "Idioma en el que se enviará el correo electrónico"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz____last_update
@@ -1645,6 +1645,16 @@ msgstr "Historial de comunicación web"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
 msgid ""
+"When executed, a test email will be sent using the data from the first of "
+"the selected records but using the specified address as the recipient."
+msgstr ""
+"Al ejecutar se enviará un correo electrónico de prueba usando los datos del "
+"1º de los registros seleccionados pero usando como destinatario la "
+"dirección especificada."
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
+msgid ""
 "When executed, an email with the selected email template will be sent to "
 "all underlying records."
 msgstr ""
@@ -1700,6 +1710,15 @@ msgstr "No puedes subscribirte a dos tipos de aportaciones diferentes."
 #, python-format
 msgid "You must check the SEPA transference."
 msgstr "Debes marcar la opción de transferencia SEPA."
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
+#, python-format
+msgid "You must specify a recipient email address for test"
+msgstr ""
+"Debe especificar una dirección de correo electrónico de destinatario para "
+"la prueba."
 
 #. module: energy_communities_cooperator
 #. odoo-python

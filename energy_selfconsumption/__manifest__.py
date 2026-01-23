@@ -112,6 +112,7 @@ managing collective self-consumption projects under Spanish energy regulations.
         "wizards/selfconsumption_import_wizard_views.xml",
         "wizards/set_iban_inscriptions_wizard_views.xml",
         "wizards/export_csv_inscriptions_wizard_views.xml",
+        "wizards/email_sending_assistant.xml",
         # Main views
         "views/contract_views.xml",
         "views/distribution_table_views.xml",
