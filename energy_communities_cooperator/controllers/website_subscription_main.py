@@ -28,7 +28,20 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         target_odoo_company_id = False
         if kwargs.get("odoo_company_id", False):
             try:
-                target_odoo_company_id = int(kwargs.get("odoo_company_id"))
+                target_odoo_company_id = (
+                    request.env["res.company"]
+                    .sudo()
+                    .search(
+                        [
+                            (
+                                "id",
+                                "=",
+                                kwargs.get("odoo_company_id"),
+                            )
+                        ]
+                    )
+                    .id
+                )
             except:
                 pass
 
@@ -46,7 +59,6 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                             )
                         ]
                     )
-                    .id
                 )
             except:
                 pass
@@ -54,12 +66,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         if (
             ("odoo_company_id" in kwargs)
             or ("external_company_id" in kwargs)
-            and (
-                not target_odoo_company_id
-                or not request.env["res.company"]
-                .sudo()
-                .search([("id", "=", target_odoo_company_id)])
-            )
+            and (not target_odoo_company_id)
         ):
             return http.Response(
                 _(
@@ -88,15 +95,50 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             except:
                 pass
 
-        if ("product_external_id" in kwargs) and (
-            not target_product_external_id
-            or not request.env["product.template"]
-            .sudo()
-            .search([("id", "=", target_product_external_id)])
-        ):
-            return http.Response(
-                _("Not valid parameter value [product_external_id]"), status=500
-            )
+        if ("product_external_id" in kwargs) and (not target_product_external_id):
+            try:
+                target_product_external_id = (
+                    request.env["product.template"]
+                    .sudo()
+                    .search(
+                        [
+                            (
+                                "id",
+                                "=",
+                                kwargs.get("product_external_id"),
+                            )
+                        ]
+                    )
+                )
+            except:
+                pass
+
+            if not target_product_external_id:
+                return http.Response(
+                    _("Not valid parameter value [product_external_id]"), status=500
+                )
+            if target_odoo_company_id and target_product_external_id:
+                if target_odoo_company_id.legal_form == "non_profit":
+                    url = "/subscription/member_associations/{company_external_id}/{product_external_id}".format(
+                        company_external_id=target_odoo_company_id.company_external_id,
+                        product_external_id=target_product_external_id.product_external_id,
+                    )
+                else:
+                    url = "/subscription/member/{company_external_id}/{product_external_id}".format(
+                        company_external_id=target_odoo_company_id.company_external_id,
+                        product_external_id=target_product_external_id.product_external_id,
+                    )
+                return request.redirect(urljoin(request.httprequest.host_url, url), 303)
+        if target_odoo_company_id:
+            if target_odoo_company_id.legal_form == "non_profit":
+                url = "/subscription/member_associations/{company_external_id}".format(
+                    company_external_id=target_odoo_company_id.company_external_id
+                )
+            else:
+                url = "/subscription/member/{company_external_id}".format(
+                    company_external_id=target_odoo_company_id.company_external_id
+                )
+            return request.redirect(urljoin(request.httprequest.host_url, url), 303)
 
         ctx = request.context.copy()
         ctx.update({"target_odoo_company_id": target_odoo_company_id})
@@ -112,7 +154,20 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         target_odoo_company_id = False
         if kwargs.get("odoo_company_id", False):
             try:
-                target_odoo_company_id = int(kwargs.get("odoo_company_id"))
+                target_odoo_company_id = (
+                    request.env["res.company"]
+                    .sudo()
+                    .search(
+                        [
+                            (
+                                "id",
+                                "=",
+                                kwargs.get("odoo_company_id"),
+                            )
+                        ]
+                    )
+                    .id
+                )
             except:
                 pass
 
@@ -130,7 +185,6 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                             )
                         ]
                     )
-                    .id
                 )
             except:
                 pass
@@ -138,12 +192,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         if (
             ("odoo_company_id" in kwargs)
             or ("external_company_id" in kwargs)
-            and (
-                not target_odoo_company_id
-                or not request.env["res.company"]
-                .sudo()
-                .search([("id", "=", target_odoo_company_id)])
-            )
+            and (not target_odoo_company_id)
         ):
             return http.Response(
                 _(
@@ -151,6 +200,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                 ),
                 status=500,
             )
+
         target_product_external_id = False
         if kwargs.get("product_external_id", False):
             try:
@@ -171,15 +221,50 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             except:
                 pass
 
-        if ("product_external_id" in kwargs) and (
-            not target_product_external_id
-            or not request.env["product.template"]
-            .sudo()
-            .search([("id", "=", target_product_external_id)])
-        ):
-            return http.Response(
-                _("Not valid parameter value [product_external_id]"), status=500
-            )
+        if ("product_external_id" in kwargs) and (not target_product_external_id):
+            try:
+                target_product_external_id = (
+                    request.env["product.template"]
+                    .sudo()
+                    .search(
+                        [
+                            (
+                                "id",
+                                "=",
+                                kwargs.get("product_external_id"),
+                            )
+                        ]
+                    )
+                )
+            except:
+                pass
+
+            if not target_product_external_id:
+                return http.Response(
+                    _("Not valid parameter value [product_external_id]"), status=500
+                )
+            if target_odoo_company_id and target_product_external_id:
+                if target_odoo_company_id.legal_form == "non_profit":
+                    url = "/subscription/member_associations/{company_external_id}/{product_external_id}".format(
+                        company_external_id=target_odoo_company_id.company_external_id,
+                        product_external_id=target_product_external_id.product_external_id,
+                    )
+                else:
+                    url = "/subscription/company_member/{company_external_id}/{product_external_id}".format(
+                        company_external_id=target_odoo_company_id.company_external_id,
+                        product_external_id=target_product_external_id.product_external_id,
+                    )
+                return request.redirect(urljoin(request.httprequest.host_url, url), 303)
+        if target_odoo_company_id:
+            if target_odoo_company_id.legal_form == "non_profit":
+                url = "/subscription/member_associations/{company_external_id}".format(
+                    company_external_id=target_odoo_company_id.company_external_id
+                )
+            else:
+                url = "/subscription/company_member/{company_external_id}".format(
+                    company_external_id=target_odoo_company_id.company_external_id
+                )
+            return request.redirect(urljoin(request.httprequest.host_url, url), 303)
 
         ctx = request.context.copy()
         ctx.update({"target_odoo_company_id": target_odoo_company_id})
