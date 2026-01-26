@@ -42,15 +42,57 @@ class ProductCategory(models.Model):
         compute="_compute_type_url",
         readonly=True,
     )
+
+    def _set_default_product_website(self):
+        MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
+            self.get_mapping_product_category_id_subscription_mode()
+        )
+        if not MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE:
+            for record in self:
+                record.product_website = False
+            return
+        for record in self:
+            if record.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys():
+                if (
+                    MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.id]
+                    == "voluntary"
+                ):
+                    record.product_website = True
+                else:
+                    record.product_website = False
+            else:
+                record.product_website = False
+
     product_website = fields.Boolean(
         string="Product Website",
-        default=False,
+        default=lambda self: self._set_default_product_website(),
         company_dependent=True,
         help="If checked, the group of fields in the generic form will be hidden so that you can choose the product from the list of those included. The product that will be linked to the form by default will be the one marked in the ‘Default product in the generic form’ field.",
     )
+
+    def _set_default_product_qty_must_be_read_only(self):
+        MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
+            self.get_mapping_product_category_id_subscription_mode()
+        )
+        if not MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE:
+            for record in self:
+                record.product_qty_must_be_read_only = False
+            return
+        for record in self:
+            if record.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys():
+                if (
+                    MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[record.id]
+                    == "voluntary"
+                ):
+                    record.product_qty_must_be_read_only = False
+                else:
+                    record.product_qty_must_be_read_only = True
+            else:
+                record.product_qty_must_be_read_only = False
+
     product_qty_must_be_read_only = fields.Boolean(
         string="Product Qty Must Be Read Only",
-        default=False,
+        default=lambda self: self._set_default_product_qty_must_be_read_only(),
         company_dependent=True,
         help="If checked, the generic and specific web forms for products in this category are configured to allow the product quantity field to the right of the drop-down menu for selecting the product to be modified.",
     )
