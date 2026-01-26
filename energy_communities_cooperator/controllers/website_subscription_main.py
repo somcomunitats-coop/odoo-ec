@@ -40,12 +40,11 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                             )
                         ]
                     )
-                    .id
                 )
             except:
                 pass
 
-        if kwargs.get("external_company_id", False):
+        if not target_odoo_company_id and kwargs.get("external_company_id", False):
             try:
                 target_odoo_company_id = (
                     request.env["res.company"]
@@ -63,10 +62,8 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             except:
                 pass
 
-        if (
-            ("odoo_company_id" in kwargs)
-            or ("external_company_id" in kwargs)
-            and (not target_odoo_company_id)
+        if (("odoo_company_id" in kwargs) or ("external_company_id" in kwargs)) and (
+            not target_odoo_company_id
         ):
             return http.Response(
                 _(
@@ -166,12 +163,11 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                             )
                         ]
                     )
-                    .id
                 )
             except:
                 pass
 
-        if kwargs.get("external_company_id", False):
+        if not target_odoo_company_id and kwargs.get("external_company_id", False):
             try:
                 target_odoo_company_id = (
                     request.env["res.company"]
@@ -189,10 +185,8 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             except:
                 pass
 
-        if (
-            ("odoo_company_id" in kwargs)
-            or ("external_company_id" in kwargs)
-            and (not target_odoo_company_id)
+        if (("odoo_company_id" in kwargs) or ("external_company_id" in kwargs)) and (
+            not target_odoo_company_id
         ):
             return http.Response(
                 _(
@@ -267,9 +261,9 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             return request.redirect(urljoin(request.httprequest.host_url, url), 303)
 
         ctx = request.context.copy()
-        ctx.update({"target_odoo_company_id": target_odoo_company_id})
+        ctx.update({"target_odoo_company_id": target_odoo_company_id.id})
         if target_product_external_id:
-            ctx.update({"target_product_external_id": target_product_external_id})
+            ctx.update({"target_product_external_id": target_product_external_id.id})
         request.env.context = ctx
 
         res = super().display_become_company_cooperator_page(**kwargs)
@@ -324,7 +318,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             kwargs["vat"] = kwargs["vat"].upper().strip()
 
         ctx = request.context.copy()
-        ctx.update({"target_odoo_company_id": target_odoo_company_id})
+        ctx.update({"target_odoo_company_id": target_odoo_company_id.id})
         request.env.context = ctx
 
         res = super().share_subscription(**kwargs)
