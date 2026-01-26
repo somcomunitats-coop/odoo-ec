@@ -802,7 +802,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             if len(ctx.products) == 1:
                 values_field["readonly"] = True
 
-        if not ctx.product_categ.product_website:
+        if ctx.product_categ.product_website:
             if values_field["key"] == "share_product_id":
                 values_field["class"] = "col-md-4 d-none"
                 values_field["required"] = False
