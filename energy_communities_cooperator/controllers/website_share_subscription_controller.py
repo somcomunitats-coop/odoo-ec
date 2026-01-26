@@ -583,7 +583,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             and ctx.product.html_specific_products
             and ctx.product.html_specific_products != empty_headline
         ):
-            return ctx.share_product_id.html_specific_products
+            return ctx.product.html_specific_products
         if (
             ctx.formtype_mode.value == "generic"
             and ctx.product_categ.share_form_header_text
