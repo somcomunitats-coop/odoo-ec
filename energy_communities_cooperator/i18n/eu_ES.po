@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 09:48+0000\n"
-"PO-Revision-Date: 2026-01-22 10:53+0100\n"
+"POT-Creation-Date: 2026-01-26 09:45+0000\n"
+"PO-Revision-Date: 2026-01-26 10:49+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: eu_ES\n"
@@ -523,6 +523,13 @@ msgid "City not found"
 msgstr "Ez da hiria aurkitu"
 
 #. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#, python-format
+msgid "Clauses"
+msgstr "Klausulak"
+
+#. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_res_company
 msgid "Companies"
 msgstr "Enpresak"
@@ -564,6 +571,13 @@ msgstr "Enpresaren izena"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_users__company_register_number
 msgid "Company Register Number"
 msgstr "Enpresaren Erregistro Zenbakia"
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#, python-format
+msgid "Company bank details"
+msgstr "Enpresaren bankuko datuak"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -976,7 +990,7 @@ msgstr "Nahiago dut ez partekatu"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "IBAN"
-msgstr "IBAN"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__company_id_id
@@ -985,7 +999,7 @@ msgstr "IBAN"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_product__activate_form_specific_products
@@ -1596,7 +1610,7 @@ msgstr "Borondatezko akzioen interesa itzuli"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "SEPA"
-msgstr "SEPA"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
@@ -2157,34 +2171,6 @@ msgid "ZIP code not found"
 msgstr "Posta kodea ez da aurkitu"
 
 #. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
-#, python-format
-msgid "invited_ccee_eu_ES"
-msgstr ""
-
-#. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
-#, python-format
-msgid "invited_eu_ES"
-msgstr ""
-
-#. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
-#, python-format
-msgid "member_ccee_eu_ES"
-msgstr ""
-
-#. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
-#, python-format
-msgid "member_eu_ES"
-msgstr ""
-
-#. module: energy_communities_cooperator
 #: model:ir.actions.report,print_report_name:energy_communities_cooperator.action_voluntary_share_interest_return_invoices
 msgid "object._get_report_base_filename()"
 msgstr ""
@@ -2199,13 +2185,6 @@ msgstr "piztuta"
 #: code:addons/energy_communities_cooperator/schemas/website_share_subscription_schemas.py:0
 #, python-format
 msgid "records_required"
-msgstr ""
-
-#. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
-#, python-format
-msgid "vol_share_eu_es"
 msgstr ""
 
 #. module: energy_communities_cooperator

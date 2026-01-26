@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 09:48+0000\n"
-"PO-Revision-Date: 2026-01-22 09:48+0000\n"
+"POT-Creation-Date: 2026-01-26 09:45+0000\n"
+"PO-Revision-Date: 2026-01-26 09:45+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -382,6 +382,16 @@ msgid "City not found"
 msgstr ""
 
 #. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#, python-format
+msgid "Clauses"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_res_company
 msgid "Companies"
 msgstr ""
@@ -423,6 +433,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_partner__company_register_number
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_users__company_register_number
 msgid "Company Register Number"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#, python-format
+msgid "Company bank details"
 msgstr ""
 
 #. module: energy_communities_cooperator
@@ -2008,7 +2029,7 @@ msgstr ""
 #: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
-msgid "You must specify a recipient email address for test"
+msgid "ZIP code not found"
 msgstr ""
 
 #. module: energy_communities_cooperator
@@ -2067,13 +2088,6 @@ msgstr ""
 #: code:addons/energy_communities_cooperator/schemas/website_share_subscription_schemas.py:0
 #, python-format
 msgid "records_required"
-msgstr ""
-
-#. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
-#, python-format
-msgid "vol_share_eu_es"
 msgstr ""
 
 #. module: energy_communities_cooperator

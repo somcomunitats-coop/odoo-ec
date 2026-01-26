@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 09:49+0000\n"
-"PO-Revision-Date: 2026-01-22 11:57+0100\n"
+"POT-Creation-Date: 2026-01-26 09:46+0000\n"
+"PO-Revision-Date: 2026-01-26 10:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -420,12 +420,12 @@ msgstr ""
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.theme_voluntary_share_interest_return_document
 msgid "<span> %</span>"
-msgstr "<span> %</span>"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.theme_voluntary_share_interest_return_document
 msgid "<span> €</span>"
-msgstr "<span> €</span>"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.theme_voluntary_share_interest_return_document
@@ -575,7 +575,7 @@ msgstr "Cancelar"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_wizard_form
 msgid "Cancelar"
-msgstr "Cancelar"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_product__mail_template
@@ -602,6 +602,13 @@ msgstr "Ciudad"
 #, python-format
 msgid "City not found"
 msgstr "Ciudad no encontrada"
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#, python-format
+msgid "Clauses"
+msgstr "Cláusulas"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_res_company
@@ -645,6 +652,13 @@ msgstr "Nombre de la empresa"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_users__company_register_number
 msgid "Company Register Number"
 msgstr "Número del Registro Mercantil"
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#, python-format
+msgid "Company bank details"
+msgstr "Datos bancarios de la empresa"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1024,7 +1038,7 @@ msgstr "Género"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
 msgid "General"
-msgstr "General"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1073,7 +1087,7 @@ msgstr "Prefiero no compartirlo"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "IBAN"
-msgstr "IBAN"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__company_id_id
@@ -1691,7 +1705,7 @@ msgstr "Retorno de intereses de aportaciones voluntarias"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "SEPA"
-msgstr "SEPA"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
@@ -1981,7 +1995,7 @@ msgstr ""
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
 msgid "Total"
-msgstr "Total"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -2042,7 +2056,7 @@ msgstr "URL de la empresa"
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "URL individual"
-msgstr "URL individual"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
@@ -2071,7 +2085,7 @@ msgstr "Rol actual del usuario"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "VAT"
-msgstr "VAT"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
@@ -2273,34 +2287,6 @@ msgid "ZIP code not found"
 msgstr "Código postal no encontrado"
 
 #. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
-#, python-format
-msgid "invited_ccee_eu_ES"
-msgstr ""
-
-#. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
-#, python-format
-msgid "invited_eu_ES"
-msgstr ""
-
-#. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
-#, python-format
-msgid "member_ccee_eu_ES"
-msgstr ""
-
-#. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
-#, python-format
-msgid "member_eu_ES"
-msgstr ""
-
-#. module: energy_communities_cooperator
 #: model:ir.actions.report,print_report_name:energy_communities_cooperator.action_voluntary_share_interest_return_invoices
 msgid "object._get_report_base_filename()"
 msgstr ""
@@ -2315,13 +2301,6 @@ msgstr "en"
 #: code:addons/energy_communities_cooperator/schemas/website_share_subscription_schemas.py:0
 #, python-format
 msgid "records_required"
-msgstr ""
-
-#. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/config.py:0
-#, python-format
-msgid "vol_share_eu_es"
 msgstr ""
 
 #. module: energy_communities_cooperator

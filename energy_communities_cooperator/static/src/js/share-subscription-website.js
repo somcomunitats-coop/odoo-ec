@@ -60,11 +60,17 @@ odoo.define(
         if (payment_method == "sepa") {
           $("div[name='iban_container']").parent().show();
           $("div[name='conditions_payment_container']").parent().show();
+          $(".h3_company_bank_details").show();
+          $("#iban").attr("required", true);
+          $("#conditions_payment").attr("required", true);
         } else {
           $("div[name='iban_container']").parent().hide();
           $("div[name='conditions_payment_container']").parent().hide();
+          $(".h3_company_bank_details").hide();
           $("#iban").val("");
+          $("#iban").attr("required", false);
           $("#conditions_payment").val(false);
+          $("#conditions_payment").attr("required", false);
         }
         $("#ordered_parts").change();
       });

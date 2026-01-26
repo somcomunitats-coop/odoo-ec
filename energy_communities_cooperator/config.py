@@ -405,6 +405,9 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT = {
             {"id": "transfer", "name": _lt("Transfer")},
         ],
     },
+}
+
+MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PAYMENT_METHOD = {
     "iban": {
         "class": "col-md-12",
         "type": "form_field_text",
@@ -490,6 +493,15 @@ MAPPING__MEMBER__DEFAULT_FORM_FIELDS = (
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
+    | {
+        "h3_company_bank_details": {
+            "key": "h3_company_bank_details",
+            "class": "h3_company_bank_details col-md-12",
+            "type": "form_h3",
+            "description": _lt("Company bank details"),
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PAYMENT_METHOD
 )
 MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
     {
@@ -530,12 +542,30 @@ MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS = (
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
+    | {
+        "h3_company_bank_details": {
+            "key": "h3_company_bank_details",
+            "class": "h3_company_bank_details col-md-12",
+            "type": "form_h3",
+            "description": _lt("Company bank details"),
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PAYMENT_METHOD
 )
 MAPPING__INVITED__DEFAULT_FORM_FIELDS = (
     MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
+    | {
+        "h3_company_bank_details": {
+            "key": "h3_company_bank_details",
+            "class": "h3_company_bank_details col-md-12",
+            "type": "form_h3",
+            "description": _lt("Company bank details"),
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PAYMENT_METHOD
 )
 MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
     {
@@ -576,6 +606,15 @@ MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
+    | {
+        "h3_company_bank_details": {
+            "key": "h3_company_bank_details",
+            "class": "h3_company_bank_details col-md-12",
+            "type": "form_h3",
+            "description": _lt("Company bank details"),
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PAYMENT_METHOD
 )
 MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS = (
     MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
@@ -606,6 +645,15 @@ MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS = (
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
+    | {
+        "h3_company_bank_details": {
+            "key": "h3_company_bank_details",
+            "class": "h3_company_bank_details col-md-12",
+            "type": "form_h3",
+            "description": _lt("Company bank details"),
+        },
+    }
+    | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PAYMENT_METHOD
 )
 
 MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS = {

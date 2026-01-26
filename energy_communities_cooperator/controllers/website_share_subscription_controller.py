@@ -496,7 +496,18 @@ class WebsiteShareSubscriptionController(http.Controller):
             ctx.subscription_mode
         ].copy()
         # TODO: Add id card upload field if ctx.company.allow_id_card_upload is True
+        have_clauses = False
         if ctx.company.display_generic_rules_approval:
+            if not have_clauses:
+                form_fields |= {
+                    "h3_clauses": {
+                        "key": "h3_clauses",
+                        "class": "col-md-12",
+                        "type": "form_h3",
+                        "description": _("Clauses"),
+                    },
+                }
+                have_clauses = True
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES["generic_rules"][
                 "label"
             ] = ctx.company.generic_rules_approval_text
@@ -505,6 +516,16 @@ class WebsiteShareSubscriptionController(http.Controller):
             ] = ctx.company.generic_rules_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES
         if ctx.company.display_internal_rules_approval:
+            if not have_clauses:
+                form_fields |= {
+                    "h3_clauses": {
+                        "key": "h3_clauses",
+                        "class": "col-md-12",
+                        "type": "form_h3",
+                        "description": _("Clauses"),
+                    },
+                }
+                have_clauses = True
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES["internal_rules"][
                 "label"
             ] = ctx.company.internal_rules_approval_text
@@ -513,6 +534,16 @@ class WebsiteShareSubscriptionController(http.Controller):
             ] = ctx.company.internal_rules_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES
         if ctx.company.display_financial_risk_approval:
+            if not have_clauses:
+                form_fields |= {
+                    "h3_clauses": {
+                        "key": "h3_clauses",
+                        "class": "col-md-12",
+                        "type": "form_h3",
+                        "description": _("Clauses"),
+                    },
+                }
+                have_clauses = True
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK["financial_risk"][
                 "label"
             ] = ctx.company.financial_risk_approval_text
@@ -521,6 +552,16 @@ class WebsiteShareSubscriptionController(http.Controller):
             ] = ctx.company.financial_risk_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK
         if ctx.company.display_data_policy_approval:
+            if not have_clauses:
+                form_fields |= {
+                    "h3_clauses": {
+                        "key": "h3_clauses",
+                        "class": "col-md-12",
+                        "type": "form_h3",
+                        "description": _("Clauses"),
+                    },
+                }
+                have_clauses = True
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY["privacy_policy"][
                 "label"
             ] = ctx.company.data_policy_approval_text
@@ -528,6 +569,7 @@ class WebsiteShareSubscriptionController(http.Controller):
                 "required"
             ] = ctx.company.data_policy_approval_required
             form_fields |= MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY
+
         values = {"form_fields": []}
 
         # Build field dictionary for each configured field
