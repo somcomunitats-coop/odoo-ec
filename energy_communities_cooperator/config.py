@@ -30,30 +30,24 @@ MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF = {
 
 def _get_subscription_mode_page_title_message(subscription_mode, company_name):
     MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE = {
-        "member": _("Become a member of %(company_name)s ", company_name=company_name)
-        + _("member_eu_ES"),
+        "member": _("Become a member of %(company_name)s ", company_name=company_name),
         "member_associations": _(
             "Become a member of %(company_name)s ", company_name=company_name
-        )
-        + _("member_eu_ES"),
+        ),
         "company_member": _(
             "Become a member of %(company_name)s ", company_name=company_name
-        )
-        + _("member_eu_ES"),
+        ),
         "invited": _(
             "Register to participate in the projects and initiatives of %(company_name)s ",
             company_name=company_name,
-        )
-        + _("invited_eu_ES"),
+        ),
         "company_invited": _(
             "Register to participate in the projects and initiatives of %(company_name)s ",
             company_name=company_name,
-        )
-        + _("invited_eu_ES"),
+        ),
         "voluntary": _(
             "Voluntary Share of %(company_name)s ", company_name=company_name
-        )
-        + _("vol_share_eu_es"),
+        ),
     }
     return MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE[subscription_mode]
 
@@ -89,7 +83,6 @@ def _get_subscription_mode_headline_message(
             "This form allow you to request be member of the community: %(company_name)s ",
             company_name=company_name,
         )
-        + _("member_ccee_eu_ES")
         + ".</p>"
         + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
         "member_associations": "<p>"
@@ -97,7 +90,6 @@ def _get_subscription_mode_headline_message(
             "This form allow you to request be member of the community: %(company_name)s ",
             company_name=company_name,
         )
-        + _("member_ccee_eu_ES")
         + ".</p>"
         + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
         "company_member": "<p>"
@@ -105,7 +97,6 @@ def _get_subscription_mode_headline_message(
             "This form allow you to request be member of the community: %(company_name)s ",
             company_name=company_name,
         )
-        + _("member_ccee_eu_ES")
         + ".</p>"
         + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
         "invited": "<p>"
@@ -113,7 +104,6 @@ def _get_subscription_mode_headline_message(
             "This is the form to register as a person/entity invited to participate in the Energy Community's projects and initiatives: %(company_name)s ",
             company_name=company_name,
         )
-        + _("invited_ccee_eu_ES")
         + ".</p>"
         + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
         "company_invited": "<p>"
@@ -121,7 +111,6 @@ def _get_subscription_mode_headline_message(
             "This is the form to register as a person/entity invited to participate in the Energy Community's projects and initiatives: %(company_name)s ",
             company_name=company_name,
         )
-        + _("invited_ccee_eu_ES")
         + ".</p>"
         + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
         "voluntary": "<p>"
