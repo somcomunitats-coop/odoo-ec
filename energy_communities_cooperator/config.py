@@ -22,6 +22,7 @@ MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF = {
     "member": COOP_SHARE_PRODUCT_CATEG_REF,
     "member_associations": COOP_SHARE_PRODUCT_CATEG_REF_ASSOCIATIONS,
     "company_member": COOP_SHARE_PRODUCT_CATEG_REF,
+    "company_member_associations": COOP_SHARE_PRODUCT_CATEG_REF_ASSOCIATIONS,
     "invited": COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
     "company_invited": COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
     "voluntary": COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
@@ -35,6 +36,9 @@ def _get_subscription_mode_page_title_message(subscription_mode, company_name):
             "Become a member of %(company_name)s ", company_name=company_name
         ),
         "company_member": _(
+            "Become a member of %(company_name)s ", company_name=company_name
+        ),
+        "company_member_associations": _(
             "Become a member of %(company_name)s ", company_name=company_name
         ),
         "invited": _(
@@ -99,6 +103,13 @@ def _get_subscription_mode_headline_message(
         )
         + ".</p>"
         + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
+        "company_member_associations": "<p>"
+        + _(
+            "This form allow you to request be member of the community: %(company_name)s ",
+            company_name=company_name,
+        )
+        + ".</p>"
+        + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
         "invited": "<p>"
         + _(
             "This is the form to register as a person/entity invited to participate in the Energy Community's projects and initiatives: %(company_name)s ",
@@ -140,6 +151,11 @@ def _get_headline_fixed_transfer_message(
         ),
         "company_member": _(
             "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by follow the steps you will receive by email.</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+        "company_member_associations": _(
+            "<p id='transfer_text'>To become a member, you must first fill out this questionnaire and then make the initial financial contribution of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by following the steps we will send you by email once we have received your request.</p>",
             product_price=product_price,
             currency_symbol=currency_symbol,
         ),
@@ -188,6 +204,11 @@ def _get_headline_fixed_sepa_message(subscription_mode, product_price, currency_
         ),
         "company_invited": _(
             "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>",
+            product_price=product_price,
+            currency_symbol=currency_symbol,
+        ),
+        "company_member_associations": _(
+            "<p id='sepa_text'>To become a member, you must first fill out this form, where we ask you for your bank account details and authorization to issue a direct debit to collect the initial contribution of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>",
             product_price=product_price,
             currency_symbol=currency_symbol,
         ),
@@ -684,6 +705,7 @@ MAPPING__SUBSCRIPTION_MODE__DEFAULT_FORM_FIELDS = {
     "member": MAPPING__MEMBER__DEFAULT_FORM_FIELDS,
     "member_associations": MAPPING__MEMBER__DEFAULT_FORM_FIELDS,
     "company_member": MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS,
+    "company_member_associations": MAPPING__COMPANY_MEMBER__DEFAULT_FORM_FIELDS,
     "invited": MAPPING__INVITED__DEFAULT_FORM_FIELDS,
     "company_invited": MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS,
     "voluntary": MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS,
@@ -692,6 +714,7 @@ MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE = {
     "member": "member",
     "member_associations": "member",
     "company_member": "member",
+    "company_member_associations": "member",
     "invited": "invited",
     "company_invited": "invited",
     "voluntary": "voluntary",
@@ -700,6 +723,7 @@ MAPPING__SUBSCRIPTION_MODE__MEMBERTYPE_MODE = {
     "member": "individual",
     "member_associations": "individual",
     "company_member": "company",
+    "company_member_associations": "company",
     "invited": "individual",
     "company_invited": "company",
     "voluntary": "individual_company",

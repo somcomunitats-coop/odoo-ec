@@ -34,6 +34,7 @@ class SubscriptionMode(str, Enum):
     member = "member"
     member_associations = "member_associations"
     company_member = "company_member"
+    company_member_associations = "company_member_associations"
     invited = "invited"
     company_invited = "company_invited"
     voluntary = "voluntary"

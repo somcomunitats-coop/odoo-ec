@@ -129,7 +129,7 @@ class ProductCategory(models.Model):
         if (
             self.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys()
             and MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.id]
-            not in ["voluntary", "member_associations"]
+            not in ["voluntary"]
         ):
             url_company += f"company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.id]}/{self.env.company.company_external_id}"
         elif self.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys():

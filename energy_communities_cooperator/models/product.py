@@ -81,7 +81,7 @@ class ProductTemplate(models.Model):
         if (
             self.categ_id.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys()
             and MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]
-            not in ["voluntary", "member_associations"]
+            not in ["voluntary"]
         ):
             url_company += f"company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]}/{self.company_id.company_external_id}"
         elif self.categ_id.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys():
@@ -121,7 +121,7 @@ class ProductTemplate(models.Model):
         if (
             self.categ_id.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys()
             and MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]
-            not in ["voluntary", "member_associations"]
+            not in ["voluntary"]
         ):
             url_specific_company += f"company_{MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[self.categ_id.id]}/{self.company_id.company_external_id}/{self.product_external_id}"
         elif self.categ_id.id in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys():
