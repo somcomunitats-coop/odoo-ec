@@ -509,7 +509,7 @@ class WebsiteShareSubscriptionController(http.Controller):
                 }
                 have_clauses = True
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES["generic_rules"][
-                "label"
+                "description"
             ] = ctx.company.generic_rules_approval_text
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_GENERIC_RULES["generic_rules"][
                 "required"
@@ -527,7 +527,7 @@ class WebsiteShareSubscriptionController(http.Controller):
                 }
                 have_clauses = True
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES["internal_rules"][
-                "label"
+                "description"
             ] = ctx.company.internal_rules_approval_text
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_INTERNAL_RULES["internal_rules"][
                 "required"
@@ -545,7 +545,7 @@ class WebsiteShareSubscriptionController(http.Controller):
                 }
                 have_clauses = True
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK["financial_risk"][
-                "label"
+                "description"
             ] = ctx.company.financial_risk_approval_text
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_FINANCIAL_RISK["financial_risk"][
                 "required"
@@ -563,7 +563,7 @@ class WebsiteShareSubscriptionController(http.Controller):
                 }
                 have_clauses = True
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY["privacy_policy"][
-                "label"
+                "description"
             ] = ctx.company.data_policy_approval_text
             MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PRIVACY_POLICY["privacy_policy"][
                 "required"
@@ -844,7 +844,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             if len(ctx.products) == 1:
                 values_field["readonly"] = True
 
-        if ctx.product_categ.product_website:
+        if not ctx.product_categ.product_website:
             if values_field["key"] == "share_product_id":
                 values_field["class"] = "col-md-4 d-none"
                 values_field["required"] = False

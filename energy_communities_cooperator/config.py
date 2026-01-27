@@ -154,7 +154,7 @@ def _get_headline_fixed_transfer_message(
             currency_symbol=currency_symbol,
         ),
         "voluntary": _(
-            "<p id='transfer_text'>To be a member you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by follow the steps you will receive by email.</p>",
+            "<p id='transfer_text'>To formalize the contribution, you must fulfill this form and lateron proceed to pay the initial share of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by follow the steps you will receive by email.</p>",
             product_price=product_price,
             currency_symbol=currency_symbol,
         ),
@@ -192,7 +192,7 @@ def _get_headline_fixed_sepa_message(subscription_mode, product_price, currency_
             currency_symbol=currency_symbol,
         ),
         "voluntary": _(
-            "<p id='sepa_text'>To join, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>",
+            "<p id='sepa_text'>To formalize the contribution, you must first fill out this form where we ask for a bank account and authorization to issue a bank receipt to collect the initial mandatory financial contribution of <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>",
             product_price=product_price,
             currency_symbol=currency_symbol,
         ),
@@ -492,13 +492,21 @@ MAPPING__MEMBER__DEFAULT_FORM_FIELDS = (
     MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
+    | {
+        "h3_share_selection": {
+            "key": "h3_share_selection",
+            "class": "col-md-12",
+            "type": "form_h3",
+            "description": _lt("Share Selection"),
+        },
+    }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
     | {
         "h3_company_bank_details": {
             "key": "h3_company_bank_details",
             "class": "h3_company_bank_details col-md-12",
             "type": "form_h3",
-            "description": _lt("Company bank details"),
+            "description": _lt("Bank details"),
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PAYMENT_METHOD
@@ -556,13 +564,21 @@ MAPPING__INVITED__DEFAULT_FORM_FIELDS = (
     MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PERSONAL_CONTACT
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_VAT
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS
+    | {
+        "h3_share_selection": {
+            "key": "h3_share_selection",
+            "class": "col-md-12",
+            "type": "form_h3",
+            "description": _lt("Share Selection"),
+        },
+    }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
     | {
         "h3_company_bank_details": {
             "key": "h3_company_bank_details",
             "class": "h3_company_bank_details col-md-12",
             "type": "form_h3",
-            "description": _lt("Company bank details"),
+            "description": _lt("Bank details"),
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PAYMENT_METHOD
@@ -611,7 +627,7 @@ MAPPING__COMPANY_INVITED__DEFAULT_FORM_FIELDS = (
             "key": "h3_company_bank_details",
             "class": "h3_company_bank_details col-md-12",
             "type": "form_h3",
-            "description": _lt("Company bank details"),
+            "description": _lt("Bank details"),
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PAYMENT_METHOD
@@ -644,13 +660,21 @@ MAPPING__VOLUNTARY__DEFAULT_FORM_FIELDS = (
             "disabled": False,
         },
     }
+    | {
+        "h3_share_selection": {
+            "key": "h3_share_selection",
+            "class": "col-md-12",
+            "type": "form_h3",
+            "description": _lt("Share Selection"),
+        },
+    }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_SHARE_PRODUCT
     | {
         "h3_company_bank_details": {
             "key": "h3_company_bank_details",
             "class": "h3_company_bank_details col-md-12",
             "type": "form_h3",
-            "description": _lt("Company bank details"),
+            "description": _lt("Bank details"),
         },
     }
     | MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_PAYMENT_METHOD
@@ -689,6 +713,15 @@ MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE = {
 CONTEXT_VALIDATION_ERROR_TITLE = _lt("Form can't be loaded")
 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE = _lt(
     "There is a problem loading the form. Please contact your administrator for more details"
+)
+COMTEXT_VALIDATION_ERROR_NO_PRODUCT = _lt(
+    "There is a problem loading the form. This form requires at least one product to be linked to it. Please contact the administrators of your Energy Community."
+)
+COMTEXT_VALIDATION_ERROR_NO_COMPANY = _lt(
+    "There is a problem loading the form. This form requires the existence of an entity/company that is linked to it. Please contact the administrators of your Energy Community."
+)
+COMTEXT_VALIDATION_ERROR_NO_CATEGORY = _lt(
+    "There is a problem loading the form. This form requires the existence of a product category that is linked to it. Please contact the administrators of your Energy Community."
 )
 CONTEXT_VALIDATION_ERROR_UNAVAILABLE_MESSAGE = _lt(
     "The form is no longer available. Contact your coordinator for further information."

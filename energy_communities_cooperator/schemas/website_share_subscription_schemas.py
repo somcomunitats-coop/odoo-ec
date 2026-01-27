@@ -19,6 +19,9 @@ from odoo.addons.product.models.product_category import ProductCategory
 from odoo.addons.product.models.product_template import ProductTemplate
 
 from ..config import (
+    COMTEXT_VALIDATION_ERROR_NO_CATEGORY,
+    COMTEXT_VALIDATION_ERROR_NO_COMPANY,
+    COMTEXT_VALIDATION_ERROR_NO_PRODUCT,
     CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
     CONTEXT_VALIDATION_ERROR_TITLE,
     STATUS_CODE_CONSISTENCY_ERROR,
@@ -184,7 +187,7 @@ class WebsiteShareSubscriptionContext(BaseModel):
             raise ControllerContextValidationError(
                 STATUS_CODE_NOT_FOUND_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
-                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+                COMTEXT_VALIDATION_ERROR_NO_COMPANY,
             )
         return company
 
@@ -199,7 +202,7 @@ class WebsiteShareSubscriptionContext(BaseModel):
             raise ControllerContextValidationError(
                 STATUS_CODE_NOT_FOUND_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
-                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+                COMTEXT_VALIDATION_ERROR_NO_CATEGORY,
             )
         return product_categ
 
@@ -212,7 +215,7 @@ class WebsiteShareSubscriptionContext(BaseModel):
             raise ControllerContextValidationError(
                 STATUS_CODE_NOT_FOUND_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
-                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+                COMTEXT_VALIDATION_ERROR_NO_PRODUCT,
             )
         return products
 
@@ -223,7 +226,7 @@ class WebsiteShareSubscriptionContext(BaseModel):
             raise ControllerContextValidationError(
                 STATUS_CODE_NOT_FOUND_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
-                CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
+                COMTEXT_VALIDATION_ERROR_NO_PRODUCT,
             )
         return product
 
