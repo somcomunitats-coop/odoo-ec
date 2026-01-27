@@ -125,47 +125,10 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                     product_external_id=target_product_external_id.product_external_id,
                 )
                 return request.redirect(urljoin(request.httprequest.host_url, url), 303)
-        if target_odoo_company_id:
-            url = "/subscription/voluntary/{company_external_id}".format(
-                company_external_id=target_odoo_company_id.company_external_id
-            )
-            return request.redirect(urljoin(request.httprequest.host_url, url), 303)
-
-        ctx = request.context.copy()
-        ctx.update({"target_odoo_company_id": target_odoo_company_id.id})
-        request.env.context = ctx
-
-        values = {}
-        logged = False
-
-        if request.env.user.login != "public":
-            logged = True
-        for field in _VOLUNTARY_SHARE_FORM_FIELD:
-            if kwargs.get(field):
-                values[field] = kwargs.pop(field)
-
-        if request.env.user.login != "public":
-            logged = True
-        values = self.fill_values(values, True, logged, True)
-
-        values.update(kwargs=kwargs.items())
-        values.update({"company_id": target_odoo_company_id.id})
-        company_id = request.env["res.company"].sudo().browse(target_odoo_company_id.id)
-        values.update(
-            {
-                "company_id": target_odoo_company_id.id,
-            }
+        url = "/subscription/voluntary/{company_external_id}".format(
+            company_external_id=target_odoo_company_id.company_external_id
         )
-        if company_id.voluntary_share_id:
-            values.update({"share_product_id": company_id.voluntary_share_id.id})
-        else:
-            raise UserWarning(
-                _("This company doesn't have a voluntary product share selected.")
-            )
-
-        # redirect url to fall back on become cooperator in template redirection
-        values["redirect_url"] = request.httprequest.url
-        return request.render("energy_communities_cooperator.voluntary_share", values)
+        return request.redirect(urljoin(request.httprequest.host_url, url), 303)
 
     def voluntary_share_validation(  # noqa: C901 (method too complex)
         self, kwargs, logged, values, post_file

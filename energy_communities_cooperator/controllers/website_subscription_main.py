@@ -126,25 +126,16 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                         product_external_id=target_product_external_id.product_external_id,
                     )
                 return request.redirect(urljoin(request.httprequest.host_url, url), 303)
-        if target_odoo_company_id:
-            if target_odoo_company_id.legal_form == "non_profit":
-                url = "/subscription/member_associations/{company_external_id}".format(
-                    company_external_id=target_odoo_company_id.company_external_id
-                )
-            else:
-                url = "/subscription/member/{company_external_id}".format(
-                    company_external_id=target_odoo_company_id.company_external_id
-                )
-            return request.redirect(urljoin(request.httprequest.host_url, url), 303)
 
-        ctx = request.context.copy()
-        ctx.update({"target_odoo_company_id": target_odoo_company_id})
-        if target_product_external_id:
-            ctx.update({"target_product_external_id": target_product_external_id})
-        request.env.context = ctx
-
-        res = super().display_become_cooperator_page(**kwargs)
-        return res
+        if target_odoo_company_id.legal_form == "non_profit":
+            url = "/subscription/member_associations/{company_external_id}".format(
+                company_external_id=target_odoo_company_id.company_external_id
+            )
+        else:
+            url = "/subscription/member/{company_external_id}".format(
+                company_external_id=target_odoo_company_id.company_external_id
+            )
+        return request.redirect(urljoin(request.httprequest.host_url, url), 303)
 
     @http.route()
     def display_become_company_cooperator_page(self, **kwargs):
@@ -249,25 +240,15 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
                         product_external_id=target_product_external_id.product_external_id,
                     )
                 return request.redirect(urljoin(request.httprequest.host_url, url), 303)
-        if target_odoo_company_id:
-            if target_odoo_company_id.legal_form == "non_profit":
-                url = "/subscription/member_associations/{company_external_id}".format(
-                    company_external_id=target_odoo_company_id.company_external_id
-                )
-            else:
-                url = "/subscription/company_member/{company_external_id}".format(
-                    company_external_id=target_odoo_company_id.company_external_id
-                )
-            return request.redirect(urljoin(request.httprequest.host_url, url), 303)
-
-        ctx = request.context.copy()
-        ctx.update({"target_odoo_company_id": target_odoo_company_id.id})
-        if target_product_external_id:
-            ctx.update({"target_product_external_id": target_product_external_id.id})
-        request.env.context = ctx
-
-        res = super().display_become_company_cooperator_page(**kwargs)
-        return res
+        if target_odoo_company_id.legal_form == "non_profit":
+            url = "/subscription/company_member_associations/{company_external_id}".format(
+                company_external_id=target_odoo_company_id.company_external_id
+            )
+        else:
+            url = "/subscription/company_member/{company_external_id}".format(
+                company_external_id=target_odoo_company_id.company_external_id
+            )
+        return request.redirect(urljoin(request.httprequest.host_url, url), 303)
 
     @http.route()  # noqa: C901 (method too complex)
     def share_subscription(self, **kwargs):
