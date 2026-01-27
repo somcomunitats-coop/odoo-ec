@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-26 09:46+0000\n"
-"PO-Revision-Date: 2026-01-26 10:48+0100\n"
+"POT-Creation-Date: 2026-01-27 11:12+0000\n"
+"PO-Revision-Date: 2026-01-27 12:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -323,6 +323,22 @@ msgstr ""
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
+"<p id='sepa_text'>To formalize the contribution, you must first fill out "
+"this form where we ask for a bank account and authorization to issue a bank "
+"receipt to collect the initial mandatory financial contribution of <span "
+"id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>"
+msgstr ""
+"<p id='sepa_text'>Para formalizar la aportación,  debes rellenar este "
+"formulario donde te pedimos una cuenta bancaria y la autorización para "
+"girar un recibo bancario para cobrar la aportación económica obligatoria "
+"inicial de <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s."
+"</p>"
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#, python-format
+msgid ""
 "<p id='sepa_text'>To join, you must first fill out this form where we ask "
 "for a bank account and authorization to issue a bank receipt to collect the "
 "initial mandatory financial contribution of <span "
@@ -359,6 +375,22 @@ msgid ""
 "steps we will send you by email once we have received your request.</p>"
 msgstr ""
 "<p id='transfer_text'>Para ser socio/a primero debes rellenar este "
+"cuestionario y después formalizar la aportación económica inicial de <span "
+"id='prodPrice'>%(product_price)s</span>%(currency_symbol)s siguiendo los "
+"pasos que te indicaremos por correo electrónico una vez hayamos recibido tu "
+"petición.</p>"
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#, python-format
+msgid ""
+"<p id='transfer_text'>To formalize the contribution, you must fulfill this "
+"form and lateron proceed to pay the initial share of <span "
+"id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by follow the "
+"steps you will receive by email.</p>"
+msgstr ""
+"<p id='transfer_text'>Para formalizar la aportación, debes rellenar este "
 "cuestionario y después formalizar la aportación económica inicial de <span "
 "id='prodPrice'>%(product_price)s</span>%(currency_symbol)s siguiendo los "
 "pasos que te indicaremos por correo electrónico una vez hayamos recibido tu "
@@ -530,6 +562,13 @@ msgstr "Número de adjuntos"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_users__no_member_autorized_in_energy_actions
 msgid "Authorized guest"
 msgstr "Invitado autorizado"
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#, python-format
+msgid "Bank details"
+msgstr "Datos bancarios"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1413,8 +1452,8 @@ msgstr "Valor de parámetro no válido [odoo_company_id]"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/controllers/mixin.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Not valid parameter value [odoo_company_id] or [external_company_id]"
 msgstr ""
@@ -1422,7 +1461,7 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#: code:addons/energy_communities_cooperator/controllers/mixin.py:0
 #, python-format
 msgid "Not valid parameter value [product_external_id]"
 msgstr "Valor de parámetro no válido [product_external_id]"
@@ -1637,12 +1676,12 @@ msgstr "Categoría de producto"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__product_qty_must_be_read_only
 msgid "Product Qty Must Be Read Only"
-msgstr "Cantidad de producto modificable"
+msgstr "Cantidad de producto no modificable"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__product_website
 msgid "Product Website"
-msgstr "Ocultar selector de productos en el formulario genérico"
+msgstr "Mostrar selector de productos en el formulario genérico"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1897,6 +1936,45 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#, python-format
+msgid ""
+"There is a problem loading the form. This form requires at least one "
+"product to be linked to it. Please contact the administrators of your "
+"Energy Community."
+msgstr ""
+"Hay un problema al cargar el formulario. Este formulario requiere de la "
+"existencia de al menos un producto que esté vinculado al mismo. Por favor, "
+"contacta con las personas administradoras de tu Comunidad Energética."
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#, python-format
+msgid ""
+"There is a problem loading the form. This form requires the existence of a "
+"product category that is linked to it. Please contact the administrators of "
+"your Energy Community."
+msgstr ""
+"Hay un problema al cargar el formulario. Este formulario requiere de la "
+"existencia de una categoría de producto que esté vinculada al mismo. Por "
+"favor, contacta con las personas administradoras de tu Comunidad Energética."
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#, python-format
+msgid ""
+"There is a problem loading the form. This form requires the existence of an "
+"entity/company that is linked to it. Please contact the administrators of "
+"your Energy Community."
+msgstr ""
+"Hay un problema al cargar el formulario. Este formulario requiere de la "
+"existencia de una entidad/compañía que esté vinculada al mismo. Por favor, "
+"contacta con las personas administradoras de tu Comunidad Energética."
+
+#. module: energy_communities_cooperator
+#. odoo-python
 #: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
 #, python-format
 msgid "There is a problem on creating request params"
@@ -1949,15 +2027,6 @@ msgid ""
 msgstr ""
 "Existe una cuenta para este número de identificación fiscal en la "
 "comunidad. Por favor contacta con el administrador de la comunidad."
-
-#. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
-#, python-format
-msgid "This company doesn't have a voluntary product share selected."
-msgstr ""
-"Esta compañía no tiene un producto para aportaciones voluntarias "
-"seleccionado."
 
 #. module: energy_communities_cooperator
 #. odoo-python
