@@ -9,6 +9,7 @@
             <t t-if="field['label']" t-set="label" t-value="field['label']" />
             <t t-if="field['required']" t-set="required" t-value="field['required']" />
             <t t-if="field['disabled']" t-set="disabled" t-value="field['disabled']" />
+            <t t-if="field['readonly']" t-set="readonly" t-value="field['readonly']" />
             <t t-if="field['options']" t-set="options" t-value="field['options']" />
             <t t-if="field['description']" t-set="description" t-value="field['description']" />
           </t>
