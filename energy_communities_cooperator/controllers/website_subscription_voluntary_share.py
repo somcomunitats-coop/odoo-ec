@@ -3,10 +3,13 @@ import logging
 from urllib.parse import urljoin
 
 from odoo import http
+from odoo.exceptions import ValidationError
 from odoo.http import request
 from odoo.tools.translate import _
 
 from odoo.addons.cooperator_website.controllers import main as emyc_wsc
+
+from .mixin import Controller_company_and_product_mixin
 
 logger = logging.getLogger(__name__)
 _VOLUNTARY_SHARE_FORM_FIELD = [
@@ -22,7 +25,9 @@ _VOLUNTARY_SHARE_FORM_FIELD = [
 ]
 
 
-class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
+class WebsiteSubscriptionCCEE(
+    emyc_wsc.WebsiteSubscription, Controller_company_and_product_mixin
+):
     @http.route(
         ["/page/voluntary_share", "/voluntary_share"],
         type="http",
@@ -30,101 +35,19 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         website=True,
     )
     def display_voluntary_share_page(self, **kwargs):
-        target_odoo_company_id = False
-        if kwargs.get("odoo_company_id", False):
-            try:
-                target_odoo_company_id = (
-                    request.env["res.company"]
-                    .sudo()
-                    .search(
-                        [
-                            (
-                                "id",
-                                "=",
-                                kwargs.get("odoo_company_id"),
-                            )
-                        ]
-                    )
-                )
-            except:
-                pass
-
-        if not target_odoo_company_id and kwargs.get("external_company_id", False):
-            try:
-                target_odoo_company_id = (
-                    request.env["res.company"]
-                    .sudo()
-                    .search(
-                        [
-                            (
-                                "company_external_id",
-                                "=",
-                                kwargs.get("external_company_id"),
-                            )
-                        ]
-                    )
-                )
-            except:
-                pass
-
-        if (("odoo_company_id" in kwargs) or ("external_company_id" in kwargs)) and (
-            not target_odoo_company_id
-        ):
-            return http.Response(
-                _(
-                    "Not valid parameter value [odoo_company_id] or [external_company_id]"
-                ),
-                status=500,
+        try:
+            (
+                target_odoo_company_id,
+                target_product_external_id,
+            ) = self.get_company_and_product(**kwargs)
+        except ValidationError as e:
+            return http.Response(str(e), status=500)
+        if target_odoo_company_id and target_product_external_id:
+            url = "/subscription/voluntary/{company_external_id}/{product_external_id}".format(
+                company_external_id=target_odoo_company_id.company_external_id,
+                product_external_id=target_product_external_id.product_external_id,
             )
-
-        target_product_external_id = False
-        if kwargs.get("product_external_id", False):
-            try:
-                target_product_external_id = (
-                    request.env["product.template"]
-                    .sudo()
-                    .search(
-                        [
-                            (
-                                "product_external_id",
-                                "=",
-                                kwargs.get("product_external_id"),
-                            )
-                        ]
-                    )
-                    .id
-                )
-            except:
-                pass
-
-        if ("product_external_id" in kwargs) and (not target_product_external_id):
-            try:
-                target_product_external_id = (
-                    request.env["product.template"]
-                    .sudo()
-                    .search(
-                        [
-                            (
-                                "id",
-                                "=",
-                                kwargs.get("product_external_id"),
-                            )
-                        ]
-                    )
-                )
-            except:
-                pass
-
-            if not target_product_external_id:
-                return http.Response(
-                    _("Not valid parameter value [product_external_id]"), status=500
-                )
-            if target_odoo_company_id and target_product_external_id:
-                url = "/subscription/voluntary/{company_external_id}/{product_external_id}".format(
-                    company_external_id=target_odoo_company_id.company_external_id,
-                    product_external_id=target_product_external_id.product_external_id,
-                )
-                return request.redirect(urljoin(request.httprequest.host_url, url), 303)
+            return request.redirect(urljoin(request.httprequest.host_url, url), 303)
         url = "/subscription/voluntary/{company_external_id}".format(
             company_external_id=target_odoo_company_id.company_external_id
         )
