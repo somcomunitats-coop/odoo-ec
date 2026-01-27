@@ -3,13 +3,9 @@ from unittest.mock import patch
 from odoo.exceptions import ValidationError
 from odoo.tests import common, tagged
 
-from odoo.addons.mail.tests.common import MailCommon
-
 
 @tagged("-at_install", "post_install")
-class TestEmailSendingAssistant(
-    common.TransactionCase
-):  # (MailCommon): #TODO: Fix this super().setUpClass()
+class TestEmailSendingAssistant(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -18,9 +14,9 @@ class TestEmailSendingAssistant(
     def setUp(self):
         super().setUp()
         self.maxDiff = None
-        self.community = self.env.ref(
-            "energy_communities.energy_community_company_1_wizard"
-        ).new_company_id
+        self.community = self.env["res.company"].search(
+            [("name", "=", "Community 1")], limit=1
+        )[0]
 
         # Create test partners
         self.partner1 = self.env["res.partner"].create(
@@ -63,24 +59,6 @@ class TestEmailSendingAssistant(
         # Create active languages
         self.lang_en = self.env["res.lang"].search([("code", "=", "en_US")], limit=1)
         self.lang_es = self.env["res.lang"].search([("code", "=", "es_ES")], limit=1)
-        if not self.lang_en:
-            self.lang_en = self.env["res.lang"].create(
-                {
-                    "name": "English",
-                    "code": "en_US",
-                    "iso_code": "en",
-                    "active": True,
-                }
-            )
-        if not self.lang_es:
-            self.lang_es = self.env["res.lang"].create(
-                {
-                    "name": "Spanish",
-                    "code": "es_ES",
-                    "iso_code": "es",
-                    "active": True,
-                }
-            )
 
     def test_wizard_initialization_with_active_ids(self):
         """Test wizard initialization with active_ids in context"""
