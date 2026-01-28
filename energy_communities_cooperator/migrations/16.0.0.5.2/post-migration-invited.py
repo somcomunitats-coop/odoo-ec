@@ -28,9 +28,8 @@ def setup_components(env):
     # dependencies of the tested addons, not the siblings or
     # children addons
     builder.build_registry(comp_registry, states=("installed",))
-    # build the components of the current tested addon
-    current_addon = _get_addon_name("odoo.addons.energy_communities_cooperator")
-    env["component.builder"].load_components(current_addon)
+    # build the componenets fot energy_communities_invoicing
+    builder.load_components("energy_communities_service_invoicing", comp_registry)
     env.context = dict(env.context, components_registry=comp_registry)
     return env
 

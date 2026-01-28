@@ -46,6 +46,7 @@ from ..schemas import (
 
 class ProductUtils(Component):
     _inherit = "product.utils"
+    _usage = "product.utils"
 
     def create_product(
         self,
