@@ -2,26 +2,43 @@ import logging
 
 from odoo import SUPERUSER_ID, api
 
-from odoo.addons.energy_communities_cooperator.schemas.website_share_subscription_schemas import (
+from odoo.addons.component.core import _get_addon_name
+from odoo.addons.energy_communities.utils import product_utils
+from odoo.addons.energy_communities_cooperator.schemas import (
     MemberTypeMode,
     SubscriptionRequestCreationParams,
 )
 from odoo.addons.energy_communities_cooperator.utils import (
     subscription_request_utils,
 )
-from odoo.addons.energy_communities_service_invoicing.schemas.service_product_schemas import (
+from odoo.addons.energy_communities_service_invoicing.schemas import (
     ServiceProductCreationData,
-)
-from odoo.addons.energy_communities_service_invoicing.utils import (
-    product_utils,
 )
 
 logger = logging.getLogger(__name__)
 
 
+def setup_components(env):
+    logger.info("Setup components..")
+    builder = env["component.builder"]
+    # build the components of every installed addons
+    comp_registry = builder._init_global_registry()
+    # ensure that we load only the components of the 'installed'
+    # modules, not 'to install', which means we load only the
+    # dependencies of the tested addons, not the siblings or
+    # children addons
+    builder.build_registry(comp_registry, states=("installed",))
+    # build the components of the current tested addon
+    current_addon = _get_addon_name("odoo.addons.energy_communities_cooperator")
+    env["component.builder"].load_components(current_addon)
+    env.context = dict(env.context, components_registry=comp_registry)
+    return env
+
+
 def migrate(cr, version):
     logger.info("Running post migration {}".format(version))
     env = api.Environment(cr, SUPERUSER_ID, {})
+    env = setup_components(env)
 
     invited_category = env.ref(
         "energy_communities_cooperator.product_category_company_invited_share"
@@ -65,7 +82,7 @@ def migrate(cr, version):
                 product_component.setup_company_product_categs(company)
                 # invited product
                 invited_product = product_component.create_product(
-                    _invited_product_creation_params()
+                    _invited_product_creation_params(company)
                 )
                 _invited_product_translations(invited_product)
                 return True, invited_product
@@ -123,12 +140,9 @@ def migrate(cr, version):
                     SubscriptionRequestCreationParams(**creation_params)
                 )
             except Exception as e:
+                msg = "Error creating subscription request params with <Company={}, Partner={}>: {}"
                 logger.error("Company: %s, Partner: %s", company.name, partner.name)
-                raise ValueError(
-                    "Error creating subscription request params: Company: %s, Partner: %s",
-                    company.name,
-                    partner.name,
-                )
+                raise ValueError(msg.format(company.name, partner.name, str(e)))
 
             try:
                 # Use component to validate and create subscription request
@@ -137,15 +151,13 @@ def migrate(cr, version):
                         subscription_request_creation_params
                     )
                     subscription_request.validate_subscription_request()
-                    cooperator = _get_invited_cooperator(partner, company)
             except Exception as e:
+                msg = "Error creating subscription request with <Company={}, Partner={}>: {}"
                 logger.error("Company: %s, Partner: %s", company.name, partner.name)
-                raise ValueError(
-                    "Error creating subscription request: Company: %s, Partner: %s",
-                    company.name,
-                    partner.name,
-                )
-            return True, cooperator
+                raise ValueError(msg.format(company.name, partner.name, str(e)))
+            else:
+                cooperator = _get_invited_cooperator(partner, company)
+                return True, cooperator
         return False, cooperator
 
     companies = env["res.company"].search([])
