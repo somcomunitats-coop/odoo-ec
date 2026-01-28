@@ -283,27 +283,24 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         """
         partner_with_type = partner.get_partner_with_type()
 
-        if not partner_with_type.with_company(
-            project.company_id.id
-        ).no_member_autorized_in_energy_actions:
-            cooperator = (
-                request.env["cooperative.membership"]
-                .sudo()
-                .search(
-                    [
-                        ("company_id", "=", project.company_id.id),
-                        ("partner_id", "=", partner_with_type.id),
-                        ("cooperator", "=", True),
-                        ("member", "=", True),
-                    ]
-                )
+        cooperator = (  # TODO: Move this to generic function on energy_communities_cooperator
+            request.env["cooperative.membership"]
+            .sudo()
+            .search(
+                [
+                    ("company_id", "=", project.company_id.id),
+                    ("partner_id", "=", partner_with_type.id),
+                    "|"("member", "=", True),
+                    ("effective_invited", "=", True),
+                ]
             )
+        )
 
-            if not cooperator:
-                return {
-                    "error_msgs": [_("Partner is not a cooperator.")],
-                    "global_error": True,
-                }
+        if not cooperator:
+            return {
+                "error_msgs": [_("Partner is not a cooperator.")],
+                "global_error": True,
+            }
 
         return None
 
