@@ -689,7 +689,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
                     "company_id": self.env.company.id,
                     "company_type": "person",
                     "cooperative_membership_id": self.env.company.partner_id.id,
-                    "no_member_autorized_in_energy_actions": True,
+                    "no_member_autorized_in_energy_actions": True,  # TODO: Same as script post-migration-invited.py
                 }
             )
         )
