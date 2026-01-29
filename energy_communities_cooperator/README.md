@@ -4,7 +4,11 @@
 
 ## Changelog
 
-### 2026-01-15 (v16.0.0.5.0)
+### 2026-01-29 (v16.0.0.5.2)
+
+- Update email.template cooperator.email_template_confirmation for field email_cc
+
+### 2026-01-15 (v16.0.0.5.1)
 
 - numberof_effective_inviteds,numberof_effective_members and
   numberof_effective_cooperators are fixed
