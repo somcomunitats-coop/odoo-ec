@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-01-29 (v16.0.0.7.8)
+
+- New translate for email.template account.email_template_edi_invoice in field body_html
+
 ### 2026-01-13 (v16.0.0.7.7)
 
 - log warning message in logfile and chatter instead of raise an exception when
