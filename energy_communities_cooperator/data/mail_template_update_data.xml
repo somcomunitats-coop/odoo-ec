@@ -70,7 +70,7 @@
             <field name="name">Confirmation Email for CE Subscription Request Receipt</field>
             <field name="description">Sent to cooperators to confirm their subscription request</field>
             <field name="email_from">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
-            <field name="email_cc">{{((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or object.company_id.parent_id.email_formatted)) or '')}}</field>
+            <field name="email_cc">{{((object.company_id.coop_email_contact or object.company_id.email_formatted or '')+','+((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or object.company_id.parent_id.email_formatted)) or ''))}}</field>
             <field name="subject">Application to become Community membership</field>
             <field name="email_to">{{ object.email }}{{ object.is_company and (", " + object.company_email) }}</field>
             <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
