@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2026-01-30 (v16.0.0.5.3)
+
+- Fix email.template cooperator.email_template_confirmation for field email_cc
+
 ### 2026-01-29 (v16.0.0.5.2)
 
 - Update email.template cooperator.email_template_confirmation for field email_cc
