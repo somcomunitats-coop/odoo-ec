@@ -731,10 +731,17 @@ msgstr "El número de aportaciones no puede ser negativo."
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "The request must be in draft or on waiting list to be validated"
 msgstr "La solicitud ha de estar en estado de borrador o en lista de espera para poder ser validada"
+
+#. module: cooperator
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__operation_type__transfer
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_register__type__transfer
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__state__transfer
+#: model_terms:ir.ui.view,arch_db:cooperator.view_subscription_register_filter
+msgid "Transfer"
+msgstr "Transferencia"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__share_product
@@ -954,10 +961,15 @@ msgstr "Por favor sube una copia escaneada de tu documento de identitat."
 #. module: cooperator_website
 #. odoo-python
 #: code:addons/cooperator_website/controllers/main.py:0
-#: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "Provided IBAN is not valid."
 msgstr "El IBAN proporcionado no es válido."
+
+#. module: cooperator
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__operation_type__sell_back
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_register__type__sell_back
+msgid "Sell Back"
+msgstr "Devolución"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.main_form_template

@@ -928,10 +928,15 @@ msgstr "Mesedez, igo zure NANa eskaneatuta."
 #. module: cooperator_website
 #. odoo-python
 #: code:addons/cooperator_website/controllers/main.py:0
-#: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "Provided IBAN is not valid."
 msgstr "Emandako IBANa ez da baliozkoa."
+
+#. module: cooperator
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__operation_type__sell_back
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_register__type__sell_back
+msgid "Sell Back"
+msgstr "Itzulketa"
 
 #. module: cooperator_website
 #: model_terms:ir.ui.view,arch_db:cooperator_website.main_form_template
@@ -995,6 +1000,15 @@ msgstr "bazkideen erregistroan jasota dago, zenbaki honekin:"
 #: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_register
 msgid "Effective Date"
 msgstr "Eraginetarako data"
+
+
+#. module: cooperator
+#: model:ir.model.fields.selection,name:cooperator.selection__operation_request__operation_type__transfer
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_register__type__transfer
+#: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__state__transfer
+#: model_terms:ir.ui.view,arch_db:cooperator.view_subscription_register_filter
+msgid "Transfer"
+msgstr "Transferitu"
 
 #. module: cooperator
 #: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__share_product
