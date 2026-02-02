@@ -25,14 +25,12 @@ msgstr "Ekarpenen kudeaketa"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "%s is not available to companies"
 msgstr "%s ez dago eskuragarri enpresetarako"
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "%s is not available to individuals"
@@ -275,7 +273,6 @@ msgstr "Kooperatibakideek erregistro-zenbaki bakarra izan dezakete (enpresako)"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/wizard/partner_create_subscription.py:0
-#: code:addons/cooperator/wizard/partner_create_subscription.py:0
 #, python-format
 msgid "A person can't be representative of two different companies."
 msgstr "Pertsona berak ezin du bi enpresaren ordezkari izan."
@@ -354,9 +351,6 @@ msgstr "Bihurketa"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "Converting just part of the shares is not yet implemented"
 msgstr "Oraingoz ezin da ekarpenaren zati bat bakarrik bihurtu"
@@ -376,14 +370,12 @@ msgstr "Kooperatibako bazkidetzak"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/res_company.py:0
-#: code:addons/cooperator/models/res_company.py:0
 #, python-format
 msgid "Cooperator number sequence"
 msgstr "Kooperatibakide-zenbakiaren sekuentzia"
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/res_company.py:0
 #: code:addons/cooperator/models/res_company.py:0
 #, python-format
 msgid "Cooperator register operation sequence"
@@ -403,7 +395,6 @@ msgstr "Bistaratze-izena"
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Email and Company Email must be different."
@@ -449,7 +440,6 @@ msgstr "Ez da kontakturik aurkitu"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/wizard/partner_create_subscription.py:0
-#: code:addons/cooperator/wizard/partner_create_subscription.py:0
 #, python-format
 msgid "No default share product found for this type of partner."
 msgstr "Ez da kontaktu-mota honen ekarpen lehenetsirik aurkitu."
@@ -462,14 +452,12 @@ msgstr "Ekarpen-kopurua"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Number of share must be greater than 0."
 msgstr "Ekarpen-kopuruak 0 baino handiagoa izan behar du."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Only blocked requests can be unblocked."
@@ -478,14 +466,12 @@ msgstr "Blokeatuta dauden ekarpenak soilik desblokea daitezke."
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Only draft request can be put on the waiting list."
 msgstr "Zirriborro egoeran dauden eskaerak soilik jar daitezke itxaron-zerrendan."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Only draft requests can be blocked."
@@ -500,7 +486,6 @@ msgstr ""
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__gender__other
 #, python-format
@@ -519,7 +504,6 @@ msgstr "Ordainketa jaso dela jakinarazteko mezu elektronikoa"
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid ""
@@ -665,7 +649,6 @@ msgstr "Ekarpenak eguneratzeko mezu elektronikoaren txantiloia"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/models/subscription_request.py:0
 #: model:ir.model.fields,field_description:cooperator.field_res_company__subscription_journal_id
 #, python-format
 msgid "Subscription Journal"
@@ -684,7 +667,6 @@ msgstr "Bazkidetza-eskaera itxaron-zerrendan dago"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "The checkbox already cooperator is checked please select a cooperator."
 msgstr "Kooperatibakide dela adierazten duen koadroa markatuta dago jada. Hautatu kooperatibakide bat."
@@ -692,14 +674,12 @@ msgstr "Kooperatibakide dela adierazten duen koadroa markatuta dago jada. Hautat
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "The cooperator can't hand over more shares that he/she owns."
 msgstr "Kooperatibakideak ezin ditu dauzkan ekarpenak baino gehiago eman."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/operation_request.py:0
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid ""
@@ -711,14 +691,12 @@ msgstr ""
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "The effective date can not be in the future."
 msgstr "Eraginetarako data ezin da etorkizuneko data bat izan."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/operation_request.py:0
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid ""
@@ -729,7 +707,6 @@ msgstr ""
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/operation_request.py:0
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "The is_operation field of the subscription request must be true"
@@ -743,7 +720,6 @@ msgstr "Ekarpen-kopurua ezin da negatiboa izan."
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "The request must be in draft or on waiting list to be validated"
 msgstr "Eskaerak zirriborro egoeran edo itxaron-zerrendan egon behar du hura baliozkotu ahal izateko"
@@ -751,8 +727,6 @@ msgstr "Eskaerak zirriborro egoeran edo itxaron-zerrendan egon behar du hura bal
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/wizard/partner_create_subscription.py:0
 #: code:addons/cooperator/wizard/partner_create_subscription.py:0
 #, python-format
 msgid ""
@@ -774,7 +748,6 @@ msgstr ""
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid ""
 "This operation can't be executed if the cooperator is not an effective "
@@ -785,14 +758,12 @@ msgstr ""
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This operation is not yet implemented."
 msgstr "Eragiketa hau ez da inplementatu oraindik."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/operation_request.py:0
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This operation must be approved before to be executed"
@@ -801,7 +772,6 @@ msgstr "Eragiketa hau onartu egin behar da exekutatu aurretik"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share can not be subscribed an individual"
 msgstr "Pertsona fisikoek ezin dute ekarpen honen harpidetzarik egin"
@@ -809,14 +779,12 @@ msgstr "Pertsona fisikoek ezin dute ekarpen honen harpidetzarik egin"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share can not be subscribed by a company"
 msgstr "Pertsona juridikoek (enpresek) ezin dute ekarpen honen harpidetzarik egin"
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/operation_request.py:0
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share type could not be transfered to "
@@ -845,14 +813,12 @@ msgstr "Ongi etorri {{object.env.company.comercial_name or object.env.company.na
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "You can't convert the share to the same share type."
 msgstr "Ezin duzu ekarpena ekarpen-mota berera bihurtu."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "You cannot cancel a request in this state."
@@ -861,14 +827,12 @@ msgstr "Ezin duzu egoera horretan dagoen eskaera bat ezeztatu."
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "You must convert all the shares to the selected type."
 msgstr "Ekarpen guztiak hautatutako motara bihurtu behar dituzu."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "You must set a cooperator account on your company."
@@ -920,7 +884,6 @@ msgstr ""
 #. module: cooperator_website
 #. odoo-python
 #: code:addons/cooperator_website/controllers/main.py:0
-#: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid ""
 "An account already exists for this email address. Please log in before "
@@ -946,7 +909,6 @@ msgstr "Lehenik zure datu pertsonalak aldatu nahi dituzu?"
 #. module: cooperator_website
 #. odoo-python
 #: code:addons/cooperator_website/controllers/main.py:0
-#: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "Email and confirmation email addresses don't match."
 msgstr "Helbide elektronikoa eta berrestekoa ez datoz bat."
@@ -958,7 +920,6 @@ msgstr "Saioa hasita"
 
 #. module: cooperator_website
 #. odoo-python
-#: code:addons/cooperator_website/controllers/main.py:0
 #: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "Please upload a scan of your ID card."
@@ -980,14 +941,12 @@ msgstr "Bidali"
 #. module: cooperator_website
 #. odoo-python
 #: code:addons/cooperator_website/controllers/main.py:0
-#: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "Some mandatory fields have not been filled."
 msgstr "Nahitaezko eremu batzuk ez dira bete."
 
 #. module: cooperator_website
 #. odoo-python
-#: code:addons/cooperator_website/controllers/main.py:0
 #: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid ""
@@ -997,7 +956,6 @@ msgstr ""
 
 #. module: cooperator_website
 #. odoo-python
-#: code:addons/cooperator_website/controllers/main.py:0
 #: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "You can't subscribe to two different types of share."

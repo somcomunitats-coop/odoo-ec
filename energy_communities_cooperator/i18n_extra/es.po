@@ -25,14 +25,12 @@ msgstr "Gestión aportaciones"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "%s is not available to companies"
 msgstr "%s no está disponible para empresas"
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "%s is not available to individuals"
@@ -275,7 +273,6 @@ msgstr "Un registro de socia debe ser único por compañía"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/wizard/partner_create_subscription.py:0
-#: code:addons/cooperator/wizard/partner_create_subscription.py:0
 #, python-format
 msgid "A person can't be representative of two different companies."
 msgstr "Una misma persona no puede representar 2 empresas distintas."
@@ -354,9 +351,6 @@ msgstr "Conversión"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "Converting just part of the shares is not yet implemented"
 msgstr "Convertir solo una parte de la aportación no está contemplado"
@@ -376,14 +370,12 @@ msgstr "Membresías"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/res_company.py:0
-#: code:addons/cooperator/models/res_company.py:0
 #, python-format
 msgid "Cooperator number sequence"
 msgstr "Secuencia de número de socia"
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/res_company.py:0
 #: code:addons/cooperator/models/res_company.py:0
 #, python-format
 msgid "Cooperator register operation sequence"
@@ -403,7 +395,6 @@ msgstr "Nombre a mostrar"
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Email and Company Email must be different."
@@ -449,7 +440,6 @@ msgstr "No se han encontrado contactos"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/wizard/partner_create_subscription.py:0
-#: code:addons/cooperator/wizard/partner_create_subscription.py:0
 #, python-format
 msgid "No default share product found for this type of partner."
 msgstr "No se ha encontrado ninguna aportación por defecto para este tipo de contacto."
@@ -462,14 +452,12 @@ msgstr "Número Aportaciones"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Number of share must be greater than 0."
 msgstr "Número de aportaciones ha de ser superior a 0."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Only blocked requests can be unblocked."
@@ -478,14 +466,12 @@ msgstr "Només sol·licituds bloquejades es poden desbloquejar."
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Only draft request can be put on the waiting list."
 msgstr "Solamente solicitudes en borrador pueden ponerse en lista de espera."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Only draft requests can be blocked."
@@ -499,7 +485,6 @@ msgstr "Solamente puede existir una membresía por contacto (partner) y compañ�
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #: model:ir.model.fields.selection,name:cooperator.selection__subscription_request__gender__other
 #, python-format
@@ -518,7 +503,6 @@ msgstr "Confirmación recepción pago incremento capital social"
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid ""
@@ -674,7 +658,6 @@ msgstr "Plantilla correo actualitzación de aportaciones (suplantará la global)
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/models/subscription_request.py:0
 #: model:ir.model.fields,field_description:cooperator.field_res_company__subscription_journal_id
 #, python-format
 msgid "Subscription Journal"
@@ -693,7 +676,6 @@ msgstr "Solicitud de subscripción en lista de espera"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/subscription_request.py:0
-#: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "The checkbox already cooperator is checked please select a cooperator."
 msgstr "El campo que indica que ya es socia está marcado, hay que seleccionar una socia."
@@ -701,14 +683,12 @@ msgstr "El campo que indica que ya es socia está marcado, hay que seleccionar u
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "The cooperator can't hand over more shares that he/she owns."
 msgstr "La socia no puede actuar sobre aportaciones que no le corresponden."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/operation_request.py:0
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid ""
@@ -721,14 +701,12 @@ msgstr ""
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "The effective date can not be in the future."
 msgstr "La fecha efectiva no puede ser futura."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/operation_request.py:0
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid ""
@@ -740,7 +718,6 @@ msgstr ""
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/operation_request.py:0
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "The is_operation field of the subscription request must be true"
@@ -795,7 +772,6 @@ msgstr ""
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid ""
 "This operation can't be executed if the cooperator is not an effective "
@@ -807,14 +783,12 @@ msgstr ""
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This operation is not yet implemented."
 msgstr "Esta operación no está aún implementada."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/operation_request.py:0
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This operation must be approved before to be executed"
@@ -823,7 +797,6 @@ msgstr "Esta operación requiere ser aprobada antes de ser ejecutada"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share can not be subscribed an individual"
 msgstr "Esta aportación no puede ser subscrita por una persona física"
@@ -831,14 +804,12 @@ msgstr "Esta aportación no puede ser subscrita por una persona física"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share can not be subscribed by a company"
 msgstr "Esta aportación no puede ser subscrita por una persona jurídica (empres)"
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/operation_request.py:0
 #: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "This share type could not be transfered to "
@@ -867,14 +838,12 @@ msgstr "!Bienvenida a la Comunidad Energética!"
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "You can't convert the share to the same share type."
 msgstr "No puedes convertir la aportación hacia el mismo tipo de aportación que ya tiene."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "You cannot cancel a request in this state."
@@ -883,14 +852,12 @@ msgstr "No puedes cancelar una solicitud en este estado."
 #. module: cooperator
 #. odoo-python
 #: code:addons/cooperator/models/operation_request.py:0
-#: code:addons/cooperator/models/operation_request.py:0
 #, python-format
 msgid "You must convert all the shares to the selected type."
 msgstr "Hay que convertir todas las aportaciones al tipo seleccionado."
 
 #. module: cooperator
 #. odoo-python
-#: code:addons/cooperator/models/subscription_request.py:0
 #: code:addons/cooperator/models/subscription_request.py:0
 #, python-format
 msgid "You must set a cooperator account on your company."
@@ -942,7 +909,6 @@ msgstr ""
 #. module: cooperator_website
 #. odoo-python
 #: code:addons/cooperator_website/controllers/main.py:0
-#: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid ""
 "An account already exists for this email address. Please log in before "
@@ -969,7 +935,6 @@ msgstr "¿Deseas primero cambiar tus datos personales?"
 #. module: cooperator_website
 #. odoo-python
 #: code:addons/cooperator_website/controllers/main.py:0
-#: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "Email and confirmation email addresses don't match."
 msgstr "El correo electrónico y el de confirmación no coinciden."
@@ -981,7 +946,6 @@ msgstr "Sesión iniciada"
 
 #. module: cooperator_website
 #. odoo-python
-#: code:addons/cooperator_website/controllers/main.py:0
 #: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "Please upload a scan of your ID card."
@@ -1003,14 +967,12 @@ msgstr "Envía"
 #. module: cooperator_website
 #. odoo-python
 #: code:addons/cooperator_website/controllers/main.py:0
-#: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "Some mandatory fields have not been filled."
 msgstr "Algunos campos obligatorios no se han rellenado."
 
 #. module: cooperator_website
 #. odoo-python
-#: code:addons/cooperator_website/controllers/main.py:0
 #: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid ""
@@ -1020,7 +982,6 @@ msgstr ""
 
 #. module: cooperator_website
 #. odoo-python
-#: code:addons/cooperator_website/controllers/main.py:0
 #: code:addons/cooperator_website/controllers/main.py:0
 #, python-format
 msgid "You can't subscribe to two different types of share."
