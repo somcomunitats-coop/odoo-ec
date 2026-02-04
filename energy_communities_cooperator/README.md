@@ -9,6 +9,17 @@
 - Add wizard to send emails to a cooperator
 - Improvement translations
 
+### 2026-01-30 (v16.0.0.5.4)
+
+- Fix translations for:
+
+  - msgid "Sell Back"
+  - msgid "Transfer"
+  - sentence in basc language for msg:
+    model:mail.template,body_html:cooperator.email_template_confirmation
+  - variable to choose the correct iban account
+  - msgid for model:mail.template,body_html:cooperator.email_template_release_capital
+
 ### 2026-01-30 (v16.0.0.5.3)
 
 - Fix email.template cooperator.email_template_confirmation for field email_cc
