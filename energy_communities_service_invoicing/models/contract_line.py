@@ -48,6 +48,9 @@ class ContractLine(models.Model):
                 rec.create_invoice_visibility = False
 
     def _prepare_invoice_line(self):
-        res = super()._prepare_invoice_line()
+        lang_code = self.contract_id.partner_id.lang
+        res = super(
+            ContractLine, self.with_context(lang=lang_code)
+        )._prepare_invoice_line()
         res["tax_ids"] = self.product_id.taxes_id
         return res

@@ -135,16 +135,17 @@ class ContractUtils(Component):
                 "ordered_quantity": line.quantity,
                 "ordered_qty_formula_id": line.qty_formula_id.id,
             }
-            if line.product_id.product_tmpl_id.description_sale:
-                # context language to be considered from community_company_id or partner_id
-                if self.work.record.community_company_id:
-                    lang = self.work.record.community_company_id.partner_id.lang
-                else:
-                    lang = self.work.record.partner_id.lang
-                line_params["name"] = line.product_id.product_tmpl_id.with_context(
-                    lang=lang
-                ).description_sale
             line.write(line_params)
+            if line.product_id.product_tmpl_id.description_sale:
+                langs = self.env["res.lang"].search([])
+                for lang in langs:
+                    line.with_context(lang=lang.code).write(
+                        {
+                            "name": line.product_id.product_tmpl_id.with_context(
+                                lang=lang.code
+                            ).description_sale
+                        }
+                    )
 
     def _set_discount_if_needed(self, metadata_keys_arr):
         if "discount" in metadata_keys_arr:
