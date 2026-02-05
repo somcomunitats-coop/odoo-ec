@@ -52,5 +52,14 @@ class ContractLine(models.Model):
         res = super(
             ContractLine, self.with_context(lang=lang_code)
         )._prepare_invoice_line()
-        res["tax_ids"] = self.product_id.taxes_id
+        if (
+            self.product_id.product_tmpl_id.categ_id.id
+            == self.env.ref(
+                "energy_communities.product_category_share_recurring_fee_service"
+            ).id
+        ):
+            if self.product_id.taxes_id:
+                res["tax_ids"] = self.product_id.taxes_id
+            else:
+                res["tax_ids"] = None
         return res

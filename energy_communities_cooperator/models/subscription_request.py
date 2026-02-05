@@ -230,4 +230,14 @@ class SubscriptionRequest(models.Model):
     def _prepare_invoice_line(self, move_id, product, partner, qty):
         res = super()._prepare_invoice_line(move_id, product, partner, qty)
         res["tax_ids"] = product.taxes_id
+        if (
+            product.product_tmpl_id.categ_id.id
+            == self.env.ref(
+                "energy_communities.product_category_share_recurring_fee_service"
+            ).id
+        ):
+            if product.taxes_id:
+                res["tax_ids"] = product.taxes_id
+            else:
+                res["tax_ids"] = None
         return res
