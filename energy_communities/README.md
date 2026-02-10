@@ -4,6 +4,13 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-02-10 (v16.0.0.7.9)
+
+- New menu entry in energy communities configuration to access directly to email
+  templates
+- Add new filters to search only energy community templates
+- Hide to energy community managers general filters
+
 ### 2026-01-29 (v16.0.0.7.8)
 
 - New translate for email.template account.email_template_edi_invoice in field body_html
