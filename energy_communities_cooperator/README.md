@@ -7,6 +7,7 @@
 ### 2026-01-10 (v16.0.0.6.0)
 
 - Add wizard to send emails to a cooperator
+- fix correct taxes in product
 - Improvement translations
 
 ### 2026-01-30 (v16.0.0.5.4)
