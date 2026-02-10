@@ -121,11 +121,13 @@ class Contract(models.Model):
         # Exclude contracts with energy_delivered invoicing mode
         domain.extend(
             [
+                "|",
+                ("project_id", "=", False),
                 (
                     "project_id.selfconsumption_id.invoicing_mode",
                     "!=",
                     SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED,
-                )
+                ),
             ]
         )
 

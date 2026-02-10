@@ -322,3 +322,7 @@ class ContractContract(models.Model):
             if self.community_company_id.numberof_effective_cooperators <= 100
             else 1
         )
+
+    @api.model
+    def cron_recurring_create_invoice(self, date_ref=None):
+        return self.with_delay()._cron_recurring_create(date_ref, create_type="invoice")

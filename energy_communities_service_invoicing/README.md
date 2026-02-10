@@ -4,6 +4,11 @@
 
 ## Changelog
 
+### 2026-02-10 (v16.0.0.7.2)
+
+- Fix creating invoice cron
+- Fix correct language when duplicating contracts
+
 ### 2026-01-15 (v16.0.0.7.1)
 
 - Apply new formula for count members
