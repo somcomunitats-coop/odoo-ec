@@ -12,7 +12,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Cooperative management",
-    "version": "16.0.0.5.3",
+    "version": "16.0.0.6.0",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
@@ -51,6 +51,7 @@
         "views/res_config_settings_view.xml",
         "wizards/multicompany_easy_creation.xml",
         "wizards/voluntary_share_interest_return.xml",
+        "wizards/email_sending_assistant.xml",
     ],
     # only loaded in demonstration mode
     "demo": ["demo/res_company_demo.xml"],

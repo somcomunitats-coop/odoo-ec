@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-20 08:13+0000\n"
-"PO-Revision-Date: 2025-10-20 08:13+0000\n"
+"POT-Creation-Date: 2026-02-10 12:14+0000\n"
+"PO-Revision-Date: 2026-02-10 12:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -135,6 +135,11 @@ msgstr ""
 msgid "A super power user that is able to CRUD users on KC."
 msgstr ""
 "KCn erabiltzaileei CRUD egiteko baimenak dituen supererabiltzaile bat."
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
+msgid "Accept"
+msgstr ""
 
 #. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_energy_actions
@@ -278,6 +283,11 @@ msgid "Bank Accounts"
 msgstr "Banku-kontuak"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+msgid "Base Templates"
+msgstr "Oinarrizko txantiloiak"
+
+#. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__mode__become_cooperator
@@ -302,6 +312,11 @@ msgstr "Kooperatibakide egiteko prozesua"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__social_bluesky
 msgid "Bluesky Account"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_bluesky_url
+msgid "Bluesky link"
 msgstr ""
 
 #. module: energy_communities
@@ -350,6 +365,16 @@ msgstr "Ezeztatu"
 #, python-format
 msgid "Cancelled"
 msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+msgid "Ce Custom Templates"
+msgstr "Komunitate energetikoaren txantiloi pertsonalizatuak"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+msgid "Ce Templates"
+msgstr "CE txantiloiak"
 
 #. module: energy_communities
 #. odoo-python
@@ -412,6 +437,13 @@ msgid "Ciutadania"
 msgstr "Herritarrak"
 
 #. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Clear search"
+msgstr "Bilaketa argia"
+
+#. module: energy_communities
 #: model_terms:ir.actions.act_window,help:energy_communities.ce_utm_sources_action
 msgid "Click to define a new Source."
 msgstr "Egin klik jatorri berri bat definitzeko."
@@ -435,6 +467,12 @@ msgstr "Kodea"
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__comercial_name
 msgid "Comercial name"
 msgstr "Izen komertziala"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__comments
+#: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
+msgid "Comments"
+msgstr "Iruzkinak"
 
 #. module: energy_communities
 #. odoo-python
@@ -627,13 +665,6 @@ msgid "Cooperative"
 msgstr "Kooperatiba"
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/models/landing_cooperator_button.py:0
-#, python-format
-msgid "Cooperator button restore successful"
-msgstr "Kooperatibakidearen botoia behar bezala leheneratu da"
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__cooperator_button_ids
 msgid "Cooperator buttons"
 msgstr "Kooperatibakidearen botoiak"
@@ -776,9 +807,28 @@ msgid "Custom"
 msgstr "Pertsonalizatua"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+msgid "Custom Templates"
+msgstr "Txantiloi pertsonalizatuak"
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_users_form_form_inherit
 msgid "DNI"
 msgstr "NANa"
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Deselect All"
+msgstr "Desautatu denak"
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Deselect All Companies"
+msgstr "Enpresa guztiak desautatu"
 
 #. module: energy_communities
 #: model:cm.map,proposal_form_subtitle_step_address:energy_communities.map_campanya
@@ -824,6 +874,7 @@ msgstr "Helbide elektronikoa"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_mail_template
+#: model:ir.ui.menu,name:energy_communities.ec_menu_email_templates
 msgid "Email Templates"
 msgstr "Posta elektronikoko txantiloiak"
 
@@ -981,6 +1032,10 @@ msgstr "Sorrera-formularioa"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__foundation
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__foundation
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__foundation
 #, python-format
 msgid "Foundation"
 msgstr "Fundazioa"
@@ -1015,6 +1070,11 @@ msgstr "Sozietate kolektiboa"
 #: model:ir.model,name:energy_communities.model_user_currentcompany_mixin
 msgid "Get current selected company from any model"
 msgstr "Edozein eredutatik lortu oraingo enpresa."
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+msgid "Global Templates"
+msgstr "Txantiloi globalak"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__has_message
@@ -1197,9 +1257,10 @@ msgstr "KeyCloak hornitzailea"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/landing_cooperator_button.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__visibility__landing
 #, python-format
-msgid "Label and url restored to defaults."
-msgstr "Label eta url lehenetsitako baliotara itzuli da."
+msgid "Landing"
+msgstr ""
 
 #. module: energy_communities
 #. odoo-python
@@ -1226,9 +1287,13 @@ msgid "Landing lng param required for place creation"
 msgstr "Longitudea beharrezkoa da mapan puntu bat sortzeko"
 
 #. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #: model:ir.model,name:energy_communities.model_landing_cooperator_button
 #: model:ir.model,name:energy_communities.model_landing_page
 #: model:ir.model.fields,field_description:energy_communities.field_cm_filter__landing_id
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__mode__landing_page
+#, python-format
 msgid "Landing page"
 msgstr "Lurreratze-orria"
 
@@ -1373,6 +1438,14 @@ msgid "Main Attachment"
 msgstr "Eranskin nagusia"
 
 #. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__visibility__map
+#, python-format
+msgid "Map"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__map_sync_mode
 msgid "Map Sync Mode"
 msgstr "Mapa sinkronizatzeko modua"
@@ -1385,8 +1458,21 @@ msgid "Map not found slug_id: {}"
 msgstr "Mapa ez da aurkitu slug_id honetarako: {}"
 
 #. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__visibility__map_landing
+#, python-format
+msgid "Map/Landing"
+msgstr ""
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__social_mastodon
 msgid "Mastodon Account"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_mastodon_url
+msgid "Mastodon link"
 msgstr ""
 
 #. module: energy_communities
@@ -1465,26 +1551,6 @@ msgid "Neighborhood community"
 msgstr "Auzokideen erkidego"
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__non_profit_limited_company
-#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__non_profit_limited_company
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__non_profit_limited_company
-#, python-format
-msgid "Non profit limited company"
-msgstr "Irabazi-asmorik gabeko SL"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__foundation
-#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__foundation
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__foundation
-#, python-format
-msgid "Foundation"
-msgstr "Fundazioa"
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
 msgstr "Hurrengo jardueraren egutegiko gertaera"
@@ -1533,6 +1599,16 @@ msgstr "Ez dugu emaitzarik aurkitu. Saiatu iragazkien konfigurazioa aldatzen."
 #, python-format
 msgid "Non profit association"
 msgstr "Irabazi-asmorik gabeko elkartea"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__non_profit_limited_company
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__non_profit_limited_company
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__non_profit_limited_company
+#, python-format
+msgid "Non profit limited company"
+msgstr "Irabazi-asmorik gabeko SL"
 
 #. module: energy_communities
 #. odoo-python
@@ -1734,13 +1810,6 @@ msgid "Platform Manager"
 msgstr "Administradora de Instancia"
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/config.py:0
-#, python-format
-msgid "Platform Pack"
-msgstr ""
-
-#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_partner_form
 msgid "Platform company"
 msgstr "Plataforma-enpresa"
@@ -1833,13 +1902,6 @@ msgid "Realm name"
 msgstr "REALM izena"
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/config.py:0
-#, python-format
-msgid "Recurring fee Pack"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__redirect_admin_url
 msgid "Redirect Link after update password"
 msgstr "Birbideratu esteka pasahitza eguneratu ondoren"
@@ -1848,6 +1910,13 @@ msgstr "Birbideratu esteka pasahitza eguneratu ondoren"
 #: model:ir.model.fields,field_description:energy_communities.field_energy_action__company_mids
 msgid "Related companies"
 msgstr "Erlazionatutako enpresak"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/controllers/website_form_controllers.py:0
+#, python-format
+msgid "Related model closed."
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_partner_form
@@ -1876,11 +1945,6 @@ msgstr "Pasahitza berrezartzeko URLa ez dago konfiguratuta."
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__activity_user_id
 msgid "Responsible User"
 msgstr "Erabiltzaile arduraduna"
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
-msgid "Restore defaults"
-msgstr "Berrezarri lehenetsiak"
 
 #. module: energy_communities
 #. odoo-python
@@ -1919,10 +1983,31 @@ msgid "Run the post hook in a cron job or not"
 msgstr "Geroagoko ekintza bat exekutatu edo ez cron job batean"
 
 #. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Search companies..."
+msgstr "Bilaketa-enpresak..."
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__landing_secondary_image_file
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__secondary_image_file
 msgid "Secondary Image"
 msgstr "Bigarren mailako irudia"
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Select All"
+msgstr "Hautatu Todo"
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Select All Companies"
+msgstr "Hautatu enpresa guztiak"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_create_users_wizard_form
@@ -1932,13 +2017,6 @@ msgid ""
 msgstr ""
 "Hautatu bazkide bakoitzarentzat bete beharreko etapak (etapa bat hautatzeak "
 "aurrekoak egitea dakar):"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/config.py:0
-#, python-format
-msgid "Selfconsumption Pack"
-msgstr ""
 
 #. module: energy_communities
 #. odoo-python
@@ -1955,13 +2033,6 @@ msgstr "EK diseinatzeko eta abian jartzeko zerbitzuak"
 #, python-format
 msgid "Services to raise awareness in the creation of CCEE"
 msgstr "EKaren sorreran sentsibilizatzeko zerbitzuak"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/config.py:0
-#, python-format
-msgid "Share with recurring fee pack"
-msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__landing_short_description
@@ -2394,14 +2465,6 @@ msgstr "Bista"
 #: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__visibility
 msgid "Visibility"
 msgstr "Ikuspen"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/models/landing_cooperator_button.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__visibility__visible
-#, python-format
-msgid "Visible"
-msgstr "Ikusgai"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_landing_page_id
@@ -3803,45 +3866,3 @@ msgstr ""
 "\"po2_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</div>\",\n"
 "\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Partekatu eta lagundu hazten energia-komunitateari</p></div>\"\n"
 "}"
-
-#. module: energy_communities
-#. odoo-javascript
-#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
-msgid "Search companies..."
-msgstr "Bilaketa-enpresak..."
-
-#. module: energy_communities
-#. odoo-javascript
-#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
-msgid "Clear search"
-msgstr "Bilaketa argia"
-
-#. module: energy_communities
-#. odoo-javascript
-#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
-msgid "Select All"
-msgstr "Hautatu Todo"
-
-#. module: energy_communities
-#. odoo-javascript
-#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
-msgid "Select All Companies"
-msgstr "Hautatu enpresa guztiak"
-
-#. module: energy_communities
-#. odoo-javascript
-#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
-msgid "Deselect All"
-msgstr "Desautatu denak"
-
-#. module: energy_communities
-#. odoo-javascript
-#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
-msgid "Deselect All Companies"
-msgstr "Enpresa guztiak desautatu"

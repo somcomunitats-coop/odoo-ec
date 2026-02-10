@@ -4,6 +4,11 @@
 
 ## Changelog
 
+### 2026-01-10 (v16.0.0.6.0)
+
+- Add wizard to send emails to a cooperator
+- Improvement translations
+
 ### 2026-01-30 (v16.0.0.5.3)
 
 - Fix email.template cooperator.email_template_confirmation for field email_cc

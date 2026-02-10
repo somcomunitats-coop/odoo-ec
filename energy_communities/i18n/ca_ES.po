@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-20 08:14+0000\n"
-"PO-Revision-Date: 2025-10-20 08:14+0000\n"
+"POT-Creation-Date: 2026-02-10 12:13+0000\n"
+"PO-Revision-Date: 2026-02-10 12:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -133,6 +133,11 @@ msgid "A super power user that is able to CRUD users on KC."
 msgstr "Un super-usuari amb permisos pper CRUD en KC."
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
+msgid "Accept"
+msgstr ""
+
+#. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_energy_actions
 msgid "Accions energètiques"
 msgstr ""
@@ -250,7 +255,9 @@ msgstr ""
 msgid ""
 "Are you sure you want to run the wizard and proceed with creating the "
 "company?"
-msgstr "Segur que vols executar l'assistent y procedir amb la creació de la Companyia?"
+msgstr ""
+"Segur que vols executar l'assistent y procedir amb la creació de la "
+"Companyia?"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_config_assistants_menu
@@ -272,6 +279,11 @@ msgstr "Roles disponibles"
 #: model:ir.model,name:energy_communities.model_res_partner_bank
 msgid "Bank Accounts"
 msgstr "Comptes bancaris"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+msgid "Base Templates"
+msgstr "Plantilles base"
 
 #. module: energy_communities
 #. odoo-python
@@ -298,6 +310,11 @@ msgstr "Fer-te col·laborador"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__social_bluesky
 msgid "Bluesky Account"
+msgstr ""
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_bluesky_url
+msgid "Bluesky link"
 msgstr ""
 
 #. module: energy_communities
@@ -346,6 +363,16 @@ msgstr "Cancel·lar"
 #, python-format
 msgid "Cancelled"
 msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+msgid "Ce Custom Templates"
+msgstr "Plantilles personalitzades de la comunitat energètica"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+msgid "Ce Templates"
+msgstr "Plantilles CE"
 
 #. module: energy_communities
 #. odoo-python
@@ -408,6 +435,13 @@ msgid "Ciutadania"
 msgstr ""
 
 #. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Clear search"
+msgstr "Esborra la cerca"
+
+#. module: energy_communities
 #: model_terms:ir.actions.act_window,help:energy_communities.ce_utm_sources_action
 msgid "Click to define a new Source."
 msgstr "Clica per definir un nou Source."
@@ -431,6 +465,12 @@ msgstr "Codi"
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__comercial_name
 msgid "Comercial name"
 msgstr "Nom comercial"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__comments
+#: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
+msgid "Comments"
+msgstr "Comentaris"
 
 #. module: energy_communities
 #. odoo-python
@@ -622,13 +662,6 @@ msgid "Cooperative"
 msgstr "Cooperativa"
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/models/landing_cooperator_button.py:0
-#, python-format
-msgid "Cooperator button restore successful"
-msgstr "Botó de soci restaurat satisfactòriament"
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__cooperator_button_ids
 msgid "Cooperator buttons"
 msgstr "Butons de soci"
@@ -771,9 +804,28 @@ msgid "Custom"
 msgstr "Personalitzat"
 
 #. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+msgid "Custom Templates"
+msgstr "Plantilles personalitzades"
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_users_form_form_inherit
 msgid "DNI"
 msgstr ""
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Deselect All"
+msgstr "Desseleccioneu-ho tot"
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Deselect All Companies"
+msgstr "Desseleccioneu Totes les empreses"
 
 #. module: energy_communities
 #: model:cm.map,proposal_form_subtitle_step_address:energy_communities.map_campanya
@@ -819,6 +871,7 @@ msgstr "Correu electrònic"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_mail_template
+#: model:ir.ui.menu,name:energy_communities.ec_menu_email_templates
 msgid "Email Templates"
 msgstr "Plantilles de correu electrònic"
 
@@ -966,7 +1019,7 @@ msgstr "Forçar enviament invitació en cas que ja s'hagi fet anteriorment"
 #: model:cm.filter,name:energy_communities.map_filter_training
 #: model:energy.action,name:energy_communities.energy_action_citizen_education
 msgid "Formació ciutadana"
-msgstr ""
+msgstr "Formació ciutadana"
 
 #. module: energy_communities
 #: model:cm.map,proposal_form_subtitle_step_form:energy_communities.map_campanya
@@ -976,6 +1029,10 @@ msgstr "Formulari de creació"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__foundation
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__foundation
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__foundation
 #, python-format
 msgid "Foundation"
 msgstr "Fundació"
@@ -1010,6 +1067,11 @@ msgstr "Societat Col·lectiva"
 #: model:ir.model,name:energy_communities.model_user_currentcompany_mixin
 msgid "Get current selected company from any model"
 msgstr "Obté la compnyia actual desde qualsevol model"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+msgid "Global Templates"
+msgstr "Plantilles globals"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__has_message
@@ -1192,9 +1254,10 @@ msgstr "Proveïdor KeyCloak"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/landing_cooperator_button.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__visibility__landing
 #, python-format
-msgid "Label and url restored to defaults."
-msgstr "Text i Link restaurat to els valors inicials."
+msgid "Landing"
+msgstr "Destinació"
 
 #. module: energy_communities
 #. odoo-python
@@ -1221,9 +1284,13 @@ msgid "Landing lng param required for place creation"
 msgstr "La longitud és requerida per la creació d'un punt de mapa"
 
 #. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #: model:ir.model,name:energy_communities.model_landing_cooperator_button
 #: model:ir.model,name:energy_communities.model_landing_page
 #: model:ir.model.fields,field_description:energy_communities.field_cm_filter__landing_id
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__mode__landing_page
+#, python-format
 msgid "Landing page"
 msgstr "Pàgina Landing"
 
@@ -1368,6 +1435,14 @@ msgid "Main Attachment"
 msgstr "Adjunt principal"
 
 #. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__visibility__map
+#, python-format
+msgid "Map"
+msgstr "Mapa"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__map_sync_mode
 msgid "Map Sync Mode"
 msgstr ""
@@ -1380,9 +1455,22 @@ msgid "Map not found slug_id: {}"
 msgstr "Mapa no trobat per slug_id: {}"
 
 #. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/landing_cooperator_button.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__visibility__map_landing
+#, python-format
+msgid "Map/Landing"
+msgstr "Mapa/Landing"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__social_mastodon
 msgid "Mastodon Account"
-msgstr ""
+msgstr "Compte de Mastodon"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_mastodon_url
+msgid "Mastodon link"
+msgstr "Enllaç a Mastodon"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_mail_message
@@ -1460,26 +1548,6 @@ msgid "Neighborhood community"
 msgstr "Comunitat veïnal"
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__non_profit_limited_company
-#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__non_profit_limited_company
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__non_profit_limited_company
-#, python-format
-msgid "Non profit limited company"
-msgstr "SL sense ànim de lucre"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/models/res_company.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__foundation
-#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__foundation
-#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__foundation
-#, python-format
-msgid "Foundation"
-msgstr "Fundació"
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
 msgstr ""
@@ -1526,6 +1594,16 @@ msgstr "No hem trobats resultats. Prova a canviar la configuració de filtres."
 #, python-format
 msgid "Non profit association"
 msgstr "Associació sense ànim de lucre"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/res_company.py:0
+#: model:ir.model.fields.selection,name:energy_communities.selection__account_multicompany_easy_creation_wiz__legal_form__non_profit_limited_company
+#: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__community_secondary_type__non_profit_limited_company
+#: model:ir.model.fields.selection,name:energy_communities.selection__res_company__legal_form__non_profit_limited_company
+#, python-format
+msgid "Non profit limited company"
+msgstr "SL sense ànim de lucre"
 
 #. module: energy_communities
 #. odoo-python
@@ -1726,13 +1804,6 @@ msgid "Platform Manager"
 msgstr "Manager de plataforma"
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/config.py:0
-#, python-format
-msgid "Platform Pack"
-msgstr ""
-
-#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_partner_form
 msgid "Platform company"
 msgstr "Companyia Plataforma"
@@ -1825,13 +1896,6 @@ msgid "Realm name"
 msgstr "Nom REALM"
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/config.py:0
-#, python-format
-msgid "Recurring fee Pack"
-msgstr ""
-
-#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__redirect_admin_url
 msgid "Redirect Link after update password"
 msgstr "Enllaç de redirecció un cop actualitzada la contrasenya"
@@ -1840,6 +1904,13 @@ msgstr "Enllaç de redirecció un cop actualitzada la contrasenya"
 #: model:ir.model.fields,field_description:energy_communities.field_energy_action__company_mids
 msgid "Related companies"
 msgstr "Companyies relacionades"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/controllers/website_form_controllers.py:0
+#, python-format
+msgid "Related model closed."
+msgstr "Model relacionat tancant."
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_partner_form
@@ -1868,11 +1939,6 @@ msgstr "La URL per restablir la contrasenya no està configurada."
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__activity_user_id
 msgid "Responsible User"
 msgstr "Usuari responsable"
-
-#. module: energy_communities
-#: model_terms:ir.ui.view,arch_db:energy_communities.landing_page_form_view
-msgid "Restore defaults"
-msgstr ""
 
 #. module: energy_communities
 #. odoo-python
@@ -1911,10 +1977,31 @@ msgid "Run the post hook in a cron job or not"
 msgstr "Executa, o no, una acció posterior en un cron job"
 
 #. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Search companies..."
+msgstr "Cerca empreses..."
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__landing_secondary_image_file
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__secondary_image_file
 msgid "Secondary Image"
 msgstr "Imatge secundària"
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Select All"
+msgstr "Seleccioneu Tot"
+
+#. module: energy_communities
+#. odoo-javascript
+#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
+#, python-format
+msgid "Select All Companies"
+msgstr "Seleccioneu Totes les empreses"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_create_users_wizard_form
@@ -1924,13 +2011,6 @@ msgid ""
 msgstr ""
 "Selecciona les etapes a cubrir per a cada persona sòcia (la selecció d'una "
 "etapa implica la execució dels precedents):"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/config.py:0
-#, python-format
-msgid "Selfconsumption Pack"
-msgstr ""
 
 #. module: energy_communities
 #. odoo-python
@@ -1947,13 +2027,6 @@ msgstr "Serveis pel disseny i posada en marxa de CCEE"
 #, python-format
 msgid "Services to raise awareness in the creation of CCEE"
 msgstr "Serveis per sensibilització en la creació de CEEE"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/config.py:0
-#, python-format
-msgid "Share with recurring fee pack"
-msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__landing_short_description
@@ -2384,14 +2457,6 @@ msgstr "Veure"
 #: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__visibility
 msgid "Visibility"
 msgstr "Visibilitat"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/models/landing_cooperator_button.py:0
-#: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__visibility__visible
-#, python-format
-msgid "Visible"
-msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_landing_page_id
@@ -3548,45 +3613,3 @@ msgid ""
 "\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></div>\"\n"
 "}"
 msgstr ""
-
-#. module: energy_communities
-#. odoo-javascript
-#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
-msgid "Search companies..."
-msgstr "Cerca empreses..."
-
-#. module: energy_communities
-#. odoo-javascript
-#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
-msgid "Clear search"
-msgstr "Esborra la cerca"
-
-#. module: energy_communities
-#. odoo-javascript
-#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
-msgid "Select All"
-msgstr "Seleccioneu Tot"
-
-#. module: energy_communities
-#. odoo-javascript
-#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
-msgid "Select All Companies"
-msgstr "Seleccioneu Totes les empreses"
-
-#. module: energy_communities
-#. odoo-javascript
-#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
-msgid "Deselect All"
-msgstr "Desseleccioneu-ho tot"
-
-#. module: energy_communities
-#. odoo-javascript
-#: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
-msgid "Deselect All Companies"
-msgstr "Desseleccioneu Totes les empreses"

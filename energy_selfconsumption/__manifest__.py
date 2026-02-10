@@ -47,7 +47,7 @@ managing collective self-consumption projects under Spanish energy regulations.
     """,
     "author": "Som IT SCCL & Som Energia SCCL",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
-    "version": "16.0.0.5.16",
+    "version": "16.0.0.5.17",
     "category": "Energy Management",
     "license": "AGPL-3",
     "maintainers": ["coopdevs", "som-energia"],
@@ -112,6 +112,7 @@ managing collective self-consumption projects under Spanish energy regulations.
         "wizards/selfconsumption_import_wizard_views.xml",
         "wizards/set_iban_inscriptions_wizard_views.xml",
         "wizards/export_csv_inscriptions_wizard_views.xml",
+        "wizards/email_sending_assistant.xml",
         # Main views
         "views/contract_views.xml",
         "views/distribution_table_views.xml",

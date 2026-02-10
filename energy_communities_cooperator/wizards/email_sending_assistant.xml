@@ -1,0 +1,55 @@
+<odoo>
+  <record id="email_sending_assistant_form_wizard" model="ir.ui.view">
+    <field name="name">Send email using existing template</field>
+    <field name="model">email.sending.assistant.wiz</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <div attrs="{'invisible': [('state', '=', 'test')]}">
+            <p>When executed, an email with the selected email template will be sent to all underlying records.</p>
+            <p>The sender will be defined in the template (Configuration tab field). Otherwise, it will be the email address of the user executing the sending.</p>
+            <p>You can set the language in which recipients will receive the email using the (optional) ‘Force language’ field. Otherwise, the language will depend on the settings defined in the template (Language field in the Settings tab). If not defined in the template, it will be sent in the language of the user context sending the email.</p>
+            <p>Before executing the mass mailing, you can do a ‘Test mailing’ to a specific email address that the wizard will ask you for when you click the ‘Test mailing’ button.</p>
+          </div>
+          <div attrs="{'invisible': [('state', '=', 'draft')]}">
+            <p>When executed, a test email will be sent using the data from the first of the selected records but using the specified address as the recipient.</p>
+          </div>
+          <field name="state" invisible="1" />
+          <group attrs="{'invisible': [('state', '=', 'test')]}">
+            <field name="num_selected_records" readonly="1" />
+            <field name="email_template_id" attrs="{'required': [('state', '=', 'draft')]}"/>
+            <field name="force_language" />
+            <button name="action_test_email" string="Test mailing" type="object" class="btn-primary" />
+          </group>
+          <group attrs="{'invisible': [('state', '=', 'draft')]}">
+            <field name="recipient_email_address_for_test"/>
+          </group>
+          <footer>
+            <button name="action_send_email" string="Send email" type="object" class="btn-primary" confirm="Are you sure you want to send the email?" />
+            <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" />
+          </footer>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_send_email_wizard_partner" model="ir.actions.act_window">
+    <field name="name">Send email using existing template</field>
+    <field name="res_model">email.sending.assistant.wiz</field>
+    <field name="view_mode">form</field>
+    <field name="binding_model_id" ref="model_res_partner"/>
+    <field name="binding_view_types">list</field>
+    <field name="view_id" ref="energy_communities_cooperator.email_sending_assistant_form_wizard" />
+    <field name="target">new</field>
+  </record>
+
+  <record id="action_send_email_wizard_subscription_request" model="ir.actions.act_window">
+    <field name="name">Send email using existing template</field>
+    <field name="res_model">email.sending.assistant.wiz</field>
+    <field name="view_mode">form</field>
+    <field name="binding_model_id" ref="model_subscription_request"/>
+    <field name="binding_view_types">list</field>
+    <field name="view_id" ref="energy_communities_cooperator.email_sending_assistant_form_wizard" />
+    <field name="target">new</field>
+  </record>
+</odoo>

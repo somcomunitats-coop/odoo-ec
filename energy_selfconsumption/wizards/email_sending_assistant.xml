@@ -1,0 +1,11 @@
+<odoo>
+  <record id="action_send_email_wizard_energy_selfconsumption_inscription_selfconsumption" model="ir.actions.act_window">
+    <field name="name">Send email using existing template</field>
+    <field name="res_model">email.sending.assistant.wiz</field>
+    <field name="view_mode">form</field>
+    <field name="binding_model_id" ref="model_energy_selfconsumption_inscription_selfconsumption"/>
+    <field name="binding_view_types">list</field>
+    <field name="view_id" ref="energy_communities_cooperator.email_sending_assistant_form_wizard" />
+    <field name="target">new</field>
+  </record>
+</odoo>
