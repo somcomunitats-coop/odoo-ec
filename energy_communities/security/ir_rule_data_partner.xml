@@ -64,7 +64,7 @@
       <field name="domain_force">
 [
 '&amp;',
-('user_current_role', '=', 'role_platform_admin'),
+('user_current_role', 'in', ['role_platform_admin','role_ce_admin',role_coord_admin','role_ce_manager']),
 '|',
 ('type', '!=', 'private'),
 ('type', '=', False)
