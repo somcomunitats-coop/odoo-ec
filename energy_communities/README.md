@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-02-11 (v16.0.0.7.10)
+
+- Fix search view for email template.
+
 ### 2026-02-10 (v16.0.0.7.9)
 
 - New menu entry in energy communities configuration to access directly to email
