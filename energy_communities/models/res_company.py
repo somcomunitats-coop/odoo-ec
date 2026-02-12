@@ -272,7 +272,7 @@ class ResCompany(models.Model):
         return LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG[mode].format(
             base_url=self.env["ir.config_parameter"].get_param("web.base.url"),
             lang=lang,
-            odoo_company_id=self.id,
+            company_external_id=self.company_external_id,
         )
 
     def _get_admin_role_name_from_hierarchy_level(self):

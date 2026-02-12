@@ -372,7 +372,7 @@ MAPPING__BASE__DEFAULT_FORM_FIELDS_VALUES_ADDRESS = {
     "country_id": {
         "class": "col-md-12",
         "type": "form_field_selection",
-        "value": "",
+        "value": "company.partner_id.country_id.id",
         "label": _lt("Country"),
         "required": True,
         "readonly": False,

@@ -97,7 +97,9 @@ class ProductCategory(models.Model):
         help="If checked, the generic and specific web forms for products in this category are configured to allow the product quantity field to the right of the drop-down menu for selecting the product to be modified.",
     )
     share_form_header_text = fields.Html(
-        string="Customizable paragraph in the header text of the form", translate=True
+        string="Customizable paragraph in the header text of the form",
+        translate=True,
+        company_dependent=True,
     )
 
     def url_individual_button(self):

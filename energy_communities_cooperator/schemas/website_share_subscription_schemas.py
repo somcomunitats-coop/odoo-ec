@@ -85,8 +85,8 @@ class WebsiteShareSubscriptionSubmissionBase(BaseModel):
     country_id: int
     share_product_id: int
     ordered_parts: int
-    iban: str
-    conditions_payment: bool
+    iban: Optional[str] = None
+    conditions_payment: Optional[bool] = None
     privacy_policy: Optional[bool] = None
 
     @model_validator(mode="before")
@@ -111,8 +111,8 @@ class WebsiteShareSubscriptionSubmissionVoluntary(BaseModel):
     phone: str
     share_product_id: int
     ordered_parts: int
-    iban: str
-    conditions_payment: bool
+    iban: Optional[str] = None
+    conditions_payment: Optional[bool] = None
     privacy_policy: Optional[bool] = None
 
     @model_validator(mode="before")

@@ -271,7 +271,7 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
             short_name="Capital social voluntario",
             sale_ok=False,
             display_on_website=True,
-            default_share_product=False,
+            default_share_product=True,
         )
 
     def _vol_coop_product_translations(self, vol_coop_product):
