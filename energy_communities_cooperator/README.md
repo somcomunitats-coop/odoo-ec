@@ -4,6 +4,12 @@
 
 ## Changelog
 
+### 2026-01-18 (v16.0.0.6.1)
+
+- fix the count of the days between the start and end period of a share
+- fix the calculation of the share day one year before
+- more verbose and descriptions in interest calculations
+
 ### 2026-01-10 (v16.0.0.6.0)
 
 - Add wizard to send emails to a cooperator
