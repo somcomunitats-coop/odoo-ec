@@ -87,10 +87,6 @@ class SubscriptionRequest(models.Model):
             subscription_request.skip_iban_control = True
         return subscription_request
 
-    def setup_partner(self):
-        self._create_representative()
-        return super().setup_partner()
-
     def validate_subscription_request(self):
         if self.is_voluntary and not self.partner_id:
             raise ValidationError(
@@ -152,7 +148,7 @@ class SubscriptionRequest(models.Model):
         return partner
 
     def _get_partner_domain(self):
-        is_representative = self.context.get("is_representative", False)
+        is_representative = self.env.context.get("is_representative", False)
         # used for representative
         if is_representative:
             return None
