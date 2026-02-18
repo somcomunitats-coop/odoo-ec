@@ -1,4 +1,6 @@
-from datetime import datetime, timedelta
+from datetime import datetime
+
+from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
@@ -8,6 +10,8 @@ _DEFAULT_ANUAL_BULK_INTEREST_RATE = 1
 _DEFAULT_IRPF_CAPITAL_TAX_XMLID = "account_tax_template_p_irpf19"
 _DEFAULT_CREDIT_ACCOUNT_MOVE_XMLID = "account_common_4100"
 _DEFAULT_RETURN_ACCOUNT_MOVE_LINE_XMLID = "account_common_6624"
+_YDAYS = 365
+
 # NOTE: we'll have to build this xml_ids dynamically prepending on each "l10n_es.{company_id}_"
 
 
@@ -58,9 +62,8 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
         return res
 
     def _default_period_date(self, mode):
-        # return (datetime.now() - timedelta(days=365)).replace(day=1,month=1)
         if mode == "start":
-            return datetime.now() - timedelta(days=365)
+            return datetime.now() - relativedelta(years=1)
         if mode == "end":
             return datetime.now()
 
@@ -247,18 +250,30 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
         else:
             return self.start_date_period
 
-    # TODO: verify this formula
-    # TODO: Calculate end period based on a possible return.
     def _get_voluntary_share_days_num(self, inv_line):
-        return (self.end_date_period - self._get_period_start_date(inv_line)).days
+        return (self.end_date_period - self._get_period_start_date(inv_line)).days + 1
 
     def _get_voluntary_share_price_unit(self, inv_line):
-        days_quantity = self._get_voluntary_share_days_num(inv_line)
-        price_unit_day = self._get_voluntary_share_price_unit_per_day(inv_line)
+        """
+        This function returns the interest of a share
+            I = ((A * i) / 365) * D
+            A: Amout in € of the share
+            i: interest in % (ex: 0.02)
+            D: number of days for the first share payment
+        """
+        days_quantity = self._get_voluntary_share_days_num(inv_line)  # D
+        price_unit_day = self._get_voluntary_share_price_unit_per_day(
+            inv_line
+        )  # (A * i) / 365
         return price_unit_day * days_quantity
 
     def _get_voluntary_share_price_unit_per_day(self, inv_line):
-        return inv_line.price_subtotal * self.interest / 36500
+        """
+        Function that returns (A * i) / 365 of the interest share formula
+            A: Amout in € of the share
+            i: interest in % (ex: 0.02)
+        """
+        return inv_line.price_subtotal * self.interest / _YDAYS * 100
 
     def _find_related_invoice_line_from_share_line(self, share_line):
         if share_line.related_invoice_line:
