@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-02-18 (v16.0.0.7.11)
+
+- Fix security rules for email template.
+
 ### 2026-02-11 (v16.0.0.7.10)
 
 - Fix search view for email template.

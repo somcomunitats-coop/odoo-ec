@@ -116,4 +116,24 @@
       <field name="perm_unlink" eval="False" />
     </record>
 
+    <record model="ir.rule" id="res_partner_no_hierarchy_rule">
+      <field name="name">res.partner no hierarchy multi-company</field>
+      <field name="model_id" ref="base.model_res_partner" />
+      <field name="groups" eval="[(4, ref('base.group_user'))]" />
+      <field name="domain_force">
+[
+'&amp;','&amp;',
+('company_hierarchy_level','=', 'none'),
+('company_ids','!=', False),
+'|',
+('type', '!=', 'private'),
+('type', '=', False)
+]
+      </field>
+      <field name="perm_read" eval="False" />
+      <field name="perm_write" eval="True" />
+      <field name="perm_create" eval="True" />
+      <field name="perm_unlink" eval="True" />
+    </record>
+
 </odoo>
