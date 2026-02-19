@@ -1157,7 +1157,7 @@ msgid ""
 "the drop-down menu for selecting the product to be modified."
 msgstr ""
 "Si es marca, els formularis web genèric i específic dels productes "
-"d’aquesta categoria es configuren per permetre que es pugui modificar el "
+"d’aquesta categoria es configuren per no permetre que es pugui modificar el "
 "camp de la quantitat de producte que apareix a la dreta del desplegable per "
 "triar el producte."
 
@@ -1169,7 +1169,7 @@ msgid ""
 "that will be linked to the form by default will be the one marked in the "
 "‘Default product in the generic form’ field."
 msgstr ""
-"Si es marca, quedarà ocult el grup de camps que hi ha al formulari genèric "
+"Si es marca, quedarà visible el grup de camps que hi ha al formulari genèric "
 "per poder triar el producte entre la llista dels que s’hi han incorporat. "
 "El producte que quedarà per defecte vinculat al formulari serà el que "
 "tingui marcat al camp ‘Producte per defecte al formulari genèric’."
@@ -2110,13 +2110,13 @@ msgstr "Escriu l'URL"
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "URL company"
-msgstr "Empresa d'URL"
+msgstr "Enllaç per entitat/empresa"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "URL individual"
-msgstr ""
+msgstr "Enllaç per persona individual"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form

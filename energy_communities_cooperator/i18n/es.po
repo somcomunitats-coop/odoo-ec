@@ -1174,7 +1174,7 @@ msgid ""
 "the drop-down menu for selecting the product to be modified."
 msgstr ""
 "Si se marca, los formularios web genérico y específico de los productos de "
-"esta categoría se configuran para permitir que pueda modificarse el campo "
+"esta categoría se configuran para no permitir que pueda modificarse el campo "
 "de la cantidad de producto que aparece a la derecha del desplegable para "
 "elegir el producto."
 
@@ -1186,7 +1186,7 @@ msgid ""
 "that will be linked to the form by default will be the one marked in the "
 "‘Default product in the generic form’ field."
 msgstr ""
-"Si se marca, quedará oculto el grupo de campos que hay en el formulario "
+"Si se marca, quedará visible el grupo de campos que hay en el formulario "
 "genérico para poder elegir el producto entre la lista de los incorporados. "
 "El producto que quedará por defecto vinculado al formulario será el que "
 "tenga marcado en el campo ‘Producto por defecto en el formulario genérico."
@@ -1381,7 +1381,7 @@ msgstr "Adjunto principal"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Male"
-msgstr "Masculino"
+msgstr "Hombre"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_subscription_request_filter_inherit
@@ -2119,13 +2119,13 @@ msgstr "Tipo URL"
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "URL company"
-msgstr "URL de la empresa"
+msgstr "Enlace para entidad/empresa"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "URL individual"
-msgstr ""
+msgstr "Enlace para persona individual"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form

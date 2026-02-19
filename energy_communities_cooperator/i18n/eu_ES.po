@@ -1075,10 +1075,10 @@ msgid ""
 "category are configured to allow the product quantity field to the right of "
 "the drop-down menu for selecting the product to be modified."
 msgstr ""
-"Markatuta badago, kategoria honetako produktuen web formulario generikoak "
-"eta espezifikoak konfiguratuta daude goitibeherako menuaren eskuinaldean "
-"dagoen produktuaren kantitatearen eremua aldatzeko produktua hautatzeko "
-"aukera emateko."
+"Markatuz gero, kategoria honetako produktuen "
+"web-formulario generiko eta espezifikoak konfiguratu egiten "
+"dira, produktua hautatzeko goitibeherako menuaren eskuinean "
+"azaltzen den produktu-kantitatearen eremua aldatzen ez uzteko."
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_category__product_website
@@ -1088,10 +1088,11 @@ msgid ""
 "that will be linked to the form by default will be the one marked in the "
 "‘Default product in the generic form’ field."
 msgstr ""
-"Markatuta badago, formulario generikoko eremuen multzoa ezkutatuko da, "
-"produktua sartutakoen zerrendatik aukeratu ahal izateko. Formularioari "
-"lehenespenez lotuko zaion produktua 'Formulario generikoko produktu "
-"lehenetsia' eremuan markatuta dagoena izango da."
+"Markatuz gero, formulario generikoko eremu-multzoa "
+"agerian geratuko da, txertatutakoen zerrendatik produktua "
+"aukeratu ahal izateko. Formularioari lehenespenez lotuta  "
+"geratuko den produktua “Formulario orokorreko produktu "
+"lehenetsia” eremuan markatuta dagoena izango da"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
@@ -2010,13 +2011,13 @@ msgstr "Idatzi URLa"
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "URL company"
-msgstr "URL enpresa"
+msgstr "Erakunde/enpresarako esteka"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "URL individual"
-msgstr "URL indibiduala"
+msgstr "Bakarkako pertsonarentzako esteka"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
@@ -2057,7 +2058,7 @@ msgstr "Saltzaile"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Voluntary Share of %(company_name)s "
-msgstr "%(company_name)s-ren borondatezko partaidetza "
+msgstr "Erakundeari egindako borondatezko ekarpena: %(company_name)s"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_subscription_request_filter_inherit
