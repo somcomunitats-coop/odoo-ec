@@ -273,7 +273,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
             A: Amout in € of the share
             i: interest in % (ex: 0.02)
         """
-        return inv_line.price_subtotal * self.interest / _YDAYS * 100
+        return inv_line.price_subtotal * self.interest / (_YDAYS * 100)
 
     def _find_related_invoice_line_from_share_line(self, share_line):
         if share_line.related_invoice_line:

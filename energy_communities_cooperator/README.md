@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2026-01-19 (v16.0.0.6.2)
+
+- fix formula voluntary share interest return
+
 ### 2026-01-18 (v16.0.0.6.1)
 
 - fix the count of the days between the start and end period of a share
