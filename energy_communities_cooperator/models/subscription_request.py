@@ -117,9 +117,13 @@ class SubscriptionRequest(models.Model):
                 val["company_register_number"] = val["vat"]
 
         subscription_request = super().create(vals)
-        if (
-            not subscription_request.payment_mode_id.payment_method_id.code
-            == "sepa_direct_debit"
+        if not subscription_request.payment_mode_id or (
+            subscription_request.payment_mode_id
+            and subscription_request.payment_mode_id.payment_method_id
+            and (
+                not subscription_request.payment_mode_id.payment_method_id.code
+                == "sepa_direct_debit"
+            )
         ):
             subscription_request.skip_iban_control = True
         return subscription_request
