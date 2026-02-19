@@ -115,15 +115,13 @@ def _get_subscription_mode_headline_message(
             "This is the form to register as a person/entity invited to participate in the Energy Community's projects and initiatives: %(company_name)s ",
             company_name=company_name,
         )
-        + ".</p>"
-        + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
+        + ".</p>",
         "company_invited": "<p>"
         + _(
             "This is the form to register as a person/entity invited to participate in the Energy Community's projects and initiatives: %(company_name)s ",
             company_name=company_name,
         )
-        + ".</p>"
-        + SUBSCRIPTION_MODE__DEFAULT_PAGE_HEADLINE_LAST_TEXT,
+        + ".</p>",
         "voluntary": "<p>"
         + _(
             "This is the form for members of %(company_name)s to make voluntary contributions to the share capital",
