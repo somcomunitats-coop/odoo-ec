@@ -77,7 +77,10 @@ def migrate(cr, version):
         if not invited_product:
             with product_utils(env, use_sudo=True) as product_component:
                 # create company pricelist
-                product_component.create_company_pricelist(company)
+                try:
+                    product_component.create_company_pricelist(company)
+                except Exception as e:
+                    logger.error("Error creating company pricelist: %s", e)
                 product_component.setup_company_product_categs(company)
                 # invited product
                 invited_product = product_component.create_product(

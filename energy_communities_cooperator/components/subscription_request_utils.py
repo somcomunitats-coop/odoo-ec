@@ -206,8 +206,6 @@ class SubscriptionRequestUtils(Component):
             ].product_variant_id.id,
             "company_id": creation_params["company_id"].id,
         }
-        # if "iban" not in creation_params or "iban" in creation_params and creation_params["iban"] == None:
-        #     creation_params["skip_iban_control"] = True
         # Delete not necesary params for creation
         del creation_params["product_categ"]
         del creation_params["membertype_mode"]
