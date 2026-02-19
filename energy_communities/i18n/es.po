@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 10:09+0000\n"
-"PO-Revision-Date: 2026-01-22 11:14+0100\n"
+"POT-Creation-Date: 2026-02-19 11:32+0000\n"
+"PO-Revision-Date: 2026-02-19 12:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -18,32 +18,19 @@ msgstr ""
 "X-Generator: Poedit 3.8\n"
 
 #. module: energy_communities
-#: model:ir.module.category,description:energy_communities.energy_communities_category
-msgid ""
-"\n"
-"      Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats Energètiques\n"
-"    "
-msgstr ""
-"\n"
-"      Nivel de acceso de los usuarios a la plataforma Odoo de las Comunidades Energéticas\n"
-"    "
-
-#. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_auth_oauth_provider__superuser_pwd
 msgid "\"Superuser\" user password"
 msgstr "Contraseña del super-usuario"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_date_past
-#, fuzzy
 msgid "#{date_placeholder}"
-msgstr "#{date_placeholder}"
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.mail_notification_layout
-#, fuzzy
 msgid "&amp;nbsp;&amp;nbsp;"
-msgstr "&amp;nbsp;&amp;nbsp;"
+msgstr ""
 
 #. module: energy_communities
 #. odoo-python
@@ -70,6 +57,44 @@ msgid "3) Send invitation email to confirm email and reset password"
 msgstr "3) Enviar correo de invitación para confirmar email y resetear contraseña"
 
 #. module: energy_communities
+#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_campanya
+#, fuzzy
+msgid ""
+"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 class=\"text-lg font-"
+"medium\">¡Muchas gracias por tu interés!</h2><p class =\"text-[#8a9f96] text-sm text-"
+"justify\">Cuando haya novedades con la Comunidad Energética contactaremos contigo y con las "
+"personas que también han mostrado interés y le ofreceremos apoyo para activarla.</p><p class "
+"=\"text-[#8a9f96] text-sm text-justify\">Comparte la información de la futura Comunidad "
+"Energética entre tu gente para hacerla posible entre todos!</p><p class =\"text-[#8a9f96] "
+"text-sm text-justify\">¡Vamos!</p>"
+msgstr ""
+"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 class=\"text-lg font-"
+"medium\">¡Muchas gracias por tu interés!</h2><p class =\"text-[#8a9f96] text-sm text-"
+"justify\">Cuando haya novedades con la Comunidad Energética contactaremos contigo y con las "
+"personas que también han mostrado interés y le ofreceremos apoyo para activarla.</p><p class "
+"=\"text-[#8a9f96] text-sm text-justify\">Comparte la información de la futura Comunidad "
+"Energética entre tu gente para hacerla posible entre todos!</p><p class =\"text-[#8a9f96] "
+"text-sm text-justify\">¡Vamos!</p>"
+
+#. module: energy_communities
+#: model:cm.form.model,submission_ok_message:energy_communities.map_form_model_sumate_coordinadora
+#, fuzzy
+msgid ""
+"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 class=\"text-lg font-"
+"medium\">¡Muchas gracias por tu interés!</h2><p class =\"text-[#8a9f96] text-sm text-"
+"justify\">Cuando haya novedades con la Comunidad Energética contactaremos contigo y con las "
+"personas que también han mostrado interés.</p><p class =\"text-[#8a9f96] text-sm text-"
+"justify\">Comparte la información de la futura Comunidad Energética entre tu gente para "
+"hacerla posible entre todos!</p><p class =\"text-[#8a9f96] text-sm text-justify\">¡Vamos!</p>"
+msgstr ""
+"<h1 class=\"text-lg font-semibold\">Formulario enviado.</h1><h2 class=\"text-lg font-"
+"medium\">¡Muchas gracias por tu interés!</h2><p class =\"text-[#8a9f96] text-sm text-"
+"justify\">Cuando haya novedades con la Comunidad Energética contactaremos contigo y con las "
+"personas que también han mostrado interés.</p><p class =\"text-[#8a9f96] text-sm text-"
+"justify\">¡Comparte la información de la futura Comunidad Energética entre tu gente para "
+"hacerla posible entre todos!</p><p class =\"text-[#8a9f96] text-sm text-justify\">¡Vamos!</p>"
+
+#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_selection
 msgid "<option value=\"\">Please choose an option</option>"
 msgstr "Escoge una opción"
@@ -94,7 +119,6 @@ msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.mail_notification_layout
-#, fuzzy
 msgid ""
 "<strong>Internal communication</strong>: Replying will post an internal note. Followers won't "
 "receive any email notification."
@@ -109,7 +133,6 @@ msgstr "Un super-usuario con permisos para CRUD en KC."
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
-#, fuzzy
 msgid "Accept"
 msgstr "Aceptar"
 
@@ -177,7 +200,6 @@ msgstr "Proveedor AUTH  tareas administrativas"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_admin
-#, fuzzy
 msgid "Administrator"
 msgstr "Administrador"
 
@@ -204,7 +226,6 @@ msgstr "Compañias permitidas"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_setup_bank_manual_config__allowed_company_ids
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner_bank__allowed_company_ids
-#, fuzzy
 msgid "Allowed Company"
 msgstr "Compañía permitida"
 
@@ -216,15 +237,15 @@ msgstr "Usuarios autorizados"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "An instance company already exists"
-msgstr "Ya existe una compañía con el rol de Instancia"
+msgstr "Ya existe una empresa de instancia."
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users_role.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_users_role__application_scope
-#, fuzzy, python-format
+#, python-format
 msgid "Application scope"
 msgstr "Ámbito de aplicación"
 
@@ -235,7 +256,6 @@ msgstr "¿Seguro que quieres ejecutar el asistente y proceder con la creación d
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_config_assistants_menu
-#, fuzzy
 msgid "Assistants"
 msgstr "Asistentes"
 
@@ -257,6 +277,7 @@ msgstr "Cuentas bancarias"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+#, fuzzy
 msgid "Base Templates"
 msgstr "Plantillas base"
 
@@ -264,7 +285,7 @@ msgstr "Plantillas base"
 #. odoo-python
 #: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__mode__become_cooperator
-#, fuzzy, python-format
+#, python-format
 msgid "Become Cooperator"
 msgstr "Conviértete en cooperador"
 
@@ -272,7 +293,7 @@ msgstr "Conviértete en cooperador"
 #. odoo-python
 #: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__mode__become_company_cooperator
-#, fuzzy, python-format
+#, python-format
 msgid "Become company cooperator"
 msgstr "Conviértete en colaborador de la empresa"
 
@@ -284,13 +305,11 @@ msgstr "Proceso para hacerte colaborador"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__social_bluesky
-#, fuzzy
 msgid "Bluesky Account"
 msgstr "Cuenta Bluesky"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_bluesky_url
-#, fuzzy
 msgid "Bluesky link"
 msgstr "Enlace de Bluesky"
 
@@ -301,11 +320,20 @@ msgid "Build platform users from partner members"
 msgstr "Generar usuarias de plataforma para las socias"
 
 #. module: energy_communities
+#: model:cm.map,searchbar_placeholder:energy_communities.map_campanya
+#: model:cm.map,searchbar_placeholder:energy_communities.map_sumate_ecooo
+#: model:cm.map,searchbar_placeholder:energy_communities.map_sumate_energetica
+#: model:cm.map,searchbar_placeholder:energy_communities.map_sumate_goiener
+#, fuzzy
+msgid "Buscar dirección o municipio"
+msgstr "Buscar dirección o municipio"
+
+#. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Button configs not found."
-msgstr "Configuración de botones no encontrada."
+msgstr "No se han encontrado configuraciones de botones."
 
 #. module: energy_communities
 #. odoo-python
@@ -333,6 +361,18 @@ msgstr "Cancelar"
 #, fuzzy, python-format
 msgid "Cancelled"
 msgstr "Cancelado"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+#, fuzzy
+msgid "Ce Custom Templates"
+msgstr "Plantillas personalizadas Ce"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+#, fuzzy
+msgid "Ce Templates"
+msgstr "Plantillas Ce"
 
 #. module: energy_communities
 #. odoo-python
@@ -397,7 +437,7 @@ msgstr "Ciudadanía"
 #. module: energy_communities
 #. odoo-javascript
 #: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
+#, fuzzy, python-format
 msgid "Clear search"
 msgstr "Borrar búsqueda"
 
@@ -429,7 +469,6 @@ msgstr "Nombre comercial"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__comments
 #: model_terms:ir.ui.view,arch_db:energy_communities.wizard_multicompany_easy_creation_form_inherit
-#, fuzzy
 msgid "Comments"
 msgstr "Comentarios"
 
@@ -437,13 +476,12 @@ msgstr "Comentarios"
 #. odoo-python
 #: code:addons/energy_communities/models/res_users_role.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_users_role__application_scope__common_functional_layer
-#, fuzzy, python-format
+#, python-format
 msgid "Common layer"
 msgstr "Capa común"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.ce_communities_root_menu
-#, fuzzy
 msgid "Communities"
 msgstr "Comunidades"
 
@@ -475,20 +513,20 @@ msgstr "Companyia Comunidad Energètica"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Community created from: <a href='/web#id={id}"
 "&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
 msgstr ""
-"Comunidad creada desde: <a href='/web#id={id}"
+"Comunidad creada a partir de: <a href='/web#id={id}"
 "&view_type=form&model=crm.lead&menu_id={menu_id}'>{name}</a>"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Community creation process has been started."
-msgstr "El proceso de creación de compnyia ha empezado."
+msgstr "Se ha iniciado el proceso de creación de la comunidad."
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_community_energy_action
@@ -540,23 +578,24 @@ msgstr "Logotipo de la compañia"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__pricelist_id
-#, fuzzy
 msgid "Company Tariffs"
 msgstr "Tarifas de la empresa"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Company comercial name must be established in order to create a landing"
-msgstr "El nombre comercial debe estar definido para crear una Landing"
+msgstr ""
+"El nombre comercial de la empresa debe estar establecido para poder crear una página de "
+"aterrizaje."
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/wizards/multicompany_easy_creation.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Company creation successful"
-msgstr "Creación de companyía realizada con éxito"
+msgstr "Creación de la empresa realizada con éxito."
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_partner__company_hierarchy_level
@@ -595,13 +634,13 @@ msgstr "Configuración"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Conflict on user values. Please verify that all values supposed to be unique are really "
 "unique. %(detail)s"
 msgstr ""
-"Conflicto con los datos de usuario. Por favor verifica que los datos que se supone que son "
-"únicos para cada usuario, realmente lo son. %(detail)s"
+"Conflicto en los valores de usuario. Comprueba que todos los valores que deben ser únicos "
+"sean realmente únicos. %(detail)s"
 
 #. module: energy_communities
 #. odoo-python
@@ -624,7 +663,6 @@ msgstr "Cooperativa"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__cooperator_button_ids
-#, fuzzy
 msgid "Cooperator buttons"
 msgstr "Botones cooperadores"
 
@@ -659,9 +697,9 @@ msgstr "Trabajador coordinador"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/wizards/change_coordinator_wizard.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Coordinator change successful"
-msgstr "Cambio de Coordinadora ejecutado con éxito"
+msgstr "Cambio de coordinador realizado con éxito"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_partner_form
@@ -669,21 +707,30 @@ msgid "Coordinator company"
 msgstr "Companyia cordinadora"
 
 #. module: energy_communities
-#: model:landing.page,name:energy_communities.landing_page_coordinator_company_demo_1
-#, fuzzy
-msgid "Coordinator company 1 landing demo"
-msgstr "Empresa coordinadora 1 demostración de aterrizaje"
-
-#. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_res_partner_filter
 msgid "Coordinators"
 msgstr "Cordinadoras"
 
 #. module: energy_communities
+#: model:cm.map,proposal_form_title:energy_communities.map_campanya
+#, fuzzy
+msgid "Crea una comunidad en el mapa"
+msgstr "Crea una comunidad en el mapa"
+
+#. module: energy_communities
+#: model:cm.map,proposal_cta_title:energy_communities.map_campanya
+#: model:cm.map,proposal_cta_title:energy_communities.map_sumate_ecooo
+#: model:cm.map,proposal_cta_title:energy_communities.map_sumate_energetica
+#: model:cm.map,proposal_cta_title:energy_communities.map_sumate_goiener
+#, fuzzy
+msgid "Crear una comunidad"
+msgstr "Crear una comunidad"
+
+#. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__map_sync_mode__create
-#, fuzzy, python-format
+#, python-format
 msgid "Create"
 msgstr "Crear"
 
@@ -754,9 +801,15 @@ msgstr "Rol actual"
 #. odoo-python
 #: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__mode__custom
-#, fuzzy, python-format
+#, python-format
 msgid "Custom"
 msgstr "Personalizado"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+#, fuzzy
+msgid "Custom Templates"
+msgstr "Plantillas Personalizadas"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_users_form_form_inherit
@@ -767,16 +820,22 @@ msgstr "DNI"
 #. module: energy_communities
 #. odoo-javascript
 #: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
+#, fuzzy, python-format
 msgid "Deselect All"
 msgstr "Deseleccionar todo"
 
 #. module: energy_communities
 #. odoo-javascript
 #: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
+#, fuzzy, python-format
 msgid "Deselect All Companies"
 msgstr "Deseleccionar todas las empresas"
+
+#. module: energy_communities
+#: model:cm.map,proposal_form_subtitle_step_address:energy_communities.map_campanya
+#, fuzzy
+msgid "Dirección"
+msgstr "Dirección"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_mail_channel
@@ -824,9 +883,9 @@ msgstr "Plantillas de correo electrónico"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Email is not valid"
-msgstr "Correo no válido"
+msgstr "El email no es válido"
 
 #. module: energy_communities
 #: model:cm.filter,name:energy_communities.map_filter_thermal_energy
@@ -880,7 +939,6 @@ msgstr "Estado de la Comunidad Energética"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_energy_action
-#, fuzzy
 msgid "Energy action"
 msgstr "Acción energética"
 
@@ -888,6 +946,13 @@ msgstr "Acción energética"
 #: model:ir.ui.menu,name:energy_communities.energy_actions_menu
 msgid "Energy actions"
 msgstr "Acciones energéticas"
+
+#. module: energy_communities
+#: model:cm.form.model,button_label:energy_communities.map_form_model_campanya
+#: model:cm.form.model,button_label:energy_communities.map_form_model_sumate_coordinadora
+#, fuzzy
+msgid "Enviar"
+msgstr "Send"
 
 #. module: energy_communities
 #: model:cm.filter.group,name:energy_communities.map_filter_group_community_status
@@ -933,6 +998,11 @@ msgid "Facebook link"
 msgstr "Facebook"
 
 #. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_res_company__failed_message_ids
+msgid "Failed Messages"
+msgstr "Mensages fallidos"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__message_follower_ids
 msgid "Followers"
 msgstr "Seguidores"
@@ -957,6 +1027,12 @@ msgstr "Forzar envio de invitación en caso de que ya se ha hecho anteriormente"
 #: model:energy.action,name:energy_communities.energy_action_citizen_education
 msgid "Formació ciutadana"
 msgstr "Formación ciudadana"
+
+#. module: energy_communities
+#: model:cm.map,proposal_form_subtitle_step_form:energy_communities.map_campanya
+#, fuzzy
+msgid "Formulario de creación"
+msgstr "Formulario de creación"
 
 #. module: energy_communities
 #. odoo-python
@@ -1001,8 +1077,9 @@ msgstr "Obten la compañia actual desde cualquier modelo"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.ce_mail_template_search_view
+#, fuzzy
 msgid "Global Templates"
-msgstr "Plantillas globales"
+msgstr "Plantillas Globales"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__has_message
@@ -1155,19 +1232,16 @@ msgstr "Asiento contable"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_places_search
-#, fuzzy
 msgid "Key Group NOT activated"
 msgstr "Grupo clave NO activado"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_places_search
-#, fuzzy
 msgid "Key Group activated"
 msgstr "Grupo clave activado"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place__key_group_activated
-#, fuzzy
 msgid "Key group activated"
 msgstr "Grupo clave activado"
 
@@ -1187,7 +1261,7 @@ msgstr "Proveedor KeyCloak"
 #. odoo-python
 #: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__visibility__landing
-#, fuzzy, python-format
+#, python-format
 msgid "Landing"
 msgstr "Aterrizaje"
 
@@ -1204,27 +1278,25 @@ msgstr "Página Landing"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Landing lat param required for place creation"
-msgstr "La latitud es una parámetro requerido para la creación de un punto de mapa"
+msgstr "Se requiere el parámetro lat de aterrizaje para la creación del lugar."
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Landing lng param required for place creation"
-msgstr "La longitud es una parámetro requerido para la creación de un punto de mapa"
+msgstr "Se requiere el parámetro lng para la creación del lugar."
 
 #. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #. odoo-python
 #: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #: model:ir.model,name:energy_communities.model_landing_cooperator_button
 #: model:ir.model,name:energy_communities.model_landing_page
 #: model:ir.model.fields,field_description:energy_communities.field_cm_filter__landing_id
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__mode__landing_page
-#, fuzzy, python-format
+#, python-format
 msgid "Landing page"
 msgstr "Página de destino"
 
@@ -1232,16 +1304,16 @@ msgstr "Página de destino"
 #. odoo-python
 #: code:addons/energy_communities/models/cm_place.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place__landing_id
-#, fuzzy, python-format
+#, python-format
 msgid "Landing reference"
 msgstr "Referencia de aterrizaje"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Lang is not valid"
-msgstr "Idioma no válido"
+msgstr "Lang no es válido"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__default_lang_id
@@ -1342,7 +1414,6 @@ msgstr "El inicio de sesión está vacío"
 #. module: energy_communities
 #: model:auth.oauth.provider,body:energy_communities.keycloak_admin_provider
 #: model:auth.oauth.provider,body:energy_communities.keycloak_login_provider
-#, fuzzy
 msgid "Login with Keycloak"
 msgstr "Iniciar sesión con Keycloak"
 
@@ -1373,40 +1444,37 @@ msgstr "Adjunto principal"
 #. odoo-python
 #: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__visibility__map
-#, fuzzy, python-format
+#, python-format
 msgid "Map"
 msgstr "Mapa"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__map_sync_mode
-#, fuzzy
 msgid "Map Sync Mode"
 msgstr "Modo de sincronización de mapas"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Map not found slug_id: {}"
-msgstr "Mapa no encontrado para slug_id: {}"
+msgstr "No se ha encontrado el mapa slug_id: {}"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_cooperator_button__visibility__map_landing
-#, fuzzy, python-format
+#, python-format
 msgid "Map/Landing"
 msgstr "Mapa/Aterrizaje"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__social_mastodon
-#, fuzzy
 msgid "Mastodon Account"
 msgstr "Cuenta de Mastodon"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_mastodon_url
-#, fuzzy
 msgid "Mastodon link"
 msgstr "Enlace a Mastodon"
 
@@ -1433,7 +1501,6 @@ msgstr "Movilidad sostenible"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__mode
-#, fuzzy
 msgid "Mode"
 msgstr "Modo"
 
@@ -1445,7 +1512,6 @@ msgstr "Mi deadline de actividad"
 #. module: energy_communities
 #: model:ir.actions.server,name:energy_communities.action_ce_my_community
 #: model:ir.ui.menu,name:energy_communities.ce_my_community
-#, fuzzy
 msgid "My Community"
 msgstr "Mi comunidad"
 
@@ -1458,6 +1524,11 @@ msgstr "Mi página Landing"
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_company_form_ce_inherited
 msgid "My website"
 msgstr "Mi web"
+
+#. module: energy_communities
+#: model:cm.map,external_link_cta_txt:energy_communities.map_campanya
+msgid "Més informació"
+msgstr "Mas información"
 
 #. module: energy_communities
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_partner__company_hierarchy_level__none
@@ -1483,7 +1554,6 @@ msgstr "Comundad vecinal"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__activity_calendar_event_id
-#, fuzzy
 msgid "Next Activity Calendar Event"
 msgstr "Próximo evento del calendario de actividades"
 
@@ -1501,6 +1571,24 @@ msgstr "Resumen de siguiente actividad"
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__activity_type_id
 msgid "Next Activity Type"
 msgstr "Tipo de nueva actividad"
+
+#. module: energy_communities
+#: model:ir.module.category,description:energy_communities.energy_communities_category
+msgid ""
+"Nivell d'Accés dels usuaris a la plataforma Odoo de les Comunitats Energètiques\n"
+"        "
+msgstr ""
+"Nivel de accesp de los usuarios a la plataforma Odoo de las Comunidades Energéticas\n"
+"        "
+
+#. module: energy_communities
+#: model:cm.map,noresults_msg:energy_communities.map_campanya
+#: model:cm.map,noresults_msg:energy_communities.map_sumate_ecooo
+#: model:cm.map,noresults_msg:energy_communities.map_sumate_energetica
+#: model:cm.map,noresults_msg:energy_communities.map_sumate_goiener
+#, fuzzy
+msgid "No hemos encontrado resultados. Prueba a cambiar la configuración de filtros."
+msgstr "No hemos encontrado resultados. Prueba a cambiar la configuración de filtros."
 
 #. module: energy_communities
 #. odoo-python
@@ -1525,16 +1613,16 @@ msgstr "SL sin ánimo de lucro"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Non-profit SL"
-msgstr "SL sin ánimo de lucro"
+msgstr "Sin ánimo de lucro SL"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/config.py:0
 #: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__wp_sync_mode__none
-#, fuzzy, python-format
+#, python-format
 msgid "None"
 msgstr "Ninguno"
 
@@ -1585,12 +1673,12 @@ msgstr "Abierta"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Only users that belongs to the 'Coordinator' or 'Instance' company can create new Map Places."
 msgstr ""
-"Solo usuarios pertenecientes a la compañía 'Instancia' o 'Coordinadora' puedes crear nuevos "
-"puntos de mapa."
+"Solo los usuarios que pertenezcan a la empresa «Coordinador» o «Instancia» pueden crear "
+"nuevos lugares en el mapa."
 
 #. module: energy_communities
 #. odoo-python
@@ -1603,9 +1691,9 @@ msgstr "Abierto"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Other"
-msgstr "Otras"
+msgstr "Otro"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__parent_id
@@ -1625,16 +1713,16 @@ msgstr "ID del pariente filtrado"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Parent company must be coordinator hierarchy level."
-msgstr "La compañía matriz debe tener nivel de Coordinadora."
+msgstr "La empresa matriz debe ser el nivel jerárquico coordinador."
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Parent company must be instance hierarchy level."
-msgstr "La compañía matriz debe tener nivel de Instancia."
+msgstr "La empresa matriz debe ser un nivel jerárquico de instancia."
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__parent_landing_id
@@ -1668,29 +1756,28 @@ msgstr "Teléfono"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Place category not found slug_id: {}"
-msgstr "Categoria de punto no encontrado para slug_id: {}"
+msgstr "No se ha encontrado la categoría del lugar slug_id: {}"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Place presenter not found slug_id: {}"
-msgstr "Presenter de punto no encontrado para slug_id: {}"
+msgstr "No se ha encontrado el presentador slug_id: {}"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__map_place_ids
-#, fuzzy
 msgid "Place references"
 msgstr "Referencias de lugar"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/client_map/resources/landing_cmplace.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Place status filter not found slug_id: {}"
-msgstr "Filtro de estado de punto no encontrado para slug_id: {}"
+msgstr "No se ha encontrado el filtro de estado del lugar slug_id: {}"
 
 #. module: energy_communities
 #. odoo-python
@@ -1711,13 +1798,11 @@ msgstr "Plataforma"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.role_platform_admin_res_groups
-#, fuzzy
 msgid "Platform Admin Role"
 msgstr "Función de administrador de la plataforma"
 
 #. module: energy_communities
 #: model:res.groups,name:energy_communities.group_platform_manager
-#, fuzzy
 msgid "Platform Manager"
 msgstr "Administrador de plataforma"
 
@@ -1757,9 +1842,9 @@ msgstr "Proceso"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/wizards/create_users_wizard.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Process has been started."
-msgstr "Se ha iniciado el proceso."
+msgstr "El proceso se ha iniciado."
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_product_template
@@ -1768,7 +1853,6 @@ msgstr "Plantilla de producte"
 
 #. module: energy_communities
 #: model:ir.ui.menu,name:energy_communities.view_product_categories_menu
-#, fuzzy
 msgid "Product Categories"
 msgstr "Categorías de Productos"
 
@@ -1780,9 +1864,9 @@ msgstr "Categoría de producto"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/landing_page.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Public data update successful"
-msgstr "Actualización de datos públicos realizado con éxito"
+msgstr "Actualización de datos públicos realizada correctamente"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_community_energy_action__public_status
@@ -1805,6 +1889,12 @@ msgid "Published"
 msgstr "Publicado"
 
 #. module: energy_communities
+#: model:ir.actions.server,name:energy_communities.print_instance
+#, fuzzy
+msgid "Push user to Keycloak"
+msgstr "Enviar usuario a Keycloak"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__realm_name
 msgid "Realm name"
 msgstr "Nombre REALM"
@@ -1818,13 +1908,6 @@ msgstr "Enlace de redirección después de haber introducido la contraseña"
 #: model:ir.model.fields,field_description:energy_communities.field_energy_action__company_mids
 msgid "Related companies"
 msgstr "Empresas relacionadas"
-
-#. module: energy_communities
-#. odoo-python
-#: code:addons/energy_communities/controllers/website_form_controllers.py:0
-#, python-format
-msgid "Related model closed."
-msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_partner_form
@@ -1845,7 +1928,7 @@ msgstr "Enlace de reseteo de contraseña"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Reset password url is not set."
 msgstr "La URL para restablecer la contraseña no está configurada."
 
@@ -1857,19 +1940,18 @@ msgstr "Usuario responsable"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Role {} is not available for company {} of type {}. This type of company allows roles {}"
 msgstr ""
-"El rol {} no se puede elegir para la compañía {} de tipo {}. Este tipo de compañías permiten "
-"los roles {}"
+"El rol {} no está disponible para la empresa {} de tipo {}. Este tipo de empresa permite los "
+"roles {}."
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Role {} is not available for user with {} role. This role only allows {}"
-msgstr ""
-"El rol {} no se puede elegir para usuarios con el rol {}. Solo se pueden elegir los roles {}"
+msgstr "El rol {} no está disponible para usuarios con el rol {}. Este rol solo permite {}."
 
 #. module: energy_communities
 #: model:ir.model.constraint,message:energy_communities.constraint_res_users_role_line_user_role_uniq
@@ -1889,7 +1971,7 @@ msgstr "Ejecutar o no una acción posterior en un cron job"
 #. module: energy_communities
 #. odoo-javascript
 #: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
+#, fuzzy, python-format
 msgid "Search companies..."
 msgstr "Buscar empresas..."
 
@@ -1902,14 +1984,14 @@ msgstr "Imagen secundaria"
 #. module: energy_communities
 #. odoo-javascript
 #: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
+#, fuzzy, python-format
 msgid "Select All"
 msgstr "Seleccionar todo"
 
 #. module: energy_communities
 #. odoo-javascript
 #: code:addons/energy_communities/static/src/xml/switch_company_menu.xml:0
-#, python-format
+#, fuzzy, python-format
 msgid "Select All Companies"
 msgstr "Seleccionar todas las empresas"
 
@@ -1980,16 +2062,15 @@ msgstr "Tipo de token de inicio de sesión"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.mail_notification_layout
-#, fuzzy
 msgid "Som Comunitats"
 msgstr "Comunidades"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Something went wrong. Mail can not be sended. More details: {}"
-msgstr "Ha fallado algo. El correo no se puede enviar. Más detalles: {}"
+msgstr "Algo salió mal. No se puede enviar el correo. Más detalles: {}"
 
 #. module: energy_communities
 #. odoo-python
@@ -2001,15 +2082,15 @@ msgstr "Algo salió mal. Más detalles: {}"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Something went wrong. Please check logs."
-msgstr "Algo fué mal. Por favor revisar los LOGS."
+msgstr "Algo salió mal. Por favor, comprueba los registros."
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/landing_cooperator_button.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__sort_order
-#, fuzzy, python-format
+#, python-format
 msgid "Sort order"
 msgstr "Orden de clasificación"
 
@@ -2027,7 +2108,7 @@ msgstr "Origenes"
 #. odoo-python
 #: code:addons/energy_communities/models/res_users_role.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__res_users_role__application_scope__specific_functional_layer
-#, fuzzy, python-format
+#, python-format
 msgid "Specific layer"
 msgstr "Capa específica"
 
@@ -2077,6 +2158,13 @@ msgid "Subministrament d'energia 100% renovable"
 msgstr "Suministro de energía 100% renovable"
 
 #. module: energy_communities
+#: model:cm.form.model,cta_button_label:energy_communities.map_form_model_campanya
+#: model:cm.form.model,cta_button_label:energy_communities.map_form_model_sumate_coordinadora
+#, fuzzy
+msgid "Sumarme"
+msgstr "Sumarme"
+
+#. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_auth_oauth_provider__superuser
 msgid "Superuser"
 msgstr "Super Usuario"
@@ -2110,27 +2198,27 @@ msgstr "Gracias!"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "There has been a coordinator change             from [OLD:{outgoing_id}] {outgoing_name} to "
 "[NEW:{incoming_id}] {incoming_name},             Change reason: {change_reason}"
 msgstr ""
-"Ha habido un cambio de coordinadora             de [OLD:{outgoing_id}] {outgoing_name} a [NEW:"
-"{incoming_id}] {incoming_name},             Motivo del cambio: {change_reason}"
+"Ha habido un cambio de coordinador de [ANTIGUO:{outgoing_id}] {outgoing_name} a [NUEVO:"
+"{incoming_id}] {incoming_name}, motivo del cambio: {change_reason}"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/components/user_creator.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "There is at least one selected no community companies"
-msgstr "Existe almenos una compañía seleccionada que no es Comunidad"
+msgstr "Hay al menos una empresa seleccionada sin comunidad."
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/wizards/change_coordinator_wizard.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "This community has been moved to a new coordinator"
-msgstr "La Comunidad se ha movido a una nueva Coordinadora"
+msgstr "Esta comunidad ha sido trasladada a un nuevo coordinador."
 
 #. module: energy_communities
 #. odoo-python
@@ -2144,11 +2232,21 @@ msgstr ""
 "empresas seleccionadas a una sola."
 
 #. module: energy_communities
+#: model:cm.map,categories_filter_title:energy_communities.map_campanya
+#: model:cm.map,categories_filter_title:energy_communities.map_sumate_ecooo
+#: model:cm.map,categories_filter_title:energy_communities.map_sumate_energetica
+#: model:cm.map,categories_filter_title:energy_communities.map_sumate_goiener
+#: model:cm.map,proposal_form_subtitle_step_category:energy_communities.map_campanya
+#, fuzzy
+msgid "Tipo de comunidad"
+msgstr "Tipo de comunidad"
+
+#. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "To be defined"
-msgstr "Pendiente de definir"
+msgstr "Por definir"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__ce_twitter_url
@@ -2169,19 +2267,20 @@ msgstr "Origen UTM"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Unable to create new company because there is an allready existing company with this NAME: {}"
-msgstr "No es posible crear la nueva compañía porque ya existe una con este nombre: {}"
+msgstr "No se puede crear una nueva empresa porque ya existe una empresa con este NOMBRE: {}"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Unable to create new company because there is an allready existing company with this VAT "
 "number: {}"
-msgstr "No es posible crear la nueva compañía porque ya existe una con este NIF/CIF: {}"
+msgstr ""
+"No se puede crear una nueva empresa porque ya existe una empresa con este número de IVA: {}"
 
 #. module: energy_communities
 #. odoo-python
@@ -2203,7 +2302,7 @@ msgstr "Despublicar"
 #: code:addons/energy_communities/models/landing_page.py:0
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__map_sync_mode__update
 #: model:ir.model.fields.selection,name:energy_communities.selection__landing_page__wp_sync_mode__update
-#, fuzzy, python-format
+#, python-format
 msgid "Update"
 msgstr "Actualizar"
 
@@ -2267,7 +2366,7 @@ msgstr "URL usuario admin"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/wizards/create_users_wizard.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "User creation"
 msgstr "Creación de usuario"
 
@@ -2286,21 +2385,21 @@ msgstr "Rol de usuario"
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "User with vat {} is already {} for the company {}"
-msgstr "El usuario con vat {} ya es {} para la compañía {}"
+msgstr "El usuario con IVA {} ya es {} para la empresa {}."
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "User_vals dict is empty"
 msgstr "El diccionario User_vals está vacío"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_users.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Users"
 msgstr "Usuarios"
 
@@ -2322,7 +2421,6 @@ msgstr ""
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_utils_backend
-#, fuzzy
 msgid "Utils backend"
 msgstr "Backend de utilidades"
 
@@ -2345,7 +2443,6 @@ msgstr "Ver"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_cooperator_button__visibility
-#, fuzzy
 msgid "Visibility"
 msgstr "Visibilidad"
 
@@ -2392,7 +2489,7 @@ msgstr "Asistente de creación fácil de cuenta multi-compañía"
 #: code:addons/energy_communities/models/res_config_settings.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__wordpress_base_url
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__wordpress_base_url
-#, fuzzy, python-format
+#, python-format
 msgid "Wordpress Base URL (JWT auth)"
 msgstr "URL base de WordPress (autenticación JWT)"
 
@@ -2402,7 +2499,7 @@ msgstr "URL base de WordPress (autenticación JWT)"
 #: code:addons/energy_communities/models/res_config_settings.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__wordpress_db_password
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__wordpress_db_password
-#, fuzzy, python-format
+#, python-format
 msgid "Wordpress DB Admin Password"
 msgstr "Contraseña de administrador de la base de datos de Wordpress"
 
@@ -2412,41 +2509,38 @@ msgstr "Contraseña de administrador de la base de datos de Wordpress"
 #: code:addons/energy_communities/models/res_config_settings.py:0
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__wordpress_db_username
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__wordpress_db_username
-#, fuzzy, python-format
+#, python-format
 msgid "Wordpress DB Admin Username"
 msgstr "Nombre de usuario del administrador de la base de datos de Wordpress"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.connect_res_config_settings_view_form
-#, fuzzy
 msgid "Wordpress credentials"
 msgstr "Credenciales de Wordpress"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/landing_page.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Wordpress landing and map place has been successfully updated."
-msgstr "Página landing y punto de mapa actualizados satisfactoriamente."
+msgstr "La página de inicio y el mapa de Wordpress se han actualizado correctamente."
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__wp_sync_mode
-#, fuzzy
 msgid "Wp Sync Mode"
 msgstr "Modo de sincronización de Wp"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_product_category__data_xml_id
-#, fuzzy
 msgid "XML ID"
 msgstr "Identificador XML"
 
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_company.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "You cannot create a instance company with a parent company."
-msgstr "No puede haber una compañía de nivel Instancia con una empresa matriz asignada."
+msgstr "No se puede crear una empresa filial con una empresa matriz."
 
 #. module: energy_communities
 #. odoo-python
@@ -2458,9 +2552,9 @@ msgstr "No se puede vincular más de un usuario a un socio. Compruebe el socio {
 #. module: energy_communities
 #. odoo-python
 #: code:addons/energy_communities/models/res_partner.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "You cannot remove company {} because there are banks referencing to it"
-msgstr "No se puede eliminar la empresa {} porque hay bancos que hacen referencia a ella"
+msgstr "No se puede eliminar la empresa {} porque hay bancos que hacen referencia a ella."
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_multicompany_easy_creation_wiz__zip_code
@@ -2487,15 +2581,13 @@ msgstr "en construcción"
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_cm_filter
-#, fuzzy
 msgid "cm.filter"
-msgstr "cm.filtro"
+msgstr ""
 
 #. module: energy_communities
 #: model:ir.model,name:energy_communities.model_cm_place
-#, fuzzy
 msgid "cm.place"
-msgstr "cm.lugar"
+msgstr ""
 
 #. module: energy_communities
 #. odoo-python
@@ -2509,23 +2601,1391 @@ msgstr "Comunidad de bienes"
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_date_past
-#, fuzzy
 msgid "dd/mm/aaaa"
-msgstr "dd/mm/aaaa"
+msgstr ""
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.form_field_date_past
-#, fuzzy
 msgid "dd/mm/yyyy"
-msgstr "dd/mm/aaaa"
+msgstr ""
+
+#. module: energy_communities
+#: model:cm.map,cookies_link:energy_communities.map_campanya
+#, fuzzy
+msgid "https://somcomunitats.coop/es/politica-de-cookies/"
+msgstr "https://somcomunitats.coop/es/politica-de-cookies/"
+
+#. module: energy_communities
+#: model:cm.map,privacy_link:energy_communities.map_campanya
+#: model:cm.map,privacy_link:energy_communities.map_sumate_ecooo
+#: model:cm.map,privacy_link:energy_communities.map_sumate_goiener
+#, fuzzy
+msgid "https://somcomunitats.coop/es/politica-de-privacidad/"
+msgstr "https://somcomunitats.coop/es/politica-de-privacidad/"
+
+#. module: energy_communities
+#: model:cm.map,privacy_link:energy_communities.map_sumate_energetica
+#, fuzzy
+msgid "https://www.energetica.coop/politica-de-privacidad/"
+msgstr "https://www.energetica.coop/politica-de-privacidad/"
+
+#. module: energy_communities
+#: model:cm.form.model,json_uischema:energy_communities.map_form_model_campanya
+msgid ""
+"{\n"
+"  \"type\": \"VerticalLayout\",\n"
+"  \"elements\": [\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Dades de contacte\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/name\",\n"
+"              \"label\": \"Nom\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/surname\",\n"
+"              \"label\": \"Cognoms\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/email\",\n"
+"              \"label\": \"Correu electrònic\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/phone\",\n"
+"              \"label\": \"Telèfon\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Com vols participar en la Comunitat?*\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_member_implication\",\n"
+"              \"label\": false,\n"
+"              \"options\": {\n"
+"                \"format\": \"radio\"\n"
+"               }\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"De quins Serveis energètics t'agradaria participar\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_common_generation\",\n"
+"              \"label\": \"Generació renovable comunitaria\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_sustainable_mobility\",\n"
+"              \"label\": \"Mobilitat sostenible\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_citizen_education\",\n"
+"              \"label\": \"Formació ciutadana\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_thermal_energy\",\n"
+"              \"label\": \"Energia tèrmica i climatització\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_collective_purchases\",\n"
+"              \"label\": \"Compres col.lectives\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_aggregate_demand\",\n"
+"              \"label\": \"Agregació i flexibilitat de la demanda\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_renewable_energy\",\n"
+"              \"label\": \"Subministrament d'energia 100% renovable\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_energy_efficiency\",\n"
+"              \"label\": \"Eficiencia energètica\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Informació sobre protecció de dades\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Display\",\n"
+"              \"scope\": \"#/properties/newsletter_info\",\n"
+"              \"options\": {\n"
+"                \"html\": \"<div class='p-1 border border-transparent empty:hidden text-sm "
+"text-gray-500'><p class='mb-2'>Les seves dades seran tractades per gestionar el registre com "
+"a persona interessada en ser membre d’una Comunitat Energètica i mantenir-lo informat sobre "
+"la constitució de les comunitats energètiques que puguin ser del seu interès. Les seves dades "
+"podran ser cedides a una Comunitat Energètica en procés de constitució, per tal d’informar-la "
+"del seu possible interès a participar en ella i facilitar d’aquesta manera els contactes "
+"previs  per  a un futur membre de la Comunitat Energètica que es vol constituir i mantenir-lo "
+"informat sobre els avenços i novetats en relació amb aquesta Comunitat Energètica. Quan la "
+"Comunitat Energètica sigui finalment constituïda, les seves dades seran cedides a la mateixa "
+"per tal que es gestioni l’alta definitiva. La Comunitat Energètica, com a responsable, "
+"l’informarà correctament sobre el tractament de les seves dades.</p><p class='mb-2'>Si marca "
+"la casella d’acceptació, podrem enviar-li comunicacions sobre els serveis i activitats de SOM "
+"COMUNITATS, inclús per mitjans electrònics.</p><p class='mb-2'>Pot exercir el seu dret "
+"d'accés, rectificació, supressió, oposició, limitació i portabilitat de les seves dades a <a "
+"class='underline text-[#8a9f96]' href='mailto:info@somcomnuitats.coop' "
+"target='_blank'>info@somcomunitats.coop</a>.</p></div>\"\n"
+"              }\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/newsletter\",\n"
+"              \"label\": \"Accepto rebre informació sobre el serveis de SOM COMUNITATS per "
+"mitjans electrònics.\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    }\n"
+"  ]\n"
+"}"
+msgstr ""
+"{\n"
+"  \"type\": \"VerticalLayout\",\n"
+"  \"elements\": [\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Datos de contacto\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/name\",\n"
+"              \"label\": \"Nombre\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/surname\",\n"
+"              \"label\": \"Apellidos\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/vat\",\n"
+"              \"label\": \"NIF\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/email\",\n"
+"              \"label\": \"Correo electrónico\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/phone\",\n"
+"              \"label\": \"Teléfono\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"   {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Como quieres participar en la Comunidad?*\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_member_implication\",\n"
+"              \"label\": false,\n"
+"              \"options\": {\n"
+"                \"format\": \"radio\"\n"
+"               }\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"De qué Servicios energéticos te gustaría participar\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_common_generation\",\n"
+"              \"label\": \"Generación renovable comunitaria\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_sustainable_mobility\",\n"
+"              \"label\": \"Movilidad sostenible\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_citizen_education\",\n"
+"              \"label\": \"Formación ciudadana\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_thermal_energy\",\n"
+"              \"label\": \"Energía térmica y climatización\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_collective_purchases\",\n"
+"              \"label\": \"Compras colectivas\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_aggregate_demand\",\n"
+"              \"label\": \"Agregación y flexibilidad de la demanda\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_renewable_energy\",\n"
+"              \"label\": \"Suministro de energía 100% renovable\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_energy_efficiency\",\n"
+"              \"label\": \"Eficiencia energética\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Información sobre protección de datos\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Display\",\n"
+"              \"scope\": \"#/properties/newsletter_info\",\n"
+"              \"options\": {\n"
+"                \"html\": \"<div class='p-1 border border-transparent empty:hidden text-sm "
+"text-gray-500'><p class='mb-2'>Sus datos serán tratados para gestionar el registro como "
+"persona interesada en ser  miembro de una   Comunidad Energética y mantenerlo informado sobre "
+"la constitución de  las comunidades energéticas que puedan ser de su interés. Sus datos "
+"podrán ser cedidos a una Comunidad Energética en proceso de constitución, a fin de informarle "
+"de su posible interés en participar en ella y facilitar así los contactos previos para "
+"eventualmente poder entrar en ella. La Comunidad Energética, como responsable, lo informará "
+"correctamente sobre el tratamiento de sus datos.</p><p class='mb-2'>Si marca la casilla de "
+"aceptación, podremos enviarle comunicaciones sobre los servicios y actividades de SOM "
+"COMUNITATS, incluso por medios electrónicos.</p><p class='mb-2'>Puede ejercer su derecho de "
+"acceso, rectificación, supresión, oposición, limitación y portabilidad de sus datos en <a "
+"class='underline text-[#8a9f96]' href='mailto:info@somcomnuitats.coop' "
+"target='_blank'>info@somcomunitats.coop</a>.</p></div>\"\n"
+"              }\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/newsletter\",\n"
+"              \"label\": \"Acepto recibir información sobre los servicios de SOM COMUNITATS "
+"por medios electrónicos.\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    }\n"
+"  ]\n"
+"}"
+
+#. module: energy_communities
+#: model:cm.form.model,json_uischema:energy_communities.map_form_model_sumate_coordinadora
+#, fuzzy
+msgid ""
+"{\n"
+"  \"type\": \"VerticalLayout\",\n"
+"  \"elements\": [\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Datos de contacto\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/name\",\n"
+"              \"label\": \"Nombre\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/surname\",\n"
+"              \"label\": \"Apellidos\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/vat\",\n"
+"              \"label\": \"NIF\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/email\",\n"
+"              \"label\": \"Correo electrónico\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/phone\",\n"
+"              \"label\": \"Teléfono\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"   {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Como quieres participar en la Comunidad?*\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_member_implication\",\n"
+"              \"label\": false,\n"
+"              \"options\": {\n"
+"                \"format\": \"radio\"\n"
+"               }\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"De qué Servicios energéticos te gustaría participar\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_common_generation\",\n"
+"              \"label\": \"Generación renovable comunitaria\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_sustainable_mobility\",\n"
+"              \"label\": \"Movilidad sostenible\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_citizen_education\",\n"
+"              \"label\": \"Formación ciudadana\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_thermal_energy\",\n"
+"              \"label\": \"Energía térmica y climatización\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_collective_purchases\",\n"
+"              \"label\": \"Compras colectivas\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_aggregate_demand\",\n"
+"              \"label\": \"Agregación y flexibilidad de la demanda\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_renewable_energy\",\n"
+"              \"label\": \"Suministro de energía 100% renovable\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_energy_efficiency\",\n"
+"              \"label\": \"Eficiencia energética\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Información sobre protección de datos\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Display\",\n"
+"              \"scope\": \"#/properties/newsletter_info\",\n"
+"              \"options\": {\n"
+"                \"html\": \"<div class='p-1 border border-transparent empty:hidden text-sm "
+"text-gray-500'><p class='mb-2'>Sus datos serán tratados para gestionar el registro como "
+"persona interesada en ser  miembro de una   Comunidad Energética y mantenerlo informado sobre "
+"la constitución de  las comunidades energéticas que puedan ser de su interés. Sus datos "
+"podrán ser cedidos a una Comunidad Energética en proceso de constitución, a fin de informarle "
+"de su posible interés en participar en ella y facilitar así los contactos previos para "
+"eventualmente poder entrar en ella. La Comunidad Energética, como responsable, lo informará "
+"correctamente sobre el tratamiento de sus datos.</p><p class='mb-2'>Si marca la casilla de "
+"aceptación, podremos enviarle comunicaciones sobre los servicios y actividades de SOM "
+"COMUNITATS, incluso por medios electrónicos.</p><p class='mb-2'>Puede ejercer su derecho de "
+"acceso, rectificación, supresión, oposición, limitación y portabilidad de sus datos en <a "
+"class='underline text-[#8a9f96]' href='mailto:info@somcomnuitats.coop' "
+"target='_blank'>info@somcomunitats.coop</a>.</p></div>\"\n"
+"              }\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/newsletter\",\n"
+"              \"label\": \"Acepto recibir información sobre los servicios de SOM COMUNITATS "
+"por medios electrónicos.\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    }\n"
+"  ]\n"
+"}"
+msgstr ""
+"{\n"
+"  \"type\": \"VerticalLayout\",\n"
+"  \"elements\": [\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Datos de contacto\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"tipo\": \"VerticalLayout\",\n"
+"          \"elementos\": [\n"
+"            {\n"
+"              \"tipo\": \"Control\",\n"
+"              \"alcance\": \"#/propiedades/nombre\",\n"
+"              \"etiqueta\": \"Nombre\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/surname\",\n"
+"              \"label\": \"Apellidos\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/vat\",\n"
+"              \"label\": \"NIF\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/email\",\n"
+"              \"label\": \"Correo electrónico\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/phone\",\n"
+"              \"label\": \"Teléfono\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"   {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"¿Cómo quieres participar en la Comunidad?*\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_member_implication\",\n"
+"              \"label\": false,\n"
+"              \"options\": {\n"
+"                \"format\": \"radio\"\n"
+"               }\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"De qué Servicios energéticos te gustaría participar\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"VerticalLayout\",\n"
+"          \"elements\": [\n"
+"            {\n"
+"              \"tipo\": \"Control\",\n"
+"              \"alcance\": \"#/propiedades/ce_tag_common_generation\",\n"
+"              \"etiqueta\": \"Generación renovable comunitaria\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_sustainable_mobility\",\n"
+"              \"label\": \"Movilidad sostenible\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_citizen_education\",\n"
+"              \"label\": \"Formación ciudadana\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_thermal_energy\",\n"
+"              \"label\": \"Energía térmica y climatización\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_collective_purchases\",\n"
+"              \"label\": \"Compras colectivas\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_aggregate_demand\",\n"
+"              \"label\": \"Agregación y flexibilidad de la demanda\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_renewable_energy\",\n"
+"              \"label\": \"Suministro de energía 100% renovable\"\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/ce_tag_energy_efficiency\",\n"
+"              \"label\": \"Eficiencia energética\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"label\": \"Información sobre protección de datos\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"tipo\": \"VerticalLayout\",\n"
+"          \"elementos\": [\n"
+"            {\n"
+"              \"tipo\": \"Display\",\n"
+"              \"alcance\": \"#/properties/newsletter_info\",\n"
+"              \"opciones\": {\n"
+"                \"html\": \"<div class='p-1 border border-transparent empty:hidden text-sm "
+"text-gray-500'><p class='mb-2'>Sus datos serán tratados para gestionar el registro como "
+"persona interesada en ser  miembro de una   Comunidad Energética y mantenerlo informado sobre "
+"la constitución de  las comunidades energéticas que puedan ser de su interés. Sus datos "
+"podrán ser cedidos a una Comunidad Energética en proceso de constitución, a fin de informarle "
+"de su posible interés en participar en ella y facilitar así los contactos previos para "
+"eventualmente poder entrar en ella. La Comunidad Energética, como responsable, le informará "
+"correctamente sobre el tratamiento de sus datos.</p><p class='mb-2'>Si marca la casilla de "
+"aceptación, podremos enviarle comunicaciones sobre los servicios y actividades de SOM "
+"COMUNITATS, incluso por medios electrónicos.</p><p class='mb-2'>Puede ejercer su derecho de "
+"acceso, rectificación, supresión, oposición, limitación y portabilidad de sus datos en <a "
+"class='underline text-[#8a9f96]' href='mailto:info@somcomnuitats.coop' "
+"target='_blank'>info@somcomunitats.coop</a>.</p></div>\"\n"
+"              }\n"
+"            },\n"
+"            {\n"
+"              \"type\": \"Control\",\n"
+"              \"scope\": \"#/properties/newsletter\",\n"
+"              \"label\": \"Acepto recibir información sobre los servicios de SOM COMUNITATS "
+"por medios electrónicos.\"\n"
+"            }\n"
+"          ]\n"
+"        }\n"
+"      ]\n"
+"    }\n"
+"  ]\n"
+"}"
+
+#. module: energy_communities
+#: model:cm.form.model,json_schema:energy_communities.map_form_model_campanya
+msgid ""
+"{\n"
+"  \"type\": \"object\",\n"
+"  \"properties\": {\n"
+"    \"name\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"surname\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"email\": {\n"
+"      \"type\": \"string\",\n"
+"      \"format\": \"email\"\n"
+"    },\n"
+"    \"phone\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"ce_member_implication\": {\n"
+"      \"type\": \"string\",\n"
+"      \"enum\": [\n"
+"        \"low\",        \n"
+"        \"medium\",\n"
+"        \"high\",\n"
+"        \"leadership\"\n"
+"      ],\n"
+"      \"i18n\": \"ce_member_implication\",\n"
+"      \"translations\": {\n"
+"        \"low\": \"No puc participar gaire\",\n"
+"        \"medium\": \"Puc participar una mica\",\n"
+"        \"high\": \"Vull i puc participar\",\n"
+"        \"leadership\": \"M'agradaria liderar i participar\"\n"
+"      }\n"
+"    },\n"
+"    \"ce_tag_common_generation\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_energy_efficiency\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_sustainable_mobility\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_citizen_education\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_thermal_energy\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_collective_purchases\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_renewable_energy\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_aggregate_demand\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"newsletter\": {\n"
+"      \"type\": \"boolean\"\n"
+"    }\n"
+"  },\n"
+"  \"required\": [\n"
+"    \"name\",\n"
+"    \"surname\",\n"
+"    \"email\",\n"
+"    \"phone\",\n"
+"    \"ce_member_implication\"\n"
+"  ]\n"
+"}"
+msgstr ""
+"{\n"
+"  \"type\": \"object\",\n"
+"  \"properties\": {\n"
+"    \"name\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"surname\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"email\": {\n"
+"      \"type\": \"string\",\n"
+"      \"format\": \"email\"\n"
+"    },\n"
+"    \"phone\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"ce_member_implication\": {\n"
+"      \"type\": \"string\",\n"
+"      \"enum\": [\n"
+"        \"low\",        \n"
+"        \"medium\",\n"
+"        \"high\",\n"
+"        \"leadership\"\n"
+"      ],\n"
+"      \"i18n\": \"ce_member_implication\",\n"
+"      \"translations\": {\n"
+"        \"low\": \"No puedo participar mucho\",\n"
+"        \"medium\": \"Puedo participar un poco\",\n"
+"        \"high\": \"Quiero y puedo participar\",\n"
+"        \"leadership\": \"Me gustaría liderar y participar\"\n"
+"      }\n"
+"    },\n"
+"    \"ce_tag_common_generation\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_energy_efficiency\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_sustainable_mobility\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_citizen_education\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_thermal_energy\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_collective_purchases\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_renewable_energy\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_aggregate_demand\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"newsletter\": {\n"
+"      \"type\": \"boolean\"\n"
+"    }\n"
+"  },\n"
+"  \"required\": [\n"
+"    \"name\",\n"
+"    \"surname\",\n"
+"    \"email\",\n"
+"    \"phone\",\n"
+"    \"ce_member_implication\"\n"
+"  ]\n"
+"}"
+
+#. module: energy_communities
+#: model:cm.form.model,json_schema:energy_communities.map_form_model_sumate_coordinadora
+#, fuzzy
+msgid ""
+"{\n"
+"  \"type\": \"object\",\n"
+"  \"properties\": {\n"
+"    \"name\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"surname\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"email\": {\n"
+"      \"type\": \"string\",\n"
+"      \"format\": \"email\"\n"
+"    },\n"
+"    \"phone\": {\n"
+"      \"type\": \"string\",\n"
+"      \"minLength\": 2\n"
+"    },\n"
+"    \"ce_member_implication\": {\n"
+"      \"type\": \"string\",\n"
+"      \"enum\": [\n"
+"        \"low\",        \n"
+"        \"medium\",\n"
+"        \"high\",\n"
+"        \"leadership\"\n"
+"      ],\n"
+"      \"i18n\": \"ce_member_implication\",\n"
+"      \"translations\": {\n"
+"        \"low\": \"No puedo participar mucho\",\n"
+"        \"medium\": \"Puedo participar un poco\",\n"
+"        \"high\": \"Quiero y puedo participar\",\n"
+"        \"leadership\": \"Me gustaría liderar y participar\"\n"
+"      }\n"
+"    },\n"
+"    \"ce_tag_common_generation\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_energy_efficiency\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_sustainable_mobility\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_citizen_education\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_thermal_energy\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_collective_purchases\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_renewable_energy\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"ce_tag_aggregate_demand\": {\n"
+"      \"type\": \"boolean\"\n"
+"    },\n"
+"    \"newsletter\": {\n"
+"      \"type\": \"boolean\"\n"
+"    }\n"
+"  },\n"
+"  \"required\": [\n"
+"    \"name\",\n"
+"    \"surname\",\n"
+"    \"email\",\n"
+"    \"phone\",\n"
+"    \"ce_member_implication\"\n"
+"  ]\n"
+"}"
+msgstr ""
+"{ \"tipo\": \"objeto\", \"propiedades\": { \"nombre\": { \"tipo\": \"cadena\", \"longitud "
+"mínima\": 2 }, \"apellido\": { \"tipo\": \"cadena\", \"longitud mínima\": 2\n"
+"    }, \"email\": { \"tipo\": \"cadena\", \"formato\": \"correo electrónico\" }, "
+"\"teléfono\": { \"tipo\": \"cadena\", \"longitud mínima\": 2 },\n"
+"    \"ce_member_implication\": { \"tipo\": \"cadena\", \"enumeración\": [ \"bajo\", "
+"\"medio\", \"alto\", \"liderazgo\"\n"
+"      ], \"i18n\": \"ce_member_implication\", \"translations\": { \"low\": \"No puedo "
+"participar mucho\", \"medium\": \"Puedo participar un poco\", \"high\": \"Quiero y puedo "
+"participar\", \"leadership\": \"Me gustaría liderar y participar\" } }, "
+"\"ce_tag_common_generation\": { \"type\": \"boolean\" }, \"ce_tag_energy_efficiency\": "
+"{ \"type\": \"boolean\" },\n"
+"    \"ce_tag_sustainable_mobility\": { \"type\": \"boolean\" }, \"ce_tag_citizen_education\": "
+"{ \"type\": \"boolean\" },\n"
+"    «ce_tag_energía térmica»: { «tipo»: «booleano» }, «ce_tag_compras colectivas»: { «tipo»: "
+"«booleano» },\n"
+"    «ce_tag_energía_renovable»: { «tipo»: «booleano» }, «ce_tag_demanda_agregada»: { «tipo»: "
+"«booleano» },\n"
+"    «newsletter»: { «type»: «boolean» } }, «required»: [ «name», «surname», «email», «phone», "
+"«ce_member_implication» ] }"
+
+#. module: energy_communities
+#: model:cm.presenter.model,json_uischema:energy_communities.map_presenter_model_to_activate
+msgid ""
+"{\n"
+"  \"type\":\"VerticalLayout\",\n"
+"  \"elements\": [\n"
+"    {\n"
+"      \"type\": \"HorizontalLayout\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Container\",\n"
+"          \"scope\": \"#/properties/pd_filter_state\",\n"
+"          \"backgroundColor\": \"#8ec23a\",\n"
+"          \"textColor\": \"#fff\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"Container\",\n"
+"          \"scope\": \"#/properties/pd_category\",\n"
+"          \"backgroundColor\": \"#e8f3ec\",\n"
+"          \"textColor\": \"#153f2d\"\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/pd_title\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/pd_description\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"EnergyActions\",\n"
+"      \"scope\": \"#/properties/pd_filter_energy_actions\",\n"
+"      \"backgroundColor\": \"#51ab50\",\n"
+"      \"textColor\": \"#fff\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"border\": true,\n"
+"      \"borderColor\": \"#c5e2d0\",\n"
+"      \"backgroundColor\": \"#FFFFFF\",\n"
+"      \"textColor\": \"#000000\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Display\",\n"
+"          \"scope\": \"#/properties/pd_target_objective\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"Display\",\n"
+"          \"label\": \"{% if submission_number %}{{submission_number}} interessades - {% "
+"endif %}{{goalProgress}}% completada\",\n"
+"          \"scope\": \"#/properties/progress\",\n"
+"          \"options\": { \"progress\": true }\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"InteractionButtons\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/pd_secondary_description\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"center\": true,\n"
+"      \"border\": true,\n"
+"      \"borderColor\": \"transparent\",\n"
+"      \"backgroundColor\": \"#153f2d\",\n"
+"      \"textColor\": \"#FFFFFF\",\n"
+"      \"showInResult\": true,\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Display\",\n"
+"          \"scope\": \"#/properties/pd_social_headline\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"InteractionSocial\",\n"
+"          \"IconColor\": \"#153f2d\",\n"
+"          \"IconBackgroundColor\": \"#fff\"\n"
+"        }\n"
+"      ]\n"
+"    }\n"
+"  ]\n"
+"}"
+msgstr ""
+"{\n"
+"  \"type\":\"VerticalLayout\",\n"
+"  \"elements\": [\n"
+"    {\n"
+"      \"type\": \"HorizontalLayout\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Container\",\n"
+"          \"scope\": \"#/properties/pd_filter_state\",\n"
+"          \"backgroundColor\": \"#8ec23a\",\n"
+"          \"textColor\": \"#fff\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"Container\",\n"
+"          \"scope\": \"#/properties/pd_category\",\n"
+"          \"backgroundColor\": \"#e8f3ec\",\n"
+"          \"textColor\": \"#153f2d\"\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/pd_title\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/pd_description\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"EnergyActions\",\n"
+"      \"scope\": \"#/properties/pd_filter_energy_actions\",\n"
+"      \"backgroundColor\": \"#51ab50\",\n"
+"      \"textColor\": \"#fff\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"border\": true,\n"
+"      \"borderColor\": \"#c5e2d0\",\n"
+"      \"backgroundColor\": \"#FFFFFF\",\n"
+"      \"textColor\": \"#000000\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Display\",\n"
+"          \"scope\": \"#/properties/pd_target_objective\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"Display\",\n"
+"          \"label\": \"{% if submission_number %}{{submission_number}} interesadas - {% endif "
+"%}{{goalProgress}}% completada\",\n"
+"          \"scope\": \"#/properties/progress\",\n"
+"          \"options\": { \"progress\": true }\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"InteractionButtons\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/pd_secondary_description\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"center\": true,\n"
+"      \"border\": true,\n"
+"      \"borderColor\": \"transparent\",\n"
+"      \"backgroundColor\": \"#153f2d\",\n"
+"      \"textColor\": \"#FFFFFF\",\n"
+"      \"showInResult\": true,\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Display\",\n"
+"          \"scope\": \"#/properties/pd_social_headline\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"InteractionSocial\",\n"
+"          \"IconColor\": \"#153f2d\",\n"
+"          \"IconBackgroundColor\": \"#fff\"\n"
+"        }\n"
+"      ]\n"
+"    }\n"
+"  ]\n"
+"}"
+
+#. module: energy_communities
+#: model:cm.presenter.model,json_uischema:energy_communities.map_presenter_model_external
+#, fuzzy
+msgid ""
+"{\n"
+"  \"type\":\"VerticalLayout\",\n"
+"  \"elements\": [\n"
+"    {\n"
+"      \"type\": \"HorizontalLayout\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Container\",\n"
+"          \"scope\": \"#/properties/pgm_filter_state\",\n"
+"          \"backgroundColor\": \"#8ec23a\",\n"
+"          \"textColor\": \"#fff\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"Container\",\n"
+"          \"scope\": \"#/properties/pgm_category\",\n"
+"          \"backgroundColor\": \"#e8f3ec\",\n"
+"          \"textColor\": \"#153f2d\"\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/pgm_title\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/pgm_description\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"EnergyActions\",\n"
+"      \"scope\": \"#/properties/pgm_filter_energy_actions\",\n"
+"      \"backgroundColor\": \"#51ab50\",\n"
+"      \"textColor\": \"#153f2d\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"border\": true,\n"
+"      \"borderColor\": \"#c5e2d0\",\n"
+"      \"backgroundColor\": \"#FFFFFF\",\n"
+"      \"textColor\": \"#000000\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"            \"type\": \"InteractionButtons\"\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"center\": true,\n"
+"      \"border\": true,\n"
+"      \"borderColor\": \"transparent\",\n"
+"      \"backgroundColor\": \"#153f2d\",\n"
+"      \"textColor\": \"#FFFFFF\",\n"
+"      \"showInResult\": true,\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Display\",\n"
+"          \"scope\": \"#/properties/pgm_social_headline\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"InteractionSocial\",\n"
+"          \"IconColor\": \"#153f2d\",\n"
+"          \"IconBackgroundColor\": \"#fff\"\n"
+"        }\n"
+"      ]\n"
+"    }\n"
+"  ]\n"
+"}"
+msgstr ""
+"{ \"tipo\":\"VerticalLayout\", \"elementos\": [ { \"tipo\": \"HorizontalLayout\", "
+"\"elementos\": [ {\n"
+"          \"tipo\": \"Contenedor\", \"alcance\": \"#/propiedades/pgm_filter_state\", \"color "
+"de fondo\": \"#8ec23a\", \"color del texto\": \"#fff\"\n"
+"        }, { \"type\": \"Container\", \"scope\": \"#/properties/pgm_category\", "
+"\"backgroundColor\": \"#e8f3ec\", \"textColor\": \"#153f2d\" } ] }, {\n"
+"      \"tipo\": \"Visualización\", \"alcance\": \"#/propiedades/pgm_title\" }, { \"tipo\": "
+"\"Visualización\", \"alcance\": \"#/propiedades/pgm_description\" }, {\n"
+"      \"tipo\": \"Acciones energéticas\", \"alcance\": \"#/propiedades/"
+"pgm_filtro_acciones_energéticas\", \"color de fondo\": \"#51ab50\", \"color del texto\": "
+"\"#153f2d\" }, {\n"
+"      \"tipo\": \"Grupo\", \"borde\": verdadero, \"color del borde\": \"#c5e2d0\", \"color de "
+"fondo\": \"#FFFFFF\", \"color del texto\": \"#000000\",\n"
+"      \"elementos\": [ { \"tipo\": \"InteractionButtons\"\n"
+"        } ] }, { \"tipo\": \"Grupo\", \"centro\": verdadero, \"borde\": verdadero, "
+"\"colorBorde\": \"transparente\", \"colorFondo\": \"#153f2d\", \"colorTexto\": \"#FFFFFF\",\n"
+"      \"mostrarEnResultado\": verdadero, \"elementos\": [ { \"tipo\": \"Pantalla\", "
+"\"alcance\": \"#/propiedades/pgm_social_headline\"\n"
+"        }, { \"tipo\": \"InteractionSocial\", \"ColorIcono\": \"#153f2d\", "
+"\"ColorFondoIcono\": \"#fff\" } ] } ] }"
+
+#. module: energy_communities
+#: model:cm.presenter.model,json_uischema:energy_communities.map_presenter_model_open
+msgid ""
+"{\n"
+"  \"type\":\"VerticalLayout\",\n"
+"  \"elements\": [\n"
+"    {\n"
+"      \"type\": \"HorizontalLayout\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Container\",\n"
+"          \"scope\": \"#/properties/po2_filter_state\",\n"
+"          \"backgroundColor\": \"#8ec23a\",\n"
+"          \"textColor\": \"#fff\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"Container\",\n"
+"          \"scope\": \"#/properties/po2_category\",\n"
+"          \"backgroundColor\": \"#e8f3ec\",\n"
+"          \"textColor\": \"#153f2d\"\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/po2_title\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Display\",\n"
+"      \"scope\": \"#/properties/po2_description\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"EnergyActions\",\n"
+"      \"scope\": \"#/properties/po2_filter_energy_actions\",\n"
+"      \"backgroundColor\": \"#51ab50\",\n"
+"      \"textColor\": \"#fff\"\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"border\": true,\n"
+"      \"borderColor\": \"#c5e2d0\",\n"
+"      \"backgroundColor\": \"#FFFFFF\",\n"
+"      \"textColor\": \"#000000\",\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"InteractionButtons\"\n"
+"        }\n"
+"      ]\n"
+"    },\n"
+"    {\n"
+"      \"type\": \"Group\",\n"
+"      \"center\": true,\n"
+"      \"border\": true,\n"
+"      \"borderColor\": \"transparent\",\n"
+"      \"backgroundColor\": \"#153f2d\",\n"
+"      \"textColor\": \"#FFFFFF\",\n"
+"      \"showInResult\": true,\n"
+"      \"elements\": [\n"
+"        {\n"
+"          \"type\": \"Display\",\n"
+"          \"scope\": \"#/properties/po2_social_headline\"\n"
+"        },\n"
+"        {\n"
+"          \"type\": \"InteractionSocial\",\n"
+"          \"IconColor\": \"#153f2d\",\n"
+"          \"IconBackgroundColor\": \"#fff\"\n"
+"        }\n"
+"      ]\n"
+"    }\n"
+"  ]\n"
+"}"
+msgstr ""
+"{ \"type\":\"VerticalLayout\",   \"elements\": [     {       \"type\": "
+"\"HorizontalLayout\",       \"elements\": [         {           \"type\": "
+"\"Container\",           \"scope\": \"#/properties/po2_filter_state\",           "
+"\"backgroundColor\": \"#8ec23a\",           \"textColor\": \"#fff\"         },         "
+"{           \"type\": \"Container\",           \"scope\": \"#/properties/"
+"po2_category\",           \"backgroundColor\": \"#e8f3ec\",           \"textColor\": "
+"\"#153f2d\"         }       ]     },     {       \"type\": \"Display\",       \"scope\": \"#/"
+"properties/po2_title\"     },     {       \"type\": \"Display\",       \"scope\": \"#/"
+"properties/po2_description\"     },     {       \"type\": \"EnergyActions\",       \"scope\": "
+"\"#/properties/po2_filter_energy_actions\",       \"backgroundColor\": \"#51ab50\",       "
+"\"textColor\": \"#fff\"     },     {       \"type\": \"Group\",       \"border\": true,       "
+"\"borderColor\": \"#c5e2d0\",       \"backgroundColor\": \"#FFFFFF\",       \"textColor\": "
+"\"#000000\",       \"elements\": [         {           \"type\": "
+"\"InteractionButtons\"         }       ]     },     {       \"type\": \"Group\",       "
+"\"center\": true,       \"border\": true,       \"borderColor\": \"transparent\",       "
+"\"backgroundColor\": \"#153f2d\",       \"textColor\": \"#FFFFFF\",       \"showInResult\": "
+"true,       \"elements\": [         {           \"type\": \"Display\",           \"scope\": "
+"\"#/properties/po2_social_headline\"         },         {           \"type\": "
+"\"InteractionSocial\",           \"IconColor\": \"#153f2d\",           "
+"\"IconBackgroundColor\": \"#fff\"         }       ]     }   ] }"
+
+#. module: energy_communities
+#: model:cm.presenter.model,json_dataschema:energy_communities.map_presenter_model_to_activate
+msgid ""
+"{\n"
+"\"pd_title\": \"{{name}}\",\n"
+"\"pd_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-de-"
+"la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
+"fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if "
+"filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% "
+"endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></"
+"i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}"
+"</div></div>{% endif %}{% endfor %}\",\n"
+"\"pd_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
+"fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-"
+"pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
+"\"pd_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if "
+"filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-"
+"pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div "
+"class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 "
+"rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full "
+"absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full "
+"absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 "
+"absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-"
+"{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</"
+"div>\",\n"
+"\"pd_target_objective\": \"<p class='m-2'>Objectiu: <strong>{{ goalTarget }} {% if "
+"category_slug == 'industrial' %}empreses{% else %}persones{% endif %}</strong></p>\",\n"
+"\"progress\": \"<div class='flex justify-between'><div>{% if submission_number %}"
+"<strong>{{submission_number}}</strong> interesadas</div><div>{% endif %}"
+"<strong>{{goalProgress}}%</strong> completada</div></div>\",\n"
+"\"pd_secondary_description\": \"<p class='m-2 mb-4 flex flex-col justify-center align-center "
+"text-center'>Ja esteu impulsant una comunitat en aquest municipi?<br><a href='https://"
+"somcomunitats.coop/alta-nova-comunitat?map_place_ref={{slug}}' target='_parent'>Sol·licita "
+"donar-la d’alta</a></p>\",\n"
+"\"pd_social_headline\": \"<div class='flex justify-center align-center text-center'><p "
+"class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></"
+"div>\"\n"
+"}"
+msgstr ""
+"{\n"
+"\"pd_title\": \"{{name}}\",\n"
+"\"pd_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-de-"
+"la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
+"fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if "
+"filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% "
+"endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></"
+"i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}"
+"</div></div>{% endif %}{% endfor %}\",\n"
+"\"pd_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
+"fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-"
+"pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
+"\"pd_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if "
+"filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-"
+"pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div "
+"class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 "
+"rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full "
+"absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full "
+"absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 "
+"absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-"
+"{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</"
+"div>\",\n"
+"\"pd_target_objective\": \"<p class='m-2'>Objetivo: <strong>{{ goalTarget }} {% if "
+"category_slug == 'industrial' %}empresas{% else %}personas{% endif %}</strong></p>\",\n"
+"\"progress\": \"<div class='flex justify-between'><div>{% if submission_number %}"
+"<strong>{{submission_number}}</strong> interesadas</div><div>{% endif %}"
+"<strong>{{goalProgress}}%</strong> completada</div></div>\",\n"
+"\"pd_secondary_description\": \"<p class='m-2 mb-4 flex flex-col justify-center align-center "
+"text-center'>¿Ya está impulsando una comunidad en este municipio?<br><a href='https://"
+"somcomunitats.coop/es/alta-nova-comunitat?map_place_ref={{slug}}' target='_parent'>Solicita "
+"darla de alta</a></p>\",\n"
+"\"pd_social_headline\": \"<div class='flex justify-center align-center text-center'><p "
+"class='font-semibold text-white'>Comparte y haz crecer la Comunidad Energética</p></div>\"\n"
+"}"
+
+#. module: energy_communities
+#: model:cm.presenter.model,json_dataschema:energy_communities.map_presenter_model_external
+#, fuzzy
+msgid ""
+"{\n"
+"\"pgm_title\": \"{{name}}\",\n"
+"\"pgm_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-"
+"de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
+"fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if "
+"filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% "
+"endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></"
+"i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}"
+"</div></div>{% endif %}{% endfor %}\",\n"
+"\"pgm_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative "
+"z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-"
+"pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
+"\"pgm_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if "
+"filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-"
+"pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div "
+"class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 "
+"rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full "
+"absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full "
+"absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 "
+"absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-"
+"{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</"
+"div>\",\n"
+"\"pgm_social_headline\": \"<div class='flex justify-center align-center text-center'><p "
+"class='font-semibold text-white'>Comparte y haz crecer la Comunidad Energética</p></div>\"\n"
+"}"
+msgstr ""
+"{\n"
+"\"pgm_title\": \"{{name}}\",\n"
+"\"pgm_filter_state\": \"{% fo filtro en filters_data %}{% if filter.group == 'estat-actual-de-"
+"la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
+"fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if "
+"filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% "
+"endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></"
+"i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}"
+"</div></div>{% endif %}{% endfor %}\",\n"
+"\"pgm_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative "
+"z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-"
+"pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
+"\"pgm_filter_energy_actions\": \"<div class='flex'>{% fo filtro en filtros_datos %}{% if "
+"filtro.grupo == 'accions-energéticas' %}<div class='px-1'><label class='w-full p-2 cursor-"
+"pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div "
+"class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 "
+"rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full "
+"absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full "
+"absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 "
+"absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-"
+"{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</"
+"div>\",\n"
+"\"pgm_social_headline\": \"<div class='flex justify-center align-center text-center'><p "
+"class='font-semibold text-white'>Comparte y haz crecer la Comunidad Energética</p></div>\"\n"
+"}"
 
 #. module: energy_communities
 #: model:cm.presenter.model,json_dataschema:energy_communities.map_presenter_model_open
 msgid ""
-"{ \"po2_title\": \"title\", \"po2_filter_state\": \"<div><i></i><div>filter_state</div></"
-"div>\", \"po2_category\": \"<div><i></i><div>category</div></div>\", "
-"\"po2_filter_energy_actions\": \"<div><i></i><div>category</div></div>\", "
-"\"po2_social_headline\": \"<div><i></i><div>category</div></div>\" }"
+"{\n"
+"\"po2_title\": \"{{name}}\",\n"
+"\"po2_filter_state\": \"{% for filter in filters_data %}{% if filter.group == 'estat-actual-"
+"de-la-comunitat' %}<div class='flex items-center w-fit font-semibold'><i class='relative z-20 "
+"fas {% if filter.icon_class == 'circle' %}fa-regular fa-circle {% endif %}{% if "
+"filter.icon_class == 'circle-half-stroke' %}fa-sharp fa-regular fa-circle-half-stroke {% "
+"endif %}{% if filter.icon_class == 'circle-full' %}fa-solid fa-circle {% endif %}text-base'></"
+"i><div class='text-sm cursor-pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{filter.name}}"
+"</div></div>{% endif %}{% endfor %}\",\n"
+"\"po2_category\": \"<div class='flex items-center w-fit font-semibold'><i class='relative "
+"z-20 fas fa-regular fa-{{category_data.icon_class}} text-base'></i><div class='text-sm cursor-"
+"pointer sm:font-semibold text-xs sm:text-sm ml-2'>{{category_data.name}}</div></div>\",\n"
+"\"po2_filter_energy_actions\": \"<div class='flex'>{% for filter in filters_data %}{% if "
+"filter.group == 'accions-energetiques' %}<div class='px-1'><label class='w-full p-2 cursor-"
+"pointer rounded border border-transparent hover:shadow-sm hover:border-gray-300'><div "
+"class='flex md:items-center pb-2'><div class='overflow-hidden relative flex-none mt-1 sm:mt-0 "
+"rounded-full p-2 h-6 w-6 xs:h-8 xs:w-8 h-10 w-10'><div class='overflow-hidden rounded-full "
+"absolute inset-0 z-10 flex items-center justify-center border'><div class='z-0 rounded-full "
+"absolute inset-0' style='background-color: red;'></div><div style='height: 100%;' class='z-10 "
+"absolute left-0 right-0 bottom-0'></div><i class='relative z-20 fas fa-regular fa-"
+"{{filter.icon_class}} text-base'></i></div></div></div></label></div>{% endif %}{% endfor %}</"
+"div>\",\n"
+"\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p "
+"class='font-semibold text-white'>Comparteix i fem créixer la Comunitat Energètica</p></"
+"div>\"\n"
+"}"
 msgstr ""
 "{\n"
 "\"po2_title\": \"{{name}}\",\n"
@@ -2552,48 +4012,3 @@ msgstr ""
 "\"po2_social_headline\": \"<div class='flex justify-center align-center text-center'><p "
 "class='font-semibold text-white'>Comparte y haz crecer la Comunidad Energética</p></div>\"\n"
 "}"
-
-#. module: energy_communities
-#: model:cm.presenter.model,json_uischema:energy_communities.map_presenter_model_open
-msgid ""
-"{ \"type\":\"VerticalLayout\",   \"elements\": [     {       \"type\": "
-"\"HorizontalLayout\",       \"elements\": [         {           \"type\": "
-"\"Container\",           \"scope\": \"#/properties/po2_filter_state\",           "
-"\"backgroundColor\": \"#8ec23a\",           \"textColor\": \"#fff\"         },         "
-"{           \"type\": \"Container\",           \"scope\": \"#/properties/"
-"po2_category\",           \"backgroundColor\": \"#e8f3ec\",           \"textColor\": "
-"\"#153f2d\"         }       ]     },     {       \"type\": \"Display\",       \"scope\": \"#/"
-"properties/po2_title\"     },     {       \"type\": \"Display\",       \"scope\": \"#/"
-"properties/po2_description\"     },     {       \"type\": \"EnergyActions\",       \"scope\": "
-"\"#/properties/po2_filter_energy_actions\",       \"backgroundColor\": \"#51ab50\",       "
-"\"textColor\": \"#fff\"     },     {       \"type\": \"Group\",       \"border\": true,       "
-"\"borderColor\": \"#c5e2d0\",       \"backgroundColor\": \"#FFFFFF\",       \"textColor\": "
-"\"#000000\",       \"elements\": [         {           \"type\": "
-"\"InteractionButtons\"         }       ]     },     {       \"type\": \"Group\",       "
-"\"center\": true,       \"border\": true,       \"borderColor\": \"transparent\",       "
-"\"backgroundColor\": \"#153f2d\",       \"textColor\": \"#FFFFFF\",       \"showInResult\": "
-"true,       \"elements\": [         {           \"type\": \"Display\",           \"scope\": "
-"\"#/properties/po2_social_headline\"         },         {           \"type\": "
-"\"InteractionSocial\",           \"IconColor\": \"#153f2d\",           "
-"\"IconBackgroundColor\": \"#fff\"         }       ]     }   ] }"
-msgstr ""
-"{ \"type\":\"VerticalLayout\",   \"elements\": [     {       \"type\": "
-"\"HorizontalLayout\",       \"elements\": [         {           \"type\": "
-"\"Container\",           \"scope\": \"#/properties/po2_filter_state\",           "
-"\"backgroundColor\": \"#8ec23a\",           \"textColor\": \"#fff\"         },         "
-"{           \"type\": \"Container\",           \"scope\": \"#/properties/"
-"po2_category\",           \"backgroundColor\": \"#e8f3ec\",           \"textColor\": "
-"\"#153f2d\"         }       ]     },     {       \"type\": \"Display\",       \"scope\": \"#/"
-"properties/po2_title\"     },     {       \"type\": \"Display\",       \"scope\": \"#/"
-"properties/po2_description\"     },     {       \"type\": \"EnergyActions\",       \"scope\": "
-"\"#/properties/po2_filter_energy_actions\",       \"backgroundColor\": \"#51ab50\",       "
-"\"textColor\": \"#fff\"     },     {       \"type\": \"Group\",       \"border\": true,       "
-"\"borderColor\": \"#c5e2d0\",       \"backgroundColor\": \"#FFFFFF\",       \"textColor\": "
-"\"#000000\",       \"elements\": [         {           \"type\": "
-"\"InteractionButtons\"         }       ]     },     {       \"type\": \"Group\",       "
-"\"center\": true,       \"border\": true,       \"borderColor\": \"transparent\",       "
-"\"backgroundColor\": \"#153f2d\",       \"textColor\": \"#FFFFFF\",       \"showInResult\": "
-"true,       \"elements\": [         {           \"type\": \"Display\",           \"scope\": "
-"\"#/properties/po2_social_headline\"         },         {           \"type\": "
-"\"InteractionSocial\",           \"IconColor\": \"#153f2d\",           "
-"\"IconBackgroundColor\": \"#fff\"         }       ]     }   ] }"
