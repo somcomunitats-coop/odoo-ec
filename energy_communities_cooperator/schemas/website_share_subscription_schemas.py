@@ -88,6 +88,9 @@ class WebsiteShareSubscriptionSubmissionBase(BaseModel):
     iban: Optional[str] = None
     conditions_payment: Optional[bool] = None
     privacy_policy: Optional[bool] = None
+    generic_rules: Optional[bool] = None
+    internal_rules: Optional[bool] = None
+    financial_risk: Optional[bool] = None
 
     @model_validator(mode="before")
     def empty_strings_to_none(cls, data):

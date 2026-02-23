@@ -289,20 +289,30 @@ class WebsiteSubscriptionCCEE(
             if vat:
                 vat = vat.strip().upper()
 
-            partner = request.env["res.partner"].sudo().search([("vat", "ilike", vat)])
-            if partner:
-                membership = partner._get_member_or_candidate_cooperative_membership(
-                    company.id
-                )
-                if membership:
-                    values = self.fill_values(values, is_company, logged)
-                    values.update(kwargs)
-                    values["error_msg"] = _(
-                        "There is an existing account for this"
-                        " vat number on this community. "
-                        "Please contact with the community administrators."
+            partners = (
+                request.env["res.partner"]
+                .sudo()
+                .search([("vat", "ilike", vat), ("parent_id", "=", "False")])
+            )
+            existing_partner = any(
+                [
+                    bool(
+                        partner._get_member_or_candidate_cooperative_membership(
+                            company.id
+                        )
                     )
-                    return request.render(redirect, values)
+                    for partner in partners
+                ]
+            )
+            if existing_partner:
+                values = self.fill_values(values, is_company, logged)
+                values.update(kwargs)
+                values["error_msg"] = _(
+                    "There is an existing account for this"
+                    " vat number on this community. "
+                    "Please contact with the community administrators."
+                )
+                return request.render(redirect, values)
 
         # upload id card image validation
         if company.allow_id_card_upload:

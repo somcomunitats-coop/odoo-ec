@@ -90,33 +90,33 @@ class SubscriptionRequestUtils(Component):
                     )
                 )
         # Validate data policy approval
-        if creation_params.company_id.data_policy_approval_required:
-            if (
-                "privacy_policy" not in creation_params
-                or creation_params.privacy_policy != "on"
-            ):
-                errors.append(_("Privacy policy must be approved"))
-        # Validate internal rules approval
-        if creation_params.company_id.internal_rules_approval_required:
-            if (
-                "internal_rules" not in creation_params
-                or creation_params.internal_rules != "on"
-            ):
-                errors.append(_("Internal rules must be approved"))
-        # Validate financial risk approval
-        if creation_params.company_id.financial_risk_approval_required:
-            if (
-                "financial_risk" not in creation_params
-                or creation_params.financial_risk != "on"
-            ):
-                errors.append(_("Financial risk must be approved"))
+        privacy_must_approved = (
+            creation_params.company_id.display_data_policy_approval
+            and creation_params.company_id.data_policy_approval_required
+        )
+        if privacy_must_approved and not creation_params.privacy_policy:
+            errors.append(_("Privacy policy must be approved"))
         # Validate generic rules approval
-        if creation_params.company_id.generic_rules_approval_required:
-            if (
-                "generic_rules" not in creation_params
-                or creation_params.generic_rules != "on"
-            ):
-                errors.append(_("Generic rules must be approved"))
+        generic_rules_must_approved = (
+            creation_params.company_id.display_generic_rules_approval
+            and creation_params.company_id.generic_rules_approval_required
+        )
+        if generic_rules_must_approved and not creation_params.generic_rules:
+            errors.append(_("Generic rules must be approved"))
+        # Validate internal rules approval
+        internal_rules_must_approved = (
+            creation_params.company_id.display_internal_rules_approval
+            and creation_params.company_id.internal_rules_approval_required
+        )
+        if internal_rules_must_approved and not creation_params.internal_rules:
+            errors.append(_("Internal rules must be approved"))
+        # Validate financial risk approval
+        financial_risk_must_approved = (
+            creation_params.company_id.display_financial_risk_approval
+            and creation_params.company_id.financial_risk_approval_required
+        )
+        if financial_risk_must_approved and not creation_params.financial_risk:
+            errors.append(_("Financial risk must be approved"))
         # Product must belong to company
         if creation_params.company_id != creation_params.share_product_id.company_id:
             errors.append(
@@ -131,6 +131,32 @@ class SubscriptionRequestUtils(Component):
                     f"Product {creation_params.share_product_id.name} must have correct subscription context"
                 )
             )
+
+        # Existing partner
+        partners = (
+            self.env["res.partner"]
+            .sudo()
+            .search([("vat", "ilike", creation_params.vat), ("parent_id", "=", False)])
+        )
+        existing_partner = any(
+            [
+                bool(
+                    partner._get_member_or_candidate_cooperative_membership(
+                        creation_params.company_id.id
+                    )
+                )
+                for partner in partners
+            ]
+        )
+        if existing_partner:
+            errors.append(
+                _(
+                    "There is an existing account for this"
+                    " vat number on this community. "
+                    "Please contact with the community administrators."
+                )
+            )
+
         # TODO: Validate privacy_policy and conditions_payment must be marked
         if errors:
             raise ComponentValidationError(
@@ -172,27 +198,24 @@ class SubscriptionRequestUtils(Component):
     ) -> dict:
         creation_params = creation_params.model_dump()
         if creation_params["membertype_mode"].value == "company":
-            creation_params["is_company"] = "on"
-        data_policy_approved = False
-        if creation_params["company_id"].display_data_policy_approval:
-            data_policy_approved = (
-                True if creation_params["privacy_policy"] == "on" else False
-            )
-        internal_rules_approved = False
-        if creation_params["company_id"].display_internal_rules_approval:
-            internal_rules_approved = (
-                True if creation_params["internal_rules"] == "on" else False
-            )
-        financial_risk_approved = False
-        if creation_params["company_id"].display_financial_risk_approval:
-            financial_risk_approved = (
-                True if creation_params["financial_risk"] == "on" else False
-            )
-        generic_rules_approved = False
-        if creation_params["company_id"].display_generic_rules_approval:
-            generic_rules_approved = (
-                True if creation_params["generic_rules"] == "on" else False
-            )
+            creation_params["is_company"] = True
+        data_policy_approved = creation_params[
+            "company_id"
+        ].display_data_policy_approval and creation_params.get("privacy_policy", False)
+        generic_rules_approved = creation_params[
+            "company_id"
+        ].display_generic_rules_approval and creation_params.get("generic_rules", False)
+        internal_rules_approved = creation_params[
+            "company_id"
+        ].display_internal_rules_approval and creation_params.get(
+            "internal_rules", False
+        )
+        financial_risk_approved = creation_params[
+            "company_id"
+        ].display_financial_risk_approval and creation_params.get(
+            "financial_risk", False
+        )
+
         creation_params |= {
             "source": "website",  # TODO review diferent type of creation
             "gender": creation_params["gender"].value,
@@ -209,6 +232,9 @@ class SubscriptionRequestUtils(Component):
         # Delete not necesary params for creation
         del creation_params["product_categ"]
         del creation_params["membertype_mode"]
-        del creation_params["privacy_policy"]
         del creation_params["conditions_payment"]
+        del creation_params["privacy_policy"]
+        del creation_params["generic_rules"]
+        del creation_params["internal_rules"]
+        del creation_params["financial_risk"]
         return creation_params
