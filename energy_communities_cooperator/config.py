@@ -748,7 +748,3 @@ COMTEXT_VALIDATION_ERROR_NO_CATEGORY = _lt(
 CONTEXT_VALIDATION_ERROR_UNAVAILABLE_MESSAGE = _lt(
     "The form is no longer available. Contact your coordinator for further information."
 )
-STATUS_CODE_NOT_FOUND_ERROR = 404
-STATUS_CODE_CONSISTENCY_ERROR = 422  # un processble content
-STATUS_CODE_UNAVAILABLE_ERROR = 423  # locked
-STATUS_CODE_SERVER_ERROR = 500

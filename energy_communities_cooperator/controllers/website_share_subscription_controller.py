@@ -1,4 +1,6 @@
 import logging
+import traceback
+from http import HTTPMethod, HTTPStatus
 
 from pydantic import ValidationError as PydanticValidationError
 
@@ -18,8 +20,6 @@ from ..config import (
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
     MAPPING_FORM_ERROR_TITLE,
     MAPPING_FORM_SUCCESS,
-    STATUS_CODE_CONSISTENCY_ERROR,
-    STATUS_CODE_SERVER_ERROR,
     _get_headline_fixed_sepa_message,
     _get_headline_fixed_transfer_message,
     _get_subscription_mode_headline_message,
@@ -29,6 +29,7 @@ from ..exceptions import (
     ComponentValidationError,
     ControllerContextValidationError,
     FormValidationError,
+    URLValidationError,
 )
 from ..schemas import (
     SubscriptionRequestCreationParams,
@@ -79,23 +80,24 @@ class WebsiteShareSubscriptionController(http.Controller):
                 kwargs
             )
             ctx = WebsiteShareSubscriptionContext(**context_creation_params_dict)
-        except ControllerContextValidationError as e:
+            values = self._get_page_values(ctx)
+            if request.httprequest.method == HTTPMethod.POST:
+                values = self._process_form(request, ctx)
+        except (ControllerContextValidationError, URLValidationError) as e:
             # Render error page if context validation fails
             return self._render_error_page(e)
-        values = self._get_page_values(ctx)
-        http_code = 200
-        if request.httprequest.method == "POST":
-            try:
-                values = self._process_form(request, ctx)
-            except FormValidationError as e:
-                _logger.error(e.title)
-                # now we return form with values pre-selected and error message on top
-                if e.http_error_code == 500:
-                    return self._render_error_page(e)
-                http_code = e.http_error_code
-                values["error"] = {"title": e.title, "messages": e.messages}
-                self._populate_form_values_from_submission(request, values)
-        return self._render_page(values, http_code)
+        except FormValidationError as e:
+            _logger.error(e.title)
+            # now we return form with values pre-selected and error message on top
+            if e.http_error_code == HTTPStatus.INTERNAL_SERVER_ERROR:
+                return self._render_error_page(e)
+            values["error"] = {"title": e.title, "messages": e.messages}
+            self._populate_form_values_from_submission(request, values)
+            return self._render_page(values, e.http_error_code)
+        except Exception as e:
+            return self._render_error_page(e)
+        else:
+            return self._render_page(values, HTTPStatus.OK)
 
     def _render_page(self, values, status_code):
         """
@@ -123,21 +125,24 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Rendered template response
         """
-        if isinstance(error, ComponentValidationError) or isinstance(
-            error, FormValidationError
-        ):
-            error_message = ""
-            for e in error.messages:
-                error_message += e + "\n"
-        else:
+        name = type(exception).__name__
+
+        if isinstance(error, (ComponentValidationError, FormValidationError)):
+            error_message = "\n".join(error.messages)
+        elif isinstance(error, ControllerContextValidationError):
             error_message = error.message
+        else:
+            error_message = str(error)
+
         return request.render(
             "http_routing.http_error",
             {
-                "status_code": error.http_error_code,
-                "status_message": error.title,
+                "status_code": getattr(
+                    error, "http_error_code", HTTPStatus.INTERNAL_SERVER_ERROR
+                ),
+                "status_message": getattr(error, "title", name),
                 "error_message": error_message,
-                "debug": "debug",
+                "debug": traceback.format_exc(),
             },
             status=error.http_error_code,
         )

@@ -2,11 +2,7 @@ from odoo import _
 
 from odoo.addons.component.core import Component
 
-from ..config import (
-    MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE,
-    STATUS_CODE_CONSISTENCY_ERROR,
-    STATUS_CODE_SERVER_ERROR,
-)
+from ..config import MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE
 from ..exceptions import ComponentValidationError
 from ..schemas.website_share_subscription_schemas import (
     SubscriptionRequestCreationParams,
@@ -38,21 +34,17 @@ class SubscriptionRequestUtils(Component):
         Returns:
             Created subscription.request recordset
         """
-        try:
-            self._validate_creation_params(creation_params)
-        except ComponentValidationError as e:
-            raise e
+        self._validate_creation_params(creation_params)
         try:
             creation_params = self._get_model_creation_params(creation_params)
         except Exception as e:
             raise ComponentValidationError(
-                STATUS_CODE_SERVER_ERROR,
                 _("There is a problem on creating request params"),
                 [
                     e.args[0],
                     _("Please contact the platform administrator to fix the issue."),
                 ],
-            )
+            ) from e
         # Create subscription request
         try:
             subscription_request = (
@@ -60,13 +52,12 @@ class SubscriptionRequestUtils(Component):
             )
         except Exception as e:
             raise ComponentValidationError(
-                STATUS_CODE_SERVER_ERROR,
                 _("There is a problem on creating request."),
                 [
                     e.args[0],
                     _("Please contact the platform administrator to fix the issue."),
                 ],
-            )
+            ) from e
         self._validate_subscription_data_consistency(subscription_request)
         return subscription_request
 

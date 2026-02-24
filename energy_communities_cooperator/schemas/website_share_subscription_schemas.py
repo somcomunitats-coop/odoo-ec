@@ -9,6 +9,7 @@ from pydantic import (
     field_validator,
     model_validator,
 )
+from typing_extensions import Self
 
 from odoo.tools.translate import _
 
@@ -24,10 +25,8 @@ from ..config import (
     COMTEXT_VALIDATION_ERROR_NO_PRODUCT,
     CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
     CONTEXT_VALIDATION_ERROR_TITLE,
-    STATUS_CODE_CONSISTENCY_ERROR,
-    STATUS_CODE_NOT_FOUND_ERROR,
 )
-from ..exceptions import ControllerContextValidationError
+from ..exceptions import ControllerContextValidationError, URLValidationError
 
 
 class SubscriptionMode(str, Enum):
@@ -173,6 +172,10 @@ class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
 
 
 class WebsiteShareSubscriptionContext(BaseModel):
+    # TODO: this class oveloads two problems. For one hand, validate if in the URL
+    # are present all parameters and the values are resources in our system
+    # On the other hand, also validates if that values are correct
+    # This beaviour should be fixed in furthers developments
     model_config = ConfigDict(arbitrary_types_allowed=True)
     subscription_mode: SubscriptionMode
     membership_mode: MembershipMode
@@ -183,28 +186,23 @@ class WebsiteShareSubscriptionContext(BaseModel):
     products: List[ProductTemplate]
     product: Optional[ProductTemplate]
 
-    # Avoid empty recordsets
     @field_validator("company", mode="before")
     @classmethod
     def check_company_required(cls, company: Company) -> Company:
         if not company:
-            raise ControllerContextValidationError(
-                STATUS_CODE_NOT_FOUND_ERROR,
+            raise URLValidationError(
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 COMTEXT_VALIDATION_ERROR_NO_COMPANY,
             )
         return company
 
-    # TODO: Modify this validation use strategy of unify all empty record validations
-    # You must be able to pass a array of error to http_routing error template right now only accepts msg string
     @field_validator("product_categ", mode="before")
     @classmethod
     def check_product_categ_required(
         cls, product_categ: ProductCategory
     ) -> ProductCategory:
         if not product_categ:
-            raise ControllerContextValidationError(
-                STATUS_CODE_NOT_FOUND_ERROR,
+            raise URLValidationError(
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 COMTEXT_VALIDATION_ERROR_NO_CATEGORY,
             )
@@ -216,8 +214,7 @@ class WebsiteShareSubscriptionContext(BaseModel):
         cls, products: List[ProductTemplate]
     ) -> List[ProductTemplate]:
         if not products:
-            raise ControllerContextValidationError(
-                STATUS_CODE_NOT_FOUND_ERROR,
+            raise URLValidationError(
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 COMTEXT_VALIDATION_ERROR_NO_PRODUCT,
             )
@@ -227,77 +224,92 @@ class WebsiteShareSubscriptionContext(BaseModel):
     @classmethod
     def check_product_required(cls, product: ProductTemplate) -> ProductTemplate:
         if not product:
-            raise ControllerContextValidationError(
-                STATUS_CODE_NOT_FOUND_ERROR,
+            raise URLValidationError(
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 COMTEXT_VALIDATION_ERROR_NO_PRODUCT,
             )
         return product
 
     @model_validator(mode="after")
-    @classmethod
-    def check_data_consistency(cls, data: Any) -> Any:
+    def check_product_company(self) -> Self:
         # Product must belong to defined company
-        if data.product.company_id.id != data.company.id:
+        if self.product.company_id.id != self.company.id:
             raise ControllerContextValidationError(
-                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
+        return self
+
+    @model_validator(mode="after")
+    def check_product_category(self) -> Self:
         # Product doesn't belong to defined category
-        if data.product.categ_id.id != data.product_categ.id:
+        if self.product.categ_id.id != self.product_categ.id:
             raise ControllerContextValidationError(
-                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
+        return self
+
+    @model_validator(mode="after")
+    def check_product_share(self) -> Self:
         # Product is not a share
-        if not data.product.is_share:
+        if not self.product.is_share:
             raise ControllerContextValidationError(
-                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
+        return self
+
+    @model_validator(mode="after")
+    def check_product_subscription_mode_for_individuals(self) -> Self:
         # Product is not for individuals request on member,invited subscription_mode
         if (
-            data.subscription_mode
+            self.subscription_mode
             in [SubscriptionMode.member, SubscriptionMode.invited]
-            and not data.product.by_individual
+            and not self.product.by_individual
         ):
             raise ControllerContextValidationError(
-                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
+        return self
+
+    @model_validator(mode="after")
+    def check_product_subscription_mode_for_companies(self) -> Self:
         # Product is not for companies request on member_company,invited_company subscription_mode
         if (
-            data.subscription_mode
+            self.subscription_mode
             in [SubscriptionMode.company_member, SubscriptionMode.company_invited]
-            and not data.product.by_company
+            and not self.product.by_company
         ):
             raise ControllerContextValidationError(
-                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
+        return self
+
+    @model_validator(mode="after")
+    def check_product_available_generic_form(self) -> Self:
         # Product not available on generic form
         if (
-            data.formtype_mode == FormTypeMode.generic
-            and not data.product.display_on_website
+            self.formtype_mode == FormTypeMode.generic
+            and not self.product.display_on_website
         ):
             raise ControllerContextValidationError(
-                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
+        return self
+
+    @model_validator(mode="after")
+    def check_product_available_single_form(self) -> Self:
         # Product not available on single form
         if (
-            data.formtype_mode == FormTypeMode.single
-            and not data.product.activate_form_specific_products
+            self.formtype_mode == FormTypeMode.single
+            and not self.product.activate_form_specific_products
         ):
             raise ControllerContextValidationError(
-                STATUS_CODE_CONSISTENCY_ERROR,
                 CONTEXT_VALIDATION_ERROR_TITLE,
                 CONTEXT_VALIDATION_ERROR_GENERIC_MESSAGE,
             )
-        return data
+        return self
