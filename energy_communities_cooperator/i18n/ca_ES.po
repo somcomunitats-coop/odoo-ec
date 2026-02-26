@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-27 11:12+0000\n"
-"PO-Revision-Date: 2026-02-25 15:12+0000\n"
+"PO-Revision-Date: 2026-02-26 09:36+0000\n"
 "Last-Translator: Weblate Admin <weblate.admin@example.com>\n"
-"Language-Team: Catalan <http://localhost:8080/projects/odoo-de-scomunitats/"
+"Language-Team: Catalan <http://localhost:8080/projects/odoo/"
 "energy_communities_cooperator/ca/>\n"
 "Language: ca_ES\n"
 "MIME-Version: 1.0\n"
@@ -663,7 +663,7 @@ msgstr "Correu electrònic de l'empresa"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Company Information"
-msgstr "Informació de la companyia"
+msgstr "Informació de l’entitat/empresa"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__representative_of_member_company
@@ -675,7 +675,7 @@ msgstr "Representant legal de companyia"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Company Name"
-msgstr "Nom de l'Empresa"
+msgstr "Nom de l'empresa"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_partner__company_register_number
@@ -688,7 +688,7 @@ msgstr "Codi de registre de la companyia"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Company bank details"
-msgstr "Dades bancàries de l’empresa"
+msgstr "Dades bancàries de l’entitat/empresa"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -832,7 +832,7 @@ msgstr "Paràgraf personalitzable a la capçalera del formulari específic"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__share_form_header_text
 msgid "Customizable paragraph in the header text of the form"
-msgstr "Paràgraf personalitzable al text de la capçalera del formulari"
+msgstr "Paràgraf personalitzable a la capçalera del formulari genèric"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
@@ -1073,7 +1073,7 @@ msgstr "Regles genèriques"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "Generic form options"
-msgstr "Opcions de formulari genèriques"
+msgstr "Opcions del formulari genèric"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_company_form
@@ -1110,7 +1110,7 @@ msgstr "Prefereixo no compartir-ho"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "IBAN"
-msgstr "IBAN"
+msgstr "Número de compte bancari"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__company_id_id
@@ -1248,7 +1248,7 @@ msgstr "Convidat/da"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_subscription_request_filter_inherit
 msgid "Invited Shares"
-msgstr "Comparticions convidades"
+msgstr "Invitadas a participar"
 
 #. module: energy_communities_cooperator
 #: model:ir.ui.menu,name:energy_communities_cooperator.menu_cooperator_cooperator_invited
@@ -1509,7 +1509,7 @@ msgstr "Socis antics"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Ordered Parts"
-msgstr "Número aportació"
+msgstr "Quantitat"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1807,7 +1807,7 @@ msgstr "Tipus d'aportació"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Share Selection"
-msgstr "Comparteix la selecció"
+msgstr "Selecciona l'aportació"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_share_line
@@ -1827,7 +1827,7 @@ msgstr "Tipus aportació"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__share_product_categ_id
 msgid "Share type category"
-msgstr "Categoria de tipus de compartició"
+msgstr "Categoria de participació"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -2063,7 +2063,7 @@ msgstr ""
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Total Price"
-msgstr "Preu total"
+msgstr "Import total"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_bank_statement_line__voluntary_share_total_contribution
@@ -2122,7 +2122,7 @@ msgstr "Enllaç per persona individual"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "URLs"
-msgstr "Enllaços dels formularis"
+msgstr "Enllaços del formulari genèric"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_res_users
@@ -2146,7 +2146,7 @@ msgstr "Rol actual de l'usuari"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "VAT"
-msgstr ""
+msgstr "NIF"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
