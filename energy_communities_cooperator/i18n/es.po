@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-27 11:12+0000\n"
-"PO-Revision-Date: 2026-02-25 15:12+0000\n"
+"PO-Revision-Date: 2026-02-26 09:36+0000\n"
 "Last-Translator: Weblate Admin <weblate.admin@example.com>\n"
-"Language-Team: Spanish <http://localhost:8080/projects/odoo-de-scomunitats/"
+"Language-Team: Spanish <http://localhost:8080/projects/odoo/"
 "energy_communities_cooperator/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -666,14 +666,14 @@ msgstr "Compañía"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Company Email"
-msgstr "Email de la empresa"
+msgstr "Correo electrónico de la empresa"
 
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Company Information"
-msgstr "Información de la empresa"
+msgstr "Información de la entidad/empresa"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__representative_of_member_company
@@ -698,7 +698,7 @@ msgstr "Número del Registro Mercantil"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Company bank details"
-msgstr "Datos bancarios de la empresa"
+msgstr "Datos bancarios de la entidad/empresa"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -846,7 +846,7 @@ msgstr "Párrafo personalizable en la cabecera del formulario específico"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__share_form_header_text
 msgid "Customizable paragraph in the header text of the form"
-msgstr "Párrafo personalizable en el texto del encabezado del formulario"
+msgstr "Párrafo personalizable en la cabecera del formulario genérico"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
@@ -1110,8 +1110,8 @@ msgid ""
 "I confirm that the holder of the bank account, whether myself or another "
 "person, authorizes the direct debit of the bills."
 msgstr ""
-"Confirmo que el titular de la cuenta bancaria, ya sea yo mismo u otra "
-"persona, autoriza el débito directo de las facturas."
+"Confirmo que la persona titular de la cuenta bancaria, sea yo misma u otra "
+"persona, autoritza la domiciliación de los recibos."
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1127,7 +1127,7 @@ msgstr "Prefiero no compartirlo"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "IBAN"
-msgstr "IBAN"
+msgstr "Número de cuenta bancaria"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__company_id_id
@@ -1263,7 +1263,7 @@ msgstr "Invitado"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_subscription_request_filter_inherit
 msgid "Invited Shares"
-msgstr "Acciones invitadas"
+msgstr "Convidades a participar"
 
 #. module: energy_communities_cooperator
 #: model:ir.ui.menu,name:energy_communities_cooperator.menu_cooperator_cooperator_invited
@@ -1475,7 +1475,7 @@ msgstr "Notificar a los socios"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__message_needaction_counter
 msgid "Number of Actions"
-msgstr "Número de acciones"
+msgstr "Cantidad"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__numberof_effective_cooperators
@@ -1524,7 +1524,7 @@ msgstr "Socios antiguos"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Ordered Parts"
-msgstr "Número de acciones"
+msgstr "Cantidad"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1821,7 +1821,7 @@ msgstr "Tipo aportación"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Share Selection"
-msgstr "Selección de acciones"
+msgstr "Selecciona la aportación"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_share_line
@@ -1831,17 +1831,17 @@ msgstr "Compartir línea"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__share_unit_price
 msgid "Share price"
-msgstr "Precio de las acciones"
+msgstr "Precio aportación"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__share_product_id
 msgid "Share type"
-msgstr "Tipo de Acción"
+msgstr "Tipo de aportación"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__share_product_categ_id
 msgid "Share type category"
-msgstr "Categoría de tipo de acción"
+msgstr "Categoría de participación"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -2072,7 +2072,7 @@ msgstr ""
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Total Price"
-msgstr "Precio Total"
+msgstr "Importe total"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_account_bank_statement_line__voluntary_share_total_contribution
@@ -2131,7 +2131,7 @@ msgstr "Enlace para persona individual"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "URLs"
-msgstr "Enlaces de los formularios"
+msgstr "Enlaces del formulario genérico"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_res_users
@@ -2155,7 +2155,7 @@ msgstr "Rol actual del usuario"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "VAT"
-msgstr ""
+msgstr "NIF"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
