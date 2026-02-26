@@ -3,6 +3,8 @@
 # 	* cooperator
 # 	* cooperator_website
 # 	* l10n_es_cooperator
+#   * account_banking_mandate
+#   * contract_mandate
 #
 msgid ""
 msgstr ""
@@ -1022,3 +1024,134 @@ msgstr "Información Aportación"
 #: model:ir.ui.menu,name:cooperator.menu_cooperator_subscription_request
 msgid "Subscriptions"
 msgstr "Solicitud de suscripción"
+
+#. module: cooperator
+#: model:ir.actions.act_window,name:cooperator.cooperator_register_action
+#: model:ir.actions.report,name:cooperator.action_report_cooperator_register
+#: model:ir.ui.menu,name:cooperator.menu_cooperator_register
+msgid "Cooperator Register"
+msgstr "Registro de cooperadores/as"
+
+#. module: account_banking_mandate
+#: model:ir.model.fields,field_description:account_banking_mandate.field_account_bank_statement_line__mandate_id
+#: model:ir.model.fields,field_description:account_banking_mandate.field_account_move__mandate_id
+#: model:ir.model.fields,field_description:account_banking_mandate.field_account_payment__mandate_id
+#: model:ir.model.fields,field_description:account_banking_mandate.field_account_payment_line__mandate_id
+msgid "Direct Debit Mandate"
+msgstr "Mandato de débito directo"
+
+#. module: contract_mandate
+#: model:ir.model.fields,field_description:contract_mandate.field_contract_contract__mandate_id
+msgid "Direct Debit Mandate"
+msgstr "Mandato de débito directo"
+
+#. module: cooperator
+#: model:ir.actions.report,name:cooperator.action_cooperator_invoices
+msgid "Capital Release Request"
+msgstr "Aportación solicitada"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__capital_release_request
+#: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_view_form
+msgid "Capital release request"
+msgstr "Aportación solicitada"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_invoice_document
+msgid "Request to Release Capital"
+msgstr "Aportación solicitada"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__capital_release_request_date
+msgid "Force the capital release request date"
+msgstr "Forzar fecha pago aportación"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__date
+msgid "Subscription date request"
+msgstr "Fecha solicitud suscripción"
+
+#. module: cooperator
+#: model:ir.model,name:cooperator.model_subscription_register
+msgid "Subscription register"
+msgstr "Fecha solicitud suscripción"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_share_line__share_number
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__ordered_parts
+msgid "Number of Share"
+msgstr "Número aportaciones"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_subscription_register
+msgid "Number of Shares"
+msgstr "Número aportaciones"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__number_of_share
+#: model:ir.model.fields,field_description:cooperator.field_operation_request__quantity
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__number_of_share
+#: model:ir.model.fields,field_description:cooperator.field_res_users__number_of_share
+#: model:ir.model.fields,field_description:cooperator.field_subscription_register__quantity
+msgid "Number of share"
+msgstr "Número aportaciones"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__cooperator_register_number
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__cooperator_register_number
+#: model:ir.model.fields,field_description:cooperator.field_res_users__cooperator_register_number
+msgid "Cooperator Number"
+msgstr "Número socia"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_product_product__display_on_website
+#: model:ir.model.fields,field_description:cooperator.field_product_template__display_on_website
+msgid "Display on website"
+msgstr "Socia efectiva"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__member
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__member
+#: model:ir.model.fields,field_description:cooperator.field_res_users__member
+msgid "Effective cooperator"
+msgstr "Socia efectiva"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__cooperator_type
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__cooperator_type
+#: model:ir.model.fields,field_description:cooperator.field_res_users__cooperator_type
+msgid "Cooperator Type"
+msgstr "Tipo de Cooperador"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__cooperator
+#: model:ir.model.fields,field_description:cooperator.field_operation_request__partner_id
+#: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__cooperator
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__cooperator
+#: model:ir.model.fields,field_description:cooperator.field_res_users__cooperator
+#: model:ir.model.fields,field_description:cooperator.field_share_line__partner_id
+#: model:ir.model.fields,field_description:cooperator.field_share_line_update_info__cooperator
+#: model:ir.model.fields,field_description:cooperator.field_subscription_register__partner_id
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__partner_id
+#: model_terms:ir.ui.view,arch_db:cooperator.report_subscription_register
+#: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_view_form
+#: model_terms:ir.ui.view,arch_db:cooperator.view_share_line_filter
+msgid "Cooperator"
+msgstr "Cooperador"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__old_member
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__old_member
+#: model:ir.model.fields,field_description:cooperator.field_res_users__old_member
+msgid "Old cooperator"
+msgstr "Antiguo cooperador"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.view_partner_form
+msgid "Shares"
+msgstr "Aportaciones"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.view_partner_form
+msgid "Share subscriptions"
+msgstr "Solicitudes de suscripción"
