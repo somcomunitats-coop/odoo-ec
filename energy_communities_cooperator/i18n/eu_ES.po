@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-27 11:11+0000\n"
-"PO-Revision-Date: 2026-02-25 15:12+0000\n"
+"PO-Revision-Date: 2026-02-26 09:36+0000\n"
 "Last-Translator: Weblate Admin <weblate.admin@example.com>\n"
-"Language-Team: Basque <http://localhost:8080/projects/odoo-de-scomunitats/"
+"Language-Team: Basque <http://localhost:8080/projects/odoo/"
 "energy_communities_cooperator/eu/>\n"
 "Language: eu_ES\n"
 "MIME-Version: 1.0\n"
@@ -288,9 +288,9 @@ msgid ""
 "span>%(currency_symbol)s by follow the steps you will receive by email.</p>"
 msgstr ""
 "<p id='transfer_text'>Bazkide izateko, lehenbizi formulario hau bete behar "
-"duzu, eta, ondoren, honen hasierako ekarpena ordaindu: <span "
-"id='prodPrice'>%(product_price)s</span> %(currency_symbol)s jarraitu posta "
-"elektronikoz bidaliko dizkizugun urratsei.</p>"
+"duzu, eta, ondoren, honen hasierako ekarpena ordaindu: <span id='prodPrice'>%"
+"(product_price)s</span> %(currency_symbol)s sartu vejar dira posta "
+"elektronikoz bidaliko zalzuen kontu korronte zenbaklan.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -304,9 +304,9 @@ msgid ""
 msgstr ""
 "<p id='transfer_text'>Bazkidea izateko, lehenik eta behin, formulario hau "
 "bete behar duzu. Bertan, banku-kontu bat eta banku-ordainagiri bat "
-"bidaltzeko baimena eskatzen dizugu, hasierako <span "
-"id='prodPrice'>%(product_price)s</span> %(currency_symbol)s jarraitu posta "
-"elektronikoz bidaliko dizkizugun urratsei.</p>"
+"bidaltzeko baimena eskatzen dizugu, hasierako <span id='prodPrice'>%"
+"(product_price)s</span> %(currency_symbol)s sartu vejar dira posta "
+"elektronikoz bidaliko zalzuen kontu korronte zenbaklan.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -456,7 +456,7 @@ msgstr "Aktibo"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Address"
-msgstr "Herria"
+msgstr "Helbidea"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -502,7 +502,7 @@ msgstr "Egin zaitez honen kooperatibakide: %(company_name)s "
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Birthdate"
-msgstr "Jaiotze data"
+msgstr "Sortze-data"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
@@ -551,7 +551,7 @@ msgstr "Ziurtagiria {{ (object.cooperator_register_number or '') }}"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "City"
-msgstr "Herria"
+msgstr "Hiria"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -760,7 +760,7 @@ msgstr "Formulario espezifikoaren goiburuko paragrafo pertsonalizagarria"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__share_form_header_text
 msgid "Customizable paragraph in the header text of the form"
-msgstr "Formularioaren goiburuko testuan pertsonaliza daitekeen paragrafoa"
+msgstr "Formulario orokorraren goiburuko paragrafo pertsonalizagarria"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
@@ -870,7 +870,7 @@ msgstr "Posta elektronikoa"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Email Confirmation"
-msgstr "Mezu elektroniko bidezko baieztapena"
+msgstr "Berretsi posta elektronikoa"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -965,7 +965,7 @@ msgstr "Formulak (kantitatea)"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Function"
-msgstr "Funtzioa"
+msgstr "Kargua"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1012,8 +1012,9 @@ msgid ""
 "I confirm that the holder of the bank account, whether myself or another "
 "person, authorizes the direct debit of the bills."
 msgstr ""
-"Banku-kontuaren titularrak, ni neu edo beste pertsona batek izan, fakturak "
-"zuzenean zorduntzeko baimena ematen duela berresten dut."
+"Baieztatzen dut banku-kontuaren titularrak, ni neu edo beste edozein "
+"pertsona izan, erakundeak kontu horretara helbideratutako ordainagiriak "
+"jaulkitzeko baimena ematen duela."
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1029,7 +1030,7 @@ msgstr "Nahiago dut ez partekatu"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "IBAN"
-msgstr "IBAN"
+msgstr "Banku-kontuaren zenbakia"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__company_id_id
@@ -1168,7 +1169,7 @@ msgstr "Gonbidatuta"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_subscription_request_filter_inherit
 msgid "Invited Shares"
-msgstr "Gonbidatutako partekatzeak"
+msgstr "Parte hartzera gonbidatuak"
 
 #. module: energy_communities_cooperator
 #: model:ir.ui.menu,name:energy_communities_cooperator.menu_cooperator_cooperator_invited
@@ -1251,7 +1252,7 @@ msgstr "Azken eguneraketa data"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Lastname"
-msgstr "Abizena"
+msgstr "Abizenak"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1430,7 +1431,7 @@ msgstr "Lankide ohiak"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Ordered Parts"
-msgstr "Eskatutako piezak"
+msgstr "Kantitatea"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1552,7 +1553,7 @@ msgstr "Bidalketa"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Postal Code"
-msgstr "Posta kodea"
+msgstr "Posta-kodea"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1718,14 +1719,14 @@ msgstr ""
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Share Product"
-msgstr "Produktua partekatu"
+msgstr "Ekarpen mota"
 
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Share Selection"
-msgstr "Hautaketa partekatu"
+msgstr "Aukeratu ekarpena"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_share_line
@@ -1735,17 +1736,17 @@ msgstr "Partekatu lerroa"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__share_unit_price
 msgid "Share price"
-msgstr "Akzioen prezioa"
+msgstr "Ekarpenaren prezioa"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__share_product_id
 msgid "Share type"
-msgstr "Partekatze mota"
+msgstr "Ekarpen mota"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_subscription_request__share_product_categ_id
 msgid "Share type category"
-msgstr "Partekatze motaren kategoria"
+msgstr "Parte-hartzearen kategoria"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -2023,7 +2024,7 @@ msgstr "Bakarkako pertsonarentzako esteka"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "URLs"
-msgstr "Formularioen estekak"
+msgstr "Formulario orokorreko estekak"
 
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_res_users
@@ -2047,7 +2048,7 @@ msgstr "Erabiltzailearen uneko rola"
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "VAT"
-msgstr "BEZa"
+msgstr "IFZ"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
