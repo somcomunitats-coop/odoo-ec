@@ -173,9 +173,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
             "payment_mode_id": self.payment_mode_id.id,
             "company_id": self.company_id.id,
             "move_type": "in_invoice",
-            "partner_bank_id": self._get_invoice_partner_bank(
-                voluntary_shares_inv_line[-1]
-            ),  # TODO: Find a proper way of getting partner bank account
+            "partner_bank_id": self._get_invoice_partner_bank(membership.partner_id),
             "voluntary_share_interest_return_id": voluntary_share_interest_return_id,
             "invoice_line_ids": [],
         }
@@ -193,14 +191,15 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
             return create_dict
         return False
 
-    def _get_invoice_partner_bank(self, origin_inv_line):
-        # TODO: This method must take into consideration that the bank account has a valid mandate
-        origin_inv = origin_inv_line.move_id
-        if origin_inv_line.move_id.partner_bank_id:
-            return origin_inv.partner_bank_id.id
+    def _get_invoice_partner_bank(self, partner_id):
+        # try to find the first bank account with a valid mandate
+        if partner_id.valid_mandate_id.partner_bank_id:
+            return partner_id.valid_mandate_id.partner_bank_id.id
+        # use any other existing banck account without mandate assigned
         else:
             rel_bank_acc = self.env["res.partner.bank"].search(
-                [("partner_id", "=", origin_inv.partner_id.id)]
+                [("partner_id", "=", partner_id.id),("mandate_ids","=", False),
+                 ("company_id", "=", self.company_id.id)]
             )
             if rel_bank_acc:
                 return rel_bank_acc[0].id
