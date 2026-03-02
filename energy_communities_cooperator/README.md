@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2026-03-02 (v16.0.0.6.3)
+
+- fix bad partner_bank_id assignation on voluntary interest return invoices
+
 ### 2026-01-19 (v16.0.0.6.2)
 
 - fix formula voluntary share interest return
