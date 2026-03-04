@@ -697,34 +697,22 @@ class WebsiteShareSubscriptionController(http.Controller):
             Field value if found, empty string if not found, or boolean if path is boolean
         """
         # Return boolean value directly if path is boolean
-        if isinstance(path, bool):
-            return path
 
         # Split path into keys
-        keys = path.split(".")
-        if len(keys) == 1:
-            return ""
 
-        # Navigate through nested structure
-        current = data
-        for key in keys:
+        try:
+            key, path_attributes = path.split(".", 1)
+        except (ValueError, AttributeError):
+            return path
+
+        current = data[key]
+        for attr in path_attributes.split("."):
             # Handle tuple values (selection fields return tuples)
             if isinstance(current, tuple):
                 return current[1]
 
-            # Convert recordset to dictionary if needed
-            if not isinstance(current, dict):
-                try:
-                    current = current.read()[0]  # Convert the record to a dictionary
-                except:
-                    return ""  # Return an empty string if the record cannot be converted to a dictionary
-
-            # Check if key exists in current dictionary
-            if key not in current:
-                return ""  # Return an empty string if the field is not found
-
             # Move to next level
-            current = current[key]
+            current = getattr(current, attr, "")
         return current
 
     def _get_country_options(self):
