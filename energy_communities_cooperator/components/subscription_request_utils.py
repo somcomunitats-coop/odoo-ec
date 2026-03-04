@@ -222,6 +222,7 @@ class SubscriptionRequestUtils(Component):
                 "share_product_id"
             ].product_variant_id.id,
             "company_id": creation_params["company_id"].id,
+            "mandate_approved": creation_params["conditions_payment"],
         }
         # Delete not necesary params for creation
         del creation_params["payment_method"]
