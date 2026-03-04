@@ -29,7 +29,7 @@ SUBSCRIPTION_FORM_SUBMISSION_COMPANY_MEMBER = {
     "birthdate": "22/03/1983",
     "phone": "1234",
     "lang": "6",
-    "vat": "47731166W",
+    "vat": "90793973R",
     "address": "address test",
     "city": "city test",
     "zip_code": "08301",

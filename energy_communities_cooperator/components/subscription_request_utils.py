@@ -5,6 +5,7 @@ from odoo.addons.component.core import Component
 from ..config import MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE
 from ..exceptions import ComponentValidationError
 from ..schemas.website_share_subscription_schemas import (
+    MemberShipMode,
     SubscriptionRequestCreationParams,
 )
 
@@ -139,7 +140,10 @@ class SubscriptionRequestUtils(Component):
                 for partner in partners
             ]
         )
-        if existing_partner:
+        if (
+            existing_partner
+            and creation_params.membership_mode != MemberShipMode.voluntary
+        ):
             errors.append(
                 _(
                     "There is an existing account for this"
@@ -222,6 +226,7 @@ class SubscriptionRequestUtils(Component):
         # Delete not necesary params for creation
         del creation_params["product_categ"]
         del creation_params["membertype_mode"]
+        del creation_params["membership_mode"]
         del creation_params["conditions_payment"]
         del creation_params["privacy_policy"]
         del creation_params["generic_rules"]

@@ -39,7 +39,7 @@ class SubscriptionMode(str, Enum):
     voluntary = "voluntary"
 
 
-class MembershipMode(str, Enum):
+class MemberShipMode(str, Enum):
     cooperator = "member"
     invited = "invited"
     voluntary = "voluntary"
@@ -134,6 +134,7 @@ class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
     company_id: Company
     product_categ: ProductCategory
     membertype_mode: MemberTypeMode
+    membership_mode: MemberShipMode
     lang: str
     company_name: Optional[str] = None
     company_email: Optional[EmailStr] = None
@@ -178,7 +179,7 @@ class WebsiteShareSubscriptionContext(BaseModel):
     # This beaviour should be fixed in furthers developments
     model_config = ConfigDict(arbitrary_types_allowed=True)
     subscription_mode: SubscriptionMode
-    membership_mode: MembershipMode
+    membership_mode: MemberShipMode
     membertype_mode: MemberTypeMode
     formtype_mode: FormTypeMode
     company: Company

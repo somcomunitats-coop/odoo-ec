@@ -133,18 +133,18 @@ class WebsiteShareSubscriptionController(http.Controller):
             error_message = error.message
         else:
             error_message = str(error)
-
+        status_code = getattr(
+            error, "http_error_code", HTTPStatus.INTERNAL_SERVER_ERROR
+        )
         return request.render(
             "http_routing.http_error",
             {
-                "status_code": getattr(
-                    error, "http_error_code", HTTPStatus.INTERNAL_SERVER_ERROR
-                ),
+                "status_code": status_code,
                 "status_message": getattr(error, "title", name),
                 "error_message": error_message,
                 "debug": traceback.format_exc(),
             },
-            status=error.http_error_code,
+            status=status_code,
         )
 
     def _populate_form_values_from_submission(self, request, values):
@@ -293,6 +293,8 @@ class WebsiteShareSubscriptionController(http.Controller):
         creation_params["product_categ"] = ctx.product_categ
         creation_params["company_id"] = ctx.company
         creation_params["membertype_mode"] = ctx.membertype_mode
+        creation_params["membership_mode"] = ctx.membership_mode
+
         if ctx.subscription_mode.value == "voluntary":
             creation_params["vat"] = creation_params["vat"].strip().upper()
             partner = (
